@@ -1,0 +1,30 @@
+{
+  "tests/spatial-rotation-browser.js": {
+    "checks": [
+      "network starts with rotation selected",
+      "plain left drag rotates around the current target",
+      "drag preserves every node coordinate and selection",
+      "the guide identifies the rotated view",
+      "shift drag pans without changing the chosen mode",
+      "right drag pans in the default rotation mode",
+      "the visible pan button switches left drag to pan",
+      "right drag rotates while the pan mode is selected",
+      "top view tilts down without shifting the rotation center",
+      "top view down keeps source coordinates",
+      "a tilted top view shows the layer axis and the free-view label",
+      "top view tilts up without shifting the rotation center",
+      "top view up keeps source coordinates",
+      "a tilted top view shows the layer axis and the free-view label",
+      "side view rotates around the same target",
+      "side drag preserves selection and source coordinates",
+      "rotated view and target survive refresh",
+      "refresh restores a rotated view and default drag mode",
+      "a source point is available for the click-versus-drag check",
+      "a drag returning to its start is not mistaken for a click",
+      "the classic world retains its existing default pan",
+      "normal-motion drag saves the final camera after inertia",
+      "no browser errors"
+    ],
+    "errors": []
+  }
+}

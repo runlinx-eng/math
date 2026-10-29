@@ -13,6 +13,18 @@ import {LESSONS,ROUTES,lessonForTopic,routeFor,routeForPack,routesForPack,topicI
 import {personalRelations} from './learning/bridges.js';
 const V=a=>new THREE.Vector3(...a);
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+// At the exact top view an orbit cannot cross its polar limit. Let a drag
+// starting there tilt away from the pole in either vertical direction.
+class SpatialOrbitControls extends OrbitControls {
+  _handleMouseDownRotate(event){super._handleMouseDownRotate(event);this.topDragPending=this.allowTopDrag&&this.getPolarAngle()<.002;this.flipTopDrag=false;}
+  _handleMouseMoveRotate(event){
+    const dy=event.clientY-this._rotateStart.y;
+    if(this.topDragPending&&Math.abs(dy)>.1){this.flipTopDrag=dy>0;this.topDragPending=false;}
+    if(!this.flipTopDrag){super._handleMouseMoveRotate(event);return;}
+    super._handleMouseMoveRotate({clientX:event.clientX,clientY:this._rotateStart.y-dy});
+    this._rotateStart.set(event.clientX,event.clientY);
+  }
+}
 function regionGeometry(theme,space){
   const geometry=new THREE.SphereGeometry(1,32,20),position=geometry.attributes.position;
   const centers=theme.children.map(key=>{const p=space.byKey.get(key);return {v:V(p.position).sub(V(theme.position)),r:p.radius*.65};});
@@ -30,13 +42,13 @@ export class SpatialScene {
     this.scene=new THREE.Scene();this.scene.fog=new THREE.FogExp2(0xf5f4ef,.00016);
     this.camera=space.globalInfo?new THREE.OrthographicCamera(-800,800,600,-600,1,20000):new THREE.PerspectiveCamera(40,1,1,20000);this.camera.fov=40;this.camera.aspect=1;
     this.camera.position.set(370,260,1600);
-    this.controls=new OrbitControls(this.camera,this.canvas);
+    this.controls=new SpatialOrbitControls(this.camera,this.canvas);this.controls.allowTopDrag=this.network;
     this.controls.enableDamping=!matchMedia('(prefers-reduced-motion: reduce)').matches;this.controls.dampingFactor=.13;this.controls.minDistance=28;this.controls.maxDistance=8000;
     this.controls.screenSpacePanning=true;this.controls.zoomToCursor=true;this.controls.minZoom=.15;this.controls.maxZoom=35;this.controls.rotateSpeed=.65;this.controls.panSpeed=.85;
     this.controls.mouseButtons={LEFT:THREE.MOUSE.PAN,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.ROTATE};
     this.controls.touches={ONE:THREE.TOUCH.PAN,TWO:THREE.TOUCH.DOLLY_ROTATE};
     this.controls.minPolarAngle=this.network?.0001:.04;this.controls.maxPolarAngle=Math.PI-.04;this.controls.listenToKeyEvents(this.canvas);
-    this.controls.addEventListener('change',()=>{this.dirty=true;});
+    this.controls.addEventListener('change',()=>{this.dirty=true;callbacks.onCameraChange?.();});
     this.controls.addEventListener('start',()=>{this.tween=null;callbacks.onStart?.();});
     this.controls.addEventListener('end',()=>callbacks.onSettled?.());
     this.scene.add(new THREE.HemisphereLight(0xffffff,0x8e9c91,2));
@@ -136,9 +148,10 @@ export class SpatialScene {
     for(const a of this.globalAxisPoints||[]){a.el=document.createElement('span');a.el.textContent=a.text;this.axisLayer.append(a.el);}
     this.bandLayer=document.createElement('div');this.bandLayer.className='network-bands';this.labelLayer.append(this.bandLayer);
     this.raycaster=new THREE.Raycaster();this.pointer=new THREE.Vector2();
-    this.canvas.addEventListener('pointerdown',e=>{this.down={x:e.clientX,y:e.clientY,button:e.button};});
-    this.canvas.addEventListener('pointerup',e=>{if(this.down?.button===0&&Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)<5){const key=this.hit(e);if(key)callbacks.onSelect?.(key);}this.down=null;});
-    this.canvas.addEventListener('pointermove',e=>{if(this.down)return;this.hovered=this.hit(e);this.canvas.style.cursor=this.hovered?'pointer':this.mode==='rotate'?'grab':'move';this.dirty=true;});
+    this.canvas.addEventListener('pointerdown',e=>{this.down={x:e.clientX,y:e.clientY,button:e.button,moved:false};});
+    this.canvas.addEventListener('pointerup',e=>{if(this.down?.button===0&&!this.down.moved&&Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)<5){const key=this.hit(e);if(key)callbacks.onSelect?.(key);}this.down=null;});
+    this.canvas.addEventListener('pointercancel',()=>{this.down=null;});
+    this.canvas.addEventListener('pointermove',e=>{if(this.down){if(Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)>=5)this.down.moved=true;return;}this.hovered=this.hit(e);this.canvas.style.cursor=this.hovered?'pointer':this.mode==='rotate'?'grab':'move';this.dirty=true;});
     this.canvas.addEventListener('pointerleave',()=>{this.hovered=null;this.dirty=true;});
     this.canvas.addEventListener('dblclick',e=>{const key=this.hit(e),o=space.byKey.get(key);if(o?.kind==='node')callbacks.onOpen?.(o.id);});
     this.canvas.addEventListener('keydown',e=>{if(['+','=','-','_'].includes(e.key)){e.preventDefault();this.zoom(e.key==='-'||e.key==='_'?1.3:.77);}if(e.key==='Home'){e.preventDefault();callbacks.onOverview?.();}});
@@ -150,7 +163,7 @@ export class SpatialScene {
   get global(){return this.network&&this.networkVersion===GLOBAL_VERSION;}
   updateProjection(){this.camera.aspect=this.width/this.height;if(this.camera.isOrthographicCamera){const half=this.camera.position.distanceTo(this.controls.target)*Math.tan(Math.PI/9);this.camera.left=-half*this.camera.aspect;this.camera.right=half*this.camera.aspect;this.camera.top=half;this.camera.bottom=-half;}this.camera.updateProjectionMatrix();}
   resize(){const {width,height}=this.host.getBoundingClientRect();this.width=width;this.height=height;this.updateProjection();this.renderer.setSize(width,height,false);this.dirty=true;}
-  setMode(mode){this.mode=mode;this.controls.mouseButtons.LEFT=mode==='rotate'?THREE.MOUSE.ROTATE:THREE.MOUSE.PAN;this.controls.touches.ONE=mode==='rotate'?THREE.TOUCH.ROTATE:THREE.TOUCH.PAN;this.canvas.style.cursor=mode==='rotate'?'grab':'move';}
+  setMode(mode){this.mode=mode;this.controls.mouseButtons.LEFT=mode==='rotate'?THREE.MOUSE.ROTATE:THREE.MOUSE.PAN;this.controls.mouseButtons.RIGHT=mode==='rotate'?THREE.MOUSE.PAN:THREE.MOUSE.ROTATE;this.controls.touches.ONE=mode==='rotate'?THREE.TOUCH.ROTATE:THREE.TOUCH.PAN;this.canvas.style.cursor=mode==='rotate'?'grab':'move';}
   project(position){const p=V(position).project(this.camera);return {x:(p.x+1)*this.width/2,y:(1-p.y)*this.height/2,visible:p.z<1&&p.z>-1&&Math.abs(p.x)<1.4&&Math.abs(p.y)<1.4,distance:this.camera.position.distanceTo(V(position))/(this.global?this.camera.zoom:1)};}
   hit(e){const r=this.canvas.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.raycaster.setFromCamera(this.pointer,this.camera);
     if(this.network){let best=null,bestD=11*11,bestDepth=Infinity;const x=e.clientX-r.left,y=e.clientY-r.top;
@@ -339,14 +352,14 @@ export class SpatialScene {
     }
     for(const c of this.captionCandidates||[]){if(!c.el)continue;c.el.hidden=true;const p=this.project(c.position);if(!p.visible)continue;const r=placeLabel({x:p.x,y:p.y,w:102,h:28,viewport:{w:this.width,h:this.height},occupied:rects});if(!r)continue;rects.push(r);c.el.style.transform=`translate(${r.x}px,${r.y}px)`;c.el.hidden=false;}
     for(const b of this.bandLabels||[]){const p=this.project([0,b.y,0]);b.el.hidden=!p.visible;b.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
-    for(const a of this.globalAxisPoints||[]){const p=this.project(a.position);a.el.hidden=!this.global||this.networkView==='map'||!p.visible;a.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
+    for(const a of this.globalAxisPoints||[]){const p=this.project(a.position);a.el.hidden=!this.global||this.controls.getPolarAngle()<.02||!p.visible;a.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
     this.labelTethers.innerHTML=tethers.join('');
   }
   frame(time){if(document.hidden)return;let moving=false;
     if(this.tween){const t=this.tween,x=clamp((time-t.start)/t.duration,0,1),e=x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
       this.camera.position.lerpVectors(t.from,t.to,e);this.controls.target.lerpVectors(t.fromTarget,t.toTarget,e);this.dirty=true;moving=true;
       if(x===1){this.tween=null;this.callbacks.onSettled?.();}}
-    const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;
+    const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&this.controls.getPolarAngle()>=.02;
     const o=this.space.byKey.get(this.selected);this.halo.visible=!!o;if(o){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5);}
     this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.exclusions=this.callbacks.onMove?.()||[];this.updateLabels();this.dirty=false;
   }

@@ -58,7 +58,7 @@
     "scripts/build_content_plan.py": "3a54c8cf59af85e01bb7c649b7b6bc8b423dc9406f3b982707a113f9906abe52",
     "dist/exploration-content.js": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
     "dist/journey-model.js": "18f83392633a722301163386a7e27b087b666f5fc10c1d2fee016d03d2594104",
-    "dist/exploration.js": "ab8bea75300a3e0bd2345390815588b2341cade380b68fea86fff5e29875bb58",
+    "dist/exploration.js": "88619684848e36c2ad39d5c7e27948487712b6b26b75aa6a8bfde81ef4873341",
     "dist/journey.js": "92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2",
     "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/design.md": "a69f1ac8714a882d42a3c7bdbc5b22aa00157f17d59a132d695a81474f2bce85",
     "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/app.js": "4621b9c9ab0ed09be25f672afa623e05633805cfdb57d68f0c6bf265def07bcd",

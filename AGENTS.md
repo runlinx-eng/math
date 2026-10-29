@@ -55,6 +55,15 @@ adaptations have not received independent mathematical review. The generator
 `scripts/build_spatial_exploration_inventory.mjs --check` verifies the complete
 source-and-explanation inventory in `docs/spatial-exploration/`.
 
+The v52 relationship map defaults to left-drag rotation around the camera
+target. Shift-drag or right-drag pans; the visible pan button switches the
+left-drag action, and the right button then rotates. The classic world keeps
+its previous default pan. A top-view vertical drag can tilt away from the pole
+in either direction. Dragging is never a click even if it returns to its start.
+Named view buttons return to their actual fixed camera orientations; a rotated
+camera is labelled as a free view. Camera inertia must settle into saved views.
+The separate human usability acceptance of these gestures is still pending.
+
 Learner progress has only complete/incomplete, an overall bar and compact task
 steps. Browsing is not completion. Both endpoints completed is not a completed
 connection: the joint work must be performed. Count unique available source
@@ -134,7 +143,7 @@ labels align by their actual last digit. Preserve first guesses after wrong
 alignment; either original addend may be used for an addition inverse check.
 Written task completion does not establish handwriting or an independent paper
 algorithm. Method selection does not establish actual mental or calculator use.
-Keep sw.js, space.js and exploration.js cache versions synchronized (current v51).
+Keep sw.js, space.js and exploration.js cache versions synchronized (current v52).
 
 The global network is the default for a new world. Before a view preference is
 chosen, existing unfinished classic sessions return to their saved view; unfinished
@@ -147,12 +156,13 @@ completed joint task lights its connection. The square marks a saved activity
 scene and the diamond a pending question, neither an additional source node.
 Short-route navigation remains optional. Current unit and browser checks are
 `tests/spatial-global.test.mjs`, `tests/spatial-global-browser.js` and
-`tests/spatial-global-camera-browser.js`, plus `tests/spatial-exploration.test.mjs`
-and `tests/spatial-exploration-browser.js`. Run the isolated current-browser suites
-through `scripts/verify_spatial_exploration.cjs` with exploration, global, camera
-and regressions arguments. It adapts historical cache checks without altering
-coordinate-version assertions. Current evidence is in
-`verification/spatial-exploration-20261029/`; earlier v49/v50 evidence remains in
+`tests/spatial-global-camera-browser.js`, plus `tests/spatial-exploration.test.mjs`,
+`tests/spatial-exploration-browser.js` and `tests/spatial-rotation-browser.js`.
+Run the isolated current-browser suites through `scripts/verify_spatial_rotation.cjs`
+with rotation, exploration, global, camera and classic arguments. It adapts
+historical cache checks without altering coordinate-version assertions. Current
+evidence is in `verification/spatial-rotation-20261029/`; v51 evidence remains
+in `verification/spatial-exploration-20261029/`, and earlier v49/v50 evidence remains in
 `verification/spatial-global-20261029/` and `verification/spatial-readability-20261029/`. No child
 trial or user acceptance is implied.
 
