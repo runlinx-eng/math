@@ -1,0 +1,13 @@
+{
+  "tests/spatial-global-camera-browser.js": {
+    "checks": [
+      "normal-motion pointer drag changes the real camera",
+      "changing to side view during rotational inertia still aligns all 851 hard edges",
+      "animated camera transitions do not rearrange global objects",
+      "wheel zoom changes the orthographic scale",
+      "wheel scale and cursor-centered camera restore after refresh",
+      "normal-motion camera produces no browser errors"
+    ],
+    "errors": []
+  }
+}

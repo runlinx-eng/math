@@ -1,0 +1,109 @@
+{
+  "tests/phase5-b39-regression/spatial.js": {
+    "passed": 39,
+    "checks": [
+      "3D world retains five themes, 23 clusters, 587 nodes and 1223 source edges",
+      "overview begins with five directions rather than hundreds of labels",
+      "approaching a theme progressively reveals knowledge clusters",
+      "the expanded fraction pack first offers three directions",
+      "approaching a cluster reveals its actual objects in the same world",
+      "zooming through scales retains the same canvas",
+      "all objects of a dense cluster remain reachable through the contextual finder",
+      "dragging empty space pans the continuous world",
+      "rotation changes the viewpoint around a stable target",
+      "wheel zoom approaches the object under the pointer",
+      "previous viewpoint restores camera position and target",
+      "embedded activity exposes content without a second page navigation bar",
+      "enlarging a surface provides more reading room without replacing the space",
+      "editing two live work surfaces preserves both drafts",
+      "two content surfaces remain open at the same time",
+      "selected names remain available in the surfaces; visible labels fit",
+      "space labels stay outside both open work surfaces",
+      "embedded construction and transfer persist their independent records and hint history",
+      "later work within each surface keeps both recent drafts",
+      "completed activity is not promoted to independent understanding",
+      "following an available relationship opens its learning activity",
+      "following the relationship preserves both earlier drafts",
+      "highlighted object connections exactly match source prerequisites and extensions",
+      "opening activities and following relationships do not replace the world",
+      "learning progress and all camera actions leave world coordinates unchanged",
+      "reload restores the exact last camera rather than refocusing the URL node",
+      "reload restores both world-anchored work surfaces",
+      "reload preserves each surface content tab",
+      "reload preserves the enlarged surface",
+      "activity draft returns inside the restored surface",
+      "overview shows completed task counts across the 286 available number nodes",
+      "overall progress retains all five regions without status filters",
+      "new entry exports the actual learning history",
+      "invalid import through the 3D entry cannot overwrite records",
+      "reimport merges without losing drafts or duplicating evidence",
+      "3D rendering reloads offline including locally bundled Three.js",
+      "embedded activity reopens offline with its learning and support history",
+      "3D world and work surfaces make no external network requests",
+      "no JavaScript errors across desktop, activities and offline reload"
+    ],
+    "errors": [],
+    "remote": []
+  },
+  "tests/phase5-b39-regression/daily.js": {
+    "checks": [
+      "question resumes in its activity",
+      "explicit route link does not reopen the saved activity",
+      "explicit other route is honored despite the pending question",
+      "connection choices can be expanded",
+      "same-day clock check does not collapse what the child is reading",
+      "deferred question stays out of today entry",
+      "open page updates the question entry when the local day changes",
+      "no JavaScript errors"
+    ],
+    "errors": []
+  },
+  "tests/phase5-b39-regression/readiness.js": {
+    "checks": [
+      "question button cannot accept a click while modules are still loading",
+      "question button becomes available after the work is ready",
+      "standalone early question really saves after loading",
+      "no runtime errors"
+    ],
+    "errors": []
+  },
+  "tests/phase5-b39-integration-browser.js": {
+    "checks": [
+      "overview counts unique available nodes",
+      "entry offers three directions",
+      "first page has at most three routes",
+      "second page has at most three routes",
+      "new route has three nodes",
+      "selected route survives reload",
+      "selected calculator lesson opens",
+      "first inaccurate calculator input is recorded",
+      "calculator result is recorded as support",
+      "the child’s exact words are saved without grading",
+      "simulated next day shows the original question",
+      "original partial calculator work is restored",
+      "later work is preserved separately",
+      "original explanation is restored exactly",
+      "world camera returns to the question",
+      "actual backup contains the original explanation",
+      "repeated import preserves question and partial work",
+      "all four new files are cached",
+      "the question reopens offline",
+      "the calculation can finish offline",
+      "calculator use is kept as support",
+      "no runtime errors",
+      "no remote requests"
+    ],
+    "errors": [],
+    "remote": [],
+    "cache": {
+      "name": "math-explorer-20261027-learning-v51",
+      "modules": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "childTrial": false
+  }
+}

@@ -5,6 +5,7 @@ import {placeLabel} from './spatial-labels.js';
 import {applyNetworkView} from './spatial-network.js';
 import {GLOBAL_VERSION,restoreNetworkCoordinates} from './spatial-global.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
+import {traceCritical} from './spatial-trace.js';
 import {ACTIVITIES,activityIds} from './exploration-content.js';
 import {routeStep,routeLinks} from './journey-model.js';
 
@@ -20,7 +21,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.traceMode='direct';this.traceResult=null;this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -120,7 +121,7 @@ export class SpatialScene {
     this.relationLayer=document.createElement('div');this.relationLayer.className='relation-captions';this.labelLayer.append(this.relationLayer);
     for(const object of space.objects){
       const el=document.createElement('button');el.type='button';el.className=`space-label ${object.kind}`;el.dataset.key=object.key;el.style.setProperty('--object-color',object.color);
-      const title=document.createElement('span'),step=object.kind==='node'&&routeStep(object.id);const lesson=object.kind==='node'&&lessonForTopic(object.id),route=lesson&&routeFor(lesson);title.textContent=this.network&&object.kind==='node'?object.title:lesson?`${route.id}–0${route.ids.indexOf(lesson)+1} ${LESSONS[lesson].title}`:step?`A–0${step.step} ${step.title}`:object.title;el.append(title);el.title=title.textContent;
+      const title=document.createElement('span'),step=object.kind==='node'&&routeStep(object.id);const lesson=object.kind==='node'&&lessonForTopic(object.id),route=lesson&&routeFor(lesson);title.textContent=this.network&&object.kind==='node'?(space.knowledgeNames?.get(object.id)||object.title):lesson?`${route.id}–0${route.ids.indexOf(lesson)+1} ${LESSONS[lesson].title}`:step?`A–0${step.step} ${step.title}`:object.title;el.append(title);el.title=title.textContent;
       if(this.network&&object.kind==='node'){
         const forms=activityForms(object.id),form=forms[0]||'steps';el.insertAdjacentHTML('afterbegin',activityGlyph(form));
         el.dataset.activityForm=form;el.title+=' · '+forms.map(f=>ACTIVITY_FORMS[f].label).join('、');
@@ -161,8 +162,8 @@ export class SpatialScene {
     let o=isNodeMesh(hit.object)?this.nodeList[hit.instanceId]:this.space.byKey.get(hit.object.userData.key);
     const d=this.camera.position.distanceTo(V(o.position));if(!this.network&&o.kind==='node'&&d>350)o=this.space.packs.get(o.packId);if(!this.network&&d>1000)o=this.space.themes.get(o.themeId);return o.key;
   }
-  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
-  restore(view,animated=false){if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;this.select(view.selected);if(this.global)this.camera.zoom=view.cameraZoom||1;this.setRelations(view.relationMode||'off');this.fly(view.position,view.target,animated?850:0);}
+  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom,traceMode:this.traceMode}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
+  restore(view,animated=false){if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;this.select(view.selected);if(this.global){this.camera.zoom=view.cameraZoom||1;this.setTrace(view.traceMode||'direct');}this.setRelations(view.relationMode||(this.global&&o?.kind==='node'?'source':'off'));this.fly(view.position,view.target,animated?850:0);}
   overview(animated=true){if(this.network){this.networkVersion=GLOBAL_VERSION;this.networkView='oblique';this.select(null);this.fitNetworkView(animated);return;}const factor=Math.max(1,1/this.camera.aspect);this.select(null);this.fly(this.network?[345*factor,310*factor,1150*factor]:[260*factor,160*factor,1580*factor],this.network?[0,0,0]:[0,-15,-70],animated?1100:0);}
   focus(key,{animate=true}={}){const o=this.space.byKey.get(key);if(!o)return;const overview=this.global&&!this.selected&&this.wholeMapVisible();this.select(key);
     if(this.global){if(o.kind==='node'){const p=this.project(o.position),insets=this.globalInsets();if(overview)this.fitGlobalView(animate);else if(!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
@@ -170,7 +171,10 @@ export class SpatialScene {
     const ratio=Math.max(1,.85/this.camera.aspect),d=(o.kind==='theme'?570:o.kind==='pack'?Math.max(225,o.radius*4.7):175)*ratio;
     const direction=this.camera.position.clone().sub(this.controls.target).normalize();this.fly(V(o.position).addScaledVector(direction,d).toArray(),o.position,animate?1000:0);
   }
-  select(key){const changed=key!==this.selected;if(changed)this.relationMode=this.network&&key?.startsWith('node:')?'source':'off';this.selected=this.space.byKey.has(key)?key:null;if(this.network)this.applyNetworkLayout();this.rebuildRelations();this.dirty=true;}
+  select(key){const changed=key!==this.selected;if(changed){this.relationMode=this.network&&key?.startsWith('node:')?'source':'off';this.traceMode='direct';this.traceResult=null;this.previewKey=null;}this.selected=this.space.byKey.has(key)?key:null;if(this.network)this.applyNetworkLayout();this.rebuildRelations();this.dirty=true;}
+  setTrace(mode){this.traceMode=this.global&&this.selected?.startsWith('node:')&&['before','after'].includes(mode)?mode:'direct';this.traceResult=this.traceMode==='direct'?null:traceCritical(this.space.atlas,this.selected.slice(5),this.traceMode);this.previewKey=null;this.rebuildRelations();this.dirty=true;}
+  setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
+  updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
   setRelations(mode){this.relationMode=['source','route'].includes(mode)?mode:'off';this.rebuildRelations();this.dirty=true;}
   setAllNodes(show){this.showAllNodes=!!show;this.rebuildRelations();this.dirty=true;}
   setLearningSection(id){this.learningSectionId=id;this.learningRoutePage=0;this.learningRouteId=null;this.rebuildRelations();this.dirty=true;}
@@ -244,7 +248,7 @@ export class SpatialScene {
   refresh(stateFor,filter=this.filter){this.stateFor=stateFor;this.filter=filter;this.states=this.nodeList.map(o=>stateFor(o.id));this.completedNodes=new Set(this.nodeList.filter((o,i)=>this.states[i].progress==='completed').map(o=>o.id));
     const available=new Set(topicIds);
     for(const {object,el}of this.labels){
-      if(object.kind==='node'){const done=stateFor(object.id).progress==='completed';el.dataset.progress=done?'completed':'incomplete';el.classList.remove('has-evidence');el.setAttribute('aria-label',`${routeStep(object.id)?.title||object.title}${available.has(object.id)?'，'+(done?'完成':'未完成'):''}`);}
+      if(object.kind==='node'){const done=stateFor(object.id).progress==='completed',name=this.network?(this.space.knowledgeNames?.get(object.id)||object.title):(routeStep(object.id)?.title||object.title);el.dataset.progress=done?'completed':'incomplete';el.classList.remove('has-evidence');el.setAttribute('aria-label',`${name}${available.has(object.id)?'，'+(done?'完成':'未完成'):''}`);}
       else {const ids=(object.kind==='pack'?object.nodeIds:this.nodeList.filter(n=>n.themeId===object.id).map(n=>n.id)).filter(id=>available.has(id)),completed=ids.filter(id=>stateFor(id).progress==='completed').length;
         el.classList.remove('has-trail');el.classList.toggle('has-completion',completed>0);el.dataset.completed=String(completed);
         if(object.kind==='theme')el.querySelector('small').innerHTML=ids.length?`<span>完成 ${completed} / ${ids.length}</span><progress max="${ids.length}" value="${completed}" aria-label="完成 ${completed} / ${ids.length}"></progress>`:`${object.children.length} 个分组`;
@@ -255,7 +259,7 @@ export class SpatialScene {
   }
   paintObjects(){
     const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef);
-    const emphasis=o=>!selected?1:selected.kind==='theme'?(o.themeId===selected.id||o.id===selected.id?1:.35):selected.kind==='pack'?(o.packId===selected.id||o.id===selected.id?1:.28):(this.related?.has(o.key)||o.key===selected.key?1:o.packId===selected.packId ? .42 : .18);
+    const emphasis=o=>{if(o.key===this.previewKey)return 1;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();
     for(let i=0;i<this.nodeList.length;i++){
       const o=this.nodeList[i],s=this.states?.[i]||{progress:'unseen',evidence:'none'},d=this.camera.position.distanceTo(V(o.position))/(this.global?this.camera.zoom:1),focus=emphasis(o);
@@ -263,7 +267,7 @@ export class SpatialScene {
       const level=visible?(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)):0,match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
       color.set(o.color).lerp(paper,1-(this.network ? .87 : s.progress==='completed' ? .92 : .68)*focus*(match?1:.16));
       const size=this.global?5:this.network?4:3.2;
-      transform.position.copy(V(o.position));transform.quaternion.identity();transform.scale.setScalar((this.global?(o.key===this.selected?size+3:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
+      transform.position.copy(V(o.position));transform.quaternion.identity();transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+1.6)*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
       transform.scale.setScalar(0);transform.updateMatrix();this.evidenceMesh.setMatrixAt(i,transform.matrix);
       if(this.network){
@@ -280,7 +284,7 @@ export class SpatialScene {
   rebuildRelations(){for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     if(this.networkEdges){this.networkEdges.visible=this.showAllNodes&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
-    let links=this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
+    let links=this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
     if(this.network){const lit=new Set(this.litConnections||[]);links=links.map(l=>({...l,lit:l.lit||l.edges.some(e=>lit.has(e.prerequisiteId+'>'+e.topicId))}));}
     if(!this.global&&this.networkView==='relations')links=links.filter(l=>l.from===this.selected||l.to===this.selected);this.relations=links;this.related=new Set(links.flatMap(l=>[l.from,l.to]));this.captionCandidates=[];if(this.relationLayer)this.relationLayer.replaceChildren();
     if(this.network&&!this.selected&&this.relationMode==='off'&&links.length){
@@ -289,16 +293,16 @@ export class SpatialScene {
       this.edgesGroup.add(new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xb48b36,transparent:true,opacity:.8,depthWrite:false})));return;
     }
     for(const l of links){const a=this.space.byKey.get(l.from),b=this.space.byKey.get(l.to),v=V(a.position),w=V(b.position);const c=v.clone().lerp(w,.5);c.z+=Math.min(70,v.distanceTo(w)*.18);
-      const curve=new THREE.QuadraticBezierCurve3(v,c,w),before=l.to===this.selected,color=l.lit?0xb48b36:this.relationMode==='off'?0x9ca99c:this.selected?(before?0x985b2f:0x286f7c):0xb3bcb3;
+      const curve=new THREE.QuadraticBezierCurve3(v,c,w),before=this.traceMode==='before'||this.traceMode==='direct'&&l.to===this.selected,color=l.lit?0xb48b36:this.relationMode==='off'?0x9ca99c:this.selected?(before?0x985b2f:0x286f7c):0xb3bcb3;
       const line=l.lit||this.selected&&this.relationMode!=='off'?new THREE.Mesh(new THREE.TubeGeometry(curve,36,l.lit?.8:this.global?1.35:this.networkView==='relations'?.7:a.kind==='node'?.20:.38,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity:this.global?.92:.75,depthWrite:false})):
-        new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(36)),new THREE.LineBasicMaterial({color,transparent:true,opacity:this.relationMode==='off'?.3:.14,depthWrite:false}));if(this.network&&l.edges[0]?.strength==='soft'){
-        line.geometry.dispose();line.material.dispose();const dashed=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(50)),new THREE.LineDashedMaterial({color,transparent:true,opacity:this.global?.88:.7,dashSize:6,gapSize:5}));dashed.computeLineDistances();this.edgesGroup.add(dashed);
-      }else this.edgesGroup.add(line);
-      if(this.selected&&this.relationMode!=='off'){const arrow=new THREE.Mesh(new THREE.ConeGeometry(this.global?5.5:this.networkView==='relations'?4.5:a.kind==='node'?1.9:3,this.global?15:this.networkView==='relations'?12:a.kind==='node'?5.8:9,10),new THREE.MeshBasicMaterial({color}));arrow.position.copy(curve.getPoint(.78));arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),curve.getTangent(.78).normalize());this.edgesGroup.add(arrow);
+         new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(36)),new THREE.LineBasicMaterial({color,transparent:true,opacity:this.relationMode==='off'?.3:.14,depthWrite:false}));let rendered=line;if(this.network&&l.edges[0]?.strength==='soft'){
+        line.geometry.dispose();line.material.dispose();rendered=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(50)),new THREE.LineDashedMaterial({color,transparent:true,opacity:this.global?.88:.7,dashSize:6,gapSize:5}));rendered.computeLineDistances();
+      }rendered.userData.relation=[l.from,l.to];rendered.userData.baseOpacity=rendered.material.opacity;this.edgesGroup.add(rendered);
+      if(this.selected&&this.relationMode!=='off'){const arrow=new THREE.Mesh(new THREE.ConeGeometry(this.global?5.5:this.networkView==='relations'?4.5:a.kind==='node'?1.9:3,this.global?15:this.networkView==='relations'?12:a.kind==='node'?5.8:9,10),new THREE.MeshBasicMaterial({color,transparent:true}));arrow.position.copy(curve.getPoint(.78));arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),curve.getTangent(.78).normalize());arrow.userData.relation=[l.from,l.to];arrow.userData.baseOpacity=1;this.edgesGroup.add(arrow);
         this.captionCandidates.push({before,position:curve.getPoint(before?.58:.42).toArray(),length:v.distanceTo(w)});
       }
     }
-    if(this.selected&&this.relationLayer&&!this.global&&this.networkView!=='relations')for(const before of [true,false]){const candidate=this.captionCandidates.filter(c=>c.before===before).sort((a,b)=>a.length-b.length)[0];if(!candidate)continue;const el=document.createElement('span');el.className=`relation-caption ${before?'before':'after'}`;el.textContent=before?'这里会用到':'可以继续到';el.hidden=true;this.relationLayer.append(el);candidate.el=el;}
+    if(this.selected&&this.relationLayer&&!this.global&&this.networkView!=='relations')for(const before of [true,false]){const candidate=this.captionCandidates.filter(c=>c.before===before).sort((a,b)=>a.length-b.length)[0];if(!candidate)continue;const el=document.createElement('span');el.className=`relation-caption ${before?'before':'after'}`;el.textContent=before?'这里会用到':'可以继续到';el.hidden=true;this.relationLayer.append(el);candidate.el=el;}this.updateRelationPreview();
   }
   updateLabels(){
     const selected=this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
@@ -314,17 +318,17 @@ export class SpatialScene {
       if(this.global){
         if(o.kind==='theme'){show=selected?.kind!=='node'&&scale<2.2;priority=60;}
         else if(o.kind==='pack')show=selected?.kind!=='node'&&(scale>1.15||selected?.kind==='theme'&&o.themeId===selected.id||isSelected);
-        else show=this.nodeVisible(o)&&(scale>2.5||related||isSelected||o.key===this.hovered);
-        if(o.key===this.hovered||isSelected)show=true;
+        else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey);
+        if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
       if(isSelected&&o.kind==='theme')show=false;
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
-      el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
+      if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
     for(const c of candidates){const {object:o,el,p}=c;if(o.kind==='node'&&nodes>=(this.global||this.networkView==='relations'?587:22)&&!c.isSelected&&o.key!==this.hovered)continue;
       const title=el.querySelector('span')?.textContent||o.title;
-      const side=!this.global&&this.networkView==='relations'&&o.kind==='node',highlight=c.isSelected||o.key===this.hovered;
+      const side=!this.global&&this.networkView==='relations'&&o.kind==='node',highlight=c.isSelected||o.key===this.hovered||o.key===this.previewKey;
       const width=this.global?(o.kind==='theme'?title.length*14+38:o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
       const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;

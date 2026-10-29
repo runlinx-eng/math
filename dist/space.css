@@ -156,3 +156,25 @@ body[data-network-version="49"] .continue-card button{padding:7px 9px;white-spac
 .network-focus-key .before{color:#985b2f}.network-focus-key .after{color:#286f7c}
 body[data-network-version="49"] .label-tethers path{opacity:.28;stroke-dasharray:none}
 @media(max-width:1100px){body[data-network-version="49"] .network-guide{gap:2px 10px}body[data-network-version="49"] .network-guide>p{display:none}body[data-network-version="49"] .network-guide .network-legend{gap:3px 6px}body[data-network-version="49"] .network-legend button{font-size:11px}}
+
+/* Direct links and source-only tracing share the same fixed spatial map. */
+.trace-modes{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 8px}
+.trace-button{border:1px solid #dbe3d7;border-radius:7px;background:#f5f7ef;color:#526b59;padding:7px 8px;font-size:11px;line-height:1.4}
+.trace-button[aria-pressed="true"]{background:#dce9dc;border-color:#83a18d;color:#214b3c;font-weight:650}
+.trace-note{color:#607467!important;font-size:11px!important;line-height:1.6!important;margin:8px 0!important}
+.network-relations .network-relation>.relation-button{width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.network-relations .network-relation>.relation-button small{display:block;margin-top:4px;font-size:10px;line-height:1.5;color:#708073}
+.network-relations .relation-reason{font-size:11px;line-height:1.65;color:#4e6656;margin:6px 3px}
+.network-relations .relation-reason.pending{color:#8c8d7b}
+.preview-hint:not(:empty){display:block;margin:4px 3px;color:#668074;font-size:11px;line-height:1.5}
+.network-relation:has(.relation-button:hover),.network-relation:has(.relation-button:focus-visible){background:#f0f5ec;border-radius:7px}
+.trace-list .network-relation{padding:2px 0}
+body[data-network-version="49"] .focus-card[data-kind="node"]{padding:12px 16px}
+body[data-network-version="49"] .focus-card[data-kind="node"] h2{position:sticky;top:0;z-index:4;margin:5px 0;padding:3px 0;background:#fffef9f5}
+body[data-network-version="49"] .focus-card[data-kind="node"] .focus-actions{margin:8px 0}
+body[data-network-version="49"] .focus-card[data-kind="node"] .network-concept{padding-top:7px}
+body[data-network-version="49"] .focus-card[data-kind="node"] .activity-forms{margin:5px 0}
+body[data-network-version="49"] .focus-card[data-kind="node"] .network-focus-key{margin:5px 0!important}
+body[data-network-version="49"] .focus-card[data-kind="node"] .trace-modes{margin:7px 0}
+body[data-network-version="49"] .focus-card[data-kind="node"] .network-relations{margin-top:7px;padding-top:6px}
+body[data-network-version="49"] .focus-card[data-kind="node"] .network-relations h3{margin:7px 0 3px}

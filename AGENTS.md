@@ -39,6 +39,22 @@ outgoing edges blue, with hard/soft styles preserved. Do not overwrite saved
 cameras with the new overview framing. The compact continuation entry belongs
 at the bottom and must not cover source points in a fitted overview.
 
+The v51 interface also retains coordinate version 49. `spatial-names.js`
+provides source-goal-based names consistently across map, search and focus;
+the original source titles and IDs remain unchanged. `spatial-trace.js` follows
+hard edges only, deduplicates nodes, retains all hard edges among the reachable
+set, and reports shortest hop counts without moving world coordinates. New node
+selection defaults to direct links; back restores trace mode, camera and list
+scroll. Hover and keyboard focus are temporary previews, not selections or
+history entries. The current view and question world preserve trace mode.
+`spatial-reasons.js` contains 1,223 locally authored Chinese explanations bound
+to the exact source edges and original reasons. Changed or unmatched source
+reasons must be visibly marked unreviewed. Never infer a mathematical explanation
+from names alone or turn source ages into learning prerequisites. These local
+adaptations have not received independent mathematical review. The generator
+`scripts/build_spatial_exploration_inventory.mjs --check` verifies the complete
+source-and-explanation inventory in `docs/spatial-exploration/`.
+
 Learner progress has only complete/incomplete, an overall bar and compact task
 steps. Browsing is not completion. Both endpoints completed is not a completed
 connection: the joint work must be performed. Count unique available source
@@ -118,7 +134,7 @@ labels align by their actual last digit. Preserve first guesses after wrong
 alignment; either original addend may be used for an addition inverse check.
 Written task completion does not establish handwriting or an independent paper
 algorithm. Method selection does not establish actual mental or calculator use.
-Keep sw.js, space.js and exploration.js cache versions synchronized (current v50).
+Keep sw.js, space.js and exploration.js cache versions synchronized (current v51).
 
 The global network is the default for a new world. Before a view preference is
 chosen, existing unfinished classic sessions return to their saved view; unfinished
@@ -131,12 +147,13 @@ completed joint task lights its connection. The square marks a saved activity
 scene and the diamond a pending question, neither an additional source node.
 Short-route navigation remains optional. Current unit and browser checks are
 `tests/spatial-global.test.mjs`, `tests/spatial-global-browser.js` and
-`tests/spatial-global-camera-browser.js`, plus `tests/spatial-readability-browser.js`.
-Run the isolated current-browser suites through `scripts/verify_spatial_readability.cjs`
-with readability, global, camera and regressions arguments. It adapts historical
-cache checks without altering coordinate-version assertions. Current evidence is
-in `verification/spatial-readability-20261029/`; the global-coordinate baseline
-remains in `verification/spatial-global-20261029/`. v47/v48 evidence is historical. No child
+`tests/spatial-global-camera-browser.js`, plus `tests/spatial-exploration.test.mjs`
+and `tests/spatial-exploration-browser.js`. Run the isolated current-browser suites
+through `scripts/verify_spatial_exploration.cjs` with exploration, global, camera
+and regressions arguments. It adapts historical cache checks without altering
+coordinate-version assertions. Current evidence is in
+`verification/spatial-exploration-20261029/`; earlier v49/v50 evidence remains in
+`verification/spatial-global-20261029/` and `verification/spatial-readability-20261029/`. No child
 trial or user acceptance is implied.
 
 dist/learning/phase5/b13*.js owns conserved equal groups/sharing, actual array
@@ -165,7 +182,7 @@ drafts. Former A03 source ID now has the quarters lesson at A04; never renumber
 stored source IDs or upgrade old completion to new independent evidence.
 Imports must merge without dropping current work, help or exposure history.
 
-Run node --test tests/*.test.mjs for learning/data changes (current 1031 checks).
+Run node --test tests/*.test.mjs for learning/data changes (current 1036 checks).
 Run build_content_plan.py --check and the phase2, phase3 and phase4 coverage
 generators plus build_phase5_coverage.mjs with --check. Phase2/3/4 generators
 are frozen historical baselines; phase5 is the current cumulative inventory. Regenerate planning fingerprints when relevant

@@ -1,0 +1,42 @@
+[
+  {
+    "command": "content plan",
+    "chunk_id": "754c0f",
+    "wall_time_seconds": 0.792654917,
+    "exit_code": 0,
+    "original_token_count": 93,
+    "output": "{\"mode\": \"check\", \"mathTopics\": 587, \"internalRelations\": 1223, \"externalReferences\": 32, \"researchTopics\": 502, \"missingResearchTopics\": 85, \"existingActivities\": 3, \"previewOnly\": 1, \"nodesWithoutFullActivity\": 584, \"firstSample\": 12, \"firstRelease\": 50, \"remainingAfterFirstRelease\": 537, \"sharedAuthoringGroups\": 93, \"proposedTaskUnits\": 161, \"deliveryBatches\": 39}\n"
+  },
+  {
+    "command": "phase2",
+    "chunk_id": "07f170",
+    "wall_time_seconds": 0.354070041,
+    "exit_code": 0,
+    "original_token_count": 32,
+    "output": "{\"availableNodes\":12,\"newNodes\":9,\"tasks\":30,\"sourceGoals\":36,\"localResearchSupplements\":2,\"remainingUnimplementedNodes\":575}\n"
+  },
+  {
+    "command": "phase3",
+    "chunk_id": "72d1d8",
+    "wall_time_seconds": 0.214848542,
+    "exit_code": 0,
+    "original_token_count": 17,
+    "output": "{\"mode\":\"check\",\"nodes\":12,\"connections\":9,\"connectionTasks\":18}\n"
+  },
+  {
+    "command": "phase4",
+    "chunk_id": "b7a4fc",
+    "wall_time_seconds": 0.377599291,
+    "exit_code": 0,
+    "original_token_count": 60,
+    "output": "{\n  availableNodes: 50,\n  newNodes: 38,\n  nodeTasks: 136,\n  sourceGoals: 153,\n  routes: 15,\n  availableConnections: 21,\n  connectionTasks: 42,\n  localResearchSupplements: 9,\n  remainingUnimplementedNodes: 537,\n  remainingResearchGaps: 76\n}\n"
+  },
+  {
+    "command": "phase5",
+    "chunk_id": "e037d4",
+    "wall_time_seconds": 0.542362459,
+    "exit_code": 0,
+    "original_token_count": 84,
+    "output": "{\n  availableNodes: 587,\n  newNodes: 8,\n  nodeTasks: 1996,\n  newNodeTasks: 35,\n  sourceGoals: 1772,\n  newSourceGoals: 24,\n  routes: 231,\n  availableConnections: 776,\n  connectionTasks: 1552,\n  newConnections: 13,\n  newConnectionTasks: 26,\n  localResearchSupplements: 85,\n  remainingUnimplementedNodes: 0,\n  remainingResearchGaps: 0\n}\n"
+  }
+]
