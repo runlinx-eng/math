@@ -1,0 +1,31 @@
+{
+  "viewport": [
+    1280,
+    720
+  ],
+  "view": "oblique",
+  "beforeBounds": {
+    "x": 613.0533938418212,
+    "y": 245.36724982968846,
+    "w": 313.6402433422476,
+    "h": 320.30106578288064
+  },
+  "afterBounds": {
+    "x": 396.315660421264,
+    "y": 185.93749999999994,
+    "w": 409.36867915747195,
+    "h": 418.06249999999994
+  },
+  "projectedAreaRatio": 1.7035922632325606,
+  "labelAreaRatio": 0.18939393966422766,
+  "beforeVisibleLabels": 12,
+  "afterVisibleLabels": 5,
+  "allPositionsUnchanged": true,
+  "objectCount": 615,
+  "sourceNodeCount": 587,
+  "sourceEdgeCount": 1223,
+  "coordinateVersion": 49,
+  "cacheVersion": 50,
+  "childTrial": false,
+  "userAccepted": false
+}

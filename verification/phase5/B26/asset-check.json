@@ -1,0 +1,248 @@
+[
+  {
+    "path": "storage.js",
+    "sha256": "8a7d85b66c19898560c33e372d832b7416adc153d523acd8eaec516282361bf7",
+    "bytes": 3214,
+    "match": true
+  },
+  {
+    "path": "exploration-core.js",
+    "sha256": "ece376a7983fb6f0e7695bd0ada67cd48a4317517723a6eff7d85701fc18e2cd",
+    "bytes": 12056,
+    "match": true
+  },
+  {
+    "path": "journey.js",
+    "sha256": "92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2",
+    "bytes": 13065,
+    "match": true
+  },
+  {
+    "path": "app.js",
+    "sha256": "ab168f8eb3fd771ab5f2663fb52c6e39486a92dfc2815261e5d38e987282e562",
+    "bytes": 35482,
+    "match": true
+  },
+  {
+    "path": "sw.js",
+    "sha256": "f937d2da09d242677c1f1fcdbc83087f249620afd9fdc3ff43e54c8d1e405649",
+    "bytes": 5958,
+    "match": true
+  },
+  {
+    "path": "space.js",
+    "sha256": "5bb1f8d4a9b360da1d49d1f84bb73ab5773ac4f0142f909de916fcac8b2bf986",
+    "bytes": 42464,
+    "match": true
+  },
+  {
+    "path": "exploration.js",
+    "sha256": "1d67c6d58d57d48bf662922916b17dcb360cf93617611ebe7adc0c68e28cddc1",
+    "bytes": 51226,
+    "match": true
+  },
+  {
+    "path": "learning/learn.js",
+    "sha256": "844807da6fd70aed8d450b744fe78858ab70107759efd47c3790b8ea8d00511a",
+    "bytes": 39651,
+    "match": true
+  },
+  {
+    "path": "learning/learn.css",
+    "sha256": "ea75d0df77b10a7e13a48c1764749faeac3c4d1ad551537c3d830fddbfc7f057",
+    "bytes": 16173,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/catalog.js",
+    "sha256": "58e4c1daa63c3d0b9073c0ace44ac4cb10210c617534d633fa320a547da817e4",
+    "bytes": 1633,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/engine.js",
+    "sha256": "4e62e7c782570bfcb9bd115ddcc1194f6462b1385d96420c666f69d187ea7142",
+    "bytes": 5467,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b26.js",
+    "sha256": "9f1747ca678b0dbd79c70b9445bc10d9902bc7ef64f560c5a8ebeef1cb8d041e",
+    "bytes": 4757,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b26-model.js",
+    "sha256": "d9a7c629fa859856067edc624f651c57f2c99059ede6679f0a456fb3bb85516b",
+    "bytes": 10305,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b26-view.js",
+    "sha256": "af878de457f27fc31dac2de4882187081a2d5506ea6e3da733afce54687b78a5",
+    "bytes": 14475,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b26-geometry.js",
+    "sha256": "c43d912ccbcddd71ca768fd441c87e06d66d8d74be112c7ee84f7f61816bb443",
+    "bytes": 1778,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b26.css",
+    "sha256": "52e7155fd21c92789937a3cdd8b7a198715bdadd30dcd625cf8ad6cb8a821b14",
+    "bytes": 1081,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b25.js",
+    "sha256": "18202ec448ec13b51940b178674d48e988a1d8b6bb80ee3fb7a46e1a714c5e5e",
+    "bytes": 27393,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b25-model.js",
+    "sha256": "52f1cdfba7c8225b58eebe71569a2a56f4053061c45fd08f47678b98625689bf",
+    "bytes": 12474,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b25-view.js",
+    "sha256": "dfa2772a8d559653b4b9cb95f3a36723c26aaa999e35f5a92821794b796a29b2",
+    "bytes": 17475,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b25-geometry.js",
+    "sha256": "cd838daaf150dc11a6ff65d1a441f45b221f19a83d683ae63f5b3d7ade8b1dbf",
+    "bytes": 2873,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b25.css",
+    "sha256": "05362b4a9bb9939130bca92352898956d3eb89f147bd75871e6c58ed828c9ae8",
+    "bytes": 889,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b24.js",
+    "sha256": "2ad3793fb4a6e975e2a88ef7d31189e48f44bd71d17f61ace0be07f75bc46049",
+    "bytes": 22321,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b24-model.js",
+    "sha256": "2d7ac1bba93bc201990e4c94452592cdb78d0c4e490f4f6e647744c0d9e93b04",
+    "bytes": 15113,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b24-view.js",
+    "sha256": "568bcb533763f827eb081dd9151e6afae0709fa55a06b1bcb31aed63282d3200",
+    "bytes": 19958,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b24-geometry.js",
+    "sha256": "d7a685591ee5c0729eea9f3269aa5d7183feb6ccd19fe539c0f4bd36c633b09d",
+    "bytes": 3568,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b24.css",
+    "sha256": "0ddc4652c93fd2eb933379e26a5024fbf54bf8f8e1f89203a421bd1e0636dd82",
+    "bytes": 1385,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23.js",
+    "sha256": "deed404ee6766d2ddb75bfe62db4e31426c938b839abeee7fac0dddd51c9a845",
+    "bytes": 25899,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23-model.js",
+    "sha256": "542c5f323b2832191f74100181f68faa4b18aa119c1cd3a7ff4fad85f8fd2265",
+    "bytes": 19516,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23-view.js",
+    "sha256": "aeb8697a51bbd6354e5512d61ff34af9ad5eed3ed8a00176522b0bd199306f5f",
+    "bytes": 22696,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23-geometry.js",
+    "sha256": "78a02f2cbeffa3e6ad43f6ef0ecd8988e1703d10d2adb131d4a6df22149bd90f",
+    "bytes": 4859,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23-solid-view.js",
+    "sha256": "185142b4a05c85f4d6e32cc61f3e7052b3d6ec96ebe2b83a87042285501a2af3",
+    "bytes": 1448,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b23.css",
+    "sha256": "895a94368c7daf52eb8808e19d22c6d390286370aaf3a0e22803c2247224c4db",
+    "bytes": 2020,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b22.js",
+    "sha256": "03d107b13f5a53c88d19753f6d08d5e3b6df0df77eb920bcd00c18583afbaf98",
+    "bytes": 24386,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b22-model.js",
+    "sha256": "c12a33c014576da5728169e160cdf22a146c3c67b5763c8830e4c984bd2ae617",
+    "bytes": 14240,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b22-view.js",
+    "sha256": "28e295fda0d5df6752330024eebe96b423184509eb4ddf345a778394cef59bc9",
+    "bytes": 16576,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b22.css",
+    "sha256": "82ef9aa7d05ae73efc6c61eaed27f7ba43dbd50b40b80b80edb0cd0955f313a9",
+    "bytes": 3017,
+    "match": true
+  },
+  {
+    "path": "learning/catalog.js",
+    "sha256": "6ae4a8f3c7836588c432c3ecaa6c641923316cb4bd0addde5a456192ed2aabfa",
+    "bytes": 7008,
+    "match": true
+  },
+  {
+    "path": "learning/state.js",
+    "sha256": "988b5b208fc3abf419198f1b15c66a1f4380c4631730c5a165c386523219122b",
+    "bytes": 5026,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/b04.js",
+    "sha256": "7deb5f3f2fb2e355257bb4512f82af68c09e2941c0e492af75c11f1b251dcba8",
+    "bytes": 9820,
+    "match": true
+  },
+  {
+    "path": "data/atlas.json",
+    "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "bytes": 1051830,
+    "match": true
+  },
+  {
+    "path": "exploration-content.js",
+    "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+    "bytes": 7895,
+    "match": true
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "untried angle unmarked",
+    "tested angle marked",
+    "mark survives reload",
+    "no runtime errors"
+  ],
+  "errors": []
+}

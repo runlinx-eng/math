@@ -1,0 +1,90 @@
+{
+  "batch": "B38",
+  "date": "2026-10-28",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 579,
+    "newNodes": 20,
+    "nodeTasks": 1961,
+    "newNodeTasks": 69,
+    "sourceGoals": 1748,
+    "newSourceGoals": 60,
+    "routes": 228,
+    "availableConnections": 763,
+    "connectionTasks": 1526,
+    "newConnections": 13,
+    "newConnectionTasks": 26,
+    "localResearchSupplements": 84,
+    "remainingUnimplementedNodes": 8,
+    "remainingResearchGaps": 1
+  },
+  "unitChecks": 992,
+  "browserChecks": 647,
+  "suites": [
+    {
+      "name": "browser-full",
+      "checks": 516
+    },
+    {
+      "name": "integration-final",
+      "checks": 22
+    },
+    {
+      "name": "navigation-final",
+      "checks": 18
+    },
+    {
+      "name": "capacity-full",
+      "checks": 15
+    },
+    {
+      "name": "regression/spatial-current",
+      "checks": 37
+    },
+    {
+      "name": "regression/daily",
+      "checks": 8
+    },
+    {
+      "name": "regression/readiness",
+      "checks": 4
+    },
+    {
+      "name": "regression/b37-visual",
+      "checks": 27
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-28T11:59:00.333Z",
+    "health": 200,
+    "progress": "0 / 579",
+    "cache": "math-explorer-20261027-learning-v43",
+    "cachedFiles": 221,
+    "assetsMatched": 96,
+    "distBytes": 7575641,
+    "distMiB": 7.225
+  },
+  "capacity": {
+    "nodes": 579,
+    "connections": 763,
+    "characters": 11873409,
+    "bytes": 11891375,
+    "storedChars": 2381463,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 894,
+    "format": "math-storage/lzw16-v1",
+    "downloadBytes": 39644822,
+    "syntheticCompletedRecords": true
+  },
+  "sourceInputsUnchanged": 12,
+  "limits": [
+    "Open explanations are saved but not automatically assessed.",
+    "Reasoning cards and guided steps do not establish independent general arguments.",
+    "Real peer talk, real-world tools, free drawing, and child learning remain unverified.",
+    "Capacity covers one synthetic full record, not unlimited future history."
+  ]
+}

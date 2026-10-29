@@ -1,0 +1,28 @@
+async original=>{
+ const ctx=await original.context().browser().newContext({viewport:{width:1440,height:1050},reducedMotion:'reduce',timezoneId:'Asia/Shanghai'}),page=await ctx.newPage(),checks=[],errors=[],remote=[];
+ const base='http://127.0.0.1:43827/',root='/Users/zj1-6/dev/math/verification/phase5/B23/';page.setDefaultTimeout(8000);page.on('pageerror',e=>errors.push(String(e)));page.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base))remote.push(r.url());});
+ const snap=()=>page.evaluate(()=>mathLesson.snapshot()),state=()=>page.evaluate(async()=>JSON.parse((await import('./storage.js')).readStored('math-explorer-v2'))),check=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
+ const reveal=async e=>{for(let n=0;n<4;n++){const d=e.locator('xpath=ancestor::details[not(@open)]').first();if(!(await d.count()))break;await d.locator(':scope > summary').click();}};
+ const click=async(a,data={})=>{const e=page.locator(`[data-x="${a}"]`+Object.entries(data).map(([k,v])=>`[data-${k}="${v}"]`).join(''));await reveal(e);await e.click();};
+ const field=async(k,v)=>{const e=page.locator(`[data-xfield="${k}"]`);await reveal(e);if(await e.evaluate(e=>e.tagName)==='SELECT')await e.selectOption(String(v));else if(await e.getAttribute('type')==='range'){const min=Number(await e.getAttribute('min')),step=Number(await e.getAttribute('step')||1);await e.focus();await e.press('Home');for(let n=0;n<Math.round((Number(v)-min)/step);n++)await e.press('ArrowRight');}else await e.fill(String(v));};
+ let current='';const model=async()=>{const s=await snap(),a=await state();return(a.lessons[s.id]||a.daily.bridges[s.id]).models[s.index];};
+ try{
+  await page.goto(base+'learn.html#shapehello');await page.waitForFunction(()=>window.mathLesson);
+  const fixture=await page.evaluate(async()=>{const c=await import('./learning/catalog.js'),b=await import('./learning/bridges.js'),v=await import('./learning/phase5/b23-model.js'),v15=await import('./learning/phase5/b15-model.js'),e=await import('./learning/phase4/engine.js');return Object.fromEntries([...Object.keys(c.LESSONS).filter(id=>c.LESSONS[id].batch==='B23'),...Object.keys(b.BRIDGES).filter(id=>b.BRIDGES[id].batch==='B23')].map(id=>[id,b.sessionTasks(id).map(t=>({t,m:e.exampleExtra(t),steps:v.TYPES.has(t.type)?v.solveSteps(t):v15.TYPES.has(t.type)?v15.solveSteps(t):null}))]));});
+  for(const[id,tasks]of Object.entries(fixture)){
+   await page.goto(base+'learn.html#'+id);await page.waitForFunction(id=>window.mathLesson?.snapshot().id===id,id);check(!(await snap()).summary.completed,id+' begins incomplete');if(await page.locator('[data-do="start"]').count())await page.locator('[data-do="start"]').click();
+   for(let i=0;i<tasks.length;i++){
+    current=id+':'+i;const{t,m,steps}=tasks[i];check((await snap()).index===i,current+' opens');if(i===0){await page.locator('[data-do="check"]').click();check(!(await snap()).summary.cases[i].complete,current+' untouched cannot complete');}
+    if(steps)for(const s of steps){if(s.field)await field(s.field,s.value);else await click(s.action,s.data);}
+    else if(t.type==='x-solid'){await click('turn-extra');for(const k of ['faces','edges','vertices']){await click('solid-mode',{value:k});const d=page.locator('.x-access');if(await d.getAttribute('open')===null)await d.locator('summary').click();for(const n of m.marks[k])await click('solid-mark',{index:n});await field('counts.'+k,m.counts[k]);}}
+    else if(t.type==='x-net'){if(t.draw)for(const[x,y]of m.cells)await click('net-cell',{col:x,row:y});await click('guess',{value:m.guess});await field('pair.0',m.pair[0]);await field('pair.1',m.pair[1]);await click('fold');for(const k of ['faces','edges','vertices'])await field('counts.'+k,m.counts[k]);if(await page.locator('[data-xfield="reason"]').count())await field('reason',m.reason);}
+    else throw Error('No UI solver '+t.type);
+    await page.locator('[data-do="check"]').click();check((await snap()).summary.cases[i].complete,current+' actual controls complete');check(await page.locator('#storage-warning').isHidden(),current+' valid saved model');check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),current+' no horizontal overflow');
+    if(['shapeframe:2','shapepieces:0','shapeaxes:1','quadsort:3','geometrynotation:1','compasswork:1','shapeapprox:2'].includes(current))await page.screenshot({path:root+current.replace(':','-')+'.png',fullPage:true});
+    await page.locator('[data-do="next"]').click();
+   }
+   check((await snap()).summary.completed,id+' complete');await page.reload();await page.waitForFunction(id=>window.mathLesson?.snapshot().id===id,id);check((await snap()).summary.completed,id+' survives reload');
+  }
+  const s=await state();check(Object.keys(s.lessons).length===19,'19 distinct node records');check(Object.keys(s.daily.bridges).length===24,'24 distinct joint-work records');check(!errors.length,'no runtime errors');check(!remote.length,'no remote requests');return{checks,errors,remote,nodes:19,nodeTasks:68,connections:24,connectionTasks:48,storageBytes:JSON.stringify(s).length};
+ }catch(e){await page.screenshot({path:root+'browser-failure.png',fullPage:true}).catch(()=>{});return{checks,errors,remote,current,failed:String(e),body:(await page.locator('body').innerText()).slice(-2400),model:await model().catch(()=>null),snapshot:await snap().catch(()=>null)};}finally{await ctx.close();}
+}

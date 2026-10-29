@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "538 unique available nodes",
+    "unknowns opens with three directions",
+    "writing routes reachable",
+    "structure routes reachable",
+    "previous equality route stays reachable",
+    "at most three routes on first page",
+    "second page offers the paired-number route",
+    "GX has two nodes",
+    "selected route survives reload",
+    "partial balanced step and first wrong attempt retained",
+    "simulated next day shows exact question",
+    "original partial equation restored",
+    "later operation retained separately",
+    "first one-sided attempt remains in restored record",
+    "world camera restored",
+    "actual backup contains original partial work",
+    "repeat import preserves question and partial equation",
+    "import opens original question",
+    "all four B35 files cached",
+    "original work opens offline",
+    "equation can be completed offline",
+    "first mistake is not independent evidence",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v41",
+    "count": 213,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

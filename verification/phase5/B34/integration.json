@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "516 unique available nodes",
+    "patterns opens with three directions",
+    "number routes reachable",
+    "rules routes reachable",
+    "shapes direction has two choices",
+    "GQ has two nodes",
+    "selected route survives reload",
+    "unfinished 3D activity and first submission retained",
+    "simulated next day shows exact question",
+    "original partial blocks restored",
+    "later setting retained separately",
+    "rotation remains in restored record",
+    "world camera restored",
+    "3D activity camera restored",
+    "actual backup contains original partial setting",
+    "repeat import preserves question and partial work",
+    "import opens original question",
+    "all five B34 files cached",
+    "original work opens offline",
+    "3D pattern can be completed offline",
+    "early failed submission is not independent evidence",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v39",
+    "count": 205,
+    "modules": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

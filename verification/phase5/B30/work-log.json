@@ -1,0 +1,11 @@
+{
+  "batch": "B30",
+  "startedAt": "2026-10-28T02:36:28.080493+00:00",
+  "snapshot": "snapshots/v34-before-b30-20261028T103626.tar.gz",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "activeHours": null,
+  "finishedAt": "2026-10-28T02:57:02.790643+00:00",
+  "nextBatch": "B31"
+}

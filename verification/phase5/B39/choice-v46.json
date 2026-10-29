@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "mental shows only the chosen method controls",
+    "mental is accepted as a valid choice",
+    "selecting mental does not pretend calculator help was used",
+    "mental survives reload",
+    "written shows only the chosen method controls",
+    "written is accepted as a valid choice",
+    "selecting written does not pretend calculator help was used",
+    "written survives reload",
+    "calculator shows only the chosen method controls",
+    "calculator choice without running an expression does not complete",
+    "calculator is accepted as a valid choice",
+    "calculator support and first mistaken input are retained",
+    "calculator survives reload",
+    "one intersection is not enough when the graph has two",
+    "both approximate intersections are accepted",
+    "the two marks and first position are saved",
+    "source information shows current nodes, routes and connections",
+    "source information states the bounded coverage",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "childTrial": false
+}

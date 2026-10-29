@@ -1,0 +1,42 @@
+{
+  "checks": [
+    "486 unique available nodes",
+    "volume opens with two directions",
+    "historical cube route remains reachable",
+    "old E and both new routes stay in the three-choice group",
+    "GB has three nodes",
+    "GC has two nodes",
+    "selected route survives refresh",
+    "wrong first layer plan and support are retained",
+    "four actual cubes remain in the unfinished work",
+    "simulated next day shows original words",
+    "partial cubes and first wrong plan restored",
+    "later draft is retained separately",
+    "original question appears in lesson",
+    "world camera restored",
+    "lesson camera restored",
+    "actual backup contains the original four cubes",
+    "repeat import preserves question and initial error",
+    "import opens original question",
+    "all five B31 files cached",
+    "original work opens offline",
+    "unfinished cubes can be completed offline",
+    "correcting the first error remains supported",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v37",
+    "count": 196,
+    "modules": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

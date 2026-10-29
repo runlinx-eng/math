@@ -1,0 +1,29 @@
+✔ B09 exactly covers its nine planned sources and six real source edges (1.196792ms)
+✔ 44 node tasks and all joint tasks dispatch; untouched work cannot be completed (4.019834ms)
+✔ exact fractions normalize signs and reject unsafe or ambiguous input (0.081542ms)
+✔ counting through zero preserves an initial error when corrected (0.236916ms)
+✔ number line uses positions and interval lengths, not tick counting or copied answers (0.062917ms)
+✔ opposite operation and negative operand stay distinct, with original guess retained (0.094917ms)
+✔ changing start clears the drawn path but keeps correction history and remains valid (0.048833ms)
+✔ signed value and distance comparisons differ; decimal distances and zero require tracing (0.064167ms)
+✔ inequality ray includes a continuous range and requires real boundary tests (0.113541ms)
+✔ two-sided interval has separate endpoint membership (0.108167ms)
+✔ inequality operations change both sides exactly and positive divisors only (0.127625ms)
+✔ both calculation tools work, but selecting a tool without doing the work is insufficient (0.049333ms)
+✔ measurement conserves joined lengths, uses units and limits segments rather than forbidding short rulers (0.072833ms)
+✔ cube roots require all equal-sided layers and three factors, with first prediction retained (0.117167ms)
+✔ higher powers are repeated products and exponentiation precedes addition (0.047542ms)
+✔ root brackets use exact squaring without overflow at six decimal places (0.092541ms)
+✔ root brackets must shrink and justify the requested rounding, with failed guesses retained (0.063583ms)
+✔ decimal classification follows actual division remainders, including delayed repetition (0.062833ms)
+✔ rational vs irrational cannot be inferred from long decimals or a radical sign (0.054709ms)
+✔ density zoom uses exact internal fractions and distinguishes a display limit from a mathematical claim (0.114875ms)
+✔ malformed imported model data is rejected without crashing shared validation (0.318583ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.489375

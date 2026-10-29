@@ -1,0 +1,1412 @@
+{
+  "checks": [
+    "nextone begins incomplete",
+    "nextone:0 opens",
+    "nextone:0 empty work cannot complete",
+    "nextone:0 manipulation completes",
+    "nextone:0 records persist",
+    "nextone:1 opens",
+    "nextone:1 manipulation completes",
+    "nextone:1 records persist",
+    "nextone:2 opens",
+    "nextone:2 manipulation completes",
+    "nextone:2 records persist",
+    "nextone complete",
+    "nextone completion survives refresh",
+    "link-countonce-lastcount begins incomplete",
+    "link-countonce-lastcount:0 opens",
+    "link-countonce-lastcount:0 empty work cannot complete",
+    "link-countonce-lastcount:0 manipulation completes",
+    "link-countonce-lastcount:0 records persist",
+    "link-countonce-lastcount:1 opens",
+    "link-countonce-lastcount:1 manipulation completes",
+    "link-countonce-lastcount:1 records persist",
+    "link-countonce-lastcount complete",
+    "link-countonce-lastcount completion survives refresh",
+    "link-lastcount-nextone begins incomplete",
+    "link-lastcount-nextone:0 opens",
+    "link-lastcount-nextone:0 empty work cannot complete",
+    "link-lastcount-nextone:0 manipulation completes",
+    "link-lastcount-nextone:0 records persist",
+    "link-lastcount-nextone:1 opens",
+    "link-lastcount-nextone:1 manipulation completes",
+    "link-lastcount-nextone:1 records persist",
+    "link-lastcount-nextone complete",
+    "link-lastcount-nextone completion survives refresh",
+    "link-lastcount-manyfaces begins incomplete",
+    "link-lastcount-manyfaces:0 opens",
+    "link-lastcount-manyfaces:0 empty work cannot complete",
+    "link-lastcount-manyfaces:0 manipulation completes",
+    "link-lastcount-manyfaces:0 records persist",
+    "link-lastcount-manyfaces:1 opens",
+    "link-lastcount-manyfaces:1 manipulation completes",
+    "link-lastcount-manyfaces:1 records persist",
+    "link-lastcount-manyfaces complete",
+    "link-lastcount-manyfaces completion survives refresh",
+    "link-quickfive-partswithin begins incomplete",
+    "link-quickfive-partswithin:0 opens",
+    "link-quickfive-partswithin:0 empty work cannot complete",
+    "link-quickfive-partswithin:0 flash reveals representation",
+    "link-quickfive-partswithin:0 manipulation completes",
+    "link-quickfive-partswithin:0 records persist",
+    "link-quickfive-partswithin:1 opens",
+    "link-quickfive-partswithin:1 flash reveals representation",
+    "link-quickfive-partswithin:1 manipulation completes",
+    "link-quickfive-partswithin:1 records persist",
+    "link-quickfive-partswithin complete",
+    "link-quickfive-partswithin completion survives refresh",
+    "link-countline-skipbasic begins incomplete",
+    "link-countline-skipbasic:0 opens",
+    "link-countline-skipbasic:0 empty work cannot complete",
+    "link-countline-skipbasic:0 manipulation completes",
+    "link-countline-skipbasic:0 records persist",
+    "link-countline-skipbasic:1 opens",
+    "link-countline-skipbasic:1 manipulation completes",
+    "link-countline-skipbasic:1 records persist",
+    "link-countline-skipbasic complete",
+    "link-countline-skipbasic completion survives refresh",
+    "link-skipbasic-anytens begins incomplete",
+    "link-skipbasic-anytens:0 opens",
+    "link-skipbasic-anytens:0 empty work cannot complete",
+    "link-skipbasic-anytens:0 manipulation completes",
+    "link-skipbasic-anytens:0 records persist",
+    "link-skipbasic-anytens:1 opens",
+    "link-skipbasic-anytens:1 manipulation completes",
+    "link-skipbasic-anytens:1 records persist",
+    "link-skipbasic-anytens complete",
+    "link-skipbasic-anytens completion survives refresh",
+    "link-skipbasic-skipfour begins incomplete",
+    "link-skipbasic-skipfour:0 opens",
+    "link-skipbasic-skipfour:0 empty work cannot complete",
+    "link-skipbasic-skipfour:0 manipulation completes",
+    "link-skipbasic-skipfour:0 records persist",
+    "link-skipbasic-skipfour:1 opens",
+    "link-skipbasic-skipfour:1 manipulation completes",
+    "link-skipbasic-skipfour:1 records persist",
+    "link-skipbasic-skipfour complete",
+    "link-skipbasic-skipfour completion survives refresh",
+    "link-write20-teenbuild begins incomplete",
+    "link-write20-teenbuild:0 opens",
+    "link-write20-teenbuild:0 empty work cannot complete",
+    "link-write20-teenbuild:0 manipulation completes",
+    "link-write20-teenbuild:0 records persist",
+    "link-write20-teenbuild:1 opens",
+    "link-write20-teenbuild:1 manipulation completes",
+    "link-write20-teenbuild:1 records persist",
+    "link-write20-teenbuild complete",
+    "link-write20-teenbuild completion survives refresh",
+    "link-digitcompare-order20 begins incomplete",
+    "link-digitcompare-order20:0 opens",
+    "link-digitcompare-order20:0 empty work cannot complete",
+    "link-digitcompare-order20:0 manipulation completes",
+    "link-digitcompare-order20:0 records persist",
+    "link-digitcompare-order20:1 opens",
+    "link-digitcompare-order20:1 manipulation completes",
+    "link-digitcompare-order20:1 records persist",
+    "link-digitcompare-order20 complete",
+    "link-digitcompare-order20 completion survives refresh",
+    "link-write20-numberwords begins incomplete",
+    "link-write20-numberwords:0 opens",
+    "link-write20-numberwords:0 empty work cannot complete",
+    "link-write20-numberwords:0 manipulation completes",
+    "link-write20-numberwords:0 records persist",
+    "link-write20-numberwords:1 opens",
+    "link-write20-numberwords:1 manipulation completes",
+    "link-write20-numberwords:1 records persist",
+    "link-write20-numberwords complete",
+    "link-write20-numberwords completion survives refresh"
+  ],
+  "errors": [],
+  "remote": [],
+  "current": "link-write20-numberwords:1",
+  "failed": "Error: expected new node records",
+  "url": "http://127.0.0.1:43827/learn.html#link-write20-numberwords",
+  "body": "← 回到空间\n数字、名字和一整十\n留到下次\n完成\nV–01\n把听到的数，摆出来写下来\nV–02\n十个扎成一束，还剩几个\nV–03\n数字的名字，也能当标签\n数字换成文字，数量仍相同\n连起来\n✓\n✓\n收一收\n\n把刚才做出的关系，收成一个发现。\n\n✓\n把两个想法连起来\n\n数字与中文数词表示相同的数量；不涉及英语拼写评估。\n\n你在这两件事之间发现了什么？（可选）\n记下发现\n原来的名称和目标\n再连一次\n回到这条路线 →\n这次留下的记录",
+  "state": {
+    "schema": 2,
+    "daily": {
+      "bridges": {
+        "link-countonce-lastcount": {
+          "id": "link-countonce-lastcount",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "taps": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "total": 6,
+              "badStep": 4,
+              "why": "twice",
+              "prediction": null,
+              "before": null,
+              "moved": false,
+              "again": [],
+              "after": null
+            },
+            "1": {
+              "taps": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "total": 5,
+              "badStep": null,
+              "why": "start",
+              "prediction": null,
+              "before": null,
+              "moved": false,
+              "again": [],
+              "after": null
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "145ccae2-b9c8-4553-ad47-7620dd228784",
+                  "at": "2026-10-25T04:16:44.800Z",
+                  "value": {
+                    "taps": [],
+                    "total": null,
+                    "badStep": null,
+                    "why": "",
+                    "prediction": null,
+                    "before": null,
+                    "moved": false,
+                    "again": [],
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "7b19999b-3b73-40e5-9f2a-83ccb108c25d",
+                  "at": "2026-10-25T04:16:45.051Z",
+                  "value": {
+                    "taps": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "total": 6,
+                    "badStep": 4,
+                    "why": "twice",
+                    "prediction": null,
+                    "before": null,
+                    "moved": false,
+                    "again": [],
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "6ef298e6-4ddb-4688-bb66-1132e484ebf5",
+                  "at": "2026-10-25T04:16:45.301Z",
+                  "value": {
+                    "taps": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "total": 5,
+                    "badStep": null,
+                    "why": "start",
+                    "prediction": null,
+                    "before": null,
+                    "moved": false,
+                    "again": [],
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:45.375Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-lastcount-nextone": {
+          "id": "link-lastcount-nextone",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "taps": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "total": 7,
+              "badStep": null,
+              "why": "same",
+              "prediction": 7,
+              "before": 7,
+              "moved": true,
+              "again": [],
+              "after": 7
+            },
+            "1": {
+              "guess": 6,
+              "committed": 6,
+              "changed": true,
+              "total": 6,
+              "why": "next"
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "70122c9a-145d-4b9b-aa2a-89ca89a28e58",
+                  "at": "2026-10-25T04:16:45.418Z",
+                  "value": {
+                    "taps": [],
+                    "total": null,
+                    "badStep": null,
+                    "why": "",
+                    "prediction": null,
+                    "before": null,
+                    "moved": false,
+                    "again": [],
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "ea4877ad-6e99-4cb6-be6d-2d63c59ee5f5",
+                  "at": "2026-10-25T04:16:45.751Z",
+                  "value": {
+                    "taps": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6
+                    ],
+                    "total": 7,
+                    "badStep": null,
+                    "why": "same",
+                    "prediction": 7,
+                    "before": 7,
+                    "moved": true,
+                    "again": [],
+                    "after": 7
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "abb59c01-e85f-4aea-b9c4-6b2e5b966f3c",
+                  "at": "2026-10-25T04:16:45.867Z",
+                  "value": {
+                    "guess": 6,
+                    "committed": 6,
+                    "changed": true,
+                    "total": 6,
+                    "why": "next"
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:45.937Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-lastcount-manyfaces": {
+          "id": "link-lastcount-manyfaces",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "taps": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "total": 6,
+              "badStep": null,
+              "why": "same",
+              "prediction": 6,
+              "before": 6,
+              "moved": true,
+              "again": [
+                5,
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "after": 6
+            },
+            "1": {
+              "selected": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "dots": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "mark": 6,
+              "numeral": 6,
+              "before": null,
+              "after": null
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "51e35280-6b6f-432c-9de2-fc85673fab9c",
+                  "at": "2026-10-25T04:16:45.984Z",
+                  "value": {
+                    "taps": [],
+                    "total": null,
+                    "badStep": null,
+                    "why": "",
+                    "prediction": null,
+                    "before": null,
+                    "moved": false,
+                    "again": [],
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "65d42cf3-2984-4ab5-831a-173bfafb53a4",
+                  "at": "2026-10-25T04:16:46.484Z",
+                  "value": {
+                    "taps": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "total": 6,
+                    "badStep": null,
+                    "why": "same",
+                    "prediction": 6,
+                    "before": 6,
+                    "moved": true,
+                    "again": [
+                      5,
+                      4,
+                      3,
+                      2,
+                      1,
+                      0
+                    ],
+                    "after": 6
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "8f881cb4-483d-481d-9473-e09ace007e18",
+                  "at": "2026-10-25T04:16:46.985Z",
+                  "value": {
+                    "selected": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "dots": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "mark": 6,
+                    "numeral": 6,
+                    "before": null,
+                    "after": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:47.055Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-quickfive-partswithin": {
+          "id": "link-quickfive-partswithin",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "open": false,
+              "until": 1792901808134,
+              "reveals": 1,
+              "answer": 4,
+              "a": null,
+              "b": null
+            },
+            "1": {
+              "open": false,
+              "until": 1792901809268,
+              "reveals": 1,
+              "answer": 6,
+              "a": 4,
+              "b": 2
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "d6b82202-e085-409c-9b70-b106b4698685",
+                  "at": "2026-10-25T04:16:47.102Z",
+                  "value": {
+                    "open": false,
+                    "until": 0,
+                    "reveals": 0,
+                    "answer": null,
+                    "a": null,
+                    "b": null
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "679e4667-80c6-4a66-bcbd-1198213a0382",
+                  "at": "2026-10-25T04:16:48.202Z",
+                  "value": {
+                    "open": false,
+                    "until": 1792901808134,
+                    "reveals": 1,
+                    "answer": 4,
+                    "a": null,
+                    "b": null
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "1f33e0f0-9e6c-4ce9-ac7a-3b31f1f31869",
+                  "at": "2026-10-25T04:16:49.351Z",
+                  "value": {
+                    "open": false,
+                    "until": 1792901809268,
+                    "reveals": 1,
+                    "answer": 6,
+                    "a": 4,
+                    "b": 2
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:49.431Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-countline-skipbasic": {
+          "id": "link-countline-skipbasic",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "hops": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "next": null,
+              "step": null,
+              "why": ""
+            },
+            "1": {
+              "hops": [
+                2,
+                4,
+                6,
+                8,
+                10
+              ],
+              "next": null,
+              "step": null,
+              "why": ""
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "4f1159f6-4613-4ee0-a77a-32e30b8eb9a4",
+                  "at": "2026-10-25T04:16:49.485Z",
+                  "value": {
+                    "hops": [],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "1847abf0-71d9-4fd3-9854-a98eedd5f5af",
+                  "at": "2026-10-25T04:16:49.851Z",
+                  "value": {
+                    "hops": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "f612b43d-e354-4e0c-b3dd-c24a5c8f4caa",
+                  "at": "2026-10-25T04:16:50.085Z",
+                  "value": {
+                    "hops": [
+                      2,
+                      4,
+                      6,
+                      8,
+                      10
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:50.167Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-skipbasic-anytens": {
+          "id": "link-skipbasic-anytens",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "hops": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+              ],
+              "next": null,
+              "step": null,
+              "why": ""
+            },
+            "1": {
+              "hops": [
+                17,
+                27,
+                37,
+                47,
+                57,
+                67,
+                77,
+                87,
+                97,
+                107
+              ],
+              "next": null,
+              "step": null,
+              "why": "ones"
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "1fe7b000-c7ed-45cd-913e-ed8e2ff2a124",
+                  "at": "2026-10-25T04:16:50.219Z",
+                  "value": {
+                    "hops": [],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "676ce9f3-3fd5-4f0a-9931-2aa0fd59799f",
+                  "at": "2026-10-25T04:16:50.585Z",
+                  "value": {
+                    "hops": [
+                      10,
+                      20,
+                      30,
+                      40,
+                      50,
+                      60,
+                      70,
+                      80,
+                      90,
+                      100
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "2be24fb0-bc48-4796-b021-cae06ca50ad7",
+                  "at": "2026-10-25T04:16:50.984Z",
+                  "value": {
+                    "hops": [
+                      17,
+                      27,
+                      37,
+                      47,
+                      57,
+                      67,
+                      77,
+                      87,
+                      97,
+                      107
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": "ones"
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:51.059Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-skipbasic-skipfour": {
+          "id": "link-skipbasic-skipfour",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "hops": [
+                2,
+                4,
+                6,
+                8,
+                10,
+                12,
+                14,
+                16,
+                18,
+                20
+              ],
+              "next": null,
+              "step": null,
+              "why": ""
+            },
+            "1": {
+              "hops": [
+                4,
+                8,
+                12,
+                16,
+                20,
+                24,
+                28,
+                32,
+                36,
+                40,
+                44,
+                48
+              ],
+              "next": null,
+              "step": null,
+              "why": ""
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "d924381b-6e9c-4399-8d72-de22418c5413",
+                  "at": "2026-10-25T04:16:51.118Z",
+                  "value": {
+                    "hops": [],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "c3f0d6fb-cd43-42e7-8f28-ed8c1664830f",
+                  "at": "2026-10-25T04:16:51.485Z",
+                  "value": {
+                    "hops": [
+                      2,
+                      4,
+                      6,
+                      8,
+                      10,
+                      12,
+                      14,
+                      16,
+                      18,
+                      20
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "5ca4d1e9-1fa7-44f3-a218-1c9fa12db3ec",
+                  "at": "2026-10-25T04:16:51.952Z",
+                  "value": {
+                    "hops": [
+                      4,
+                      8,
+                      12,
+                      16,
+                      20,
+                      24,
+                      28,
+                      32,
+                      36,
+                      40,
+                      44,
+                      48
+                    ],
+                    "next": null,
+                    "step": null,
+                    "why": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:52.029Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-write20-teenbuild": {
+          "id": "link-write20-teenbuild",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "hundreds": 0,
+              "tens": 1,
+              "ones": 7,
+              "numeral": "17",
+              "word": "十七",
+              "heard": 1,
+              "textHelp": false,
+              "ink": []
+            },
+            "1": {
+              "selected": [],
+              "bundle": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "unpacked": false,
+              "rebundled": false,
+              "tens": 1,
+              "ones": 4,
+              "total": 14,
+              "why": "ten"
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "01bf3223-1d5f-4f3b-b2ad-75ca92ad00a3",
+                  "at": "2026-10-25T04:16:52.069Z",
+                  "value": {
+                    "hundreds": 0,
+                    "tens": 0,
+                    "ones": 0,
+                    "numeral": "",
+                    "word": "",
+                    "heard": 0,
+                    "textHelp": false,
+                    "ink": []
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "ec3d1b0f-05dd-416d-8e5e-94272b49a463",
+                  "at": "2026-10-25T04:16:52.452Z",
+                  "value": {
+                    "hundreds": 0,
+                    "tens": 1,
+                    "ones": 7,
+                    "numeral": "17",
+                    "word": "十七",
+                    "heard": 1,
+                    "textHelp": false,
+                    "ink": []
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "a3e0407a-688e-48eb-8a9a-32a912916bbd",
+                  "at": "2026-10-25T04:16:52.918Z",
+                  "value": {
+                    "selected": [],
+                    "bundle": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9
+                    ],
+                    "unpacked": false,
+                    "rebundled": false,
+                    "tens": 1,
+                    "ones": 4,
+                    "total": 14,
+                    "why": "ten"
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:53.000Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-digitcompare-order20": {
+          "id": "link-digitcompare-order20",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "a": 4,
+              "b": 7,
+              "relation": "less"
+            },
+            "1": {
+              "order": [
+                3,
+                1,
+                4,
+                0,
+                2
+              ]
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "184b8012-5e19-4e7d-8c23-62960cac4526",
+                  "at": "2026-10-25T04:16:53.053Z",
+                  "value": {
+                    "a": 0,
+                    "b": 0,
+                    "relation": ""
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "dd0270dc-f58b-47cb-a927-e7b910d5b225",
+                  "at": "2026-10-25T04:16:53.135Z",
+                  "value": {
+                    "a": 4,
+                    "b": 7,
+                    "relation": "less"
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "2c8cd031-3998-4d21-b668-609c9d2ee74c",
+                  "at": "2026-10-25T04:16:53.369Z",
+                  "value": {
+                    "order": [
+                      3,
+                      1,
+                      4,
+                      0,
+                      2
+                    ]
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:53.448Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        },
+        "link-write20-numberwords": {
+          "id": "link-write20-numberwords",
+          "view": "summary",
+          "index": 1,
+          "models": {
+            "0": {
+              "hundreds": 0,
+              "tens": 2,
+              "ones": 0,
+              "numeral": "20",
+              "word": "二十",
+              "heard": 0,
+              "textHelp": false,
+              "ink": []
+            },
+            "1": {
+              "hundreds": 0,
+              "tens": 2,
+              "ones": 0,
+              "numeral": "20",
+              "word": "二十",
+              "heard": 0,
+              "textHelp": false,
+              "ink": []
+            }
+          },
+          "cases": {
+            "0": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "b069f9d2-8c19-459d-a6cc-7101101f7e67",
+                  "at": "2026-10-25T04:16:53.503Z",
+                  "value": {
+                    "hundreds": 0,
+                    "tens": 0,
+                    "ones": 0,
+                    "numeral": "",
+                    "word": "",
+                    "heard": 0,
+                    "textHelp": false,
+                    "ink": []
+                  },
+                  "supported": false,
+                  "exposed": false
+                },
+                {
+                  "id": "b16f91d5-d19a-4498-aeeb-004725d8cb7f",
+                  "at": "2026-10-25T04:16:53.619Z",
+                  "value": {
+                    "hundreds": 0,
+                    "tens": 2,
+                    "ones": 0,
+                    "numeral": "20",
+                    "word": "二十",
+                    "heard": 0,
+                    "textHelp": false,
+                    "ink": []
+                  },
+                  "supported": false,
+                  "exposed": true
+                }
+              ]
+            },
+            "1": {
+              "support": false,
+              "attempts": [
+                {
+                  "id": "23d8d4ef-517f-4da7-a086-e653749a0d20",
+                  "at": "2026-10-25T04:16:53.768Z",
+                  "value": {
+                    "hundreds": 0,
+                    "tens": 2,
+                    "ones": 0,
+                    "numeral": "20",
+                    "word": "二十",
+                    "heard": 0,
+                    "textHelp": false,
+                    "ink": []
+                  },
+                  "supported": false,
+                  "exposed": false
+                }
+              ]
+            }
+          },
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:16:53.836Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        }
+      },
+      "questions": [],
+      "continuation": {
+        "id": "link-write20-numberwords",
+        "at": "2026-10-25T04:16:53.836Z",
+        "questionId": null
+      }
+    },
+    "visited": {
+      "mt_WcfaSfVT33": "2026-10-25T04:16:44.251Z",
+      "mt_sYpKWbq5ra": "2026-10-25T04:16:44.275Z",
+      "mt_dmNvjroCPT": "2026-10-25T04:16:44.752Z",
+      "mt_pAcaehday5": "2026-10-25T04:16:45.947Z",
+      "mt_BK5xwkrD5C": "2026-10-25T04:16:47.065Z",
+      "mt_nvdpxAJTBG": "2026-10-25T04:16:49.441Z",
+      "mt_OkSJfrmFb_": "2026-10-25T04:16:50.172Z",
+      "mt_IzQvs7k_sE": "2026-10-25T04:16:51.070Z",
+      "mt_xmmgAzxe5j": "2026-10-25T04:16:52.036Z",
+      "mt_dJOKkYMsCv": "2026-10-25T04:16:53.010Z",
+      "mt_9IzhGUZ30z": "2026-10-25T04:16:53.455Z"
+    },
+    "openedPacks": {
+      "number-sense": "2026-10-25T04:16:44.251Z"
+    },
+    "bookmarks": [],
+    "activities": {},
+    "lessons": {
+      "countonce": {
+        "id": "countonce",
+        "view": "play",
+        "index": 0,
+        "models": {
+          "-1": {
+            "taps": [],
+            "total": null,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          }
+        },
+        "cases": {},
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:16:44.251Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "nextone": {
+        "id": "nextone",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "guess": 6,
+            "committed": 6,
+            "changed": true,
+            "total": 6,
+            "why": "next"
+          },
+          "1": {
+            "guess": 7,
+            "committed": 7,
+            "changed": true,
+            "total": 7,
+            "why": "previous"
+          },
+          "2": {
+            "guess": 8,
+            "committed": 8,
+            "changed": true,
+            "total": 8,
+            "why": "next"
+          },
+          "-1": {
+            "guess": null,
+            "committed": null,
+            "changed": false,
+            "total": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "8908b1e7-1ded-4f0b-977e-19ac5d85aa9b",
+                "at": "2026-10-25T04:16:44.351Z",
+                "value": {
+                  "guess": null,
+                  "committed": null,
+                  "changed": false,
+                  "total": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "9d01971e-d9b7-4ae4-a16a-913cb20c353e",
+                "at": "2026-10-25T04:16:44.434Z",
+                "value": {
+                  "guess": 6,
+                  "committed": 6,
+                  "changed": true,
+                  "total": 6,
+                  "why": "next"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e25ec312-92b0-49d2-87c9-2c0dfa01037d",
+                "at": "2026-10-25T04:16:44.550Z",
+                "value": {
+                  "guess": 7,
+                  "committed": 7,
+                  "changed": true,
+                  "total": 7,
+                  "why": "previous"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e98a1073-6919-4438-8cc6-2927eaaad64d",
+                "at": "2026-10-25T04:16:44.667Z",
+                "value": {
+                  "guess": 8,
+                  "committed": 8,
+                  "changed": true,
+                  "total": 8,
+                  "why": "next"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:16:44.747Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      }
+    },
+    "lessonContinuation": "numberwords",
+    "journeys": {},
+    "journeyContinuation": null,
+    "continuation": null,
+    "legacy": null
+  }
+}

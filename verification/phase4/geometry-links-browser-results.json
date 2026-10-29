@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "link-area-tiling: opens 0",
+    "link-area-tiling: empty work cannot finish",
+    "link-area-tiling: constructed result 0",
+    "link-area-tiling: opens 1",
+    "link-area-tiling: constructed result 1",
+    "link-area-tiling: all tasks finish",
+    "link-tiling-rectangle: opens 0",
+    "link-tiling-rectangle: empty work cannot finish",
+    "link-tiling-rectangle: constructed result 0",
+    "link-tiling-rectangle: opens 1",
+    "link-tiling-rectangle: constructed result 1",
+    "link-tiling-rectangle: all tasks finish",
+    "link-rectangle-boundary: opens 0",
+    "link-rectangle-boundary: empty work cannot finish",
+    "link-rectangle-boundary: constructed result 0",
+    "link-rectangle-boundary: opens 1",
+    "link-rectangle-boundary: constructed result 1",
+    "link-rectangle-boundary: all tasks finish",
+    "link-solids-nets: opens 0",
+    "link-solids-nets: empty work cannot finish",
+    "link-solids-nets: actual camera rotates 0",
+    "link-solids-nets: constructed result 0",
+    "link-solids-nets: opens 1",
+    "link-solids-nets: constructed result 1",
+    "link-solids-nets: all tasks finish",
+    "no page errors"
+  ],
+  "errors": []
+}

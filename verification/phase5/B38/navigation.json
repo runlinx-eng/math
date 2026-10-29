@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "three entry choices",
+    "reasoning-words shows at most three routes",
+    "reasoning-words shows at most three routes",
+    "reasoning-words exposes its routes and original O",
+    "reasoning-words has a short route",
+    "reasoning-words route persists",
+    "reasoning-words returns to its direction",
+    "reasoning-model shows at most three routes",
+    "reasoning-model exposes its routes and original O",
+    "reasoning-model has a short route",
+    "reasoning-model route persists",
+    "reasoning-model returns to its direction",
+    "reasoning-plan shows at most three routes",
+    "reasoning-plan exposes its routes and original O",
+    "reasoning-plan has a short route",
+    "reasoning-plan route persists",
+    "reasoning-plan returns to its direction",
+    "no runtime errors"
+  ],
+  "errors": []
+}

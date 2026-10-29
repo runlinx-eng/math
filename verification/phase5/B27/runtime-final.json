@@ -1,0 +1,249 @@
+{
+  "at": "2026-10-27T13:14:01.291Z",
+  "health": 200,
+  "nodes": 423,
+  "routes": 164,
+  "connections": 525,
+  "directions": 3,
+  "progress": "0 / 423",
+  "cache": "math-explorer-20261027-learning-v32",
+  "cachedFiles": 172,
+  "assets": {
+    "storage.js": {
+      "status": 200,
+      "bytes": 3214,
+      "sha256": "8a7d85b66c19898560c33e372d832b7416adc153d523acd8eaec516282361bf7"
+    },
+    "exploration-core.js": {
+      "status": 200,
+      "bytes": 12056,
+      "sha256": "ece376a7983fb6f0e7695bd0ada67cd48a4317517723a6eff7d85701fc18e2cd"
+    },
+    "journey.js": {
+      "status": 200,
+      "bytes": 13065,
+      "sha256": "92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2"
+    },
+    "app.js": {
+      "status": 200,
+      "bytes": 35482,
+      "sha256": "ab168f8eb3fd771ab5f2663fb52c6e39486a92dfc2815261e5d38e987282e562"
+    },
+    "sw.js": {
+      "status": 200,
+      "bytes": 6152,
+      "sha256": "c12d04bdc68c4a02b176d9c3b0a7a291594690093ed14a23059e3583bb392dc3"
+    },
+    "space.js": {
+      "status": 200,
+      "bytes": 42646,
+      "sha256": "a4a83464620f7426e2a87ab2818aede246ed9bd234a6759e2b478a49f15a853f"
+    },
+    "exploration.js": {
+      "status": 200,
+      "bytes": 51226,
+      "sha256": "b7f1bf411461418f94e2c0a33c068456a2263bfebafdf50a856328b86f89d8b5"
+    },
+    "learning/learn.js": {
+      "status": 200,
+      "bytes": 40322,
+      "sha256": "88be69133b37f66ecf953237e00ea8c5c91bc68b463f3b4180632395475e66a8"
+    },
+    "learning/learn.css": {
+      "status": 200,
+      "bytes": 16201,
+      "sha256": "935308afe41c459496de4a47cd6a7a175462f005250eea24562e37dfaaf444a7"
+    },
+    "learning/phase4/catalog.js": {
+      "status": 200,
+      "bytes": 1678,
+      "sha256": "7652c0414a42e257e9013a5edc1afc783645f98a8beaf7b9c6fb650287f89362"
+    },
+    "learning/phase4/engine.js": {
+      "status": 200,
+      "bytes": 5664,
+      "sha256": "44b390ee15b3c663739dc201576d43c3926ebfd4356379145055aae20532ec92"
+    },
+    "learning/phase5/b27.js": {
+      "status": 200,
+      "bytes": 13132,
+      "sha256": "c4e53b570fabe39d25c7ade5aaf02ba07bdba087319984e723efe53eed32001c"
+    },
+    "learning/phase5/b27-model.js": {
+      "status": 200,
+      "bytes": 8098,
+      "sha256": "4c4f2f16a4d3e955efd32c538c10d7c1311590868157e8d5e25a63a5eabfb78a"
+    },
+    "learning/phase5/b27-view.js": {
+      "status": 200,
+      "bytes": 4765,
+      "sha256": "78c5f9c5ac9f1f0bed85862d19bc63c1e87d9189d1e8b89df9c186cad963ff72"
+    },
+    "learning/phase5/b27-geometry.js": {
+      "status": 200,
+      "bytes": 2052,
+      "sha256": "b81a8b368edbf11f3ccee035cafe744f1a927eaf62bfe8bbe0b06b55b616021d"
+    },
+    "learning/phase5/b27-solid-view.js": {
+      "status": 200,
+      "bytes": 11010,
+      "sha256": "a6dba3a1cfd88eaa9b28fb75e1b87cdce2190b1f4443629d2e20e0f591cb916f"
+    },
+    "learning/phase5/b27.css": {
+      "status": 200,
+      "bytes": 963,
+      "sha256": "22b6248a824584f87a78e16ed9ad4041971da5230002aeebdc05e8ce7c3765ed"
+    },
+    "learning/phase5/b26.js": {
+      "status": 200,
+      "bytes": 4757,
+      "sha256": "9f1747ca678b0dbd79c70b9445bc10d9902bc7ef64f560c5a8ebeef1cb8d041e"
+    },
+    "learning/phase5/b26-model.js": {
+      "status": 200,
+      "bytes": 10305,
+      "sha256": "d9a7c629fa859856067edc624f651c57f2c99059ede6679f0a456fb3bb85516b"
+    },
+    "learning/phase5/b26-view.js": {
+      "status": 200,
+      "bytes": 14475,
+      "sha256": "af878de457f27fc31dac2de4882187081a2d5506ea6e3da733afce54687b78a5"
+    },
+    "learning/phase5/b26-geometry.js": {
+      "status": 200,
+      "bytes": 1778,
+      "sha256": "c43d912ccbcddd71ca768fd441c87e06d66d8d74be112c7ee84f7f61816bb443"
+    },
+    "learning/phase5/b26.css": {
+      "status": 200,
+      "bytes": 1081,
+      "sha256": "52e7155fd21c92789937a3cdd8b7a198715bdadd30dcd625cf8ad6cb8a821b14"
+    },
+    "learning/phase5/b25.js": {
+      "status": 200,
+      "bytes": 27393,
+      "sha256": "18202ec448ec13b51940b178674d48e988a1d8b6bb80ee3fb7a46e1a714c5e5e"
+    },
+    "learning/phase5/b25-model.js": {
+      "status": 200,
+      "bytes": 12474,
+      "sha256": "52f1cdfba7c8225b58eebe71569a2a56f4053061c45fd08f47678b98625689bf"
+    },
+    "learning/phase5/b25-view.js": {
+      "status": 200,
+      "bytes": 17475,
+      "sha256": "dfa2772a8d559653b4b9cb95f3a36723c26aaa999e35f5a92821794b796a29b2"
+    },
+    "learning/phase5/b25-geometry.js": {
+      "status": 200,
+      "bytes": 2873,
+      "sha256": "cd838daaf150dc11a6ff65d1a441f45b221f19a83d683ae63f5b3d7ade8b1dbf"
+    },
+    "learning/phase5/b25.css": {
+      "status": 200,
+      "bytes": 889,
+      "sha256": "05362b4a9bb9939130bca92352898956d3eb89f147bd75871e6c58ed828c9ae8"
+    },
+    "learning/phase5/b24.js": {
+      "status": 200,
+      "bytes": 22321,
+      "sha256": "2ad3793fb4a6e975e2a88ef7d31189e48f44bd71d17f61ace0be07f75bc46049"
+    },
+    "learning/phase5/b24-model.js": {
+      "status": 200,
+      "bytes": 15113,
+      "sha256": "2d7ac1bba93bc201990e4c94452592cdb78d0c4e490f4f6e647744c0d9e93b04"
+    },
+    "learning/phase5/b24-view.js": {
+      "status": 200,
+      "bytes": 19958,
+      "sha256": "568bcb533763f827eb081dd9151e6afae0709fa55a06b1bcb31aed63282d3200"
+    },
+    "learning/phase5/b24-geometry.js": {
+      "status": 200,
+      "bytes": 3568,
+      "sha256": "d7a685591ee5c0729eea9f3269aa5d7183feb6ccd19fe539c0f4bd36c633b09d"
+    },
+    "learning/phase5/b24.css": {
+      "status": 200,
+      "bytes": 1385,
+      "sha256": "0ddc4652c93fd2eb933379e26a5024fbf54bf8f8e1f89203a421bd1e0636dd82"
+    },
+    "learning/phase5/b23.js": {
+      "status": 200,
+      "bytes": 25899,
+      "sha256": "deed404ee6766d2ddb75bfe62db4e31426c938b839abeee7fac0dddd51c9a845"
+    },
+    "learning/phase5/b23-model.js": {
+      "status": 200,
+      "bytes": 19516,
+      "sha256": "542c5f323b2832191f74100181f68faa4b18aa119c1cd3a7ff4fad85f8fd2265"
+    },
+    "learning/phase5/b23-view.js": {
+      "status": 200,
+      "bytes": 22696,
+      "sha256": "aeb8697a51bbd6354e5512d61ff34af9ad5eed3ed8a00176522b0bd199306f5f"
+    },
+    "learning/phase5/b23-geometry.js": {
+      "status": 200,
+      "bytes": 4859,
+      "sha256": "78a02f2cbeffa3e6ad43f6ef0ecd8988e1703d10d2adb131d4a6df22149bd90f"
+    },
+    "learning/phase5/b23-solid-view.js": {
+      "status": 200,
+      "bytes": 1448,
+      "sha256": "185142b4a05c85f4d6e32cc61f3e7052b3d6ec96ebe2b83a87042285501a2af3"
+    },
+    "learning/phase5/b23.css": {
+      "status": 200,
+      "bytes": 2020,
+      "sha256": "895a94368c7daf52eb8808e19d22c6d390286370aaf3a0e22803c2247224c4db"
+    },
+    "learning/phase5/b22.js": {
+      "status": 200,
+      "bytes": 24386,
+      "sha256": "03d107b13f5a53c88d19753f6d08d5e3b6df0df77eb920bcd00c18583afbaf98"
+    },
+    "learning/phase5/b22-model.js": {
+      "status": 200,
+      "bytes": 14240,
+      "sha256": "c12a33c014576da5728169e160cdf22a146c3c67b5763c8830e4c984bd2ae617"
+    },
+    "learning/phase5/b22-view.js": {
+      "status": 200,
+      "bytes": 16576,
+      "sha256": "28e295fda0d5df6752330024eebe96b423184509eb4ddf345a778394cef59bc9"
+    },
+    "learning/phase5/b22.css": {
+      "status": 200,
+      "bytes": 3017,
+      "sha256": "82ef9aa7d05ae73efc6c61eaed27f7ba43dbd50b40b80b80edb0cd0955f313a9"
+    },
+    "learning/catalog.js": {
+      "status": 200,
+      "bytes": 7086,
+      "sha256": "1677289524aff055b541cde700dd0ada785f5d3ee4d806cb4b206f6d9855d50a"
+    },
+    "learning/state.js": {
+      "status": 200,
+      "bytes": 5026,
+      "sha256": "988b5b208fc3abf419198f1b15c66a1f4380c4631730c5a165c386523219122b"
+    },
+    "learning/phase4/b04.js": {
+      "status": 200,
+      "bytes": 9820,
+      "sha256": "7deb5f3f2fb2e355257bb4512f82af68c09e2941c0e492af75c11f1b251dcba8"
+    },
+    "data/atlas.json": {
+      "status": 200,
+      "bytes": 1051830,
+      "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf"
+    },
+    "exploration-content.js": {
+      "status": 200,
+      "bytes": 7895,
+      "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397"
+    }
+  },
+  "errors": []
+}

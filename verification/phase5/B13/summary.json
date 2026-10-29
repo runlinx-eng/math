@@ -1,0 +1,63 @@
+{
+  "batch": "B13",
+  "at": "2026-10-26T05:42:48.146327+00:00",
+  "technicalComplete": true,
+  "childTrials": 0,
+  "userAcceptance": "not claimed",
+  "counts": {
+    "availableNodes": 199,
+    "newNodes": 24,
+    "nodeTasks": 662,
+    "newNodeTasks": 90,
+    "sourceGoals": 601,
+    "newSourceGoals": 72,
+    "routes": 68,
+    "availableConnections": 133,
+    "connectionTasks": 266,
+    "newConnections": 26,
+    "newConnectionTasks": 52,
+    "localResearchSupplements": 22,
+    "remainingUnimplementedNodes": 388,
+    "remainingResearchGaps": 63
+  },
+  "unitChecks": 252,
+  "browserAssertions": 919,
+  "browserSuites": [
+    {
+      "file": "browser-final.json",
+      "assertions": 789
+    },
+    {
+      "file": "integration-final.json",
+      "assertions": 48
+    },
+    {
+      "file": "regression/phase5-b12-integration-browser/result.json",
+      "assertions": 33
+    },
+    {
+      "file": "regression/spatial-browser/result.json",
+      "assertions": 37
+    },
+    {
+      "file": "regression/phase3-continuation-browser/result.json",
+      "assertions": 8
+    },
+    {
+      "file": "regression/phase5-b09-readiness-browser/result.json",
+      "assertions": 4
+    }
+  ],
+  "coverageChecks": "coverage-checks.json",
+  "runtime": "runtime-final.json",
+  "distBytes": 6223142,
+  "distMiB": 5.93,
+  "upstreamCommit": "a8719737ff86ef7940ba5feca11940de1204103e",
+  "newRuntimeDependencies": 0,
+  "nextBatch": {
+    "id": "B14",
+    "nodes": 19,
+    "researchGaps": 2,
+    "expectedCumulativeNodes": 218
+  }
+}

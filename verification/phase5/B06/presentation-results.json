@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "sequential digit typing keeps focus in countboard",
+    "ten frame contains ten equal positions",
+    "five and two occupy seven positions",
+    "twenty counters remain on a single line",
+    "all twenty counters fit desktop width"
+  ],
+  "errors": [],
+  "failed": "Error: interrupted audio is not counted as completed playback",
+  "body": "← 回到空间\n数字、名字和一整十\n留到下次\n未完成\nV–01\n把听到的数，摆出来写下来\nV–02\n十个扎成一束，还剩几个\nV–03\n数字的名字，也能当标签\n十个扎成一束，还剩几个\n试一试\n1\n2\n3\n收一收\n\n从十四颗里选十颗扎成一束，再记录整束和剩下的。\n\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n\n选了 0 颗\n\n十颗扎成一束\n拆开这一束\n几个十\n还剩几个一\n一共几个\n十位上的 1 代表\n选择\n十个一\n只有一个物品\n可以先自由试，不会因为点开就完成。\n换个条件试试 →\n这次留下的记录"
+}

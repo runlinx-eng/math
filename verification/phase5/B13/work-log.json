@@ -1,0 +1,11 @@
+{
+  "batch": "B13",
+  "startedAt": "2026-10-26T05:01:44.838369+00:00",
+  "snapshot": "snapshots/v17-before-b13-20261026T050144Z.tar.gz",
+  "activeHours": null,
+  "note": "Wall time is not independently measured labor. No child trial.",
+  "finishedAt": "2026-10-26T05:42:48.146327+00:00",
+  "technicalComplete": true,
+  "childTrials": 0,
+  "validation": "summary.json"
+}

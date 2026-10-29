@@ -1,0 +1,192 @@
+"""Reviewed authoring choices. IDs, not age or grade, determine scope and grouping.
+
+Each group is a proposed shared activity or short route with per-topic tasks.
+A common representation does not establish that one task covers every objective.
+"""
+PLAN_VERSION = '1.0'
+PLAN_DATE = '2026-10-24'
+EXISTING = {
+    'mt_ndGqFPWyen': ('fair', 'dist/exploration-content.js'),
+    'mt_Ep7TDFuYUa': ('rename', 'dist/exploration-content.js'),
+    'mt_TqDq6jyOmL': ('decimal', 'dist/exploration-content.js'),
+}
+PREVIEWS = {'mt_DRlbMok2lT': 'A03 / dist/journey-model.js'}
+# These are proposed authoring placements only; the live atlas is unchanged.
+PLACEMENT_OVERRIDES = {
+    'mt_MgsDabdnr1': ('time', '目标是读钟面的一刻和差一刻，主要操作属于时间。'),
+    'mt_A-FyLLLLzy': ('patterns', '目标是按规则生成并解释数列或图形规律，不是乘除技能。'),
+    'mt_ZOJ6EbdPOb': ('scaling', '说明和表现标准要求按分数缩放、比较单价和简单比率。'),
+    'mt_snlqRCiA1R': ('positions', '目标是坐标描点及解释坐标；不是形状分类。'),
+    'mt_WXW0hjNhph': ('patterns', '目标是图案排列及序列规则，按主要学习动作归入规律。'),
+}
+# (id, Chinese working title, authoring family, proposed pack, explicit member IDs)
+GROUPS = [
+('n-count','一眼看出、逐个数清','count','number-sense','mt__h7hvT4tEb mt_dmNvjroCPT mt_sYpKWbq5ra mt_WcfaSfVT33 mt_pAcaehday5 mt_yqAL6O5i_v mt_BK5xwkrD5C mt_t9BICauBSI'),
+('n-skip','按步长往前和往后','number-line','number-sense','mt_nvdpxAJTBG mt_M5PPDJStGm mt_aHAM29nidj mt_OkSJfrmFb_ mt_M2v1A9OEuM mt_IzQvs7k_sE mt_7rJM8eWUfw mt_tAtMET4EIU mt_0ZDouU664X'),
+('n-small','数量、数词和数字对起来','place-value','number-sense','mt__YRJ23GuIK mt_9IzhGUZ30z mt_dJOKkYMsCv mt_x8TshvbbQT mt_fR0UtsSREU mt_xmmgAzxe5j mt_QguIGVMB1o mt_76SPWvdI7r mt_XV0B4kWwqL'),
+('n-tens','十个一可以换成什么','place-value','number-sense','mt_kw7xmp68rU mt_r0VXbfAmsH mt_U0waNfD8PB mt_kJGCjnuelW mt_Bt-iORUzdO mt_9L3NQqgqRd mt_zfy1gOEewd mt_THl9GLxwoL mt_hniI4E-OCE'),
+('n-hundreds','一百里面装着多少个十','place-value','number-sense','mt_izien3ZX51 mt_8gy7uxRlF6 mt_HczwO1sr-y mt_AQcVRBddko mt_98c2qwEF7Q mt_VFsuftfvYM mt_F_zEAJ8VIo mt_R2ccrI-nKD mt_aPBzD28_mT'),
+('n-large','换一位，数量怎么变','place-value','number-sense','mt_9XVFje6Tyr mt_MHaiUd2FLA mt_lC_Q5mSL_I mt_jY7uf0Cb7o mt__sMrmOv3bx mt_JwP9QFv6gQ mt_QqG6IdmTSE mt_xMt1TLTs-- mt_XNmGwNggdU mt_HLUqHJ9Y7n mt_EDgw64OmfA mt_Ac7oMWhyPw mt_Gag_h98jWP mt_bO-njVOige'),
+('n-round','一个接近而有用的数','number-line','number-sense','mt_NLSfvB9vUl mt_5NwqN6pf_A mt_VVn1IXjkzn'),
+('n-roman','同一个数，另一种记法','symbol-system','number-sense','mt_MewIRdzpzz mt_To9HdLy8vq'),
+('n-decimal','把一个单位继续分小','place-value','number-sense','mt_Fl7b8q9pI1 mt_Ii1hV4V5ql mt__casygEB85 mt_lNGpnILM5C mt_U9sme87C32'),
+('n-line','零的两边和离零多远','number-line','number-sense','mt_19j_5AuuQI mt_9QzSnn8m80 mt_i2F1nWxJjv mt_zMEvtigoM3 mt_vXRzMbiPff mt_1KkvzwYxbR mt_RWUY7_IXvw'),
+('n-sets','数还可以怎样组织','structure','number-sense','mt_hCVPYlF-7Y mt_b4lbTOJYwI'),
+('a-story','物品来了，又走了','count','add-subtract','mt_yJmvUCCym7 mt_OvyoRo47K- mt_PgsHGYJMH- mt_zuKAX6lcYR mt_mr_Vk7FGzK mt_VAWV_l7J0D mt_Y6_cq3UMyy mt_biGHAbkoV2 mt_8RmpkDxT9L'),
+('a-parts','总数可以分成哪两份','count','add-subtract','mt_e8CZ7E5qW7 mt_7XcCG43ZZW mt_ghF3Vv6taM mt_s2mfRBoTal mt_m1W6nTQJ2b mt__we2TDqnJx mt__t4afSyZRm'),
+('a-strategy','换一种凑法，结果一样吗','operation','add-subtract','mt_Zx1xZM-RbX mt_PpWSHA-0kv mt_QCgbiVrwnp mt_3e_PQxwC12 mt_T76hKqXf0z mt_ehGS_uVSJv mt_AKAtWEwpcj mt_zxST3MarI9 mt_oDU_8zMZjp'),
+('a-exchange','不够减或满十时怎么办','place-value','add-subtract','mt_I5j1ZWo2cn mt_UQnAFPs83F mt_glPPG-kTQY mt_wzAZ8qFDc4 mt_HJTuIGHvcR mt_SrrsLiJkr3 mt_TiQbi027PE mt_ewmuMMPAzP mt_cChv2j_-Da mt_xPqczp7zPX mt_aHQ9kNt3is'),
+('a-general','把加减方法用到新的数','operation','add-subtract','mt_mpS-JK_p_m mt_HFRYjTb-Z5 mt_-F_Lv_apzH mt_Yw1_4Nfsql mt_MWXPiaTnEu mt_M1tnXqmYbn mt_JH_6RpNWjr'),
+('a-check','先猜范围，再查哪里错了','operation','add-subtract','mt_QaYfeVL-0C mt_G3sVFQNCme'),
+('a-problem','一件事需要几次加减','model','add-subtract','mt_Eqk6oSbySH mt_yTWxkzzoOZ mt_CDa5AVakLE'),
+('g-share','同样多的一组可以怎样分','array','groups','mt_LpSuPgL31x mt_GRWwTDZ3wD mt_PZ909yPrEC mt_1GDEHyEZYH mt_C9ZfT-4cgn mt_wh3UqnWsa7 mt_0u4KLbvBa1 mt_zOWwLxa77y mt_qUjW0N1cYO mt_gtTl3R5buH mt_iNdrM2-oJf'),
+('g-table','从一排找到整张乘法表','array','groups','mt_aivrWs6jrS mt_HhuSDxwDNM mt_B1zj1RwQ3a mt_UTnDKQkVX5 mt_wQ89AEXhz3 mt_K5jM7vlVhA mt_WX30dzi4dt mt_w6MxaaoMXZ'),
+('g-relations','乘法和除法互相告诉了什么','array','groups','mt_GDG9_SZmsO mt_nZkL5-XjRX mt_pjfmCMMPjO mt_isojCL9yy- mt_Lb2ZnMdkYR mt_xZvDCYA5Ae mt_8A3pZNOp7Z'),
+('g-written','大数乘除也能拆开看','place-value','groups','mt_DyGBW3ZHh3 mt_18fK9sQdIz mt_q9EaJc2FP8 mt_LlMl2PbaZe mt_MCu_SNg_OW mt_FvEq4heNBx mt_XLP1IM3Qbb mt_wPgpMJ0-PA'),
+('g-remainder','分完还剩下，答案怎么说','array','groups','mt_p-nbe0w_lf mt_WsM4EmdOLe mt_QU5R7Aajy9'),
+('g-factors','哪些数能排成整齐的行','structure','groups','mt_FHIAv6dfhU mt_0Wg5F97osg mt_oxfxzbat3k mt_y1XCVsIelg mt_gxCIASSezX mt_bZC-wqWX7Y mt_xhoOWnhtHq'),
+('g-order','先做哪一步为什么重要','operation','groups','mt_hImiKNiaNh mt_8jFSnXxqQD mt_jHgRQ4hR0g mt_4WaKWECpcv mt_X5cypSGoGU mt_rxInpOQ74w mt_VUQNveSYjQ'),
+('g-decimal','小数乘除与答案检查','operation','groups','mt_SoDP1fSQEB mt_lU-2aTRB9f mt_NmvuwVUFRS mt_ilPrU0cbtT mt_vmW2cb5c7A mt_3m0pA-aeat'),
+('g-problems','是多几份，还是多几倍','model','groups','mt_EmR5n58jZt mt_Zdv-b-iW5K mt_AR-K72OIIO mt_U4cIBXVug4 mt_6-j1NO2ZUH mt_RXnyhCRYXA'),
+('f-share','怎样才算分得一样多','fraction','same-amount','mt_g3W0mdADVu mt_-hTTat0mBR mt_hyvHv2BCwb mt_vKcxX6iNOA mt_xACS3rWWDp mt_gC-6JXAG5S mt_Xp-rj46S2w mt_idbKDrf9qZ mt_ndGqFPWyen mt_AYzE1EAvI0 mt_HJA2Oz-Zh1 mt_4Km38F4L-6'),
+('f-amount','一堆东西的几分之几','fraction','same-amount','mt_cFltwUQi-d mt_3y7xKP9MjU mt_K3R0yaHVcx'),
+('f-line','在一条线上找到这份量','fraction-line','same-amount','mt_Kr3IyA6m-O mt_NoB20kVa4w mt_3VmBdlAeOZ mt_CUmjcE7W6c mt_PsylzZ9lHW mt_uDJY0X0hgo'),
+('f-understand','从一份拼成许多份','fraction','same-amount','mt_MyGblah2yY mt_k2WE0-22-4 mt_09sySPqM9Z mt_dXq9VWm31W mt_HY8Yycu_rz mt_2ESZh70NyS mt_9KmVWCuh5_'),
+('f-compare','哪一份更大，怎样看出来','fraction-line','same-amount','mt_IfEgu0X449 mt_SsLWS_APM7 mt_HnKbuCliNS mt_SXbZ3bC9z7 mt_PL9VkDwXfh'),
+('f-equivalent','切法变了，量没有变','fraction-line','same-amount','mt_FbDKeLfBCo mt_FP-mjXaq3B mt_Ep7TDFuYUa mt_ebPelt-qAl mt_b7T-CjOYUR mt_jCy07DyBNU'),
+('f-tenths','十分之一和百分之一','fraction-decimal','same-amount','mt_YzM5goBctT mt_IegHBHERVa mt_doX1BhmFgk mt_NaqEP8xDhZ mt_Vi4Vo5xs_g mt_sA2OvTiech mt_kdWoAel3Zl mt_933BohS9BH'),
+('f-decimal','分数和小数写的是同一个量','fraction-decimal','same-amount','mt_TqDq6jyOmL mt_wB-GBDkoNr mt_DRlbMok2lT mt_4K1dr204Hi mt_SBkTGjiZjZ mt_hlGKg5M7qJ'),
+('f-mixed','超过一整个怎么表示','fraction','same-amount','mt_o_p-3tCxiM mt_gNUE4B3vuk'),
+('fo-add','先统一一份有多大','fraction','fraction-operations','mt_a1FdAsRKOF mt_CBHwluE6Lp mt_70qDTI14td mt_-V7EnqU7gG mt_ZLqYE7la4Z mt_VgOePicFYK mt_14T5yPXUq_'),
+('fo-multiply','一份里面再取一份','area','fraction-operations','mt_TgHxujL81r mt_gx6KQK5-Kx mt_AabJisinfi mt_lvaSGHwvQ5 mt_J339bO7qLe'),
+('fo-divide','这段量里面装得下几份','fraction-line','fraction-operations','mt_kDMKJ5Ztt6 mt_1PAWhRhpdg mt_ifPDOYvUqm mt_rCMdwG-YOE mt_e7filQgayF mt_9Y96vxG_LH'),
+('s-percent','一百份里的多少份','ratio','scaling','mt_W17Kbwm0-u mt_4ubP_RMg9o mt_ZM9mhHsyYZ mt_ESgc4YBw-a mt_PNSyfH56eQ mt_ALUrJpY0cZ mt_iEXqN48w3x'),
+('s-ratio','一起放大，关系保持吗','ratio','scaling','mt_VKW8lOcFaw mt_ePXg_XyCKU mt_h0gJcSuwdL mt_FnUJMXPUZX mt_nOCPx5qw0Z mt_xAf2bu9wYK mt_ATYLKt0je- mt_XWSGuFW7It mt_5mIcmKRCgA mt_yK51ZnKA8m mt_ZOJ6EbdPOb'),
+('s-scale','图上的长度能告诉我什么','transform','scaling','mt_2OtRUM_0zW mt_1badik7iKJ mt_CUJr8L5_Wn'),
+('s-rate','两个量一起变','function','scaling','mt_kLQOzZYrd5 mt_FspV_imUGK mt_tpT9brpI6D'),
+('sh-build','用小形状搭成大形状','shape','shapes','mt_KJeEeTutJI mt_2VR963szuk mt_XjwUlmxdCT mt_sBcRdUfAzV mt_MqqR7VUoz1'),
+('sh-properties','转一转，什么性质没变','shape','shapes','mt_bfhng6mOuy mt_vJUa62bxeR mt_zuOGOGFAKb mt_hRZyKvz1KN mt_Xt1cRqaBOW mt_r8c43QB6wx mt_8H2kO4k2B9 mt_hdrMoiTgqu mt_liIW336odh'),
+('sh-use','给物品找一个合适的形状','shape','shapes','mt_mN4Ye_vtR7 mt_SK7WntVZ6y'),
+('sh-construct','用尺和圆规造出条件','construction','shapes','mt_xq3YHZ2zeR mt_WtIFJSCQIT mt_ZrsqGVG-Wt'),
+('p-position','怎样准确告诉别人在哪里','coordinate','positions','mt_qeZYF6HZ4o mt_TdV9YGJEoY mt_i5_HnoFOYw mt_Uq5vYqboCR mt_jBQS-CicNn mt_R4AY0LKxfl mt_oDlduFnemk mt_h7zVgCDVmx mt_snlqRCiA1R'),
+('p-transform','移动、翻面、转身后','transform','positions','mt_hR2Y7NhMSY mt_SH7QgFl8-v mt_NM5I3yN-Q6 mt_efOeaGFyGM mt_RdfzwInyAj mt_lxaM6iVpdr mt_K0Y15w48SY mt_61Nhj8W78f mt_y-BuQAfw4B'),
+('an-turn','转了多少，和边长有关吗','angle','angles','mt_Y9XKzLrUAZ mt_u23IGDxOpk mt_MFfYcnv6Tv mt_8OAGVdeTJ_ mt_h0CVtqI2xo mt_e4V6hvcuEJ mt_qUGMyMYn9m mt_QysgF57dxh mt_LBT-9jz7kR mt_KFKUR_gBg_ mt_3S10OOGPqu'),
+('an-measure','先估转角，再量出来','angle','angles','mt_YUJ5pwalqL mt_4MFUAsbx_6 mt_89riIKwGYp'),
+('an-relate','几个角为什么总能拼起来','angle','angles','mt_oqziWKry-L mt_cdMlC7EpTJ mt_QDTO3GAgcq mt_J03RFlVdas mt_DNYQLahbfa mt_tedML_iu4Y mt_H_pNJ3ZI_S'),
+('an-possible','这些条件能造出一个三角形吗','construction','angles','mt_Jf8xcX4UTq mt_167X6Ax8P7 mt_4bc3EAxhlY'),
+('an-right','直角三角形的边怎样联系','construction','angles','mt_1VmTUxBrNd mt_KB_Czd7RQH'),
+('so-see','换个方向看同一块积木','solid','solids','mt_Qcp2d_kuta mt_yGv8doDAmp mt_mnEVZNkX3p mt_UooUHC_V7U mt_QNxFnxikCN mt_Mnodea7mG_ mt_fEuoBYw6bU'),
+('so-open','展开、折起与切开','solid','solids','mt_vnJEztczji mt_wUSbRt3-qw mt_REwgr0d_ss mt_nRksLqt-iR mt_h02-C8PRrj'),
+('u-compare','先选要比较的东西','measure','units','mt_uhuxX8sg9f mt_NtJYlJdUe9 mt_-P1kdZhHbL mt_KaF0SQvaiu mt_zd0YkB3xNj mt_DOe893F6gN mt_BFJ-ch_8QU'),
+('u-length','把同样的单位一个个接起来','measure','units','mt_skYly2Qm01 mt_cqSf213hSa mt_xWg0lI_gG4 mt_OzRZ89GrQW mt_e4x3l2JeLI mt_jHv4BgRK8B mt_e7tLi9SCIE mt_SOM6Imm2sO'),
+('u-convert','单位变了，实际量变了吗','measure','units','mt_d8al9JcajP mt_Zks8xyInSG mt_p6MhZJYYPN mt_2VpdPjvewx mt_SqhXQhAEUf mt_3tPI0HqqcN'),
+('u-data','把量出来的结果放在一起','data-display','units','mt_mayItsxMUu mt_ghK1mnEstc mt_42QD6nYjiZ'),
+('u-apply','把测量用在一个真实安排里','measure','units','mt_DLcEzmmj2r mt_6oxQPNLHNv mt_5HV4mbgSGH mt_RVK655t391'),
+('ar-cover','铺满需要多少个小方块','area','area','mt_y1n0Zwhoca mt_AQo4u7O4sM mt_Jvvh5P06NV mt_GzcJEVkNRn mt_6xNmQLzuqm'),
+('ar-boundary','围一圈和铺满是两回事','area','area','mt_wE7-Gs9ENL mt_WtcFrxGOgw mt_eiB3-6pu6a mt_n0AlyLQwC9 mt_MJZA90uc6H'),
+('ar-rearrange','剪开重排以后有多少面积','area','area','mt_eMtV6tBSJm mt_ML5t7n2-U8 mt_i2-QaXbyzB mt_svFa6_mjO_'),
+('ar-surface','把外面展开，再看里面','solid','area','mt_tAJH5BrpOx mt_Sij9ByyHq6 mt_tegkuJA5gM'),
+('v-capacity','容器看起来大就装得多吗','measure','volume','mt_zkFbMLpu3U mt_4lp_b5Pzik mt_bnwHo5wfCD mt_-af65bxfdp mt_NSC3LT_-ch'),
+('v-cubes','藏起来的积木也要数进去','volume','volume','mt_IuHa5UI5od mt_d7XktBQPxm mt_nTL-owFJTF mt_5TBUFnCy5- mt_IlDaxVr60U'),
+('t-duration','发生先后和经过多久','time','time','mt_TcG90kS8nu mt_-vvVxpOHG2 mt__N55B7u7HD mt_2XDGT5tei1 mt_6XCURuNwPw mt_4emC463IyW mt_Jz9UuT8BXW mt_IL86kadLSS'),
+('t-clock','钟面转到哪里了','time','time','mt_0XxyaQLRhn mt_HNOPGJYiRK mt_4m8BimI4G5 mt_5J2quSTspi mt_UNzojLkNdm mt_WfrE_4r-kY mt_2yas4Unc8o mt_MgsDabdnr1'),
+('t-calendar','在日历上安排下一次','time','time','mt_bj1YCgNWUx mt_EXlmTURK_o mt_tVvZVWO5d6'),
+('m-exchange','用不同的钱付同一笔款','money','money','mt_iQYPw8bMfN mt_cPZwlUk8Nd mt_AF2BeFQwfX mt_FSLJbKkryb mt_6J1wmCWf41 mt_pbuhUQJjtt mt_6_O6THdEDK mt_8cs4YPkp23 mt_3tz3Otap5j mt_9L5qyBYmg-'),
+('m-choice','有限的钱怎样作选择','money','money','mt_FVVSQR9vGg mt_mFJ-2ZF6Tk mt_5bmrA-0pBi mt_Qe2PsFmSAH mt_oMkQQ2O-ML mt_mMDpLugX2X'),
+('pt-repeat','最短的重复片段是什么','pattern','patterns','mt_ZjIFGc6zPW mt_DW2D1c0fKx mt_FAXjFkgG6X mt_WXW0hjNhph'),
+('pt-grow','规则相同，下一步会怎样','pattern','patterns','mt_W3VOAuFwVw mt_hBZwbst0ow mt_fxPtngwUfz mt_yXO7lQ9Yn7 mt_uG2mjHFOlO mt_fZTn0W_iZR mt_2jbUekyTu4 mt_iyovKgZC1q mt_A-FyLLLLzy'),
+('pt-algorithm','让规则自己产生一串结果','algorithm','patterns','mt_zQfWqImxva mt_QeKWt4BZn3 mt_nx4a3kH-59 mt_gu0NPDvlhY'),
+('eq-balance','两边一样多时能做什么','balance','unknowns','mt_ezc2m_0dzN mt_3JgrHY221M mt_oIzycTBeE4 mt_XuHmIn2xje mt_anAe11HAEH mt_YFS7JFk64p mt_QhFEDyIwSO'),
+('eq-write','把条件写成可以操作的关系','algebra','unknowns','mt_i9rJbuFO3p mt_KwdjWEmMNo mt_z5iwdZyeDr mt_g_fkAqmz72 mt_HRKzwEQJgO'),
+('eq-build','同一个式子有几种搭法','algebra','unknowns','mt_nNNVrLqPW3 mt_FX4a2Q8XXN mt_uESbzWCZIq mt_KhS7K1Mgrw mt_mqgu72aCMz'),
+('fn-change','改一个量，另一个会怎样','function','functions','mt_Jvg8X0N5u0 mt_hVpGOEz2kG mt_vHzVa3SURC mt_WBdHkc2HTf mt_-3udyo6VyB mt_3qrCtdoVAU mt_GZuoYaDdWd'),
+('r-express','让别人看懂你怎么想的','explain','reasoning','mt_lMz9nAs7VO mt_nyK25mNOeR mt_EBYGhd8X3x mt_kJ5wYzO8qC mt_TMoHjMhRS2 mt_pyMD_SIiYO mt_a3dov8CZkq mt_mywsN77hGZ mt_xfwv0M83mJ mt_3rTIyJDw7- mt_j5YqQnN6xe'),
+('r-model','把一件真实的事变成模型','model','reasoning','mt_20WfHhnL39 mt_WkKkb7W9Qd mt_IM1G_7QzTa mt_fLOkq-HfPB mt_f67qGDhyfi mt_8xVHooT4aI mt_yqZiX6vS7D'),
+('r-plan','先决定怎么走，再检查结果','model','reasoning','mt_O_UOTiMvT_ mt_RKeheOL9uo mt_SmghasIvbT mt_GpltXPoaoc mt_FieL-vVTI_'),
+('r-tool','为什么选这个工具或方法','explain','reasoning','mt_Yw27nweoTj mt_RFeVlw0QvX mt_mQcWGh02no mt_d-WZC2OyMB mt__Itf4aQZUj mt_IwEOCN6bL1 mt_ish_uH8vZe mt_ZJC7JnnPCu'),
+('d-sort','先说清按什么分','data-collect','collect','mt_xppl18avyY mt_ylXdiVRAYv mt_1VSfm9yiLn'),
+('d-question','这个问题需要收集什么','data-collect','collect','mt_ebQURBOsM5 mt_kxeuXm6EyC mt_yrvYKSwSRZ mt_Y6JmLjnfRP mt_SHVyE1CLUa mt_QHT16CrFO- mt_O-U263ukg1 mt_iykH2P5oFq mt_6gpryAnpoZ'),
+('d-basic','把同一份记录换一种画法','data-display','display','mt_c29FaCTNsx mt_X53txVXOcG mt_u5HkSxZECM mt_VhBH8wrFC6 mt__yvsKKp3TS mt_r8XnXwRA6g mt_eKJG-0eC6D'),
+('d-choose','哪一种图能回答这个问题','data-display','display','mt_ChjMU2GDJa mt_QpJydot2Kh mt_TiFjjvBMaY mt_H6LlpWgEYS mt_Cqm8iy48UI mt_HlNSurPVDp mt_IHipFGTFEY mt_bESTSBB0wK'),
+('d-distribution','把散开的数据集中看','statistics','display','mt_8VjmxR1yfw mt_JRzXQl9M7c mt_oderfUBZPw mt_BdAeZJUOir mt_8atyuvPUZc'),
+('st-center','一组数据能用一个数说清吗','statistics','summarize','mt_fmm-P17Vka mt_Cg8VPguS_V mt_ZfpeI1CFyP mt_XSXnTQoQ4l mt_OwYms2tB1L mt_KCS9GbZgU_ mt_tuEnyrp5Ia'),
+('st-infer','看到一部分能推断多少','statistics','summarize','mt_mn765HbXi1 mt_8IsaoMPvod mt_4zgPzc6yu5 mt_km4V6d5IAh mt_fQ9Rw10fss mt_A2hKhHXgL5 mt_x7V1qrkiqH'),
+('c-experiment','多试几次，结果一定相同吗','chance','chance','mt_iFFKZd-Vgv mt_J4j7d3iAfg mt_xSgAgg9Ej_ mt_-bMnJcPJy8 mt_UcGn2hjhYU mt_sHJqh6UUya mt_8DT3LXwwH- mt_aCwj2PCoRV mt_nzdtOLXWWa'),
+('c-number','用一个数描述有多可能','chance','chance','mt_-c4Ca_nBzX mt_Zt30Gxi-qp mt_3fwYu7imd4 mt_t0g2SlP404 mt_XfyqXLqzpx mt_vmQJAtAFuy'),
+('c-outcomes','可能的结果有没有漏掉','chance-tree','chance','mt_dlg6i-Lw0I mt_1YwOCMMwD8 mt_GDtFU5fyUv mt_eSv_w46u6H'),
+]
+SAMPLE_ROUTES = [
+ ('S01','同一个量的不同写法','mt_ndGqFPWyen mt_Ep7TDFuYUa mt_TqDq6jyOmL mt_DRlbMok2lT','分割、数轴与百格联动；已有三个活动复用，补齐 A03。'),
+ ('S02','积木里面藏着多少','mt_IuHa5UI5od mt_d7XktBQPxm mt_nTL-owFJTF mt_5TBUFnCy5-','直接转动、拆层、填充和拆合；复用 Hidden Cubes 的部分机制。'),
+ ('S03','同一份数据怎样看清楚','mt_c29FaCTNsx mt_ebQURBOsM5 mt_VhBH8wrFC6 mt__yvsKKp3TS','从一个问题得到记录，在表、象形图和条形图间转换；提前处理两个资料缺口。'),
+]
+FIRST50_BATCHES = [
+ ('B02','铺面、围边与量空间','mt_NtJYlJdUe9 mt_DOe893F6gN mt_y1n0Zwhoca mt_Jvvh5P06NV mt_GzcJEVkNRn mt_eiB3-6pu6a mt_UTnDKQkVX5 mt_vnJEztczji mt_Mnodea7mG_ mt_NSC3LT_-ch'),
+ ('B03','分得一样多，再一起变化','mt_Xp-rj46S2w mt_vKcxX6iNOA mt_cFltwUQi-d mt_FbDKeLfBCo mt_NoB20kVa4w mt_doX1BhmFgk mt_W17Kbwm0-u mt_gC-6JXAG5S mt_VKW8lOcFaw mt_ePXg_XyCKU'),
+ ('B04','从记录到可能性','mt_xppl18avyY mt_ylXdiVRAYv mt_u5HkSxZECM mt_r8XnXwRA6g mt_QpJydot2Kh mt_iykH2P5oFq mt_iFFKZd-Vgv mt_J4j7d3iAfg mt_xSgAgg9Ej_ mt_8DT3LXwwH-'),
+ ('B05','试规律，说理由','mt_ZjIFGc6zPW mt_W3VOAuFwVw mt_DW2D1c0fKx mt_oIzycTBeE4 mt_3JgrHY221M mt_EBYGhd8X3x mt_kJ5wYzO8qC mt_pyMD_SIiYO'),
+]
+# Production order balances component reuse, connected routes and early gap work.
+# It is deliberately NOT claimed to be a topological learner lock.
+PACK_ORDER = ['number-sense','add-subtract','groups','same-amount','fraction-operations',
+ 'collect','display','summarize','chance','shapes','positions','angles','solids',
+ 'units','area','volume','time','money','patterns','unknowns','functions','scaling','reasoning']
+# At most six topic-specific task variants per proposed work unit. Further splitting
+# remains allowed after phase 2; these are not six simultaneous child-facing panels.
+MAX_UNIT_NODES = 6
+MAX_BATCH_NODES = 24
+
+# Family-level authoring hypotheses. Topic evidence and research always narrow these.
+# title, action, new-condition application, mathematical check, reusable code example
+FAMILIES = {
+ 'count': ('数、分与配对','移动实物或计数物，配对、分组、合并后说明数量。','更换排列、物品和总数，重新构造而不是认同一幅图。','一一对应、总数守恒、合分关系和零的处理。',None),
+ 'number-line': ('数轴与距离','放置点、走等长步或标出区间，比较位置与距离。','更换端点、刻度和数值，解释坐标及距离。','等距刻度、方向、负数顺序、端点和舍入边界。',None),
+ 'place-value': ('数位与交换','把一组小单位换成一个大单位，将模型与数位记录联动。','换数量级或表示方式；需要进退位时自己安排交换。','交换前后数值守恒、零占位、小数位值及算法适用范围。',None),
+ 'symbol-system': ('数量与记号','把数量、数词和不同记号来回编码并解释规则。','用新数值编码或纠正一条有歧义的记录。','记号规则、适用范围和数值保持。',None),
+ 'structure': ('排列与数的结构','构造阵列、因子组合或数集，寻找结构并提供反例。','给出新数或边界例，检验自己的规律。','因子是否穷尽、素数及一的区别、平方立方及无穷概念边界。',None),
+ 'operation': ('操作、算式与检查','把计算步骤与模型对应，比较不同方法并定位错误。','换数值或问题条件，自己选方法，再用另一种方法核对。','运算性质、顺序、符号和估算误差，不以速度代替理解。',None),
+ 'array': ('成组、阵列与平均分','构造等组或行列，把乘除和余数放回实际分配过程。','改变总量、每份大小或组数，决定余下部分怎样处理。','等组条件、行列乘积、除法含义和情境中的余数。',None),
+ 'model': ('情境建模与规划','选出有关量，搭建模型，执行方案并解释取舍。','换情境、增加无关信息或改变约束，修正模型。','假设、单位和结果合理性；开放解释不能只按关键词判定。',None),
+ 'fraction': ('同一整体的分割与组合','固定整体，构造等份，选择、重组并解释几分之几。','改变整体形状或把连续量换成离散数量，仍能说明单位份。','整体一致、等份条件、单位分数、分子分母的含义。','local-fractions'),
+ 'fraction-line': ('等长与同一点','调整分割或数轴刻度，让不同分数在同一位置重合并说明原因。','换分母、改用分数条或数轴，说明比较及等值。','零点与整体对齐、分割等距、不用分子分母同时加一冒充等值。','local-fractions'),
+ 'fraction-decimal': ('分割、百格与小数联动','在数轴、百格和数字之间来回表示同一数量。','换成新数量或不同教具，独立建立对应。','十分位百分位、尾零、大小比较与同一整体。','local-fractions'),
+ 'ratio': ('保持比例的共同变化','拖动成对量或分配条，使相对关系保持，比较不同方案。','换配方、总量、百分率或单价，自选共同单位。','加法关系与倍数关系区分、百分比基准和比例不变量。',None),
+ 'shape': ('拼搭、分类与属性','组合或改变图形，对照属性分类并找出反例。','旋转、拉伸或换外观后判断类别是否改变。','定义属性与颜色朝向分离；分类包含关系及反例。','bee-builder'),
+ 'construction': ('几何构造与约束','用可追踪的尺规、长度和角度约束构造图形，检查可行性。','换参数，识别无解、多解或适用条件。','作图精度、三角形条件、定理假设和近似误差。',None),
+ 'coordinate': ('位置与坐标','在方格或空间中定位、描点与描述移动，交换读图和制图角色。','更换坐标、原点、路线或情境，解释两个数各代表什么。','坐标顺序、象限、刻度和移动前后的位置。',None),
+ 'transform': ('平移、对称与缩放','直接移动、翻折、旋转或缩放图形，追踪不变和改变的量。','换图形或变换中心，预测后构造并验证。','对应点、距离与角度保持、缩放对长度和面积的不同影响。',None),
+ 'angle': ('转角、测量与拼角','转动射线、比较或拼合角，先预测再量取。','改变边长、朝向或关联图形，独立判断和解释。','角与边长无关、量角器起点、直角平角周角及角和条件。',None),
+ 'solid': ('立体、展开与截面','直接旋转、搭建、折展或切开立体，关联各视图。','换形状或折法，先预测再检查面、边及截面。','拓扑计数、遮挡、合法展开图与截面的几何一致性。','hidden-cubes'),
+ 'measure': ('比较、测量与单位','选择属性和单位，估计后测量或换单位，解释精度。','换工具、量程或非整刻度值，检查单位是否合适。','单位迭代无空隙、读数起点、换算、误差和量纲。',None),
+ 'area': ('铺满、围边与重排','铺单位方格、展开边界、剪拼重组，比较面积和周长。','构造同面积不同周长或新复合图形，解释所用方法。','面积守恒、重叠与遗漏、周长和内边界的区别、公式条件。','bee-builder'),
+ 'volume': ('填充、拆层与拆合','旋转、填充和拆层计数，构造与分解立体并留下计划。','换尺寸、形状与视角，在揭示之前独立规划计数或分解。','单位立方体、隐藏块、层数乘积、无重叠分解；面积不能当体积。','hidden-cubes'),
+ 'time': ('钟面、时间轴与日历','拨钟、安排事件、沿时间轴量经过的时长。','跨整点、跨日或更换钟面表示后重新安排。','六十进制、时刻与时长、日期边界和上午下午。',None),
+ 'money': ('等值支付、找零与预算','组合货币、模拟交易或比较预算，解释选择和核算过程。','换价格和约束，估算再精确计算，并检查找零。','货币单位、整数分的精确计算、税率折扣基准；不同币制不可静默互换。',None),
+ 'pattern': ('规则生成与反例','拖放或生成序列，找最小重复片段或增长规则。','换起点、问远处一项、构造能推翻猜测的例子。','有限例子不唯一确定规则；区分观察、猜测与一般说明。',None),
+ 'algorithm': ('执行、修改与追踪规则','执行简单指令或小表格，逐步追踪生成的数并修正算法。','换输入或边界，检查遗漏、重复和停止条件。','规则精确定义、过程可追踪、输出集合与终止条件。',None),
+ 'balance': ('相等与未知量','用平衡或对应模型表现未知量，保持两边关系并求解。','改变未知量位置或条件，建立关系后再检查解。','等号对称、等量变换、检验代回；模型不适用时需说明。',None),
+ 'algebra': ('式子的不同表示','用拼块、面积或符号改写表达式，将每步改写与关系对应。','换值、参数或结构，检查改写是否恒等或只在特定条件成立。','同类项、分配律、定义域和恒等式与方程的区别。',None),
+ 'function': ('两个量、表格与图线','改变输入，建立表格和图像，比较不同变化关系。','换参数或让孩子反向从图像建立关系。','坐标和单位一致、离散连续区别、斜率及二次关系的条件。',None),
+ 'explain': ('作品、说明与质疑','借已有数学任务选择表示、留下推理作品，比较说明并回应反例。','换一个任务，说明工具和推理为何仍适用或需要改变。','按每个源目标保留解释证据；没有可靠判断时记录为待评，不宣称掌握。',None),
+ 'data-collect': ('问题、分类与记录','明确问题，设计类别，收集或整理一组可核查的数据。','换问题或加入异常记录，修改收集方案与分类。','数据来自哪里、每条是否计入、类别互斥完备及缺失和重复。',None),
+ 'data-display': ('数据与多种图表','用同一份原始记录构造表和图，切换并回答真实比较问题。','换数据、比例尺或表达目的，选图并解释限制。','总量、图例、刻度、单位一致；连续数据不能任意当类别处理。',None),
+ 'statistics': ('分布、代表值与抽样','拖动数据点或重抽样，观察代表值、差异及推断如何变化。','更换偏斜、离群值或抽样方法，比较结论的可靠程度。','统计量定义、样本总体、误差与变异；相关不能自动当因果。',None),
+ 'chance': ('预测、试验与模拟','先预测可能结果，再重复试验，比较短期结果与长期模式。','换装置或次数，解释不确定性而非背下固定频率。','概率范围与和、等可能条件、随机性和可重现的测试种子。',None),
+ 'chance-tree': ('列举结果与条件变化','构造结果树或集合图，计数并比较有无放回或条件变化。','更换条件，检查漏列重列及独立性假设。','互斥完备、交并关系、分支概率及依赖条件。',None),
+}
+ASSETS = {
+ 'local-fractions': {
+  'label': '本地分数活动', 'paths': ['dist/exploration-content.js','dist/exploration.js','dist/journey-model.js','dist/journey.js'],
+  'reuse': '复用已有分割、数轴、百格、任务草稿与证据记录的适用部分。',
+  'limit': '只有 EXISTING 中三个源节点有早期完整活动；A03 仍为预览；新目标必须新增任务和验证。'},
+ 'hidden-cubes': {
+  'label': 'Hidden Cubes',
+  'paths': ['vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/design.md','vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/app.js','vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/tasks.js'],
+  'reuse': '旋转、填充、拆层、先提交后揭示及任务选择/计分分离。mt_d7XktBQPxm 是示例明确锚点。',
+  'limit': '其他体积、展开、截面目标只借部分教具代码；不能由数隐藏块推定全目标覆盖。源码尚未接入本地应用。'},
+ 'bee-builder': {
+  'label': 'Bee Builder',
+  'paths': ['vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/design.md','vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/source/app.js','vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/ANIDOODLE-NOTICE.txt'],
+  'reuse': '精确二维图形、边界展开、共享边和等面积比较的适用部分。',
+  'limit': '蜂巢示例不是所有形状或面积节点的完整课程；不将二维目标强制做成三维。保留素材许可说明。'},
+}

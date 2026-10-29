@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "open the actual triangular-prism task",
+    "fold stops halfway",
+    "half-fold changes the actual canvas",
+    "direct drag rotates the 3D net",
+    "unfinished fold survives reload",
+    "actual viewpoint survives reload",
+    "fully folded canvas differs from halfway",
+    "folded net completes through controls",
+    "desktop layout fits",
+    "upstream example opens and places a cube",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

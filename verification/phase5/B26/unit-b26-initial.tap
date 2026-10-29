@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: B26 pythagoras initial cannot complete, constructed work and replay
+ok 1 - B26 pythagoras initial cannot complete, constructed work and replay
+  ---
+  duration_ms: 6.566167
+  type: 'test'
+  ...
+# Subtest: B26 trigbasics initial cannot complete, constructed work and replay
+ok 2 - B26 trigbasics initial cannot complete, constructed work and replay
+  ---
+  duration_ms: 1.976125
+  type: 'test'
+  ...
+# Subtest: 2 source nodes, 10 tasks, one route and 2 directed source connections
+ok 3 - 2 source nodes, 10 tasks, one route and 2 directed source connections
+  ---
+  duration_ms: 3.076958
+  type: 'test'
+  ...
+# Subtest: actual edge squares have areas a squared, c squared, b squared under rotation
+ok 4 - actual edge squares have areas a squared, c squared, b squared under rotation
+  ---
+  duration_ms: 0.159792
+  type: 'test'
+  ...
+# Subtest: area observation requires both sizes and the real hypotenuse first
+ok 5 - area observation requires both sizes and the real hypotenuse first
+  ---
+  duration_ms: 0.743958
+  type: 'test'
+  ...
+# Subtest: a non-right triangle is not treated as a right triangle after rotation
+ok 6 - a non-right triangle is not treated as a right triangle after rotation
+  ---
+  duration_ms: 0.119917
+  type: 'test'
+  ...
+# Subtest: hypotenuse versus leg determines add or subtract and length is not area
+ok 7 - hypotenuse versus leg determines add or subtract and length is not area
+  ---
+  duration_ms: 0.15875
+  type: 'test'
+  ...
+# Subtest: coordinate distance accepts both genuine right-angle paths
+ok 8 - coordinate distance accepts both genuine right-angle paths
+  ---
+  duration_ms: 1.41875
+  type: 'test'
+  ...
+# Subtest: pending changes cannot reuse a prior length or trigonometry answer
+ok 9 - pending changes cannot reuse a prior length or trigonometry answer
+  ---
+  duration_ms: 0.284834
+  type: 'test'
+  ...
+# Subtest: changing reference angle swaps opposite and adjacent, never hypotenuse
+ok 10 - changing reference angle swaps opposite and adjacent, never hypotenuse
+  ---
+  duration_ms: 0.317833
+  type: 'test'
+  ...
+# Subtest: same-angle length ratios stay constant as the actual triangle scales
+ok 11 - same-angle length ratios stay constant as the actual triangle scales
+  ---
+  duration_ms: 0.169416
+  type: 'test'
+  ...
+# Subtest: correct known/unknown pair selects sin, cos or inverse tan, in degrees
+ok 12 - correct known/unknown pair selects sin, cos or inverse tan, in degrees
+  ---
+  duration_ms: 0.076792
+  type: 'test'
+  ...
+# Subtest: wrong ratio is retained even if corrected before completion
+ok 13 - wrong ratio is retained even if corrected before completion
+  ---
+  duration_ms: 0.27175
+  type: 'test'
+  ...
+# Subtest: help is replayable and does not itself complete work
+ok 14 - help is replayable and does not itself complete work
+  ---
+  duration_ms: 0.042625
+  type: 'test'
+  ...
+# Subtest: free text is escaped and not automatically judged as mastery
+ok 15 - free text is escaped and not automatically judged as mastery
+  ---
+  duration_ms: 0.255417
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 111.119917

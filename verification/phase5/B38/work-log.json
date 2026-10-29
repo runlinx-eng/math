@@ -1,0 +1,11 @@
+{
+  "batch": "B38",
+  "startedAt": "2026-10-28T19:40:06+08:00",
+  "finishedAt": "2026-10-28T19:59:12+08:00",
+  "snapshot": "snapshots/v42-before-b38-20261028T194006.tar.gz",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "activeHours": null,
+  "checks": "verification/phase5/B38/summary.json"
+}

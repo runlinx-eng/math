@@ -1,0 +1,98 @@
+[
+  {
+    "path": "sw.js",
+    "sha256": "c000e3df695a7a711f19059a10583149f2d1fcc65b19579d9a092467a93e3675",
+    "bytes": 4834,
+    "match": true
+  },
+  {
+    "path": "space.js",
+    "sha256": "6b274c6a299f1b69717a33914621b57201a8f56ce49c37a43adc756e09ad30ca",
+    "bytes": 41832,
+    "match": true
+  },
+  {
+    "path": "exploration.js",
+    "sha256": "9bdba261838f9e280ff97d2e42b2d9534fe54c0d7821a7c3892e4b70491be5ef",
+    "bytes": 51203,
+    "match": true
+  },
+  {
+    "path": "learning/learn.js",
+    "sha256": "8ef32dbe0a17f8e525f9f874827d799b7166b9062b57fc62ba0c97acd757eada",
+    "bytes": 38642,
+    "match": true
+  },
+  {
+    "path": "learning/learn.css",
+    "sha256": "77844b70030a37ad8df2b5cfb43f483fc58c66e2db2f799add0fd0d3c57040e3",
+    "bytes": 15977,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/catalog.js",
+    "sha256": "43cca279ad5f4fb235bdcef75cdfcb6d6f71257a9165ac6fa5ef0c9eeeaa7693",
+    "bytes": 1318,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/engine.js",
+    "sha256": "65a6b2b98e4cd7f67ced4b7e2e9b5dfa95bebc9afb1662b9f36ae93290f10e64",
+    "bytes": 4088,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b19.js",
+    "sha256": "ff0a90595f4378a16af3963d072f9798e374075621af698455be841de852bb0a",
+    "bytes": 16495,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b19-model.js",
+    "sha256": "6555392dac86e060dba5007b1ed3b315cd85cc1fe6920d6da11f91c5dc119497",
+    "bytes": 16414,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b19-view.js",
+    "sha256": "592e61cbce9abac0565ec536fdb52fa4b397b0eac753c60b4165d9bd63bbfbfb",
+    "bytes": 13945,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b19.css",
+    "sha256": "3e8d928e2854f0068444e2b057ae7dc6916156273c362c32826cc85a40ab1933",
+    "bytes": 3655,
+    "match": true
+  },
+  {
+    "path": "learning/catalog.js",
+    "sha256": "d8493e693e09243454b2382eff62cb33d7d8e9dd48fd23c073603e18c3706064",
+    "bytes": 6528,
+    "match": true
+  },
+  {
+    "path": "learning/state.js",
+    "sha256": "988b5b208fc3abf419198f1b15c66a1f4380c4631730c5a165c386523219122b",
+    "bytes": 5026,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/b04.js",
+    "sha256": "f0be323b84e37edc26f7e33b0171fdd351afb2a078d8dd6fe3531fd7db4f1759",
+    "bytes": 9797,
+    "match": true
+  },
+  {
+    "path": "data/atlas.json",
+    "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "bytes": 1051830,
+    "match": true
+  },
+  {
+    "path": "exploration-content.js",
+    "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+    "bytes": 7895,
+    "match": true
+  }
+]

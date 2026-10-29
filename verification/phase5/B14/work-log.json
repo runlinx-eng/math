@@ -1,0 +1,10 @@
+{
+  "batch": "B14",
+  "startedAt": "2026-10-26T06:13:38.390054+00:00",
+  "snapshot": "snapshots/v18-before-b14-20261026T061338Z.tar.gz",
+  "activeHours": null,
+  "note": "No child trial; wall time is not measured labor.",
+  "endedAt": "2026-10-26T07:20:09.986024+00:00",
+  "status": "content-and-technical-checks-complete",
+  "childTrial": false
+}

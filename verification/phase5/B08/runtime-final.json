@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-25T07:13:06.987Z",
+  "healthStatus": 200,
+  "health": {
+    "app": "local-math-explorer",
+    "version": 1
+  },
+  "counts": {
+    "themes": 5,
+    "packs": 23,
+    "nodes": 587,
+    "edges": 1223
+  },
+  "progress": "0 / 118",
+  "cache": "math-explorer-20261025-learning-v13",
+  "cachedResources": 86,
+  "availableNodes": 118,
+  "nodeTasks": 363,
+  "routes": 39,
+  "connections": 56,
+  "newModules": true,
+  "finalWordVariant": true,
+  "precacheResources": 85
+}

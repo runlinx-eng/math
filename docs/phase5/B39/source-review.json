@@ -1,0 +1,1745 @@
+[
+  {
+    "topic": {
+      "id": "mt_Yw27nweoTj",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Estimating answers (age 13+)",
+      "description": "Use graphs of linear and quadratic functions to estimate output values for given inputs, find approximate solutions to equations, and interpret graphical information in real-world contexts",
+      "ageRangeStart": 13,
+      "ageRangeEnd": 14,
+      "centrality": 0.1672025723472669,
+      "evidence": [
+        "Read off an approximate y-value for a given x from a plotted curve",
+        "Find approximate solutions to an equation by identifying where a graph crosses the x-axis or another line",
+        "Interpret a real-world graph (e.g., distance–time) to answer contextual questions"
+      ],
+      "assessmentPrompt": "Can {{name}} use a graph — whether a straight line or a curve — to read off an answer to an equation approximately, rather than solving it algebraically?",
+      "standards": [
+        "ccss-math:8.F.5",
+        "uk-nc-2013:KS3.Maths.Alg.12",
+        "uk-nc-2013:KS3.Maths.Alg.13"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/705",
+    "research": {
+      "topicId": "mt_Yw27nweoTj",
+      "pedagogy": {
+        "summary": "Estimating from a graph means reading a value the graph gives: an output y for a given input x, an approximate solution where a curve or line meets the x-axis or another graph, or a contextual quantity from a real-world graph. It is inherently APPROXIMATE — read to the nearest sensible interval, using the axis scale. It is best taught with an explicit 'up-and-across' reading routine, always stating the scale first, and treating crossing points (with the x-axis, or between two graphs) as solutions to be read and then checked.",
+        "bestPractices": [
+          "Teach a consistent reading routine: find the given value on one axis, travel to the graph, then across to the other axis, drawing the path so it can be checked.",
+          "State the scale of each axis before reading, and read to the nearest sensible fraction of a grid square — an estimate, not false precision.",
+          "Treat x-axis crossings as approximate solutions of 'f(x) = 0', and the intersection of two graphs as values satisfying both.",
+          "For a parabola, look for TWO crossings (or one, or none) rather than stopping at the first.",
+          "Sense-check every read-off value against the context — its units and a realistic range."
+        ],
+        "keyRepresentations": [
+          "'Up and across' reading lines drawn onto the graph",
+          "x-axis crossings as roots/solutions; intersection of two graphs as a common solution",
+          "Real-world axes (distance-time, cost) with a clearly labelled scale",
+          "A read-off shown as a band ('between 2 and 2.5, about 2.25') rather than a single false-precise figure"
+        ],
+        "commonMisconceptions": [
+          "Reads against the wrong scale (assumes each square is one unit) or reads off the wrong axis.",
+          "Gives a single false-precise value instead of an estimate to a sensible interval.",
+          "Stops at the first x-axis crossing, missing a parabola's second root.",
+          "Confuses where a single line crosses an AXIS with where two graphs intersect each other."
+        ]
+      },
+      "learn": {
+        "summary": "Learners estimate values from plotted linear and quadratic graphs using a consistent 'up-and-across' reading routine: state the axis scale first, find the given value on one axis, travel to the graph, then across to read the other axis. Reading is inherently approximate — report to a sensible interval, not false precision. Treat x-axis crossings as approximate solutions of f(x)=0 (a parabola has two, one, or none), and the intersection of two graphs as a value satisfying both. Real-world graphs (distance–time, cost) are read for contextual quantities with attention to units and realistic range.",
+        "activities": [
+          {
+            "title": "Up-and-across reading with the scale stated first",
+            "feedback": [
+              "If read-off values are halved or doubled relative to the labelled axis, state the scale aloud and count grid units deliberately before reading.",
+              "If a learner writes 'y = 2' as if exact, or an over-precise 'y = 2.247', model reading a band: 'between 2 and 2.5, so about 2.25' — the goal is a sensible estimate.",
+              "Ask: 'If the axis went up in 2s instead of 1s, would your answer change? Why?' to surface scale-dependence."
+            ],
+            "rationale": "Misinterpreting the axis scale (not noticing the interval each grid line represents) is a documented graph-reading difficulty, and giving false-precise values is a commonly reported (though, in this row, unverified) error; an explicit scale-first routine and an estimate-as-band habit are proposed to target both directly.",
+            "sourceClaims": [
+              "Reading values from a graph and misinterpreting the axis scale (failing to notice the interval each grid line represents) are documented student difficulties, and real-world (distance-time) graphs must be read for contextual quantities.",
+              "KS3 pupils should 'use linear and quadratic graphs to estimate values of y for given values of x and vice versa and to find approximate solutions of simultaneous linear equations'."
+            ],
+            "learnerActions": [
+              "Before reading anything, state aloud what one grid square represents on each axis (e.g. 'each square is 1 unit' or 'each square is 2 units').",
+              "For a plotted curve, draw a line up from a given x-value to the curve, then across to the y-axis, and record the estimated y.",
+              "Read a value to the nearest sensible fraction of a grid square, writing it as a band (e.g. 'between 2 and 2.5, about 2.25') rather than a single over-precise figure.",
+              "Re-read the same physical point after the grid interval changes (e.g. squares now worth 2) and note how the number changes while the point does not."
+            ],
+            "intendedInsight": "A read-off value depends on the axis scale, so checking the scale comes before trusting any number; a value between grid lines is an estimate given to a sensible interval, not an exact figure."
+          },
+          {
+            "title": "Finding both roots of a parabola",
+            "feedback": [
+              "If a learner gives only one x for 'y = 0', point to the other branch — 'does the curve meet the x-axis anywhere else?' — and use the symmetry; scaffold rather than reteach.",
+              "If a learner answers 'y = 0' with −4 or (0, −4) (the y-intercept), clarify: 'y = 0 means the height is zero — where does the curve actually meet the x-axis?' and mark that axis.",
+              "For y = 5, check both symmetric branches are given (e.g. x ≈ 3 and x ≈ −3)."
+            ],
+            "rationale": "Missing a parabola's second symmetric root and confusing axis crossings are reported errors (the supporting source is marked unverified in the row); explicit symmetry prompts and a y=0-versus-y-intercept distinction are proposed to address them.",
+            "sourceClaims": [
+              "Missing a parabola's second (symmetric) root when reading solutions, and giving false-precise single values instead of estimates, are common graph-reading errors.",
+              "KS3 pupils should 'use linear and quadratic graphs to estimate values of y for given values of x and vice versa and to find approximate solutions of simultaneous linear equations'."
+            ],
+            "learnerActions": [
+              "On a parabola such as y = x² − 4, find every x-value where the curve meets the x-axis (where height = 0), not just the first one encountered.",
+              "Use the symmetry of the curve: after finding one crossing, look on the opposite branch for its partner (a parabola that only touches the x-axis at its vertex has just one, and one that never reaches the x-axis has none).",
+              "Given a target height (e.g. y = 5), find both symmetric x-values that reach it, and read each as an estimate.",
+              "Distinguish 'y = 0' (where the curve meets the x-axis) from the y-intercept (where the curve meets the y-axis, here −4)."
+            ],
+            "intendedInsight": "'Find where y = 0' can have two answers for a parabola, located symmetrically; stopping at the first crossing misses a root, and the x-axis crossings are different from the y-intercept."
+          },
+          {
+            "title": "Intersections as shared solutions, and checking read-offs",
+            "feedback": [
+              "If a learner confuses an axis crossing with a graph–graph intersection, label each explicitly on the diagram and ask which question each answers.",
+              "Prompt: 'If I asked where this curve meets the line y = x, how would you find that from the graph?' then check the substitution.",
+              "For real-world graphs, ask whether the answer's units and magnitude are realistic for the situation."
+            ],
+            "rationale": "Treating an intersection as the common solution and checking a read-off against the equation (because poor scale or unlabelled axes yield wrong reads) are documented practices; real-world interpretation is a stated curriculum aim.",
+            "sourceClaims": [
+              "The intersection of two plotted graphs is read as the solution satisfying both; an inaccurately plotted graph (poor scale, unlabelled axes) yields a wrong read-off, so a read solution should be checked (Mia's graphical sample response).",
+              "Reading values from a graph and misinterpreting the axis scale (failing to notice the interval each grid line represents) are documented student difficulties, and real-world (distance-time) graphs must be read for contextual quantities."
+            ],
+            "learnerActions": [
+              "Read the intersection point of two plotted graphs (e.g. a curve and the line y = x) as the value(s) satisfying both.",
+              "Distinguish where a single line crosses an axis from where two graphs cross each other.",
+              "After reading a solution from a graph, substitute it back to check that it approximately satisfies the equation(s) (both sides come out close, not necessarily exactly equal), especially when the plot may be inaccurately drawn.",
+              "Interpret a real-world graph (e.g. distance–time) to answer a contextual question, stating units and sense-checking against a realistic range."
+            ],
+            "intendedInsight": "An intersection of two graphs gives the value(s) common to both; a graphical read-off is approximate and can be wrong if the plot is inaccurate, so solutions should be checked and sense-checked against context."
+          }
+        ],
+        "constraints": [
+          "Report read-offs as estimates to a sensible interval (a band), not false-precise single values; the task is approximation using the axis scale.",
+          "State each axis scale before reading; do not assume one square equals one unit.",
+          "A static graph with pre-drawn read-off lines can demonstrate the routine but does not let the learner perform the reading across many different values, so pair any worked reference with active reading practice.",
+          "Recognition-only responses (e.g. multiple-choice on 'how many solutions') can check understanding of root count but do not by themselves elicit the learner drawing and executing the up-and-across reading; include tasks where the learner produces the reading lines and values.",
+          "An interactive draggable marker is one way to rehearse the routine and make dual roots salient; it is an optional scaffold, not a requirement — the same routine can be taught with pencil-and-paper reading lines on a printed graph."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite without fresh source verification; sources were not re-fetched this session, and all activities are research-informed proposals, not validated interventions.",
+          "The source claim about missing a parabola's second root and false-precise values is marked verified:false in the row; treat it as a plausible but unconfirmed documented error (used in activities 1 and 2) and do not overstate its evidentiary strength.",
+          "The legacy row asserted '3D adds nothing' and that 'an open dialogue cannot rehearse the act of reading off a graph'; these are catalog-fit opinions, not established pedagogical laws, and have been softened — reading plotted graphs is a planar task well served by 2D representations, while discussion can still support reasoning about scale, symmetry and checking, even though it does not itself execute the reading.",
+          "Self-audit of worked values for y = x² − 4: at x = 2.5, y = 2.25 (6.25 − 4), consistent with 'about 2.2–2.3'; y = 0 at x = ±2; y = 5 at x = ±3 (9 − 4). These are arithmetically correct and retained.",
+          "The KS3 claim supports both estimating y for a given x (activity 1) and reading x for a given y — including y = 0 roots and y = 5 — through its explicit 'and vice versa' wording, so its retention in activities 1 and 2 is on-principle, not merely topical.",
+          "The interactive 'live highlighting of crossing points' and 'scale toggle' are preserved as optional mechanism examples, not mandated features."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "You read y at x = 2.5. If the axis went up in 2s instead of 1s, would your answer change? Why?",
+          "You found x = 2 gives y = 0. Is there another x that also gives y = 0? How does the shape of the curve tell you?",
+          "How sure are you of that value — could you write it as a range rather than a single number?",
+          "If I asked you where this curve meets the line y = x, how would you find that from the graph?"
+        ],
+        "correctAnswer": "(a) y ≈ 2.25 (read up from x = 2.5 to the curve, then across — about 2.2–2.3). (b) x = −2 AND x = 2 — both crossings of the x-axis. (c) x ≈ 3 and x ≈ −3 — the curve reaches height 5 on both branches. Values are read as estimates to a sensible interval, using the stated scale.",
+        "errorPatterns": [
+          {
+            "kind": "performance",
+            "pattern": "Stops at the first crossing, missing the second root ('y = 0 when x = 2')",
+            "nextMove": "Point to the other branch — 'does the curve sit on the x-axis anywhere else?' — and use the symmetry; scaffold rather than reteach.",
+            "distractor": null,
+            "revealedBy": "Gives only x = 2 for part (b), or only one x for part (c), ignoring the symmetric partner.",
+            "reteachPrerequisiteId": "mt_GZuoYaDdWd"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads against the wrong scale, treating each square as one unit when the axis says otherwise",
+            "nextMove": "State the scale aloud before each read and count grid units deliberately.",
+            "distractor": null,
+            "revealedBy": "Read-off values are inconsistent with the labelled axis — e.g. halved or doubled.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Insists on a single exact value, refusing to give an estimate or a range for a point between grid lines",
+            "nextMove": "Model reading a band ('between 2 and 2.5, so about 2.25'); the goal is a sensible estimate.",
+            "distractor": null,
+            "revealedBy": "Writes 'y = 2' as if exact, or an over-precise 'y = 2.247', ignoring that the reading lies between grid lines.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads off the wrong axis / crossing: for 'y = 0' gives the y-intercept (−4, where the curve meets the y-axis) instead of the x-axis crossings",
+            "nextMove": "Clarify 'y = 0 means the height is zero — where does the curve actually sit ON the x-axis?'; mark that axis.",
+            "distractor": null,
+            "revealedBy": "Answers part (b) with −4 or (0, −4) rather than x = ±2.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot execute the up-and-across reading, reads the wrong axis, or ignores the scale; gives one root only.",
+          "full": "Reads outputs to a sensible estimate on the correct scale, finds BOTH roots using symmetry, can read an intersection/solution, and states appropriate precision — transferring the reading routine to a new value and to an intersection of two graphs.",
+          "partial": "Reads single output values correctly using the scale, but stops at one root or treats an estimate as exact — performs individual reads without coordinating symmetry or approximation across the whole task."
+        },
+        "diagnosticPrompt": "Here is the graph of y = x² − 4, drawn on axes where each square is one unit. Using the graph and showing your reading lines each time: (a) what is y when x = 2.5? (b) for which values of x is y = 0? (c) roughly what is x when y = 5?",
+        "whatMakesItDiscriminate": "Part (a) shows whether the child reads up-and-across on the correct scale; part (b) separates those who give BOTH roots from those who stop at one; part (c) exposes whether they recognise two symmetric x-values and offer an estimate rather than a false-precise number. Watching the reading lines, not asking about the method, is what reveals the procedure."
+      },
+      "sources": [
+        {
+          "claim": "Reading values from a graph and misinterpreting the axis scale (failing to notice the interval each grid line represents) are documented student difficulties, and real-world (distance-time) graphs must be read for contextual quantities.",
+          "source": "Mathematics Assessment Project, 'Interpreting Distance–Time Graphs' — Common Issues table",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1680",
+          "verified": true
+        },
+        {
+          "claim": "The intersection of two plotted graphs is read as the solution satisfying both; an inaccurately plotted graph (poor scale, unlabelled axes) yields a wrong read-off, so a read solution should be checked (Mia's graphical sample response).",
+          "source": "Mathematics Assessment Project, 'Solving Linear Equations in Two Variables' — teacher guide (Mia sample response)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1730",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils should 'use linear and quadratic graphs to estimate values of y for given values of x and vice versa and to find approximate solutions of simultaneous linear equations'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Missing a parabola's second (symmetric) root when reading solutions, and giving false-precise single values instead of estimates, are common graph-reading errors.",
+          "source": "Documented graph-reading errors (not fetched this session)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1680",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T16:08:23.827Z",
+        "updatedAt": "2026-10-19T15:21:48.179Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/1005",
+    "connections": [
+      {
+        "topicId": "mt_Yw27nweoTj",
+        "prerequisiteId": "mt_-3udyo6VyB",
+        "strength": "hard",
+        "reason": "Reading approximate values from graphs requires graph-plotting experience"
+      },
+      {
+        "topicId": "mt_Yw27nweoTj",
+        "prerequisiteId": "mt_GZuoYaDdWd",
+        "strength": "soft",
+        "reason": "Estimating from quadratic graphs requires understanding how curves behave"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_RFeVlw0QvX",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Finding efficient methods",
+      "description": "Notice when a calculation or pattern repeats and use this to count more efficiently or predict results",
+      "ageRangeStart": 5,
+      "ageRangeEnd": 6,
+      "centrality": 0.01071811361200429,
+      "evidence": [
+        "Notice that skip counting by 2s follows a repeating odd/even pattern",
+        "Recognise that adding 1 to any number always gives the next counting number",
+        "Use a repeated pattern (e.g. +10 on a hundred chart always moves down one row) to predict answers"
+      ],
+      "assessmentPrompt": "When {{name}} is counting or doing repeated additions, have they started to notice the pattern — like \"5, 10, 15, 20…\" — and used it to predict the next number without counting one by one?",
+      "standards": [
+        "ccss-math:MP.8"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/920",
+    "research": {
+      "topicId": "mt_RFeVlw0QvX",
+      "pedagogy": {
+        "summary": "At 5-6 this is the seed of MP8: noticing that a calculation or move REPEATS and using that to count more efficiently or predict, rather than starting from scratch each time. The child sees that adding 1 always gives the next counting number, that skip-counting in 2s produces a steady odd/even rhythm, and that +10 on a hundred square always drops you straight down one row. CCSS MP8 begins here — 'notice if calculations are repeated, and look for… shortcuts' — and the teaching job is to prompt the child to expect the repeat and test it ('will it happen again?'), not to hand over the rule.",
+        "bestPractices": [
+          "Use the hundred square so +10 is a physical, repeatable move (straight down a row) the child can predict before checking",
+          "Prompt prediction: 'what will happen next? will it keep happening?' so the child forms and tests an expectation rather than counting afresh",
+          "Skip-count with a visible rhythm (steps on a number track, claps) so the repeating structure is heard and seen, and highlight the odd/even alternation",
+          "Deliberately extend a pattern one more step together and confirm the rule held, building the habit of using a noticed repeat to predict"
+        ],
+        "keyRepresentations": [
+          "Hundred square (rows make +10 a repeated downward move)",
+          "Number track / number line for +1 and skip-count steps",
+          "Bead string or steps grouped in 2s, 5s, 10s",
+          "Ten-frames showing the steady 'one more' growth"
+        ],
+        "commonMisconceptions": [
+          "Counts in ones every time instead of using the repeated +10 move, treating each sum as brand new",
+          "Sees a pattern work once but does not expect it to continue, so won't use it to predict",
+          "Loses the skip-count structure partway (2, 4, 6, 8, 9) by reverting to counting in ones",
+          "Thinks 'the next number' and 'one more' are unrelated ideas rather than the same repeated +1"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 5-6, this is the seed of noticing that a calculation or move REPEATS and using that to count more efficiently or predict, rather than starting afresh each time. Children learn that adding 1 always gives the next counting number, that skip-counting in 2s from 2 lands on every second number (the even numbers, skipping the odd ones between), and that on a standard hundred square with 1 in the top row, +10 moves you straight down one row whenever there is a row below. The teaching job is to prompt the child to expect the repeat and test it ('will it happen again?'), not to hand over the rule. The most developed activity has the child predict the next repeat and then see it happen; recognition checks and highlighted references play supporting roles.",
+        "activities": [
+          {
+            "title": "Predict-the-jump hundred square",
+            "feedback": [
+              "If the child counts ten squares each time rather than jumping straight down, don't drill the rule — keep asking them to predict the next jump before checking, until they stop recounting.",
+              "If the child gets 34 by the move but re-counts for 44 as if it might be different, ask 'will it happen again? shall we test it?' and confirm together across several jumps so they build the expectation that the pattern repeats.",
+              "When the child predicts correctly without recounting and says it works 'the same as before', confirm that the move repeats every time and invite them to put the reason in their own words."
+            ],
+            "rationale": "Repeated reasoning is learned by predicting the next repeat and seeing it happen; a hundred square makes +10 a physical, repeatable downward move the child can forecast then confirm. Predict-then-check is what turns 'it repeats' into an expectation rather than a memorised rule. An optional live counter that drops straight down one row, or a lit path, makes the mechanism concrete, but a paper hundred square with a movable token can serve the same purpose; the choice of medium is an optional mechanism, not established as more effective.",
+            "sourceClaims": [
+              "MP8 begins with noticing repeated calculations and looking for shortcuts; upper-elementary and younger students notice repetition and use it to predict/generalise",
+              "Early maths should build understanding of the number system and counting structures using representations (e.g. number tracks, hundred squares) that make repeated patterns visible"
+            ],
+            "learnerActions": [
+              "Point to 24 on a hundred square.",
+              "Before moving anything, say out loud where you think 24 + 10 will land.",
+              "Move a counter straight down one row to land on 34 and check your guess.",
+              "Do it again: predict 34 + 10, then land on 44; then predict 44 + 10 and land on 54.",
+              "After a few jumps, try to say where the next +10 will land without looking closely — notice you no longer need to recount.",
+              "Try a jump from a different starting number (e.g. 'will adding ten from 57 still go straight down a row? shall we check?') to test whether the repeat always holds."
+            ],
+            "intendedInsight": "On this hundred square (1 in the top row), adding ten moves you straight down one row each time there is a row below, so once you notice the repeat you can predict the next result instead of counting ten squares each time."
+          },
+          {
+            "title": "Skip-count rhythm track",
+            "feedback": [
+              "If the child loses the structure partway (e.g. 2, 4, 6, 8, 9) by slipping back to counting in ones, re-anchor the rhythm with a beat or steps and rebuild the count. This is the skip-count structure still consolidating, not a fact error.",
+              "If the child can call the next number before reaching it, highlight that they used the repeating rhythm rather than counting every number.",
+              "Use 'is 7 in your counting-by-2s?' to check whether the child notices the odd/even structure, not just the next number."
+            ],
+            "rationale": "A visible, audible rhythm (steps, claps, a lit step on every 2nd count) makes the repeating structure felt, and highlights the odd/even alternation. Anticipating the next step builds the habit of using a noticed repeat to predict. An optional track that lights every second step with a beat makes the rhythm concrete; beads, steps, or claps can serve the same purpose.",
+            "sourceClaims": [
+              "Early maths should build understanding of the number system and counting structures using representations (e.g. number tracks, hundred squares) that make repeated patterns visible"
+            ],
+            "learnerActions": [
+              "Count in 2s along a number track or line of steps: 2, 4, 6, 8, ...",
+              "Add a steady beat (clap, drum, or stepping) on each number so the repeating rhythm is heard as well as seen.",
+              "After a few steps, try to call the next number before you reach it.",
+              "Notice which numbers you land on and which you skip; talk about the odd/even alternation.",
+              "Answer: 'Is 7 in your counting-by-2s? Why not?' and 'What comes after 2, 4, 6, 8 — how did you know without counting all of them?'"
+            ],
+            "intendedInsight": "Skip-counting in 2s follows a repeating, predictable rhythm with a steady even pattern, so you can anticipate the next number instead of counting in ones."
+          },
+          {
+            "title": "Distinguish the +1 move from the +10 move",
+            "feedback": [
+              "If the child thinks 'the next number' and 'one more' are unrelated ideas, show that adding one always produces the next counting number — they are the same repeated +1 move.",
+              "Use 'does adding ONE also go straight down a row, or somewhere else?' to check the child tells the +10 repeat apart from the +1 move (adding one moves to the next counting number — usually one place along the row — not down a row)."
+            ],
+            "rationale": "A common difficulty is treating 'the next number' and 'one more' as separate ideas, and confusing which repeated move does what. Contrasting +1 and +10 on the same representation makes each repeat distinct; a ten-frame showing the steady 'one more' growth reinforces that +1 gives the next counting number. The reliable invariant to emphasise is 'next counting number', since the sideways move is the usual case rather than universal on a hundred square.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "On the hundred square, show where adding 1 takes you from a number — usually one place to the right, to the next counting number (at the end of a row it continues at the start of the next row).",
+              "Then show where adding 10 takes you (straight down one row).",
+              "Optionally, use a ten-frame: add one counter and see the total become the next number — the same steady 'one more' step.",
+              "Say in your own words how the two moves are different.",
+              "Connect 'the next number' and 'one more': confirm these are the same repeated +1 move."
+            ],
+            "intendedInsight": "Different repeated moves have different fixed effects: +1 gives the next counting number, +10 drops down a row. 'One more' and 'the next number' are the same idea, not unrelated."
+          },
+          {
+            "title": "Light check: what comes next in the sequence",
+            "feedback": [
+              "A correct next number is encouraging, but ask the child to explain how they knew — this distinguishes using the noticed repeat from a lucky copy.",
+              "If the child cannot explain, return to the rhythm track and rebuild the repeat before asking again."
+            ],
+            "rationale": "A short sequence-completion check can confirm whether the repeat was noticed, but on its own a right answer may be a lucky copy, so it works best as a light follow-up after hands-on predicting, paired with a request to explain.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Fill in the missing number: 2, 4, 6, __.",
+              "Say how you knew without counting from the start."
+            ],
+            "intendedInsight": "Being able to continue the sequence and explain the repeat shows the pattern was genuinely noticed."
+          }
+        ],
+        "constraints": [
+          "The goal is that the child expects the move to REPEAT and uses it to predict — not memorising a stated rule. Do not simply hand over '+10 goes down a row'; prompt prediction and let the child test it.",
+          "Sequence-completion or next-number questions check whether a repeat was noticed but do not by themselves show the child formed an expectation that it repeats; a correct answer can be a lucky copy, so pair with an explanation prompt.",
+          "A static or highlighted hundred square (e.g. a lit +10 column) is a useful reference but does not let the child predict-then-check; use it alongside, not instead of, an activity where the child forecasts the next result.",
+          "Losing the skip-count structure partway is a developmental stage, not a fact error — re-anchor the rhythm rather than correcting as a mistake.",
+          "Predict from varied starting numbers, including later rows (e.g. 57), so the child tests that the repeat holds generally rather than only in a memorised example.",
+          "When contrasting +1 and +10, keep 'next counting number' as the reliable description of +1; the horizontal one-place move is the usual case but wraps at the end of a row."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The source claim that '3D adds load, not insight' for these flat grid/number-line patterns was not retained as a universal rule; tactile or 3D representations offer a different experience and were simply not the focus here. No comparative efficacy is established by the saved ratings.",
+          "The claim that open conversation 'offers nothing to notice repeating' was softened: discussion alone lacks a concrete object to predict on for this age, so it supports rather than replaces the hands-on work; it is not asserted that talk cannot contribute.",
+          "The choice of a live/digital counter versus a paper hundred square with a movable token is treated as an optional mechanism; no source establishes one medium as more effective than the other.",
+          "The arithmetic in all examples was checked: 24+10=34, 34+10=44, 44+10=54, 57+10=67 (down a row), and 2,4,6,8 are correct. The deliberate '2,4,6,8,9' is shown as a learner slip and framed as such, not taught as correct.",
+          "Adding 1 on a hundred square moves to the next counting number — usually one place to the right, but at the end of a row it continues at the start of the next row. The description was qualified so children are not taught '+1 is always across one'.",
+          "Skip-counting in 5s appears in the original key representations but is not exercised as its own learner action here; 2s (odd/even) and the +10 tens move are the focus, matching the stated evidence."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "Ask 'will adding ten always go straight down, even from 57? shall we check?' to see if the repeat is an expectation or a one-off",
+          "Counterexample tuned to this age: 'does adding ONE also go straight down a row, or somewhere else?' to check the child distinguishes the +10 repeat from the +1 move",
+          "Ask 'what comes after 2, 4, 6, 8? how did you know without counting all of them?' to surface reliance on the repeating rhythm",
+          "Ask 'is 7 in your counting-by-2s? why not?' to probe whether the odd/even structure of the repeat is noticed"
+        ],
+        "correctAnswer": "No single scored answer — listen for the child using the repeated move: 'adding ten goes straight down a row every time, so 34 is under 24 and 44 is under that.' The expectation that the move REPEATS is the target, not the cell.",
+        "errorPatterns": [
+          {
+            "kind": "developmental",
+            "pattern": "Counts on in ones (or counts ten cells) each time instead of reusing the 'down one row' move",
+            "nextMove": "Do NOT drill the rule; keep asking them to predict the next jump before checking on the hundred square until they stop recounting — the shortcut abstracts with repetition",
+            "distractor": null,
+            "revealedBy": "Child recounts squares for 34 and again for 44 rather than jumping straight down",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "developmental",
+            "pattern": "Sees +10 land one row down once but does not expect it to happen again, so won't predict 44",
+            "nextMove": "Ask 'will it happen again? shall we test it?' and confirm together across several jumps so the child builds the expectation that the pattern repeats — do not simply assert the rule",
+            "distractor": null,
+            "revealedBy": "Child gets 34 by the move but re-counts for 44 as if it might be different",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "developmental",
+            "pattern": "Loses the skip-count structure partway (2,4,6,8,9) by slipping back to counting in ones",
+            "nextMove": "Re-anchor the rhythm with a beat/steps and rebuild the count; do not treat as a fact error — the skip-count structure is still consolidating",
+            "distractor": null,
+            "revealedBy": "Child breaks the 2s rhythm and inserts a one-step",
+            "reteachPrerequisiteId": "mt_nvdpxAJTBG"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Counts in ones every time and treats each jump/sum as new; no expectation that a move repeats",
+          "full": "Predicts the next result by reusing the repeated move (+10 down a row, next skip-count number) without recounting, and expects it to keep working — saying so in their own words",
+          "partial": "Uses the repeated move when reminded ('go down a row'), but reverts to counting for the next case and doesn't predict unprompted"
+        },
+        "diagnosticPrompt": "Here is 24 on the hundred square. Without counting, where will 34 be? And 44? How do you know where to look each time?",
+        "whatMakesItDiscriminate": "Landing on 34 by counting ten squares shows no repeated-reasoning insight; predicting it 'straight down, same as before' does. The tell is whether the child reuses the move without recounting and expects it to keep working for 44."
+      },
+      "sources": [
+        {
+          "claim": "MP8 begins with noticing repeated calculations and looking for shortcuts; upper-elementary and younger students notice repetition and use it to predict/generalise",
+          "source": "CCSS Standards for Mathematical Practice, MP8 'Look for and express regularity in repeated reasoning'",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP8/",
+          "verified": true
+        },
+        {
+          "claim": "Early maths should build understanding of the number system and counting structures using representations (e.g. number tracks, hundred squares) that make repeated patterns visible",
+          "source": "EEF, 'Improving Mathematics in the Early Years and Key Stage 1' guidance report",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/early-maths",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T14:26:41.575Z",
+        "updatedAt": "2026-10-19T15:21:15.932Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/765",
+    "connections": [
+      {
+        "topicId": "mt_fZTn0W_iZR",
+        "prerequisiteId": "mt_RFeVlw0QvX",
+        "strength": "hard",
+        "reason": "Age 6-7 generalising from repeated reasoning builds on age 5-6 noticing repeated patterns"
+      },
+      {
+        "topicId": "mt_RFeVlw0QvX",
+        "prerequisiteId": "mt_nvdpxAJTBG",
+        "strength": "soft",
+        "reason": "Skip counting exercises recognising repeating calculation patterns"
+      },
+      {
+        "topicId": "mt_RFeVlw0QvX",
+        "prerequisiteId": "mt_sYpKWbq5ra",
+        "strength": "soft",
+        "reason": "The +1 pattern in counting is the earliest repeated reasoning"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_mQcWGh02no",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Choosing the right strategy",
+      "description": "Select and use appropriate tools and representations strategically, including choosing between mental methods, jottings, formal algorithms, and calculators for arithmetic with multi-digit numbers, decimals, and fractions",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.04501607717041801,
+      "evidence": [
+        "Choose a mental method for 345 + 200 but a written method for 345 + 278",
+        "Select a ruler vs a metre stick based on the object being measured",
+        "Decide when a number line is more useful than base-ten blocks for a given problem"
+      ],
+      "assessmentPrompt": "When {{name}} faces a maths problem, do they think about which method suits it best — like doing easy ones in their head, using a written method for bigger calculations, or sketching a diagram for geometry?",
+      "standards": [
+        "ccss-math:MP.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/935",
+    "research": {
+      "topicId": "mt_mQcWGh02no",
+      "pedagogy": {
+        "summary": "At 7-8 the strategic choice widens to METHODS — mental, jottings, formal written algorithm, calculator — and to measuring tools chosen by the object. The defining act is READING the numbers first and picking a method that fits their features, rather than defaulting to the column algorithm for everything: 345+200 is a mental case (add two hundreds, other digits unchanged), while 345+278 (with regrouping) is where a written method earns its keep. EEF's guidance is explicit that pupils should learn a range of mental, written and calculator methods and make considered decisions about when each is appropriate and efficient, self-regulating so they make less but better use of any one method.",
+        "bestPractices": [
+          "Teach pupils to look at the numbers before choosing — sort calculations into 'do in your head', 'jot', 'write out', 'use a calculator' — so method follows the numbers (EEF Rec 4)",
+          "Present a range of methods and ask 'when is each appropriate and efficient?', building considered decision-making rather than a single default",
+          "Integrate the calculator as a checking tool and teach reasonableness checks, so pupils self-regulate ('less but better') rather than reaching for it or the algorithm reflexively (EEF)",
+          "Match measuring tools to the object's size and precision — ruler for a pencil, metre stick/tape for a room — and name why the wrong-scale tool fails",
+          "Prize the justification: two methods may both reach 545, so the assessable skill is the reason for the choice, not the answer"
+        ],
+        "keyRepresentations": [
+          "Mental methods (partitioning, known facts)",
+          "Jottings / empty number line",
+          "Formal columnar algorithm",
+          "Calculator (for checking and awkward numbers)",
+          "Measuring tools: ruler, metre stick, tape"
+        ],
+        "commonMisconceptions": [
+          "Applies the formal written method to everything, even 345+200 or 300+300, because it is the 'proper' way — missing the faster mental route (EEF: not self-regulating)",
+          "Attempts a regrouping calculation like 345+278 in the head and drops a carry, misjudging when a written method is needed",
+          "Trusts a calculator answer without a reasonableness check",
+          "Chooses a measuring tool that doesn't fit the object — a 30 cm ruler for a room — ignoring range and cumulative error"
+        ]
+      },
+      "learn": {
+        "summary": "For 7-8 year olds, the target skill is choosing a calculation method (mental, jottings, formal written algorithm, or calculator) and measuring tools by first READING the numbers or the object, rather than defaulting to the column algorithm for everything. 345+200 is a mental case (add two hundreds, tens and ones unchanged), while 345+278 involves regrouping and is where a written method earns its effort. The assessable skill is the justification for the choice, not just the answer — since two methods can both reach 545. Learners also decide which representation fits (for example when an empty number line helps more than base-ten blocks), integrate a calculator as a checking tool with a reasonableness judgement, and match measuring tools to an object's size and precision.",
+        "activities": [
+          {
+            "title": "Method chooser: route each calculation",
+            "feedback": [
+              "If a learner sets out columns for 345+200, ask what the numbers let them SEE — point to the +200 and that only the hundreds digit changes; invite them to say 545 without writing.",
+              "If a learner reaches the right answer by an inefficient method, acknowledge the correct answer but ask 'could you have done that one a faster way? What in the numbers tells you?' — the reason for the choice is the point.",
+              "If a learner tries 345+278 in their head and drops the carry, don't reteach the algorithm; ask the meta-question 'is this one to hold in your head, or one to write down?' and let them choose the written method with a reason."
+            ],
+            "rationale": "EEF Recommendation 4 advises teaching a range of mental, written and calculator methods and building considered decisions about when each is appropriate and efficient; an interactive routing task where the effort of each method is visible is one proposed way to make the strategic payoff felt rather than told. An optional interactive 'bench' can reflect the effort of a slow column build versus an instant mental route to make efficiency concrete.",
+            "sourceClaims": [
+              "Pupils should be taught a range of mental, calculator and pencil-and-paper methods and encouraged to make considered decisions about when each is appropriate and efficient, integrating the calculator and self-regulating so they make less but better use of it",
+              "Proficient students consider available tools and make sound decisions about when each is helpful, recognising its insight and limitations"
+            ],
+            "learnerActions": [
+              "Work through a stream of mixed calculations (e.g. 345+200, 300+300, 345+278), and for each one first decide out loud which method fits: do it in your head, jot it down, write it out as columns, or use a calculator.",
+              "For each, state WHY that method fits before solving — e.g. 'I can see +200, so the tens and ones don't change, so I'll do it in my head.'",
+              "Compare the effort: deliberately set out columns for 345+200 and notice how many steps that takes versus saying 545 straight away.",
+              "Deliberately choose the written column method for 345+278 and name why (there is regrouping / a carry to track) it is worth the extra effort.",
+              "For a given problem, also decide which representation would help most — for example when an empty number line is clearer than base-ten blocks — and say what about the problem makes that representation fit.",
+              "Sort a mixed set of calculations into two piles: 'do in your head' and 'worth writing down', and explain what feature of the numbers put each one where it went."
+            ],
+            "intendedInsight": "Reading the numbers first and spotting their features (round hundreds vs messy regrouping) lets you pick the method or representation that costs least effort; the column algorithm is worth its effort precisely for the messy cases, not for every calculation."
+          },
+          {
+            "title": "Calculator check: is that sensible?",
+            "feedback": [
+              "If a learner accepts the calculator answer without any check, prompt 'how big should the answer roughly be? Does 623 fit near 630?'",
+              "If a learner only trusts the calculator by redoing it exactly, point out that an estimate is faster and still a valid check.",
+              "Praise a learner who rounds to check (≈350+280≈630) and concludes 623 is in range, so the calculator's answer is confirmed sensible."
+            ],
+            "rationale": "EEF advises integrating the calculator and self-regulating so pupils make less but better use of it, which requires reasonableness checks rather than reflexive trust. MP5 emphasises recognising a tool's insight and limitations. Here 623 is the correct answer, so the task teaches confirming reasonableness, not rejecting a right result.",
+            "sourceClaims": [
+              "Pupils should be taught a range of mental, calculator and pencil-and-paper methods and encouraged to make considered decisions about when each is appropriate and efficient, integrating the calculator and self-regulating so they make less but better use of it",
+              "Proficient students consider available tools and make sound decisions about when each is helpful, recognising its insight and limitations"
+            ],
+            "learnerActions": [
+              "A calculator returns 623 for 345+278. Decide whether that answer is sensible WITHOUT redoing the exact calculation.",
+              "Estimate instead: 345 is about 350, 278 is about 280, so the total should be around 630 — use that to judge the calculator's answer.",
+              "Say aloud a quick reasonableness check for the result: rounding to size (≈630), and the last-digit check (5+8=13, so the ones digit should be 3 — 623 ends in 3). Confirm these checks ratify 623 rather than flag an error.",
+              "Practise choosing when a calculator is the sensible tool (awkward numbers, checking) versus when a mental or written method is faster."
+            ],
+            "intendedInsight": "A calculator answer should be checked for reasonableness rather than trusted blindly; estimating the rough size and the expected last digit is a quick way to show an answer is sensible or catch a wrong one, though passing these checks does not prove the answer is exactly right (for example, 633 would also pass both)."
+          },
+          {
+            "title": "Fit the measuring tool to the object",
+            "feedback": [
+              "If a learner picks the 30 cm ruler for a room, ask how many times they'd have to move it and what happens to the small errors each time.",
+              "If a learner picks a tool correctly, ask them to say the feature of the object (its size) that made that tool fit.",
+              "Confirm that there isn't one 'proper' tool — the right choice depends on what is being measured."
+            ],
+            "rationale": "The topic couples arithmetic method choice with tool selection as a single strategic habit of reading the situation before choosing; naming cumulative error from repeated placement makes the limitation concrete, though its size depends on the specific tool and method. MP5 supports making sound decisions about when a tool is helpful and recognising its limitations.",
+            "sourceClaims": [
+              "Proficient students consider available tools and make sound decisions about when each is helpful, recognising its insight and limitations"
+            ],
+            "learnerActions": [
+              "Decide which tool to use to measure a pencil versus a room: a 30 cm ruler, or a metre stick / tape measure.",
+              "Explain why a 30 cm ruler is a poor choice for a room — it needs many placements, and each placement can add a little error that accumulates.",
+              "Match a few objects (book, desk, corridor, pencil) to the tool whose range and precision suits them, and name the reason each time."
+            ],
+            "intendedInsight": "The same 'read the job, then choose the tool' habit used for arithmetic applies to measuring: match the tool's range and precision to the object, and recognise that repeated placement of a short ruler can accumulate error."
+          },
+          {
+            "title": "Argue the choice with a method-defaulting partner",
+            "feedback": [
+              "If the learner cannot say why 345+278 is a written-method case, prompt them to point at the regrouping / carry they'd have to track mentally.",
+              "If the learner can only say a mental method is 'quicker' when prompted but doesn't choose it spontaneously, give more mixed examples and ask them to route first, solve second.",
+              "Reward a clear 'because the numbers...' reason over a correct answer with no explanation."
+            ],
+            "rationale": "A dialogue partner who over-writes everything and springs a regrouping case is one proposed way to pull out the self-regulating rationale EEF says pupils need; justification is the discriminating evidence because both methods reach the same answer. This is one way to elicit the reasoning, not the only way.",
+            "sourceClaims": [
+              "Pupils should be taught a range of mental, calculator and pencil-and-paper methods and encouraged to make considered decisions about when each is appropriate and efficient, integrating the calculator and self-regulating so they make less but better use of it"
+            ],
+            "learnerActions": [
+              "Work with a partner (or in-role tutor) who writes out columns for EVERYTHING, including 345+200, and argue the case for when a mental method is enough.",
+              "Respond when the partner springs a regrouping calculation (345+278): decide whether to upgrade to a written method and give your reason.",
+              "Answer prompts like: 'Give me a calculation where the column method really IS the best choice, and one where it would be silly', and 'For 345+278, why does writing it down help more than doing it in your head?'"
+            ],
+            "intendedInsight": "Being able to justify a method choice — including when to upgrade to a written method for regrouping — is the self-regulating reasoning the skill is really about."
+          }
+        ],
+        "constraints": [
+          "The assessable skill is the REASON for the method choice, not the answer: 345+200 and 345+278 can both be checked, but a correct answer reached by an inefficient method does not demonstrate strategic judgement.",
+          "Treat a learner who holds 345+278 in their head and drops a carry as a judgement issue about when to deploy a written method, not a gap in the algorithm — do not reteach the algorithm, tune the choice.",
+          "623 is the correct answer for 345+278; the reasonableness-check task must confirm it is sensible (≈630, ones digit 3), never lead a learner to reject it.",
+          "A scored 'which method?' item can assess recognition of an efficient choice but does not by itself show the self-regulation or reasonableness-checking; use such items to feed into, not replace, a task where the learner routes and justifies.",
+          "A static reference chart of 'which method when' is a useful reminder but does not itself let the learner route calculations, feel the efficiency difference, or justify a choice — treat it as a reference alongside, not instead of, the routing task.",
+          "Estimation-for-checking (≈350+280≈630) is an approximation used to judge reasonableness, not an exact recalculation."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. The activities are research-informed proposals, not validated interventions.",
+          "Arithmetic self-audit: 345+200=545 (correct); 345+278=623 (correct). The calculator value 623 used in the checking task is the correct answer, so the 'is it sensible?' task confirms reasonableness (≈630, ones digit 3) rather than hunting a planted error; no activity asks a learner to reject a correct result.",
+          "The legacy source rated 3D as 'adding nothing' and a static image/quiz as unable to teach the practice; these comparative-efficacy/necessity claims are not established by the cited sources and have been narrowed to scoped affordances/limits (a static chart as a reference; a scored item as recognition-only).",
+          "The number-line vs base-ten-blocks representation-choice example from the original evidence was restored into the method-chooser activity.",
+          "The measuring-tool cumulative-error point is qualitatively reasonable but its magnitude depends on the specific ruler, object and method; presented qualitatively, not as a quantified absolute.",
+          "The formal objective (description) spans multi-digit numbers, decimals and fractions, but all worked examples here are whole-number — consistent with the source's own examples, but decimals/fractions method-choice is not exemplified and would need separate material to cover the full stated scope.",
+          "Legacy 'high' confidence and 'verified' source flags were not re-checked in this rewrite."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "Give me a calculation where the column method really IS the best choice, and one where it would be silly.",
+          "For 345 + 278, why does writing it down help more than doing it in your head?",
+          "A calculator gives 623 for 345 + 278 — how could you tell that's sensible without redoing it exactly?",
+          "You're measuring the classroom — why not use your 30 cm ruler? What would you pick, and why?"
+        ],
+        "correctAnswer": "No single scored answer — listen for the child recognising that 345+200 is a mental case (add two hundreds, the tens and ones unchanged) so the column method is unnecessary work, while 345+278 involves regrouping and is where a written method earns its keep — a judgement driven by the NUMBERS, not a blanket 'always use columns'.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Applies the formal written method to everything, even 345+200 or 300+300, because it is the 'proper' way",
+            "nextMove": "Sort a mixed set into 'do in your head' vs 'worth writing down'; ask what the numbers let you SEE (the +200). Build the habit of reading before routing — reteach in place, this is a strategy-selection issue not a gap in the algorithm.",
+            "distractor": null,
+            "revealedBy": "Sets out columns for 345+200 and treats a mental method as not allowed or not trustworthy",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Overreaches mentally on a regrouping calculation — tries 345+278 in the head and drops a carry",
+            "nextMove": "Scaffold the meta-question 'is this one to hold in your head, or one to write down?'; do NOT reteach the algorithm — tune the judgement of when to deploy it.",
+            "distractor": null,
+            "revealedBy": "Attempts the hard one mentally and errs at the regroup, having a working written method available but misjudging when to use it",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Chooses a measuring tool that doesn't fit the object — a 30 cm ruler for measuring a room",
+            "nextMove": "Match tool to the object's size and precision; name the short ruler's limitation (many placements, accumulating error). Reteach selecting measuring tools.",
+            "distractor": null,
+            "revealedBy": "Picks a tool whose range or precision doesn't suit the object, ignoring cumulative error from repeated placement",
+            "reteachPrerequisiteId": "mt_e4x3l2JeLI"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Defaults to one method (usually the column algorithm) for all calculations, or mismatches measuring tools; does not read the numbers to inform the choice.",
+          "full": "Unprompted, reads the numbers and matches the method to their features (mental for +200, written for +278), justifies by efficiency and the numbers' structure, checks a calculator answer for reasonableness, and selects measuring tools by the object's size and precision.",
+          "partial": "Can say a mental method is 'quicker' for 345+200 when prompted, but does not spontaneously choose it, or cannot articulate what makes 345+278 a written-method case."
+        },
+        "diagnosticPrompt": "Two children work out 345 + 200. One sets out the column method and carries carefully; the other just says '545' straight away. Who chose the better method for THIS calculation, and why? Now what about 345 + 278 — would your advice change?",
+        "whatMakesItDiscriminate": "Both methods reach 545, so accuracy is not the tell — the discriminator is whether the child reads the numbers and matches the method to their features (round hundreds → mental; messy regrouping → written). A child who says 'columns is the proper way' for 345+200 reveals no strategic judgement; the second calculation checks they can also justify UPGRADING to a written method."
+      },
+      "sources": [
+        {
+          "claim": "Proficient students consider available tools and make sound decisions about when each is helpful, recognising its insight and limitations",
+          "source": "CCSS Standards for Mathematical Practice — MP5 Use appropriate tools strategically",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP5/",
+          "verified": true
+        },
+        {
+          "claim": "Pupils should be taught a range of mental, calculator and pencil-and-paper methods and encouraged to make considered decisions about when each is appropriate and efficient, integrating the calculator and self-regulating so they make less but better use of it",
+          "source": "EEF — Improving Mathematics in Key Stages 2 and 3 (Recommendation 4: choose between mathematical strategies)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T13:59:41.433Z",
+        "updatedAt": "2026-10-19T15:20:57.877Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/620",
+    "connections": [
+      {
+        "topicId": "mt_d-WZC2OyMB",
+        "prerequisiteId": "mt_mQcWGh02no",
+        "strength": "hard",
+        "reason": "Age 7-8 strategic tool use is prerequisite to age 8-9 level"
+      },
+      {
+        "topicId": "mt_mQcWGh02no",
+        "prerequisiteId": "mt_e4x3l2JeLI",
+        "strength": "soft",
+        "reason": "Selecting measurement tools exercises strategic tool use"
+      },
+      {
+        "topicId": "mt_mQcWGh02no",
+        "prerequisiteId": "mt_SrrsLiJkr3",
+        "strength": "soft",
+        "reason": "Choosing mental vs written method exercises strategic tool selection"
+      },
+      {
+        "topicId": "mt_mQcWGh02no",
+        "prerequisiteId": "mt_zMEvtigoM3",
+        "strength": "hard",
+        "reason": "Age 7-8 strategic tool use builds on age 6-7"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_d-WZC2OyMB",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Choosing mathematical tools",
+      "description": "Select and use appropriate tools and representations strategically: choose between mental, written, and diagrammatic methods; use calculators for checking; select fraction models suited to the task",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 9,
+      "centrality": 0.08145766345123258,
+      "evidence": [
+        "Decide to use mental multiplication for 25×4 but a written method for 167×3",
+        "Choose fraction strips rather than a number line to compare 3/8 and 1/4",
+        "Use a ruler and squared paper to verify area by counting squares after calculating l×w"
+      ],
+      "assessmentPrompt": "When {{name}} is working on maths, do they choose the right method — doing simple calculations in their head, using written working for complex ones, and sketching a diagram when a problem involves shapes or fractions?",
+      "standards": [
+        "ccss-math:MP.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/944",
+    "research": {
+      "topicId": "mt_d-WZC2OyMB",
+      "pedagogy": {
+        "summary": "At 8-9 strategic choice covers mental vs written vs diagrammatic methods, using a second tool to CHECK a result, and selecting the fraction MODEL that fits the task. Two moves are new: reading a calculation to route the method (25×4 mentally by doubling twice; 167×3 in writing), and using a tool to VERIFY — counting unit squares on squared paper against a computed l×w — which is CCSS MP5's 'detect errors' idea made concrete. Choosing the fraction representation matters because different models make different comparisons visible: strips align wholes for 3/8 vs 1/4 in a way a crowded number line does not.",
+        "bestPractices": [
+          "Read the numbers to route the method — sort a mixed set into 'do in your head' vs 'write out' by their features (25×4 vs 167×3)",
+          "Teach tools as CHECKERS: after computing l×w, tile the rectangle on squared paper and count to verify — use a second representation and estimation to catch errors (CCSS MP5)",
+          "Select the fraction model to fit the comparison (strips align lengths for 3/8 vs 1/4) and discuss why that model helps (EEF: compare representations)",
+          "Integrate the calculator for CHECKING, not doing, so mental fluency is not eroded (EEF: less but better)",
+          "Name each tool's limitation — a number line crowds when comparing eighths and quarters; strips only help if the wholes are the same length"
+        ],
+        "keyRepresentations": [
+          "Mental strategies (doubling, partitioning)",
+          "Formal written methods",
+          "Fraction strips",
+          "Number line",
+          "Squared paper / arrays for verifying area",
+          "Calculator (for checking)"
+        ],
+        "commonMisconceptions": [
+          "Writes out even friendly calculations like 25×4, missing the mental route",
+          "Treats the first answer as final and never checks it with a second tool (CCSS: tools and estimation detect errors)",
+          "Grabs a number line to compare 3/8 and 1/4 when strips align the wholes far more clearly — wrong model for the task",
+          "Uses the calculator to DO the arithmetic rather than to check it, undermining mental fluency (EEF)"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 8-9, this topic builds strategic choice in mathematics: reading a calculation to route the method (mental vs written), using a second tool or representation to VERIFY a result rather than treating the first answer as final, and selecting the fraction model that makes a particular comparison visible. Learners compute a rectangle's area (l×w) and check it by tiling and counting unit squares on squared paper, route friendly calculations like 25×4 to mental strategies while reserving written methods for calculations like 167×3, and compare fractions such as 3/8 and 1/4 by aligning strips against a common whole.",
+        "activities": [
+          {
+            "title": "Compute the area, then check it by tiling",
+            "feedback": [
+              "When the 24 squares fill the rectangle exactly, name the moment: 'your multiplication and your counting agree, so you can be more confident the area is 24 cm².'",
+              "If the tiled count differs from the computed answer (e.g. 25 vs 24), prompt: 'which would you trust, and what would you check first?' Encourage recounting and recomputing rather than guessing.",
+              "If the learner computes 24 and will not or cannot check, model tiling the array and counting aloud, then ask them to do the next one themselves.",
+              "Optional live mechanism: with an interactive on-screen tool, dragging unit squares onto the rectangle and having it flag a mismatch makes the confirm/catch mechanism concrete — but counting on paper achieves the same check. Note that paper squares have slight physical thickness and model the idealised unit areas."
+            ],
+            "rationale": "Using a second tool and estimation to detect possible errors, and recognising a tool's insight and limits, is the targeted practice. Tiling a computed rectangle makes the 'detect errors' idea concrete for this age.",
+            "sourceClaims": [
+              "Proficient students detect possible errors by strategically using estimation and other mathematical knowledge, and recognise a tool's insight and limitations when deciding whether it is helpful"
+            ],
+            "learnerActions": [
+              "Find the area of a 6 cm by 4 cm rectangle by computing length times width (6×4 = 24 cm²).",
+              "Take 1 cm squared paper, draw or tile the same 6 cm by 4 cm rectangle with 1 cm unit squares, then count the squares.",
+              "Compare the count against the computed answer: do 24 squares fill the rectangle exactly?",
+              "If the count and the calculation disagree, pause and work out which to trust and what to do next (recount, recompute, re-measure).",
+              "Say in your own words how counting squares and multiplying length by width are two views of the same area."
+            ],
+            "intendedInsight": "l×w and counting unit squares are two views of one area, so a second representation can CONFIRM your calculation or catch a slip. Checking is a routine worth doing, not a waste of time."
+          },
+          {
+            "title": "Read the numbers to route the method",
+            "feedback": [
+              "If a learner sets out a column or long-multiplication layout for 25×4, ask them to look at the numbers first and find a mental shortcut; confirm 25×4 = 100.",
+              "Ask the learner to give a multiplication where writing it out really IS worth the effort, and discuss what made it so.",
+              "Praise the reasoning ('25×4 is friendly because it makes 100'), not just the correct answer."
+            ],
+            "rationale": "Choosing between mental, written and diagrammatic methods by reading the numbers is the core strategic move at this band; justifying the choice develops the judgement rather than just the answer.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Sort a mixed set of multiplications into 'do in my head' and 'write it out' by looking at the numbers first.",
+              "Do 25×4 mentally — for example double 25 to 50, double again to 100; or recognise 25×4 = 100.",
+              "Choose a written method for 167×3, where the numbers make a written layout worthwhile.",
+              "Explain for each one WHY you chose mental or written: what features of the numbers made that choice efficient?"
+            ],
+            "intendedInsight": "Reading a calculation's features before starting lets you pick the efficient route; a written layout is worth the effort for some numbers and wasteful for friendly ones."
+          },
+          {
+            "title": "Pick the fraction model that fits the comparison",
+            "feedback": [
+              "If a learner reaches for a number line and struggles, prompt them to align strips over the same whole and compare lengths directly.",
+              "Reinforce the limit on the model: strips only let you compare by length when the wholes are the same length; comparing represented portions of different-sized wholes with strips is misleading. The fractions themselves (3/8 and 1/4) are still comparable as numbers — 3/8 > 1/4.",
+              "Ask 'why might fraction strips beat a number line for comparing 3/8 and 1/4?' and listen for reasoning about aligned wholes, not just a preference.",
+              "Optional mechanism: dragging two strips to a common baseline, or recolouring the shaded parts, makes the length comparison vivid — paper strips cut to the same whole achieve the same alignment, with slight physical thickness standing in for the idealised lengths."
+            ],
+            "rationale": "Representations should be chosen purposefully with a clear rationale, and comparing representations develops conceptual understanding. Matching the model to what must be seen is the skill here.",
+            "sourceClaims": [
+              "Representations must be chosen purposefully with a clear rationale; comparing different representations develops conceptual understanding; and the calculator should be integrated for checking with pupils self-regulating to make less but better use of it"
+            ],
+            "learnerActions": [
+              "Compare 3/8 and 1/4 using fraction strips, aligning both strips against the same whole length.",
+              "Try comparing the same fractions on a number line and notice whether the marks are easy to read; on a short line, eighth and quarter marks can be close together (1/4 sits on the same mark as 2/8).",
+              "Decide which representation makes it easiest to see that 3/8 is larger than 1/4, and say why.",
+              "State the condition for the strips to work: the wholes being compared must be the same length."
+            ],
+            "intendedInsight": "Different models make different comparisons visible: aligning strips over a common whole shows 3/8 > 1/4 directly, and a number line marked in eighths shows it too (1/4 = 2/8), though a small or crowded line can make it harder to see. The right model depends on what must be seen. 3/8 is larger than 1/4 as numbers regardless of which model is used."
+          },
+          {
+            "title": "Argue your method and model to a partner",
+            "feedback": [
+              "Listen for the learner proposing an independent check (tile and count) rather than re-stating the same calculation.",
+              "If the learner cannot justify strips over a number line, revisit aligning strips over a common whole together.",
+              "For the calculator question, reinforce: checking a result afterwards is fine; using it to avoid a mental method you already have erodes fluency."
+            ],
+            "rationale": "Explaining and defending a verification habit and a model choice surfaces and consolidates the strategic reasoning that pure computation does not reveal. Dialogue of this kind can elicit the reasoning but does not by itself guarantee the learner will compute or check independently.",
+            "sourceClaims": [
+              "Representations must be chosen purposefully with a clear rationale; comparing different representations develops conceptual understanding; and the calculator should be integrated for checking with pupils self-regulating to make less but better use of it"
+            ],
+            "learnerActions": [
+              "Work with a partner (or an in-role character) who never checks answers and always reaches for a number line.",
+              "When they give an area answer, ask them 'how do you KNOW that is right?' and propose a verification step.",
+              "When they compare fractions on a number line, discuss whether strips over a common whole would make this comparison easier to see, and give reasons for the model you prefer.",
+              "Decide together when a calculator is a fair checking tool here and when using it would just do the arithmetic for you."
+            ],
+            "intendedInsight": "Verifying with a second tool and choosing a fitting model are habits you can defend out loud; articulating the reasons strengthens them. A calculator is for checking, not for doing the arithmetic you can do yourself."
+          }
+        ],
+        "constraints": [
+          "This is a strategic/meta skill: a correct final answer alone does not show it. Observe whether the learner verifies with a second tool, routes the method by reading the numbers, and chooses a fitting model — not just whether the answer is 24.",
+          "Recognition-only or scored-step formats can test isolated method-choice items but cannot by themselves observe whether a learner spontaneously verifies or justifies a model choice; a correct answer reached without checking still scores full marks. Use such items only to feed richer open work.",
+          "Fraction strips only support comparison by length when the wholes are the same length; comparing represented portions of different-sized wholes with strips is misleading. State this condition explicitly, while noting the fractions themselves remain comparable as numbers.",
+          "A number line is not 'wrong' in general — it can crowd specifically when comparing eighths and quarters. Keep the limitation scoped to the task rather than dismissing the number line as a tool.",
+          "Integrate the calculator for checking a result, not for performing arithmetic the learner can do mentally, so mental fluency is preserved.",
+          "Paper strips and squared paper have slight physical thickness; treat them as practical approximations to the idealised mathematical lengths and areas they represent, and treat on-screen strips as an idealised model.",
+          "A static reference image can usefully show 'which model shows what' as a support, but cannot host the compute-verify-choose decision-making, which requires the learner to actually calculate, check and select."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The source assumes 6×4 = 24 cm² and 25×4 = 100; both are correct. 167×3 = 501 if computed, but the source states only that it merits a written method, so the activity asserts no specific product for it.",
+          "The legacy row rated a static image and a quiz as 'poor' partly via universal claims ('a static picture cannot teach this', 'scored steps cannot observe verifying') and judged 3D as adding 'no purchase'. Only the narrow objective limit (recognition/scored-only formats do not by themselves elicit spontaneous verification or justification) is retained in constraints; the categorical 'cannot teach' and '3D adds nothing' framings were softened or dropped as not established by the sources.",
+          "The 'number line crowds' claim is an inherited pedagogical judgement, preserved with hedged wording and scoped to eighths-vs-quarters; it was not independently verified.",
+          "The non-preferred conversation alternative was preserved as a distinct activity because its pedagogical purpose (defending the verification habit and model choice aloud) differs from the computation/verification activity.",
+          "The catalog term 'bench' present in the candidate's area-verification feedback was replaced with a generic 'interactive on-screen tool' to remove product vocabulary from learner-facing text."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "If the squares came to 25 instead of 24, which would you trust, and what would you do next?",
+          "Give me a multiplication where writing it out really IS worth the effort.",
+          "Why might fraction strips beat a number line for comparing 3/8 and 1/4?",
+          "When is it fine to use a calculator here, and when would it just make you lazy?"
+        ],
+        "correctAnswer": "No single scored answer — listen for using squared paper to tile and count the 6×4 array as an independent CHECK on the computation (a second representation confirming l×w), and understanding that a check raises confidence or catches an error; and for choosing a MENTAL method for 25×4 (double-double, or 25×4=100) because the numbers are friendly, reserving written work for something like 167×3.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Treats the first answer as final and never checks it — has no habit of verifying with a second tool",
+            "nextMove": "Model tiling the array on squared paper and counting; establish that a second representation can confirm a result or catch a slip, and make checking routine.",
+            "distractor": null,
+            "revealedBy": "Gives 24 and cannot or will not check; the idea of verifying is unfamiliar or seen as pointless",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Writes out even friendly calculations (25×4) because a written method feels 'proper'",
+            "nextMove": "Sort a mixed set into mental vs written by looking at the numbers first; reserve the written method for calculations whose numbers demand it.",
+            "distractor": null,
+            "revealedBy": "Sets out a column or long-multiplication layout for 25×4 rather than seeing 100 mentally",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Chooses a fraction model that obscures the comparison — a number line where strips would align the wholes for 3/8 vs 1/4",
+            "nextMove": "Match the model to what must be seen — same whole, aligned lengths — and reteach the fraction models and equivalence that make comparison visible.",
+            "distractor": null,
+            "revealedBy": "Picks a model that makes the comparison harder to see, or compares fractions of different-sized wholes",
+            "reteachPrerequisiteId": "mt_Ep7TDFuYUa"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Computes and stops with no verification; writes out friendly calculations, or picks a fraction model by habit regardless of the comparison.",
+          "full": "Unprompted, verifies the result with a second representation, reads the numbers to choose mental vs written, selects the fraction model that makes the comparison visible, and reserves the calculator for checking.",
+          "partial": "When prompted, can describe checking with squares or say 25×4 is 'easy', but does not spontaneously verify or read the numbers to route the method."
+        },
+        "diagnosticPrompt": "You worked out that a 6 cm by 4 cm rectangle has an area of 24 cm². A friend says 'you can't be sure — check it.' How could you use squared paper to check, and would you trust 24 more afterwards? And for 25 × 4, would you write it out or do it in your head — why?",
+        "whatMakesItDiscriminate": "A child who only computes gives 24 and stops; a strategic child uses a second tool to verify (CCSS detect-errors) and reads the numbers to pick the efficient method. 25×4 is deliberately friendly, so choosing to write it out — or being unable to say why checking helps — reveals no strategic judgement, while accuracy alone does not separate the children."
+      },
+      "sources": [
+        {
+          "claim": "Proficient students detect possible errors by strategically using estimation and other mathematical knowledge, and recognise a tool's insight and limitations when deciding whether it is helpful",
+          "source": "CCSS Standards for Mathematical Practice — MP5 Use appropriate tools strategically",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP5/",
+          "verified": true
+        },
+        {
+          "claim": "Representations must be chosen purposefully with a clear rationale; comparing different representations develops conceptual understanding; and the calculator should be integrated for checking with pupils self-regulating to make less but better use of it",
+          "source": "EEF — Improving Mathematics in Key Stages 2 and 3 (Recommendations 2 and 4)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T14:02:34.055Z",
+        "updatedAt": "2026-10-19T15:20:21.228Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/297",
+    "connections": [
+      {
+        "topicId": "mt_d-WZC2OyMB",
+        "prerequisiteId": "mt_Ep7TDFuYUa",
+        "strength": "soft",
+        "reason": "Equivalent fractions require selecting appropriate fraction models"
+      },
+      {
+        "topicId": "mt_d-WZC2OyMB",
+        "prerequisiteId": "mt_IL86kadLSS",
+        "strength": "soft",
+        "reason": "Elapsed time problems require choosing between number line and mental methods"
+      },
+      {
+        "topicId": "mt_d-WZC2OyMB",
+        "prerequisiteId": "mt_mQcWGh02no",
+        "strength": "hard",
+        "reason": "Age 7-8 strategic tool use is prerequisite to age 8-9 level"
+      },
+      {
+        "topicId": "mt_IwEOCN6bL1",
+        "prerequisiteId": "mt_d-WZC2OyMB",
+        "strength": "hard",
+        "reason": "Age 8-9 strategic tool use is prerequisite to age 9-10 level"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt__Itf4aQZUj",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Using Mathematical Structure",
+      "description": "Look for and use mathematical structure: exploit place-value patterns for ×10/×100, use the distributive property to break apart multiplications, apply fraction equivalence to compare and compute, use shape properties to classify quadrilaterals",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 9,
+      "centrality": 0.05144694533762058,
+      "evidence": [
+        "Decompose 7×13 into 7×10 + 7×3 using the distributive property",
+        "Explain why multiplying by 10 shifts digits one place left using place-value structure",
+        "Use the fact that a square is a special rectangle to reason about quadrilateral properties"
+      ],
+      "assessmentPrompt": "When {{name}} is comparing fractions or working out a percentage, do they look for underlying patterns — like spotting that 50% is always half, or that equivalent fractions all sit at the same point on a number line?",
+      "standards": [
+        "ccss-math:MP.7"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/951",
+    "research": {
+      "topicId": "mt__Itf4aQZUj",
+      "pedagogy": {
+        "summary": "At 8-9, using structure becomes a deliberate calculating tool: breaking 7×13 into 7×10 + 7×3 with the distributive property, using place value to explain why ×10 shifts every digit one place left (not 'add a zero'), and using the quadrilateral hierarchy (a square is a special rectangle) to carry properties down from category to subcategory. The teaching aim is that the child looks for a known structure before grinding a procedure. The area model is the workhorse: it makes the distributive split visible as two sub-rectangles, and CCSS MP7 names exactly this partitioning as the heart of the practice.",
+        "bestPractices": [
+          "Model 7×13 on a partitioned area rectangle (7×10 and 7×3) so the split is seen, then connect it to the numeric decomposition",
+          "Teach ×10 as a place-value shift using a place-value chart (digits move one column left; a zero fills the emptied ones place) rather than the 'add a zero' rule, which breaks for decimals",
+          "Use overlapping property sets / a shape family tree so squares sit inside rectangles inside parallelograms, and reason 'a square must have… because it is a rectangle'",
+          "Prompt 'is there a number fact or shape fact you already know that this is like?' before any standard algorithm"
+        ],
+        "keyRepresentations": [
+          "Partitioned area model / grid for the distributive split",
+          "Place-value chart showing digits shifting left on ×10/×100",
+          "Shape hierarchy diagram (quadrilateral → parallelogram → rectangle → square)",
+          "Arrays and factor trees linking multiplication structure"
+        ],
+        "commonMisconceptions": [
+          "Uses 'multiplying by 10 adds a zero', which fails for decimals (2.5×10 read as 2.50)",
+          "Splits distributively but forgets to multiply the second part (7×13 = 7×10 + 3)",
+          "Refuses that a square is a rectangle because the names/looks differ, so properties don't transfer down the hierarchy",
+          "Treats each multiplication as needing the column algorithm, not looking for a decomposition that makes it easy"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 8-9, this topic develops the habit of looking for known mathematical structure before grinding a procedure: splitting a multiplication like 7×13 into 7×10 + 7×3 (distributive property), explaining ×10 as a place-value shift (digits move one column left) rather than 'add a zero', and using the quadrilateral hierarchy (a square is a special rectangle) to inherit properties from category to subcategory. The partitioned area model is the central representation, making the distributive split visible as two sub-rectangles. Activities centre on learners partitioning, justifying and generalising the structural move, not just reaching a correct answer.",
+        "activities": [
+          {
+            "title": "Split the rectangle: 7×13 from two easy facts",
+            "feedback": [
+              "If a learner writes 7×10 + 3 = 73, point back to the rectangle: the second part is also 7 tall, so it is 7×3 = 21, not 3. Have them shade the missing 7×3 block.",
+              "If a learner reaches 91 only by the column algorithm, ask them to show the two sub-rectangles and name the two easy facts, so the structure is made explicit.",
+              "When a learner tries a second valid split (e.g. 11 and 2) and still gets 91, confirm that any split works because the ×7 is shared over the parts — the choice is just about which parts are easiest."
+            ],
+            "rationale": "The area model makes the distributive partition literally visible as two sub-rectangles and ties the picture to the numeric decomposition. CCSS MP7 gives this kind of distributive split (e.g. 7 × 8 = 7 × 5 + 7 × 3) as one example of 'using structure', alongside other examples. An interactive version where the learner drags the divider and watches the parts recompute and slide together is one proposed way to make the mechanism operate under the learner's hand, and a drawn, cut or folded paper rectangle may serve the same purpose; the relative effectiveness of either medium is not established by the cited sources. An array alongside the area model (the original row's arrays/factor-trees representation) could optionally reinforce the same structure.",
+            "sourceClaims": [
+              "Using structure includes partitioning a product distributively (e.g. 7×8 = 7×5 + 7×3) as the basis of the distributive property",
+              "Teaching should help pupils recognise and use mathematical structure and relationships, choosing representations (e.g. area models, place-value charts) that expose structure and are gradually removed"
+            ],
+            "learnerActions": [
+              "Face 7×13 drawn as a rectangle 7 tall and 13 wide; mark where to cut the width to make a friendly 10 and 3",
+              "Cut the rectangle into a 7×10 part and a 7×3 part and work out each: 70 and 21",
+              "Combine the two parts (70 + 21 = 91) and state the matching number sentence: 7×13 = 7×10 + 7×3",
+              "Explain in your own words why BOTH parts have to be multiplied by 7 (both sub-rectangles are 7 tall)",
+              "Try a different cut of 13 (for example 11 and 2, giving 7×11 = 77 and 7×2 = 14) and check you still reach 91; say which cut was easiest and why"
+            ],
+            "intendedInsight": "A multiplication that feels hard can be assembled from two multiplications you already know; the distributive property shares the ×7 across every part of the 13, which is why both parts must be multiplied."
+          },
+          {
+            "title": "Why ×10 shifts digits, not 'adds a zero'",
+            "feedback": [
+              "If a learner writes 2.5×10 = 2.50, show the chart: 2.50 is the same value as 2.5, so nothing has changed — ×10 must make it ten times bigger, which means shifting to 25.",
+              "Reinforce that for 36×10 = 360 the zero appears because the ones column is emptied, not because we 'add a zero' as a rule."
+            ],
+            "rationale": "A place-value chart exposes the structural reason behind the ×10 pattern and provides a built-in counterexample (the decimal case) to the shortcut. A live chart where digits slide one column on ×10/×100 can make the shift concrete, and a paper chart with movable digit cards can serve the same purpose; the relative effectiveness of the media is not established by the cited sources.",
+            "sourceClaims": [
+              "Teaching should help pupils recognise and use mathematical structure and relationships, choosing representations (e.g. area models, place-value charts) that expose structure and are gradually removed"
+            ],
+            "learnerActions": [
+              "Place a number such as 36 in a place-value chart (tens and ones), then multiply by 10 and move each digit one column to the left, writing a 0 in the emptied ones place to read 360",
+              "Now push 2.5 through ×10 in the same chart: move each digit one column left to get 25, and notice that appending a zero would wrongly give 2.50 (the same value as 2.5)",
+              "State a rule in your own words: ×10 moves every digit one place left; 'add a zero' only looks right for whole numbers because a zero happens to fill the empty ones place",
+              "Repeat for ×100 (two columns left) with one whole number and one decimal"
+            ],
+            "intendedInsight": "Multiplying by 10 (or 100) is a place-value shift of every digit; 'add a zero' is only a lucky special case for whole numbers and breaks for decimals."
+          },
+          {
+            "title": "Nested shape families: a square is a special rectangle",
+            "feedback": [
+              "If a learner denies that a square is a rectangle, use the nested sets: the square sits inside the rectangle set, so it must satisfy every rectangle property (four right angles).",
+              "If a learner claims every rectangle is a square, show a long thin rectangle as a counterexample — inheritance runs from the wider category to the narrower one, not back up."
+            ],
+            "rationale": "A shape family tree / nested property sets make the hierarchy visible and are intended to support reasoning by inheritance, which is the structural move for quadrilateral classification. Tappable property labels on a hierarchy diagram can serve as a reference; a sort by itself checks or teaches classification but does not itself elicit the learner's explanation, so pair the active sorting with a request to justify. The attached EEF claim supports using representations to expose structure in general and does not specifically evidence the nested-set method.",
+            "sourceClaims": [
+              "Teaching should help pupils recognise and use mathematical structure and relationships, choosing representations (e.g. area models, place-value charts) that expose structure and are gradually removed"
+            ],
+            "learnerActions": [
+              "Sort a set of quadrilaterals into nested property sets so squares sit inside rectangles, which sit inside parallelograms",
+              "For a given square, list what must be true of it just because it is a rectangle (e.g. it has four right angles) — without measuring",
+              "Complete sentences of the form 'A square must have … because it is a rectangle' and 'A square must have … because it is a parallelogram'",
+              "Decide and justify: is every rectangle a square? Explain why the inheritance runs one way down the hierarchy"
+            ],
+            "intendedInsight": "Subcategories inherit the properties of the categories that contain them, so knowing 'a square is a rectangle' lets you carry rectangle properties down without re-checking; but the reverse is not guaranteed."
+          },
+          {
+            "title": "'What do I already know that this is like?' — probing and generalising",
+            "feedback": [
+              "Listen for a structurally justified decomposition such as '7×13 is 7×10 plus 7×3, that's 70 and 21, so 91 — I can split the 13 because multiplying is shared out over the parts.' The justification, not the answer 91, is the target.",
+              "If the learner reaches 91 only by running the column algorithm in their head, that does not yet show structural insight — ask them to name the parts and why the split is valid.",
+              "If the learner cannot say why the split works, return to the area model activity before pushing generalisation."
+            ],
+            "rationale": "The answer 91 is reachable by the column algorithm with no structural insight; what discriminates is whether the learner decomposes and can justify the split, and whether they transfer the move to related products. Open probes are intended to elicit the justification that a scored answer would hide.",
+            "sourceClaims": [
+              "Using structure includes partitioning a product distributively (e.g. 7×8 = 7×5 + 7×3) as the basis of the distributive property"
+            ],
+            "learnerActions": [
+              "Work out 7×13 mentally using a fact you already know instead of the written column method, then talk through how you split it and why that split is allowed",
+              "Answer: could you have split 13 a different way and still got 91? Which split was easiest and why?",
+              "Generalise: how is splitting 7×13 like splitting 6×13 or 7×23? Describe the structural move you reused",
+              "Before any standard algorithm on a new product, pause and ask 'is there a number fact or shape fact I already know that this is like?'"
+            ],
+            "intendedInsight": "Using structure is a deliberate, transferable habit: decompose into known parts and justify the decomposition, rather than defaulting to a procedure."
+          }
+        ],
+        "constraints": [
+          "The teaching aim is that the learner looks for a known structure before applying a standard procedure; reaching the correct numerical answer by the column algorithm does not demonstrate this objective.",
+          "Target the justification, not just the result: a distributive split must be explained as sharing the ×7 over both parts, and ×10 must be explained as a place-value shift.",
+          "Tap-to-reveal annotations on a pre-split area model or a shape hierarchy are useful as reference scaffolds, but they do not let the learner choose the split point or watch the parts recombine; use them to support, not replace, active partitioning.",
+          "Recognition or matching checks (e.g. 'which split makes 7×13 easy?') can confirm the structural move, but a correct selection can hide the reasoning; pair any such check with a request to explain why.",
+          "Avoid teaching 'multiply by 10 adds a zero' as a rule; use it only as a named special case for whole numbers alongside the place-value explanation.",
+          "Inheritance in the quadrilateral hierarchy runs from broader to narrower categories (a square inherits rectangle properties), not the reverse; make this directionality explicit."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. The activities are research-informed proposals, not validated interventions, and medium/interaction choices are presented with proposed/may wording.",
+          "The legacy row rated dialogue ('conversation') and 3D as 'poor' with claims such as 'dialogue without the area model gives nothing to partition' and '3D adds load, not insight'. These comparative/necessity claims are not established by the cited sources and have been reframed as narrow scaffold limits rather than universal laws; the open probes retained here use discussion productively once a visual model is available.",
+          "The original keyRepresentation 'arrays and factor trees linking multiplication structure' was not carried into any activity as a standalone task; it is noted as an optional reinforcement in activity 1 and could be reinstated to enrich the distributive-split work. Flagged as a substantive representation gap rather than silently dropped.",
+          "The EEF source claim is a general representation/structure statement; attaching it to the shape-hierarchy activity supports the 'use a representation to expose structure' principle but does not specifically evidence the nested-property-set approach — treated as topical support, not validation.",
+          "Self-audit of arithmetic: 7×13 = 7×10 + 7×3 = 70 + 21 = 91 (correct); alternative split 7×11 + 7×2 = 77 + 14 = 91 (correct). The common error 7×10 + 3 = 73 is retained only as an explicitly labelled misconception with a correction, never as a valid answer. 2.5×10 = 25 (correct); 2.50 is flagged as the wrong 'add a zero' outcome. 36×10 = 360, 6×13 = 78 and 7×23 = 161 by the same method (used only as generalisation prompts, not as stated answers)."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "Ask 'you split 13 into 10 and 3 — could you have split it a different way and still got 91? which split was easiest and why?' to test flexible, purposeful structure use",
+          "Counterexample tuned to this topic: 'does \"add a zero\" give the right answer for 2.5×10? why or why not?' to check the place-value structure beneath the rule",
+          "Ask 'a square is a rectangle — so what does that let you say about its angles without measuring?' to probe property inheritance in the hierarchy",
+          "Ask 'how is splitting 7×13 like splitting 6×13 or 7×23?' to see whether the distributive structure generalises"
+        ],
+        "correctAnswer": "No single scored answer — listen for a distributive decomposition justified structurally: '7×13 is 7×10 plus 7×3, that's 70 and 21, so 91 — I can split the 13 because multiplying is sharing out over the parts.' The justification, not the 91, is the target.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Splits distributively but multiplies only the first part, giving 7×10 + 3 = 73, because the split is treated as chopping the number rather than sharing the ×7 over both parts",
+            "nextMove": "Return to the area model: both sub-rectangles are 7 tall, so the 3 must also be multiplied by 7; see the missing 7×3 block",
+            "distractor": null,
+            "revealedBy": "Child says '70 plus 3' or otherwise leaves the second part un-multiplied",
+            "reteachPrerequisiteId": "mt_FAXjFkgG6X"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Relies on 'multiplying by 10 just adds a zero', which misfires on decimals and hides the place-value shift",
+            "nextMove": "Use a place-value chart to shift every digit one column left; contrast the whole-number case where a zero happens to fill the ones place",
+            "distractor": null,
+            "revealedBy": "Asked to explain ×10 or to do 2.5×10, the child appends a zero (2.50) instead of shifting digits",
+            "reteachPrerequisiteId": "mt_kDMKJ5Ztt6"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Refuses that a square is a special rectangle, so shared properties don't transfer down the hierarchy",
+            "nextMove": "Sort quadrilaterals into nested property sets so the square sits inside the rectangle set; reason that a square inherits rectangle properties",
+            "distractor": null,
+            "revealedBy": "Asked 'is a square a rectangle? so must it have four right angles?' the child denies the category link",
+            "reteachPrerequisiteId": "mt_Xt1cRqaBOW"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Reaches for the column algorithm or splits incorrectly (7×10+3), appends a zero for ×10, and won't accept the square-rectangle link",
+          "full": "Chooses a distributive decomposition unprompted and justifies it via the area model, explains ×10 as a place-value shift, and reasons about inherited quadrilateral properties — applying 'what do I already know that this is like?' to new products and shapes",
+          "partial": "Can carry out a distributive split or state a hierarchy fact when prompted, but cannot justify why the split is valid or transfers 'add a zero' unsafely to decimals"
+        },
+        "diagnosticPrompt": "Work out 7 × 13 in your head, using a fact you already know instead of the written column method. Talk me through how you split it up and why that's allowed.",
+        "whatMakesItDiscriminate": "The answer 91 can be reached by the column algorithm with no structural insight. What discriminates is whether the child DECOMPOSES and can say why the split is valid. A child using structure partitions and justifies; a child without it either runs the algorithm mentally or splits wrongly (7×10+3)."
+      },
+      "sources": [
+        {
+          "claim": "Using structure includes partitioning a product distributively (e.g. 7×8 = 7×5 + 7×3) as the basis of the distributive property",
+          "source": "CCSS Standards for Mathematical Practice, MP7 'Look for and make use of structure'",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP7/",
+          "verified": true
+        },
+        {
+          "claim": "Teaching should help pupils recognise and use mathematical structure and relationships, choosing representations (e.g. area models, place-value charts) that expose structure and are gradually removed",
+          "source": "EEF, 'Improving Mathematics in Key Stages 2 and 3' guidance report (Recommendations 2 and 4)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T14:23:06.641Z",
+        "updatedAt": "2026-10-19T15:20:45.954Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/8",
+    "connections": [
+      {
+        "topicId": "mt_hlGKg5M7qJ",
+        "prerequisiteId": "mt__Itf4aQZUj",
+        "strength": "hard",
+        "reason": "Age 8-9 using structure is prerequisite to age 9-10 level"
+      },
+      {
+        "topicId": "mt__Itf4aQZUj",
+        "prerequisiteId": "mt_FAXjFkgG6X",
+        "strength": "hard",
+        "reason": "Age 7-8 using structure is prerequisite to age 8-9 level"
+      },
+      {
+        "topicId": "mt__Itf4aQZUj",
+        "prerequisiteId": "mt_kDMKJ5Ztt6",
+        "strength": "soft",
+        "reason": "Dividing by 10/100 exercises place-value structural patterns"
+      },
+      {
+        "topicId": "mt__Itf4aQZUj",
+        "prerequisiteId": "mt_wvcFlwOrDl",
+        "strength": "soft",
+        "reason": "Using mathematical structure (distributive property, fraction equivalence) draws on the universal pattern-and-structure habit"
+      },
+      {
+        "topicId": "mt__Itf4aQZUj",
+        "prerequisiteId": "mt_Xt1cRqaBOW",
+        "strength": "soft",
+        "reason": "Quadrilateral classification exercises using structure (shape hierarchy)"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_IwEOCN6bL1",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Choosing representations strategically",
+      "description": "Select and use tools and representations strategically: choose between mental methods, formal written methods, protractors, fraction strips, and diagrams based on the demands of the problem",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 10,
+      "centrality": 0.1039657020364416,
+      "evidence": [
+        "Choose mental multiplication for 25 × 40 but long multiplication for 347 × 26",
+        "Select a protractor to verify an estimated angle rather than relying on visual inspection alone",
+        "Choose a common-denominator approach vs. benchmark comparison for ordering fractions, and explain why"
+      ],
+      "assessmentPrompt": "When {{name}} faces a geometry or proportion problem, do they choose the right tool — like a protractor for angles or a fraction strip for comparing fractions — rather than always defaulting to one method?",
+      "standards": [
+        "ccss-math:MP.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/952",
+    "research": {
+      "topicId": "mt_IwEOCN6bL1",
+      "pedagogy": {
+        "summary": "At 9-10 the choices sharpen: mental (25×40) vs long multiplication (347×26); a protractor to VERIFY an estimated angle rather than trusting the eye; and choosing between a full common-denominator method and a quicker BENCHMARK comparison (against 1/2) for ordering fractions, with a reason. The strategic advance is recognising when a shortcut beats the general algorithm — and, crucially, when it does NOT (two fractions the same side of 1/2 and close together defeat the benchmark). Estimation and measuring tools work together: estimate first, then measure to check.",
+        "bestPractices": [
+          "Read the numbers to route (25×40 mentally as 25×4×10; 347×26 by long multiplication)",
+          "Teach benchmark comparison (is it below, at, or above 1/2?) as an efficient alternative to common denominators, and discuss which fractions each method suits (EEF: efficiency, comparing representations)",
+          "Use the protractor to VERIFY an estimate, not replace it — estimate the angle, then measure to check (CCSS: detect errors)",
+          "Prize the justification of the choice as much as the answer, since competing methods reach the same order",
+          "Name the benchmark's limitation: when fractions sit the same side of 1/2 and close together it cannot separate them, so a common denominator earns its keep"
+        ],
+        "keyRepresentations": [
+          "Mental strategies",
+          "Long multiplication",
+          "Protractor",
+          "Benchmark fractions (1/2, 1 whole)",
+          "Common denominator / equivalent fractions",
+          "Fraction strips / number line"
+        ],
+        "commonMisconceptions": [
+          "Long-multiplies friendly products like 25×40, missing the mental route",
+          "Relies on visual inspection for angles and skips the protractor check",
+          "Uses common denominators for every fraction comparison even when a benchmark settles it instantly — inefficient",
+          "Applies a benchmark to two close, same-side fractions (5/8 vs 4/7) where it cannot separate them, and guesses",
+          "Treats the protractor as replacing estimation rather than checking it"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 9-10, build the strategic judgement of choosing an efficient method and knowing when a shortcut beats the general algorithm — and when it fails. Learners read the numbers to route a multiplication (25×40 mentally as 25×4×10 vs 347×26 by long multiplication), estimate an angle then measure with a protractor to verify, and order fractions by benchmarking against 1/2 versus finding a common denominator. The key insight: a 1/2 benchmark is fast and sufficient when fractions fall on different sides of 1/2 (e.g. 3/8 below, 5/8 above), but cannot separate two fractions on the same side of 1/2 (e.g. the close pair 5/8 vs 4/7), where another method such as equivalent fractions or a common denominator is needed. Estimation and tools work together: estimate first, then measure to confirm or correct. Prize the justification of the choice as much as the answer, since competing methods reach the same order.",
+        "activities": [
+          {
+            "title": "Estimate then verify an angle",
+            "feedback": [
+              "If the learner skips the estimate and reads straight off the protractor, prompt: 'Before you measure, what's your best guess? Now check — were you close?'",
+              "If the estimate is far off (e.g. 'about 70°' for a 38° angle), ask them to compare against a right angle (90°) as a reference and re-estimate.",
+              "If they say estimating was a waste because they measured anyway, point out that a big gap between your estimate and your reading warns you that you may have misread the protractor scale (protractors carry two scales, so a good estimate guards against reading the wrong one)."
+            ],
+            "rationale": "MP5 describes proficient students detecting possible errors using estimation and making sound decisions about when a tool helps, recognising its insight and limits — so pairing estimate-then-measure develops exactly that disposition. Presented as a proposed activity, not a tested intervention.",
+            "sourceClaims": [
+              "Proficient students detect possible errors using estimation and other knowledge, and make sound decisions about when a tool is helpful, recognising its insight and limitations"
+            ],
+            "learnerActions": [
+              "Look at a drawn angle and state an estimate aloud, e.g. 'about 40°'.",
+              "Place a protractor on the angle and read the actual measure, e.g. 38°.",
+              "Compare the estimate with the measurement and say whether the estimate was close.",
+              "Explain why estimating first was not wasted even though you measured afterwards."
+            ],
+            "intendedInsight": "The eye gives a ballpark; the tool confirms or corrects it. Estimating first makes you more likely to catch a measuring slip, and measuring checks the estimate — the two work together rather than one replacing the other."
+          },
+          {
+            "title": "Benchmark versus common denominator for ordering fractions",
+            "feedback": [
+              "If the learner uses common denominators even for 3/8 vs 1/2, prompt: 'Is 3/8 below or above a half? Does that already settle it?'",
+              "If the learner says 5/8 and 4/7 are 'both above a half so about the same', point out that both being above 1/2 does not tell you which is larger, and ask them to find a common denominator.",
+              "Confirm the equivalence check: 5/8 = 35/56 and 4/7 = 32/56, so 4/7 is smaller — the 1/2 benchmark alone could not reveal this.",
+              "Praise reasons given for the choice, not just the correct final order, since both methods reach the same order."
+            ],
+            "rationale": "EEF recommends pupils make considered decisions about when different methods are appropriate and efficient, and that comparing representations develops conceptual understanding — this task has learners compare the benchmark and common-denominator representations and judge fit. Proposed activity, not a validated intervention.",
+            "sourceClaims": [
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and comparing representations of an idea develops conceptual understanding"
+            ],
+            "learnerActions": [
+              "Order 3/8, 1/2, 5/8 by comparing each to 1/2 (below, at, or above a half) and write the order.",
+              "Order the same three fractions by finding a common denominator, and check the two methods agree.",
+              "Compare how long each method took and say which was quicker here.",
+              "Now try to order 5/8 and 4/7: test whether the 'compare to a half' check separates them (both are above 1/2).",
+              "When the 1/2 benchmark cannot separate them, find a common denominator (or equivalent fractions) to order them exactly, e.g. 5/8 = 35/56 and 4/7 = 32/56, so 4/7 < 5/8.",
+              "State a rule for yourself about which method fits which fractions."
+            ],
+            "intendedInsight": "Benchmarking against 1/2 instantly sorts fractions that fall on different sides of a half, but when both fractions sit on the same side of 1/2 the 1/2 benchmark cannot separate them — then a common denominator earns its keep. The skill is matching the method to the fractions' features, not always using one method."
+          },
+          {
+            "title": "Route the multiplication by reading the numbers",
+            "feedback": [
+              "If the learner sets up long multiplication for 25×40, ask: 'Can you see a quicker way using 25×4 and then ×10?'",
+              "If a mental attempt at 347×26 goes astray, suggest the written algorithm and check the partial products line up by place value (for reference 347×20 = 6940 and 347×6 = 2082, giving 9022).",
+              "Ask the learner to name the number feature (round factor, small digits) that triggered their choice, reinforcing the routing habit."
+            ],
+            "rationale": "EEF's efficiency recommendation covers choosing when different methods are appropriate and efficient; routing between mental and written multiplication is a direct instance. Proposed activity, not a tested intervention.",
+            "sourceClaims": [
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and comparing representations of an idea develops conceptual understanding"
+            ],
+            "learnerActions": [
+              "Look at 25×40 and decide whether a mental method or long multiplication is quicker.",
+              "Compute 25×40 mentally, e.g. as 25×4×10 = 100×10 = 1000.",
+              "Look at 347×26 and decide on a method.",
+              "Compute 347×26 by long multiplication and show the partial products.",
+              "For each, say what feature of the numbers made you choose that method."
+            ],
+            "intendedInsight": "Friendly numbers (round factors, easy regroupings) invite a mental route; awkward multi-digit numbers call for the written algorithm. Reading the numbers before starting saves effort."
+          },
+          {
+            "title": "Argue with a shortcut-happy partner",
+            "feedback": [
+              "If the learner cannot generate counter-cases, prompt them to find two fractions on the same side of 1/2 that are close together.",
+              "If the learner lets the eye-only angle claim stand, remind them that estimation is for checking and a protractor confirms the actual measure.",
+              "Praise clear justifications that name the fractions' features, not just correct answers."
+            ],
+            "rationale": "Explaining and defending when a method fits, including the limits of a shortcut, aligns with EEF's point that comparing representations and making considered method decisions builds understanding. A dialogue can rehearse this reasoning; it is offered as one route, not the only way. Proposed activity, not a validated intervention.",
+            "sourceClaims": [
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and comparing representations of an idea develops conceptual understanding"
+            ],
+            "learnerActions": [
+              "Work with a partner (real or role-played) who benchmarks every fraction comparison and trusts the eye for every angle.",
+              "When the partner benchmarks 5/8 vs 4/7 and declares them 'about the same', supply the counter-case: both are above a half, so the 1/2 benchmark cannot order them.",
+              "Show the partner how a common denominator settles 5/8 vs 4/7 exactly (35/56 vs 32/56).",
+              "When the partner reads an angle from the eye alone, insist on a protractor check and explain why.",
+              "Give the partner two fraction pairs where benchmarking is smart and two where it is not."
+            ],
+            "intendedInsight": "Being able to say when a shortcut works and when the algorithm is required — and defending a verification step — shows genuine fit judgement rather than rote method use."
+          }
+        ],
+        "constraints": [
+          "The learning objective is the judgement of matching method to problem features, so prize the justification of the choice as much as the final answer — both methods reach the same order, so a correct answer alone does not show strategic understanding.",
+          "Estimation and measurement are complementary: estimate first, then measure to check. Do not frame the protractor as replacing estimation or estimation as replacing the tool.",
+          "Selected-response or single-step scored checks can verify an isolated method choice but do not, on their own, reveal the efficiency judgement or the estimate-then-verify habit, because a correct order reached by the laborious method still counts as fully correct; use them only to feed richer method-choice work.",
+          "The benchmark's limitation must be made explicit: a single 1/2 benchmark cannot separate two fractions on the same side of 1/2, so for a same-side (and close) pair a common denominator or equivalence is warranted.",
+          "A static reference chart of 'benchmark vs common denominator' is at most a supporting scaffold; it does not let the learner estimate, measure, compare timings, or justify, which is where the decision-making becomes visible.",
+          "Angle measurement and fraction ordering are planar tasks; a three-dimensional representation is not needed for this objective (stated as a scope note for this content, not a universal claim)."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "Self-audit of arithmetic: 25×40 = 1000 (via 25×4×10) is correct. For 5/8 vs 4/7 with common denominator 56: 5/8 = 35/56 and 4/7 = 32/56, so 4/7 < 5/8 — correct, and both lie above 1/2 (28/56), confirming the 1/2 benchmark cannot separate them. 347×26 was left for the learner; for reference 347×26 = 9022 (347×20=6940, 347×6=2082, sum 9022).",
+          "Precision clarification on the benchmark limit: a single 1/2 benchmark never orders two fractions on the same side of 1/2, whether near or far apart. The 'same side and close together' framing (retained from the source) is where no other simple benchmark (e.g. 1 whole or 3/4) helps either, so a common denominator or equivalence is the reliable tool; this is true, not merely true for 'close' pairs.",
+          "The legacy entries asserted 'a static picture cannot teach this', 'scored steps cannot observe the judgement', and '3D adds nothing'. These comparative-necessity claims are not established by the cited sources; they have been softened into scoped scaffold/scope limits in constraints rather than presented as universal pedagogical laws.",
+          "The source carried reteach-prerequisite links and diagnostic/assessment fields that are not learner-facing activity content; they were not altered. Their internal identifiers have been omitted from this guidance.",
+          "The source lists benchmark fractions as 1/2 and 1 whole; the activities focus on 1/2 because it separates the given examples. Benchmarking against 1 whole remains a valid technique but is not exercised here."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "For 5/8 and 4/7, why doesn't 'compare to a half' settle it — and what would?",
+          "Give me two fractions where benchmarking is the smart move, and two where it isn't.",
+          "You estimated an angle as 40° and the protractor says 38° — was estimating a waste of time? Why not?",
+          "When is long multiplication worth the effort over a mental method?"
+        ],
+        "correctAnswer": "No single scored answer — listen for recognising the benchmark (compare to 1/2) is quicker and sufficient for 3/8, 1/2, 5/8, while 5/8 and 4/7 both sit above 1/2 and close together so the benchmark cannot separate them and a common denominator or equivalence is warranted — a judgement about which method fits which fractions.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Uses common denominators for every comparison, even 3/8 vs 1/2, never reaching for a benchmark",
+            "nextMove": "Teach the 'compare to a half first' check and reserve the full algorithm for when benchmarks cannot separate — a self-regulation issue, reteach in place.",
+            "distractor": null,
+            "revealedBy": "Grinds a common-denominator computation where 'below/above a half' would settle it instantly",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Applies a benchmark to two close, same-side fractions (5/8 vs 4/7) where it cannot separate them, and guesses",
+            "nextMove": "Show the benchmark's limitation for same-side-close fractions and reteach finding a common denominator / equivalence to order them exactly.",
+            "distractor": null,
+            "revealedBy": "Says the two are 'both above a half so about the same' or guesses the order",
+            "reteachPrerequisiteId": "mt_-V7EnqU7gG"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Relies on visual inspection for angles and skips the protractor check",
+            "nextMove": "Estimate then MEASURE to check; treat the protractor as the verifier of the estimate, not an optional extra. Reteach measuring angles with a protractor.",
+            "distractor": null,
+            "revealedBy": "States an angle from the eye alone and resists measuring to verify",
+            "reteachPrerequisiteId": "mt_4MFUAsbx_6"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Uses one method for everything (common denominators or long multiplication throughout), or trusts the eye for angles; gives no efficiency or verification reasoning.",
+          "full": "Unprompted, matches method to the fractions (benchmark when it separates, common denominator when it cannot), estimates then verifies angles with a protractor, justifies each choice by efficiency and fit, and transfers the judgement to mental vs long multiplication.",
+          "partial": "When prompted, says benchmarking is 'quicker' for the first set, but does not notice that 5/8 vs 4/7 needs the algorithm, or checks angles only when told."
+        },
+        "diagnosticPrompt": "To put 3/8, 1/2 and 5/8 in order, one child finds a common denominator for all three; another just says '3/8 is below a half, 5/8 is above, so it's 3/8, 1/2, 5/8'. Who chose the smarter method here, and why? Would your advice change for ordering 5/8 and 4/7?",
+        "whatMakesItDiscriminate": "Both methods order 3/8, 1/2, 5/8 correctly, so accuracy is not the tell; the discriminator is whether the child sees the benchmark suffices here AND recognises the second pair as a case where it fails, matching method to the fractions' features (EEF's efficiency point) rather than applying one method blindly."
+      },
+      "sources": [
+        {
+          "claim": "Proficient students detect possible errors using estimation and other knowledge, and make sound decisions about when a tool is helpful, recognising its insight and limitations",
+          "source": "CCSS Standards for Mathematical Practice — MP5 Use appropriate tools strategically",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP5/",
+          "verified": true
+        },
+        {
+          "claim": "Pupils should make considered decisions about when different methods are appropriate and efficient, and comparing representations of an idea develops conceptual understanding",
+          "source": "EEF — Improving Mathematics in Key Stages 2 and 3 (Recommendations 2 and 4)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T14:03:11.505Z",
+        "updatedAt": "2026-10-19T15:20:40.332Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/496",
+    "connections": [
+      {
+        "topicId": "mt_IwEOCN6bL1",
+        "prerequisiteId": "mt_4MFUAsbx_6",
+        "strength": "soft",
+        "reason": "Protractor use exercises strategic tool selection"
+      },
+      {
+        "topicId": "mt_IwEOCN6bL1",
+        "prerequisiteId": "mt_d-WZC2OyMB",
+        "strength": "hard",
+        "reason": "Age 8-9 strategic tool use is prerequisite to age 9-10 level"
+      },
+      {
+        "topicId": "mt_IwEOCN6bL1",
+        "prerequisiteId": "mt_-V7EnqU7gG",
+        "strength": "soft",
+        "reason": "Choosing common-denominator approach requires strategic method selection"
+      },
+      {
+        "topicId": "mt_ZJC7JnnPCu",
+        "prerequisiteId": "mt_IwEOCN6bL1",
+        "strength": "hard",
+        "reason": "Y6 strategic tool use extends Y5 tool selection"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_ish_uH8vZe",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Using a calculator well",
+      "description": "Use a calculator efficiently and appropriately to solve multi-step addition, subtraction, multiplication and division problems, deciding when a calculator is the best tool and checking the result with an estimate",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 10,
+      "centrality": 0.05251875669882101,
+      "evidence": [
+        "Use a calculator to find the total of 1468 + 2975 + 813 and check it against an estimate of about 5300",
+        "Decide whether to use mental strategies or a calculator for 400 x 3 and for 387 x 46, and explain the choice",
+        "Spot that a calculator answer of 4 150 for 83 x 5 must be a keying error because 80 x 5 = 400"
+      ],
+      "assessmentPrompt": "When {{name}} uses a calculator for homework, do they check the answer looks about right with a quick estimate — and know when it's faster to do it in their head?",
+      "standards": [
+        "acara-v9:AC9M4N06",
+        "acara-v9:AC9M4N08"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/960",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_ish_uH8vZe",
+        "prerequisiteId": "mt_FVVSQR9vGg",
+        "strength": "soft",
+        "reason": "Year 3 calculator checks for money precede efficient Year 4 calculator use"
+      },
+      {
+        "topicId": "mt_ish_uH8vZe",
+        "prerequisiteId": "mt_mpS-JK_p_m",
+        "strength": "hard",
+        "reason": "Using a calculator well requires understanding the operations it performs"
+      },
+      {
+        "topicId": "mt_ish_uH8vZe",
+        "prerequisiteId": "mt_QaYfeVL-0C",
+        "strength": "soft",
+        "reason": "Checking calculator results uses estimation by rounding"
+      },
+      {
+        "topicId": "mt_NmvuwVUFRS",
+        "prerequisiteId": "mt_ish_uH8vZe",
+        "strength": "hard",
+        "reason": "Builds on choosing and checking calculator use for whole-number operations"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_ish_uH8vZe",
+        "strength": "soft",
+        "reason": "Budgets and best buys use a calculator with estimation checks"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_ZJC7JnnPCu",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Choosing Maths Tools",
+      "description": "Select and use tools and representations strategically: choose between mental methods, formal written methods, algebraic approaches, coordinate grids, and technology based on the demands of the problem",
+      "ageRangeStart": 10,
+      "ageRangeEnd": 11,
+      "centrality": 0.1457663451232583,
+      "evidence": [
+        "Explain why long division is more appropriate than mental methods for 4,752 ÷ 13",
+        "Choose a coordinate grid approach to verify a translation rather than computing from a description alone",
+        "Select a formula-based approach rather than counting cubes to find volume efficiently"
+      ],
+      "assessmentPrompt": "When {{name}} chooses how to tackle a maths problem, do they pick the most efficient approach — using algebra for a complex generalisation, a coordinate grid for a geometry problem, or mental arithmetic for a simple calculation?",
+      "standards": [
+        "ccss-math:MP.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/963",
+    "research": {
+      "topicId": "mt_ZJC7JnnPCu",
+      "pedagogy": {
+        "summary": "At 10-11, the primary capstone, strategic choice spans mental vs formal written methods (why long division suits 4,752 ÷ 13), formula/algebraic approaches vs enumeration (a volume formula rather than stacking cubes), and using coordinate grids or technology to VERIFY (checking a translation on a grid, not from a description alone). The advance is choosing for efficiency AT SCALE — reaching for a more powerful tool when brute methods become impractical — while still being able to justify the choice and knowing why the slower, concrete method has its place in building the idea.",
+        "bestPractices": [
+          "Read the problem to route: an awkward computation like 4,752 ÷ 13 warrants long division, a friendly one does not",
+          "Choose a formula over enumeration when counting is impractical (V = l×w×h rather than stacking cubes), naming the efficiency gain and checking the shape actually fits the formula",
+          "Use a coordinate grid or technology to VERIFY a transformation against its rule rather than trust a verbal description (CCSS: detect errors)",
+          "Keep the justification central — 'why is this the right tool for THIS problem?' — not just the answer",
+          "Name each tool's limitation: a volume formula assumes a cuboid; a grid check assumes accurate plotting; a calculator only helps if you can judge whether its output is sensible (EEF: less but better)"
+        ],
+        "keyRepresentations": [
+          "Formal long division",
+          "Mental strategies",
+          "Volume/area formulae (V = l×w×h)",
+          "Coordinate grid",
+          "Technology (calculator, dynamic geometry)"
+        ],
+        "commonMisconceptions": [
+          "Attempts an awkward division (4,752 ÷ 13) mentally and errs, or conversely long-divides a friendly calculation",
+          "Counts cubes to find volume when a formula is far quicker — or applies V = l×w×h to a non-cuboid",
+          "Trusts a described transformation without checking it on a coordinate grid — no verification",
+          "Reaches for a calculator or technology reflexively without judging whether it is the efficient tool or whether its answer is sensible (EEF)"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 10-11, this capstone 'meta' topic develops strategic tool choice in mathematics: deciding between mental and formal written methods, between a formula and brute enumeration, and when to use a coordinate grid or technology to VERIFY a claim rather than trust a description. The advance is choosing for efficiency AT SCALE while still justifying the choice and knowing why the slower concrete method has a place in building understanding. Core examples: route 4,752 ÷ 13 to long division rather than an error-prone mental attempt; use V = l×w×h rather than counting ~400 cubes; plot a shape and its image on a grid to prove a translation matches its rule.",
+        "activities": [
+          {
+            "title": "The chooser bench: formula vs counting, and routing a division",
+            "feedback": [
+              "If a learner enumerates cubes for a large box and does not reach for the formula, link the layered count explicitly to l × w × h so the formula is seen as the shortcut for the SAME structure; reserve counting for building the concept, not for large cases.",
+              "If a learner attempts 4,752 ÷ 13 mentally and slips, do NOT reteach long division — scaffold the meta-question 'is this one to write out?' to tune the judgement of when to deploy an already-known written method.",
+              "If a learner applies V = l × w × h to a non-cuboid, ask them to check the shape actually fits the formula's cuboid assumption before using it, and to decompose the shape into cuboids if it does not.",
+              "Probe: 'Counting cubes still teaches you something — what? When is it worth doing?' and 'For 4,752 ÷ 13, what about the numbers tells you a mental method won't do?'"
+            ],
+            "rationale": "Proficient students consider available tools, decide when each is helpful, and recognise each tool's insight and limitations; pupils should make considered decisions about when methods are appropriate and efficient. Starting from the tedious concrete count before revealing the formula is intended to let the efficiency gain be felt, not just stated.",
+            "sourceClaims": [
+              "Proficient students consider available tools — including technology and dynamic geometry — make sound decisions about when each is helpful, and detect errors using estimation and other knowledge, recognising each tool's insight and limitations",
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and self-regulate technology use to make less but better use of it"
+            ],
+            "learnerActions": [
+              "Find the volume of a 10 cm × 8 cm × 5 cm box by starting to stack unit cubes layer by layer — notice how tedious it becomes and how easy it is to lose count.",
+              "Then compute 10 × 8 × 5 = 400 cm³ and compare: the formula gives the same result in one line.",
+              "State in your own words WHY the formula works (each layer is 10 × 8 = 80 cubes, and there are 5 layers), so you see counting is worth doing only to understand the structure or for tiny cases.",
+              "Decide whether to compute 4,752 ÷ 13 mentally or by long division, and say what about the numbers makes a mental attempt a trap here (it need not divide evenly, and the digits are awkward to hold).",
+              "For each task, write down your reason: 'why is this the right tool for THIS problem?'",
+              "Try a non-cuboid shape (e.g. an L-shaped solid) and notice that V = l × w × h no longer applies as stated — name why, and how you would instead decompose it into cuboids."
+            ],
+            "intendedInsight": "Choose a more powerful tool when brute methods become impractical at scale, justify the choice by the demands of the problem, and know each tool's limitation: a volume formula V = l × w × h assumes a cuboid, and a mental method is error-prone and impractical on awkward numbers like 4,752 ÷ 13, warranting a written method."
+          },
+          {
+            "title": "Using a coordinate grid to VERIFY a transformation",
+            "feedback": [
+              "If a learner asserts a translation is correct from the description alone and resists plotting, model plotting pre-image and image and comparing against the rule, vertex by vertex; treat the grid as the verifier of the claim. Reteach plotting and reading coordinates only if the diagnostic shows that prerequisite is missing.",
+              "Probe: 'How would a coordinate grid PROVE the translation is right, rather than just look right?'",
+              "Probe the limit: 'If your plotting were slightly off, could the grid mislead you? What makes the check trustworthy?'"
+            ],
+            "rationale": "Proficient students make sound decisions about when tools including technology and dynamic geometry are helpful, and detect errors; a grid turns a transformation claim into something checkable against its rule.",
+            "sourceClaims": [
+              "Proficient students consider available tools — including technology and dynamic geometry — make sound decisions about when each is helpful, and detect errors using estimation and other knowledge, recognising each tool's insight and limitations"
+            ],
+            "learnerActions": [
+              "Take a shape and a stated translation rule (e.g. 'move 3 right and 2 up').",
+              "Plot the pre-image on a coordinate grid, then plot where each vertex should land under the rule.",
+              "Carry out (or receive) the translation and check the image lands exactly where the rule predicts — vertex by vertex.",
+              "Decide whether the claimed transformation is correct from the grid evidence, not from the verbal description alone.",
+              "Explain HOW the grid proves the claim rather than just making it 'look right'."
+            ],
+            "intendedInsight": "A coordinate grid (or dynamic geometry) can prove a transformation matches its rule and detect errors, whereas a verbal description trusted alone provides no independent check — but the verification is only as good as the accuracy of the plotting."
+          },
+          {
+            "title": "Resolving a conflict and judging technology output",
+            "feedback": [
+              "If a learner reaches for a calculator reflexively, prompt them to first estimate the answer and judge whether the tool is the efficient route at all.",
+              "If a learner cannot resolve the 400-vs-380 conflict, guide them to re-derive via l × w × h and recount one layer, so the structural method anchors the check (the correct volume here is 400 cm³).",
+              "Probe: 'If the formula gave 400 but your cube count gave 380, which would you trust, and how would you resolve it?'"
+            ],
+            "rationale": "Pupils should self-regulate technology use to make less but better use of it, and proficient students detect errors using estimation and other knowledge — both call for judging output rather than trusting a tool.",
+            "sourceClaims": [
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and self-regulate technology use to make less but better use of it",
+              "Proficient students consider available tools — including technology and dynamic geometry — make sound decisions about when each is helpful, and detect errors using estimation and other knowledge, recognising each tool's insight and limitations"
+            ],
+            "learnerActions": [
+              "Imagine the formula gives 400 but a hand cube-count gives 380 — decide which you would trust and how you would resolve the disagreement (recount a layer, recheck the multiplication).",
+              "Explain how estimation can tell you whether a calculator or technology output is sensible before accepting it.",
+              "Name a situation where reaching for a calculator or technology reflexively is NOT the efficient choice.",
+              "Justify, for each of the day's problems, why the concrete/slower method still has a place in building the idea."
+            ],
+            "intendedInsight": "Tools do not relieve you of judgement: you should self-regulate technology use (less but better), check outputs for sensibleness using estimation, and resolve conflicts between methods rather than trust one blindly."
+          },
+          {
+            "title": "Arguing for the better tool against a tutor who over-enumerates",
+            "feedback": [
+              "Reward justifications framed by scale and fit ('counting is impractical at 400 cubes; the formula collapses it') over bare labels like 'quicker' or 'for big ones'.",
+              "If the learner can only say the formula is 'quicker' without justifying by scale and fit, press for the specific feature of the problem that makes it so.",
+              "If the learner cannot say why the concrete method has a place, prompt them to connect cube-counting to seeing WHY the formula works."
+            ],
+            "rationale": "Keeping the justification central — 'why is this the right tool for THIS problem?' — develops the considered decision-making the standards describe; a dialogue partner who over-enumerates is intended to force the learner to make the efficiency-and-verification reasoning explicit.",
+            "sourceClaims": [
+              "Pupils should make considered decisions about when different methods are appropriate and efficient, and self-regulate technology use to make less but better use of it"
+            ],
+            "learnerActions": [
+              "Work with a tutor (real or in-role) who insists on counting cubes and trusting descriptions without checking.",
+              "Argue the case for using V = l × w × h on a large box, naming the efficiency gain and the cuboid assumption it relies on.",
+              "Argue the case for checking a translation on a grid rather than trusting the tutor's verbal claim.",
+              "When the tutor pushes back, defend WHEN the slower concrete method is still worth doing — and when it is not."
+            ],
+            "intendedInsight": "Being able to justify a tool choice out loud — for efficiency, for verification, and for its limits — is central to strategic tool use, and is distinct from merely getting a right answer."
+          }
+        ],
+        "constraints": [
+          "A static 'which tool when' reference can orient a learner but cannot host the computation, tool-choice, or verification itself, so it should support rather than replace the active decision-making.",
+          "Isolated 'pick the efficient tool' recognition items can feed discussion but do not on their own elicit the independent efficiency-at-scale judgement or the verify-on-a-grid habit — a correct answer reached by enumeration can still be marked right on such items, so they do not by themselves evidence strategic choice.",
+          "A packable 3D box can make 'counting is impractical, the formula collapses it' vivid for the volume strand, but the core objective is method-choice and justification, not spatial exploration; use it as a companion to the main decision tasks, not a substitute.",
+          "V = l × w × h assumes a cuboid; a grid check assumes accurate plotting; a calculator only helps if you can judge whether its output is sensible. Always have learners name the relevant limitation.",
+          "Do not reteach long division or coordinate plotting as the goal here — the objective is the judgement of WHEN to deploy an already-known method; reteach a prerequisite method only if the diagnostic shows it is missing.",
+          "Physical unit cubes (plastic or card) approximate the idealised mathematical unit cubes and cuboid of the volume formula — the idealisation is exact edge lengths of a solid, not zero thickness (a cube is a solid, not a plane figure). A flat drawing of the box is a picture of the solid, not the solid itself; ask learners about the mathematical shape represented rather than a physical or drawn model."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; the two cited claims (CCSS MP5; EEF KS2-3 Recommendation 4) were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The source framed a static image and a scored quiz as unable to teach this skill. These have been softened to narrowly scoped affordance limits: such formats can orient or assess, but a recognition-only or non-interactive format does not by itself elicit the independent construction and verification that defines the objective. No comparative-efficacy claim is asserted beyond the cited standards.",
+          "Self-audit of arithmetic: 10 × 8 × 5 = 400 is correct (each layer 80 cubes × 5 layers). 4,752 ÷ 13 ≈ 365.5 (365 remainder 7), so it does not divide evenly; the source uses it only as an example of an awkward division warranting a written method, which is pedagogically sound, but if it is ever presented as a worked answer, confirm the intended remainder/context with a reviewer.",
+          "The 400-vs-380 conflict scenario is hypothetical (the true cube count is 400); it is retained as a reasoning prompt about resolving method disagreement, not as a factual claim that a count yields 380.",
+          "The source error patterns referenced reteaching plotting/reading coordinates via an internal prerequisite link; the internal ID has been stripped and the link is retained conceptually as 'reteach plotting if the diagnostic shows it missing', which may lose a specific reteach mapping a reviewer could restore.",
+          "Corrected an inaccurate thickness claim: a prior draft called the formula's unit cubes 'zero-thickness'. Unit cubes are solids with exact edge lengths; zero thickness applies only to ideal plane figures, so the constraint now distinguishes the ideal solid, its physical model, and a flat picture of it."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "Counting cubes still teaches you something — what? When is it worth doing?",
+          "For 4,752 ÷ 13, what about the numbers tells you a mental method won't do?",
+          "How would a coordinate grid PROVE the translation is right, rather than just look right?",
+          "If the formula gave 400 but your cube count gave 380, which would you trust, and how would you resolve it?"
+        ],
+        "correctAnswer": "No single scored answer — listen for recognising V = l×w×h is far more efficient than counting 400 cubes and gives the same result (choosing power and efficiency at scale), while cube-counting is worth doing only for tiny cases or to first SEE why the formula works; and that 4,752 ÷ 13 is awkward enough to warrant long division rather than a mental attempt — a fit-by-features judgement.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Counts cubes to find volume when a formula is available, treating enumeration as the trustworthy method",
+            "nextMove": "Link the layered cube count to l×w×h so the formula is seen as the shortcut for the same structure; reserve counting for building the concept, not for large cases.",
+            "distractor": null,
+            "revealedBy": "Enumerates cubes for a large box and does not reach for l×w×h, or cannot say when the formula should take over",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Overreaches mentally on an awkward division (4,752 ÷ 13) and errs, having a written method available",
+            "nextMove": "Scaffold the meta-question 'is this one to write out?'; do NOT reteach long division — tune the judgement of when to deploy it.",
+            "distractor": null,
+            "revealedBy": "Attempts 4,752 ÷ 13 in the head and slips, rather than choosing the written algorithm",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Trusts a described transformation without verifying it on a coordinate grid",
+            "nextMove": "Plot pre-image and image on a grid and compare against the rule; treat the grid as the verifier of the claim. Reteach plotting and reading coordinates.",
+            "distractor": null,
+            "revealedBy": "Asserts a translation is correct from the description alone and resists plotting to check",
+            "reteachPrerequisiteId": "mt_snlqRCiA1R"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Counts cubes, trusts descriptions, or overreaches mentally on awkward computations; gives no efficiency or verification reasoning.",
+          "full": "Unprompted, chooses the efficient powerful tool at scale (formula, long division), can still say why the concrete method has a place, verifies transformations on a coordinate grid, and justifies each choice by the demands of the problem.",
+          "partial": "When prompted, says the formula is 'quicker' or long division is 'for big ones', but does not justify by scale and fit, or use the grid to verify unless told."
+        },
+        "diagnosticPrompt": "Two children find the volume of a 10 cm × 8 cm × 5 cm box. One carefully counts unit cubes layer by layer; the other writes 10 × 8 × 5 = 400 cm³. Who chose the better method, and why? And for 4,752 ÷ 13 — mental or long division? Explain.",
+        "whatMakesItDiscriminate": "Both volume methods reach 400, so the tell is whether the child sees the formula as the efficient tool when counting is impractical and can still say why the concrete method has a place (understanding the formula); the division turn checks they route an awkward computation to the written algorithm rather than overreaching mentally."
+      },
+      "sources": [
+        {
+          "claim": "Proficient students consider available tools — including technology and dynamic geometry — make sound decisions about when each is helpful, and detect errors using estimation and other knowledge, recognising each tool's insight and limitations",
+          "source": "CCSS Standards for Mathematical Practice — MP5 Use appropriate tools strategically",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP5/",
+          "verified": true
+        },
+        {
+          "claim": "Pupils should make considered decisions about when different methods are appropriate and efficient, and self-regulate technology use to make less but better use of it",
+          "source": "EEF — Improving Mathematics in Key Stages 2 and 3 (Recommendation 4)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T14:03:51.320Z",
+        "updatedAt": "2026-10-19T15:21:53.348Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/1026",
+    "connections": [
+      {
+        "topicId": "mt_ZJC7JnnPCu",
+        "prerequisiteId": "mt_IwEOCN6bL1",
+        "strength": "hard",
+        "reason": "Y6 strategic tool use extends Y5 tool selection"
+      },
+      {
+        "topicId": "mt_ZJC7JnnPCu",
+        "prerequisiteId": "mt_snlqRCiA1R",
+        "strength": "soft",
+        "reason": "Coordinate grids are a new tool for verification"
+      },
+      {
+        "topicId": "mt_ZJC7JnnPCu",
+        "prerequisiteId": "mt_WsM4EmdOLe",
+        "strength": "soft",
+        "reason": "Choosing long vs short division exemplifies Y6 strategic tool use"
+      }
+    ]
+  }
+]

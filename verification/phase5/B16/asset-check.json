@@ -1,0 +1,92 @@
+[
+  {
+    "path": "learning/learn.js",
+    "sha256": "07c2b4812b6876217ee26985102fdd93ff31ab6877743b56a01806f94e0fe1c5",
+    "bytes": 38212,
+    "match": true
+  },
+  {
+    "path": "learning/learn.css",
+    "sha256": "7c96bf482efaa5b3ab14620fa5c0a79c2d29b24f7637b4af228284c266613380",
+    "bytes": 15893,
+    "match": true
+  },
+  {
+    "path": "learning/catalog.js",
+    "sha256": "35601ee331efd49dfa49209b71e4bcca7cdda809dd39b1d7011a240535d49e16",
+    "bytes": 6348,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/catalog.js",
+    "sha256": "ee8b11a849ea53b5e8567f09f7fc807557d336ffdde26fe62ca24cc875354839",
+    "bytes": 1183,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/b03.js",
+    "sha256": "9a238aa038ab5ca94f1549d604e57ad2a8796dae695549c54a994c05f26a0cc5",
+    "bytes": 7874,
+    "match": true
+  },
+  {
+    "path": "learning/phase4/engine.js",
+    "sha256": "96ae26b940c3935441360a5d2cfc8108c161daff1d62f586d0645beb94475e0f",
+    "bytes": 3497,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b16.js",
+    "sha256": "32dd356d23a765122b60e0c40d804d7ee9353e3950757386704a6e9435e39d79",
+    "bytes": 24252,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b16-model.js",
+    "sha256": "dcb14a0dc05f2e047a666259944f8b24b20e230a6bd844d34180860e62ff68ab",
+    "bytes": 24117,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b16-view.js",
+    "sha256": "ece4c0a940e20c0ecdb4923e7dceb419f0dc4544097c8026e97d5cd576d03f13",
+    "bytes": 21148,
+    "match": true
+  },
+  {
+    "path": "learning/phase5/b16.css",
+    "sha256": "706ff753c31b53ca9c096170b80312ee67204b9463be9512c74b3936487ea4ce",
+    "bytes": 6869,
+    "match": true
+  },
+  {
+    "path": "space.js",
+    "sha256": "cebba516d5a699d52611e2972d559297b299ec1e1aee0171ade39eab1823e0e5",
+    "bytes": 41832,
+    "match": true
+  },
+  {
+    "path": "exploration.js",
+    "sha256": "854d48ef833954383da2512792ba293dee205492118b3beecc84c6f7512f97d1",
+    "bytes": 51203,
+    "match": true
+  },
+  {
+    "path": "sw.js",
+    "sha256": "5803772b482874b0453e7b0efb0162d1eb5d6c597b85ca029895182fc9fafc95",
+    "bytes": 4356,
+    "match": true
+  },
+  {
+    "path": "data/atlas.json",
+    "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "bytes": 1051830,
+    "match": true
+  },
+  {
+    "path": "exploration-content.js",
+    "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+    "bytes": 7895,
+    "match": true
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "checks": [
+    "overview counts unique available nodes",
+    "entry offers the original route and the new route",
+    "new route has three nodes",
+    "selected route survives reload",
+    "counterexample opens after actual angle and division work",
+    "wrong first prediction and revealed feedback persist",
+    "the child’s words are saved without grading",
+    "simulated next day shows the original question",
+    "original partial investigation is restored",
+    "later investigation is preserved separately",
+    "original explanation is restored exactly",
+    "world camera returns to the question",
+    "actual backup contains the original explanation",
+    "repeated import preserves question and partial work",
+    "all four new files are cached",
+    "the question reopens offline",
+    "the investigation can finish offline",
+    "a revealed comparison is kept as support",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v43",
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+ok 1 - B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+  ---
+  duration_ms: 3.590125
+  type: 'test'
+  ...
+# Subtest: tiling requires equal unit squares and the full interior without exterior squares
+ok 2 - tiling requires equal unit squares and the full interior without exterior squares
+  ---
+  duration_ms: 0.07825
+  type: 'test'
+  ...
+# Subtest: rectangles accept alternative factor pairs and separate area from perimeter
+ok 3 - rectangles accept alternative factor pairs and separate area from perimeter
+  ---
+  duration_ms: 0.066625
+  type: 'test'
+  ...
+# Subtest: pond estimation uses polygon intersection and the stated half-square rule
+ok 4 - pond estimation uses polygon intersection and the stated half-square rule
+  ---
+  duration_ms: 0.318333
+  type: 'test'
+  ...
+# Subtest: solids count unique mathematical features including hidden ones
+ok 5 - solids count unique mathematical features including hidden ones
+  ---
+  duration_ms: 0.100625
+  type: 'test'
+  ...
+# Subtest: fold model distinguishes known nets and finds all eleven free cube nets
+ok 6 - fold model distinguishes known nets and finds all eleven free cube nets
+  ---
+  duration_ms: 3.17375
+  type: 'test'
+  ...
+# Subtest: net checks use committed predictions and opposite faces, not an answer edited after reveal
+ok 7 - net checks use committed predictions and opposite faces, not an answer edited after reveal
+  ---
+  duration_ms: 0.398667
+  type: 'test'
+  ...
+# Subtest: measurements require the correct instrument, unit and actual model operation
+ok 8 - measurements require the correct instrument, unit and actual model operation
+  ---
+  duration_ms: 0.433416
+  type: 'test'
+  ...
+# Subtest: capacity separates estimate, full capacity and contents; no forced perfect estimate
+ok 9 - capacity separates estimate, full capacity and contents; no forced perfect estimate
+  ---
+  duration_ms: 0.33125
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.733417

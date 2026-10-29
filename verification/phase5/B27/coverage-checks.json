@@ -1,0 +1,42 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "command": "python3 scripts/build_content_plan.py --check",
+      "exit_code": 0,
+      "output": "{\"mode\": \"check\", \"mathTopics\": 587, \"internalRelations\": 1223, \"externalReferences\": 32, \"researchTopics\": 502, \"missingResearchTopics\": 85, \"existingActivities\": 3, \"previewOnly\": 1, \"nodesWithoutFullActivity\": 584, \"firstSample\": 12, \"firstRelease\": 50, \"remainingAfterFirstRelease\": 537, \"sharedAuthoringGroups\": 93, \"proposedTaskUnits\": 161, \"deliveryBatches\": 39}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "command": "node scripts/build_phase2_coverage.mjs --check",
+      "exit_code": 0,
+      "output": "{\"availableNodes\":12,\"newNodes\":9,\"tasks\":30,\"sourceGoals\":36,\"localResearchSupplements\":2,\"remainingUnimplementedNodes\":575}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "command": "node scripts/build_phase3_coverage.mjs --check",
+      "exit_code": 0,
+      "output": "{\"mode\":\"check\",\"nodes\":12,\"connections\":9,\"connectionTasks\":18}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "command": "node scripts/build_phase4_coverage.mjs --check",
+      "exit_code": 0,
+      "output": "{\n  availableNodes: 50,\n  newNodes: 38,\n  nodeTasks: 136,\n  sourceGoals: 153,\n  routes: 15,\n  availableConnections: 21,\n  connectionTasks: 42,\n  localResearchSupplements: 9,\n  remainingUnimplementedNodes: 537,\n  remainingResearchGaps: 76\n}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "command": "node scripts/build_phase5_coverage.mjs --check",
+      "exit_code": 0,
+      "output": "{\n  availableNodes: 423,\n  newNodes: 10,\n  nodeTasks: 1447,\n  newNodeTasks: 32,\n  sourceGoals: 1280,\n  newSourceGoals: 30,\n  routes: 164,\n  availableConnections: 525,\n  connectionTasks: 1050,\n  newConnections: 9,\n  newConnectionTasks: 18,\n  localResearchSupplements: 61,\n  remainingUnimplementedNodes: 164,\n  remainingResearchGaps: 24\n}\n"
+    }
+  }
+]

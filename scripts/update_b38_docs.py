@@ -1,0 +1,43 @@
+from pathlib import Path
+def replace(path, old, new, count=1):
+    p=Path(path);s=p.read_text();actual=s.count(old)
+    if actual!=count: raise RuntimeError(f'{path}: expected {count}, got {actual}: {old[:80]}')
+    p.write_text(s.replace(old,new))
+
+replace('README.md','**当前累计 559 个知识点、221 条短路线、1892 个节点任务；750 条真实源关系各有两步联合操作。** 本批 B37 新增 21 个节点、71 个节点任务、38 条连接。全图保留 587 个节点、1,223 条数学关系；剩余 28 个节点已有制作批次。','**当前累计 579 个知识点、228 条短路线、1961 个节点任务；763 条真实源关系各有两步联合操作。** B38 新增 20 个节点、69 个节点任务、13 条连接。全图保留 587 个节点、1,223 条数学关系；剩余 8 个节点安排在 B39。')
+replace('README.md','全景按已开放的 559 个源节点汇总','全景按已开放的 579 个源节点汇总')
+replace('README.md','[B37 依据](docs/phase5/B37/RESEARCH.md)、[制作记录](docs/phase5/B37/PRODUCTION.md)：559 个节点、1688 个源目标','[B38 依据](docs/phase5/B38/RESEARCH.md)、[制作记录](docs/phase5/B38/PRODUCTION.md)：579 个节点、1748 个源目标')
+replace('README.md','- B37 新增配比对照、按比分配、图形缩放与面积，部分地图、利息和单位换算采用分步记录；系统图示是支架。','- B37 新增配比对照、按比分配、图形缩放与面积，部分地图、利息和单位换算采用分步记录；系统图示是支架。\n- B38 让孩子拆换、检查推理、自己选数找反例，并把生活情境、数学语言和多步计划连起来；部分内容仍是预置卡片或分步填写，自由解释保存但不自动判懂。')
+replace('README.md','当前规则检查 972 项通过；浏览器检查及已知边界见 [技术验证](docs/VALIDATION.md)。当前证据在 `verification/phase5/B37/`','当前规则检查 992 项通过；浏览器检查及已知边界见 [技术验证](docs/VALIDATION.md)。当前证据在 `verification/phase5/B38/`')
+
+replace('docs/EXECUTION-PLAN.md','累计 559 个不同源节点、1892 个任务、221 条短路线','累计 579 个不同源节点、1961 个任务、228 条短路线')
+replace('docs/EXECUTION-PLAN.md','750 条真实连接活动、原话与现场保存','763 条真实连接活动、原话与现场保存')
+replace('docs/EXECUTION-PLAN.md','B06–B37 已制作，累计 559；剩余 28，当前技术验证见 VALIDATION','B06–B38 已制作，累计 579；剩余 8，当前技术验证见 VALIDATION')
+replace('docs/EXECUTION-PLAN.md','当前剩余 28 个节点（起始余量 537）','当前剩余 8 个节点（起始余量 537）')
+replace('docs/EXECUTION-PLAN.md','B06–B37均已制作，当前累计559节点；剩余B38–B39共28节点、1个研究缺口。下一批B38“把想法说清楚·批1”为20节点、无研究缺口；按该批源目标与研究清单继续制作。','B06–B38均已制作，当前累计579节点；剩余B39共8节点、1个研究缺口。下一批B39“把想法说清楚·批2”按源目标与研究清单继续制作。')
+replace('docs/EXECUTION-PLAN.md','当前下一批：B38「把想法说清楚·批1」，20个节点、无研究缺口。当前仍余28节点、1个研究缺口。','当前下一批：B39「把想法说清楚·批2」，8个节点、1个研究缺口。')
+with Path('docs/EXECUTION-PLAN.md').open('a') as f:f.write('\n2026-10-28，B38结果：新增20节点、69个节点任务、13条真实连接的26个联合任务；累计579节点／1961任务／763连接／228路线。20份上游研究逐目标适配；部分任务复用旧教具，推理卡片与分步填写是支架，开放解释未自动评估。下一批B39余8节点、1个研究缺口。详见[B38制作记录](phase5/B38/PRODUCTION.md)。\n')
+
+replace('docs/LEARNING-DESIGN.md','扩展内容版 v42。559 个可学习源节点、1892 个节点任务、221 条短路线、750 条连接活动','扩展内容版 v43。579 个可学习源节点、1961 个节点任务、228 条短路线、763 条连接活动')
+replace('docs/LEARNING-DESIGN.md','任务与 1688 个源目标逐项对应','任务与 1748 个源目标逐项对应')
+replace('docs/LEARNING-DESIGN.md','475 个节点适配原研究','495 个节点适配原研究')
+replace('docs/LEARNING-DESIGN.md','559 个已开放源节点的活动进度','579 个已开放源节点的活动进度')
+replace('docs/LEARNING-DESIGN.md','750 条连接活动、1500 个联合操作','763 条连接活动、1526 个联合操作')
+replace('docs/LEARNING-DESIGN.md','当前559节点与750连接的完整模拟记录','当前579节点与763连接的完整模拟记录')
+marker='## 完成与证据'
+replace('docs/LEARNING-DESIGN.md',marker,'B38 在“把想法说清楚”按三方向提供七条路线。孩子可以拆换、检查错误、自己选数寻找反例，再把数学语言、情境建模与计划联系起来。推理卡及分步填写仍是支架，旧教具部分复用，自由解释保存但不自动评估。见[B38设计](phase5/B38/DESIGN.md)。\n\n'+marker)
+
+replace('AGENTS.md','Current content: 559 unique source nodes, 1892 node tasks, 221 short routes with\n2–4 nodes each; 750 real source connections with 1500 joint tasks.','Current content: 579 unique source nodes, 1961 node tasks, 228 short routes with\n2–4 nodes each; 763 real source connections with 1526 joint tasks.')
+replace('AGENTS.md','There are 28 planned nodes and one research gap left for stage 5.','There are 8 planned nodes and one research gap left for stage 5.')
+replace('AGENTS.md','docs/phase5/coverage.json and COVERAGE.md map current 559 nodes / 1688 source\n  goals with limited-case and unassessed-goal boundaries. B37/RESEARCH.md,','docs/phase5/coverage.json and COVERAGE.md map current 579 nodes / 1748 source\n  goals with limited-case and unassessed-goal boundaries. B38/RESEARCH.md,')
+replace('AGENTS.md','current v42','current v43')
+replace('AGENTS.md','current 972 checks','current 992 checks')
+replace('AGENTS.md','Current evidence is verification/phase5/B37/','Current evidence is verification/phase5/B38/')
+replace('AGENTS.md','continue from B38 (20 nodes, no missing research records)','continue from B39 (8 nodes, one missing research record)')
+replace('AGENTS.md','B36 extends functions and B37 extends scaling; next is B38.','B36 extends functions, B37 extends scaling, B38 extends mathematical reasoning; next is B39.')
+replace('AGENTS.md','B21 through B37 are now implemented; the current next batch is B38 with 20 nodes\nand no missing research records.','B21 through B38 are now implemented; the current next batch is B39 with 8 nodes\nand one missing research record.')
+replace('AGENTS.md','Current 559-node/750-link synthetic','The B37 559-node/750-link synthetic')
+replace('AGENTS.md','B30 through B37 are implemented; the current next batch is B38.','B30 through B38 are implemented; the current next batch is B39.')
+replace('AGENTS.md','B31 through B37 are implemented and B38 has 20 planned nodes and no research gaps.','B31 through B38 are implemented; B39 has 8 planned nodes and one research gap.')
+replace('AGENTS.md','the next batch is B38 (20 nodes, no missing research records).','the next batch is B39 (8 nodes, one missing research record).')
+with Path('AGENTS.md').open('a') as f:f.write('''\nB38 adds HN–HT under three reasoning directions, retaining O. Its model/view\nlets children exchange a ten, select and order bounded reasons and construct\ntheir own multiplication counterexample. Positive original values and nonnegative\nfactors are bounded to the displayed domain; 1 breaks strictly greater but not\nnever smaller. Values are compared exactly, and products display exact fractions.\nFirst predictions, help, optional prose and old completed submissions remain;\nchanged current constructions cannot count as current independent evidence.\nOther B38 nodes reuse prior constructions; selected cards and guided steps do\nnot establish independent arguments, free drawing, actual peer talk or child\nlearning. Continue B39 with eight nodes and one local research gap; stage 4 child\ntrial and actual next-day continuation remain unverified.\n''')

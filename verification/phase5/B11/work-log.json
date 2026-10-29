@@ -1,0 +1,17 @@
+{
+  "batch": "B11",
+  "startedAt": "2026-10-25T22:46:04.607499+00:00",
+  "snapshot": "snapshots/v15-before-b11-20261025T224604Z.tar.gz",
+  "activeHours": null,
+  "note": "Wall time includes parallel work and tool waiting; do not infer active labor.",
+  "completedAt": "2026-10-26T03:51:24.473037+00:00",
+  "technicalEvidence": "summary.json",
+  "interruptions": [
+    "Subagent credit/network failures; resumed after user continuation.",
+    "Initial browser exec result lost after tool session interruption; successful full rerun saved separately."
+  ],
+  "notes": [
+    "Ordinary local work only; no publishing or child-trial claims.",
+    "Wall time includes parallel work and waits."
+  ]
+}

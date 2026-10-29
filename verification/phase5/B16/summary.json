@@ -1,0 +1,71 @@
+{
+  "batch": "B16",
+  "date": "2026-10-26",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 259,
+    "newNodes": 22,
+    "nodeTasks": 882,
+    "newNodeTasks": 74,
+    "sourceGoals": 784,
+    "newSourceGoals": 66,
+    "routes": 92,
+    "availableConnections": 236,
+    "connectionTasks": 472,
+    "newConnections": 40,
+    "newConnectionTasks": 80,
+    "localResearchSupplements": 26,
+    "remainingUnimplementedNodes": 328,
+    "remainingResearchGaps": 59
+  },
+  "unitChecks": 342,
+  "browserChecks": 1124,
+  "suites": [
+    {
+      "name": "browser-final",
+      "checks": 868
+    },
+    {
+      "name": "integration-final",
+      "checks": 56
+    },
+    {
+      "name": "visual-final",
+      "checks": 106
+    },
+    {
+      "name": "regression/phase5-b15-integration-browser/result",
+      "checks": 45
+    },
+    {
+      "name": "regression/spatial-browser/result",
+      "checks": 37
+    },
+    {
+      "name": "regression/phase3-continuation-browser/result",
+      "checks": 8
+    },
+    {
+      "name": "regression/phase5-b09-readiness-browser/result",
+      "checks": 4
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-26T13:10:40.604Z",
+    "health": 200,
+    "progress": "0 / 259",
+    "cache": "math-explorer-20261026-learning-v21",
+    "cachedFiles": 120,
+    "assetsMatched": 15,
+    "distBytes": 6439864,
+    "distMiB": 6.142
+  },
+  "limits": [
+    "Finite tasks do not establish general mastery.",
+    "Child trial and real next-day continuation have not occurred.",
+    "No claims of independent oral explanation, mental fluency, handwriting, general proofs or physical partitioning."
+  ]
+}

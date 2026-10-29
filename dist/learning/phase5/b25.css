@@ -1,0 +1,7 @@
+.g25-world{width:min(100%,740px);margin:1.2rem auto;padding:1rem;border-radius:18px;background:#f3f5ec;overflow:hidden}
+.g25-svg{display:block;width:100%;height:auto;max-height:560px;font-family:inherit;color:#3d5c4b}
+.g25-svg text{font-family:inherit;fill:#405f50;font-size:15px}.g25-svg [data-x]{cursor:pointer}
+.g25-caption{color:#587367;font-size:.9rem;margin:.5rem 0}.g25-controls{max-width:800px;margin:auto}.g25-buttons{display:flex;gap:.5rem;flex-wrap:wrap;margin:.7rem 0}.g25-controls button{margin:.25rem .35rem .25rem 0}.g25-field{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin:.5rem 0}.g25-field span{min-width:7.2rem}.g25-field input,.g25-field select{max-width:100%;min-width:12rem}.g25-issue{color:#9a573b}.g25-fold{margin:.8rem 0;color:#516d5f}.g25-fold summary{cursor:pointer}
+
+.g25-svg .g25-scale{font-size:11px}
+.g25-svg .g25-scale-inner{fill:#a36d41}

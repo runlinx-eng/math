@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "portionoperator:0 completes at shorter desktop",
+    "portionoperator:0 no document overflow",
+    "portionoperator:0 usable work surface",
+    "portionoperator:0 state remains valid",
+    "portionoperator:1 completes at shorter desktop",
+    "portionoperator:1 no document overflow",
+    "portionoperator:1 usable work surface",
+    "portionoperator:1 state remains valid",
+    "portionoperator:2 completes at shorter desktop",
+    "portionoperator:2 no document overflow",
+    "portionoperator:2 usable work surface",
+    "portionoperator:2 state remains valid",
+    "money uses familiar exact notation",
+    "portionoperator:3 completes at shorter desktop",
+    "portionoperator:3 no document overflow",
+    "portionoperator:3 usable work surface",
+    "portionoperator:3 state remains valid",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

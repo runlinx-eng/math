@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-26T03:50:29.110Z",
+  "health": 200,
+  "progress": "0 / 172",
+  "nodes": 172,
+  "routes": 59,
+  "connections": 101,
+  "directions": 3,
+  "cache": "math-explorer-20261026-learning-v16",
+  "cachedFiles": 99,
+  "assets": {
+    "learning/learn.js": {
+      "status": 200,
+      "bytes": 36997,
+      "sha256": "17e05c1a243254c54819351889d0f97dc0769d03f914c5343ad67c20e28d8b60"
+    },
+    "learn.html": {
+      "status": 200,
+      "bytes": 1150,
+      "sha256": "39cd2366a3b1d737c9d1e8a31d5b5992abe4de72fb20eb3020102ecdda133a87"
+    },
+    "learning/phase5/b11.js": {
+      "status": 200,
+      "bytes": 21251,
+      "sha256": "fb10f142ba8f634591e21570e21855f7294127cc1132bde3cc97784dd3979503"
+    },
+    "learning/phase5/b11-model.js": {
+      "status": 200,
+      "bytes": 17102,
+      "sha256": "91b0c02d436c7adb0a8fdbac61ced4bc669eb00e073bde60c4a2c0e7a0d4e8b7"
+    },
+    "learning/phase5/b11-view.js": {
+      "status": 200,
+      "bytes": 9914,
+      "sha256": "d790c0a8ae9071a65ce143558fb858d8551715a5f78a34d7f5c81bcb98cb2eb7"
+    },
+    "learning/phase5/b11.css": {
+      "status": 200,
+      "bytes": 4931,
+      "sha256": "2096ce0dd63d891eee71ce8e1bc1f1e8c96de8fab8599e3a0f77b0d8e5f4473d"
+    },
+    "data/atlas.json": {
+      "status": 200,
+      "bytes": 1051830,
+      "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf"
+    },
+    "exploration-content.js": {
+      "status": 200,
+      "bytes": 7895,
+      "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397"
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,33 @@
+{
+  "checks": [
+    "placing quantities makes both bars visible",
+    "first wrong prediction is stored",
+    "corrected and changed mixture can complete without erasing the error",
+    "sharing questions stay hidden until pieces are placed",
+    "sharing questions appear after all pieces are placed",
+    "equal blocks can be divided 3 to 5",
+    "changing a block invalidates the current allocation",
+    "the earlier completed submission remains in history",
+    "the changed current work is not counted as current independent evidence",
+    "area questions wait for the size comparison",
+    "revealed size feedback is recorded as support",
+    "area questions appear after the scaled sides are recorded",
+    "length factor 3 has area factor 9",
+    "area copy scaffold is disclosed",
+    "changing factor invalidates the current model",
+    "stale geometry is clearly indicated",
+    "guided step feedback is recorded as support",
+    "first incorrect change remains recorded",
+    "increase and multiplier match original base",
+    "reverse discount recovers original amount",
+    "simple interest uses the original principal",
+    "constant product pairs complete",
+    "inverse relationship has an actual curved path",
+    "system curve is identified as a scaffold",
+    "shorter desktop has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

@@ -1,0 +1,495 @@
+Adding Three Small Numbers|三个小数目的相加
+Adding and subtracting|加法与减法
+Adding and subtracting on screen|用数字工具探索加减
+Adding and subtracting tens mentally|整十数的口算
+Adding numbers|数的相加
+Adding two two-digit numbers|两位数加两位数
+Adding within 100|100以内的加法
+Addition and subtraction strategies|加减法的策略
+Addition and subtraction within 1000|1000以内的加减法
+Addition and subtraction within 20|20以内的加减法
+Addition and subtraction word problems|加减法应用题
+Addition as combining or putting together two|合起来就是加法
+Addition in any order|交换顺序来相加
+Checking Answers by Rounding|用近似数检查答案
+Early Word Problems|从生活故事列算式
+Estimating by rounding|用四舍五入估算
+Finding a missing number in addition|寻找加法中的未知数
+Fluent adding and subtracting within 10|熟练计算10以内加减
+Fluent adding and subtracting within 100|熟练计算100以内加减
+Fluent adding and subtracting within 1000|熟练计算1000以内加减
+Fluent adding and subtracting within 20|熟练计算20以内加减
+Fluent adding and subtracting within 5|熟练计算5以内加减
+Fluent addition and subtraction|熟练使用加减法
+Grouping numbers to add|把数凑成一组再相加
+Inverse: addition undoes subtraction|加减法的互逆关系
+Mental addition and subtraction|加减法口算
+Mental and written addition and subtraction|口算与笔算加减法
+Mentally adding hundreds to 3-digit numbers|三位数加整百数
+Mentally adding tens to 3-digit numbers|三位数加整十数
+Missing number problems|求未知数
+Number bonds|数的分与合
+Number bonds to 9|9以内数的分与合
+Number stories on screen|用数字工具表示数量故事
+Numbers on a number line|数轴上的数
+Numbers up to 10 into pairs|把10以内的数分成两部分
+Positive and Negative Numbers|正数与负数
+Reading +, −, and = symbols|认识加号、减号与等号
+Representing Addition and Subtraction|表示加减法
+Subtracting multiples of 10|减去整十数
+Subtraction as taking away or separating|拿走与分开：减法的意义
+Three-number word problems|含三个数的应用题
+Two-Step Equations|两步方程
+Two-Step Word Problems|两步应用题
+Two-step addition and subtraction problems|两步加减法问题
+Unknown in Addition & Subtraction|加减法中的未知数
+What the equals sign means|等号表示什么
+Algebraic Notation|用字母表示数
+Algebraic Transformations|代数式的变形
+Algorithms that generate number sets|按规则生成一组数
+Collecting Like Terms|合并同类项
+Coordinates|坐标
+Describing growing number patterns|描述数列的增长规律
+Designing number algorithms|设计数的运算步骤
+Equations with Two Unknowns|含两个未知数的等式
+Estimating answers|估计答案
+Expanding Double Brackets|展开两个括号的乘积
+Expanding Single Brackets|展开单个括号
+Expressions & Equations Vocabulary|代数式与方程的语言
+Factorising Expressions|因式分解
+Finding the repeating unit|找出重复的部分
+Following number algorithms|按照步骤运算
+Generating Sequences|按规律生成数列
+Linear Function Graphs|一次函数图像
+Linear number sequences|等差数列
+Nth-Term Rules|数列的第n项规律
+Number Pattern Relationships|数的规律与关系
+Plotting Linear Graphs|绘制直线图像
+Quadratic Graphs|二次函数图像
+Simple formulae|简单公式
+Simultaneous Equations|联立方程
+Solving Linear Equations|解一元一次方程
+Substituting into Formulae|把数代入公式
+Systematic Listing|有序地列出所有可能
+Using Simple Formulae|使用简单公式
+Writing Algebraic Equations|把问题写成方程
+Comparing groups: more or fewer|比较哪一组更多
+Counting Within 1,000|1000以内的数数
+Counting big collections in groups|分组数大量物品
+Counting forwards and backwards|顺着数与倒着数
+Counting in 2s|两个两个地数
+Counting in 6s|六个六个地数
+Counting objects to 20|数20以内的物品
+How Many in Total?|一共有多少
+One More Each Time|每次多一个
+One-to-one counting|一一对应地数
+Representing numbers with objects|用实物表示数
+Rote counting to 100|顺序数到100
+Seeing parts within 10|观察10以内数的组成
+Skip Counting (4s, 8s, 50s, 100s)|按4、8、50、100跳着数
+Subitising to 5|一眼看出5以内的数量
+Two written numerals between 1 and 10|比较1到10的数字
+Average distance from the mean|到平均数的平均距离
+Averages and range|平均数与极差
+Bar graphs|条形统计图
+Box plots|箱线图
+Calculating the Mean|计算平均数
+Choosing displays for a purpose|选择合适的统计图
+Collecting data for a question|围绕问题收集数据
+Collecting data with digital tools|用数字工具收集数据
+Comparing data sets digitally|用数字工具比较数据
+Comparing displays and distributions|比较图表与数据分布
+Comparing two data displays|比较两幅统计图
+Comparing two populations|比较两个总体
+Conducting a statistical investigation|开展统计调查
+Critiquing statistics in the media|辨析媒体中的统计信息
+Data with digital tools|用数字工具处理数据
+Describing distributions|描述数据分布
+Dot plots|点图
+Estimating from a sample|用样本进行估计
+Guided statistical investigation|在引导下开展统计调查
+Histograms|直方图
+How far apart two groups are|两组数据差多少
+How samples vary|不同样本的差异
+Line graph problems|解决折线图问题
+Line graphs|折线统计图
+Line plots with fractions|带分数刻度的点图
+Pictograms and tally charts|象形统计图与计数表
+Picture & Bar Graphs|象形图与条形图
+Pie charts|扇形统计图
+Planning a statistical investigation|规划统计调查
+Populations, samples and fair sampling|总体、样本与公平抽样
+Quartiles and interquartile range|四分位数与四分位距
+Reading tables|读懂表格
+Refining a statistical investigation|改进统计调查
+Scaled picture and bar graphs|带比例刻度的统计图
+Scatter Graphs|散点图
+Scatter Graphs & Correlation|散点图与相关关系
+Sorting Data into Categories|把数据分类
+Sorting into categories|按特征分类
+Statistical Analysis Vocabulary|统计分析的语言
+Statistical questions|提出统计问题
+Validating and describing categorical data|检查并描述分类数据
+What was measured, and how|测量了什么，怎样测量
+Writing a data summary|写出数据结论
+Adding Fractions (Same Denominator)|同分母分数相加
+Adding Fractions (Unlike Denominators)|异分母分数相加
+Adding and subtracting mixed numbers|带分数的加减法
+Adding fractions (different denominators)|通分后做分数加减法
+Area with Fractions|用分数计算面积
+Comparing Decimals|比较小数大小
+Comparing fractions|比较分数大小
+Converting tenths to hundredths|十分之几与百分之几
+Decimal & Percent Notation|小数与百分数的写法
+Decimal equivalents of tenths and hundredths|分数与小数对应
+Decimal place value|小数的数位与运用
+Decimals and fractions|小数与分数
+Decimals for Tenths & Hundredths|十分位与百分位
+Decimals to three places|三位小数
+Decomposing a shape into more equal shares|把图形分得更细
+Dividing by 10 and 100|除以10和100
+Dividing by Fractions|除以分数
+Dividing fractions|分数除法
+Dividing fractions (unit fractions)|单位分数的除法
+Dividing unit fractions and whole numbers|单位分数与整数相除
+Equivalent fractions|等值分数
+Equivalent fractions on a number line|数轴上的等值分数
+Finding halves and quarters|寻找二分之一与四分之一
+Fraction Addition Concepts|分数加法的意义
+Fraction Notation|分数怎样写
+Fraction Word Problems|分数应用题
+Fraction-Decimal Equivalents|分数与小数的等值关系
+Fractions as parts of shapes|图形中的分数
+Fractions of a whole|分数的意义
+Fractions of amounts|一个数量的几分之几
+Fractions of amounts (harder)|求一个数量的几分之几：进阶
+Fractions on a number line|数轴上的分数
+Halves & Quarters of Shapes|图形的二分之一与四分之一
+Halves, quarters and eighths|二分之一、四分之一与八分之一
+Mixed & Improper Fractions|带分数与假分数
+Mixed numbers and improper fractions|带分数与假分数互化
+Multiplication as scaling|乘法与放大缩小
+Multiplying fractions|分数乘法
+Percentage and decimal equivalents|百分数与小数互化
+Real-world fraction multiplication|生活中的分数乘法
+Simple Fraction Sums|简单的分数相加
+Simplifying Fractions|约分
+Splitting shapes into equal parts|把图形平均分
+Tenths|认识十分之一
+Understanding Percentages|理解百分数
+Understanding fractions|理解分数
+Unit fractions|单位分数
+What Is a Half?|什么是二分之一
+2-D faces on 3-D shapes|立体图形的平面
+2-D shapes|平面图形
+3-D shapes|立体图形
+Angle Sum Rules|角的和有什么规律
+Angle sums in triangles and polygons|三角形与多边形的内角和
+Angles in triangles|三角形中的角
+Angles with parallel lines|平行线中的角
+Applying Pythagoras' theorem|使用勾股定理
+Approximating objects with shapes|用图形近似表示物体
+Area and volume formulae|面积与体积公式
+Building & Drawing Shapes|搭建与画出图形
+Building with 3-D Shapes|用立体图形搭建
+Circles: Circumference & Area|圆的周长与面积
+Classifying quadrilaterals|四边形分类
+Classifying shapes by line properties|按边的特征给图形分类
+Classifying shapes by properties|按特征给图形分类
+Combining Simple Shapes|组合简单图形
+Composing Shapes|拼成新的图形
+Congruent triangles|全等三角形
+Coordinate Transformations|坐标变换
+Cross-sections of prisms|棱柱的截面
+Defining attributes of shapes|图形的关键特征
+Degrees and turns|角度与旋转
+Describing Movements|描述物体的移动
+Drawing triangles accurately|准确绘制三角形
+Edges, vertices, and faces|棱、顶点与面
+Estimating Angles|估计角的大小
+First Quadrant Coordinates|第一象限的坐标
+Flat vs Solid Shapes|平面图形与立体图形
+Geometry notation and sketching|几何符号与草图
+Lines of symmetry|对称轴
+Lines, Rays & Angles|直线、射线与角
+Measuring angles|测量角
+Nets of 3-D Shapes|立体图形的展开图
+Parallel and perpendicular lines|平行与垂直
+Parts of a circle|认识圆的各部分
+Patterns & Sequences|图案与排列规律
+Plotting points in the first quadrant|在第一象限描点
+Position, direction, and movement|位置、方向与移动
+Positional Language|描述位置的语言
+Properties of triangles and quadrilaterals|三角形与四边形的特征
+Recognising and drawing shapes by attributes|按特征辨认和绘制图形
+Regular and irregular polygons|正多边形与不规则多边形
+Right Angles & Turns|直角与转弯
+Rotational symmetry|旋转对称
+Ruler and compass constructions|尺规作图
+Shapes on a coordinate grid|坐标网格上的图形
+Similarity and enlargement|相似与放大
+Sorting 2-D and 3-D shapes|平面与立体图形分类
+Straight, reflex and revolution angles|平角、优角与周角
+Surface area and volume of solids|立体图形的表面积与体积
+Tessellations and transformation patterns|平面铺砌与变换图案
+The coordinate grid|坐标网格
+Transformations on a Grid|网格上的图形变换
+Transformations with geometry software|用几何软件变换图形
+Translating and reflecting shapes|图形的平移与轴对称
+Trigonometry basics|三角函数初步
+Turns & Directions|转向与方向
+Types of angles|角的分类
+Understanding angles|理解角
+What Is an Angle?|什么是角
+Which triangles are possible|哪些边长能组成三角形
+Why objects suit their uses|物体的形状与用途
+Advanced Maths Vocabulary|进阶数学词汇
+Advanced Multi-Step Problems|进阶多步问题
+Calculator checks for money|用计算器检查金额
+Choosing Maths Tools|选择数学工具
+Choosing mathematical tools|选择合适的数学工具
+Choosing representations strategically|选择合适的表示方式
+Choosing the right strategy|选择解题策略
+Complex Multi-Step Problems|复杂的多步问题
+Connecting Representations|连接不同表示方式
+Connecting maths to real life|把数学与生活联系起来
+Constructing mathematical arguments|构建数学论证
+Early Maths Vocabulary|基础数学词汇
+Explaining Mathematical Reasoning|讲清数学推理
+Extending Table Patterns|延续表格中的规律
+Finding efficient methods|寻找更高效的方法
+Fractions, Decimals & Percentages|分数、小数与百分数
+Generalising Patterns|从规律中概括结论
+Generalising with repeated reasoning|从重复推理中概括规律
+Guided Multi-Step Problem Solving|分步骤解决问题
+Hands-On Problem Solving|动手解决问题
+Justifying mathematical reasoning|说明推理的依据
+Making Sense of Problems|读懂问题
+Mathematical Precision|准确地表达数学
+Modelling with multiplication and fractions|用乘法与分数建立模型
+Multi-Step Problem Solving|解决多步问题
+Order of operations|运算顺序
+Precise Maths Communication|清楚准确地交流数学
+Precise Maths Vocabulary|准确使用数学词汇
+Real-World Mathematical Modelling|为生活问题建立数学模型
+Real-World Maths Modelling|生活中的数学建模
+Real-World to Maths Connections|从生活走向数学
+Reasoning with Equivalences|利用等值关系推理
+Shape patterns|图形规律
+Showing Your Working|展示解题过程
+Spotting mathematical patterns|发现数学规律
+Times tables|乘法口诀与乘法表
+Using Mathematical Structure|运用数学结构
+Using a calculator well|合理使用计算器
+Using objects to model real problems|用实物表示真实问题
+Working with money|与钱有关的数学
+12-hour and 24-hour time|12时制与24时制
+Adding money and giving change|计算总价与找零
+Area|认识面积
+Area and perimeter of rectangles|长方形的面积与周长
+Area and the distributive property|用面积理解分配律
+Area by Tiling|铺满方格来求面积
+Area by splitting shapes|分割图形求面积
+Area of Triangles & Parallelograms|三角形与平行四边形面积
+Area of compound shapes|组合图形的面积
+Area of rectangles by multiplication|用乘法求长方形面积
+Australian coins and simple purchases|澳大利亚硬币与购物
+Budgets and best buys|预算与购物选择
+Calculating with measurements|带测量单位的计算
+Capacity and volume|容积与体积
+Choosing measurement units|选择测量单位
+Coin Values|硬币的面值
+Comparing Capacity|比较容积
+Comparing Lengths & Heights|比较长度与高度
+Comparing Time Durations|比较经过的时间
+Comparing and ordering measurements|比较与排列测量结果
+Comparing durations|比较时长
+Comparing lengths by measuring|通过测量比较长度
+Comparing mass and capacity indirectly|间接比较质量与容积
+Converting measurement units|测量单位换算
+Counting Unit Cubes|数单位立方体
+Days, Weeks, Months & Years|日、周、月与年
+Discounts, GST and balances|折扣、消费税与余额
+Dollars and cents|元与分：美元和澳元
+Elapsed time problems|经过时间的问题
+Estimating Lengths|估计长度
+Estimating and comparing money|估算与比较金额
+Estimating capacity|估计容积
+Estimating money totals|估计总价
+Fractions of time and events|时间与事件中的分数
+Giving Change|找零钱
+Halves and quarters|一半与四分之一
+Hours, minutes and seconds|时、分、秒
+Measurable Attributes of Objects|物体有哪些可测量的量
+Measurement Conversions|测量单位的转换
+Measurement Line Plots|用点图表示测量数据
+Measuring & Plotting Lengths|测量并记录长度
+Measuring Liquids & Masses|测量液体与质量
+Measuring Perimeters|测量周长
+Measuring length|测量长度
+Measuring length and height|测量长度与高度
+Measuring mass and weight|测量质量与重量
+Measuring with different units|使用不同单位测量
+Metric & Imperial Conversion|公制与英制换算
+Miles & Kilometres|英里与千米
+Money Addition & Subtraction|金额的加减法
+Money transactions in dollars|以元为单位的交易
+Money word problems|购物应用题
+Number of minutes in an hour|一小时有多少分钟
+Ordering Events in Time|按时间给事件排序
+Perimeter|周长
+Perimeter of Compound Shapes|组合图形的周长
+Perimeters of polygons|多边形的周长
+Pounds & Pence Notation|英镑与便士的写法
+Quarter past and quarter to|几点一刻与差一刻
+Reading between scale marks|读出刻度之间的数值
+Roman numeral and 24-hour clocks|罗马数字钟面与24时制
+Sequence intervals of time|排列时间间隔
+Smaller units for accuracy|用更小的单位提高精度
+Spreadsheets for money problems|用电子表格解决金额问题
+Surface area using nets|用展开图求表面积
+Telling Time: Hours and Half Hours|认识整时与半时
+Telling time to 5 minutes|读时间：精确到5分钟
+Telling time to the minute|读时间：精确到分钟
+Time Units and Calendar Facts|时间单位与日历
+Time to the nearest minute|读出最接近的分钟
+Understanding Area|理解面积
+Using a calendar|使用日历
+Volume as additive|体积可以相加
+Volume of cuboids|长方体的体积
+Volume with fraction lengths|边长为分数的体积
+What volume means|体积表示什么
+a.m. and p.m. times|上午与下午的时间
+All times tables to 12×12|12×12以内的乘法表
+Arrays for multiplication|用排列方阵表示乘法
+Brackets in Expressions|算式中的括号
+Calculators for multiplying and dividing|用计算器进行乘除
+Commutative Multiplication|乘法交换律
+Dividing by two-digit numbers|除数是两位数的除法
+Division as Unknown Factor|把除法看成求未知因数
+Division as equal sharing|平均分与除法
+Division with Decimals|商是小数的除法
+Division with remainders|有余数的除法
+Estimating to check decimals|估算检查小数运算
+Estimation to check answers to calculations|用估算检查计算结果
+Factor Pairs & Commutativity|因数对与交换律
+Factor algorithms and spreadsheets|寻找因数的步骤与工具
+Factors, multiples, and primes|因数、倍数与质数
+Fluent multiplication and division facts|熟练使用乘除法事实
+Long multiplication|乘法竖式
+Mental calculation strategies|口算策略
+Mental multiplication and division|乘除法口算
+Multi-Step Multiply & Divide|多步乘除问题
+Multi-step problems: choosing operations|多步问题：选择运算
+Multiplication and Division Word Problems|乘除法应用题
+Multiplication as repeated addition|乘法是相同加数的和
+Multiplicative Comparison|用倍数比较
+Multiply & Add Problems|乘法与加法结合的问题
+Multiplying and dividing|乘法与除法
+Multiplying by Tens|乘整十数
+Odd and even number rules|奇数与偶数的规律
+Odd and even numbers|奇数与偶数
+Patterns in Times Tables|乘法表中的规律
+Prime numbers|质数
+Priority of operations|运算的先后顺序
+Properties of Operations|运算性质
+Reading ×, ÷, and = Symbols|认识乘号、除号与等号
+Rounding Answers|给答案取近似值
+Rows & Columns in Rectangles|长方形中的行与列
+Sharing and grouping on screen|用数字工具平均分与分组
+Sharing and grouping problems|平均分与分组问题
+Short division with remainders|简式除法与余数
+Sign Rules for Multiplication|正负数相乘的符号
+Square and cube numbers|平方数与立方数
+Unknown in Multiplication & Division|乘除法中的未知数
+Using inverse operations|使用逆运算
+What Division Means|除法的意义
+What Multiplication Means|乘法的意义
+Writing Number Sentences|把数量关系写成算式
+Written Multiplication|笔算乘法
+Written Multiplication & Division|笔算乘法与除法
+10 More or 10 Less|多10或少10
+10 or 100 More or Less|多或少10、100
+1000 More or Less|多1000或少1000
+A Hundred Is Ten Tens|一百是十个十
+A Ten Is Ten Ones|一个十是十个一
+Absolute value as distance|用距离理解绝对值
+Comparing Large Numbers|比较大数
+Comparing and ordering numbers|比较数并排序
+Measuring temperature|测量温度
+Negative Numbers|负数
+Negative numbers in context|生活中的负数
+Number Sets & Infinity|数集与无穷
+Number Words to 100|100以内数的英文读法
+Number Words to Twenty|20以内数的英文读法
+Numbers to 10,000|万以内的数
+Numbers to 1000 on screen|用数字工具探索千以内的数
+Numbers to 120 everywhere|不同形式的120以内的数
+Numbers to Ten Million|千万以内的数
+Odd or Even|判断奇偶
+Ordering Numbers to 1000|排列1000以内的数
+Ordering numbers to 20|排列20以内的数
+Patterns with Powers of Ten|10的幂与数位规律
+Place Value Problem-Solving|用数位知识解决问题
+Place Value to 1000|千以内的数位
+Place Value × 10 Pattern|相邻数位的10倍关系
+Place Value × 10 and ÷ 10|数位之间乘10与除以10
+Place value of each digit|每个数字的位值
+Place value understanding and number facts|用数位理解运算
+Powers of Ten Notation|10的幂的写法
+Reading Decimal Places|读懂小数的数位
+Reading and writing numbers|数的读写
+Reading and writing numbers to 10,000,000|千万以内数的读写
+Reading and writing numbers to 100|100以内数的读写
+Reading and writing numbers to 1000|1000以内数的读写
+Reading and writing numbers to 120|120以内数的读写
+Reading and writing numbers to 20|20以内数的读写
+Renaming two-digit numbers|两位数的不同表示
+Representing numbers to 100|表示100以内的数
+Representing numbers to 1000|表示1000以内的数
+Roman numerals to 100|100以内的罗马数字
+Roman numerals to 1000|1000以内的罗马数字
+Rounding Large Numbers|大数的近似值
+Rounding to 10, 100, 1000|取整十、整百、整千的近似数
+The multiples of 10|10的倍数
+The multiples of 100|100的倍数
+The teen numbers|十几的数
+The three digits of a three-digit number|三位数的三个数位
+The two digits of a two-digit number|两位数的两个数位
+Working with Large Numbers|使用大数
+Calculating Simple Probability|计算简单概率
+Complementary events|互补事件
+Equally Likely Outcomes|等可能的结果
+Experimental probability|用实验估计概率
+Experimental vs Theoretical|实验结果与理论概率
+Independent and dependent events|独立与相互影响的事件
+Likelihood Language|描述可能性
+Ordering Likelihoods|给可能性排序
+Probabilities Sum to One|所有结果的概率和为1
+Probability as a Fraction|用分数表示概率
+Probability models|概率模型
+Sets & Venn Diagrams|集合与韦恩图
+Simple Chance Experiments|简单随机实验
+Simulating chance events|模拟随机事件
+Simulating chance with digital tools|用数字工具模拟随机事件
+The 0-to-1 Probability Scale|0到1之间的概率
+The Probability Scale|概率的刻度
+Tree diagrams|树状图
+Venn Diagrams and Counting Outcomes|用韦恩图数结果
+Area from scale drawings|由比例图求面积
+Bar Models for Ratios|用条形图表示比
+Calculating Percentages|计算百分数
+Compound Units|复合单位
+Dividing Quantities by Ratio|按比分配
+One Quantity as a Fraction|一个量占另一个量的几分之几
+Percentages|百分数的应用
+Percentages as Fractions|把百分数写成分数
+Proportion|正比例与比例关系
+Proportion Graphs|比例关系的图像
+Proportional Reasoning Vocabulary|比例推理的语言
+Ratio Notation|比的写法
+Ratio Notation and Relationships|比的写法与关系
+Ratio Problems|比的应用题
+Scale and similar shapes|比例尺与相似图形
+Scale drawings and maps|比例图与地图
+Unit Conversions|单位换算

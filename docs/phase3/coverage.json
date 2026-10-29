@@ -1,0 +1,308 @@
+{
+  "schema": 1,
+  "availableNodes": 12,
+  "nodeTasks": 30,
+  "availableConnections": 9,
+  "connectionTasks": 18,
+  "sourceNodes": 587,
+  "sourceRelations": 1223,
+  "bridges": [
+    {
+      "id": "link-share-equivalent",
+      "title": "切成六份，还是半份吗？",
+      "from": {
+        "id": "share",
+        "topicId": "mt_ndGqFPWyen",
+        "title": "怎样才算一份"
+      },
+      "to": {
+        "id": "equivalent",
+        "topicId": "mt_Ep7TDFuYUa",
+        "title": "分细了，会变多吗"
+      },
+      "sourceEdge": {
+        "topicId": "mt_Ep7TDFuYUa",
+        "prerequisiteId": "mt_ndGqFPWyen",
+        "strength": "hard",
+        "reason": "Must understand unit fractions to reason about equivalence"
+      },
+      "localReason": "先平均分才能数单位份；不同分法可以表示同一个半份。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "partition",
+          "prompt": "把整块平均分成 6 份，取 3 份，做出一个半份。"
+        },
+        {
+          "index": 1,
+          "type": "equivalent",
+          "prompt": "把三条纸带都涂到一半。切法不同，拿到的量要一样。"
+        }
+      ]
+    },
+    {
+      "id": "link-equivalent-quarters",
+      "title": "四分之一怎样走到 0.25？",
+      "from": {
+        "id": "equivalent",
+        "topicId": "mt_Ep7TDFuYUa",
+        "title": "分细了，会变多吗"
+      },
+      "to": {
+        "id": "quarters",
+        "topicId": "mt_DRlbMok2lT",
+        "title": "半杯，还能怎样记"
+      },
+      "sourceEdge": {
+        "topicId": "mt_DRlbMok2lT",
+        "prerequisiteId": "mt_Ep7TDFuYUa",
+        "strength": "soft",
+        "reason": "Equivalent fractions understanding supports recognising decimal equivalents of common fractions"
+      },
+      "localReason": "把四分之一改写成百分之二十五，就和 0.25 连在了一起。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "equivalent",
+          "prompt": "把三条同长纸带都取到四分之一，分法改变，量保持。"
+        },
+        {
+          "index": 1,
+          "type": "grid",
+          "prompt": "用百格表示 1/4，再写出同一个量的小数。"
+        }
+      ]
+    },
+    {
+      "id": "link-decimal-quarters",
+      "title": "百格里的量，怎样装进杯子？",
+      "from": {
+        "id": "decimal",
+        "topicId": "mt_TqDq6jyOmL",
+        "title": "同一个量，换个名字"
+      },
+      "to": {
+        "id": "quarters",
+        "topicId": "mt_DRlbMok2lT",
+        "title": "半杯，还能怎样记"
+      },
+      "sourceEdge": {
+        "topicId": "mt_DRlbMok2lT",
+        "prerequisiteId": "mt_TqDq6jyOmL",
+        "strength": "hard",
+        "reason": "General decimal equivalents prerequisite to specific 1/4, 1/2, 3/4 equivalents"
+      },
+      "localReason": "百格、小数和分数都是给同一个量取名字。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "grid",
+          "prompt": "先在百格上做出 50/100，并写出小数。"
+        },
+        {
+          "index": 1,
+          "type": "match",
+          "prompt": "给三个直筒杯倒入指定的量，再为它们配上小数名字。"
+        }
+      ]
+    },
+    {
+      "id": "link-space-hidden",
+      "title": "搭出来的块，怎样一层层数？",
+      "from": {
+        "id": "space",
+        "topicId": "mt_IuHa5UI5od",
+        "title": "里面装了多少"
+      },
+      "to": {
+        "id": "hidden",
+        "topicId": "mt_d7XktBQPxm",
+        "title": "看不见的也要算"
+      },
+      "sourceEdge": {
+        "topicId": "mt_d7XktBQPxm",
+        "prerequisiteId": "mt_IuHa5UI5od",
+        "strength": "hard",
+        "reason": "Measuring by counting cubes requires understanding unit cube concept"
+      },
+      "localReason": "填满空间的单位块，可以按完整的层来数，隐藏的也算在里面。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "fill",
+          "prompt": "先亲自搭满 3 × 2 × 2 的盒子，记下体积。"
+        },
+        {
+          "index": 1,
+          "type": "cube-plan",
+          "prompt": "还是这个盒子：把刚才放入的块数写成一层 × 层数。"
+        }
+      ]
+    },
+    {
+      "id": "link-hidden-box",
+      "title": "一层的数法，怎样变成公式？",
+      "from": {
+        "id": "hidden",
+        "topicId": "mt_d7XktBQPxm",
+        "title": "看不见的也要算"
+      },
+      "to": {
+        "id": "box",
+        "topicId": "mt_nTL-owFJTF",
+        "title": "从一层想到整箱"
+      },
+      "sourceEdge": {
+        "topicId": "mt_nTL-owFJTF",
+        "prerequisiteId": "mt_d7XktBQPxm",
+        "strength": "hard",
+        "reason": "Volume formula derives from counting-cubes understanding"
+      },
+      "localReason": "长乘宽得到一层，再乘高。形状不同，也可能装下一样多的块。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "cube-plan",
+          "prompt": "长 3、宽 2、高 4。先用每层块数和层数算总量。"
+        },
+        {
+          "index": 1,
+          "type": "cube-plan",
+          "prompt": "换成长 4、宽 3、高 2。再用同一个办法，看看总量怎样变化。"
+        }
+      ]
+    },
+    {
+      "id": "link-box-steps",
+      "title": "会算一箱，能算整个台阶吗？",
+      "from": {
+        "id": "box",
+        "topicId": "mt_nTL-owFJTF",
+        "title": "从一层想到整箱"
+      },
+      "to": {
+        "id": "steps",
+        "topicId": "mt_5TBUFnCy5-",
+        "title": "拆开，还是这么多"
+      },
+      "sourceEdge": {
+        "topicId": "mt_5TBUFnCy5-",
+        "prerequisiteId": "mt_nTL-owFJTF",
+        "strength": "hard",
+        "reason": "Composite volume requires volume formula for individual prisms"
+      },
+      "localReason": "把台阶分成互不重叠的长方体，每块用长宽高计算，再相加。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "cube-plan",
+          "prompt": "先求出这一块 2 × 2 × 3 长方体的体积。"
+        },
+        {
+          "index": 1,
+          "type": "decompose",
+          "prompt": "把刚才那一块放回台阶。找一个有效切法，分别计算再合起来。"
+        }
+      ]
+    },
+    {
+      "id": "link-tally-survey",
+      "title": "每一个回答，怎样留在表里？",
+      "from": {
+        "id": "tally",
+        "topicId": "mt_c29FaCTNsx",
+        "title": "一笔一票，画出记录"
+      },
+      "to": {
+        "id": "survey",
+        "topicId": "mt_ebQURBOsM5",
+        "title": "带着问题去观察"
+      },
+      "sourceEdge": {
+        "topicId": "mt_ebQURBOsM5",
+        "prerequisiteId": "mt_c29FaCTNsx",
+        "strength": "hard",
+        "reason": "Frequency tables build on tally charts"
+      },
+      "localReason": "每条观察对应一笔，分类累计的笔数就是频数。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "survey",
+          "prompt": "观察这组模拟到校记录，再回答：哪种方式最多？"
+        },
+        {
+          "index": 1,
+          "type": "chart",
+          "prompt": "把刚才自己的两列记录换成计数笔画，再读出公交的人数。"
+        }
+      ]
+    },
+    {
+      "id": "link-tally-views",
+      "title": "笔画变圆点，什么没变？",
+      "from": {
+        "id": "tally",
+        "topicId": "mt_c29FaCTNsx",
+        "title": "一笔一票，画出记录"
+      },
+      "to": {
+        "id": "views",
+        "topicId": "mt__yvsKKp3TS",
+        "title": "换张图，还是那些数据"
+      },
+      "sourceEdge": {
+        "topicId": "mt__yvsKKp3TS",
+        "prerequisiteId": "mt_c29FaCTNsx",
+        "strength": "hard",
+        "reason": "Comparing displays requires making tally charts and pictograms"
+      },
+      "localReason": "同一类别的次数不变，计数表和圆点图就表达同一份资料。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "chart",
+          "prompt": "先把这份投票整理成计数笔画。"
+        },
+        {
+          "index": 1,
+          "type": "compare",
+          "prompt": "让右边的图和左边的表说同一件事，再分别读出狗的票数。"
+        }
+      ]
+    },
+    {
+      "id": "link-bars-views",
+      "title": "柱子变圆点，怎样对得上？",
+      "from": {
+        "id": "bars",
+        "topicId": "mt_VhBH8wrFC6",
+        "title": "把票数搭成高度"
+      },
+      "to": {
+        "id": "views",
+        "topicId": "mt__yvsKKp3TS",
+        "title": "换张图，还是那些数据"
+      },
+      "sourceEdge": {
+        "topicId": "mt__yvsKKp3TS",
+        "prerequisiteId": "mt_VhBH8wrFC6",
+        "strength": "hard",
+        "reason": "Comparing displays requires making picture and bar graphs"
+      },
+      "localReason": "条形高度与圆点个数可以表示同一数量，换画法不改变原始数据。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "chart",
+          "prompt": "从表格搭出条形图，再找出猫比狗多的那一段。"
+        },
+        {
+          "index": 1,
+          "type": "compare",
+          "prompt": "把刚才的柱子改用圆点表示，再从两边读出狗的票数。"
+        }
+      ]
+    }
+  ]
+}

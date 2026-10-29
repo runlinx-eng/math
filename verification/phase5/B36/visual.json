@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "first incorrect perimeter is saved",
+    "changing dimensions makes the previous result stale",
+    "changed rectangle can be checked without losing the first error",
+    "triangle uses the perpendicular height and half area",
+    "negative-substitution mistake retained",
+    "negative substitution is visibly bracketed",
+    "swapped coordinates do not place a different point",
+    "actual mouse and keyboard place coordinates including an axis point",
+    "changing the parameter redraws the actual line",
+    "increasing and negative rates are recorded",
+    "at time four the higher position and faster rate remain distinct",
+    "incorrect formula is retained",
+    "equivalent bracketed rearrangement is accepted",
+    "edited formula cannot show the old check as current",
+    "plotted points are directly selectable",
+    "actual clicks select both x-axis intersections",
+    "plotted quadratic and its two roots complete",
+    "approximate roots use bounded tolerance",
+    "shorter desktop has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

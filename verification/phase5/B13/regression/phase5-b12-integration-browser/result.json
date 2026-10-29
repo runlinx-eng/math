@@ -1,0 +1,50 @@
+{
+  "checks": [
+    "199 unique available nodes",
+    "three addition directions",
+    "routes remain grouped at entry",
+    "first group contains only three routes",
+    "older story route remains available",
+    "next group stays small",
+    "new route shows only its three nodes",
+    "route and second group survive refresh",
+    "back returns to the same short route",
+    "wrong first result leaves all facts",
+    "local feedback marks support",
+    "first chosen step is really merged",
+    "first wrong step retained",
+    "partial plan is not complete",
+    "simulated next day shows original question",
+    "question restores exact first step and error",
+    "later second-step draft retained separately",
+    "question wording remains exact",
+    "world camera restored",
+    "actual backup contains partial plan",
+    "repeat import retains first mistake without duplicate questions",
+    "support survives import",
+    "import opens the original question",
+    "all four B12 files precached",
+    "original work reopens offline",
+    "offline next step completes the plan",
+    "supported correction not upgraded to independent",
+    "first wrong plan remains after success",
+    "threepiles available offline",
+    "storytwo available offline",
+    "plansteps available offline",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261026-learning-v18",
+    "count": 109,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,996 @@
+[
+  {
+    "topic": {
+      "id": "mt_DLcEzmmj2r",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Addition and subtraction word problems",
+      "description": "Solve word problems involving lengths within 100, using addition and subtraction with drawings and equations",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.04072883172561629,
+      "evidence": [
+        "Solve 'The rope is 45 cm long. I cut off 18 cm. How long is it now?'",
+        "Draw a diagram (e.g. a ruler drawing) to represent a length word problem",
+        "Write an equation with a symbol for the unknown to represent the problem"
+      ],
+      "assessmentPrompt": "If {{name}} has a piece of rope 75 cm long and cuts off 28 cm, can they work out how much rope is left — and draw a number-line diagram to show it?",
+      "standards": [
+        "ccss-math:2.MD.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/994",
+    "research": {
+      "topicId": "mt_DLcEzmmj2r",
+      "pedagogy": {
+        "summary": "Year 2–Grade 2 (age 7–8) pupils solve one-step LENGTH word problems within 100 using addition and subtraction, REPRESENTING the situation with a drawing (such as a ruler drawing or bar) and an EQUATION that uses a symbol for the unknown number. The pedagogy is about modelling: the child should build a picture of the problem structure (whole/parts, or comparison) and read the number sentence off that picture — including missing-addend forms like 18 + □ = 45 — rather than grabbing the two numbers and applying an operation cued by a keyword. (This maps CCSS 2.MD.B.5 almost verbatim, with 2.MD.B.6 adding the number-line-from-0 model.)",
+        "bestPractices": [
+          "Model the situation before calculating — use a bar model or a ruler/number-line drawing to show the whole and its parts (or the two lengths being compared), so the operation follows from the structure, not from a keyword.",
+          "Teach the symbol-for-the-unknown explicitly: write 45 − 18 = □ AND 18 + □ = 45 for the same rope, showing both describe the same picture and that '=' means 'has the same value as', not 'the answer comes next'.",
+          "Deliberately include comparison ('12 cm longer') and missing-addend ('how much was cut off?') problems, not just result-unknown take-aways, so keyword strategies break down.",
+          "Represent lengths from 0 on a number line with equally spaced points, and show sums/differences as jumps (2.MD.B.6).",
+          "Insist on units in the answer (cm) and on a drawing that matches the numbers, so the model and the equation stay tied to the quantity."
+        ],
+        "keyRepresentations": [
+          "Bar model (whole split into known part + unknown □)",
+          "Ruler / number-line drawing with jumps from 0",
+          "Equation with a symbol for the unknown (□ or ?)",
+          "Comparison bars stacked to show 'how much longer'"
+        ],
+        "commonMisconceptions": [
+          "Chooses the operation from a keyword ('longer'/'altogether' → add; 'cut off'/'left' → subtract) without modelling the situation, so comparison and missing-addend problems are miscalculated.",
+          "Writes the answer where the unknown symbol should go, reading '=' as 'the answer is' rather than 'has the same value as', so cannot represent 18 + □ = 45 before solving.",
+          "When drawing/using a ruler, counts the marks or starts at 1 instead of 0, so the represented length is off by one.",
+          "Drops the unit or draws a picture that doesn't match the quantities."
+        ]
+      },
+      "learn": {
+        "summary": "Year 2 / Grade 2 (age 7–8) pupils solve one-step length word problems within 100 using addition and subtraction, representing each situation with a drawing (such as a ruler or bar drawing) and an equation that uses a symbol (□ or ?) for the unknown — including missing-addend forms like 18 + □ = 45. The core skill is modelling: the child builds a picture of the problem structure (whole and parts, or two lengths compared) and reads the number sentence off that picture, rather than grabbing the two numbers and applying an operation cued by a keyword. This maps CCSS 2.MD.B.5, with 2.MD.B.6 adding the length-from-0 number-line model.",
+        "activities": [
+          {
+            "title": "Build a bar or ruler model, then read the equation off it",
+            "feedback": [
+              "If the child writes the answer where the □ should go (e.g. writes 27 instead of keeping □ in 18 + □ = 45), point back to the drawing: 'Which piece don't we know yet? That piece is the box — keep the box until the very end.'",
+              "If only one form is offered, prompt: 'Can you write it a different way — an adding sentence with a box — that means the same thing?' and check it against the same bar.",
+              "If the unit is dropped, ask 'How long — in what?' so the answer reads 27 cm."
+            ],
+            "rationale": "CCSS 2.MD.B.5 names drawings and equations with a symbol for the unknown as the target representation; writing both the subtraction and the missing-addend form on one picture is intended to build a relational reading of '=' as 'has the same value as'.",
+            "sourceClaims": [
+              "Grade 2 pupils use addition and subtraction within 100 to solve word problems involving lengths given in the same units, e.g. by using drawings (such as drawings of rulers) and equations with a symbol for the unknown number to represent the problem.",
+              "Elementary children generally read '=' operationally — as a signal to carry out the calculation before it and write the total after — rather than relationally as 'is the same value as'. Given 8 + 4 = □ + 5, across 145 sixth-graders every child answered 12 or 17 and almost none the correct 7; the pattern held from grade 1 to 6 and did not improve with age. Building a relational view via true/false and open number sentences (unknown in varied positions) enabled first/second graders to answer correctly (14 of 16 in a pilot class)."
+            ],
+            "learnerActions": [
+              "Read a result-unknown story, e.g. 'A rope is 45 cm long. I cut off 18 cm. How long is it now?'",
+              "Draw a bar (or ruler line) labelled 45, mark off the 18 cm that was cut, and mark the leftover piece with a □ to show it is the length you do not yet know.",
+              "Write a number sentence that matches the drawing, using a symbol for the unknown: 45 − 18 = □ AND 18 + □ = 45.",
+              "Solve and label the answer with its unit: 27 cm.",
+              "Show the two equations against the same drawing and explain why both describe one picture."
+            ],
+            "intendedInsight": "The unknown is a visible piece of the bar or ruler you can point to before you know its number, so the equation is a description of the picture — not a guess triggered by a word like 'cut off'."
+          },
+          {
+            "title": "Model comparison stories with stacked bars",
+            "feedback": [
+              "If the child adds simply because they saw 'longer', ask them to show the 12 on the two stacked bars first, then decide: 'Is the piece we don't know the whole ribbon, or the gap?'",
+              "If the bars don't start level, re-align them at 0 so the overhang is read correctly.",
+              "Prompt: 'This story says 12 cm longer — where is the 12 in your picture?'"
+            ],
+            "rationale": "Comparison and missing-addend structures are where keyword strategies fail; modelling the structure lets the correct operation follow from the picture. Problem semantics (Compare, Add To with unknown start, Take From with unknown change) do not map reliably onto surface words.",
+            "sourceClaims": [
+              "CGI classifies add/subtract word problems by semantic structure (Add To, Take From, Put Together/Take Apart, Compare) crossed with which quantity is unknown (result/change/start; difference/bigger/smaller). Keyword mapping breaks down on non-result-unknown structures: a 'take from' story with an unknown change is solved by adding (5 − ? = 3), an 'add to' story with unknown start by subtracting (? + 3 = 5), and Compare 'more/fewer' wording does not reliably signal the operation — so children must model the structure, not cue on a word.",
+              "Genuine mathematical problem solving is non-routine and is NOT the execution of memorised shortcuts such as key words; teaching students to build a visual representation of the problem before writing an equation has strong evidence for improving problem-solving achievement."
+            ],
+            "learnerActions": [
+              "Read a comparison story, e.g. 'Sam's ribbon is 30 cm. Mia's is 12 cm longer. How long is Mia's?'",
+              "Draw two bars stacked so they start level; make Mia's bar stick out past Sam's, and mark the extra gap as 12 cm.",
+              "Point to where the 12 cm sits in the picture (the overhang), not just the word 'longer'.",
+              "Write the matching equation with a symbol for the unknown total and solve: 30 + 12 = □, so □ = 42 cm.",
+              "Compare a 'how much longer?' version where the gap itself is the unknown, and show the gap is what the □ marks this time."
+            ],
+            "intendedInsight": "In a comparison the operation comes from where the lengths line up and which piece of the drawing is unknown. The word 'longer' always points to the overhang (the difference). Whether you add or subtract depends on whether the unknown is the longer bar, the shorter bar or the overhang itself."
+          },
+          {
+            "title": "Lengths from 0 on a number line, with jumps",
+            "feedback": [
+              "If the count gives the number of marks rather than intervals, ask the child to point to the first space and count spaces: 'The length is the ground you cover, not the fence posts.'",
+              "If a measurement begins at the '1' instead of 0, re-set the start to 0 and re-read.",
+              "Confirm the jump lands on the expected number and relate it back to the equation with the □."
+            ],
+            "rationale": "CCSS 2.MD.B.6 asks pupils to represent lengths from 0 on a number line and show sums and differences as jumps; a documented error is counting marks or starting from the wrong point.",
+            "sourceClaims": [
+              "Grade 2 pupils represent whole numbers as lengths from 0 on a number line diagram with equally spaced points, and represent whole-number sums and differences within 100 on a number line.",
+              "When using a ruler/number line to model length, children count marks and treat them as the units, or read from the wrong start point rather than accumulating length from 0 — an off-by-one representation error."
+            ],
+            "learnerActions": [
+              "Draw a number line with equally spaced points and label the start point 0.",
+              "Place a length by counting the intervals (spaces) from 0, not the marks, so a length of 18 cm ends at the mark labelled 18 after 18 intervals, rather than by counting 18 marks (which lands short).",
+              "Show a sum or difference as a jump along the line (e.g. jump back 18 from 45, landing on 27).",
+              "Say aloud where each length begins and ends, confirming it accumulates from 0."
+            ],
+            "intendedInsight": "Length accumulates from 0, and it is the intervals (the spaces between marks) that count — starting from 1, or counting marks instead of spaces, gives a length that is off by one."
+          },
+          {
+            "title": "Check your equation and answer against the picture",
+            "feedback": [
+              "For an open sentence like 18 + □ = 45, if the child writes 45 (the whole) or 63 (adding both numbers), return to the bar: 'The box is the missing piece, not the whole rope — 18 and the box together make 45.'",
+              "If a matched pair is solved with the same operation for both, ask which piece is unknown in each drawing.",
+              "Reinforce that selecting a correct sentence from options is a check — the main goal is to build and label your own model and equation."
+            ],
+            "rationale": "Open number sentences with the unknown in varied positions are intended to build the relational view of '=' and let pupils verify that the written equation genuinely describes the modelled structure; selecting a correct sentence checks, but does not itself elicit, independent construction.",
+            "sourceClaims": [
+              "Elementary children generally read '=' operationally — as a signal to carry out the calculation before it and write the total after — rather than relationally as 'is the same value as'. Given 8 + 4 = □ + 5, across 145 sixth-graders every child answered 12 or 17 and almost none the correct 7; the pattern held from grade 1 to 6 and did not improve with age. Building a relational view via true/false and open number sentences (unknown in varied positions) enabled first/second graders to answer correctly (14 of 16 in a pilot class)."
+            ],
+            "learnerActions": [
+              "After solving, respond to short checks: choose the number sentence that matches a given drawing; complete an open sentence such as 18 + □ = 45; state the answer with its unit; and draw the matching jump on a number line.",
+              "Re-tell which piece of the drawing the □ stood for and why the operation fits the structure.",
+              "Try a matched pair that share a keyword but have different structures (e.g. one 'how much longer' difference-unknown story and one 'longer' total-unknown story) and show why they need different operations."
+            ],
+            "intendedInsight": "A correct answer should be traceable back to the drawing: the symbol marks the unknown piece, the operation matches the structure, and the unit names the quantity."
+          }
+        ],
+        "constraints": [
+          "The learning objective is for the child to construct the model and the equation, so recognition-only tasks (choosing a finished sentence, tapping to reveal a completed bar) check understanding but do not elicit the independent construction the standard requires; use them as checks or worked-example references, not as the main activity.",
+          "Deliberately include comparison and missing-addend problems alongside result-unknown take-aways, especially structures where a keyword points to the wrong operation (e.g. 'Mia's ribbon is 12 cm longer than Sam's. Mia's is 42 cm. How long is Sam's?', where 'longer' appears but you subtract). Keyword strategies often give the right operation on result-unknown items, and even on some comparison or missing-part items such as '12 cm longer, how long is Mia's?' or 'how much was cut off?'. So check the structure rather than assuming every comparison or missing-addend item will expose keyword use.",
+          "Insist on a drawing that matches the numbers and on units (cm) in the answer, so the model and equation stay tied to the quantity.",
+          "When a ruler or number line is used, start length from 0 and count intervals, not marks; otherwise represented lengths come out off by one.",
+          "A draggable on-screen builder (e.g. sliding a cutter along a 45 bar so the leftover segment is marked with a □, or stacking two comparison bars to reveal a 12 cm gap) makes the unknown concrete and can accept both 45 − 18 = □ and 18 + □ = 45; paper bar/ruler drawings achieve the same modelling and either medium is acceptable.",
+          "Keep problems to one step and within 100, with both lengths in the same unit."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. All activities are research-informed proposals, not validated interventions.",
+          "Worked example checked: for the rope, 45 − 18 = 27 cm and the equivalent 18 + □ = 45 gives □ = 27; for the ribbons, 30 + 12 = 42 cm. Likely wrong-answer slips to watch for include 45 + 18 = 63 (keyword-driven) and writing the answer where the □ belongs.",
+          "The original source material included framings such as '3D adds nothing spatial' and a dialogue format having no value for this topic; these catalog-style comparative judgements are not treated as established and have been reframed as narrow scope notes (recognition tasks check rather than construct; a manipulable builder and paper drawings each support modelling). No claim of one medium being universally necessary is asserted.",
+          "The original assessment field wrote the ribbon work as a chained equation '30 + 12 = □ = 42 cm'; this run-on use of '=' conflicts with the relational-equality goal and has been corrected to '30 + 12 = □, so □ = 42 cm' in the guidance. The original slip is recorded here only, not in any learner-facing prompt.",
+          "The assessment field's partial/full response levels and diagnostic prompts were used to inform activity feedback but were not altered in the original row."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Show me on your drawing which part is the number we don't know.'",
+          "'Can you write it a different way — as an adding sentence with a box — that means the same thing?'",
+          "'This story says \"12 cm longer\". Draw Sam's and Mia's ribbons — where is the 12?'",
+          "'If the rope had been 45 cm and it is now 27 cm, how much was cut off? Same picture — which piece is missing now?'"
+        ],
+        "correctAnswer": "For the rope: draws a bar/ruler showing 45 split into 18 and an unknown, writes 45 − 18 = □ (or 18 + □ = 45) and gets 27 cm. For the ribbons: models 30 with 12 more, writes 30 + 12 = □ = 42 cm. Chooses each operation from the STRUCTURE, represents the unknown with a symbol, and labels cm.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Keyword-driven operation choice — picks the operation from a surface word ('cut off' → subtract, 'longer'/'more' → add) without modelling, so a comparison or missing-addend problem gets the wrong operation.",
+            "nextMove": "Draw the structure first — bar model of whole and parts, or stacked comparison bars — and read the operation off the picture; contrast two problems with the same keyword but different structures.",
+            "distractor": null,
+            "revealedBy": "Applies an operation that matches a word but not the situation (e.g. 45 + 18 because a number 'sounds like adding', or can't handle 'how much was cut off?').",
+            "reteachPrerequisiteId": "mt_xWg0lI_gG4"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Operational view of '=' — writes the answer where the unknown symbol should go and reads '=' as 'the answer is', so cannot represent 18 + □ = 45 before solving.",
+            "nextMove": "Build meaning for '=' as 'has the same value as' using a balance and true/false number sentences; model the unknown as a box in the picture first, then transcribe the equation.",
+            "distractor": null,
+            "revealedBy": "Refuses or fails to write an equation with the unknown as a symbol; only writes a completed 'sum = answer' string after solving mentally.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Ruler-representation error — when drawing or using a ruler to model the length, counts the marks or starts at 1 instead of 0, so the represented/measured length is off by one.",
+            "nextMove": "Re-establish that length accumulates from 0 and that it is the INTERVALS (spaces), not the marks, that count; represent the story on a number line starting at 0.",
+            "distractor": null,
+            "revealedBy": "A ruler drawing whose count of marks (not intervals) gives the length, or a measurement that begins at the '1' or the ruler's edge rather than 0.",
+            "reteachPrerequisiteId": "mt_xWg0lI_gG4"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Grabs the two numbers and applies a keyword-cued operation with no model; writes the answer in place of the unknown; ruler drawing counts marks or starts at 1.",
+          "full": "Models the situation (bar/ruler/number line from 0), chooses the operation from the structure not keywords, represents the unknown with a symbol, solves within 100, labels cm, and transfers across take-away, comparison and missing-addend variants.",
+          "partial": "Solves a simple result-unknown take-away by subtracting and can draw a picture, but a comparison ('12 cm longer') or missing-addend ('how much was cut off?') derails the operation choice, or the unknown is written as the answer rather than a symbol."
+        },
+        "diagnosticPrompt": "Give two length stories and watch how the child represents and solves them. First: 'A rope is 45 cm long. I cut off 18 cm. How long is it now? Draw something to show the problem and write a number sentence with a box for the number you don't know.' Then a comparison: 'Sam's ribbon is 30 cm. Mia's is 12 cm longer. How long is Mia's? Show me.' Watch the model, the operation choice, the use of a symbol for the unknown, and the unit.",
+        "whatMakesItDiscriminate": "A child who models the structure handles both the take-away and the 'longer' comparison correctly and can place a □ for the unknown; a keyword-reliant child adds for 'longer' but may subtract or add wrongly on the missing-addend/comparison, and writes the answer where the box belongs. Modelling-from-structure and keyword-cueing diverge exactly on the comparison and missing-addend items."
+      },
+      "sources": [
+        {
+          "claim": "Grade 2 pupils use addition and subtraction within 100 to solve word problems involving lengths given in the same units, e.g. by using drawings (such as drawings of rulers) and equations with a symbol for the unknown number to represent the problem.",
+          "source": "Common Core State Standards for Mathematics, 2.MD.B.5",
+          "url": "https://www.thecorestandards.org/Math/Content/2/MD/",
+          "verified": true
+        },
+        {
+          "claim": "Grade 2 pupils represent whole numbers as lengths from 0 on a number line diagram with equally spaced points, and represent whole-number sums and differences within 100 on a number line.",
+          "source": "Common Core State Standards for Mathematics, 2.MD.B.6",
+          "url": "https://www.thecorestandards.org/Math/Content/2/MD/",
+          "verified": true
+        },
+        {
+          "claim": "When using a ruler/number line to model length, children count marks and treat them as the units, or read from the wrong start point rather than accumulating length from 0 — an off-by-one representation error.",
+          "source": "Gómezescobar, A. (2026), 'Ruler by Steps', Early Childhood Education Journal 54(3), citing Clements et al.",
+          "url": "https://link.springer.com/article/10.1007/s10643-025-01915-w",
+          "verified": true
+        },
+        {
+          "claim": "Elementary children generally read '=' operationally — as a signal to carry out the calculation before it and write the total after — rather than relationally as 'is the same value as'. Given 8 + 4 = □ + 5, across 145 sixth-graders every child answered 12 or 17 and almost none the correct 7; the pattern held from grade 1 to 6 and did not improve with age. Building a relational view via true/false and open number sentences (unknown in varied positions) enabled first/second graders to answer correctly (14 of 16 in a pilot class).",
+          "source": "Falkner, Levi & Carpenter (1999), 'Children's Understanding of Equality: A Foundation for Algebra', Teaching Children Mathematics 6(4), 232-236",
+          "url": "https://academic.sun.ac.za/mathed/174/AlgebraNCTM.pdf",
+          "verified": true
+        },
+        {
+          "claim": "CGI classifies add/subtract word problems by semantic structure (Add To, Take From, Put Together/Take Apart, Compare) crossed with which quantity is unknown (result/change/start; difference/bigger/smaller). Keyword mapping breaks down on non-result-unknown structures: a 'take from' story with an unknown change is solved by adding (5 − ? = 3), an 'add to' story with unknown start by subtracting (? + 3 = 5), and Compare 'more/fewer' wording does not reliably signal the operation — so children must model the structure, not cue on a word.",
+          "source": "Idaho SDE, 'Cognitively Guided Problem Types' chart (based on Carpenter, Fennema, Franke, Levi & Empson, Children's Mathematics: Cognitively Guided Instruction, Heinemann 1999; NRC 2009; CCSS 2010)",
+          "url": "https://www.sde.idaho.gov/wp-content/uploads/2025/09/Cognitively-Guided-Problem-Types.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Genuine mathematical problem solving is non-routine and is NOT the execution of memorised shortcuts such as key words; teaching students to build a visual representation of the problem before writing an equation has strong evidence for improving problem-solving achievement.",
+          "source": "Woodward et al. (2012), IES/WWC Practice Guide 'Improving Mathematical Problem Solving in Grades 4 Through 8' (NCEE 2012-4055)",
+          "url": "https://ies.ed.gov/ncee/WWC/Docs/PracticeGuide/MPS_PG_043012.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:57:36.301Z",
+        "updatedAt": "2026-10-19T15:20:38.090Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/309",
+    "dependencies": [
+      {
+        "topicId": "mt_DLcEzmmj2r",
+        "prerequisiteId": "mt_cChv2j_-Da",
+        "strength": "soft",
+        "reason": "Word problems within 100 require fluent addition/subtraction within 100"
+      },
+      {
+        "topicId": "mt_DLcEzmmj2r",
+        "prerequisiteId": "mt_xWg0lI_gG4",
+        "strength": "hard",
+        "reason": "Length word problems build on comparing measured lengths"
+      },
+      {
+        "topicId": "mt_iQYPw8bMfN",
+        "prerequisiteId": "mt_DLcEzmmj2r",
+        "strength": "soft",
+        "reason": "Length word problems exercise real-world modelling"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_6oxQPNLHNv",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Calculating with measurements",
+      "description": "Measure, compare, add, and subtract lengths (m/cm/mm), mass (kg/g), and volume/capacity (l/ml) using standard units",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 9,
+      "centrality": 0.1103965702036442,
+      "evidence": [
+        "Measure a length in centimetres and millimetres",
+        "Weigh an object using grams and kilograms",
+        "Add two measurements in the same unit (e.g. 250 ml + 400 ml = 650 ml)"
+      ],
+      "assessmentPrompt": "If {{name}} pours 350 ml into a jug and then adds another 275 ml, can they work out the total — and tell you how much more is needed to reach 1 litre?",
+      "standards": [
+        "acara-v9:AC9M3M02",
+        "uk-nc-2013:Ma/KS2/Y3/M/1"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/996",
+    "research": {
+      "topicId": "mt_6oxQPNLHNv",
+      "pedagogy": {
+        "summary": "Children measure in standard units and then calculate with the measures — adding and subtracting lengths (m/cm/mm), masses (kg/g) and volumes (l/ml). The governing rule is that you can only add or subtract measures that are in the SAME unit, and the answer keeps that unit. At Year 3 the arithmetic is done within a single unit (250 ml + 400 ml = 650 ml); systematic conversion between units (mm–cm–m) comes later, so mixed-unit sums are not yet expected.",
+        "bestPractices": [
+          "Establish 'same unit before you calculate' — line up like units, add, and carry the unit into the answer.",
+          "Model length calculations on a number line / tape so adding lengths is combining distances and subtracting is finding a gap.",
+          "Always write the unit in the answer; treat a bare number as incomplete.",
+          "Keep arithmetic within one unit at this stage; delay formal mm–cm–m conversion (it belongs to a later unit-conversion topic).",
+          "Use real measuring-then-calculating tasks (ribbon needed, juice combined) so the operation has a purpose."
+        ],
+        "keyRepresentations": [
+          "A number line / tape diagram for combining and comparing lengths",
+          "Aligned columns of like units (all in ml, or all in cm) before adding",
+          "A measuring bench: measure two quantities, then combine them",
+          "An answer frame that always includes the unit (____ ml, ____ cm)"
+        ],
+        "commonMisconceptions": [
+          "Adds or subtracts across different units as if they were the same number (2 m + 30 cm = 32).",
+          "Drops the unit from the answer (250 ml + 400 ml = 650).",
+          "Muddles compound units, e.g. reads 3 cm 5 mm as 35 or adds 3 + 5 — not yet knowing 10 mm = 1 cm.",
+          "Applies the wrong operation — adds when the problem asks for a difference, or vice versa."
+        ]
+      },
+      "learn": {
+        "summary": "Year 3 children calculate with standard-unit measures: adding and subtracting lengths (m/cm/mm), masses (kg/g) and volumes/capacities (l/ml). The governing rule is 'same unit before you calculate': you only add or subtract measures expressed in the same unit, and the answer keeps that unit (250 ml + 400 ml = 650 ml). Arithmetic stays within a single unit at this stage; systematic mm–cm–m conversion comes later, so mixed-unit sums are not yet expected. A number line / tape model makes combining (stacking) versus differencing (finding the gap) concrete, and every answer must carry its unit.",
+        "activities": [
+          {
+            "title": "Measure-and-combine bench with a number line",
+            "feedback": [
+              "If the learner writes a bare number (e.g. 650), ask: 'What unit belongs on this answer, and why does it matter?' Treat a measurement answer without a unit as incomplete.",
+              "If the learner adds across units (2 m + 30 cm = 32), ask: 'Is 2 metres the same size as 2 centimetres? What has to be true before you can add them?' Line both up on one common scale (2 m lines up as 200 cm) so the mismatch is visible; the goal here is to recognise that the units must match, not to carry out the full conversion, which is a later-stage skill.",
+              "If the learner picks the wrong operation, ask: 'Does this problem want you to put the amounts together, or find how much more one is than the other?' and rebuild it on the number line (combine = stack/mark to total, difference = gap).",
+              "If the learner muddles a compound unit (writes 3 cm 5 mm as 35 cm, or adds 3 + 5 to get 8), keep the task within a single unit for now; full mm–cm conversion belongs to a later stage. (Note that 35 mm is a correct value for 3 cm 5 mm, so do not mark it as wrong.)"
+            ],
+            "rationale": "Representing add/subtract on tape or number-line diagrams follows established measurement progressions where combining and differencing are modelled on a line with equal unit spacing; measuring-then-calculating gives the operation a real purpose. An optional live mechanism — marking measured amounts on the line and a running answer box that always carries the unit — may make the combining idea and the same-unit requirement concrete, but is not the only possible setup.",
+            "sourceClaims": [
+              "Second graders add two lengths to obtain the length of the whole and subtract one length from another to find the difference; length add/subtract problems are represented with tape or number-bond diagrams and equations with a symbol for the unknown, and a number line diagram is a measurement model where consecutive whole numbers are one unit apart.",
+              "Unit size is critical in measurement and the unit must always be considered ('what are you counting?' -> the length-units), so a measurement answer is meaningful only with its unit.",
+              "Year 3 pupils measure, compare, add and subtract lengths (m/cm/mm), mass (kg/g) and volume/capacity (l/ml) using standard units."
+            ],
+            "learnerActions": [
+              "Measure two real quantities of the SAME kind — e.g. two lengths of ribbon in cm, or two beakers of juice in ml (250 ml and 400 ml), or two masses in g.",
+              "Combine the two measures on a number line / tape: place lengths end to end to read the total (e.g. 25 cm + 40 cm = 65 cm), or mark the two volumes along the scale to reach the total (250 ml + 400 ml = 650 ml). Write the answer WITH its unit (65 cm; 650 ml).",
+              "Switch to a subtraction task: use the same number line to find the difference between the two measures as the gap between them.",
+              "Decide for each worded problem whether you are combining the amounts (stack them / mark to the total) or finding how much more one is than the other (find the gap).",
+              "Meet the mixed-unit case: a 2 m length and a 30 cm length. Try to total them and notice you cannot simply write 32 — line both up on one common scale (2 m lines up as 200 cm) and say what has to be true (same unit) before adding."
+            ],
+            "intendedInsight": "Adding measures means combining amounts and subtracting means finding a gap; a measurement answer is only meaningful with its unit; and you can only add or subtract measures that are in the same unit."
+          },
+          {
+            "title": "Same-unit calculation check with targeted wrong-answer options",
+            "feedback": [
+              "For the option that drops the unit: 'The arithmetic is right, but what is missing? A measurement answer needs its unit.'",
+              "For the option that adds across units: 'Why can't 2 m and 30 cm just be added as 2 + 30? What would make them addable?' Line them up on one common scale (2 m lines up as 200 cm) so the units clearly differ; actually converting and totalling is a later-stage skill, not expected now.",
+              "If the learner answers correctly, ask them to generalise: 'What is the rule for when two measures CAN be added together?'"
+            ],
+            "rationale": "Short checks that target the specific error patterns (dropping the unit, adding across units) are strongly discriminating for whether the same-unit rule is understood. This format can test and make the rule explicit; recognising a correct option is not the same as producing unit-bearing work, so it complements rather than replaces the number-line sense built on the bench.",
+            "sourceClaims": [
+              "Unit size is critical in measurement and the unit must always be considered ('what are you counting?' -> the length-units), so a measurement answer is meaningful only with its unit.",
+              "The systematic relationship among length units (km, m, cm, mm) and conversion between them is placed in Grade 4 (4.MD.1), not Grade 3; expressing larger units in smaller units reinforces place value. This means at the earlier stage children work within a single unit and full mm–cm–m conversion is not yet expected."
+            ],
+            "learnerActions": [
+              "Complete fill-in-the-blank sums within one unit, writing the unit in the answer (e.g. 250 ml + 400 ml = ___ ml).",
+              "Choose the correct result from options that include one that drops the unit and one that adds across units (e.g. for 2 m + 30 cm, recognise that '32' is wrong).",
+              "Explain in words why the across-unit option is wrong before moving on."
+            ],
+            "intendedInsight": "The same-unit rule and the unit-bearing answer can be stated explicitly and recognised in others' work, not just produced on the bench."
+          },
+          {
+            "title": "Reference number-line diagram of a length addition",
+            "feedback": [
+              "Prompt: 'Point to where the total ends on the line — what number is it, and what unit?'",
+              "Prompt: 'If this were a subtraction, which part of the picture would be the gap you measure?'"
+            ],
+            "rationale": "A fixed diagram cannot be manipulated and does not let the child measure across varied cases or meet the same-unit trap by recomputing, so it works best as a reference or worked example alongside active tasks. It can still clarify the combining idea and unit placement.",
+            "sourceClaims": [
+              "Second graders add two lengths to obtain the length of the whole and subtract one length from another to find the difference; length add/subtract problems are represented with tape or number-bond diagrams and equations with a symbol for the unknown, and a number line diagram is a measurement model where consecutive whole numbers are one unit apart."
+            ],
+            "learnerActions": [
+              "Study a labelled number line / tape showing two lengths placed end to end and the total read off the scale.",
+              "Trace along the line to see where the first length ends and the second begins, and where the total sits.",
+              "Describe in your own words why the total is found by combining distances, and identify where the unit appears in the answer."
+            ],
+            "intendedInsight": "A worked tape/number-line picture shows the combining idea and anchors the vocabulary, as a reference to support the active measure-and-calculate work."
+          }
+        ],
+        "constraints": [
+          "Keep all arithmetic within a single unit at this stage; delay formal mm–cm–m (and kg–g, l–ml) conversion to a later unit-conversion topic. The mixed-unit trap is used only to reveal that units must match, not to have the child compute a converted total.",
+          "Always require the unit in the answer; treat a bare number as an incomplete answer.",
+          "Keep length examples (ribbon in cm/mm), capacity examples (juice in ml) and mass examples (in g) coherent — do not label a volume as a 'length' or carry a length action over to a capacity or mass result.",
+          "The fill-in/selection check tests and states the same-unit rule but does not by itself build number-line sense; pair it with the measure-and-combine activity.",
+          "The reference diagram is a worked example: it cannot let the child measure varied cases or recompute at the same-unit trap, so use it to support, not replace, hands-on measuring and calculating.",
+          "Optional interaction examples (marking measured amounts on a line, a subtraction 'gap' mode, a running unit-bearing answer box, lining up mismatched units on one common scale) illustrate the mechanism; they are suggestions, not mandatory features.",
+          "When a child muddles a compound unit (e.g. writes 3 cm 5 mm as 35 cm, or adds 3 + 5 to get 8), do not drill conversion now; keep calculations within one unit and let compound-unit fluency arrive with the later conversion topic."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were NOT re-fetched. The activities are research-informed proposals, not validated interventions.",
+          "Original inconsistency: the source recommendation text conflated capacity and length examples ('measures two lengths of ribbon (250 ml and 400 ml of juice...)'). 250 ml and 400 ml are capacities (juice/beakers), not lengths of ribbon; ribbon is measured in cm/mm. Activities now keep length (cm), capacity (ml) and mass (g) examples distinct.",
+          "Arithmetic checked: 250 ml + 400 ml = 650 ml is correct; 25 cm + 40 cm = 65 cm is correct; 2 m + 30 cm is NOT 32 (2 m = 200 cm, so a converted total would be 230 cm). The mixed-unit item is retained only as a deliberate error to recognise, never as a valid answer; the full conversion to 230 cm is a later-stage skill and is not presented to the child as expected Year 3 work.",
+          "The mass strand (kg/g) is named in the objective and evidence but was not exemplified by a dedicated activity; a two-masses-in-g version of the measure-and-combine bench has been offered so this strand can be covered.",
+          "The last source (UK National Curriculum, Year 3 measurement) is marked verified:false in the row; the Year 3 scope claim rests on this unverified source and should be confirmed on review.",
+          "Original fit field framed some claims as universal ('3D adds nothing', dialogue unsuitable because the skill is 'a watched performance'). These are not established by the cited sources and have been omitted; a conversation or worked demonstration can still support this skill even if it is not the primary vehicle."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "What unit should be on your answer of 650? Why does it matter?",
+          "You wrote 2 m + 30 cm = 32 — is 2 metres the same size as 2 centimetres? What has to be true before you can add them?",
+          "Show me this addition on the number line — where does the total end up?",
+          "Does this problem want you to put the amounts together, or find how much more one is than the other? How can you tell?"
+        ],
+        "correctAnswer": "The child adds/subtracts measures that are in the same unit, keeps the unit in the answer (650 ml; 7 cm), chooses the operation that fits the problem, and — faced with the mixed-unit item — recognises the units must match first rather than adding 2 + 30 to get 32.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Adds/subtracts across different units as bare numbers: treats unlike units as like, e.g. 2 m + 30 cm = 32, or 1 kg + 200 g = 201.",
+            "nextMove": "Insist on a common unit before calculating; show both quantities on one scale so the mismatch is visible; return to attending to the unit when measuring.",
+            "distractor": null,
+            "revealedBy": "Combines the digits of measures in different units without matching them; answer has no coherent unit.",
+            "reteachPrerequisiteId": "mt_DOe893F6gN"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Drops the unit from the answer: computes correctly but writes a bare number (250 ml + 400 ml = 650).",
+            "nextMove": "Treat a measurement answer without a unit as incomplete; build the habit of writing the unit every time; the calculation itself is sound.",
+            "distractor": null,
+            "revealedBy": "Right arithmetic, no unit on the result; supplies it only when asked.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "developmental",
+            "pattern": "Compound-unit muddle: reads or combines mixed compound units wrongly, e.g. writes 3 cm 5 mm as 35 or adds 3 + 5, not yet knowing 10 mm = 1 cm.",
+            "nextMove": "Do NOT drill mm–cm conversion now — systematic conversion belongs to a later stage; keep calculations within a single unit and let compound-unit fluency come with the conversion topic.",
+            "distractor": null,
+            "revealedBy": "Treats the two parts of a compound measure as one number, or adds them; expected before unit conversion is taught.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Wrong operation: adds when the problem asks for a difference, or subtracts when it asks for a total.",
+            "nextMove": "Represent the problem on a number line/tape (combine = stack, difference = gap) so the operation follows the model; comprehension, not calculation, is the issue.",
+            "distractor": null,
+            "revealedBy": "Correct arithmetic but the operation does not match the question's structure.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Adds across different units as bare numbers, or routinely omits the unit, or picks the wrong operation.",
+          "full": "Calculates with measures in a common unit, carries the unit into every answer, chooses the operation from the problem structure, and recognises that unlike units must be made the same before adding or subtracting.",
+          "partial": "Adds/subtracts correctly within a single unit and usually keeps the unit, but is caught by the mixed-unit item or an unfamiliar compound unit — the same-unit rule is not yet explicit."
+        },
+        "diagnosticPrompt": "Give real quantities to measure and combine: e.g. two lengths of ribbon and two beakers of water, plus a written problem ('250 ml + 400 ml = ?') and a deliberately mixed-unit one ('2 m + 30 cm = ?'). Say: 'Measure these and work out the totals and the difference.' Watch whether they keep like units together, carry the unit into the answer, and choose the right operation.",
+        "whatMakesItDiscriminate": "A child who understands calculating with measures produces unit-bearing answers and pauses at the mixed-unit sum; a child who does not writes 650 without a unit, or 2 m + 30 cm = 32, or applies the wrong operation — each visible in the written work."
+      },
+      "sources": [
+        {
+          "claim": "Second graders add two lengths to obtain the length of the whole and subtract one length from another to find the difference; length add/subtract problems are represented with tape or number-bond diagrams and equations with a symbol for the unknown, and a number line diagram is a measurement model where consecutive whole numbers are one unit apart.",
+          "source": "Common Core Progressions — K–5 Geometric Measurement (2012), Grade 2 (2.MD.5–6) (ISBE mirror)",
+          "url": "https://www.isbe.net/Documents/geometric-measurement-k-5.pdf",
+          "verified": true
+        },
+        {
+          "claim": "The systematic relationship among length units (km, m, cm, mm) and conversion between them is placed in Grade 4 (4.MD.1), not Grade 3; expressing larger units in smaller units reinforces place value. This means at the earlier stage children work within a single unit and full mm–cm–m conversion is not yet expected.",
+          "source": "Common Core Progressions — K–5 Geometric Measurement (2012), Grade 4 (4.MD.1) (ISBE mirror)",
+          "url": "https://www.isbe.net/Documents/geometric-measurement-k-5.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Unit size is critical in measurement and the unit must always be considered ('what are you counting?' -> the length-units), so a measurement answer is meaningful only with its unit.",
+          "source": "Common Core Progressions — K–5 Geometric Measurement (2012), Grade 2 (ISBE mirror)",
+          "url": "https://www.isbe.net/Documents/geometric-measurement-k-5.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Year 3 pupils measure, compare, add and subtract lengths (m/cm/mm), mass (kg/g) and volume/capacity (l/ml) using standard units.",
+          "source": "UK National Curriculum — Mathematics, Key Stage 2 Measurement",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T20:19:32.406Z",
+        "updatedAt": "2026-10-19T15:19:59.151Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/153",
+    "dependencies": [
+      {
+        "topicId": "mt_6oxQPNLHNv",
+        "prerequisiteId": "mt_BFJ-ch_8QU",
+        "strength": "hard",
+        "reason": "Extends comparing/ordering measures to adding/subtracting them"
+      },
+      {
+        "topicId": "mt_6oxQPNLHNv",
+        "prerequisiteId": "mt_DOe893F6gN",
+        "strength": "hard",
+        "reason": "Extends Y2 standard unit measurement to include mm and to add/subtract measures"
+      },
+      {
+        "topicId": "mt_-af65bxfdp",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Prior experience measuring mass/capacity in standard units feeds into formal measurement with g/kg/l"
+      },
+      {
+        "topicId": "mt_d8al9JcajP",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Measuring in standard units is prerequisite to converting between units"
+      },
+      {
+        "topicId": "mt_HY8Yycu_rz",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "soft",
+        "reason": "Specifying units in measurement exercises precision"
+      },
+      {
+        "topicId": "mt_kgTN6yk4oE",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "soft",
+        "reason": "Understanding measurement of length and mass helps children appreciate the scale of engineering involved in moving and lifting multi-tonne stone blocks"
+      },
+      {
+        "topicId": "mt_mFJ-2ZF6Tk",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Standard unit measurement is prerequisite to estimating and calculating measures"
+      },
+      {
+        "topicId": "mt_NSC3LT_-ch",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Estimating capacity in litres and millilitres builds on measuring and calculating with these units"
+      },
+      {
+        "topicId": "mt_wE7-Gs9ENL",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Measuring perimeter requires measuring lengths and adding them"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_5HV4mbgSGH",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Fractions on a number line",
+      "description": "Solve word problems involving distances, time intervals, liquid volumes, masses, and money using the four operations with fractions or decimals; represent with diagrams including number lines",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 10,
+      "centrality": 0.07502679528403002,
+      "evidence": [
+        "A 2.5 kg bag of flour is split equally into 4 portions — what does each weigh?",
+        "A journey takes 1 hr 45 min; what time do you arrive if you leave at 09:20?",
+        "Three ribbons of 0.75 m, 1.2 m, and 0.95 m — what is the total length?"
+      ],
+      "assessmentPrompt": "If {{name}} is planning a 4.5 km walk and has already walked 1.75 km, can they work out how far is left — and estimate how long the remaining walk might take?",
+      "standards": [
+        "ccss-math:4.MD.2",
+        "uk-nc-2013:Ma5/3.1g"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1033",
+    "research": {
+      "topicId": "mt_5HV4mbgSGH",
+      "pedagogy": {
+        "summary": "Children solve multi-step word problems set in real measurement contexts — distance, time, capacity, mass, money — using the four operations on quantities that are often fractions or decimals, and represent the situation with a diagram (a number line or bar model) before computing. The heart of the topic is not the arithmetic but the MODELLING: reading the situation, choosing a representation that captures the relationships, attending to units (converting where needed), and checking the answer is reasonable in context. It is best taught by having students build a visual representation before they calculate, monitor their own problem-solving steps, and compare strategies — and by explicitly refusing the keyword habit ('altogether means add').",
+        "bestPractices": [
+          "Teach students to draw a visual representation — number line or bar/strip diagram — that links the quantities BEFORE writing an equation (IES/WWC Recommendation 3, strong evidence); gains are largest when students design and refine their OWN representation",
+          "Give self-monitoring prompts ('What is the problem asking?', 'Does my answer make sense?') and model thinking aloud (IES/WWC Recommendation 2, strong evidence)",
+          "Insist on unit-checking: convert to a common unit before operating (95 cm → 0.95 m) and label the answer's unit and money symbol",
+          "Estimate first to bound the answer, then check the computed result against that estimate for reasonableness",
+          "Expose several strategies and compare them on worked examples (IES/WWC Recommendation 4); never teach keyword shortcuts — require modelling the situation"
+        ],
+        "keyRepresentations": [
+          "Number-line diagram with a measurement scale",
+          "Bar / strip (Singapore) model showing part-whole relationships",
+          "A labelled part-whole diagram linking known and unknown quantities",
+          "A conversion table for units within a system (km/m/cm, kg/g, l/ml, hr/min)"
+        ],
+        "commonMisconceptions": [
+          "Keyword plucking — grabbing the numbers and applying the operation a keyword cues, with no model of the situation",
+          "Operating across mixed units without converting (adding 0.75 m and 95 cm as if the same unit)",
+          "Treating time as base-ten (handling 1 hr 45 min as 1.45; carrying at 100 rather than 60)",
+          "Misaligning decimal points or dropping/mixing the money symbol (writing $5.7, or $0.50¢)",
+          "Computing with no diagram or estimate, so an unreasonable answer goes unchecked"
+        ]
+      },
+      "learn": {
+        "summary": "Grade 4 learners (ages 9–10) solve multi-step measurement word problems — distance, time, capacity, mass, money — using the four operations on quantities that are often fractions or decimals. The core skill is MODELLING, not bare arithmetic: read the situation, build a visual representation (number line or bar/strip diagram) that captures the relationships, convert mixed units to a common unit, sequence the operations, label units and money symbols, check the answer is reasonable, and transfer the approach when a quantity changes. The habit to refuse is keyword plucking ('altogether means add'); learners who design their own representation before computing are the target.",
+        "activities": [
+          {
+            "title": "Build the model before you compute",
+            "feedback": [
+              "If a learner writes a bare equation straight from a keyword cue, cover the numbers and ask them to retell the situation in their own words and draw it before any calculation.",
+              "For the flour example, splitting 2500 g (2.5 kg) into 4 gives 625 g (0.625 kg) per tub; after removing 150 g the tub holds 475 g (0.475 kg). Confirm the diagram shows four equal parts and one marked-off segment, and ask the learner to point to where the 150 g sits on the diagram.",
+              "If the answer comes out wildly off-scale (e.g. 0.006 kg or 6000 kg per tub), prompt: 'Roughly how big should each tub be? Does your answer match your estimate?'",
+              "If kg and g are combined directly, ask: 'Can you subtract these as they are? Why or why not?' and have them convert to one unit first.",
+              "For the transfer check, confirm 3 kg ÷ 4 = 0.75 kg per tub, which is 0.125 kg more than the 0.625 kg from the 2.5 kg bag; the diagram structure (4 equal parts) is unchanged — only the whole changed."
+            ],
+            "rationale": "Teaching learners to build and refine their own visual representation before writing an equation is supported as improving problem-solving achievement, with the largest gains when learners design their own representation. Building the model (rather than reading a finished one) is the active ingredient the diagram-first task targets.",
+            "sourceClaims": [
+              "Teaching students to use visual representations improves problem-solving achievement (STRONG evidence); students who visually represent the information before writing an equation are more effective, and gains are largest when students design their own representations. Assisting students to monitor and reflect on the problem-solving process also has STRONG evidence. Genuine problem solving is non-routine and is NOT the execution of memorised shortcuts such as key words.",
+              "Grade 4 standard: use the four operations to solve word problems involving distances, intervals of time, liquid volumes, masses of objects, and money, including problems involving simple fractions or decimals, and problems that require expressing measurements given in a larger unit in terms of a smaller unit; represent measurement quantities using diagrams such as number line diagrams that feature a measurement scale."
+            ],
+            "learnerActions": [
+              "Read a multi-step measurement problem, e.g. 'A 2.5 kg bag of flour is shared equally into 4 tubs, then 150 g is taken from one tub — how much is left in that tub?'",
+              "Before writing any equation, draw a bar/strip diagram or number line that shows the quantities and how they relate (the whole 2.5 kg, the 4 equal parts, the 150 g removed)",
+              "Convert to a common unit where needed (150 g = 0.15 kg, or 2.5 kg = 2500 g) and note the conversion explicitly",
+              "Let the structure of your diagram tell you the operations: splitting the bar into 4 equal parts IS the ÷4 (each part = 2500 g ÷ 4 = 625 g = 0.625 kg), and marking off 150 g from one part IS the subtraction (625 g − 150 g = 475 g = 0.475 kg). Working in grams keeps the numbers whole, because 0.625 kg is in thousandths and Grade 4 decimal work usually stops at hundredths.",
+              "Estimate roughly first, then check the computed answer against that estimate and label the unit",
+              "Test transfer: if the same bag had been 3 kg instead of 2.5 kg shared into 4 tubs, predict whether each tub holds more or less and by how much before computing — the same partition-then-subtract model still applies"
+            ],
+            "intendedInsight": "The diagram generates the operations, so you never have to guess an operation from a keyword; partitioning a bar is division and marking off a segment is subtraction. Checking against an estimate catches off-scale answers, and the same model transfers when a quantity changes (e.g. a 3 kg bag still partitions into four equal parts)."
+          },
+          {
+            "title": "Convert units before operating",
+            "feedback": [
+              "If a learner writes 0.75 + 95 = 95.75 or 2.5 − 150, point out that metres and centimetres (or kilograms and grams) are different sizes and must be matched first.",
+              "Check that 0.75 m + 1.2 m + 0.95 m is computed as 2.9 m, with all three already in metres.",
+              "For time, verify that 09:20 + 1 hr 45 min = 11:05 by adding 45 min to 20 min = 65 min = 1 hr 5 min, carrying the hour, then adding the journey hours — not by treating 1.45 as a decimal."
+            ],
+            "rationale": "The standard explicitly requires expressing measurements given in a larger unit in terms of a smaller unit (e.g. 0.75 m = 75 cm, 2.5 kg = 2500 g); converting to the smaller unit also keeps numbers whole. Converting to a larger unit (95 cm = 0.95 m) is also valid. A common unit-handling error is operating across mixed units without converting, so an explicit convert-first step addresses a frequent breakdown.",
+            "sourceClaims": [
+              "Grade 4 standard: use the four operations to solve word problems involving distances, intervals of time, liquid volumes, masses of objects, and money, including problems involving simple fractions or decimals, and problems that require expressing measurements given in a larger unit in terms of a smaller unit; represent measurement quantities using diagrams such as number line diagrams that feature a measurement scale."
+            ],
+            "learnerActions": [
+              "Given quantities in mixed units (e.g. 0.75 m, 1.2 m and 0.95 m; or 95 cm alongside 0.75 m), identify that they cannot be combined until expressed in one unit",
+              "Use a conversion table within a system (km/m/cm, kg/g, l/ml, hr/min) to rewrite every quantity in a common unit (95 cm → 0.95 m)",
+              "Only then add, subtract, multiply or divide, and label the result with the correct unit",
+              "Treat time carefully: 1 hr 45 min is NOT 1.45; minutes carry at 60, not 100 (e.g. leaving 09:20 and travelling 1 hr 45 min arrives at 11:05)"
+            ],
+            "intendedInsight": "Operations are only valid between quantities expressed in the same unit; converting first prevents combining unlike units, and time is base-60, not base-10."
+          },
+          {
+            "title": "Self-monitor and compare strategies",
+            "feedback": [
+              "Prompt reflection with 'Before you calculate, roughly what should the answer be? About how big?' and 'Does this make sense?'",
+              "When comparing strategies, confirm the learner can say why both a bar model and a number line lead to the same ÷4-then-subtract sequence.",
+              "A tap-to-reveal annotated worked example can teach how a bar maps to the equation and is useful for exposition and reference, but it does not itself let the learner build or revise their own representation; follow it with a problem where the learner constructs the diagram themselves."
+            ],
+            "rationale": "Self-monitoring prompts and reflection on the problem-solving process are supported teaching moves directly backed by the quoted source. Comparing valid strategies may also support flexible problem solving (from the original's IES Recommendation 4 best practice), though the quoted source claim directly supports only the self-monitoring component. An annotated worked example supports exposition but cannot substitute for learner-built representation.",
+            "sourceClaims": [
+              "Teaching students to use visual representations improves problem-solving achievement (STRONG evidence); students who visually represent the information before writing an equation are more effective, and gains are largest when students design their own representations. Assisting students to monitor and reflect on the problem-solving process also has STRONG evidence. Genuine problem solving is non-routine and is NOT the execution of memorised shortcuts such as key words."
+            ],
+            "learnerActions": [
+              "At the start, ask yourself 'What is the problem asking?' and restate the goal before choosing a representation",
+              "After solving, ask 'Does my answer make sense?' and compare it to your up-front estimate",
+              "Solve a problem, then view or discuss an alternative strategy for the same problem (e.g. a bar model vs. a number-line path) and explain how each maps to the same operations",
+              "Explore a worked example where each diagram segment is annotated with the quantity it stands for and the operation the structure implies — use this for reference, then build your own on a new problem"
+            ],
+            "intendedInsight": "Monitoring your own steps and comparing different valid representations can deepen understanding of why the operations follow from the situation, rather than from a cue word."
+          }
+        ],
+        "constraints": [
+          "The target skill is modelling plus computing: learners must build their own representation, not only read or tap a finished one. Annotated worked examples and reveal-the-segment displays are exposition/reference scaffolds and should be followed by learner-constructed diagrams.",
+          "Fill-in-the-blank, slider and draw-the-jump response formats can assess computation and unit handling, but a sequence that only scores the final number cannot see whether the learner modelled the situation or plucked a keyword — so pair any such checks with observation of the build.",
+          "Interactive supports such as dragging quantities onto a bar or number line, partitioning a bar into equal parts, a unit strip that snaps g↔kg or cm↔m, and flags for off-scale answers are useful ways to make the model concrete and provide feedback; they are optional illustrations of the mechanism, not required tooling.",
+          "Refuse keyword shortcuts ('altogether means add', 'left means subtract'); require a model of the situation before an equation.",
+          "Insist on unit-checking (convert to a common unit before operating) and on labelling the answer with its unit and money symbol (avoid $5.7 or $0.50¢).",
+          "Treat time as base-60: 1 hr 45 min is not 1.45, and minutes carry at 60.",
+          "A fixed/static annotated example can still teach how a bar maps to an equation; it simply cannot be manipulated by the learner — scope its role to exposition rather than claiming it cannot teach.",
+          "Include transfer: once a model works, vary a quantity (e.g. 2.5 kg → 3 kg) and have the learner predict whether and by how much the result changes using the same model."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. The activities are research-informed proposals, not validated interventions, and citations support general teaching principles, not that these specific tasks were tested.",
+          "The original worked example ('2.5 kg split into 4 = 0.625 kg each') is arithmetically correct (2.5 ÷ 4 = 0.625). After removing 150 g (0.15 kg) from one tub, that tub holds 0.475 kg; the source stated the per-tub value but not the final remaining amount, so 0.475 kg has been added for completeness and should be confirmed.",
+          "The time example (leave 09:20, travel 1 hr 45 min) was listed in the source evidence without a stated answer; 11:05 is supplied here and flagged as an added computation. The source's own misconception list warns against treating 1 hr 45 min as 1.45, which this activity corrects explicitly.",
+          "The transfer figures (3 kg ÷ 4 = 0.75 kg per tub; 0.125 kg more than 0.625 kg) were computed here from the original's transfer probe and responseLevels 'full' criterion, which left the numbers unstated; they should be confirmed.",
+          "The compare-strategies element of Activity 3 reflects the original's 'expose several strategies' best practice (IES Recommendation 4), but the quoted source claim directly supports only the visual-representation and self-monitoring principles, not the compare-multiple-strategies recommendation; wording has been qualified accordingly.",
+          "Source claims about 'strong evidence' and 'verified' flags are copied from the legacy row and were not independently re-checked in this rewrite."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Before you calculate — roughly what should the answer be? About how big?",
+          "You have kilograms and grams here — can you subtract them as they are? Why or why not?",
+          "Show me on your diagram where the 150 g is.",
+          "If the bag had been 3 kg instead of 2.5, would each tub be more or less — and by how much?"
+        ],
+        "correctAnswer": "Draws a representation (bar or number line) that captures the relationships, converts to a common unit (2.5 kg = 2500 g, or 150 g = 0.15 kg), applies the operations in the right sequence (÷4 then subtract), labels the answer with its unit, and can say why the size of the answer is reasonable.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Keyword plucking — writes an equation straight from a number-plus-keyword cue ('shared → divide everything', 'left → subtract the two numbers') with no model of the situation",
+            "nextMove": "Cover the numbers and ask them to retell the situation in their own words and draw it first; require a model before any calculation",
+            "distractor": null,
+            "revealedBy": "Produces a bare equation using all the numbers once in the keyword-cued operation, with no diagram and often the wrong structure for a multi-step problem",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Operates across mixed units without converting — combines quantities in different units as if the same",
+            "nextMove": "Reteach relative unit sizes and convert to a common unit before operating, using a conversion table",
+            "distractor": null,
+            "revealedBy": "Writes e.g. 2.5 − 150, or adds 0.75 m + 95 cm as 95.75, ignoring that kg≠g and m≠cm",
+            "reteachPrerequisiteId": "mt_Zks8xyInSG"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Computes without checking reasonableness — can do the arithmetic but omits estimating or sense-checking, so an off-scale answer stands",
+            "nextMove": "Scaffold an estimate-first and a 'does this make sense?' step; do not reteach the arithmetic — the computation is held, the monitoring lapses",
+            "distractor": null,
+            "revealedBy": "Produces an answer wildly off-scale (each tub 0.006 kg, or 6000 kg) with no estimate and no diagram to check it against, and does not flag it",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Grabs numbers and applies a keyword-cued operation with no model; combines mixed units without converting; cannot say whether the answer is reasonable.",
+          "full": "Models the situation with a diagram, converts to a common unit, sequences the operations correctly, labels units and money symbols, and checks the answer against an estimate — transferring the approach when a quantity is changed.",
+          "partial": "Represents and computes single steps but the chain breaks — converts OR models but not both, or reaches a correct number without checking reasonableness; can list the steps but not justify the operations from the situation."
+        },
+        "diagnosticPrompt": "Give the child two multi-step measurement problems that mix units and involve a fraction or decimal — e.g. 'A 2.5 kg bag of flour is shared equally into 4 tubs; then 150 g is taken from one tub. How much is left in that tub?' Say: 'Show your thinking with a diagram, then solve it.' Provide blank paper and watch: do they draw a number line or bar that models the situation BEFORE calculating, do they convert kg and g to a common unit, and do they check the answer is reasonable?",
+        "whatMakesItDiscriminate": "The 'show your thinking with a diagram' demand on a mixed-unit multi-step problem separates a modeller from a keyword-plucker and a converter from a non-converter: the plucker writes a bare equation using every number once in the cued operation, the non-converter combines kg and g directly, and the unmonitored child leaves an off-scale answer standing. Watching the build — not asking about the method — makes each visible."
+      },
+      "sources": [
+        {
+          "claim": "Grade 4 standard: use the four operations to solve word problems involving distances, intervals of time, liquid volumes, masses of objects, and money, including problems involving simple fractions or decimals, and problems that require expressing measurements given in a larger unit in terms of a smaller unit; represent measurement quantities using diagrams such as number line diagrams that feature a measurement scale.",
+          "source": "Common Core State Standards for Mathematics, 4.MD.A.2",
+          "url": "https://www.thecorestandards.org/Math/Content/4/MD/",
+          "verified": true
+        },
+        {
+          "claim": "Teaching students to use visual representations improves problem-solving achievement (STRONG evidence); students who visually represent the information before writing an equation are more effective, and gains are largest when students design their own representations. Assisting students to monitor and reflect on the problem-solving process also has STRONG evidence. Genuine problem solving is non-routine and is NOT the execution of memorised shortcuts such as key words.",
+          "source": "Woodward et al. (2012), IES/WWC Practice Guide 'Improving Mathematical Problem Solving in Grades 4 Through 8' (NCEE 2012-4055)",
+          "url": "https://ies.ed.gov/ncee/WWC/Docs/PracticeGuide/MPS_PG_043012.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T00:50:51.731Z",
+        "updatedAt": "2026-10-19T15:20:15.066Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/138",
+    "dependencies": [
+      {
+        "topicId": "mt_5HV4mbgSGH",
+        "prerequisiteId": "mt_mFJ-2ZF6Tk",
+        "strength": "hard",
+        "reason": "Y4 estimate/compare/calculate measures is prerequisite to word problems with fractions/decimals"
+      },
+      {
+        "topicId": "mt_5HV4mbgSGH",
+        "prerequisiteId": "mt_Vi4Vo5xs_g",
+        "strength": "soft",
+        "reason": "Decimal notation supports measurement problems with decimals"
+      },
+      {
+        "topicId": "mt_5HV4mbgSGH",
+        "prerequisiteId": "mt_Zks8xyInSG",
+        "strength": "hard",
+        "reason": "Unit conversion supports measurement word problems"
+      },
+      {
+        "topicId": "mt_SqhXQhAEUf",
+        "prerequisiteId": "mt_5HV4mbgSGH",
+        "strength": "hard",
+        "reason": "Measurement word problems extend Y5 measurement problem-solving"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_RVK655t391",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Measuring temperature",
+      "description": "Use negative numbers in context (temperature, finance, sea level); calculate intervals across zero",
+      "ageRangeStart": 10,
+      "ageRangeEnd": 12,
+      "centrality": 0.05144694533762058,
+      "evidence": [
+        "The temperature falls from 3°C to −5°C — what is the drop? (8 degrees)",
+        "Calculate the difference between a bank balance of −£120 and £350",
+        "Order −7, −3, 0, 2, 5 on a number line and find the interval from −7 to 5"
+      ],
+      "assessmentPrompt": "If a bank account goes from −£45 to +£120, can {{name}} work out the total change — counting through zero to get £165?",
+      "standards": [
+        "acara-v9:AC9M6N01",
+        "uk-nc-2013:Ma6/2.1c"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1158",
+    "research": {
+      "topicId": "mt_RVK655t391",
+      "pedagogy": {
+        "summary": "• Age/Topic: 10–11 — use negative numbers in context (temperature, finance, sea level) and calculate intervals across zero.\n• Standards—UK (DfE NC Mathematics): Y6 'use negative numbers in context, and calculate intervals across zero.'\n• Standards—US (CCSS-M): 6.NS.C.5 and 6.NS.C.7 — understand positive and negative numbers in real-world contexts and find distances between them (US formally introduces negatives in Grade 6).\n• Operational details: Ground negatives in directed real contexts (temperature above/below 0, credit/debt, above/below sea level). Compute an interval across zero as a DISTANCE on the number line — count/measure from the lower value up through 0 to the higher, or add the two magnitudes on opposite sides of zero (−5 to 3 = 5 + 3 = 8). Keep this as counting/measuring intervals; DEFER formal signed arithmetic rules.\n• Checkpoint — Tier A (age 10): 'Temperature rises from −2°C to 3°C — how many degrees?' Tier B: 'Difference between a balance of −£120 and £350?' Tier C: 'Order −7, −3, 0, 2, 5 and give the interval from −7 to 5.'",
+        "bestPractices": [
+          "Anchor every negative in a directed context (temperature, sea level, bank balance) so the sign means a direction, not a smaller ordinary number",
+          "Compute intervals across zero as a distance on the number line — count/measure through zero, or add the two sides' magnitudes",
+          "Use a VERTICAL number line (thermometer) for temperature/sea level so 'colder/lower' maps to physically down",
+          "Keep the focus on ordering and intervals; defer signed +/−/× arithmetic rules to KS3",
+          "Contrast 'the difference between −5 and 3' (interval = 8) with the values themselves, so distance is not confused with a single number's value"
+        ],
+        "keyRepresentations": [
+          "Vertical number line / thermometer spanning below and above zero",
+          "Horizontal number line with zero as the crossing point and interval arcs",
+          "Real-context strips: temperature scale, sea-level cross-section, bank balance line",
+          "Interval arcs decomposed at zero (−5→0 is 5, 0→3 is 3, total 8)"
+        ],
+        "commonMisconceptions": [
+          "Treating −5 as larger than −3 because '5 > 3' (ignoring direction)",
+          "Counting the interval across zero without including the step onto/over 0, or double-counting zero",
+          "Adding the numbers instead of finding a distance (−5 to 3 answered as −2)",
+          "Believing there is no number between −1 and 1 other than described, or that zero is negative/positive",
+          "Reading a fall in temperature as a rise because the digit gets 'bigger' (−2 to −8 seen as warming)"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 10–11: use negative numbers in directed real-world contexts (temperature, bank balance, sea level) and calculate intervals across zero as a distance on the number line. The key insight is that an across-zero interval decomposes at zero into two magnitudes that ADD (e.g. −2 to 3 = 2 + 3 = 5), and that ordering depends on direction, not digit size (−5 sits below −3 even though 5 > 3). Signed +/−/× arithmetic rules are deferred to later study.",
+        "activities": [
+          {
+            "title": "Dragging across zero on a vertical number line (thermometer)",
+            "feedback": [
+              "If the learner answers −2 for 'from −5 to 3' (i.e. adds the signed numbers), show the two arcs meeting at zero: 5 (below) + 3 (above) = 8; the gap is a distance, never negative.",
+              "If the learner subtracts magnitudes (e.g. 3 to −5 answered as 2), prompt: 'and how far below zero do you still have to travel?' then mark both parts on the line: 3→0 is 3, 0→−5 is 5, total 8.",
+              "If the learner says −5 is greater than −3 because 5 > 3, point to the scale: the mark for −5 is physically lower/colder, so −5 is the smaller value.",
+              "If the learner reads a fall as a rise because the digit grows (e.g. treats −2 to −8 as getting warmer), use the vertical scale: −8 sits lower/colder than −2, so this is a fall of 6 degrees (both marks are below zero, so no crossing: 8 − 2 = 6), not a rise.",
+              "If the learner gives 9 for −5 to 3 (usually from counting the marks −5, −4, …, 3 instead of the gaps between them, or from counting zero as an extra step), explain that an interval is measured in steps, not marks: zero is a point you pass through, not a step. Count the steps below zero (5) and the steps above zero (3) and add them to get 8.",
+              "When both arcs are correctly summed, confirm: 'You crossed zero once and added both sides — that is why it isn't just the difference of the digits.'"
+            ],
+            "rationale": "Grounding each negative in a directed context makes the sign mean a direction rather than a smaller ordinary number, and letting the learner traverse and measure an arbitrary interval makes the 'split at zero and add' structure felt directly. A vertical scale maps 'colder/lower' to physically down. Dragging with a live running interval is an optional mechanism that makes the decomposition concrete, but a well-marked static number line that the learner annotates by hand can serve the same purpose.",
+            "sourceClaims": [
+              "Y6 pupils use negative numbers in context and calculate intervals across zero.",
+              "6.NS.C.5/C.7: understand positive and negative numbers in real-world contexts and find distances between them."
+            ],
+            "learnerActions": [
+              "Set a start value (e.g. −2°C) and an end value (e.g. 3°C) on a vertical number line scaled like a thermometer.",
+              "Drag a marker from the start up through zero to the end, watching the interval light up as two arcs meeting at zero: '2 below → 0' and '0 → 3'.",
+              "Read the running interval as it decomposes: 2 + 3 = 5, rather than a single subtraction.",
+              "Switch the context (temperature → sea-level cross-section → bank balance, e.g. −£120 below zero and £350 above) while the same number line stays, and repeat the drag.",
+              "Compare the positions of −5 and −3 on the scale and state which is lower and why."
+            ],
+            "intendedInsight": "An interval that spans zero is the sum of the two distances on each side of zero; direction (not the size of the digit) sets the order of negative numbers, so −5 lies below −3."
+          },
+          {
+            "title": "Explain-the-error dialogue: 'convince me on the line'",
+            "feedback": [
+              "If the learner accepts the 2-degree claim, ask them to count aloud from 3 down to −5 on the line and notice they pass through zero: 3→0 is 3, then 0→−5 is 5, total 8.",
+              "If the learner correctly rejects it, ask them to generalise: 'When does the simple digit difference give the right answer, and when does it fail?' (It gives the right answer when both values are on the same side of zero, and it fails whenever the interval spans zero.)"
+            ],
+            "rationale": "A dialogue can surface the '−5 > −3' and 'subtract magnitudes' errors and demand reasoning in words; pairing it with the number line keeps the inherently spatial measurement visible. This is a complement to, not a replacement for, hands-on interval work.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Consider a claim such as: 'The temperature fell from 3°C to −5°C, so it dropped 2 degrees.'",
+              "Decide whether it is right or wrong, and use a number line to justify your answer.",
+              "State where zero is in the journey and how far you travel on each side of it.",
+              "Explain in words why the answer is not simply 5 − 3 = 2."
+            ],
+            "intendedInsight": "Verbalising why the zero crossing must be counted exposes the 'subtract the magnitudes' error and reinforces that the interval is the sum of both sides."
+          },
+          {
+            "title": "Ordering and interval consolidation",
+            "feedback": [
+              "For the −£120 to £350 difference, if the learner gives £230 (subtracting magnitudes) or −£470 (signing the distance), restate that a difference is a positive distance: 120 + 350 = £470.",
+              "For ordering, if −5 is placed above −3, return to the scale and the directed meaning of the sign.",
+              "Confirm a correct interval by having the learner show the two parts that sum to it."
+            ],
+            "rationale": "Ordering, value-setting and multiple-choice question formats cleanly check ordering and across-zero interval skills once the underlying intuition is built, acting as a consolidator rather than the first teaching step.",
+            "sourceClaims": [
+              "Y6 pupils use negative numbers in context and calculate intervals across zero."
+            ],
+            "learnerActions": [
+              "Order a set such as −7, −3, 0, 2, 5 from lowest to highest and place them on a number line.",
+              "Find the interval from −7 to 5 by splitting at zero: 7 (below) + 5 (above) = 12.",
+              "Set a temperature after a stated fall (e.g. start 3°C, fall 8 degrees → −5°C) by marking it on the line.",
+              "Find the difference between a balance of −£120 and £350 and check it against the 'add both sides' method: 120 + 350 = 470."
+            ],
+            "intendedInsight": "Ordering negatives and computing across-zero intervals become reliable once the number-line intuition is applied consistently across contexts."
+          }
+        ],
+        "constraints": [
+          "Keep the focus on ordering and measuring/counting intervals; defer formal signed +/−/× arithmetic rules to later (KS3) study.",
+          "Anchor every negative in a directed context (temperature, sea level, bank balance) so the sign denotes direction, not a smaller ordinary number.",
+          "A labelled thermometer with tap-to-reveal readings illustrates the scale but does not let the learner traverse and measure an arbitrary interval across zero; treat it as an illustrative scaffold, not the core interval task.",
+          "A multiple-choice or value-setting check consolidates and assesses the skill but does not by itself build the across-zero intuition; introduce the hands-on or annotated number-line work first.",
+          "Report intervals as positive distances; contrast 'the difference between −5 and 3' (interval = 8) with the individual values so distance is not confused with a single number's value.",
+          "Distinguish the ideal number line (direction and position) from any physical thermometer prop used to represent it.",
+          "Zero is neither positive nor negative; treat it as the single crossing point where an across-zero interval splits: count the steps (unit gaps) from the start to zero and from zero to the end, so zero is a boundary point, not an extra step."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The original claim that '3D adds nothing' for one-dimensional interval work was removed as an unsupported universal; the directed number line is adequately represented in one dimension, which is a design observation, not a proof that other media cannot teach it.",
+          "Self-audit of worked values: −2 to 3 = 5 (2+3); −5 to 3 = 8 (5+3); 3 to −5 drop = 8 (3+5); −7 to 5 = 12 (7+5); −£120 to £350 = £470 (120+350); −2 to −8 = 6 (no zero crossing, 8−2). All check out. The −£470/−£230 error pair in the original check note corresponds to the signed-answer and subtract-magnitudes errors and is retained only as error feedback, not as a valid answer.",
+          "The original reteach-link and fit-ranking metadata were not carried into learner-facing content; only their pedagogical substance (split-at-zero reteach, one-side-only under-count) was preserved as feedback.",
+          "Two source misconceptions — 'zero is negative/positive' and 'there is no number between −1 and 1' — were not built into standalone activity feedback; the zero-neutral point is now stated as a constraint, but the density-of-numbers point could be added as a further prompt. Flagged as a residual preservation gap, not a learner-facing error."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Count from 3 down to −5 on a number line — how many steps, and where is zero?",
+          "How far is −7 from 5? Split the distance at zero.",
+          "Why isn't the drop just 5 − 3 = 2?"
+        ],
+        "correctAnswer": "8 degrees; £470; 12 — found by adding the distance on each side of zero (or counting across it).",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Subtracts the magnitudes as if both were positive: 3 to −5 gives a drop of 2; −£120 to £350 gives £230",
+            "nextMove": "Split the journey at zero: 3→0 is 3, 0→−5 is 5, total 8. Draw it on a number line.",
+            "distractor": null,
+            "revealedBy": "The interval ignores the crossing of zero; answers are too small.",
+            "reteachPrerequisiteId": "mt_1KkvzwYxbR"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Counts only one side of zero — stops at zero or forgets the negative part",
+            "nextMove": "Don't reteach negatives — prompt 'and how far below zero?' so both parts are added; mark both on the line.",
+            "distractor": null,
+            "revealedBy": "Answer equals just the positive portion (e.g. 3, or the 5, not 8).",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Subtracts magnitudes and misses the zero crossing entirely.",
+          "full": "Calculates intervals across zero by adding the distances on each side, in temperature, finance and pure-number contexts.",
+          "partial": "Handles intervals on one side of zero but under-counts when the interval spans zero."
+        },
+        "diagnosticPrompt": "Set the problems and watch the working: 'The temperature falls from 3°C to −5°C — what is the drop? A bank balance goes from −£120 to £350 — what is the difference? What is the interval from −7 to 5?' Watch how they handle the zero crossing.",
+        "whatMakesItDiscriminate": "Each interval straddles zero, so a child who subtracts magnitudes (5 − 3, 350 − 120) gets the wrong gap; a child who splits at zero and adds the two parts gets it right. Watching whether they account for the part below zero is the discriminator."
+      },
+      "sources": [
+        {
+          "claim": "Y6 pupils use negative numbers in context and calculate intervals across zero.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS1–2)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "6.NS.C.5/C.7: understand positive and negative numbers in real-world contexts and find distances between them.",
+          "source": "Common Core State Standards for Mathematics, The Number System Grade 6",
+          "url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:43:24.773Z",
+        "updatedAt": "2026-10-19T15:21:27.591Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/774",
+    "dependencies": [
+      {
+        "topicId": "mt_9QzSnn8m80",
+        "prerequisiteId": "mt_RVK655t391",
+        "strength": "hard",
+        "reason": "Negative number arithmetic extends Y6 using negative numbers in context"
+      },
+      {
+        "topicId": "mt_hBZwbst0ow",
+        "prerequisiteId": "mt_RVK655t391",
+        "strength": "soft",
+        "reason": "Sequences crossing zero require negative number understanding"
+      },
+      {
+        "topicId": "mt_R4AY0LKxfl",
+        "prerequisiteId": "mt_RVK655t391",
+        "strength": "hard",
+        "reason": "Negative coordinates require understanding of negative numbers"
+      },
+      {
+        "topicId": "mt_RVK655t391",
+        "prerequisiteId": "mt_1KkvzwYxbR",
+        "strength": "hard",
+        "reason": "Calculating intervals across zero extends Y5 negative number context"
+      },
+      {
+        "topicId": "mt_uDJY0X0hgo",
+        "prerequisiteId": "mt_RVK655t391",
+        "strength": "hard",
+        "reason": "Ordering with inequality symbols extends Y6 work with negative numbers in context"
+      },
+      {
+        "topicId": "mt_XNmGwNggdU",
+        "prerequisiteId": "mt_RVK655t391",
+        "strength": "soft",
+        "reason": "Negative number problems may appear in context"
+      }
+    ]
+  }
+]

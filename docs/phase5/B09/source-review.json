@@ -1,0 +1,1943 @@
+[
+  {
+    "topic": {
+      "id": "mt_19j_5AuuQI",
+      "type": "REPRESENTATIONAL",
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "name": "Numbers on a number line",
+      "description": "Represent whole numbers as lengths on a number line and represent sums and differences within 100 on a number line diagram",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.02786709539121115,
+      "evidence": [
+        "Place whole numbers on a number line with equally spaced points",
+        "Show an addition as a jump forward on the number line (e.g. 38 + 27 shown as jumps)",
+        "Show a subtraction as a jump backward on the number line"
+      ],
+      "assessmentPrompt": "Can {{name}} mark numbers on a number line and show what happens when they add or subtract — for example, jumping forward 35 places from 48?",
+      "standards": [
+        "ccss-math:2.MD.6"
+      ]
+    },
+    "topicPointer": "/topics/666",
+    "researchPointer": "/records/58",
+    "research": {
+      "topicId": "mt_19j_5AuuQI",
+      "pedagogy": {
+        "summary": "Representing sums and differences on a number line is about mapping calculation onto MAGNITUDE: numbers are positions/lengths, and an addition is a forward jump of the added amount while a subtraction is a backward jump. The representational demands are that intervals (not tick marks) carry the quantity, spacing is proportional, and a jump's LENGTH is the amount added or subtracted (not its endpoint). Partitioning the jump (38 + 27 as +20 then +7) links the model to place-value strategy. The empty number line is the target tool.",
+        "bestPractices": [
+          "Emphasise intervals over points: the amount is the SPACE jumped, not the marks counted — the classic off-by-one trap",
+          "Insist on proportional spacing so distance represents magnitude (a jump of 20 looks far longer than a jump of 7)",
+          "Model addition as forward jumps and subtraction as backward jumps, labelling each jump with its size",
+          "Partition jumps to mirror the mental strategy (bridge to the next ten, then the rest)",
+          "Move from pre-marked lines to the empty number line, and have children both READ a given diagram and DRAW their own"
+        ],
+        "keyRepresentations": [
+          "Empty number line (jumps labelled with amounts)",
+          "Pre-marked number line (equally spaced points)",
+          "Bead string / ruler (length model of number)",
+          "Partitioned jump (+20 then +7)",
+          "Backward-arrow subtraction diagram"
+        ],
+        "commonMisconceptions": [
+          "Counting tick marks (points) instead of intervals/jumps — off-by-one errors",
+          "Unequal or non-proportional spacing so distance doesn't represent magnitude",
+          "Reading a jump as its endpoint rather than as the amount added/subtracted",
+          "Drawing subtraction as a forward jump, or starting an addition jump from 0 rather than from the first number"
+        ]
+      },
+      "learn": {
+        "summary": "Help 7-8 year-olds represent sums and differences within 100 on a number line by mapping calculation onto MAGNITUDE: numbers are positions/lengths, a jump's LENGTH is the amount added or subtracted (not its endpoint), addition is a forward jump and subtraction a backward jump. The key representational demands are that intervals (not tick marks) carry the quantity, spacing is proportional, and jumps can be partitioned to mirror place-value strategy (38 + 27 as +20 then +7). The target tool is the empty number line, and children should both READ a given diagram and DRAW their own.",
+        "activities": [
+          {
+            "title": "Build the jump: make each arrow's length equal the amount",
+            "feedback": [
+              "If a jump of 20 is drawn the same length as a jump of 7, compare the two side by side against a ruler or scaled line so magnitude maps to length.",
+              "If the arrow is read as its endpoint ('+20' read as '58'), ask: does this arrow show the number 58, or does it show 'add 20'? What is the difference?",
+              "If subtraction is drawn going right, re-establish that subtraction moves left (gets smaller) and that a jump STARTS from the current number.",
+              "If the first addition jump is anchored at 0 instead of at 38, point out that the jump starts from the number you already have."
+            ],
+            "rationale": "A number line is a spatial-magnitude representation; letting a child size and place jumps so that length equals amount is intended to address the count-the-marks and equal-jumps errors as the child acts. An interactive version where arrow length is proportional (a +20 is longer than a +7) and that distinguishes forward-add from backward-subtract may make the mechanism concrete; this is an optional way to deliver the task, not the only way. Optionally, preserve the learner’s attempted arrow, compare it with the scaled target, then animate a corrected proportional jump and explain why its length changed; this feedback is a proposed scaffold, not evidence of superior effectiveness.",
+            "sourceClaims": [
+              "Year 2 pupils represent and use number lines among the representations for numbers, sums and differences; number lines support addition as forward and subtraction as backward movement.",
+              "Children commonly misread number lines by counting tick marks rather than intervals and by ignoring proportional spacing; the empty number line is an effective model for representing addition and subtraction as jumps."
+            ],
+            "learnerActions": [
+              "Start at 38 on a number line and add a forward jump of 20, then a forward jump of 7, landing on 58 then 65 (showing 38 + 27 = 65).",
+              "Notice and state that the +20 jump is drawn visibly longer than the +7 jump because the LENGTH of the jump is the amount.",
+              "Build 52 − 24 yourself using backward (leftward) jumps, e.g. −20 then −4, or −22 then −2 bridging 30, landing on 28.",
+              "Label each jump with its size and label the start and end points.",
+              "Both interpret a diagram you are given and construct one for a new calculation."
+            ],
+            "intendedInsight": "Distance on the line equals the amount: a jump represents 'add/subtract this much', not the point it lands on. Addition moves forward and subtraction moves backward, and partitioning a jump mirrors the mental place-value strategy."
+          },
+          {
+            "title": "Label the spaces, not the marks",
+            "feedback": [
+              "If the first mark is counted as 'one' of the jump, re-run it counting the gaps between marks instead.",
+              "If endpoints come out one off, re-step the jump labelling each space as you cross it."
+            ],
+            "rationale": "Explicitly counting intervals rather than points targets a common number-line error: counting tick marks instead of gaps, which gives off-by-one answers. Pre-marked lines and physical stepping aim to make the intervals tangible before moving to the empty number line.",
+            "sourceClaims": [
+              "Children commonly misread number lines by counting tick marks rather than intervals and by ignoring proportional spacing; the empty number line is an effective model for representing addition and subtraction as jumps."
+            ],
+            "learnerActions": [
+              "On a pre-marked, equally spaced number line, label the SPACES (intervals) between the marks rather than the marks themselves.",
+              "Physically step out a jump, counting the gaps crossed, not the ticks touched.",
+              "Check an endpoint: for a jump of 20 from 38, confirm it lands on 58 and not one mark off."
+            ],
+            "intendedInsight": "The amount is the number of intervals jumped, not the number of tick marks counted — this is the classic off-by-one trap."
+          },
+          {
+            "title": "Interpret a given diagram, then draw your own",
+            "feedback": [
+              "Reading correctly but drawing flawed lines (unequal spacing, starting from 0, or confusing amount with endpoint) shows partial command — practise producing lines from a blank start.",
+              "If spacing in a drawing doesn't match magnitude, compare against a ruler or scaled line.",
+              "Note: a hand-drawn or illustrated line is evocative, not exact, so proportional spacing can only be checked roughly; use a ruler or scale to tighten it."
+            ],
+            "rationale": "Interpretation exposes whether the child reads jumps as amounts and knows forward = add; translation exposes production errors invisible in reading (unequal spacing, counting marks, wrong direction, starting from 0). Requiring both read and draw gives a fuller picture of understanding; recognition or matching alone does not elicit the independent proportional drawing.",
+            "sourceClaims": [
+              "Year 2 pupils represent and use number lines among the representations for numbers, sums and differences; number lines support addition as forward and subtraction as backward movement."
+            ],
+            "learnerActions": [
+              "Interpret: shown a number line starting at 38 with an arrow landing on 58 labelled '+20' and then an arrow landing on 65 labelled '+7', state what calculation it shows (38 + 27 = 65) and what each jump means.",
+              "Explain that 27 has been partitioned into 20 and 7, each a forward jump of that amount.",
+              "Translate: on a blank line, draw a number line to show 52 − 24, using backward jumps totalling 24, landing on 28, with start, end, and each jump labelled and spaced proportionally.",
+              "Match number-line diagrams to the equations they represent."
+            ],
+            "intendedInsight": "Reading a diagram and faithfully producing one are different skills; full command means you can do both, reading jumps as amounts and drawing proportional, correctly-directed lines."
+          }
+        ],
+        "constraints": [
+          "Place whole numbers on a number line with equally spaced points; show addition as a forward jump and subtraction as a backward jump (within 100).",
+          "Intervals, not tick marks, carry the quantity; spacing must be proportional so a jump of 20 looks far longer than a jump of 7.",
+          "A jump's length is the amount added or subtracted, not the point it lands on.",
+          "Move from pre-marked lines to the empty number line as the target tool; have children both read and draw.",
+          "Matching diagrams to equations and drawing on a marked line can check interpretation and rough production, but recognition/matching alone does not elicit the independent, proportional drawing that shows full command.",
+          "Hand-drawn or illustrated number lines are approximations; proportional spacing cannot be rigorously assessed from an evocative illustration without a scale or ruler.",
+          "If points-versus-intervals is shaky, reteach the underlying number-line representation before proceeding."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources have not been re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "One source (empty number line / misconception research) is marked verified:false in the row; treat its claims, including that the empty number line is an 'effective model', as indicative, not confirmed.",
+          "The original row asserted '3D adds nothing' and 'talk cannot exercise the drawing-and-reading of a spatial representation.' These are catalog-fit opinions, not established pedagogical laws, and have been softened/omitted: a number line is primarily a 1-D/2-D spatial task that benefits from drawing, while spoken explanation can still support reasoning about it.",
+          "The original row framed an interactive tool that auto-stretches jumps as the moment the line 'stops being decoration'; this is a design claim, not evidence of efficacy, and has been presented as an optional delivery, not a requirement.",
+          "Efficacy wording in the activity rationales was kept to intended/may form because no cited source establishes that these specific activities outperform alternatives, and no source speaks directly to the read-versus-draw distinction beyond the forward=add convention."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "interpret_translate",
+        "poeTask": null,
+        "probeDeeper": [
+          "The arrow goes from 38 to 58 — does it show the number '58', or does it show 'add 20'? What's the difference?",
+          "Why should a jump of 20 be drawn longer than a jump of 7 — what would be wrong with the picture if they were equal?",
+          "Which way do the arrows point for a subtraction, and why?",
+          "If I drew the +7 jump LONGER than the +20 jump, what would be wrong even if the numbers were right?"
+        ],
+        "correctAnswer": "Interpretation: it shows 38 + 27 = 65, with 27 partitioned into 20 and 7, each arrow a forward jump of that amount (a jump = an addition of its length). Translation: a number line from 52 with backward jump(s) totalling 24 (e.g. −20 then −4, or −22 then −2 bridging 30) landing on 28, start and end labelled, jumps sized and labelled, points spaced proportionally.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Counts the tick marks (points) instead of the intervals — a jump of 20 read/drawn as passing 21 marks, landing one off",
+            "nextMove": "Have the child label the SPACES between marks, not the marks; physically step the jumps counting gaps. Reteach number-line representation if points-vs-intervals is shaky.",
+            "distractor": null,
+            "revealedBy": "Off-by-one endpoints; the child counts the first mark as 'one' of the jump",
+            "reteachPrerequisiteId": "mt_9L3NQqgqRd"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Non-proportional spacing — draws a jump of 20 the same length as a jump of 7 (or ticks at irregular intervals)",
+            "nextMove": "Compare their jumps against a ruler/scaled line so magnitude maps to length; contrast a +20 and a +7 side by side.",
+            "distractor": null,
+            "revealedBy": "In the drawn line, distance doesn't match magnitude; big and small jumps look alike",
+            "reteachPrerequisiteId": "mt_9L3NQqgqRd"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Direction or anchor error — draws the subtraction as a forward jump, or starts the addition jump from 0 instead of from 38, or reads a jump as its endpoint (the +20 arrow read as '58')",
+            "nextMove": "Re-establish that subtraction moves left (gets smaller) and that a jump STARTS from the current number and its length is the amount, not where it lands.",
+            "distractor": null,
+            "revealedBy": "Subtraction shown going right, the first jump anchored at 0, or the amount and the landing point confused",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Counts tick marks, spaces jumps unequally, or points them the wrong way; the diagram doesn't map to the calculation.",
+          "full": "Reads jumps as the amounts added/subtracted (not endpoints), knows forward = add and backward = subtract, and draws a proportional, correctly-directed number line for a new calculation with jumps and endpoints labelled.",
+          "partial": "Interprets a given number-line calculation correctly but draws one with flaws (unequal spacing, starts from 0, or endpoint/amount confusion) — can read but not yet faithfully produce (or vice versa)."
+        },
+        "diagnosticPrompt": "First, interpretation: show the child a number line starting at 38 with two arrows drawn — a jump landing on 58 labelled '+20', then a jump landing on 65 labelled '+7'. Ask: 'What calculation does this picture show, and what does each jump mean?' Then, translation: hand them a blank line and say 'Now draw a number line to show 52 − 24.'",
+        "whatMakesItDiscriminate": "The interpret move exposes whether the child reads jumps as amounts (not endpoints) and knows forward = add. The translate move exposes production errors invisible in reading: unequal spacing, counting marks, wrong direction, or starting from 0. A child who can both read AND faithfully draw understands the representation; one who can read a given diagram but draws a flawed one has only partial command."
+      },
+      "sources": [
+        {
+          "claim": "Year 2 pupils represent and use number lines among the representations for numbers, sums and differences; number lines support addition as forward and subtraction as backward movement.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS1)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Children commonly misread number lines by counting tick marks rather than intervals and by ignoring proportional spacing; the empty number line is an effective model for representing addition and subtraction as jumps.",
+          "source": "Research on number-line representations (e.g. Bright, Behr, Wheeler & Post; Freudenthal Institute empty number line)",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-22T15:32:22.299Z",
+        "updatedAt": "2026-10-19T15:19:50.702Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_9QzSnn8m80",
+      "type": "REPRESENTATIONAL",
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "name": "Positive and Negative Numbers",
+      "description": "Understand positive and negative numbers as describing quantities with opposite directions or values; use them in context such as temperature, floors in a building, and bank balances",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 13,
+      "centrality": 0.04394426580921758,
+      "evidence": [
+        "Represent positive and negative numbers on a number line and explain what zero means in context",
+        "Add a positive or negative number to any integer using number line reasoning",
+        "Subtract a positive or negative number from any integer, understanding that subtracting a negative is equivalent to adding"
+      ],
+      "assessmentPrompt": "If {{name}} sees temperatures like −3°C and +5°C on a weather forecast, can they figure out how much warmer one day is than the other — even when the answer crosses zero?",
+      "standards": [
+        "ccss-math:6.NS.5",
+        "ccss-math:6.NS.6",
+        "ccss-math:6.NS.6a",
+        "ccss-math:7.NS.1",
+        "ccss-math:7.NS.1a",
+        "ccss-math:7.NS.1b",
+        "ccss-math:7.NS.1c",
+        "ccss-math:7.NS.1d",
+        "uk-nc-2013:KS3.Maths.Num.2"
+      ]
+    },
+    "topicPointer": "/topics/678",
+    "researchPointer": "/records/196",
+    "research": {
+      "topicId": "mt_9QzSnn8m80",
+      "pedagogy": {
+        "summary": "Understanding positive and negative numbers as quantities with opposite DIRECTIONS about a meaningful zero, and operating on them using number-line reasoning. The number line (or thermometer / floors-in-a-building / bank balance) is the central representation: a number's sign is its direction from zero and its magnitude is its distance. Adding a positive moves right/up, adding a negative moves left/down, and subtracting a negative reverses that to move right — so 'subtracting a negative is the same as adding' is derived from direction, not memorised. The recurring difficulty is distinguishing the two meanings of the minus symbol: the sign OF a number versus the operation of subtraction.",
+        "bestPractices": [
+          "Anchor every idea on a number line / thermometer where zero is a real reference (freezing point, ground floor, break-even), not 'nothing'",
+          "Keep magnitude (distance from zero) and sign (direction) as separate ideas - counter 'bigger digit = bigger number' for negatives",
+          "Use directed-journey language: adding a negative is a move in the negative direction; subtracting a negative reverses direction",
+          "Distinguish the operation minus from the negative sign explicitly (colour, gesture, or bracket: 4 + (-7))",
+          "Derive 'subtract a negative = add' on the line (removing a debt / turning to face the other way) rather than stating a rule"
+        ],
+        "keyRepresentations": [
+          "Horizontal number line spanning zero (arrows for direction and length)",
+          "Vertical thermometer / floors of a building / sea level",
+          "Bank balance and debt (money owed as negative)",
+          "Two-colour counters (zero pairs) for combining opposites"
+        ],
+        "commonMisconceptions": [
+          "Orders negatives by magnitude - thinks -7 > -3 because 7 > 3",
+          "Conflates the negative sign with the subtraction operation ('two minuses', reads 4 + (-7) as 4 - 7 or 4 + 7 arbitrarily)",
+          "Believes numbers 'stop' at zero, so cannot count or move through zero",
+          "Thinks subtracting always makes smaller and adding always makes bigger (fails for negatives)",
+          "Treats 'subtract a negative' as more negative rather than as reversing direction"
+        ]
+      },
+      "learn": {
+        "summary": "Positive and negative numbers are quantities with opposite DIRECTIONS from a meaningful zero (freezing point, ground floor, break-even), where sign is direction and magnitude is distance. On a number line, adding a positive moves right/up, adding a negative moves left/down, and subtracting a negative reverses direction to move right/up — so 'subtracting a negative is the same as adding' is derived from the direction of travel, not memorised as a sign rule. The central difficulty is distinguishing the two meanings of the minus symbol: the sign OF a number versus the operation of subtraction. Learners should both READ arrows/journeys and PRODUCE their own for new signed calculations, including moves straight through zero.",
+        "activities": [
+          {
+            "title": "Operate a directed number line: fire and flip the arrow",
+            "feedback": [
+              "If the 1 - (-3) arrow is drawn moving LEFT to -2 ('subtracting a negative makes it more negative'): model on the line and with debt — subtracting a negative reverses direction (removing a -3 is adding 3); walk the arrow flip physically.",
+              "If 4 + (-7) is drawn rightward or read as 4 - 7 or 4 + 7: separate 'negative seven' (a directed quantity) from 'subtract' (a move) using brackets, colour and gesture for the two roles.",
+              "If the arrow halts at zero: continue the thermometer/lift below zero and count aloud through it (2, 1, 0, -1, -2)."
+            ],
+            "rationale": "An operable line where the learner chooses the calculation and watches direction (sign) and length (magnitude) makes the structure of the move the object of attention, rather than a sign rule applied by habit. NCETM advises examining the STRUCTURE of the calculation rather than teaching sign rules; standards frame p+q as a distance |q| from p in a direction set by the sign, and p-q as adding the additive inverse. The through-zero journey for 4 + (-7) (passing 2, 1, 0, -1, -2 on the way to -3) covers an interval across 0 (7 units from 4 to -3), which links to the Year 6 statutory wording on intervals across zero; the 1 - (-3) journey does not cross zero. This is a research-informed design proposal, not a validated intervention.",
+            "sourceClaims": [
+              "Pupils 'understand p + q as the number located a distance |q| from p, in the positive or negative direction depending on whether q is positive or negative' and 'understand subtraction of rational numbers as adding the additive inverse, p - q = p + (-q)', representing these on a horizontal or vertical number line (7.NS.A.1b, 1c).",
+              "Hart (1981)/CSMS records that when subtracting a positive integer many students 'simply subtract the numerals and then attempt to determine the sign for the answer', and when subtracting a negative use the rule 'two negatives make a positive'; the misconception is rooted in prior experience that 'addition makes larger and subtraction makes smaller', which breaks down for negatives. NCETM advises examining the STRUCTURE of the calculation rather than teaching sign rules.",
+              "Year 6 pupils 'use negative numbers in context, and calculate intervals across 0' (Year 6 Number - number and place value, verbatim statutory wording)."
+            ],
+            "learnerActions": [
+              "Enter 4 + (-7): start a marker at 4 and draw/trace an arrow 7 units LEFT, landing on -3 — state that the negative sign IS the leftward direction and the 7 is how far.",
+              "Enter 1 - (-3): show that the arrow subtraction would send LEFT instead FLIPS to point RIGHT, landing on 4; compare with adding 3 (1 + 3 = 4) and confirm you land in the same place.",
+              "Say in words why the arrow reversed: removing a -3 (e.g. clearing a debt of 3) is the same as adding 3.",
+              "Replay both journeys vertically on a thermometer/lift mode: for 4 + (-7), count aloud straight down through zero (4, 3, 2, 1, 0, -1, -2, -3); for 1 - (-3), count up from 1 (2, 3, 4) and notice that this journey stays above zero."
+            ],
+            "intendedInsight": "Signed addition and the direction-reversal of subtracting a negative become visible: 'two minuses make a plus' is a direction reversal you can see, not a spell to recall. Numbers do not stop at zero."
+          },
+          {
+            "title": "Zero in context and the two minus signs",
+            "feedback": [
+              "If zero is described as 'nothing': re-anchor on a real context where below-zero values exist (temperature, basement floors, debt).",
+              "If the two minus signs are conflated: name 'negative seven' (a directed quantity) separately from 'subtract' (a move), and re-read the calculation aloud with that distinction."
+            ],
+            "rationale": "A fixed reference display supports reading direction, zero-in-context and the sign/operation distinction. It is a reference scaffold: it does not animate a calculation the learner chooses, so it complements rather than replaces the operable line, and it does not by itself show the learner can produce a move.",
+            "sourceClaims": [
+              "Year 6 pupils 'use negative numbers in context, and calculate intervals across 0' (Year 6 Number - number and place value, verbatim statutory wording)."
+            ],
+            "learnerActions": [
+              "On a labelled reference line/thermometer, point to a value and state both its sign (direction from zero) and its distance from zero.",
+              "Switch contexts (temperature, floors of a building, bank balance) and say what zero means in each (freezing point, ground floor, break-even — not 'nothing').",
+              "For a written calculation like 4 + (-7), mark which minus is the negative SIGN of a number and which (if any) is the subtraction OPERATION; use brackets/colour to keep them apart."
+            ],
+            "intendedInsight": "Zero is a meaningful reference point, and the minus symbol carries two distinct meanings that must be read, not guessed."
+          },
+          {
+            "title": "Place, order and interpret signed calculations",
+            "feedback": [
+              "If -7 is placed to the RIGHT of -3 (ordering by magnitude, treating -7 as greater): use the thermometer/line — left of zero is less, and the further left the smaller; contrast -7 and -3 directly.",
+              "If the given arrow's calculation is misread: separate direction (sign) from length (magnitude) explicitly and re-read the endpoints."
+            ],
+            "rationale": "Placing, ordering and reading signed calculations target the 'bigger digit = bigger number' error directly and rehearse separating sign from magnitude. The interpret action reads an interval across zero, which the Year 6 statutory wording supports; the ordering focus rests on the separated-ideas teaching principle rather than on that claim. Include a deliberate magnitude-ordering contrast such as -7 versus -3.",
+            "sourceClaims": [
+              "Year 6 pupils 'use negative numbers in context, and calculate intervals across 0' (Year 6 Number - number and place value, verbatim statutory wording)."
+            ],
+            "learnerActions": [
+              "Place -7 and -3 on a number line and state which is smaller, explaining via position (the further left, the smaller).",
+              "Order a set of negatives from least to greatest.",
+              "Interpret a given arrow (e.g. starting at -3, ending at 2): state the calculation it shows (-3 + 5 = 2, or the difference 2 - (-3) = 5, an interval across 0) and what its direction and length tell you.",
+              "Decide and justify which way 1 - (-3) moves before drawing it."
+            ],
+            "intendedInsight": "Ordering by position (not by digit size) and reading an arrow's direction and length consolidate that magnitude and sign are separate ideas."
+          },
+          {
+            "title": "Talk through the two meanings of minus",
+            "feedback": [
+              "If the learner says subtracting always sends you left: revisit 1 - (-3) on the line and the debt model to show the reversal.",
+              "If the two minuses are described as the same thing: re-draw the calculation distinguishing the directed quantity from the move."
+            ],
+            "rationale": "A probing discussion can surface the two-meanings-of-minus confusion and whether the learner reasons about direction or guesses; it works best alongside the line, where the directional insight is seen, rather than in place of it. Discussion can elicit explanation but does not itself show the learner can construct an arrow for a new calculation.",
+            "sourceClaims": [
+              "Hart (1981)/CSMS records that when subtracting a positive integer many students 'simply subtract the numerals and then attempt to determine the sign for the answer', and when subtracting a negative use the rule 'two negatives make a positive'; the misconception is rooted in prior experience that 'addition makes larger and subtraction makes smaller', which breaks down for negatives. NCETM advises examining the STRUCTURE of the calculation rather than teaching sign rules."
+            ],
+            "learnerActions": [
+              "Answer: what is the difference between the minus in 'negative three' and the minus in 'subtract three'?",
+              "Explain which way your arrow for 4 + (-7) went and why.",
+              "Answer: does subtracting always send you left? What did 1 - (-3) do, and why?",
+              "Explain, using the line, which is bigger, -7 or -3."
+            ],
+            "intendedInsight": "Articulating the two roles of the minus symbol and justifying arrow direction surfaces and tests understanding beyond a correct final answer."
+          }
+        ],
+        "constraints": [
+          "Anchor every idea on a number line/thermometer/floors/balance where zero is a real reference (freezing point, ground floor, break-even), not 'nothing'.",
+          "Keep magnitude (distance from zero) and sign (direction) as separate ideas; counter 'bigger digit = bigger number' for negatives.",
+          "Use directed-journey language: adding a negative moves in the negative direction; subtracting a negative reverses direction (right/up on the chosen axis).",
+          "Explicitly distinguish the subtraction operation from the negative sign using colour, gesture, or brackets, e.g. 4 + (-7).",
+          "Derive 'subtract a negative = add' on the line (removing a debt / turning to face the other way) rather than stating it as a rule.",
+          "A fixed reference poster/line supports reading sign, magnitude and zero-in-context but does not animate a learner-chosen operation; use it to complement, not replace, learner production of arrows.",
+          "Recognition/placement tasks (ordering, selecting a direction) do not by themselves show the learner can PRODUCE an arrow for a new signed calculation; include tasks where the learner constructs the move themselves.",
+          "Two-colour counters (zero pairs) are a useful alternative representation for combining opposites and may be offered alongside the line."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched and legacy 'verified'/'confidence' flags are not independently confirmed. Activities are research-informed proposals, not validated interventions.",
+          "The legacy row rated a genuine third spatial dimension as adding nothing over a 2D vertical thermometer/lift. This is a catalog preference, not an established pedagogical law; it is framed here only as a scope note (directed number is one-dimensional, so a vertical 2D thermometer/lift already represents that single directed axis) rather than a universal 'adds nothing' claim.",
+          "Self-audit of arithmetic: 4 + (-7) = -3 (7 left of 4); 1 - (-3) = 4 (reverse to move 3 right from 1, matching 1 + 3); -3 + 5 = 2 and 2 - (-3) = 5 — all consistent across the source fields and retained as stated.",
+          "The debt analogy ('removing a -3 is the same as adding 3') is a model of direction reversal, not a proof; present it as an illustration alongside the line.",
+          "Activity 3's single source claim directly supports its interval-across-zero interpret action; the ordering/magnitude focus rests on the separated-ideas teaching principle rather than on that statutory wording. The Year 6 claim on activity 1 supports the through-zero counting action, not the sign/magnitude-separation principle."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "interpret_translate",
+        "poeTask": null,
+        "probeDeeper": [
+          "What is the difference between the minus in 'negative three' and the minus in 'subtract three'?",
+          "Your arrow for 4 + (-7) went which way, and why that way?",
+          "Does subtracting always send you left? What did 1 - (-3) do - and why?",
+          "On the line, which is bigger, -7 or -3, and how does the line show it?"
+        ],
+        "correctAnswer": "Interpret: the arrow shows -3 + 5 = 2 (it points right/positive, so something is added; its length 5 is the amount, matching the distance from -3 to 2) - equivalently the difference 2 - (-3) = 5. Translate: 4 + (-7) starts at 4 and moves 7 LEFT to -3; 1 - (-3) reverses direction to move 3 RIGHT (subtracting a negative), landing on 4. Distinguishes the negative sign (direction/position) from the subtraction operation (a move).",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'Subtracting a negative just makes it more negative' - draws 1 - (-3) moving LEFT, landing on -2",
+            "nextMove": "Model on the line/with debt: subtracting a negative reverses the direction (removing a -3 is the same as adding 3); walk the arrow flip physically.",
+            "distractor": null,
+            "revealedBy": "The translate step: the 1 - (-3) arrow points the wrong way",
+            "reteachPrerequisiteId": "mt_RVK655t391"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Conflates the negative sign with the subtraction operation - reads 4 + (-7) as 4 - 7 done arbitrarily, or as 4 + 7, unsure which minus is which",
+            "nextMove": "Explicitly separate 'negative seven' (a directed quantity) from 'subtract' (a move); use brackets, colour, and gesture for the two roles.",
+            "distractor": null,
+            "revealedBy": "Misreads the calculation the given arrow shows, or draws 4 + (-7) rightward",
+            "reteachPrerequisiteId": "mt_RVK655t391"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Orders negatives by magnitude, so places -7 to the RIGHT of -3 on the line",
+            "nextMove": "Thermometer / left-of-zero-is-less; the further left, the smaller; contrast -7 and -3 directly.",
+            "distractor": null,
+            "revealedBy": "Endpoints placed wrongly; -7 treated as greater than -3",
+            "reteachPrerequisiteId": "mt_RVK655t391"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Believes numbers 'stop' at zero, so an arrow crossing zero confuses or is halted there",
+            "nextMove": "Use a thermometer/lift that continues below zero; count aloud through zero (2, 1, 0, -1, -2).",
+            "distractor": null,
+            "revealedBy": "Arrow stops at 0, or the child cannot continue a move through zero",
+            "reteachPrerequisiteId": "mt_RVK655t391"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Orders negatives by size, cannot cross zero, or draws arrows in the wrong direction; treats the two minus signs as the same thing.",
+          "full": "Interprets and produces arrows for adding and subtracting both positive and negative numbers, articulates subtracting a negative as reversing direction (equivalent to adding), and transfers to a new case moving through zero.",
+          "partial": "Interprets a given arrow correctly and places integers on the line, but cannot reliably PRODUCE an arrow for adding a negative or subtracting a negative - knows the pieces but cannot translate a new signed calculation onto the line."
+        },
+        "diagnosticPrompt": "First, INTERPRET: here is a number line with an arrow that starts at -3 and ends at 2. What calculation does this arrow show, and what do its direction and length tell you? Then, TRANSLATE: on the number line, draw an arrow to show 4 + (-7) and say where you land; then draw one for 1 - (-3) and say where you land.",
+        "whatMakesItDiscriminate": "Reading the given arrow forces separating direction (sign) from length (magnitude). Producing an arrow for adding a negative (move left) versus subtracting a negative (move right) reveals whether the child understands subtracting-a-negative as a direction reversal or is guessing - and a child who conflates the operation minus with the negative sign draws 4 + (-7) or 1 - (-3) in the wrong direction. Interpreting then producing catches the child who can read a diagram but cannot build one for a new signed calculation."
+      },
+      "sources": [
+        {
+          "claim": "Year 6 pupils 'use negative numbers in context, and calculate intervals across 0' (Year 6 Number - number and place value, verbatim statutory wording).",
+          "source": "DfE, National Curriculum in England: Mathematics programmes of study, Year 6",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Pupils 'understand p + q as the number located a distance |q| from p, in the positive or negative direction depending on whether q is positive or negative' and 'understand subtraction of rational numbers as adding the additive inverse, p - q = p + (-q)', representing these on a horizontal or vertical number line (7.NS.A.1b, 1c).",
+          "source": "Common Core State Standards for Mathematics, 7.NS.A.1",
+          "url": "https://www.thecorestandards.org/Math/Content/7/NS/",
+          "verified": true
+        },
+        {
+          "claim": "Hart (1981)/CSMS records that when subtracting a positive integer many students 'simply subtract the numerals and then attempt to determine the sign for the answer', and when subtracting a negative use the rule 'two negatives make a positive'; the misconception is rooted in prior experience that 'addition makes larger and subtraction makes smaller', which breaks down for negatives. NCETM advises examining the STRUCTURE of the calculation rather than teaching sign rules.",
+          "source": "NCETM, KS3 Mastery PD Guidance 2.1 Arithmetic Procedures (citing Hart, K.M. ed. 1981, Children's Understanding of Mathematics: 11-16 / CSMS)",
+          "url": "https://www.ncetm.org.uk/media/xhqegzuq/ncetm_ks3_cc_2_1.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-22T15:49:40.261Z",
+        "updatedAt": "2026-10-19T15:20:03.975Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_i2F1nWxJjv",
+      "type": "REPRESENTATIONAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Numbers on a number line",
+      "description": "Understand inequalities as statements comparing expressions, represent solutions on a number line, and solve simple linear inequalities using the same inverse-operation methods as equations",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 14,
+      "centrality": 0.1254019292604502,
+      "evidence": [
+        "Write an inequality from a worded constraint (e.g., 'must be at least 12' → x ≥ 12)",
+        "Represent the solution set of an inequality on a number line with open or closed circles",
+        "Solve a one-step or two-step inequality such as 3x + 1 < 10"
+      ],
+      "assessmentPrompt": "Can {{name}} solve an inequality like 2x + 1 < 9, show the answer on a number line, and explain what all the solutions have in common?",
+      "standards": [
+        "ccss-math:6.EE.8",
+        "ccss-math:7.EE.4b",
+        "uk-nc-2013:KS3.Maths.Alg.7"
+      ]
+    },
+    "topicPointer": "/topics/697",
+    "researchPointer": "/records/468",
+    "research": {
+      "topicId": "mt_i2F1nWxJjv",
+      "pedagogy": {
+        "summary": "An inequality compares expressions and, unlike an equation, its solution is a RANGE (a set) of values, not a single value. On a number line that range is shown by a circle at the boundary — open/hollow for strict < or > (boundary excluded), closed/filled for inclusive ≤ or ≥ (boundary included) — with an arrow or segment covering the values that satisfy it. Solving uses the same inverse operations as equations. The representational competence is translating fluently among worded constraint, inequality symbol and number-line diagram; it is best taught by tying the circle style to boundary inclusion, the arrow to the satisfying set, and rehearsing worded phrases such as 'at least' and 'at most'.",
+        "bestPractices": [
+          "Distinguish strict from inclusive explicitly: open circle = boundary NOT included (<, >), closed circle = boundary included (≤, ≥), tied to whether the boundary value itself satisfies the statement.",
+          "Represent the solution as a SET (arrow/segment), not a point; test a value inside and outside the range to confirm which side to shade.",
+          "Rehearse worded-constraint translation: 'at least 12' → x ≥ 12, 'at most'/'no more than' → ≤, 'more than' → strict >.",
+          "Solve inequalities with the same inverse operations as equations (for KS3 cases like 3x + 1 < 10) and read the result back onto the number line.",
+          "(KS4 extension) flag that multiplying or dividing both sides by a NEGATIVE reverses the inequality, while keeping the KS3 focus on the representation."
+        ],
+        "keyRepresentations": [
+          "Number line with open vs closed circle at the boundary plus an arrow for the solution set",
+          "The symbol quartet <, ≤, >, ≥ mapped to circle style and direction",
+          "Worded constraint ↔ inequality symbol ↔ number-line diagram triple",
+          "A test value checked inside and outside the range"
+        ],
+        "commonMisconceptions": [
+          "Confuses strict (<, >) with inclusive (≤, ≥): uses the wrong circle style (open for ≥, filled for <).",
+          "Shades or points the arrow the wrong way (reads the symbol direction backwards).",
+          "Treats the solution as a single boundary value (x < 5 means x = 4) rather than a whole set.",
+          "Worded-boundary error: renders 'at least 12' as x > 12 (strict) instead of x ≥ 12."
+        ]
+      },
+      "learn": {
+        "summary": "An inequality compares expressions and, unlike an equation, its solution is a RANGE (a set) of values rather than a single value. On a number line that range is shown by a circle at the boundary — open/hollow for strict < or > (boundary excluded), closed/filled for inclusive ≤ or ≥ (boundary included) — with an arrow or segment covering the values that satisfy it. Solving uses the same inverse operations as equations, except that multiplying or dividing both sides by a negative number reverses the inequality sign (an extension point). The core skill is translating fluently among a worded constraint, the inequality symbol and the number-line diagram, tying circle style to boundary inclusion, the arrow to the satisfying set, and rehearsing worded phrases such as 'at least' and 'at most'.",
+        "activities": [
+          {
+            "title": "Build and test a number-line inequality",
+            "feedback": [
+              "If a value exactly on the boundary is marked as satisfying under > or <, ask: 'does the boundary value itself make the statement true?' For strict < or >, it does not, so the circle is open.",
+              "If the arrow covers values that fail the test, pick one value on each side (e.g. is −5 ≥ −2? is 0 ≥ −2?) to decide which side belongs to the solution.",
+              "If only the boundary point is marked, prompt that an inequality's solution is EVERY value in the range — mark several, then the whole arrow or segment; contrast with an equation's single answer."
+            ],
+            "rationale": "A live builder plus a 'does this value satisfy it?' tester makes boundary inclusion and solution-as-a-set directly observable, and letting the symbol switch recolour the boundary value ties the open/closed convention to a fact about solutions. Testing values on each side addresses reading direction backwards.",
+            "sourceClaims": [
+              "Students have difficulty distinguishing > from ≥ and < from ≤ (whether the boundary is included) — shown graphically by whether a boundary line is dashed or solid, the coordinate-grid analogue of an open vs closed circle on a number line; they also shade/read the wrong side, and reason about the solution as isolated points rather than a whole region/set."
+            ],
+            "learnerActions": [
+              "Choose an inequality symbol (<, ≤, >, ≥) and a boundary value, then draw the matching number line: decide whether the boundary circle is open or closed and which way the arrow points.",
+              "Test several sample values by asking of each, 'does this value satisfy the inequality?', and mark those that satisfy it (e.g. in one colour) and those that do not (another colour).",
+              "Switch the symbol from ≥ to > (or ≤ to <) on the same boundary and observe what changes: the boundary circle hollows, and a value sitting exactly on the boundary flips from satisfying to not satisfying.",
+              "Deliberately draw the arrow the wrong way, then test values along it to see that a whole stretch of the line fails the check — confirming direction matters.",
+              "Read a given diagram (e.g. a filled circle at −2 with a right-pointing arrow) back into symbols and words."
+            ],
+            "intendedInsight": "Inclusion is not an arbitrary drawing convention: whether the circle is filled depends on whether the boundary value itself is a solution. The arrow/segment represents the whole set of satisfying values, and its direction is fixed by what the symbol means."
+          },
+          {
+            "title": "Translate worded constraints into symbols and diagrams",
+            "feedback": [
+              "If 'at least 1' is rendered as x > 1 or an open circle, ask whether 1 itself is allowed — 'at least' includes the boundary, so x ≥ 1 with a closed circle.",
+              "If 'less than 4' is drawn with a closed circle at 4, check whether 4 satisfies 'less than 4' — it does not, so the circle is open.",
+              "Confirm the compound case by testing x = 1, x = 4 and a value between: 1 should satisfy, 4 should not, and the between-value should satisfy."
+            ],
+            "rationale": "Worded-constraint translation is the part of the representational skill most prone to slips between strict and inclusive phrasing; rehearsing the phrase→symbol mapping and checking the boundary against the words targets that error directly.",
+            "sourceClaims": [
+              "Students have difficulty distinguishing > from ≥ and < from ≤ (whether the boundary is included) — shown graphically by whether a boundary line is dashed or solid, the coordinate-grid analogue of an open vs closed circle on a number line; they also shade/read the wrong side, and reason about the solution as isolated points rather than a whole region/set."
+            ],
+            "learnerActions": [
+              "Translate worded constraints into inequality symbols: 'at least 12' → x ≥ 12, 'at most'/'no more than' → ≤, 'more than' → strict >, 'less than' → strict <.",
+              "Build a phrase→symbol reference table and, for each phrase, test the boundary value against the words ('is 12 allowed if you must be at least 12?').",
+              "Draw the number-line diagram for a compound statement such as 'x is at least 1 and less than 4' (closed circle at 1, open circle at 4, segment shaded between).",
+              "Check your diagram by reading it back into words and comparing with the original statement."
+            ],
+            "intendedInsight": "Everyday boundary phrases map precisely onto strict or inclusive symbols, and testing whether the boundary value is allowed decides between an open and closed circle."
+          },
+          {
+            "title": "Solve a simple linear inequality and plot its solution set",
+            "feedback": [
+              "If the solution is given as a single value, remind that solving an inequality yields a range — plot the whole arrow or segment, not a point.",
+              "If a test value inside the range fails the original inequality, recheck the inverse operations step by step.",
+              "For the negative-multiplier extension: test an actual value in both the original and transformed inequalities to see that the direction must flip for the solutions to agree."
+            ],
+            "rationale": "The curriculum requires solving linear inequalities and representing the solution set on a number line; tying the solved result back to the diagram reinforces that the solution is a set. The negative-multiplier rule is flagged as an extension rather than the KS3 focus.",
+            "sourceClaims": [
+              "Pupils should 'solve linear inequalities in one variable ... ; represent the solution set on a number line' — this is the Key Stage 4 Algebra statutory statement (at KS3 pupils use the symbols =, ≠, <, >, ≤, ≥ and inequality notation a < x ≤ b)."
+            ],
+            "learnerActions": [
+              "Solve a one-step or two-step inequality such as 3x + 1 < 10 using the same inverse operations as an equation (subtract 1, then divide by 3, giving x < 3).",
+              "Represent the resulting solution set on a number line with the correct open or closed circle and arrow.",
+              "Check the solution by testing a value inside the range and a value outside it.",
+              "(Extension) Explore what happens when both sides are multiplied or divided by a negative number, using test values to discover that the inequality direction reverses."
+            ],
+            "intendedInsight": "Solving an inequality mirrors solving an equation, but the answer is a set shown on the number line; special care is needed when multiplying or dividing by a negative because the direction reverses."
+          },
+          {
+            "title": "Reference card: symbols, circles and directions",
+            "feedback": [
+              "If a mapping is wrong (e.g. open circle paired with ≥), re-derive it from the question 'is the boundary value a solution?' rather than memorising.",
+              "Encourage pairing the card with an actual drawn example so the reference supports, rather than replaces, building the diagram."
+            ],
+            "rationale": "A static symbol-to-diagram reference supports recall but cannot by itself rehearse constructing or translating an inequality, so it is positioned as a check alongside the building activities.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Match each of <, ≤, >, ≥ to its circle style (open for strict, closed for inclusive) and, for inequalities written with the variable on the left (e.g. x < 3), to the direction of its arrow; notice that 3 > x means the same as x < 3, so the arrow still points left.",
+              "Use the card as a check when building or reading diagrams, confirming each choice against whether the boundary value is itself a solution."
+            ],
+            "intendedInsight": "The four symbols map systematically onto circle style; they map onto arrow direction once the inequality is written with the variable on the left (e.g. x ≥ a points right), giving a quick self-check reference."
+          }
+        ],
+        "constraints": [
+          "A static reference card mapping symbols to circle style and arrow direction supports recall but does not rehearse building, translating or reading inequalities independently; pair it with construction tasks.",
+          "Matching, multiple-choice and fill-in-the-blank items can check the representation (e.g. 'open or closed circle for x ≥ 3?', 'at least 12 → x __ 12') but recognition-style responses do not elicit independent construction of a diagram or translation; include tasks where the learner draws the number line and states the inequality themselves.",
+          "This content lives on a one-dimensional number line, so a three-dimensional representation carries no extra spatial payload for it; a 2D line with circle, arrow and test values is sufficient.",
+          "The negative-multiplier direction-reversal rule is a KS4 extension; keep the KS3 focus on the representation and translation.",
+          "Keep the solution-as-set idea explicit: an inequality's answer is every value in the range, contrasted with an equation's single value."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. The activities are research-informed proposals, not validated interventions.",
+          "The two cited sources support the existence of the boundary-inclusion/direction/set misconceptions and the curriculum requirement to represent solution sets on a number line; they do not establish the comparative efficacy of any specific activity format, interaction, or medium.",
+          "The curriculum source labels the solve-and-represent statement as KS4 Algebra (KS3 covers the symbols/notation); activity 3 treats the full solving plus negative-multiplier reversal as an extension beyond the KS3 representation focus, consistent with the source.",
+          "Self-audit: the worked values (x ≥ −2 with closed circle and right arrow; compound 1 ≤ x < 4 with closed circle at 1, open at 4) are internally consistent, and 3x + 1 < 10 solves to x < 3 via one-/two-step inverse operations. The negative-multiplier reversal is genuine inequality mathematics, not a spurious denominator-style 'flip'. No arithmetic or logic errors were found in learner-facing text."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "interpret_translate",
+        "poeTask": null,
+        "probeDeeper": [
+          "You showed x ≥ −2. Is −2 itself a solution? What about −2.5? How does your diagram say so?",
+          "If the circle at −2 were hollow instead of filled, what would change about the inequality?",
+          "In your diagram for 'at least 1 and less than 4', is x = 4 included? Is x = 1? How can you tell from the circles?",
+          "Are 'you must be more than 12' and 'you must be at least 12' the same inequality? Show each on a number line."
+        ],
+        "correctAnswer": "The diagram shows x ≥ −2 (closed circle = boundary included; arrow to the right = values greater than or equal to −2). The produced number line has a CLOSED circle at 1, an OPEN circle at 4, and the segment between them shaded: 1 ≤ x < 4.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Confuses strict with inclusive circle style — reads the filled circle as x > −2, or draws an OPEN circle at 1 for 'at least 1' / a closed circle at 4 for 'less than 4'",
+            "nextMove": "Ask 'does −2 itself count as a solution?' — if yes, fill the circle; translate the symbol into words to separate > from ≥.",
+            "distractor": null,
+            "revealedBy": "The wrong circle style appears on read or draw; the boundary's inclusion does not match the symbol/words.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads the direction backwards — takes a closed circle with a right arrow as x ≤ −2, or shades the wrong side of the boundary",
+            "nextMove": "Test a value on each side (is −5 ≥ −2? is 0 ≥ −2?) to fix which side belongs to the solution.",
+            "distractor": null,
+            "revealedBy": "The arrow/shading covers the values that do NOT satisfy the inequality.",
+            "reteachPrerequisiteId": "mt_uDJY0X0hgo"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Treats the solution as a single value, not a set — marks only a dot at the boundary, or gives one number for x ≥ −2",
+            "nextMove": "An inequality's solution is EVERY value in the range — mark several, then the arrow/segment; contrast with an equation's single answer.",
+            "distractor": null,
+            "revealedBy": "Draws a point with no arrow/segment, or answers 'x = 1'.",
+            "reteachPrerequisiteId": "mt_QhFEDyIwSO"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Worded-boundary translation error — renders 'at least 1' as x > 1 (strict) rather than x ≥ 1, or 'less than 4' as ≤ 4",
+            "nextMove": "Build a phrase→symbol table ('at least'→≥, 'at most'→≤, 'more/less than'→ strict) and test the boundary value against the words.",
+            "distractor": null,
+            "revealedBy": "Uses strict symbols/open circles for 'at least/at most', or inclusive for 'more/less than'.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot read the circle/arrow, uses the wrong circle style, or marks a single point instead of a set.",
+          "full": "Reads the diagram as x ≥ −2, produces the compound 1 ≤ x < 4 with correct open/closed circles and a shaded set, and justifies each boundary's inclusion against the words — translating fluently in both directions and to a new, compound case.",
+          "partial": "Reads and draws simple one-boundary inequalities with the correct circle style, but slips on direction, on the 'at least/at most' wording, or on the compound two-boundary case — handles single translations without coordinating symbol, words and diagram across the whole set."
+        },
+        "diagnosticPrompt": "Here is a number line with a FILLED (closed) circle at −2 and an arrow pointing to the right. First: what inequality does this diagram show? Then, on a fresh number line, show the solution to the statement 'x is at least 1 and less than 4'.",
+        "whatMakesItDiscriminate": "Reading the diagram tests whether the child maps a filled circle to ≥ (not >) and a right arrow to 'greater'; producing the compound diagram reverses the translation and exposes both the strict/inclusive choice (closed at 1 for 'at least', open at 4 for 'less than') and whether the solution is drawn as a set (a shaded segment) rather than isolated points. A child who confuses the circle styles or marks a single point cannot produce the correct diagram."
+      },
+      "sources": [
+        {
+          "claim": "Students have difficulty distinguishing > from ≥ and < from ≤ (whether the boundary is included) — shown graphically by whether a boundary line is dashed or solid, the coordinate-grid analogue of an open vs closed circle on a number line; they also shade/read the wrong side, and reason about the solution as isolated points rather than a whole region/set.",
+          "source": "Mathematics Assessment Project, 'Representing Inequalities Graphically' — Common Issues table (teacher guide p.T-3)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1742",
+          "verified": true
+        },
+        {
+          "claim": "Pupils should 'solve linear inequalities in one variable ... ; represent the solution set on a number line' — this is the Key Stage 4 Algebra statutory statement (at KS3 pupils use the symbols =, ≠, <, >, ≤, ≥ and inequality notation a < x ≤ b).",
+          "source": "National curriculum in England: mathematics programmes of study (KS4 Algebra; KS3 Number), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T16:21:28.989Z",
+        "updatedAt": "2026-10-19T15:20:46.542Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_zMEvtigoM3",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Numbers on a number line",
+      "description": "Select and use appropriate tools and representations (number lines, hundred squares, rulers, part-whole models) to support problem-solving",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 7,
+      "centrality": 0.03108252947481243,
+      "evidence": [
+        "Choose a number line or hundred square to support adding or subtracting two-digit numbers",
+        "Select a ruler when a problem requires measuring length",
+        "Explain why one representation (e.g. a number line vs cubes) is more helpful for a particular problem"
+      ],
+      "assessmentPrompt": "When {{name}} is tackling a maths problem, do they choose a useful tool — like a number line for addition or a hundred square to count on — rather than always working in their head?",
+      "standards": [
+        "ccss-math:MP.5"
+      ]
+    },
+    "topicPointer": "/topics/932",
+    "researchPointer": "/records/1035",
+    "research": {
+      "topicId": "mt_zMEvtigoM3",
+      "pedagogy": {
+        "summary": "At 6-7 tool choice moves from purely concrete objects to REPRESENTATIONS — number line, hundred square, ruler, part-whole model — and the strategic act becomes matching the representation to the problem's PURPOSE and to the size of the numbers. A jump-counting addition suits a number line; a place-value addition suits a hundred square; a length problem needs a ruler. As numbers grow past ten, counting single cubes in ones becomes slow and error-prone, so a key lesson is trading the concrete tool for a representation that carries the tens. Press children to explain why one representation beats another for a given problem.",
+        "bestPractices": [
+          "Sort problems by 'what are we trying to find?' and match the tool to that purpose (measure → ruler; jump-add → number line) before choosing numbers (EEF: clear rationale)",
+          "Show number lines explicitly — EEF finds them a particularly effective representation across KS2/3 — modelling jumps of ten rather than counting marks in ones",
+          "Compare two representations for the same problem and discuss 'which helped more and why', which EEF finds develops conceptual understanding",
+          "Make the inefficiency of counting big numbers in ones felt, so children choose a representation for efficiency, not just because it is allowed",
+          "Keep naming each tool's limitation (a number line doesn't measure a real object; cubes are unwieldy past twenty) so choice stays a fit judgement"
+        ],
+        "keyRepresentations": [
+          "Number line (jump in tens and ones)",
+          "Hundred square (place-value moves — down a row = +10)",
+          "Ruler / measuring tools",
+          "Part-whole model",
+          "Cubes / base-ten (for smaller numbers)"
+        ],
+        "commonMisconceptions": [
+          "Persists with counting single cubes in ones for two-digit numbers (34+28), which is slow and error-prone (EEF: over-reliance on concrete)",
+          "Mismatches the tool to the problem's purpose — e.g. reaches for a number line for a 'how long is it?' measuring task instead of a ruler",
+          "Draws a number line but counts every mark in ones anyway, using it as a ritual rather than to jump in tens (EEF: answer, not structure)",
+          "Thinks a representation is 'babyish' or 'proper' rather than fit-for-purpose, so choice is about status not the problem"
+        ]
+      },
+      "learn": {
+        "summary": "For 6-7 year-olds, strategic tool choice shifts from concrete objects to REPRESENTATIONS (number line, hundred square, ruler, part-whole model), and the skill becomes matching the representation to the problem's PURPOSE and to the size of the numbers. As numbers grow past ten, counting single cubes in ones becomes slow and error-prone, so a key lesson is trading the concrete tool for a representation that carries the tens. The central proposed activity gives a child the same chooser facing two problems — a two-digit addition (34+28) where a number line's tens-and-ones jumps are genuinely quicker than counting a cube pile, and a measuring task where a ruler (or a metre stick for a large object), not a number line, fits — then invites them to justify why each tool fits its problem. Alternatives (a convince-a-partner dialogue, a primer comparison board) are intended to serve different pedagogical purposes.",
+        "activities": [
+          {
+            "title": "Pick the tool, work the problem, justify the fit",
+            "feedback": [
+              "If the child builds 34+28 from single cubes and miscounts, or insists cubes are the way even for big numbers: contrast directly with a +20-then-+8 number-line jump, showing how the representation holds the tens so the ones needn't be counted. Revisit place-value adding strategies.",
+              "If the child grabs a number line for the measuring task: sort the two problems by 'what are we trying to find?' and match each tool's purpose; name what a ruler or metre stick does that a number line cannot here.",
+              "If the child reaches for a short ruler to measure the door: ask which measuring tool matches the size of the object, prompting the metre stick, so size as well as purpose drives the choice. Revisit measuring with length units.",
+              "If the child draws a number line but counts every mark in ones: model the +10 jump and ask 'can you get there in fewer jumps?', linking the tool to place-value structure rather than to the ritual of having drawn it.",
+              "Praise specifically when the child names both the efficiency gain (fewer jumps, no miscounting) and a case where the rejected tool would still win."
+            ],
+            "rationale": "A 2D surface with a tool palette lets the child actually pick, use, and feel the efficiency difference between a slow cube pile and a two-jump number line, then justify the choice. The same-child, two-problems contrast is intended to make the strategy concrete rather than a stated rule, though this specific activity is a research-informed proposal, not a separately validated intervention. Number lines modelling jumps of ten, and comparing two representations of the same idea, are highlighted in the EEF guidance.",
+            "sourceClaims": [
+              "Manipulatives and representations must be used purposefully with a clear rationale and to reveal structure not just get an answer; number lines are a particularly effective representation, and comparing different representations of an idea develops conceptual understanding",
+              "Proficient students make sound decisions about when a tool is helpful, recognising the insight it gives and its limitations"
+            ],
+            "learnerActions": [
+              "Solve 34 + 28 using a palette of tools: cubes/base-ten, a number line, a hundred square, a ruler.",
+              "If you reach for single cubes, build and count 62 in ones — notice it is slow and easy to miscount. (Base-ten rods group the tens, so they avoid most of this counting.)",
+              "On the number line, jump 34 → +20 → 54 → +8 → 62 in two jumps.",
+              "On the hundred square (numbered with 1 at the top), add the 20 by moving two rows down to 54, then add 8 by moving forward eight squares (crossing into the next row) to reach 62.",
+              "After solving, answer: 'Why did that tool help?' and 'When would cubes actually be the better choice?'",
+              "Then tackle a measuring task: 'How long is the ribbon?' (a ruler fits, the number line does not) and 'How tall is the door?' (a metre stick fits better than a short ruler). Explain why the tool follows the problem's purpose AND the size of the object."
+            ],
+            "intendedInsight": "The right tool follows the PURPOSE of the problem and the size of the numbers or object, not habit: a representation that carries the tens (number line, hundred square) spares you counting ones, while a length problem needs a measuring tool matched to the object's size. Cubes remain a good fit for small numbers — this is a fit judgement, not a ranking of tools as 'babyish' or 'proper'."
+          },
+          {
+            "title": "Convince a partner who defaults to cubes",
+            "feedback": [
+              "If the child only says the number line is 'quicker' but cannot name when cubes would be better, prompt: 'Give me a problem where cubes really would be the BEST choice.'",
+              "If the child dismisses cubes outright as 'babyish', redirect to fit: cubes are fine, even best, for small numbers — the issue is efficiency with large numbers.",
+              "Affirm when the child both defends the efficient tool and identifies a genuine case for cubes."
+            ],
+            "rationale": "A dialogue partner who must be convinced can surface the fit-and-efficiency reasoning aloud and expose whether the child's reason is fit-based or status-based. This is intended as a complementary purpose to the hands-on palette: it targets articulation and justification rather than doing. It is a proposal, not a validated intervention.",
+            "sourceClaims": [
+              "Proficient students make sound decisions about when a tool is helpful, recognising the insight it gives and its limitations"
+            ],
+            "learnerActions": [
+              "Work with a partner (or in-role character) who always reaches for cubes, even for 34 + 28.",
+              "Argue why a number line or hundred square is more efficient for big numbers — point to jumping the tens and avoiding miscounts.",
+              "Concede honestly where cubes still win: give a problem (e.g. a small total like 3 + 4) where cubes really would be the best choice.",
+              "Answer a probe such as 'What can a hundred square show you that a number line doesn't when you add 28?'"
+            ],
+            "intendedInsight": "Being able to explain why one representation beats another for a given problem — and when the rejected tool would in fact be right — is what separates a real fit judgement from a blanket ranking of tools."
+          },
+          {
+            "title": "Primer: what each tool is for",
+            "feedback": [
+              "If the child treats the board as the whole lesson, move them promptly to actually working a problem with a chosen tool — naming purposes is only a warm-up and does not by itself show they can choose and use a tool when solving."
+            ],
+            "rationale": "A static annotated comparison can prime awareness of each tool's purpose and lets the child compare representations, but on its own it does not let the child act, feel the inefficiency, or justify a choice; keep it as a brief primer before the hands-on activity.",
+            "sourceClaims": [
+              "Manipulatives and representations must be used purposefully with a clear rationale and to reveal structure not just get an answer; number lines are a particularly effective representation, and comparing different representations of an idea develops conceptual understanding"
+            ],
+            "learnerActions": [
+              "Explore a comparison board for number line vs hundred square vs ruler, revealing 'best for…' and 'not for…' notes for each.",
+              "Before the main task, predict which tool you would reach for in an addition and in a measuring problem."
+            ],
+            "intendedInsight": "Each representation has a purpose and a limitation — a number line jumps along a count but does not measure a real object; cubes become unwieldy past twenty — so a warm-up can prime 'what each is for'."
+          }
+        ],
+        "constraints": [
+          "Choose numbers large enough that counting in ones is genuinely inefficient (e.g. 34+28), so the efficiency case for a tens-carrying representation is real rather than asserted.",
+          "Frame tool choice as a fit judgement tied to the problem's purpose and number/object size — not as some tools being 'babyish' or 'proper'. Always include a case where the rejected tool (cubes for small numbers) is the better fit.",
+          "A comparison/primer board naming 'what each tool is for' is a warm-up: it does not elicit the child working a problem or justifying efficiency, so do not treat it as the main activity.",
+          "A single matching/recognition item can ask 'which tool?' but cannot observe the child using the tool or justifying fit and efficiency; recognition-only responses do not elicit independent construction of a strategy.",
+          "Keep naming each tool's limitation (a number line doesn't measure a real object; cubes are unwieldy past twenty) so the choice stays a fit judgement.",
+          "Include at least one measuring task, and vary the object's size (e.g. ribbon vs door) so the child experiences matching a measuring tool — ruler vs metre stick — to the object, and that a number line does not fit a length problem."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were NOT re-fetched. The activities are research-informed proposals, not validated interventions, and efficacy wording has been kept qualified accordingly.",
+          "The legacy row claimed '3D adds no purchase on tool-fit here' and that a quiz 'cannot observe the child... the WHY is invisible'. These are catalog-fit opinions, not established findings. Retained only the narrowly objective point that recognition-only items do not elicit independent construction; dropped the universal dismissals.",
+          "The legacy 'possible'/'poor' fit rankings and product-format vocabulary were removed; the underlying distinct pedagogical purposes (dialogue for justification, primer for priming) were preserved as separate activities.",
+          "Arithmetic check: 34 + 28 = 62, and 34 → +20 → 54 → +8 → 62 is correct; on the hundred square +20 is two rows down to 54 and +8 moves forward eight squares (crossing a row boundary) to 62. No arithmetic errors found.",
+          "The part-whole model is listed among the topic's tools but is not exercised in any activity, matching the original recommended task; it could optionally be added to the palette."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "Can you give me a problem where cubes really would be the BEST choice?",
+          "Show me the fewest jumps you can do on the number line for 34 + 28 — why fewer jumps?",
+          "If the problem was 'how tall is the door', which would you pick — number line, ruler, or metre stick — and why?",
+          "What can a hundred square show you that a number line doesn't, when you add 28?"
+        ],
+        "correctAnswer": "No single scored answer — listen for the child recognising that counting single cubes for numbers this big is slow and error-prone (a limitation), that the number line lets you jump in tens and ones (efficiency and structure), AND that cubes are fine for small numbers — a fit judgement, not 'cubes are babyish'.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Persists with counting single cubes in ones for two-digit numbers — slow, error-prone — rather than a representation that carries the tens",
+            "nextMove": "Contrast directly with a +20-then-+8 number-line jump; show how the representation holds the tens so ones needn't be counted. Reteach place-value adding strategies.",
+            "distractor": null,
+            "revealedBy": "Builds 34+28 from single cubes and miscounts, or insists cubes are the way even for big numbers",
+            "reteachPrerequisiteId": "mt_glPPG-kTQY"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Mismatches the tool to the problem's purpose — grabs a number line for a 'how long is it?' measuring task instead of a ruler",
+            "nextMove": "Sort problems by 'what are we trying to find?' then match the tool's purpose; name what a ruler does that a number line cannot here. Reteach measuring with length units.",
+            "distractor": null,
+            "revealedBy": "Chooses the wrong class of tool for what the problem asks to find",
+            "reteachPrerequisiteId": "mt_cqSf213hSa"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Draws a number line but counts every mark in ones anyway, using it as a ritual rather than to jump in tens",
+            "nextMove": "Model the +10 jump and ask 'can you get there in fewer jumps?'; link the tool to place-value structure, not just to having drawn it.",
+            "distractor": null,
+            "revealedBy": "Number line present but every step is a single mark, no tens jumps",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Reaches for one tool by habit (usually cubes) or mismatches the tool to the problem's purpose, with no efficiency or fit reasoning.",
+          "full": "Unprompted, matches the tool to the problem's purpose and the size of the numbers, justifies by efficiency and structure (jump the tens), names when the rejected tool would in fact be the right choice, and picks a ruler for a measuring task.",
+          "partial": "Chooses a reasonable representation and, when prompted, says the number line is 'quicker', but cannot say when cubes would be better or slips back into counting marks in ones."
+        },
+        "diagnosticPrompt": "To work out 34 + 28, one child got out 62 cubes and counted them one by one; another used a number line and jumped +20 then +8. Which was the better tool for these numbers, and why? And when WOULD cubes be the better choice?",
+        "whatMakesItDiscriminate": "34+28 is big enough that counting cubes in ones is genuinely inefficient, so a strategic chooser points to efficiency and place-value jumps; a non-strategic child either counts everything or dismisses cubes outright with no fit reason. The 'when would cubes be better?' turn separates a real fit judgement from a blanket ranking of tools."
+      },
+      "sources": [
+        {
+          "claim": "Proficient students make sound decisions about when a tool is helpful, recognising the insight it gives and its limitations",
+          "source": "CCSS Standards for Mathematical Practice — MP5 Use appropriate tools strategically",
+          "url": "https://www.thecorestandards.org/Math/Practice/MP5/",
+          "verified": true
+        },
+        {
+          "claim": "Manipulatives and representations must be used purposefully with a clear rationale and to reveal structure not just get an answer; number lines are a particularly effective representation, and comparing different representations of an idea develops conceptual understanding",
+          "source": "EEF — Improving Mathematics in Key Stages 2 and 3 (Recommendation 2)",
+          "url": "https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/maths-ks-2-3",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T13:58:59.058Z",
+        "updatedAt": "2026-10-19T15:21:50.215Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_vXRzMbiPff",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Negative Numbers",
+      "description": "Count backwards through zero to include negative numbers",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 12,
+      "centrality": 0.05359056806002144,
+      "evidence": [
+        "Count backwards from 5 through zero: 5, 4, 3, 2, 1, 0, −1, −2 …",
+        "Place negative numbers on a number line",
+        "Understand that negative numbers are less than zero and use them in context (e.g. temperature)"
+      ],
+      "assessmentPrompt": "Can {{name}} count backwards past zero into negative numbers — like 3, 2, 1, 0, −1, −2, −3 — without hesitating at zero?",
+      "standards": [
+        "acara-v9:AC9M6N01",
+        "uk-nc-2013:Ma/KS2/Y4/NPV/3"
+      ]
+    },
+    "topicPointer": "/topics/1144",
+    "researchPointer": "/records/893",
+    "research": {
+      "topicId": "mt_vXRzMbiPff",
+      "pedagogy": {
+        "summary": "• Age/Topic — Ages 8-9. Count backwards through zero into negative numbers (5, 4, 3, 2, 1, 0, −1, −2…), understand that negatives are less than zero, place them on a number line, and read them in context (temperature). The number line EXTENDS left past zero — the first genuinely new territory beyond the counting numbers.\n• Standards — UK (DfE NC Mathematics, Year 4): 'count backwards through zero to include negative numbers'.\n• Standards — US (CCSS-M): formal integers are Grade 6 (6.NS.5-6), but temperature/number-line intuition is built earlier; treat this as pre-integer number-line reasoning.\n• Operational details — Build negatives on a horizontal or (temperature-style) vertical number line, counting continuously down through zero so the sequence's symmetry about 0 is felt. Anchor to a real context — the thermometer is ideal — so 'below zero' has meaning. Stress that −2 is less than −1 (further from zero going left = smaller), which contradicts children's 'bigger digit = bigger' intuition. Avoid formal negative arithmetic here; focus on ordering, counting, and reading in context.\n• Checkpoint — Tier A (age 8, emerging): counts back through zero to −5 with a number line. Tier B (age 8-9, secure): places negatives on a line and reads temperatures below zero. Tier C (age 9, extending): orders negatives correctly (−5 < −2) and explains why, using the line.",
+        "bestPractices": [
+          "Count continuously DOWN through zero on a number line so the symmetry about 0 is experienced, not stated.",
+          "Anchor to the thermometer / temperature context — the most intuitive real model of below-zero.",
+          "Explicitly confront the 'bigger digit = bigger' clash: −5 is LESS than −2 because it is further left/colder.",
+          "Use a vertical number line (thermometer) as well as horizontal so direction-of-decrease is felt two ways.",
+          "Keep to counting/ordering/reading in context; defer negative arithmetic (adding/subtracting integers) to later."
+        ],
+        "keyRepresentations": [
+          "Horizontal number line extended left of zero",
+          "Vertical thermometer / temperature scale (below zero)",
+          "Number track counting down through zero",
+          "Real contexts: temperature, sea level, later bank balance/floors",
+          "Symmetry-about-zero image (mirror at 0)"
+        ],
+        "commonMisconceptions": [
+          "Thinking −5 > −2 because 5 > 2 (ignoring direction/order).",
+          "Believing zero is the smallest number, so negatives 'can't exist' or are 'just zero'.",
+          "Reading −3 as 'three' and losing the sign's meaning.",
+          "Miscounting across zero (skipping 0, or 1, 0, 1 back up).",
+          "Treating the minus as subtraction rather than a position/label below zero."
+        ]
+      },
+      "learn": {
+        "summary": "For ages 8-9: counting backwards through zero into negative numbers, placing negatives on a number line, and reading them in context (temperature). The core insight is that the number line extends left past zero, and that −5 is LESS than −2 because it lies further from zero on the negative side — directly confronting the 'bigger digit = bigger' intuition. Work stays with counting, ordering, and reading in context; formal negative arithmetic is deferred. The primary vehicle is a number-line/thermometer activity the child drives, with reference images and conversational context as supports.",
+        "activities": [
+          {
+            "title": "Count down through zero on a thermometer line",
+            "feedback": [
+              "If the child reverses upward at zero (0 then 1 again), extend the line/thermometer visibly below zero and re-count −1, −2, −3 so the continuation is seen; do not accept 'nothing is below zero'.",
+              "If the child says numbers stop at zero, anchor in a real below-zero context (temperature, floors below ground) so numbers less than zero are legitimate.",
+              "If the child reads −3 as 'three', pause and have them say 'negative three / three below zero' so the minus is read as a position/label below zero, not as a subtraction to carry out."
+            ],
+            "rationale": "Counting continuously down through zero lets the unbroken continuation past zero be experienced rather than merely stated, and the thermometer gives 'below zero' a concrete meaning. A horizontal line offers a second felt direction of decrease. A live, learner-driven scale (dragging the marker so the reading updates past zero) can make the continuation vivid, though a reference image or spoken counting can also support this.",
+            "sourceClaims": [
+              "Year 4 pupils should 'count backwards through zero to include negative numbers'.",
+              "The temperature/thermometer context and continuous counting through zero address the persistent −5>−2 ordering misconception."
+            ],
+            "learnerActions": [
+              "Start at a reading (e.g. 3°C) on a vertical thermometer (or a horizontal number line) and count the marker down continuously: 3, 2, 1, 0, −1, −2, −3, watching it pass zero in one unbroken descent rather than stopping or bouncing.",
+              "Narrate each step aloud, including the names of the negatives as the marker crosses zero.",
+              "Repeat the descent on a horizontal number line, moving steadily left through zero, to feel that the decrease keeps going in the same direction past zero (toggle between the two if available).",
+              "Then count back UP through zero from a negative start (e.g. −4, −3, −2, −1, 0, 1) to check the sequence works both ways."
+            ],
+            "intendedInsight": "Below-zero numbers are a genuine continuation of the counting sequence, not a separate set; the line extends left/below zero, and counting down keeps going in the same direction past zero. Only the number names repeat as mirror images (1 and −1, 2 and −2), and each step down still gives a smaller number."
+          },
+          {
+            "title": "Order negatives: colder is lower is smaller",
+            "feedback": [
+              "If the child ranks −5 as larger because 5 > 2, walk both onto a horizontal number line: −5 sits further left, and further left means smaller, so −5 < −2 even though 5 > 2.",
+              "Reinforce with the thermometer image: a lower reading is colder, and colder is a smaller temperature.",
+              "If the child names 0 as the smallest possible number, use a below-zero context so numbers less than zero are accepted as comparable."
+            ],
+            "rationale": "The −5 vs −2 comparison is the central misconception, so it deserves dedicated ordering practice with an explanation, not just the correct label. Tying 'smaller' to position (further left / further below zero / colder) gives the child a stable rule that survives the digit-size clash. A drag-to-order interaction where −5 correctly lands below −2 with 'colder = lower = smaller' feedback can make the mechanism concrete; ordering on paper with stated reasons works too.",
+            "sourceClaims": [
+              "The temperature/thermometer context and continuous counting through zero address the persistent −5>−2 ordering misconception."
+            ],
+            "learnerActions": [
+              "Given numbers such as −5, −2, 0, 3, place each on the scale and arrange them smallest to largest.",
+              "Specifically compare −2 and −5: place both and decide which is smaller, stating a reason.",
+              "Explain in words why −5 is smaller than −2 even though 5 is bigger than 2 — e.g. 'it is further below zero / further left / colder'.",
+              "Answer context questions: Is −10°C warmer or colder than −2°C? Which is bigger, −1 or 0?"
+            ],
+            "intendedInsight": "On the negative side, further from zero (further left / lower / colder) means SMALLER, so −5 < −2, reversing the digit-size intuition."
+          },
+          {
+            "title": "Predict-then-check: drop below zero",
+            "feedback": [
+              "A child expecting numbers to stop predicts 0 or 'it can't go lower'; show the continuation below zero and re-count through zero to −2.",
+              "A child who predicts −2 and justifies by continuing past zero (…1, 0, −1, −2) has the target understanding; ask them to explain the crossing point.",
+              "Follow-up probes: What comes after −3 if I keep counting back? If I started at −4 and counted up through zero, what would I say?"
+            ],
+            "rationale": "A predict-then-check task surfaces the 'numbers stop at zero' and magnitude-ordering misconceptions through the child's stated reason before the answer is revealed, making the diagnostic value come from the justification rather than the final label.",
+            "sourceClaims": [
+              "Year 4 pupils should 'count backwards through zero to include negative numbers'."
+            ],
+            "learnerActions": [
+              "Set a thermometer to 3°C. Before moving anything, predict the reading after it drops 5 degrees, and say WHY.",
+              "Commit to the prediction and reason out loud (the reasoning is the important part).",
+              "Then slide/count the marker down 5 steps through zero to check against the prediction.",
+              "Discuss any mismatch: where did the count cross zero, and what came after?"
+            ],
+            "intendedInsight": "Counting down past zero from 3 by 5 reaches −2 (3 − 5 = −2); numbers do not stop at zero, and predicting forces the child to apply the continuation rather than read it off."
+          },
+          {
+            "title": "Negatives in the real world (context talk)",
+            "feedback": [
+              "If the child treats −20 as warmer than −5 because 20 > 5, return to the thermometer: −20 is lower, so colder and smaller.",
+              "Keep the focus on ordering and reading; do not drift into adding/subtracting negatives."
+            ],
+            "rationale": "Context motivates and reinforces, and reading real sub-zero values gives extra ordering practice; the ordering rule itself is secured on the line, so context work supports and applies the idea rather than being the only route to it.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Discuss or read about places and situations with below-zero values: last night's temperatures, a polar region at −20°C vs −5°C, sea level, floors below ground.",
+              "Decide which of two sub-zero values is colder/lower and justify using the line idea.",
+              "Match a few real readings (e.g. fridge, freezer, a frosty morning) to positions on a thermometer scale."
+            ],
+            "intendedInsight": "Negative numbers describe real quantities below a chosen zero, giving the abstract line a meaningful anchor and extra ordering practice."
+          }
+        ],
+        "constraints": [
+          "Keep to counting, ordering, and reading negatives in context; defer formal negative arithmetic (adding/subtracting integers) to later.",
+          "Explicitly confront the 'bigger digit = bigger' clash: −5 is less than −2 because it is further left / lower / colder.",
+          "A static thermometer or number-line poster is a useful reference and can support counting, but cannot itself be dragged or stepped; pair it with active ordering/counting on a line rather than relying on it alone.",
+          "Conversation/context framing (e.g. a polar scientist) can motivate and give extra ordering practice, but should not be the sole route to the ordering concept.",
+          "US note: formal integers are Grade 6 (CCSS-M 6.NS.5-6); for this age treat the work as pre-integer number-line and temperature intuition.",
+          "When counting across zero, guard against skipping 0 or bouncing (1, 0, 1); ensure zero is named as a step and the sequence continues below it."
+        ],
+        "reviewNotes": [
+          "Independent editorial review performed on the saved teaching research; sources were not re-fetched and no fresh source verification, human review, or empirical effectiveness testing occurred. Activities are research-informed proposals, not validated interventions.",
+          "Two of three cited sources (CCSS-M Grade 6; NCETM guidance) were marked verified:false in the source row; the DfE Year 4 claim was marked verified:true. Evidence strength is unchanged and not independently confirmed here.",
+          "The CCSS-M Grade 6 claim is retained only as standards-placement context (US constraint); it is correctly not used as a sourceClaim for the context activity, because it does not establish that activity's teaching principle (context supports while ordering is secured on the line).",
+          "The original noted 3D 'adds nothing'. That is a catalog-fit judgement, not an established pedagogical law; a 3D treatment is simply not needed because the concept is essentially one-dimensional (a line/scale). Softened accordingly.",
+          "Arithmetic check: starting at 3°C and dropping 5 degrees gives −2°C (3 − 5 = −2); matches the source and the predict-then-check activity.",
+          "Ordering checks: −5 < −2 is correct (further from zero on the negative side is smaller); −10°C and −20°C are colder/smaller than −2°C and −5°C respectively.",
+          "The 'minus read as subtraction' misconception from the source is covered only indirectly via the sign-meaning feedback in the first activity; it could warrant a more explicit treatment if expanded later."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": "Set a model thermometer to 3°C. Before moving anything, ask the child to predict the reading after it drops 5 degrees and to say why. A child who thinks numbers stop at zero predicts 0 (or 'it can't go lower'); a child who understands negatives predicts −2. Then slide the marker down through zero to check — the pre-observation reason is the diagnostic part.",
+        "probeDeeper": [
+          "If I keep counting back, what comes after −3?",
+          "On a thermometer, is −10°C warmer or colder than −2°C — why?",
+          "Which is bigger, −1 or 0? How can you tell?",
+          "What if I started at −4 and counted UP through zero — what would I say?"
+        ],
+        "correctAnswer": "After 0 comes −1, −2, −3 … −5 is smaller than −2 because it is further below zero (further left on the number line).",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Orders negatives by magnitude — '−5 is bigger than −2 because 5 is bigger than 2'.",
+            "nextMove": "Walk both on a horizontal number line; show −5 sits further left, and 'smaller' means further left, so −5 < −2 even though 5 > 2.",
+            "distractor": "−2 is smaller, because 2 is less than 5.",
+            "revealedBy": "Child ranks −5 as the larger / −2 as the smaller, reasoning from the digits.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Numbers stop at (or bounce off) zero — after 0 the child says 1 again, treating zero as the floor.",
+            "nextMove": "Extend the number line and a thermometer below zero so the sequence −1, −2, −3 is seen as a real continuation; do not accept 'nothing is below zero'.",
+            "distractor": "After 0 you go back up to 1.",
+            "revealedBy": "Counting back reaches 0 and then reverses upward, or child says 'you can't go past zero'.",
+            "reteachPrerequisiteId": "mt_M2v1A9OEuM"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Zero-as-smallest — believes 0 is the least possible number, so there is no answer 'below' it.",
+            "nextMove": "Use a context that clearly goes below zero (temperature, floors below ground) to establish numbers less than zero as legitimate.",
+            "distractor": "Zero — it's the smallest, nothing is less.",
+            "revealedBy": "Child names 0 as the smallest number when asked, or refuses to compare negatives.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Stops or bounces at zero, or orders negatives purely by digit size.",
+          "full": "Continues the sequence past zero and orders negatives by position on the number line, justifying that further-left / further-below-zero means smaller, and applies it in context (temperature).",
+          "partial": "Counts back through zero correctly but reverts to magnitude reasoning when comparing two negatives (−5 vs −2)."
+        },
+        "diagnosticPrompt": "Count back from 3, out loud: 3, 2, 1, 0 ... what comes next? And which is smaller, −2 or −5? How do you know?",
+        "whatMakesItDiscriminate": "A child who understands the number line continues past zero into negatives and knows −5 is smaller because it is further from zero the other way. A child treating negatives as ordinary numbers picks −2 as smaller (2<5), and a child who thinks numbers stop at zero bounces back to 1. The justification, not the label, reveals which."
+      },
+      "sources": [
+        {
+          "claim": "Year 4 pupils should 'count backwards through zero to include negative numbers'.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (Year 4 Number & place value)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Understanding integers and their ordering on the number line (negatives as positions less than zero) is formalised in Grade 6 (6.NS.5-6), with earlier temperature intuition.",
+          "source": "Common Core State Standards for Mathematics, The Number System, Grade 6",
+          "url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+          "verified": false
+        },
+        {
+          "claim": "The temperature/thermometer context and continuous counting through zero address the persistent −5>−2 ordering misconception.",
+          "source": "NCETM Primary Mastery PD: Number / negative numbers guidance",
+          "url": "https://www.ncetm.org.uk/in-the-classroom/primary-mastery-professional-development/",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:32:22.514Z",
+        "updatedAt": "2026-10-19T15:21:36.272Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_1KkvzwYxbR",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Negative numbers in context",
+      "description": "Interpret negative numbers in context (temperature, sea level, bank balance); count forwards and backwards with positive and negative whole numbers, including through zero",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 12,
+      "centrality": 0.05359056806002144,
+      "evidence": [
+        "Place –3, –1, 0, 2, 5 on a number line",
+        "The temperature is –4°C and rises by 7 degrees — what is the new temperature?",
+        "Count backwards from 3 in ones: 3, 2, 1, 0, –1, –2"
+      ],
+      "assessmentPrompt": "If the temperature drops to −5°C overnight and rises to 3°C by day, can {{name}} place both on a number line and say how many degrees warmer the daytime temperature is?",
+      "standards": [
+        "acara-v9:AC9M6N01",
+        "uk-nc-2013:Ma5/2.1c"
+      ]
+    },
+    "topicPointer": "/topics/1152",
+    "researchPointer": "/records/65",
+    "research": {
+      "topicId": "mt_1KkvzwYxbR",
+      "pedagogy": {
+        "summary": "• Age/Topic — Ages 9-10. Interpret negative numbers in real contexts (temperature, sea level, bank balance) and count forwards and backwards through zero with positive and negative whole numbers; place negatives on a number line and begin to find simple intervals (−4°C rises 7° → 3°C). Extends 'count back through zero' into using and reasoning with negatives.\n• Standards — UK (DfE NC Mathematics, Year 5): 'interpret negative numbers in context, count forwards and backwards with positive and negative whole numbers, including through zero'.\n• Standards — US (CCSS-M): integers and their contexts are formalised in Grade 6 (6.NS.5-7); this is the pre-formal contextual foundation.\n• Operational details — Ground negatives in multiple contexts (thermometer, sea level, money) and use the number line to count and to find intervals by 'counting the gap' through zero rather than by rules. Reinforce ordering (−4 < −1) and the meaning of the gap between a negative and a positive (the interval spans zero). Keep it count/interval based; defer formal signed arithmetic.\n• Checkpoint — Tier A (age 9, emerging): places negatives on a line and reads a sub-zero temperature. Tier B (age 9-10, secure): counts through zero and finds a simple rise/fall interval across zero. Tier C (age 10, extending): reasons about intervals spanning zero in context and orders mixed positive/negative sets confidently.",
+        "bestPractices": [
+          "Use several contexts (temperature, sea level, money) so 'negative' is meaningful, not abstract.",
+          "Find intervals by counting the gap along the number line THROUGH zero, not by memorised sign rules.",
+          "Reinforce ordering across zero (−4 < −1 < 0 < 2) with the line.",
+          "Make the zero crossing explicit: the interval from −4 to 3 is 4 up to zero, then 3 more.",
+          "Keep to counting/intervals in context; defer formal negative arithmetic to later years."
+        ],
+        "keyRepresentations": [
+          "Horizontal number line spanning negatives and positives",
+          "Vertical thermometer / sea-level scale",
+          "Number line 'gap counting' for intervals across zero",
+          "Real contexts: temperature change, floors/lifts, bank balance",
+          "Ordering strip mixing negatives and positives"
+        ],
+        "commonMisconceptions": [
+          "Ordering negatives by magnitude (−4 > −1).",
+          "Counting the interval across zero wrongly (forgetting the zero step or double-counting it).",
+          "Treating a negative as just its digit (ignoring sign).",
+          "Believing you 'can't go below zero'.",
+          "Applying whole-number intuitions (bigger digit = bigger) to negatives."
+        ]
+      },
+      "learn": {
+        "summary": "For ages 9-10: interpret negative whole numbers in real contexts (temperature, sea level, bank balance), place them on a number line, order mixed positive/negative sets, count forwards and backwards through zero, and find simple intervals that cross zero by counting the gap through zero (e.g. −4°C rising 7° reaches 3°C). Keep the work count- and interval-based in context; defer formal signed arithmetic to later years. Core misconceptions to confront: ordering negatives by magnitude (believing −4 > −1) and miscounting when crossing zero.",
+        "activities": [
+          {
+            "title": "Count the gap through zero on a thermometer/number line",
+            "feedback": [
+              "If the learner lands on 11, pause: starting at −4 is to the LEFT of (below) zero, so counting 7 steps right/up only reaches 3. Contrast with starting at +4, where 7 steps reach 11.",
+              "If the learner lands on 2, check whether they counted the starting value −4 as a jump or counted zero twice; if they land on 4, check whether they skipped zero (jumping straight from −1 to 1). Count the jumps aloud together: −4→−3→−2→−1→0 is exactly four jumps, then 0→1→2→3 is three more; reaching zero takes one jump of its own, so zero is counted once, never skipped and never repeated.",
+              "When counting backwards from 3, check that after 0 comes −1, then −2 — the count continues below zero rather than stopping at 0.",
+              "When the learner splits the count as '4 up to zero, then 3 more = 7 steps total, landing on 3', confirm they have read the interval positionally rather than by a rule.",
+              "For −4°C rising 7°, the interval is 7 degrees (4 up to zero, then 3 more) and the landing value is 3°C."
+            ],
+            "rationale": "Grounding negatives in multiple real contexts and finding cross-zero intervals by counting the gap on the number line (before formal signed arithmetic) makes the zero crossing concrete and directly targets the magnitude-ordering and double-counting errors; counting both forwards and backwards through zero matches the stated standard.",
+            "sourceClaims": [
+              "Year 5 pupils should 'interpret negative numbers in context, count forwards and backwards with positive and negative whole numbers, including through zero'.",
+              "Intervals across zero should be found by counting the gap on the number line through zero, in multiple contexts, before formal signed arithmetic."
+            ],
+            "learnerActions": [
+              "Set a starting value in a real context, e.g. the temperature is −4°C, marked on a vertical thermometer or horizontal number line.",
+              "Apply a change, e.g. 'it rises by 7 degrees', and move a marker one step at a time, saying each value aloud: −4 → −3 → −2 → −1 → 0, then 1 → 2 → 3.",
+              "Deliberately split the count into two parts: how many steps up to reach zero (4), then how many steps beyond zero (3), and record the landing value (3°C).",
+              "Count backwards through zero as well: start at 3 and step down in ones — 3, 2, 1, 0, −1, −2 — saying what comes after 0, so you can move both forwards and backwards across zero.",
+              "Switch the SAME line into a different context — sea-level depth or a bank balance — keep the start and change equivalent, and notice the number behaves identically even though it means something different.",
+              "State in words where you crossed zero and why the total rise is 7 even though you land on 3."
+            ],
+            "intendedInsight": "An interval that spans zero is found by counting the gap along the line through zero — so many steps up to zero, then so many more beyond — not by a sign rule; you can count both forwards and backwards across zero, and negatives in different contexts behave the same positionally."
+          },
+          {
+            "title": "Order and place mixed negatives and positives",
+            "feedback": [
+              "If the learner places −4 as larger than (to the right of) −1, show both on the line: −4 sits further left/lower, so it is the smaller (colder) value; −7°C is colder than −3°C for the same reason.",
+              "Tie the feedback to the context: colder, lower, or more in debt all correspond to being further left on the line and therefore a smaller number.",
+              "Correct order smallest to largest: −4, −1, 0, 2, 5."
+            ],
+            "rationale": "Reinforcing ordering across zero with a concrete left-is-less experience confronts the seductive −4 > −1 magnitude error that the research flags as a common misconception.",
+            "sourceClaims": [
+              "Year 5 pupils should 'interpret negative numbers in context, count forwards and backwards with positive and negative whole numbers, including through zero'."
+            ],
+            "learnerActions": [
+              "Arrange a mixed set such as −4, −1, 0, 2, 5 from smallest to largest on a number line.",
+              "Place a single value such as −3 at its correct spot on a labelled line.",
+              "Decide which of two values is colder/lower/more in debt, e.g. 'Which is colder, −7°C or −3°C?', and justify using position on the line.",
+              "Explain why −4 is smaller than −1 even though 4 is a bigger digit than 1, referencing left-is-less on the line."
+            ],
+            "intendedInsight": "On the number line, further left (colder / lower / deeper in debt) means smaller, so −4 < −1 < 0 < 2 < 5 — the size of the digit does not decide the order for negatives."
+          },
+          {
+            "title": "Explain the context (optional spoken/role-play extension)",
+            "feedback": [
+              "Prompt the learner to justify answers by referring to the number line or scale, not just a figure, especially when a change crosses zero.",
+              "If a change does not actually cross zero (e.g. −30 m rising to −18 m), confirm that too — not every rise or fall passes through zero.",
+              "Keep answers interval/count based; avoid introducing formal signed-arithmetic rules at this stage."
+            ],
+            "rationale": "A character or role-play can motivate multiple real contexts and generate interval questions; the interval reasoning itself is still best grounded on the number line, so this is offered as a contextual extension rather than the primary mechanism.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Take on a role such as a submarine pilot describing depths below sea level, or a weather presenter describing temperature changes.",
+              "Pose and answer questions like 'We were at −30 m and rose 12 m — where are we now?' (−18 m, still below the surface) and 'It was −3°C and rose 8° — how warm now?' (+5°C, passing up through zero), and explain the crossing of zero where it happens.",
+              "Reason aloud about which depth/temperature is higher or lower and how you know."
+            ],
+            "intendedInsight": "Negatives describe real quantities (depth, temperature, balance); talking through changes rehearses counting through zero in meaningful situations, while noting that not every change actually crosses zero."
+          }
+        ],
+        "constraints": [
+          "Use several contexts (temperature, sea level, money) so 'negative' is meaningful rather than abstract.",
+          "Find intervals by counting the gap through zero on the line, not by memorised sign rules; make the zero crossing explicit (e.g. −4 to 3 is 4 up to zero, then 3 more).",
+          "Support counting both forwards and backwards through zero, including stepping down below zero into the negatives.",
+          "Keep to counting and intervals in context; defer formal signed arithmetic to later years (US formalises integers in Grade 6; this is the pre-formal contextual foundation).",
+          "Ordering and placing tasks (ordering a set, placing on a line, fill-in-the-blank, multiple choice) can assess placement, ordering and simple cross-zero intervals, including the magnitude trap, but selection/recognition responses do not by themselves show the learner can count through zero and construct the reasoning aloud — pair them with the learner explaining their method.",
+          "A static thermometer or context poster is a useful reference and can introduce negative readings, but it cannot let the learner step through a changing value; use it as a scaffold alongside an activity where the learner actually counts the gap.",
+          "The 1D number line/scale is the natural representation for this topic; a 3D model is not needed here (this is a representation preference for this content, not a general claim that 3D adds nothing).",
+          "The role-play/spoken extension is optional and supplementary; do not treat it as a replacement for working on the number line."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were NOT re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "The source assessment lists distractor 'It is 2°C' while revealedBy says 'Answer is 2 or 4 (an off-by-one at the zero crossing)'. Both off-by-one outcomes (2 and 4) are plausible miscounts; feedback here addresses landing on 2 or 4 rather than asserting a single wrong value.",
+          "The original source labelled the 3D representation 'poor' with 'negatives live on a 1D line/scale; 3D adds nothing'. The comparative/necessity 'adds nothing' assertion is not established by the cited sources, so it has been reframed as a representation preference for this topic rather than a universal law.",
+          "Arithmetic checked: −4°C rising 7° = 3°C (four steps to zero, three beyond). Sign-stripping error gives 11 (4+7). Off-by-one at zero gives 2 or 4. Counting backwards from 3 through zero gives 3,2,1,0,−1,−2. Role-play examples: −30 m +12 m = −18 m (no crossing); −3°C +8° = +5°C (crosses zero). These are internally consistent and retained for diagnostic feedback.",
+          "The CCSS Grade 6 claim and the NCETM guidance claim were marked verified:false in the source; treat their status as unverified in any downstream use."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": null,
+        "probeDeeper": [
+          "Show −4 rising by 7 on a number line — where do you cross zero?",
+          "Which is colder, −7°C or −3°C? How does the line show it?",
+          "Count backwards from 3 in ones — what comes after 0?"
+        ],
+        "correctAnswer": "3°C. Count up 7 from −4: four steps reach 0, then three more reach 3 — you pass through zero.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Ignores the sign and treats −4 as 4: −4 + 7 = 11",
+            "nextMove": "Put −4 on a number line to the LEFT of zero; count 7 steps right and see you only reach 3. Contrast with starting at +4.",
+            "distractor": "It is 11°C.",
+            "revealedBy": "Answer is 11°C.",
+            "reteachPrerequisiteId": "mt_vXRzMbiPff"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Miscounts across zero — stops at 0, or counts 0 twice",
+            "nextMove": "Count the jumps aloud on the line: −4→−3→−2→−1→0 is four jumps, not five; zero is a point you pass, not a step you repeat.",
+            "distractor": "It is 2°C.",
+            "revealedBy": "Answer is 2 or 4 (an off-by-one at the zero crossing).",
+            "reteachPrerequisiteId": "mt_vXRzMbiPff"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Strips the sign (−4 + 7 = 11) or cannot count through zero.",
+          "full": "Interprets negatives in context and counts through zero accurately (−4 + 7 = 3), reasoning from number-line position.",
+          "partial": "Places negatives correctly and orders them, but miscounts by one when crossing zero."
+        },
+        "diagnosticPrompt": "Ask: 'The temperature is −4°C and it rises by 7 degrees. What is it now, and how did you work it out?'",
+        "whatMakesItDiscriminate": "A child who reads negatives positionally counts up through zero and lands on 3; a child who strips the sign computes 4 + 7 = 11, and one who mishandles zero stalls at 0 or double-counts it. The reason tier reveals how they treat the crossing of zero."
+      },
+      "sources": [
+        {
+          "claim": "Year 5 pupils should 'interpret negative numbers in context, count forwards and backwards with positive and negative whole numbers, including through zero'.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (Year 5 Number & place value)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Integers, their ordering and real-world contexts are formalised in Grade 6 (6.NS.5-7).",
+          "source": "Common Core State Standards for Mathematics, The Number System, Grade 6",
+          "url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+          "verified": false
+        },
+        {
+          "claim": "Intervals across zero should be found by counting the gap on the number line through zero, in multiple contexts, before formal signed arithmetic.",
+          "source": "NCETM Primary Mastery PD: Number / negative numbers guidance",
+          "url": "https://www.ncetm.org.uk/in-the-classroom/primary-mastery-professional-development/",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:36:20.050Z",
+        "updatedAt": "2026-10-19T15:19:58.919Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_RWUY7_IXvw",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Absolute value as distance",
+      "description": "Understand the absolute value of a rational number as its distance from zero on the number line; interpret absolute value as magnitude in real-world contexts; distinguish absolute value comparisons from ordering statements",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.02357984994640943,
+      "evidence": [
+        "Define absolute value as distance from zero on a number line",
+        "Calculate the absolute value of positive and negative rational numbers",
+        "Distinguish between comparing absolute values and comparing signed numbers in real-world contexts"
+      ],
+      "assessmentPrompt": "Can {{name}} tell you that the absolute value of −7 is 7 — because it's 7 steps from zero on a number line regardless of direction — and use this idea to compare distances?",
+      "standards": [
+        "ccss-math:6.NS.7c",
+        "ccss-math:6.NS.7d"
+      ]
+    },
+    "topicPointer": "/topics/1165",
+    "researchPointer": "/records/775",
+    "research": {
+      "topicId": "mt_RWUY7_IXvw",
+      "pedagogy": {
+        "summary": "• Age/Topic: 11–12 — understand the absolute value of a rational number as its distance from zero on the number line; interpret it as magnitude in context; distinguish absolute-value comparisons from ordering statements.\n• Standards—UK (DfE NC Mathematics, KS3): supports work on negatives and number-line reasoning; absolute value as magnitude underpins later work (bounds, error, modulus).\n• Standards—US (CCSS-M): 6.NS.C.7c — 'understand the absolute value of a rational number as its distance from 0 on the number line; interpret absolute value as magnitude for a positive or negative quantity in a real-world situation' and 7d distinguish comparisons of absolute value from statements about order.\n• Operational details: Define |x| as DISTANCE from zero (always ≥0), so |−5| = |5| = 5. Keep the distinction sharp between magnitude (how far) and order (which is greater): −7 < −3 but |−7| > |−3|. Ground in context — a debt of −£30 is a bigger amount than −£5 even though it is 'less'. Read |·| aloud as 'distance from zero'.\n• Checkpoint — Tier A (age 11): 'What is |−8|?' Tier B: 'Which is greater: −9 or −2? Which has the greater absolute value?' Tier C: 'A balance of −£40 vs −£15 — which is the larger debt, and which is the smaller number? Explain.'",
+        "bestPractices": [
+          "Define absolute value strictly as distance from zero on the number line, so it is never negative and |−5| = |5|",
+          "Hold magnitude and order apart explicitly with paired statements (−7 < −3 but |−7| > |−3|)",
+          "Anchor in contexts where magnitude matters (size of a debt, depth below sea level) versus signed order",
+          "Read |x| aloud as 'the distance of x from zero' rather than 'make it positive' (a rule that hides the meaning)",
+          "Use symmetric points about zero to show two different numbers share one absolute value"
+        ],
+        "keyRepresentations": [
+          "Number line with a distance arc from 0 to the point (length = |x|)",
+          "Mirror/fold about zero showing −a and a mapping to the same distance",
+          "Context strips (debt size, depth) where magnitude is the salient quantity",
+          "Paired statement cards contrasting order (<, >) with absolute value (|·|)"
+        ],
+        "commonMisconceptions": [
+          "Believing |x| just 'removes the minus sign' as a symbol trick rather than measuring distance (fails for expressions like |x−3|)",
+          "Thinking the number with the greater absolute value is automatically the greater number (−9 > −2)",
+          "Assuming absolute value can be negative",
+          "Conflating 'larger debt/depth' (magnitude) with 'larger number' (order)",
+          "Treating |−5| and −5 as interchangeable"
+        ]
+      },
+      "learn": {
+        "summary": "For learners aged 11–12: build absolute value as distance from zero on the number line (always ≥0, so |−5| = |5| = 5), interpret it as magnitude in real contexts (size of a debt, depth below sea level), and keep it sharply separate from ordering (−7 < −3 but |−7| > |−3|). Read |x| aloud as 'the distance of x from zero', not 'make it positive'. A manipulable number line is the core activity; an annotated static line, a consolidation set of short items, and a context dialogue are supporting approaches with distinct purposes.",
+        "activities": [
+          {
+            "title": "Measure distance from zero on a draggable number line",
+            "feedback": [
+              "If the learner expects |x| to carry a minus sign on the left of zero, point to the arc: it is a length, so it reads the same magnitude on both sides.",
+              "When the arc for −9 is longer than for −2, ask them to say aloud which number is greater (−2) and which is further from zero (−9) — two different answers.",
+              "At the crossing point, highlight that |x| touches 0 exactly at zero, then grows again in either direction."
+            ],
+            "rationale": "Absolute value is defined as distance from zero on the number line; making that distance visible and live as the point moves ties the symbol to its meaning and separates magnitude from order. The dragging/mirror/dual-read-out details are illustrative affordances, not required technology, and are a research-informed proposal rather than a validated intervention.",
+            "sourceClaims": [
+              "6.NS.C.7c/7d: understand absolute value as distance from 0, interpret it as magnitude in context, and distinguish absolute-value comparisons from order statements.",
+              "KS3 number work develops reasoning with negative numbers and magnitude on the number line, underpinning absolute value / modulus."
+            ],
+            "learnerActions": [
+              "Drag a point along a number line and watch a glowing arc from 0 to the point report its length as |x|, which is positive on either side of zero and is 0 only when the point is at zero.",
+              "Park the point at −5, then flip on a mirror toggle so the reflection at +5 lays down an identical arc — observe |−5| = |5| = 5.",
+              "Read a twin read-out that shows the signed value beside its absolute value; move the point to −9 then to −2 and notice the arc for −9 is LONGER even though −9 sits further LEFT (is the smaller number).",
+              "Drag the point across zero and watch the |x| read-out shrink to 0 and climb again — distance tracks how far from zero, never which side."
+            ],
+            "intendedInsight": "Absolute value is a distance (a length) from zero: it is never negative, two symmetric points share one absolute value, and 'further from zero' is a different question from 'greater number'."
+          },
+          {
+            "title": "Annotated number line with distance arcs (static anchor)",
+            "feedback": [
+              "If a learner reads the longer arc as 'the bigger number', separate the two questions: length of arc = magnitude; position left/right = order.",
+              "Confirm both arcs for −5 and 5 are the same length before moving on."
+            ],
+            "rationale": "A static annotated line anchors the distance meaning and the two-numbers-one-magnitude idea; it supports the same objective as the draggable version without live dragging and works on paper. It lacks the live across-zero movement, so add tracing tasks if used alone.",
+            "sourceClaims": [
+              "6.NS.C.7c/7d: understand absolute value as distance from 0, interpret it as magnitude in context, and distinguish absolute-value comparisons from order statements."
+            ],
+            "learnerActions": [
+              "On a number line, mark −5 and 5 and draw the arc from 0 to each, confirming both measure 5 units.",
+              "Reveal a callout that contrasts the order statement (−5 < 5) with the magnitude statement (|−5| = |5|).",
+              "For a second pair such as −9 and −2, draw both arcs and state separately which number is greater (−2) and which has the greater absolute value (−9)."
+            ],
+            "intendedInsight": "Even without live movement, measuring arcs from zero establishes 'distance from zero' and the idea that two different numbers can share one absolute value."
+          },
+          {
+            "title": "Consolidation: evaluate and discriminate",
+            "feedback": [
+              "If a learner answers the same way to '−9 > −2' and '|−9| > |−2|', reread each using the number line: position for order, distance from zero for absolute value.",
+              "If an absolute value is given as negative, restate |x| as a length that cannot be negative."
+            ],
+            "rationale": "Evaluation and magnitude-vs-order discrimination are cleanly checkable in short structured items, making this a useful consolidator after the distance meaning is established. Recognition and selected-response items chiefly check and reinforce classification; they do not by themselves elicit independent reasoning or construction, which the number-line work is intended to develop.",
+            "sourceClaims": [
+              "6.NS.C.7c/7d: understand absolute value as distance from 0, interpret it as magnitude in context, and distinguish absolute-value comparisons from order statements."
+            ],
+            "learnerActions": [
+              "Evaluate absolute values, e.g. 'What is |−8|?' (= 8).",
+              "Match signed values to their absolute values.",
+              "Judge paired true/false statements such as '−9 > −2' (false) versus '|−9| > |−2|' (true), and explain each by the number line."
+            ],
+            "intendedInsight": "Once the distance meaning is built, learners can reliably compute absolute values and tell absolute-value comparisons apart from ordering comparisons."
+          },
+          {
+            "title": "Context talk: larger debt vs larger number",
+            "feedback": [
+              "If the learner equates 'bigger debt' with 'bigger number', place −40 and −15 on a line: −40 sits further left, so it is the smaller number though the larger debt.",
+              "Encourage the learner to state the two questions separately before answering."
+            ],
+            "rationale": "Grounding magnitude in debt/depth/temperature contexts targets the common conflation of magnitude with order and gives learners language for the distinction. Dialogue here addresses the contextual magnitude-vs-order question and works alongside the spatial number-line model; its advantage over other media is not established by the sources.",
+            "sourceClaims": [
+              "6.NS.C.7c/7d: understand absolute value as distance from 0, interpret it as magnitude in context, and distinguish absolute-value comparisons from order statements."
+            ],
+            "learnerActions": [
+              "Discuss a scenario: 'You owe £40, I owe £15 — whose debt is bigger, and whose balance is the greater number?'",
+              "Explain that −40 is the larger debt (greater magnitude) yet the smaller/lower balance (−40 < −15).",
+              "Try a second context (−8°C vs −3°C, or a diver at −8 m vs −3 m): name who is deeper/colder/further from zero and whose value is the greater number."
+            ],
+            "intendedInsight": "In real contexts, magnitude (how far from zero) and order (which value is greater) answer different questions, and conflating them produces errors like '−40 is the greater number'."
+          }
+        ],
+        "constraints": [
+          "Define |x| strictly as distance from zero on the number line (always ≥0); avoid teaching it as 'remove the minus sign', which hides the meaning and fails for expressions like |x−3|.",
+          "Always pair order and magnitude explicitly (e.g. −7 < −3 but |−7| > |−3|) so learners do not assume greater absolute value means greater number.",
+          "Distinguish |−5| from −5: they are not interchangeable.",
+          "Recognition/matching/true-false items consolidate and check classification but do not elicit independent construction; use them after the number-line meaning is built, not as the primary teaching.",
+          "The static annotated line is a scaffold that lacks live movement across zero; if used alone, add tasks where learners trace the distance changing on both sides of zero.",
+          "A 3D representation was judged to add little because absolute value is a one-dimensional distance; this is a design judgement for this topic, not a general claim that 3D adds nothing to learning."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "Both cited standards sources are marked verified:false in the source row; treat the citations as unconfirmed.",
+          "The original rated a quiz and a 3D interactive by catalog 'fit'; those ranking labels were removed and the quiz and dialogue retained as supporting approaches with distinct pedagogical purposes.",
+          "Arithmetic and logic checked: |−8| = 8; −3 > −8 while |−8| > |−3|; −40 < −15 while |−40| > |−15|; −5 < 5 with |−5| = |5| — all consistent across every action, feedback item and note."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": null,
+        "probeDeeper": [
+          "On a number line, which is further from zero, −8 or −3?",
+          "Can an absolute value ever be negative? Why not?",
+          "A diver at −8 m and one at −3 m: who is deeper, who is further from the surface, and whose depth is the 'bigger' number?"
+        ],
+        "correctAnswer": "−3 is the greater number (it is closer to zero / further right on the number line). But −8 has the greater absolute value, because |−8| = 8 and |−3| = 3 — absolute value is distance from zero, ignoring direction.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Orders negatives by magnitude: '−8 is greater than −3 because 8 > 3'",
+            "nextMove": "Place both on a number line: −3 sits to the right of −8, so −3 is greater. Reason from position, not digit size.",
+            "distractor": "−8 is the greater number.",
+            "revealedBy": "Child ranks −8 above −3 when asked which is the greater number.",
+            "reteachPrerequisiteId": "mt_9QzSnn8m80"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Thinks absolute value keeps the sign: |−8| = −8",
+            "nextMove": "Define absolute value as distance from zero — a length, never negative. Read |−8| off the number line as 8 units.",
+            "distractor": "The absolute value of −8 is −8.",
+            "revealedBy": "Child gives a negative absolute value.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Assumes greater absolute value means greater number (treats the two comparisons as identical)",
+            "nextMove": "Use a context (−8°C vs −3°C): −8 is colder/lower yet 'further from zero'. Name the two different questions explicitly.",
+            "distractor": null,
+            "revealedBy": "Child gives the same answer to both questions.",
+            "reteachPrerequisiteId": "mt_9QzSnn8m80"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Orders negatives by magnitude or gives a negative absolute value; treats the two comparisons as the same.",
+          "full": "Distinguishes ordering (−3 > −8) from absolute value (|−8| > |−3|), defines |x| as distance from zero, and applies both correctly in context.",
+          "partial": "Computes absolute values correctly but still conflates 'greater absolute value' with 'greater number' in context."
+        },
+        "diagnosticPrompt": "Ask: 'Which is the greater number, −8 or −3? And which has the greater absolute value? How do you know?'",
+        "whatMakesItDiscriminate": "Asking for BOTH the ordering and the absolute value in one prompt forces the child to separate 'which is bigger' from 'which is further from zero'. A child conflating them gives the same answer twice; a child who understands gives opposite answers and can justify each by the number line."
+      },
+      "sources": [
+        {
+          "claim": "6.NS.C.7c/7d: understand absolute value as distance from 0, interpret it as magnitude in context, and distinguish absolute-value comparisons from order statements.",
+          "source": "Common Core State Standards for Mathematics, The Number System Grade 6",
+          "url": "https://www.thecorestandards.org/Math/Content/6/NS/",
+          "verified": false
+        },
+        {
+          "claim": "KS3 number work develops reasoning with negative numbers and magnitude on the number line, underpinning absolute value / modulus.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS3)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:46:31.682Z",
+        "updatedAt": "2026-10-19T15:21:15.814Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_hCVPYlF-7Y",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Square and cube numbers",
+      "description": "Use integer powers and associated real roots (square, cube, and higher); recognise powers of 2, 3, 4, and 5; distinguish between exact representations of roots and their decimal approximations",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 14,
+      "centrality": 0.06538049303322616,
+      "evidence": [
+        "Calculate squares, cubes, and higher integer powers of whole numbers",
+        "Find square roots and cube roots of perfect squares and perfect cubes",
+        "Recognise key powers (powers of 2 up to 2¹⁰, powers of 3 up to 3⁵, etc.) and distinguish exact roots from approximations"
+      ],
+      "assessmentPrompt": "Can {{name}} work out that √25 = 5 and ∛27 = 3 — knowing these are the inverse of squaring and cubing — and say whether √50 is closer to 7 or 8?",
+      "standards": [
+        "ccss-math:8.EE.2",
+        "uk-nc-2013:KS3.Maths.Num.7"
+      ]
+    },
+    "topicPointer": "/topics/1169",
+    "researchPointer": "/records/439",
+    "research": {
+      "topicId": "mt_hCVPYlF-7Y",
+      "pedagogy": {
+        "summary": "• Age/Topic: 11–14 — use integer powers and associated real roots (square, cube and higher); recognise powers of 2, 3, 4, 5; distinguish exact root representations from decimal approximations.\n• Standards—UK (DfE NC Mathematics, KS3): 'use integer powers and associated real roots (square, cube and higher), recognise powers of 2, 3, 4, 5' and 'distinguish between exact representations of roots and their decimal approximations.'\n• Standards—US (CCSS-M): 8.EE.A.1 (integer exponents) and 8.EE.A.2 (use square-root and cube-root symbols; √2 is irrational); 6.EE.A.1 write and evaluate expressions with whole-number exponents.\n• Operational details: Define a power as repeated multiplication (base^exponent = base multiplied exponent-many times), tying square to area and cube to volume. Present roots as the INVERSE (√ of a perfect square, ∛ of a perfect cube). Distinguish EXACT surd form (√2) from a rounded decimal (≈1.414): the decimal is an approximation, √2 is the precise value. Recognise key power sequences (2¹–2¹⁰ etc.) for fluency. Respect BIDMAS for powers/roots in expressions.\n• Checkpoint — Tier A (age 11): 'Evaluate 5³ and √49.' Tier B: 'Is √20 exact as a decimal? Explain.' Tier C: 'Which is larger, 3⁴ or 4³, and how do you know?'",
+        "bestPractices": [
+          "Define powers as repeated multiplication with square→area and cube→volume made concrete before abstracting to notation",
+          "Present roots explicitly as the inverse of powers (√ undoes squaring, ∛ undoes cubing), including on perfect squares/cubes first",
+          "Draw the exact-vs-approximate line sharply: √2 is the precise value, 1.414 is a rounded approximation that never equals it",
+          "Build fluency with key power sequences (powers of 2, 3, 4, 5) as recognisable landmarks",
+          "Apply order-of-operations (BIDMAS) so powers and roots are evaluated in the right priority within expressions"
+        ],
+        "keyRepresentations": [
+          "Square array (area) for n² and cube stack (volume) for n³",
+          "Inverse-pair diagrams: 7 → (square) 49 → (root) 7",
+          "Power-sequence tables (2¹–2¹⁰, 3¹–3⁵) as landmarks",
+          "Number line contrasting the exact surd √2 with its decimal approximation region"
+        ],
+        "commonMisconceptions": [
+          "Reading n² as n×2 and n³ as n×3 (multiplying by the exponent instead of repeated multiplication)",
+          "Believing a rounded decimal equals the root (1.414 = √2) rather than approximating it",
+          "Assuming every number has a 'nice' exact root, or that √ always yields a whole number",
+          "Confusing square and cube (or their roots), especially in volume/area contexts",
+          "Mishandling powers in BIDMAS — evaluating left-to-right rather than powers before ×/÷"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 11–14: build powers as repeated multiplication (tying n² to area, n³ to volume), roots as the inverse operation, and the distinction between an exact surd (√2, √20) and its never-settling decimal approximation. Fluency with power sequences (powers of 2, 3, 4, 5) and correct order-of-operations handling of powers support the core conceptual work.",
+        "activities": [
+          {
+            "title": "Power/root workbench on arrays",
+            "feedback": [
+              "If a cube comes out as base × exponent (e.g. 4³ = 12), rebuild it: 4³ is a 4×4×4 arrangement totalling 64 — count the repeated factors, not a single multiplication by the small number.",
+              "If a root is halved or divided (e.g. √49 = 24.5), reframe it as a question: '√49 asks what number times itself makes 49?' and test 7×7 = 49.",
+              "If √20 is written as a finished decimal, square your decimal (e.g. 4.47² = 19.9809; 4.472² = 19.998784, still short of 20) to see that these do not give exactly 20. Because 20 is not a perfect square, no terminating decimal squares to exactly 20, so the exact answer stays as √20."
+            ],
+            "rationale": "Manipulating square arrays makes power-as-repeated-multiplication and root-as-inverse concrete, and watching a non-perfect root's decimal refine without terminating makes the exact/approximate distinction visible. The live product, factor string, snapping of perfect squares, and persistent surd label are optional interaction examples that make the mechanism concrete, not required mechanisms.",
+            "sourceClaims": [
+              "KS3 pupils use integer powers and associated real roots (square, cube, higher), recognise powers of 2, 3, 4, 5, and distinguish exact root representations from decimal approximations."
+            ],
+            "learnerActions": [
+              "Set a base and exponent: pick base 3, exponent 2, and watch a 3×3 square fill in reading area = 9; raise the exponent (e.g. to 4) and see a factor string assemble, 3×3×3×3 = 81 (that is 3⁴).",
+              "Switch to root mode: given an area of 49, resize a square until it fits exactly — side 7 — and record √49 = 7.",
+              "Given an area of 20, try to square off a whole-number side; observe that no whole side fits, the exact label √20 stays pinned, and a decimal read-out ticks 4.47…, 4.472… without ever landing.",
+              "State in your own words why √20 is the exact value while the decimal is only ever an approximation."
+            ],
+            "intendedInsight": "A power is repeated multiplication (not base × exponent); a root is the inverse that recovers the side/edge; and for non-perfect roots the surd is the exact value while the decimal only approximates it, never catching up."
+          },
+          {
+            "title": "Build a cube to feel n³ as volume",
+            "feedback": [
+              "If ∛64 is computed as 64 ÷ 3, rebuild the cube: three equal factors 4×4×4 = 64, so the edge is 4.",
+              "If a learner treats every root as exact, contrast ∛64 (exact, 4) with √2 (no terminating decimal)."
+            ],
+            "rationale": "The cube case is genuinely spatial, so a physical or on-screen 3D build adds real meaning for volume and edge. This covers only the cube case: squares are modelled as 2D areas in the array work, and higher powers and the exact/approximate idea need the array and surd work above. Physical unit cubes are real objects with slight thickness used as models of the idealised geometric cube.",
+            "sourceClaims": [
+              "KS3 pupils use integer powers and associated real roots (square, cube, higher), recognise powers of 2, 3, 4, 5, and distinguish exact root representations from decimal approximations."
+            ],
+            "learnerActions": [
+              "Stack unit cubes into an n×n×n cube (e.g. a 4×4×4 cube) and count the total to feel n³ as a volume.",
+              "Reverse the task: given a volume such as 64, find the edge length to establish ∛64 = 4.",
+              "Compare: say whether ∛64 is exact and how that differs from √2."
+            ],
+            "intendedInsight": "Cube numbers and cube roots have a genuine three-dimensional meaning (volume and edge), and perfect cubes give exact roots while numbers like 2 do not."
+          },
+          {
+            "title": "Power-sequence reference wall",
+            "feedback": [
+              "If a value is misread, re-expand its factor string to confirm, e.g. 2⁴ is four 2s multiplied = 16, not 2×4.",
+              "Point out that recognising 64 = 2⁶ = 4³ = 8² shows how the sequences overlap."
+            ],
+            "rationale": "A tap-to-reveal reference supports fluency and recognition of the landmark sequences. It is a reference aid: on its own it does not elicit the repeated-multiplication action or the inverse root operation, which the manipulable activities provide.",
+            "sourceClaims": [
+              "KS3 pupils use integer powers and associated real roots (square, cube, higher), recognise powers of 2, 3, 4, 5, and distinguish exact root representations from decimal approximations."
+            ],
+            "learnerActions": [
+              "Reveal values on a powers-of-2, 3, 4 and 5 wall, reading each value alongside its factor string (e.g. 2⁵ = 2×2×2×2×2 = 32, 5³ = 5×5×5 = 125).",
+              "Use the wall to recognise landmark powers (powers of 2 up to 2¹⁰, powers of 3 up to 3⁵, powers of 4 up to 4⁵ and powers of 5 up to 5⁴) on sight.",
+              "Spot which listed values are perfect squares or perfect cubes."
+            ],
+            "intendedInsight": "Key power sequences become recognisable landmarks that speed recall and help judge whether a root is likely to be exact."
+          },
+          {
+            "title": "Consolidation: evaluate and classify",
+            "feedback": [
+              "For 3 + 2², apply the power to its base first: 2² = 4, then 3 + 4 = 7 — not (3+2)² = 25.",
+              "For the exact/approximate item, √20 is the non-perfect one: its decimal never terminates, so it stays written as √20, while √25 = 5 and √9 = 3 are exact."
+            ],
+            "rationale": "Short evaluation and classification items consolidate fluency and surface whether the exact/approximate distinction and order-of-operations rule have taken hold. Recognition and fill-in items check fluency; they do not by themselves require independent construction of the concept, so they follow the manipulable work rather than replace it.",
+            "sourceClaims": [
+              "8.EE.A.1/A.2: work with integer exponents and use square-root and cube-root symbols; know √2 is irrational."
+            ],
+            "learnerActions": [
+              "Fill in values: 5³ = ___ and √49 = ___.",
+              "Match bases to their power-sequence landmarks (e.g. 3 → 9, 27, 81).",
+              "Decide which of √25, √20, √9 is NOT exact, and explain why.",
+              "Evaluate a mixed expression such as 3 + 2² and explain the order used."
+            ],
+            "intendedInsight": "Once meaning is built, learners can evaluate powers and roots fluently, identify exact versus approximate roots, and apply order of operations correctly."
+          },
+          {
+            "title": "Justify why √2 ≠ 1.414",
+            "feedback": [
+              "If the learner insists 1.41 is exact, have them square it and compare to 2 — the gap (1.9881 ≠ 2) shows it is only an approximation.",
+              "Confirm that the exact value stays written as √2, just as √49 = 7 is exact because 49 is a perfect square."
+            ],
+            "rationale": "A guided justification discussion lets learners defend the exact/approximate distinction in their own words. Squaring candidate decimals gives an objective check rather than relying on assertion.",
+            "sourceClaims": [
+              "8.EE.A.1/A.2: work with integer exponents and use square-root and cube-root symbols; know √2 is irrational."
+            ],
+            "learnerActions": [
+              "Discuss and answer: does 1.414 equal √2? Square 1.41 (= 1.9881) and 1.414 (= 1.999396) and report whether either hits 2.",
+              "Explain why no terminating decimal can equal √2, and what the exact value is."
+            ],
+            "intendedInsight": "√2 is irrational: its decimal never terminates or repeats, so any decimal is only an approximation and the exact value remains the surd √2."
+          }
+        ],
+        "constraints": [
+          "Define powers as repeated multiplication with square→area and cube→volume made concrete before abstracting to notation.",
+          "Present roots explicitly as the inverse of powers (√ undoes squaring, ∛ undoes cubing), starting on perfect squares and perfect cubes.",
+          "Draw the exact-vs-approximate line sharply: √2 is the precise value; 1.414 is a rounded approximation that never equals it.",
+          "Apply BIDMAS so a power binds to its base before +, −, ×, ÷ (3 + 2² = 7, not 25).",
+          "The reference wall and the recognition/fill-in items are fluency aids and do not elicit the repeated-multiplication or inverse-root actions on their own.",
+          "The 3D cube build covers only the cube case; squares, higher powers and the exact/approximate idea need the array and surd activities.",
+          "Physical cube and card/array models have slight real thickness and are approximations of the idealised geometric figures; treat on-screen arrays as models of the number relationship, not as the figures themselves."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "Source claims are marked verified:false in the row; the cited standards support the stated teaching principles but do not establish the comparative efficacy of any specific activity or medium.",
+          "Self-audit arithmetic checks (all consistent with the source): 5³ = 125; √49 = 7; ∛64 = 4; 4³ = 64; 2⁵ = 32; 2⁶ = 64 = 4³ = 8²; 3 + 2² = 7; 1.41² = 1.9881; 1.414² = 1.999396; 4.47² = 19.9809 and 4.472² = 19.998784 (both just under 20), consistent with √20 ≈ 4.472 never landing exactly.",
+          "A trailing-ellipsis display of 4.472² in the first activity's feedback was corrected to the exact product 19.998784 to avoid misstating digits while keeping the 'never reaches 20' point.",
+          "The source's '3×3×3×3 = 81' is 3⁴ = 81; it is stated explicitly as 3⁴ here to avoid confusion with the 3² (area 9) example, since raising the exponent from 2 jumps to 4.",
+          "The original framing that a quiz is only a 'consolidator' and that non-manipulable formats 'cannot build' the concept has been narrowed to scoped affordance statements; catalog fit rankings were not treated as established pedagogical laws.",
+          "The reference-wall activity's source claim was corrected from the CCSS exponent/root-symbol claim to the DfE claim, which directly supports recognising powers of 2, 3, 4, 5."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Why is 4³ = 64 and not 12 — what is actually being multiplied?",
+          "How are squaring and square-rooting related — how did finding √49 use that?",
+          "Is ∛64 exact or approximate? How is that different from √2?",
+          "What if I asked for √50 instead of √49 — what changes about the kind of answer you can give?"
+        ],
+        "correctAnswer": "(1) 64 (4×4×4). (2) √49 = 7, ∛64 = 4. (3) √2 is irrational — its decimal (1.41421…) never terminates or repeats, so 1.41 is only an approximation; the exact value stays written as √2.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'Squaring means times 2, cubing means times 3' — computes 4² as 8 and 4³ as 12.",
+            "nextMove": "Return to the geometric meaning: 4² is a 4×4 square (16 unit squares), 4³ a 4×4×4 cube (64); build one to break the 'times the little number' rule.",
+            "distractor": null,
+            "revealedBy": "Powers come out as the base times the exponent rather than repeated multiplication.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Treats a root as division by 2 or 3 — gives √49 as 24.5.",
+            "nextMove": "Reframe the root as a question — '√49 asks: what number times itself makes 49?' — and test 7×7; connect explicitly to the squaring just done.",
+            "distractor": null,
+            "revealedBy": "Root answers are halves/thirds of the radicand rather than the inverse of a power.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Treats √2 (and other non-perfect roots) as exact terminating decimals — writes √2 = 1.41 with no sense it is rounded.",
+            "nextMove": "Square 1.41 (=1.9881 ≠ 2) and 1.414 (=1.999…) to show no decimal ever hits 2 exactly; establish that the exact value is the surd √2, the decimal is an approximation.",
+            "distractor": null,
+            "revealedBy": "States √2 = 1.41 (or 1.414) as the answer, no hedging, treats it like √49.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Applies the power after other operations — evaluates 3 + 2² as 5² = 25.",
+            "nextMove": "Re-establish order of operations: powers bind to their base before addition, so 3 + 2² = 3 + 4 = 7.",
+            "distractor": null,
+            "revealedBy": "In a mixed expression the exponent is applied to a sum rather than to its base alone.",
+            "reteachPrerequisiteId": "mt_X5cypSGoGU"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Computes powers as base×exponent or roots as division; treats all roots as exact decimals.",
+          "full": "Computes integer powers and perfect roots fluently, and distinguishes exact surd representations from their decimal approximations, justifying why a non-perfect root never terminates.",
+          "partial": "Calculates perfect powers and roots correctly but cannot articulate why √2 is only approximable, or slips on order of operations in mixed expressions."
+        },
+        "diagnosticPrompt": "Work these on paper, showing what you do. (1) Calculate 4³. (2) Find √49 and ∛64. (3) Is √2 an exact number you can write down fully, or an approximation? Explain.",
+        "whatMakesItDiscriminate": "Watch the working. A child with the power/root concept builds 4×4×4 and reverses squaring to root; a child running on a corrupted rule computes 4×3=12 for the cube or halves for the root. The √2 task is the sharp one: only a child who distinguishes exact surds from decimal approximations resists writing √2 = 1.41 as if it were exact."
+      },
+      "sources": [
+        {
+          "claim": "KS3 pupils use integer powers and associated real roots (square, cube, higher), recognise powers of 2, 3, 4, 5, and distinguish exact root representations from decimal approximations.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS3)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": false
+        },
+        {
+          "claim": "8.EE.A.1/A.2: work with integer exponents and use square-root and cube-root symbols; know √2 is irrational.",
+          "source": "Common Core State Standards for Mathematics, Expressions & Equations Grade 8",
+          "url": "https://www.thecorestandards.org/Math/Content/8/EE/",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:47:15.182Z",
+        "updatedAt": "2026-10-19T15:20:38.208Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  },
+  {
+    "topic": {
+      "id": "mt_b4lbTOJYwI",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "name": "Number Sets & Infinity",
+      "description": "Appreciate the infinite nature of the sets of integers, real numbers, and rational numbers; position integers on a number line and distinguish between rational and irrational numbers",
+      "ageRangeStart": 13,
+      "ageRangeEnd": 14,
+      "centrality": 0.09646302250803858,
+      "evidence": [
+        "Explain that rational numbers can be written as a fraction of two integers and have terminating or repeating decimals",
+        "Give examples of irrational numbers and explain why their decimal expansions neither terminate nor repeat",
+        "Appreciate that between any two numbers there are infinitely many other numbers"
+      ],
+      "assessmentPrompt": "Can {{name}} explain that numbers like √2 and π can't be written as exact fractions — and that their decimal expansions go on forever without repeating?",
+      "standards": [
+        "ccss-math:8.NS.1",
+        "ccss-math:8.NS.2",
+        "uk-nc-2013:KS3.Maths.Num.16"
+      ]
+    },
+    "topicPointer": "/topics/1172",
+    "researchPointer": "/records/243",
+    "research": {
+      "topicId": "mt_b4lbTOJYwI",
+      "pedagogy": {
+        "summary": "• Age/Topic: 13–14 — appreciate the infinite nature of the sets of integers, rational and real numbers; position numbers on a number line; distinguish rational from irrational numbers.\n• Standards—UK (DfE NC Mathematics, KS3): develops the number system — rational numbers, the reals, and the distinction of irrationals (e.g. √2, π) — and the density/infinity of number sets.\n• Standards—US (CCSS-M): 8.NS.A.1 (know numbers that are not rational are irrational; every rational has a terminating or repeating decimal, and conversely) and 8.NS.A.2 (approximate irrationals and locate them on a number line).\n• Operational details: A rational number can be written as a fraction of two integers and its decimal either TERMINATES or REPEATS; an irrational number's decimal neither terminates nor repeats (√2, π). Contrast the countable infinity of integers/rationals with the idea that between ANY two numbers lie infinitely many more (density). Locate irrationals approximately on the line via their decimal expansions. Distinguish 'infinite decimal' (can be rational, e.g. 0.333…) from 'irrational'.\n• Checkpoint — Tier A (age 13): 'Is 0.75 rational? Give its fraction.' Tier B: 'Explain why √2 is irrational, not just \"it has lots of decimals\".' Tier C: 'Name a number between 0.12 and 0.13, then argue there are infinitely many.'",
+        "bestPractices": [
+          "Define rational as expressible as a ratio of integers, tied to terminating OR repeating decimals; irrational as neither terminating nor repeating",
+          "Guard against 'infinite decimal = irrational' — 0.333… is infinite yet rational (1/3); the test is repetition, not length",
+          "Use density concretely: repeatedly find a number between two numbers to show infinitely many lie between any pair",
+          "Locate irrationals (√2 ≈ 1.414…, π ≈ 3.1415…) approximately on a number line while keeping their exact symbolic form",
+          "Give canonical irrational examples (√2, π, non-repeating constructed decimals) and canonical rationals (fractions, terminating/repeating decimals)"
+        ],
+        "keyRepresentations": [
+          "Zoomable number line demonstrating density (always another number between two)",
+          "Decimal-expansion classifier: terminating / repeating (rational) vs non-terminating-non-repeating (irrational)",
+          "Set nesting diagram: integers ⊂ rationals ⊂ reals, with irrationals filling the gaps",
+          "Fraction ↔ decimal conversions showing why some terminate and some repeat"
+        ],
+        "commonMisconceptions": [
+          "Believing any number with infinitely many decimals is irrational (0.333… is rational)",
+          "Thinking √2 or π 'equal' their rounded decimals (1.414, 3.14)",
+          "Assuming there is a 'next' number after a given one, or a smallest gap on the line",
+          "Confusing 'irrational' with 'very large' or 'undefined' rather than non-repeating-non-terminating",
+          "Thinking there are finitely many numbers between two close decimals like 0.12 and 0.13"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 13–14: build the distinction between rational and irrational numbers from the decimal signature (terminating OR repeating = rational; non-terminating AND non-repeating = irrational) and develop the idea of density — that infinitely many numbers lie between any two distinct numbers. The guidance aims to counter the 'infinite decimal = irrational' and 'discrete line' misconceptions, and to keep irrationals (√2, π) in their exact symbolic form while locating them approximately on a number line.",
+        "activities": [
+          {
+            "title": "Decimal-signature classifier: repetition, not length, decides",
+            "feedback": [
+              "If a learner calls 0.333… irrational 'because it goes on forever', have them find and box the repeating 3 and write it as 1/3 — length is not the test; a repeat means rational.",
+              "If a learner calls √9 irrational 'because of the root sign', have them evaluate √9 = 3, a ratio of integers, and contrast with √2 whose value is not any such ratio; the symbol does not decide it.",
+              "If a learner treats 1.414 as 'equal to' √2, show the expansion continuing past those digits and keep the exact √2 pinned alongside the approximation."
+            ],
+            "rationale": "Classifying by decimal signature is intended to address the most common misconceptions (infinite-means-irrational, root-sign-means-irrational) and connects the fraction definition to its decimal behaviour. A streaming classifier that highlights a repeating block may make the repetition test concrete. If it reports 'no repeating block found', that only describes the digits shown, so irrationality must come from proof. This is an optional interaction example, not a required mechanism.",
+            "sourceClaims": [
+              "8.NS.A.1/A.2: rational numbers have terminating or repeating decimals (and conversely), irrational numbers do not; approximate irrationals and locate them on a number line.",
+              "KS3 pupils develop the number system to include rationals, reals and the distinction of irrational numbers, and reason about the density/infinity of number sets."
+            ],
+            "learnerActions": [
+              "Take a set of numbers: 0.75, 0.333…, 3/8, 0.25, √2, π, √9, 0.142857142857… (1/7).",
+              "For each, write out or stream the decimal expansion and decide whether it TERMINATES or REPEATS. For √2 and π, note that a finite list of digits can never show that a decimal does NEITHER: some rationals have very long repeating blocks (1/97 repeats only after 96 digits). We know √2 and π are irrational because it has been proved, so their decimals never terminate or repeat.",
+              "Mark the repeating block when there is one (e.g. box the 3 in 0.3̅, or the 142857 in 1/7) and write the equivalent fraction.",
+              "State a rule in your own words for deciding rational vs irrational, then test it against √9 = 3 and 0.333…",
+              "Keep √2 and π written exactly as symbols, noting that 1.414… and 3.14… are only approximations.",
+              "Locate √2 and π approximately on a number line (e.g. √2 just past 1.4, between 1 and 2; π between 3 and 4) using their decimal approximations, while keeping the exact symbol pinned alongside."
+            ],
+            "intendedInsight": "A number is rational exactly when it can be written as a ratio of two integers — which shows up as a terminating OR repeating decimal. The deciding feature is whether the digits settle into a repeat, not how many digits there are: 0.333… is endless yet rational (=1/3). √2 is proved to be irrational, so its expansion never repeats. Checking a finite number of digits could never establish that on its own."
+          },
+          {
+            "title": "Squeeze another number in: density of the line",
+            "feedback": [
+              "If a learner says 'none' or a small finite count lie between two close fractions, walk through the averaging process twice. Then argue that averaging any two distinct numbers always gives a new number strictly between them, so the process never terminates and the count is infinite.",
+              "If a learner imports 'consecutive neighbours' from whole numbers, contrast finding the number after 5 (which is 6) with trying to find the number right after 0.12 — no such number exists.",
+              "Confirm when a learner articulates that the squeezing process has no end and therefore infinitely many numbers lie in any interval."
+            ],
+            "rationale": "Repeatedly constructing an in-between number makes density an action the learner performs rather than a fact to accept, and is intended to address the consecutive-number carryover. A zoomable number line that names a between-number then zooms to offer another is an optional interaction example that may make the 'well never runs dry' idea vivid; it is not the only way to teach density.",
+            "sourceClaims": [
+              "KS3 pupils develop the number system to include rationals, reals and the distinction of irrational numbers, and reason about the density/infinity of number sets."
+            ],
+            "learnerActions": [
+              "Name two close numbers, e.g. 0.12 and 0.13 (or 1/4 and 1/3).",
+              "Find a number strictly between them — averaging the two is one reliable method (e.g. 0.125).",
+              "Now find a number between THAT one and the upper end, and again, and again.",
+              "Argue why this process can never run out, and conclude how many numbers lie between the original pair.",
+              "Explain why there is no 'next' number after a given one, unlike the integers."
+            ],
+            "intendedInsight": "Between any two distinct numbers there are infinitely many others, so the number line is dense: there is no smallest gap and no 'next' number. This contrasts with the discrete, consecutive structure of the integers."
+          },
+          {
+            "title": "Dialogue: why √2 cannot be a fraction",
+            "feedback": [
+              "If a learner justifies √2's irrationality only by 'it has lots of decimals', redirect to the structural argument that no integer ratio can equal it.",
+              "If a learner claims a number comes 'right after' 0.12, ask them to name it, then name one between 0.12 and their answer — surfacing density.",
+              "Acknowledge that the full proof-by-contradiction is challenging; partial reasoning that grasps 'no integer ratio works' is valuable progress."
+            ],
+            "rationale": "This philosophically rich topic (what infinity means, why √2 is not a fraction, whether there is a next number) suits Socratic dialogue that can probe and challenge intuitions. Dialogue is offered as a complementary approach to the manipulatives, each exposing different facets; it is not claimed to be superior to or necessary over hands-on classification.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Work through the classic argument: suppose √2 = a/b in lowest terms, and reason about whether a and b can both be chosen with no common factor.",
+              "Respond to Socratic prompts about what would have to be true of a² and b², and where a contradiction arises.",
+              "Then tackle the intuition probe: 'Is there a number right after 0.12?' and explain your answer.",
+              "Try to write π as a fraction of two whole numbers (e.g. 22/7 or 355/113) and check that these are only approximations. Note that mathematicians have proved π is irrational, though the proof is beyond this level, which is why its decimal never terminates or repeats."
+            ],
+            "intendedInsight": "Some numbers genuinely cannot be written as a ratio of integers — this is a provable fact, not just 'it has lots of decimals'. Engaging with the proof-by-contradiction and the 'no next number' question deepens understanding of what irrationality and density actually mean."
+          },
+          {
+            "title": "Reference anchor: nested number sets",
+            "feedback": [
+              "If a learner places √9 among the irrationals, have them evaluate it (=3) and move it into the integers/rationals.",
+              "If a learner cannot place 0.333…, have them recall its fraction (1/3) and place it with the rationals."
+            ],
+            "rationale": "A set-nesting diagram is a useful static reference that organises the vocabulary and relationships. Note its limit: a fixed diagram anchors structure but does not by itself demonstrate density or classify expansions dynamically, so pair it with the active tasks above.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Study a nested-sets diagram: integers ⊂ rationals ⊂ reals, with irrationals filling the gaps in the reals.",
+              "For each region, note example numbers and their decimal signature (terminating / repeating / non-repeating).",
+              "Place given numbers into the correct region and justify the placement by the rational/irrational test."
+            ],
+            "intendedInsight": "The number systems nest: every integer is rational, every rational is real, and irrationals occupy the reals that are not rational. This gives a map for where any number sits."
+          },
+          {
+            "title": "Consolidation: sort and justify",
+            "feedback": [
+              "Recognition sorting confirms classification but does not by itself show independent reasoning — require a stated justification for each item.",
+              "If a learner picks the wrong item, ask them to name the decimal signature that justifies each option before re-choosing."
+            ],
+            "rationale": "Sorting and selected-response items cleanly assess the decimal-signature distinction and make good consolidators AFTER the concept is constructed. Treat selected-response as a check that follows construction; requiring a justification keeps it from being pure recognition.",
+            "sourceClaims": [
+              "8.NS.A.1/A.2: rational numbers have terminating or repeating decimals (and conversely), irrational numbers do not; approximate irrationals and locate them on a number line."
+            ],
+            "learnerActions": [
+              "Sort a mixed set (e.g. 0.333…, √2, 3/8, 0.25, √9, π) into rational vs irrational.",
+              "Choose which of a list is irrational and explain the reason, not just the choice (e.g. 'which is irrational: 0.333…, √2, 3/8, 0.25?').",
+              "Given a repeating decimal, write the equivalent fraction.",
+              "For a classification you make, state the decision rule you applied."
+            ],
+            "intendedInsight": "Once the concepts are built, fluent classification and fraction-recovery confirm that the learner applies the repetition/ratio test rather than surface cues."
+          }
+        ],
+        "constraints": [
+          "Keep irrationals in exact symbolic form (√2, π); treat 1.414… and 3.14… as approximations, never as equal to the exact value.",
+          "The decision test is repetition/terminability (equivalently, expressibility as a ratio of integers), NOT how long or 'messy' the decimal looks — 0.333… is rational.",
+          "The root symbol does not determine irrationality: √9 = 3 is rational while √2 is irrational; evaluate the value.",
+          "A static nested-sets diagram is a reference scaffold: it anchors vocabulary and structure but does not demonstrate density or dynamically classify expansions, so it should accompany active tasks.",
+          "Selected-response/sorting tasks are consolidators that follow concept-building; pair them with required justifications so they elicit reasoning rather than recognition alone.",
+          "Tier the challenge: age-13 checkpoint 'Is 0.75 rational? Give its fraction'; mid 'Explain why √2 is irrational, not just that it has lots of decimals'; stretch 'Name a number between 0.12 and 0.13, then argue there are infinitely many.'"
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified, and the activities are research-informed proposals, not validated interventions.",
+          "The original 'conversation' entry's proof-by-contradiction for √2 is mathematically standard but demanding for ages 13–14; it is retained as an exploratory dialogue with the caveat that partial reasoning is acceptable, and is not asserted as more effective than the manipulative approaches.",
+          "The original claims that a dialogue can probe intuitions 'in ways a manipulative cannot' and that '3D adds nothing' were catalog fit-rankings; these have been softened or dropped — the 3D option was omitted as it carried no distinct learning action and risked implying spurious structure on a one-dimensional topic.",
+          "The pedagogy's contrast between the countable infinity of integers/rationals and the density of the reals is an advanced nuance; this rewrite develops density but does not separately treat countability — add it only if learners are ready.",
+          "The two reteach prerequisite IDs and one null in the source error patterns are internal references not reproduced in learner-facing guidance."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": null,
+        "probeDeeper": [
+          "What is the actual test for whether a decimal is rational — length, or something else?",
+          "Give me a number between 1/4 and 1/3 — now one between THAT and 1/3.",
+          "Is √16 rational or irrational? How do you decide?",
+          "Can you write π as a fraction of two whole numbers? Why does that matter here?"
+        ],
+        "correctAnswer": "0.333... is rational — it equals 1/3, a ratio of two integers, and a repeating decimal is always rational. There are infinitely many numbers between 1/4 and 1/3 (indeed between any two distinct numbers).",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'Non-terminating decimal = irrational' — calls 0.333... irrational because it never ends.",
+            "nextMove": "Distinguish repeating (rational: 0.333...=1/3, 0.142857...=1/7) from non-repeating-non-terminating (irrational: π, √2); the test is the pattern, not the length.",
+            "distractor": "Irrational — it goes on forever.",
+            "revealedBy": "Child cites 'goes on forever' as proof of irrationality, ignoring the repeat.",
+            "reteachPrerequisiteId": "mt_SBkTGjiZjZ"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Consecutive-number / discreteness carryover — thinks there are no (or only a few) numbers between 1/4 and 1/3, as if fractions have 'next' neighbours like integers.",
+            "nextMove": "Find a number between (e.g. average them), then between that and 1/3, and again — show the process never stops, so infinitely many lie between; the line is dense.",
+            "distractor": "None — they're right next to each other.",
+            "revealedBy": "Child answers 'none', 'one', or a small finite count for numbers between the two fractions.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "'Irrational = anything with a root or a messy decimal' — calls √9 irrational, or thinks all surds are irrational.",
+            "nextMove": "Evaluate √9 = 3 (rational) versus √2 (irrational); the root symbol does not decide it — whether the value is a ratio of integers does.",
+            "distractor": "√9 is irrational because it's a root.",
+            "revealedBy": "Child labels √9 (=3) or a rounded decimal as irrational on sight of the root sign.",
+            "reteachPrerequisiteId": "mt_hCVPYlF-7Y"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Equates infinite/root with irrational; treats the line as discrete (finite numbers between fractions).",
+          "full": "Classifies by whether a value is a ratio of integers (repeating/terminating = rational; non-repeating-non-terminating = irrational), gives correct examples, and explains that infinitely many numbers lie between any two distinct numbers.",
+          "partial": "Can classify clear cases but relies on 'goes on forever' or the root sign as the test, or is unsure about density between fractions."
+        },
+        "diagnosticPrompt": "Is 0.333... (the 3 repeating forever) rational or irrational? And how many numbers are there between 1/4 and 1/3? Explain both.",
+        "whatMakesItDiscriminate": "A child with the rational/irrational distinction knows 'goes on forever' is not the test — REPEATING or terminating means rational, only non-repeating-non-terminating is irrational — and grasps the density of the number line. A child equating 'infinite decimal' with 'irrational', or importing whole-number 'consecutive' thinking, answers differently and reveals the misconception in the reason."
+      },
+      "sources": [
+        {
+          "claim": "8.NS.A.1/A.2: rational numbers have terminating or repeating decimals (and conversely), irrational numbers do not; approximate irrationals and locate them on a number line.",
+          "source": "Common Core State Standards for Mathematics, The Number System Grade 8",
+          "url": "https://www.thecorestandards.org/Math/Content/8/NS/",
+          "verified": false
+        },
+        {
+          "claim": "KS3 pupils develop the number system to include rationals, reals and the distinction of irrational numbers, and reason about the density/infinity of number sets.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS3)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-09T13:49:47.036Z",
+        "updatedAt": "2026-10-19T15:19:56.845Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    }
+  }
+]

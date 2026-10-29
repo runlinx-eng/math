@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "423 unique nodes",
+    "three directions remain",
+    "one short slicing route",
+    "FH contains two nodes",
+    "route survives refresh",
+    "wrong first prediction is retained and marks support",
+    "drag rotates the real 3D model",
+    "first cut position and original prose retained",
+    "simulated next day shows exact question",
+    "original unfinished model and wrong prediction restored",
+    "later cut position kept as displaced draft",
+    "question words restored",
+    "lesson camera restored",
+    "world camera restored",
+    "actual backup contains original cut",
+    "repeat import keeps question and support",
+    "import opens original question",
+    "all six B27 files cached",
+    "original work opens offline",
+    "offline slice comparison completes",
+    "wrong prediction remains assisted",
+    "first wrong prediction persists",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v32",
+    "count": 173,
+    "modules": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

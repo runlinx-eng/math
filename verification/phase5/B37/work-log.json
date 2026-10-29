@@ -1,0 +1,11 @@
+{
+  "batch": "B37",
+  "startedAt": "2026-10-28T08:42:19.866466+00:00",
+  "snapshot": "snapshots/v41-before-b37-20261028T164218.tar.gz",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "activeHours": null,
+  "finishedAt": "2026-10-28T09:07:16.771360+00:00",
+  "checks": "verification/phase5/B37/summary.json"
+}

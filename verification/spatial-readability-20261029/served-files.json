@@ -1,0 +1,34 @@
+[
+  {
+    "file": "dist/space.js",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/space.css",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/spatial-scene.js",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/spatial-global.js",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/spatial-labels.js",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/index.html",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/sw.js",
+    "servedMatchesDisk": true
+  },
+  {
+    "file": "dist/exploration.js",
+    "servedMatchesDisk": true
+  }
+]

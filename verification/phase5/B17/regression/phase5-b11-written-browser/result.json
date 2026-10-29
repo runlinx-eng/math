@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "columnlarge:0 real controls complete",
+    "columnlarge:1 real controls complete",
+    "columnlarge digit input keeps focus",
+    "columnlarge written digits align with actual unit columns",
+    "columnlarge no page overflow",
+    "decimalsum:0 real controls complete",
+    "decimalsum:1 real controls complete",
+    "decimalsum:2 real controls complete",
+    "decimalsum digit input keeps focus",
+    "decimalsum written digits align with actual unit columns",
+    "decimalsum no page overflow",
+    "no runtime errors"
+  ],
+  "errors": []
+}

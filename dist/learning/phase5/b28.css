@@ -1,0 +1,15 @@
+.m28-world{width:100%;max-width:800px;margin:auto;border-radius:16px;background:#f4f7ed}
+.m28-svg{display:block;width:100%;height:auto;max-height:430px;color:#395c4a;font:15px ui-rounded,"PingFang SC",sans-serif}
+.m28-svg text{fill:#395c4a;font-size:15px}.m28-svg .m28-digital{font-size:42px;font-weight:650;letter-spacing:2px}
+.m28-svg [role=button]{cursor:pointer;outline-offset:3px}
+.m28-controls{display:grid;gap:.65rem;color:#315146;padding:.3rem 0 1rem}
+.m28-controls p{margin:.1rem 0;line-height:1.55}
+.m28-controls>button{justify-self:start}
+.m28-buttons{display:flex;gap:.45rem;flex-wrap:wrap}
+#extra-controls .m28-controls button[aria-pressed=true]{background:#3d765f;color:white;border-color:#3d765f}
+.m28-range,.m28-field{display:grid;gap:.35rem;max-width:460px}
+.m28-range input{width:100%;accent-color:#538b70}
+.m28-field input,.m28-field select{border:1px solid #afc6b6;border-radius:8px;padding:.55rem .7rem;min-height:38px;background:#fff}
+.m28-issue{padding:.6rem .8rem;background:#fff0dc;border-radius:10px}
+.m28-success{padding:.6rem .8rem;background:#e3f1e3;border-radius:10px}
+.m28-controls small{display:block;color:#5f7569}

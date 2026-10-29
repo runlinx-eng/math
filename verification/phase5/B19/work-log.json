@@ -1,0 +1,11 @@
+{
+  "batch": "B19",
+  "startedAt": "2026-10-27T01:17:30.676157+00:00",
+  "snapshot": "snapshots/v23-before-b19-20261027T011729Z.tar.gz",
+  "activeHours": null,
+  "reason": "Interrupted wall-clock time is not active labor.",
+  "finishedAt": "2026-10-27T01:56:11.693114+00:00",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false
+}

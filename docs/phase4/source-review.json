@@ -1,0 +1,2742 @@
+[
+  {
+    "id": "mt_UTnDKQkVX5",
+    "sourceName": "Rows & Columns in Rectangles",
+    "learningGoals": [
+      "Divide a rectangle into equal rows and columns of unit squares",
+      "Count the total number of squares using repeated addition or skip counting",
+      "Relate the rows-and-columns structure to a rectangular array"
+    ],
+    "currentPackId": "groups",
+    "plannedPackId": "groups",
+    "plannedThemeId": "numbers",
+    "groupId": "g-table",
+    "unitId": "B02-U01",
+    "batchId": "B02",
+    "familyId": "array",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/862",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build and read a tiled rectangle grid",
+          "jsonPointer": "/records/862/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Partition on paper and count by structure (performance task)",
+          "jsonPointer": "/records/862/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Check the equal-unit requirement and the array link",
+          "jsonPointer": "/records/862/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build and read a tiled rectangle grid",
+        "learnerActions": [
+          "Set the number of rows and the number of columns for a rectangle, and watch it fill with same-size squares that snap to a grid; if a partition leaves gaps or overlaps, notice it flagged and correct it so the squares are equal and aligned.",
+          "First count the squares one-by-one (slowly), then switch to a rows × columns view and watch the same rectangle resolve to its total instantly — e.g. 4 rows of 6 squares becoming 4×6 = 24.",
+          "Write the multiplication fact that matches the grid you built, and say how many squares are in each row and how many rows there are.",
+          "Add one more column (or one more row) and predict the new total before revealing it."
+        ],
+        "intendedInsight": "A rectangle tiled with equal squares is a rectangular array; its total comes from rows × columns, not from counting each square, and this square-count is what area will later measure.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Rectangle partitioned into a grid of equal unit squares",
+        "Rows × columns structure (the array within the grid)",
+        "Link to a multiplication fact for the total",
+        "Precursor to the area-by-counting-squares model"
+      ],
+      "commonMisconceptions": [
+        "Partitioning into unequal squares/pieces (not same-size units).",
+        "Leaving gaps or overlapping squares when tiling.",
+        "Counting every square one-by-one instead of using rows × columns.",
+        "Confusing the number of rows with the number of squares in a row.",
+        "Not connecting the grid count to a multiplication fact (treating it as pure counting)."
+      ],
+      "constraints": [
+        "Squares must be the same size and tile the rectangle with no gaps or overlaps — this equal-unit requirement is what makes the count structural and underpins area.",
+        "Do not force the rows × columns shortcut; the structural count is adopted with exposure. A child who partitions correctly but still counts one-by-one has a developmental gap, not an error to penalise.",
+        "A static labelled grid (tap-to-reveal rows, columns, total) is a useful reference but cannot let the child vary the grid or contrast counting versus structure, so use it alongside, not instead of, construction tasks.",
+        "Recognition/matching items check that the structure is understood but do not elicit independent construction of a partition; pair them with a hands-on partition task.",
+        "Keep this planar: volume and 3D packing are a separate later topic and are not part of this objective.",
+        "A paper/card rectangle has slight real thickness; treat it as an approximation of the ideal flat figure when discussing the squares as area units, and talk about the mathematical shape represented, not the physical sheet."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/862/assess",
+      "sourceBibliographyPointer": "/records/862/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_Mnodea7mG_",
+    "sourceName": "Edges, vertices, and faces",
+    "learningGoals": [
+      "Count the edges, vertices, and faces of common 3-D shapes",
+      "Use the terms edge, vertex (vertices), and face correctly",
+      "Describe a 3-D shape by its properties (e.g. a cube has 6 faces, 12 edges, 8 vertices)"
+    ],
+    "currentPackId": "solids",
+    "plannedPackId": "solids",
+    "plannedThemeId": "space",
+    "groupId": "so-see",
+    "unitId": "B02-U02",
+    "batchId": "B02",
+    "familyId": "solid",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/617",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Count a real cube by touch in a fixed order",
+          "jsonPointer": "/records/617/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict then count the hidden features",
+          "jsonPointer": "/records/617/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Flat face versus curved surface",
+          "jsonPointer": "/records/617/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Faces as 2-D shapes and nets",
+          "jsonPointer": "/records/617/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Check and explain the counts",
+          "jsonPointer": "/records/617/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Count a real cube by touch in a fixed order",
+        "learnerActions": [
+          "Hold a real cube and turn it in your hands.",
+          "Count the faces first: colour or number each flat surface as you touch it, saying 'face' each time, until every face is marked. Record the total.",
+          "Then trace each edge with a finger, marking each traced edge (e.g. a gold line or sticker), saying 'edge' each time, until all are traced. Record the total.",
+          "Then dot each vertex (corner) with a sticker, saying 'vertex' each time. Record the total.",
+          "Recount starting from a different face to check your totals stay the same (6 faces, 12 edges, 8 vertices)."
+        ],
+        "intendedInsight": "A face, an edge and a vertex are three different things; counting each property separately in a fixed order, and marking features as you go, keeps them distinct and makes sure nothing hidden is missed or double-counted.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Handleable solids (cube, cuboid, pyramid, sphere, cylinder, cone) counted by touch",
+        "Colour-a-face / trace-an-edge / dot-a-vertex marking system while counting",
+        "Nets that fold up into the solid, showing each face as a separate 2-D shape",
+        "A cube-vs-cylinder pair to contrast flat faces with a curved surface"
+      ],
+      "commonMisconceptions": [
+        "Blurs faces, edges and vertices under everyday words, calling edges 'sides' and vertices 'corners' so the three properties run together when counting.",
+        "Counts only the faces/edges/vertices that are visible, missing the hidden ones on the far side (gives a cube 3 faces, 9 edges or 4 corners).",
+        "Counts a curved surface as a 'face' and the curved boundary line as an 'edge' (e.g. says a cylinder has 3 faces).",
+        "Treats the whole solid as if it were the 2-D shape of a face, not distinguishing the flat face from the 3-D object."
+      ],
+      "constraints": [
+        "Tap-to-reveal or labelled-model activities that show a feature's name and definition on tap can teach vocabulary, but they display the answer rather than requiring the child to build the count or feel the flat-versus-curved distinction; use them to introduce terms, not to replace counting.",
+        "A flat-screen tally that colours each tapped face/edge/vertex can build the keep-them-distinct skill, but a flat screen makes it harder to reveal hidden features on the far side — a main source of miscounting; pair it with a solid the child can turn.",
+        "A rotatable on-screen 3-D model lets a child turn the solid to catch hidden features and can toggle to a cylinder for the curved-surface convention; it is one good way to surface the hidden-feature error, but real solids in the hand should confirm what the screen shows, and the on-screen model should be understood as a model of the solid, not the solid itself.",
+        "Scored recall questions check whether a child remembers counts; they do not on their own build the counting strategy or the property distinction, so use them as an end-check.",
+        "Always state explicitly which convention you are using for describing curved solids, because schemes differ.",
+        "Paper nets and card cutouts have a slight real thickness and are approximations of the ideal flat faces, which have no thickness; use them to represent faces but keep attention on the flat 2-D shape represented rather than on picking up or handling the card as a definition of the shape.",
+        "Recognising or recalling counts is not the same as producing a reliable count by handling and tracking features; expect production, not only recognition."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/617/assess",
+      "sourceBibliographyPointer": "/records/617/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_vnJEztczji",
+    "sourceName": "Nets of 3-D Shapes",
+    "learningGoals": [
+      "Draw the net of a cube, cuboid, or triangular prism and fold it mentally to identify which faces connect",
+      "Build a 3-D shape from its net and check that all faces, edges, and vertices match",
+      "Identify which of several given nets will fold into a specific 3-D shape and explain why the others won't"
+    ],
+    "currentPackId": "solids",
+    "plannedPackId": "solids",
+    "plannedThemeId": "space",
+    "groupId": "so-open",
+    "unitId": "B02-U03",
+    "batchId": "B02",
+    "familyId": "solid",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/889",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Predict then fold: does this arrangement close into a cube?",
+          "jsonPointer": "/records/889/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Anchor a base and track where every square lands",
+          "jsonPointer": "/records/889/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Make it fail, then make a new one",
+          "jsonPointer": "/records/889/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Extend the reasoning to other solids",
+          "jsonPointer": "/records/889/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Predict then fold: does this arrangement close into a cube?",
+        "learnerActions": [
+          "Look at a flat arrangement of six squares and, before folding, commit to a prediction: 'will this fold into a closed cube?' and say WHY.",
+          "Fold the arrangement (physical card/Polydron cut-outs, or by folding a paper net) to check the prediction — treating the card as a stand-in for the ideal flat net and asking about the cube it would form, not about the card as an object.",
+          "Start with the familiar cross/T net, then meet an unfamiliar 'staircase' zig-zag (2-2-2) net and predict it before folding.",
+          "Fold the staircase and observe that it ALSO closes into a cube, with every face covered once and no face left open (allowing for slight gaps from card thickness).",
+          "Try a 2-by-3 block of six squares: predict, fold, and watch squares overlap onto the same face while other cube faces are left uncovered."
+        ],
+        "intendedInsight": "Whether a net closes into a cube is decided by the ARRANGEMENT of the squares, not merely by having six of them. Unfamiliar nets can be valid and prototype-looking blocks can fail.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Physical fold-up nets (card, Polydron) folded and unfolded from the solid",
+        "The eleven cube nets chart; the T/cross prototype set beside non-standard nets",
+        "Base-face plus a 'line of four squares' composite",
+        "Face-to-face mapping diagram linking each net shape to a solid face"
+      ],
+      "commonMisconceptions": [
+        "Only the familiar T/cross net makes a cube (prototype-as-only-net; Mariotti 1989) — other valid nets are rejected and near-prototypes trusted.",
+        "Any arrangement with the right number of faces folds up — attends to face count, not arrangement.",
+        "Cannot predict the fold direction of an L-shape, so mis-assigns which faces meet — a face is thought 'stuck in the corner' or two squares that should be opposite are left adjacent."
+      ],
+      "constraints": [
+        "Suitable for ages roughly 8–11 (upper Key Stage 2 geometry).",
+        "The predict-then-fold step is load-bearing: a prediction must be committed to and justified BEFORE folding, not after. Omitting the prediction reduces the task to observation.",
+        "Physical card/Polydron cut-outs have slight thickness and can be held, but they stand in for ideal flat (zero-thickness) faces; frame questions around the mathematical net and the cube it would fold into, not around whether the physical card can be picked up.",
+        "The 'line of four squares' composite applies to nets that contain such a line (e.g. the cross/1-4-1); it is not present in every valid net (e.g. the 2-2-2 staircase), where the general strategy is to track each square's destination from the base.",
+        "A static labelled net (each square tagged to the cube face it becomes, optionally with lift-the-flap or tap-to-highlight mappings) is a useful reference and reinforces face-to-face mapping, but it cannot be folded, so on its own it cannot provide the predict-then-fold experience.",
+        "A flat 2-D fold animation (drag squares, press fold, with overlap/missing-face flags) supports prediction and immediate close/fail feedback, but a flat animation can under-represent the spatial depth of the fold; pair it with physical folding or a rotatable model where possible.",
+        "A rotatable 3-D fold (watch faces swing up around a base, rotate the closing solid, see which squares become opposite) and hands-on physical card/Polydron both make the spatial fold concrete; they offer different experiences and either can carry the core mental action. Supporting non-standard nets on screen or in card lets 'only the T-net works' be disproved directly.",
+        "A 'which of these fold into a cube?' selection question is a useful CHECK after folding work; include a valid non-prototype net and an invalid six-square block as options. Recognition-only selection does not by itself elicit the folding reasoning or the production of a new net — pair it with asking the child to name opposite faces or draw a new valid net.",
+        "Spoken explanation of a prediction is a valuable prompt but is not a substitute for the spatial folding itself."
+      ],
+      "assessmentMethod": "interpret_translate",
+      "assessmentPointer": "/records/889/assess",
+      "sourceBibliographyPointer": "/records/889/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_NtJYlJdUe9",
+    "sourceName": "Measurable Attributes of Objects",
+    "learningGoals": [
+      "Identify that a pencil has length and can be measured",
+      "Describe multiple attributes of one object (e.g. a bottle has height, weight, and capacity)",
+      "Use words like 'long', 'heavy', 'full' to describe objects"
+    ],
+    "currentPackId": "units",
+    "plannedPackId": "units",
+    "plannedThemeId": "measure",
+    "groupId": "u-compare",
+    "unitId": "B02-U04",
+    "batchId": "B02",
+    "familyId": "measure",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/649",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Measuring lenses: watch which one wins change",
+          "jsonPointer": "/records/649/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "One object, many attributes — collect the tags",
+          "jsonPointer": "/records/649/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Counterexamples that break false links",
+          "jsonPointer": "/records/649/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "From 'tall' to 'taller than' — comparative language",
+          "jsonPointer": "/records/649/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Sort words and questions to their attribute",
+          "jsonPointer": "/records/649/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Measuring lenses: watch which one wins change",
+        "learnerActions": [
+          "Place a tall thin bottle and a short wide jar side by side.",
+          "Apply a length comparison (e.g. a ruler lens or measuring them against each other): name the taller as the winner — 'taller'.",
+          "Apply a weight comparison (e.g. a balance that tips to the heavier): name which is heavier.",
+          "Apply a capacity comparison: fill the tall bottle to the top and pour it into the wide jar; if the jar takes it all with room to spare it holds more. Choose containers where the pour really shows this, and let the actual result stand.",
+          "Say aloud which object wins for each attribute, using the matching comparative word.",
+          "Notice that the same two objects can win on different attributes, so there is no single answer to 'which is bigger?'"
+        ],
+        "intendedInsight": "There is no single 'bigger': each object has a height, a weight, and a capacity, and these are different questions with different answers. When which object wins changes per attribute, 'bigger' dissolves into separate, nameable attributes.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "One object shown with three separate 'measuring lenses' — a length lens, a weight lens (balance), a capacity lens (fill) — each answering a different question about the same object",
+        "Two contrasting objects (tall+thin vs short+wide) where the winner changes depending on which attribute is chosen",
+        "Comparative word banks paired to each attribute: long/short, tall/short, heavy/light, full/empty, more/less",
+        "A balance scale and a pouring/filling demonstration to make weight and capacity felt as attributes distinct from how big something looks"
+      ],
+      "commonMisconceptions": [
+        "Undifferentiated 'bigger': treats length, height, area, weight and capacity as one global size, so the 'biggest-looking' object is assumed to be the longest AND heaviest AND to hold the most",
+        "Height–capacity conflation: a taller container is assumed to hold more, regardless of width",
+        "Size–weight conflation: a bigger object is assumed to be heavier",
+        "Absolute rather than comparative use of attribute words: labels each object 'tall' or 'big' but cannot say one is taller than another (treats 'tall' as a category, not a relation)",
+        "Recognises only a single attribute of an object ('how big it is') rather than seeing that one object has several measurable attributes"
+      ],
+      "constraints": [
+        "Sorting/matching and multiple-choice ('which attribute does this word measure?') can assess and reinforce recognition of attribute names; they do not, by themselves, let the child observe which object wins change across attributes or construct attribute language in a live comparison — pair them with hands-on comparison and pouring.",
+        "Tap-to-reveal of an object's attributes shows one-object-many-attributes but does not dynamically change which object wins a comparison; use it alongside a comparison activity.",
+        "Absolute vs comparative language is developmental: provide many graded side-by-side comparisons and let comparative relations emerge; do not drill comparative vocabulary in isolation or mark absolute answers wrong.",
+        "Capacity outcomes depend on the actual containers: a wide jar holding more than a tall bottle must be verified by filling and pouring, not assumed, and must NOT be described as 'the one that overflows first holds more' (the first to overflow actually holds less). Choose containers where the pour genuinely demonstrates the point, and let the real result stand.",
+        "Counterexample outcomes (big ball lighter than small stone; tall glass vs wide bowl) depend on the specific objects chosen; pick objects that reliably produce the intended contrast and confirm by weighing or pouring rather than asserting."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/649/assess",
+      "sourceBibliographyPointer": "/records/649/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_DOe893F6gN",
+    "sourceName": "Choosing measurement units",
+    "learningGoals": [
+      "Measure the length of a table in centimetres using a ruler",
+      "Weigh an object in grams using a scale",
+      "Measure the capacity of a container in millilitres using a measuring jug"
+    ],
+    "currentPackId": "units",
+    "plannedPackId": "units",
+    "plannedThemeId": "measure",
+    "groupId": "u-compare",
+    "unitId": "B02-U04",
+    "batchId": "B02",
+    "familyId": "measure",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/312",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Measuring station: choose the tool and the unit",
+          "jsonPointer": "/records/312/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Why standard units at all — the hand-span contrast",
+          "jsonPointer": "/records/312/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Sort objects to their sensible unit",
+          "jsonPointer": "/records/312/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Benchmark reference card",
+          "jsonPointer": "/records/312/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Read the instrument to the nearest mark",
+          "jsonPointer": "/records/312/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Measuring station: choose the tool and the unit",
+        "learnerActions": [
+          "Set out a mixed set of objects one at a time — a pencil, a table, an apple, a jug of juice, a cup of water (and, if available, something whose temperature matters) — with a ruler/tape, a kitchen scale, a measuring jug and a thermometer all available.",
+          "For each object, first say out loud what KIND of measurement this is: how long? how heavy? how much fills it? how hot?",
+          "Pick the matching instrument, then choose the standard unit (m or cm, kg or g, litres or ml, °C).",
+          "Measure to the nearest mark and state the amount with its unit.",
+          "Try a deliberate mismatch — measure the pencil in metres — and notice the number is useless (to the nearest metre a pencil rounds to '0 m'); then switch to centimetres and get a clean reading (a real pencil is usually somewhere between about 10 cm and 19 cm, depending on how much it has been sharpened).",
+          "Try reaching for the ruler to measure the jug of juice and notice it cannot give a capacity reading at all."
+        ],
+        "intendedInsight": "You first decide what kind of quantity you are measuring so the unit family and tool fit, then choose a unit grain that gives a sensible, readable number.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "A measuring station: ruler/tape, kitchen scale, measuring jug, thermometer, with unit dials m/cm, kg/g, l/ml, °C",
+        "Benchmark objects for each unit (a metre stick, a 1 kg bag, a 1 litre bottle)",
+        "A sorting chart matching everyday objects to their sensible unit",
+        "The 'same object, different hand-spans' contrast motivating standard units"
+      ],
+      "commonMisconceptions": [
+        "Uses a unit or tool from the wrong attribute — e.g. reaches for a ruler to find 'how much water', or gives grams for a length.",
+        "Picks the wrong grain — measures a pencil in metres ('0 m') or a room laboriously in centimetres — not choosing to the nearest appropriate unit.",
+        "Happily reports a non-standard count ('6 cubes') when a standard measurement is asked for, not seeing why standard units matter.",
+        "Reads the instrument carelessly — doesn't measure to the nearest mark, mis-reads the jug's meniscus or the scale."
+      ],
+      "constraints": [
+        "Introduce standard units once the need for them is understood; heavy early use of many varied non-standard units, before the purpose of measurement is grasped, can interfere with understanding why standard units are needed.",
+        "Sorting and targeted-question checks verify the judgement of which unit to use but do not rehearse the physical act of measuring; pair them with hands-on measuring.",
+        "A reference card reminds learners of benchmarks but cannot let them make and test a choice; it is a scaffold, not the core activity.",
+        "Assessment is best done by watching the learner choose the tool and unit across a mixed set of objects, not by asking them to recite rules.",
+        "An interactive live-recompute station is one way to make a bad grain visibly awkward; real instruments and objects achieve the same learning and should not be treated as replaceable by a screen only.",
+        "Choosing units is primarily a categorical/attribute judgement; a spatial 3D setting may offer little specific additional leverage for it, and in-role dialogue can discuss but not itself rehearse the watched act of picking a tool — these are observations about fit, not claims that any medium is necessary or impossible."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/312/assess",
+      "sourceBibliographyPointer": "/records/312/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_y1n0Zwhoca",
+    "sourceName": "Area (age 8+)",
+    "learningGoals": [
+      "Count unit squares to find the area of an L-shaped figure",
+      "Measure the area of a book cover using square-centimetre tiles",
+      "Compare areas of two shapes by counting their unit squares"
+    ],
+    "currentPackId": "area",
+    "plannedPackId": "area",
+    "plannedThemeId": "measure",
+    "groupId": "ar-cover",
+    "unitId": "B02-U05",
+    "batchId": "B02",
+    "familyId": "area",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/973",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Tile and count an L-shaped garden",
+          "jsonPointer": "/records/973/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tile a real surface before squared paper",
+          "jsonPointer": "/records/973/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Compare and check with quick counting questions",
+          "jsonPointer": "/records/973/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Read a finished counted figure",
+          "jsonPointer": "/records/973/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Tile and count an L-shaped garden",
+        "learnerActions": [
+          "Cover an L-shaped figure's whole interior with unit squares so there are no gaps and no overlaps, including the awkward squares inside the notch of the L.",
+          "Count the covering squares systematically — row by row, or by splitting the L into two rectangles and counting each — marking each square as you count it so none is missed or double-counted.",
+          "State the result in square units, e.g. '18 square cm' or in square metres, not just a bare number.",
+          "Repeat with a plain rectangle and then compare two shapes side by side, deciding which covers more by comparing their counts."
+        ],
+        "intendedInsight": "Area is the count of unit squares that cover the inside of a shape — notches and all — and is about the surface inside, not the fence or distance running around the edge.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Square-centimetre tiles covering a book cover",
+        "L-shaped and irregular figures on squared paper",
+        "A shape decomposed into rectangles for systematic counting",
+        "A count recorded with its square unit (e.g. '18 square cm')"
+      ],
+      "commonMisconceptions": [
+        "Counts the squares around the boundary (perimeter) instead of the squares covering the interior.",
+        "Leaves gaps or overlaps, or counts unsystematically so squares are missed or double-counted (especially on L-shapes).",
+        "Counts every partly-covered square at the edge as a whole square, overestimating.",
+        "Gives the count as a bare number without the square unit."
+      ],
+      "constraints": [
+        "Count every square that covers the inside of the outline, with no gaps or overlaps — including the squares along the edge, which are part of the area. Do not count only the border squares, and do not count squares outside the outline. The distance around the outline (perimeter, measured in unit lengths) is a different kind of quantity from an area count.",
+        "Count systematically (row by row, or by decomposing an L-shape into rectangles) so each square is counted exactly once.",
+        "Always state the area in square units (square cm, square m, etc.); a bare number is an incomplete answer.",
+        "Keep to whole unit squares at this stage; treat edge part-squares informally (e.g. pairing two halves) and do NOT drill a part-square formula yet — part-square figures are for discussion, not scored counts.",
+        "Real tiles and squared-paper diagrams each support learning differently — tiles ground the physical covering, diagrams abstract it; neither is claimed as universally necessary.",
+        "A revealed static figure is a reference/scaffold: it shows the result but does not let the child practise the covering and counting, so it should not replace hands-on tiling.",
+        "A count-the-squares check verifies understanding and can catch edge-counting, but does not by itself build the systematic covering skill."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/973/assess",
+      "sourceBibliographyPointer": "/records/973/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_Jvvh5P06NV",
+    "sourceName": "Area by Tiling",
+    "learningGoals": [
+      "Tile a 4×6 rectangle and count 24 squares, then verify 4×6=24",
+      "Explain why the number of rows times the number in each row gives the area",
+      "Draw a rectangle on squared paper, tile it, and write the multiplication"
+    ],
+    "currentPackId": "area",
+    "plannedPackId": "area",
+    "plannedThemeId": "measure",
+    "groupId": "ar-cover",
+    "unitId": "B02-U05",
+    "batchId": "B02",
+    "familyId": "area",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/528",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build the array and watch the multiplication grow",
+          "jsonPointer": "/records/528/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tile and label on squared paper",
+          "jsonPointer": "/records/528/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Area is not the distance around (spot the error)",
+          "jsonPointer": "/records/528/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Row-strips that fill the rectangle",
+          "jsonPointer": "/records/528/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Check and justify the link",
+          "jsonPointer": "/records/528/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build the array and watch the multiplication grow",
+        "learnerActions": [
+          "Set up a rectangle 4 rows tall and 6 squares wide, adding one complete row of six unit squares at a time.",
+          "As each row is added, count on by six: 6, 12, 18, 24, and notice the running total jump by six each time.",
+          "Alongside the growing grid, build the matching statement '4 × 6' and connect it to 'four rows of six'.",
+          "Rotate the rectangle so it becomes 6 rows of 4; check that the total is still 24, showing 4 × 6 = 6 × 4.",
+          "Say in your own words why you do NOT have to count all 24 squares — each new row simply adds another six."
+        ],
+        "intendedInsight": "The multiplication IS the array: one factor is how many squares are in a row and the other is how many rows, so rows × squares-in-a-row gives the same total as counting every tile. Rotation preserves area, which is why 4×6 = 6×4.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "A rectangle tiled with unit squares showing rows and columns",
+        "A 4×6 array with '6 in each row, 4 rows' annotated and 4×6 = 24",
+        "Row-strips (cut-outs) repeated to fill the rectangle",
+        "A rectangle rotated 90° to show 4×6 = 6×4"
+      ],
+      "commonMisconceptions": [
+        "Adds the side lengths (4 + 6 = 10) instead of multiplying — confusing area with perimeter.",
+        "Cannot structure the array — counts squares one by one with no sense of rows × columns, so never reaches the multiplication.",
+        "Multiplies the sides as a rote rule but cannot explain why it equals the tile count.",
+        "Miscounts rows or columns, especially when the grid is only partly drawn."
+      ],
+      "constraints": [
+        "Multiplication for area must grow out of the array: one side is squares-in-a-row, the other is number-of-rows. Do not introduce length×width as a rote rule before the child can structure rows and columns.",
+        "Keep the figure planar. Avoid moving to 3D blocks here, which can blur rectangular area with volume; area is a covering of flat unit squares.",
+        "Tile in complete rows and columns with no gaps or overlaps. Partly-drawn grids cause miscounts; complete the grid before counting.",
+        "Always use square units for area and distinguish them from the linear units used for the border/perimeter.",
+        "A static labelled array (e.g. '6 in each row, 4 rows, 4×6 = 24') is a useful reference, but on its own it does not let a child build rows or rotate to feel commutativity; pair it with hands-on tiling or construction.",
+        "A conversation or verbal explanation can discuss the array and check understanding, but does not by itself get the child to construct, tile and count the rows; pair any discussion with hands-on tiling or array construction.",
+        "Items that only ask the child to select or fill in an answer can check the link but do not by themselves build the array sense; include construction, tiling and explanation.",
+        "For a child who cannot yet see rows and columns, prioritise spatial-structuring practice (row-strips, drawing rows/columns, skip-counting) over imposing the formula."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/528/assess",
+      "sourceBibliographyPointer": "/records/528/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_GzcJEVkNRn",
+    "sourceName": "Area of rectangles by multiplication",
+    "learningGoals": [
+      "Calculate the area of a 7 cm × 9 cm rectangle as 63 cm²",
+      "Draw a rectangle with area 36 square units and label its side lengths",
+      "Solve: A garden is 8 m by 5 m — what is its area?"
+    ],
+    "currentPackId": "area",
+    "plannedPackId": "area",
+    "plannedThemeId": "measure",
+    "groupId": "ar-cover",
+    "unitId": "B02-U05",
+    "batchId": "B02",
+    "familyId": "area",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/426",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build and compute: side × side = area",
+          "jsonPointer": "/records/426/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Reverse the relationship: many rectangles, one area",
+          "jsonPointer": "/records/426/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Area versus perimeter: surface versus edge",
+          "jsonPointer": "/records/426/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Check your understanding: compute, select, and label units",
+          "jsonPointer": "/records/426/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build and compute: side × side = area",
+        "learnerActions": [
+          "Choose two side lengths for a rectangle (e.g. 7 and 9) and draw it on squared paper or with a grid overlay.",
+          "Count the squares as rows of squares (squares-in-a-row × number of rows) and confirm this equals multiplying the side lengths: 7 × 9 = 63.",
+          "Write the answer with square units: 63 cm².",
+          "Change one side (e.g. 7 → 8) and recompute, noticing the rectangle re-tiles and the area becomes 8 × 9 = 72 cm².",
+          "Solve a real context: a garden 8 m by 5 m — find its area (8 × 5 = 40 m²)."
+        ],
+        "intendedInsight": "Multiplying the two side lengths gives the same total as counting all the unit squares, because the rectangle is a number of equal rows; the result is measured in square units.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "A rectangle labelled 7 cm × 9 cm with area 63 cm²",
+        "An area model linking multiplication to a rectangle of squares",
+        "Several rectangles all of area 36 (2×18, 3×12, 4×9, 6×6) with sides labelled",
+        "A word-problem sketch (garden 8 m × 5 m)"
+      ],
+      "commonMisconceptions": [
+        "Adds the side lengths (perimeter) instead of multiplying for area.",
+        "Gives the answer in linear units (cm) rather than square units (cm²).",
+        "Cannot reverse the relationship — struggles to draw a rectangle of a given area or to find its factor-pair sides.",
+        "Multiplies unrelated numbers or applies l×w to a non-rectangle."
+      ],
+      "constraints": [
+        "Keep the array meaning in view: one side = squares in a row, the other = number of rows; the formula should carry the counting meaning, not replace it.",
+        "Always require square units (cm², m²) in area answers, tied back to the unit square.",
+        "A static labelled rectangle (e.g. '7 cm × 9 cm, area 63 cm²') is a useful reference for illustrating one calculation, but on its own it cannot have the learner compute across varied cases or perform the reverse construction; pair it with tasks where the learner computes and builds.",
+        "Recognition/selection items (choosing which rectangle has area 36, choosing cm vs cm²) can check understanding during teaching, but do not by themselves elicit independent construction of a rectangle of a given area; include open drawing/building tasks for that objective.",
+        "This content is for planar rectangular area; avoid presenting it with volume/solid contexts that could confuse area with volume.",
+        "Interactive supports — e.g. a live-updating 'l × w = area' label, an optional unit-square grid overlay, a reverse mode that fixes the area while the learner adjusts dimensions, and a perimeter toggle — are helpful optional illustrations of the mechanism, not required mechanisms; the same learning can be done on squared paper."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/426/assess",
+      "sourceBibliographyPointer": "/records/426/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_eiB3-6pu6a",
+    "sourceName": "Area and perimeter of rectangles",
+    "learningGoals": [
+      "Find the width of a room given area = 48 m² and length = 8 m",
+      "Calculate the area of a square with side 7.5 cm",
+      "Estimate the area of an irregular pond drawn on a cm² grid"
+    ],
+    "currentPackId": "area",
+    "plannedPackId": "area",
+    "plannedThemeId": "measure",
+    "groupId": "ar-boundary",
+    "unitId": "B02-U06",
+    "batchId": "B02",
+    "familyId": "area",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/340",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Grid playground: reshape a rectangle and watch area and perimeter move apart",
+          "jsonPointer": "/records/340/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build l × w from an array of unit squares, then express a missing side algebraically",
+          "jsonPointer": "/records/340/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Tap-to-reveal formula reference (scaffold)",
+          "jsonPointer": "/records/340/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Checking quiz: area, perimeter, missing side and estimate with a units check",
+          "jsonPointer": "/records/340/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Grid playground: reshape a rectangle and watch area and perimeter move apart",
+        "learnerActions": [
+          "On cm² paper (physical squared paper or an on-screen grid), draw or drag the corners of a rectangle and, as it changes shape, keep two counts — tallied by hand on paper or shown live on screen: the squares filling the inside (area, in cm²) and the units traced around the outline (perimeter, in cm).",
+          "Compare a 6×4 rectangle (24 cm², 20 cm) with other shapes you make, saying aloud which count is 'squares covering it' (area) and which is 'steps around it' (perimeter).",
+          "Switch to a 'missing side' task: with the area fixed at 48 cm² and the length given as 8 cm, find the width (6 cm); then try area 48 m² with length 8 m → width 6 m.",
+          "Switch to an 'irregular blob/pond' task: shade whole squares and part-squares on the grid and combine them to estimate the blob's area, stating that it is an estimate."
+        ],
+        "intendedInsight": "Area and perimeter are different quantities with different units: area counts the unit squares covering a surface (cm²); perimeter measures the distance around the edge (cm). One can stay the same while the other changes as a shape is reshaped.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "cm² grid / squared paper",
+        "Unit-square array (rows × columns)",
+        "Rectangle with labelled length and width",
+        "String-around-the-edge model for perimeter",
+        "Algebraic missing-measure equation (e.g. 4 + 2b = 20)"
+      ],
+      "commonMisconceptions": [
+        "Confuses area and perimeter — uses one formula for the other, or gives the distance around when asked for the covered surface.",
+        "Overgeneralises 'area = length × breadth' and reports the answer in linear units (cm) instead of square units (cm²).",
+        "When estimating irregular area, counts only whole squares and ignores part-squares (or counts every touched square as a whole)."
+      ],
+      "constraints": [
+        "Label every answer with correct units: area in square units (cm², m²), perimeter in linear units (cm, m).",
+        "Treat irregular-area counting as an estimate; agree one explicit rule for part-squares — either count a part-square as one if it is at least half and ignore smaller parts, or pair part-squares that together make about one whole — and apply it consistently.",
+        "The tap-to-reveal reference supports recall of the formulae and units but cannot show area and perimeter changing as a shape is reshaped; use it alongside, not instead of, grid manipulation.",
+        "The checking quiz confirms accurate application and unit choice but its recognition/selection responses do not require the learner to construct and reshape figures or reason about why the two quantities differ.",
+        "Keep the formulae anchored to meaning (array of unit squares for area, distance around for perimeter) so they are not learned purely instrumentally; avoid overgeneralising l × w to non-rectangular shapes.",
+        "Live counters, dragging corners and a slider estimate are optional ways to make the mechanism concrete; physical squared paper, tiles and finger-tracing achieve the same purpose and neither is mandatory."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/340/assess",
+      "sourceBibliographyPointer": "/records/340/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_NSC3LT_-ch",
+    "sourceName": "Estimating capacity",
+    "learningGoals": [
+      "Estimate whether a mug holds about 30 ml, 300 ml or 3 litres, then check with a measuring jug",
+      "Estimate the capacity of a jug by comparing it with a 1-litre bottle, then fill it with water to check",
+      "Explain that a 1-litre jug half full of water has a capacity of 1 litre but holds 500 ml of water"
+    ],
+    "currentPackId": "volume",
+    "plannedPackId": "volume",
+    "plannedThemeId": "measure",
+    "groupId": "v-capacity",
+    "unitId": "B02-U07",
+    "batchId": "B02",
+    "familyId": "measure",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_Xp-rj46S2w",
+    "sourceName": "Splitting shapes into equal parts (age 7+)",
+    "learningGoals": [
+      "Partition a circle into 3 equal parts and label each 'a third'",
+      "Partition a rectangle into 4 equal shares in more than one way",
+      "Explain that two different-looking shares can still be equal in size"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-share",
+    "unitId": "B03-U01",
+    "batchId": "B03",
+    "familyId": "fraction",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/954",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Cut it, re-lay it: equal amount beats equal look",
+          "jsonPointer": "/records/954/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort the partitions: quarters or not?",
+          "jsonPointer": "/records/954/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Which is the bigger share: a third or a quarter?",
+          "jsonPointer": "/records/954/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Cut it, re-lay it: equal amount beats equal look",
+        "learnerActions": [
+          "Partition a square into four parts where the pieces look different — e.g. one long thin strip plus some oddly-shaped bits — but each covers the same amount.",
+          "Before checking, predict: is the long thin piece the same amount of the square as a fat corner piece? Say why.",
+          "Check equality physically: cut the long strip and lay it over the fat piece to see it rearranges exactly onto it. For pieces whose edges follow a faint underlying grid you can also count the unit squares each covers; for diagonal or irregular pieces use cutting and rearrangement rather than counting, since squares get split.",
+          "Decide whether all four pieces are quarters and give the reason (each is the same AMOUNT, one of four equal parts).",
+          "Now quarter the SAME shape in a completely different way (e.g. three equally spaced vertical cuts giving four equal strips, then a 2x2 grid, then two diagonals) and argue each piece is still a quarter.",
+          "Partition a circle into three equal parts (120-degree slices) and explain how you could check the three parts really are equal (overlay one onto another — they are congruent — or compare the area each covers)."
+        ],
+        "intendedInsight": "A quarter means each part is the same amount (area) of the whole, one of four equal parts — the pieces may look different as long as each covers the same amount; and the same shape can be partitioned into the same fraction in many valid ways.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Rectangle partitioned several ways into the same fraction (multiple valid cuts)",
+        "Circle partitioned into thirds (120° shares)",
+        "Equal-area different-shape pieces that rearrange onto one another",
+        "Faint unit-square grid under a shape for checking equal area"
+      ],
+      "commonMisconceptions": [
+        "Equal shares must look the same / be congruent — rejects equal-area different-shape pieces as 'not fair'",
+        "Any N pieces count as Nths regardless of size (ignores the equal-parts requirement)",
+        "A shape can only be partitioned into a fraction one 'proper' way",
+        "Judges share size by one dimension (length) rather than area",
+        "Thinks halving repeatedly is the only way to make parts, so thirds feel impossible"
+      ],
+      "constraints": [
+        "Equal shares must be equal in AMOUNT (area); they need not be congruent or look the same.",
+        "Having the right NUMBER of pieces is not sufficient — unequal pieces are not halves/thirds/quarters.",
+        "Move beyond halving to thirds so children cannot rely on repeated halving; a circle into three (120-degree shares) is a good non-halving case.",
+        "Compare share sizes (e.g. a third vs a quarter) only for identical wholes; this scopes the comparison to represented portions. As numbers, fractions remain comparable without a shared whole, but that is not this activity's focus.",
+        "Counting unit squares is a valid equal-area check only where piece edges follow the grid; for diagonal or irregular pieces use cutting and rearrangement, since grid squares get split. Overlay alone proves equality only for congruent pieces; for equal-area pieces of different shape, cut and recompose (or count unit squares if their edges follow the grid).",
+        "Sorting/categorisation tasks are recognition: they may check and sharpen the equal-parts criterion but do not let a child physically prove equality by rearranging, so use them alongside hands-on cutting and overlaying, not instead of it.",
+        "Physical paper/card cutouts have slight thickness and model the ideal flat figure being partitioned; the lesson is about the 2D area partition they represent, for which thickness is irrelevant.",
+        "An on-screen faint unit grid that tints pieces green when areas match is one optional way to make the equal-area check concrete, not a required mechanism — cutting and rearranging pieces works too, and is needed for differently shaped pieces whose edges do not follow the grid.",
+        "Static galleries of correct/incorrect partitions can serve as a reference but do not let the child test equality by rearranging pieces; pair them with a hands-on check.",
+        "A third spatial dimension is not needed for partitioning 2D shapes; keep the work planar unless there is a specific reason otherwise."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/954/assess",
+      "sourceBibliographyPointer": "/records/954/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_vKcxX6iNOA",
+    "sourceName": "Fraction Notation",
+    "learningGoals": [
+      "Point to and name the numerator and denominator in any given fraction and explain what each tells you",
+      "Correctly classify fractions as unit, proper, improper, or mixed number with an example of each",
+      "Explain in own words why 2/4 and 1/2 are equivalent fractions"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-share",
+    "unitId": "B03-U01",
+    "batchId": "B03",
+    "familyId": "fraction",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/885",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build the fraction, build the name",
+          "jsonPointer": "/records/885/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Label the fraction's jobs",
+          "jsonPointer": "/records/885/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Classify and match for fluency",
+          "jsonPointer": "/records/885/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build the fraction, build the name",
+        "learnerActions": [
+          "Cut a bar into M equal parts (for example set it to 4) and shade N of them (for example 3), then write the symbol that matches: the parts taken on top, the equal parts in one whole on the bottom.",
+          "As you shade, say the fraction as one spoken quantity ('three-quarters'), not 'three, four'.",
+          "Label each number to its job: the numerator is 'the 3 parts we took' and the denominator is 'the 4 equal parts in one whole'.",
+          "Now push the numerator past the denominator (shade 5 parts when the whole holds 4): the shading overflows into a second whole. Record that this is called an improper fraction (5/4) and write its mixed twin beside it (1 1/4).",
+          "Sort every fraction you build into four trays: unit (numerator 1 and denominator more than 1, like 1/4), proper-but-not-unit (numerator more than 1 but less than the denominator, like 3/4), improper (numerator as big as or bigger than the denominator, like 5/4 or 4/4; 1/1 also goes here because it equals one whole), and mixed (like 1 1/4). A unit fraction like 1/4 is a special kind of proper fraction, so sort each card into its most specific tray.",
+          "Shade 2/4 of a bar, then slide that shaded length to overlay 1/2 of a bar of the same length (the same whole): notice the symbols differ but the shaded length is identical, so they name the same amount."
+        ],
+        "intendedInsight": "Fraction notation names one number. The bottom number tells how many equal parts one whole is cut into; the top counts how many we have. Pushing the numerator past the denominator shows 5/4 is a real number greater than one (equal to 1 1/4), and overlaying 2/4 on 1/2 shows different symbols can name the same quantity.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Bar/area model with the symbol written alongside and each number labelled to its job",
+        "Number line locating the fraction as a single point (a fraction is a number)",
+        "Fraction wall showing unit vs non-unit and proper vs improper",
+        "Word-symbol-picture triple card (three-quarters / 3/4 / shaded bar)"
+      ],
+      "commonMisconceptions": [
+        "Reads 3/4 as two separate whole numbers ('three, four') rather than one quantity",
+        "Writes the fraction upside down — swaps numerator and denominator",
+        "Believes an improper fraction like 5/4 or 4/3 'isn't a real number / can't exist'",
+        "Mixes the vocabulary — calls the bottom number the numerator",
+        "Thinks 2/4 and 1/2 must be different amounts because the numbers differ"
+      ],
+      "constraints": [
+        "Always anchor the vocabulary to a model (bar, circle or number line); do not teach numerator/denominator as memorised top/bottom labels.",
+        "Deliberately include improper and mixed forms (5/4, 1 1/4) so children learn the notation can name amounts greater than one; do not leave them believing 'you can't have 5/4'.",
+        "Say fractions as single spoken quantities ('three-quarters') so the symbol is heard as one number, never 'three, four'.",
+        "When sorting into unit / proper / improper / mixed, make clear that a unit fraction is a special proper fraction (sort it as unit) so the categories are not treated as if a fraction like 1/4 belonged in two trays.",
+        "The labelled-reference activity supports naming and reading only; it cannot let a child build improper/mixed forms or manipulate equivalence, so it is a scaffold, not a replacement for generating notation.",
+        "Classification, matching and fill-in tasks check fluency and recognition; a sort or match does not itself elicit independent construction of the single-number idea, so follow them with building and explaining.",
+        "A spoken quiz or dialogue can check naming, but it does not by itself elicit the writing and shading that produce the notation; pair any dialogue with building rather than treating talk as a substitute."
+      ],
+      "assessmentMethod": "use_in_context",
+      "assessmentPointer": "/records/885/assess",
+      "sourceBibliographyPointer": "/records/885/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_gC-6JXAG5S",
+    "sourceName": "Halves, quarters and eighths",
+    "learningGoals": [
+      "Fold a paper strip in half, then half again, then half again, and label the halves, quarters and eighths",
+      "Show that 2 eighths of a pizza is the same amount as 1 quarter",
+      "Shade one-eighth of a square and one-eighth of a circle and explain how you know"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-share",
+    "unitId": "B03-U01",
+    "batchId": "B03",
+    "familyId": "fraction",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_cFltwUQi-d",
+    "sourceName": "Fractions of amounts",
+    "learningGoals": [
+      "Find 1/3 of 12 objects by sharing into 3 equal groups",
+      "Shade 3/4 of a rectangle that has been divided into 4 equal parts",
+      "Identify 1/4 of a length on a number line or ruler"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-amount",
+    "unitId": "B03-U02",
+    "batchId": "B03",
+    "familyId": "fraction",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/279",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Fraction-of-a-set bench: share into equal groups, then take some",
+          "jsonPointer": "/records/279/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build a non-unit fraction from unit-fraction parts",
+          "jsonPointer": "/records/279/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Same number or same amount? Guarding against the count-vs-quantity trap",
+          "jsonPointer": "/records/279/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Fraction of a length on a number line or ruler",
+          "jsonPointer": "/records/279/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Naming and writing practice (recognition and recall check)",
+          "jsonPointer": "/records/279/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Fraction-of-a-set bench: share into equal groups, then take some",
+        "learnerActions": [
+          "Put out 12 counters as the whole. To find 1/3, share ALL 12 into 3 equal groups (one group per hoop) and take one group - record '1/3 of 12 = 4'.",
+          "To find 3/4, share all 12 into 4 equal groups (3 in each) and take THREE of the four groups - record '3/4 of 12 = 9'.",
+          "Say aloud 'the bottom number is how many equal groups; the top number is how many groups I take' as you act it out.",
+          "Re-show the same fraction as a shaded strip or rectangle divided into the denominator and shaded to the numerator, to see the continuous and discrete versions side by side.",
+          "Check a non-dividing case: with a different set of items that does not share evenly (for example 10 counters into 3 groups), notice the leftover. It means the groups cannot all be equal with whole items, so that fraction of the set cannot be found exactly with whole counters (1/3 of 10 is not 3)."
+        ],
+        "intendedInsight": "The denominator sets how many EQUAL groups/parts to make; the numerator says how many of those to take - so 3/4 is three quarters, not one piece, and the same fraction describes both a set and a shape.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "A set of counters shared into equal groups (denominator groups; take numerator)",
+        "A rectangle/strip partitioned and shaded (e.g. 3 of 4 parts for 3/4)",
+        "A length/number line marked into equal parts",
+        "Unit-fraction tiles combined to build a non-unit fraction"
+      ],
+      "commonMisconceptions": [
+        "Reading the denominator as the group SIZE, not the number of groups (1/3 of 12 -> makes groups of 3)",
+        "Treating a non-unit fraction like a unit fraction - taking only ONE part for 3/4",
+        "Number-vs-quantity: sharing an equal COUNT of unequal-sized items rather than equal amount",
+        "Losing track of the whole, or ignoring leftover items when a set doesn't divide evenly"
+      ],
+      "constraints": [
+        "Fractions require EQUAL parts/groups; share the whole into denominator-many equal parts before taking any.",
+        "For a set, share into denominator-many equal GROUPS (not groups of that size), then take numerator-many groups.",
+        "Keep the whole explicit and fixed throughout a task.",
+        "Non-unit fractions (2/4, 3/4) are repeated unit fractions - take numerator-many parts, not one.",
+        "A reference poster or labelled image is reference-only: tapping to highlight parts-taken versus total-parts can support naming but does not have the child do the sharing, so it is a scaffold, not a replacement for partition-and-select practice.",
+        "Recognition and matching tasks assess and consolidate naming/writing but do not on their own require the learner to construct the partition; pair them with hands-on sharing.",
+        "When a set does not divide evenly, address any leftover explicitly rather than ignoring it.",
+        "When the whole is an amount of stuff (e.g. food or material), fair sharing makes the AMOUNT equal; equal COUNT only guarantees this for identical items, so distinguish count from amount when items differ in size. When the whole is the number of objects in a set (e.g. 1/3 of 12 counters), the fraction refers to the count.",
+        "Compare fractions as fixed quantities: 2/4 of 12 takes two of the four equal parts, 1/4 takes one; never describe the denominator rule as 'flipping'."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/279/assess",
+      "sourceBibliographyPointer": "/records/279/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_NoB20kVa4w",
+    "sourceName": "Fractions on a number line (age 8+)",
+    "learningGoals": [
+      "Partition a 0-to-1 number line into 4 equal parts and mark 1/4",
+      "Explain that each part on the line has size 1/b",
+      "Locate 1/3 and 1/6 on separate number lines",
+      "Locate 3/4 on a number line by counting three 1/4-jumps from 0",
+      "Place 5/6 on a number line and explain the process",
+      "Identify a fraction shown by a point on a pre-partitioned number line"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-line",
+    "unitId": "B03-U03",
+    "batchId": "B03",
+    "familyId": "fraction-line",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/644",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build fourths: three cuts, not four marks",
+          "jsonPointer": "/records/644/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Read the point, then place the fraction",
+          "jsonPointer": "/records/644/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Which segment is the unit?",
+          "jsonPointer": "/records/644/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Compare with the area model",
+          "jsonPointer": "/records/644/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build fourths: three cuts, not four marks",
+        "learnerActions": [
+          "Start with a bare line labelled only 0 and 1 — the 0–1 segment is the unit.",
+          "To make 'fourths', first try the common mistake: drop FOUR equally spaced marks inside the 0–1 segment. Notice this cuts the unit into FIVE equal parts, each one a fifth (1/5) — the far interior mark sits at 4/5. So you have actually made fifths, not fourths: a sign something has gone wrong.",
+          "Correct to THREE interior marks so the unit is cut into exactly four equal parts (quarters); the marks land at 1/4, 2/4, 3/4, and a fourth quarter-length jump lands exactly on 1 (4/4).",
+          "State the rule in your own words: b equal parts need b−1 interior marks.",
+          "Place 3/4 by jumping the quarter-length three times from 0, landing one quarter-length short of 1."
+        ],
+        "intendedInsight": "Four equal parts require three interior cuts (b equal parts need b−1 interior marks); a/b is measured as a LENGTH from 0 (a jumps of 1/b), not as a count of tick marks. Drawing four equally spaced interior marks cuts the unit into five equal parts (fifths), so calling them fourths mislabels the pieces — making the tick-counting error visible so the child can correct it.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Single 0–1 number line partitioned into b equal intervals",
+        "Unit-fraction 'jump' iterated a times from 0",
+        "Stacked 0–1 number lines (IES Figure 4, halves through tenths)",
+        "Fraction strips measured against the line (IES Figure 5)"
+      ],
+      "commonMisconceptions": [
+        "Counting tick marks instead of intervals / drawing b marks rather than b−1 interior marks (IES Roadblock 2.1)",
+        "Whole-number placement — putting 3/4 between 3 and 4, treating numerator and denominator as separate whole numbers (IES Roadblock 2.2)",
+        "Treating the whole drawn segment (0 to the far end) as the unit rather than 0–1",
+        "Reading a point by matching to marks with no sense of the unit-fraction length"
+      ],
+      "constraints": [
+        "A pre-labelled reference line (tap a point → 'this is 3/4, three quarter-jumps from 0') supports recall but does not let the child partition or iterate, where the learning lives; use it as a scaffold only, not as the main task.",
+        "Both interpret (read a shown point) and produce (place on a blank line) are required; recognition alone does not elicit the independent partitioning and placement that demonstrate understanding.",
+        "A number line is one-dimensional; the unit-interval idea lives on a single line, so added dimensions are not needed for this particular objective (this is a scope note, not a claim that other media cannot teach).",
+        "Children aged ~8–9 (KS2 Years 3–4) are the intended audience; keep lines and partitions simple (halves through tenths).",
+        "When an interactive builder is used, optional feedback such as rejecting an unequal drag, a 'hopper' that jumps the unit fraction and lands on a/b, a draggable point that reports the nearest fraction and turns green on the exact spot, and a mode showing the line running past 1 can make the mechanism concrete — these are illustrative, not mandatory or proven superior to other media."
+      ],
+      "assessmentMethod": "interpret_translate",
+      "assessmentPointer": "/records/644/assess",
+      "sourceBibliographyPointer": "/records/644/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_FbDKeLfBCo",
+    "sourceName": "Equivalent fractions",
+    "learningGoals": [
+      "Show that 1/2 = 2/4 using a diagram of equal parts",
+      "Use a fraction wall or bar model to find equivalent fractions",
+      "Explain why two fractions are equivalent by comparing the shaded areas"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-equivalent",
+    "unitId": "B03-U04",
+    "batchId": "B03",
+    "familyId": "fraction-line",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/361",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Split each part of a fixed bar (2/3 becomes 4/6)",
+          "jsonPointer": "/records/361/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Fraction wall: which rows line up",
+          "jsonPointer": "/records/361/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Same point on the number line",
+          "jsonPointer": "/records/361/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Sort, match and complete equivalents",
+          "jsonPointer": "/records/361/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Predict, overlay, explain (diagnostic)",
+          "jsonPointer": "/records/361/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Split each part of a fixed bar (2/3 becomes 4/6)",
+        "learnerActions": [
+          "Shade two of three equal parts of a bar to show 2/3.",
+          "Split every third into two equal pieces by drawing a line through each part; count that four of six parts are now shaded and write 4/6.",
+          "Describe what happened to the length of shaded strip: it did not grow or shrink, there are just more lines.",
+          "Keep splitting to generate the family: split each part into three for 6/9, into four for 8/12; each time check the shaded strip stays the same length.",
+          "Test changing only one number: on an identical bar change only the bottom number (2/3 to 2/6) or only the top number (2/3 to 3/3) and shade it; check that the shaded amount changes, so changing just one part does NOT make an equivalent fraction.",
+          "Try the trap: add one to the top and one to the bottom (2/3 to 3/4) and shade 3/4 of an identical bar; compare the shaded length with the original 2/3."
+        ],
+        "intendedInsight": "Splitting each part (multiplying numerator and denominator by the same number) makes more, smaller pieces that cover exactly the same amount; for fractions like 2/3, changing only one of the two numbers, or adding one to each, shifts the amount, so neither is a way to make an equivalent fraction.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Fraction wall / stacked equal-length bars (canonical equivalence reference)",
+        "A single bar re-partitioned by splitting each part (2/3 → 4/6)",
+        "Number line with dual labelling (thirds above, sixths below) showing the same point",
+        "Area model (identical rectangles shaded to the same amount)"
+      ],
+      "commonMisconceptions": [
+        "Whole-number bias — 4/6 judged more than 2/3 'because 4 > 2 and there are more pieces'",
+        "Different numbers must mean different amounts (denies equivalence)",
+        "Makes 'equivalents' by ADDING the same number to top and bottom (2/3 → 3/4)",
+        "Compares shaded amounts across different-sized wholes",
+        "Thinks changing only the numerator or only the denominator keeps the value"
+      ],
+      "constraints": [
+        "When comparing represented portions (shaded areas or bar lengths), always use identical-sized wholes; comparing shaded amounts across different-sized wholes invalidates the equivalence judgement. As numbers on a number line, equivalent fractions remain comparable and coincide at one point.",
+        "Teach the multiplicative structure (splitting each part, multiplying numerator and denominator by the same number) with diagrams BEFORE introducing any 'times top and bottom' rule.",
+        "Both numerator and denominator must be multiplied by the same number: for fractions less than one, such as 2/3, adding one to each (2/3 to 3/4) or changing only one of the two numbers shifts the shaded amount and does not make an equivalent fraction. (Adding one to each keeps the amount the same only when the fraction is a whole, e.g. 3/3 to 4/4, so it is not a valid rule.)",
+        "Matching, sorting and fill-in-the-blank tasks consolidate and check classification/completion but do not on their own build the underlying structure; use them after diagram-based construction.",
+        "A fraction wall shows which fractions align but does not itself demonstrate the split-each-part mechanism; pair it with active splitting.",
+        "Suitable for ages 7-8 (small denominators); the goal is recognising and showing equivalence with diagrams, not symbolic manipulation in isolation."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/361/assess",
+      "sourceBibliographyPointer": "/records/361/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_doX1BhmFgk",
+    "sourceName": "Tenths (age 8+)",
+    "learningGoals": [
+      "Count from 3/100 to 12/100 in hundredths",
+      "Explain that 1/10 ÷ 10 = 1/100",
+      "Place several hundredths on a number line between 0 and 1/10"
+    ],
+    "currentPackId": "same-amount",
+    "plannedPackId": "same-amount",
+    "plannedThemeId": "numbers",
+    "groupId": "f-tenths",
+    "unitId": "B03-U05",
+    "batchId": "B03",
+    "familyId": "fraction-decimal",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/313",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Split a tenth into ten hundredths",
+          "jsonPointer": "/records/313/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Count in hundredths across the tenth boundary and place them on a line",
+          "jsonPointer": "/records/313/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Predict and compare: which is bigger, a tenth or a hundredth?",
+          "jsonPointer": "/records/313/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Split a tenth into ten hundredths",
+        "learnerActions": [
+          "Start with a strip that is one whole, already partitioned into ten equal tenths.",
+          "Take a single tenth and cut (or subdivide) it into ten equal pieces; name one piece 'a hundredth' and write 1/10 ÷ 10 = 1/100.",
+          "Work out how many of these small pieces would fill the whole strip: each of the ten tenths holds ten hundredths, so 10 × 10 = 100. Connect this to 'a hundredth is one of a hundred equal parts of the whole'.",
+          "Count aloud in hundredths across the tenth boundary — 8, 9, 10, 11, 12 hundredths — and pause at 10 hundredths to say it is also 1 tenth.",
+          "Lay one hundredth directly beside one tenth and describe how much smaller the hundredth is."
+        ],
+        "intendedInsight": "Hundredths come from dividing a tenth again by ten; ten hundredths rebuild one tenth and 100 hundredths make one whole. A hundredth is smaller than a tenth even though 100 is a bigger number than 10, because the same whole is split into more equal parts.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "10×10 hundred grid (whole = 1, column = 1/10, small square = 1/100)",
+        "Length / number line from 0 to 1/10 subdivided into 10 hundredths",
+        "A tenth-strip physically cut into ten hundredth-pieces (1/10 ÷ 10 = 1/100)",
+        "Place-value nesting diagram: whole → tenths → hundredths, each ten-for-one",
+        "Counting sequence in hundredths crossing 10/100 = 1/10"
+      ],
+      "commonMisconceptions": [
+        "Whole-number bias on the denominator: believing a hundredth is bigger than a tenth 'because 100 is bigger than 10'.",
+        "Not coordinating the nesting — treating 10 hundredths and 1 tenth as different, unrelated amounts.",
+        "Believing hundredths can only be made by cutting the whole into 100 at once, not by subdividing tenths (missing the recursive ×10 structure).",
+        "Losing count across the tenth boundary (after 9 hundredths, not seeing 10 hundredths = 1 tenth).",
+        "Thinking 'hundredths' refers to the large number 100 rather than to tiny parts of a whole."
+      ],
+      "constraints": [
+        "A 10×10 hundred grid and a length/number-line model are complementary and are recommended together (whole grid/strip = 1, one column or row = 1/10, one small square or gap = 1/100); pairing the two models is the original's preferred approach, though a single well-chosen model can also support the learning.",
+        "Derive hundredths by subdividing a tenth, not by cutting the whole into 100 pieces in one go, so the recursive ten-in-one structure is felt.",
+        "Whole-number bias is the central obstacle and must be addressed, not merely stated; directly comparing exactly one tenth against exactly one hundredth is the strongly recommended means (the original's named approach), though it is one effective technique rather than the only possible one.",
+        "Paper or card strips have real thickness and are physical approximations of the ideal flat fractional length; a screen model shows the idealised zero-thickness version. Either can support this learning; neither is required.",
+        "Recognition or ordering tasks (e.g. picking which is bigger from options, filling '10 hundredths = __ tenth') check outcomes but do not by themselves build the nesting insight; use them alongside subdivision work, not as a substitute for the child performing the split.",
+        "Optional interaction examples that make the mechanism concrete: a live counter that steps in hundredths and snaps to the 1/10 tick with a flipping '10 hundredths = 1 tenth' label; a size-compare mode dropping one hundredth beside one tenth; zooming between 0 and 1/10 to place several hundredths; a tappable column revealing '1 tenth = 10 hundredths'. These are illustrative, not mandatory."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/313/assess",
+      "sourceBibliographyPointer": "/records/313/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_W17Kbwm0-u",
+    "sourceName": "Decimal & Percent Notation",
+    "learningGoals": [
+      "Read and write decimal numbers correctly, identifying the value of each digit (ones, tenths, hundredths)",
+      "Use the % symbol correctly and explain that per cent means 'out of 100'",
+      "Convert between simple fractions, decimals, and percentages (e.g. 1/2 = 0.5 = 50%) and explain why they are equal"
+    ],
+    "currentPackId": "scaling",
+    "plannedPackId": "scaling",
+    "plannedThemeId": "numbers",
+    "groupId": "s-percent",
+    "unitId": "B03-U06",
+    "batchId": "B03",
+    "familyId": "ratio",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/894",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "One quantity, three names — fill and watch them move together",
+          "jsonPointer": "/records/894/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Match, read and complete — diagnostic usage practice",
+          "jsonPointer": "/records/894/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain it to a younger child",
+          "jsonPointer": "/records/894/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Four-way reference display",
+          "jsonPointer": "/records/894/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "One quantity, three names — fill and watch them move together",
+        "learnerActions": [
+          "Fill a hundred square (or slide a bar) to show a chosen amount, e.g. drag to fill fifty squares.",
+          "Read the linked panel as it updates in lockstep: 50/100, 0.5, 50%, with a marker halfway along a 0%–100% number line.",
+          "Say the decimal aloud in place-value language ('five tenths, one half, fifty per cent'); use a 'read it' option to hear the correct reading.",
+          "Fill nine squares and confirm the panel reads 9/100, 0.09, 9% and voices the place-value name 'nine hundredths' alongside the digit reading 'zero point zero nine'.",
+          "Switch to context skins (a '9% off' price tag, a jug 0.5 full) and state the same fact as a fraction, a decimal and a percentage.",
+          "When finding part of an amount, practise saying and writing 'X% of N' (e.g. '9% of £420 = £37.80') rather than '9% = £37.80'; equivalences such as '9% = 0.09 = 9/100' are still correct."
+        ],
+        "intendedInsight": "A fraction, a decimal and a percentage are not three separate topics but one quantity wearing three names; the correct place-value reading and the 'per cent = out of 100' meaning are visible in the same moment the learner acts.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Four-way display: shaded hundred square + fraction (n/100) + decimal + point on a 0%–100% number line",
+        "0–1 / 0%–100% double number line linking the three forms",
+        "Place-value chart for reading decimals aloud (ones | tenths | hundredths | thousandths)",
+        "Real-context cards (50% off, jug 0.5 full, 3/4 of a pizza) matched across notations",
+        "Matching sets of fraction–decimal–percentage cards for one value"
+      ],
+      "commonMisconceptions": [
+        "Reading decimals as digit strings ('point oh nine', 'point seven') instead of place-value names ('nine hundredths', 'seven tenths').",
+        "Treating fraction, decimal and percentage as different, unrelated things rather than three names for one value.",
+        "Misusing percentage notation — writing '10% = 42' instead of '10% of 420 = 42'.",
+        "Reading the percentage number as the whole ('50% means 50') rather than as parts per hundred.",
+        "Confusing per cent (out of 100) with a plain count."
+      ],
+      "constraints": [
+        "Insist that learners can give the place-value reading of decimals: 0.09 is 'nine hundredths', 0.7 is 'seven tenths'. Digit readings such as 'zero point zero nine' or 'point seven' are conventional and not wrong, but they do not show place value, so always ask for the place-value name as well.",
+        "When finding a percentage of an amount, always write 'X% of N' (e.g. '9% of £420 = £37.80'), never '9% = £37.80', including in worked feedback; per cent means parts per hundred of a base, and 100% is the whole. Equivalences between forms, such as '9% = 0.09 = 9/100' or '50% = 0.5 = 1/2', are correct and should be encouraged.",
+        "Treat the three forms as names for one value, not as separate topics; show them together on a shaded hundred square and/or a 0%–100% number line.",
+        "Introduce 'terminating decimal' and 'convert' as working vocabulary during the act of converting, attached to actions rather than defined in isolation.",
+        "Matching, multiple-choice and sorting tasks check correct usage but do not by themselves build the linked-representation habit; use them alongside an activity where the learner drives the change.",
+        "A fixed reference display shows one value at a time and cannot be re-driven by the learner; pair it with manipulable work across many values.",
+        "The target is USE in context, not reciting definitions; judge success by how a learner reads, writes and moves between forms with real quantities."
+      ],
+      "assessmentMethod": "use_in_context",
+      "assessmentPointer": "/records/894/assess",
+      "sourceBibliographyPointer": "/records/894/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_VKW8lOcFaw",
+    "sourceName": "Multiplication as scaling",
+    "learningGoals": [
+      "Predict without calculating whether 3/4 × 7 is greater or less than 7",
+      "Explain why multiplying by 5/3 makes a number larger and multiplying by 2/5 makes it smaller",
+      "Relate multiplying a/b by n/n = 1 to the principle of fraction equivalence"
+    ],
+    "currentPackId": "scaling",
+    "plannedPackId": "scaling",
+    "plannedThemeId": "numbers",
+    "groupId": "s-ratio",
+    "unitId": "B03-U07",
+    "batchId": "B03",
+    "familyId": "ratio",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/886",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Stretch-and-shrink bar: predict before you scale",
+          "jsonPointer": "/records/886/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict and sort multipliers by direction",
+          "jsonPointer": "/records/886/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Find the counterexample to 'multiplying always makes bigger'",
+          "jsonPointer": "/records/886/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Multiplying by n/n keeps the value",
+          "jsonPointer": "/records/886/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Stretch-and-shrink bar: predict before you scale",
+        "learnerActions": [
+          "Look at a 7-unit bar placed beside a faint marker of the original length 7.",
+          "Before anything moves, predict out loud or in writing whether scaling by a chosen multiplier will make the bar longer, shorter, or the same, and say WHY.",
+          "Set the multiplier to 3/4 and watch the bar contract to sit short of 7 (3/4 × 7 = 5.25).",
+          "Set the multiplier to 5/3 and watch the bar stretch past 7 (5/3 × 7 ≈ 11.67).",
+          "Set the multiplier to 4/4 and watch the bar hold exactly at 7, re-partitioned to show it is still the same length.",
+          "Sweep the multiplier dial slowly across 1 and notice the exact point where the bar flips from shrinking to growing.",
+          "State the rule: multiplying a positive quantity makes it bigger only when the multiplier is more than 1."
+        ],
+        "intendedInsight": "For a positive quantity scaled by a positive multiplier, the product is larger than, equal to, or smaller than the quantity exactly according to whether the multiplier is greater than, equal to, or less than 1 — the number 1 is the pivot, not whether the multiplier is written as a fraction.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Number line / elastic band stretched (×>1) or compressed (×<1) relative to the original length",
+        "Photo or shape enlargement/reduction by a scale factor",
+        "Double number line pairing a quantity with its scaled image",
+        "× n/n = ×1 shown as re-partitioning without changing length (equivalence link)"
+      ],
+      "commonMisconceptions": [
+        "'Multiplication always makes the number bigger' (and division always smaller) — predicts 3/4 × 7 > 7 (Fischbein's primitive intuitive model; named explicitly in the IES guide).",
+        "Over-corrects to 'any fraction makes it smaller' — predicts 5/3 × 7 < 7 because the multiplier is written as a fraction, ignoring that 5/3 > 1.",
+        "Thinks multiplying by n/n changes the value (because 'you multiplied'), not recognising n/n = 1."
+      ],
+      "constraints": [
+        "Target age roughly 10–11 (Year 5 / Grade 5); conceptual objective, not a computation drill.",
+        "Insist on prediction and reasoning BEFORE any calculation — the reason is the diagnostic part. A learner can guess 'less than 7' without understanding; require 'because 3/4 is less than 1, so it's part of 7'.",
+        "Always pair a multiplier >1 (e.g. 5/3) with one <1 (e.g. 2/5 or 3/4) so learners must track size relative to 1 rather than applying a blanket 'fractions shrink' rule.",
+        "Sorting and multiple-choice items assess direction and can bait errors, but they ask for selection; include tasks where the learner constructs a reason, a counterexample, or a corrected rule.",
+        "A static before/after image can show one enlargement and one reduction but does not let the learner vary the multiplier across 1; treat it as a reference scaffold, not the main concept-building task.",
+        "Keep concrete numbers correct: 3/4 × 7 = 5.25 (short of 7), 5/3 × 7 ≈ 11.67 (past 7), 2/5 × 7 = 2.8 (short of 7), 4/4 × 7 = 7.",
+        "A zero-thickness on-screen bar or elastic is an idealised model of magnitude/length; physical strips, elastic bands, or photos are approximations with their own properties (slight thickness, stretch limits) — use either to make resizing felt, without claiming one is required or superior.",
+        "Compare fractions here as numbers/multipliers against 1; do not teach any 'denominator rule flips' idea — the direction of change comes from the multiplier's size relative to 1."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/886/assess",
+      "sourceBibliographyPointer": "/records/886/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_ePXg_XyCKU",
+    "sourceName": "Bar Models for Ratios",
+    "learningGoals": [
+      "Draw a bar model to represent a ratio problem — e.g. sharing £20 in the ratio 3:2 by drawing 5 equal blocks",
+      "Use a bar model to solve a proportion problem and explain each step",
+      "Compare bar models with other representations (tables, double number lines) and explain when each is most useful"
+    ],
+    "currentPackId": "scaling",
+    "plannedPackId": "scaling",
+    "plannedThemeId": "numbers",
+    "groupId": "s-ratio",
+    "unitId": "B03-U07",
+    "batchId": "B03",
+    "familyId": "ratio",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/347",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build the tape diagram: draw, find one block, read off",
+          "jsonPointer": "/records/347/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Concrete first: build the ratio with cubes, then draw it",
+          "jsonPointer": "/records/347/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Read a worked bar model (scaffold)",
+          "jsonPointer": "/records/347/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Match, read and sketch (assessment-style practice)",
+          "jsonPointer": "/records/347/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Compare the bar model with tables and double number lines",
+          "jsonPointer": "/records/347/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build the tape diagram: draw, find one block, read off",
+        "learnerActions": [
+          "Given '£20 shared in the ratio 3:2', build two bars — 3 equal blocks beside 2 equal blocks — keeping every block the same width.",
+          "Place a brace spanning all 5 blocks and label it with the total, £20.",
+          "Find the value of one block by dividing the total by the number of blocks: £20 ÷ 5 = £4.",
+          "Fill every block with £4, then read off the two shares: 3 × £4 = £12 and 2 × £4 = £8; check they add back to £20.",
+          "Toggle the same ratio between part-to-part twin bars (3 and 2) and a part-to-whole single bar of 5, and say which layout the question needs.",
+          "Repeat independently for a new problem: share £18 in the ratio 5:1 — six equal blocks in two bars (5 and 1), brace £18, one block = £3, shares £15 and £3.",
+          "Re-read one of your diagrams as a proportion: 'what fraction of the money is the shaded bar?' (e.g. 3 out of 5)."
+        ],
+        "intendedInsight": "Each block is an equal unit standing for the same amount; dividing the whole by the number of blocks gives one block's value, and from that single fact every share and proportion can be read straight off the picture without a memorised rule.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Part-to-part twin bars (e.g. 3 equal blocks : 2 equal blocks) with a brace showing the total",
+        "Part-to-whole single bar split into the total number of parts, one section shaded",
+        "Cubes/counters as the concrete precursor to drawn blocks",
+        "Ratio table and double number line as complementary models to contrast",
+        "One labelled block annotated with its value (the pivot of the three-move routine)"
+      ],
+      "commonMisconceptions": [
+        "Draws blocks of unequal size, so the model no longer represents equal units",
+        "Sets up part-to-whole when the problem is part-to-part (draws a bar of 3 for a 3:2 ratio and treats the 2 as part of it), or vice versa",
+        "Jumps to arithmetic without finding the value of one block, so the diagram is decorative rather than a solving tool",
+        "Maps the wrong quantity to the wrong bar, or forgets which bar is which after drawing"
+      ],
+      "constraints": [
+        "Every block in the bars must be the same size and stand for the same amount; the model breaks if blocks are drawn unequal.",
+        "Distinguish part-to-part (two separate bars, e.g. 3 and 2) from part-to-whole (one bar of 5, or a whole split), and choose the layout the question needs.",
+        "Always draw the diagram before calculating so problem structure is made visible rather than guessed from key words.",
+        "Label the diagram fully — the total (a brace over the whole), the known value and the '?' — so it carries the problem's information.",
+        "Make 'find the value of one block' the pivot: a diagram that is drawn but never used to find one block's value is decorative, not a solving tool.",
+        "Reading a prepared model (tap-to-reveal, worked example) is a scaffold toward constructing one; it does not by itself require the learner to build a model for a new problem.",
+        "Matching and multiple-choice items assess recognition; independent construction requires the learner to draw a correct model for a new ratio.",
+        "The bar model is planar; a flat layout keeps the equal-unit comparison clear. Added depth is not needed for this representation (this is a scope note, not a claim about 3D teaching generally)."
+      ],
+      "assessmentMethod": "interpret_translate",
+      "assessmentPointer": "/records/347/assess",
+      "sourceBibliographyPointer": "/records/347/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_xppl18avyY",
+    "sourceName": "Sorting into categories",
+    "learningGoals": [
+      "Sort a set of shapes by colour and count how many in each group",
+      "Sort objects by size (big/small) and state how many in each category",
+      "Identify which category has the most/fewest after sorting and counting"
+    ],
+    "currentPackId": "collect",
+    "plannedPackId": "collect",
+    "plannedThemeId": "data",
+    "groupId": "d-sort",
+    "unitId": "B04-U01",
+    "batchId": "B04",
+    "familyId": "data-collect",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/955",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Drag-to-sort (or hands-on sort) with self-counting groups",
+          "jsonPointer": "/records/955/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort the same set two different ways",
+          "jsonPointer": "/records/955/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Answer a real question from sorted class data",
+          "jsonPointer": "/records/955/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Drag-to-sort (or hands-on sort) with self-counting groups",
+        "learnerActions": [
+          "Face a jumble of coloured shapes and three labelled groups/bins (physical trays or an on-screen mat).",
+          "Before starting, say aloud the single attribute: 'we are sorting by COLOUR.'",
+          "Move each shape into its matching group until every shape is placed and none is left over.",
+          "Watch or build each group as a line with one object per equal-sized space (or a stack of same-size counters standing for the objects) so groups can be compared fairly, and keep a running count of each group.",
+          "Read off which group has the most and which has the fewest by comparing the counts.",
+          "Then re-sort the SAME set a different way (by size): tip everything out, relabel the groups, and sort again, noticing the counts change."
+        ],
+        "intendedInsight": "Sorting means applying one consistent rule to classify every object, and 'most/fewest' is read from the counts once the groups are arranged for fair comparison. The same fixed data can also be grouped in more than one way — how you sort is a choice.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Sorting hoops / bins or trays, one per category",
+        "Objects lined up one-to-one in rows (an emerging bar graph)",
+        "A simple two- or three-row count record (category name + count)",
+        "Real class data the child helped generate (favourite colour, shape cards)"
+      ],
+      "commonMisconceptions": [
+        "Shifts the sorting criterion partway (starts by colour, drifts to size), producing mixed groups",
+        "Judges 'most' by the space a group takes up rather than its count (a spread-out group of big objects looks like 'more')",
+        "Miscounts a group by losing track when objects are scattered (insecure cardinality)",
+        "Thinks each object can go in more than one pile, or leaves objects unsorted"
+      ],
+      "constraints": [
+        "Keep one sorting attribute fixed within a single sort; name it aloud before starting so groups don't drift into mixed criteria.",
+        "Arrange groups as lines with one object per equal-sized space (e.g. a grid mat), or as stacks of same-size counters or blocks, so 'most/fewest' is read from count, not from the space a group happens to fill — large or spread-out objects can look like 'more' while being fewer, and stacks of different-sized shapes cannot be fairly compared by height.",
+        "Every object must be classified into exactly one non-overlapping group; none left unsorted and none in two piles.",
+        "Secure cardinality supports this skill: if a child loses track counting a scattered group, that is a counting lapse to steady (slide each aside / line them up), not a sorting error to reteach.",
+        "Assess by watching the child sort and count (the doing), not by asking them to describe sorting: observe whether they hold one rule, sort exhaustively, count with cardinality, and read most/fewest from counts. Recognising an answer in a multiple-choice check is not the same as independently sorting and counting.",
+        "A tap-to-reveal of an already-sorted set with counts can serve as reference, but it does not let the child perform the sorting, which is the skill; use it only as a scaffold, not the main task.",
+        "An open conversation or a 3D handling task is not required for this flat, single-attribute classification; a multiple-choice 'which has most?' may check the read-off, but recognising the answer does not elicit independent sorting and counting."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/955/assess",
+      "sourceBibliographyPointer": "/records/955/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_ylXdiVRAYv",
+    "sourceName": "Sorting Data into Categories",
+    "learningGoals": [
+      "Sort a set of objects into 2-3 given categories and count each group",
+      "Create a simple table or list showing category names and counts",
+      "Order categories from most to fewest or fewest to most"
+    ],
+    "currentPackId": "collect",
+    "plannedPackId": "collect",
+    "plannedThemeId": "data",
+    "groupId": "d-sort",
+    "unitId": "B04-U01",
+    "batchId": "B04",
+    "familyId": "data-collect",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/989",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Survey organiser: from response cards to a table that answers the question",
+          "jsonPointer": "/records/989/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Interactive reconcile-and-order check (optional self-check mechanism)",
+          "jsonPointer": "/records/989/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Read a completed table to say what it means (annotation scaffold)",
+          "jsonPointer": "/records/989/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Survey organiser: from response cards to a table that answers the question",
+        "learnerActions": [
+          "Start from a real question the class cares about, e.g. 'which of these three snacks is most popular?' or 'which of these three fruits does our class like best?'",
+          "Take a shuffled stack of class response cards and sort each card into one of 2-3 categories, building a tally as you go",
+          "Write each category name beside its count in a simple table or list",
+          "Check that the row counts add up to the number of cards you started with (e.g. '7 + 5 + 4 = 16, and we had 16 cards')",
+          "Order the categories from most to fewest so the category with the biggest count rises to the top (if two categories have the same biggest count, say that they are tied rather than naming one winner)",
+          "Read the table back aloud to state which category answers the question",
+          "Test the table as a live record: if two more children chose one fruit, update that count, check that the new total is 2 more than before (e.g. 18 instead of 16), and see whether the ordered answer changes"
+        ],
+        "intendedInsight": "An organised table is a tool that ANSWERS a question, not just a store of numbers: once ordered, the record visibly shows the most popular category, the totals should reconcile with the whole set, and updating a count updates the answer.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Simple frequency table / list (category name + count)",
+        "Tally chart feeding the table",
+        "Sorted objects or cards arranged in rows as the concrete source",
+        "Ordered list of categories from most to fewest"
+      ],
+      "commonMisconceptions": [
+        "Records counts that don't line up with their categories (rows misaligned in the table)",
+        "Organises the data but cannot read it back to answer the original question (table treated as decoration)",
+        "Miscounts categories or the totals don't reconcile with the full set",
+        "Forces every item into the given categories (or invents overlaps) when some items fit none"
+      ],
+      "constraints": [
+        "Begin from a genuine statistical question so the organised data has a purpose to answer; always return to the question so the table is a tool, not a decoration",
+        "Model the full tally-then-table pipeline: sort/tally raw data, then write each category name beside its count",
+        "Build a reconcile habit: category totals should sum back to the whole set, and this self-check should be modelled explicitly",
+        "Limit to 2-3 categories with counts within young children's secure cardinality",
+        "Allow an 'other' category for items that fit none of the given categories, rather than forcing or double-placing them; keep the total number of categories, including 'other', within the 2-3 category limit (e.g. two named categories plus 'other')",
+        "The reading/annotation scaffold assesses and supports interpretation but does not elicit independent construction of a table from raw data; pair it with hands-on organising",
+        "Interactive reconcile/order controls are illustrative affordances; the same learning can occur with physical cards and a paper table — do not treat the digital tool as mandatory"
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/989/assess",
+      "sourceBibliographyPointer": "/records/989/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_iykH2P5oFq",
+    "sourceName": "Statistical questions",
+    "learningGoals": [
+      "Sort questions such as 'How tall am I?', 'How tall are the pupils in my class?', 'How many days are in March?' and 'How many hours of sleep do 12-year-olds usually get?' into statistical and non-statistical, explaining each choice by whether the answers are expected to vary",
+      "For a given statistical question, name the population and the attribute being measured, describe the variation they expect (e.g. 'sleep times will differ from person to person, perhaps from 7 to 11 hours'), and explain that a good answer must account for that variability in the data — even a single-number summary such as 'a typical 12-year-old sleeps about 9 hours' stands for many differing values, unlike the one fixed answer to 'How many days are in March?'",
+      "Explain why a question about a group can still be non-statistical (e.g. 'How many pupils are in my class?' has one fixed answer), and rewrite a non-statistical question as a statistical one (e.g. 'How long is my journey to school?' becomes 'How long are journeys to school for pupils in my year?')"
+    ],
+    "currentPackId": "collect",
+    "plannedPackId": "collect",
+    "plannedThemeId": "data",
+    "groupId": "d-question",
+    "unitId": "B04-U02",
+    "batchId": "B04",
+    "familyId": "data-collect",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_u5HkSxZECM",
+    "sourceName": "Pictograms and tally charts (age 6+)",
+    "learningGoals": [
+      "Correctly label the axes of a bar chart including a title, axis labels, and scale",
+      "Distinguish between discrete data (counted) and continuous data (measured) with an example of each",
+      "Use 'tally', 'frequency', and 'pictogram' correctly when describing how to record and display data"
+    ],
+    "currentPackId": "display",
+    "plannedPackId": "display",
+    "plannedThemeId": "data",
+    "groupId": "d-basic",
+    "unitId": "B04-U03",
+    "batchId": "B04",
+    "familyId": "data-display",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/843",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Label the chart and sort the data",
+          "jsonPointer": "/records/843/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tally to frequency: marks become a count",
+          "jsonPointer": "/records/843/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Contrast-pair glossary (scaffold)",
+          "jsonPointer": "/records/843/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Label the chart and sort the data",
+        "learnerActions": [
+          "Finish a half-built bar chart by placing the right term onto each part: the title, each axis label, the scale (the equal number steps up the side), the category names along the bottom, and the frequency (the count shown by the height of each bar on the value axis).",
+          "Say each term aloud as you place it — 'this is the scale', 'these are the category names', 'this axis shows the frequency' — so you are wielding the word, not just matching it.",
+          "Sort real variables into 'discrete (counted)' or 'continuous (measured)': e.g. 'number of pets', 'goals scored' versus 'how tall', 'time taken', 'temperature'.",
+          "For each variable, apply the test: 'Could there be a value in between?' — someone can be 125-and-a-half cm tall (continuous) but cannot have two-and-a-half pets (discrete)."
+        ],
+        "intendedInsight": "Data vocabulary is mastered by using it correctly in a real chart and a real sorting task — height is continuous because a value can fall in between, even when it is written as a whole number.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "A chart the child annotates: title, both axis labels, an even scale, category names",
+        "Contrast-pair cards (discrete/continuous; tally/frequency)",
+        "A sorting mat for variables: counted vs measured",
+        "Tally chart feeding a frequency table (marks → count)"
+      ],
+      "commonMisconceptions": [
+        "Confuses discrete and continuous — e.g. thinks height is discrete because it's written as a whole number, or that 'continuous' just means 'a lot of data'",
+        "Uses 'frequency' for the category name, or conflates the tally marks with the frequency total",
+        "Muddles 'label' and 'scale' — calls the category names the scale, or numbers an axis in uneven steps yet still calls it a scale",
+        "Calls every display a 'bar chart' or 'graph', not matching the term to the representation"
+      ],
+      "constraints": [
+        "Teach each term at the point it is needed inside a real data activity, not as an up-front word list.",
+        "Recognition and tap-to-reveal glossary tasks support recall but do not, by themselves, elicit independent construction; pair them with building and labelling a chart and sorting real variables.",
+        "The contrast-pair glossary is a scaffold: it displays comparisons but does not require the child to use the term, so confirm mastery through active labelling and sorting with feedback.",
+        "Matching, categorisation and fill-the-blank items can check correct use (e.g. a discrete/continuous sort with a 'whole-number-written' trap, a tally-versus-frequency match), but keep them as checks alongside the hands-on build rather than the main teaching.",
+        "A real survey/chart with actual categories, an even scale and variables to sort is the core for this LANGUAGE objective; picture-only or definition-reciting versions are weaker for eliciting correct use because the vocabulary is learned by wielding it."
+      ],
+      "assessmentMethod": "use_in_context",
+      "assessmentPointer": "/records/843/assess",
+      "sourceBibliographyPointer": "/records/843/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_r8XnXwRA6g",
+    "sourceName": "Scaled picture and bar graphs",
+    "learningGoals": [
+      "Draw a bar graph where each square represents 5 pets",
+      "From a scaled pictogram, answer: how many more children chose football than tennis?",
+      "Solve a two-step problem: how many votes in total for the top two choices?"
+    ],
+    "currentPackId": "display",
+    "plannedPackId": "display",
+    "plannedThemeId": "data",
+    "groupId": "d-basic",
+    "unitId": "B04-U03",
+    "batchId": "B04",
+    "familyId": "data-display",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/759",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Flip the scale: watch the same bars change value",
+          "jsonPointer": "/records/759/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Reading values between the marks",
+          "jsonPointer": "/records/759/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Two-step problems as two reads then combine",
+          "jsonPointer": "/records/759/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Construct a scaled graph from a frequency table",
+          "jsonPointer": "/records/759/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Flip the scale: watch the same bars change value",
+        "learnerActions": [
+          "Draw bars for a small data set on squared paper where 'each square = 1'.",
+          "Then change the key to 'each square = 5' and re-read every bar: say what each bar now means (e.g. a 4-square bar is now 20, not 4).",
+          "State out loud: 'The height on its own doesn't tell me the value — I only know the value once I read it through the scale.'",
+          "Optional with an interactive scaled-graph builder: use a scale selector (each square = 2/5/10) that re-labels the axis live, so the same drawn bars instantly re-map to new values.",
+          "Choose a sensible scale (e.g. 2, 5 or 10) for a given data set so the largest value fits, mark the axis in equally spaced intervals, and explain why that scale works."
+        ],
+        "intendedInsight": "A bar's or symbol's size maps to a value only via the scale; changing the scale re-maps every value, and a sensible scale (e.g. 2, 5 or 10) makes the largest value fit with equal intervals.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Scaled bar graph on squared paper (each square = 2/5/10)",
+        "Scaled pictogram with a stated key and part-symbols",
+        "Frequency table as the source, with the scale chosen from the largest value",
+        "Two bars aligned for a difference, or stacked for a sum"
+      ],
+      "commonMisconceptions": [
+        "Ignores the scale and reads each square/symbol as one unit (or just counts symbols)",
+        "Cannot read an intermediate value — rounds a mid-interval bar to a gridline or ignores a part-symbol",
+        "Collapses a two-step problem to one step (reads a value but doesn't combine, or does the wrong operation)",
+        "Constructs a scaled axis with unequal intervals, so positions no longer map to values"
+      ],
+      "constraints": [
+        "Always read the key/scale first, before reading any value ('each square stands for 5').",
+        "Learners should both READ and CONSTRUCT scaled graphs; recognition-only or tap-to-reveal items that show a key and values can check reading but do not themselves elicit the independent scale choice or multi-step solving that construction and open problems require.",
+        "A static scaled graph with a tappable key can serve as a reference, but it cannot let the learner change the scale or solve multi-step problems; use it as a scaffold, not the main task.",
+        "Multiple-choice two-step items should include a 'one-step' wrong option (just the top value) so collapsing to one step is detectable; such items check reading/solving but do not require construction.",
+        "Half-symbols and bar tops between gridlines must be included so intermediate reading is practised, not avoided.",
+        "When a half-symbol or mid-interval value is used with learners, choose a key/scale that yields an exact value (e.g. an even key so a half-symbol is a whole number), or state the half value explicitly (2½, 12½) rather than rounding to a nearby whole number."
+      ],
+      "assessmentMethod": "interpret_translate",
+      "assessmentPointer": "/records/759/assess",
+      "sourceBibliographyPointer": "/records/759/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_QpJydot2Kh",
+    "sourceName": "Choosing displays for a purpose",
+    "learningGoals": [
+      "Show the same sport survey as a table and as a bar graph made in software and describe what each makes easy to see",
+      "Choose a table to read an exact count and a bar graph to compare categories at a glance, explaining both choices",
+      "Interpret the bar graph by saying which sport is most popular and by how much"
+    ],
+    "currentPackId": "display",
+    "plannedPackId": "display",
+    "plannedThemeId": "data",
+    "groupId": "d-choose",
+    "unitId": "B04-U04",
+    "batchId": "B04",
+    "familyId": "data-display",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_iFFKZd-Vgv",
+    "sourceName": "Likelihood Language",
+    "learningGoals": [
+      "Place five everyday events (e.g. 'the sun will rise tomorrow', 'it will snow in July', 'I'll flip heads') on a scale from impossible to certain",
+      "Use 'likely', 'unlikely', 'certain', 'impossible', and 'even chance' correctly to describe different events",
+      "Explain why pulling a red ball from a bag of mostly red balls is 'likely' but not 'certain'"
+    ],
+    "currentPackId": "chance",
+    "plannedPackId": "chance",
+    "plannedThemeId": "data",
+    "groupId": "c-experiment",
+    "unitId": "B04-U05",
+    "batchId": "B04",
+    "familyId": "chance",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/478",
+      "activityCount": 5,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "The Chance-master's bag: say it, then watch it happen",
+          "jsonPointer": "/records/478/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Physical likelihood line: peg real events and justify",
+          "jsonPointer": "/records/478/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Live likelihood strip with an adjustable bag",
+          "jsonPointer": "/records/478/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Sort and order events (recognition check)",
+          "jsonPointer": "/records/478/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Tap-to-reveal reference scene (worked examples)",
+          "jsonPointer": "/records/478/learn/activities/4"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "The Chance-master's bag: say it, then watch it happen",
+        "learnerActions": [
+          "Look into a bag you can see holds mostly red counters (e.g. 7 red and 3 blue) with the composition visible.",
+          "Before any draw, say in words how likely a red draw is and WHY, grounding the reason in the numbers ('most of them are red') rather than wanting red.",
+          "When you declare red 'certain', watch the game-master take out and show a blue counter (picked on purpose, or by drawing until one appears, because a single random draw will usually be red), then repair your word: was red certain, or only likely? Explain the difference.",
+          "Answer the opposite trap: the game-master suggests 'landing on 7 with this ordinary 1–6 die is only very unlikely, isn't it?' — decide whether 7 is very unlikely (rare but possible) or impossible (cannot happen at all), and say why.",
+          "Describe a green draw ('there are no green counters'), and a 'red or blue' draw ('only those two colours exist'), choosing and justifying a word for each.",
+          "Reject vague answers: if you say '50-50', be ready for 'but there are 7 red and 3 blue — is that even?' and recount to decide."
+        ],
+        "intendedInsight": "Each likelihood word corresponds to how many of each outcome there are; 'likely' is not a guarantee and 'impossible' (cannot happen at all) is stronger than 'very unlikely' (rare but possible). 'Even chance' requires equal numbers, not merely two possible outcomes.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Likelihood line / probability word-scale strip (impossible ↔ certain)",
+        "Bags of coloured counters with visible, countable composition",
+        "Spinners with equal vs unequal sections",
+        "Everyday-event cards to sort and order"
+      ],
+      "commonMisconceptions": [
+        "Treating 'even chance' as meaning 'any situation with two possible outcomes' (e.g. calling a 1-red / 5-blue draw 'even chance' because there are two colours)",
+        "Collapsing the graded words to guarantees — 'likely' taken to mean it will definitely happen, 'unlikely' that it definitely won't",
+        "Confusing 'impossible' (cannot happen, probability 0) with 'very unlikely' (rare but possible) — e.g. calling a rare draw 'impossible'",
+        "Judging likelihood by personal preference or wishful thinking rather than by how many of each outcome there are"
+      ],
+      "constraints": [
+        "The objective is correct USE and justification of the five words in context; activities must make the child produce and justify the vocabulary, not merely select it.",
+        "Justifications must be grounded in the composition (how many of each outcome), not in personal preference or wishful thinking.",
+        "Reserve 'certain' and 'impossible' for the true endpoints (all favourable / zero favourable) and use the graded middle for everything else; do not let 'likely' become a guarantee or 'unlikely' become 'impossible'.",
+        "Keep 'impossible' (cannot happen at all, e.g. 7 on a 1–6 die or a green draw when none are present) distinct from 'very unlikely' (rare but possible); never present a strictly impossible outcome as a graded-middle case.",
+        "Use unequal compositions early (e.g. 7 red/3 blue, a spinner with one big section) so 'even chance' is not over-generalised to any two-outcome case; when comparing two represented outcomes, 'even chance' requires equal numbers.",
+        "Sorting/sequencing and the tap-to-reveal scene are recognition or reference scaffolds: they can assess classification or model reasoning but do not on their own elicit the child's independent, justified use of the words — pair them with spoken/written reasons or follow with open dialogue.",
+        "The live strip's slider/recolouring and suggested-word zone are optional illustrative interactions, not required mechanisms; the child must still voice the word themselves.",
+        "A spatial/3D environment is not required for this vocabulary-focused objective, which centres on producing and justifying words rather than spatial reasoning; the source judged it to add little over a flat scale and dialogue, but treat this as a scoped, untested design judgement, not a universal claim that 3D media add nothing."
+      ],
+      "assessmentMethod": "use_in_context",
+      "assessmentPointer": "/records/478/assess",
+      "sourceBibliographyPointer": "/records/478/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_J4j7d3iAfg",
+    "sourceName": "Simple Chance Experiments",
+    "learningGoals": [
+      "Flip a coin 20 times, record heads and tails in a tally chart, and describe what they notice about the results",
+      "Roll a die 30 times and compare how often each number came up with what they expected",
+      "Pull counters from a bag, record results, and explain whether the outcomes matched their prediction"
+    ],
+    "currentPackId": "chance",
+    "plannedPackId": "chance",
+    "plannedThemeId": "data",
+    "groupId": "c-experiment",
+    "unitId": "B04-U05",
+    "batchId": "B04",
+    "familyId": "chance",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/507",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Predict, flip, tally: run and read a coin experiment",
+          "jsonPointer": "/records/507/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Watch the proportion settle: scale up the number of trials",
+          "jsonPointer": "/records/507/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "The coin has no memory: confront recency thinking",
+          "jsonPointer": "/records/507/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Interpretation check: does a small sample prove bias?",
+          "jsonPointer": "/records/507/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Predict, flip, tally: run and read a coin experiment",
+        "learnerActions": [
+          "Before flipping, predict the expected number of heads in 20 flips (about 10) and write it down.",
+          "Set up a tally chart with one row per outcome (heads, tails).",
+          "Flip the coin 20 times, marking exactly one tally per flip AS it happens — not reconstructing from memory afterward.",
+          "Total the marks and check the total equals the number of flips (20).",
+          "Describe what you notice: was it about half? Exactly ten? How close to your prediction?"
+        ],
+        "intendedInsight": "A fair device produces outcomes clustered near the expected split but not exactly matching it; disciplined one-tally-per-trial recording is part of the procedure, and the total must reconcile with the number of trials.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Tally chart / frequency table (one row per outcome)",
+        "Coins, dice, and bags of counters as trial-generators",
+        "Bar or block chart of observed frequencies against the expected line",
+        "Prediction-vs-result comparison"
+      ],
+      "commonMisconceptions": [
+        "Expecting the experiment to match the theoretical split exactly, and concluding the device is biased when it does not (law of small numbers)",
+        "Recency thinking — predicting the next trial from the recent run ('it's been heads four times, so tails is due', or 'heads is on a streak')",
+        "Recording carelessly — backfilling tallies or losing count so the total does not match the number of trials",
+        "Treating the result of a small experiment as the true probability rather than an estimate"
+      ],
+      "constraints": [
+        "The child must actually perform and tally the experiment; a recognition-only or reading-a-completed-tally task does not elicit the independent conducting-and-recording skill the topic requires.",
+        "Enforce one-tally-per-trial recording as the trial happens, not reconstruction from memory; total the marks against the number of trials so a mismatch is caught.",
+        "Have children predict the expected outcome before running, so the prediction-versus-result comparison is theirs to make.",
+        "Distinguish an execution lapse (careless recording, miscounting) from a conceptual error (expecting an exact match, recency thinking) — support the recording habit for the former, confront the belief for the latter.",
+        "A completed-tally interpretation check supports reasoning about bias and independence but is a supplement; it does not replace conducting the experiment.",
+        "Physical tossing (coin/die) and on-screen simulators offer different experiences — tactile realism versus the ability to scale rapidly to hundreds of trials; recording and comparing frequencies is not a spatial task, so neither is universally required. Treat the choice as a trade-off, not a ranking.",
+        "A small experiment yields an estimate of the probability, not the true probability; make this explicit to avoid treating a 20-trial result as definitive.",
+        "Live-tally, running proportion bar, 'run 20 vs run 500' contrast, and manual single-trial mode are optional illustrations of the mechanism, not mandatory tooling.",
+        "After any run, each flip of a fair coin stays 50-50 and heads is exactly as likely as tails next — never present one outcome as 'most likely' following a streak."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/507/assess",
+      "sourceBibliographyPointer": "/records/507/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_xSgAgg9Ej_",
+    "sourceName": "Equally Likely Outcomes",
+    "learningGoals": [
+      "Explain that a fair coin has equally likely outcomes because heads and tails each have the same chance",
+      "Identify whether a spinner with unequal sections has equally likely outcomes or not, and explain why",
+      "Give an example of a situation with equally likely outcomes and one without, explaining the difference"
+    ],
+    "currentPackId": "chance",
+    "plannedPackId": "chance",
+    "plannedThemeId": "data",
+    "groupId": "c-experiment",
+    "unitId": "B04-U05",
+    "batchId": "B04",
+    "familyId": "chance",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/959",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build a fair three-colour spinner and test it by sampling",
+          "jsonPointer": "/records/959/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort and decide: fair or not fair?",
+          "jsonPointer": "/records/959/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Argue down the carnival host (equally likely vs random)",
+          "jsonPointer": "/records/959/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Why is a balanced die fair? (structure vs execution)",
+          "jsonPointer": "/records/959/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build a fair three-colour spinner and test it by sampling",
+        "learnerActions": [
+          "Try to divide a spinner into three colours (red, blue, green) so that each colour is equally likely to be landed on.",
+          "Spin the spinner many times (e.g. 100 times) and keep a tally of how often each colour comes up.",
+          "If one colour comes up clearly more often over many spins, examine the spinner: is one wedge bigger than the others? (Small differences in the tally can happen by chance even on a fair spinner.) Adjust the boundaries until the three wedges are the same size, checking the sizes directly, then spin and tally again.",
+          "State in your own words what makes the three colours equally likely — the equal AREA of each section, not the fact that there are three colours.",
+          "Then build the opposite: a cube with 1 red face and 5 blue faces (six equal faces), or a spinner split into six equal sections with 1 red and 5 blue; predict and then tally the long-run result.",
+          "Compare your prediction with the tally and explain why two colours did NOT give a 50-50 result."
+        ],
+        "intendedInsight": "Equal chance depends on each outcome region being the same size (or the same number of equal ways), not on how many different outcomes there are; sampling many times reveals equal-area regions producing roughly equal frequencies and unequal regions producing a lopsided tally.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Spinners: equal sections vs unequal sections (area = chance)",
+        "Fair coin and balanced die (identical, interchangeable faces)",
+        "Bags with equal vs unequal numbers of each colour",
+        "Area/region model in which equal chance corresponds to equal area"
+      ],
+      "commonMisconceptions": [
+        "Assuming that because there are two (or three) possible outcomes, they must be equally likely — counting the number of outcome types rather than their sizes",
+        "Equiprobability bias — believing any chance situation gives all outcomes an equal chance because the result is 'random/luck'",
+        "Judging a die or coin's fairness by how it is thrown or how well it is made, rather than by its identical faces (Watson & Moritz)",
+        "Confusing 'fair' as equal-chance with 'fair' as 'I have a good chance of winning'"
+      ],
+      "constraints": [
+        "Target the crux: equal chance is decided by the SIZE/number of each outcome region, not by how many different outcomes there are.",
+        "Explicitly separate 'equally likely' from 'random': an uneven spinner is still random but its outcomes are not equally likely.",
+        "Also distinguish the two senses of 'fair': equal-chance versus 'I have a good chance of winning'.",
+        "Sorting/categorisation is a recognition task: it may check classification but does not itself elicit the child independently building a fair device and explaining it; pair it with a construction task.",
+        "A static tap-to-reveal comparison can present the definition but cannot let the child test a wrong judgement by sampling; treat it as a scaffold, not the main mechanism.",
+        "Sampling (spinning many times and tallying) is what reveals that equal-area regions give roughly equal frequencies and imbalance gives a lopsided tally; keep this as the empirical check, noting small samples vary.",
+        "Optional interaction examples (dragging spinner-section boundaries, adding/removing counters in a bag, a 'spin many times' tally, highlighting equal vs unequal area) make the mechanism concrete but are not mandatory."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/959/assess",
+      "sourceBibliographyPointer": "/records/959/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_8DT3LXwwH-",
+    "sourceName": "Simulating chance with digital tools",
+    "learningGoals": [
+      "Simulate runs of 10, 100 and 1000 dice rolls with a spreadsheet random-number function, repeating each run size 5 times, and record the proportion of 6s in every run",
+      "Plot the proportions for each run size and show that the 10-roll results spread widely while the 1000-roll results cluster near 1/6",
+      "Explain that results tend to settle near the expected 1/6 as trials increase, but a particular 1000-roll run can still be further from 1/6 than a lucky 10-roll run"
+    ],
+    "currentPackId": "chance",
+    "plannedPackId": "chance",
+    "plannedThemeId": "data",
+    "groupId": "c-experiment",
+    "unitId": "B04-U05",
+    "batchId": "B04",
+    "familyId": "chance",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_ZjIFGc6zPW",
+    "sourceName": "Finding the repeating unit",
+    "learningGoals": [
+      "Circle the part that repeats in red, blue, blue, red, blue, blue and describe it as an ABB pattern",
+      "Build a new pattern with the unit 1, 2, 2, 3 and repeat it three times",
+      "Say whether clap, stamp, stamp, clap, stamp, stamp and circle, square, square have the same repeating unit"
+    ],
+    "currentPackId": "patterns",
+    "plannedPackId": "patterns",
+    "plannedThemeId": "patterns",
+    "groupId": "pt-repeat",
+    "unitId": "B05-U01",
+    "batchId": "B05",
+    "familyId": "pattern",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_DW2D1c0fKx",
+    "sourceName": "Shape patterns",
+    "learningGoals": [
+      "Use the commutative property deliberately (e.g. reorder 3 + 9 as 9 + 3 to count on from the larger number)",
+      "Use place-value structure to add or subtract tens (e.g. 47 + 10 = 57 because only the tens digit changes)",
+      "Recognise structural similarities between shapes (e.g. rectangles and squares both have 4 sides and 4 right angles)"
+    ],
+    "currentPackId": "patterns",
+    "plannedPackId": "patterns",
+    "plannedThemeId": "patterns",
+    "groupId": "pt-repeat",
+    "unitId": "B05-U01",
+    "batchId": "B05",
+    "familyId": "pattern",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/319",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Choose your start: count on from the larger addend",
+          "jsonPointer": "/records/319/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Adding ten: predict which digit moves",
+          "jsonPointer": "/records/319/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Is a square a kind of rectangle?",
+          "jsonPointer": "/records/319/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Does the shortcut still work? Bounding the structure",
+          "jsonPointer": "/records/319/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Choose your start: count on from the larger addend",
+        "learnerActions": [
+          "For 3 + 9, first count on starting from 3 — draw or hop all nine moves across a number line and watch it crawl from 3 to 12.",
+          "Now start from 9 instead and count on three — land on 12 in just three hops.",
+          "Say what is the same (both reach 12) and what is different (far fewer hops when you start from the larger number).",
+          "Answer: why is swapping the order allowed here? Connect to 'the order you add in doesn't change the total.'",
+          "Try the same choice for 2 + 8 and 8 + 2: decide which number to start from and explain your choice before you count."
+        ],
+        "intendedInsight": "Starting the count-on from the larger addend reaches the same total with far less work, and this is allowed because addition can be done in any order (commutativity).",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Number line for count-on-from-larger (comparing hop counts)",
+        "Place-value / arrow cards and a tens-and-ones column machine",
+        "Venn-style overlapping shape hoops (four sides; four right angles)",
+        "Base-ten blocks showing +10 as one added ten-rod"
+      ],
+      "commonMisconceptions": [
+        "Always counts on from the first number written, not the larger, because order is treated as fixed",
+        "Adds 10 by counting in ones or by changing the ones digit (47+10 = 48) rather than seeing the tens digit change",
+        "Believes a square is not a rectangle because they look different / have different names (prototype and mutually-exclusive categories)",
+        "Applies commutativity to subtraction (34-10 handled like 10-34)"
+      ],
+      "constraints": [
+        "Count-on efficiency should be felt by actually comparing the number of hops for the two starting choices; simply being told 'start from the bigger' performs the move without building the reason.",
+        "A scored check or single multiple-choice answer can confirm which start is quicker or which digit changes, but it hides whether the child reasoned structurally or guessed; use it only after the hands-on work and follow with a 'why' question.",
+        "Annotated or tap-to-reveal reference pictures (shape hoops, labelled digits) are useful as a reference but do not let the child test the count-on choice or predict a column; they are a scaffold, not the place the strategy is built.",
+        "Reordering to count on from the larger addend is justified only for addition; do not let the child extend it to subtraction (12 − 4 is not 4 − 12).",
+        "Adding ten changes only the tens digit for two-digit numbers that do not cross into the hundreds; keep examples within that range unless deliberately extending.",
+        "Paper/card shape cutouts and base-ten rods are thin physical approximations of ideal figures; direct the child's attention to the mathematical properties (sides, right angles, one whole ten) they represent, not to the physical object."
+      ],
+      "assessmentMethod": "open_epistemic_probe",
+      "assessmentPointer": "/records/319/assess",
+      "sourceBibliographyPointer": "/records/319/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_W3VOAuFwVw",
+    "sourceName": "Describing growing number patterns",
+    "learningGoals": [
+      "Describe 5, 8, 11, 14 as 'start at 5 and add 3 each time'",
+      "Find the missing numbers in 40, 35, __, 25, __, 15",
+      "Build a tower pattern that grows by 2 blocks each step and predict the 6th tower"
+    ],
+    "currentPackId": "patterns",
+    "plannedPackId": "patterns",
+    "plannedThemeId": "patterns",
+    "groupId": "pt-grow",
+    "unitId": "B05-U02",
+    "batchId": "B05",
+    "familyId": "pattern",
+    "teachingResource": {
+      "status": "缺专门教学研究；仍有源目标和表现标准",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": null,
+      "activityCount": 0,
+      "activityReferences": [],
+      "startingActivity": null
+    }
+  },
+  {
+    "id": "mt_oIzycTBeE4",
+    "sourceName": "What the equals sign means",
+    "learningGoals": [
+      "Explain that 6 = 6 is true because both sides are the same",
+      "Determine that 4 + 1 = 5 + 2 is false",
+      "Understand that = does not mean 'the answer comes next' — it means balance"
+    ],
+    "currentPackId": "unknowns",
+    "plannedPackId": "unknowns",
+    "plannedThemeId": "patterns",
+    "groupId": "eq-balance",
+    "unitId": "B05-U03",
+    "batchId": "B05",
+    "familyId": "balance",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/676",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Balance beam: build both sides and watch it level",
+          "jsonPointer": "/records/676/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "True or false across varied forms",
+          "jsonPointer": "/records/676/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Static balance picture to anchor 'the same as'",
+          "jsonPointer": "/records/676/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Talk it through: why is this true?",
+          "jsonPointer": "/records/676/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Balance beam: build both sides and watch it level",
+        "learnerActions": [
+          "Set an expression on the left pan and another on the right (for example 5+2 on the left, 6+1 on the right) using identical cubes on a physical pan balance (5 cubes and 2 cubes on one side, 6 cubes and 1 cube on the other), or number/operation tiles on an on-screen balance that weighs each side by its value.",
+          "Predict whether the beam will tip or settle level, and say why, before releasing it.",
+          "Watch whether the beam tips or settles level: with identical cubes (or an on-screen balance that weighs by value), it sits level only when both sides share the same value.",
+          "Try a case where the sides look different but balance: put 8 on the left and 5+3 on the right and observe that the beam still sits level.",
+          "Try a missing-number challenge: add to one pan to level the beam, e.g. make 8+3 balance 9+□ (the blank is 2, since both sides then make 11)."
+        ],
+        "intendedInsight": "The equals sign is the pivot/balance point: two sides are equal when they share the same value, regardless of how each side looks or which side 'the answer' is on. '=' is not a direction to compute leftward.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Pan balance / balance beam with equal masses or cubes on each side",
+        "Number balance (bucket balance) where hanging weights on numbered pegs balance",
+        "Part-whole bar with the same total shown two ways",
+        "Double ten-frame showing both expressions holding equal counts",
+        "Equation cards in varied layouts with a true/false sorting mat"
+      ],
+      "commonMisconceptions": [
+        "Reading '=' as 'work out the answer' / 'the total goes here' (operator misconception) — so 8 = 5+3 looks 'backwards' or wrong.",
+        "Rejecting bare identities like 8 = 8 as 'not a sum' or incomplete.",
+        "In a+b = c+□, writing the running total of the left side into the box (e.g. 8+4 = 12+□ → box = 12 or 12+? = to next), the classic Falkner/Carpenter error.",
+        "Believing there can only be one number after the '='.",
+        "Thinking both sides must LOOK identical rather than share a value."
+      ],
+      "constraints": [
+        "Read '=' aloud consistently as 'is the same value as' / 'balances', never as 'makes' or 'gives you'.",
+        "Present answer-left, operations-both-sides and identity forms early so children do not fix on left-to-right computing.",
+        "Prioritise true/false judging and relational (compensation) reasoning over always calculating both sides, but still ensure learners can construct and complete equations, not only recognise them.",
+        "A fixed balance picture and recognition-only true/false items do not require the learner to construct equations or feel the beam respond to their own expressions; use them as scaffolds alongside hands-on or constructive tasks.",
+        "Checkpoints: age 6 — judges 4+1 = 5 and 5 = 4+1 true, 4+1 = 6 false; age 7 — judges 5+2 = 6+1 true without fully computing, using compensation; age 7+ — fills a missing number to balance each side (8+3 = 9+□) and explains using 'the same as'.",
+        "Address the running-total error directly: in a + b = □ + c the blank is 'what makes this side the same value as the other', solved by balancing, not by writing the left-hand total."
+      ],
+      "assessmentMethod": "two_tier",
+      "assessmentPointer": "/records/676/assess",
+      "sourceBibliographyPointer": "/records/676/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_3JgrHY221M",
+    "sourceName": "Unknown in Addition & Subtraction",
+    "learningGoals": [
+      "Solve 8 + ? = 11 and write 3",
+      "Solve 5 = □ − 3 and write 8",
+      "Solve 6 + 6 = □ and write 12"
+    ],
+    "currentPackId": "unknowns",
+    "plannedPackId": "unknowns",
+    "plannedThemeId": "patterns",
+    "groupId": "eq-balance",
+    "unitId": "B05-U03",
+    "batchId": "B05",
+    "familyId": "balance",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/102",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Balance the unknown with counters",
+          "jsonPointer": "/records/102/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Solve by the inverse, then check",
+          "jsonPointer": "/records/102/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain your move (strategy talk)",
+          "jsonPointer": "/records/102/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Anchor each position to an operation (worked bar models)",
+          "jsonPointer": "/records/102/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Balance the unknown with counters",
+        "learnerActions": [
+          "Set out an equation with a box, e.g. 5 = □ − 3, on a two-pan balance or bar model where one side already shows 5.",
+          "Add or remove counters in the box until both sides match: too few and the box side is too light, too many and it tips down.",
+          "State the value that makes both sides balance (for 5 = □ − 3 the box must hold 8, because □ − 3 has to equal 5).",
+          "Repeat with the unknown in every position: 8 + ? = 11, □ + 6 = 12, 6 + 6 = □.",
+          "Check each solved equation by putting the found number back in and confirming both sides match."
+        ],
+        "intendedInsight": "The box holds whatever value makes the two sides equal; '=' means balance, so an answer-on-left form like 5 = □ − 3 is not 'backwards' — it is the same balancing task. One balancing method works for every position.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Bar model / part-whole diagram with the unknown segment shaded",
+        "Pan balance with an unknown mass on one side",
+        "Empty number line for count-on / inverse jumps",
+        "Fact-family triangle to pick the needed operation",
+        "Equation cards with the box in varied positions"
+      ],
+      "commonMisconceptions": [
+        "Adding the two visible numbers regardless of the box's position (8 + ? = 11 → 19).",
+        "Reading answer-left forms as backwards (5 = □ − 3 → writes 2, i.e. 5 − 3).",
+        "Always subtracting or always adding by keyword rather than by the unknown's role.",
+        "Not checking the solution by putting it back into the equation.",
+        "Treating '=' as 'work out the total' so a box before '=' is confusing."
+      ],
+      "constraints": [
+        "Systematically vary the unknown's position (a+b=□, a+□=c, □+b=c, and answer-left forms) so pupils build a flexible method, not a keyword habit.",
+        "Introduce non-standard forms (5 = □ − 3) early to counter the left-to-right 'answer-comes-next' reading.",
+        "Read '=' as 'both sides balance', not 'work out the total'; a box before '=' is legitimate.",
+        "Insist on checking by substituting the found value back into the equation.",
+        "Fill-in-the-blank and multiple-choice practice (e.g. choosing the inverse calculation that solves □ + 9 = 14, with '2' as a wrong option for 5 = □ − 3) is useful for spaced retrieval and checking fluency, but recognition/selection does not itself require the child to construct and reason through the balancing move, so pair it with constructed solving.",
+        "Worked static diagrams anchor the position→operation mapping but do not themselves provide practice with feedback; follow them with fresh items to solve.",
+        "Trial-and-error can produce correct answers but does not build the intended inverse-method fluency; prompt the inverse once accuracy is secure.",
+        "Keep the wrong-answer value '2' (from 5 − 3) only as an incorrect option; the correct answer to 5 = □ − 3 is 8."
+      ],
+      "assessmentMethod": "performance_task",
+      "assessmentPointer": "/records/102/assess",
+      "sourceBibliographyPointer": "/records/102/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_EBYGhd8X3x",
+    "sourceName": "Connecting Representations",
+    "learningGoals": [
+      "Write a number sentence (e.g. 14 + 5 = 19) to match a word problem and explain the connection",
+      "Draw a bar model or part-whole diagram to represent a problem, then solve using the diagram",
+      "Translate between a concrete model and a symbolic equation, describing what each number represents"
+    ],
+    "currentPackId": "reasoning",
+    "plannedPackId": "reasoning",
+    "plannedThemeId": "patterns",
+    "groupId": "r-express",
+    "unitId": "B05-U04",
+    "batchId": "B05",
+    "familyId": "explain",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/332",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Build the bar from the story, then write the sentence",
+          "jsonPointer": "/records/332/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "True/false and balance: '=' means 'the same as'",
+          "jsonPointer": "/records/332/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain-why with a study partner",
+          "jsonPointer": "/records/332/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Read the links both ways (worked example / warm-up)",
+          "jsonPointer": "/records/332/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Build the bar from the story, then write the sentence",
+        "learnerActions": [
+          "Read a story such as: '6 red apples, and some green apples, 10 apples altogether.'",
+          "Build a part-whole bar: first decide and label which quantity is the WHOLE, then place the known part, then mark the missing part with '?'.",
+          "Notice the classic error — putting 6 and 10 side by side as two parts — and correct it by recognising that 10 is the whole, 6 is a part, and the green apples are the missing part.",
+          "Write a matching number sentence (6 + ? = 10) and then write at least one other correct form for the same bar (e.g. 10 − 6 = ?).",
+          "Say aloud what each number in the sentence stands for in the story.",
+          "For a separate 'how many more' story with its own numbers (e.g. 'Tom has 5 stickers and Mia has 8 stickers — how many more does Mia have?'), build a COMPARISON bar instead, lining up the two amounts to show the difference, and write a matching sentence."
+        ],
+        "intendedInsight": "A part-whole bar shows the structure of a situation — which quantity is the whole and which are the parts — so you must identify the whole before deciding what to add, and one bar can be matched by several correct sentences (adding or subtracting). A comparison bar is a different representation that suits 'how many more' situations by lining up two amounts to show the difference between them.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Part-whole bar model (whole on top, parts beneath; unknown marked with ?)",
+        "Comparison bars for 'how many more' situations",
+        "Number sentence with the unknown in varied positions (□ + 5 = 12, 7 + □ = 6 + 4)",
+        "True/false number sentences as a relational-equality routine"
+      ],
+      "commonMisconceptions": [
+        "Reads '=' as 'work out the answer' (operational), so accepts or writes left-to-right computes like 8 + 4 = □ + 5 → 12 regardless of the structure",
+        "Grabs the two numbers in a story and adds them without asking which is the whole and which is a part",
+        "Ignores 'altogether'/total language when deciding what to combine",
+        "Can produce a matching sentence but cannot say what each number represents in the story"
+      ],
+      "constraints": [
+        "The bar model must be used to expose structure (whole vs parts, where the unknown sits), not as a procedure for getting the answer.",
+        "Provide comparison bars as a distinct representation for 'how many more' (difference) situations alongside the part-whole bar, and give the comparison story its own numbers/context so a value is not simultaneously treated as a whole in one task and a compared quantity in another.",
+        "Build the relational equals sign explicitly with true/false sentences and open sentences with the unknown in varied positions; telling children '= means the same as' is reported as insufficient on its own.",
+        "Require the learner to say what each number represents and to defend structural judgements with a reason; producing a correct sentence without explanation is a partial outcome to be drawn out.",
+        "Accept several structurally faithful sentences for one situation (e.g. 6 + □ = 10 and 10 − 6 = □); do not mark only one form correct.",
+        "Recognition-only formats (e.g. multiple-choice 'which sentence matches?') can check recognition but do not require constructing a sentence from structure or explaining the connection, and can be satisfied by the compute-left-to-right habit; use them only as warm-ups, not as the main assessment.",
+        "A tap-to-reveal static triple is a scaffold/worked example: it cannot let the learner build the mapping or respond to an operational-equals error, so it should not replace construction and explanation.",
+        "Optional interactive mechanisms (a draggable bar builder that flags a part exceeding the labelled whole; a balance/seesaw that tips until both sides are equal) are illustrative ways to make structure and relational equality felt — they are helpful examples, not required mechanisms."
+      ],
+      "assessmentMethod": "open_epistemic_probe",
+      "assessmentPointer": "/records/332/assess",
+      "sourceBibliographyPointer": "/records/332/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_kJ5wYzO8qC",
+    "sourceName": "Explaining Mathematical Reasoning",
+    "learningGoals": [
+      "Explain a solution strategy using a drawing or number sentence (e.g. 'I made ten first, then added the rest')",
+      "Justify why an answer is correct by showing an alternative method that gives the same result",
+      "Identify and explain an error in a worked example or a peer's solution"
+    ],
+    "currentPackId": "reasoning",
+    "plannedPackId": "reasoning",
+    "plannedThemeId": "patterns",
+    "groupId": "r-express",
+    "unitId": "B05-U04",
+    "batchId": "B05",
+    "familyId": "explain",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/551",
+      "activityCount": 4,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "The 'convince me' partner",
+          "jsonPointer": "/records/551/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build an explanation you can test",
+          "jsonPointer": "/records/551/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Model a complete because-chain (scaffold)",
+          "jsonPointer": "/records/551/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Critique items: real reason or just saying it's right? (complement)",
+          "jsonPointer": "/records/551/learn/activities/3"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "The 'convince me' partner",
+        "learnerActions": [
+          "Pose the child a within-20 calculation (e.g. 8 + 5) and ask them to explain HOW they worked it out.",
+          "Then ask 'why does that work?' and 'how do you know it's right?' — not just 'what did you do?'.",
+          "When the child stalls or only asserts ('I just know', 'I reckon it's right'), hand over a sentence stem: 'Start with because…' and prompt for the missing link.",
+          "Have the child upgrade a confident hunch into a chain, e.g. 'because 5 is 2 and 3, and 8 and 2 make 10, so 10 and 3 more is 13'.",
+          "Ask the child to show the same calculation a different way and check whether it also gives the answer ('the other way also gives 13 — what does that tell us?').",
+          "Present a worked example containing a slip (e.g. a number bond that doesn't actually make ten) and ask 'Is this right? How can you tell?' — pushing for WHICH step is wrong and WHY."
+        ],
+        "intendedInsight": "A confident answer is not the same as a justification; a reason that works can be built by linking steps with 'because' and 'so', and an alternative method that agrees is supporting evidence that backs up the reason, though it does not replace explaining why.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Drawings and number sentences as the medium of explanation",
+        "Alternative-method check (two routes to the same answer)",
+        "Sentence stems with connectives (because / so / therefore)",
+        "True-or-false equation judgements",
+        "The explain → convince → justify steps of the NRICH ladder"
+      ],
+      "commonMisconceptions": [
+        "Confident assertion ('I reckon it's right') offered as justification, with an incomplete or incoherent chain (convincing mistaken for justifying)",
+        "Describing the method but stopping short of saying WHY it gives the right answer unless heavily prompted",
+        "Spotting that a worked example is wrong but being unable to explain the flaw",
+        "Treating 'justify' as 'do the sum again' rather than giving a reason"
+      ],
+      "constraints": [
+        "Target the gap between convincing and justifying: confident-but-vague is a normal developmental rung, NOT wrong reasoning — hand over connectives and ask for the missing link rather than marking it wrong.",
+        "Do not accept 'do the sum again' or 'because it's right' as justification; the target is a reason WHY the method gives the right answer.",
+        "Keep concrete/visual support (drawings, number sentences) as the backbone of explanation at this age.",
+        "Modelled/tap-to-reveal justified examples are scaffolds: the child sees a chain but does not build one, so always follow with independent construction.",
+        "Selected-response critique items assess recognition of flaws and reasons, not the child's own construction of a justification; use them to complement, not replace, dialogue and building tasks. Recognising a good reason does not by itself elicit producing one.",
+        "Error-finding should require naming the faulty step AND why it is faulty, anchored on the meaning of equality (is each side really the same?), not just flagging that the answer looks off.",
+        "Alternative-method agreement is used here as a form of justification ('two routes, same answer') — frame it as supporting the reason, not as a substitute for explaining why the method works."
+      ],
+      "assessmentMethod": "open_epistemic_probe",
+      "assessmentPointer": "/records/551/assess",
+      "sourceBibliographyPointer": "/records/551/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  },
+  {
+    "id": "mt_pyMD_SIiYO",
+    "sourceName": "Justifying mathematical reasoning",
+    "learningGoals": [
+      "Explain step by step why a columnar addition method gives the correct answer",
+      "Find and explain an error in a worked example (e.g. incorrect regrouping)",
+      "Construct a simple argument for why a general statement is true (e.g. 'adding two even numbers always gives an even number')"
+    ],
+    "currentPackId": "reasoning",
+    "plannedPackId": "reasoning",
+    "plannedThemeId": "patterns",
+    "groupId": "r-express",
+    "unitId": "B05-U04",
+    "batchId": "B05",
+    "familyId": "explain",
+    "teachingResource": {
+      "status": "已有教学方案，待适配与内容核对",
+      "file": "vendor/os-taxonomy/data/teaching-research.json",
+      "jsonPointer": "/records/719",
+      "activityCount": 3,
+      "activityReferences": [
+        {
+          "index": 0,
+          "title": "Convince the friendly skeptic",
+          "jsonPointer": "/records/719/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build and test an argument workspace",
+          "jsonPointer": "/records/719/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Spot and explain the faulty step",
+          "jsonPointer": "/records/719/learn/activities/2"
+        }
+      ],
+      "startingActivity": {
+        "index": 0,
+        "title": "Convince the friendly skeptic",
+        "learnerActions": [
+          "State a general claim, e.g. 'adding two even numbers always gives an even number', and offer an example such as 4 + 6 = 10",
+          "Respond to a partner (an adult or a role-play) who cheerfully agrees each example is even but keeps asking: 'Can you give me another? And another?'",
+          "Face the key question: 'I believe every pair you've tried — but even numbers go on forever, so you could never check them all. How do you KNOW there isn't one pair that breaks it?'",
+          "Reach for a reason that covers all cases at once, e.g. 'every even number is made of pairs with none left over, so two of them still make complete pairs, so the total is even'",
+          "Then take a FALSE statement from the partner (e.g. 'adding two numbers always gives an even number') and topple it with a single counter-example such as 2 + 3 = 5"
+        ],
+        "intendedInsight": "When there are endlessly many cases, as with even numbers, no pile of examples can establish a claim for every case, but a structural reason can — and a single counter-example is enough to disprove a general ('always') statement even though many examples cannot prove one.",
+        "selectionStatus": "作为适配起查项；不宣称首个活动覆盖全部目标"
+      },
+      "keyRepresentations": [
+        "Generic/visual proof (even number as pairs; place-value columns)",
+        "Counter-example as a disproof tool",
+        "Multi-step because/therefore chain",
+        "Worked examples containing deliberate errors",
+        "The justify → prove steps of the NRICH ladder"
+      ],
+      "commonMisconceptions": [
+        "Empirical proof scheme — treating a few confirming examples as proof that a general statement is always true",
+        "Convincing-not-justifying — a confident argument with missing steps, close to but not yet a complete chain",
+        "Identifying an error only as 'the answer is different' rather than naming the faulty step and why",
+        "Not realising that one counter-example is enough to disprove a general statement"
+      ],
+      "constraints": [
+        "Accept examples as legitimate illustration and a starting point; explicitly name that a few examples do not prove a general claim. This empirical-to-structural shift is a known developmental milestone and is hard and slow — treat it as development, not as a failing to be corrected sharply.",
+        "Distinguish 'convincing' from 'justifying': a confident multi-step argument with a missing link is close to proof. Don't dismiss it — ask 'what's the missing step between here and here?' and offer because/therefore stems to complete the chain.",
+        "Keep always/sometimes/never logic precise: a single counter-example disproves an 'always' claim and a single confirming case disproves a 'never' claim, but a genuine 'sometimes' classification requires both a case where the statement holds and a case where it fails.",
+        "Tap-to-reveal / worked-example companions model a general argument or flaw but do not require the child to construct the argument; use them to illustrate, then move to tasks where the child builds and states the reasoning.",
+        "Always/sometimes/never items, 'is this a proof or just examples?' items, and spot-the-error items probe critique and discrimination well, but a recognition-only response cannot show a child independently constructing a general argument; use these to complement, not replace, construction tasks.",
+        "When critiquing the flawed worked example, keep the focus on naming the faulty step and the place-value rule; do not reteach the addition procedure itself.",
+        "The error-spotting task assumes the child can already perform columnar addition with regrouping; if that prerequisite is shaky, address it separately rather than inside the justification task."
+      ],
+      "assessmentMethod": "open_epistemic_probe",
+      "assessmentPointer": "/records/719/assess",
+      "sourceBibliographyPointer": "/records/719/sources",
+      "publicationStatus": "上游教学方案及其引用是素材，尚非本地实现或孩子有效性证据"
+    }
+  }
+]

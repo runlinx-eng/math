@@ -1,0 +1,26 @@
+{
+  "startedAt": "2026-10-24T14:14:27.758761+00:00",
+  "measurement": "按工作段记录墙钟时间；用户等待或中断另列，不推断持续有效工时。",
+  "events": [
+    {
+      "at": "2026-10-24T14:14:27.758761+00:00",
+      "batch": "B02",
+      "segment": "source-review",
+      "event": "start"
+    },
+    {
+      "at": "2026-10-25T03:46:11.359978+00:00",
+      "batch": "B02–B05",
+      "segment": "content-and-technical-verification",
+      "event": "complete",
+      "nodes": 50,
+      "nodeTasks": 136,
+      "connections": 21,
+      "childTrial": "not_started"
+    }
+  ],
+  "childTrials": [],
+  "contentTechnicalCompletedAt": "2026-10-25T03:46:11.359978+00:00",
+  "activeWorkTimeSeconds": null,
+  "measurementGap": "中途多次继续、上下文中断、审批额度等待未分段计时；最初 source-review 段无当时的结束时间。不能从墙钟跨度推算有效工时或分类型实耗。"
+}

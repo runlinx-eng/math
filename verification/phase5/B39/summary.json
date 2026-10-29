@@ -1,0 +1,94 @@
+{
+  "batch": "B39",
+  "date": "2026-10-28",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 587,
+    "newNodes": 8,
+    "nodeTasks": 1996,
+    "newNodeTasks": 35,
+    "sourceGoals": 1772,
+    "newSourceGoals": 24,
+    "routes": 231,
+    "availableConnections": 776,
+    "connectionTasks": 1552,
+    "newConnections": 13,
+    "newConnectionTasks": 26,
+    "localResearchSupplements": 85,
+    "remainingUnimplementedNodes": 0,
+    "remainingResearchGaps": 0
+  },
+  "unitChecks": 1015,
+  "browserChecks": 487,
+  "suites": [
+    {
+      "name": "browser-v46",
+      "checks": 332
+    },
+    {
+      "name": "integration-v46",
+      "checks": 23
+    },
+    {
+      "name": "navigation-v46",
+      "checks": 19
+    },
+    {
+      "name": "choice-v46",
+      "checks": 20
+    },
+    {
+      "name": "capacity-v46",
+      "checks": 15
+    },
+    {
+      "name": "regression/spatial-v46",
+      "checks": 39
+    },
+    {
+      "name": "regression/daily-v46",
+      "checks": 8
+    },
+    {
+      "name": "regression/readiness-v46",
+      "checks": 4
+    },
+    {
+      "name": "regression/b37-visual-v46",
+      "checks": 27
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-28T12:17:49.278Z",
+    "health": 200,
+    "progress": "0 / 587",
+    "cache": "math-explorer-20261027-learning-v46",
+    "cachedFiles": 225,
+    "assetsMatched": 100,
+    "distBytes": 7600642,
+    "distMiB": 7.249
+  },
+  "capacity": {
+    "nodes": 587,
+    "connections": 776,
+    "characters": 12037179,
+    "bytes": 12055153,
+    "storedChars": 2407159,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 945,
+    "format": "math-storage/lzw16-v1",
+    "downloadBytes": 40170234,
+    "syntheticCompletedRecords": true
+  },
+  "sourceInputsUnchanged": 12,
+  "limits": [
+    "Source nodes have finite activities, not full coverage of all mathematics or all source competencies.",
+    "Open explanations and actual chosen mental or paper methods are not assessed.",
+    "Actual child learning, independent application and real next-day continuation remain unverified.",
+    "Capacity covers one synthetic full record, not unlimited future history."
+  ]
+}

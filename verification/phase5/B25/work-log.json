@@ -1,0 +1,9 @@
+{
+  "startedAt": "2026-10-27T11:52:45.585837+00:00",
+  "snapshot": "snapshots/v29-before-b25-20261027T195244.tar.gz",
+  "activeHours": null,
+  "childTrial": false,
+  "status": "technical_complete",
+  "endedAt": "2026-10-27T12:17:03.640315+00:00",
+  "userAcceptance": false
+}

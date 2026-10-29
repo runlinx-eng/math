@@ -1,0 +1,13 @@
+# Local rollback copies stay on this machine; Git keeps source history.
+/snapshots/
+
+# macOS and interpreter residue.
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Local credentials must never be committed.
+.env
+.env.*
+!.env.example
+!.env.sample

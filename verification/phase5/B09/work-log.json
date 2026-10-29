@@ -1,0 +1,43 @@
+{
+  "batch": "B09",
+  "startedAt": "20261025T111942Z",
+  "events": [
+    {
+      "at": "20261025T111942Z",
+      "event": "snapshot and source extraction"
+    },
+    {
+      "at": "2026-10-25T12:28:10.097560+00:00",
+      "event": "171 final rule tests passed",
+      "evidence": "verification/phase5/B09/unit.tap"
+    },
+    {
+      "at": "2026-10-25T12:26:35.044736+00:00",
+      "event": "all new tasks and links passed",
+      "evidence": "verification/phase5/B09/browser-final-results.json"
+    },
+    {
+      "at": "2026-10-25T11:56:40.013002+00:00",
+      "event": "new routes, partial cubes, camera, backup and offline passed",
+      "evidence": "verification/phase5/B09/integration-results.json"
+    },
+    {
+      "at": "2026-10-25T12:26:16.889818+00:00",
+      "event": "early question click loading guard passed",
+      "evidence": "verification/phase5/B09/readiness-results.json"
+    },
+    {
+      "at": "2026-10-25T12:27:44.202411+00:00",
+      "event": "live v14 verification",
+      "evidence": "verification/phase5/B09/runtime-final.json"
+    },
+    {
+      "at": "2026-10-25T12:37:32.883111+00:00",
+      "event": "Final range variants and 172 tests passed; 805 browser assertions; live source hashes match",
+      "evidence": "verification/phase5/B09/summary.json"
+    }
+  ],
+  "activeHours": null,
+  "limits": "Wall-clock timestamps include tool waits and context recovery; no per-task active time measured. Child trial has not happened.",
+  "finishedAt": "2026-10-25T12:37:32.883111+00:00"
+}

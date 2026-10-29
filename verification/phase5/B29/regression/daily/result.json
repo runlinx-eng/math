@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "question resumes in its activity",
+    "explicit route link does not reopen the saved activity",
+    "explicit other route is honored despite the pending question",
+    "connection choices can be expanded",
+    "same-day clock check does not collapse what the child is reading",
+    "deferred question stays out of today entry",
+    "open page updates the question entry when the local day changes",
+    "no JavaScript errors"
+  ],
+  "errors": []
+}

@@ -1,0 +1,10 @@
+{
+  "batch": "B32",
+  "startedAt": "2026-10-28T03:38:50.286348+00:00",
+  "snapshot": "snapshots/v36-before-b32-20261028T113848.tar.gz",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "activeHours": null,
+  "completedAt": "2026-10-28T06:44:36.896512+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "batch": "B17",
+  "startedAt": "2026-10-26T13:46:52.468165+00:00",
+  "snapshot": "snapshots/v21-before-b17-20261026T134652Z.tar.gz",
+  "activeHours": null,
+  "reason": "Interrupted wall-clock time is not active labor.",
+  "completedAt": "2026-10-26T18:46:36.763334+00:00",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 281,
+    "newNodes": 22,
+    "nodeTasks": 980,
+    "newNodeTasks": 98,
+    "sourceGoals": 850,
+    "newSourceGoals": 66,
+    "routes": 101,
+    "availableConnections": 280,
+    "connectionTasks": 560,
+    "newConnections": 44,
+    "newConnectionTasks": 88,
+    "localResearchSupplements": 26,
+    "remainingUnimplementedNodes": 306,
+    "remainingResearchGaps": 59
+  }
+}

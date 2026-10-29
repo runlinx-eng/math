@@ -1,0 +1,12 @@
+{
+  availableNodes: 50,
+  newNodes: 38,
+  nodeTasks: 136,
+  sourceGoals: 153,
+  routes: 15,
+  availableConnections: 21,
+  connectionTasks: 42,
+  localResearchSupplements: 9,
+  remainingUnimplementedNodes: 537,
+  remainingResearchGaps: 76
+}

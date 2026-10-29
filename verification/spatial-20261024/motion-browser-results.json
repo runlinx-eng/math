@@ -1,0 +1,10 @@
+{
+  "passed": 5,
+  "checks": [
+    "normal motion interpolates through 3D space",
+    "keyboard arrows pan the canvas",
+    "keyboard Home restores the overview",
+    "single-finger touch gesture pans the mobile space",
+    "two-finger pinch changes actual camera distance"
+  ]
+}

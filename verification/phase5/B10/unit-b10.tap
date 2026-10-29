@@ -1,0 +1,26 @@
+✔ B10 has exactly 22 planned source IDs, eight short routes and 16 actual source edges (1.658916ms)
+✔ all 65 node tasks and 32 joint tasks dispatch, persist and reject untouched work (3.691458ms)
+✔ equations allow equal sign reversal, unicode symbols and additive order; never evaluate code (0.102583ms)
+✔ story requires constructed parts and chosen action, retaining first failed guess and experiment (0.084958ms)
+✔ zero actions must be actually performed; comparison and missing-start stories retain source meanings (0.073208ms)
+✔ equal-valued expressions must correspond to the two constructed sides (0.049ms)
+✔ split enumeration conserves token IDs, includes zero and does not double count reversals (0.134583ms)
+✔ specific 8 partitions accept reversed order and do not accept an unrelated pair (0.129125ms)
+✔ make-ten needs actual landmark and both conserved parts, not only the final result (0.1205ms)
+✔ wrong landmark and reset retain original guess and action history (0.097208ms)
+✔ fact family requires all four real transformations and correctly ordered subtractions (0.095917ms)
+✔ recall preserves a wrong first answer, correction and visual support without a speed criterion (0.079292ms)
+✔ count-on excludes the starting number and retains corrected steps (0.077416ms)
+✔ swapping addition does not license swapping subtraction (0.057042ms)
+✔ three-part work accepts different valid pairing orders and keeps the third addend (0.1235ms)
+✔ subtraction regrouping preserves two different intermediate paths (0.053833ms)
+✔ ones versus tens must change actual value; exchange conserves quantity (0.067542ms)
+✔ malformed imports are rejected by shared validation without crashing (1.574959ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 108.162916

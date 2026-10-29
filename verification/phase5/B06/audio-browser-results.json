@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "countboard keeps focus for sequential typing",
+    "ten frame has ten equal positions",
+    "ten frame shows five plus two",
+    "twenty counters remain in one row",
+    "twenty counters fit desktop width",
+    "browser decodes actual sound n14",
+    "browser decodes actual sound n17",
+    "browser decodes actual sound n40",
+    "browser decodes actual sound n100",
+    "interrupted audio has no completed-playback mark",
+    "audio cannot mutate another activity",
+    "leaving audio preserves storage",
+    "empty clip cannot award heard evidence",
+    "no runtime errors"
+  ],
+  "errors": [],
+  "decoded": [
+    {
+      "n": 14,
+      "seconds": 0.6024375,
+      "rms": 0.10049049762759064
+    },
+    {
+      "n": 17,
+      "seconds": 0.6721041666666666,
+      "rms": 0.1062960917638824
+    },
+    {
+      "n": 40,
+      "seconds": 0.6727708333333333,
+      "rms": 0.08995794622030118
+    },
+    {
+      "n": 100,
+      "seconds": 0.522625,
+      "rms": 0.1169603176976229
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "batch": "B16",
+  "startedAt": "2026-10-26T11:18:51.816457+00:00",
+  "snapshot": "snapshots/v20-before-b16-20261026T111851Z.tar.gz",
+  "activeHours": null,
+  "reason": "Interrupted wall-clock time is not active labor.",
+  "completedAt": "2026-10-26T13:14:35.920010+00:00",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "nextBatch": "B17"
+}

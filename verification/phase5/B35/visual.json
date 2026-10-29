@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "one-sided operation displays a preview but does not replace the original equality",
+    "one-sided outcome is visible",
+    "symmetric transformations and substitution complete",
+    "incorrect one-sided attempt remains supported",
+    "changed order actually gives 22 and retains the first result",
+    "correct order and reversed equation are accepted",
+    "editing input marks the previous run stale",
+    "expanded factor is shown",
+    "changed factorization cannot display the old check as current",
+    "all four signed products and their sum are accepted",
+    "actual graph click tests a point on only the first line",
+    "keyboard activates a graph point and synchronizes its inputs",
+    "intersection must satisfy both equations",
+    "fraction and decimal forms agree for the half-grid intersection",
+    "shorter desktop has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

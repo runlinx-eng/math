@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "486 unique available nodes",
+    "time opens with three directions",
+    "both duration routes reachable",
+    "both calendar routes reachable",
+    "clock direction has three choices",
+    "GF has three nodes",
+    "selected route survives reload",
+    "wrong first setting and attempt are retained",
+    "simulated next day shows exact question",
+    "original partial clock setting restored",
+    "later setting retained separately",
+    "wrong attempt remains in restored record",
+    "world camera restored",
+    "actual backup contains original setting",
+    "repeat import preserves question and attempt",
+    "import opens original question",
+    "all four B32 files cached",
+    "original work opens offline",
+    "clock can be corrected offline",
+    "first incorrect attempt does not become independent evidence",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v37",
+    "count": 196,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

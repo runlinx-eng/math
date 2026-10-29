@@ -1,0 +1,41 @@
+{
+  "batch": "B08",
+  "startedAt": "20261025T064615Z",
+  "events": [
+    {
+      "at": "20261025T064615Z",
+      "event": "snapshot and source extraction"
+    },
+    {
+      "at": "2026-10-25T06:56:26.265616+00:00",
+      "event": "saved dist/learning/phase5/b08.js"
+    },
+    {
+      "at": "2026-10-25T07:12:21.714092+00:00",
+      "event": "saved dist/learning/phase5/b08-model.js"
+    },
+    {
+      "at": "2026-10-25T07:01:00.723713+00:00",
+      "event": "saved dist/learning/phase5/b08-view.js"
+    },
+    {
+      "at": "2026-10-25T07:06:06.611152+00:00",
+      "event": "saved verification/phase5/B08/browser-results-first.json"
+    },
+    {
+      "at": "2026-10-25T07:07:09.092180+00:00",
+      "event": "saved verification/phase5/B08/integration-results-first.json"
+    },
+    {
+      "at": "2026-10-25T07:12:22.722978+00:00",
+      "event": "saved verification/phase5/B08/unit.tap"
+    },
+    {
+      "at": "2026-10-25T07:15:35.561681+00:00",
+      "event": "technical results reconciled; child trial remains pending"
+    }
+  ],
+  "activeHours": null,
+  "limits": "Wall-clock file/save events only; tools, interruptions and context recovery are included. No measured active hours. Child trial has not happened.",
+  "finishedAt": "2026-10-25T07:15:35.561681+00:00"
+}

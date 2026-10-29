@@ -1,0 +1,2217 @@
+{
+  "checks": [
+    "categoryuse begins incomplete",
+    "categoryuse:0 opens",
+    "categoryuse:0 untouched cannot complete",
+    "categoryuse:0 actual controls complete",
+    "categoryuse:0 valid saved model",
+    "categoryuse:0 no horizontal overflow",
+    "categoryuse:1 opens",
+    "categoryuse:1 actual controls complete",
+    "categoryuse:1 valid saved model",
+    "categoryuse:1 no horizontal overflow",
+    "categoryuse:2 opens",
+    "categoryuse:2 actual controls complete",
+    "categoryuse:2 valid saved model",
+    "categoryuse:2 no horizontal overflow",
+    "categoryuse tested task progress survives reload",
+    "playgroundstudy begins incomplete",
+    "playgroundstudy:0 opens",
+    "playgroundstudy:0 untouched cannot complete",
+    "playgroundstudy:0 b19-plan no horizontal overflow",
+    "playgroundstudy:0 b19-table no horizontal overflow",
+    "playgroundstudy:0 b19-plot no horizontal overflow",
+    "playgroundstudy:0 actual controls complete",
+    "playgroundstudy:0 valid saved model",
+    "playgroundstudy:0 no horizontal overflow",
+    "playgroundstudy:1 opens",
+    "playgroundstudy:1 actual controls complete",
+    "playgroundstudy:1 valid saved model",
+    "playgroundstudy:1 no horizontal overflow",
+    "playgroundstudy:2 opens",
+    "playgroundstudy:2 actual controls complete",
+    "playgroundstudy:2 valid saved model",
+    "playgroundstudy:2 no horizontal overflow",
+    "playgroundstudy tested task progress survives reload",
+    "digitalstudy begins incomplete",
+    "digitalstudy:0 opens",
+    "digitalstudy:0 untouched cannot complete",
+    "digitalstudy:0 b19-plan no horizontal overflow",
+    "digitalstudy:0 b19-table no horizontal overflow",
+    "digitalstudy:0 b19-plot no horizontal overflow",
+    "digitalstudy:0 actual controls complete",
+    "digitalstudy:0 valid saved model",
+    "digitalstudy:0 no horizontal overflow"
+  ],
+  "errors": [],
+  "remote": [],
+  "current": "digitalstudy:0",
+  "failed": "Error: reopening a recorded row invalidates previous completion",
+  "body": "← 回到空间\n从观察到一张图\n留到下次\n未完成\nDF–01 ✓\n操场上，什么最受欢迎\nDF–02\n让表格帮忙数\n让表格帮忙数\n试一试\n✓\n2\n3\n收一收\n\n先选一个不暗示答案的问题，再逐条录入模拟答卷。用表格数出喜欢每项运动的人数。\n\n模拟数据 · 可以观察规律，不能当作真实调查结果\n\n1 定问题\n2 记下来\n3 算成表\n4 画出来\n5 回答\n原卡片 R01 · 同一次收集\n\n运动：足球\n\n已记 10/10 条\n\n回看原卡片与已记表格\n记下这条的运动\n选择\n足球\n游泳\n羽毛球\n其他\n保存这条记录\n更正记录或保存表格\n↶ 回去试\n给一点帮助\n看看我的作品\n换个条件 →\n这次留下的记录",
+  "model": {
+    "total": "10",
+    "gap": "3",
+    "scope": "records",
+    "chart": "bar",
+    "title": "question",
+    "xaxis": "variable",
+    "yaxis": "frequency",
+    "reason": "compare",
+    "finding1": "我只在这组模拟记录里比较最多的类别。",
+    "finding2": "最多与最少的差来自同一张表，其他人可能不同。",
+    "limit": "sample",
+    "improve": "repeat",
+    "draft": "",
+    "editIndex": "0",
+    "decision": "",
+    "correction": "",
+    "cleanReason": "",
+    "usable": "",
+    "unknown": "",
+    "orderReason": "",
+    "precisionReason": "",
+    "guess": "",
+    "roundAnswer": "",
+    "conclusion": "",
+    "answers": [],
+    "questions": [
+      "clear"
+    ],
+    "entry": [
+      "足球"
+    ],
+    "counts": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "formulas": [
+      "=COUNTIF(B2:B11,\"足球\")",
+      "=COUNTIF(B2:B11,\"游泳\")",
+      "=COUNTIF(B2:B11,\"羽毛球\")",
+      "=COUNTIF(B2:B11,\"其他\")"
+    ],
+    "kinds": [],
+    "board": {
+      "first": {
+        "plan": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            ""
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-0": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-1": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-2": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-3": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "羽毛球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-4": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "其他"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-5": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-6": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-7": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "羽毛球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-8": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "record-9": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        },
+        "table": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        },
+        "plot": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        },
+        "report": {
+          "total": "10",
+          "gap": "3",
+          "scope": "records",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "我只在这组模拟记录里比较最多的类别。",
+          "finding2": "最多与最少的差来自同一张表，其他人可能不同。",
+          "limit": "sample",
+          "improve": "repeat",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      "stage": 1,
+      "cursor": 0,
+      "rows": [
+        [
+          "足球"
+        ],
+        [
+          "游泳"
+        ],
+        [
+          "足球"
+        ],
+        [
+          "羽毛球"
+        ],
+        [
+          "其他"
+        ],
+        [
+          "游泳"
+        ],
+        [
+          "足球"
+        ],
+        [
+          "羽毛球"
+        ],
+        [
+          "游泳"
+        ],
+        [
+          "足球"
+        ]
+      ],
+      "table": null,
+      "heights": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "plot": null,
+      "max": [],
+      "min": [],
+      "report": null,
+      "plan": {
+        "questions": [
+          "clear"
+        ],
+        "who": "这组模拟参与者",
+        "when": "同一次收集",
+        "how": "每人独立回答一次",
+        "draft": ""
+      }
+    },
+    "history": [
+      {
+        "a": "plan",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            ""
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "羽毛球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "其他"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "羽毛球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "游泳"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "record",
+        "d": {},
+        "f": {
+          "total": "",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "table",
+        "d": {},
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "",
+          "title": "",
+          "xaxis": "",
+          "yaxis": "",
+          "reason": "consistent",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "0",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "0",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "0",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "0",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "1",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "1",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "1",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "2",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "2",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "bar",
+        "d": {
+          "index": "3",
+          "delta": "1"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "plot",
+        "d": {},
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "max",
+        "d": {
+          "index": "0"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "min",
+        "d": {
+          "index": "3"
+        },
+        "f": {
+          "total": "10",
+          "gap": "",
+          "scope": "defined",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "",
+          "finding2": "",
+          "limit": "",
+          "improve": "",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "report",
+        "d": {},
+        "f": {
+          "total": "10",
+          "gap": "3",
+          "scope": "records",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "我只在这组模拟记录里比较最多的类别。",
+          "finding2": "最多与最少的差来自同一张表，其他人可能不同。",
+          "limit": "sample",
+          "improve": "repeat",
+          "draft": "",
+          "editIndex": "",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      },
+      {
+        "a": "edit",
+        "d": {},
+        "f": {
+          "total": "10",
+          "gap": "3",
+          "scope": "records",
+          "chart": "bar",
+          "title": "question",
+          "xaxis": "variable",
+          "yaxis": "frequency",
+          "reason": "compare",
+          "finding1": "我只在这组模拟记录里比较最多的类别。",
+          "finding2": "最多与最少的差来自同一张表，其他人可能不同。",
+          "limit": "sample",
+          "improve": "repeat",
+          "draft": "",
+          "editIndex": "0",
+          "decision": "",
+          "correction": "",
+          "cleanReason": "",
+          "usable": "",
+          "unknown": "",
+          "orderReason": "",
+          "precisionReason": "",
+          "guess": "",
+          "roundAnswer": "",
+          "conclusion": "",
+          "answers": [],
+          "questions": [
+            "clear"
+          ],
+          "entry": [
+            "足球"
+          ],
+          "counts": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "formulas": [
+            "=COUNTIF(B2:B11,\"足球\")",
+            "=COUNTIF(B2:B11,\"游泳\")",
+            "=COUNTIF(B2:B11,\"羽毛球\")",
+            "=COUNTIF(B2:B11,\"其他\")"
+          ],
+          "kinds": []
+        }
+      }
+    ],
+    "issue": ""
+  },
+  "snapshot": {
+    "id": "digitalstudy",
+    "view": "task",
+    "index": 0,
+    "summary": {
+      "completed": false,
+      "independent": false,
+      "done": 1,
+      "total": 3,
+      "cases": [
+        {
+          "complete": true,
+          "independent": false,
+          "attempts": 2
+        },
+        {
+          "complete": false,
+          "independent": false,
+          "attempts": 0
+        },
+        {
+          "complete": false,
+          "independent": false,
+          "attempts": 0
+        }
+      ],
+      "explanation": "missing"
+    },
+    "cube": null,
+    "extra": null
+  }
+}

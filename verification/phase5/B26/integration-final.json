@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "413 unique nodes",
+    "three directions remain",
+    "at most three construct routes",
+    "FC contains two nodes",
+    "route survives refresh",
+    "wrong first hypotenuse is recorded as support",
+    "first size has been compared",
+    "original words retained",
+    "simulated next day shows original question",
+    "original work, first error and help restored",
+    "later comparison retained separately",
+    "exact question words restored",
+    "world camera restored",
+    "actual backup includes original work",
+    "repeat import keeps original and support",
+    "import opens original question",
+    "all five B26 files cached",
+    "original work opens offline",
+    "offline area comparison completes",
+    "wrong first hypotenuse not counted independent",
+    "first wrong choice remains after success",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v31",
+    "count": 167,
+    "modules": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

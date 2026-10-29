@@ -1,0 +1,89 @@
+{
+  "batch": "B21",
+  "date": "2026-10-27",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 335,
+    "newNodes": 14,
+    "nodeTasks": 1153,
+    "newNodeTasks": 43,
+    "sourceGoals": 1013,
+    "newSourceGoals": 43,
+    "routes": 126,
+    "availableConnections": 405,
+    "connectionTasks": 810,
+    "newConnections": 40,
+    "newConnectionTasks": 80,
+    "localResearchSupplements": 49,
+    "remainingUnimplementedNodes": 252,
+    "remainingResearchGaps": 36
+  },
+  "unitChecks": 514,
+  "browserChecks": 1097,
+  "suites": [
+    {
+      "name": "browser-final",
+      "checks": 712
+    },
+    {
+      "name": "integration-final",
+      "checks": 52
+    },
+    {
+      "name": "visual-final",
+      "checks": 216
+    },
+    {
+      "name": "capacity-final",
+      "checks": 15
+    },
+    {
+      "name": "regression/phase5-b20-integration-browser/result",
+      "checks": 53
+    },
+    {
+      "name": "regression/spatial-browser/result",
+      "checks": 37
+    },
+    {
+      "name": "regression/phase3-continuation-browser/result",
+      "checks": 8
+    },
+    {
+      "name": "regression/phase5-b09-readiness-browser/result",
+      "checks": 4
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-27T07:15:40.653Z",
+    "health": 200,
+    "progress": "0 / 335",
+    "cache": "math-explorer-20261027-learning-v26",
+    "cachedFiles": 141,
+    "assetsMatched": 20,
+    "distBytes": 6753185,
+    "distMiB": 6.44
+  },
+  "capacity": {
+    "nodes": 335,
+    "connections": 405,
+    "characters": 9763039,
+    "bytes": 9779475,
+    "storedChars": 1722430,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 739,
+    "format": "math-storage/lzw16-v1",
+    "downloadBytes": 32057316,
+    "syntheticCompletedRecords": true
+  },
+  "limits": [
+    "Finite tasks do not establish general mastery.",
+    "Child trial and real next-day continuation have not occurred.",
+    "Simulation sampling and structured summaries do not establish actual survey work or semantic quality of free explanations.",
+    "Capacity test covers the current full synthetic corpus, not unbounded future history."
+  ]
+}

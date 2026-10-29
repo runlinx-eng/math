@@ -1,0 +1,9 @@
+{
+  "startedAt": "2026-10-27T09:13:11.058972+00:00",
+  "snapshot": "snapshots/v26-before-b22-20261027.tar.gz",
+  "activeHours": null,
+  "childTrial": false,
+  "status": "content-and-technical-checks-complete",
+  "completedAt": "2026-10-27T09:32:12.971034+00:00",
+  "summary": "15 nodes / 45 tasks / 34 connections; next B23"
+}

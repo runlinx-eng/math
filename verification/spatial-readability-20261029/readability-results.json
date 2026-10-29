@@ -1,0 +1,836 @@
+{
+  "tests/spatial-readability-browser.js": {
+    "checks": [
+      "1440 oblique: all 615 world positions match the pre-change map",
+      "1440 oblique: every source node and connection remains available",
+      "1440 oblique: five complete topic names form the overview",
+      "1440 oblique: fixed controls and continuation do not cover the map or its names",
+      "1440 top: all 615 world positions match the pre-change map",
+      "1440 top: every source node and connection remains available",
+      "1440 top: five complete topic names form the overview",
+      "1440 top: fixed controls and continuation do not cover the map or its names",
+      "1440 side: all 615 world positions match the pre-change map",
+      "1440 side: every source node and connection remains available",
+      "1440 side: five complete topic names form the overview",
+      "1440 side: fixed controls and continuation do not cover the map or its names",
+      "1440: selection preserves the whole source map",
+      "1440: local names take priority over topic signs and avoid the focus card",
+      "1440: selected activity and relationship directions are identifiable",
+      "1440: all sixteen real neighbors remain accessible",
+      "1280 oblique: all 615 world positions match the pre-change map",
+      "1280 oblique: every source node and connection remains available",
+      "1280 oblique: five complete topic names form the overview",
+      "1280 oblique: fixed controls and continuation do not cover the map or its names",
+      "same-size overview provides at least 50 percent more projected graph area",
+      "same-size overview labels occupy less than one quarter of their former area",
+      "1280 top: all 615 world positions match the pre-change map",
+      "1280 top: every source node and connection remains available",
+      "1280 top: five complete topic names form the overview",
+      "1280 top: fixed controls and continuation do not cover the map or its names",
+      "1280 side: all 615 world positions match the pre-change map",
+      "1280 side: every source node and connection remains available",
+      "1280 side: five complete topic names form the overview",
+      "1280 side: fixed controls and continuation do not cover the map or its names",
+      "1280: selection preserves the whole source map",
+      "1280: local names take priority over topic signs and avoid the focus card",
+      "1280: selected activity and relationship directions are identifiable",
+      "1280: all sixteen real neighbors remain accessible",
+      "zooming closer reveals content group names",
+      "closer zoom reveals individual concept names",
+      "progressive labels never move the underlying graph",
+      "1000 oblique: all 615 world positions match the pre-change map",
+      "1000 oblique: every source node and connection remains available",
+      "1000 oblique: five complete topic names form the overview",
+      "1000 oblique: fixed controls and continuation do not cover the map or its names",
+      "1000 top: all 615 world positions match the pre-change map",
+      "1000 top: every source node and connection remains available",
+      "1000 top: five complete topic names form the overview",
+      "1000 top: fixed controls and continuation do not cover the map or its names",
+      "1000 side: all 615 world positions match the pre-change map",
+      "1000 side: every source node and connection remains available",
+      "1000 side: five complete topic names form the overview",
+      "1000 side: fixed controls and continuation do not cover the map or its names",
+      "1000: selection preserves the whole source map",
+      "1000: local names take priority over topic signs and avoid the focus card",
+      "1000: selected activity and relationship directions are identifiable",
+      "1000: all sixteen real neighbors remain accessible",
+      "readability checks produce no browser errors"
+    ],
+    "errors": [],
+    "measurements": [
+      {
+        "width": 1440,
+        "height": 940,
+        "view": "oblique",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 421.6579895019531,
+            "y": 406.78680419921875,
+            "w": 93.99996948242188,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 680.2230224609375,
+            "y": 433.9810485839844,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 852.316650390625,
+            "y": 536.0283203125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 381.6772766113281,
+            "y": 552.2022705078125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 606.0111694335938,
+            "y": 552.5697021484375,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 624.793668039861,
+          "h": 638.0625
+        },
+        "area": 16199.999084472656,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "height": 940,
+        "view": "top",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 421.6579895019531,
+            "y": 406.78680419921875,
+            "w": 93.99996948242188,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 680.2230224609375,
+            "y": 433.9810485839844,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 852.316650390625,
+            "y": 536.0283203125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 381.6772766113281,
+            "y": 552.2022705078125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 606.0111694335938,
+            "y": 552.5697021484375,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 903.4947614435808,
+          "h": 638.0625000000953
+        },
+        "area": 16199.999084472656,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "height": 940,
+        "view": "side",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 299.8424987792969,
+            "y": 372.726806640625,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 628.9044799804688,
+            "y": 262.30645751953125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 964.9664916992188,
+            "y": 372.7294921875,
+            "w": 108.00006103515625,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 451.271728515625,
+            "y": 694.3915405273438,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 799.5372924804688,
+            "y": 694.3834838867188,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 857.7079828972435,
+          "h": 638.0624999999998
+        },
+        "area": 16200.001831054688,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "height": 940,
+        "view": "selected",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "node:mt_0u4KLbvBa1",
+            "x": 666.1531372070312,
+            "y": 605.1603393554688,
+            "w": 100,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_HhuSDxwDNM",
+            "x": 572.4273681640625,
+            "y": 564.3861694335938,
+            "w": 130,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_M5PPDJStGm",
+            "x": 536.9501953125,
+            "y": 709.0908203125,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_OkSJfrmFb_",
+            "x": 500.8628234863281,
+            "y": 516.51025390625,
+            "w": 117.99996948242188,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_nvdpxAJTBG",
+            "x": 483.0876159667969,
+            "y": 646.6279907226562,
+            "w": 135.00003051757812,
+            "h": 32,
+            "fits": true
+          },
+          {
+            "key": "node:mt_zfy1gOEewd",
+            "x": 546.7510375976562,
+            "y": 603.894775390625,
+            "w": 100,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_YzM5goBctT",
+            "x": 489.9609069824219,
+            "y": 467.1496276855469,
+            "w": 106.00003051757812,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_WXW0hjNhph",
+            "x": 801.8421630859375,
+            "y": 714.7427978515625,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_HNOPGJYiRK",
+            "x": 970.790283203125,
+            "y": 723.3717651367188,
+            "w": 154,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_RFeVlw0QvX",
+            "x": 482.7359619140625,
+            "y": 787.1392822265625,
+            "w": 130,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 624.7936680398609,
+          "h": 638.0625
+        },
+        "area": 36540.0009765625,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "view": "oblique",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 414.8721923828125,
+            "y": 322.3642883300781,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 581.8720703125,
+            "y": 340.18212890625,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 694.62890625,
+            "y": 407.04412841796875,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 386.2630310058594,
+            "y": 417.6413879394531,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 530.8344116210938,
+            "y": 417.88214111328125,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 409.36867915747195,
+          "h": 418.06249999999994
+        },
+        "area": 16200,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "view": "top",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 414.8721923828125,
+            "y": 322.3642883300781,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 581.8720703125,
+            "y": 340.18212890625,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 694.62890625,
+            "y": 407.04412841796875,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 386.2630310058594,
+            "y": 417.6413879394531,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 530.8344116210938,
+            "y": 417.88214111328125,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 591.9753608870715,
+          "h": 418.06250000006247
+        },
+        "area": 16200,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "view": "side",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 335.05792236328125,
+            "y": 300.0479736328125,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 548.2478637695312,
+            "y": 227.69985961914062,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 768.437744140625,
+            "y": 300.0497131347656,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 431.86175537109375,
+            "y": 510.8046875,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 657.6339111328125,
+            "y": 510.7994079589844,
+            "w": 122,
+            "h": 30.000030517578125,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 561.9755801351419,
+          "h": 418.0624999999999
+        },
+        "area": 16200.003723144531,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "view": "selected",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "node:mt_qUjW0N1cYO",
+            "x": 569.2258911132812,
+            "y": 451.73504638671875,
+            "w": 130,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_M5PPDJStGm",
+            "x": 537.6491088867188,
+            "y": 545.9505004882812,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_OkSJfrmFb_",
+            "x": 514.0044555664062,
+            "y": 350.73907470703125,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_nvdpxAJTBG",
+            "x": 499.4272766113281,
+            "y": 492.6118469238281,
+            "w": 134.99996948242188,
+            "h": 31.999969482421875,
+            "fits": true
+          },
+          {
+            "key": "node:mt_zfy1gOEewd",
+            "x": 547.173828125,
+            "y": 410.6128234863281,
+            "w": 100,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_WXW0hjNhph",
+            "x": 711.2079467773438,
+            "y": 483.2410888671875,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_HNOPGJYiRK",
+            "x": 815.6975708007812,
+            "y": 542.8948974609375,
+            "w": 154,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_RFeVlw0QvX",
+            "x": 500.0588684082031,
+            "y": 584.6757202148438,
+            "w": 129.99996948242188,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 409.3686791574719,
+          "h": 418.0624999999999
+        },
+        "area": 30359.99398803804,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1000,
+        "height": 720,
+        "view": "oblique",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 274.0246276855469,
+            "y": 320.79473876953125,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 442.0845031738281,
+            "y": 338.72113037109375,
+            "w": 107.99996948242188,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 555.5282592773438,
+            "y": 405.990478515625,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 245.2838134765625,
+            "y": 416.65228271484375,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 390.7785949707031,
+            "y": 416.8945007324219,
+            "w": 121.99996948242188,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 411.86259060547127,
+          "h": 420.609375
+        },
+        "area": 16199.998168945312,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1000,
+        "height": 720,
+        "view": "top",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 274.0246276855469,
+            "y": 320.79473876953125,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 442.0845031738281,
+            "y": 338.72113037109375,
+            "w": 107.99996948242188,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 555.5282592773438,
+            "y": 405.990478515625,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 245.2838134765625,
+            "y": 416.65228271484375,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 390.7785949707031,
+            "y": 416.8945007324219,
+            "w": 121.99996948242188,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 595.5817289474911,
+          "h": 420.60937500006276
+        },
+        "area": 16199.998168945312,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1000,
+        "height": 720,
+        "view": "side",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "theme:numbers",
+            "x": 193.72412109375,
+            "y": 298.34246826171875,
+            "w": 94,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:space",
+            "x": 408.25543212890625,
+            "y": 225.55360412597656,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:measure",
+            "x": 629.7867431640625,
+            "y": 298.34423828125,
+            "w": 108,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "theme:patterns",
+            "x": 291.1603088378906,
+            "y": 510.3831481933594,
+            "w": 108,
+            "h": 30.000030517578125,
+            "fits": true
+          },
+          {
+            "key": "theme:data",
+            "x": 518.3505859375,
+            "y": 510.3778076171875,
+            "w": 122,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 565.3991867864363,
+          "h": 420.60937500000017
+        },
+        "area": 16200.003295898438,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      },
+      {
+        "width": 1000,
+        "height": 720,
+        "view": "selected",
+        "nodes": 587,
+        "edges": 1223,
+        "labels": [
+          {
+            "key": "node:mt_qUjW0N1cYO",
+            "x": 428.52056884765625,
+            "y": 450.72216796875,
+            "w": 130,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_M5PPDJStGm",
+            "x": 396.71490478515625,
+            "y": 545.292236328125,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_OkSJfrmFb_",
+            "x": 372.9261779785156,
+            "y": 349.6713562011719,
+            "w": 118,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_nvdpxAJTBG",
+            "x": 358.3119812011719,
+            "y": 491.8479919433594,
+            "w": 135,
+            "h": 32.000030517578125,
+            "fits": true
+          },
+          {
+            "key": "node:mt_zfy1gOEewd",
+            "x": 406.2428283691406,
+            "y": 409.6783752441406,
+            "w": 100,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_WXW0hjNhph",
+            "x": 571.3310546875,
+            "y": 482.7491149902344,
+            "w": 118,
+            "h": 30.000030517578125,
+            "fits": true
+          },
+          {
+            "key": "node:mt_HNOPGJYiRK",
+            "x": 676.56689453125,
+            "y": 542.4373168945312,
+            "w": 154,
+            "h": 30,
+            "fits": true
+          },
+          {
+            "key": "node:mt_RFeVlw0QvX",
+            "x": 358.93218994140625,
+            "y": 584.4727172851562,
+            "w": 130,
+            "h": 30,
+            "fits": true
+          }
+        ],
+        "bounds": {
+          "w": 411.8625906054711,
+          "h": 420.60937499999994
+        },
+        "area": 30360.007720947266,
+        "labelCollisions": [],
+        "obstructedPoints": 0,
+        "overflow": false
+      }
+    ],
+    "childTrial": false
+  }
+}

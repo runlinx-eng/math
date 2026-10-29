@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "comparison scene uses readable desktop width",
+    "pouring moves both quantities into identical beakers",
+    "the matching comparison cups show the greater amount higher",
+    "equal amounts occupy equal visual area in the same-depth containers",
+    "clicking the actual ghost cube places a cube",
+    "a click without rotation does not count as a turn",
+    "dragging changes the 3D camera",
+    "actual rotation is recorded",
+    "all small cube layers fit inside the canvas",
+    "all five separated layers fit after turning",
+    "shorter desktop layout has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "projectedY": {
+    "lo": -0.5685510378247259,
+    "hi": 0.8464495593756404
+  }
+}

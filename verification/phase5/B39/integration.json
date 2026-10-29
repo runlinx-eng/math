@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "overview counts unique available nodes",
+    "entry offers three directions",
+    "first page has at most three routes",
+    "second page has at most three routes",
+    "new route has three nodes",
+    "selected route survives reload",
+    "selected calculator lesson opens",
+    "first inaccurate calculator input is recorded",
+    "calculator result is recorded as support",
+    "the child’s exact words are saved without grading",
+    "simulated next day shows the original question",
+    "original partial calculator work is restored",
+    "later work is preserved separately",
+    "original explanation is restored exactly",
+    "world camera returns to the question",
+    "actual backup contains the original explanation",
+    "repeated import preserves question and partial work",
+    "all four new files are cached",
+    "the question reopens offline",
+    "the calculation can finish offline",
+    "calculator use is kept as support",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v44",
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "two scales have distinct colors",
+    "both scales have complete labels",
+    "desktop width fits",
+    "no runtime errors"
+  ],
+  "errors": [],
+  "outer": "rgb(64, 95, 80)",
+  "inner": "rgb(163, 109, 65)"
+}

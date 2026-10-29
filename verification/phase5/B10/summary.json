@@ -1,0 +1,80 @@
+{
+  "batch": "B10",
+  "at": "2026-10-25T18:39:22.589968+00:00",
+  "technicalComplete": true,
+  "childTrials": 0,
+  "userAcceptance": "not claimed",
+  "counts": {
+    "availableNodes": 149,
+    "newNodes": 22,
+    "nodeTasks": 472,
+    "newNodeTasks": 65,
+    "sourceGoals": 448,
+    "newSourceGoals": 66,
+    "routes": 51,
+    "availableConnections": 78,
+    "connectionTasks": 156,
+    "newConnections": 16,
+    "newConnectionTasks": 32,
+    "localResearchSupplements": 19,
+    "remainingUnimplementedNodes": 438,
+    "remainingResearchGaps": 66
+  },
+  "unitChecks": 190,
+  "browserAssertions": 820,
+  "browserSuites": [
+    {
+      "file": "browser-final.json",
+      "assertions": 544
+    },
+    {
+      "file": "integration-first.json",
+      "assertions": 66
+    },
+    {
+      "file": "phase5-b09-integration-browser.json",
+      "assertions": 47
+    },
+    {
+      "file": "phase5-b06-audio-browser.json",
+      "assertions": 14
+    },
+    {
+      "file": "phase4-integration-browser.json",
+      "assertions": 45
+    },
+    {
+      "file": "phase3-continuation-browser.json",
+      "assertions": 8
+    },
+    {
+      "file": "spatial-browser.json",
+      "assertions": 37
+    },
+    {
+      "file": "exploration-browser.json",
+      "assertions": 55
+    },
+    {
+      "file": "phase5-b09-readiness-browser.json",
+      "assertions": 4
+    }
+  ],
+  "coverageChecks": [
+    "build_content_plan.py --check",
+    "build_phase2_coverage.mjs --check",
+    "build_phase3_coverage.mjs --check",
+    "build_phase4_coverage.mjs --check",
+    "build_phase5_coverage.mjs --check"
+  ],
+  "runtime": "runtime-final.json",
+  "distBytes": 6090460,
+  "distMiB": 5.81,
+  "upstreamCommit": "a8719737ff86ef7940ba5feca11940de1204103e",
+  "newRuntimeDependencies": 0,
+  "nextBatch": {
+    "id": "B11",
+    "nodes": 23,
+    "expectedCumulativeNodes": 172
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "cmd": "python3 scripts/build_content_plan.py --check",
+    "chunk_id": "303ce3",
+    "wall_time_seconds": 0.170443416,
+    "exit_code": 0,
+    "original_token_count": 93,
+    "output": "{\"mode\": \"check\", \"mathTopics\": 587, \"internalRelations\": 1223, \"externalReferences\": 32, \"researchTopics\": 502, \"missingResearchTopics\": 85, \"existingActivities\": 3, \"previewOnly\": 1, \"nodesWithoutFullActivity\": 584, \"firstSample\": 12, \"firstRelease\": 50, \"remainingAfterFirstRelease\": 537, \"sharedAuthoringGroups\": 93, \"proposedTaskUnits\": 161, \"deliveryBatches\": 39}\n"
+  },
+  {
+    "cmd": "node scripts/build_phase2_coverage.mjs --check",
+    "chunk_id": "faf10b",
+    "wall_time_seconds": 0.010437625,
+    "exit_code": 0,
+    "original_token_count": 32,
+    "output": "{\"availableNodes\":12,\"newNodes\":9,\"tasks\":30,\"sourceGoals\":36,\"localResearchSupplements\":2,\"remainingUnimplementedNodes\":575}\n"
+  },
+  {
+    "cmd": "node scripts/build_phase3_coverage.mjs --check",
+    "chunk_id": "54ccf6",
+    "wall_time_seconds": 0.000010375,
+    "exit_code": 0,
+    "original_token_count": 17,
+    "output": "{\"mode\":\"check\",\"nodes\":12,\"connections\":9,\"connectionTasks\":18}\n"
+  },
+  {
+    "cmd": "node scripts/build_phase4_coverage.mjs --check",
+    "chunk_id": "50ea93",
+    "wall_time_seconds": 0.028749333,
+    "exit_code": 0,
+    "original_token_count": 60,
+    "output": "{\n  availableNodes: 50,\n  newNodes: 38,\n  nodeTasks: 136,\n  sourceGoals: 153,\n  routes: 15,\n  availableConnections: 21,\n  connectionTasks: 42,\n  localResearchSupplements: 9,\n  remainingUnimplementedNodes: 537,\n  remainingResearchGaps: 76\n}\n"
+  },
+  {
+    "cmd": "node scripts/build_phase5_coverage.mjs --check",
+    "chunk_id": "c45241",
+    "wall_time_seconds": 0.035179584,
+    "exit_code": 0,
+    "original_token_count": 84,
+    "output": "{\n  availableNodes: 199,\n  newNodes: 24,\n  nodeTasks: 662,\n  newNodeTasks: 90,\n  sourceGoals: 601,\n  newSourceGoals: 72,\n  routes: 68,\n  availableConnections: 133,\n  connectionTasks: 266,\n  newConnections: 26,\n  newConnectionTasks: 52,\n  localResearchSupplements: 22,\n  remainingUnimplementedNodes: 388,\n  remainingResearchGaps: 63\n}\n"
+  }
+]

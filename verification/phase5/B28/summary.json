@@ -1,0 +1,89 @@
+{
+  "batch": "B28",
+  "date": "2026-10-27",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 445,
+    "newNodes": 22,
+    "nodeTasks": 1519,
+    "newNodeTasks": 72,
+    "sourceGoals": 1346,
+    "newSourceGoals": 66,
+    "routes": 175,
+    "availableConnections": 545,
+    "connectionTasks": 1090,
+    "newConnections": 20,
+    "newConnectionTasks": 40,
+    "localResearchSupplements": 63,
+    "remainingUnimplementedNodes": 142,
+    "remainingResearchGaps": 22
+  },
+  "unitChecks": 753,
+  "browserChecks": 746,
+  "suites": [
+    {
+      "name": "browser-final",
+      "checks": 620
+    },
+    {
+      "name": "integration-final",
+      "checks": 25
+    },
+    {
+      "name": "visual-final",
+      "checks": 13
+    },
+    {
+      "name": "capacity-final",
+      "checks": 15
+    },
+    {
+      "name": "regression/b27/result",
+      "checks": 24
+    },
+    {
+      "name": "regression/spatial/result",
+      "checks": 37
+    },
+    {
+      "name": "regression/daily/result",
+      "checks": 8
+    },
+    {
+      "name": "regression/readiness/result",
+      "checks": 4
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-27T14:41:28.280Z",
+    "health": 200,
+    "progress": "0 / 445",
+    "cache": "math-explorer-20261027-learning-v33",
+    "cachedFiles": 176,
+    "assetsMatched": 51,
+    "distBytes": 7149594,
+    "distMiB": 6.818
+  },
+  "capacity": {
+    "nodes": 445,
+    "connections": 545,
+    "characters": 10587273,
+    "bytes": 10604313,
+    "storedChars": 1973539,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 907,
+    "format": "math-storage/lzw16-v1",
+    "downloadBytes": 35139150,
+    "syntheticCompletedRecords": true
+  },
+  "limits": [
+    "Finite tasks do not establish general mastery.",
+    "Child trial and real next-day continuation have not occurred.",
+    "Physical tools, free explanations and open-ended construction remain unassessed.",
+    "Capacity test covers the current synthetic corpus, not unlimited future history."
+  ]
+}

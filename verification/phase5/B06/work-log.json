@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-10-25T03:53:31.129075+00:00",
+  "events": [
+    {
+      "at": "2026-10-25T03:53:31.129171+00:00",
+      "segment": "source-review-and-design",
+      "event": "start"
+    },
+    {
+      "at": "2026-10-25T03:59:22.292889+00:00",
+      "segment": "source-review-and-design",
+      "event": "complete"
+    },
+    {
+      "at": "2026-10-25T03:59:22.292889+00:00",
+      "segment": "shared-counting-models",
+      "event": "start"
+    },
+    {
+      "at": "2026-10-25T04:18:03.936809+00:00",
+      "segment": "shared-counting-models",
+      "event": "complete"
+    },
+    {
+      "at": "2026-10-25T04:18:03.936809+00:00",
+      "segment": "browser-validation-and-repairs",
+      "event": "start"
+    },
+    {
+      "at": "2026-10-25T04:31:45.339443+00:00",
+      "segment": "audio-content-repair",
+      "event": "verified",
+      "detail": "Sandbox say returned success with zero-frame files; host speech service produced non-empty clips. WAV PCM frame count/duration/RMS and browser runtime rejection added."
+    },
+    {
+      "at": "2026-10-25T04:34:57.233819+00:00",
+      "segment": "browser-validation-and-repairs",
+      "event": "complete"
+    },
+    {
+      "at": "2026-10-25T04:34:57.234041+00:00",
+      "segment": "documentation-and-handoff",
+      "event": "complete"
+    }
+  ],
+  "childTrials": [],
+  "measurement": "工作段记录墙钟起止；出现中断则不推断有效工时。",
+  "snapshot": "snapshots/v10-before-b06-20261025T035922Z.tar.gz",
+  "technicalStatus": "B06 verified; child trials pending"
+}

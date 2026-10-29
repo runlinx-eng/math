@@ -1,0 +1,26 @@
+✔ exactly the planned 50 unique nodes, bounded routes and source connections are present (3.124375ms)
+✔ all new task models start incomplete and accept constructed work with durable records (11.825084ms)
+✔ same amount accepts different shapes but color renaming is not a second partition (0.111916ms)
+✔ unit fractions are proper too; overflowing quarters also require a correct mixed expression (0.089417ms)
+✔ fractions refer to the entire set and the correct number-line unit (0.074792ms)
+✔ equivalence requires preserved quantity and decimal place-value errors do not pass (0.0705ms)
+✔ scaling checks pre-action predictions and ratio models must account for total parts (0.067ms)
+✔ classification keeps every object, handles tied ordering and measured quantities (0.072833ms)
+✔ statistics anticipates variation, including repeated observations of one person (0.064042ms)
+✔ same chart data must survive scale and representation changes; choice of display is not a single-answer trap (0.102958ms)
+✔ trial data replay exactly, forged outcomes fail, prediction need not equal observed counts (0.144125ms)
+✔ repeated spinner runs advance the random stream; areas, not equal observed counts, determine equal chance (0.144958ms)
+✔ simulation plots unedited samples and accepts even a less-concentrated observed batch (6.977708ms)
+✔ repetition, fixed growth and equality are structural checks rather than count-only answers (0.096334ms)
+✔ story equations retain the whole/parts; arithmetic coincidence is insufficient (0.045084ms)
+✔ exchange preserves quantity and examples without a general reason cannot finish proof (0.125458ms)
+✔ all current nodes plus joint work survive backup, deduplication, errors and next-day question continuation (2146.194958ms)
+✔ route choice does not fabricate source edges, and overview exposes only actual completed links (0.447209ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2299.476958

@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "all four stacks fit the initial scene",
+    "clicking actual 3D ghost cube places a block",
+    "clicking without rotation does not count as turning",
+    "dragging changes 3D camera",
+    "rotation is saved",
+    "two possible rules are hidden before prediction",
+    "prediction and both continuations are shown",
+    "wrong order produces and keeps the actual 15 classification",
+    "wrong classification is visible",
+    "edited program does not display stale output",
+    "corrected classification can complete",
+    "first mistake remains in evidence",
+    "early stop is retained and 192 is included",
+    "shorter desktop layout has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "projected": {
+    "x": 754.4039932688944,
+    "y": 328.7614184318734,
+    "min": -0.5573938561951669,
+    "max": 0.5706703534138396
+  }
+}

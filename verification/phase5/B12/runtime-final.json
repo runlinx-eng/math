@@ -1,0 +1,79 @@
+{
+  "at": "2026-10-26T04:53:15.455Z",
+  "health": 200,
+  "progress": "0 / 175",
+  "nodes": 175,
+  "routes": 60,
+  "connections": 107,
+  "directions": 3,
+  "cache": "math-explorer-20261026-learning-v17",
+  "cachedFiles": 104,
+  "assets": {
+    "learning/learn.js": {
+      "status": 200,
+      "bytes": 37021,
+      "sha256": "89a7da48082c99ec0be77fc151c4904e365c710fcca9bf3af06ef3d3502cef7f"
+    },
+    "learning/learn.css": {
+      "status": 200,
+      "bytes": 15766,
+      "sha256": "5a5bcfcd7991e89dd2e98c793492bd69e45165e1dd6fa18a0cda354fc23c35a8"
+    },
+    "learning/phase4/catalog.js": {
+      "status": 200,
+      "bytes": 1003,
+      "sha256": "7cce3700b819eececc9cd883d763627bd93b17569a7877a6a7dc7b63a5e5d2e4"
+    },
+    "learning/phase4/engine.js": {
+      "status": 200,
+      "bytes": 2709,
+      "sha256": "198cf76af35f987f2d898324a76d65c733c0a7390b807ef07597c79123c263a3"
+    },
+    "learning/phase5/b12.js": {
+      "status": 200,
+      "bytes": 5796,
+      "sha256": "19475d8e0eef424aac43506a558cdceb4704a265857b1607974eb1bf4956a33d"
+    },
+    "learning/phase5/b12-model.js": {
+      "status": 200,
+      "bytes": 13401,
+      "sha256": "121ffb6631ade31f38467d76d736cc77d57fabe8fbfd5589ca1980f1edd44d02"
+    },
+    "learning/phase5/b12-view.js": {
+      "status": 200,
+      "bytes": 4068,
+      "sha256": "d05a30460e3ed364dcccdd905ec6e5afc8c7fc75aedb75b601e832a3d60cf53c"
+    },
+    "learning/phase5/b12.css": {
+      "status": 200,
+      "bytes": 2809,
+      "sha256": "ad82d8ee2bb9cc97804801b3b9a25ef9721cf7c0a3a098fe1fc56414bf7a9d9a"
+    },
+    "space.js": {
+      "status": 200,
+      "bytes": 41832,
+      "sha256": "501a93be40e89bc35ddd468a08a567d429d93dd9f22a6bc825d8a2623eef4049"
+    },
+    "exploration.js": {
+      "status": 200,
+      "bytes": 51203,
+      "sha256": "abaaae11fc5853946e26b6b56b4092512bef32659161426ab29fc8814935cc10"
+    },
+    "sw.js": {
+      "status": 200,
+      "bytes": 3872,
+      "sha256": "8594baacf2b7f3697b6e59489de2b2335a530084129a24259660542a9fb2373d"
+    },
+    "data/atlas.json": {
+      "status": 200,
+      "bytes": 1051830,
+      "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf"
+    },
+    "exploration-content.js": {
+      "status": 200,
+      "bytes": 7895,
+      "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397"
+    }
+  },
+  "errors": []
+}

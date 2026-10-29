@@ -1,0 +1,19 @@
+{
+  "batch": "B15",
+  "startedAt": "2026-10-26T07:25:36.968204+00:00",
+  "snapshot": "snapshots/v19-before-b15-20261026T072536Z.tar.gz",
+  "activeHours": null,
+  "note": "No child trial; wall time is not measured labor.",
+  "finishedAt": "2026-10-26T08:17:51.599546+00:00",
+  "status": "content-and-technical-checks-complete",
+  "userAcceptance": false,
+  "childTrial": false,
+  "unitChecks": 310,
+  "browserChecks": 967,
+  "coverageChecks": 5,
+  "sourceReviewRecords": 19,
+  "adaptedResearchRecords": 17,
+  "localSupplements": 2,
+  "nextBatch": "B16",
+  "nextNodes": 22
+}

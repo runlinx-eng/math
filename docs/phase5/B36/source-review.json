@@ -1,0 +1,1879 @@
+[
+  {
+    "topic": {
+      "id": "mt_Jvg8X0N5u0",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Using Simple Formulae",
+      "description": "Use simple formulae expressed in words or symbols to calculate values (e.g. perimeter = 2 × (length + width))",
+      "ageRangeStart": 10,
+      "ageRangeEnd": 11,
+      "centrality": 0.1028938906752412,
+      "evidence": [
+        "Substitute values into P = 2(l + w) to find the perimeter of a rectangle",
+        "Use the formula for area of a triangle (A = 1/2 × b × h) given base and height values",
+        "Interpret a formula expressed in words and use it to compute an output"
+      ],
+      "assessmentPrompt": "If {{name}} is told that the perimeter of a rectangle uses the formula perimeter = 2 × (length + width), can they plug in the measurements and work out the answer?",
+      "standards": [
+        "uk-nc-2013:Ma6/2.5a"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/688",
+    "research": {
+      "topicId": "mt_Jvg8X0N5u0",
+      "pedagogy": {
+        "summary": "Using a simple formula means reading what it tells you to do — in words or symbols — substituting the given values, and computing with the correct order of operations, applying EVERY operation the formula specifies. The signature pitfalls are ignoring the bracket in P = 2(l + w) (doubling only the length), omitting the ½ in the area of a triangle, confusing the perimeter and area formulae, and mismatched units. Connecting each formula to the shape it describes keeps the computation meaningful.",
+        "bestPractices": [
+          "Read the formula first and say what it computes and what each letter means before substituting.",
+          "Do the bracket first: for P = 2(l + w), add length and width, THEN double — not 2×l + w.",
+          "Apply every operation in the formula, including the ½ for a triangle; link it to the triangle being half its enclosing rectangle.",
+          "Distinguish perimeter (distance round, in cm) from area (space inside, in cm²) and attach the correct units.",
+          "Substitute carefully and check the result is sensible for the shape."
+        ],
+        "keyRepresentations": [
+          "The shape itself with the formula overlaid (perimeter traced round the edge)",
+          "Triangle drawn inside its enclosing rectangle (why ½)",
+          "Function machine for the sequence of operations",
+          "Worded-formula ↔ symbol-formula matching cards"
+        ],
+        "commonMisconceptions": [
+          "Ignores the bracket / order of operations: P = 2(l + w) computed as 2×l + w (e.g. 2×5+3 = 13 instead of 2×8 = 16).",
+          "Omits the ½ in a triangle's area, giving b×h (24) instead of ½×b×h (12).",
+          "Confuses perimeter and area formulae, or uses the wrong measurements.",
+          "Attaches wrong units (perimeter in cm², or no units).",
+          "Reads a worded formula incorrectly and mis-sequences the operations."
+        ]
+      },
+      "learn": {
+        "summary": "Year 6 learners use simple formulae (in words or symbols) to calculate values, substituting given numbers and applying EVERY operation in the correct order. The signature pitfalls are ignoring the bracket in P = 2(l + w) and doubling only the length (2×l + w), omitting the ½ in the area of a triangle, confusing perimeter with area, and mismatched units (cm vs cm²). Connecting each formula to the shape it describes keeps the computation meaningful.",
+        "activities": [
+          {
+            "title": "Formula-on-a-shape: watch the bracket do its work",
+            "feedback": [
+              "If the 'double first' trace fails to close, point out that it counts both lengths but only one width, so it falls short by one width — the bracket (add first) is what makes the boundary close.",
+              "For the triangle, if the ½ is treated as optional, show that the leftover pieces of the same-base, same-height rectangle exactly cover the triangle (for a right-angled triangle, two identical copies form the rectangle): base × height is the whole rectangle, so the triangle's area is half of that. With a paper cut-out, treat it as a model of the ideal flat triangle.",
+              "When the answer looks wrong, prompt: 'read the formula again — have you done every operation it lists, in the order it lists them?'"
+            ],
+            "rationale": "Seeing the bracket and the ½ act on an actual shape links symbolic order of operations to the quantity being measured, countering the instrumental, ungrounded learning that research associates with area/perimeter confusion and over-generalising the rectangle formula to triangles. Live recolouring, the perimeter trace, the function machine, and the 'double first' toggle are optional interaction examples that make the mechanism concrete; a static or paper version (tracing with a pen, cutting and rearranging a paper triangle against a rectangle with the same base and height) can carry the same idea, with the paper cut-out understood as an approximation of the ideal plane figure.",
+            "sourceClaims": [
+              "Students writing/evaluating expressions apply operations left-to-right and mishandle the order of operations implied by symbolic form and parentheses — the same error that produces 2(l+w) -> 2*l+w.",
+              "Learners confuse area and perimeter because the formulae (A = l x b and P = 2(l + b)) are taught at about the same time and learned instrumentally, without conceptual grounding (Van de Walle et al.; Dickson 1989: confusion is 'nearly always due to inadequate preparation... given the formulae without adequate explanation'); and they over-generalise the rectangle area formula, extending A = l x b to non-rectangular figures such as triangles (Olivier 1989) — the mechanism behind applying base x height to a triangle without the halving adjustment the triangle requires."
+            ],
+            "learnerActions": [
+              "Set the length and width of a rectangle (for example with sliders), and evaluate P = 2(l + w) step by step: add length and width inside the bracket FIRST, then double.",
+              "Trace the perimeter round the edge of the rectangle as the formula computes, and check the traced path closes back on itself.",
+              "Toggle a 'double first' version that shows what 2×l + w would do — a path that traces both lengths but only one width, so it stops one side short and never closes round the shape.",
+              "Flip to a triangle whose top vertex lies above its base and place it on a rectangle with the same base and height (on screen or with a paper/card cut-out). Cut or drag the leftover pieces of the rectangle to show they exactly cover the triangle (for a right-angled triangle, two identical copies make the rectangle), so the ½ in A = ½ × b × h is seen as the triangle being half that rectangle. (A paper cut-out has slight thickness and stands in for the ideal flat, zero-thickness triangle; it still shows the half-area relationship.)",
+              "Optionally lay the formula out as a function machine so the sequence of operations the formula specifies is explicit.",
+              "State, in your own words, what each formula computes and what each letter means before substituting."
+            ],
+            "intendedInsight": "The bracket's order is not arbitrary here: adding-then-doubling walks the whole boundary and closes it, while doubling-then-adding misses one width and does not. The ½ for a triangle is the visible fact that a triangle has half the area of a rectangle with the same base and height."
+          },
+          {
+            "title": "Substitute and compute with feedback",
+            "feedback": [
+              "If 13 appears for P (from 2×5 + 3), show that this doubles only the length; add length and width first, then double, to get 16 cm.",
+              "If 24 appears for the triangle, point to the ½ written in the formula — every operation must be carried out, so halve 24 to 12 cm².",
+              "If units are wrong (area with no square units, or perimeter in cm²), re-read what the formula computes: distance round (cm) versus space inside (cm²)."
+            ],
+            "rationale": "Choosing formulae, substituting, and attaching units are cleanly checkable, and distractors built from the bracket and ½ errors make the characteristic mistakes visible for correction. A recognition/fill-in item checks substitution and formula choice but does not by itself require the learner to construct and justify a full method; pair it with the step-showing and explanation actions above.",
+            "sourceClaims": [
+              "Year 6 pupils should use simple formulae (expressed in words or symbols) to calculate values.",
+              "Students writing/evaluating expressions apply operations left-to-right and mishandle the order of operations implied by symbolic form and parentheses — the same error that produces 2(l+w) -> 2*l+w."
+            ],
+            "learnerActions": [
+              "Fill in the blank: P = 2(5 + 3) = __, showing the bracket step (2 × 8 = 16 cm) before the answer.",
+              "Choose the area of a triangle with base 6 cm and height 4 cm from options including 12 cm² and the ½-omission result 24 cm²; explain why 24 is wrong.",
+              "Match each worded formula to its symbol form (e.g. 'multiply the base by the height, then halve' ↔ A = ½ × b × h).",
+              "Attach the correct units to each answer and say why perimeter is in cm but area is in cm².",
+              "Work an unfamiliar simple worded formula end-to-end, naming each operation as you do it."
+            ],
+            "intendedInsight": "Substituting into a given formula and picking the right formula/units is a procedure built by doing and checking; the common slips are the bracket and the dropped ½, so each is targeted directly."
+          },
+          {
+            "title": "Label the shape and reveal the steps",
+            "feedback": [
+              "If a learner cannot predict the next step, return to naming what each letter measures on the shape.",
+              "Use the revealed steps to confirm whether the bracket was handled first."
+            ],
+            "rationale": "A static labelled shape with step-reveal shows the parts of a formula clearly and supports reading it (in words or symbols) before use. It is a scaffold: because the numbers are fixed it does not let the learner compute across changing values, which is where the bracket and ½ errors actually surface, so follow it with the substitution and formula-on-a-shape activities.",
+            "sourceClaims": [
+              "Year 6 pupils should use simple formulae (expressed in words or symbols) to calculate values."
+            ],
+            "learnerActions": [
+              "On a labelled rectangle, tap or point to the perimeter formula and reveal each step of the calculation in turn.",
+              "Say what each letter in the formula stands for on the drawing before any numbers are substituted.",
+              "Predict the next step before revealing it, then check your prediction against the shown calculation."
+            ],
+            "intendedInsight": "Connecting each symbol to the part of the shape it measures keeps the formula meaningful before computing."
+          }
+        ],
+        "constraints": [
+          "Perimeter and triangle area here are planar (2D) quantities; a third dimension is not needed and can mislead toward surface area or volume, so keep the representation flat.",
+          "A paper or card triangle cut out and rearranged against a rectangle with the same base and height has slight thickness and is an approximation of the ideal plane figure; use it to show the half-area relationship, not as a literal zero-thickness shape. This is also noted in the activity where the paper model is proposed.",
+          "The static label-and-reveal task is a scaffold: fixed numbers mean it cannot elicit computing across different values, which is where the characteristic errors live.",
+          "Recognition/multiple-choice items check substitution and formula/unit selection but do not on their own require the learner to construct and justify a full method; include step-showing and explanation to assess independent procedure.",
+          "Always apply every operation the formula specifies, in order: bracket first in P = 2(l + w), and include the ½ for a triangle.",
+          "Describe triangle area as half the base times the (perpendicular) height; avoid calling base and height 'two side lengths', since the height is a perpendicular distance, not necessarily a side."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. Activities are research-informed proposals, not validated interventions.",
+          "Self-audit of arithmetic: P = 2(5 + 3) = 2 × 8 = 16 cm (bracket-ignoring slip gives 2×5 + 3 = 13); triangle area = ½ × 6 × 4 = 12 cm² (½-omission gives 6×4 = 24). All checked and consistent across the summary, activities, feedback, and constraints.",
+          "The source row's 3D-unsuitable and conversation-unsuitable ratings were catalog fit judgements; retained only the genuine, narrowly scoped point that a third dimension risks shifting toward surface area/volume for a planar quantity. No universal 'only this teaches' or 'dialogue cannot teach procedures' claim is asserted.",
+          "Source claim attributions were tightened: the curriculum-scope claim was removed from activity 1 because that activity's principle is conceptual grounding of order of operations/½, supported by the order-of-operations and area/perimeter claims rather than by curriculum scope.",
+          "The inherited worded formula 'multiply the two side lengths, then halve' loosely treated base and height as 'side lengths'; the learner-facing matching task was corrected to 'multiply the base by the height, then halve', since height is a perpendicular distance, not a triangle side. The original phrasing is recorded in the preservation audit for fidelity.",
+          "The cited sources support curriculum scope and the mechanisms of the order-of-operations and area/perimeter errors; they do not establish the comparative efficacy of any particular activity or medium."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "In part (a), why add before you double? What do you get if you double first, and does it match the shape? (order-of-operations reasoning)",
+          "Your triangle sits inside a 6-by-4 rectangle — how do their areas compare, and why the ½? (counterexample/derivation for the half)",
+          "What units should each answer have, and why is area measured differently from perimeter?",
+          "Here is a formula in words: 'multiply the two side lengths, then halve.' Which is it — area of a triangle or perimeter of a rectangle? (interpreting a worded formula)"
+        ],
+        "correctAnswer": "(a) P = 2(5 + 3) = 2 × 8 = 16 cm. (b) A = ½ × 6 × 4 = 12 cm².",
+        "errorPatterns": [
+          {
+            "kind": "interference",
+            "pattern": "Ignores the bracket / order of operations — computes 2(l + w) as 2×l + w, doubling only the length.",
+            "nextMove": "Bracket first — add length and width, THEN double; connect to perimeter as two lengths plus two widths traced round the shape.",
+            "distractor": null,
+            "revealedBy": "Writes 2×5 + 3 = 13 (or similar); only one dimension is doubled before the other is added.",
+            "reteachPrerequisiteId": "mt_jHgRQ4hR0g"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Omits the ½ in a triangle's area — computes base × height and stops, giving the rectangle's area.",
+            "nextMove": "Show the triangle as exactly half its enclosing rectangle by cutting/folding; stress that every operation written in the formula must be carried out.",
+            "distractor": null,
+            "revealedBy": "Answer is 24 (6×4) rather than 12; the ½ in the formula is not applied.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Confuses perimeter and area, or the units — uses the wrong formula/quantity, or labels perimeter in cm².",
+            "nextMove": "Separate the two ideas — perimeter is the distance round (cm), area is the space inside (cm²); read what the formula computes before using it.",
+            "distractor": null,
+            "revealedBy": "Adds where the formula multiplies (or vice versa), or gives area with no square units / perimeter with cm².",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Ignores brackets/order or omits an operation (drops the ½), or selects the wrong formula; the calculation does not follow the formula as written.",
+          "full": "Interprets worded or symbolic formulae, applies every operation in the correct order (bracket first, includes the ½), attaches correct units, and transfers the approach to an unfamiliar simple formula.",
+          "partial": "Substitutes and computes a single-operation formula correctly, but slips on the bracket in 2(l + w), forgets the ½, or muddles units — manages the routine case but not reliably."
+        },
+        "diagnosticPrompt": "Give the child this card and say 'work these out, showing your steps': (a) A rectangle has length 5 cm and width 3 cm — use P = 2(l + w) to find its perimeter. (b) A triangle has base 6 cm and height 4 cm — use A = ½ × b × h to find its area. Say nothing about method. Watch whether they do the bracket first in (a) and include the ½ in (b), and whether the units are right.",
+        "whatMakesItDiscriminate": "Each item isolates an error in the written steps: (a) exposes ignoring the bracket (2×5+3 = 13) versus adding first then doubling (16); (b) exposes omitting the ½ (24) versus halving (12). Units (cm vs cm²) further separate a child who knows what each formula computes. Watching the steps, not asking, shows which operation was dropped or mis-ordered."
+      },
+      "sources": [
+        {
+          "claim": "Year 6 pupils should use simple formulae (expressed in words or symbols) to calculate values.",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (Year 6 Algebra)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Students writing/evaluating expressions apply operations left-to-right and mishandle the order of operations implied by symbolic form and parentheses — the same error that produces 2(l+w) -> 2*l+w.",
+          "source": "Mathematics Assessment Project — 'Interpreting Algebraic Expressions' Classroom Challenge (Common Issues: order of operations & parentheses)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1726",
+          "verified": true
+        },
+        {
+          "claim": "Learners confuse area and perimeter because the formulae (A = l x b and P = 2(l + b)) are taught at about the same time and learned instrumentally, without conceptual grounding (Van de Walle et al.; Dickson 1989: confusion is 'nearly always due to inadequate preparation... given the formulae without adequate explanation'); and they over-generalise the rectangle area formula, extending A = l x b to non-rectangular figures such as triangles (Olivier 1989) — the mechanism behind applying base x height to a triangle without the halving adjustment the triangle requires.",
+          "source": "Machaba, F.M. (2016), 'The concepts of area and perimeter: Insights and misconceptions of Grade 10 learners', Pythagoras (peer-reviewed; ERIC full text)",
+          "url": "https://files.eric.ed.gov/fulltext/EJ1209134.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T13:19:07.932Z",
+        "updatedAt": "2026-10-19T15:20:49.167Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/527",
+    "connections": [
+      {
+        "topicId": "mt_Jvg8X0N5u0",
+        "prerequisiteId": "mt_4WaKWECpcv",
+        "strength": "soft",
+        "reason": "Interpreting formulae connects to interpreting numerical expressions"
+      },
+      {
+        "topicId": "mt_Jvg8X0N5u0",
+        "prerequisiteId": "mt_jHgRQ4hR0g",
+        "strength": "hard",
+        "reason": "Substituting into formulae requires understanding order of operations"
+      },
+      {
+        "topicId": "mt_KwdjWEmMNo",
+        "prerequisiteId": "mt_Jvg8X0N5u0",
+        "strength": "hard",
+        "reason": "Using letters in expressions extends KS2 simple formulae work"
+      },
+      {
+        "topicId": "mt_ML5t7n2-U8",
+        "prerequisiteId": "mt_Jvg8X0N5u0",
+        "strength": "soft",
+        "reason": "Using area formulae connects to the general skill of using formulae"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_hVpGOEz2kG",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Coordinates (age 11+)",
+      "description": "Plot and read coordinates in all four quadrants of the Cartesian plane, using positive and negative x- and y-values to describe positions precisely",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.120042872454448,
+      "evidence": [
+        "Plot points with negative coordinates accurately in all four quadrants",
+        "Identify the quadrant a point belongs to from its coordinate signs",
+        "Read coordinates from a graph including fractional and negative values"
+      ],
+      "assessmentPrompt": "Can {{name}} plot a point like (−3, 4) correctly on a coordinate grid and read the coordinates of points in all four quadrants, including negative numbers?",
+      "standards": [
+        "ccss-math:6.NS.6c",
+        "uk-nc-2013:KS3.Maths.Alg.8"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/693",
+    "research": {
+      "topicId": "mt_hVpGOEz2kG",
+      "pedagogy": {
+        "summary": "Four-quadrant coordinates extend first-quadrant plotting by carrying each axis through zero into the negatives. The key move is reading a position as an ordered pair — the FIRST coordinate on the x-axis (horizontal), the SECOND on the y-axis (vertical) — and coordinating each sign with a direction. It is best taught by building the plane as two perpendicular number lines the child can already order, teaching the axis-order convention structurally rather than by a first-quadrant rhyme, and working in all four quadrants together rather than bolting negatives on afterwards.",
+        "bestPractices": [
+          "Build the plane as a horizontal and a vertical number line crossing at the origin, so negative coordinates simply inherit the ordering the child already knows from the number line.",
+          "Teach the convention structurally: the first coordinate is read on the x-axis, the second on the y-axis; rehearse against the origin (0,0). Treat 'along the corridor, up the stairs' as a first-quadrant crutch ONLY — it breaks down for negatives (to plot (4,-5) you go along then DOWN the stairs), so prioritise 'x-axis first' once negatives appear.",
+          "Use points in all four quadrants from the start; have children name the quadrant from the sign pair (+,+), (-,+), (-,-), (+,-) rather than memorising quadrant numbers.",
+          "Work both directions — plot from given coordinates AND read coordinates off a plotted point — including negative and fractional values, so fluency is not one-way.",
+          "Surface the reversal error deliberately with a compare-correct-and-incorrect task (one child says a point is (8,6), another says (6,8) — who is right and why?), and state the scale of each axis before reading or plotting, especially when grid lines represent 2, 5 or 10."
+        ],
+        "keyRepresentations": [
+          "Two perpendicular number lines forming the Cartesian plane, origin labelled",
+          "'x-axis first, then y-axis' read against the origin (the 'corridor/stairs' rhyme holds only in the first quadrant)",
+          "Sign-by-quadrant grid: (+,+) | (-,+) | (-,-) | (+,-)"
+        ],
+        "commonMisconceptions": [
+          "Reverses the ordered pair, plotting/reading (y, x) — takes the vertical value first (the single most common coordinate error).",
+          "Sign/direction error: counts the wrong way for a negative value, landing a point in the wrong quadrant.",
+          "Misreads the scale: assumes each grid line is one unit when it is 2, 5 or 10, or reads two differently-scaled axes as if identical.",
+          "Over-relies on the 'along the corridor, up the stairs' mnemonic and is stranded when a coordinate is negative (goes 'up the stairs' for a negative y)."
+        ]
+      },
+      "learn": {
+        "summary": "Learners plot and read positions in all four quadrants of the Cartesian plane using positive and negative x- and y-values. The core idea: a position is an ordered pair whose FIRST coordinate is read along the horizontal x-axis and whose SECOND is read along the vertical y-axis, with each sign tied to a direction. Build the plane as two perpendicular number lines crossing at the origin so negatives inherit the ordering the child already knows, teach the axis-order convention structurally (not via a first-quadrant rhyme), and work across all four quadrants together rather than adding negatives afterwards.",
+        "activities": [
+          {
+            "title": "Plot and read on a four-quadrant grid",
+            "feedback": [
+              "If a point lands in the wrong quadrant, mirrored across the diagonal — for example aiming for (-3, 2) but landing where (2, -3) belongs — the pair has been reversed: re-read the first number along the horizontal x-axis, then the second up or down the vertical y-axis.",
+              "If the horizontal step is right but a negative y was counted upward (or a negative x the wrong way), rebuild the axis as a number line through zero, count the negative on that line first, then transfer the direction onto the grid.",
+              "If a read-back value comes out as half (or a fraction) of the true value, the scale was ignored: ask 'what is one grid line worth on this axis?' and count in those units — a point 3 lines right and 2 lines up on axes rising in 2s is (6, 4), not (3, 2).",
+              "When comparing (-3, 2) with (2, -3), if the learner expected a near-identical point, draw attention to the different quadrant as evidence that the order of the numbers matters, because each sign is read on the axis its position assigns."
+            ],
+            "rationale": "Placing a point and seeing where it lands makes the horizontal-then-vertical sequence and the sign-to-direction link concrete, and deliberately contrasting a pair with its reversal targets the most common coordinate error directly. A live grid with on-target feedback, a read-back mode, and a scale control (lines worth 1, 2, 5) makes each sub-skill visible; these interaction examples are optional illustrations, not required mechanisms — equivalent work can be done on squared paper.",
+            "sourceClaims": [
+              "KS3 pupils should 'work with coordinates in all four quadrants'.",
+              "Misreading the axis scale (e.g. failing to notice the axis goes up in 2s/5s/10s rather than 1s, or that two axes use different scales) is a documented student difficulty when reading coordinates and graphs.",
+              "The most common coordinate error is reversing the ordered pair / reading the axes in the wrong order (one pupil says a point is (8,6), another (6,8)); the 'along the corridor, up the stairs' mnemonic works only in the first quadrant and breaks down for negatives (e.g. plotting (4,-5) requires going along then DOWN), so pupils should be taught explicitly that the first coordinate is read on the x-axis and the second on the y-axis, and the reversal is best remediated with a compare-correct-vs-incorrect reasoning task."
+            ],
+            "learnerActions": [
+              "Given a target coordinate such as (-3, 2), place a point by first moving horizontally along the x-axis to -3, then vertically along the y-axis to 2, and check whether it lands on target.",
+              "Immediately after plotting (-3, 2), plot (2, -3) and compare where the two points land: note that swapping the order of the two numbers (each keeping its own sign) sends the point to a visibly different quadrant.",
+              "Switch to reading: a point is shown already marked on the grid, and the learner states its coordinates as (x, y) with correct signs.",
+              "Repeat with on-axis points such as (0, 2) and with negative and fractional values so plotting and reading are both rehearsed.",
+              "State what one grid line is worth before each plot or read, practising with grids where each line represents 1, then 2, then 5."
+            ],
+            "intendedInsight": "The order of the two numbers and the sign of each carry independent meaning: (-3, 2) and (2, -3) are different points in different quadrants, and the interval each grid line represents must be checked before counting."
+          },
+          {
+            "title": "Name the quadrant from the signs",
+            "feedback": [
+              "If a point is placed in a quadrant whose signs don't match (e.g. a (-,-) point put where (+,-) belongs), check each sign against its axis direction separately.",
+              "For (0, 2), reinforce that one coordinate being zero means the point lies exactly on an axis — here the y-axis, 2 above the origin — so it belongs to no quadrant."
+            ],
+            "rationale": "Naming quadrants from the sign pair reinforces the sign-to-direction link structurally and avoids rote memorisation of quadrant numbering, while still realising the curriculum expectation to work across all four quadrants. A reference layout that reveals each quadrant's sign pair and labels the axes ('x first, horizontal'; 'y second, vertical') can support this as a reference, though it does not by itself rehearse plotting or reading.",
+            "sourceClaims": [
+              "KS3 pupils should 'work with coordinates in all four quadrants'."
+            ],
+            "learnerActions": [
+              "For a given point, state its quadrant by its sign pair: (+,+), (-,+), (-,-), (+,-), rather than recalling an abstract quadrant number.",
+              "Rehearse the convention against the origin (0,0): confirm that the first coordinate is read on the horizontal axis and the second on the vertical.",
+              "Classify on-axis points such as (0, 2): explain why a point with a zero coordinate sits on an axis and is not inside any quadrant."
+            ],
+            "intendedInsight": "The combination of signs locates which region of the plane a point lies in, and a zero coordinate places a point on an axis rather than inside a quadrant."
+          },
+          {
+            "title": "Compare correct and incorrect readings",
+            "feedback": [
+              "If the learner picks the reversed reading, trace each coordinate back to its axis: the first number is the horizontal position, the second the vertical.",
+              "If the learner still relies on 'up the stairs' for a negative y, show that a negative second coordinate means moving DOWN, and restate the axis-first convention that covers every case.",
+              "For the prediction, confirm A(3,-2) lands in the fourth quadrant (3 right, 2 down) while A(-2,3) lands in the second (2 left, 3 up) — a different point, reflected across the line y=x."
+            ],
+            "rationale": "A compare-correct-and-incorrect reasoning task is a documented way to remediate the reversal error, and explicitly flagging the corridor/stairs rhyme as first-quadrant-only prevents learners being stranded by negatives.",
+            "sourceClaims": [
+              "The most common coordinate error is reversing the ordered pair / reading the axes in the wrong order (one pupil says a point is (8,6), another (6,8)); the 'along the corridor, up the stairs' mnemonic works only in the first quadrant and breaks down for negatives (e.g. plotting (4,-5) requires going along then DOWN), so pupils should be taught explicitly that the first coordinate is read on the x-axis and the second on the y-axis, and the reversal is best remediated with a compare-correct-vs-incorrect reasoning task."
+            ],
+            "learnerActions": [
+              "Consider a dispute about a point plotted 8 units right of the origin and 6 units up: one person says it is (8, 6), another says (6, 8). Decide who is right and explain why, pointing to which number belongs on which axis.",
+              "Explain, using a case like plotting (4, -5), why 'along the corridor, up the stairs' is unreliable for negatives — here you go along then DOWN — and why 'read the first coordinate on the x-axis' always holds.",
+              "Predict where A(3, -2) and A(-2, 3) each land and justify whether they are the same point or different."
+            ],
+            "intendedInsight": "Reasoning about why a reading is right or wrong fixes the ordered-pair convention more durably than a first-quadrant mnemonic, which fails once the y-coordinate is negative."
+          },
+          {
+            "title": "Accuracy check across all four quadrants",
+            "feedback": [
+              "Expected placements: A in the fourth quadrant (3 right, 2 down); B in the second (4 left, 1 up); C in the third (2 left, 3 down); D on the y-axis, 2 above the origin.",
+              "For the sign-change question, B(-4,1) to B(-4,-1) moves straight down by 2 units, keeping the same horizontal position (4 left of the origin).",
+              "If A and B land mirrored across the diagonal, the pair was reversed; if a negative lands in an adjacent quadrant, a sign direction was miscounted; if a read-back is a fraction of the true value, the scale was read as units."
+            ],
+            "rationale": "Procedural accuracy across both directions, including negative and on-axis values and non-unit scales, confirms the convention has transferred. Draw-a-path plotting and short read-back responses can score accuracy well, but such checking tasks confirm the skill rather than build the underlying sequence.",
+            "sourceClaims": [
+              "KS3 pupils should 'work with coordinates in all four quadrants'.",
+              "Misreading the axis scale (e.g. failing to notice the axis goes up in 2s/5s/10s rather than 1s, or that two axes use different scales) is a documented student difficulty when reading coordinates and graphs."
+            ],
+            "learnerActions": [
+              "Plot and label a set of points spanning every quadrant plus an on-axis case, e.g. A(3, -2), B(-4, 1), C(-2, -3), D(0, 2).",
+              "Read back the coordinates of points already marked on the grid, including on a non-unit scale (axes rising in 2s).",
+              "Describe how a point moves when a coordinate changes sign, e.g. B from (-4, 1) to (-4, -1): which direction and how far."
+            ],
+            "intendedInsight": "Fluency means plotting from coordinates AND reading coordinates from a plotted point reliably, including negative, on-axis, and non-unit-scale cases (fractional values are practised in the first activity)."
+          }
+        ],
+        "constraints": [
+          "Work in all four quadrants from the start rather than adding negatives after first-quadrant practice.",
+          "Treat 'along the corridor, up the stairs' as a first-quadrant crutch only; once negatives appear, prioritise 'first coordinate on the x-axis, second on the y-axis', because the rhyme breaks for a negative y (plotting (4,-5) means along then DOWN).",
+          "Always state the scale of each axis before reading or plotting, especially where grid lines represent 2, 5 or 10, or where the two axes use different scales.",
+          "Rehearse both directions — plot from given coordinates and read coordinates off a plotted point — so fluency is not one-way.",
+          "A static labelled plane or reference card can help name quadrants and locate the origin but does not rehearse the act of plotting or reading, where the procedure lives; use it as a reference alongside active plotting.",
+          "Recognition-only or read-back-only responses confirm accuracy but do not by themselves build the plotting sequence; pair them with active placement.",
+          "Squared paper and drawn axes are a fully adequate substitute for any on-screen grid; the interactive examples are illustrative, not required.",
+          "A third spatial dimension is unnecessary for this planar ordered-pair concept and risks adding load without clarifying the two-axis sign-direction link."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "Self-audit of the diagnostic cases: A(3,-2) is 3 right, 2 down (fourth quadrant); reversed to (-2,3) it is 2 left, 3 up (second quadrant), i.e. mirrored across the line y=x — matching the stated reversal error. B(-4,1) to (-4,-1) is a downward move of 2 units with unchanged horizontal position. A point 3 lines right and 2 lines up on axes rising in 2s is (6,4), confirming the halved read-back pattern. Activity 1 feedback now uses only the activity's own (-3,2)/(2,-3) pair to avoid switching example pairs mid-feedback.",
+          "The legacy reteach note phrased the fix as 'x is the corridor, count that first, then y up or down the stairs'; this rewrite keeps the corridor/stairs phrasing only as an explicitly first-quadrant crutch and leads with the axis-first convention, to avoid reintroducing the mnemonic's failure for negatives.",
+          "A non-preferred alternative (an in-role dialogue) was judged in the source as unable to rehearse the physical placement of points; this is retained only as the narrow objective point that dialogue does not itself exercise the plotting action, not as a universal claim that dialogue cannot teach coordinate reasoning.",
+          "The KS3 'work with coordinates in all four quadrants' claim is a curriculum requirement used to ground the all-quadrant scope of activities 1, 2 and 4; no source directly addresses the specific principle of naming quadrants from sign pairs, so that pedagogical choice is carried from the original pedagogy notes rather than from a cited source."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "You plotted A at (3, -2). Where would A(-2, 3) go — the same place or a different one? Show me.",
+          "Point D is (0, 2). What is special about where it sits, and why isn't it inside a quadrant?",
+          "If I changed B from (-4, 1) to (-4, -1), which way would it move, and how far?"
+        ],
+        "correctAnswer": "A sits in the fourth quadrant (3 right, 2 down); B in the second (4 left, 1 up); C in the third (2 left, 3 down); D on the y-axis, 2 above the origin. The read-back point is named as (x, y) with correct signs and read against the '2s' scale (e.g. a point 3 lines right and 2 lines up is (6, 4)).",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Reverses the ordered pair, plotting (y, x): counts the vertical value first, so A(3,-2) lands where (-2,3) belongs — second quadrant instead of fourth",
+            "nextMove": "Reteach the convention against the origin — 'x is the corridor, count that first, then y up or down the stairs' — using the horizontal number line the child already orders.",
+            "distractor": null,
+            "revealedBy": "Watch the order of counting: A and B land in the wrong quadrants, mirrored across the diagonal from where they belong.",
+            "reteachPrerequisiteId": "mt_R4AY0LKxfl"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Sign/direction error for negatives: right-count is correct but counts up instead of down for a negative y (or left/right wrong for negative x), landing the point in the wrong side",
+            "nextMove": "Rebuild the axes as two number lines through zero and count the negative on the line first, then transfer that direction onto the grid.",
+            "distractor": null,
+            "revealedBy": "B(-4,1) or C(-2,-3) lands in an adjacent quadrant; the negative is counted in the positive direction.",
+            "reteachPrerequisiteId": "mt_uDJY0X0hgo"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Misreads the scale: on the read-back, states (3, 2) for a point that is 3 and 2 grid-lines along axes that go up in 2s (true value (6, 4)) — treats each line as one unit",
+            "nextMove": "Before reading, ask 'what is one grid line worth on this axis?' Scaffold the count in the correct units; the concept is intact, only the scale was overlooked.",
+            "distractor": null,
+            "revealedBy": "Read-back value is exactly half (or a fraction) of the true value; child ignores the axis interval.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Plots points into wrong quadrants, reverses pairs, or cannot read a marked point back; treats negatives inconsistently and ignores scale.",
+          "full": "Plots and reads all four points accurately including the on-axis and negative cases, self-checks order and sign, and correctly reads back a point on a non-unit scale — transferring the ordered-pair convention to a new point.",
+          "partial": "Plots positive and first-quadrant points correctly and reads simple points, but slips on sign/direction for negatives or reads a non-unit scale as units — can place the parts but does not yet coordinate sign with direction reliably across all four quadrants."
+        },
+        "diagnosticPrompt": "Here is a coordinate grid showing all four quadrants, with each square worth one unit. Plot and label these four points: A(3, -2), B(-4, 1), C(-2, -3), D(0, 2). When you have finished, I will point to a fifth point already marked on the grid (drawn on axes that go up in 2s) and you tell me its coordinates.",
+        "whatMakesItDiscriminate": "A child who holds the ordered-pair convention and the sign-to-direction link places every point in the correct quadrant on the first attempt. A child who reverses the pair sends A and B into wrong quadrants in a way a correct plot never produces; D(0,2) separates those who treat 0 as a genuine coordinate sitting on the axis from those who drift off it; and the read-back on a non-unit scale exposes anyone assuming one line equals one unit."
+      },
+      "sources": [
+        {
+          "claim": "KS3 pupils should 'work with coordinates in all four quadrants'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Misreading the axis scale (e.g. failing to notice the axis goes up in 2s/5s/10s rather than 1s, or that two axes use different scales) is a documented student difficulty when reading coordinates and graphs.",
+          "source": "Mathematics Assessment Project, 'Comparing Lines and Linear Equations' & 'Interpreting Distance-Time Graphs' — Common Issues tables",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1682",
+          "verified": true
+        },
+        {
+          "claim": "The most common coordinate error is reversing the ordered pair / reading the axes in the wrong order (one pupil says a point is (8,6), another (6,8)); the 'along the corridor, up the stairs' mnemonic works only in the first quadrant and breaks down for negatives (e.g. plotting (4,-5) requires going along then DOWN), so pupils should be taught explicitly that the first coordinate is read on the x-axis and the second on the y-axis, and the reversal is best remediated with a compare-correct-vs-incorrect reasoning task.",
+          "source": "Third Space Learning — 'Teaching Geometry: Position, Direction and Coordinates KS2' (Neil Almond), aligned to the England National Curriculum",
+          "url": "https://thirdspacelearning.com/blog/coordinates-ks2/",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T15:58:03.096Z",
+        "updatedAt": "2026-10-19T15:20:48.574Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/461",
+    "connections": [
+      {
+        "topicId": "mt_8atyuvPUZc",
+        "prerequisiteId": "mt_hVpGOEz2kG",
+        "strength": "hard",
+        "reason": "Scatter graphs require confident coordinate plotting in the first quadrant and beyond"
+      },
+      {
+        "topicId": "mt_h7zVgCDVmx",
+        "prerequisiteId": "mt_hVpGOEz2kG",
+        "strength": "hard",
+        "reason": "Drawing polygons from vertex coordinates in all four quadrants requires plotting points with negative coordinates"
+      },
+      {
+        "topicId": "mt_hVpGOEz2kG",
+        "prerequisiteId": "mt_i5_HnoFOYw",
+        "strength": "soft",
+        "reason": "GB route: plotting points and completing polygons in the first quadrant (Year 4) is the groundwork that four-quadrant plotting extends; soft because this node is GB-only and US learners get the same groundwork from 5.G.2"
+      },
+      {
+        "topicId": "mt_hVpGOEz2kG",
+        "prerequisiteId": "mt_R4AY0LKxfl",
+        "strength": "soft",
+        "reason": "GB route: Year 6 introduces all four quadrants, which KS3 revisits and consolidates; soft because this node is GB-only"
+      },
+      {
+        "topicId": "mt_hVpGOEz2kG",
+        "prerequisiteId": "mt_snlqRCiA1R",
+        "strength": "soft",
+        "reason": "US route: plotting and reading ordered pairs in the first quadrant (5.G.2) is the groundwork that four-quadrant plotting extends; soft because this node is US-only"
+      },
+      {
+        "topicId": "mt_hVpGOEz2kG",
+        "prerequisiteId": "mt_uDJY0X0hgo",
+        "strength": "hard",
+        "reason": "Plotting coordinates in all four quadrants requires understanding positive and negative values on both axes"
+      },
+      {
+        "topicId": "mt_K0Y15w48SY",
+        "prerequisiteId": "mt_hVpGOEz2kG",
+        "strength": "hard",
+        "reason": "Transformations on coordinate grids require confident four-quadrant coordinate work"
+      },
+      {
+        "topicId": "mt_WBdHkc2HTf",
+        "prerequisiteId": "mt_hVpGOEz2kG",
+        "strength": "hard",
+        "reason": "Understanding linear graphs requires confident coordinate plotting"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_vHzVa3SURC",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Substituting into Formulae",
+      "description": "Substitute numerical values into formulae and expressions including scientific formulae; evaluate expressions by replacing variables with given values and computing the result using correct order of operations",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.09003215434083602,
+      "evidence": [
+        "Substitute positive and negative values into algebraic expressions and evaluate",
+        "Substitute values into formulae involving multiple operations and powers",
+        "Use correct order of operations when evaluating expressions after substitution"
+      ],
+      "assessmentPrompt": "If a formula says that the area of a triangle is ½ × base × height, can {{name}} substitute in the measurements and calculate the answer correctly?",
+      "standards": [
+        "ccss-math:6.EE.2c",
+        "uk-nc-2013:KS3.Maths.Alg.2"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/699",
+    "research": {
+      "topicId": "mt_vHzVa3SURC",
+      "pedagogy": {
+        "summary": "Substitution is a procedure: replace each letter with its given value — keeping the operations the notation encodes — then evaluate using the correct order of operations. It is best taught by making the hidden multiplication and the protective brackets EXPLICIT: rewrite 3a as 3×a and always drop the substituted value inside brackets, e.g. 3×(5)² or (−2)², so that powers, signs and order of operations are handled correctly. Practise across a deliberate range of values — positive, zero, negative and fractional — because each exposes a different error.",
+        "bestPractices": [
+          "Rewrite implicit operations before substituting: 3a becomes 3×a, a² becomes a×a — this pre-empts concatenation ('34') and the '×2' misreading of squaring.",
+          "Always substitute the value inside brackets, especially for negatives: (−2)² not −2², so two negatives making a positive is visible.",
+          "Contrast a² and 2a on the same value (a=5 gives 25 vs 10) so the child feels the difference.",
+          "Substitute a spread of values including 0 and negatives, and use a function machine or spreadsheet/table to generate many results and reveal patterns.",
+          "After substituting, treat the result as an ordinary arithmetic expression and apply order of operations (powers, then ×÷, then +−), boxing each term first."
+        ],
+        "keyRepresentations": [
+          "Function machine / 'substitution machine' (value in, result out)",
+          "Area square for a² (a by a) contrasted with a bar of length 2a",
+          "Bracket-inserting template: 3×(  )² − 2×(  )",
+          "Table/spreadsheet of values for one expression",
+          "Number line for negative substituted values"
+        ],
+        "commonMisconceptions": [
+          "Concatenation: substitutes to make digits, e.g. 3a with a=4 read as '34' instead of 3×4=12.",
+          "Reads a² as a×2, e.g. a² with a=5 evaluated as 10 rather than 25.",
+          "Ignores order of operations after substituting, e.g. 2+3a with a=4 done left-to-right as (2+3)×4=20 instead of 14.",
+          "Drops brackets on a negative value, e.g. (−2)² evaluated as −4 instead of 4 (−x² vs (−x)² confusion).",
+          "Assumes a=0 makes every term vanish, forgetting constants."
+        ]
+      },
+      "learn": {
+        "summary": "Substitution is a procedure: replace each letter with its given value, keep the operations the notation encodes, then evaluate using the correct order of operations. Make the hidden multiplication and the protective brackets explicit — rewrite 3a as 3×a and place every substituted value inside brackets, e.g. 3×(5)² or (−2)² — so powers, signs and order of operations are handled correctly. Practise across a deliberate spread of values (positive, zero, negative and fractional), and transfer the same discipline to an unfamiliar formula, because each value and each new formula exposes a different error.",
+        "activities": [
+          {
+            "title": "Rebuild-the-expression substitution with a sliding value",
+            "feedback": [
+              "If a value and coefficient are written side by side as digits (e.g. 3a with a=4 read as '34'), re-establish that 3a means 3×a by expanding 3a as a+a+a for a small value, then rewrite with explicit × signs before substituting.",
+              "If a² with a=5 is evaluated as 10, contrast a² and 2a at a=5 (25 vs 10): rewrite a² as a×a explicitly, and compare a 5-by-5 area square with a bar of length 10.",
+              "If a negative gives (−2)² = −4 or the bracket is dropped as −2², write (−2)×(−2) in full, link to two negatives making a positive, and contrast −2² with (−2)² side by side.",
+              "If operations are taken left-to-right (e.g. 2+3a with a=4 done as (2+3)×4=20 instead of 14), the substitution itself was fine — box each term first, then resolve powers, then ×÷, then +−."
+            ],
+            "rationale": "Substitution is a procedure built by repeated doing with feedback across a range of values; making the implicit multiplication and the protective brackets explicit pre-empts the concatenation, squaring-as-doubling, sign and order-of-operations errors that are documented when pupils interpret and evaluate algebraic notation.",
+            "sourceClaims": [
+              "KS3 pupils should substitute numerical values into formulae and expressions, including scientific formulae, and use conventional algebraic notation (3y, a² etc.).",
+              "Students misread algebraic notation — e.g. treating 3a as concatenation rather than 3×a — and apply operations left-to-right rather than by order of operations when interpreting/evaluating expressions.",
+              "Students assume −(x²) is the same as (−x)², e.g. classifying x²+4=0 as true at x=−2 — the documented negative-square/sign error that shows up when substituting negative values.",
+              "Reading a² as doubling and letter-as-object interpretations are persistent, documented difficulties among 11–16 year-olds that resurface during substitution."
+            ],
+            "learnerActions": [
+              "Take the expression 3a² − 2a and first rewrite the implicit operations explicitly: 3×a×a − 2×a, or 3×(a)² − 2×(a).",
+              "Choose a value for a and drop it inside the brackets so the expression becomes 3×( )² − 2×( ), e.g. 3×(5)² − 2×(5).",
+              "Evaluate in order: resolve the power first, then the multiplications, then the subtraction. For a=5: 3×25 − 10 = 75 − 10 = 65.",
+              "Repeat the same expression for a sequence of values — try a = 3, then a = 0, then a = −2, then a = 1/2 — writing out every step each time.",
+              "For each value, note alongside what the two parts (a² and 2a) came to separately, and watch how a² stays non-negative while 2a goes negative as a crosses zero."
+            ],
+            "intendedInsight": "Substitution means replacing the letter with its value while preserving the encoded operations; brackets protect negatives so (−2)² = +4, and a² (=a×a) behaves differently from 2a (=2×a)."
+          },
+          {
+            "title": "Contrast a² against 2a on the same value",
+            "feedback": [
+              "If the learner still reads the exponent as a doubling coefficient, return to a×a written in full and the area-square picture before trying another value.",
+              "If they claim a² and 2a are always different, prompt them to test a=0 and a=2, where the two happen to coincide, so the generalisation is tested rather than assumed."
+            ],
+            "rationale": "Directly contrasting a² and 2a on shared values targets the persistent 'square as doubling' misinterpretation; an area model makes the a×a meaning concrete.",
+            "sourceClaims": [
+              "Reading a² as doubling and letter-as-object interpretations are persistent, documented difficulties among 11–16 year-olds that resurface during substitution."
+            ],
+            "learnerActions": [
+              "Pick a value, e.g. a=5, and evaluate a² and 2a separately: a² = 5×5 = 25, 2a = 2×5 = 10.",
+              "Draw a 5-by-5 square for a² next to a bar of length 10 for 2a, and compare their sizes.",
+              "Repeat for a=0 (both give 0) and for a=3, recording how the two results diverge.",
+              "State in your own words why a² and 2a are generally not the same, and identify when they do coincide."
+            ],
+            "intendedInsight": "a² means a×a, not a×2; the exponent is not a coefficient, so the two expressions generally give very different values (coinciding only at a=0 and a=2)."
+          },
+          {
+            "title": "Negative and fractional values that expose the rules",
+            "feedback": [
+              "If (−2)² comes out as −4, rewrite it as (−2)×(−2) and connect to two negatives multiplying to a positive; contrast −2² with (−2)² explicitly.",
+              "For −a², if the sign flips between a=3 and a=−3, point out that the square is taken first and is always non-negative, so the leading minus gives −9 in both cases.",
+              "If a=0 makes the learner zero out a constant term, point back to the constant and ask what it equals when nothing is multiplied by a."
+            ],
+            "rationale": "Negative, zero and fractional values each trigger a distinct documented error; deliberately sampling them while insisting on brackets and order of operations surfaces and corrects the sign and over-generalisation mistakes.",
+            "sourceClaims": [
+              "Students assume −(x²) is the same as (−x)², e.g. classifying x²+4=0 as true at x=−2 — the documented negative-square/sign error that shows up when substituting negative values."
+            ],
+            "learnerActions": [
+              "Evaluate 3a² − 2a at a = −2, substituting inside brackets: 3×(−2)² − 2×(−2) = 3×4 + 4 = 12 + 4 = 16.",
+              "Evaluate −a² at a = 3 and at a = −3, substituting inside brackets (−(3)² and −(−3)²), and check that BOTH give −9; then evaluate (−a)² at the same values, (−3)² and (3)², which both give +9 — confirming −a² differs from (−a)².",
+              "Evaluate the expression at a = 1/2, keeping the fraction inside the bracket for the square and ordering the operations correctly.",
+              "Try a = 0 and check each term explicitly, including any constant, instead of assuming everything vanishes.",
+              "Optionally use a number line to place each negative substituted value and keep track of its sign before applying the power."
+            ],
+            "intendedInsight": "Brackets around a substituted value preserve its sign under powers, so (−2)² = 4; −a² and (−a)² are different; and special values like 0 and fractions must still be evaluated term by term with correct order of operations."
+          },
+          {
+            "title": "Check and talk-through across error-triggering values",
+            "feedback": [
+              "Build comparison options from documented errors — e.g. 34 (concatenation), 10 (square read as doubling) — and ask the learner to identify and correct each.",
+              "If the correct final value is reached but a step is skipped, ask for the intermediate power and product values to check the reasoning, not just the answer.",
+              "If the method breaks down on the unfamiliar formula (e.g. v = u + a×t evaluated left-to-right as (3+2)×4 = 20 instead of 11), re-apply the box-each-term rule — multiplication before addition — to the substituted formula, showing the substitution itself was fine."
+            ],
+            "rationale": "Checking performance across the error-triggering values and extending to an unfamiliar formula confirms fluency and transfer; using documented wrong answers as discussion points turns common errors into teaching moments. A completion/selection check confirms the procedure but, on its own, elicits less independent step-by-step construction than open working, so pair it with talk-through.",
+            "sourceClaims": [
+              "KS3 pupils should substitute numerical values into formulae and expressions, including scientific formulae, and use conventional algebraic notation (3y, a² etc.).",
+              "Students misread algebraic notation — e.g. treating 3a as concatenation rather than 3×a — and apply operations left-to-right rather than by order of operations when interpreting/evaluating expressions.",
+              "Reading a² as doubling and letter-as-object interpretations are persistent, documented difficulties among 11–16 year-olds that resurface during substitution."
+            ],
+            "learnerActions": [
+              "Given 3a² − 2a, complete the partially-worked line 3×(5)² − 2×(5) = __, showing the power step, the multiplication step and the subtraction step.",
+              "For a second expression such as 3a − 1, find its value when a = 4 and explain each step.",
+              "Transfer the same procedure to an unfamiliar formula with given values — e.g. find v in v = u + a×t when u = 3, a = 2, t = 4, giving v = 3 + 2×4 = 3 + 8 = 11 — to confirm the discipline carries beyond the practised expression.",
+              "Explain why a wrong value such as 34 (for 3a with a=4) or 10 (for a² with a=5) is incorrect, naming the mistake.",
+              "When finished, point to the step where the power was worked out and talk through just that step to show the order-of-operations reasoning."
+            ],
+            "intendedInsight": "Evaluating at given values, transferring the method to an unfamiliar formula, and explaining why common wrong answers are wrong consolidates the correct procedure and reveals whether order of operations and notation are genuinely understood."
+          }
+        ],
+        "constraints": [
+          "Choose an expression that contains BOTH a square and a coefficient, e.g. 3a² − 2a, so the a² vs 2a distinction and the sign rules both come into play.",
+          "Always substitute the value inside brackets, especially for negatives — (−2)² not −2² — so the sign is protected.",
+          "After substituting, treat the result as an ordinary arithmetic expression and apply order of operations (powers, then ×÷, then +−), boxing each term first.",
+          "Deliberately sample positive, zero, negative and fractional values; each exposes a different error, and the negative case is decisive because it requires keeping the bracket AND knowing two negatives multiply to a positive.",
+          "Include transfer to at least one unfamiliar formula (the curriculum scope covers scientific formulae) so the procedure is shown to generalise beyond the practised expression.",
+          "A completion or selection check (fill-in-the-blank, set-the-value, or pick-the-answer with distractors like 34 and 10) confirms the procedure but does not by itself elicit independent step-by-step construction; pair it with open working and talk-through.",
+          "A tap-to-reveal worked example can show one substitution's steps as a scaffold, but the learner still needs to perform the procedure across several values to build fluency.",
+          "Live manipulation (sliding a value through positive, zero and negative while the expression auto-rebuilds and brackets snap around the value) is an optional way to make the a² vs 2a difference and the (−2)²=+4 behaviour visible; it is one helpful presentation, not a required mechanism, and the same learning can be reached with written working, a number line for negatives, or a table/spreadsheet of values."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. Activities are research-informed proposals, not validated interventions.",
+          "One listed source (Hodgen, Küchemann, Brown & Coe 2009) is marked unverified in the row; treat its 'reading a² as doubling' claim with corresponding caution.",
+          "Self-audit of arithmetic: a=5 gives 3×25 − 10 = 65; a=−2 gives 3×4 + 4 = 16; −a² at a=3 and a=−3 both give −9; a²=2a only at a=0 and a=2; transfer example v = u + a×t with u=3,a=2,t=4 gives 3 + 8 = 11. All checked and retained.",
+          "The original catalog fit-rankings claiming dialogue 'cannot efficiently' teach the procedure, that a static image 'cannot let the child DO the procedure', and that a third dimension 'adds nothing' were comparative-efficacy assertions, not established evidence; they have been removed or softened to scope-limited statements about affordances.",
+          "The gap description (notation misread so no correct value is produced) and the distinction between substitution errors and order-of-operations errors are preserved as feedback branches; an order-of-operations error after substitution does not require reteaching substitution.",
+          "Source-claim attachments were tightened: the MAP concatenation/order claim was kept only where the relevant errors are actually addressed; the generic KS3 claim was attached to the core substitution activity and the transfer-to-formula step, not to the a²-vs-2a or the negative/fractional-value activities whose principles it does not directly support.",
+          "A transfer step to an unfamiliar formula was added to the check activity to honour the objective's 'including scientific formulae' scope and the assessment's 'full' transfer criterion, which the earlier candidate had dropped; this addition is a proposal, not an empirically validated task."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Now find it for a = 0 — watch whether they still evaluate each term or assume '0 makes everything 0' and forget the constant behaviour. (counterexample: a special value that tempts over-generalisation)",
+          "Change it to −a² and do a = 3 and a = −3 — watch whether BOTH give −9 (correct) or whether the sign flips between them. (counterexample separating −a² from (−a)²)",
+          "Give a = 1/2 and watch whether they can substitute a fraction into the square and still order the operations.",
+          "After they finish, point to the step where they worked out the power and say 'talk me through just that step' — surfaces their order-of-operations reasoning without having pre-cued it."
+        ],
+        "correctAnswer": "For a = 5: 3×(5)² − 2×(5) = 3×25 − 10 = 75 − 10 = 65. For a = −2: 3×(−2)² − 2×(−2) = 3×4 + 4 = 12 + 4 = 16.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Concatenation — substitutes to form digits rather than multiply, e.g. treats 3a as '34' when a=4, or writes the coefficient beside the value.",
+            "nextMove": "Return to notation: 3a means 3×a. Re-establish by expanding 3a as a+a+a for a small value, then rewrite the expression with explicit × signs before substituting.",
+            "distractor": null,
+            "revealedBy": "Writes the coefficient and the substituted value side by side as a multi-digit number instead of multiplying (e.g. 3a² with a=5 becomes 3 then 25 written as '325' or similar).",
+            "reteachPrerequisiteId": "mt_KwdjWEmMNo"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads a² as a×2, e.g. a² with a=5 evaluated as 10 rather than 25.",
+            "nextMove": "Contrast a² and 2a with a=5 (25 vs 10) using an area square (5 by 5) beside a bar of length 10; rewrite a² as a×a explicitly before substituting.",
+            "distractor": null,
+            "revealedBy": "Computes 5×2=10 (or 3×10) where the square is required; treats the exponent as a coefficient.",
+            "reteachPrerequisiteId": "mt_KwdjWEmMNo"
+          },
+          {
+            "kind": "interference",
+            "pattern": "Ignores order of operations after substituting — works left-to-right, e.g. does the subtraction or the multiplication before the power.",
+            "nextMove": "Do NOT reteach substitution — the substitution was fine. Reteach order of operations on the resulting numerical expression: box each term first, resolve powers, then ×÷, then ±.",
+            "distractor": null,
+            "revealedBy": "Squares last, or evaluates 2+3a as (2+3)×4; the written steps show operations taken in reading order rather than powers→×÷→+−.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Mishandles a negative value — (−2)² evaluated as −4, or the bracket is dropped giving −2² = −4 (−x² vs (−x)² confusion).",
+            "nextMove": "Insist on substituting inside brackets always; write (−2)×(−2) in full and connect to two-negatives-make-a-positive; contrast −2² with (−2)² explicitly.",
+            "distractor": null,
+            "revealedBy": "For a=−2 writes (−2)²=−4, or drops the bracket entirely; the a=−2 answer comes out negative or otherwise wrong while a=5 was right.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot begin, or the substitution is meaningless because notation is misread — concatenates (34 for 3a with a=4) or reads the square as doubling, so no correct value is produced.",
+          "full": "Substitutes positive AND negative values, handles powers and multi-operation expressions with correct order of operations, protects negatives with brackets so (−2)²=4, and transfers the same discipline to an unfamiliar formula.",
+          "partial": "Substitutes correctly for a positive whole number with straightforward operations (gets the a=5 case right), but breaks down on the a=−2 case, on the power, or on order of operations — handles the routine value but not the ones that expose a rule."
+        },
+        "diagnosticPrompt": "Hand the child this card and say 'work these out, thinking aloud, and show every step': Find the value of 3a² − 2a when a = 5, and then when a = −2. Say NOTHING about method — watch the order they compute, how they handle the square, and how they deal with the negative.",
+        "whatMakesItDiscriminate": "Because the teacher WATCHES rather than asks, each error surfaces as a different visible line of working: a child who concatenates writes 35 for 3a²; one who reads the square as ×2 writes 3×10; one who ignores order of operations squares last or subtracts first; one who mishandles the negative writes (−2)²=−4 or drops the bracket. The a=−2 case is decisive — it cannot be got right by a child who does not both keep the bracket and know two negatives multiply to a positive."
+      },
+      "sources": [
+        {
+          "claim": "KS3 pupils should substitute numerical values into formulae and expressions, including scientific formulae, and use conventional algebraic notation (3y, a² etc.).",
+          "source": "DfE National Curriculum in England: Mathematics programmes of study (KS3)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Students misread algebraic notation — e.g. treating 3a as concatenation rather than 3×a — and apply operations left-to-right rather than by order of operations when interpreting/evaluating expressions.",
+          "source": "Mathematics Assessment Project — 'Interpreting Algebraic Expressions' Classroom Challenge (Common Issues table)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1726",
+          "verified": true
+        },
+        {
+          "claim": "Students assume −(x²) is the same as (−x)², e.g. classifying x²+4=0 as true at x=−2 — the documented negative-square/sign error that shows up when substituting negative values.",
+          "source": "Mathematics Assessment Project — 'Sorting Equations and Identities' Classroom Challenge (Common Issues table, issue 5)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1720",
+          "verified": true
+        },
+        {
+          "claim": "Reading a² as doubling and letter-as-object interpretations are persistent, documented difficulties among 11–16 year-olds that resurface during substitution.",
+          "source": "Hodgen, Küchemann, Brown & Coe (2009). Children's understandings of algebra 30 years on. Research in Mathematics Education, 11(2).",
+          "url": "https://doi.org/10.1080/14794800902732241",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-23T23:54:31.507Z",
+        "updatedAt": "2026-10-19T15:21:46.164Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/880",
+    "connections": [
+      {
+        "topicId": "mt_3qrCtdoVAU",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "hard",
+        "reason": "Rearranging formulae requires fluent substitution to verify results"
+      },
+      {
+        "topicId": "mt_IlDaxVr60U",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "soft",
+        "reason": "Applying V = l × w × h with fractional values is substitution into a formula"
+      },
+      {
+        "topicId": "mt_QhFEDyIwSO",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "hard",
+        "reason": "Solving equations requires substitution skill to check answers"
+      },
+      {
+        "topicId": "mt_vHzVa3SURC",
+        "prerequisiteId": "mt_KwdjWEmMNo",
+        "strength": "hard",
+        "reason": "Substitution requires understanding algebraic notation"
+      },
+      {
+        "topicId": "mt_WBdHkc2HTf",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "hard",
+        "reason": "Interpreting y = mx + c requires substitution to generate coordinate pairs"
+      },
+      {
+        "topicId": "mt_yXO7lQ9Yn7",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "soft",
+        "reason": "Position-to-term rules require substituting the position number into a formula"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_WBdHkc2HTf",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Linear Function Graphs",
+      "description": "Recognise that a linear function produces a straight-line graph, understand the relationship between an equation of the form y = mx + c and its graphical representation, and interpret gradient and y-intercept in context",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 14,
+      "centrality": 0.1757770632368703,
+      "evidence": [
+        "Explain that changing m in y = mx + c alters the steepness and direction of the line",
+        "Identify the y-intercept of a line from its equation and from its graph",
+        "Determine whether a given equation will produce a straight line or a curve"
+      ],
+      "assessmentPrompt": "If {{name}} sees the equation y = 2x + 3, can they explain what the graph will look like — including how steep it is and where it crosses the y-axis?",
+      "standards": [
+        "ccss-math:8.EE.5",
+        "ccss-math:8.EE.6",
+        "ccss-math:8.F.3",
+        "uk-nc-2013:KS3.Maths.Alg.11",
+        "uk-nc-2013:KS3.Maths.Alg.9"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/701",
+    "research": {
+      "topicId": "mt_WBdHkc2HTf",
+      "pedagogy": {
+        "summary": "A linear function y = mx + c produces a straight-line graph, where m (the gradient) is the constant rate of change — the line's steepness and direction — and c is the starting value, the y-intercept. It is best taught by generating (x, y) pairs from the equation and plotting them so the straight line is DISCOVERED from a constant rate, then varying m and c independently so each parameter is bound to its visual effect. Rate contexts such as distance-time (where gradient = speed) give the numbers meaning, and the graph-as-picture and slope-height misconceptions must be confronted directly.",
+        "bestPractices": [
+          "Build the line from a table of values first, so 'constant rate produces a straight line' is discovered rather than asserted.",
+          "Vary m and c independently and watch the effect: a larger m steepens the line, a negative m flips its direction, and changing c slides the whole line up or down through its intercept.",
+          "Use rate contexts (distance-time, cost-per-item) so the gradient means something real — speed, price per unit — not a bare number.",
+          "Confront graph-as-picture explicitly: a distance-time graph is a record of a relationship, not a picture of the route; a rising line is not a hill.",
+          "Contrast linear with non-linear (plot y = x^2 beside y = 2x + 1) so 'straight line' becomes a property to test, not an assumption."
+        ],
+        "keyRepresentations": [
+          "Table of values → plotted points → straight line",
+          "y = mx + c with m (gradient) and c (y-intercept) annotated on the line",
+          "Distance-time graph where the gradient of the line is the speed",
+          "A family of lines pivoting (as m changes) and sliding (as c changes)"
+        ],
+        "commonMisconceptions": [
+          "Graph-as-picture / iconic: reads the shape of the line as a literal picture of the situation (the line goes up, so the person went up a hill).",
+          "Slope-height confusion: judges the line that is HIGHER on the graph as faster/greater, rather than the STEEPER one.",
+          "Gradient/intercept swap: reads c as the slope or m as where the line crosses the axis.",
+          "Believes every equation gives a straight line, and is surprised that y = x^2 curves."
+        ]
+      },
+      "learn": {
+        "summary": "A linear function y = mx + c produces a straight-line graph, where m (the gradient) is the constant rate of change — the line's steepness and direction — and c is the starting value (the y-intercept). The concept is best built by generating (x, y) pairs from the equation and plotting them so the straight line is DISCOVERED from a constant rate, then varying m and c independently so each parameter is bound to its visual effect. Rate contexts such as distance-time (gradient = speed) give the numbers meaning, and the graph-as-picture and slope-height misconceptions must be confronted directly. For ages 12-14 (KS3).",
+        "activities": [
+          {
+            "title": "Build the line from a table of values",
+            "feedback": [
+              "If the points don't line up, check your arithmetic: each y should change by the same amount (here +2) for each step of +1 in x.",
+              "Point out that y when x = 0 is 1 — this is exactly the c value and the point where the line crosses the y-axis."
+            ],
+            "rationale": "Deriving the line from a value table lets 'constant rate produces a straight line' be discovered rather than asserted, and exposes the intercept concretely as the value at x = 0.",
+            "sourceClaims": [
+              "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'."
+            ],
+            "learnerActions": [
+              "Take the equation y = 2x + 1 and complete a table of values for x = -2, -1, 0, 1, 2 (giving y = -3, -1, 1, 3, 5).",
+              "Plot each (x, y) pair on axes and join them.",
+              "Observe that equal steps in x give equal steps in y, and that the points fall exactly on a straight line.",
+              "State in your own words why a constant rate of change produces a straight line."
+            ],
+            "intendedInsight": "A straight line is a consequence of a constant rate of change, not an assumption — 'straight' is something you can test from the numbers."
+          },
+          {
+            "title": "Vary m and c independently",
+            "feedback": [
+              "When a learner predicts where the line will cross the axis for a given c, confirm it lands exactly at (0, c).",
+              "If a learner thinks a negative m just makes a 'smaller' uphill line, show two points and compute the change: y decreases as x increases, so the line falls.",
+              "Emphasise that changing c never changes the steepness, and that changing m never moves the y-axis crossing (it stays at (0, c)) — this separation is the key reading."
+            ],
+            "rationale": "Binding each parameter to its own visual role (pivot for m, slide for c) is the central conceptual payload and directly counters the gradient/intercept swap. Live sliders with a recomputing line and a synced value table can make this relationship felt; predicting the intercept before it appears tests understanding.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Keep c fixed and change m: try m = 1, then m = 3, then m = -2, replotting or predicting each line.",
+              "Describe what happens as positive m gets larger (the line steepens) and as m goes negative (the line flips from climbing to falling, pivoting about the same intercept); steepness depends on the size of m ignoring its sign, so m = -2 is steeper than m = 1.",
+              "Now keep m fixed and change c: try c = 0, then c = 2, then c = -3.",
+              "Describe what happens (the whole line slides up or down and crosses the y-axis exactly at c), and predict the crossing point before plotting."
+            ],
+            "intendedInsight": "m controls steepness AND direction (sign), while c slides the whole line to its y-intercept — each parameter is bound to a distinct visual effect."
+          },
+          {
+            "title": "Distance-time race: steepness is speed, not height",
+            "feedback": [
+              "If a learner picks Maggie because her line is higher at 4 seconds, take two points on each line and compute distance-per-second together, then show Emma's steeper line draws level at 5 seconds and pulls ahead afterward — steepness, not height, is speed.",
+              "If a learner talks about hills, going uphill, or the shape of a 'track', ask: 'If someone walked in a circle around their home, what would a distance-time graph look like?' Contrast a picture of the route with a record of distance over time.",
+              "If a learner names the head-start number (the 10) as the speed, change c only (steepness untouched) and then m only (line pivots), and re-read the equation to re-attach 'speed' to the gradient."
+            ],
+            "rationale": "A distance-time context gives gradient real meaning (speed) and directly confronts the slope-height and graph-as-picture misconceptions in one experience, especially when two lines cross so the higher-but-slower line is visible. Choosing a comparison time before the crossing (here t = 4, where the higher-at-4-seconds runner is the slower one) forces the discrimination, and the meeting point at t = 5 makes the catch-up concrete.",
+            "sourceClaims": [
+              "Students confuse 'higher on the graph' with 'faster', assuming a runner is fastest because at 5 seconds her line is above another's, and make y-intercept and slope-direction errors when producing a linear graph (e.g. drawing a positive slope where negative is needed, or an incorrect intercept such as f=30); some assume two matched graphs must share the same vertical intercept.",
+              "Students interpret distance-time graphs as pictures of the situation ('as the graph goes up and down, Tom's path is going up and down'; a straight line means a straight path; a negative slope means a detour) — the graph-as-picture / iconic misconception — and misread slope direction as speeding up/slowing down; the hill-shaped graph is a deliberate distractor (Card 2 matched to interpretation E)."
+            ],
+            "learnerActions": [
+              "Plot two runners' distance over time on the same axes, e.g. Emma d = 6t and Maggie d = 4t + 10.",
+              "Before computing, predict who is faster and write your reason.",
+              "At 4 seconds, note that Maggie's line is higher (26 m versus Emma's 24 m), but Emma's line is steeper.",
+              "Take two points on each line and compute distance-per-second (Emma gains 6 per second; Maggie gains 4 per second).",
+              "Identify where/whether the lines cross — here they meet at 5 seconds (both at 30 m), after which Emma pulls ahead — and say what that crossing means in the race.",
+              "In the equations, identify which number is the speed (the coefficient of t, the gradient) and which is the head start (the constant, the intercept)."
+            ],
+            "intendedInsight": "Speed is the gradient (steepness), not the height of the line; a runner can start ahead (large c) yet be slower (small m). Emma is faster because her line is steeper, covering more distance each second, even though Maggie's line sits higher at 4 seconds — until the lines meet at 5 seconds, after which Emma pulls ahead."
+          },
+          {
+            "title": "Predict-then-test: does every equation give a straight line?",
+            "feedback": [
+              "If a learner predicts 'straight' because 'it's an equation with x in it, like the straight ones', the emerging parabola confronts this directly — revisit the value table and show the changing step size.",
+              "Point out the symmetry of the parabola about x = 0 and that the differences between successive y-values are themselves changing, unlike the constant difference in a linear table."
+            ],
+            "rationale": "A prediction stated before observing is diagnostic of the all-equations-are-linear misconception, and contrasting a curve with a line beside it makes 'straight' a testable property. Contrasting the differing step sizes grounds the distinction numerically (the constant-difference test holds for equally spaced x-values, as used in the suggested tables).",
+            "sourceClaims": [
+              "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'."
+            ],
+            "learnerActions": [
+              "Before plotting, predict: will y = x^2 give a straight line or a curve? Write your answer AND your reason first.",
+              "Build a table of values for x = -2, -1, 0, 1, 2 (giving y = 4, 1, 0, 1, 4), plot the points, and join them.",
+              "Plot y = 2x + 1 on the same axes for comparison.",
+              "Compare how y changes: for y = 2x + 1 the step is constant (+2 each time); for y = x^2 the steps differ (-3, -1, +1, +3), so the graph curves.",
+              "State what makes an equation produce a straight line versus a curve."
+            ],
+            "intendedInsight": "Not every equation is linear; a straight line requires a constant rate of change. 'Straight' is a property that depends on the equation, discovered by testing, not assumed."
+          },
+          {
+            "title": "Check and consolidate: match, judge, and sort",
+            "feedback": [
+              "Include a 'which line is faster/steeper' item where the correct line is NOT the one highest on the graph at the compared time, so the slope-height misconception is actively tested.",
+              "For any item answered via height rather than steepness, return to taking two points and computing the change per step."
+            ],
+            "rationale": "Matching, comparison, and categorisation are efficient checks of the concept; a 'higher but slower' item surfaces the slope-height misconception. These checks confirm the parameter-to-feature link rather than building it, so they work best after the dynamic exploration.",
+            "sourceClaims": [
+              "Students confuse 'higher on the graph' with 'faster', assuming a runner is fastest because at 5 seconds her line is above another's, and make y-intercept and slope-direction errors when producing a linear graph (e.g. drawing a positive slope where negative is needed, or an incorrect intercept such as f=30); some assume two matched graphs must share the same vertical intercept."
+            ],
+            "learnerActions": [
+              "Match each equation to its graph.",
+              "Given two straight-line graphs, decide which is steeper (and in a distance-time context, which is faster), explicitly reasoning from steepness rather than height.",
+              "Sort a set of equations into 'produces a straight line' and 'produces a curve'.",
+              "For an equation like d = 6t + 10, state which number is the gradient (speed) and which is the intercept (head start)."
+            ],
+            "intendedInsight": "Consolidates reading gradient and intercept from both equation and graph, and distinguishing linear from non-linear, while resisting the slope-height distractor."
+          }
+        ],
+        "constraints": [
+          "Matching, multiple-choice comparison, and categorisation confirm understanding but do not themselves build the dynamic link between a parameter and its visual feature; use them after exploration, not instead of it.",
+          "A static annotated y = mx + c diagram (tap m to highlight steepness, tap c to highlight the crossing point) can summarise the gradient and intercept on one line but cannot itself show the pivot-and-slide; it works as a recap card after dynamic work, not as the first teacher of the relationship.",
+          "The slope-height and graph-as-picture misconceptions must be confronted with a case where the higher line (at the compared time) is the slower one; a single rising line can reinforce rather than break 'higher = faster'.",
+          "When using Emma d = 6t and Maggie d = 4t + 10, compare at a time before the lines cross (they meet at t = 5, both 30 m); t = 4 gives Maggie higher (26) but Emma steeper and faster, with Emma pulling ahead after t = 5.",
+          "Interactive sliders, a live-redrawing line, and a synced value table are optional ways to make the equation-to-graph relationship concrete; the same insight can be reached by hand-plotting several lines and comparing them.",
+          "Require learners to state reasons, not just answers, when judging which runner is faster — the reason is what distinguishes gradient reasoning from slope-height reasoning."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The original material claimed 3D rendering 'adds nothing' and that open dialogue is not a natural vehicle; these categorical modality claims have been removed. A 3D view is not the natural representation for a two-variable linear relationship, and a coaching conversation can still probe reasoning ('how do you know Emma is faster?') — such prompts are retained inside activity feedback — without claiming dialogue cannot teach the concept.",
+          "Arithmetic checked: y = 2x + 1 over x = -2..2 gives -3,-1,1,3,5 (constant +2); y = x^2 gives 4,1,0,1,4 with non-constant differences -3,-1,+1,+3. Emma d = 6t vs Maggie d = 4t + 10 are EQUAL at t = 5 (both 30 m) and cross there, so the original row's claim that 'Maggie's line is higher at 5 seconds' is false for these numbers. The race activity's comparison has been corrected to t = 4 (Maggie 26, Emma 24), with the lines meeting at t = 5 and Emma pulling ahead afterward; the steeper = faster teaching point is preserved.",
+          "At exactly t = 5 neither runner is ahead (both 30 m); Emma leads only for t > 5, so learner-facing text describes t = 5 as the meeting/catch-up point and 'pulls ahead afterward' rather than an overtake exactly at 5 seconds.",
+          "The constant-difference argument distinguishes linear from quadratic only for equally spaced x-values; this condition is built into the suggested tables."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": "Before plotting anything, ask the child: 'Will y = x^2 give a straight line or a curved one? Write down your answer AND your reason first.' Then have them build a table of values for x = -2, -1, 0, 1, 2, plot the points, and join them. The reason stated before observing is the diagnostic part: children who predict 'straight' because 'it is an equation with x in it, like the straight ones' reveal the all-equations-are-linear misconception, and the emerging parabola confronts it directly.",
+        "probeDeeper": [
+          "At the very start (0 seconds) Maggie's line begins higher than Emma's. Does starting further ahead mean running faster? Why or why not?",
+          "Suppose Emma's race is d = 6t and Maggie's is d = 4t + 10. Which number tells you the speed, and which tells you the head start?",
+          "If the two lines crossed at some point, what would that moment mean in the race?",
+          "Would a runner who is gradually slowing down give a straight line or a curved one — and why?"
+        ],
+        "correctAnswer": "Emma is running faster, because speed is shown by the steepness (gradient) of the line, not by how high it is: a steeper line covers more distance in each second. Maggie's line being higher at 5 seconds only means she was further ahead at that moment, not that she is faster.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Slope-height confusion: 'Maggie is faster because her line is higher up the graph at 5 seconds' — reads vertical position as speed rather than steepness",
+            "nextMove": "Take two points on each line and compute distance-per-second together; show that the steeper line overtakes, so steepness (not height) is speed.",
+            "distractor": "Maggie — at 5 seconds her line is higher up the graph, so she must be the faster runner.",
+            "revealedBy": "Chooses Maggie and justifies by how high her line sits, not by how steep it is.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Graph-as-picture / iconic: reads the line as a literal picture of the route (a rising line means the runner went uphill; a steeper line means a steeper hill)",
+            "nextMove": "Ask the classic MAP prompt: 'If someone walked in a circle around their home, what would the graph look like?' Contrast a picture of the route with a record of distance over time.",
+            "distractor": "The steeper line just means that runner's track went up a steeper hill.",
+            "revealedBy": "Talks about hills, going up, or the shape of the track rather than distance-over-time; may pick the 'steeper hill' reading.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Gradient/intercept swap: when reading an equation like d = 6t + 10, names c (the 10) as the speed or m (the 6) as the starting distance",
+            "nextMove": "Bind each parameter with the slider — change c only and the steepness is untouched; change m only and the line pivots — then re-read the equation.",
+            "distractor": null,
+            "revealedBy": "Surfaces on the follow-up equation probe, not the runners graph: the child attaches 'speed' to the wrong number.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Believes all equations give straight lines: expects y = x^2 to be straight and is surprised by the curve",
+            "nextMove": "Build a table for y = x^2 alongside y = 2x + 1 and plot both; the curvature is discovered, and 'straight' becomes a property that depends on the equation.",
+            "distractor": null,
+            "revealedBy": "Surfaces on the POE / follow-up, not the runners graph: predicts 'straight' for y = x^2 because 'it's an equation like the others'.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Picks the higher line as faster, or reads the graph as a literal picture of the route; makes no link between steepness and speed.",
+          "full": "Identifies Emma as faster because gradient = speed, distinguishes head-start (intercept) from speed (gradient), maps both onto the equation, and predicts a curve for a non-constant rate — relating the parameters and transferring to a new case.",
+          "partial": "Says the steeper line is faster, and can point to gradient and intercept when prompted, but cannot yet explain how m and c act together or map them onto the equation form (d = 6t vs d = 4t + 10) — lists the features without relating them."
+        },
+        "diagnosticPrompt": "Here are two straight-line graphs showing two runners' distance from the start over time, drawn on the same axes. At 5 seconds, Maggie's line is higher than Emma's line, but Emma's line is steeper. Who is running faster — and how do you know?",
+        "whatMakesItDiscriminate": "A child who understands gradient-as-rate chooses Emma and justifies by steepness; a child holding the slope-height misconception chooses Maggie precisely BECAUSE her line is higher. The two reasoning paths give opposite first-tier answers, and the required reason (tier two) reveals whether 'faster' is being read from steepness or from height — a child cannot easily land the right answer for the wrong reason here."
+      },
+      "sources": [
+        {
+          "claim": "Students confuse 'higher on the graph' with 'faster', assuming a runner is fastest because at 5 seconds her line is above another's, and make y-intercept and slope-direction errors when producing a linear graph (e.g. drawing a positive slope where negative is needed, or an incorrect intercept such as f=30); some assume two matched graphs must share the same vertical intercept.",
+          "source": "Mathematics Assessment Project, 'Comparing Lines and Linear Equations' (Grade 8) — Common Issues table (teacher guide, p.T-3)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1682",
+          "verified": true
+        },
+        {
+          "claim": "Students interpret distance-time graphs as pictures of the situation ('as the graph goes up and down, Tom's path is going up and down'; a straight line means a straight path; a negative slope means a detour) — the graph-as-picture / iconic misconception — and misread slope direction as speeding up/slowing down; the hill-shaped graph is a deliberate distractor (Card 2 matched to interpretation E).",
+          "source": "Mathematics Assessment Project, 'Interpreting Distance–Time Graphs' (Grade 8) — Common Issues table (teacher guide, p.T-3)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1680",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T15:58:51.083Z",
+        "updatedAt": "2026-10-19T15:21:42.183Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/906",
+    "connections": [
+      {
+        "topicId": "mt_-3udyo6VyB",
+        "prerequisiteId": "mt_WBdHkc2HTf",
+        "strength": "hard",
+        "reason": "Plotting linear graphs requires understanding what y = mx + c represents"
+      },
+      {
+        "topicId": "mt_5mIcmKRCgA",
+        "prerequisiteId": "mt_WBdHkc2HTf",
+        "strength": "soft",
+        "reason": "Graphical representations of proportion connect to linear graphs (y = kx through origin)"
+      },
+      {
+        "topicId": "mt_8atyuvPUZc",
+        "prerequisiteId": "mt_WBdHkc2HTf",
+        "strength": "soft",
+        "reason": "Line of best fit connects to understanding linear relationships from y = mx + c"
+      },
+      {
+        "topicId": "mt_WBdHkc2HTf",
+        "prerequisiteId": "mt_hVpGOEz2kG",
+        "strength": "hard",
+        "reason": "Understanding linear graphs requires confident coordinate plotting"
+      },
+      {
+        "topicId": "mt_WBdHkc2HTf",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "hard",
+        "reason": "Interpreting y = mx + c requires substitution to generate coordinate pairs"
+      },
+      {
+        "topicId": "mt_WBdHkc2HTf",
+        "prerequisiteId": "mt_z5iwdZyeDr",
+        "strength": "hard",
+        "reason": "Recognising the relationship between y=mx+c and its graph requires moving fluently between algebraic and graphical representations"
+      },
+      {
+        "topicId": "mt_yK51ZnKA8m",
+        "prerequisiteId": "mt_WBdHkc2HTf",
+        "strength": "soft",
+        "reason": "Connecting ratios to linear functions links to understanding y = mx + c from algebra"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_-3udyo6VyB",
+      "type": "REPRESENTATIONAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Plotting Linear Graphs",
+      "description": "Plot linear graphs by generating a table of values, reduce a two-variable linear equation to the form y = mx + c, and calculate gradients from two points on a line",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 14,
+      "centrality": 0.1682743837084673,
+      "evidence": [
+        "Generate a table of (x, y) values for a linear equation and plot the points accurately",
+        "Rearrange an equation such as 2x + 3y = 12 into the form y = mx + c",
+        "Calculate the gradient between two coordinate points using rise over run"
+      ],
+      "assessmentPrompt": "Can {{name}} draw the graph of a straight line by making a table of values and plotting the points — and work out the gradient from two points on the line?",
+      "standards": [
+        "ccss-math:8.F.1",
+        "ccss-math:8.F.4",
+        "uk-nc-2013:KS3.Maths.Alg.10",
+        "uk-nc-2013:KS3.Maths.Alg.11",
+        "uk-nc-2013:KS3.Maths.Alg.9"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/703",
+    "research": {
+      "topicId": "mt_-3udyo6VyB",
+      "pedagogy": {
+        "summary": "Plotting a linear graph is the representational bridge between an equation and its line: generate a table of (x, y) values, plot and join them into a straight line, calculate gradient as rise-over-run between two points, and rearrange a two-variable equation such as 2x + 3y = 12 into y = mx + c. The competence is translating fluently among equation, table, line and gradient. It is best taught by making the table→line→gradient chain explicit, always checking that a third point lies on the line, and reading the scale of each axis before measuring rise and run.",
+        "bestPractices": [
+          "Always generate at least three points and check the third lies on the line — this catches arithmetic and plotting slips before they become a wrong line.",
+          "Teach gradient as rise-over-run between two clearly chosen lattice points, reading the value of each axis's scale first.",
+          "Rearrange ax + by = c into y = mx + c by inverse operations applied to every term, then read m and c directly off the standard form.",
+          "Translate in both directions: given a line, extract its equation and gradient; given an equation, produce the line.",
+          "Discuss how a squashed or stretched axis scale changes the line's APPEARANCE without changing its gradient value, so steepness is judged in units, not degrees."
+        ],
+        "keyRepresentations": [
+          "Table of values grid feeding plotted points",
+          "Rise-over-run triangle drawn between two lattice points on the line",
+          "y = mx + c rearranged from ax + by = c",
+          "The same line drawn on two different scales to show gradient is invariant"
+        ],
+        "commonMisconceptions": [
+          "Rise/run inverted: computes run-over-rise (horizontal ÷ vertical) instead of rise-over-run.",
+          "Gradient sign error: reads a falling line as a positive gradient, or draws a rising line for a negative gradient.",
+          "Scale-dependence: judges the gradient by the line's visual angle rather than by rise-over-run measured in axis units.",
+          "Rearrangement error: mishandles 2x + 3y = 12 (e.g. y = 12 - 2x, forgetting to divide the whole side by 3, or a sign slip)."
+        ]
+      },
+      "learn": {
+        "summary": "Learners translate fluently among a linear equation, its table of values, its line, and its gradient. Core actions: generate at least three (x, y) pairs for an equation and plot them, join into a straight line, check a third point lies on the line, compute gradient as rise-over-run between two clearly chosen lattice points (reading each axis's scale first), and rearrange a two-variable equation such as 2x + 3y = 12 into y = mx + c by applying inverse operations to every term. The target is reversible translation: equation→line and line→equation/gradient, with gradient understood as a property of the line (invariant along it and across different axis scales), measured in axis units rather than visual angle.",
+        "activities": [
+          {
+            "title": "Build the line and measure its gradient",
+            "feedback": [
+              "If the third point does not sit on the line, re-check each table value and plot: a linear equation always gives a straight line, so a point off the line means a mistake, not a curve.",
+              "If the gradient changes when you pick different points on the SAME line, you have likely counted a rise or run in squares rather than axis units, or swapped rise and run — recount 'how much UP for each one ACROSS'.",
+              "For the line through (0,-1) and (2,3): rise = 3-(-1) = 4, run = 2-0 = 2, gradient = 4÷2 = 2, meaning it climbs steadily 2 units up for every 1 unit across."
+            ],
+            "rationale": "Making the table→line→gradient chain explicit and verifying a third point catches arithmetic and plotting slips before they produce a wrong line, and re-measuring along the same line surfaces gradient invariance.",
+            "sourceClaims": [
+              "KS3 pupils should 'reduce a given linear equation in two variables to the standard form y = mx + c' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'."
+            ],
+            "learnerActions": [
+              "Take a linear equation and fill a value table with at least three (x, y) pairs, then plot each pair as a point.",
+              "Draw a straight line through two of the points and check that the third plotted point lies exactly on it; if it does not, find and fix the arithmetic or plotting slip before continuing.",
+              "Choose two clearly placed lattice points on the line and form a rise-over-run triangle: moving left to right, count the rise (vertical change: positive if up, negative if down) and the run (horizontal change, across) in axis units, then compute rise ÷ run.",
+              "Repeat the measurement using a wider pair of points on the same line and confirm the ratio is unchanged.",
+              "State what the gradient number means in words, e.g. 'the line rises 2 units for every 1 unit across'."
+            ],
+            "intendedInsight": "Gradient is rise-over-run measured in axis units and is a property of the whole line: it does not change depending on which two points you pick along the line."
+          },
+          {
+            "title": "Confront rise-over-run, sign, and scale pitfalls",
+            "feedback": [
+              "If you report the reciprocal (e.g. 1/2 instead of 2), you have divided across by up: fix the numerator as the vertical change — 'how much UP for each one ACROSS'.",
+              "If your 'gradient -2' line climbs to the right, tie the sign to direction: a negative gradient goes downhill left-to-right, so it should fall 2 units for every 1 unit across.",
+              "If your gradient answer changes when the axis scale is stretched, you are judging by visual angle — recount the rise and run in axis units and you will get the same ratio."
+            ],
+            "rationale": "These are documented procedural and conceptual errors (inverting the ratio, sign confusion, scale-dependence); directly eliciting and comparing the wrong computation against the right one makes the distinction concrete.",
+            "sourceClaims": [
+              "Misinterpreting the axis scale, and whether students find slope using ratios/fractions or assume two matched graphs share the same vertical intercept, are documented difficulties when working with lines and linear equations.",
+              "Inverting rise-over-run (computing run/rise) and dropping the division when rearranging ax+by=c to y=mx+c are common procedural gradient/plotting errors."
+            ],
+            "learnerActions": [
+              "On a given line, compute the gradient and then deliberately compute run-over-rise as well; compare the two numbers and state which one is the gradient and why.",
+              "Given a falling line, report its gradient with the correct sign; given the instruction 'draw a line with gradient -2', draw it and say where you chose to start it (any y-intercept is acceptable).",
+              "Take the SAME line drawn on a stretched (or squashed) axis scale and measure its gradient again by counting rise and run in axis units; confirm the number is the same even though the line looks steeper or gentler."
+            ],
+            "intendedInsight": "The numerator is the vertical change (rise) over the horizontal change (run); a falling line has a negative gradient; and visual steepness is not the gradient — the counted ratio in axis units is."
+          },
+          {
+            "title": "Rearrange to y = mx + c and confirm against the line",
+            "feedback": [
+              "Writing y = 4 - 2x is a classic slip: you divided only part of the right-hand side (the 12 but not the 2x). Every term on the right must be divided by 3, giving y = 4 - (2/3)x.",
+              "If the gradient you read from m disagrees with the gradient measured between two points on the line, re-check the rearrangement for a dropped division or a sign slip — this is an algebra lapse, not a graph misconception.",
+              "Treat each inverse operation one at a time: first remove 2x, then divide all terms by 3."
+            ],
+            "rationale": "Rearranging into y = mx + c by applying inverse operations to every term is the skill required by the curriculum; using the plotted line as a consistency check links the algebra to its representation. The worked gradient (-2/3) is the correct result; a dropped division would give a different value.",
+            "sourceClaims": [
+              "KS3 pupils should 'reduce a given linear equation in two variables to the standard form y = mx + c' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'.",
+              "Inverting rise-over-run (computing run/rise) and dropping the division when rearranging ax+by=c to y=mx+c are common procedural gradient/plotting errors."
+            ],
+            "learnerActions": [
+              "Rearrange 2x + 3y = 12 into y = mx + c step by step: subtract 2x from both sides to get 3y = 12 - 2x, then divide EVERY term by 3 to get y = 4 - (2/3)x, i.e. m = -2/3 and c = 4.",
+              "Order the rearrangement steps correctly (isolate the y-term, then divide every term on both sides by the coefficient of y).",
+              "Read m and c off the gradient-intercept form y = mx + c, then plot or check the line and confirm the gradient you read matches the gradient measured from two points on the line.",
+              "Also go the other way: given a drawn line, read its gradient and intercept and write its equation."
+            ],
+            "intendedInsight": "Rearranging to y = mx + c lets you read gradient (m) and intercept (c) directly, and the plotted line is a check on the algebra — equation and line must agree."
+          }
+        ],
+        "constraints": [
+          "The learning objective is DOING the translations (filling tables, plotting, measuring, rearranging), not recognising finished results. A static annotated worked example (table → line → gradient triangle) can support reading the chain and serve as a reference, but does not let the learner rehearse the translations; treat it as a scaffold, not the main experience.",
+          "Recognition-only responses (e.g. multiple-choice gradient reading, ordering pre-written rearrangement steps) can check a distinct sub-skill but do not elicit independent construction of a line or an equation; pair them with tasks where the learner plots and rearranges themselves.",
+          "Gradient must be judged by counting rise and run in axis units, never by the line's visual angle, because a stretched or squashed axis changes appearance without changing the gradient value.",
+          "Always generate and plot at least three points and verify the third lies on the line.",
+          "Optional interactive supports can make the mechanism concrete without being required: an auto-plotting table where each entered pair appears as a point, a draggable rise-run triangle that reports rise, run and their ratio, a toggle that redraws the same line on a different axis scale, and a step-by-step rearrangement checker with the plotted line confirming m and c. These are example affordances, not mandatory tools.",
+          "A two-variable linear relationship is planar; adding a third spatial dimension does not aid table-to-line translation or gradient calculation. An open in-role dialogue format is poorly suited to rehearsing plotting, measuring and rearranging, though spoken explanation of reasoning can still support a learner."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were NOT re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "Rearranging 2x + 3y = 12 gives 3y = 12 - 2x, then dividing every term by 3 yields y = 4 - (2/3)x, so m = -2/3 and c = 4. The original pedagogy text referenced '2x + 3y = 12' as a worked example but did not state the resulting m; activity 3 states the fully correct result. The error form 'y = 12 - 2x (failing to divide every term by 3)' is retained only as a diagnosed slip, never as a correct answer.",
+          "The source note for the 'inverting rise-over-run / dropping the division' claim is marked not fetched/unverified (verified:false) in the original row; it is retained as a documented common-error description but its evidence strength has not been re-confirmed this session.",
+          "The diagnostic line through (0,-1) and (2,3) gives gradient (3-(-1))/(2-0) = 4/2 = 2, which is internally consistent and preserved as stated.",
+          "Independent re-audit confirms the Mathematics Assessment Project axis-scale claim is correctly placed only in Activity 2 (whose rationale concerns scale-dependence and slope-as-ratio) and absent from Activity 1; no further source-claim misplacement found. No new arithmetic, sign, invariance, or categorical-claim errors were detected on fresh review."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "interpret_translate",
+        "poeTask": null,
+        "probeDeeper": [
+          "You found the gradient is 2. If I pick two different points on the same line — say (1, 1) and (3, 5) — will the gradient come out the same? Try it.",
+          "Your gradient -2 line and mine both have gradient -2 but start in different places. Are they the same line? What is different about them?",
+          "Here is the equation 2x + 3y = 12. What is its gradient, and is it steeper or gentler than the first line?",
+          "If I stretch the y-axis so this line looks much steeper, has its gradient actually changed? How do you know?"
+        ],
+        "correctAnswer": "Gradient = rise ÷ run = (3 - (-1)) ÷ (2 - 0) = 4 ÷ 2 = 2; it means the line rises 2 units for every 1 unit across, so it climbs steadily from left to right. The line the child draws should fall 2 units for every 1 unit across (any y-intercept is acceptable), correctly showing a negative gradient.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Rise/run inverted: computes run-over-rise, giving gradient 2/4 = 1/2 by dividing the horizontal change by the vertical",
+            "nextMove": "Label the triangle 'rise' (up) and 'run' (across) and rehearse the phrasing 'how much UP for each one ACROSS' so the numerator is fixed as the vertical change.",
+            "distractor": null,
+            "revealedBy": "States a gradient that is the reciprocal of the true value (1/2 instead of 2).",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Gradient sign error: gives +2 for a falling line, or draws a line rising to the right when asked for gradient -2",
+            "nextMove": "Tie sign to direction explicitly — negative gradient means downhill left-to-right — and check the drawn line against a known falling example.",
+            "distractor": null,
+            "revealedBy": "The drawn 'gradient -2' line climbs left-to-right, or a falling line is reported with a positive gradient.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Scale-dependence: judges gradient from the line's visual angle, and changes the answer when the same line is redrawn on a stretched or squashed scale",
+            "nextMove": "Insist on counting rise and run in axis units, not degrees; place the same line on two scales and show the counted ratio is unchanged.",
+            "distractor": null,
+            "revealedBy": "Gradient answer shifts when the axis scale changes, or is estimated 'by eye' rather than counted in units.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Rearrangement error to y = mx + c: given 2x + 3y = 12 writes y = 12 - 2x (failing to divide every term by 3) or slips a sign, then reads the wrong gradient",
+            "nextMove": "Scaffold the inverse operations one at a time — subtract 2x from both sides, then divide EVERY term by 3 — treating this as an algebra lapse, not a graph misconception.",
+            "distractor": null,
+            "revealedBy": "On the equation follow-up, extracts a gradient inconsistent with the plotted line because the rearrangement dropped the ÷3 or flipped a sign.",
+            "reteachPrerequisiteId": "mt_3qrCtdoVAU"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot compute the gradient (inverts or ignores rise/run) or cannot draw a line to a given gradient; plots inconsistent points.",
+          "full": "Computes gradient with the correct sign, draws a line to a specified gradient at any intercept, rearranges 2x + 3y = 12 to read its gradient, and holds gradient invariant across different points and scales — translating fluently in both directions and transferring to a new case.",
+          "partial": "Computes the gradient of the given line and plots from a table, but slips on sign or on rearranging ax + by = c, and treats visual steepness as the gradient — handles single translations but does not coordinate equation↔line↔gradient or transfer to a new scale."
+        },
+        "diagnosticPrompt": "Here is a straight line drawn through the points (0, -1) and (2, 3), on axes where each square is one unit. First: what is the gradient of this line, and what does that number tell you about the line? Then, on the same axes, draw a different line whose gradient is -2, and tell me where you chose to start it.",
+        "whatMakesItDiscriminate": "Reading the gradient tests whether the child computes rise-over-run in axis units AND attaches meaning to the number; asking them to DRAW a line of gradient -2 reverses the translation and exposes whether negative gradient is understood as direction. A child who inverts the ratio reports 1/2; a child with a sign error draws a rising line for -2 — each error produces a distinctly wrong artefact that correct reasoning never yields."
+      },
+      "sources": [
+        {
+          "claim": "Misinterpreting the axis scale, and whether students find slope using ratios/fractions or assume two matched graphs share the same vertical intercept, are documented difficulties when working with lines and linear equations.",
+          "source": "Mathematics Assessment Project, 'Comparing Lines and Linear Equations' (Grade 8) — Common Issues table and matching-activity teacher notes",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1682",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils should 'reduce a given linear equation in two variables to the standard form y = mx + c' and 'calculate and interpret gradients and intercepts of graphs of such linear equations numerically, graphically and algebraically'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Inverting rise-over-run (computing run/rise) and dropping the division when rearranging ax+by=c to y=mx+c are common procedural gradient/plotting errors.",
+          "source": "Widely documented procedural errors (not fetched this session)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1682",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T15:59:32.988Z",
+        "updatedAt": "2026-10-19T15:19:59.641Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/19",
+    "connections": [
+      {
+        "topicId": "mt_-3udyo6VyB",
+        "prerequisiteId": "mt_3qrCtdoVAU",
+        "strength": "soft",
+        "reason": "Rearranging to y = mx + c form uses formula rearrangement skills"
+      },
+      {
+        "topicId": "mt_-3udyo6VyB",
+        "prerequisiteId": "mt_WBdHkc2HTf",
+        "strength": "hard",
+        "reason": "Plotting linear graphs requires understanding what y = mx + c represents"
+      },
+      {
+        "topicId": "mt_GZuoYaDdWd",
+        "prerequisiteId": "mt_-3udyo6VyB",
+        "strength": "hard",
+        "reason": "Understanding quadratic graphs requires prior experience plotting linear graphs"
+      },
+      {
+        "topicId": "mt_mqgu72aCMz",
+        "prerequisiteId": "mt_-3udyo6VyB",
+        "strength": "hard",
+        "reason": "Simultaneous equations graphically requires plotting two linear graphs on the same axes"
+      },
+      {
+        "topicId": "mt_Yw27nweoTj",
+        "prerequisiteId": "mt_-3udyo6VyB",
+        "strength": "hard",
+        "reason": "Reading approximate values from graphs requires graph-plotting experience"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_3qrCtdoVAU",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Simple formulae",
+      "description": "Understand and use standard mathematical formulae; rearrange formulae to change the subject, performing inverse operations to isolate a different variable",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 14,
+      "centrality": 0.0857449088960343,
+      "evidence": [
+        "Identify the subject of a given formula",
+        "Use inverse operations to rearrange a formula to make a different variable the subject",
+        "Rearrange formulae involving multiple steps including fractions and powers"
+      ],
+      "assessmentPrompt": "If a formula gives speed as distance ÷ time, can {{name}} rearrange it to find distance or time when they're the unknowns instead?",
+      "standards": [
+        "uk-nc-2013:KS3.Maths.Alg.5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/704",
+    "research": {
+      "topicId": "mt_3qrCtdoVAU",
+      "pedagogy": {
+        "summary": "Rearranging a formula ('changing the subject') isolates a chosen variable by applying inverse operations to BOTH sides — the same technique as solving a linear equation, except the 'answer' is an expression in the other letters. The key discipline is doing each inverse operation to the WHOLE side (every term), in the reverse order of the original operations, keeping the formula balanced. It is best taught by first solving the numeric equation, then generalising to letters, using a 'same to both sides' layout, and verifying by substituting numbers back.",
+        "bestPractices": [
+          "Bridge from solving equations: solve 3x + 1 = 10 numerically, then rearrange y = 3x + 1 for x with identical steps — the letters just replace the number.",
+          "Apply each inverse operation to the WHOLE side, not one term, and undo operations in reverse order.",
+          "Use a balanced 'do the same to both sides' layout so no term is left behind.",
+          "Verify a rearrangement by substituting numbers into both the original and the rearranged form.",
+          "Handle harder cases explicitly: subject in a denominator, under a root, or appearing twice (multiply up, or collect and factor the subject out)."
+        ],
+        "keyRepresentations": [
+          "'Same to both sides' balance layout",
+          "Function-machine / inverse-operation chain run backwards",
+          "Original vs rearranged formula checked by substitution",
+          "y = mx + c rearranged to x = (y − c) / m"
+        ],
+        "commonMisconceptions": [
+          "Applies the inverse to only part of the side: y = mx + c → x = y − c/m (divides only c by m, not the whole (y − c)).",
+          "'Swap side, swap sign' over-generalised to multiplication/division (y = mx → x = y − m).",
+          "Sign error when moving a term across (subtracts where it should add or vice versa).",
+          "Mishandles the subject when it is in a denominator, under a root, or appears twice."
+        ]
+      },
+      "learn": {
+        "summary": "Rearranging a formula ('changing the subject') isolates a chosen variable by applying inverse operations to BOTH sides — the same technique as solving a linear equation, except the 'answer' is an expression in the other letters. The core discipline is doing each inverse operation to the WHOLE side (every term), undoing operations in the reverse order from how they were built up, and keeping the formula balanced. It can be taught by first solving the numeric equation, then generalising to letters with a 'same to both sides' layout, and checking by substituting numbers into both forms (a check for errors, not a proof of equivalence), while noting any values that cannot be divided by, such as zero.",
+        "activities": [
+          {
+            "title": "From number to letter: rearrange with identical steps",
+            "feedback": [
+              "If you reach x = (y − 1)/3, check it against the numeric case: the step that undid '+1' becomes '−1' and the step that undid '×3' becomes '÷3' — the structure is identical.",
+              "Subtractingc and then dividing bym is a convenient route. Another route can also work if each operation is applied correctly to both complete sides; for example dividing first givesy/m=x+c/m, then subtractingc/m isolatesx, providedm is nonzero."
+            ],
+            "rationale": "Bridging from a solved numeric equation to the lettered formula lets learners reuse an already-secure procedure and see that the 'answer' is now an expression. Both-sides and inverse-operation errors are documented difficulties in solving linear equations, the identical technique underlying changing the subject.",
+            "sourceClaims": [
+              "Errors in applying inverse operations and in failing to do the same operation to the whole of both sides are documented difficulties in solving linear equations — the identical technique that underlies rearranging a formula to change the subject."
+            ],
+            "learnerActions": [
+              "Solve the numeric equation 3x + 1 = 10 step by step, writing each inverse operation you apply to both sides (subtract 1, then divide by 3) to reach x = 3.",
+              "Now take y = 3x + 1 and rearrange it to make x the subject using the SAME two steps: subtract 1 from both sides, then divide the whole side by 3, reaching x = (y − 1)/3.",
+              "Write out, side by side, how each line of the numeric solution matches each line of the algebraic rearrangement.",
+              "Finally rearrange the general form y = mx + c for x, undoing +c first, then ×m, to get x = (y − c)/m, provided m ≠ 0."
+            ],
+            "intendedInsight": "Changing the subject is exactly the same balancing technique as solving an equation; the letters simply stand in for the numbers, so the inverse operations and their reverse order are unchanged."
+          },
+          {
+            "title": "Divide the WHOLE side, not one term",
+            "feedback": [
+              "If the shortcut x = y − c/m returned a wrong x (11 − 3/2 = 9.5) while x = (y − c)/m returned 4, that mismatch is the evidence: dividing only the last term leaves the rest of the side untouched.",
+              "If both versions seemed to 'work', recompute y first from the original formula, then substitute — the check only discriminates when you start from the original."
+            ],
+            "rationale": "Dividing only one term of a side rather than the whole side is a common change-the-subject error. A contrast between a flawed and a correct rearrangement, confirmed by substitution, makes the whole-side rule concrete. A manipulable layout where a chosen operation is applied to both sides simultaneously, paired with a substitution checker, may make the balance discipline visible, though a worked example on paper can also show it.",
+            "sourceClaims": [
+              "Dividing only one term of a side (rather than the whole side) when changing the subject, and failing to isolate a subject that appears twice or in a denominator, are common rearrangement errors.",
+              "Errors in applying inverse operations and in failing to do the same operation to the whole of both sides are documented difficulties in solving linear equations — the identical technique that underlies rearranging a formula to change the subject."
+            ],
+            "learnerActions": [
+              "Attempt to make x the subject of y = mx + c. First try the tempting shortcut x = y − c/m and notice it divides only the c-term by m.",
+              "Test this shortcut with numbers: let m = 2, c = 3, x = 4. Compute y from the original (y = 2×4 + 3 = 11), then put y = 11 into your shortcut and see what x you get back.",
+              "Now bracket the whole side before dividing: x = (y − c)/m. Substitute again (y = 11): x = (11 − 3)/2 = 8/2 = 4, recovering the starting value.",
+              "State in your own words why the division has to act on every term of the side at once."
+            ],
+            "intendedInsight": "An inverse operation must be applied to the entire side (every term), not a single term; the numeric check exposes the flawed version because the y-term was left undivided."
+          },
+          {
+            "title": "Undo multiplication by dividing, not by sign-swapping",
+            "feedback": [
+              "If x = y − m appeared, the numeric check (6 instead of 4) flags it: subtraction is the inverse of addition, division is the inverse of multiplication.",
+              "If a sign flipped the wrong way moving c, undo +c with −c on both sides and recheck the numbers."
+            ],
+            "rationale": "Over-generalising 'swap side, swap sign' to multiplication/division and making sign errors when moving terms are documented misconceptions. Naming the operation and applying its true inverse, confirmed numerically, targets both directly.",
+            "sourceClaims": [
+              "Errors in applying inverse operations and in failing to do the same operation to the whole of both sides are documented difficulties in solving linear equations — the identical technique that underlies rearranging a formula to change the subject."
+            ],
+            "learnerActions": [
+              "Take y = mx and make x the subject. Name the operation attaching m to x — it is multiplication.",
+              "Undo multiplication with its true inverse, division, to get x = y/m (provided m ≠ 0). Do NOT write x = y − m.",
+              "Check numerically: if m = 2 and x = 4, then y = 8, and y/m = 8/2 = 4 ✓, whereas y − m = 8 − 2 = 6 ✗.",
+              "Also practise a sign move: rearrange y = mx + c and confirm you subtract c (not add it) when moving it across, verifying with the same substitution."
+            ],
+            "intendedInsight": "'Swap side, swap sign' applies only to addition/subtraction; a multiplied factor is undone by dividing, not by changing its sign. Keeping sign direction correct for added terms is a separate discipline."
+          },
+          {
+            "title": "Harder structures: denominators, roots and the subject appearing twice",
+            "feedback": [
+              "If you could not isolate a subject appearing twice, check you collected its terms together first; you cannot divide until it appears only once, as a common factor.",
+              "State which denominators must be nonzero before clearing fractions or dividing. When squaring or taking roots, keep the original domain and check for extra or missing solutions in the original formula."
+            ],
+            "rationale": "Failing to multiply up to clear a fraction, or to collect and factor out a subject that appears twice, are documented rearrangement errors. Scaffolding these harder structures distinguishes secure transfer from mechanical single-step undoing.",
+            "sourceClaims": [
+              "Dividing only one term of a side (rather than the whole side) when changing the subject, and failing to isolate a subject that appears twice or in a denominator, are common rearrangement errors."
+            ],
+            "learnerActions": [
+              "Warm up with a one-step case: make r the subject of C = 2πr by dividing the whole side by 2π to get r = C/(2π).",
+              "Now take a formula where the subject is in the denominator, for example make r the subject of t = k/r. Multiply both sides by r to clear the fraction (tr = k), then divide both sides by t to reach r = k/t.",
+              "For a formula where the subject appears twice, collect all terms containing the subject on one side, then factor the subject out before dividing.",
+              "Use an explicit example: fory=sqrt(x), withx>=0 andy>=0, square both sides to obtainx=y^2. Forx^2=y, the real solutions arex=plus-or-minus sqrt(y) wheny>=0, unless a stated context restrictsx to one sign. Check the original equation and domain rather than treating roots and powers as unrestricted inverses."
+            ],
+            "intendedInsight": "When the subject is in a denominator, under a root, or appears more than once, extra structural moves — multiplying up, factoring out, or applying root/power inverses — are needed before the ordinary balancing finishes the job."
+          },
+          {
+            "title": "Spot the flawed step, transfer, and verify by substitution",
+            "feedback": [
+              "If your identified error line and the numeric check disagree, recheck both: substitute the same consistent values (worked out from the original formula) into each line in turn. The first line that becomes false shows where an invalid step happened, but lines that agree at a few values are not proven valid.",
+              "Completing x = (y − c)/m (not y − c/m) shows you kept the whole numerator together over m.",
+              "When making m the subject, note you divide by x this time, not by m — the subject you isolate changes which letter you divide the whole side by."
+            ],
+            "rationale": "Identifying a flawed step and completing a correct form rehearse the procedure and the whole-side rule, while transfer tasks and substitution teach independent verification across formulae. These response formats test the procedure, though error-spotting and fill-in check recognition and completion rather than fully open construction from scratch.",
+            "sourceClaims": [
+              "Errors in applying inverse operations and in failing to do the same operation to the whole of both sides are documented difficulties in solving linear equations — the identical technique that underlies rearranging a formula to change the subject."
+            ],
+            "learnerActions": [
+              "Given a fully worked but flawed rearrangement, identify which single line first goes wrong and state the correct inverse operation that should have been used there.",
+              "Reconstruct the correct rearrangement from that point, writing each line in order.",
+              "Complete a partially written rearranged form such as x = (y − __)/__ for y = mx + c.",
+              "Transfer to new formulae: make t the subject of v = u + at (subtract u from both sides, then divide the whole side by a, giving t = (v − u)/a, provided a ≠ 0), and make m the subject of y = mx + c (subtract c, then divide the whole side by x, giving m = (y − c)/x, provided x ≠ 0).",
+              "Check every rearrangement you produce: choose several suitable values (avoiding any divisor of zero), compute the output from the original formula first, substitute it into the rearranged formula and confirm you recover the starting value. Remember this check can expose an error but does not prove the two forms are equivalent."
+            ],
+            "intendedInsight": "Substitution is a useful error check: a counterexample shows two forms are not equivalent, while agreement for a few chosen values is not a general proof. Justify the rearrangement through valid balanced operations and the stated domain."
+          }
+        ],
+        "constraints": [
+          "Learners must actually construct the rearranged formula and carry out the inverse steps themselves; recognising a correct answer or reading a worked example does not demonstrate independent rearrangement.",
+          "A fixed worked inverse-operation chain can show the method but does not let the learner perform the balanced steps or catch a left-behind term; use it as a reference, not as the main practice.",
+          "Error-spotting and fill-in-the-blank tasks check recognition and completion; pair them with at least one rearrangement built from scratch to evidence full competence.",
+          "Use substitution with several suitable values to look for errors, but justify equivalence by valid algebraic operations. Agreement at one value does not prove a formula identity, and division or root operations require domain conditions.",
+          "When the subject is in a denominator, under a root, or appears twice, require the extra structural step (multiply up, apply root/power inverse, or collect and factor) rather than treating these as routine single inverse steps.",
+          "The substitution check only discriminates if the learner computes the known output from the original formula first, then substitutes it into the rearranged form.",
+          "State each harder-case formula and its restrictions. Forx=(y-c)/m requirem!=0; forr=k/t obtained fromt=k/r require the originalr!=0 andt!=0 for this rearranged form; for t=(v-u)/a requirea!=0; form=(y-c)/x requirex!=0. Handle excluded zero cases separately. Root/power examples must state domains and any sign choices."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified this session. All activities are research-informed proposals, not validated interventions, and no claim of empirical testing of these specific tasks is made.",
+          "One source claim (dividing only one term; subject appearing twice/in a denominator) is marked verified:false in the row ('not fetched this session'); treat its citation as legacy and unconfirmed.",
+          "Self-audit arithmetic checks pass: for m=2, c=3, x=4, original y = 2×4+3 = 11, and (11−3)/2 = 4 ✓; r = C/(2π) from C = 2πr ✓; t = k/r gives r = k/t ✓; v = u + at gives t = (v − u)/a ✓; y = mx gives x = y/m ✓. The flawed shortcut x = y − c/m with y=11 gives 11 − 3/2 = 9.5 ≠ 4, correctly exposing the error.",
+          "Softened the row's framing that an open dialogue 'cannot rehearse' the manipulation and that symbolic work 'has no spatial dimension': these are narrow affordance observations, not established universal limits; dialogue can still support reasoning about the steps even if it is less suited to rehearsing full written manipulation.",
+          "The transfer examples v = u + at and 'make m the subject of y = mx + c' were drawn from the row's assessment probes and reinstated to preserve concrete examples.",
+          "The KS3 curriculum claim was removed from the sourceClaims of the bridging and harder-structures activities because it supports only the topic/objective, not those activities' specific teaching principles; the objective remains represented in the summary and learnerActions."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Substitute m = 2, c = 3, x = 4 into the original to get y, then into your rearranged formula — do you get x = 4 back?",
+          "In y = mx + c, why can't we just write x = y − c/m? What is m attached to?",
+          "Now make m the subject of the same formula — is it harder or easier, and why?",
+          "If the formula were v = u + at, how would you make t the subject?"
+        ],
+        "correctAnswer": "(a) x = (y − c)/m — subtract c from BOTH sides, then divide the WHOLE side by m. (b) r = C/(2π). Check: y = 2×4 + 3 = 11; x = (11 − 3)/2 = 8/2 = 4 ✓.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Applies the inverse to only part of the side — writes x = y − c/m, dividing only the last term by m instead of the whole (y − c)",
+            "nextMove": "Bracket the whole side before dividing: (y − c) ÷ m; the numeric check fails on the flawed version, forcing the correction.",
+            "distractor": null,
+            "revealedBy": "The rearranged form has m under only the c-term; the numeric check returns the wrong x.",
+            "reteachPrerequisiteId": "mt_VUQNveSYjQ"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "'Swap side, swap sign' over-generalised — moves a MULTIPLIED term by changing its sign (y = mx → x = y − m) instead of dividing",
+            "nextMove": "Name the operation attaching m to x (multiplication) and undo it with its true inverse (division), not a sign change.",
+            "distractor": null,
+            "revealedBy": "A factor is subtracted rather than divided when moved across.",
+            "reteachPrerequisiteId": "mt_QhFEDyIwSO"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Sign error moving a term — y = mx + c → x = (y + c)/m, adding c instead of subtracting it",
+            "nextMove": "Undo +c with −c on both sides and confirm with the substitution check.",
+            "distractor": null,
+            "revealedBy": "The constant's sign is wrong in the rearranged form; the numeric check is off by 2c/m.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Mishandles the subject when it is in a denominator or appears twice — fails to multiply up to clear the fraction or to factor the subject out",
+            "nextMove": "Multiply through to clear the denominator, or collect the subject's terms and factor it out; scaffold the harder structure.",
+            "distractor": null,
+            "revealedBy": "Given a formula with the subject in a denominator or on both sides, the child cannot isolate it and abandons or mis-cancels.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot isolate the variable; moves terms by changing signs indiscriminately or leaves terms undivided.",
+          "full": "Makes the subject by undoing operations in reverse order applied to the whole side, verifies by substitution, and handles a harder case (subject in a denominator or appearing twice) — transferring the balanced-inverse method to a new formula.",
+          "partial": "Rearranges one-step formulae (C = 2πr) correctly, but on a two-step formula divides only part of the side or slips a sign — executes single inverse steps without keeping the whole side balanced."
+        },
+        "diagnosticPrompt": "Here are two formulae. (a) Make x the subject of y = mx + c. (b) Make r the subject of C = 2πr. Then check your answer to (a) with numbers: let m = 2, c = 3 and x = 4 — work out y, then put it into your rearranged formula and see whether you get x = 4 back.",
+        "whatMakesItDiscriminate": "Part (a) exposes whether the child divides the WHOLE side by m or only the c-term (the y = mx + c → x = y − c/m error); part (b) tests one clean inverse pair; the substitution check reveals whether they can self-verify. Watching the steps, not asking about the method, is what shows the procedure."
+      },
+      "sources": [
+        {
+          "claim": "Errors in applying inverse operations and in failing to do the same operation to the whole of both sides are documented difficulties in solving linear equations — the identical technique that underlies rearranging a formula to change the subject.",
+          "source": "Mathematics Assessment Project, 'Solving Linear Equations in One Variable' — Common Issues table (inverse-operation and both-sides errors)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1686",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils should 'understand and use standard mathematical formulae; rearrange formulae to change the subject'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3 Algebra), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Dividing only one term of a side (rather than the whole side) when changing the subject, and failing to isolate a subject that appears twice or in a denominator, are common rearrangement errors.",
+          "source": "Documented change-the-subject errors (not fetched this session)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1686",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T16:21:29.187Z",
+        "updatedAt": "2026-10-19T15:20:15.929Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/105",
+    "connections": [
+      {
+        "topicId": "mt_1VmTUxBrNd",
+        "prerequisiteId": "mt_3qrCtdoVAU",
+        "strength": "soft",
+        "reason": "Rearranging a² + b² = c² to find a shorter side uses formula rearrangement"
+      },
+      {
+        "topicId": "mt_3qrCtdoVAU",
+        "prerequisiteId": "mt_QhFEDyIwSO",
+        "strength": "hard",
+        "reason": "Rearranging formulae uses the same inverse-operation techniques as solving equations"
+      },
+      {
+        "topicId": "mt_3qrCtdoVAU",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "hard",
+        "reason": "Rearranging formulae requires fluent substitution to verify results"
+      },
+      {
+        "topicId": "mt_3qrCtdoVAU",
+        "prerequisiteId": "mt_VUQNveSYjQ",
+        "strength": "hard",
+        "reason": "Rearranging formulae to change the subject is an application of inverse operations to algebraic expressions"
+      },
+      {
+        "topicId": "mt_-3udyo6VyB",
+        "prerequisiteId": "mt_3qrCtdoVAU",
+        "strength": "soft",
+        "reason": "Rearranging to y = mx + c form uses formula rearrangement skills"
+      },
+      {
+        "topicId": "mt_KB_Czd7RQH",
+        "prerequisiteId": "mt_3qrCtdoVAU",
+        "strength": "hard",
+        "reason": "Using trig ratios to find unknowns requires formula rearrangement"
+      },
+      {
+        "topicId": "mt_kLQOzZYrd5",
+        "prerequisiteId": "mt_3qrCtdoVAU",
+        "strength": "soft",
+        "reason": "Rearranging compound unit formulae (speed = distance/time) uses formula rearrangement skills"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_GZuoYaDdWd",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "name": "Quadratic Graphs",
+      "description": "Recognise that quadratic functions produce curved (parabolic) graphs, distinguish them from linear graphs, and use plotted quadratic graphs to estimate values and find approximate solutions",
+      "ageRangeStart": 13,
+      "ageRangeEnd": 14,
+      "centrality": 0.1672025723472669,
+      "evidence": [
+        "Explain why x² produces a U-shaped curve rather than a straight line",
+        "Plot a simple quadratic such as y = x² − 4 from a table of values",
+        "Read approximate solutions from a quadratic graph (e.g., where y = 0)"
+      ],
+      "assessmentPrompt": "Can {{name}} recognise that an equation like y = x² produces a curved graph rather than a straight line, and use a plotted curve to estimate values?",
+      "standards": [
+        "ccss-math:8.F.3",
+        "ccss-math:8.F.5",
+        "uk-nc-2013:KS3.Maths.Alg.12",
+        "uk-nc-2013:KS3.Maths.Alg.9"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/707",
+    "research": {
+      "topicId": "mt_GZuoYaDdWd",
+      "pedagogy": {
+        "summary": "A quadratic function (one containing an x² term) produces a smooth U-shaped curve — a parabola — not a straight line, for two linked reasons: the rate of change is not constant (it grows as x moves away from zero), and squaring makes +x and −x give the same positive y, so the curve is symmetric about a vertical line. It is best taught by building a table of values that INCLUDES negative x, plotting, and joining with a smooth curve; contrasting directly with a linear graph; drawing out why the two branches mirror each other; then using the curve to read approximate solutions (where y = 0, the roots).",
+        "bestPractices": [
+          "Build from a table spanning negative and positive x (e.g. x = −3..3 for y = x²) so the symmetry and the turning point emerge from the numbers, not from assertion.",
+          "Insist on a SMOOTH curve through the points, never straight segments, and discuss why: the gradient changes continuously.",
+          "Contrast a linear and a quadratic graph side by side from their equations, tying 'straight vs curved' to the presence of the x² term.",
+          "Make the symmetry explicit: (−3)² = 3² = 9, so the point at x = −3 sits at the same height as x = 3 and the curve folds about its axis of symmetry.",
+          "Use the graph to read roots (where the curve meets the x-axis) and note that a parabola can cross the axis twice, once, or not at all."
+        ],
+        "keyRepresentations": [
+          "Table of values including negative x → plotted points → smooth parabola",
+          "The parabola with its axis of symmetry and turning point (vertex) marked",
+          "Side-by-side straight line (y = 2x) and curve (y = x²) from their equations",
+          "x-axis crossings shown as the roots / approximate solutions"
+        ],
+        "commonMisconceptions": [
+          "Expects a straight line (or draws one), not distinguishing a quadratic from a linear function.",
+          "Squares a negative wrongly ((−3)² = −9), so the left branch is plotted below the axis and the symmetry is lost.",
+          "Joins the plotted points with straight line segments rather than a smooth curve.",
+          "Reads only one root, missing the parabola's second, symmetric crossing."
+        ]
+      },
+      "learn": {
+        "summary": "Help a 13–14 year old see that a quadratic function (one with a nonzero x² term) produces a smooth curve called a parabola, rather than a straight line. It is U-shaped when the x² coefficient is positive and an upside-down U when it is negative. With y = x² (and shifts such as y = x² + c), two linked reasons can be seen: the size of the rate of change grows as x moves away from the vertex at x = 0, and squaring makes +x and −x give the same y, so the curve is symmetric about the y-axis. (Every parabola is symmetric about a vertical line through its vertex. But for quadratics with an x term, such as y = x² + 2x, that line is not the y-axis, and +x and −x do not give equal y.) The core work is building a table of values that includes negative x, plotting the points, joining them with a smooth curve, contrasting directly with a linear graph, explaining the mirror symmetry, and then reading approximate roots (where y = 0) off the curve. Dynamic auto-plotting with coefficient sliders, a static annotated reference, and recognition checks each play distinct, complementary roles.",
+        "activities": [
+          {
+            "title": "Plot y = x² from a table that includes negative x",
+            "feedback": [
+              "If you predicted −9 for x = −3, check (−3)×(−3) = +9: multiplying two negatives gives a positive, so the point lands at +9, level with x = 3, not below the axis.",
+              "If your left branch goes downward below the axis, replot those points at the same heights as their positive partners; folding the paper along the y-axis should make the two halves coincide.",
+              "If your points are joined with straight segments into a V or zig-zag, add intermediate x-values such as 0.5, 1.5 and 2.5 — the extra points force the bend and show the join should curve smoothly.",
+              "If you predicted a straight line, look at the y-column: it does not go up in equal steps (0,1,4,9…), so the graph cannot be straight."
+            ],
+            "rationale": "Letting the symmetry and turning point emerge from computed values including negative x, rather than from assertion, directly confronts the common errors of squaring negatives wrongly and expecting a line. Predict-then-check is intended to surface the misconception so the contradicting observation can do the teaching.",
+            "sourceClaims": [
+              "Students confuse the sign of a squared negative, treating −(x²) and (−x)² as equal / mishandling the square of a negative — a documented algebra misconception.",
+              "Joining plotted points of a curve with straight line segments instead of a smooth curve is a common plotting error.",
+              "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'use linear and quadratic graphs to estimate values ... and find approximate solutions'."
+            ],
+            "learnerActions": [
+              "Before plotting, predict the height of y = x² at x = −3 and write down both the value AND your reason.",
+              "Complete a table of values for y = x² across x = −3, −2, −1, 0, 1, 2, 3, computing each y yourself.",
+              "Plot each point, then join them with a single smooth curve (not straight segments).",
+              "Compare the point at x = −3 with the point at x = 3: notice both sit at height 9.",
+              "State in your own words why the two sides of the curve mirror each other."
+            ],
+            "intendedInsight": "Because (−3)² = 9 = 3², (−2)² = 4 = 2², and so on, the negative-x points land at the same heights as their positive partners, so the graph is a smooth U-shaped parabola symmetric about the y-axis with its lowest point at (0, 0) — not a straight line, because the amount y increases grows as x moves away from zero."
+          },
+          {
+            "title": "Line versus curve: contrast y = x with y = x²",
+            "feedback": [
+              "If you drew y = x² as a straight line, compare its y-column to the y = x column: for y = x² the step sizes are not constant (from x = 0 upward they are 1, 3, 5, 7…), so its graph cannot be a ruler-straight line.",
+              "A correct straight-line equation has no x² (or higher) term; as soon as x² appears, equal x-steps no longer give equal y-steps.",
+              "Check that for larger x your parabola climbs increasingly far above the line y = x (the gap is 2 at x = 2 and 6 at x = 3) — that widening gap reflects the rate of change growing as x moves away from zero."
+            ],
+            "rationale": "Side-by-side comparison of a linear and quadratic graph from their equations targets the documented difficulty of distinguishing straight from curved graphs and grounds the distinction in the behaviour of the rate of change.",
+            "sourceClaims": [
+              "Distinguishing a straight-line (linear) graph from a curved (non-linear) one is a target difficulty: students draw a non-linear graph where a straight line is required, and vice versa.",
+              "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'use linear and quadratic graphs to estimate values ... and find approximate solutions'."
+            ],
+            "learnerActions": [
+              "Build one table that holds columns for both y = x and y = x² over the same x-values, including negatives.",
+              "Plot both on the same axes and describe how the shapes differ.",
+              "Look at how each y-column changes step by step: y = x goes up in constant steps, while y = x² changes by amounts that are not constant — they shrink approaching the vertex at x = 0 and grow as x moves away from zero.",
+              "Explain, tying it to the equation, why the x² term forces a curve while the linear term gives a straight line.",
+              "Try to invent an equation whose graph would be a straight line, and one whose graph would curve — and say what distinguishes them."
+            ],
+            "intendedInsight": "A graph is straight only when y changes by a constant amount for each equal step in x; the x² term makes those step sizes vary — shrinking near the vertex and growing as x moves away from zero — so a quadratic must curve. 'Straight vs curved' is tied to the presence of the x² term, not merely to 'being an equation'."
+          },
+          {
+            "title": "Read roots and explore hill/valley and shifts with an auto-plotting table and sliders",
+            "feedback": [
+              "If the x = −3 and x = 3 points do not match in height, recheck your squaring — symmetry about the y-axis means matching heights.",
+              "When you flip 'a' negative, the lowest point becomes a highest point: a valley becomes a hill, but the symmetry stays.",
+              "For y = x² − 4, the shape and symmetry are unchanged; only the whole curve shifts down by 4, so it now crosses the x-axis at two points (x = −2 and x = 2) — those crossings are the roots.",
+              "If you report only one root, check whether there is a symmetric partner crossing on the other side of the axis of symmetry — unless the curve only touches the x-axis at its vertex, which gives a single (repeated) root."
+            ],
+            "rationale": "Dynamic coefficient controls and live replotting are intended to make the symmetry, turning point, and hill/valley flip concrete and to let learners connect equation changes to graph changes; reading x-axis crossings builds the curriculum skill of estimating solutions. A static annotated parabola (with axis of symmetry, vertex and roots labelled) is a valuable reference alongside this, though a fixed picture cannot itself be manipulated to show the curve emerging from a table or why negatives square upward.",
+            "sourceClaims": [
+              "Key features of a quadratic graph that students must grasp are the number of roots (two, one or none, shown by where the curve meets the x-axis), whether the parabola is a 'hill or a valley', and its axis of symmetry.",
+              "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'use linear and quadratic graphs to estimate values ... and find approximate solutions'."
+            ],
+            "learnerActions": [
+              "Fill a table for y = x² with points that plot automatically as you enter negative and positive x; watch the x = −3 and x = 3 points land at the same height.",
+              "Toggle the join between straight segments and a smooth curve to see the scattered points resolve into a single U.",
+              "Drag the coefficient 'a' below zero and describe what happens to the valley (it inverts into a hill).",
+              "With 'a' set back to a positive value (e.g. a = 1), shift the constant 'c' downward to slide the whole parabola down until it cuts the x-axis twice, and read off the approximate roots where y = 0 (shifting upward instead lifts this valley clear of the axis; for a hill with negative 'a' these effects are reversed).",
+              "For y = x² − 4, state what changes and what stays the same compared with y = x², then read its roots from the graph.",
+              "Decide how many times a given parabola crosses the x-axis — twice, once, or not at all — and justify from the picture."
+            ],
+            "intendedInsight": "The axis of symmetry, the turning point (vertex), whether the parabola is a hill or a valley, and the number of roots (two, one, or none, shown where the curve meets the x-axis) are the key features of a quadratic graph; shifting c moves the whole curve while preserving its shape, and roots are the approximate solutions where y = 0."
+          },
+          {
+            "title": "Recognition checks: classify, count roots, and order by height",
+            "feedback": [
+              "If you classed an x² equation as a straight line, recall that the squared term forces a curve.",
+              "If you ordered the heights as a steady increase, remember x = −2 and x = 2 tie at the top (height 4) and x = 0 is lowest — the ordering is symmetric, not monotonic.",
+              "An upward parabola fully above the x-axis has no roots; one touching it has a single (repeated) root; one dipping below crosses twice."
+            ],
+            "rationale": "Classification, multiple-choice on root count, and height-sequencing are efficient checks of whether the parabola and its symmetry are recognised. These check recognition and do not by themselves require the learner to construct a graph or explain the reasoning, so they complement rather than replace the plotting and explanation activities.",
+            "sourceClaims": [
+              "Key features of a quadratic graph that students must grasp are the number of roots (two, one or none, shown by where the curve meets the x-axis), whether the parabola is a 'hill or a valley', and its axis of symmetry.",
+              "Distinguishing a straight-line (linear) graph from a curved (non-linear) one is a target difficulty: students draw a non-linear graph where a straight line is required, and vice versa."
+            ],
+            "learnerActions": [
+              "Sort a set of linear and quadratic equations into 'straight line' versus 'curve' based on whether they contain an x² term (with a nonzero coefficient).",
+              "For each pictured parabola, answer: how many times does it cross the x-axis — twice, once, or not at all?",
+              "Order the points x = −2, −1, 0, 1, 2 for y = x² by their height to expose the mirror pairing."
+            ],
+            "intendedInsight": "Quickly consolidates recognition that an x² term signals a curve, that a parabola can cross the x-axis twice, once or not at all, and that points equidistant from the axis of symmetry share the same height."
+          }
+        ],
+        "constraints": [
+          "The table of values must span negative and positive x (e.g. x = −3..3) so symmetry and the turning point emerge from the numbers, not from assertion.",
+          "Points must be joined with a smooth curve, never straight segments; if a learner draws chords, add intermediate x-values to force the bend — this is a drawing habit to scaffold, not a concept to reteach.",
+          "Learners must compute squares of negatives correctly: (−3)² = (−3)×(−3) = +9, not −9. Distinguish (−x)² from −(x²).",
+          "When describing the rate of change over a table that includes negative x, say the step sizes are not constant — shrinking toward the vertex and growing as x moves away from the vertex (x = 0 for y = x²) — rather than simply 'growing'.",
+          "Recognition checks (classification, multiple-choice, ordering) assess whether the parabola is recognised but do not elicit independent graph construction or an explanation of why the graph curves; pair them with the plotting and explanation activities.",
+          "A static annotated parabola is a useful reference but a fixed picture cannot be manipulated to show the curve emerging from a table or the hill/valley flip; treat it as a complement to the dynamic and hand-plotted work.",
+          "The coefficient sliders, straight/smooth toggle and auto-plotting are optional ways to make the mechanism concrete; the essential learning (table with negatives, smooth plot, symmetry reasoning, reading roots) can be done on paper.",
+          "Full understanding requires relating symmetry, curvature (rate of change growing in size as x moves away from the vertex, which is x = 0 for y = x²) and the x² term together — not just producing a U-shape or knowing negatives square to positives in isolation."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched this session. All activities are research-informed proposals, not validated interventions.",
+          "The claim that joining points with straight segments is a common plotting error is flagged as not fetched/unverified in the source row (verified:false); retained as a plausible plotting habit but not asserted as established.",
+          "The original row marked a 3D treatment as adding nothing and a conversation format as unable to deliver the visual/relational insight. These are catalog fit judgements, not established pedagogical laws, and have not been propagated as universal claims; the plausible objective point retained is only that recognition-only checks do not elicit construction or explanation.",
+          "Self-audit of arithmetic and logic: squares used (0,1,4,9 for x=0..3) and symmetric pairs are correct; y = x² − 4 shifts down 4 and crosses the x-axis at x = ±2, consistent with 'two roots'; for an upward parabola only a downward c-shift cuts the axis, which the slider action states. The line-vs-curve comparison was tightened this pass: first differences over x = −3..3 are 5,3,1,1,3,5 (not monotonically growing), so the activity now says the steps shrink toward the vertex then grow; and y = x and y = x² coincide at (0,0) and (1,1) rather than only diverging from the origin, so the feedback now points to the widening gap for larger x (gap 2 at x = 2, 6 at x = 3).",
+          "The row states a parabola 'folds about its axis of symmetry'; for y = x² the axis is the y-axis (x = 0), which the activities state explicitly. The axis of y = x² − 4 remains x = 0, but a non-zero horizontal shift would move it — not covered by the examples used here."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": "Before plotting anything, ask the child to predict the height of y = x² at x = −3, writing down both the value AND the reason. Then have them compute and plot the points for x = −3, −2, −1, 0, 1, 2, 3 and join them. Children who predict −9 (or a line sloping down to the left) are confronted the instant the point lands at +9, level with x = 3: the observation contradicts the naive prediction and forces the symmetry idea into the open.",
+        "probeDeeper": [
+          "At x = 2 the height is 4. Is there another x-value that also gives a height of 4? How do you know?",
+          "Where is the lowest point of this curve, and why is it there and not somewhere else?",
+          "If the equation were y = x² − 4 instead, what would change about the graph and what would stay the same?",
+          "Could a graph shaped like this ever come from an equation that gives a straight line? What would that equation have to look like?"
+        ],
+        "correctAnswer": "The negative-x points sit at the SAME heights as the matching positive-x points, because (−3)² = 9 = 3², (−2)² = 4 = 2² and so on. So the graph is a smooth U-shaped curve, symmetric about the y-axis, with its lowest point at (0, 0). It is not a straight line because the amount y increases grows as x moves away from zero.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Squares negatives wrongly — '(−3)² is −9' — so draws the left branch descending below the axis and loses the symmetry",
+            "nextMove": "Rehearse (−3)×(−3) = +9 on two or three values, replot those points at equal height to their positive partners, and fold the paper to reveal the symmetry.",
+            "distractor": "The left side goes downwards below the axis, because squaring −3 gives −9.",
+            "revealedBy": "Sketches the left half going down into negative y, or a straight diagonal through the origin; says 'minus three squared is minus nine'.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Expects a straight line, conflating a quadratic with a linear function ('it's an equation, so it's a line')",
+            "nextMove": "Plot y = x and y = x² from the same table side by side; the x² column does not go up in constant steps, so its graph cannot be straight.",
+            "distractor": "It will be a straight line, like the other graphs we have drawn.",
+            "revealedBy": "Draws a straight line for y = x² and treats it like y = x; the sketch has no curvature.",
+            "reteachPrerequisiteId": "mt_-3udyo6VyB"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Joins the plotted points with straight line segments, making a jagged V or zig-zag instead of a smooth curve",
+            "nextMove": "Add intermediate x-values (0.5, 1.5, 2.5) so the bending between points is forced; this is a drawing habit to scaffold, not a concept to reteach.",
+            "distractor": null,
+            "revealedBy": "Connects the points with a ruler; the 'curve' is a sequence of straight chords.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Draws a straight line, or a curve whose left branch goes the wrong way; treats (−3)² as −9.",
+          "full": "Predicts the mirrored branch from (−3)² = 9, draws a smooth symmetric parabola, explains the curvature as the increasing rate of change of x², and transfers to y = x² − 4 (same shape, shifted down) — relating symmetry, curvature and equation.",
+          "partial": "Draws a symmetric U and knows negatives square to positives, but cannot yet explain WHY the graph is not straight (why the rate of change grows) or tie the shape to the x² term — has the parts (symmetry, U-shape) without relating them."
+        },
+        "diagnosticPrompt": "Here is the equation y = x². I have already plotted the points for x = 1, 2 and 3. What will the graph look like for the negative x-values x = −1, −2, −3 — and why? Sketch the whole graph and explain its shape.",
+        "whatMakesItDiscriminate": "A child who knows squaring a negative gives a positive predicts a mirrored left branch and a symmetric U; a child who computes (−3)² as −9 predicts the left side dropping below the axis (a sloping line or an S/N shape). The two reasonings produce visibly different graphs, and the required 'why' reveals whether the symmetry is grounded in the squaring or merely copied from a remembered picture."
+      },
+      "sources": [
+        {
+          "claim": "Students confuse the sign of a squared negative, treating −(x²) and (−x)² as equal / mishandling the square of a negative — a documented algebra misconception.",
+          "source": "Mathematics Assessment Project, 'Sorting Equations and Identities' — Common Issues table (assumes −(x²) = (−x)²)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1720",
+          "verified": true
+        },
+        {
+          "claim": "Distinguishing a straight-line (linear) graph from a curved (non-linear) one is a target difficulty: students draw a non-linear graph where a straight line is required, and vice versa.",
+          "source": "Mathematics Assessment Project, 'Comparing Lines and Linear Equations' & 'Interpreting Distance–Time Graphs' — Common Issues tables",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1682",
+          "verified": true
+        },
+        {
+          "claim": "Key features of a quadratic graph that students must grasp are the number of roots (two, one or none, shown by where the curve meets the x-axis), whether the parabola is a 'hill or a valley', and its axis of symmetry.",
+          "source": "Mathematics Assessment Project, 'Representing Quadratic Functions Graphically' (Grade 9+) — teacher guide",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1734",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils should 'recognise, sketch and produce graphs of linear and quadratic functions of one variable' and 'use linear and quadratic graphs to estimate values ... and find approximate solutions'.",
+          "source": "National curriculum in England: mathematics programmes of study (KS3), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Joining plotted points of a curve with straight line segments instead of a smooth curve is a common plotting error.",
+          "source": "Widely documented plotting error (not fetched this session)",
+          "url": "https://www.map.mathshell.org/download.php?fileid=1734",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-24T16:07:41.145Z",
+        "updatedAt": "2026-10-19T15:20:40.456Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/427",
+    "connections": [
+      {
+        "topicId": "mt_GZuoYaDdWd",
+        "prerequisiteId": "mt_-3udyo6VyB",
+        "strength": "hard",
+        "reason": "Understanding quadratic graphs requires prior experience plotting linear graphs"
+      },
+      {
+        "topicId": "mt_Yw27nweoTj",
+        "prerequisiteId": "mt_GZuoYaDdWd",
+        "strength": "soft",
+        "reason": "Estimating from quadratic graphs requires understanding how curves behave"
+      }
+    ]
+  }
+]

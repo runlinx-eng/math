@@ -1,0 +1,52 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "cb4816",
+      "wall_time_seconds": 0.185032417,
+      "exit_code": 0,
+      "original_token_count": 93,
+      "output": "{\"mode\": \"check\", \"mathTopics\": 587, \"internalRelations\": 1223, \"externalReferences\": 32, \"researchTopics\": 502, \"missingResearchTopics\": 85, \"existingActivities\": 3, \"previewOnly\": 1, \"nodesWithoutFullActivity\": 584, \"firstSample\": 12, \"firstRelease\": 50, \"remainingAfterFirstRelease\": 537, \"sharedAuthoringGroups\": 93, \"proposedTaskUnits\": 161, \"deliveryBatches\": 39}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "294eb5",
+      "wall_time_seconds": 0.029484667,
+      "exit_code": 0,
+      "original_token_count": 32,
+      "output": "{\"availableNodes\":12,\"newNodes\":9,\"tasks\":30,\"sourceGoals\":36,\"localResearchSupplements\":2,\"remainingUnimplementedNodes\":575}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "ec4444",
+      "wall_time_seconds": 0.01225325,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "{\"mode\":\"check\",\"nodes\":12,\"connections\":9,\"connectionTasks\":18}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "ac178b",
+      "wall_time_seconds": 0.040851833,
+      "exit_code": 0,
+      "original_token_count": 60,
+      "output": "{\n  availableNodes: 50,\n  newNodes: 38,\n  nodeTasks: 136,\n  sourceGoals: 153,\n  routes: 15,\n  availableConnections: 21,\n  connectionTasks: 42,\n  localResearchSupplements: 9,\n  remainingUnimplementedNodes: 537,\n  remainingResearchGaps: 76\n}\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "f4d6e8",
+      "wall_time_seconds": 0.126462208,
+      "exit_code": 0,
+      "original_token_count": 84,
+      "output": "{\n  availableNodes: 516,\n  newNodes: 14,\n  nodeTasks: 1749,\n  newNodeTasks: 45,\n  sourceGoals: 1559,\n  newSourceGoals: 42,\n  routes: 204,\n  availableConnections: 678,\n  connectionTasks: 1356,\n  newConnections: 20,\n  newConnectionTasks: 40,\n  localResearchSupplements: 83,\n  remainingUnimplementedNodes: 71,\n  remainingResearchGaps: 2\n}\n"
+    }
+  }
+]

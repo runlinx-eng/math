@@ -1,0 +1,9 @@
+{
+  "batch": "B12",
+  "startedAt": "2026-10-26T04:04:09.893230+00:00",
+  "snapshot": "snapshots/v16-before-b12-20261026T040409Z.tar.gz",
+  "activeHours": null,
+  "note": "Wall time includes interruptions, partial delegated work, quota interruption and waits; active labor was not separately measured. No child trial.",
+  "completedAt": "2026-10-26T04:55:50.510389+00:00",
+  "technicalComplete": true
+}

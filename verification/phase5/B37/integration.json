@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "overview counts available nodes",
+    "entry offers three directions",
+    "two percentage routes are reachable",
+    "original scaling route remains reachable",
+    "at most three routes are shown together",
+    "additional route remains reachable",
+    "two sharing routes are reachable",
+    "selected route contains three nodes",
+    "route survives reload",
+    "first incorrect prediction and correction remain",
+    "simulated next day shows exact question",
+    "original partial mixture is restored",
+    "later mixture is retained separately",
+    "first incorrect prediction is retained",
+    "world position is restored",
+    "actual backup includes original partial work",
+    "repeated import preserves question and partial work",
+    "import opens the original question",
+    "all four B37 files cached",
+    "original question opens offline",
+    "the partial mixture can be completed offline",
+    "first error remains part of the evidence",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v42",
+    "count": 217,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

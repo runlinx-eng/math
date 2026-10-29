@@ -1,0 +1,44 @@
+{
+  "checks": [
+    "area retains both historical routes",
+    "volume retains both historical routes",
+    "449 unique nodes",
+    "three measurement directions",
+    "FU is reachable in the second group",
+    "FU contains both new ideas",
+    "at most three choices and old E is present",
+    "new route is reachable on the second page",
+    "FT contains two nodes",
+    "route survives refresh",
+    "wrong first cut and support are retained",
+    "incorrect cut is actual saved work",
+    "simulated next day shows exact question",
+    "unfinished wrong cut and original prose restored",
+    "later corrected cut retained separately",
+    "question words restored",
+    "world camera restored",
+    "actual backup contains original cut",
+    "repeat import keeps question and first error",
+    "import opens original question",
+    "all four B29 files cached",
+    "original work opens offline",
+    "offline tape construction completes",
+    "first wrong cut remains supported",
+    "first wrong cut remains after correction",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v34",
+    "count": 181,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,44 @@
+✔ B21 statwords bounded construction, empty rejection and replay (40.652875ms)
+✔ B21 meanbalance bounded construction, empty rejection and replay (8.032542ms)
+✔ B21 meandistance bounded construction, empty rejection and replay (8.423583ms)
+✔ B21 averagestory bounded construction, empty rejection and replay (4.904708ms)
+✔ B21 distributionlook bounded construction, empty rejection and replay (2.788ms)
+✔ B21 quartiles bounded construction, empty rejection and replay (15.420292ms)
+✔ B21 datasummary bounded construction, empty rejection and replay (4.09075ms)
+✔ B21 digitalsets bounded construction, empty rejection and replay (1.965792ms)
+✔ B21 medialens bounded construction, empty rejection and replay (1.432542ms)
+✔ B21 fairdraw bounded construction, empty rejection and replay (3.747458ms)
+✔ B21 comparepeople bounded construction, empty rejection and replay (1.5775ms)
+✔ B21 estimatepeople bounded construction, empty rejection and replay (7.601375ms)
+✔ B21 comparegap bounded construction, empty rejection and replay (1.819292ms)
+✔ B21 samplevary bounded construction, empty rejection and replay (18.93425ms)
+✔ B21 recalculates inconsistent upstream arithmetic rather than copying answers (0.732958ms)
+✔ B21 mean equals conserved fair share and need not be an observed score (0.857334ms)
+✔ B21 equal-card ordering accepts either identity order (1.354167ms)
+✔ B21 mean zero appended changes denominator and accepts equivalent fractions (0.328125ms)
+✔ B21 preserves wrong first prediction after correction and reset (1.012167ms)
+✔ B21 missing value cannot skip total or accept numerical coincidence (0.334416ms)
+✔ B21 MAD includes zero and uses absolute distances with original units (1.690167ms)
+✔ B21 quartile convention handles odd/even and outlier counterexample (0.2475ms)
+✔ B21 same mean and MAD do not determine distribution overlap (0.064875ms)
+✔ B21 reasonable cluster bounds and partial blank bounds round-trip (2.021292ms)
+✔ B21 summary accepts matched justified pairs and rejects stale edited values (0.49625ms)
+✔ B21 numeric data summary retains actual context and quartile width (0.28675ms)
+✔ B21 unequal group sizes compare ordinal percentages, not raw counts (0.60275ms)
+✔ B21 media repair requires evidence, and denominator/scope stay explicit (0.54375ms)
+✔ B21 one random draw cannot be rerolled before recording; no within-sample duplicates (1.02225ms)
+✔ B21 saved sample and partial input reproduce the next draw exactly (0.65425ms)
+✔ B21 biased frame stays limited to the club, full frame includes both (0.103708ms)
+✔ B21 larger random samples vary less over many seeds, not every draw more accurate (10.037417ms)
+✔ B21 sample-range answers use actual draws, not a curated fixed interval (2.721583ms)
+✔ B21 exact arithmetic is insufficient for a biased population estimate (1.87375ms)
+✔ B21 open explanations stay unassessed and safely escaped (0.466959ms)
+✔ B21 seven short routes and 40 separately performed source links (0.062334ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 298.787417

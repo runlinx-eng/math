@@ -1,0 +1,89 @@
+{
+  "batch": "B22",
+  "date": "2026-10-27",
+  "technicalChecksPassed": true,
+  "childTrial": false,
+  "userAcceptance": false,
+  "counts": {
+    "availableNodes": 350,
+    "newNodes": 15,
+    "nodeTasks": 1198,
+    "newNodeTasks": 45,
+    "sourceGoals": 1058,
+    "newSourceGoals": 45,
+    "routes": 133,
+    "availableConnections": 439,
+    "connectionTasks": 878,
+    "newConnections": 34,
+    "newConnectionTasks": 68,
+    "localResearchSupplements": 52,
+    "remainingUnimplementedNodes": 237,
+    "remainingResearchGaps": 33
+  },
+  "unitChecks": 551,
+  "browserChecks": 1054,
+  "suites": [
+    {
+      "name": "browser-final",
+      "checks": 652
+    },
+    {
+      "name": "integration-final",
+      "checks": 59
+    },
+    {
+      "name": "visual-final",
+      "checks": 227
+    },
+    {
+      "name": "capacity-final",
+      "checks": 15
+    },
+    {
+      "name": "regression/phase5-b21-integration-browser/result",
+      "checks": 52
+    },
+    {
+      "name": "regression/spatial-browser/result",
+      "checks": 37
+    },
+    {
+      "name": "regression/phase3-continuation-browser/result",
+      "checks": 8
+    },
+    {
+      "name": "regression/phase5-b09-readiness-browser/result",
+      "checks": 4
+    }
+  ],
+  "coverageChecks": 5,
+  "runtime": {
+    "at": "2026-10-27T09:30:09.682Z",
+    "health": 200,
+    "progress": "0 / 350",
+    "cache": "math-explorer-20261027-learning-v27",
+    "cachedFiles": 145,
+    "assetsMatched": 20,
+    "distBytes": 6811921,
+    "distMiB": 6.496
+  },
+  "capacity": {
+    "nodes": 350,
+    "connections": 439,
+    "characters": 9922195,
+    "bytes": 9938631,
+    "storedChars": 1750714,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 862,
+    "format": "math-storage/lzw16-v1",
+    "downloadBytes": 32784456,
+    "syntheticCompletedRecords": true
+  },
+  "limits": [
+    "Finite tasks do not establish general mastery.",
+    "Child trial and real next-day continuation have not occurred.",
+    "Pseudorandom simulations do not establish physical experiments or quality of free explanations.",
+    "Capacity test covers the current full synthetic corpus, not unlimited future history."
+  ]
+}

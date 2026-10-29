@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "four relevant money pieces can be directly clicked",
+    "wrong first amount is recorded",
+    "saved combinations remain visible",
+    "saved combinations show their denominations",
+    "clicking a piece on the table returns one",
+    "wrong coin classification is retained",
+    "AU 50c is visually larger than AU $2",
+    "AU 50c is shown as a silver twelve-sided token",
+    "buying all five exceeds the budget",
+    "an over-budget plan does not complete",
+    "removing an item shows remaining money",
+    "corrected plan retains the first failed attempt",
+    "first wrong spreadsheet formula is retained",
+    "editing formula hides the stale calculated result",
+    "stale calculation cannot complete",
+    "corrected formula completes without erasing support",
+    "nearby estimate is distinguished from exact change",
+    "shorter desktop layout has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "childTrial": false
+}

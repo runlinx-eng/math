@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "case 0 accepts self-chosen interior/exterior and reversed notation",
+    "case 0 persists valid work",
+    "case 1 accepts self-chosen interior/exterior and reversed notation",
+    "case 1 persists valid work",
+    "case 2 accepts self-chosen interior/exterior and reversed notation",
+    "case 2 persists valid work",
+    "case 3 accepts self-chosen interior/exterior and reversed notation",
+    "case 3 persists valid work",
+    "case 4 accepts self-chosen interior/exterior and reversed notation",
+    "case 4 persists valid work",
+    "alternate valid work survives reload",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

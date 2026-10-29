@@ -1,0 +1,94 @@
+{
+  "batch": "B09",
+  "at": "2026-10-25T12:37:32.883111+00:00",
+  "technicalComplete": true,
+  "childTrials": 0,
+  "userAcceptance": "not claimed",
+  "counts": {
+    "availableNodes": 127,
+    "newNodes": 9,
+    "nodeTasks": 407,
+    "newNodeTasks": 44,
+    "sourceGoals": 382,
+    "newSourceGoals": 27,
+    "routes": 43,
+    "availableConnections": 62,
+    "connectionTasks": 124,
+    "newConnections": 6,
+    "newConnectionTasks": 12,
+    "localResearchSupplements": 17,
+    "remainingUnimplementedNodes": 460,
+    "remainingResearchGaps": 68
+  },
+  "unitChecks": 172,
+  "browserAssertions": 805,
+  "browserSuites": [
+    {
+      "file": "browser-final-results.json",
+      "assertions": 292
+    },
+    {
+      "file": "integration-results.json",
+      "assertions": 47
+    },
+    {
+      "file": "readiness-results.json",
+      "assertions": 4
+    },
+    {
+      "file": "b08-integration-regression-results.json",
+      "assertions": 46
+    },
+    {
+      "file": "b07-integration-regression-results.json",
+      "assertions": 58
+    },
+    {
+      "file": "audio-regression-results.json",
+      "assertions": 14
+    },
+    {
+      "file": "phase2-regression-results.json",
+      "assertions": 123
+    },
+    {
+      "file": "phase3-regression-results.json",
+      "assertions": 63
+    },
+    {
+      "file": "phase4-integration-regression-results.json",
+      "assertions": 45
+    },
+    {
+      "file": "continuation-final-regression-results.json",
+      "assertions": 8
+    },
+    {
+      "file": "spatial-regression-results.json",
+      "assertions": 37
+    },
+    {
+      "file": "legacy-regression-results.json",
+      "assertions": 55
+    },
+    {
+      "file": "range-variants-results.json",
+      "assertions": 13
+    }
+  ],
+  "sourceIntegrity": {
+    "dist/data/atlas.json": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "dist/exploration-content.js": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397"
+  },
+  "distBytes": 6040596,
+  "precacheResources": 91,
+  "limits": [
+    "孩子尚未试用，实际起步与真实隔天续接待观察。",
+    "数值、操作与有限样例成立不等于长期理解或全范围掌握。",
+    "口述、语音流利度、真实手指动作、实物工具操作和手写清晰度未自动评估。",
+    "中文数词替代原英文目标，不能据此称英文读写已完成。",
+    "估计、预测的原始值保留；不能由屏幕行为确定心里是否逐个数。",
+    "解释单独保留待确认，正确选择不等于独立论证。",
+    "路线、分组与空间距离为本地导航，只有源边可被点亮为连接。"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "startedAt": "2026-10-24T08:33:18.661405+00:00",
+  "measurement": "实现开始至验证结束的墙钟跨度，包含中断及用户接续等待；不是可计费工时、持续工作时间或孩子学习时间。",
+  "events": [
+    {
+      "at": "2026-10-24T08:33:18.661405+00:00",
+      "phase": "implementation-start"
+    },
+    {
+      "at": "2026-10-24T09:08:14.889531+00:00",
+      "phase": "cube-goal-repair-start",
+      "category": "new-interaction",
+      "note": "12-node UI pass; goal audit requires actual building and prediction-before-fill, beyond prebuilt cube counting."
+    },
+    {
+      "at": "2026-10-24T09:08:53.968205+00:00",
+      "phase": "cube-goal-repair-code-end",
+      "category": "new-interaction",
+      "note": "Implemented build, estimate-before-fill and rule tests; browser verification measured later."
+    },
+    {
+      "at": "2026-10-24T09:08:53.968526+00:00",
+      "phase": "data-gap-repair-start",
+      "category": "missing-research-adaptation",
+      "note": "Add linked tallies and totals to the simulated frequency table; educational references already documented."
+    },
+    {
+      "at": "2026-10-24T09:08:53.969430+00:00",
+      "phase": "data-gap-repair-code-end",
+      "category": "missing-research-adaptation",
+      "note": "Tallies, per-observation add/remove, totals and CSV share the learner data; browser verification measured later."
+    },
+    {
+      "at": "2026-10-24T13:02:51.505010+00:00",
+      "phase": "implementation-and-browser-verification-complete",
+      "checks": {
+        "unit": 62,
+        "newLessonBrowser": 123,
+        "legacyBrowser": 55,
+        "spatialBrowser": 36
+      }
+    }
+  ],
+  "implementationAndVerificationEndedAt": "2026-10-24T13:02:51.505010+00:00",
+  "limitations": [
+    "本轮跨越用户继续消息及较长时间间隔，未记录暂停起止，不能把269.5分钟跨度当作实际工作耗时。",
+    "批次时间包括工具等待、验证、返工和文档核对；前期设计、资料检索部分不在计时内。",
+    "三类内容与共享框架穿插制作，初始分类型耗时未单独计时，不能事后等分或推算成实测。",
+    "局部 repair-code 起止仅为编辑命令的执行边界，不包括之前思考，不能作为整类内容工时。"
+  ],
+  "workTypes": [
+    {
+      "type": "已有方案适配",
+      "scope": "10 个上游有研究节点，复用其中 3 个旧活动",
+      "elapsed": "与共享实现合并计时，不可可靠分离"
+    },
+    {
+      "type": "新交互",
+      "scope": "三维填充、拆层与切分，计数与图表共享教具",
+      "elapsed": "与共享实现合并计时，不可可靠分离"
+    },
+    {
+      "type": "缺研究补充",
+      "scope": "2 个数据节点，补依据、模拟观察与表示比较",
+      "elapsed": "研究时长未完整单计，含实现部分在本批总计时内"
+    }
+  ],
+  "elapsedWallClockMinutes": 269.5,
+  "activeMinutes": null
+}

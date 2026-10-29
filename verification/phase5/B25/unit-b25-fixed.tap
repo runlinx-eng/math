@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: B25 turnroute actual work, empty rejection and replay
+ok 1 - B25 turnroute actual work, empty rejection and replay
+  ---
+  duration_ms: 4.696917
+  type: 'test'
+  ...
+# Subtest: B25 anglecorner actual work, empty rejection and replay
+ok 2 - B25 anglecorner actual work, empty rejection and replay
+  ---
+  duration_ms: 1.580208
+  type: 'test'
+  ...
+# Subtest: B25 angleparts actual work, empty rejection and replay
+ok 3 - B25 angleparts actual work, empty rejection and replay
+  ---
+  duration_ms: 1.097166
+  type: 'test'
+  ...
+# Subtest: B25 rightcheck actual work, empty rejection and replay
+ok 4 - B25 rightcheck actual work, empty rejection and replay
+  ---
+  duration_ms: 0.638167
+  type: 'test'
+  ...
+# Subtest: B25 angletypes actual work, empty rejection and replay
+ok 5 - B25 angletypes actual work, empty rejection and replay
+  ---
+  duration_ms: 0.686375
+  type: 'test'
+  ...
+# Subtest: B25 anglestraight actual work, empty rejection and replay
+ok 6 - B25 anglestraight actual work, empty rejection and replay
+  ---
+  duration_ms: 0.362792
+  type: 'test'
+  ...
+# Subtest: B25 degreeunit actual work, empty rejection and replay
+ok 7 - B25 degreeunit actual work, empty rejection and replay
+  ---
+  duration_ms: 0.341541
+  type: 'test'
+  ...
+# Subtest: B25 angleestimate actual work, empty rejection and replay
+ok 8 - B25 angleestimate actual work, empty rejection and replay
+  ---
+  duration_ms: 0.388958
+  type: 'test'
+  ...
+# Subtest: B25 angleprotractor actual work, empty rejection and replay
+ok 9 - B25 angleprotractor actual work, empty rejection and replay
+  ---
+  duration_ms: 1.318042
+  type: 'test'
+  ...
+# Subtest: B25 lineorientation actual work, empty rejection and replay
+ok 10 - B25 lineorientation actual work, empty rejection and replay
+  ---
+  duration_ms: 0.555
+  type: 'test'
+  ...
+# Subtest: B25 linemark actual work, empty rejection and replay
+ok 11 - B25 linemark actual work, empty rejection and replay
+  ---
+  duration_ms: 0.294917
+  type: 'test'
+  ...
+# Subtest: B25 linenotation actual work, empty rejection and replay
+ok 12 - B25 linenotation actual work, empty rejection and replay
+  ---
+  duration_ms: 0.385958
+  type: 'test'
+  ...
+# Subtest: B25 angleadd actual work, empty rejection and replay
+ok 13 - B25 angleadd actual work, empty rejection and replay
+  ---
+  duration_ms: 0.291917
+  type: 'test'
+  ...
+# Subtest: B25 anglearound actual work, empty rejection and replay
+ok 14 - B25 anglearound actual work, empty rejection and replay
+  ---
+  duration_ms: 0.308208
+  type: 'test'
+  ...
+# Subtest: B25 anglecross actual work, empty rejection and replay
+ok 15 - B25 anglecross actual work, empty rejection and replay
+  ---
+  duration_ms: 0.243042
+  type: 'test'
+  ...
+# Subtest: B25 rectanglefacts actual work, empty rejection and replay
+ok 16 - B25 rectanglefacts actual work, empty rejection and replay
+  ---
+  duration_ms: 0.28925
+  type: 'test'
+  ...
+# Subtest: B25 anglechain actual work, empty rejection and replay
+ok 17 - B25 anglechain actual work, empty rejection and replay
+  ---
+  duration_ms: 0.200959
+  type: 'test'
+  ...
+# Subtest: B25 parallelangle actual work, empty rejection and replay
+ok 18 - B25 parallelangle actual work, empty rejection and replay
+  ---
+  duration_ms: 0.235417
+  type: 'test'
+  ...
+# Subtest: B25 triangleangles actual work, empty rejection and replay
+ok 19 - B25 triangleangles actual work, empty rejection and replay
+  ---
+  duration_ms: 0.487459
+  type: 'test'
+  ...
+# Subtest: B25 polygonangles actual work, empty rejection and replay
+ok 20 - B25 polygonangles actual work, empty rejection and replay
+  ---
+  duration_ms: 0.259208
+  type: 'test'
+  ...
+# Subtest: B25 shapefacts actual work, empty rejection and replay
+ok 21 - B25 shapefacts actual work, empty rejection and replay
+  ---
+  duration_ms: 0.506584
+  type: 'test'
+  ...
+# Subtest: B25 triangledraw actual work, empty rejection and replay
+ok 22 - B25 triangledraw actual work, empty rejection and replay
+  ---
+  duration_ms: 0.829791
+  type: 'test'
+  ...
+# Subtest: B25 trianglecongruent actual work, empty rejection and replay
+ok 23 - B25 trianglecongruent actual work, empty rejection and replay
+  ---
+  duration_ms: 0.907042
+  type: 'test'
+  ...
+# Subtest: B25 trianglepossible actual work, empty rejection and replay
+ok 24 - B25 trianglepossible actual work, empty rejection and replay
+  ---
+  duration_ms: 1.04225
+  type: 'test'
+  ...
+# Subtest: 24 source nodes, 82 tasks, 8 routes and 19 genuine source edges
+ok 25 - 24 source nodes, 82 tasks, 8 routes and 19 genuine source edges
+  ---
+  duration_ms: 8.900125
+  type: 'test'
+  ...
+# Subtest: angles have correct boundary classes, including reflex and full turn
+ok 26 - angles have correct boundary classes, including reflex and full turn
+  ---
+  duration_ms: 0.577417
+  type: 'test'
+  ...
+# Subtest: angle is independent of arm length, and required different lengths are recorded
+ok 27 - angle is independent of arm length, and required different lengths are recorded
+  ---
+  duration_ms: 0.128667
+  type: 'test'
+  ...
+# Subtest: angle order compares openings rather than arm lengths
+ok 28 - angle order compares openings rather than arm lengths
+  ---
+  duration_ms: 0.102
+  type: 'test'
+  ...
+# Subtest: tilted rectangle has four real right angles, obtuse triangle one obtuse vertex
+ok 29 - tilted rectangle has four real right angles, obtuse triangle one obtuse vertex
+  ---
+  duration_ms: 0.041875
+  type: 'test'
+  ...
+# Subtest: equal-side ticks accept either distinct one/two mark pairing
+ok 30 - equal-side ticks accept either distinct one/two mark pairing
+  ---
+  duration_ms: 0.076667
+  type: 'test'
+  ...
+# Subtest: protractor requires actual center and zero-line placement and rejects stale drawing
+ok 31 - protractor requires actual center and zero-line placement and rejects stale drawing
+  ---
+  duration_ms: 0.195042
+  type: 'test'
+  ...
+# Subtest: estimate stays hidden until committed, and first wrong estimate is retained
+ok 32 - estimate stays hidden until committed, and first wrong estimate is retained
+  ---
+  duration_ms: 0.089
+  type: 'test'
+  ...
+# Subtest: regular polygon triangulation uses n minus 3 diagonals and n minus 2 pieces
+ok 33 - regular polygon triangulation uses n minus 3 diagonals and n minus 2 pieces
+  ---
+  duration_ms: 0.101166
+  type: 'test'
+  ...
+# Subtest: triangle angle construction keeps the given ASA angles
+ok 34 - triangle angle construction keeps the given ASA angles
+  ---
+  duration_ms: 0.048792
+  type: 'test'
+  ...
+# Subtest: triangle inequality distinguishes separate circles, tangency and true intersection
+ok 35 - triangle inequality distinguishes separate circles, tangency and true intersection
+  ---
+  duration_ms: 0.031458
+  type: 'test'
+  ...
+# Subtest: SSA really produces two different triangles with AB=7 BC=5 A=40
+ok 36 - SSA really produces two different triangles with AB=7 BC=5 A=40
+  ---
+  duration_ms: 0.1275
+  type: 'test'
+  ...
+# Subtest: collinear circle touch cannot be selected as a triangle and first issue stays replayable
+ok 37 - collinear circle touch cannot be selected as a triangle and first issue stays replayable
+  ---
+  duration_ms: 0.129584
+  type: 'test'
+  ...
+# Subtest: input changes invalidate a previously constructed triangle until redrawn
+ok 38 - input changes invalidate a previously constructed triangle until redrawn
+  ---
+  duration_ms: 0.132333
+  type: 'test'
+  ...
+# Subtest: walking backward keeps the heading and returns to the start
+ok 39 - walking backward keeps the heading and returns to the start
+  ---
+  duration_ms: 0.100083
+  type: 'test'
+  ...
+# Subtest: free-form words are escaped and are not automatically treated as mastery
+ok 40 - free-form words are escaped and are not automatically treated as mastery
+  ---
+  duration_ms: 0.120875
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 192.593708

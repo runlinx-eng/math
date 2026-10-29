@@ -1,0 +1,10 @@
+{
+  "batch": "B35",
+  "startedAt": "2026-10-28T07:50:02.068691+00:00",
+  "snapshot": "snapshots/v39-before-b35-20261028T155000.tar.gz",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "activeHours": null,
+  "finishedAt": "2026-10-28T08:12:16.586786+00:00"
+}

@@ -1,0 +1,190 @@
+TAP version 13
+# Subtest: B14 all 73 node and 62 joint tasks reject untouched work and accept replayed serializable constructions
+ok 1 - B14 all 73 node and 62 joint tasks reject untouched work and accept replayed serializable constructions
+  ---
+  duration_ms: 106.418
+  type: 'test'
+  ...
+# Subtest: B14 eight short routes and all joint work use real source edges, not route proximity
+ok 2 - B14 eight short routes and all joint work use real source edges, not route proximity
+  ---
+  duration_ms: 4.205166
+  type: 'test'
+  ...
+# Subtest: B14 tens times tens needs hundreds, not a zero-adding answer
+ok 3 - B14 tens times tens needs hundreds, not a zero-adding answer
+  ---
+  duration_ms: 0.142875
+  type: 'test'
+  ...
+# Subtest: B14 area cuts retain whole edges, accept mirrored tens splits and reject stale pending cuts
+ok 4 - B14 area cuts retain whole edges, accept mirrored tens splits and reject stale pending cuts
+  ---
+  duration_ms: 0.302333
+  type: 'test'
+  ...
+# Subtest: B14 multiplying cannot skip exchanges or hide a wrong carry behind a correct total
+ok 5 - B14 multiplying cannot skip exchanges or hide a wrong carry behind a correct total
+  ---
+  duration_ms: 0.16
+  type: 'test'
+  ...
+# Subtest: B14 wrong first estimate survives correction and reset, and estimate need not exceed exact answer
+ok 6 - B14 wrong first estimate survives correction and reset, and estimate need not exceed exact answer
+  ---
+  duration_ms: 0.504916
+  type: 'test'
+  ...
+# Subtest: B14 the tens row needs a shift even with the right final product, zero positions remain
+ok 7 - B14 the tens row needs a shift even with the right final product, zero positions remain
+  ---
+  duration_ms: 1.577417
+  type: 'test'
+  ...
+# Subtest: B14 division records zero quotients and brings the exact remainder down
+ok 8 - B14 division records zero quotients and brings the exact remainder down
+  ---
+  duration_ms: 0.921125
+  type: 'test'
+  ...
+# Subtest: B14 a quotient is rejected if the stated remainder can still make another share
+ok 9 - B14 a quotient is rejected if the stated remainder can still make another share
+  ---
+  duration_ms: 0.089791
+  type: 'test'
+  ...
+# Subtest: B14 short and expanded notation both work; neither implies a best mental method
+ok 10 - B14 short and expanded notation both work; neither implies a best mental method
+  ---
+  duration_ms: 0.557875
+  type: 'test'
+  ...
+# Subtest: B14 inverse checking is mandatory and accepts equality reversal
+ok 11 - B14 inverse checking is mandatory and accepts equality reversal
+  ---
+  duration_ms: 0.340083
+  type: 'test'
+  ...
+# Subtest: B14 vehicle and full-piece contexts cannot use ordinary nearest-integer rounding
+ok 12 - B14 vehicle and full-piece contexts cannot use ordinary nearest-integer rounding
+  ---
+  duration_ms: 0.809666
+  type: 'test'
+  ...
+# Subtest: B14 exact fractions and decimals differ from requested rounded precision
+ok 13 - B14 exact fractions and decimals differ from requested rounded precision
+  ---
+  duration_ms: 0.513
+  type: 'test'
+  ...
+# Subtest: B14 factor search requires a complete boundary check, includes 1 and squares once
+ok 14 - B14 factor search requires a complete boundary check, includes 1 and squares once
+  ---
+  duration_ms: 0.509
+  type: 'test'
+  ...
+# Subtest: B14 common multiples are the first positive intersections of both constructed lists
+ok 15 - B14 common multiples are the first positive intersections of both constructed lists
+  ---
+  duration_ms: 0.631208
+  type: 'test'
+  ...
+# Subtest: B14 1 is neither, 2 is prime, odd 51 is composite and 97 is prime
+ok 16 - B14 1 is neither, 2 is prime, odd 51 is composite and 97 is prime
+  ---
+  duration_ms: 0.673917
+  type: 'test'
+  ...
+# Subtest: B14 being divisible by only 2 or only 3 does not suffice for 6
+ok 17 - B14 being divisible by only 2 or only 3 does not suffice for 6
+  ---
+  duration_ms: 0.24425
+  type: 'test'
+  ...
+# Subtest: B14 odd and even reasoning retains wrong prediction and needs the matching structure
+ok 18 - B14 odd and even reasoning retains wrong prediction and needs the matching structure
+  ---
+  duration_ms: 0.110375
+  type: 'test'
+  ...
+# Subtest: B14 every split keeps its original product; a prime cannot split using 1
+ok 19 - B14 every split keeps its original product; a prime cannot split using 1
+  ---
+  duration_ms: 0.067958
+  type: 'test'
+  ...
+# Subtest: B14 prime factors allow arbitrary valid trees and equivalent powers, not composite leaves
+ok 20 - B14 prime factors allow arbitrary valid trees and equivalent powers, not composite leaves
+  ---
+  duration_ms: 0.462667
+  type: 'test'
+  ...
+# Subtest: B14 a shared prime copy can be matched only once; coprime numbers still share factor 1
+ok 21 - B14 a shared prime copy can be matched only once; coprime numbers still share factor 1
+  ---
+  duration_ms: 1.097959
+  type: 'test'
+  ...
+# Subtest: B14 uniqueness comparison requires a different first split, without claiming a general proof
+ok 22 - B14 uniqueness comparison requires a different first split, without claiming a general proof
+  ---
+  duration_ms: 1.217417
+  type: 'test'
+  ...
+# Subtest: B14 two-step stories preserve operands, unit conversion and corresponding n-equation
+ok 23 - B14 two-step stories preserve operands, unit conversion and corresponding n-equation
+  ---
+  duration_ms: 0.393875
+  type: 'test'
+  ...
+# Subtest: B14 a valid alternative two-step plan can find unit price first
+ok 24 - B14 a valid alternative two-step plan can find unit price first
+  ---
+  duration_ms: 0.171709
+  type: 'test'
+  ...
+# Subtest: B14 replacing 24 by factors conserves identities and undo retains old operations
+ok 25 - B14 replacing 24 by factors conserves identities and undo retains old operations
+  ---
+  duration_ms: 0.312333
+  type: 'test'
+  ...
+# Subtest: B14 nonzero square pair excludes zero-plus-100 and accepts either orientation
+ok 26 - B14 nonzero square pair excludes zero-plus-100 and accepts either orientation
+  ---
+  duration_ms: 0.091917
+  type: 'test'
+  ...
+# Subtest: B14 child rules execute different outputs; bad order or predicates cannot earn completion
+ok 27 - B14 child rules execute different outputs; bad order or predicates cannot earn completion
+  ---
+  duration_ms: 0.246334
+  type: 'test'
+  ...
+# Subtest: B14 spreadsheet formula must use previous cell, and only common multiples are highlighted
+ok 28 - B14 spreadsheet formula must use previous cell, and only common multiples are highlighted
+  ---
+  duration_ms: 0.274292
+  type: 'test'
+  ...
+# Subtest: B14 forged steps and malformed history cannot bypass replay
+ok 29 - B14 forged steps and malformed history cannot bypass replay
+  ---
+  duration_ms: 1.511292
+  type: 'test'
+  ...
+# Subtest: B14 numeric parser and controls escape child text; visuals never replace focused text fields
+ok 30 - B14 numeric parser and controls escape child text; visuals never replace focused text fields
+  ---
+  duration_ms: 0.520375
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 222.287666

@@ -1,0 +1,148 @@
+{
+  "nodes": 587,
+  "edges": 1223,
+  "themes": 5,
+  "packs": 23,
+  "research": 502,
+  "missingResearch": 85,
+  "packsSummary": [
+    {
+      "id": "number-sense",
+      "title": "数的样子与大小",
+      "researchCount": 69,
+      "nodes": 77
+    },
+    {
+      "id": "add-subtract",
+      "title": "合起来与拿走",
+      "researchCount": 45,
+      "nodes": 48
+    },
+    {
+      "id": "groups",
+      "title": "成组与平均分",
+      "researchCount": 59,
+      "nodes": 65
+    },
+    {
+      "id": "same-amount",
+      "title": "一份与同一个量",
+      "researchCount": 54,
+      "nodes": 55
+    },
+    {
+      "id": "fraction-operations",
+      "title": "分数也能运算",
+      "researchCount": 18,
+      "nodes": 18
+    },
+    {
+      "id": "scaling",
+      "title": "放大、缩小与比例",
+      "researchCount": 22,
+      "nodes": 23
+    },
+    {
+      "id": "shapes",
+      "title": "形状有什么共同点",
+      "researchCount": 19,
+      "nodes": 21
+    },
+    {
+      "id": "positions",
+      "title": "位置与变换",
+      "researchCount": 13,
+      "nodes": 17
+    },
+    {
+      "id": "angles",
+      "title": "转弯与角",
+      "researchCount": 24,
+      "nodes": 26
+    },
+    {
+      "id": "solids",
+      "title": "从平面到立体",
+      "researchCount": 11,
+      "nodes": 12
+    },
+    {
+      "id": "units",
+      "title": "用单位比较",
+      "researchCount": 26,
+      "nodes": 29
+    },
+    {
+      "id": "area",
+      "title": "边界与铺满",
+      "researchCount": 14,
+      "nodes": 17
+    },
+    {
+      "id": "volume",
+      "title": "装得下多少",
+      "researchCount": 7,
+      "nodes": 10
+    },
+    {
+      "id": "time",
+      "title": "时间怎样走",
+      "researchCount": 15,
+      "nodes": 18
+    },
+    {
+      "id": "money",
+      "title": "钱与选择",
+      "researchCount": 8,
+      "nodes": 16
+    },
+    {
+      "id": "patterns",
+      "title": "寻找与创造规律",
+      "researchCount": 10,
+      "nodes": 15
+    },
+    {
+      "id": "unknowns",
+      "title": "相等与未知数",
+      "researchCount": 17,
+      "nodes": 17
+    },
+    {
+      "id": "functions",
+      "title": "一起变化的量",
+      "researchCount": 7,
+      "nodes": 7
+    },
+    {
+      "id": "reasoning",
+      "title": "把想法说清楚",
+      "researchCount": 30,
+      "nodes": 31
+    },
+    {
+      "id": "collect",
+      "title": "问问题与收集",
+      "researchCount": 3,
+      "nodes": 12
+    },
+    {
+      "id": "display",
+      "title": "把数据画出来",
+      "researchCount": 13,
+      "nodes": 20
+    },
+    {
+      "id": "summarize",
+      "title": "比较与推断",
+      "researchCount": 3,
+      "nodes": 14
+    },
+    {
+      "id": "chance",
+      "title": "可能与不一定",
+      "researchCount": 15,
+      "nodes": 19
+    }
+  ]
+}

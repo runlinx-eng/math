@@ -1,0 +1,34 @@
+{
+  "passed": 22,
+  "checks": [
+    "3D world retains five themes, 23 clusters, 587 nodes and 1223 source edges",
+    "overview begins with five directions rather than hundreds of labels",
+    "approaching a theme progressively reveals knowledge clusters",
+    "the expanded fraction pack first offers three directions",
+    "approaching a cluster reveals its actual objects in the same world",
+    "zooming through scales retains the same canvas",
+    "all objects of a dense cluster remain reachable through the contextual finder",
+    "dragging empty space pans the continuous world",
+    "rotation changes the viewpoint around a stable target",
+    "wheel zoom approaches the object under the pointer",
+    "previous viewpoint restores camera position and target",
+    "embedded activity exposes content without a second page navigation bar",
+    "enlarging a surface provides more reading room without replacing the space",
+    "editing two live work surfaces preserves both drafts",
+    "two content surfaces remain open at the same time",
+    "selected names remain available in the surfaces; visible labels fit",
+    "space labels stay outside both open work surfaces",
+    "embedded construction and transfer persist their independent records and hint history",
+    "later work within each surface keeps both recent drafts",
+    "completed activity is not promoted to independent understanding",
+    "following an available relationship opens its learning activity",
+    "following the relationship preserves both earlier drafts"
+  ],
+  "failed": "Error: highlighted object connections exactly match source prerequisites and extensions",
+  "errors": [],
+  "remote": [],
+  "drafts": {
+    "fair": "先把整体平均分，左右两份草稿都要保留。",
+    "rename": "两种分法表示同一个量，这是右边的草稿。"
+  }
+}

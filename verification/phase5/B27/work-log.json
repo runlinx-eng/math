@@ -1,0 +1,10 @@
+{
+  "startedAt": "2026-10-27T12:46:56.646253+00:00",
+  "snapshot": "snapshots/v31-before-b27-20261027T204655.tar.gz",
+  "activeHours": null,
+  "childTrial": false,
+  "status": "technical-complete",
+  "endedAt": "2026-10-27T13:15:50.587644+00:00",
+  "userAcceptance": false,
+  "summary": "verification/phase5/B27/summary.json"
+}

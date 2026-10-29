@@ -1,0 +1,10 @@
+{
+  "nodes": 335,
+  "connections": 405,
+  "characters": 9763021,
+  "bytes": 9779421,
+  "saved": false,
+  "error": "QuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'math-capacity-probe' exceeded the quota.",
+  "isolatedContext": true,
+  "syntheticCompletedRecords": true
+}

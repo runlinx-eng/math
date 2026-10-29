@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: B19 matches eight planned nodes and all 24 tasks, with 12 genuine source edges
+ok 1 - B19 matches eight planned nodes and all 24 tasks, with 12 genuine source edges
+  ---
+  duration_ms: 102.633541
+  type: 'test'
+  ...
+# Subtest: B19 three entry choices keep every collect and display route reachable
+ok 2 - B19 three entry choices keep every collect and display route reachable
+  ---
+  duration_ms: 0.136584
+  type: 'test'
+  ...
+# Subtest: B19 total counts records, neither category rows nor the largest frequency
+ok 3 - B19 total counts records, neither category rows nor the largest frequency
+  ---
+  duration_ms: 1.549
+  type: 'test'
+  ...
+# Subtest: B19 matching makes a difference visible and cannot pass by reporting the larger count
+ok 4 - B19 matching makes a difference visible and cannot pass by reporting the larger count
+  ---
+  duration_ms: 2.433166
+  type: 'test'
+  ...
+# Subtest: B19 ties require all maxima and minima, including equality
+ok 5 - B19 ties require all maxima and minima, including equality
+  ---
+  duration_ms: 2.33675
+  type: 'test'
+  ...
+# Subtest: B19 repeated visits are not silently counted as unique people
+ok 6 - B19 repeated visits are not silently counted as unique people
+  ---
+  duration_ms: 0.314375
+  type: 'test'
+  ...
+# Subtest: B19 COUNTIF actually executes, with full range and correct condition checked separately
+ok 7 - B19 COUNTIF actually executes, with full range and correct condition checked separately
+  ---
+  duration_ms: 0.073667
+  type: 'test'
+  ...
+# Subtest: B19 a short formula range is rejected even if omitted row has another category
+ok 8 - B19 a short formula range is rejected even if omitted row has another category
+  ---
+  duration_ms: 0.261458
+  type: 'test'
+  ...
+# Subtest: B19 three days and three questions preserve their observation units
+ok 9 - B19 three days and three questions preserve their observation units
+  ---
+  duration_ms: 4.195333
+  type: 'test'
+  ...
+# Subtest: B19 a biased question blocks collection but its first attempt remains
+ok 10 - B19 a biased question blocks collection but its first attempt remains
+  ---
+  duration_ms: 2.608917
+  type: 'test'
+  ...
+# Subtest: B19 incorrect transcription is retained, and a matching total cannot conceal it
+ok 11 - B19 incorrect transcription is retained, and a matching total cannot conceal it
+  ---
+  duration_ms: 1.183459
+  type: 'test'
+  ...
+# Subtest: B19 correcting one row invalidates downstream table, plot and report, while retaining prior work
+ok 12 - B19 correcting one row invalidates downstream table, plot and report, while retaining prior work
+  ---
+  duration_ms: 4.476333
+  type: 'test'
+  ...
+# Subtest: B19 correct totals alone cannot replace the raw records
+ok 13 - B19 correct totals alone cannot replace the raw records
+  ---
+  duration_ms: 0.172167
+  type: 'test'
+  ...
+# Subtest: B19 suitable alternative tables and dot plots pass with matching reasons
+ok 14 - B19 suitable alternative tables and dot plots pass with matching reasons
+  ---
+  duration_ms: 7.302041
+  type: 'test'
+  ...
+# Subtest: B19 drawing a plausible graph of the wrong values cannot pass
+ok 15 - B19 drawing a plausible graph of the wrong values cannot pass
+  ---
+  duration_ms: 2.845417
+  type: 'test'
+  ...
+# Subtest: B19 a conclusion about all children is rejected even with correct counts
+ok 16 - B19 a conclusion about all children is rejected even with correct counts
+  ---
+  duration_ms: 3.069917
+  type: 'test'
+  ...
+# Subtest: B19 optional prose is saved and escaped without semantic or word-count grading
+ok 17 - B19 optional prose is saved and escaped without semantic or word-count grading
+  ---
+  duration_ms: 0.226042
+  type: 'test'
+  ...
+# Subtest: B19 missing categorical data cannot be replaced with zero or a guessed majority
+ok 18 - B19 missing categorical data cannot be replaced with zero or a guessed majority
+  ---
+  duration_ms: 0.225166
+  type: 'test'
+  ...
+# Subtest: B19 known transcription error requires the provided evidence
+ok 19 - B19 known transcription error requires the provided evidence
+  ---
+  duration_ms: 0.196334
+  type: 'test'
+  ...
+# Subtest: B19 unknown or excluded is valid with an explicit reason; equal valid responses are retained
+ok 20 - B19 unknown or excluded is valid with an explicit reason; equal valid responses are retained
+  ---
+  duration_ms: 0.664917
+  type: 'test'
+  ...
+# Subtest: B19 ordinal order is not assumed to be equally spaced
+ok 21 - B19 ordinal order is not assumed to be equally spaced
+  ---
+  duration_ms: 0.345792
+  type: 'test'
+  ...
+# Subtest: B19 measurement context preserves sample count, method, unit and half-centimetre precision
+ok 22 - B19 measurement context preserves sample count, method, unit and half-centimetre precision
+  ---
+  duration_ms: 0.280666
+  type: 'test'
+  ...
+# Subtest: B19 rounded reports conserve observations and half-way values follow the declared convention
+ok 23 - B19 rounded reports conserve observations and half-way values follow the declared convention
+  ---
+  duration_ms: 0.634875
+  type: 'test'
+  ...
+# Subtest: B19 rounding keeps a wrong original guess and the rejected rounding value
+ok 24 - B19 rounding keeps a wrong original guess and the rejected rounding value
+  ---
+  duration_ms: 0.758916
+  type: 'test'
+  ...
+# Subtest: B19 all constructed states replay, survive JSON, and reject forged history or boards
+ok 25 - B19 all constructed states replay, survive JSON, and reject forged history or boards
+  ---
+  duration_ms: 63.749292
+  type: 'test'
+  ...
+# Subtest: B19 raw CSV uses stored rows and identifies them as simulations
+ok 26 - B19 raw CSV uses stored rows and identifies them as simulations
+  ---
+  duration_ms: 4.203333
+  type: 'test'
+  ...
+# Subtest: B19 correcting a completed investigation requires a new checked revision without deleting the old success
+ok 27 - B19 correcting a completed investigation requires a new checked revision without deleting the old success
+  ---
+  duration_ms: 55.266084
+  type: 'test'
+  ...
+# Subtest: B19 ordinary historical tasks retain their previously completed work when revisited
+ok 28 - B19 ordinary historical tasks retain their previously completed work when revisited
+  ---
+  duration_ms: 2.915041
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 374.668041

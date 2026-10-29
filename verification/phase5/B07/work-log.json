@@ -1,0 +1,37 @@
+{
+  "batch": "B07",
+  "startedAt": "20261025T044309Z",
+  "events": [
+    {
+      "at": "20261025T044309Z",
+      "event": "snapshot and source review started"
+    },
+    {
+      "at": "2026-10-25T04:44:40.384084+00:00",
+      "event": "source extraction saved",
+      "evidence": "docs/phase5/B07/source-review.json"
+    },
+    {
+      "at": "2026-10-25T06:21:47.896488+00:00",
+      "event": "model source last saved",
+      "evidence": "dist/learning/phase5/b07-model.js"
+    },
+    {
+      "at": "2026-10-25T06:25:02.679556+00:00",
+      "event": "complete UI pass result saved",
+      "evidence": "verification/phase5/B07/browser-results-final.json"
+    },
+    {
+      "at": "2026-10-25T06:27:28.004430+00:00",
+      "event": "continuation integration result saved",
+      "evidence": "verification/phase5/B07/integration-browser-results-final.json"
+    },
+    {
+      "at": "2026-10-25T06:34:31.847026+00:00",
+      "event": "final rule checks and evidence reconciliation"
+    }
+  ],
+  "activeHours": null,
+  "limits": "File save times and wall-clock events only, including tool waits and interruptions; not active labor. Five planned units share models; no per-unit active time measured. Child trial has not happened.",
+  "finishedAt": "2026-10-25T06:34:31.847026+00:00"
+}

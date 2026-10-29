@@ -1,0 +1,14 @@
+.g27-world{min-height:320px;border-radius:18px;background:radial-gradient(circle at 50% 38%,#fbfcf5,#e7f0e8);overflow:hidden}
+.g27-world canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.g27-controls{display:grid;gap:.7rem;padding:1rem 0;color:#365247}
+.g27-controls p{margin:.1rem 0;line-height:1.55}
+.g27-cards,.g27-buttons{display:flex;gap:.5rem;flex-wrap:wrap}
+#extra-controls .g27-controls button[aria-pressed=true]{background:#3d765f;color:#fff;border-color:#3d765f}
+.g27-controls>button{justify-self:start}
+.g27-slider{display:grid;gap:.55rem;max-width:440px}
+.g27-slider input{width:100%;accent-color:#568d71}
+.g27-discovery{padding:.6rem .8rem;border-radius:10px;background:#e5f2e7}
+.g27-issue{padding:.6rem .8rem;border-radius:10px;background:#fff1dd}
+.g27-controls details{margin-top:.4rem}
+.g27-controls details label{display:grid;gap:.35rem;margin-top:.5rem;max-width:500px}
+.g27-controls small{display:block;color:#5f7569}

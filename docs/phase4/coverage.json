@@ -1,0 +1,4871 @@
+{
+  "schema": "math-phase4-coverage/1",
+  "date": "2026-10-25",
+  "sourceCommit": "a8719737ff86ef7940ba5feca11940de1204103e",
+  "counts": {
+    "availableNodes": 50,
+    "newNodes": 38,
+    "nodeTasks": 136,
+    "sourceGoals": 153,
+    "routes": 15,
+    "availableConnections": 21,
+    "connectionTasks": 42,
+    "localResearchSupplements": 9,
+    "remainingUnimplementedNodes": 537,
+    "remainingResearchGaps": 76
+  },
+  "nodes": [
+    {
+      "topicId": "mt_ndGqFPWyen",
+      "lessonId": "share",
+      "route": "A",
+      "title": "怎样才算一份",
+      "sourceName": "Fractions of a whole",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/801",
+        "topicId": "mt_ndGqFPWyen"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Cut it fair, then count the unit",
+          "jsonPointer": "/records/638/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "How big is ONE part? (vary the whole and the denominator)",
+          "jsonPointer": "/records/638/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Predict, then check: comparing same-numerator fractions",
+          "jsonPointer": "/records/638/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Identify, match and construct across models (consolidation)",
+          "jsonPointer": "/records/638/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#share",
+      "taskCount": 3,
+      "reflection": "两块大小不同，为什么不能只数涂了几块？分子和分母分别告诉了什么？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Given a shape divided into 5 equal parts, identify one shaded part as 1/5",
+          "tasks": [
+            {
+              "key": "share:0",
+              "index": 0,
+              "type": "partition",
+              "prompt": "把这一整块平均分成 5 份，取出 1 份。"
+            }
+          ],
+          "implementedAction": "移动切口平均分成五份，选任意一份",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain that 3/4 means 3 parts each of size 1/4",
+          "tasks": [
+            {
+              "key": "share:1",
+              "index": 1,
+              "type": "partition",
+              "prompt": "把这一整块平均分成 4 份，取出 3 份。"
+            }
+          ],
+          "implementedAction": "构造四份取三份；用自己的话说明三个单位份",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Draw a model showing 2/6 as 2 pieces of a whole cut into 6",
+          "tasks": [
+            {
+              "key": "share:2",
+              "index": 2,
+              "type": "partition",
+              "prompt": "把这一整块平均分成 6 份，取出 2 份。"
+            }
+          ],
+          "implementedAction": "重新分成六份，取任意两份",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_Ep7TDFuYUa",
+      "lessonId": "equivalent",
+      "route": "A",
+      "title": "分细了，会变多吗",
+      "sourceName": "Equivalent fractions on a number line",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/797",
+        "topicId": "mt_Ep7TDFuYUa"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Plumb-line on stacked thirds and sixths lines",
+          "jsonPointer": "/records/346/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Re-partition toggle: the point that does not move",
+          "jsonPointer": "/records/346/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Measuring equal lengths with different fraction strips",
+          "jsonPointer": "/records/346/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Contrast renaming with 'add one to each'",
+          "jsonPointer": "/records/346/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Verify and sort equivalents (practice and check)",
+          "jsonPointer": "/records/346/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#equivalent",
+      "taskCount": 3,
+      "reflection": "1/2 变成 3/6 时，什么变了、什么没有变？为什么两种写法会在数轴同一点？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Use fraction strips to show 1/2 = 2/4 = 3/6",
+          "tasks": [
+            {
+              "key": "equivalent:0",
+              "index": 0,
+              "type": "equivalent",
+              "prompt": "把三条纸带都涂到一半。切法不同，拿到的量要一样。"
+            }
+          ],
+          "implementedAction": "同长纸带上构造 2/4、3/6、4/8",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Verify on a number line that 2/3 and 4/6 land on the same point",
+          "tasks": [
+            {
+              "key": "equivalent:1",
+              "index": 1,
+              "type": "line",
+              "prompt": "在下面的 6 等分线上，找到和 2/3 同一个位置。"
+            },
+            {
+              "key": "equivalent:2",
+              "index": 2,
+              "type": "line",
+              "prompt": "在下面的 9 等分线上，找到和 2/3 同一个位置。"
+            }
+          ],
+          "implementedAction": "把 2/3 对应到六等分和九等分数轴的同一点",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Identify at least three fractions equivalent to 1/2 using diagrams",
+          "tasks": [
+            {
+              "key": "equivalent:0",
+              "index": 0,
+              "type": "equivalent",
+              "prompt": "把三条纸带都涂到一半。切法不同，拿到的量要一样。"
+            }
+          ],
+          "implementedAction": "构造三种等于半份的分数，不把三个同名样本当三次覆盖",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_TqDq6jyOmL",
+      "lessonId": "decimal",
+      "route": "A",
+      "title": "同一个量，换个名字",
+      "sourceName": "Decimal equivalents of tenths and hundredths",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/790",
+        "topicId": "mt_TqDq6jyOmL"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Shade, name it twice, and pin one point",
+          "jsonPointer": "/records/833/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict then reconcile on the number line",
+          "jsonPointer": "/records/833/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Reference grid with reveal flaps",
+          "jsonPointer": "/records/833/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Convert, match and locate (check-up)",
+          "jsonPointer": "/records/833/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#decimal",
+      "taskCount": 4,
+      "reflection": "0.7 和 0.07 差在哪里？用百格或数轴解释。",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Write 7/10 as 0.7 and vice versa",
+          "tasks": [
+            {
+              "key": "decimal:0",
+              "index": 0,
+              "type": "grid",
+              "prompt": "用百格表示 7/10，再写出同一个量的小数。"
+            },
+            {
+              "key": "decimal:2",
+              "index": 2,
+              "type": "grid",
+              "prompt": "把 0.26 变回百格里的量，再写成百分之几。"
+            }
+          ],
+          "implementedAction": "7/10 转小数；换为 0.26 反向构造百分格与分数",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Convert 45/100 to 0.45",
+          "tasks": [
+            {
+              "key": "decimal:1",
+              "index": 1,
+              "type": "grid",
+              "prompt": "用百格表示 45/100，再写出同一个量的小数。"
+            }
+          ],
+          "implementedAction": "用 45 个百格与 0.45 双向对应",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Place 0.3 and 3/10 at the same point on a number line",
+          "tasks": [
+            {
+              "key": "decimal:3",
+              "index": 3,
+              "type": "line",
+              "prompt": "在下面的 100 等分线上，找到和 3/10 同一个位置。"
+            }
+          ],
+          "implementedAction": "在同一零到一单位上把 0.3 与 3/10 对齐",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_DRlbMok2lT",
+      "lessonId": "quarters",
+      "route": "A",
+      "title": "半杯，还能怎样记",
+      "sourceName": "Fraction-Decimal Equivalents",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/798",
+        "topicId": "mt_DRlbMok2lT"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Shade a quarter: finding 0.25 on the hundred grid",
+          "jsonPointer": "/records/317/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict, then check: why isn't a quarter 4 squares?",
+          "jsonPointer": "/records/317/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Which is bigger: 0.25 or 0.5?",
+          "jsonPointer": "/records/317/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Connect to money and matching",
+          "jsonPointer": "/records/317/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#quarters",
+      "taskCount": 2,
+      "reflection": "怎样从四分之一杯得到 25/100，再得到 0.25？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "State that 1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75",
+          "tasks": [
+            {
+              "key": "quarters:0",
+              "index": 0,
+              "type": "grid",
+              "prompt": "用百格表示 1/4，再写出同一个量的小数。"
+            },
+            {
+              "key": "quarters:1",
+              "index": 1,
+              "type": "match",
+              "prompt": "给三个直筒杯倒入指定的量，再为它们配上小数名字。"
+            }
+          ],
+          "implementedAction": "四分之一百格及半杯、四分之三杯的量与小数同时对应",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Match fractions to decimals in a sorting activity",
+          "tasks": [
+            {
+              "key": "quarters:1",
+              "index": 1,
+              "type": "match",
+              "prompt": "给三个直筒杯倒入指定的量，再为它们配上小数名字。"
+            }
+          ],
+          "implementedAction": "三个直筒杯分别配上小数，作为排序匹配的本地改编",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain why 1/4 = 25/100 = 0.25 using a hundredths grid",
+          "tasks": [
+            {
+              "key": "quarters:0",
+              "index": 0,
+              "type": "grid",
+              "prompt": "用百格表示 1/4，再写出同一个量的小数。"
+            }
+          ],
+          "implementedAction": "在百格上重建 25/100；解释为何等于 1/4 留在总结",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_IuHa5UI5od",
+      "lessonId": "space",
+      "route": "B",
+      "title": "里面装了多少",
+      "sourceName": "What volume means",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1039",
+        "topicId": "mt_IuHa5UI5od"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Predict, then unpack: how many cubes fill the block?",
+          "jsonPointer": "/records/495/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Explore occlusion with a rotatable, sliceable solid",
+          "jsonPointer": "/records/495/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Build and fill with an isometric builder",
+          "jsonPointer": "/records/495/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Count, explain and diagnose the reasoning",
+          "jsonPointer": "/records/495/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#space",
+      "taskCount": 2,
+      "reflection": "为什么铺表面用方片，填内部用方块？一个立方厘米是什么？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Explain what 'volume' means for a 3D shape and how it differs from area",
+          "tasks": [
+            {
+              "key": "space:1",
+              "index": 1,
+              "type": "unit",
+              "prompt": "先点选合适的小单位：铺表面和填内部各需要什么？再数填满这个模型的块数。"
+            }
+          ],
+          "implementedAction": "选择铺面和填空间的单位；总结解释面积与体积差别",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Identify a unit cube and explain that it represents one cubic unit of volume",
+          "tasks": [
+            {
+              "key": "space:0",
+              "index": 0,
+              "type": "fill",
+              "prompt": "把盒子填满。每块边长 1 cm，然后记录里面装了多少。"
+            },
+            {
+              "key": "space:1",
+              "index": 1,
+              "type": "unit",
+              "prompt": "先点选合适的小单位：铺表面和填内部各需要什么？再数填满这个模型的块数。"
+            }
+          ],
+          "implementedAction": "实际用边长 1 cm 方块填盒，识别单位立方体并解释",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Determine the volume of a small solid by counting the unit cubes that fill it",
+          "tasks": [
+            {
+              "key": "space:0",
+              "index": 0,
+              "type": "fill",
+              "prompt": "把盒子填满。每块边长 1 cm，然后记录里面装了多少。"
+            },
+            {
+              "key": "space:1",
+              "index": 1,
+              "type": "unit",
+              "prompt": "先点选合适的小单位：铺表面和填内部各需要什么？再数填满这个模型的块数。"
+            }
+          ],
+          "implementedAction": "填满 2×2×2，再换成 3×2×1 数体积",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_d7XktBQPxm",
+      "lessonId": "hidden",
+      "route": "B",
+      "title": "看不见的也要算",
+      "sourceName": "Counting Unit Cubes",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1030",
+        "topicId": "mt_d7XktBQPxm"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Fill a box and count by layers",
+          "jsonPointer": "/records/299/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Count the hidden cubes in a drawing",
+          "jsonPointer": "/records/299/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Cubic units versus square units",
+          "jsonPointer": "/records/299/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#hidden",
+      "taskCount": 3,
+      "reflection": "看不见的积木怎样包括在你的计划里？你的估计和实际数量差在哪里？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Build a 3 × 2 × 2 cuboid from 1 cm³ cubes and state its volume as 12 cm³",
+          "tasks": [
+            {
+              "key": "hidden:0",
+              "index": 0,
+              "type": "cube-plan",
+              "prompt": "搭满这个盒子，再用一层和层数说清你的计数方案。"
+            }
+          ],
+          "implementedAction": "亲自逐块搭满 3×2×2，提交每层、层数和 12 cm³",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Count the cubes in a drawing of a solid built from cubes, including the hidden ones at the back, and give the volume in cubic units",
+          "tasks": [
+            {
+              "key": "hidden:1",
+              "index": 1,
+              "type": "cube-plan",
+              "prompt": "这是一幅固定视角的图。正中间也藏着积木，把它一起算进去。"
+            }
+          ],
+          "implementedAction": "先从固定视角的 3×3×3 数全部 27 块，提交后可拆层",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Estimate how many centimetre cubes will fill a small box, then fill it to check",
+          "tasks": [
+            {
+              "key": "hidden:2",
+              "index": 2,
+              "type": "cube-plan",
+              "prompt": "换成长一点的盒子。先写下估计，再填满核对。"
+            }
+          ],
+          "implementedAction": "先留下估计才允许填块；搭满 4×2×2 后核对估计与实际",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_nTL-owFJTF",
+      "lessonId": "box",
+      "route": "B",
+      "title": "从一层想到整箱",
+      "sourceName": "Volume of cuboids",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1047",
+        "topicId": "mt_nTL-owFJTF"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build the prism layer by layer",
+          "jsonPointer": "/records/650/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Apply and compare prism volumes",
+          "jsonPointer": "/records/650/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain why packing equals multiplying",
+          "jsonPointer": "/records/650/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#box",
+      "taskCount": 2,
+      "reflection": "为什么长乘宽后还要乘高？缺块时这个公式为什么不能直接用？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Use V = l × w × h to find the volume of a cuboid 4 cm × 3 cm × 5 cm = 60 cm³",
+          "tasks": [
+            {
+              "key": "box:0",
+              "index": 0,
+              "type": "cube-plan",
+              "prompt": "长 4、宽 3、高 5。用一层和层数，把整箱的块数联系起来。"
+            }
+          ],
+          "implementedAction": "提交 12×5=60 的层计划",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain why packing a prism with unit cubes gives the same result as multiplying edge lengths",
+          "tasks": [
+            {
+              "key": "box:0",
+              "index": 0,
+              "type": "cube-plan",
+              "prompt": "长 4、宽 3、高 5。用一层和层数，把整箱的块数联系起来。"
+            }
+          ],
+          "implementedAction": "由层结构连接边长乘积，并解释为什么成立",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Compare the 60 cm³ cuboid with an irregular model built from 58 centimetre cubes, explaining that the formula works for the cuboid but the model's cubes must be counted",
+          "tasks": [
+            {
+              "key": "box:1",
+              "index": 1,
+              "type": "irregular",
+              "prompt": "另一箱少了两个角上的方块。和完整的 60 块比，怎样求它的数量？"
+            }
+          ],
+          "implementedAction": "识别缺角模型，不能直接套外包长方体，给出 58 与方法",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_5TBUFnCy5-",
+      "lessonId": "steps",
+      "route": "B",
+      "title": "拆开，还是这么多",
+      "sourceName": "Volume as additive",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1046",
+        "topicId": "mt_5TBUFnCy5-"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Pull the step-solid apart (exploded decomposition)",
+          "jsonPointer": "/records/145/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Decompose on a diagram with dimension deduction",
+          "jsonPointer": "/records/145/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Real-world composite volume problem",
+          "jsonPointer": "/records/145/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Spot the overlap and the missing dimension (practice items)",
+          "jsonPointer": "/records/145/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#steps",
+      "taskCount": 2,
+      "reflection": "为什么拆开的两部分能相加？换一种切法，怎样避免遗漏或重复？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Decompose an L-shaped solid into two cuboids and calculate total volume",
+          "tasks": [
+            {
+              "key": "steps:0",
+              "index": 0,
+              "type": "decompose",
+              "prompt": "把台阶切成两个长方体，数出两部分再合起来。"
+            },
+            {
+              "key": "steps:1",
+              "index": 1,
+              "type": "decompose",
+              "prompt": "为这个新台阶准备填充积木。自己选一个不漏、不重叠的切法。"
+            }
+          ],
+          "implementedAction": "自己选择切面；两块均为长方体、非空、互不重叠且总和准确",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Solve a real-world problem requiring the volume of a composite figure (e.g. a step-shaped structure)",
+          "tasks": [
+            {
+              "key": "steps:1",
+              "index": 1,
+              "type": "decompose",
+              "prompt": "为这个新台阶准备填充积木。自己选一个不漏、不重叠的切法。"
+            }
+          ],
+          "implementedAction": "为尺寸不同的台阶计算填充积木；可用两种有效切法",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain why splitting a composite solid into rectangular prisms allows calculation of total volume",
+          "tasks": [
+            {
+              "key": "steps:0",
+              "index": 0,
+              "type": "decompose",
+              "prompt": "把台阶切成两个长方体，数出两部分再合起来。"
+            },
+            {
+              "key": "steps:1",
+              "index": 1,
+              "type": "decompose",
+              "prompt": "为这个新台阶准备填充积木。自己选一个不漏、不重叠的切法。"
+            }
+          ],
+          "implementedAction": "以作品解释为什么体积可加，不能凭正确总数判解释",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_c29FaCTNsx",
+      "lessonId": "tally",
+      "route": "C",
+      "title": "一笔一票，画出记录",
+      "sourceName": "Pictograms and tally charts",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/726",
+        "topicId": "mt_c29FaCTNsx"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Two-way chart builder from the class's own data",
+          "jsonPointer": "/records/270/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Many-to-one key: read through it and reverse it",
+          "jsonPointer": "/records/270/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Check for value-by-length and tally errors",
+          "jsonPointer": "/records/270/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#tally",
+      "taskCount": 3,
+      "reflection": "一笔一票和一颗圆点一票怎样一一对应？图里的一个符号表示几个？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Read a pictogram where each symbol represents one item",
+          "tasks": [
+            {
+              "key": "tally:1",
+              "index": 1,
+              "type": "chart",
+              "prompt": "换成运动投票：一颗圆点代表一票，把图画出来。"
+            }
+          ],
+          "implementedAction": "构造一符号一票的圆点图并读指定类别",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Construct a tally chart from collected data",
+          "tasks": [
+            {
+              "key": "tally:0",
+              "index": 0,
+              "type": "chart",
+              "prompt": "读这些投票卡，在右边为每类记下票数。"
+            }
+          ],
+          "implementedAction": "从投票卡构造五笔一组计数表",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Draw a block diagram to represent data from a survey",
+          "tasks": [
+            {
+              "key": "tally:2",
+              "index": 2,
+              "type": "chart",
+              "prompt": "把列表变成一格一票的块状图。"
+            }
+          ],
+          "implementedAction": "从新列表构造每块一票的块状图",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_ebQURBOsM5",
+      "lessonId": "survey",
+      "route": "C",
+      "title": "带着问题去观察",
+      "sourceName": "Collecting data for a question",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/736",
+        "topicId": "mt_ebQURBOsM5"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase2/RESEARCH.md",
+      "url": "learn.html#survey",
+      "taskCount": 2,
+      "reflection": "你要回答什么问题，怎样记录才不会漏记、重复记？换成真实调查会怎么收集？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Collect data on how students travel to school to answer 'What is the most common way to get to school?'",
+          "tasks": [
+            {
+              "key": "survey:0",
+              "index": 0,
+              "type": "survey",
+              "prompt": "观察这组模拟到校记录，再回答：哪种方式最多？"
+            }
+          ],
+          "implementedAction": "逐条观察模拟上学方式，自己记录并回答最多的类别",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Record the number of siblings each classmate has in a frequency table with tallies and totals",
+          "tasks": [
+            {
+              "key": "survey:1",
+              "index": 1,
+              "type": "survey",
+              "prompt": "换个问题：兄弟姐妹人数最常见的是多少？把每个回答录入两列表格。"
+            }
+          ],
+          "implementedAction": "换为兄弟姐妹数，计数笔画与合计同步，原始观察可回看",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Enter the same data into a spreadsheet with one column for the category and one for the count",
+          "tasks": [
+            {
+              "key": "survey:1",
+              "index": 1,
+              "type": "survey",
+              "prompt": "换个问题：兄弟姐妹人数最常见的是多少？把每个回答录入两列表格。"
+            }
+          ],
+          "implementedAction": "本地两列表格记录类别、次数并导出 CSV；不要求外部软件",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_VhBH8wrFC6",
+      "lessonId": "bars",
+      "route": "C",
+      "title": "把票数搭成高度",
+      "sourceName": "Picture & Bar Graphs",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/730",
+        "topicId": "mt_VhBH8wrFC6"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build a bar graph from our data on gridded paper",
+          "jsonPointer": "/records/879/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "'How many more' as the gap between two bars",
+          "jsonPointer": "/records/879/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Picture graph with uniform, aligned symbols",
+          "jsonPointer": "/records/879/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Check questions: read, compare, and construct",
+          "jsonPointer": "/records/879/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#bars",
+      "taskCount": 2,
+      "reflection": "两类相差几票应该看哪一段？如果每格代表两票，读法会怎样变？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Draw a picture graph with a symbol representing one unit for each data point",
+          "tasks": [
+            {
+              "key": "bars:1",
+              "index": 1,
+              "type": "chart",
+              "prompt": "换一组水果投票：用一果一票的图表示，再比较橙子和苹果。"
+            }
+          ],
+          "implementedAction": "用一符号一票构造水果图",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Draw a bar graph with labelled axes and a single-unit scale",
+          "tasks": [
+            {
+              "key": "bars:0",
+              "index": 0,
+              "type": "chart",
+              "prompt": "从表格搭出条形图，再找出猫比狗多的那一段。"
+            }
+          ],
+          "implementedAction": "从表格构造共同零点、单位刻度和已标注轴的条形图",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Use a bar graph to answer comparison questions (e.g. 'How many more votes did cats get than dogs?')",
+          "tasks": [
+            {
+              "key": "bars:0",
+              "index": 0,
+              "type": "chart",
+              "prompt": "从表格搭出条形图，再找出猫比狗多的那一段。"
+            },
+            {
+              "key": "bars:1",
+              "index": 1,
+              "type": "chart",
+              "prompt": "换一组水果投票：用一果一票的图表示，再比较橙子和苹果。"
+            }
+          ],
+          "implementedAction": "读出两类差值，防止把较高柱总量当差值",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt__yvsKKp3TS",
+      "lessonId": "views",
+      "route": "C",
+      "title": "换张图，还是那些数据",
+      "sourceName": "Comparing two data displays",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/733",
+        "topicId": "mt__yvsKKp3TS"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase2/RESEARCH.md",
+      "url": "learn.html#views",
+      "taskCount": 2,
+      "reflection": "为了看出哪类最多，你会选哪种表示，为什么？换成找出每个人的答案呢？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Show the same pet survey as a tally chart and as a picture graph and say what is the same in both",
+          "tasks": [
+            {
+              "key": "views:0",
+              "index": 0,
+              "type": "compare",
+              "prompt": "让右边的图和左边的表说同一件事，再分别读出狗的票数。"
+            }
+          ],
+          "implementedAction": "左侧计数表与右侧圆点图保持类别和数量一一对应",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain which display makes it quicker to see the most popular pet",
+          "tasks": [
+            {
+              "key": "views:0",
+              "index": 0,
+              "type": "compare",
+              "prompt": "让右边的图和左边的表说同一件事，再分别读出狗的票数。"
+            },
+            {
+              "key": "views:1",
+              "index": 1,
+              "type": "compare",
+              "prompt": "换一份记录：修好图里的数量，比较两种画法。"
+            }
+          ],
+          "implementedAction": "选择表达偏好并留下为什么；偏好无标准答案",
+          "explanation": "free-text-retained-unassessed",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Answer the same question ('How many chose dogs?') from two different displays of the data",
+          "tasks": [
+            {
+              "key": "views:0",
+              "index": 0,
+              "type": "compare",
+              "prompt": "让右边的图和左边的表说同一件事，再分别读出狗的票数。"
+            },
+            {
+              "key": "views:1",
+              "index": 1,
+              "type": "compare",
+              "prompt": "换一份记录：修好图里的数量，比较两种画法。"
+            }
+          ],
+          "implementedAction": "分别读取左右两种表示里的同类数量，换资料后再做",
+          "explanation": "not-automatically-inferred",
+          "claim": "可操作任务对应；不表示孩子已掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_UTnDKQkVX5",
+      "lessonId": "rows",
+      "batch": "B02",
+      "route": "D",
+      "title": "怎样铺得整整齐齐",
+      "sourceName": "Rows & Columns in Rectangles",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1065",
+        "topicId": "mt_UTnDKQkVX5"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build and read a tiled rectangle grid",
+          "jsonPointer": "/records/862/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Partition on paper and count by structure (performance task)",
+          "jsonPointer": "/records/862/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Check the equal-unit requirement and the array link",
+          "jsonPointer": "/records/862/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#rows",
+      "taskCount": 2,
+      "reflection": "为什么每行都一样长？加一行会多几格？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Divide a rectangle into equal rows and columns of unit squares",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "给这块 4 × 3 的板画好等大的行列，再铺满小方片。"
+            },
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "多出一列，再重新铺满。用行数和每行格数说清总数。"
+            }
+          ],
+          "implementedAction": "用等大行列分板，再逐排铺满",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Count the total number of squares using repeated addition or skip counting",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "给这块 4 × 3 的板画好等大的行列，再铺满小方片。"
+            },
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "多出一列，再重新铺满。用行数和每行格数说清总数。"
+            }
+          ],
+          "implementedAction": "逐排增加方片，记录行数、每行格数与总数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Relate the rows-and-columns structure to a rectangular array",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "给这块 4 × 3 的板画好等大的行列，再铺满小方片。"
+            },
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "多出一列，再重新铺满。用行数和每行格数说清总数。"
+            }
+          ],
+          "implementedAction": "同一方阵换宽后重建行列与总量",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_Mnodea7mG_",
+      "lessonId": "solids",
+      "batch": "B02",
+      "route": "F",
+      "title": "转过去，还少数了什么",
+      "sourceName": "Edges, vertices, and faces",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/854",
+        "topicId": "mt_Mnodea7mG_"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Count a real cube by touch in a fixed order",
+          "jsonPointer": "/records/617/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict then count the hidden features",
+          "jsonPointer": "/records/617/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Flat face versus curved surface",
+          "jsonPointer": "/records/617/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Faces as 2-D shapes and nets",
+          "jsonPointer": "/records/617/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Check and explain the counts",
+          "jsonPointer": "/records/617/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#solids",
+      "taskCount": 3,
+      "reflection": "长方体拉长后，面、棱、顶点的个数会变吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Count the edges, vertices, and faces of common 3-D shapes",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-solid",
+              "prompt": "转动这个方盒，分别把所有平的面、接缝线和角点标记一遍。"
+            },
+            {
+              "index": 1,
+              "type": "x-solid",
+              "prompt": "换成长盒子，再用标记防止漏数和重复。"
+            },
+            {
+              "index": 2,
+              "type": "x-solid",
+              "prompt": "这次两端是三角形。转动检查被挡住的部分。"
+            }
+          ],
+          "implementedAction": "转动三种立体，逐项标面、棱、顶点",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use the terms edge, vertex (vertices), and face correctly",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-solid",
+              "prompt": "转动这个方盒，分别把所有平的面、接缝线和角点标记一遍。"
+            },
+            {
+              "index": 1,
+              "type": "x-solid",
+              "prompt": "换成长盒子，再用标记防止漏数和重复。"
+            },
+            {
+              "index": 2,
+              "type": "x-solid",
+              "prompt": "这次两端是三角形。转动检查被挡住的部分。"
+            }
+          ],
+          "implementedAction": "操作时用通俗称呼，总结对应正式术语",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Describe a 3-D shape by its properties (e.g. a cube has 6 faces, 12 edges, 8 vertices)",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-solid",
+              "prompt": "转动这个方盒，分别把所有平的面、接缝线和角点标记一遍。"
+            },
+            {
+              "index": 1,
+              "type": "x-solid",
+              "prompt": "换成长盒子，再用标记防止漏数和重复。"
+            },
+            {
+              "index": 2,
+              "type": "x-solid",
+              "prompt": "这次两端是三角形。转动检查被挡住的部分。"
+            }
+          ],
+          "implementedAction": "提交每种立体的三类数量，并留下性质描述",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_vnJEztczji",
+      "lessonId": "nets",
+      "batch": "B02",
+      "route": "F",
+      "title": "这张纸能合成盒子吗",
+      "sourceName": "Nets of 3-D Shapes",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/868",
+        "topicId": "mt_vnJEztczji"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Predict then fold: does this arrangement close into a cube?",
+          "jsonPointer": "/records/889/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Anchor a base and track where every square lands",
+          "jsonPointer": "/records/889/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Make it fail, then make a new one",
+          "jsonPointer": "/records/889/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Extend the reasoning to other solids",
+          "jsonPointer": "/records/889/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#nets",
+      "taskCount": 3,
+      "reflection": "你画的展开图里，哪两面相对？六格排成两行为什么不行？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Draw the net of a cube, cuboid, or triangular prism and fold it mentally to identify which faces connect",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-net",
+              "prompt": "自己画六个相连的方格。先猜能否合成盒子、哪两面相对，再合起来试。"
+            }
+          ],
+          "implementedAction": "自行画六个连格，折前提交能否合成与一对相对面",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Build a 3-D shape from its net and check that all faces, edges, and vertices match",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-net",
+              "prompt": "自己画六个相连的方格。先猜能否合成盒子、哪两面相对，再合起来试。"
+            },
+            {
+              "index": 1,
+              "type": "x-net",
+              "prompt": "换成这张阶梯纸片。先判断并选出一对相对的面，再折。"
+            }
+          ],
+          "implementedAction": "折叠模型后核对面棱顶点；本轮选择正方体",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Identify which of several given nets will fold into a specific 3-D shape and explain why the others won't",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-net",
+              "prompt": "换成这张阶梯纸片。先判断并选出一对相对的面，再折。"
+            },
+            {
+              "index": 2,
+              "type": "x-net",
+              "prompt": "六格排成两行。先留下判断，再合起来检查。"
+            }
+          ],
+          "implementedAction": "预测阶梯与两行展开图，解释重叠的失败原因",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_NtJYlJdUe9",
+      "lessonId": "attributes",
+      "batch": "B02",
+      "route": "E",
+      "title": "大的就一定重吗",
+      "sourceName": "Measurable Attributes of Objects",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/972",
+        "topicId": "mt_NtJYlJdUe9"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Measuring lenses: watch which one wins change",
+          "jsonPointer": "/records/649/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "One object, many attributes — collect the tags",
+          "jsonPointer": "/records/649/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Counterexamples that break false links",
+          "jsonPointer": "/records/649/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "From 'tall' to 'taller than' — comparative language",
+          "jsonPointer": "/records/649/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Sort words and questions to their attribute",
+          "jsonPointer": "/records/649/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#attributes",
+      "taskCount": 2,
+      "reflection": "一支铅笔能量什么？一个瓶子又能从哪几个方面比较？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Identify that a pencil has length and can be measured",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-attributes",
+              "prompt": "换成两支铅笔。较长和较重，还是同一支吗？"
+            }
+          ],
+          "implementedAction": "使用长短与轻重工具比较两支模拟铅笔",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Describe multiple attributes of one object (e.g. a bottle has height, weight, and capacity)",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-attributes",
+              "prompt": "同样两个容器，分别比高矮、轻重和能装多少。每次先试，再选。"
+            }
+          ],
+          "implementedAction": "同一对容器分别比较高、重与容量",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Use words like 'long', 'heavy', 'full' to describe objects",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-attributes",
+              "prompt": "同样两个容器，分别比高矮、轻重和能装多少。每次先试，再选。"
+            },
+            {
+              "index": 1,
+              "type": "x-attributes",
+              "prompt": "换成两支铅笔。较长和较重，还是同一支吗？"
+            }
+          ],
+          "implementedAction": "按不同属性选择正确的通俗比较描述",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_DOe893F6gN",
+      "lessonId": "measure",
+      "batch": "B02",
+      "route": "E",
+      "title": "挑对工具再量一量",
+      "sourceName": "Choosing measurement units",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/984",
+        "topicId": "mt_DOe893F6gN"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Measuring station: choose the tool and the unit",
+          "jsonPointer": "/records/312/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Why standard units at all — the hand-span contrast",
+          "jsonPointer": "/records/312/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Sort objects to their sensible unit",
+          "jsonPointer": "/records/312/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Benchmark reference card",
+          "jsonPointer": "/records/312/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Read the instrument to the nearest mark",
+          "jsonPointer": "/records/312/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#measure",
+      "taskCount": 3,
+      "reflection": "为什么尺子的端点不一定是零点？要量多少水，该选哪件工具？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Measure the length of a table in centimetres using a ruler",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-measure",
+              "prompt": "选好工具和单位，把尺的零点对准桌面左边，再用厘米（cm）记录长度。"
+            }
+          ],
+          "implementedAction": "选尺、厘米、移动零点、读桌面长度",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Weigh an object in grams using a scale",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-measure",
+              "prompt": "选好工具，用标准砝码让两边平衡，再用克（g）记录这袋豆子有多重。"
+            }
+          ],
+          "implementedAction": "加减砝码使天平平衡，按克读数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Measure the capacity of a container in millilitres using a measuring jug",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-measure",
+              "prompt": "选好工具，把已经装满的模拟杯子里的水倒入量杯，再用毫升（mL）记录读数。"
+            }
+          ],
+          "implementedAction": "把已装满模拟容器的水倒入量杯，按毫升记录",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_y1n0Zwhoca",
+      "lessonId": "area",
+      "batch": "B02",
+      "route": "D",
+      "title": "这片地方要铺几块",
+      "sourceName": "Area (age 8+)",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1015",
+        "topicId": "mt_y1n0Zwhoca"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Tile and count an L-shaped garden",
+          "jsonPointer": "/records/973/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tile a real surface before squared paper",
+          "jsonPointer": "/records/973/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Compare and check with quick counting questions",
+          "jsonPointer": "/records/973/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Read a finished counted figure",
+          "jsonPointer": "/records/973/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#area",
+      "taskCount": 2,
+      "reflection": "L 形的缺口为什么不数？边缘格子为什么仍然要数？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Count unit squares to find the area of an L-shaped figure",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "把 L 形里面铺满。缺口不铺，边缘格子也别漏。"
+            }
+          ],
+          "implementedAction": "只铺 L 形内部，用单位格计数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Measure the area of a book cover using square-centimetre tiles",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "用一平方厘米的小方片铺满这本模拟书的封面，再与刚才 14 平方厘米的 L 形比较。"
+            }
+          ],
+          "implementedAction": "以平方厘米方片覆盖模拟书面",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Compare areas of two shapes by counting their unit squares",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "用一平方厘米的小方片铺满这本模拟书的封面，再与刚才 14 平方厘米的 L 形比较。"
+            }
+          ],
+          "implementedAction": "比较书面与前一 L 形的单位格数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_Jvvh5P06NV",
+      "lessonId": "tiling",
+      "batch": "B02",
+      "route": "D",
+      "title": "铺一排，再铺一排",
+      "sourceName": "Area by Tiling",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1017",
+        "topicId": "mt_Jvvh5P06NV"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build the array and watch the multiplication grow",
+          "jsonPointer": "/records/528/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tile and label on squared paper",
+          "jsonPointer": "/records/528/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Area is not the distance around (spot the error)",
+          "jsonPointer": "/records/528/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Row-strips that fill the rectangle",
+          "jsonPointer": "/records/528/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Check and justify the link",
+          "jsonPointer": "/records/528/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#tiling",
+      "taskCount": 3,
+      "reflection": "为什么 4 排每排 6 块与 6 排每排 4 块覆盖一样多？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Tile a 4×6 rectangle and count 24 squares, then verify 4×6=24",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "一排一排铺满 4 × 6 的板。每次增加多少？"
+            }
+          ],
+          "implementedAction": "逐排铺满 4×6 并提交因素及 24",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain why the number of rows times the number in each row gives the area",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-floor",
+              "prompt": "一排一排铺满 4 × 6 的板。每次增加多少？"
+            },
+            {
+              "index": 1,
+              "type": "x-floor",
+              "prompt": "把同样大小的板转过来，再用一排和排数写出乘法。"
+            }
+          ],
+          "implementedAction": "转向后重建方阵，用行列解释乘法",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Draw a rectangle on squared paper, tile it, and write the multiplication",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-floor",
+              "prompt": "自己画一个长方形，铺满并写出它的乘法。"
+            }
+          ],
+          "implementedAction": "自己改变长宽，铺满并记录自己的乘法",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_GzcJEVkNRn",
+      "lessonId": "rectangle",
+      "batch": "B02",
+      "route": "D",
+      "title": "长和宽能告诉什么",
+      "sourceName": "Area of rectangles by multiplication",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1019",
+        "topicId": "mt_GzcJEVkNRn"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build and compute: side × side = area",
+          "jsonPointer": "/records/426/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Reverse the relationship: many rectangles, one area",
+          "jsonPointer": "/records/426/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Area versus perimeter: surface versus edge",
+          "jsonPointer": "/records/426/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Check your understanding: compute, select, and label units",
+          "jsonPointer": "/records/426/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#rectangle",
+      "taskCount": 3,
+      "reflection": "你能画出几个面积 36 的不同长方形？为什么不用长加宽？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Calculate the area of a 7 cm × 9 cm rectangle as 63 cm²",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-rectangle",
+              "prompt": "看看一行与行数，为 7 cm × 9 cm 的板算出铺地面积。"
+            }
+          ],
+          "implementedAction": "7×9 图中对应行列与 63 cm²",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Draw a rectangle with area 36 square units and label its side lengths",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-rectangle",
+              "prompt": "拖动长和宽，画出一个面积恰好是 36 平方厘米的长方形。"
+            }
+          ],
+          "implementedAction": "构造面积 36 的任意整数边长长方形",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Solve: A garden is 8 m by 5 m — what is its area?",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-rectangle",
+              "prompt": "花园长 8 m、宽 5 m，要铺多大面积的草皮？"
+            }
+          ],
+          "implementedAction": "把同样方法迁移到米制花园 8×5",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_eiB3-6pu6a",
+      "lessonId": "boundary",
+      "batch": "B02",
+      "route": "E",
+      "title": "铺地和围边一样吗",
+      "sourceName": "Area and perimeter of rectangles",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1028",
+        "topicId": "mt_eiB3-6pu6a"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Grid playground: reshape a rectangle and watch area and perimeter move apart",
+          "jsonPointer": "/records/340/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build l × w from an array of unit squares, then express a missing side algebraically",
+          "jsonPointer": "/records/340/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Tap-to-reveal formula reference (scaffold)",
+          "jsonPointer": "/records/340/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Checking quiz: area, perimeter, missing side and estimate with a units check",
+          "jsonPointer": "/records/340/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#boundary",
+      "taskCount": 3,
+      "reflection": "同样面积的长方形，围边可以不同吗？池塘的估计为何可能有误差？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Find the width of a room given area = 48 m² and length = 8 m",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-rectangle",
+              "prompt": "房间面积 48 m²，长 8 m。调好宽，再分别算铺地和围边。"
+            }
+          ],
+          "implementedAction": "固定长 8，调宽到面积 48；面积与周长各有单位",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Calculate the area of a square with side 7.5 cm",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-rectangle",
+              "prompt": "每条边 7.5 cm 的正方形，铺地面积和围边长度各是多少？"
+            }
+          ],
+          "implementedAction": "处理 7.5 的小数边长并区别平方量与边长",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Estimate the area of an irregular pond drawn on a cm² grid",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-pond",
+              "prompt": "每格 1 cm²。按“至少半格算一格”的办法圈出格子，估计池塘面积。"
+            }
+          ],
+          "implementedAction": "按明确半格规则选择池塘覆盖格并估计；并非精确测量",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_NSC3LT_-ch",
+      "lessonId": "capacity",
+      "batch": "B02",
+      "route": "E",
+      "title": "看起来能装多少",
+      "sourceName": "Estimating capacity",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1031",
+        "topicId": "mt_NSC3LT_-ch"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#capacity",
+      "taskCount": 3,
+      "reflection": "一个半满的 1 升壶，容量和当前水量分别是多少？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Estimate whether a mug holds about 30 ml, 300 ml or 3 litres, then check with a measuring jug",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-capacity",
+              "prompt": "这个模拟杯子大约装 30、300 还是 3000 mL？先估，再一份份倒满检查。"
+            }
+          ],
+          "implementedAction": "先估后逐份倒满模拟杯",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Estimate the capacity of a jug by comparing it with a 1-litre bottle, then fill it with water to check",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-capacity",
+              "prompt": "旁边的标准瓶装 1 L。先估计这只壶能装多少，再用量杯倒满核对。"
+            }
+          ],
+          "implementedAction": "与一升参照瓶比较再灌满",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain that a 1-litre jug half full of water has a capacity of 1 litre but holds 500 ml of water",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-capacity",
+              "prompt": "这是容量 1 L 的壶。倒到半壶，分别记录能装满多少和现在有多少。"
+            }
+          ],
+          "implementedAction": "保持总容量一升，把当前水调为半升并分别记录",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_Xp-rj46S2w",
+      "lessonId": "equalparts",
+      "batch": "B03",
+      "route": "G",
+      "title": "样子不同，分到的一样多吗",
+      "sourceName": "Splitting shapes into equal parts (age 7+)",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/785",
+        "topicId": "mt_Xp-rj46S2w"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Cut it, re-lay it: equal amount beats equal look",
+          "jsonPointer": "/records/954/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort the partitions: quarters or not?",
+          "jsonPointer": "/records/954/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Which is the bigger share: a third or a quarter?",
+          "jsonPointer": "/records/954/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#equalparts",
+      "taskCount": 2,
+      "reflection": "长条和方块为什么都能是四分之一？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Partition a circle into 3 equal parts and label each 'a third'",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-circlecut",
+              "prompt": "移动两条分界线，把圆分成三份一样多的。为每份写下它占整个圆的几分之一。"
+            }
+          ],
+          "implementedAction": "调整圆的等角分界并命名三分之一",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Partition a rectangle into 4 equal shares in more than one way",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-mosaic",
+              "prompt": "用四种颜色分这张纸，每种颜色分到一样多的格子。保存一种分法，再改成另一种分法。形状可以不同。"
+            }
+          ],
+          "implementedAction": "保存两个不同分区，每种颜色各占四格",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain that two different-looking shares can still be equal in size",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-mosaic",
+              "prompt": "用四种颜色分这张纸，每种颜色分到一样多的格子。保存一种分法，再改成另一种分法。形状可以不同。"
+            }
+          ],
+          "implementedAction": "用不同轮廓的等面积格组解释；文字不自动评分",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_vKcxX6iNOA",
+      "lessonId": "notation",
+      "batch": "B03",
+      "route": "G",
+      "title": "给取出的这份写个名字",
+      "sourceName": "Fraction Notation",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/775",
+        "topicId": "mt_vKcxX6iNOA"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build the fraction, build the name",
+          "jsonPointer": "/records/885/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Label the fraction's jobs",
+          "jsonPointer": "/records/885/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Classify and match for fluency",
+          "jsonPointer": "/records/885/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#notation",
+      "taskCount": 4,
+      "reflection": "5/4 和 1 又 1/4 为什么描述同一个量？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Point to and name the numerator and denominator in any given fraction and explain what each tells you",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fraction",
+              "prompt": "把纸带平均分好，取四份里的一份。两个数字各管什么？"
+            },
+            {
+              "index": 1,
+              "type": "x-fraction",
+              "prompt": "还是同样大小的整体，这次取四份里的三份。"
+            },
+            {
+              "index": 2,
+              "type": "x-fraction",
+              "prompt": "要取五个四分之一。一条纸不够时，继续在下一条上取。"
+            }
+          ],
+          "implementedAction": "建分数并指出取份数、整体份数对应的上下数字",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Correctly classify fractions as unit, proper, improper, or mixed number with an example of each",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fraction",
+              "prompt": "把纸带平均分好，取四份里的一份。两个数字各管什么？"
+            },
+            {
+              "index": 1,
+              "type": "x-fraction",
+              "prompt": "还是同样大小的整体，这次取四份里的三份。"
+            },
+            {
+              "index": 2,
+              "type": "x-fraction",
+              "prompt": "要取五个四分之一。一条纸不够时，继续在下一条上取。"
+            }
+          ],
+          "implementedAction": "分类允许单位分数也是真分数；五个四分之一改成一整加一份",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain in own words why 2/4 and 1/2 are equivalent fractions",
+          "tasks": [
+            {
+              "index": 3,
+              "type": "x-fwall",
+              "prompt": "给同样长的两条纸涂出半份，写下两种名字。"
+            }
+          ],
+          "implementedAction": "在等长纸带构造 1/2 和 2/4 并解释",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_gC-6JXAG5S",
+      "lessonId": "folds",
+      "batch": "B03",
+      "route": "G",
+      "title": "再对折一次会怎样",
+      "sourceName": "Halves, quarters and eighths",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/783",
+        "topicId": "mt_gC-6JXAG5S"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#folds",
+      "taskCount": 4,
+      "reflection": "圆和方形都能取八分之一，整体变了，八分之一的意思变了吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Fold a paper strip in half, then half again, then half again, and label the halves, quarters and eighths",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-foldpaper",
+              "prompt": "把纸带对折、再对折、再对折，记录每次摊开有几份。"
+            }
+          ],
+          "implementedAction": "连续对折模拟，分别记录 2、4、8 份",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Show that 2 eighths of a pizza is the same amount as 1 quarter",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-fwall",
+              "prompt": "两张等大的披萨图，一张分四份、另一张分八份。先取一块四分之一，再在另一张取一样多。"
+            }
+          ],
+          "implementedAction": "在两张等大的披萨图取 1/4 和 2/8",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Shade one-eighth of a square and one-eighth of a circle and explain how you know",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-fraction",
+              "prompt": "把方形分成八份，涂出一份。"
+            },
+            {
+              "index": 3,
+              "type": "x-fraction",
+              "prompt": "换成一个圆，再分出一份八分之一。"
+            }
+          ],
+          "implementedAction": "在方形和圆形分别取八分之一，解释相同单位份意义",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_cFltwUQi-d",
+      "lessonId": "amounts",
+      "batch": "B03",
+      "route": "G",
+      "title": "一份到底是多少",
+      "sourceName": "Fractions of amounts",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/776",
+        "topicId": "mt_cFltwUQi-d"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Fraction-of-a-set bench: share into equal groups, then take some",
+          "jsonPointer": "/records/279/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build a non-unit fraction from unit-fraction parts",
+          "jsonPointer": "/records/279/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Same number or same amount? Guarding against the count-vs-quantity trap",
+          "jsonPointer": "/records/279/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Fraction of a length on a number line or ruler",
+          "jsonPointer": "/records/279/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Naming and writing practice (recognition and recall check)",
+          "jsonPointer": "/records/279/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#amounts",
+      "taskCount": 3,
+      "reflection": "为什么 12 个的三分之一是 4，而不是 3？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Find 1/3 of 12 objects by sharing into 3 equal groups",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fgroups",
+              "prompt": "把全部 12 颗珠子分进三组，每组一样多。选其中一组，看看总数的三分之一是多少。"
+            }
+          ],
+          "implementedAction": "将全部十二颗分到三等组，取一组并记数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Shade 3/4 of a rectangle that has been divided into 4 equal parts",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-fraction",
+              "prompt": "用这张纸表示四分之三。"
+            }
+          ],
+          "implementedAction": "将整体四等分并取三份",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Identify 1/4 of a length on a number line or ruler",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-fline",
+              "prompt": "把整条长度看作 1。分好后，从零走到四分之一。"
+            }
+          ],
+          "implementedAction": "把同一长度四等分，从零走一段",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_NoB20kVa4w",
+      "lessonId": "fractionline",
+      "batch": "B03",
+      "route": "H",
+      "title": "从零走到这一份",
+      "sourceName": "Fractions on a number line (age 8+)",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/803",
+        "topicId": "mt_NoB20kVa4w"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build fourths: three cuts, not four marks",
+          "jsonPointer": "/records/644/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Read the point, then place the fraction",
+          "jsonPointer": "/records/644/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Which segment is the unit?",
+          "jsonPointer": "/records/644/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Compare with the area model",
+          "jsonPointer": "/records/644/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#fractionline",
+      "taskCount": 6,
+      "reflection": "1/3 和 1/6，哪一步更长？为什么？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Partition a 0-to-1 number line into 4 equal parts and mark 1/4",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fline",
+              "prompt": "先把 0 到 1 分成四段，再走一段。"
+            }
+          ],
+          "implementedAction": "分四段走一段",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain that each part on the line has size 1/b",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fline",
+              "prompt": "先把 0 到 1 分成四段，再走一段。"
+            },
+            {
+              "index": 1,
+              "type": "x-fline",
+              "prompt": "换成三段，走到三分之一。"
+            },
+            {
+              "index": 2,
+              "type": "x-fline",
+              "prompt": "同样长的线分六段，再走一段。和刚才相比呢？"
+            },
+            {
+              "index": 3,
+              "type": "x-fline",
+              "prompt": "把每一步设成四分之一，从零走三步。"
+            },
+            {
+              "index": 4,
+              "type": "x-fline",
+              "prompt": "自己分好线，再走到六分之五。"
+            }
+          ],
+          "implementedAction": "记录每段大小并说明整体与分段关系",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Locate 1/3 and 1/6 on separate number lines",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-fline",
+              "prompt": "换成三段，走到三分之一。"
+            },
+            {
+              "index": 2,
+              "type": "x-fline",
+              "prompt": "同样长的线分六段，再走一段。和刚才相比呢？"
+            }
+          ],
+          "implementedAction": "分别构造三分之一和六分之一",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 3,
+          "sourceGoal": "Locate 3/4 on a number line by counting three 1/4-jumps from 0",
+          "tasks": [
+            {
+              "index": 3,
+              "type": "x-fline",
+              "prompt": "把每一步设成四分之一，从零走三步。"
+            }
+          ],
+          "implementedAction": "从零走三段四分之一",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 4,
+          "sourceGoal": "Place 5/6 on a number line and explain the process",
+          "tasks": [
+            {
+              "index": 4,
+              "type": "x-fline",
+              "prompt": "自己分好线，再走到六分之五。"
+            }
+          ],
+          "implementedAction": "自行六等分并走五段",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 5,
+          "sourceGoal": "Identify a fraction shown by a point on a pre-partitioned number line",
+          "tasks": [
+            {
+              "index": 5,
+              "type": "x-fline",
+              "prompt": "这次刻度与点已经画好。读出每一段和这个点的名字。"
+            }
+          ],
+          "implementedAction": "读取预分割数轴上五个八分之一的位置",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_FbDKeLfBCo",
+      "lessonId": "visualeq",
+      "batch": "B03",
+      "route": "H",
+      "title": "分法变了，量变了吗",
+      "sourceName": "Equivalent fractions",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/781",
+        "topicId": "mt_FbDKeLfBCo"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Split each part of a fixed bar (2/3 becomes 4/6)",
+          "jsonPointer": "/records/361/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Fraction wall: which rows line up",
+          "jsonPointer": "/records/361/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Same point on the number line",
+          "jsonPointer": "/records/361/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Sort, match and complete equivalents",
+          "jsonPointer": "/records/361/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Predict, overlay, explain (diagnostic)",
+          "jsonPointer": "/records/361/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#visualeq",
+      "taskCount": 3,
+      "reflection": "2/3 和 4/6 一样多，那 2/6 呢？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Show that 1/2 = 2/4 using a diagram of equal parts",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fwall",
+              "prompt": "涂出同一个半份，看两条纸的末端是否对齐。"
+            }
+          ],
+          "implementedAction": "图示二等分与四等分的同一个半份",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use a fraction wall or bar model to find equivalent fractions",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-fwall",
+              "prompt": "在三种分法中找出同样多的量：三份取二份。"
+            }
+          ],
+          "implementedAction": "三种分法找末端对齐的 2/3、4/6、6/9",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain why two fractions are equivalent by comparing the shaded areas",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-fwall",
+              "prompt": "涂出同一个半份，看两条纸的末端是否对齐。"
+            },
+            {
+              "index": 1,
+              "type": "x-fwall",
+              "prompt": "在三种分法中找出同样多的量：三份取二份。"
+            },
+            {
+              "index": 2,
+              "type": "x-fwall",
+              "prompt": "把上面涂成 2/3，下面涂成 2/6。只改下面的数，量还相等吗？"
+            }
+          ],
+          "implementedAction": "比较涂色面积，并反查只改分母导致的变化",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_doX1BhmFgk",
+      "lessonId": "hundredths",
+      "batch": "B03",
+      "route": "H",
+      "title": "把一小格再分十份",
+      "sourceName": "Tenths (age 8+)",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/804",
+        "topicId": "mt_doX1BhmFgk"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Split a tenth into ten hundredths",
+          "jsonPointer": "/records/313/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Count in hundredths across the tenth boundary and place them on a line",
+          "jsonPointer": "/records/313/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Predict and compare: which is bigger, a tenth or a hundredth?",
+          "jsonPointer": "/records/313/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#hundredths",
+      "taskCount": 4,
+      "reflection": "为什么分成的份数更多，每一份反而更小？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Count from 3/100 to 12/100 in hundredths",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-hundredsplit",
+              "prompt": "整体已分成十条。把其中一条再分十份，给最小一份命名，再从 3 份一份份数到 12 份。"
+            }
+          ],
+          "implementedAction": "逐个记录从 3/100 到 12/100 的过程",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain that 1/10 ÷ 10 = 1/100",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-hundredsplit",
+              "prompt": "整体已分成十条。把其中一条再分十份，给最小一份命名，再从 3 份一份份数到 12 份。"
+            }
+          ],
+          "implementedAction": "把十分之一再十等分并写最小份名",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Place several hundredths on a number line between 0 and 1/10",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-fline",
+              "prompt": "放大看 0 到 1/10 这一段。把点放到 3/100，再给每小段和点命名。"
+            },
+            {
+              "index": 2,
+              "type": "x-fline",
+              "prompt": "放大看 0 到 1/10 这一段。把点放到 7/100，再给每小段和点命名。"
+            },
+            {
+              "index": 3,
+              "type": "x-fline",
+              "prompt": "放大看 0 到 1/10 这一段。把点放到 9/100，再给每小段和点命名。"
+            }
+          ],
+          "implementedAction": "在 0 到 1/10 中定位 3、7、9 个百分之一",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_W17Kbwm0-u",
+      "lessonId": "decpercent",
+      "batch": "B03",
+      "route": "I",
+      "title": "同一个量，三种写法",
+      "sourceName": "Decimal & Percent Notation",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/791",
+        "topicId": "mt_W17Kbwm0-u"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "One quantity, three names — fill and watch them move together",
+          "jsonPointer": "/records/894/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Match, read and complete — diagnostic usage practice",
+          "jsonPointer": "/records/894/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain it to a younger child",
+          "jsonPointer": "/records/894/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Four-way reference display",
+          "jsonPointer": "/records/894/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#decpercent",
+      "taskCount": 3,
+      "reflection": "0.09 为什么是 9%，不是 90%？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Read and write decimal numbers correctly, identifying the value of each digit (ones, tenths, hundredths)",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-decvalue",
+              "prompt": "搭出 2 个整份和 35 个小格，分别用小数、分数和百分数记录。"
+            },
+            {
+              "index": 2,
+              "type": "x-decvalue",
+              "prompt": "只涂 9 个百分格，再记录三种写法。注意 9 所在的位置。"
+            }
+          ],
+          "implementedAction": "搭整份与百格，填写个位、十分位、百分位",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use the % symbol correctly and explain that per cent means 'out of 100'",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-decvalue",
+              "prompt": "搭出 2 个整份和 35 个小格，分别用小数、分数和百分数记录。"
+            },
+            {
+              "index": 1,
+              "type": "x-decvalue",
+              "prompt": "给百格涂出一半，用三种写法记录同一个量。"
+            },
+            {
+              "index": 2,
+              "type": "x-decvalue",
+              "prompt": "只涂 9 个百分格，再记录三种写法。注意 9 所在的位置。"
+            }
+          ],
+          "implementedAction": "将同一量写成百分数，包含超过 100% 的量",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Convert between simple fractions, decimals, and percentages (e.g. 1/2 = 0.5 = 50%) and explain why they are equal",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-decvalue",
+              "prompt": "给百格涂出一半，用三种写法记录同一个量。"
+            },
+            {
+              "index": 2,
+              "type": "x-decvalue",
+              "prompt": "只涂 9 个百分格，再记录三种写法。注意 9 所在的位置。"
+            }
+          ],
+          "implementedAction": "半份与 9 个百格分别用分数、小数、百分数对应",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_VKW8lOcFaw",
+      "lessonId": "scale",
+      "batch": "B03",
+      "route": "I",
+      "title": "乘完一定变大吗",
+      "sourceName": "Multiplication as scaling",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/832",
+        "topicId": "mt_VKW8lOcFaw"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Stretch-and-shrink bar: predict before you scale",
+          "jsonPointer": "/records/886/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Predict and sort multipliers by direction",
+          "jsonPointer": "/records/886/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Find the counterexample to 'multiplying always makes bigger'",
+          "jsonPointer": "/records/886/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Multiplying by n/n keeps the value",
+          "jsonPointer": "/records/886/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#scale",
+      "taskCount": 4,
+      "reflection": "先不算结果，怎样判断乘 3/4 后会变大还是变小？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Predict without calculating whether 3/4 × 7 is greater or less than 7",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-scale",
+              "prompt": "长 7 的纸带乘 3/4，会变长、变短还是不变？先预测，再拉到这个倍数核对。"
+            }
+          ],
+          "implementedAction": "先预测 3/4×7 的方向，再改变长度核对",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Explain why multiplying by 5/3 makes a number larger and multiplying by 2/5 makes it smaller",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-scale",
+              "prompt": "长 7 的纸带乘 5/3，会变长、变短还是不变？先预测，再拉到这个倍数核对。"
+            },
+            {
+              "index": 2,
+              "type": "x-scale",
+              "prompt": "长 7 的纸带乘 2/5，会变长、变短还是不变？先预测，再拉到这个倍数核对。"
+            }
+          ],
+          "implementedAction": "分别观察大于一与小于一的倍数，并选出与一比较的理由",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Relate multiplying a/b by n/n = 1 to the principle of fraction equivalence",
+          "tasks": [
+            {
+              "index": 3,
+              "type": "x-fwall",
+              "prompt": "上下同时乘 2，涂色的量会改变吗？用两条纸来检查乘 2/2。"
+            }
+          ],
+          "implementedAction": "对齐 3/4 与 6/8，解释乘 2/2 保持量",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_ePXg_XyCKU",
+      "lessonId": "ratios",
+      "batch": "B03",
+      "route": "I",
+      "title": "按两种颜色来分",
+      "sourceName": "Bar Models for Ratios",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1192",
+        "topicId": "mt_ePXg_XyCKU"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build the tape diagram: draw, find one block, read off",
+          "jsonPointer": "/records/347/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Concrete first: build the ratio with cubes, then draw it",
+          "jsonPointer": "/records/347/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Read a worked bar model (scaffold)",
+          "jsonPointer": "/records/347/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Match, read and sketch (assessment-style practice)",
+          "jsonPointer": "/records/347/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Compare the bar model with tables and double number lines",
+          "jsonPointer": "/records/347/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#ratios",
+      "taskCount": 2,
+      "reflection": "为什么按 3:2 分 20，要先分成 5 份，而不是 3 份？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Draw a bar model to represent a ratio problem — e.g. sharing £20 in the ratio 3:2 by drawing 5 equal blocks",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-ratio",
+              "prompt": "20 颗珠子按 3:2 分给两人。搭出两行同样大小的块，再让所有块合起来恰好是 20。"
+            }
+          ],
+          "implementedAction": "搭三块与两块，按总量二十分配",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use a bar model to solve a proportion problem and explain each step",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-ratio",
+              "prompt": "换成 18 颗按 5:1 分。搭好后，把同一份记录换成表格和双数轴；选一种最方便查准确数量的画法。"
+            }
+          ],
+          "implementedAction": "换成十八按五比一分，算单块与两边",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Compare bar models with other representations (tables, double number lines) and explain when each is most useful",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-ratio",
+              "prompt": "换成 18 颗按 5:1 分。搭好后，把同一份记录换成表格和双数轴；选一种最方便查准确数量的画法。"
+            }
+          ],
+          "implementedAction": "切换同一模型的条形、表格、双数轴并留下用途说明",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_xppl18avyY",
+      "lessonId": "sortobjects",
+      "batch": "B04",
+      "route": "J",
+      "title": "换个办法分一分",
+      "sourceName": "Sorting into categories",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/727",
+        "topicId": "mt_xppl18avyY"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Drag-to-sort (or hands-on sort) with self-counting groups",
+          "jsonPointer": "/records/955/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort the same set two different ways",
+          "jsonPointer": "/records/955/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Answer a real question from sorted class data",
+          "jsonPointer": "/records/955/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#sortobjects",
+      "taskCount": 2,
+      "reflection": "换一种分类后，物品总数变了吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Sort a set of shapes by colour and count how many in each group",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-sort",
+              "prompt": "先按颜色分。选一个盒子，再点物品，把全部物品放好并记数。"
+            }
+          ],
+          "implementedAction": "按颜色放入唯一组并计数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Sort objects by size (big/small) and state how many in each category",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-sort",
+              "prompt": "还是同一堆物品，这次只按大小分。数量会怎样改变？"
+            }
+          ],
+          "implementedAction": "同一物品改按大小重分",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Identify which category has the most/fewest after sorting and counting",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-sort",
+              "prompt": "先按颜色分。选一个盒子，再点物品，把全部物品放好并记数。"
+            },
+            {
+              "index": 1,
+              "type": "x-sort",
+              "prompt": "还是同一堆物品，这次只按大小分。数量会怎样改变？"
+            }
+          ],
+          "implementedAction": "据各组数量识别最多与最少",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_ylXdiVRAYv",
+      "lessonId": "sortdata",
+      "batch": "B04",
+      "route": "J",
+      "title": "让零散回答排好队",
+      "sourceName": "Sorting Data into Categories",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/731",
+        "topicId": "mt_ylXdiVRAYv"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Survey organiser: from response cards to a table that answers the question",
+          "jsonPointer": "/records/989/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Interactive reconcile-and-order check (optional self-check mechanism)",
+          "jsonPointer": "/records/989/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Read a completed table to say what it means (annotation scaffold)",
+          "jsonPointer": "/records/989/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#sortdata",
+      "taskCount": 2,
+      "reflection": "新增两个回答后，哪一行要改？总数怎样核对？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Sort a set of objects into 2-3 given categories and count each group",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-sort",
+              "prompt": "这些模拟回答最喜欢哪种水果？按答案分类、记数，再从多到少排好表格。"
+            },
+            {
+              "index": 1,
+              "type": "x-sort",
+              "prompt": "又来了两份选香蕉的回答。重新整理记录，并检查第一名是否改变。"
+            }
+          ],
+          "implementedAction": "按水果回答分类并核对每类总数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Create a simple table or list showing category names and counts",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-sort",
+              "prompt": "这些模拟回答最喜欢哪种水果？按答案分类、记数，再从多到少排好表格。"
+            },
+            {
+              "index": 1,
+              "type": "x-sort",
+              "prompt": "又来了两份选香蕉的回答。重新整理记录，并检查第一名是否改变。"
+            }
+          ],
+          "implementedAction": "在有类别名的记录栏填次数",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Order categories from most to fewest or fewest to most",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-sort",
+              "prompt": "这些模拟回答最喜欢哪种水果？按答案分类、记数，再从多到少排好表格。"
+            },
+            {
+              "index": 1,
+              "type": "x-sort",
+              "prompt": "又来了两份选香蕉的回答。重新整理记录，并检查第一名是否改变。"
+            }
+          ],
+          "implementedAction": "按次数排列，新增回答后重排；允许并列的任意先后",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_iykH2P5oFq",
+      "lessonId": "statquestions",
+      "batch": "B04",
+      "route": "J",
+      "title": "这个问题需要去收集吗",
+      "sourceName": "Statistical questions",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/763",
+        "topicId": "mt_iykH2P5oFq"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#statquestions",
+      "taskCount": 3,
+      "reflection": "把“我今天读了几分钟”改成能研究变化的问题，会怎样问？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Sort questions such as 'How tall am I?', 'How tall are the pupils in my class?', 'How many days are in March?' and 'How many hours of sleep do 12-year-olds usually get?' into statistical and non-statistical, explaining each choice by whether the answers are expected to vary",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-questionsort",
+              "prompt": "这些问题有的需要收集变化的记录，有的只有固定答案。逐个分类，特别留意“问到一群人”也可能只求一个固定总数。"
+            }
+          ],
+          "implementedAction": "将六个固定或有变异的问题分类，并说明群体总数为何仍固定",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "For a given statistical question, name the population and the attribute being measured, describe the variation they expect (e.g. 'sleep times will differ from person to person, perhaps from 7 to 11 hours'), and explain that a good answer must account for that variability in the data — even a single-number summary such as 'a typical 12-year-old sleeps about 9 hours' stands for many differing values, unlike the one fixed answer to 'How many days are in March?'",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-questionbuild",
+              "prompt": "想知道这群孩子最喜欢的运动，拼出调查的问题，并给出两种可能不同的回答。"
+            },
+            {
+              "index": 2,
+              "type": "x-questionbuild",
+              "prompt": "“我今天读了几分钟”只有一次记录。改成能研究一周变化的问题。不要把问一个人就当作一定不能统计。"
+            }
+          ],
+          "implementedAction": "构造对象与属性，并提出两种可能记录",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain why a question about a group can still be non-statistical (e.g. 'How many pupils are in my class?' has one fixed answer), and rewrite a non-statistical question as a statistical one (e.g. 'How long is my journey to school?' becomes 'How long are journeys to school for pupils in my year?')",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-questionsort",
+              "prompt": "这些问题有的需要收集变化的记录，有的只有固定答案。逐个分类，特别留意“问到一群人”也可能只求一个固定总数。"
+            },
+            {
+              "index": 2,
+              "type": "x-questionbuild",
+              "prompt": "“我今天读了几分钟”只有一次记录。改成能研究一周变化的问题。不要把问一个人就当作一定不能统计。"
+            }
+          ],
+          "implementedAction": "辨认群体固定总数，把一次记录改成跨日观察；完整话语保留未评分",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_u5HkSxZECM",
+      "lessonId": "datavocab",
+      "batch": "B04",
+      "route": "K",
+      "title": "图里的每个位置管什么",
+      "sourceName": "Pictograms and tally charts (age 6+)",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/729",
+        "topicId": "mt_u5HkSxZECM"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Label the chart and sort the data",
+          "jsonPointer": "/records/843/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Tally to frequency: marks become a count",
+          "jsonPointer": "/records/843/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Contrast-pair glossary (scaffold)",
+          "jsonPointer": "/records/843/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#datavocab",
+      "taskCount": 2,
+      "reflection": "身高写成整数，就变成只能逐个数的量了吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Correctly label the axes of a bar chart including a title, axis labels, and scale",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-chartlab",
+              "prompt": "把记录搭成图，再补上它的标题、两条轴和每格代表的数。换成表、计数笔画和图案看看。"
+            }
+          ],
+          "implementedAction": "构建图并补标题、类别轴、次数轴、比例刻度",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Distinguish between discrete data (counted) and continuous data (measured) with an example of each",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-variable",
+              "prompt": "把这些量分到“逐个数”或“可以有中间值的测量”。再试一个半单位，看看哪些说得通。"
+            }
+          ],
+          "implementedAction": "将可数与可测量的量分类，用半单位诊断",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Use 'tally', 'frequency', and 'pictogram' correctly when describing how to record and display data",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-chartlab",
+              "prompt": "把记录搭成图，再补上它的标题、两条轴和每格代表的数。换成表、计数笔画和图案看看。"
+            }
+          ],
+          "implementedAction": "切换笔画、频数表与图案，对应术语与实际记录",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_r8XnXwRA6g",
+      "lessonId": "scaledgraphs",
+      "batch": "B04",
+      "route": "K",
+      "title": "一个图案可以代表几个",
+      "sourceName": "Scaled picture and bar graphs",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/738",
+        "topicId": "mt_r8XnXwRA6g"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Flip the scale: watch the same bars change value",
+          "jsonPointer": "/records/759/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Reading values between the marks",
+          "jsonPointer": "/records/759/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Two-step problems as two reads then combine",
+          "jsonPointer": "/records/759/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Construct a scaled graph from a frequency table",
+          "jsonPointer": "/records/759/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#scaledgraphs",
+      "taskCount": 2,
+      "reflection": "一格代表 5 只宠物，四格代表几只？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Draw a bar graph where each square represents 5 pets",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-chartlab",
+              "prompt": "每格代表 5 只。把猫 20、狗 15、兔 5 的记录画出来，再求猫比兔多多少。"
+            }
+          ],
+          "implementedAction": "每格五只构建宠物柱图",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "From a scaled pictogram, answer: how many more children chose football than tennis?",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-chartlab",
+              "prompt": "每个图案代表 2 票。画出三个项目的票数，先比较足球与网球相差多少，再求最多两项合计。"
+            }
+          ],
+          "implementedAction": "按图例两票一图案，比较足球与网球差值",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Solve a two-step problem: how many votes in total for the top two choices?",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-chartlab",
+              "prompt": "每个图案代表 2 票。画出三个项目的票数，先比较足球与网球相差多少，再求最多两项合计。"
+            }
+          ],
+          "implementedAction": "在同图求最多两类的合计",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_QpJydot2Kh",
+      "lessonId": "displaypurpose",
+      "batch": "B04",
+      "route": "K",
+      "title": "换张图，哪个问题更好答",
+      "sourceName": "Choosing displays for a purpose",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/735",
+        "topicId": "mt_QpJydot2Kh"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#displaypurpose",
+      "taskCount": 2,
+      "reflection": "你想查一个人数，或想一眼比出最多，分别会怎样选？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Show the same sport survey as a table and as a bar graph made in software and describe what each makes easy to see",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-chartlab",
+              "prompt": "把这份偏好记录做成表格和条形图。要查游泳的准确人数，你会选哪种，为什么？"
+            },
+            {
+              "index": 1,
+              "type": "x-chartlab",
+              "prompt": "同样的记录，想迅速比较最多与最少的差距，换个画法看看。"
+            }
+          ],
+          "implementedAction": "同一运动数据构建并切换表格与条形",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Choose a table to read an exact count and a bar graph to compare categories at a glance, explaining both choices",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-chartlab",
+              "prompt": "把这份偏好记录做成表格和条形图。要查游泳的准确人数，你会选哪种，为什么？"
+            },
+            {
+              "index": 1,
+              "type": "x-chartlab",
+              "prompt": "同样的记录，想迅速比较最多与最少的差距，换个画法看看。"
+            }
+          ],
+          "implementedAction": "分别查准确数与比较差距；选择和理由保留，偏好不作为唯一正确答案",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Interpret the bar graph by saying which sport is most popular and by how much",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-chartlab",
+              "prompt": "同样的记录，想迅速比较最多与最少的差距，换个画法看看。"
+            }
+          ],
+          "implementedAction": "指出最多的项目并计算与最少之差",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_iFFKZd-Vgv",
+      "lessonId": "likelihood",
+      "batch": "B04",
+      "route": "L",
+      "title": "很可能，是一定吗",
+      "sourceName": "Likelihood Language",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1173",
+        "topicId": "mt_iFFKZd-Vgv"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "The Chance-master's bag: say it, then watch it happen",
+          "jsonPointer": "/records/478/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Physical likelihood line: peg real events and justify",
+          "jsonPointer": "/records/478/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Live likelihood strip with an adjustable bag",
+          "jsonPointer": "/records/478/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Sort and order events (recognition check)",
+          "jsonPointer": "/records/478/learn/activities/3"
+        },
+        {
+          "index": 4,
+          "title": "Tap-to-reveal reference scene (worked examples)",
+          "jsonPointer": "/records/478/learn/activities/4"
+        }
+      ],
+      "url": "learn.html#likelihood",
+      "taskCount": 1,
+      "reflection": "袋里七红三蓝，为什么抽红不是一定？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Place five everyday events (e.g. 'the sun will rise tomorrow', 'it will snow in July', 'I'll flip heads') on a scale from impossible to certain",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-likelihood",
+              "prompt": "把五件事放到“不可能”到“一定”的位置。每个袋子都充分混合，每颗珠子一样大。"
+            }
+          ],
+          "implementedAction": "五种条件明确的抽珠事件放到可能性轴；替换含天气等含糊前提的例子",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use 'likely', 'unlikely', 'certain', 'impossible', and 'even chance' correctly to describe different events",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-likelihood",
+              "prompt": "把五件事放到“不可能”到“一定”的位置。每个袋子都充分混合，每颗珠子一样大。"
+            }
+          ],
+          "implementedAction": "把五个词与对应构成相联",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain why pulling a red ball from a bag of mostly red balls is 'likely' but not 'certain'",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-likelihood",
+              "prompt": "把五件事放到“不可能”到“一定”的位置。每个袋子都充分混合，每颗珠子一样大。"
+            }
+          ],
+          "implementedAction": "专门举蓝珠作反例，区别很可能与一定",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_J4j7d3iAfg",
+      "lessonId": "chance",
+      "batch": "B04",
+      "route": "L",
+      "title": "先猜，再一次次记录",
+      "sourceName": "Simple Chance Experiments",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1174",
+        "topicId": "mt_J4j7d3iAfg"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Predict, flip, tally: run and read a coin experiment",
+          "jsonPointer": "/records/507/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Watch the proportion settle: scale up the number of trials",
+          "jsonPointer": "/records/507/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "The coin has no memory: confront recency thinking",
+          "jsonPointer": "/records/507/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Interpretation check: does a small sample prove bias?",
+          "jsonPointer": "/records/507/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#chance",
+      "taskCount": 3,
+      "reflection": "这次结果与预测不同，是记录错了还是可能正常发生？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Flip a coin 20 times, record heads and tails in a tally chart, and describe what they notice about the results",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-experiment",
+              "prompt": "先预测 20 次中正面会有几次。每抛一次，就给对应结果记一笔。"
+            }
+          ],
+          "implementedAction": "二十次伪随机抛币，每次一笔并核对记录",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Roll a die 30 times and compare how often each number came up with what they expected",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-experiment",
+              "prompt": "换成理想骰子，共掷 30 次。先预测出现 1 的次数，每次及时记录。"
+            }
+          ],
+          "implementedAction": "三十次伪随机掷骰，逐项计数并比较第一种结果与预测",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Pull counters from a bag, record results, and explain whether the outcomes matched their prediction",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-experiment",
+              "prompt": "袋里 7 红 3 蓝，每次抽后放回。预测 20 次中红色几次，再试并比较。"
+            }
+          ],
+          "implementedAction": "放回抽珠，保留预测和真实结果再比较",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_xSgAgg9Ej_",
+      "lessonId": "fairness",
+      "batch": "B04",
+      "route": "L",
+      "title": "机会一样，要看什么",
+      "sourceName": "Equally Likely Outcomes",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1175",
+        "topicId": "mt_xSgAgg9Ej_"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build a fair three-colour spinner and test it by sampling",
+          "jsonPointer": "/records/959/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Sort and decide: fair or not fair?",
+          "jsonPointer": "/records/959/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Argue down the carnival host (equally likely vs random)",
+          "jsonPointer": "/records/959/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Why is a balanced die fair? (structure vs execution)",
+          "jsonPointer": "/records/959/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#fairness",
+      "taskCount": 3,
+      "reflection": "只有红蓝两色，就一定是五五开吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Explain that a fair coin has equally likely outcomes because heads and tails each have the same chance",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-spinner",
+              "prompt": "理想硬币有两个同等机会的面。把两块分别涂成两色，再试一组。次数必须一样吗？"
+            }
+          ],
+          "implementedAction": "构造理想硬币的两个等机会结果并观察试验",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Identify whether a spinner with unequal sections has equally likely outcomes or not, and explain why",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-spinner",
+              "prompt": "把六个等大扇区涂成三色，使三种颜色机会一样。先判断，再模拟转 100 次。"
+            },
+            {
+              "index": 2,
+              "type": "x-spinner",
+              "prompt": "做一个红色占一格、蓝色占五格的转盘。只有两色，机会一样吗？"
+            }
+          ],
+          "implementedAction": "构造等扇区三色及一红五蓝，按面积解释机会",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Give an example of a situation with equally likely outcomes and one without, explaining the difference",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-spinner",
+              "prompt": "把六个等大扇区涂成三色，使三种颜色机会一样。先判断，再模拟转 100 次。"
+            },
+            {
+              "index": 2,
+              "type": "x-spinner",
+              "prompt": "做一个红色占一格、蓝色占五格的转盘。只有两色，机会一样吗？"
+            }
+          ],
+          "implementedAction": "亲自制作等可能与不等可能的例子",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_8DT3LXwwH-",
+      "lessonId": "simulation",
+      "batch": "B04",
+      "route": "L",
+      "title": "试得更多，会更稳吗",
+      "sourceName": "Simulating chance with digital tools",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/1185",
+        "topicId": "mt_8DT3LXwwH-"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#simulation",
+      "taskCount": 1,
+      "reflection": "为什么不能只比较出现六的次数？哪种结果会推翻“每次都更接近”？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Simulate runs of 10, 100 and 1000 dice rolls with a spreadsheet random-number function, repeating each run size 5 times, and record the proportion of 6s in every run",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-simulation",
+              "prompt": "分别做 10、100、1000 次一轮的掷骰模拟，每种做五轮。每个点是一轮出现六的比例。观察波动，不要求结果恰好等于 1/6。"
+            }
+          ],
+          "implementedAction": "本地数字工具代替外部表格函数，三个规模各五轮并保存比例",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Plot the proportions for each run size and show that the 10-roll results spread widely while the 1000-roll results cluster near 1/6",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-simulation",
+              "prompt": "分别做 10、100、1000 次一轮的掷骰模拟，每种做五轮。每个点是一轮出现六的比例。观察波动，不要求结果恰好等于 1/6。"
+            }
+          ],
+          "implementedAction": "用全部真实结果作图观察波动，不强制五轮必然更集中",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Explain that results tend to settle near the expected 1/6 as trials increase, but a particular 1000-roll run can still be further from 1/6 than a lucky 10-roll run",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-simulation",
+              "prompt": "分别做 10、100、1000 次一轮的掷骰模拟，每种做五轮。每个点是一轮出现六的比例。观察波动，不要求结果恰好等于 1/6。"
+            }
+          ],
+          "implementedAction": "解释通常趋势与不保证，检查一个合法反例",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_ZjIFGc6zPW",
+      "lessonId": "repeat",
+      "batch": "B05",
+      "route": "M",
+      "title": "是哪一小段一直回来",
+      "sourceName": "Finding the repeating unit",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/679",
+        "topicId": "mt_ZjIFGc6zPW"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#repeat",
+      "taskCount": 3,
+      "reflection": "只看下一个是什么，和找出整段重复单元，有什么不同？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Circle the part that repeats in red, blue, blue, red, blue, blue and describe it as an ABB pattern",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-repeat",
+              "prompt": "圈出从开头开始、最小的重复单元。再自己拼出这个单元，用它搭三次。"
+            }
+          ],
+          "implementedAction": "圈选最小单元并用单元搭三次",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Build a new pattern with the unit 1, 2, 2, 3 and repeat it three times",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-repeat",
+              "prompt": "换成数字，找出单元，再搭出连续三组。"
+            }
+          ],
+          "implementedAction": "构造 1223 并重复三次",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Say whether clap, stamp, stamp, clap, stamp, stamp and circle, square, square have the same repeating unit",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-repeat",
+              "prompt": "用圆代表拍手、方块代表跺脚，把动作规律变成三组图形。"
+            }
+          ],
+          "implementedAction": "把动作映射为圆方方，保持次序",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_DW2D1c0fKx",
+      "lessonId": "structure",
+      "batch": "B05",
+      "route": "M",
+      "title": "换了样子，什么没变",
+      "sourceName": "Shape patterns",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/934",
+        "topicId": "mt_DW2D1c0fKx"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Choose your start: count on from the larger addend",
+          "jsonPointer": "/records/319/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Adding ten: predict which digit moves",
+          "jsonPointer": "/records/319/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Is a square a kind of rectangle?",
+          "jsonPointer": "/records/319/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Does the shortcut still work? Bounding the structure",
+          "jsonPointer": "/records/319/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#structure",
+      "taskCount": 3,
+      "reflection": "为什么 47 加 10 不需要重新逐个数 47 颗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Use the commutative property deliberately (e.g. reorder 3 + 9 as 9 + 3 to count on from the larger number)",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-commute",
+              "prompt": "交换这两堆珠子的位置。亲自试过后，写出交换后的算式，看看总数有没有变。"
+            }
+          ],
+          "implementedAction": "交换 3 与 9 的位置并写新算式",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Use place-value structure to add or subtract tens (e.g. 47 + 10 = 57 because only the tens digit changes)",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-placevalue",
+              "prompt": "47 颗已经按十颗一束放好。加一束十颗，不拆开重数，记录现在有几个十、几个一。"
+            }
+          ],
+          "implementedAction": "在四十七上增加一个十并描述位值",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Recognise structural similarities between shapes (e.g. rectangles and squares both have 4 sides and 4 right angles)",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-shapefacts",
+              "prompt": "分别描出长方形与正方形的边和直角，再比较什么相同。拉长长方形，观察这些数量会不会变。"
+            }
+          ],
+          "implementedAction": "分别标记长方形与正方形的边和直角并比较",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_W3VOAuFwVw",
+      "lessonId": "growing",
+      "batch": "B05",
+      "route": "M",
+      "title": "每次多一点，会长到哪里",
+      "sourceName": "Describing growing number patterns",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/680",
+        "topicId": "mt_W3VOAuFwVw"
+      },
+      "research": "local-supplement",
+      "researchReferences": "docs/phase4/RESEARCH.md",
+      "url": "learn.html#growing",
+      "taskCount": 3,
+      "reflection": "第六座塔的高度，和第六次增加，是同一件事吗？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Describe 5, 8, 11, 14 as 'start at 5 and add 3 each time'",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-grow",
+              "prompt": "约定每次增加相同数量：5、8、11、14。记录从哪里开始、每次增加多少，再补出后两项。"
+            }
+          ],
+          "implementedAction": "记录起点五、步长三并补后续",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Find the missing numbers in 40, 35, __, 25, __, 15",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-grow",
+              "prompt": "约定每次减少相同数量：40、35、空格、25、空格、15。用负号记录每次变化，并补齐。"
+            }
+          ],
+          "implementedAction": "以步长负五补齐减少序列",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Build a tower pattern that grows by 2 blocks each step and predict the 6th tower",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-grow",
+              "prompt": "前三座塔每次多两块。先预测第六座有几块，再把后面三座搭出来。"
+            }
+          ],
+          "implementedAction": "留下第六塔预测，再搭后面三塔",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_oIzycTBeE4",
+      "lessonId": "equality",
+      "batch": "B05",
+      "route": "N",
+      "title": "两边一样多才放平",
+      "sourceName": "What the equals sign means",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/654",
+        "topicId": "mt_oIzycTBeE4"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Balance beam: build both sides and watch it level",
+          "jsonPointer": "/records/676/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "True or false across varied forms",
+          "jsonPointer": "/records/676/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Static balance picture to anchor 'the same as'",
+          "jsonPointer": "/records/676/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Talk it through: why is this true?",
+          "jsonPointer": "/records/676/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#equality",
+      "taskCount": 3,
+      "reflection": "5 = 2 + 3 为什么也是正确的？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Explain that 6 = 6 is true because both sides are the same",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-balance",
+              "prompt": "按两边数字分别放珠子。先猜天平会怎样，再松开支架。"
+            }
+          ],
+          "implementedAction": "构造两个六，预测后放开天平",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Determine that 4 + 1 = 5 + 2 is false",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-balance",
+              "prompt": "这次两边都是加法，但一样多吗？搭出来、先预测，再松开。"
+            }
+          ],
+          "implementedAction": "构造五与七，判断不能用等号",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Understand that = does not mean 'the answer comes next' — it means balance",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-balance",
+              "prompt": "“答案”在左边也能成立吗？用两盘珠子检查。"
+            }
+          ],
+          "implementedAction": "左五与右二加三保持平衡，解释等号不表示方向",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_3JgrHY221M",
+      "lessonId": "unknown",
+      "batch": "B05",
+      "route": "N",
+      "title": "空盒里要放多少",
+      "sourceName": "Unknown in Addition & Subtraction",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/653",
+        "topicId": "mt_3JgrHY221M"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Balance the unknown with counters",
+          "jsonPointer": "/records/102/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Solve by the inverse, then check",
+          "jsonPointer": "/records/102/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain your move (strategy talk)",
+          "jsonPointer": "/records/102/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Anchor each position to an operation (worked bar models)",
+          "jsonPointer": "/records/102/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#unknown",
+      "taskCount": 3,
+      "reflection": "5 = □ − 3 时，空盒为什么不能填 2？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Solve 8 + ? = 11 and write 3",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-unknown",
+              "prompt": "向空盒里增减珠子，让 8 加上它与 11 一样多。"
+            }
+          ],
+          "implementedAction": "调整方框到三并代回",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Solve 5 = □ − 3 and write 8",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-unknown",
+              "prompt": "空盒拿走三颗后要剩五颗。调好空盒，再代回原式。"
+            }
+          ],
+          "implementedAction": "在方框减三的模型里构造八并检查",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Solve 6 + 6 = □ and write 12",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-unknown",
+              "prompt": "空盒在右边。这次让它与六加六一样多。"
+            }
+          ],
+          "implementedAction": "右边方框构造十二并检查",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_EBYGhd8X3x",
+      "lessonId": "represent",
+      "batch": "B05",
+      "route": "O",
+      "title": "把故事搭成一张图",
+      "sourceName": "Connecting Representations",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/928",
+        "topicId": "mt_EBYGhd8X3x"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Build the bar from the story, then write the sentence",
+          "jsonPointer": "/records/332/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "True/false and balance: '=' means 'the same as'",
+          "jsonPointer": "/records/332/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Explain-why with a study partner",
+          "jsonPointer": "/records/332/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Read the links both ways (worked example / warm-up)",
+          "jsonPointer": "/records/332/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#represent",
+      "taskCount": 2,
+      "reflection": "总共 10 个、已知 6 个，为什么不能把 6 和 10 当作两个部分相加？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Write a number sentence (e.g. 14 + 5 = 19) to match a word problem and explain the connection",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-story",
+              "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+            }
+          ],
+          "implementedAction": "将贴纸故事的两部分对应到 14+5=19",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Draw a bar model or part-whole diagram to represent a problem, then solve using the diagram",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-story",
+              "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+            },
+            {
+              "index": 1,
+              "type": "x-story",
+              "prompt": "先认出哪个数是整体，再搭图；写一个能求绿色数量的算式。"
+            }
+          ],
+          "implementedAction": "用两部分与整体搭图并求未知部分",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Translate between a concrete model and a symbolic equation, describing what each number represents",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-story",
+              "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+            },
+            {
+              "index": 1,
+              "type": "x-story",
+              "prompt": "先认出哪个数是整体，再搭图；写一个能求绿色数量的算式。"
+            }
+          ],
+          "implementedAction": "图、算式和数字角色对应；接受同一关系的加减两种形式",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_kJ5wYzO8qC",
+      "lessonId": "explain",
+      "batch": "B05",
+      "route": "O",
+      "title": "让别人看见你的办法",
+      "sourceName": "Explaining Mathematical Reasoning",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/929",
+        "topicId": "mt_kJ5wYzO8qC"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "The 'convince me' partner",
+          "jsonPointer": "/records/551/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build an explanation you can test",
+          "jsonPointer": "/records/551/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Model a complete because-chain (scaffold)",
+          "jsonPointer": "/records/551/learn/activities/2"
+        },
+        {
+          "index": 3,
+          "title": "Critique items: real reason or just saying it's right? (complement)",
+          "jsonPointer": "/records/551/learn/activities/3"
+        }
+      ],
+      "url": "learn.html#explain",
+      "taskCount": 3,
+      "reflection": "8 + 5 为什么可以变成 8 + 2 + 3，而不能是 8 + 2 + 5？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Explain a solution strategy using a drawing or number sentence (e.g. 'I made ten first, then added the rest')",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-reason",
+              "prompt": "8 + 5：从五颗中拿一些补足十颗，剩下的还要算。用图展示你的拆法。"
+            }
+          ],
+          "implementedAction": "将五拆成二和三，用图展示凑十",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Justify why an answer is correct by showing an alternative method that gives the same result",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-reason",
+              "prompt": "换一种办法：从 8 出发，在数轴上走五步，与刚才的办法比较。"
+            }
+          ],
+          "implementedAction": "用数轴五步得到同一结果，作为第二种方法",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Identify and explain an error in a worked example or a peer's solution",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-reason",
+              "prompt": "有人写：8 + 5 = 8 + 2 + 5 = 15。找出错误，重新分这五颗，修好这条推理。"
+            }
+          ],
+          "implementedAction": "指出拆分后的五重复计算，并修复作品",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    },
+    {
+      "topicId": "mt_pyMD_SIiYO",
+      "lessonId": "justify",
+      "batch": "B05",
+      "route": "O",
+      "title": "试过几次，能说总是吗",
+      "sourceName": "Justifying mathematical reasoning",
+      "source": {
+        "file": "vendor/os-taxonomy/data/topics.json",
+        "jsonPointer": "/topics/937",
+        "topicId": "mt_pyMD_SIiYO"
+      },
+      "research": "upstream-adapted",
+      "researchReferences": [
+        {
+          "index": 0,
+          "title": "Convince the friendly skeptic",
+          "jsonPointer": "/records/719/learn/activities/0"
+        },
+        {
+          "index": 1,
+          "title": "Build and test an argument workspace",
+          "jsonPointer": "/records/719/learn/activities/1"
+        },
+        {
+          "index": 2,
+          "title": "Spot and explain the faulty step",
+          "jsonPointer": "/records/719/learn/activities/2"
+        }
+      ],
+      "url": "learn.html#justify",
+      "taskCount": 3,
+      "reflection": "你的理由为什么能适用于没试过的偶数？",
+      "goals": [
+        {
+          "index": 0,
+          "sourceGoal": "Explain step by step why a columnar addition method gives the correct answer",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-regroup",
+              "prompt": "把 27 与 18 合到一起，再把十个一换成一个十。每一步总量都要保持。"
+            }
+          ],
+          "implementedAction": "合并位值块、换十，和竖式进位同步呈现",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 1,
+          "sourceGoal": "Find and explain an error in a worked example (e.g. incorrect regrouping)",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-regroup",
+              "prompt": "有人把 27 + 18 写成 315：三个十、十五个一直接连起来。用换十修好它，并指出错误。"
+            }
+          ],
+          "implementedAction": "修复 315 的位值错误并指出换十原因",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        },
+        {
+          "index": 2,
+          "sourceGoal": "Construct a simple argument for why a general statement is true (e.g. 'adding two even numbers always gives an even number')",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-proof",
+              "prompt": "先把两组完整的“对”拼在一起，换一组再试。然后用理由解释任意偶数都成立；最后为“任何两个数相加都为偶数”搭一个反例。"
+            }
+          ],
+          "implementedAction": "拼完整对子，组装适用于任意偶数的理由，再造反例区别更广的假命题",
+          "explanation": "free explanations retained unassessed; deterministic construction checked",
+          "claim": "任务对应，不宣称掌握"
+        }
+      ]
+    }
+  ],
+  "bridges": [
+    {
+      "id": "link-share-equivalent",
+      "from": "share",
+      "to": "equivalent",
+      "phase": 3,
+      "title": "切成六份，还是半份吗？",
+      "sourceEdge": {
+        "topicId": "mt_Ep7TDFuYUa",
+        "prerequisiteId": "mt_ndGqFPWyen",
+        "strength": "hard",
+        "reason": "Must understand unit fractions to reason about equivalence"
+      },
+      "summary": "先平均分才能数单位份；不同分法可以表示同一个半份。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "partition",
+          "prompt": "把整块平均分成 6 份，取 3 份，做出一个半份。"
+        },
+        {
+          "index": 1,
+          "type": "equivalent",
+          "prompt": "把三条纸带都涂到一半。切法不同，拿到的量要一样。"
+        }
+      ]
+    },
+    {
+      "id": "link-equivalent-quarters",
+      "from": "equivalent",
+      "to": "quarters",
+      "phase": 3,
+      "title": "四分之一怎样走到 0.25？",
+      "sourceEdge": {
+        "topicId": "mt_DRlbMok2lT",
+        "prerequisiteId": "mt_Ep7TDFuYUa",
+        "strength": "soft",
+        "reason": "Equivalent fractions understanding supports recognising decimal equivalents of common fractions"
+      },
+      "summary": "把四分之一改写成百分之二十五，就和 0.25 连在了一起。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "equivalent",
+          "prompt": "把三条同长纸带都取到四分之一，分法改变，量保持。"
+        },
+        {
+          "index": 1,
+          "type": "grid",
+          "prompt": "用百格表示 1/4，再写出同一个量的小数。"
+        }
+      ]
+    },
+    {
+      "id": "link-decimal-quarters",
+      "from": "decimal",
+      "to": "quarters",
+      "phase": 3,
+      "title": "百格里的量，怎样装进杯子？",
+      "sourceEdge": {
+        "topicId": "mt_DRlbMok2lT",
+        "prerequisiteId": "mt_TqDq6jyOmL",
+        "strength": "hard",
+        "reason": "General decimal equivalents prerequisite to specific 1/4, 1/2, 3/4 equivalents"
+      },
+      "summary": "百格、小数和分数都是给同一个量取名字。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "grid",
+          "prompt": "先在百格上做出 50/100，并写出小数。"
+        },
+        {
+          "index": 1,
+          "type": "match",
+          "prompt": "给三个直筒杯倒入指定的量，再为它们配上小数名字。"
+        }
+      ]
+    },
+    {
+      "id": "link-space-hidden",
+      "from": "space",
+      "to": "hidden",
+      "phase": 3,
+      "title": "搭出来的块，怎样一层层数？",
+      "sourceEdge": {
+        "topicId": "mt_d7XktBQPxm",
+        "prerequisiteId": "mt_IuHa5UI5od",
+        "strength": "hard",
+        "reason": "Measuring by counting cubes requires understanding unit cube concept"
+      },
+      "summary": "填满空间的单位块，可以按完整的层来数，隐藏的也算在里面。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "fill",
+          "prompt": "先亲自搭满 3 × 2 × 2 的盒子，记下体积。"
+        },
+        {
+          "index": 1,
+          "type": "cube-plan",
+          "prompt": "还是这个盒子：把刚才放入的块数写成一层 × 层数。"
+        }
+      ]
+    },
+    {
+      "id": "link-hidden-box",
+      "from": "hidden",
+      "to": "box",
+      "phase": 3,
+      "title": "一层的数法，怎样变成公式？",
+      "sourceEdge": {
+        "topicId": "mt_nTL-owFJTF",
+        "prerequisiteId": "mt_d7XktBQPxm",
+        "strength": "hard",
+        "reason": "Volume formula derives from counting-cubes understanding"
+      },
+      "summary": "长乘宽得到一层，再乘高。形状不同，也可能装下一样多的块。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "cube-plan",
+          "prompt": "长 3、宽 2、高 4。先用每层块数和层数算总量。"
+        },
+        {
+          "index": 1,
+          "type": "cube-plan",
+          "prompt": "换成长 4、宽 3、高 2。再用同一个办法，看看总量怎样变化。"
+        }
+      ]
+    },
+    {
+      "id": "link-box-steps",
+      "from": "box",
+      "to": "steps",
+      "phase": 3,
+      "title": "会算一箱，能算整个台阶吗？",
+      "sourceEdge": {
+        "topicId": "mt_5TBUFnCy5-",
+        "prerequisiteId": "mt_nTL-owFJTF",
+        "strength": "hard",
+        "reason": "Composite volume requires volume formula for individual prisms"
+      },
+      "summary": "把台阶分成互不重叠的长方体，每块用长宽高计算，再相加。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "cube-plan",
+          "prompt": "先求出这一块 2 × 2 × 3 长方体的体积。"
+        },
+        {
+          "index": 1,
+          "type": "decompose",
+          "prompt": "把刚才那一块放回台阶。找一个有效切法，分别计算再合起来。"
+        }
+      ]
+    },
+    {
+      "id": "link-tally-survey",
+      "from": "tally",
+      "to": "survey",
+      "phase": 3,
+      "title": "每一个回答，怎样留在表里？",
+      "sourceEdge": {
+        "topicId": "mt_ebQURBOsM5",
+        "prerequisiteId": "mt_c29FaCTNsx",
+        "strength": "hard",
+        "reason": "Frequency tables build on tally charts"
+      },
+      "summary": "每条观察对应一笔，分类累计的笔数就是频数。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "survey",
+          "prompt": "观察这组模拟到校记录，再回答：哪种方式最多？"
+        },
+        {
+          "index": 1,
+          "type": "chart",
+          "prompt": "把刚才自己的两列记录换成计数笔画，再读出公交的人数。"
+        }
+      ]
+    },
+    {
+      "id": "link-tally-views",
+      "from": "tally",
+      "to": "views",
+      "phase": 3,
+      "title": "笔画变圆点，什么没变？",
+      "sourceEdge": {
+        "topicId": "mt__yvsKKp3TS",
+        "prerequisiteId": "mt_c29FaCTNsx",
+        "strength": "hard",
+        "reason": "Comparing displays requires making tally charts and pictograms"
+      },
+      "summary": "同一类别的次数不变，计数表和圆点图就表达同一份资料。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "chart",
+          "prompt": "先把这份投票整理成计数笔画。"
+        },
+        {
+          "index": 1,
+          "type": "compare",
+          "prompt": "让右边的图和左边的表说同一件事，再分别读出狗的票数。"
+        }
+      ]
+    },
+    {
+      "id": "link-bars-views",
+      "from": "bars",
+      "to": "views",
+      "phase": 3,
+      "title": "柱子变圆点，怎样对得上？",
+      "sourceEdge": {
+        "topicId": "mt__yvsKKp3TS",
+        "prerequisiteId": "mt_VhBH8wrFC6",
+        "strength": "hard",
+        "reason": "Comparing displays requires making picture and bar graphs"
+      },
+      "summary": "条形高度与圆点个数可以表示同一数量，换画法不改变原始数据。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "chart",
+          "prompt": "从表格搭出条形图，再找出猫比狗多的那一段。"
+        },
+        {
+          "index": 1,
+          "type": "compare",
+          "prompt": "把刚才的柱子改用圆点表示，再从两边读出狗的票数。"
+        }
+      ]
+    },
+    {
+      "id": "link-area-tiling",
+      "from": "area",
+      "to": "tiling",
+      "phase": 4,
+      "title": "逐块数，怎样变成按排数？",
+      "sourceEdge": {
+        "topicId": "mt_Jvvh5P06NV",
+        "prerequisiteId": "mt_y1n0Zwhoca",
+        "strength": "hard",
+        "reason": "Counting unit squares is prerequisite to connecting tiling to multiplication"
+      },
+      "summary": "单位方片铺满同一块面，按排分组不会增减方片。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-floor",
+          "prompt": "先逐格铺满这片小板，记录面积。"
+        },
+        {
+          "index": 1,
+          "type": "x-floor",
+          "prompt": "换成稍大的板，把逐格数改成每排 × 排数。"
+        }
+      ]
+    },
+    {
+      "id": "link-tiling-rectangle",
+      "from": "tiling",
+      "to": "rectangle",
+      "phase": 4,
+      "title": "不逐格铺，怎样算整片？",
+      "sourceEdge": {
+        "topicId": "mt_GzcJEVkNRn",
+        "prerequisiteId": "mt_Jvvh5P06NV",
+        "strength": "hard",
+        "reason": "Must see tiling→multiplication connection before computing area via side lengths"
+      },
+      "summary": "长和宽就是一排的单位数与排数，乘积与铺满的方片数相同。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-floor",
+          "prompt": "先铺满，写出这片板的行列乘法。"
+        },
+        {
+          "index": 1,
+          "type": "x-rectangle",
+          "prompt": "换一片 5 × 4 的板，用行列结构求面积。"
+        }
+      ]
+    },
+    {
+      "id": "link-rectangle-boundary",
+      "from": "rectangle",
+      "to": "boundary",
+      "phase": 4,
+      "title": "同样铺地，围边会一样吗？",
+      "sourceEdge": {
+        "topicId": "mt_eiB3-6pu6a",
+        "prerequisiteId": "mt_GzcJEVkNRn",
+        "strength": "hard",
+        "reason": "Multiply side lengths for area is prerequisite to applying area formula"
+      },
+      "summary": "长宽的乘积确定面积，四条边的和确定周长，两者不能互换。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-rectangle",
+          "prompt": "先求这片 6 × 4 的铺地面积。"
+        },
+        {
+          "index": 1,
+          "type": "x-rectangle",
+          "prompt": "换成 8 × 3，再分别求铺地面积和围边长度。"
+        }
+      ]
+    },
+    {
+      "id": "link-solids-nets",
+      "from": "solids",
+      "to": "nets",
+      "phase": 4,
+      "title": "数到的六个面，怎样铺在纸上？",
+      "sourceEdge": {
+        "topicId": "mt_vnJEztczji",
+        "prerequisiteId": "mt_Mnodea7mG_",
+        "strength": "hard",
+        "reason": "Predicting which net folds into a shape and checking that its faces, edges and vertices match requires knowing how many faces, edges and vertices common 3-D shapes have"
+      },
+      "summary": "立方体的六个不同面展开后仍须各占一格，折回去不能重叠或缺面。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-solid",
+          "prompt": "转动标记盒子的面、接缝和角，再记录数量。"
+        },
+        {
+          "index": 1,
+          "type": "x-net",
+          "prompt": "把六个面安排在纸上，先预测一对相对面，再折回去检查。"
+        }
+      ]
+    },
+    {
+      "id": "link-notation-amounts",
+      "from": "notation",
+      "to": "amounts",
+      "phase": 4,
+      "title": "写的一份，能分到几颗？",
+      "sourceEdge": {
+        "topicId": "mt_cFltwUQi-d",
+        "prerequisiteId": "mt_vKcxX6iNOA",
+        "strength": "hard",
+        "reason": "Writing fractions like 1/3 and 3/4 requires knowing numerator and denominator"
+      },
+      "summary": "分母决定平均分成几组，分子决定取几组；从符号对应到实际数量。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-fraction",
+          "prompt": "先把纸带分成三份、取一份，并说明两个数字各管什么。"
+        },
+        {
+          "index": 1,
+          "type": "x-fgroups",
+          "prompt": "把全部 12 颗珠子分进三组，每组一样多。选其中一组，看看总数的三分之一是多少。"
+        }
+      ]
+    },
+    {
+      "id": "link-sortobjects-sortdata",
+      "from": "sortobjects",
+      "to": "sortdata",
+      "phase": 4,
+      "title": "整理物品的办法，能整理回答吗？",
+      "sourceEdge": {
+        "topicId": "mt_ylXdiVRAYv",
+        "prerequisiteId": "mt_xppl18avyY",
+        "strength": "hard",
+        "reason": "Organising data in categories builds on classifying and counting objects in categories"
+      },
+      "summary": "每个对象归入一个类别，再数每类次数；同样办法可整理物品和回答。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-sort",
+          "prompt": "先按颜色分。选一个盒子，再点物品，把全部物品放好并记数。"
+        },
+        {
+          "index": 1,
+          "type": "x-sort",
+          "prompt": "这些模拟回答最喜欢哪种水果？按答案分类、记数，再从多到少排好表格。"
+        }
+      ]
+    },
+    {
+      "id": "link-datavocab-scaledgraphs",
+      "from": "datavocab",
+      "to": "scaledgraphs",
+      "phase": 4,
+      "title": "刻度的名字，怎样用来读数量？",
+      "sourceEdge": {
+        "topicId": "mt_r8XnXwRA6g",
+        "prerequisiteId": "mt_u5HkSxZECM",
+        "strength": "hard",
+        "reason": "Drawing scaled bar charts and pictograms requires axis, scale, label, and frequency vocabulary"
+      },
+      "summary": "先给图补上类别与数量轴，再用同一刻度重建数量并比较。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-chartlab",
+          "prompt": "把记录搭成图，再补上它的标题、两条轴和每格代表的数。换成表、计数笔画和图案看看。"
+        },
+        {
+          "index": 1,
+          "type": "x-chartlab",
+          "prompt": "保持每格 5 票，把同样的运动记录重建为柱子，再求最多与最少之差。"
+        }
+      ]
+    },
+    {
+      "id": "link-scaledgraphs-displaypurpose",
+      "from": "scaledgraphs",
+      "to": "displaypurpose",
+      "phase": 4,
+      "title": "同一份数量，换成表还能对上吗？",
+      "sourceEdge": {
+        "topicId": "mt_QpJydot2Kh",
+        "prerequisiteId": "mt_r8XnXwRA6g",
+        "strength": "hard",
+        "reason": "Comparing scaled displays requires making scaled pictographs and bar graphs"
+      },
+      "summary": "图中的格数乘刻度得到数量，换成表仍需保持各类数据。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-chartlab",
+          "prompt": "每格代表 5 只。把猫 20、狗 15、兔 5 的记录画出来，再求猫比兔多多少。"
+        },
+        {
+          "index": 1,
+          "type": "x-chartlab",
+          "prompt": "把刚才的宠物数据转换为表与图，查出狗的准确数量。"
+        }
+      ]
+    },
+    {
+      "id": "link-likelihood-chance",
+      "from": "likelihood",
+      "to": "chance",
+      "phase": 4,
+      "title": "说很可能，实际会发生什么？",
+      "sourceEdge": {
+        "topicId": "mt_J4j7d3iAfg",
+        "prerequisiteId": "mt_iFFKZd-Vgv",
+        "strength": "hard",
+        "reason": "Conducting probability experiments and describing results requires knowing the language used to describe likelihood"
+      },
+      "summary": "用袋里的构成预测，再对照放回抽样的实际记录；很可能并不保证每次发生。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-likelihood",
+          "prompt": "把五件事放到“不可能”到“一定”的位置。每个袋子都充分混合，每颗珠子一样大。"
+        },
+        {
+          "index": 1,
+          "type": "x-experiment",
+          "prompt": "袋里 7 红 3 蓝，每次抽后放回。预测 20 次中红色几次，再试并比较。"
+        }
+      ]
+    },
+    {
+      "id": "link-repeat-growing",
+      "from": "repeat",
+      "to": "growing",
+      "phase": 4,
+      "title": "重复一段，与每次增长有什么不同？",
+      "sourceEdge": {
+        "topicId": "mt_W3VOAuFwVw",
+        "prerequisiteId": "mt_ZjIFGc6zPW",
+        "strength": "soft",
+        "reason": "Identifying the unit of repeat in repeating patterns prepares for describing the rule of growing patterns"
+      },
+      "summary": "重复单元保持内部结构；增长序列每次应用同一个变化规则，整项不必重复。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-repeat",
+          "prompt": "换成数字，找出单元，再搭出连续三组。"
+        },
+        {
+          "index": 1,
+          "type": "x-grow",
+          "prompt": "约定每次增加相同数量：5、8、11、14。记录从哪里开始、每次增加多少，再补出后两项。"
+        }
+      ]
+    },
+    {
+      "id": "link-equality-unknown",
+      "from": "equality",
+      "to": "unknown",
+      "phase": 4,
+      "title": "看懂两边一样多，才能找到空盒",
+      "sourceEdge": {
+        "topicId": "mt_3JgrHY221M",
+        "prerequisiteId": "mt_oIzycTBeE4",
+        "strength": "hard",
+        "reason": "Finding unknowns in equations requires understanding what = means"
+      },
+      "summary": "等号表达相等；调整未知量，使两边具有相同的值，再代回检查。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-balance",
+          "prompt": "“答案”在左边也能成立吗？用两盘珠子检查。"
+        },
+        {
+          "index": 1,
+          "type": "x-unknown",
+          "prompt": "空盒拿走三颗后要剩五颗。调好空盒，再代回原式。"
+        }
+      ]
+    },
+    {
+      "id": "link-explain-justify",
+      "from": "explain",
+      "to": "justify",
+      "phase": 4,
+      "title": "解释一步，再检查每一步都守住了什么",
+      "sourceEdge": {
+        "topicId": "mt_pyMD_SIiYO",
+        "prerequisiteId": "mt_kJ5wYzO8qC",
+        "strength": "hard",
+        "reason": "Age 7-8 arguing/justifying builds on age 6-7"
+      },
+      "summary": "拆分不能重复计数，换十不能改变总量；理由把每一步连接起来。",
+      "tasks": [
+        {
+          "index": 0,
+          "type": "x-reason",
+          "prompt": "有人写：8 + 5 = 8 + 2 + 5 = 15。找出错误，重新分这五颗，修好这条推理。"
+        },
+        {
+          "index": 1,
+          "type": "x-regroup",
+          "prompt": "有人把 27 + 18 写成 315：三个十、十五个一直接连起来。用换十修好它，并指出错误。"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "孩子尚未试用，阶段4整体未完成。",
+    "所有测量、折叠、调查与随机试验为屏幕模型，不代替真实器具和实际收集。",
+    "文字解释与推理质量未由程序判懂。结构化作品成立不等于可独立迁移或长期掌握。",
+    "路线编号是本地建议；只有源数据中的真实边可作为连接。",
+    "模拟采用可复算伪随机序列，不保证每一批大样本都更接近期望。"
+  ]
+}

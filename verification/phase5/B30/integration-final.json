@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "462 unique available nodes",
+    "area opens with three directions",
+    "border direction keeps E and at most three routes",
+    "solid direction contains GA",
+    "GA has three learning nodes",
+    "covering direction offers D, FV and FY",
+    "FZ available on second page",
+    "selected route survives refresh",
+    "first out-of-bounds construction and support persist",
+    "valid partial rectangle is actual work",
+    "simulated next day shows exact question",
+    "original partial rectangle, prose and first error restored",
+    "later construction retained separately",
+    "original question appears inside lesson",
+    "world camera restored",
+    "actual backup contains original partial construction",
+    "repeat import preserves question and first error",
+    "import opens original question",
+    "all six B30 files cached",
+    "original work opens offline",
+    "offline partial construction completes",
+    "correction does not erase first error",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v35",
+    "count": 187,
+    "modules": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>分一份，换个名字</title><link rel="icon" href="icon.svg"><link rel="stylesheet" href="journey.css"><script type="module" src="journey.js"></script></head><body><div id="m-storage-warning" role="alert" hidden></div><main id="math-learning-example">
+  <div class="m-top"><strong>分一份，换个名字</strong></div>
+  <ol class="m-route" aria-label="建议学习路线">
+    <li class="m-stop" data-stop="1"><button type="button" data-route="1"><span class="m-number">A–01</span>先分得一样大</button></li>
+    <li class="m-stop" data-stop="2" aria-current="step"><button type="button" data-route="2"><span class="m-number">A–02 · 正在这里</span>分细了，会变多吗？</button></li>
+    <li class="m-stop" data-stop="3"><button type="button" data-route="3"><span class="m-number">A–03</span>半杯，还能怎样记？</button></li>
+  </ol>
+  <ol id="m-task-progress" class="m-task-progress" aria-label="任务进度"></ol>
+  <section class="m-stage" id="m-current" aria-label="当前可以做的事"></section>
+  <div class="m-bottom"><button type="button" class="m-link" id="m-relations-toggle" aria-expanded="false" aria-controls="m-relations">看看这里和谁有联系</button></div>
+  <details id="m-records" class="m-records"><summary>这次留下的记录</summary><div id="m-record-content"></div></details>
+  <section class="m-relations" id="m-relations" aria-label="当前内容的知识联系" hidden>
+    <p class="m-label">A–02 和前后的联系</p>
+    <div class="m-chain">
+      <button type="button" data-relation="before" aria-pressed="false">先分得一样大<small>这里会用到</small></button>
+      <span class="m-arrow" aria-hidden="true">→</span>
+      <button type="button" data-relation="here" aria-pressed="true">分细了，会变多吗？<small>A–02</small></button>
+      <span class="m-arrow" aria-hidden="true">→</span>
+      <button type="button" data-relation="after" aria-pressed="false">半杯，还能怎样记？<small>它还能帮到</small></button>
+    </div>
+    <p class="m-reason" id="m-reason" aria-live="polite">当前只展开这一处的两条联系。</p>
+  </section>
+</main></body></html>

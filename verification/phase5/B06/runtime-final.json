@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-25T04:32:25.736Z",
+  "healthStatus": 200,
+  "health": {
+    "app": "local-math-explorer",
+    "version": 1
+  },
+  "progress": "0 / 73",
+  "offline": "本机保存 · 离线就绪",
+  "counts": {
+    "themes": 5,
+    "packs": 23,
+    "nodes": 587,
+    "edges": 1223
+  },
+  "nodes": 73,
+  "tasks": 212,
+  "routes": 23,
+  "connections": 31,
+  "cache": [
+    "math-explorer-20261025-learning-v11"
+  ]
+}

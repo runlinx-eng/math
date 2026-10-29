@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "clock rim changes minute via actual SVG click",
+    "short hand advances halfway between hour marks",
+    "selected minute appears alongside slider",
+    "premature stop and support are retained",
+    "simulate start, run, resume and stop at 60 seconds",
+    "correcting premature stop does not erase initial support",
+    "later half does not satisfy the first-half prompt",
+    "first wrong half stays in the learning record",
+    "actual circular quarter sector is selectable",
+    "clock circle is divided into four sectors",
+    "wrong numeral position is recorded from actual clock click",
+    "moving the numeral clears its old position",
+    "date selection persists across two displayed months",
+    "leap day is included in the two-day interval",
+    "shorter desktop layout has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "childTrial": false
+}

@@ -1,0 +1,2370 @@
+[
+  {
+    "topic": {
+      "id": "mt_iQYPw8bMfN",
+      "type": "META",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Working with money",
+      "description": "Model real-world problems involving measurement, money, and time by choosing appropriate representations and interpreting results in context",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.06538049303322616,
+      "evidence": [
+        "Choose whether to use a bar model, number line, or equation for a measurement problem",
+        "Model a multi-step money problem with equations and interpret the final answer as change or total cost",
+        "Create a line plot from measurement data and use it to answer questions about the real-world situation"
+      ],
+      "assessmentPrompt": "When {{name}} solves a real-life maths problem — like calculating how much fabric is needed for a project — can they choose the right representation (a diagram, a table, an equation) and explain what the answer means in the real situation?",
+      "standards": [
+        "acara-v9:AC9M2N06",
+        "ccss-math:MP.4"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/942",
+    "research": {
+      "topicId": "mt_iQYPw8bMfN",
+      "pedagogy": {
+        "summary": "At 7-8 modelling covers measurement, money and time, with multi-step problems and a choice of representation (bar model, number line, or equation), and the interpretation demand sharpens: the final answer must be read as the RIGHT quantity — 'is this the total cost or the change?' (CCSS MP4). Multi-step money is the signature context: a child must carry an interim result forward and then interpret the final number correctly. The persistent hazard remains suspension of sense-making (CDE) — computing to a number without asking whether it is reasonable or which quantity the question actually wants. Good teaching has the child choose and justify a representation, keep units throughout, interpret the final answer in context, and sense-check it; line plots from measurement data extend modelling to reading answers off a data display.",
+        "bestPractices": [
+          "Have the child choose AND justify a representation for the problem (bar model / number line / equation), matching tool to structure (MP4 identify and map quantities)",
+          "For multi-step money, name each interim result ('that's the total cost') before the next step, and interpret the final answer as the quantity asked (change vs total)",
+          "Keep units attached throughout and sense-check the final answer against the situation (CDE)",
+          "Use line plots so children read answers off a data display back into the real-world question",
+          "Reason about the situation before computing; avoid reducing the problem to keywords (CDE)"
+        ],
+        "keyRepresentations": [
+          "Bar model for multi-step and comparison money/measurement problems",
+          "Number line for time and measurement jumps",
+          "Equation with units for total cost / change",
+          "Line plot of measurement data"
+        ],
+        "commonMisconceptions": [
+          "Reports the wrong quantity — gives the total cost when the question asks for the change",
+          "Stops after the first step of a multi-step problem",
+          "Computes without sense-checking whether the answer is reasonable in context",
+          "Drops or muddles units (mixing pounds and pence, or minutes and hours)"
+        ]
+      },
+      "learn": {
+        "summary": "For ages 7-8, model real-world measurement, money, and time problems by choosing and justifying a representation (bar model, number line, or equation), carrying multi-step calculations with units attached, and crucially interpreting the final number as the RIGHT quantity (total cost vs change). The signature hazard is suspension of sense-making: computing to a number without naming which quantity the question asked for or checking its reasonableness. Line plots extend modelling to reading answers off a data display.",
+        "activities": [
+          {
+            "title": "Multi-step money modeller: name the quantity, then check it",
+            "feedback": [
+              "When the child labels 85p as 'change', separate the quantities on the bar — the £1 whole, the 85p cost part, the change part — and label each, then ask which quantity the question wants",
+              "If the child stops at 85p, prompt: 'you found the cost — what does the question still want?'",
+              "If the child accepts 85p as change without checking, ask: 'could your change be 85p if you spent 85p from a pound?' to build the sense-check habit",
+              "Confirm when the child names 85p as cost, computes 15p change, attaches the unit, and checks that 85p + 15p makes the £1 paid"
+            ],
+            "rationale": "Live build-and-check lets the child choose a representation, track interim results with units, and label the final number as the correct quantity with a reasonableness gate, directly targeting the interim-vs-final confusion. A linked bar panel that tracks the running parts with units and a prompt asking 'what is this number so far?' makes the interim-vs-final distinction concrete.",
+            "sourceClaims": [
+              "MP4: identify important quantities and map their relationships with diagrams/tables/equations; interpret results in the context of the situation and reflect on whether they make sense.",
+              "Suspension of sense-making leads students to produce a number without checking realism; problem-specific supports that make students reason about the situation help, and reasoning about relationships should precede computing.",
+              "Bar models expose multi-step and comparison structure, helping children track which quantity is which through a problem."
+            ],
+            "learnerActions": [
+              "Set up a shopping problem: two items at 65p and 20p, paying with £1",
+              "Choose a representation and say why it fits (e.g. a bar model with a £1 whole, an 85p part for the shopping, and a mystery part)",
+              "Pause at the interim number and label it: 'that 85p — what is it?' Answer: the total cost (65p + 20p = 85p)",
+              "Carry on to the second step: change £1 into 100p, then work out 100p − 85p = 15p as the change",
+              "Interpret the final number with its unit ('15p change') and sense-check it: the cost and the change together should make the £1 paid (85p + 15p = 100p = £1)",
+              "Transfer: re-run the model paying with £2 instead and describe what changes"
+            ],
+            "intendedInsight": "In a multi-step problem each number along the way means something specific; the answer is only right when you name the quantity the question actually asked for and check it is reasonable in context."
+          },
+          {
+            "title": "Shopkeeper who tries it on (spoken correction)",
+            "feedback": [
+              "If the child accepts the shopkeeper's framing, ask them to point to where the cost ends and the change begins",
+              "Prompt the child to restate the final quantity with its unit and say how they know it is reasonable",
+              "This dialogue is never scored — treat it as thinking-out-loud practice"
+            ],
+            "rationale": "Interpreting which quantity the answer is and reasoning about the situation is dialogic; a partner offering the total cost as if it were the change invites the child to reason about the relationships, sort out the quantities, and verbalise the distinction.",
+            "sourceClaims": [
+              "Suspension of sense-making leads students to produce a number without checking realism; problem-specific supports that make students reason about the situation help, and reasoning about relationships should precede computing."
+            ],
+            "learnerActions": [
+              "Play out a shop exchange where a shopkeeper rings up two items and states the subtotal as if it were the change",
+              "Catch and correct the error out loud, explaining which quantity the stated number actually is",
+              "Keep units straight (pounds and pence) while justifying the fix",
+              "Explain aloud how a bar or equation would separate the cost from the change"
+            ],
+            "intendedInsight": "Distinguishing which quantity the answer names is a reasoning skill you can articulate and defend, not just compute."
+          },
+          {
+            "title": "Worked multi-step walkthrough (scaffold)",
+            "feedback": [
+              "After each revealed meaning, ask the child to predict what the next step computes and why",
+              "Prompt the child to restate which quantity is the final answer the question wanted"
+            ],
+            "rationale": "A static worked example with revealable interim/final interpretations illustrates the process and the interim-vs-final distinction. As a scaffold it does not elicit the child's own representation choice or an independent sense-check, so pair it with a build-and-check task.",
+            "sourceClaims": [
+              "MP4: identify important quantities and map their relationships with diagrams/tables/equations; interpret results in the context of the situation and reflect on whether they make sense."
+            ],
+            "learnerActions": [
+              "Step through a worked multi-step money or measurement problem",
+              "Reveal what each step's number means (e.g. tap a step to show 'this is the total cost', 'this is the change')",
+              "Describe in your own words what the interim number means before seeing the next step"
+            ],
+            "intendedInsight": "Each number in a worked solution carries a meaning; following the labels shows how an interim quantity differs from the final answer."
+          },
+          {
+            "title": "Line plot from measurement data",
+            "feedback": [
+              "If the child reads a value but doesn't tie it to the question, ask 'what does this number tell you about the objects you measured?'",
+              "Prompt a units and reasonableness check on the answer read from the plot"
+            ],
+            "rationale": "Line plots extend modelling to reading answers off a data display and interpreting them in context, matching the measurement-data strand of the objective.",
+            "sourceClaims": [
+              "MP4: identify important quantities and map their relationships with diagrams/tables/equations; interpret results in the context of the situation and reflect on whether they make sense."
+            ],
+            "learnerActions": [
+              "Collect or receive measurement data (e.g. lengths of objects)",
+              "Create a line plot displaying the data",
+              "Use the plot to answer a real-world question, reading the answer off the display back into the situation",
+              "State what quantity your answer represents and whether it is reasonable"
+            ],
+            "intendedInsight": "A data display is a representation you read answers from; the answer must be interpreted back into the real-world question with its units."
+          }
+        ],
+        "constraints": [
+          "Keep units attached throughout every calculation (don't mix pounds and pence, or minutes and hours) and sense-check the final answer against the situation",
+          "Have the child reason about the situation before computing; avoid reducing the problem to keywords",
+          "The worked-example walkthrough is a scaffold: it illustrates the process but does not elicit the child's own representation choice or an independent sense-check, so it should not replace build-and-check practice",
+          "The dialogue/shopkeeper activity should never be scored",
+          "A scored 'which is the change?' item can serve at most as a warm-up; a recognition-only response does not elicit the child's own representation choice, interim interpretation, or reasonableness check",
+          "This objective involves money/measurement/time, which is not spatial-3D, so a 3D build is not specifically matched to it; this is a fit note for this objective, not a claim that 3D media teach nothing in general",
+          "Arithmetic check: 65p + 20p = 85p (the interim total, which is the COST), and since £1 = 100p, 100p − 85p = 15p is the CHANGE; keep these two quantities distinct in every representation"
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The non-preferred alternatives (dialogue, worked-example, line plot, warm-up quiz) are retained as distinct pedagogical purposes rather than collapsed into the preferred build-and-check modeller.",
+          "The worked-example limitation is stated as a narrow scaffold affordance, not as a claim that static media cannot teach; no categorical modality superiority claims are asserted.",
+          "The original row contained no arithmetic error; no erroneous value needed quarantining as an uncertainty note."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "open_epistemic_probe",
+        "poeTask": null,
+        "probeDeeper": [
+          "'What does the 85 tell you — is it the cost or the change? How do you know?'",
+          "'You paid £1. What do you still need to work out, and how?'",
+          "'Is 15p a sensible change for spending 85p from a pound? Check it.'",
+          "'If you'd paid with £2 instead, what would change in your model?'"
+        ],
+        "correctAnswer": "No single scored answer — listen for the child recognising 85p is the TOTAL COST (an interim quantity), computing the change as 100 − 85 = 15p, interpreting it as '15p change', and sense-checking that the change is less than the £1 paid.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Reports the wrong quantity: gives the total cost (85p) as if it were the change — confuses which quantity the question asks for.",
+            "nextMove": "Separate the quantities on a bar (the £1 whole; the 85p cost part; the change part) and label each; reteach interpreting which quantity the answer names.",
+            "distractor": null,
+            "revealedBy": "Child says the change is 85p; treats the subtotal as the final answer.",
+            "reteachPrerequisiteId": "mt_f67qGDhyfi"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Stops after the first step: computes the total cost and doesn't carry on to the change.",
+            "nextMove": "Scaffold the step structure: 'you found the cost — what does the question still want?'; the child can do both steps but didn't monitor the goal.",
+            "distractor": null,
+            "revealedBy": "Reaches 85 and stops, as if the problem is done; no second operation.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Suspension of sense-making: doesn't check the final answer against the situation (change ought to be less than the £1 paid, and 85p change from spending 85p is suspicious).",
+            "nextMove": "Prompt 'could your change be 85p if you spent 85p from a pound?'; build the habit of sense-checking against the context (CDE).",
+            "distractor": null,
+            "revealedBy": "Accepts 85p change without noticing it equals the spend and leaves nothing sensible; no reasonableness check.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Gives 85 as the change; stops after one step and doesn't sense-check.",
+          "full": "Names 85p as the total cost, computes 100 − 85 = 15p as the change, interprets it with its unit, and sense-checks it against the £1 paid — choosing/justifying a representation and transferring the interim-vs-final distinction to a new multi-step problem.",
+          "partial": "Recognises 85 is the cost OR computes 15 as the change, but not both cleanly — e.g. finds 15 without naming 85 as the cost, or names the cost but doesn't finish/sense-check."
+        },
+        "diagnosticPrompt": "In a shop you buy two things: one costs 65p and one costs 20p. You pay with a £1 coin. A friend works it out and says 'the answer is 85'. Is 85 the change? Talk me through the problem — what does 85 mean, what is the change, and how do you know your change makes sense?",
+        "whatMakesItDiscriminate": "A child who models the multi-step situation and interprets quantities sees that 85 is the cost, not the change, and finishes the second step; a child who computes-and-stops offers 85 as the answer. The prompt separates them because 85 is a real, correct interim number — accepting it as the change reveals stopping early and confusing quantities, while rejecting it reveals full modelling. Hard to get right without carrying the situation through both steps."
+      },
+      "sources": [
+        {
+          "claim": "MP4: identify important quantities and map their relationships with diagrams/tables/equations; interpret results in the context of the situation and reflect on whether they make sense.",
+          "source": "CCSS Standards for Mathematical Practice, MP4",
+          "url": "http://www.thecorestandards.org/Math/Practice/MP4/",
+          "verified": true
+        },
+        {
+          "claim": "Suspension of sense-making leads students to produce a number without checking realism; problem-specific supports that make students reason about the situation help, and reasoning about relationships should precede computing.",
+          "source": "Colorado Dept of Education, Word Problems: Research & Practice Guide",
+          "url": "https://www.cde.state.co.us/comath/word-problems-guide",
+          "verified": true
+        },
+        {
+          "claim": "Bar models expose multi-step and comparison structure, helping children track which quantity is which through a problem.",
+          "source": "NCETM, 'The Bar Model'",
+          "url": "https://www.ncetm.org.uk/classroom-resources/ca-the-bar-model/",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T13:43:22.655Z",
+        "updatedAt": "2026-10-19T15:20:27.233Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/490",
+    "connections": [
+      {
+        "topicId": "mt_iQYPw8bMfN",
+        "prerequisiteId": "mt_DLcEzmmj2r",
+        "strength": "soft",
+        "reason": "Length word problems exercise real-world modelling"
+      },
+      {
+        "topicId": "mt_iQYPw8bMfN",
+        "prerequisiteId": "mt_f67qGDhyfi",
+        "strength": "hard",
+        "reason": "Age 7-8 modelling builds on age 6-7"
+      },
+      {
+        "topicId": "mt_iQYPw8bMfN",
+        "prerequisiteId": "mt_mayItsxMUu",
+        "strength": "soft",
+        "reason": "Line plots from measurement data exercise modelling"
+      },
+      {
+        "topicId": "mt_K3R0yaHVcx",
+        "prerequisiteId": "mt_iQYPw8bMfN",
+        "strength": "hard",
+        "reason": "Age 7-8 modelling is prerequisite to age 8-9 level"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_cPZwlUk8Nd",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Coin Values",
+      "description": "Recognise and know the value of different coins and notes",
+      "ageRangeStart": 5,
+      "ageRangeEnd": 6,
+      "centrality": 0.08360128617363344,
+      "evidence": [
+        "Identify 1p, 2p, 5p, 10p, 20p, 50p, £1 and £2 coins",
+        "Know that a £2 coin is worth more than a 50p coin",
+        "Recognise £5 and £10 notes"
+      ],
+      "assessmentPrompt": "If {{name}} is given a handful of coins, can they name each one — like 2p, 5p, 20p — and sort them from least to most valuable?",
+      "standards": [
+        "uk-nc-2013:Maths/Y1/M/9"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/976",
+    "research": {
+      "topicId": "mt_cPZwlUk8Nd",
+      "pedagogy": {
+        "summary": "Children learn to recognise each UK coin (1p, 2p, 5p, 10p, 20p, 50p, £1, £2) and note (£5, £10, £20, £50) and to know its VALUE — crucially, that a coin's value is a matter of convention, not its physical size, colour, or the number of coins. The central hurdle is that value is invisible: a small silver 5p is worth more than a larger bronze 2p, and one £2 coin is worth more than a heap of pennies. Learned through handling real money and repeatedly asking 'what is it WORTH?', not 'how big / how many?'.",
+        "bestPractices": [
+          "Handle real coins and notes; sort and name them by value, not by appearance",
+          "Ask 'what is this worth?' and 'which is worth more?', separating value from size, colour and number",
+          "Contrast a small high-value coin with a large low-value one (5p vs 2p; £1 vs 2p)",
+          "Order coins by value along a value line (1p to £2)",
+          "Introduce notes once coins are secure; say a pound is WORTH a hundred pennies (avoid 'a hundred times bigger', which invites size confusion)"
+        ],
+        "keyRepresentations": [
+          "Real coins and notes",
+          "Coins ordered on a value line (1p to £2)",
+          "A sorting mat by denomination",
+          "A 'worth' label held separate from the coin's appearance"
+        ],
+        "commonMisconceptions": [
+          "Judges value by physical size or colour (a 2p is bigger than a 5p, so 'worth more')",
+          "Thinks more coins means more money (a pile of pennies beats a single £2)",
+          "Confuses one penny and one pound",
+          "Doesn't recognise notes as money, or treats all notes as the same value"
+        ]
+      },
+      "learn": {
+        "summary": "Young children (5-6) learn to recognise UK coins (1p, 2p, 5p, 10p, 20p, 50p, £1, £2) and notes (£5, £10, £20, £50) and to know each one's VALUE. The core hurdle is that value is invisible and set by convention, not by physical size, colour, or how many coins there are: a small silver 5p is worth more than a larger bronze 2p, and one £2 coin is worth more than a small heap of pennies (for example, ten 1p coins make only 10p). Activities centre on handling real money and repeatedly asking 'what is it WORTH?' rather than 'how big?' or 'how many?'.",
+        "activities": [
+          {
+            "title": "Till total: more coins is not always more money",
+            "feedback": [
+              "If a child expects the heap of pennies to win 'because there are more', count the value of each set together: ten 1p = 10p versus one £2 = 200p, so fewer coins can be worth more.",
+              "If a child says the bigger 2p is worth more, ask 'what is it WORTH?' and point to the value shown on each coin (some designs show a number; others, such as the 2008–2022 shield designs, show the value only in words like 'TWO PENCE' and 'FIVE PENCE', so name the value for the child) — 5p is more than 2p, so the small 5p wins.",
+              "Reinforce by repeating the duel with different pairs (£1 vs 2p) so worth is separated from size and colour."
+            ],
+            "rationale": "Making the TOTAL VALUE visible and recomputing it as coins are added lets a child directly feel that value is independent of count and size, targeting the two central misconceptions (size/colour and more-coins-more-money). A running-total mat or till is one concrete way to make this mechanism visible; real coins counted together serve the same purpose.",
+            "sourceClaims": [
+              "White Rose Y2 Money documents pupils counting the NUMBER of coins rather than their value ('Tiny has counted the number of £2 coins, not their value') and introduces the term 'worth'."
+            ],
+            "learnerActions": [
+              "Drop real coins (or coins onto a running-total mat/till) one at a time and watch the TOTAL VALUE build up.",
+              "Drop ten 1p coins into the till and read the total (10p); then drop a single £2 coin beside them and see the total leap far higher than the whole heap of pennies.",
+              "Say in your own words why one coin can be worth more than many coins.",
+              "Run a 'which is worth more?' duel: put a big bronze 2p against a small silver 5p, predict which wins, then reveal/count the values to check."
+            ],
+            "intendedInsight": "A set's worth is its total VALUE, not the number of coins or their size; one high-value coin can outweigh many low-value coins, and the smaller coin can be worth more."
+          },
+          {
+            "title": "Order coins on a value line",
+            "feedback": [
+              "If a child orders by size, point to the printed value and re-place the coin by what it is WORTH.",
+              "Praise reasoning that cites the number/value on the coin rather than its appearance."
+            ],
+            "rationale": "Ordering by value along a line gives a durable mental sequence and repeatedly surfaces the small-coin-worth-more discriminator. Dragging coins onto a value line by worth (not size) is one concrete interactive form; a physical sorting mat and real coins work equally well.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Handle real coins and sort them, naming each by its value.",
+              "Place each coin in order from least worth to most worth along a value line running 1p to £2 (1p, 2p, 5p, 10p, 20p, 50p, £1, £2).",
+              "Notice where a physically small coin (5p) sits ahead of a physically bigger coin (2p) on the line.",
+              "Answer 'which is worth more?' for pairs you place, giving the value as your reason."
+            ],
+            "intendedInsight": "Coins have a fixed order BY VALUE that does not follow their physical size or colour; a 5p comes after a 2p even though it is smaller."
+          },
+          {
+            "title": "Recognise and compare coins and notes",
+            "feedback": [
+              "If a child confuses one penny and one pound, lay a real 1p and £1 side by side, name each, and say a pound is WORTH a hundred pennies.",
+              "If a child treats all notes as the same, compare the printed values and ask which note is worth more.",
+              "When a child reads the number on a coin to decide, confirm that the number tells us what it is worth."
+            ],
+            "rationale": "Recognition is the stated curriculum objective and benefits from naming, value-recall and worth comparisons. A tap-to-reveal coin-and-note chart or lift-the-flap comparison is one supportive format; real coins and notes handled directly are the primary medium. Saying 'worth a hundred pennies' rather than 'a hundred times bigger' avoids inviting size confusion, per NCETM guidance.",
+            "sourceClaims": [
+              "Year 1 pupils should 'recognise and know the value of different denominations of coins and notes'.",
+              "NCETM guidance states 'Some children may confuse one pence and one pound' and advises 'It is helpful to avoid saying that one pound is one hundred times bigger than one penny as children may think this refer to the coin size rather than the value' — grounding the coin-value-independent-of-physical-size misconception."
+            ],
+            "learnerActions": [
+              "Look at each coin and note and name it and say its value.",
+              "Reveal or state a comparison fact for each: 'is this worth more than, less than, or the same as a 10p?'",
+              "Introduce notes once coins are secure: name £5, £10, £20, £50 and say which is worth more.",
+              "Say that a pound is WORTH a hundred pennies (not 'a hundred times bigger')."
+            ],
+            "intendedInsight": "Every coin and note can be recognised and matched to a known value, and notes are money too — different notes have different values."
+          },
+          {
+            "title": "Shopkeeper: hand over coins by value",
+            "feedback": [
+              "If a child hands over a coin chosen by size, ask them to read its value and pick again by worth.",
+              "Encourage answers that name the value rather than describe the colour or size."
+            ],
+            "rationale": "A role-play shopkeeper elicits recognition and value selection through talk and action and adds a purposeful context. This is a supporting activity: it is strongest when the child also physically handles and hands over real coins, so recognition is shown by doing, not only by speaking.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Play a shop where a shopkeeper asks you to hand over a coin by its value ('give me the one worth 5p', 'give me something worth more than a 10p').",
+              "Explain out loud why the coin you chose is worth what the shopkeeper asked.",
+              "Swap roles so you ask for coins by value too."
+            ],
+            "intendedInsight": "You can identify and select coins by their worth, using value rather than appearance to respond."
+          }
+        ],
+        "constraints": [
+          "Use real coins and notes as the primary medium; interactive charts, tills and value lines are scaffolds that support, not replace, handling money.",
+          "Always ask 'what is it WORTH?' rather than 'how big?' or 'how many?', so value is held apart from size, colour and number.",
+          "Introduce notes only once coin recognition and value are secure.",
+          "Say a pound is WORTH a hundred pennies; avoid 'a hundred times bigger', which invites size confusion.",
+          "A recognition matching/ordering/'which is worth more' task can check and reinforce value knowledge, but on its own it elicits selection rather than the child independently handling, totalling and explaining worth; pair it with hands-on comparison.",
+          "The shopkeeper talk activity supports recognition but should include physically handing over coins, not only naming them aloud."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; the sources were not re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "One listed source (White Rose Y2 Money) was marked verified:false in the original row; treat its 'counting number not value' example and the term 'worth' as unconfirmed, including where it is used as a sourceClaim on the till activity.",
+          "The original row claimed '3D adds nothing' for coin value. Coin value is indeed not a spatial concept, but this is a scoped observation, not an established universal law; a 3D/physical model could still support handling. Rephrased as medium guidance rather than a prohibition.",
+          "The original framed the till/value-line as the single format where the insight 'lands'. Retained as one concrete mechanism, not as the only way to teach it; counting real coins together serves the same purpose.",
+          "The Year 1 curriculum claim was left attached only to the recognition activity, where it directly matches the objective; it was removed from the value-line ordering activity's sourceClaims because it supports the general objective, not that specific method.",
+          "The assessment's ten-1p-vs-50p comparison was adapted to ten-1p-vs-£2 in the till activity (ten 1p = 10p vs one £2 = 200p); this is internally consistent and preserves the 'fewer coins can be worth more' principle, but differs from the original assessment numbers, which remain valid."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "two_tier",
+        "poeTask": "Put a heap of ten 1p coins next to a single 50p. Ask the child to PREDICT which is more money and, crucially, WHY, before anyone counts. Then count the value of the heap together (10p) against the 50p. A child who predicted the heap 'because there are more' meets the moment where fewer coins are worth more.",
+        "probeDeeper": [
+          "'This 5p is smaller than the 2p — so how can it be worth more?' (size vs value)",
+          "'You have more coins, but is it more money? Let's count what each pile is worth.'",
+          "'What does the number on the coin tell us?'",
+          "'If I gave you one £2 coin or five 20p coins, would you have the same amount? Which would you rather have?' (same value, different count)"
+        ],
+        "correctAnswer": "Says the 5p is worth more than the 2p BECAUSE 5 is more than 2 (its value, not its size); says the single 50p is more money than ten pennies (50 > 10) despite fewer coins; says £2 > 50p and £10 > £5 by their values.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Judges value by physical size or colour — a bigger coin is 'worth more' (the 2p is bigger than the 5p)",
+            "nextMove": "Confront directly — compare the printed values; handle a small high-value coin against a big low-value one repeatedly, always asking 'what does it say it is WORTH?'.",
+            "distractor": "The 2p, because it is bigger",
+            "revealedBy": "On the reason tier says the 2p is worth more 'because it is bigger'",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Thinks more coins means more money — a pile of pennies beats a single higher-value coin",
+            "nextMove": "Confront by counting the VALUE of each set (ten 1p = 10p vs 50p); show that one coin can be worth more than many.",
+            "distractor": "The ten 1p coins, because there are more of them",
+            "revealedBy": "Picks the ten 1p coins over the 50p 'because there are more'",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Confuses one penny and one pound",
+            "nextMove": "Distinguish the two explicitly with real coins; say a pound is WORTH a hundred pennies rather than 'a hundred times bigger', which invites the size confusion.",
+            "distractor": null,
+            "revealedBy": "Treats a 1p and a £1 as the same, or says £1 is 'one'",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Names some coins but judges 'worth more' by size, colour or number of coins; confuses penny and pound.",
+          "full": "Recognises all coins and notes and compares them by VALUE, knowing value is independent of size, colour and number of coins (a small 5p beats a 2p; one 50p beats ten pennies; £2 > 50p).",
+          "partial": "Recognises and names the coins/notes and reads their numbers, but is still caught when the smaller coin is worth more or a pile of small coins is set against one large-value coin."
+        },
+        "diagnosticPrompt": "Ask the value, THEN the reason: (1) Show a 5p and a 2p: 'Which coin is worth more?' then 'How do you know?' (2) Show ten 1p coins beside one 50p: 'Which is more money?' then 'Why?' (3) 'Which is worth more, a £2 coin or a 50p coin? How do you know?' and 'Point to the £5 note and the £10 note — which is worth more?' Listen to the REASON: a correct child cites the printed value; an incorrect one cites size, colour or how many.",
+        "whatMakesItDiscriminate": "The 5p-vs-2p item is the hinge: the smaller coin is worth more, so a child reasoning by size gives the wrong answer while a child reasoning by value gives the right one — hard to get right for the wrong reason. The ten-pennies-vs-50p item catches 'more coins = more money'."
+      },
+      "sources": [
+        {
+          "claim": "Year 1 pupils should 'recognise and know the value of different denominations of coins and notes'.",
+          "source": "National Curriculum in England: Mathematics, Year 1 Measurement (statutory), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "NCETM guidance states 'Some children may confuse one pence and one pound' and advises 'It is helpful to avoid saying that one pound is one hundred times bigger than one penny as children may think this refer to the coin size rather than the value' — grounding the coin-value-independent-of-physical-size misconception.",
+          "source": "NCETM Curriculum Prioritisation, Year 2 Unit 9 — Money",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-9-money/",
+          "verified": true
+        },
+        {
+          "claim": "White Rose Y2 Money documents pupils counting the NUMBER of coins rather than their value ('Tiny has counted the number of £2 coins, not their value') and introduces the term 'worth'.",
+          "source": "White Rose Education, Year 2 Spring Block 1: Money (scheme of learning / workbook answers)",
+          "url": "https://assets.whiteroseeducation.com/new-schemes/Y2%20Spring%20Block%201%20SOL%20Money.pdf",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:25:09.365Z",
+        "updatedAt": "2026-10-19T15:20:20.281Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/288",
+    "connections": [
+      {
+        "topicId": "mt_cPZwlUk8Nd",
+        "prerequisiteId": "mt_fR0UtsSREU",
+        "strength": "hard",
+        "reason": "Recognising coin values requires reading numerals (1, 2, 5, 10, 20, 50)"
+      },
+      {
+        "topicId": "mt_FIkqA0qhnj",
+        "prerequisiteId": "mt_cPZwlUk8Nd",
+        "strength": "soft",
+        "reason": "Curriculum coins/notes recognition (Maths Y1) underpins exploratory coin knowledge"
+      },
+      {
+        "topicId": "mt_pbuhUQJjtt",
+        "prerequisiteId": "mt_cPZwlUk8Nd",
+        "strength": "hard",
+        "reason": "Using £ and p symbols extends Y1 recognition of coin values"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_AF2BeFQwfX",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Adding money and giving change",
+      "description": "Find different combinations of coins that equal the same amount of money",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 9,
+      "centrality": 0.03429796355841372,
+      "evidence": [
+        "Show that 50p can be made with 2×20p + 1×10p, or 5×10p, or 1×50p",
+        "Systematically find multiple coin combinations for a given total",
+        "Explain why different coin sets give the same total"
+      ],
+      "assessmentPrompt": "If {{name}} needs to make exactly 30p, can they find two or three different ways to do it using different combinations of coins?",
+      "standards": [
+        "acara-v9:AC9M3M06",
+        "uk-nc-2013:Maths/Y2/M/4"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/982",
+    "research": {
+      "topicId": "mt_AF2BeFQwfX",
+      "pedagogy": {
+        "summary": "Children find different combinations of coins that make the same total — e.g. 50p as one 50p, or two 20p and a 10p, or five 10p. The valuable skill is doing this SYSTEMATICALLY (starting from the largest coin, or swapping one coin for equivalent smaller ones) rather than at random, and understanding that the sets are equal because their VALUES sum to the same total even though the coins differ. A key constraint: only real denominations exist — there is no 8p coin, but any total can be built from the coins that do exist.",
+        "bestPractices": [
+          "Work with real coins; build one total several different ways",
+          "Model a systematic method: start with the largest coin, or swap a coin for equivalent smaller ones (50p to two 20p + 10p)",
+          "Ask 'can you find another way?' and record each combination in an organised list",
+          "Discuss why the sets are equal — the same total value, different coins",
+          "Reinforce that only real denominations exist (no 8p coin), but any total can be made from them"
+        ],
+        "keyRepresentations": [
+          "Real coins arranged into equal-value sets",
+          "A part-whole model (total = these coins / those coins)",
+          "An organised list or table of combinations",
+          "Swapping one coin for equivalent smaller coins"
+        ],
+        "commonMisconceptions": [
+          "Uses a non-existent coin (e.g. an '8p') to make a total",
+          "Finds combinations unsystematically, repeating some and missing others",
+          "Tracks the number of coins rather than their total value",
+          "Thinks a set with more coins must be worth more, so two ways can't be equal"
+        ]
+      },
+      "learn": {
+        "summary": "Year 2 learners (ages 6-7) find different combinations of real coins that make the same total (e.g. 50p as one 50p, or two 20p + a 10p, or five 10p). The core skill is working SYSTEMATICALLY — starting from the largest coin, or swapping one coin for equivalent smaller ones — and understanding that different coin sets are equal because their VALUES sum to the same total, even though the coins differ. A key constraint: only real denominations exist (there is no 8p coin), but any total can be built from the coins that do exist.",
+        "activities": [
+          {
+            "title": "Build a target several ways with a live-updating total",
+            "feedback": [
+              "If a learner grabs for a coin that doesn't exist (e.g. an '8p'), note that there is no such coin and ask which real coins could make that part of the total instead.",
+              "When a learner finds a new combination, ask 'Can you find another way?' and add it to the organised list. Only ask 'How could you be SURE you've found them all?' when the coins allowed are limited (e.g. only 10p, 20p and 50p for 50p), because with every coin from 1p upwards there are hundreds of ways to make 50p.",
+              "If two valid ways look very different, pause on the moment the totals match: 'This set looks completely different but is worth exactly the same — why?'"
+            ],
+            "rationale": "The National Curriculum requires Year 2 pupils to find different combinations of coins equal to the same amount. A live total and an organised record support the equal-value idea and encourage systematic enumeration. A live-updating total and an organised board are optional interaction examples that make the mechanism concrete, not a required product; the same work can be done with real coins by hand.",
+            "sourceClaims": [
+              "Year 2 pupils should 'find different combinations of coins that equal the same amounts of money'.",
+              "White Rose Y2 Money teaches making the same amount in different ways using part-whole models, and documents pupils counting the number of coins rather than their value."
+            ],
+            "learnerActions": [
+              "Take a target amount (e.g. 50p) and drag or place real-denomination coins into a tray until they reach the total.",
+              "Watch a running total so you can see when the tray reaches exactly 50p.",
+              "Once a valid way is found, record it on an organised board or list of 'ways to make 50p', then find another distinct way.",
+              "Work from the largest coin first, or swap a coin for equivalent smaller ones, so the search is organised rather than random.",
+              "Only real coins are available on the shelf (no 8p), so every solution is one that could really be paid."
+            ],
+            "intendedInsight": "Many different coin sets can share the same total value; building each one and watching the total confirm the target makes 'equal value, different coins' directly visible."
+          },
+          {
+            "title": "Swap a coin for equivalent smaller coins without changing the total",
+            "feedback": [
+              "If a learner thinks the five-10p set is 'more' than a single 50p because it has more coins, count the VALUE of each set to the same total and show that more coins can equal fewer coins in value.",
+              "Prompt: 'You made 30p with three 10p. Can you make 30p using a 20p? What else do you need?' to rehearse swap reasoning.",
+              "Reinforce that the swap did not change the amount, only the coins used."
+            ],
+            "rationale": "Swapping directly targets the misconception that more coins means more money, and models a systematic route between combinations. A live swap action is an optional interaction example; the same reasoning can be done with real coins by hand.",
+            "sourceClaims": [
+              "NCETM guidance notes that a mathematically correct total may use a non-existent coin, and cautions: 'For example, we do not have an 8p coin, but any value can be made of existing denominations of coins'; it also directs attention to making an amount 'in the fewest number of coins', focusing on value rather than count.",
+              "White Rose Y2 Money teaches making the same amount in different ways using part-whole models, and documents pupils counting the number of coins rather than their value."
+            ],
+            "learnerActions": [
+              "Start with one way of making the total (e.g. a single 50p).",
+              "Swap one coin for equivalent smaller coins — lift the 50p and replace it with two 20p and a 10p — and check the total is unchanged.",
+              "Try other swaps (e.g. 30p made as three 10p; swap to 20p + 10p) and confirm each keeps the same value.",
+              "Describe in words why the new set equals the old one: the coin values still sum to the same amount."
+            ],
+            "intendedInsight": "Exchanging one coin for equivalent smaller coins keeps the total fixed, so a set with more coins can be worth exactly the same as a set with fewer coins."
+          },
+          {
+            "title": "Sort and match coin sets to totals (recognition practice)",
+            "feedback": [
+              "If a learner accepts a set that relies on a non-existent 8p coin, point out there is no 8p coin and ask which real coins could make that value.",
+              "If a set is wrongly rejected, re-count its value to the total together."
+            ],
+            "rationale": "Recognition tasks give quick practice judging totals and catching the invented-coin error. As noted in the constraints, selecting from given sets checks judgement of value but does not itself require the learner to construct combinations, so it should accompany building tasks, not replace them.",
+            "sourceClaims": [
+              "NCETM guidance notes that a mathematically correct total may use a non-existent coin, and cautions: 'For example, we do not have an 8p coin, but any value can be made of existing denominations of coins'; it also directs attention to making an amount 'in the fewest number of coins', focusing on value rather than count."
+            ],
+            "learnerActions": [
+              "Decide which of several coin sets make a given total (e.g. 'which of these make 50p?').",
+              "Sort sets into 'makes 50p' and 'does not make 50p'.",
+              "Match a total to a valid coin set.",
+              "Spot and reject any set that relies on a non-existent coin, such as an invented 8p."
+            ],
+            "intendedInsight": "Checking whether a coin set reaches a stated total, and rejecting sets that use invented coins, reinforces that value is what matters and that only real denominations may be used."
+          },
+          {
+            "title": "Pay a different way — shopkeeper talk (optional spoken extension)",
+            "feedback": [
+              "If the learner stops after one way, prompt 'Is there another way to make 50p?' and keep a shared list of ways found.",
+              "Ask 'Could you make 50p with an 8p coin? Why not?' to surface the real-denominations constraint."
+            ],
+            "rationale": "A spoken prompt can elicit further combinations and their justification. It is best paired with real coins or an organised record, because a spoken exchange alone does not display systematic enumeration as clearly.",
+            "sourceClaims": [
+              "Year 2 pupils should 'find different combinations of coins that equal the same amounts of money'."
+            ],
+            "learnerActions": [
+              "Respond to a shopkeeper asking 'Can you pay 50p a different way?' by naming or laying out another valid coin set.",
+              "Explain aloud why the new way is worth the same as the first.",
+              "Be challenged to find yet another way, and, when only a few coin types are allowed (e.g. 10p, 20p and 50p), to say how you could be sure you've found them all."
+            ],
+            "intendedInsight": "Explaining and justifying equal-value combinations aloud rehearses the reasoning and the language of 'same total, different coins'."
+          }
+        ],
+        "constraints": [
+          "Use only real coin denominations; there is no 8p (or 3p) coin, though any total can be built from the coins that do exist.",
+          "Systematic enumeration develops with age and practice: treat random searching not as an error to punish but as a cue to model one system (largest coin first, then swap down) and record each way on an organised list.",
+          "Recognition and sorting tasks (choosing which given sets make a total) check judgement of value but do not require independent construction of combinations; include building tasks for production.",
+          "A static 'ways to make 50p' poster can display combinations but does not let the learner build or swap them; use it as a reference scaffold, not the main activity.",
+          "Assess by watching HOW combinations are generated (systematic vs random, real coins vs an invented coin) and by asking why two different sets are equal — this distinguishes secure combining from guesswork and catches the more-coins-means-more-money misconception."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite without fresh source verification; sources were NOT re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "The original row rated a 3D interactive 'poor' with the claim '3D adds nothing' and framed the quiz as merely scoring; these are catalog fit judgements, not established pedagogical laws, and have been softened or dropped. The source claims do not establish comparative efficacy or necessity of any one medium.",
+          "The White Rose source (part-whole models; coin-counting misconception) is marked verified:false in the row; treat its specifics as unconfirmed.",
+          "Interaction examples (live total, drag coins, swap tool, organised board) are illustrative of the learning mechanism and optional, not mandatory implementation details. An earlier draft mentioned a 'recolour' action not in the original design notes; it has been removed."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Is there another way to make 50p? How could you be SURE you've found them all?'",
+          "'These two piles look different — one has more coins. Are they really the same amount? How do you know?'",
+          "'Could you make 50p with an 8p coin? Why not?'",
+          "'You made 30p with three 10p. Can you make 30p using a 20p? What else do you need?' (swap reasoning)"
+        ],
+        "correctAnswer": "Produces several valid combinations for 50p (e.g. 50p; 20p + 20p + 10p; five 10p) using only real coins; works with some system (largest-first or swapping) rather than at random; explains the sets are equal because their values total the same 50p.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Uses a non-existent coin (e.g. an '8p' or '3p') to make a total",
+            "nextMove": "Keep only real coins available; check each combination is payable with actual denominations, noting that any total can still be made from the coins that exist.",
+            "distractor": null,
+            "revealedBy": "Builds a total using a coin that doesn't exist as a real denomination",
+            "reteachPrerequisiteId": "mt_pbuhUQJjtt"
+          },
+          {
+            "kind": "developmental",
+            "pattern": "Works unsystematically — repeats a combination or gives up after one, with no order to the search",
+            "nextMove": "Do not treat random searching as an error to correct — systematic enumeration develops with age and practice. Instead, model one system (start from the largest coin, then swap down) and record each way on an organised list so the child sees the pattern.",
+            "distractor": null,
+            "revealedBy": "Repeats the same combination, or stops after one way, with no system",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Tracks the number of coins rather than total value — thinks a set with more coins is worth more, so two ways can't be equal",
+            "nextMove": "Count the VALUE of each set to the same total; show that more coins can equal fewer coins in value.",
+            "distractor": null,
+            "revealedBy": "Says the five-10p set is 'more' than the single 50p because it has more coins",
+            "reteachPrerequisiteId": "mt_pbuhUQJjtt"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Uses invented coins or repeats one combination; judges sets by number of coins.",
+          "full": "Systematically finds multiple valid combinations for a total using real denominations, and explains they are equal because the coin values sum to the same amount.",
+          "partial": "Finds two or three valid combinations with real coins, but searches at random and can't be sure they are all found, or is unsure why the sets are equal."
+        },
+        "diagnosticPrompt": "Set a make-the-total task and WATCH how the child works: (1) 'Show me 50p using these coins. Now make 50p a DIFFERENT way. And another way.' (2) Watch whether they work systematically (largest coin first, or swapping) or at random. (3) 'You made 50p with a 50p coin, and with two 20p and a 10p — why are they the same amount?' Watch for use of real denominations only, an organised approach, and whether they track value.",
+        "whatMakesItDiscriminate": "Watching HOW they generate combinations (systematic vs random, real coins vs an invented 8p) separates secure combining from guesswork; asking why two sets are equal catches a child who thinks more coins must mean more money."
+      },
+      "sources": [
+        {
+          "claim": "Year 2 pupils should 'find different combinations of coins that equal the same amounts of money'.",
+          "source": "National Curriculum in England: Mathematics, Year 2 Measurement (statutory), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "NCETM guidance notes that a mathematically correct total may use a non-existent coin, and cautions: 'For example, we do not have an 8p coin, but any value can be made of existing denominations of coins'; it also directs attention to making an amount 'in the fewest number of coins', focusing on value rather than count.",
+          "source": "NCETM Curriculum Prioritisation, Year 2 Unit 9 — Money",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-9-money/",
+          "verified": true
+        },
+        {
+          "claim": "White Rose Y2 Money teaches making the same amount in different ways using part-whole models, and documents pupils counting the number of coins rather than their value.",
+          "source": "White Rose Education, Year 2 Spring Block 1: Money (scheme of learning)",
+          "url": "https://assets.whiteroseeducation.com/new-schemes/Y2%20Spring%20Block%201%20SOL%20Money.pdf",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:26:08.058Z",
+        "updatedAt": "2026-10-19T15:19:51.518Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/211",
+    "connections": [
+      {
+        "topicId": "mt_6J1wmCWf41",
+        "prerequisiteId": "mt_AF2BeFQwfX",
+        "strength": "hard",
+        "reason": "Solving money problems requires ability to combine coins"
+      },
+      {
+        "topicId": "mt_AF2BeFQwfX",
+        "prerequisiteId": "mt_OvyoRo47K-",
+        "strength": "soft",
+        "reason": "Combining coins involves addition"
+      },
+      {
+        "topicId": "mt_AF2BeFQwfX",
+        "prerequisiteId": "mt_pbuhUQJjtt",
+        "strength": "hard",
+        "reason": "Finding coin combinations requires knowing coin values and symbols"
+      },
+      {
+        "topicId": "mt_aWOK1npO5s",
+        "prerequisiteId": "mt_AF2BeFQwfX",
+        "strength": "soft",
+        "reason": "Finding coin combinations (Maths Y2) supports change calculation"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_FSLJbKkryb",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Australian coins and simple purchases",
+      "description": "Recognise Australian coins (5c, 10c, 20c, 50c, $1, $2) and notes ($5, $10, $20, $50, $100), know that a coin's size does not show its value, and solve simple purchase problems within $20 or 20 cents using real coins and virtual money (on-screen coins and notes)",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 7,
+      "centrality": 0.02893890675241157,
+      "evidence": [
+        "Sort a mixed handful of real Australian coins into cents coins and dollar coins and explain why the small $2 coin is worth more than the larger 50c coin",
+        "Pay exactly for a $7 toy in a money app by dragging a virtual $5 note and a virtual $2 coin",
+        "Find the total cost of a $5 book and a $3 pen and say whether a $10 note is enough"
+      ],
+      "assessmentPrompt": "When {{name}} plays shop, can they name the Australian coins and notes — like the $1, $2 and 50c coins and the $5 note — and work out if they have enough to buy two things?",
+      "standards": [
+        "acara-v9:AC9M1N05"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/983",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_8cs4YPkp23",
+        "prerequisiteId": "mt_FSLJbKkryb",
+        "strength": "hard",
+        "reason": "Money transactions require recognising Australian coins and notes"
+      },
+      {
+        "topicId": "mt_FSLJbKkryb",
+        "prerequisiteId": "mt_FIkqA0qhnj",
+        "strength": "soft",
+        "reason": "General coin-and-note recognition supports learning Australian denominations"
+      },
+      {
+        "topicId": "mt_FSLJbKkryb",
+        "prerequisiteId": "mt_m1W6nTQJ2b",
+        "strength": "hard",
+        "reason": "Simple purchase problems require adding and subtracting within 20"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_6J1wmCWf41",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Money Addition & Subtraction",
+      "description": "Solve simple money problems involving addition and subtraction, including giving change",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 7,
+      "centrality": 0.03536977491961415,
+      "evidence": [
+        "Calculate the total cost of two items priced in pence",
+        "Work out change from 50p after buying an item costing 35p",
+        "Solve 'How much more money do I need?' problems"
+      ],
+      "assessmentPrompt": "If {{name}} buys a snack for 45p and pays with a £1 coin, can they work out how much change they should get — and count it back?",
+      "standards": [
+        "uk-nc-2013:Maths/Y2/M/5"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/989",
+    "research": {
+      "topicId": "mt_6J1wmCWf41",
+      "pedagogy": {
+        "summary": "Year 2 (age 6–7) money problems stay within a single unit (pence): totalling the cost of items, and — the demanding part — finding change and answering 'how much more do I need?'. The pedagogical key is that change is a DIFFERENCE, and young children find it far easier to reach a difference by COUNTING UP (the 'shopkeeper's method') with real coins than by counting back or by written take-away. Teaching should make change a practical, coin-in-hand act before it becomes an abstract subtraction.",
+        "bestPractices": [
+          "Build change by counting UP from the price to the amount paid, using real or realistic coins so the coins themselves record each step (e.g. 35p → +5p = 40p → +10p = 50p; change 15p) — the DfE mental-calculation guidance calls this the shopkeeper's method and notes many children find counting up easier than counting back.",
+          "Model the same jumps on an empty number line so the change is seen as the TOTAL DISTANCE travelled (the sum of the jumps), not a point on the line.",
+          "Connect 'how much more do I need?' to the identical counting-up structure — it is the same gap read the other way — so children see missing-addend and change as one idea.",
+          "Keep amounts to manageable, 'friendly' values first (bridging one multiple of ten), then extend; use role-play shops so the procedure is rehearsed in a real context.",
+          "Press children to CHECK reasonableness — count the change back onto the price to confirm it rebuilds the amount paid."
+        ],
+        "keyRepresentations": [
+          "Real/realistic coins counted into the hand (coins as a record of the steps)",
+          "Empty number line showing change as jumps from price up to amount paid",
+          "Part–whole (bar) model: amount paid = cost + change",
+          "A shop/role-play till context"
+        ],
+        "commonMisconceptions": [
+          "'More coins = more money' — thinks a fistful of small coins is worth more, so gives too many or judges having-enough by count not value.",
+          "Adds the two numbers (price + amount paid) instead of finding the difference, because early teaching over-emphasises 'take away' and difference is not recognised as subtraction.",
+          "Loses the running total or miscounts when bridging through a multiple of ten while counting up.",
+          "Counts single pennies one-by-one inaccurately instead of using coin values."
+        ]
+      },
+      "learn": {
+        "summary": "Year 2 (age 6–7) money problems stay within a single unit (pence): totalling the cost of items, and the more demanding work of finding change and answering 'how much more do I need?'. The core idea is that change is a DIFFERENCE, most easily reached by COUNTING UP from the price to the amount paid (the 'shopkeeper's method') with real coins, rather than by counting back or written take-away. Change should be a practical, coin-in-hand act before it becomes an abstract subtraction.",
+        "activities": [
+          {
+            "title": "Give change at a role-play market stall (count up with coins)",
+            "feedback": [
+              "When your counting-on reaches the amount paid, confirm success: 'You've counted on to 50p — the 15p of change you built (10p + 5p), added to the 35p price, rebuilds the amount paid.' (Note the change coins total 15p; it is the running total counted on from the price that reaches 50p.)",
+              "If one coin too many goes in, show the running total overshooting the amount paid (past 50p) and invite the child to remove a coin and recount up.",
+              "If the running total is still short, point to the remaining gap: 'Counting on from 35p you've reached 40p — how much more to reach 50p?'",
+              "Optional live supports that make the mechanism visible: a running-total bar that starts at the price (35p) and rises with each coin to the amount paid (50p), and an empty number line on which each jump (+5, +10) draws itself from 35 up to 50."
+            ],
+            "rationale": "Counting up from the smaller to the larger value ('shopkeeper's method') is an easier route to a difference for many young children than counting back, and coins give a concrete record of each step. Physically building the change makes 'change as difference' felt before it is written.",
+            "sourceClaims": [
+              "Year 2 pupils should solve simple problems in a practical context involving addition and subtraction of money of the same unit, including giving change.",
+              "Change/difference is best found by counting UP from the smaller to the larger number ('shopkeeper's method'); many children find it easier to subtract by counting up than counting back, and coins provide a record of how the change was given (worked example: 27p, change from 50p = 3p + 20p = 23p)."
+            ],
+            "learnerActions": [
+              "Set up a shop: a toy priced 35p, a 50p coin to pay with, and a pot of mixed coins.",
+              "Count UP aloud from the price to the amount paid, placing a coin into a change tray at each step: '35… (put in a 5p) 40… (put in a 10p) 50'.",
+              "State the change as the coins you built: 'The change is 15p — a 10p and a 5p.'",
+              "Check by counting the change back onto the price to confirm it rebuilds the amount paid (35p + 15p = 50p).",
+              "Repeat with other friendly prices (e.g. 45p paid with 50p gives 5p), then extend to the source worked example 27p paid with 50p, counting 27→30→50 to give 3p + 20p = 23p."
+            ],
+            "intendedInsight": "Change is the DISTANCE travelled from the price up to the amount paid — it is the total of the jumps you make when counting up (here 5p + 10p = 15p), not a take-away you have to work out on paper. The coins themselves record how the change was reached."
+          },
+          {
+            "title": "'How much more do I need?' — the same gap read the other way",
+            "feedback": [
+              "Confirm when the count-up reaches the price exactly: '15 up to 20 is one jump of 5p — you need 5p more.'",
+              "If the child adds 15 + 20, re-anchor: 'You already have 15p; count on from there up to 20p to see what's missing.'"
+            ],
+            "rationale": "Presenting change and missing-addend through the identical counting-up structure helps children treat the two situations as one move rather than as unrelated, and supports recognising difference (not only 'take away') as subtraction.",
+            "sourceClaims": [
+              "Change/difference is best found by counting UP from the smaller to the larger number ('shopkeeper's method'); many children find it easier to subtract by counting up than counting back, and coins provide a record of how the change was given (worked example: 27p, change from 50p = 3p + 20p = 23p)."
+            ],
+            "learnerActions": [
+              "Set a toy priced 20p and give the child 15p.",
+              "Ask: 'How much MORE do you need to buy this?'",
+              "Count UP from what you have to the price: '15… (add a 5p) 20' and name the shortfall as 5p.",
+              "Line this up against a change task: notice that finding the shortfall and finding change are the same counting-up move, just started from a different amount."
+            ],
+            "intendedInsight": "Finding change and finding 'how much more I need' (missing addend) are one idea: closing the gap by counting up between two amounts."
+          },
+          {
+            "title": "Value, not number of coins",
+            "feedback": [
+              "When the child checks totals: 'A fistful of pennies can be worth less than one coin — it's the value that counts, not the number.'",
+              "Praise finding several coin combinations that make the same value."
+            ],
+            "rationale": "Directly addresses the common 'more coins = more money' misconception by making children compare totals by value and build equal values from different combinations.",
+            "sourceClaims": [
+              "A common money misconception to address explicitly is 'if I have the most coins I will always have the most money'; children may confuse one pence and one pound, and value should not be judged by coin count or size."
+            ],
+            "learnerActions": [
+              "Lay the child's handful of small coins beside a single 10p and 5p.",
+              "Count the total VALUE of each set and compare, e.g. show that ten 1p coins are worth less than one 20p.",
+              "Make the SAME value (e.g. 15p) with different coin combinations (10p + 5p; 5p + 5p + 5p; 10p + 2p + 2p + 1p)."
+            ],
+            "intendedInsight": "Money is judged by total value, not by how many coins there are; many small coins can be worth less than one larger coin."
+          },
+          {
+            "title": "Short written check on change and coin combinations",
+            "feedback": [
+              "Mark correct amounts and valid combinations; for a wrong amount, send the child back to count up from the price with coins.",
+              "Note: a right answer here does not show the counting-up method — observe the hands-on building to assess the process."
+            ],
+            "rationale": "A brief recognition/short-answer check can confirm the answer, but it does not elicit the counting-up construction that is the heart of the objective, so it supplements rather than replaces hands-on work.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Given a price and an amount paid, state the change and the coins that make it.",
+              "Pick, from a set of options, coins that make a given change, and set a value (e.g. with a slider) to match the change for a given purchase."
+            ],
+            "intendedInsight": "A quick check confirms whether the child can land the correct change amount and a valid coin combination."
+          }
+        ],
+        "constraints": [
+          "Keep amounts to friendly values that bridge a single multiple of ten first (e.g. 35p→50p), then extend once secure.",
+          "A tap-to-reveal picture of coins can serve as a reference to coin values; it does not let the child carry out or get feedback on the counting-up procedure, so it is a scaffold, not the main activity.",
+          "Recognition/short-answer checks assess the answer, not the method; they do not elicit the independent counting-up construction that is the objective.",
+          "Running-total bars (anchored at the price), number-line jumps, and a change tray are optional supports to make the gap visible — offer them to illustrate the mechanism, not as mandatory steps.",
+          "Keep the value of the change coins distinct from the running total: the change coins total the difference (e.g. 15p), while the running total counted on from the price reaches the amount paid (e.g. 50p).",
+          "Always have the child check reasonableness by counting the change back onto the price to rebuild the amount paid."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. Activities are research-informed proposals, not validated interventions.",
+          "Arithmetic checked: change 15p = 10p + 5p and 35p + 15p = 50p; worked example 27p→50p = 3p + 20p = 23p; 45p→50p = 5p; missing-addend 15p→20p = 5p; ten 1p = 10p < one 20p; 15p = 10p+5p = 5p+5p+5p = 10p+2p+2p+1p. All consistent.",
+          "The 27p→50p worked example crosses more than one ten boundary, so it is presented as an extension of the friendly single-ten cases rather than as itself a single-ten bridge.",
+          "Value/running-total distinction maintained in the first activity: change coins total 15p, whereas the running total counted on from the 35p price reaches 50p; no wording states the change coins 'add up to 50p'.",
+          "The source labelled a 3D shop rendering as adding 'handling friction' and a role-play conversation as unsuited; these are catalog-fit judgements, not established facts, and have been dropped rather than restated as universal limits. A spoken shopkeeper exchange could in fact narrate the counting-up steps.",
+          "One cited source (NCETM 'Misconceptions with the Key Objectives / Subtraction as difference') is marked verified:false in the row; the principle it supports (difference under-recognised because 'take away' is over-emphasised) is retained only as rationale framing, not cited as established evidence.",
+          "The original 'adds price + amount paid (35 + 50)' and 'counts single pennies inaccurately' misconceptions are addressed indirectly rather than as standalone correctives; a future revision could add an explicit change-activity prompt contrasting adding with finding the gap."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Show me how you know that's the right change — can you count it back onto the 35p to make 50p again?'",
+          "'You gave me these coins; is there a way to make the same change with fewer coins?'",
+          "'What if the toy cost 32p instead of 35p — would the change be more or less? Why?'",
+          "'How is finding my change like working out how much MORE you need to buy the 20p toy?'"
+        ],
+        "correctAnswer": "For change: counts up from 35p (e.g. +5p to 40p, +10p to 50p) and hands back 15p in coins, or otherwise establishes the 15p gap and gives it by value. For the second: identifies the 5p shortfall by counting on from 15p to 20p. In both, the coins/steps show a DIFFERENCE being built, and the child can check by rebuilding the paid amount.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'More coins means more money' — hands back a fistful of small coins and treats having given MANY coins as having given enough, judging by count not value ('I gave you loads, so that's enough').",
+            "nextMove": "Return to value: line up the child's handful against a single 10p+5p and count both totals; show that ten 1p is worth less than one 20p. Rehearse making the SAME value with different coin combinations.",
+            "distractor": null,
+            "revealedBy": "Gives too many low-value coins for the change, or is satisfied by the NUMBER of coins rather than checking their total value against the 15p gap.",
+            "reteachPrerequisiteId": "mt_AF2BeFQwfX"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Adds the two numbers instead of finding the difference — computes 35 + 50 = 85 (or grabs 85p) because 'take away' is the only subtraction they recognise and change isn't seen as subtraction.",
+            "nextMove": "Act it out as a shopkeeper: physically count coins UP from 35p into the customer's hand to 50p, and name the total handed over as the change. Contrast 'the shop keeps 35p, you get the rest' with adding.",
+            "distractor": null,
+            "revealedBy": "Combines the price and the amount paid; hands over far too much, or writes 35+50.",
+            "reteachPrerequisiteId": "mt_zuKAX6lcYR"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Counting up but losing the running total when bridging a ten — reaches 40p, then miscounts the second jump (e.g. calls the change 10p or 25p).",
+            "nextMove": "Scaffold, don't reteach: record each jump on an empty number line so the two jumps (+5, +10) are visible and can be added deliberately; keep amounts bridging a single ten until secure.",
+            "distractor": null,
+            "revealedBy": "Starts a correct counting-on path but the total of the jumps is wrong at the multiple-of-ten boundary.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Grabs coins without matching value, adds the two amounts, or cannot establish the change; judges 'enough' by number of coins.",
+          "full": "Reliably builds change by counting up from price to paid amount, solves the missing-addend 'how much more' by the same move, checks by rebuilding the paid amount, and transfers to a new price.",
+          "partial": "Finds the change for the friendly case by counting up, but loses the total when bridging a ten, or can do the change but not the equivalent 'how much more do I need?', treating them as unrelated."
+        },
+        "diagnosticPrompt": "Set out a toy labelled 35p and give the child a single 50p coin and a pot of mixed coins. Say: 'Buy the toy and give me the right change — use the coins to show me how you work it out.' Then set a second toy at 20p and say: 'You have 15p. How much more do you need to buy this one?' Watch HOW they work, not just the answer.",
+        "whatMakesItDiscriminate": "A child who understands change as a difference counts UP from price to paid amount and the coins record the gap; a child who does not either adds 35+50, grabs a random fistful of coins judging 'enough' by how many, or counts back and loses the total. Correct reasoning yields 15p by a visible counting-on path; the wrong ideas each yield a different, diagnosable move."
+      },
+      "sources": [
+        {
+          "claim": "Year 2 pupils should solve simple problems in a practical context involving addition and subtraction of money of the same unit, including giving change.",
+          "source": "DfE, National Curriculum in England: Mathematics programmes of study (Year 2 Measurement)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Change/difference is best found by counting UP from the smaller to the larger number ('shopkeeper's method'); many children find it easier to subtract by counting up than counting back, and coins provide a record of how the change was given (worked example: 27p, change from 50p = 3p + 20p = 23p).",
+          "source": "DfE / National Strategies, Teaching children to calculate mentally (2010, adapted from 1999 NNS/QCA guidance)",
+          "url": "https://www.cuddingtonanddintonschool.co.uk/wp-content/uploads/2016/02/teaching_children_to_count_mentally.pdf",
+          "verified": true
+        },
+        {
+          "claim": "A common money misconception to address explicitly is 'if I have the most coins I will always have the most money'; children may confuse one pence and one pound, and value should not be judged by coin count or size.",
+          "source": "NCETM Curriculum Prioritisation, Year 2 Unit 9 — Money",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-9-money/",
+          "verified": true
+        },
+        {
+          "claim": "Because 'take away' is over-emphasised, many pupils do not recognise DIFFERENCE as a form of subtraction and so add rather than find the gap.",
+          "source": "NCETM, Misconceptions with the Key Objectives / Subtraction as difference",
+          "url": "https://www.ncetm.org.uk/media/cocnx0it/misconceptions-with-the-key-objectives2.doc",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:38:32.659Z",
+        "updatedAt": "2026-10-19T15:20:07.923Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/151",
+    "connections": [
+      {
+        "topicId": "mt_6J1wmCWf41",
+        "prerequisiteId": "mt_AF2BeFQwfX",
+        "strength": "hard",
+        "reason": "Solving money problems requires ability to combine coins"
+      },
+      {
+        "topicId": "mt_6J1wmCWf41",
+        "prerequisiteId": "mt_zuKAX6lcYR",
+        "strength": "hard",
+        "reason": "Giving change involves subtraction"
+      },
+      {
+        "topicId": "mt_6_O6THdEDK",
+        "prerequisiteId": "mt_6J1wmCWf41",
+        "strength": "hard",
+        "reason": "Giving change in £ and p extends Y2 simple money problems"
+      },
+      {
+        "topicId": "mt_aWOK1npO5s",
+        "prerequisiteId": "mt_6J1wmCWf41",
+        "strength": "soft",
+        "reason": "Curriculum money problem-solving (Maths Y2) provides arithmetic foundation for making change"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_pbuhUQJjtt",
+      "type": "LANGUAGE",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Pounds & Pence Notation",
+      "description": "Recognise and use symbols for pounds (£) and pence (p) and combine amounts to make a particular value",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 7,
+      "centrality": 0.03322615219721329,
+      "evidence": [
+        "Write £1.50 or 150p correctly",
+        "Combine coins to make a given total, e.g. 50p + 20p + 5p = 75p",
+        "Read prices written with £ and p symbols"
+      ],
+      "assessmentPrompt": "If {{name}} picks up coins worth 50p, 20p, and 10p, can they write the total using the p symbol — and tell you if that's enough to buy something costing 75p?",
+      "standards": [
+        "uk-nc-2013:Maths/Y2/M/3"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/991",
+    "research": {
+      "topicId": "mt_pbuhUQJjtt",
+      "pedagogy": {
+        "summary": "Children learn to read and use the £ and p symbols and to combine coins to make a stated amount. The language work is: saying and writing amounts correctly ('fifty pence' = 50p; 'one pound fifty'), reading prices, and — the key notation rule — NOT writing £ and p together (£1.50p is wrong; write 150p, or £1 and 50p, or £1.50). At Year 2 pounds and pence are recorded separately, and the same amount has more than one correct written form (150p is the same money as £1 and 50p). Taught by using money language in real shop / price contexts and listening for correct USE.",
+        "bestPractices": [
+          "Use £ and p in real contexts — price tags, shopping role-play — and listen for correct use",
+          "Read amounts aloud both ways (150p / one pound fifty) and match them to written prices",
+          "Teach the notation rule explicitly: never write £ and p together (not £1.50p)",
+          "Combine coins to hit a target amount, saying the running total by value",
+          "Record pounds and pence separately at Year 2"
+        ],
+        "keyRepresentations": [
+          "Price tags and till displays showing £ and p",
+          "Real coins combined to make a target amount",
+          "A 'say it / write it' pairing (150p to £1 and 50p)",
+          "A part-whole model of an amount split into coins"
+        ],
+        "commonMisconceptions": [
+          "Writes £ and p together (£1.50p, £50p)",
+          "Muddles the two symbols or which side the symbol goes",
+          "Reads 150p and £1 and 50p as different amounts (misses the equivalence)",
+          "When combining coins, counts the number of coins rather than their value toward the total"
+        ]
+      },
+      "learn": {
+        "summary": "Year 2 children recognise and use the £ and p symbols, read and say amounts of money two ways (150p and 'one pound and fifty pence'), and combine coins to make a stated target amount by tracking value. The central notation rule is that £ and p are never written together: '£1.50p' is wrong — write 150p, or £1 and 50p, or £1.50. At Year 2 pounds and pence are recorded separately and the same amount has more than one correct written form (150p is the same money as £1 and 50p). Taught through real shop/price contexts, listening for correct use rather than asking for symbol definitions.",
+        "activities": [
+          {
+            "title": "Build a price with coins and record it correctly",
+            "feedback": [
+              "If a child writes '£1.50p' or '£50p', stop at the point of writing: 'We never write the pound sign and the p together.' Then help them rewrite the amount they actually meant: for one pound and fifty pence write £1.50, 150p or £1 and 50p; for fifty pence write 50p.",
+              "If a child says 'I've got three coins, so that's enough' regardless of value, re-count the VALUE onto the total as each coin lands ('50... 70... 75') and ask whether the total — not the count — matches the price.",
+              "If a child treats 150p and '£1 and 50p' as different amounts, lay the two forms beside the same coins and count their value: 100p makes one pound, and 50p more makes 150p, which is one pound and fifty pence."
+            ],
+            "rationale": "The National Curriculum requires Year 2 pupils to use the £ and p symbols and combine amounts to make a particular value; building to a target with coins while recording makes the notation rule live at the point of writing. An optional interactive version — dragging coins into a till where the display writes the running total in correct notation, rejects '£1.50p', and offers a 'say it two ways' toggle flipping 150p to '£1 and 50p' — may make the feedback immediate; this is one proposed way to realise the task, not a requirement.",
+            "sourceClaims": [
+              "Year 2 pupils should 'recognise and use symbols for pounds (£) and pence (p); combine amounts to make a particular value'.",
+              "NCETM guidance states the writing convention explicitly: 'It is important that children do not write the £ and p together: 100p, £1.00, but not £1.00p', and that pupils 'read and say amounts of money confidently and use the symbols £ and p accurately, recording pounds and pence separately'."
+            ],
+            "learnerActions": [
+              "Look at a price tag (e.g. 75p, or £1 and 50p) and choose real or on-screen coins to make exactly that amount",
+              "Say the running total by VALUE as each coin is added — e.g. '50... 70... 75' — not by the number of coins",
+              "Write the amount down in a correct form, then write it a second way if possible (150p / £1 and 50p)",
+              "Check your written amount against the rule: never put £ and p together"
+            ],
+            "intendedInsight": "An amount of money can be built from coins by adding their values to a target, and the same amount has more than one correct written form, but £ and p are never written together."
+          },
+          {
+            "title": "Shop role-play: pay, read tags and spot a wrong price",
+            "feedback": [
+              "If the child reads '£1.50p' happily without noticing a problem, prompt: 'Someone wrote the pound sign AND the p — can we do that? How should it be written instead?'",
+              "If the child pays with the wrong value, re-say the price and count the value of the coins handed over together.",
+              "Praise reading an amount both ways (150p and 'one pound and fifty pence') as a sign of understanding equivalence."
+            ],
+            "rationale": "Because the objective is USING money language in authentic context, a spoken shop exchange elicits real use — reading tags, paying, and judging notation — rather than defining symbols in the abstract. A conversational character naming prices and asking the child to pay and read is one proposed format; a sort or matching item alone would check recognition but would not elicit this spoken use.",
+            "sourceClaims": [
+              "NCETM guidance states the writing convention explicitly: 'It is important that children do not write the £ and p together: 100p, £1.00, but not £1.00p', and that pupils 'read and say amounts of money confidently and use the symbols £ and p accurately, recording pounds and pence separately'.",
+              "Year 2 pupils should 'recognise and use symbols for pounds (£) and pence (p); combine amounts to make a particular value'."
+            ],
+            "learnerActions": [
+              "Take part in a shop/market-stall exchange where a shopkeeper names a price ('one pound and fifty pence') and asks you to make and hand over that amount in coins",
+              "Read a price tag aloud (e.g. read '150p' and offer an equivalent spoken form)",
+              "Judge a price written as '£1.50p': say whether it looks right and explain what is wrong with it"
+            ],
+            "intendedInsight": "Money language is used in context — reading, saying and paying amounts — and a confident user flags '£1.50p' as wrongly written because £ and p should not appear together."
+          },
+          {
+            "title": "Match and write amounts; catch the notation error",
+            "feedback": [
+              "For a matching error, place the same coins beside both forms so the equivalence is visible.",
+              "For an accepted '£1.50p', state the rule and ask for a correct rewrite (£1.50 / 150p / £1 and 50p).",
+              "For a combine-to-target error, recount by value, not by number of coins."
+            ],
+            "rationale": "Short written and matching items let the child practise producing correct notation and identifying the £/p error. These recognition and short-answer items check and rehearse the rule; they do not by themselves demonstrate confident use in a real context, so pair them with the building and role-play activities above.",
+            "sourceClaims": [
+              "Year 2 pupils should 'recognise and use symbols for pounds (£) and pence (p); combine amounts to make a particular value'.",
+              "NCETM guidance states the writing convention explicitly: 'It is important that children do not write the £ and p together: 100p, £1.00, but not £1.00p', and that pupils 'read and say amounts of money confidently and use the symbols £ and p accurately, recording pounds and pence separately'."
+            ],
+            "learnerActions": [
+              "Write a given price (e.g. hear '75p' spoken, write the amount) using correct notation",
+              "Match a spoken or written form to its equivalent: draw a line from '150p' to '£1 and 50p'",
+              "Combine coins to reach a stated total such as 75p (e.g. 50p + 20p + 5p)",
+              "Decide whether '£1.50p' is written correctly and, if not, rewrite it"
+            ],
+            "intendedInsight": "Recognising correct notation and equivalent forms, and selecting coins that sum to a target, consolidate the rule that £ and p are recorded separately."
+          }
+        ],
+        "constraints": [
+          "At Year 2 the central rule is recording pounds and pence separately and never writing £ and p together. The objective and the verified NCETM convention accept forms such as £1.50 and £1.00 (but not £1.50p); accept £1.50 as correct. The White Rose scheme (verified:false in the row) suggests Year 2 avoids decimal notation and uses 'and' (£5 and 30p); treat that stricter 'no decimal' guidance as unverified and do NOT use it to reject £1.50.",
+          "Keep any pence component below 100p when writing the split form (£1 and 50p, not £1 and 150p); this does not forbid the all-pence form 150p, which is a valid written form throughout.",
+          "The same amount has more than one correct written form (150p = £1 and 50p = £1.50); accept any correct form and treat them as equal money.",
+          "Assess by listening for correct USE in context — avoid asking the child to define a symbol in the abstract, as stated in the source's assessment approach.",
+          "A static price-tag poster or tap-to-reveal image can label £ and p but does not let the child build amounts or use the symbols in context; treat it as a labelling scaffold, not the main task.",
+          "Recognition/matching items check and rehearse the convention but do not by themselves elicit independent construction or real-context use; combine them with building and speaking tasks.",
+          "Interactive feedback examples (till display writing the running total, rejecting '£1.50p', 'say it two ways' toggle) are optional proposed illustrations of the mechanism, not required technology."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. All activities are research-informed proposals, not validated interventions.",
+          "The original catalog claimed a 3D/spatial format 'adds nothing' and that a static image 'can't' teach use in context. These are catalog-fit opinions, not established findings; softened to narrowly scoped affordance/limit statements. A static image can still teach labelling.",
+          "The White Rose Education scheme is marked verified:false in the row; its Year-2 'record pounds and pence separately, pence below 100p, use \"and\" not decimal' guidance is unverified and conflicts with the objective's listed correct form £1.50, so it is not applied as a hard constraint against £1.50.",
+          "The example 150p = £1 and 50p was checked for arithmetic consistency: 150 pence = £1 (100p) + 50p — correct. 75p = 50p + 20p + 5p is correct. '£1.50p' is correctly flagged as invalid notation."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "use_in_context",
+        "poeTask": null,
+        "probeDeeper": [
+          "'You read 150p — is that the same as £1 and 50p, or different? Show me with the coins.'",
+          "'Someone wrote £1.50p — what is wrong with that?'",
+          "'As you add each coin, what is the total now?' (value not count)",
+          "'Is 5p the same as £5? How would you write five pounds?' (the symbol and its place matter)"
+        ],
+        "correctAnswer": "Reads the price correctly and offers an equivalent form (150p is £1 and 50p); combines coins to make 75p while tracking the value (not the count); recognises '£1.50p' as wrongly written because £ and p should not appear together.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Writes or accepts £ and p together (£1.50p, £50p)",
+            "nextMove": "State and rehearse the rule in context — pounds and pence are recorded separately (150p, or £1 and 50p, or £1.50), never £ and p together; correct it at the point of writing.",
+            "distractor": null,
+            "revealedBy": "Writes £1.50p, or reads it as fine when asked if it looks right",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads 150p and '£1 and 50p' as different amounts — doesn't hold the equivalence",
+            "nextMove": "Pair the two forms with the same coins in front of the child; count 150 pennies as one pound and fifty pence.",
+            "distractor": null,
+            "revealedBy": "Says 150p and £1 and 50p are not the same money",
+            "reteachPrerequisiteId": "mt_cPZwlUk8Nd"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "When combining coins, tracks the NUMBER of coins rather than their value toward the target",
+            "nextMove": "Count the VALUE onto the total each time a coin is added ('50... 70... 75'), not the number of coins.",
+            "distractor": null,
+            "revealedBy": "Says 'I've got three coins, so that's enough' regardless of the coins' values",
+            "reteachPrerequisiteId": "mt_cPZwlUk8Nd"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Muddles £ and p, writes them together, or treats 150p and £1 and 50p as different; counts coins by number.",
+          "full": "Reads and writes amounts in correct £/p notation (never £ and p together), holds the 150p to £1 and 50p equivalence, and combines coins to a target by tracking value.",
+          "partial": "Reads and writes simple amounts and combines coins for easy totals, but slips on the £/p equivalence or writes £ and p together under pressure."
+        },
+        "diagnosticPrompt": "In a shopping context, listen for correct USE (never ask the child to define a symbol): (1) Show a price written '150p': 'Read this price to me', then 'Can you write it another way?' (2) 'I want to buy something that costs 75p — use these coins to make 75p and tell me the total as you go.' (3) Show '£1.50p' written down: 'Does this look right to you? Read it.' Listen for correct reading, the £/p equivalence, and whether they flag £ and p written together.",
+        "whatMakesItDiscriminate": "The '£1.50p — does this look right?' item is the hinge: a child who has the notation convention flags it, while one who hasn't reads it happily. Making 75p while stating the running total catches counting coins by number rather than value."
+      },
+      "sources": [
+        {
+          "claim": "Year 2 pupils should 'recognise and use symbols for pounds (£) and pence (p); combine amounts to make a particular value'.",
+          "source": "National Curriculum in England: Mathematics, Year 2 Measurement (statutory), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "NCETM guidance states the writing convention explicitly: 'It is important that children do not write the £ and p together: 100p, £1.00, but not £1.00p', and that pupils 'read and say amounts of money confidently and use the symbols £ and p accurately, recording pounds and pence separately'.",
+          "source": "NCETM Curriculum Prioritisation, Year 2 Unit 9 — Money",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-9-money/",
+          "verified": true
+        },
+        {
+          "claim": "In Key Stage 1 (Year 2) decimal notation is not used; amounts are represented with 'and' (£5 and 30p, not £5.30), recording pounds and pence separately, with the pence value kept below 100p.",
+          "source": "White Rose Education, Year 2 Spring Block 1: Money (scheme of learning)",
+          "url": "https://assets.whiteroseeducation.com/new-schemes/Y2%20Spring%20Block%201%20SOL%20Money.pdf",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:25:38.671Z",
+        "updatedAt": "2026-10-19T15:21:01.505Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/700",
+    "connections": [
+      {
+        "topicId": "mt_6_O6THdEDK",
+        "prerequisiteId": "mt_pbuhUQJjtt",
+        "strength": "hard",
+        "reason": "Requires fluency with £ and p symbols"
+      },
+      {
+        "topicId": "mt_AF2BeFQwfX",
+        "prerequisiteId": "mt_pbuhUQJjtt",
+        "strength": "hard",
+        "reason": "Finding coin combinations requires knowing coin values and symbols"
+      },
+      {
+        "topicId": "mt_pbuhUQJjtt",
+        "prerequisiteId": "mt_cPZwlUk8Nd",
+        "strength": "hard",
+        "reason": "Using £ and p symbols extends Y1 recognition of coin values"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_6_O6THdEDK",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Giving Change",
+      "description": "Add and subtract amounts of money to give change, using both £ and p in practical contexts",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.02679528403001072,
+      "evidence": [
+        "Calculate the total cost of two or three items priced in pounds and pence",
+        "Work out the change from £5 or £10",
+        "Record money calculations using £ and p notation correctly (e.g. £3.47)"
+      ],
+      "assessmentPrompt": "If {{name}} buys a book for £3.50 and a pencil for £1.25 with a £5 note, can they work out exactly how much change they should receive?",
+      "standards": [
+        "uk-nc-2013:Ma/KS2/Y3/M/3"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1001",
+    "research": {
+      "topicId": "mt_6_O6THdEDK",
+      "pedagogy": {
+        "summary": "Year 3 (age 7–8) extends money problems to pounds AND pence together: totalling two or three priced items and giving change from a whole amount such as £5 or £10, and recording with £ and p notation (e.g. £3.47). The efficient route to change from a note is the counting-on / finding-the-difference strategy, not written column subtraction across zeros. The central hazard is that £.p looks like two separate whole numbers: pupils must exchange 100p for £1 and treat the amount as one quantity. (Note: the statutory Y3 guidance records £ and p separately and defers formal decimal notation to Y4; this topic's evidence uses the £3.47 form, so teach the notation carefully alongside the pence-and-pounds meaning.)",
+        "bestPractices": [
+          "Find change from £5/£10 by counting UP from the total spent to the note (e.g. spent £4.45 → +5p to £4.50 → +50p to £5.00; change 55p), shown on an empty number line — avoids error-prone column subtraction across zeros.",
+          "Establish 100p = £1 concretely and insist that £ and p are one quantity, not two whole numbers; exchange 100 pennies for a £1 coin so the equivalence is enacted.",
+          "Use the part–whole structure for multi-item change: total the items first (the parts), then the note is the whole and change is the missing part.",
+          "Model and contrast correct vs incorrect notation explicitly (£3.47, not £347, 3.47p or £3.47p); have pupils see, say and record amounts in more than one way.",
+          "Encourage estimation before calculating (≈£4.50 spent, so change is small) so unreasonable answers are caught, and read amounts in a place-value-honest way rather than as two separate numbers."
+        ],
+        "keyRepresentations": [
+          "Empty number line for counting-on change from a note",
+          "Real coins/notes with 100p→£1 exchange",
+          "Part–whole (bar) model: note = total cost + change",
+          "Place-value columns (£ | tenths/10p | hundredths/1p) shown aligned by the decimal point"
+        ],
+        "commonMisconceptions": [
+          "'String-length thinking' — treats £ and p as two separate whole numbers (adds the pence column past 100 without exchanging, or writes £3.7 for £3 and 70p).",
+          "Notation errors — omits the decimal point, mixes units (£3.47p), or writes pence as if pounds.",
+          "Attempts change from £10 by column subtraction and makes 'take smaller from larger' / subtract-across-zeros errors instead of counting up.",
+          "'Most coins = most money' persists, and reading '£2.47' as 'two point forty-seven' reinforces the two-separate-numbers error."
+        ]
+      },
+      "learn": {
+        "summary": "Year 3 learners (age 7–8) total two or three items priced in pounds and pence, give change from a £5 or £10 note, and record amounts correctly (e.g. £3.47). The reliable route to change from a note is counting UP from the total spent to the note (finding the difference), not column subtraction across zeros. The central hazard is treating £.p as two separate whole numbers ('string-length thinking'); learners must exchange 100p for £1 and treat each amount as one quantity. Note: the National Curriculum's non-statutory notes and guidance for Year 3 say pupils record £ and p separately, and formal decimal recording of money is introduced in Year 4, so teach the £3.47 form carefully alongside its pence-and-pounds meaning.",
+        "activities": [
+          {
+            "title": "Shop till: total, pay, and count change up",
+            "feedback": [
+              "If pence are added past 100 without exchanging (e.g. £2.60 + £1.85 written as £3.145 or £3.45), stop and build the pence physically, exchange 100p for a £1 coin, then re-read the total as a single quantity (the correct total is £4.45).",
+              "If change is reached by column subtraction from £5.00/£10.00 and digits are taken the wrong way across the zeros (e.g. 00 − 47 giving £1.47 or £2.53), redirect to counting UP from the total to the note on a number line.",
+              "Check any change by counting it back onto the total: does it rebuild £5.00? If not, the jumps were wrong.",
+              "OPTIONAL interaction examples that make the mechanism concrete: a total bar that sums items as they are added; a number line that draws each counting-on jump; a coin tray whose 100p visibly animates into one £1 coin. These are illustrative, not required — coins, a paper number line and spoken rehearsal achieve the same purposes."
+            ],
+            "rationale": "Counting up / finding the difference from the total to the note is an efficient change strategy that avoids subtract-across-zeros errors, and enacting 100p = £1 confronts the 'two separate whole numbers' misconception by making the exchange visible.",
+            "sourceClaims": [
+              "Change is efficiently found by counting up / finding the difference from the total to the note (shopkeeper's method), avoiding column subtraction across zeros; many children count up more easily than they count back.",
+              "Children commonly treat pounds and pence (whole-number and decimal places) as two separate whole numbers rather than one decimal quantity ('string-length thinking'), partly because of whole-number language such as 'three pounds and seventy-six pence'; standard decimal vocal reading ('two point five four pounds') is recommended to counter this.",
+              "Year 3 pupils should add and subtract amounts of money to give change, using both £ and p in practical contexts; non-statutory guidance says they record pounds and pence separately and that decimal recording of money is introduced formally in Year 4."
+            ],
+            "learnerActions": [
+              "Choose two or three priced items (e.g. a £2.60 car and a £1.85 book) and total them, building the total step by step (£2.60 + £1.85 = £4.45).",
+              "Pay with a £5 note and work out the change by counting UP from the total to the note, drawing each jump on an empty number line: £4.45 → +5p → £4.50 → +50p → £5.00, so change is 55p.",
+              "Collect the change as actual coins into a tray; when the pennies/pence in the tray reach 100p, physically exchange them for a single £1 coin and re-read the amount as one quantity.",
+              "Repeat for a single £3.47 item paid with a £5 note: count up £3.47 → £3.50 → £4.00 → £5.00 = £1.53.",
+              "Record the change in £ and p notation (e.g. £0.55, 55p), then say the amount in a place-value-honest way suitable for Year 3 (e.g. 'fifty-five pence'); avoid reading the pence as a compound whole number joined to the pounds (e.g. 'three point forty-seven' for £3.47). Reading the digits separately ('nought point five five') is also acceptable and is the decimal reading the cited research recommends."
+            ],
+            "intendedInsight": "Change from a note is a short counting-on jump from the total to the note, and an amount in pounds and pence is ONE quantity because 100p exchanges for £1."
+          },
+          {
+            "title": "Record it right: correct versus incorrect money notation",
+            "feedback": [
+              "If a learner writes £347 for £3.47, ask how many whole pounds that would be and compare with the coins in the tray.",
+              "If a learner writes £0.55p (£ and p together) or 55p inside pounds as £55, show the correct form next to it and ask which matches the coins.",
+              "Reinforce place-value-honest readings ('fifty-five pence', 'three pounds forty-seven pence') and reject only the compound-whole reading of the pence, such as 'three point forty-seven', which treats the pence like a separate whole number. Reading the digits separately ('three point four seven') is not an error and is the reading the cited research recommends."
+            ],
+            "rationale": "Notation and place-value errors (omitted decimal point, mixed units) are specific and nameable, and contrasting correct with incorrect forms at the moment of writing targets them directly.",
+            "sourceClaims": [
+              "£ and p should not be written together (e.g. not £1.00p); pupils commonly record money incorrectly by omitting the decimal point or mixing units.",
+              "Children commonly treat pounds and pence (whole-number and decimal places) as two separate whole numbers rather than one decimal quantity ('string-length thinking'), partly because of whole-number language such as 'three pounds and seventy-six pence'; standard decimal vocal reading ('two point five four pounds') is recommended to counter this."
+            ],
+            "learnerActions": [
+              "For a given amount of coins in a tray, write the amount in £ and p and check it against the coins.",
+              "Compare correct and incorrect recordings side by side (e.g. £0.55 vs £0.55p vs £55) and decide which one matches the coins, explaining how you know.",
+              "Record the same amount in more than one correct way where sensible (e.g. 55p and £0.55) and explain they are equal.",
+              "Practise see–say–record: see the coins, say the amount place-value-honestly, then write it without ever joining £ and p (never £3.47p)."
+            ],
+            "intendedInsight": "Money notation carries meaning: the decimal point separates pounds from pence, £ and p are never written together, and the written amount must match the value of the coins."
+          },
+          {
+            "title": "Estimate first, then check for sense",
+            "feedback": [
+              "If an answer is wildly off (e.g. a change of £4.53 from £5 after spending £4.45, when only about 55p is expected), prompt the estimate check: does this match 'the change should be small'?",
+              "If the counting-back check does not rebuild the note, the jumps or columns were wrong — redo by counting up."
+            ],
+            "rationale": "Pupils rarely estimate first and so lack a sense of a sensible answer; building in estimation and a counting-back check gives a self-correction routine.",
+            "sourceClaims": [
+              "Pupils make take-smaller-from-larger and subtract-across-zeros errors (e.g. in £10.00 − amount) reflecting weak exchange/place value, and rarely estimate first so lack a sense of a sensible answer.",
+              "Change is efficiently found by counting up / finding the difference from the total to the note (shopkeeper's method), avoiding column subtraction across zeros; many children count up more easily than they count back."
+            ],
+            "learnerActions": [
+              "Before calculating change, estimate: 'I spent about £4.50, so the change should be small.'",
+              "After finding change, compare it with the estimate and say whether the answer is reasonable.",
+              "Verify change by counting it back onto the total to rebuild the note.",
+              "When paying with a £10 note instead of £5, predict how the change will differ and decide whether counting up or column subtraction would be easier."
+            ],
+            "intendedInsight": "Estimating before calculating catches unreasonable answers, and change from a note can always be checked by rebuilding the note."
+          },
+          {
+            "title": "Quick checks on notation and reasonableness",
+            "feedback": [
+              "For a wrong choice, point back to the coins or value the amount represents and ask which written form matches it.",
+              "Note: selecting a correct form checks notation and reasonableness but does not show the learner can carry out the counting-on process — pair it with the hands-on till activity."
+            ],
+            "rationale": "Short recognition checks are well suited to the crisply testable notation misconception and to reasonableness, as a companion to hands-on calculation rather than a replacement; recognition alone does not elicit the production of the counting-on method.",
+            "sourceClaims": [
+              "£ and p should not be written together (e.g. not £1.00p); pupils commonly record money incorrectly by omitting the decimal point or mixing units."
+            ],
+            "learnerActions": [
+              "Fill in the blank to record a shown amount in correct £ and p notation.",
+              "Choose which of several written forms correctly records a given amount (e.g. £3.47 among £347 and £3.47p, with the incorrect forms clearly present only as non-examples to be rejected).",
+              "Choose or state the correct change for a simple purchase from a note.",
+              "Put a set of money amounts in order from least to most to practise treating each as one quantity."
+            ],
+            "intendedInsight": "Correct notation and reasonable amounts can be recognised and chosen reliably once the single-quantity meaning is understood."
+          },
+          {
+            "title": "Shopkeeper role-play to narrate the method (optional support)",
+            "feedback": [
+              "Use this to rehearse and explain reasoning; it narrates the method but does not by itself give calculation practice with feedback, so follow it with actual totalling, change-finding and recording."
+            ],
+            "rationale": "Talking through the shopkeeper's counting-on method may support articulation of the strategy, but giving change is procedural and needs practice with feedback, which narration alone does not supply; the articulation benefit is a proposed, untested affordance.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Take the role of shopkeeper and, out loud, talk a 'customer' through giving change: name the total, then count up from the total to the note coin by coin.",
+              "Explain aloud why 100p becomes £1 while handing over the change."
+            ],
+            "intendedInsight": "Verbalising the counting-on method and the 100p→£1 exchange may help a learner articulate and consolidate the procedure."
+          }
+        ],
+        "constraints": [
+          "Treat each money amount as ONE quantity: insist on exchanging 100p for £1, never carrying pence past 99 without exchanging and never writing three digits after the point.",
+          "Teach change from a £5/£10 note primarily by counting UP (finding the difference) on a number line; reserve column subtraction for cases without the across-zeros trap and only when done correctly with exchange.",
+          "Never present an incorrect money form (£347, £3.47p, £0.55p, pence written as pounds) as a correct option in a learner task; use such forms only as clearly labelled non-examples to be rejected.",
+          "Read amounts place-value-honestly for Year 3 ('three pounds and forty-seven pence', 'fifty-five pence'); the pitfall to avoid is reading the pence as a compound whole number joined to the pounds ('three point forty-seven'). Digit-by-digit decimal reading ('three point four seven') is acceptable and is the reading the cited research recommends.",
+          "Recognition/selection checks confirm notation and reasonableness but do not elicit the independent counting-on calculation; pair them with hands-on totalling, change-finding and recording.",
+          "The National Curriculum's non-statutory Year 3 notes and guidance say pupils record pounds and pence separately, with formal decimal recording of money introduced in Year 4; introduce the £3.47 form deliberately alongside its meaning, and expect some learners to still record pounds and pence separately.",
+          "Illustrative interactions (total bar, number-line jumps, 100p→£1 animation, coin tray) are optional ways to make the mechanism concrete and must not be treated as the only valid medium; coins, paper number lines and spoken rehearsal achieve the same purposes."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The source worked example £5.00 − £3.47 = £1.53 is arithmetically correct (count up: £3.47→£3.50 is 3p, →£4.00 is 50p, →£5.00 is £1, total £1.53); retained as stated. £2.60 + £1.85 = £4.45 is also correct.",
+          "The misconception examples '£3.145/£3.45', '£2.53' and '£1.47' are deliberately WRONG forms shown only as error patterns, never as correct answers.",
+          "Reading guidance: the original candidate banned 'point five five', but the Cambridge source actually recommends digit-by-digit decimal reading ('two point five four pounds') to counter string-length thinking; only reading the pence as a compound whole number ('three point forty-seven') reinforces the two-separate-numbers error. The Year-3-appropriate reading remains 'fifty-five pence'/'three pounds and forty-seven pence', with digit-by-digit decimal reading flagged as acceptable rather than wrong. The Cambridge source also flags compound whole-number language as partly causing the misconception, so the exact convention is a teacher judgement.",
+          "The shopkeeper role-play activity had its sourceClaims set to [] because the attached counting-up claim supports only the method content, not the untested principle that verbalisation/role-play aids consolidation; the benefit is stated as proposed/may.",
+          "One cited source (NCETM, 'Misconceptions with the Key Objectives') is marked verified:false in the row; its claim about take-smaller-from-larger, subtract-across-zeros and lack of estimation is used to inform feedback but should be treated with that lower confidence.",
+          "The row notes a genuine tension: evidence materials use the £3.47 decimal form while statutory Y3 guidance records pounds and pence separately and defers decimals to Y4; teachers should resolve this against their curriculum sequence."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Read that amount to me — is £3.47 one number or two? What does the 4 mean, and the 7?'",
+          "'Check your change by counting it back onto £4.45 — does it rebuild £5?'",
+          "'You have £0.55 and £55 written down — which one matches the coins, and how do you know?'",
+          "'What if you'd paid with a £10 note instead of £5 — how would the change change, and would column subtraction or counting up be easier?'"
+        ],
+        "correctAnswer": "Totals £2.60 + £1.85 = £4.45; finds change by counting up £4.45 → £4.50 → £5.00 = 55p (or column subtraction done correctly with exchange), and records it as £0.55 / 55p in consistent notation. For the game: £5.00 − £3.47 = £1.53, again best reached by counting on. Treats each amount as one quantity, exchanging 100p for £1 where needed.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'String-length thinking' — treats £ and p as two separate whole numbers: adds the pence beyond 100 without exchanging (£2.60 + £1.85 → £3.145 or £3.45), or subtracts pounds and pence columns independently.",
+            "nextMove": "Enact 100p = £1 with coins: build up the pence, physically exchange ten 10p (or 100 pennies) for a £1 coin, and re-read the amount as one quantity. Say amounts place-value-honestly, not as two separate numbers.",
+            "distractor": null,
+            "revealedBy": "Column work where the pence exceed 99 without carrying a pound, or a total/answer with three digits after the point, or pence treated as their own number.",
+            "reteachPrerequisiteId": "mt_pbuhUQJjtt"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Notation error — omits the decimal point or mixes units: records the change as £347, £55, 55p written inside pounds, or £0.55p (£ and p together).",
+            "nextMove": "Show correct and incorrect side by side (£0.55 vs £0.55p vs £55) and ask which matches the coins in the tray; rehearse see–say–record and never writing £ and p together.",
+            "distractor": null,
+            "revealedBy": "The written amount doesn't match its value, or combines £ and p symbols, or drops/misplaces the decimal point.",
+            "reteachPrerequisiteId": "mt_pbuhUQJjtt"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Column-subtracts change from a whole note and makes take-smaller-from-larger / subtract-across-zeros errors (£5.00 − £3.47 treated as 00 − 47 = 47, giving £1.47 or £2.53) instead of counting up.",
+            "nextMove": "Redirect to the efficient strategy: find change from a note by counting UP from the total to the note on a number line, and reserve column methods for cases without the zeros trap.",
+            "distractor": null,
+            "revealedBy": "A written vertical subtraction from £5.00/£10.00 with digits taken the wrong way across the zeros; an answer that doesn't survive a counting-back check.",
+            "reteachPrerequisiteId": "mt_6J1wmCWf41"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Cannot total £.p or exchange 100p→£1; treats pounds and pence as separate whole numbers and records inconsistent notation.",
+          "full": "Totals two or three £.p items, finds change from £5/£10 by counting up, records £-notation correctly and consistently, treats each amount as a single quantity (exchanging 100p→£1), and transfers to a new price or note.",
+          "partial": "Totals and gives change for a friendly case, but stumbles on change from a whole £5/£10 (column-across-zeros error) or records £.p inconsistently; can list the amounts but not treat them as one quantity throughout."
+        },
+        "diagnosticPrompt": "Give the child a small shop of priced items and real/realistic coins and notes. Say: 'Buy the £2.60 car and the £1.85 book. Pay with this £5 note, work out the change, and write down the change using £ and p.' Then: 'Now buy just the £3.47 game and pay with a £5 note — what's the change?' Watch the method and the notation, not only the final number.",
+        "whatMakesItDiscriminate": "A child with a single-quantity understanding of £.p counts up (or exchanges cleanly) and records £0.55 correctly; a child holding 'two separate whole numbers' adds/subtracts the pounds and pence columns independently (yielding e.g. £3.150, or £2.53 by taking 47 from 00), or writes £347/£0.55p. The counting-on change and the notation each expose a different, nameable error."
+      },
+      "sources": [
+        {
+          "claim": "Year 3 pupils should add and subtract amounts of money to give change, using both £ and p in practical contexts; non-statutory guidance says they record pounds and pence separately and that decimal recording of money is introduced formally in Year 4.",
+          "source": "DfE, National Curriculum in England: Mathematics programmes of study (Year 3 Measurement)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "Children commonly treat pounds and pence (whole-number and decimal places) as two separate whole numbers rather than one decimal quantity ('string-length thinking'), partly because of whole-number language such as 'three pounds and seventy-six pence'; standard decimal vocal reading ('two point five four pounds') is recommended to counter this.",
+          "source": "Cambridge Mathematics, 'Use of Money as a Decimal Representation: A Review' (Jameson), citing Steinle 2004, Brekke 1996, Babcock LDP, NCTM 2003",
+          "url": "https://www.cambridgemaths.org/Images/research-3-money-and-decimals-full.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Change is efficiently found by counting up / finding the difference from the total to the note (shopkeeper's method), avoiding column subtraction across zeros; many children count up more easily than they count back.",
+          "source": "DfE / National Strategies, Teaching children to calculate mentally (2010)",
+          "url": "https://www.cuddingtonanddintonschool.co.uk/wp-content/uploads/2016/02/teaching_children_to_count_mentally.pdf",
+          "verified": true
+        },
+        {
+          "claim": "£ and p should not be written together (e.g. not £1.00p); pupils commonly record money incorrectly by omitting the decimal point or mixing units.",
+          "source": "NCETM Curriculum Prioritisation, Year 2 Unit 9 — Money",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-9-money/",
+          "verified": true
+        },
+        {
+          "claim": "Pupils make take-smaller-from-larger and subtract-across-zeros errors (e.g. in £10.00 − amount) reflecting weak exchange/place value, and rarely estimate first so lack a sense of a sensible answer.",
+          "source": "NCETM, Misconceptions with the Key Objectives",
+          "url": "https://www.ncetm.org.uk/media/cocnx0it/misconceptions-with-the-key-objectives2.doc",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:39:43.829Z",
+        "updatedAt": "2026-10-19T15:20:54.156Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/146",
+    "connections": [
+      {
+        "topicId": "mt_6_O6THdEDK",
+        "prerequisiteId": "mt_6J1wmCWf41",
+        "strength": "hard",
+        "reason": "Giving change in £ and p extends Y2 simple money problems"
+      },
+      {
+        "topicId": "mt_6_O6THdEDK",
+        "prerequisiteId": "mt_pbuhUQJjtt",
+        "strength": "hard",
+        "reason": "Requires fluency with £ and p symbols"
+      },
+      {
+        "topicId": "mt_mFJ-2ZF6Tk",
+        "prerequisiteId": "mt_6_O6THdEDK",
+        "strength": "hard",
+        "reason": "Money arithmetic experience feeds into calculating measures including money"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_8cs4YPkp23",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Money transactions in dollars",
+      "description": "Solve practical money transactions with Australian money involving addition, subtraction and equal groups — totals, change and costs of several identical items — and explain the answer in terms of the purchase",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.04072883172561629,
+      "evidence": [
+        "Work out the total cost of a $4 drink and a $7 sandwich and the change from a $20 note",
+        "Find the cost of 3 apples at 50c each by repeated addition",
+        "Make 85c using the fewest Australian coins and explain the choice"
+      ],
+      "assessmentPrompt": "At the canteen, if {{name}} buys a $4 drink and a $7 sandwich with a $20 note, can they work out how much change they should get?",
+      "standards": [
+        "acara-v9:AC9M2N06"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1006",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_8cs4YPkp23",
+        "prerequisiteId": "mt_FSLJbKkryb",
+        "strength": "hard",
+        "reason": "Money transactions require recognising Australian coins and notes"
+      },
+      {
+        "topicId": "mt_8cs4YPkp23",
+        "prerequisiteId": "mt_glPPG-kTQY",
+        "strength": "soft",
+        "reason": "Totals and change use adding within 100"
+      },
+      {
+        "topicId": "mt_8cs4YPkp23",
+        "prerequisiteId": "mt_wh3UqnWsa7",
+        "strength": "soft",
+        "reason": "Costs of several identical items use repeated addition"
+      },
+      {
+        "topicId": "mt_9L5qyBYmg-",
+        "prerequisiteId": "mt_8cs4YPkp23",
+        "strength": "hard",
+        "reason": "Dollars-and-cents notation and change build on whole-dollar and cents transactions"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_3tz3Otap5j",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Money word problems",
+      "description": "Solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using $ and ¢ symbols appropriately",
+      "ageRangeStart": 7,
+      "ageRangeEnd": 8,
+      "centrality": 0.02143622722400857,
+      "evidence": [
+        "Determine the total value of a collection of coins",
+        "Solve a word problem about making change with US currency",
+        "Use $ and ¢ symbols correctly in answers"
+      ],
+      "assessmentPrompt": "If {{name}} has 2 quarters, 1 dime, and 3 pennies, can they work out the total — and tell you whether that's enough to buy something costing 65 cents?",
+      "standards": [
+        "ccss-math:2.MD.8"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1007",
+    "research": {
+      "topicId": "mt_3tz3Otap5j",
+      "pedagogy": {
+        "summary": "Children solve word problems about collections of US coins and bills — finding the total value, making change, and writing amounts with the $ and ¢ symbols appropriately. The deep difficulty is that a coin's value is ABSTRACT and matches neither its physical size nor the number of coins: a dime is smaller than a nickel yet worth more, and three dimes beat five pennies. Money is best taught as a MEASURE of value (like length or weight), using proportional manipulatives that make each coin's worth visible, introducing coins two denominations at a time to limit switches of counting pattern, and first building the skip-counting and place-value number sense that totalling coins depends on.",
+        "bestPractices": [
+          "Treat money as measuring value — begin with barter and non-standard units so children feel why standard values are needed (Fanelli & Tracy)",
+          "Use PROPORTIONAL manipulatives (a dime shown as ten unit-squares) rather than realistic play coins, because a coin is not a concrete representation of its own value",
+          "Introduce coins two denominations at a time to reduce cognitive load and limit how often the counting pattern must switch",
+          "Build the underlying number sense first — skip-counting by 5s, 10s, 25s and place value — since totalling mixed coins is a skip-count-and-switch task",
+          "Teach 'counting on' from the largest coin; model correct $ and ¢ notation and when each is used (100¢ = $1)"
+        ],
+        "keyRepresentations": [
+          "Proportional value strips / 'proportional dollar' (a coin laid over its worth in unit-squares)",
+          "A number line or hundred-square for skip-counting coin values",
+          "A coin-value reference (penny 1¢, nickel 5¢, dime 10¢, quarter 25¢, dollar 100¢)",
+          "A part-whole bar for making change (cost and amount paid)"
+        ],
+        "commonMisconceptions": [
+          "Value = size: a bigger coin is worth more (nickel > dime; five pennies > three dimes)",
+          "Value = count: each coin counts as one, or all coins are counted by ones regardless of denomination (unitary thinking)",
+          "Cannot switch counting patterns — counts 25, 50, 75 then cannot shift to +10 for a dime or +1 for a penny",
+          "Notation errors — mixing $ and ¢ ($0.50¢, or $5 for a nickel), or writing 5¢ as $5",
+          "Overusing one denomination (all dimes) because counting by tens is easiest, rather than realistic combinations"
+        ]
+      },
+      "learn": {
+        "summary": "Children solve word problems with US coins and bills — totalling value, making change, and writing amounts with $ and ¢ correctly. The core difficulty is that a coin's value is abstract and matches neither its physical size nor the number of coins (a dime is smaller than a nickel yet worth more; three dimes beat five pennies). Money is best taught as a measure of value using proportional representations that make each coin's worth visible, introducing denominations a couple at a time, and first building the skip-counting and place-value number sense that totalling mixed coins depends on.",
+        "activities": [
+          {
+            "title": "Proportional-coin workbench: build value and make change",
+            "feedback": [
+              "When a learner picks the bigger or more-numerous set as worth more, lay each coin over its unit-squares so the 10 squares of the dime stand beside the 5 of the nickel — let the squares, not the coin size, settle it.",
+              "If a learner counts every coin by ones (2 dimes + 3 pennies = '5'), highlight that one dime is already 10 squares; start from a single denomination before mixing.",
+              "When a learner stalls switching from 25s to 10s to 1s (counts 25, 50, 75 then says '76' for a dime), model counting on from the largest coin and track the running total on a number line.",
+              "For a correct total reached by counting on, ask them to remake the same amount with different coins to confirm value, not a fixed coin set, is what matters."
+            ],
+            "rationale": "Fanelli & Tracy report that children equate value with size and that coins are not concrete representations of their own value, recommending proportional manipulatives over realistic play coins and teaching money as a measure of value. A running total that accumulates by value supports 'counting on' and switching counting patterns, which Chandler & Kamii link to the difficulty of coordinating tens and ones when making change (that source is marked unverified in the row). The side-by-side square comparison is a proposed way to target the size/number heuristics through what the learner sees and does.",
+            "sourceClaims": [
+              "Children often equate value with size — believing nickels are worth more than dimes and that five pennies are more valuable than three dimes — because relative coin sizes do not correlate with relative values; coins are therefore NOT concrete representations of their value, so proportional manipulatives are recommended over realistic play coins, money should be taught as a measure of value, and these size-based misconceptions lessen around ages 7-8, making second grade the appropriate time for formal money instruction.",
+              "Giving change when payment is made with a dime is difficult for young children because of the difficulty of coordinating tens and ones — underlying the trouble children have switching counting patterns across denominations.",
+              "Grade 2 standard: solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using $ and ¢ symbols appropriately (e.g. if you have 2 dimes and 3 pennies, how many cents do you have?)."
+            ],
+            "learnerActions": [
+              "Place coins onto a mat; as each coin is placed, it opens into its worth shown as unit-squares (dime = 10 squares, nickel = 5, penny = 1, quarter = 25) while a running total counts on by value.",
+              "Set the small dime beside the fatter nickel and compare the stacks of squares: the dime's 10 squares visibly outstretch the nickel's 5.",
+              "Build a target amount such as 30¢ in more than one way (e.g. three dimes; or a quarter and a nickel) and compare the coins used.",
+              "Switch to a make-change task: an item costs 40¢; pay with coins totalling 46¢ and count up the 6¢ change.",
+              "Count a mixed handful (2 dimes and 3 pennies) by counting on from the largest coin: 10, 20, then 21, 22, 23."
+            ],
+            "intendedInsight": "A coin's worth is a number of cents you count on, separate from the coin's size or how many coins there are; proportional value makes 'smaller but worth more' visible and concrete."
+          },
+          {
+            "title": "Coin denomination reference with the size/worth contradiction",
+            "feedback": [
+              "If a learner guesses worth from size, draw attention to the stated value and the dime-vs-nickel fact.",
+              "Reinforce 100¢ = $1 so a nickel is written 5¢, never $5."
+            ],
+            "rationale": "Securing denomination values and surfacing the size/worth contradiction gives a foundation for totalling. This is exposition that establishes facts; on its own it does not provide totalling or make-change practice, so it is best used before or alongside the workbench rather than instead of it.",
+            "sourceClaims": [
+              "Children often equate value with size — believing nickels are worth more than dimes and that five pennies are more valuable than three dimes — because relative coin sizes do not correlate with relative values; coins are therefore NOT concrete representations of their value, so proportional manipulatives are recommended over realistic play coins, money should be taught as a measure of value, and these size-based misconceptions lessen around ages 7-8, making second grade the appropriate time for formal money instruction."
+            ],
+            "learnerActions": [
+              "Reveal each coin's value and a short fact (e.g. the dime is 'smaller than a nickel, but worth more').",
+              "Name each coin and state its cents value: penny 1¢, nickel 5¢, dime 10¢, quarter 25¢; then name the dollar bill (100¢) and state that 100¢ = $1.",
+              "Point out at least one pair where the smaller coin is worth more."
+            ],
+            "intendedInsight": "Each coin has a fixed cents value that must be learned, and a coin's size does not tell you its worth."
+          },
+          {
+            "title": "Comparison and totalling checks with diagnostic distractors",
+            "feedback": [
+              "When a learner picks the five pennies or says 'the same', treat it as the size/count heuristic and route back to laying coins over their proportional value; three dimes (30¢) is worth more than five pennies (5¢).",
+              "If notation is mixed (e.g. $0.50¢ or $5 for a nickel), show that $ and ¢ are not used together and that 5¢ means five cents.",
+              "A correct number with weak reasoning should be followed by 'show me why' using the coins."
+            ],
+            "rationale": "Comparison and totalling items with the count/size answer as the diagnostic distractor surface whether the size/number heuristic is still operating and check notation. A selected-response or slider item can reward a correct number without revealing the underlying reasoning, so pair these checks with the workbench or a 'show me why' follow-up rather than relying on them to fix the misconception.",
+            "sourceClaims": [
+              "Grade 2 standard: solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using $ and ¢ symbols appropriately (e.g. if you have 2 dimes and 3 pennies, how many cents do you have?)."
+            ],
+            "learnerActions": [
+              "Answer 'Which is worth more: three dimes or five pennies?' and explain the choice.",
+              "Total a mixed set such as '2 dimes and 3 pennies — how many cents?' and show the count.",
+              "Write the answer using ¢ (or $ with a decimal) without mixing the two symbols."
+            ],
+            "intendedInsight": "Judging worth by value — not by coin size or number of coins — and recording amounts in correct notation."
+          },
+          {
+            "title": "Build the prerequisite number sense: skip-counting and place value",
+            "feedback": [
+              "If the learner restarts counting at each new coin, reinforce counting on from the running total.",
+              "When switching from 25s to 10s to 1s breaks down, slow it on the number line and name the jump size each time."
+            ],
+            "rationale": "Chandler & Kamii attribute change-making difficulty to coordinating tens and ones (this source is marked unverified in the row), and the pedagogy recommends building skip-counting and place value before totalling mixed coins. This activity targets that prerequisite so the workbench and comparison tasks rest on secure counting.",
+            "sourceClaims": [
+              "Giving change when payment is made with a dime is difficult for young children because of the difficulty of coordinating tens and ones — underlying the trouble children have switching counting patterns across denominations."
+            ],
+            "learnerActions": [
+              "Skip-count aloud by 5s, 10s, and 25s on a number line or hundred-square.",
+              "Practise switching patterns mid-count: 25, 50, 75, then +10, then +1 (as if adding a dime then a penny).",
+              "Count on from a starting number rather than restarting at one."
+            ],
+            "intendedInsight": "Totalling mixed coins is a skip-count-and-switch task that depends on fluent skip-counting and place value."
+          }
+        ],
+        "constraints": [
+          "When making a coin's worth visible, use a proportional representation (each coin shown as its worth in unit-squares) rather than relying on a realistic play coin, since a coin is not a concrete representation of its own value; real/realistic coins remain useful for diagnosis and handling.",
+          "Introduce denominations a couple at a time to limit how often the counting pattern must switch.",
+          "Build skip-counting (5s, 10s, 25s) and place value before totalling mixed collections.",
+          "Model 'counting on' from the largest coin and correct $/¢ notation, including 100¢ = $1.",
+          "A static denomination reference establishes facts but does not provide totalling or make-change practice; use it to support, not replace, hands-on value building.",
+          "Selected-response or slider checks can reward a correct number without revealing the size/count reasoning behind it; pair them with a 'show me why' step or hands-on value work. A check of this kind can assess totalling and comparison but does not itself elicit the proportional-value reasoning.",
+          "Real or realistic coins are useful for diagnosis and handling, but when teaching the size/worth contradiction, add a proportional value representation so worth is seen apart from size."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; the sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The Chandler & Kamii (2009) source is marked verified:false in the row; its claim about tens/ones coordination is carried forward with that caveat and should be re-checked before relying on it.",
+          "The legacy row rated role-play/dialogue and 3D as poor with absolute claims ('a 3D environment adds nothing', an 'in-role dialogue cannot show' the contradiction). These are catalog preferences, not established facts, and have not been reproduced as universal laws. A shopkeeper role-play can still provide authentic make-change practice if paired with a proportional-value representation; it is omitted here only as a lower-priority format, not as pedagogically impossible.",
+          "Arithmetic checked: 2 dimes + 3 pennies = 23¢ (counted 10, 20, 21, 22, 23); three dimes = 30¢ vs five pennies = 5¢; 30¢ built as three dimes or a quarter and a nickel; paying 46¢ for a 40¢ item gives 6¢ change — all consistent with the source and retained.",
+          "The source's make-change scenario pays 46¢ for a 40¢ item (change 6¢); this is logically consistent but oddly chosen, so the activity states item cost and payment explicitly to avoid ambiguity.",
+          "The row's parentTitle labels this 'Halves and quarters (age 7+)', which does not match the money objective; the original field is left unchanged and the guidance follows the money description and evidence statements."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "Three dimes or five pennies — which would you rather have, and why?",
+          "This dime is smaller than the nickel — how can it be worth more?",
+          "Show me 30¢ a different way, using different coins.",
+          "If I gave you one more dime, how much would you have now?"
+        ],
+        "correctAnswer": "Totals 2 dimes + 3 pennies as 23¢ by counting 10, 20, then 21, 22, 23; states three dimes (30¢) is worth more than five pennies (5¢) and justifies by value, not size or number of coins; assembles 46¢ and gives 6¢ change; writes amounts using ¢ (or $ with a decimal) correctly without mixing the two.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Value = size: a physically bigger coin is worth more — nickel beats dime, or five pennies beat three dimes because the coins are bigger or more numerous",
+            "nextMove": "Lay each coin over its proportional value (dime = 10 unit-squares) so worth is seen apart from size; confront this preoperational value-equals-size heuristic directly",
+            "distractor": null,
+            "revealedBy": "Chooses the bigger or more-numerous set as 'worth more'; on a total, treats the nickel as greater than the dime",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Value = count (unitary thinking): counts each coin as one, or counts all coins by ones regardless of denomination",
+            "nextMove": "Reteach that a coin's value is a number of cents you count on, using proportional manipulatives; start from one denomination before mixing",
+            "distractor": null,
+            "revealedBy": "Says 2 dimes + 3 pennies is '5', or counts 1,2,3,4,5 touching each coin rather than counting on by value",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Cannot switch counting patterns across denominations — skip-counts one coin but stalls moving from 25s to 10s to 1s when coins are mixed",
+            "nextMove": "Practise counting on from the largest coin, scaffolding the switch with a number line; reteach place-value-based counting",
+            "distractor": null,
+            "revealedBy": "Counts 25, 50, 75 then adds a dime as '76' or restarts the count; overrelies on dimes to avoid switching",
+            "reteachPrerequisiteId": "mt_cChv2j_-Da"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Reasons by size or number — picks the bigger or more-numerous set as worth more and counts coins by ones; cannot total a mixed handful.",
+          "full": "Counts mixed coins by value with 'counting on', judges worth by value not size or number (three dimes > five pennies, with justification), makes simple change, and writes amounts with $ or ¢ correctly — transferring to a new collection.",
+          "partial": "Knows individual coin values and can total a single denomination, but stalls switching counting patterns for mixed coins or slips back to size/count on a comparison; totals only with prompting."
+        },
+        "diagnosticPrompt": "Put out real or realistic coins. Ask three things and WATCH how the child counts: (1) 'Here are 2 dimes and 3 pennies — how many cents altogether?' (2) 'Which is worth more: three dimes or five pennies? Show me.' (3) 'This costs 46¢ — pay with these coins; now suppose it cost 40¢, give me the right change.' Watch whether they count by VALUE (skip-counting and switching patterns) or by size/number, and whether they write the amount with $ or ¢ correctly.",
+        "whatMakesItDiscriminate": "Pitting three dimes against five pennies — fewer, smaller coins that are worth MORE — forces a choice between value-reasoning and the size/count heuristics: a child using size or number picks the pennies or says 'the same', while a value-reasoner picks the dimes and can show why. Watching the count on the 2-dimes-3-pennies task reveals whether they switch counting patterns or count every coin by ones."
+      },
+      "sources": [
+        {
+          "claim": "Grade 2 standard: solve word problems involving dollar bills, quarters, dimes, nickels, and pennies, using $ and ¢ symbols appropriately (e.g. if you have 2 dimes and 3 pennies, how many cents do you have?).",
+          "source": "Common Core State Standards for Mathematics, 2.MD.C.8",
+          "url": "https://www.thecorestandards.org/Math/Content/2/MD/",
+          "verified": true
+        },
+        {
+          "claim": "Children often equate value with size — believing nickels are worth more than dimes and that five pennies are more valuable than three dimes — because relative coin sizes do not correlate with relative values; coins are therefore NOT concrete representations of their value, so proportional manipulatives are recommended over realistic play coins, money should be taught as a measure of value, and these size-based misconceptions lessen around ages 7-8, making second grade the appropriate time for formal money instruction.",
+          "source": "Fanelli & Tracy (1995), 'Learning About Money: Effects of a Cognitively Appropriate Curriculum on Second-Grade Students and Teachers', Oakland University (ERIC ED427978)",
+          "url": "https://files.eric.ed.gov/fulltext/ED427978.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Giving change when payment is made with a dime is difficult for young children because of the difficulty of coordinating tens and ones — underlying the trouble children have switching counting patterns across denominations.",
+          "source": "Chandler & Kamii (2009), 'Giving Change When Payment Is Made with a Dime: The Difficulty of Tens and Ones', Journal for Research in Mathematics Education 40(2), 97-118",
+          "url": "https://www.jstor.org/stable/40539327",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T00:56:14.746Z",
+        "updatedAt": "2026-10-19T15:19:56.606Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/109",
+    "connections": [
+      {
+        "topicId": "mt_3tz3Otap5j",
+        "prerequisiteId": "mt_cChv2j_-Da",
+        "strength": "hard",
+        "reason": "Money word problems require fluent addition/subtraction within 100"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_9L5qyBYmg-",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Dollars and cents",
+      "description": "Recognise the relationship between dollars and cents (100 cents = 1 dollar), read and write amounts in $ and c notation (e.g. $3.45 and 345c), represent the same amount with different combinations of Australian coins and notes, and calculate change in dollars and cents",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 9,
+      "centrality": 0.04715969989281887,
+      "evidence": [
+        "Write $2.70 as 270c and 450c as $4.50",
+        "Show $3.60 in two different ways using Australian coins and notes",
+        "Work out the change from a $10 note for a purchase costing $6.40"
+      ],
+      "assessmentPrompt": "At the shops, can {{name}} read a price like $3.45, explain that it means 3 dollars and 45 cents, and work out the change from a $10 note?",
+      "standards": [
+        "acara-v9:AC9M3M06",
+        "acara-v9:AC9M3N06"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1021",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_5bmrA-0pBi",
+        "prerequisiteId": "mt_9L5qyBYmg-",
+        "strength": "hard",
+        "reason": "Estimating money totals requires reading and calculating in dollars and cents"
+      },
+      {
+        "topicId": "mt_9L5qyBYmg-",
+        "prerequisiteId": "mt_8cs4YPkp23",
+        "strength": "hard",
+        "reason": "Dollars-and-cents notation and change build on whole-dollar and cents transactions"
+      },
+      {
+        "topicId": "mt_9L5qyBYmg-",
+        "prerequisiteId": "mt_ewmuMMPAzP",
+        "strength": "soft",
+        "reason": "Calculating change uses addition and subtraction with regrouping"
+      },
+      {
+        "topicId": "mt_FVVSQR9vGg",
+        "prerequisiteId": "mt_9L5qyBYmg-",
+        "strength": "hard",
+        "reason": "Reading a calculator display as money requires dollars-and-cents notation"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_FVVSQR9vGg",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "name": "Calculator checks for money",
+      "description": "Use a calculator where appropriate to solve and check practical additive and multiplicative money problems in dollars and cents, reading the display as dollars and cents and checking the result with a quick estimate",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 9,
+      "centrality": 0.04608788853161844,
+      "evidence": [
+        "Use a calculator to total $4.85, $12.30 and $7.95 for a shopping list and check it is about $25",
+        "Enter 10 - 6.45 to find the change from a $10 note and read the display 3.55 as $3.55",
+        "Decide that 4 x $5 is quicker mentally but 6 x $3.95 is easier on a calculator, and explain why"
+      ],
+      "assessmentPrompt": "When you're shopping, can {{name}} use a phone calculator to add up prices like $4.85, $12.30 and $7.95 — and tell whether the answer looks about right?",
+      "standards": [
+        "acara-v9:AC9M3N06"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/943",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_FVVSQR9vGg",
+        "prerequisiteId": "mt_9L5qyBYmg-",
+        "strength": "hard",
+        "reason": "Reading a calculator display as money requires dollars-and-cents notation"
+      },
+      {
+        "topicId": "mt_FVVSQR9vGg",
+        "prerequisiteId": "mt_ewmuMMPAzP",
+        "strength": "soft",
+        "reason": "Estimating and checking totals uses addition and subtraction within 1000"
+      },
+      {
+        "topicId": "mt_ish_uH8vZe",
+        "prerequisiteId": "mt_FVVSQR9vGg",
+        "strength": "soft",
+        "reason": "Year 3 calculator checks for money precede efficient Year 4 calculator use"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_mFJ-2ZF6Tk",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Estimating and comparing money",
+      "description": "Estimate, compare, and calculate different measures including money in pounds and pence",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 10,
+      "centrality": 0.04715969989281887,
+      "evidence": [
+        "Estimate the length of the classroom in metres",
+        "Compare 1.5 kg and 1200 g and identify which is heavier",
+        "Calculate the total cost of 3 items at £2.45, £1.30, and £0.75"
+      ],
+      "assessmentPrompt": "If {{name}} is comparing three items costing £2.85, £3.10, and £2.50, can they put them in order from cheapest to most expensive — and work out the total cost?",
+      "standards": [
+        "acara-v9:AC9M4M01",
+        "uk-nc-2013:Ma/KS2/Y4/M/4"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1023",
+    "research": {
+      "topicId": "mt_mFJ-2ZF6Tk",
+      "pedagogy": {
+        "summary": "Year 4 (age 8–9) draws the measures strands together: pupils ESTIMATE, COMPARE and CALCULATE across different measures — length, mass, capacity and money in pounds and pence. Three distinct skills sit here. Estimation means producing a reasoned rough value (and using it to sense-check exact work). Comparison across units requires converting to a common unit first (1.5 kg vs 1200 g → 1500 g > 1200 g). Calculation with money now uses decimal £.p as one quantity. The recurring hazard across all three is treating a measure as two separate whole numbers (2 m 30 cm, £3.47) or comparing raw digits while ignoring units.",
+        "bestPractices": [
+          "Teach estimation as a deliberate step BEFORE exact calculation — round each price/measure to something friendly (£2.45 ≈ £2, 1.30 ≈ £1), get an approximate total, then compute exactly and CHECK the exact answer against the estimate.",
+          "For comparison, always convert to a common unit first and make the conversion explicit (1.5 kg = 1500 g); use double number lines or a bar to show why the digits alone can't be compared.",
+          "Use benchmarks/referents for estimation (a metre stick, a 1 kg bag, a 1-litre bottle, a £1 coin) so estimates are anchored, not guessed.",
+          "Handle money totals as single decimal quantities, aligning by the decimal point and exchanging 100p→£1; connect £.p place value to metric decimals (2.30 m, £2.30).",
+          "Make 'is this answer reasonable?' a routine — an unreasonable exact answer signals an error to find."
+        ],
+        "keyRepresentations": [
+          "Benchmark referents (metre stick, 1 kg mass, 1 litre, £1 coin) for anchoring estimates",
+          "Double number line / bar model for comparing across units",
+          "Place-value columns aligned by the decimal point (metric measures and money)",
+          "Rounding number line for estimation before exact calculation"
+        ],
+        "commonMisconceptions": [
+          "Compares across units by digits alone, ignoring the unit ('1200 g > 1.5 kg because 1200 > 1.5').",
+          "Skips estimation and so cannot judge whether an exact answer is reasonable.",
+          "'String-length thinking' persists in totals — treats £2.45 or 2 m 30 cm as two separate whole numbers when adding.",
+          "Rounds after calculating rather than before, or rounds the wrong way, so the estimate is useless as a check."
+        ]
+      },
+      "learn": {
+        "summary": "Year 4 (age 8–9) learners estimate, compare and calculate across measures — length, mass, capacity and money in pounds and pence. Three distinct skills sit together: estimation (producing a reasoned rough value and using it to sense-check exact work), comparison across units (converting to a common unit first, e.g. 1.5 kg = 1500 g > 1200 g), and calculation with money as a single decimal £.p quantity. The recurring hazard across all three is treating a measure as two separate whole numbers (2 m 30 cm, £3.47) or comparing raw digits while ignoring units.",
+        "activities": [
+          {
+            "title": "Measure bench: estimate first, then check",
+            "feedback": [
+              "If the learner skips the estimate and goes straight to an exact total: ask 'Before you worked it out exactly, what did you EXPECT the answer to be about — and does your exact answer match that?' Build the habit of rounding and adding for a ballpark first.",
+              "If an out-of-range exact answer is accepted without comment (e.g. £45 or £0.45 for the three items): point back to the estimate of about £4 and ask whether the result is plausible, then help locate the error.",
+              "If rounding happens after calculating or the wrong way, so the estimate cannot act as a check: practise rounding each amount before computing and comparing the two."
+            ],
+            "rationale": "Research cited here (NCETM, unverified in this row) suggests learners often skip estimating before calculating and so may lack a sense of a sensible answer, leaving errors undetected; committing the estimate before the exact value is revealed is intended to make reasonableness-checking a routine. A live estimate→reveal→gap loop (committing an estimate, then revealing the exact value and showing the error) is a proposed way to make the check concrete, not a tested intervention.",
+            "sourceClaims": [
+              "Pupils rarely estimate before calculating and so lack a sense of a sensible answer, leaving errors undetected."
+            ],
+            "learnerActions": [
+              "Face a task: three priced items (£2.45, £1.30, £0.75) to total, or two measures to compare.",
+              "Round each amount to something friendly (£2.45≈£2, £1.30≈£1, £0.75≈£1) and commit a rough estimate BEFORE seeing any exact answer — for example drag a slider or write the estimate down and lock it in.",
+              "Keep benchmark referents in view while estimating (a £1 coin, a metre stick, a 1 kg bag, a 1-litre bottle) so the estimate is anchored rather than guessed.",
+              "Only after the estimate is committed, reveal/compute the exact total (£4.50) and look at the gap between estimate and truth.",
+              "Decide out loud whether the exact answer is reasonable: does it land near the estimate (about £4)? If not, treat that as a flag to find an error."
+            ],
+            "intendedInsight": "An exact answer that lands far from a sensible estimate signals a likely error; landing near it makes the answer plausible, though it cannot catch every small slip (e.g. £4.40 instead of £4.50). Estimation is a deliberate step before calculation and a checkable habit afterwards, not an afterthought."
+          },
+          {
+            "title": "Convert before you compare: the balance that tips",
+            "feedback": [
+              "If the learner picks the larger NUMBER regardless of unit ('1200 g is heavier because 1200 > 1.5'): ask 'What is 1.5 kg in grams? Now which is more?' and make converting to a common unit the first step every time.",
+              "Offer the counterexample 'What if the bag were 1.5 kg and the other were 1500 g — which is heavier then?' to show they are equal once converted.",
+              "If conversion is shaky, rehearse on a double number line or balance that you can only compare like with like."
+            ],
+            "rationale": "Comparison across units requires converting to a common unit first; making the conversion explicit (and, optionally, physically felt on a balance or number line) targets the digits-only misconception. A 3D balance or filling a container can add physicality to mass/capacity work, though the core reasoning is numeric rather than inherently spatial.",
+            "sourceClaims": [
+              "Year 4 pupils should estimate, compare and calculate different measures, including money in pounds and pence; non-statutory guidance says they build on place value and decimal notation to record metric measures including money, and use multiplication to convert from larger to smaller units."
+            ],
+            "learnerActions": [
+              "Take two measures in different units, e.g. 1.5 kg and 1200 g.",
+              "Before deciding which is larger, convert both to a common unit: 1.5 kg = 1500 g (using multiplication by 1000 from larger to smaller unit), or convert 1200 g = 1.2 kg.",
+              "Compare only once the units match: 1500 g > 1200 g, so 1.5 kg is heavier.",
+              "Optionally use a double number line or bar model to show why the raw digits (1.5 vs 1200) cannot be compared directly; a balance-scale tool that rewrites 1.5 kg as 1500 g and tips against 1200 g lets the comparison be seen rather than asserted.",
+              "Order a short set across units, e.g. 1.5 kg / 1200 g / 900 g, after converting all to grams (1500 g, 1200 g, 900 g)."
+            ],
+            "intendedInsight": "To compare two measures reliably, first express them in the same unit; comparing the raw digits while ignoring the units can give the wrong answer (1200 > 1.5, yet 1200 g < 1.5 kg)."
+          },
+          {
+            "title": "Money as one quantity: totalling £.p",
+            "feedback": [
+              "If the total has three digits after the point, or pounds and pence are added independently, or amounts are not lined up by the decimal point: return to £.p as one quantity, realign by the decimal point and exchange 100p for £1.",
+              "Connect back to metric decimals (2.30 m) so the same place-value reasoning transfers across measures.",
+              "Self-check the three items: pence 45+30+75 = 150p = £1.50, pounds 2+1+0 = £3, giving £4.50 — use this to confirm the total."
+            ],
+            "rationale": "The 'two separate whole numbers' error affects measurement as well as money (using '2 m and 30 cm' as two whole numbers instead of 230 cm), driven by whole-number language; competence with two-place money amounts does not guarantee wider decimal understanding, so handling money as a single aligned decimal quantity is deliberately taught.",
+            "sourceClaims": [
+              "The 'two separate whole numbers' error affects measurement as well as money — e.g. using '2 m and 30 cm' as two whole numbers instead of 230 cm — driven by whole-number language; competence with two-place money amounts does not guarantee wider decimal understanding."
+            ],
+            "learnerActions": [
+              "Total three amounts such as £2.45, £1.30 and £0.75.",
+              "Treat each amount as a single decimal quantity, not as two separate whole numbers; align the amounts by the decimal point.",
+              "Add, exchanging 100p for £1 where the pence exceed 99, to get £4.50.",
+              "Check the result reads place-value-honestly: two digits after the point, not three (£3.150 would signal pence added past 100 without exchanging).",
+              "Connect £.p place value to metric decimals written the same way, e.g. 2.30 m alongside £2.30."
+            ],
+            "intendedInsight": "Money totals are single decimal quantities: aligning by the decimal point and exchanging 100p→£1 avoids 'string-length thinking' that adds pounds and pence as independent whole-number columns."
+          },
+          {
+            "title": "Benchmark estimation across length, mass and capacity",
+            "feedback": [
+              "Ask 'Estimate the length of this classroom in metres. What did you use to help you decide — a metre stick? a stride?' to surface whether the estimate is anchored.",
+              "If an estimate seems arbitrary, point to a concrete referent (metre stick, 1 kg bag, 1-litre bottle, £1 coin) and re-anchor.",
+              "Prompt transfer: having estimated a length, ask the learner to use the same rounding-then-check move on a money total or a mass."
+            ],
+            "rationale": "The DfE programme of study expects pupils to estimate across different measures and to transfer the routine between measure types; anchoring estimates to physical benchmarks/referents is a pedagogy-level recommendation (from the row's best practice) rather than a directly cited finding, so it is offered as a reasoned proposal, not a validated intervention.",
+            "sourceClaims": [
+              "Year 4 pupils should estimate, compare and calculate different measures, including money in pounds and pence; non-statutory guidance says they build on place value and decimal notation to record metric measures including money, and use multiplication to convert from larger to smaller units."
+            ],
+            "learnerActions": [
+              "Estimate the length of the classroom in metres before measuring, stating what referent you used (a metre stick, a stride).",
+              "Estimate a mass against a known 1 kg bag, or a capacity against a 1-litre bottle.",
+              "Say the estimate aloud and the reasoning behind it, then measure or compute the exact value and compare.",
+              "Transfer the estimate→convert→calculate routine across length, mass, capacity and money rather than only within one measure type."
+            ],
+            "intendedInsight": "Good estimates come from anchoring to physical benchmarks you know, and the same estimate-then-check routine works across every measure."
+          }
+        ],
+        "constraints": [
+          "Estimation must be committed BEFORE the exact value is revealed or calculated — otherwise it cannot serve as a check and becomes an afterthought.",
+          "A labelled picture or benchmark image can show what a metre, 1 kg or £1 looks like, but on its own cannot run the estimate-then-check loop or a unit conversion; use it as a referent, not as the full activity.",
+          "Recognition/ordering formats (choose-the-heavier, order these) can rehearse and check each skill crisply but do not by themselves elicit the learner's own free reasoning; pair them with prompts asking the learner to state and justify the estimate and the conversion.",
+          "A 3D balance or container adds physicality to mass/capacity comparison but is optional; the core reasoning (convert, compare, estimate) is numeric and not inherently spatial, and is not needed for money or estimation.",
+          "Interaction examples (slider to commit an estimate, a balance that rewrites 1.5 kg as 1500 g and tips, double number lines, decimal-aligned place-value columns) are illustrative ways to make the mechanism concrete, not mandatory tools.",
+          "Role-play dialogue does not by itself require the learner to carry out the estimation or unit conversion this objective targets, so on its own it may not elicit the procedural steps; if used, direct it to prompt the learner to state and justify an estimate rather than relying on it to teach the procedure."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "Arithmetic self-check: £2.45 + £1.30 + £0.75 = £4.50 (pence 45+30+75 = 150p = £1.50; pounds 2+1+0 = £3). This confirms the stated exact total.",
+          "Unit check: 1.5 kg = 1500 g > 1200 g, so 1.5 kg is correctly the heavier mass; the digits-only reading (1.5 < 1200) is the misconception, not a valid comparison.",
+          "One source (NCETM, 'Misconceptions with the Key Objectives') is marked verified:false in the row; its claim about learners rarely estimating is retained but treated as unverified, and the rationale wording was softened accordingly. Treating estimation-before-calculation as a habit is pedagogically reasonable but its efficacy is not independently established here.",
+          "Benchmark anchoring of estimates is drawn from the row's best-practice/pedagogy notes rather than from a directly cited source claim; it is retained as a reasoned recommendation.",
+          "The original framing that a live 2D interaction is 'exactly' the ideal and static/dialogue formats are 'poor' reflects a catalog preference, not established comparative efficacy; retained as design suggestions with stated affordances/limits rather than universal laws."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Before you worked it out exactly, what did you EXPECT the answer to be about — and does your exact answer match that?'",
+          "'You said 1200 g is heavier — what is 1.5 kg in grams? Now which is more?'",
+          "'What if the bag were 1.5 kg and the other were 1500 g — which is heavier then?' (counterexample: equal once converted).",
+          "'Estimate the length of this classroom in metres. What did you use to help you decide — a metre stick? a stride?'"
+        ],
+        "correctAnswer": "Gives a reasoned estimate first (≈£2 + £1 + £1 = £4, or 'about £4.50') THEN the exact £4.50, and uses the estimate to check it. For the masses: 1.5 kg is heavier because 1.5 kg = 1500 g, which is more than 1200 g — stated by converting to a common unit, not by comparing 1.5 with 1200.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Compares across units by the digits, ignoring the unit — 'the 1200 g is heavier because 1200 is bigger than 1.5' (or bigger than 15).",
+            "nextMove": "Make units common first, every time: convert 1.5 kg → 1500 g (or 1200 g → 1.2 kg) on a double number line or balance, then compare; rehearse that you can only compare like with like.",
+            "distractor": null,
+            "revealedBy": "Picks the item with the larger NUMBER regardless of unit; does not convert 1.5 kg to 1500 g before deciding.",
+            "reteachPrerequisiteId": "mt_6oxQPNLHNv"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Skips estimation and cannot judge reasonableness — goes straight to an exact calculation, produces an unreasonable total (e.g. £45 or £0.45 for the three items) and doesn't notice it's wrong.",
+            "nextMove": "Reteach in place: build the habit of rounding each amount and adding for a ballpark BEFORE calculating, then checking the exact answer against it — an exact answer far from the estimate flags an error to find.",
+            "distractor": null,
+            "revealedBy": "No rough answer offered before calculating; an out-of-range exact answer accepted without comment.",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "'String-length thinking' in the money total — treats £2.45, £1.30, £0.75 as separate whole-number columns, adding pence past 100 without exchanging (e.g. £3.150) or misaligning the decimal points.",
+            "nextMove": "Return to £.p as one quantity: align by the decimal point, exchange 100p for £1, and read the total place-value-honestly; connect to metric decimals (2.30 m).",
+            "distractor": null,
+            "revealedBy": "A total with three digits after the point, or pounds and pence added independently, or amounts not lined up by the decimal point.",
+            "reteachPrerequisiteId": "mt_6_O6THdEDK"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Compares raw numbers ignoring units, offers no estimate, and cannot total £.p reliably; accepts unreasonable answers.",
+          "full": "Estimates before calculating and uses the estimate to check; converts to a common unit before comparing; totals money as a single quantity; and transfers the estimate–convert–calculate routine across length, mass, capacity and money.",
+          "partial": "Calculates exactly and/or converts for a friendly case, but does not estimate to check, or can compare only when the units already match — lists results without judging reasonableness or transferring across measure types."
+        },
+        "diagnosticPrompt": "Put three price tags in front of the child — £2.45, £1.30, £0.75 — and say: 'First tell me ROUGHLY what these cost altogether, then work out the exact total.' Then show a 1.5 kg bag and a 1200 g bag and ask: 'Which is heavier — and how do you know?' Watch whether they estimate before calculating, and whether they convert before comparing.",
+        "whatMakesItDiscriminate": "A child who has the idea estimates first (rounding sensibly) and converts to a common unit before comparing, so 1.5 kg is correctly heavier; a child who lacks it dives straight to an exact calculation with no reasonableness check, and/or judges 1200 g heavier because 1200 > 1.5 (or > 15). Estimating-before and converting-before each produce a visibly different move from the wrong ideas."
+      },
+      "sources": [
+        {
+          "claim": "Year 4 pupils should estimate, compare and calculate different measures, including money in pounds and pence; non-statutory guidance says they build on place value and decimal notation to record metric measures including money, and use multiplication to convert from larger to smaller units.",
+          "source": "DfE, National Curriculum in England: Mathematics programmes of study (Year 4 Measurement)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "The 'two separate whole numbers' error affects measurement as well as money — e.g. using '2 m and 30 cm' as two whole numbers instead of 230 cm — driven by whole-number language; competence with two-place money amounts does not guarantee wider decimal understanding.",
+          "source": "Cambridge Mathematics, 'Use of Money as a Decimal Representation: A Review' (Jameson), citing Steinle 2004, Babcock LDP",
+          "url": "https://www.cambridgemaths.org/Images/research-3-money-and-decimals-full.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Pupils rarely estimate before calculating and so lack a sense of a sensible answer, leaving errors undetected.",
+          "source": "NCETM, Misconceptions with the Key Objectives",
+          "url": "https://www.ncetm.org.uk/media/cocnx0it/misconceptions-with-the-key-objectives2.doc",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:40:47.866Z",
+        "updatedAt": "2026-10-19T15:21:00.298Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/611",
+    "connections": [
+      {
+        "topicId": "mt_5HV4mbgSGH",
+        "prerequisiteId": "mt_mFJ-2ZF6Tk",
+        "strength": "hard",
+        "reason": "Y4 estimate/compare/calculate measures is prerequisite to word problems with fractions/decimals"
+      },
+      {
+        "topicId": "mt_mFJ-2ZF6Tk",
+        "prerequisiteId": "mt_6_O6THdEDK",
+        "strength": "hard",
+        "reason": "Money arithmetic experience feeds into calculating measures including money"
+      },
+      {
+        "topicId": "mt_mFJ-2ZF6Tk",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Standard unit measurement is prerequisite to estimating and calculating measures"
+      },
+      {
+        "topicId": "mt_NSC3LT_-ch",
+        "prerequisiteId": "mt_mFJ-2ZF6Tk",
+        "strength": "soft",
+        "reason": "Year 4 estimating and comparing measures gives practice in judging sensible amounts before measuring"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_5bmrA-0pBi",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Estimating money totals",
+      "description": "Use estimation and rounding to check and explain the reasonableness of money calculations in dollars and cents, including rounding cash totals to the nearest 5 cents as Australian shops do, and solve practical financial problems",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 10,
+      "centrality": 0.04715969989281887,
+      "evidence": [
+        "Estimate the total of $4.95, $2.10 and $7.85 as about $15 before calculating the exact total",
+        "Round a cash total of $12.37 to $12.35 and $8.48 to $8.50 and explain the 5-cent rule",
+        "Decide whether $36 change from $50 is reasonable after buying items costing $6.90 and $8.15"
+      ],
+      "assessmentPrompt": "At the supermarket, can {{name}} round the prices in the trolley to estimate the total before you pay — and tell whether the change you get back looks about right?",
+      "standards": [
+        "acara-v9:AC9M4N07",
+        "acara-v9:AC9M4N08"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1032",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_5bmrA-0pBi",
+        "prerequisiteId": "mt_9L5qyBYmg-",
+        "strength": "hard",
+        "reason": "Estimating money totals requires reading and calculating in dollars and cents"
+      },
+      {
+        "topicId": "mt_5bmrA-0pBi",
+        "prerequisiteId": "mt_QaYfeVL-0C",
+        "strength": "hard",
+        "reason": "Checking money calculations uses estimation by rounding"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_5bmrA-0pBi",
+        "strength": "hard",
+        "reason": "Budgets and best buys build on estimating and checking money calculations"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_Qe2PsFmSAH",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Budgets and best buys",
+      "description": "Solve practical financial problems in Australian dollars and cents — planning a budget, comparing best buys by unit price, and checking reasonableness by estimation — using a calculator or spreadsheet where appropriate",
+      "ageRangeStart": 10,
+      "ageRangeEnd": 11,
+      "centrality": 0.09860664523043944,
+      "evidence": [
+        "Plan a class party for $60 by choosing items and totalling their costs in a spreadsheet or on a calculator",
+        "Decide whether a 2 kg bag of rice for $5.80 or a 500 g bag for $1.60 is better value and explain why",
+        "Estimate whether a list of 5 items fits a $25 budget before calculating the exact total"
+      ],
+      "assessmentPrompt": "If {{name}} has $25 to spend on supplies for a school camp, can they plan what to buy, keep a running total, and work out which pack size is better value?",
+      "standards": [
+        "acara-v9:AC9M5N08",
+        "acara-v9:AC9M5N09"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1041",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_4fK8Bb8Tr_",
+        "prerequisiteId": "mt_Qe2PsFmSAH",
+        "strength": "soft",
+        "reason": "'Budgets and best buys' supports 'Project plans for making'"
+      },
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_Qe2PsFmSAH",
+        "strength": "hard",
+        "reason": "Builds on budgets with calculators or spreadsheets"
+      },
+      {
+        "topicId": "mt_oMkQQ2O-ML",
+        "prerequisiteId": "mt_Qe2PsFmSAH",
+        "strength": "hard",
+        "reason": "Discounts and GST extend practical dollars-and-cents problem solving"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_5bmrA-0pBi",
+        "strength": "hard",
+        "reason": "Budgets and best buys build on estimating and checking money calculations"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_ish_uH8vZe",
+        "strength": "soft",
+        "reason": "Budgets and best buys use a calculator with estimation checks"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_MCu_SNg_OW",
+        "strength": "soft",
+        "reason": "Unit prices use division"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_NmvuwVUFRS",
+        "strength": "soft",
+        "reason": "Unit prices and budget totals use calculators for multiplication and division"
+      },
+      {
+        "topicId": "mt_Qe2PsFmSAH",
+        "prerequisiteId": "mt_q9EaJc2FP8",
+        "strength": "soft",
+        "reason": "Costing multiple items uses multi-digit multiplication"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_oMkQQ2O-ML",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Discounts, GST and balances",
+      "description": "Solve and estimate financial problems in Australian dollars involving percentage discounts, adding the 10% GST to prices given before GST (recognising that GST-inclusive prices already contain it), and account balances that go below zero",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.1479099678456592,
+      "evidence": [
+        "Work out the sale price of an $80 jacket with a 25% discount and estimate it first as about $60",
+        "For a $45 price given before GST, find the 10% GST of $4.50 and the GST-inclusive price of $49.50, and explain why a price already marked 'GST inclusive' does not get another 10% added",
+        "Show a bank balance of $20 that drops by $35 as -$15 on a number line and explain what it means"
+      ],
+      "assessmentPrompt": "If {{name}} sees an $80 jacket marked 25% off, can they work out the sale price — and for a $45 price shown before GST, work out what you'd pay once the 10% GST is added?",
+      "standards": [
+        "acara-v9:AC9M6N01",
+        "acara-v9:AC9M6N07",
+        "acara-v9:AC9M6N08",
+        "acara-v9:AC9M6N09"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1049",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_oMkQQ2O-ML",
+        "strength": "hard",
+        "reason": "Spreadsheet discounts and GST apply the percentage and GST reasoning"
+      },
+      {
+        "topicId": "mt_oMkQQ2O-ML",
+        "prerequisiteId": "mt_1KkvzwYxbR",
+        "strength": "soft",
+        "reason": "Negative balances use negative numbers in context"
+      },
+      {
+        "topicId": "mt_oMkQQ2O-ML",
+        "prerequisiteId": "mt_PNSyfH56eQ",
+        "strength": "hard",
+        "reason": "Percentage discounts and GST require calculating percentages of amounts"
+      },
+      {
+        "topicId": "mt_oMkQQ2O-ML",
+        "prerequisiteId": "mt_Qe2PsFmSAH",
+        "strength": "hard",
+        "reason": "Discounts and GST extend practical dollars-and-cents problem solving"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_mMDpLugX2X",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Spreadsheets for money problems",
+      "description": "Use a spreadsheet or calculator where appropriate to solve financial problems with decimals and percentages — totalling decimal amounts, applying percentage discounts, and adding 10% GST to prices given before GST — checking results by estimation and justifying the choice of tool",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.15005359056806,
+      "evidence": [
+        "Build a spreadsheet budget that adds and subtracts amounts such as $12.85, $7.60 and $3.95 and check the running total by rounding",
+        "Use a spreadsheet formula to apply a 15% discount to a list of prices and check one result by estimating 15% of $64.90 as about $10",
+        "Use a formula to add 10% GST to prices given before GST, and explain why 10% is not added again to a price already marked 'GST inclusive'"
+      ],
+      "assessmentPrompt": "Could {{name}} set up a simple spreadsheet for a class fundraiser that totals the costs, takes 15% off sale items, and checks the totals with a quick estimate?",
+      "standards": [
+        "acara-v9:AC9M6N04",
+        "acara-v9:AC9M6N07",
+        "acara-v9:AC9M6N09"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1050",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_ilPrU0cbtT",
+        "strength": "soft",
+        "reason": "Estimation checks the spreadsheet results"
+      },
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_NmvuwVUFRS",
+        "strength": "soft",
+        "reason": "Builds on choosing calculators and checking by estimation"
+      },
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_oMkQQ2O-ML",
+        "strength": "hard",
+        "reason": "Spreadsheet discounts and GST apply the percentage and GST reasoning"
+      },
+      {
+        "topicId": "mt_mMDpLugX2X",
+        "prerequisiteId": "mt_Qe2PsFmSAH",
+        "strength": "hard",
+        "reason": "Builds on budgets with calculators or spreadsheets"
+      }
+    ]
+  }
+]

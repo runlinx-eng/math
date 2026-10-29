@@ -1,0 +1,821 @@
+[
+  {
+    "topic": {
+      "id": "mt_zkFbMLpu3U",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Comparing Capacity",
+      "description": "Compare and describe capacity and volume using language such as full, empty, more than, less than, half full",
+      "ageRangeStart": 4,
+      "ageRangeEnd": 7,
+      "centrality": 0.2207931404072883,
+      "evidence": [
+        "Compare two containers and say which holds more/less",
+        "Use 'half full' and 'quarter full' to describe a container",
+        "Solve practical problems like 'Which cup has more water?'"
+      ],
+      "assessmentPrompt": "If {{name}} has two cups of different sizes, can they tell you which holds more water — and describe one as \"more full\" or \"less full\" than the other?",
+      "standards": [
+        "acara-v9:AC9M1M01",
+        "acara-v9:AC9MFM01",
+        "ccss-math:K.MD.1",
+        "uk-nc-2013:Maths/Y1/M/3"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/969",
+    "research": {
+      "topicId": "mt_zkFbMLpu3U",
+      "pedagogy": {
+        "summary": "Children compare how much containers HOLD (capacity) using the language full/empty/half full/more than/less than, and by POURING from one container to another. The central hurdle is conservation of liquid: don't judge the amount by the height of the liquid or the tallness of the container — a tall thin glass can hold less than a short wide one, and the same amount looks different in different-shaped containers. Compare by pouring into a common container.",
+        "bestPractices": [
+          "Compare by POURING — pour one container into the other, or both into identical bottles — rather than eyeballing liquid levels",
+          "Deliberately contrast a tall-thin container with a short-wide one so height is repeatedly misleading",
+          "Use full / empty / half full / quarter full and more/less language in context",
+          "Make it practical: water and sand play with real containers",
+          "Name the key idea: the same amount can look different in different containers"
+        ],
+        "keyRepresentations": [
+          "Pouring between containers",
+          "Identical comparison bottles/beakers (a common measure)",
+          "The tall-thin vs short-wide pair",
+          "Half-full / quarter-full level markers"
+        ],
+        "commonMisconceptions": [
+          "Taller liquid level or taller container = more (height-vs-amount / conservation of liquid)",
+          "Wider or physically bigger container = more, judging the container not the contents",
+          "Thinks pouring the same water into a different-shaped container changes the amount",
+          "Guesses from appearance instead of pouring to test"
+        ]
+      },
+      "learn": {
+        "summary": "Young children (ages 4-6) compare how much containers HOLD (capacity) using the language full / empty / half full / quarter full / more than / less than, and by POURING water or sand from one container to another. The core hurdle is conservation of liquid: children tend to judge amount by the height of the liquid or the size of the container rather than by what it actually holds. The reliable strategy is to pour into a common container (or pour one into the other) to test, repeatedly contrasting a tall-thin container with a short-wide one so that height stops being trusted.",
+        "activities": [
+          {
+            "title": "Pour the same water back and forth (conservation)",
+            "feedback": [
+              "If the child says the tall glass has more 'because the water is higher', invite them to pour both into identical beakers and watch the levels come out about the same: the amount didn't change with the shape.",
+              "Repeat with fresh tall-thin vs short-wide pairs until the child stops trusting height and reaches for the pour-and-compare check.",
+              "When a child predicts before pouring and then checks, name the strategy: 'You poured to test instead of guessing from how it looks.'"
+            ],
+            "rationale": "Conservation is revealed by holding the quantity fixed while changing the container shape: pouring the same water between a tall-thin and a short-wide container, then into matching beakers, lets the child see the level change while the amount stays the same. An optional live amount readout (e.g. a 'ml held' counter that stays constant while the level jumps) can make the invariance explicit, but the pouring itself is the mechanism, not the readout.",
+            "sourceClaims": [
+              "NCETM Year 1 uses a Captain Conjecture prompt on conservation of liquid — 'All of the glasses contain the same quantity of lemonade. Do you agree? Explain' (glasses of differing width/height with liquid at the same level) — and pouring tasks (pour a 1-litre bottle into a 2-litre bottle and mark the level; bottle vs jug capacity; half-as-full / twice-as-full), directly probing whether children confuse height with amount."
+            ],
+            "learnerActions": [
+              "Fill a tall thin glass with water and set an empty short wide bowl beside it, ready to pour the same water from one to the other.",
+              "Pour the water from the tall glass into the empty wide bowl and back again; notice the level is high in the glass and low in the bowl, even though it is the same water.",
+              "Predict first, then pour each of two mystery containers (secretly holding the same amount) into its own identical beaker and check: the levels come out about the same (small spills or drips can make a tiny difference).",
+              "Say aloud what happened: the tall one never had more, it just looked that way because the glass is thin.",
+              "Hit half-full and quarter-full targets by pouring until the water reaches a marked line (about half, about a quarter is fine at this age)."
+            ],
+            "intendedInsight": "The same amount of water can look very different in differently-shaped containers; when the containers are different shapes, the height of the liquid (or the tallness of the container) does not by itself tell you the amount. To be sure, pour into identical containers, where comparing the levels is fair."
+          },
+          {
+            "title": "Which holds more? Compare capacity by pouring into a common measure",
+            "feedback": [
+              "If the child picks the physically bigger or wider container regardless of the pour, pour both into matching bottles and show the result; set up a narrow-tall container that holds more than a wide-short one so size alone is misleading.",
+              "If the child pours a full cup into the jug and the jug isn't filled, help them say 'the jug holds more because one cupful doesn't fill it.'",
+              "Prompt 'how could you check?' and model pouring into a common container when the child guesses from appearance."
+            ],
+            "rationale": "Measurement at this stage is comparison through a practical activity; using a shared container greater than the things being compared (filling each and pouring into matching bottles) gives a fair comparison and counters judging by container size. A deliberately counter-intuitive narrow-tall-holds-more case keeps the 'bigger-looking = more' misconception in check.",
+            "sourceClaims": [
+              "Standard units can be introduced through a unit greater than the things being compared — e.g. comparing the capacity of a cup and a carton by filling each and pouring into matching bottles to compare; measurement is comparison and a practical activity.",
+              "Year 1 pupils compare, describe and solve practical problems for capacity and volume [full/empty, more than, less than, half, half full, quarter] and 'measure and begin to record' capacity and volume; at this stage volume and capacity are used interchangeably."
+            ],
+            "learnerActions": [
+              "Take two containers that look different in size — e.g. a cup and a jug, or a wide-short container and a narrow-tall one.",
+              "Predict which holds more.",
+              "Fill each and pour into matching identical bottles/beakers so you can compare fairly by what each holds.",
+              "Decide which holds more by looking at the common bottles, not at the original containers.",
+              "Try a deliberately tricky case: a narrow-tall container that actually holds MORE than a wide-short one."
+            ],
+            "intendedInsight": "Capacity is about how much a container holds, which you find by pouring and comparing in a common measure — not by how big or wide the container looks."
+          },
+          {
+            "title": "Real water and sand play with the language",
+            "feedback": [
+              "When a child names a level, check it together: in a straight-sided container, does 'half full' really reach about the middle? (In a bowl or a container that narrows or widens, half the height is not half the amount.) Let them adjust by pouring.",
+              "If a child compares by eyeballing, encourage pouring one into the other to settle it.",
+              "Celebrate correct use of full/empty/half-full/quarter-full/more/less in running commentary rather than only at the end."
+            ],
+            "rationale": "Comparing capacity is inherently practical; the Year 1 curriculum frames measurement as comparison and a practical activity. Real water and sand play with physical containers gives the hands-on pouring experience and naturalises the full/empty/half/quarter and more/less vocabulary in context, making it a core practical experience for this age alongside any screen model.",
+            "sourceClaims": [
+              "Year 1 pupils compare, describe and solve practical problems for capacity and volume [full/empty, more than, less than, half, half full, quarter] and 'measure and begin to record' capacity and volume; at this stage volume and capacity are used interchangeably.",
+              "Standard units can be introduced through a unit greater than the things being compared — e.g. comparing the capacity of a cup and a carton by filling each and pouring into matching bottles to compare; measurement is comparison and a practical activity."
+            ],
+            "learnerActions": [
+              "At a water or sand tray, fill, empty and pour between real containers of different shapes and sizes.",
+              "Describe containers as full, empty, half full and quarter full as you fill them.",
+              "Compare two containers aloud using 'more than' and 'less than'.",
+              "Make a glass that is 'about half full' and another that is 'about quarter full'.",
+              "Solve a practical problem such as 'Which cup has more water?' by pouring to find out."
+            ],
+            "intendedInsight": "Capacity language and comparison are grounded in the practical, hands-on act of filling, emptying and pouring with real materials."
+          },
+          {
+            "title": "Scored comparison and fill-level items (check, not discovery)",
+            "feedback": [
+              "For a wrong 'holds more' choice, return to real or simulated pouring into a common container to resolve it.",
+              "For a mismatched fill label, show the container and ask the child to point to where half or quarter would be.",
+              "Treat these items as a check on understanding, not as the place where the conservation idea is first built — these items do not let the child perform the pour-to-test action themselves."
+            ],
+            "rationale": "Comparison and fill-level language make clean scored items that assess recognition and application. These items check understanding but do not let the child pour to test, so independent construction of the conservation strategy should be built first in the pouring activities. Recognition alone does not elicit the child's own pour-to-test production.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "From pictures of pour outcomes, choose which container holds more.",
+              "Match containers to the labels full, half full and empty.",
+              "Put a set of containers in order by how much they hold.",
+              "Explain, where asked, how you could check an answer by pouring."
+            ],
+            "intendedInsight": "Children can recognise and apply capacity and fill-level language and reason about which holds more from pour evidence."
+          }
+        ],
+        "constraints": [
+          "Compare by POURING — pour one container into the other, or both into identical bottles/beakers — rather than eyeballing liquid levels.",
+          "Deliberately and repeatedly contrast a tall-thin container with a short-wide one so height is shown to be misleading more than once.",
+          "Use full / empty / half full / quarter full and more than / less than in context, not as isolated vocabulary drills.",
+          "At this stage volume and capacity are used interchangeably (per Year 1 curriculum notes).",
+          "A static tall-thin/short-wide pair with a 'same amount!' reveal can name the idea but does not let the child test it by pouring; use it to introduce or summarise, not as the only experience.",
+          "Recognition/scored items assess and reinforce but do not elicit the child's own pour-to-test action; pair them with hands-on or interactive pouring.",
+          "An optional constant 'amount held' readout alongside a changing level can make invariance explicit, but it is one way to show the idea, not a required mechanism.",
+          "Tilt-and-pour 3D models and 2D pouring sims offer different experiences; neither is required, and real water/sand play remains the natural companion for this age.",
+          "Half/quarter full targets are approximate at this age ('about half full'); exact fractional precision is not expected."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "The legacy source claimed a 2D pouring sim is preferable because 'capacity is about quantity, not spatial form', that a tilt-and-pour 3D version 'adds nothing but overhead', and that 'dialogue cannot supply the pouring.' These are catalog-fit preferences, not established comparative-efficacy findings; they have been softened to scoped affordance/limit statements. 3D and dialogue can still support learning in other ways.",
+          "The claim that a static image 'cannot let the child test it by pouring' is a genuine objective limit (no manipulation of a fixed picture) and is retained as scoped; it is not asserted that a static image 'cannot teach' the idea.",
+          "Half-full / quarter-full targets are approximate for this age ('about half full'); exact fractional precision is not expected.",
+          "The scored-items activity has sourceClaims [] because no cited source directly supports its recognition/assessment rationale; the recognition-vs-production limit is stated as an objective affordance, not as a sourced effectiveness finding.",
+          "The National Curriculum Year 1 claim is topic/coverage-level support; it was removed from the conservation activity (which it does not address) and retained only where the comparison and full/half/quarter vocabulary it lists is directly used.",
+          "The conservation activity narrative uses two mystery containers each holding the same amount, poured into separate identical beakers; the 'pour back and forth' step is a demonstrative lead-in and the subsequent prediction step uses a fresh equal-amount pair."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'The water looks higher in this glass — does higher always mean more? How could you be sure?'",
+          "'If I pour the tall glass's water into this wide bowl, will there be more, less, or the same water? Why?' (conservation, fresh case)",
+          "'What does “half full” mean — can you show me on this glass?'"
+        ],
+        "correctAnswer": "(1) Recognises you can't tell from the levels alone and pours into identical beakers (or one into the other) to compare — finding them equal. (2) Determines capacity by pouring (the jug holds more because the cupful doesn't fill it). (3) Identifies or makes a half-full glass. Uses full / half full / more / less correctly.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Height = amount — the taller liquid level (or taller glass) must have more, judged without pouring",
+            "nextMove": "Pour both into identical beakers so the levels match — the amount didn't change with the shape; repeat with tall-thin vs short-wide until height stops being trusted.",
+            "distractor": null,
+            "revealedBy": "On task 1 says the tall thin glass has more 'because the water is higher', declining to pour",
+            "reteachPrerequisiteId": "mt_NtJYlJdUe9"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Bigger / wider container = more — judges the container rather than what it holds",
+            "nextMove": "Pour to test capacity directly; contrast a wide-short container with a narrow-tall one that actually holds more.",
+            "distractor": null,
+            "revealedBy": "On task 2 picks the physically bigger container as holding more regardless of the actual pour",
+            "reteachPrerequisiteId": "mt_NtJYlJdUe9"
+          },
+          {
+            "kind": "performance",
+            "pattern": "Guesses from looking instead of pouring to test when pouring is available",
+            "nextMove": "Prompt 'how could you check?' and model pouring into a common container — a strategy prompt, not a reteach.",
+            "distractor": null,
+            "revealedBy": "Gives an answer without using the pour-and-compare strategy",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Judges amount by the height of the liquid or the size of the container; doesn't think to pour.",
+          "full": "Compares capacity by pouring into a common container, is not fooled by container shape or liquid height, and recognises the amount is conserved when the same water is poured into a differently-shaped container.",
+          "partial": "Uses full/empty/half-full language and compares obvious cases, but is fooled by tall-thin vs short-wide (says taller = more) unless prompted to pour."
+        },
+        "diagnosticPrompt": "Set out a tall thin glass and a short wide glass holding the SAME amount of water (so the levels differ), a cup, a jug, and some empty identical beakers. Watch how the child decides: (1) 'Do these two glasses have the same amount of water, or does one have more? How could you find out?' (2) 'Pour this full cup into the jug — which holds more, the cup or the jug?' (3) 'Show me a glass that is about half full.'",
+        "whatMakesItDiscriminate": "The equal-amount-different-height pair is the classic conservation probe — a child fooled by height says the tall glass has more; a child who conserves says 'pour them together to check'. Item 2 catches whether they compare by what a container holds (pouring) rather than by how big it looks."
+      },
+      "sources": [
+        {
+          "claim": "Year 1 pupils compare, describe and solve practical problems for capacity and volume [full/empty, more than, less than, half, half full, quarter] and 'measure and begin to record' capacity and volume; at this stage volume and capacity are used interchangeably.",
+          "source": "National Curriculum in England: Mathematics, Year 1 Measurement (statutory + notes), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "NCETM Year 1 uses a Captain Conjecture prompt on conservation of liquid — 'All of the glasses contain the same quantity of lemonade. Do you agree? Explain' (glasses of differing width/height with liquid at the same level) — and pouring tasks (pour a 1-litre bottle into a 2-litre bottle and mark the level; bottle vs jug capacity; half-as-full / twice-as-full), directly probing whether children confuse height with amount.",
+          "source": "NCETM Primary Mastery Assessment Materials, Year 1 (Measurement — Capacity)",
+          "url": "https://www.ncetm.org.uk/media/qjpctp24/mastery_assessment_y1.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Standard units can be introduced through a unit greater than the things being compared — e.g. comparing the capacity of a cup and a carton by filling each and pouring into matching bottles to compare; measurement is comparison and a practical activity.",
+          "source": "NCETM Primary Mastery Assessment Materials, Year 1 (Measurement Big Ideas)",
+          "url": "https://www.ncetm.org.uk/media/qjpctp24/mastery_assessment_y1.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T21:13:24.493Z",
+        "updatedAt": "2026-10-19T15:21:52.780Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/1028",
+    "connections": [
+      {
+        "topicId": "mt_4lp_b5Pzik",
+        "prerequisiteId": "mt_zkFbMLpu3U",
+        "strength": "hard",
+        "reason": "Measuring capacity with units requires first being able to compare capacities"
+      },
+      {
+        "topicId": "mt_bnwHo5wfCD",
+        "prerequisiteId": "mt_zkFbMLpu3U",
+        "strength": "hard",
+        "reason": "Indirect comparison of capacity builds on direct comparison of capacity"
+      },
+      {
+        "topicId": "mt_zkFbMLpu3U",
+        "prerequisiteId": "mt_NtJYlJdUe9",
+        "strength": "hard",
+        "reason": "Comparing capacity requires understanding capacity as a measurable attribute"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_4lp_b5Pzik",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Capacity and volume",
+      "description": "Measure and begin to record capacity and volume using non-standard and standard units",
+      "ageRangeStart": 5,
+      "ageRangeEnd": 8,
+      "centrality": 0.2197213290460879,
+      "evidence": [
+        "Measure capacity by counting how many cups fill a container",
+        "Begin to use litres as a unit of capacity",
+        "Record capacity measurements with a number and unit"
+      ],
+      "assessmentPrompt": "If {{name}} fills a jug using a small cup, can they count how many cups it takes — and understand that this tells you how much the jug holds?",
+      "standards": [
+        "acara-v9:AC9M2M01",
+        "acara-v9:AC9S2I03",
+        "uk-nc-2013:Maths/Y1/M/7"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/975",
+    "research": {
+      "topicId": "mt_4lp_b5Pzik",
+      "pedagogy": {
+        "summary": "Children quantify capacity: how many cupfuls fill a container (non-standard units), then litres (standard), recorded as a number + unit. It uses repeated filling and pouring with IDENTICAL units and rests on the same unit-size principle as length and mass — a bigger cup means fewer cupfuls fill the same container. Reading a marked measuring vessel means valuing its intervals.",
+        "bestPractices": [
+          "Fill with identical cups and count the cupfuls, recording number + unit ('4 cups', '2 litres')",
+          "Keep the unit consistent — mixing cup sizes breaks the count",
+          "Fill each cup to the same level (brim or a mark) so cupfuls are equal",
+          "Introduce the litre and a marked measuring jug; read the level against the intervals",
+          "Estimate first, then check by filling"
+        ],
+        "keyRepresentations": [
+          "Filling a container cupful-by-cupful with identical cups",
+          "A marked measuring jug / litre jug",
+          "The count record ('4 cups', '2 litres')",
+          "Identical unit-cups (equal measures)"
+        ],
+        "commonMisconceptions": [
+          "Uses different-sized cups yet counts 'more cupfuls = holds more' (unit-size ignorance)",
+          "Fills cups inconsistently (part-full) but counts them as equal",
+          "Reads a measuring jug by marks rather than intervals; misjudges a level between graduations",
+          "Loses count or spills, then reports the count anyway"
+        ]
+      },
+      "learn": {
+        "summary": "Young children (around 5-6) quantify capacity by repeated filling and pouring with IDENTICAL units: counting how many cupfuls fill a container (non-standard units), then meeting the litre and a marked measuring jug (standard units), recording each result as a number + unit ('4 cups', '2 litres'). The core insight — shared with length and mass — is the inverse relationship: a bigger cup means FEWER cupfuls fill the same container. Reading a marked vessel means valuing its intervals, not just counting marks. Real water play is the natural companion to any screen model.",
+        "activities": [
+          {
+            "title": "Fill, count, record — then swap the cup",
+            "feedback": [
+              "If the learner says a bigger cup needs MORE cupfuls, fill the same jug with both a big and a small cup and count both side by side: bigger cup, fewer cupfuls. Connect to 'larger unit → fewer units', as with length and mass.",
+              "If cups are poured part-full or overfilled but counted as equal, prompt: fill every cup to the same mark or brim before pouring, then re-count. This is a procedural fix, not a concept reteach.",
+              "If the learner loses count or spills and reports the count anyway, restart the count and agree to pour carefully so the tally stays accurate."
+            ],
+            "rationale": "Capacity is quantified by repeated equal-unit iteration, and holding the container fixed while only the cup size changes makes the inverse relationship observable rather than told. Insisting on identical, equally-filled units targets the common unit-size-ignorance misconception.",
+            "sourceClaims": [
+              "Year 1 pupils 'measure and begin to record' capacity and volume; Year 2 pupils choose and use appropriate standard units to estimate and measure capacity (litres/ml) to the nearest appropriate unit using measuring vessels.",
+              "NCETM Year 1 introduces capacity units through equivalence and a unit greater than the item — 'comparing the capacity of a cup and a carton by filling each and pouring into matching bottles' — and frames measurement as comparison/equivalence as a practical activity.",
+              "The larger the unit, the fewer units in a given measurement (inverse relationship between unit size and count); counting discrete items can wrongly convince children that unit size doesn't matter, when in measurement it is critical."
+            ],
+            "learnerActions": [
+              "Fill a container cupful by cupful using identical cups, filling each cup to the same mark or brim, and keep a running count (e.g. pour until the count climbs to 8).",
+              "Record the result as a number and unit, e.g. 'the jug = 8 cups'.",
+              "Now fill the SAME container again using a bigger cup, filling each to the brim, and count again (e.g. this time only 4).",
+              "Say out loud what changed: the container didn't change, so why did the count change? Record 'the jug = 4 big cups'.",
+              "Estimate first, then check by filling, for a new container."
+            ],
+            "intendedInsight": "The same container needs fewer cupfuls when the cup is bigger — a larger unit gives a smaller count (inverse relationship) — and a capacity measurement is only meaningful when the units are identical and consistently filled."
+          },
+          {
+            "title": "Read the measuring jug by its intervals",
+            "feedback": [
+              "If the learner counts the marks to get the number, pause and ask what one interval is worth first, then read the level to the nearest graduation.",
+              "If the learner can't read a level that falls between marks, discuss which graduation it is nearest to and why.",
+              "If the learner can't explain how they knew a line means half a litre, work out the interval value together: find two whole-litre marks, count how many equal spaces lie between them, and share accordingly.",
+              "Confirm correct readings by restating the interval value and the level together (e.g. 'each space is half a litre, and the water is at the second line above 0, so 1 litre')."
+            ],
+            "rationale": "Standard-unit measurement at this stage requires reading graduated vessels, and distinguishing interval value from mark-counting addresses a specific reading error.",
+            "sourceClaims": [
+              "Year 1 pupils 'measure and begin to record' capacity and volume; Year 2 pupils choose and use appropriate standard units to estimate and measure capacity (litres/ml) to the nearest appropriate unit using measuring vessels."
+            ],
+            "learnerActions": [
+              "Work out what one interval on the jug is worth: find two labelled whole-litre marks, count the equal spaces between them, and share the litre between them (e.g. if one unlabelled line sits halfway between the 0 and 1 litre marks, there are two equal spaces, so each space is worth half a litre and that line marks half a litre).",
+              "Read the water level to the nearest interval and say how much water is in the jug.",
+              "Practise with a level that falls between two graduations and judge the nearest mark.",
+              "Explain how you knew a particular line means half a litre — justify it from the spacing you counted, don't just count lines.",
+              "Introduce the litre as a standard unit and record readings with number + unit."
+            ],
+            "intendedInsight": "A measuring vessel is read by valuing the spaces (intervals) between marks against the level, not by simply counting lines — the same skill as reading a ruler or dial."
+          },
+          {
+            "title": "Practice and check: cupful counts, jug reading, and ordering",
+            "feedback": [
+              "For the bigger-cup item, if 'more' is chosen, return to filling the same jug with both cups and counting; the bigger-cup-more-cupfuls confusion is the natural one to resolve by doing.",
+              "For the '4 big cups but 8 small cups — how can it be both?' probe: the container never changed, so both counts are correct. The big cup holds more, so fewer of them fill the jug; the small cup holds less, so more are needed — that is the inverse relationship, not a contradiction.",
+              "For a wrong jug reading, re-establish the interval value before re-reading.",
+              "Treat the egg-cup probe as a fresh case: a tinier cup holds less, so MORE cupfuls are needed — the inverse relationship again."
+            ],
+            "rationale": "Scored and discussion items check whether the inverse relationship and interval-reading transfer beyond the original activity; the bigger-cup confusion makes a genuine discriminating distractor because children often assume a bigger unit gives a bigger count. Recognition items confirm but do not by themselves elicit the independent filling, pouring and reading performance.",
+            "sourceClaims": [
+              "The larger the unit, the fewer units in a given measurement (inverse relationship between unit size and count); counting discrete items can wrongly convince children that unit size doesn't matter, when in measurement it is critical."
+            ],
+            "learnerActions": [
+              "Complete fill-in items such as 'the jug = ___ cupfuls' after a filling activity.",
+              "Answer 'read the measuring jug' items where you identify the level to the nearest interval.",
+              "Decide whether a bigger cup needs MORE or FEWER cupfuls to fill the same container, and explain why.",
+              "Sequence several containers by capacity.",
+              "Answer the probe: 'You needed 4 big cups but 8 small cups for the same jug — how can it be both?' and 'If you filled the jug with a tiny egg-cup instead of a mug, would you need more or fewer? Why?'"
+            ],
+            "intendedInsight": "Secure that identical units and the inverse relationship govern capacity counts, and that jug readings depend on interval value — able to apply these to fresh cases."
+          }
+        ],
+        "constraints": [
+          "Use identical cups filled to the same level (brim or mark) for any count; mixing cup sizes or part-full cups breaks the comparison and should be corrected before counting.",
+          "Keep the container fixed when demonstrating the unit-size effect, so only the cup changes.",
+          "A static tap-to-reveal jug ('this line is half a litre') can teach interval-reading but does not provide the filling/unit-swap experience; pair it with actual filling.",
+          "Recognition or multiple-choice items confirm understanding but do not elicit the independent pouring, counting and reading that the objective requires; keep hands-on filling central.",
+          "Real water play is the intended companion to any on-screen pouring model; a screen counter and a water tray teach via different experiences and neither is claimed as universally necessary.",
+          "Record every measurement as a number plus its unit so the unit is never dropped."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. Activities are research-informed proposals, not validated interventions.",
+          "The legacy row asserted a 2D pouring simulation is 'ideal', that dialogue 'cannot supply' pouring/reading practice, and that 3D 'adds nothing' beyond realism. These are catalog preferences, not established efficacy claims; they have been softened to affordance/limit statements. Hands-on water play and an optional on-screen counter/cup-swap toggle are presented as concrete mechanisms, not mandatory ones.",
+          "Optional interaction examples preserved from the source: tap-to-pour cupfuls with a live counter, a cup-size toggle that re-fills the same jug, and tap-to-reveal interval labels. These make the mechanism concrete but are not required implementations.",
+          "The inherited age range (5-6, Year 1) is retained; reading graduated litre vessels to the nearest interval maps more to Year 2 in the cited curriculum. Not altered here, flagged for a teacher to pitch appropriately.",
+          "Activity 2's interval-value step was reworded so the child derives the value by counting equal spaces between labelled whole-litre marks rather than being told it, so the later 'how did you know?' justification is coherent."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'You needed 4 big cups but 8 small cups for the same jug — how can it be both?'",
+          "'If you filled the jug with a tiny egg-cup instead of a mug, would you need more or fewer? Why?' (inverse relationship, fresh case)",
+          "'On the jug, how did you know this line means half a litre?'"
+        ],
+        "correctAnswer": "(1) Fills with consistently-full identical cups and reports 'N cupfuls', recording the unit. (2) FEWER cupfuls, because a bigger cup holds more so fewer of them fill the same jug (inverse relationship). (3) Reads the jug by valuing the intervals to the water level.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Unit-size ignorance — 'a bigger cup means MORE cupfuls', or compares containers by cupful-count using different cups",
+            "nextMove": "Fill the jug with a big cup and a small cup and count both — bigger cup, fewer cupfuls; insist on identical units and connect to 'larger unit → fewer units'.",
+            "distractor": null,
+            "revealedBy": "On task 2 says Priya needs more cupfuls with a bigger cup; or judges 'holds more' by a count taken with different-sized cups",
+            "reteachPrerequisiteId": "mt_zkFbMLpu3U"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Reads a measuring jug by counting marks rather than valuing intervals, or misjudges a level between graduations",
+            "nextMove": "Establish what one interval is worth first, then read the level to the nearest graduation — as with a ruler or dial.",
+            "distractor": null,
+            "revealedBy": "On task 3 counts the lines to get the number, or can't read a level that falls between marks",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Inconsistent filling — pours part-full or overfilled cups but counts them as equal",
+            "nextMove": "Fill every cup to the same mark or brim before pouring, and re-count — a procedural prompt, not a concept reteach.",
+            "distractor": null,
+            "revealedBy": "Fills cups to different levels, or spills, and reports the count anyway",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Counts cupfuls with inconsistent or non-identical units; thinks a bigger cup gives more cupfuls; reads a jug by its marks.",
+          "full": "Quantifies capacity with identical units, explains that a larger unit gives fewer units for the same container, and reads a measuring vessel by valuing its intervals.",
+          "partial": "Fills consistently and counts with identical units, but is thrown when the unit size changes (can't explain the different count) or when reading a level between graduations."
+        },
+        "diagnosticPrompt": "Give the child a jug to fill, a set of identical small cups, a larger cup, and a measuring jug marked in intervals. Watch how they work: (1) 'Use this cup to find how many cupfuls fill this jug.' (2) 'Priya used a bigger cup to fill the same jug — will she need more cupfuls or fewer? Why?' (3) 'Read this measuring jug — how much water is in it?'",
+        "whatMakesItDiscriminate": "Item 2 is the unit-size discriminator — the child who thinks more cupfuls always means more capacity predicts 'more' with a bigger cup; item 1 catches consistent filling; item 3 catches the marks-vs-intervals reading error."
+      },
+      "sources": [
+        {
+          "claim": "Year 1 pupils 'measure and begin to record' capacity and volume; Year 2 pupils choose and use appropriate standard units to estimate and measure capacity (litres/ml) to the nearest appropriate unit using measuring vessels.",
+          "source": "National Curriculum in England: Mathematics, Years 1 & 2 Measurement (statutory), gov.uk",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        },
+        {
+          "claim": "NCETM Year 1 introduces capacity units through equivalence and a unit greater than the item — 'comparing the capacity of a cup and a carton by filling each and pouring into matching bottles' — and frames measurement as comparison/equivalence as a practical activity.",
+          "source": "NCETM Primary Mastery Assessment Materials, Year 1 (Measurement Big Ideas)",
+          "url": "https://www.ncetm.org.uk/media/qjpctp24/mastery_assessment_y1.pdf",
+          "verified": true
+        },
+        {
+          "claim": "The larger the unit, the fewer units in a given measurement (inverse relationship between unit size and count); counting discrete items can wrongly convince children that unit size doesn't matter, when in measurement it is critical.",
+          "source": "CCSS K–5 Geometric Measurement Progression (2012), Grade 2 2.MD.2 — ISBE mirror",
+          "url": "https://www.isbe.net/Documents/geometric-measurement-k-5.pdf",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T21:13:56.789Z",
+        "updatedAt": "2026-10-19T15:19:58.569Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/125",
+    "connections": [
+      {
+        "topicId": "mt_4lp_b5Pzik",
+        "prerequisiteId": "mt_zkFbMLpu3U",
+        "strength": "hard",
+        "reason": "Measuring capacity with units requires first being able to compare capacities"
+      },
+      {
+        "topicId": "mt_DOe893F6gN",
+        "prerequisiteId": "mt_4lp_b5Pzik",
+        "strength": "hard",
+        "reason": "Using standard units for capacity extends from beginning to measure capacity"
+      },
+      {
+        "topicId": "mt_e7tLi9SCIE",
+        "prerequisiteId": "mt_4lp_b5Pzik",
+        "strength": "soft",
+        "reason": "Applies the idea to capacity measurement"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_bnwHo5wfCD",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Comparing mass and capacity indirectly",
+      "description": "Compare and order the mass and capacity of objects indirectly, using a balance or a third object or container as a go-between, and explain the reasoning",
+      "ageRangeStart": 6,
+      "ageRangeEnd": 7,
+      "centrality": 0.005359056806002144,
+      "evidence": [
+        "Use a balance to show the apple is heavier than a block and the block is heavier than the egg, so the apple is heavier than the egg",
+        "Pour water from two bottles into the same jug to find which bottle holds more",
+        "Order three containers by capacity using cups of rice and explain the order"
+      ],
+      "assessmentPrompt": "If {{name}} wants to know which of two bottles holds more water, can they work it out by pouring each into the same jug and comparing?",
+      "standards": [
+        "acara-v9:AC9M1M01"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/986",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_-af65bxfdp",
+        "prerequisiteId": "mt_bnwHo5wfCD",
+        "strength": "soft",
+        "reason": "Comparing mass and capacity indirectly precedes measuring them with scaled instruments"
+      },
+      {
+        "topicId": "mt_bnwHo5wfCD",
+        "prerequisiteId": "mt_-P1kdZhHbL",
+        "strength": "hard",
+        "reason": "Indirect comparison of mass builds on direct comparison with a balance"
+      },
+      {
+        "topicId": "mt_bnwHo5wfCD",
+        "prerequisiteId": "mt_zkFbMLpu3U",
+        "strength": "hard",
+        "reason": "Indirect comparison of capacity builds on direct comparison of capacity"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_-af65bxfdp",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Measuring Liquids & Masses",
+      "description": "Measure and estimate liquid volumes and masses of objects using grams, kilograms, and litres; solve one-step word problems involving mass or volume",
+      "ageRangeStart": 8,
+      "ageRangeEnd": 9,
+      "centrality": 0.03108252947481243,
+      "evidence": [
+        "Estimate the mass of a textbook in grams or kilograms",
+        "Read a scale to measure liquid volume in litres",
+        "Solve: 3 bags weigh 250 g each — what is the total mass?"
+      ],
+      "assessmentPrompt": "If {{name}} is filling bottles that each hold 250 ml from a 2-litre container of juice, can they work out how many bottles they can fill?",
+      "standards": [
+        "acara-v9:AC9M3M01",
+        "acara-v9:AC9M3M02",
+        "ccss-math:3.MD.2"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1025",
+    "research": {
+      "topicId": "mt_-af65bxfdp",
+      "pedagogy": {
+        "summary": "Year 3–Grade 3 (age 8–9) pupils measure and estimate MASS (g, kg) and LIQUID VOLUME (l, ml), and solve one-step word problems involving them. Two skills sit side by side: reading a scale, and estimating against a felt sense of the unit. The load-bearing hazard is scale-reading — children treat measuring as COUNTING the marks/lines and give each mark the status of a unit, instead of working out what each INTERVAL (space) is worth. Estimation is only meaningful once a child has a bodily referent for a gram, kilogram and litre. (This maps CCSS 3.MD.A.2 almost verbatim; UK DfE Y3 places mass and volume/capacity under 'measure, compare, add and subtract'.)",
+        "bestPractices": [
+          "Before reading any value, teach pupils to DECODE the scale: find two labelled numbers, count the gaps between them, and work out 'what is one small step worth?' (e.g. 100 over 5 gaps = steps of 20) — reason from the scale, don't guess by sight.",
+          "Emphasise the INTERVAL, not the marks — vary the interval size across tasks (10 ml, 20 ml, 25 ml, 50 ml) so pupils must actively re-check the scale each time rather than assuming 'ones'.",
+          "Anchor estimation in sensory referents — hold a 1 kg bag, a 100 g weight, a 1-litre bottle — so an estimate is a comparison to a known unit, not a wild guess; pair 'estimate then measure' so the estimate is checked.",
+          "Teach unit choice explicitly (grams vs kilograms, ml vs litres) using benchmark objects, and record measurements as approximate to a sensible degree of accuracy.",
+          "Keep word problems ONE step and in the SAME unit (e.g. 3 bags of 250 g), representing them with a drawing such as a scaled beaker or a bar."
+        ],
+        "keyRepresentations": [
+          "Measuring jug / scaled beaker with variable interval size",
+          "Pan or dial balance for mass",
+          "Benchmark referents (1 g / 100 g / 1 kg weights; 1 ml drop; 1-litre bottle)",
+          "Bar model for one-step mass/volume word problems",
+          "Number line for the value of unlabelled intervals"
+        ],
+        "commonMisconceptions": [
+          "Counts the marks/lines as units ('measuring is counting'), so reads a scale by the number of small marks rather than the interval value.",
+          "Assumes each small interval equals 1 (or 10) when the scale actually steps in 2s, 5s, 20s or 50s.",
+          "Reads the nearest labelled number to the level (endpoint reading) without noticing the level falls between marks, or ignores where the scale starts.",
+          "Estimates with no sense of the unit (a textbook '5 kg') or picks the wrong unit (grams for a person's mass)."
+        ]
+      },
+      "learn": {
+        "summary": "Age 8–9 pupils measure and estimate mass (g, kg) and liquid volume (l, ml) and solve one-step word problems in the same unit. The load-bearing hazard is scale-reading treated as COUNTING marks: children give each line the status of a unit instead of working out what each INTERVAL (space) is worth. Estimation only becomes meaningful once a child has a bodily referent for a gram, kilogram and litre. Guidance here couples (1) reading scales whose interval changes between tasks so pupils must re-decode the step, with (2) estimate-then-measure against physical benchmark objects. Static labelled pictures and recognition-only checks can scaffold or probe but do not require the child to decode a novel interval or calibrate an estimate against feedback.",
+        "activities": [
+          {
+            "title": "Decode the changing scale",
+            "feedback": [
+              "If a pupil reads a value equal to the COUNT of marks (e.g. calling 340 ml 'about 3' or reading the 3rd big mark as '3'), stop and rebuild: 'What is one small space worth? Find two numbers, count the gaps, divide.'",
+              "If the reading is right at the labelled marks but wrong between them, the step size was never checked — prompt '100 ÷ 5 = 20, so each small step is 20 ml'.",
+              "Ask: 'If I poured the same water into a jug marked every 50 ml instead, would the number change? Why or why not?' The amount of water is unchanged, so a correctly decoded scale still shows the same volume, although a coarser scale may only let you read it approximately (e.g. 340 ml falls between the 300 and 350 marks). Only someone counting marks would report a very different number, so the new 50 ml step must be re-decoded to read it correctly.",
+              "Confirm success when the pupil states the step value and reads the accumulated amount correctly at an interval they have not seen before."
+            ],
+            "rationale": "Children's scale difficulties reduce to interpreting the unit and the starting point; counting marks arises from believing measuring is simply counting, and engaging with the interval is the most sophisticated strategy. Varying the interval each round is intended to prompt re-decoding and discourage the count-the-lines habit. A changing interval can be delivered by a redrawable scale or by several printed scales at different intervals; a fixed single printed scale still teaches but cannot be re-decoded on demand.",
+            "sourceClaims": [
+              "Children's ruler/scale difficulties reduce to interpreting the unit and the starting point, shown in three strategies: reading the endpoint number (EP), counting marks and assigning them the status of units (CM), and engaging with the interval (INT, the most sophisticated); CM arises because pupils believe measuring is simply counting.",
+              "A common scale-reading error is assuming each interval equals 1 when the scale steps in a different value; the remedy is to derive the step from two consecutive labelled numbers divided by the number of gaps and ask 'what does one small step equal?'.",
+              "Grade 3 pupils measure and estimate liquid volumes and masses of objects using standard units of grams (g), kilograms (kg), and liters (l), and add, subtract, multiply, or divide to solve one-step word problems involving masses or volumes given in the same units (e.g. using a drawing such as a beaker with a measurement scale); excludes compound units and multiplicative comparison."
+            ],
+            "learnerActions": [
+              "Before reading any value, find two labelled numbers on the jug (or balance) and count the gaps between them.",
+              "Work out what one small step is worth, e.g. 100 over 5 gaps = steps of 20.",
+              "Read a part-filled scale by accumulating the steps from where the scale starts, not by counting lines (e.g. a level at the labelled 300 plus two more 20-steps = 340 ml).",
+              "Use a small number line of the steps (0, 20, 40, 60…) to track the accumulated value when the interval is unlabelled, counting up from where the scale starts.",
+              "Repeat across tasks where the interval changes each time — 10 ml, 20 ml, 25 ml, 50 ml — so memorising a single step size fails.",
+              "Say aloud 'what is one small step worth?' every time before giving a reading."
+            ],
+            "intendedInsight": "The marks mean nothing until you decode the step: the same mark position (e.g. the 3rd small mark above a label) stands for different amounts on scales with different intervals, so measuring is working out interval value, not counting lines."
+          },
+          {
+            "title": "Estimate first, then measure, against a real referent",
+            "feedback": [
+              "If an estimate is far off, roughly ten times too big or too small (a textbook '5 kg' or '20 g'), or the unit is wrong (grams for a heavy object, litres for a spoonful), reteach with referents: 'Is the book heavier or lighter than this 1 kg bag? So is your estimate sensible?'",
+              "Prompt the sensible-unit check: a person's mass in kilograms, a spoonful of water in ml.",
+              "Reinforce when the pupil frames the estimate as a comparison ('lighter than the sugar, so a few hundred grams') and then checks it by measuring.",
+              "A live estimate-slider with the true value and gap revealed afterwards is one way to make the gap visible; a physical balance and weights work too."
+            ],
+            "rationale": "Sensory experience of a unit develops conceptual understanding before symbolic scale-reading and supports estimation. Pairing estimate-then-measure checks the estimate rather than leaving it as a guess. Handling physical benchmarks builds the felt sense of each unit; a screen slider can help show the gap between estimate and measurement but cannot replace the felt referent.",
+            "sourceClaims": [
+              "Sensory experience of a unit (e.g. a 1 ml drop of water) develops conceptual understanding before symbolic scale-reading, supporting estimation; formal reading of labelled scales divided into equal parts is expected in upper KS2.",
+              "Grade 3 pupils measure and estimate liquid volumes and masses of objects using standard units of grams (g), kilograms (kg), and liters (l), and add, subtract, multiply, or divide to solve one-step word problems involving masses or volumes given in the same units (e.g. using a drawing such as a beaker with a measurement scale); excludes compound units and multiplicative comparison."
+            ],
+            "learnerActions": [
+              "Hold a 1 kg bag of sugar, a 100 g weight, and a 1-litre bottle to build a felt sense of each unit.",
+              "For a target object (e.g. a textbook), commit to an estimate of its mass BEFORE measuring, saying whether it is heavier or lighter than the 1 kg bag.",
+              "Choose the sensible unit for the object — grams or kilograms, ml or litres — and justify it against a benchmark.",
+              "Measure the object and compare the true value with the estimate, noting the gap.",
+              "Repeat with several objects so the felt sense of each unit sharpens."
+            ],
+            "intendedInsight": "An estimate is a comparison to a known unit, not a wild guess; comparing estimate with measurement calibrates the body's sense of a gram, kilogram and litre and guides unit choice."
+          },
+          {
+            "title": "One-step mass and volume word problems with a drawing",
+            "feedback": [
+              "If the pupil only solves when the operation is obvious, prompt them to draw the quantity first ('show me three equal bags') so the operation emerges from the picture.",
+              "Check the unit is carried into the answer (750 g, not 750).",
+              "Confirm success when drawing, number sentence and unit all agree and the result passes a sensibility check."
+            ],
+            "rationale": "The standard expects one-step problems in the same unit, represented with a drawing such as a scaled beaker or a bar; keeping problems one-step and single-unit matches the age group and excludes compound units and multiplicative comparison.",
+            "sourceClaims": [
+              "Grade 3 pupils measure and estimate liquid volumes and masses of objects using standard units of grams (g), kilograms (kg), and liters (l), and add, subtract, multiply, or divide to solve one-step word problems involving masses or volumes given in the same units (e.g. using a drawing such as a beaker with a measurement scale); excludes compound units and multiplicative comparison.",
+              "UK DfE Year 3 places mass (kg/g) and volume/capacity (l/ml) under 'measure, compare, add and subtract' standard units."
+            ],
+            "learnerActions": [
+              "Read a one-step problem stated in a single unit, e.g. '3 bags each weigh 250 g — what is the total mass?'",
+              "Draw a representation that matches, such as a bar model or a scaled beaker.",
+              "Write the number sentence, e.g. 3 × 250 g = 750 g, and state the answer with its unit.",
+              "Check the answer is sensible against a benchmark (750 g is less than the 1 kg bag)."
+            ],
+            "intendedInsight": "A one-step word problem can be modelled with a drawing and solved with a single operation, keeping the unit throughout."
+          }
+        ],
+        "constraints": [
+          "Keep word problems ONE step and in the SAME unit; exclude compound units and multiplicative comparison for this age.",
+          "Record measurements as approximate to a sensible degree of accuracy; estimation is checked against a measurement, not left as a guess.",
+          "A static labelled picture of a jug or a benchmark can scaffold what 1 kg or 1 litre looks like, but cannot make a child decode a changing interval or check an estimate against feedback; use it as a reference, not as the core task.",
+          "Recognition-only checks (choose-the-unit, read-off at a fixed interval, fill-the-blank for the 3×250 g problem) can probe understanding and act as a companion check, but do not elicit the pour-and-adjust feedback loop or independent decoding of a novel interval.",
+          "Pouring real water or loading a physical balance adds genuine physical feel; it is a useful complement to reading 2D scales, which can be practised without apparatus. However, handling real benchmark objects (e.g. a 1 kg bag, a 1-litre bottle) is needed to build the bodily referent that estimation depends on.",
+          "Vary the interval size across tasks deliberately (10, 20, 25, 50) so 'what is one small step worth?' becomes a habitual check rather than an assumption of ones or tens."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. Activities are research-informed proposals, not validated interventions.",
+          "Self-audit arithmetic: 100 ÷ 5 = 20 ml per step; a level at the labelled 300 plus two 20-steps gives 340 ml, consistent with the diagnostic. 3 × 250 g = 750 g, and 750 g < 1 kg, so the sensibility check holds.",
+          "The original 'misread' examples (reading 340 as 305 or 320) are illustrations of error patterns for the teacher, not valid answers; they are kept only in feedback as things to correct, never presented as correct readings.",
+          "The 'assume interval equals 1' remedy source (Mathnasium) and the NCETM/DfE curriculum-placement claims are marked unverified in the row; treat their framing as practitioner/curriculum guidance rather than established efficacy evidence.",
+          "The original framing that a simulation is 'the perfect vehicle' and that static/recognition formats merely 'assess' has been rewritten to scoped affordances/limits, since catalog fit ratings do not establish comparative efficacy or necessity.",
+          "The row describes 'five small unlabelled marks between' labels while deriving 20 ml from 100 ÷ 5 gaps; strictly 5 gaps need only 4 marks between labels. The guidance uses the consistent '5 gaps = 20 ml' framing to avoid the mark-count inconsistency.",
+          "Clarified the pour-into-a-different-jug probe: the volume of water is conserved, so a correctly decoded scale still reads the same amount; only mark-counting produces a different number. This keeps the probe consistent with conservation of quantity."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'What is each small mark on this jug worth? How did you work that out?'",
+          "'If I poured the same water into a jug marked every 50 ml instead, would the number change? Why or why not?'",
+          "'Is the book heavier or lighter than this 1 kg bag of sugar? So is your estimate sensible?'",
+          "'The card says three bags of 250 g — show me a drawing that matches, then the number sentence.'"
+        ],
+        "correctAnswer": "Works out each small mark is worth 20 ml (100 ÷ 5) and reads 340 ml; estimates the book in the hundreds of grams (≈300–800 g), choosing grams as the sensible unit and comparing against the 1 kg bag; solves 3 × 250 g = 750 g. Reasoning from the interval and from a referent, not from counting marks or guessing.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Counting marks as units — believes measuring is counting, so reads the jug by the number of small lines (calls 340 ml 'about 3' or reads the 3rd big mark as '3'), giving each mark the status of a unit.",
+            "nextMove": "Decode the interval first: find two labelled numbers, count the gaps, divide (100 ÷ 5 = 20), and read the accumulated amount; rehearse with the interval size varied so counting lines never works.",
+            "distractor": null,
+            "revealedBy": "Reads a value equal to the COUNT of marks rather than the accumulated quantity; cannot say what one small space is worth.",
+            "reteachPrerequisiteId": "mt_6oxQPNLHNv"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Assumes each interval equals 1 (or 10) — reads the labelled numbers correctly but treats the small steps as ones when the scale steps in 20s, so 340 ml is read as 305, 320-as-'the-second-line', or similar.",
+            "nextMove": "Ask 'what is one small step worth?' every time before reading; derive it from labelled numbers ÷ number of gaps, and vary the interval across examples so the check becomes habit.",
+            "distractor": null,
+            "revealedBy": "A reading that is right at the labelled marks but wrong between them; the step size was never checked.",
+            "reteachPrerequisiteId": "mt_6oxQPNLHNv"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Estimates with no sense of the unit / wrong unit — offers an implausible estimate (a textbook '5 kg' or '20 g') or picks the wrong unit (grams for a heavy object, litres for a spoonful).",
+            "nextMove": "Reteach in place: build referents — hold a 1 kg bag, a 100 g weight, a 1-litre bottle — and estimate by comparison ('heavier or lighter than the sugar bag?'); estimate-then-measure to calibrate.",
+            "distractor": null,
+            "revealedBy": "An estimate orders of magnitude off, or a unit choice that doesn't fit the object; no comparison to a known referent.",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Counts marks as ones or reads the nearest labelled number; estimates wildly and mis-chooses the unit; cannot decode an unlabelled interval.",
+          "full": "Decodes the interval from labelled marks, reads part-filled scales at varied intervals, estimates against sensible referents with the correct unit, and solves one-step mass/volume word problems — transferring across g, kg and litres.",
+          "partial": "Reads the scale when intervals are labelled or 'friendly' and estimates roughly, but cannot work out an unlabelled interval value or misjudges a non-standard step; solves the word problem only when the operation is obvious."
+        },
+        "diagnosticPrompt": "Set out (1) a measuring jug part-filled to 340 ml on a scale labelled every 100 ml with five small unlabelled marks between (so each is 20 ml); (2) a textbook and a 1 kg bag of sugar; (3) a card reading '3 bags each weigh 250 g — what is the total mass?'. Say: 'Read how much water is in the jug and talk me through the scale; estimate the mass of the book and tell me if you'd use grams or kilograms; then solve the card.' Watch the scale-reading method and whether the estimate is sensible — not just the numbers.",
+        "whatMakesItDiscriminate": "A child who understands the unit decodes the interval (reads 340) and estimates against a referent (hundreds of grams, unit = grams); a child who doesn't either counts the marks (reads '3' or '34' or the nearest labelled 300), or estimates with no unit sense ('5 kg') and mis-picks the unit. Decoding-the-interval versus counting-the-marks produces a visibly different reading of the SAME jug."
+      },
+      "sources": [
+        {
+          "claim": "Grade 3 pupils measure and estimate liquid volumes and masses of objects using standard units of grams (g), kilograms (kg), and liters (l), and add, subtract, multiply, or divide to solve one-step word problems involving masses or volumes given in the same units (e.g. using a drawing such as a beaker with a measurement scale); excludes compound units and multiplicative comparison.",
+          "source": "Common Core State Standards for Mathematics, 3.MD.A.2 (verbatim via California Dept of Education standards database and Illustrative Mathematics)",
+          "url": "https://tasks.illustrativemathematics.org/content-standards/3/MD/A/2",
+          "verified": true
+        },
+        {
+          "claim": "Children's ruler/scale difficulties reduce to interpreting the unit and the starting point, shown in three strategies: reading the endpoint number (EP), counting marks and assigning them the status of units (CM), and engaging with the interval (INT, the most sophisticated); CM arises because pupils believe measuring is simply counting.",
+          "source": "Gómezescobar, A. (2026), 'Ruler by Steps: Exploring Length Measurement with Young Children through a Sequential Ruler Construction', Early Childhood Education Journal 54(3)",
+          "url": "https://link.springer.com/article/10.1007/s10643-025-01915-w",
+          "verified": true
+        },
+        {
+          "claim": "A common scale-reading error is assuming each interval equals 1 when the scale steps in a different value; the remedy is to derive the step from two consecutive labelled numbers divided by the number of gaps and ask 'what does one small step equal?'.",
+          "source": "Mathnasium, 'Common Measurement Errors in Elementary Math' (practitioner framing)",
+          "url": "https://www.mathnasium.com/math-centers/parker/news/common-measurement-errors-elementary-math",
+          "verified": false
+        },
+        {
+          "claim": "Sensory experience of a unit (e.g. a 1 ml drop of water) develops conceptual understanding before symbolic scale-reading, supporting estimation; formal reading of labelled scales divided into equal parts is expected in upper KS2.",
+          "source": "NCETM Curriculum Prioritisation — Y2 Unit 14 (sense of measure: capacity/volume/mass) and Y6 Unit 8 (statistics/scales)",
+          "url": "https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-14-sense-of-measure-capacity-volume-mass/",
+          "verified": false
+        },
+        {
+          "claim": "UK DfE Year 3 places mass (kg/g) and volume/capacity (l/ml) under 'measure, compare, add and subtract' standard units.",
+          "source": "DfE, National Curriculum in England: Mathematics programmes of study (Year 3 Measurement)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": false
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-27T23:56:33.383Z",
+        "updatedAt": "2026-10-19T15:20:25.737Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "data/teaching-research.json#/records/20",
+    "connections": [
+      {
+        "topicId": "mt_-af65bxfdp",
+        "prerequisiteId": "mt_6oxQPNLHNv",
+        "strength": "hard",
+        "reason": "Prior experience measuring mass/capacity in standard units feeds into formal measurement with g/kg/l"
+      },
+      {
+        "topicId": "mt_-af65bxfdp",
+        "prerequisiteId": "mt_bnwHo5wfCD",
+        "strength": "soft",
+        "reason": "Comparing mass and capacity indirectly precedes measuring them with scaled instruments"
+      },
+      {
+        "topicId": "mt_-af65bxfdp",
+        "prerequisiteId": "mt_e7tLi9SCIE",
+        "strength": "soft",
+        "reason": "Choosing smaller units for accuracy prepares for reading finer scale markings"
+      },
+      {
+        "topicId": "mt_SOM6Imm2sO",
+        "prerequisiteId": "mt_-af65bxfdp",
+        "strength": "hard",
+        "reason": "Interpreting unmarked intervals extends reading scales with labelled markings"
+      }
+    ]
+  },
+  {
+    "topic": {
+      "id": "mt_IlDaxVr60U",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "name": "Volume with fraction lengths",
+      "description": "Find the volume of a right rectangular prism with fractional edge lengths by packing it with cubes whose edge is a suitable unit fraction of a unit (e.g. 1/2 or 1/4), working out the volume of one such cube (a cube with 1/2-unit edges has volume 1/8 cubic unit), counting the cubes and multiplying; show that this gives the same result as multiplying the edge lengths; and apply V = l × w × h and V = B × h with fractional or mixed-number edge lengths in real-world and mathematical problems",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.120042872454448,
+      "evidence": [
+        "Show that 8 cubes with 1/2 cm edges fit exactly into a 1 cm cube, so each has a volume of 1/8 cm³",
+        "Pack a 1½ cm × 1 cm × 2½ cm prism with 1/2 cm cubes (3 × 2 × 5 = 30 cubes), find its volume as 30 × 1/8 = 3¾ cm³, and check that 1½ × 1 × 2½ gives the same answer",
+        "Find how much sand fills a box 2¼ ft long, 1½ ft wide and 2/3 ft deep using V = l × w × h (2¼ ft³)"
+      ],
+      "assessmentPrompt": "If {{name}} has a gift box 2½ inches long, 1½ inches wide and 2 inches tall, could they work out its volume — and show why filling it with little half-inch cubes gives the same answer?",
+      "standards": [
+        "ccss-math:6.G.2"
+      ]
+    },
+    "topicPointer": "data/topics.json#/topics/1052",
+    "research": null,
+    "researchPointer": null,
+    "connections": [
+      {
+        "topicId": "mt_IlDaxVr60U",
+        "prerequisiteId": "mt_gx6KQK5-Kx",
+        "strength": "hard",
+        "reason": "Tiling a rectangle with unit-fraction squares and multiplying fractional side lengths is the two-dimensional version of packing with unit-fraction cubes"
+      },
+      {
+        "topicId": "mt_IlDaxVr60U",
+        "prerequisiteId": "mt_nTL-owFJTF",
+        "strength": "hard",
+        "reason": "Extends whole-number cube packing and V = l × w × h to fractional edge lengths"
+      },
+      {
+        "topicId": "mt_IlDaxVr60U",
+        "prerequisiteId": "mt_vHzVa3SURC",
+        "strength": "soft",
+        "reason": "Applying V = l × w × h with fractional values is substitution into a formula"
+      }
+    ]
+  }
+]

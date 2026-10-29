@@ -1,0 +1,12 @@
+✔ storage accepts plain historical JSON and keeps small records unchanged (0.817375ms)
+✔ storage LZW round trips Unicode, repeated patterns and dictionary reset (138.32675ms)
+✔ storage detects altered checksums, truncation and inflated decompression metadata (1.920542ms)
+✔ large local records compress without dropping fields, failed writes leave original intact (238.835166ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 459.379

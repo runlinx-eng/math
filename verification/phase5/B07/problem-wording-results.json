@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "problems1000 begins incomplete",
+    "problems1000:0 opens",
+    "problems1000:0 empty submission cannot complete",
+    "problems1000:0 real controls complete",
+    "problems1000:0 record valid",
+    "problems1000:0 no horizontal overflow",
+    "problems1000:1 opens",
+    "problems1000:1 real controls complete",
+    "problems1000:1 record valid",
+    "problems1000:1 no horizontal overflow",
+    "problems1000:2 opens",
+    "problems1000:2 real controls complete",
+    "problems1000:2 record valid",
+    "problems1000:2 no horizontal overflow",
+    "problems1000 complete",
+    "problems1000 survives reload",
+    "expected distinct source-node records",
+    "expected distinct source-edge records",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "nodes": 1,
+  "nodeTasks": 3,
+  "connections": 0,
+  "connectionTasks": 0
+}

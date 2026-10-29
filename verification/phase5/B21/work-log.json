@@ -1,0 +1,11 @@
+{
+  "batch": "B21",
+  "startedAt": "2026-10-27T05:39:51.195422+00:00",
+  "snapshot": "snapshots/v25-before-b21-20261027T053950Z.tar.gz",
+  "activeHours": null,
+  "note": "Wall clock may include interruption and waiting; not measured labor.",
+  "completedAt": "2026-10-27T07:20:03.811343+00:00",
+  "status": "content-and-technical-checks-complete",
+  "childTrial": false,
+  "summary": "14 nodes / 43 tasks / 40 connections; storage capacity repaired; next B22"
+}

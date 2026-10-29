@@ -1,0 +1,594 @@
+TAP version 13
+# Subtest: all source topics have exactly one delivery, group and work-unit assignment
+ok 1 - all source topics have exactly one delivery, group and work-unit assignment
+  ---
+  duration_ms: 3.153625
+  type: 'test'
+  ...
+# Subtest: every source definition and every learning goal survives with an explicit task slot
+ok 2 - every source definition and every learning goal survives with an explicit task slot
+  ---
+  duration_ms: 1.4995
+  type: 'test'
+  ...
+# Subtest: 502 research records and 85 gaps reconcile by ID, with valid activity pointers
+ok 3 - 502 research records and 85 gaps reconcile by ID, with valid activity pointers
+  ---
+  duration_ms: 3.661041
+  type: 'test'
+  ...
+# Subtest: 12 → 50 → 587 counts use distinct source nodes; A03 is not the old decimal activity
+ok 4 - 12 → 50 → 587 counts use distinct source nodes; A03 is not the old decimal activity
+  ---
+  duration_ms: 0.184458
+  type: 'test'
+  ...
+# Subtest: all 1223 internal and 32 external source relations retain direction, strength and reason
+ok 5 - all 1223 internal and 32 external source relations retain direction, strength and reason
+  ---
+  duration_ms: 15.914583
+  type: 'test'
+  ...
+# Subtest: batch entry and onward references do not invent prerequisites or hide later foundations
+ok 6 - batch entry and onward references do not invent prerequisites or hide later foundations
+  ---
+  duration_ms: 8.446792
+  type: 'test'
+  ...
+# Subtest: 85 research gaps have a release batch, individual goals and review/transfer requirements
+ok 7 - 85 research gaps have a release batch, individual goals and review/transfer requirements
+  ---
+  duration_ms: 0.369416
+  type: 'test'
+  ...
+# Subtest: reuse assets are real local sources; all proposed families specify action and validation
+ok 8 - reuse assets are real local sources; all proposed families specify action and validation
+  ---
+  duration_ms: 0.415083
+  type: 'test'
+  ...
+# Subtest: proposed placement fixes are isolated from the current atlas and documented by ID
+ok 9 - proposed placement fixes are isolated from the current atlas and documented by ID
+  ---
+  duration_ms: 3.54425
+  type: 'test'
+  ...
+# Subtest: stage-one baseline preserves its original three activities and preview, separate from current coverage
+ok 10 - stage-one baseline preserves its original three activities and preview, separate from current coverage
+  ---
+  duration_ms: 0.336625
+  type: 'test'
+  ...
+# Subtest: cross-subject references remain references and do not become required new subject delivery
+ok 11 - cross-subject references remain references and do not become required new subject delivery
+  ---
+  duration_ms: 0.166959
+  type: 'test'
+  ...
+# Subtest: source fingerprints and all generated views are current and reproducible
+not ok 12 - source fingerprints and all generated views are current and reproducible
+  ---
+  duration_ms: 14.895667
+  type: 'test'
+  location: '/Users/zj1-6/dev/agents/experiments/math-explorer/tests/content-plan.test.mjs:201:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    dist/exploration.js
+    + actual - expected
+    
+    + '7e66f0a2015962823b944de3fe21c069faf9fadc127bc403635b6fb675cb9df6'
+    - 'a2291bea2738414094b35474e0febb5a65e15e8d5aaab61e2ddf6d60c5e9581f'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'a2291bea2738414094b35474e0febb5a65e15e8d5aaab61e2ddf6d60c5e9581f'
+  actual: '7e66f0a2015962823b944de3fe21c069faf9fadc127bc403635b6fb675cb9df6'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/content-plan.test.mjs:203:12)
+    Test.runInAsyncScope (node:async_hooks:212:14)
+    Test.run (node:internal/test_runner/test:1109:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+    Test.postRun (node:internal/test_runner/test:1238:19)
+    Test.run (node:internal/test_runner/test:1166:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: every original node and relation survives classification; pack arrows cite actual edges
+ok 13 - every original node and relation survives classification; pack arrows cite actual edges
+  ---
+  duration_ms: 11.621791
+  type: 'test'
+  ...
+# Subtest: both cases accept mathematically equivalent constructions across all six representations
+ok 14 - both cases accept mathematically equivalent constructions across all six representations
+  ---
+  duration_ms: 0.845041
+  type: 'test'
+  ...
+# Subtest: diagnostics distinguish unequal parts, whole/set, additive equivalence, and decimal place value
+ok 15 - diagnostics distinguish unequal parts, whole/set, additive equivalence, and decimal place value
+  ---
+  duration_ms: 0.425708
+  type: 'test'
+  ...
+# Subtest: browsing, free manipulation and written explanations do not create independent evidence
+ok 16 - browsing, free manipulation and written explanations do not create independent evidence
+  ---
+  duration_ms: 7.797042
+  type: 'test'
+  ...
+# Subtest: two submitted works mean activity complete even when evidence still needs support
+ok 17 - two submitted works mean activity complete even when evidence still needs support
+  ---
+  duration_ms: 1.765042
+  type: 'test'
+  ...
+# Subtest: a corrected retry cannot erase the first error, across reload or case switching
+ok 18 - a corrected retry cannot erase the first error, across reload or case switching
+  ---
+  duration_ms: 1.356167
+  type: 'test'
+  ...
+# Subtest: using a hint survives reload and import and cannot count as unaided evidence
+ok 19 - using a hint survives reload and import and cannot count as unaided evidence
+  ---
+  duration_ms: 1.466542
+  type: 'test'
+  ...
+# Subtest: new independent constructions and transfers have bounded evidence, never confirmed explanations
+ok 20 - new independent constructions and transfers have bounded evidence, never confirmed explanations
+  ---
+  duration_ms: 0.600083
+  type: 'test'
+  ...
+# Subtest: legacy records, ongoing sessions, answers and bookmarks are retained without new credit
+ok 21 - legacy records, ongoing sessions, answers and bookmarks are retained without new credit
+  ---
+  duration_ms: 4.0755
+  type: 'test'
+  ...
+# Subtest: backup roundtrip and repeated merge retain draft, support, notes and both histories
+ok 22 - backup roundtrip and repeated merge retain draft, support, notes and both histories
+  ---
+  duration_ms: 1.242
+  type: 'test'
+  ...
+# Subtest: malformed imports fail without mutation; asserted scores cannot override actual work
+ok 23 - malformed imports fail without mutation; asserted scores cannot override actual work
+  ---
+  duration_ms: 1.677833
+  type: 'test'
+  ...
+# Subtest: suggested route links use actual directed source edges, including the distinct decimal preview node
+ok 24 - suggested route links use actual directed source edges, including the distinct decimal preview node
+  ---
+  duration_ms: 3.171416
+  type: 'test'
+  ...
+# Subtest: each repartition preserves the selected amount, including non-half selections
+ok 25 - each repartition preserves the selected amount, including non-half selections
+  ---
+  duration_ms: 13.587792
+  type: 'test'
+  ...
+# Subtest: navigation, a preview, and a cup check alone cannot create completion or independent evidence
+ok 26 - navigation, a preview, and a cup check alone cannot create completion or independent evidence
+  ---
+  duration_ms: 0.240625
+  type: 'test'
+  ...
+# Subtest: overall completion counts twelve available tasks once; old preview browsing grants no completion
+not ok 27 - overall completion counts twelve available tasks once; old preview browsing grants no completion
+  ---
+  duration_ms: 1.757417
+  type: 'test'
+  location: '/Users/zj1-6/dev/agents/experiments/math-explorer/tests/journey.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        done: 0,
+    +   total: 50
+    -   total: 12
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    done: 0
+    total: 12
+  actual:
+    done: 0
+    total: 50
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/journey.test.mjs:27:9)
+    Test.runInAsyncScope (node:async_hooks:212:14)
+    Test.run (node:internal/test_runner/test:1109:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+    Test.postRun (node:internal/test_runner/test:1238:19)
+    Test.run (node:internal/test_runner/test:1166:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: the fair task completes only after equal division and confirmation, and survives backup merging
+not ok 28 - the fair task completes only after equal division and confirmation, and survives backup merging
+  ---
+  duration_ms: 1.290541
+  type: 'test'
+  location: '/Users/zj1-6/dev/agents/experiments/math-explorer/tests/journey.test.mjs:34:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        done: 1,
+    +   total: 50
+    -   total: 12
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    done: 1
+    total: 12
+  actual:
+    done: 1
+    total: 50
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/journey.test.mjs:44:9)
+    Test.runInAsyncScope (node:async_hooks:212:14)
+    Test.run (node:internal/test_runner/test:1109:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+    Test.postRun (node:internal/test_runner/test:1238:19)
+    Test.run (node:internal/test_runner/test:1166:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: first error survives later success, reload, export and repeated merge; a guided sample never grants independent evidence
+ok 29 - first error survives later success, reload, export and repeated merge; a guided sample never grants independent evidence
+  ---
+  duration_ms: 8.9495
+  type: 'test'
+  ...
+# Subtest: stale legacy activity writes retain route records, working state, draft and first attempt
+ok 30 - stale legacy activity writes retain route records, working state, draft and first attempt
+  ---
+  duration_ms: 1.282083
+  type: 'test'
+  ...
+# Subtest: v2 backups without the new optional route fields remain valid and invalid route data fail atomically
+ok 31 - v2 backups without the new optional route fields remain valid and invalid route data fail atomically
+  ---
+  duration_ms: 0.458584
+  type: 'test'
+  ...
+# Subtest: full source projection, every node translated, no dangling math dependencies
+ok 32 - full source projection, every node translated, no dangling math dependencies
+  ---
+  duration_ms: 20.764834
+  type: 'test'
+  ...
+# Subtest: all lesson forms have gradeable unique questions and explanations
+ok 33 - all lesson forms have gradeable unique questions and explanations
+  ---
+  duration_ms: 1.525083
+  type: 'test'
+  ...
+# Subtest: visiting or guided work cannot count as independent; help and first mistakes persist
+ok 34 - visiting or guided work cannot count as independent; help and first mistakes persist
+  ---
+  duration_ms: 7.646
+  type: 'test'
+  ...
+# Subtest: independent result returns to review after seven days
+ok 35 - independent result returns to review after seven days
+  ---
+  duration_ms: 0.289042
+  type: 'test'
+  ...
+# Subtest: backup roundtrip keeps answers, active and paused sessions
+ok 36 - backup roundtrip keeps answers, active and paused sessions
+  ---
+  duration_ms: 2.253083
+  type: 'test'
+  ...
+# Subtest: bad or tampered backup is rejected atomically, scores recalculated
+ok 37 - bad or tampered backup is rejected atomically, scores recalculated
+  ---
+  duration_ms: 0.638583
+  type: 'test'
+  ...
+# Subtest: merge keeps current active work and both histories, repeat import does not duplicate
+ok 38 - merge keeps current active work and both histories, repeat import does not duplicate
+  ---
+  duration_ms: 6.74275
+  type: 'test'
+  ...
+# Subtest: phase2 has exactly the twelve planned source nodes, including nine beyond legacy activities
+ok 39 - phase2 has exactly the twelve planned source nodes, including nine beyond legacy activities
+  ---
+  duration_ms: 3.694792
+  type: 'test'
+  ...
+# Subtest: equal partition is necessary; sixths accept precise noninteger cut locations
+ok 40 - equal partition is necessary; sixths accept precise noninteger cut locations
+  ---
+  duration_ms: 0.738666
+  type: 'test'
+  ...
+# Subtest: equivalence preserves the whole and the same number-line point
+ok 41 - equivalence preserves the whole and the same number-line point
+  ---
+  duration_ms: 0.119458
+  type: 'test'
+  ...
+# Subtest: decimal positions and arbitrary shading patterns remain mathematically equivalent
+ok 42 - decimal positions and arbitrary shading patterns remain mathematically equivalent
+  ---
+  duration_ms: 0.354083
+  type: 'test'
+  ...
+# Subtest: quarters can be rebuilt through hundredths and transferred to three cups
+ok 43 - quarters can be rebuilt through hundredths and transferred to three cups
+  ---
+  duration_ms: 0.103167
+  type: 'test'
+  ...
+# Subtest: volume counts filled cubes, not surface squares or duplicated placements
+ok 44 - volume counts filled cubes, not surface squares or duplicated placements
+  ---
+  duration_ms: 0.123875
+  type: 'test'
+  ...
+# Subtest: a correct cube total cannot conceal wrong layer factors; estimate is not judged by exactness
+ok 45 - a correct cube total cannot conceal wrong layer factors; estimate is not judged by exactness
+  ---
+  duration_ms: 0.144834
+  type: 'test'
+  ...
+# Subtest: cuboid formula is rejected for an incomplete bounding box
+ok 46 - cuboid formula is rejected for an incomplete bounding box
+  ---
+  duration_ms: 0.094
+  type: 'test'
+  ...
+# Subtest: different valid disjoint decompositions give the same total; incomplete parts fail
+ok 47 - different valid disjoint decompositions give the same total; incomplete parts fail
+  ---
+  duration_ms: 0.240541
+  type: 'test'
+  ...
+# Subtest: data graphs require correct category counts, axis roles and a difference rather than taller height
+ok 48 - data graphs require correct category counts, axis roles and a difference rather than taller height
+  ---
+  duration_ms: 0.119
+  type: 'test'
+  ...
+# Subtest: collection must observe the whole source and retain correct categorical and discrete frequencies
+ok 49 - collection must observe the whole source and retain correct categorical and discrete frequencies
+  ---
+  duration_ms: 0.100291
+  type: 'test'
+  ...
+# Subtest: representation preference is free, while each read value and category still must match
+ok 50 - representation preference is free, while each read value and category still must match
+  ---
+  duration_ms: 0.069791
+  type: 'test'
+  ...
+# Subtest: opening, submitting wrong work, or forcing summary never completes a new activity
+ok 51 - opening, submitting wrong work, or forcing summary never completes a new activity
+  ---
+  duration_ms: 4.311917
+  type: 'test'
+  ...
+# Subtest: hints, first errors and later corrections survive without becoming independent first success
+ok 52 - hints, first errors and later corrections survive without becoming independent first success
+  ---
+  duration_ms: 0.325375
+  type: 'test'
+  ...
+# Subtest: new and old records roundtrip and merge without replacing working drafts or immutable history
+ok 53 - new and old records roundtrip and merge without replacing working drafts or immutable history
+  ---
+  duration_ms: 0.990708
+  type: 'test'
+  ...
+# Subtest: all twelve can complete with deduplicated global progress and separate explanation status
+ok 54 - all twelve can complete with deduplicated global progress and separate explanation status
+  ---
+  duration_ms: 2.368125
+  type: 'test'
+  ...
+# Subtest: delivery coverage includes every original goal, with local research gaps kept explicit
+ok 55 - delivery coverage includes every original goal, with local research gaps kept explicit
+  ---
+  duration_ms: 80.595417
+  type: 'test'
+  ...
+# Subtest: nine joint activities use only real directed source relations and eighteen valid tasks
+ok 56 - nine joint activities use only real directed source relations and eighteen valid tasks
+  ---
+  duration_ms: 7.0135
+  type: 'test'
+  ...
+# Subtest: two finished endpoints, visiting and hints cannot light a connection
+ok 57 - two finished endpoints, visiting and hints cannot light a connection
+  ---
+  duration_ms: 2.434417
+  type: 'test'
+  ...
+# Subtest: joint completion lights exactly one source edge without inventing new node completions
+ok 58 - joint completion lights exactly one source edge without inventing new node completions
+  ---
+  duration_ms: 0.663292
+  type: 'test'
+  ...
+# Subtest: daily totals use first completion dates and local midnight, with no duplicate points on retry or import
+ok 59 - daily totals use first completion dates and local midnight, with no duplicate points on retry or import
+  ---
+  duration_ms: 44.135292
+  type: 'test'
+  ...
+# Subtest: support, initial errors and repeated attempts remain in the joint record
+ok 60 - support, initial errors and repeated attempts remain in the joint record
+  ---
+  duration_ms: 0.236458
+  type: 'test'
+  ...
+# Subtest: original question text and exact model, view, camera and world survive roundtrip
+ok 61 - original question text and exact model, view, camera and world survive roundtrip
+  ---
+  duration_ms: 1.913833
+  type: 'test'
+  ...
+# Subtest: resuming preserves newer attempts and saves displaced working draft without rewriting the question scene
+ok 62 - resuming preserves newer attempts and saves displaced working draft without rewriting the question scene
+  ---
+  duration_ms: 0.963541
+  type: 'test'
+  ...
+# Subtest: multiple questions can be deferred today and return next day; finishing one never completes a node
+ok 63 - multiple questions can be deferred today and return next day; finishing one never completes a node
+  ---
+  duration_ms: 0.541375
+  type: 'test'
+  ...
+# Subtest: unmatched question keeps location and original words with no fabricated lesson
+ok 64 - unmatched question keeps location and original words with no fabricated lesson
+  ---
+  duration_ms: 1.114667
+  type: 'test'
+  ...
+# Subtest: no-question fallback chooses unfinished work, then next available lesson, then an uncompleted connection
+ok 65 - no-question fallback chooses unfinished work, then next available lesson, then an uncompleted connection
+  ---
+  duration_ms: 15.030292
+  type: 'test'
+  ...
+# Subtest: old v2 files gain optional daily state without changing lesson history
+ok 66 - old v2 files gain optional daily state without changing lesson history
+  ---
+  duration_ms: 0.242166
+  type: 'test'
+  ...
+# Subtest: backup merge is idempotent and stale writes preserve questions, joint work and evidence
+ok 67 - backup merge is idempotent and stale writes preserve questions, joint work and evidence
+  ---
+  duration_ms: 0.504625
+  type: 'test'
+  ...
+# Subtest: malformed question, mismatched node, camera, joint edge or forged completion rejects atomically
+ok 68 - malformed question, mismatched node, camera, joint edge or forged completion rejects atomically
+  ---
+  duration_ms: 0.828333
+  type: 'test'
+  ...
+# Subtest: B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+ok 69 - B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+  ---
+  duration_ms: 12.216625
+  type: 'test'
+  ...
+# Subtest: tiling requires equal unit squares and the full interior without exterior squares
+ok 70 - tiling requires equal unit squares and the full interior without exterior squares
+  ---
+  duration_ms: 0.143542
+  type: 'test'
+  ...
+# Subtest: rectangles accept alternative factor pairs and separate area from perimeter
+ok 71 - rectangles accept alternative factor pairs and separate area from perimeter
+  ---
+  duration_ms: 0.090792
+  type: 'test'
+  ...
+# Subtest: pond estimation uses polygon intersection and the stated half-square rule
+ok 72 - pond estimation uses polygon intersection and the stated half-square rule
+  ---
+  duration_ms: 0.854292
+  type: 'test'
+  ...
+# Subtest: solids count unique mathematical features including hidden ones
+ok 73 - solids count unique mathematical features including hidden ones
+  ---
+  duration_ms: 0.11125
+  type: 'test'
+  ...
+# Subtest: fold model distinguishes known nets and finds all eleven free cube nets
+ok 74 - fold model distinguishes known nets and finds all eleven free cube nets
+  ---
+  duration_ms: 7.363125
+  type: 'test'
+  ...
+# Subtest: net checks use committed predictions and opposite faces, not an answer edited after reveal
+ok 75 - net checks use committed predictions and opposite faces, not an answer edited after reveal
+  ---
+  duration_ms: 0.964417
+  type: 'test'
+  ...
+# Subtest: measurements require the correct instrument, unit and actual model operation
+ok 76 - measurements require the correct instrument, unit and actual model operation
+  ---
+  duration_ms: 0.227125
+  type: 'test'
+  ...
+# Subtest: capacity separates estimate, full capacity and contents; no forced perfect estimate
+ok 77 - capacity separates estimate, full capacity and contents; no forced perfect estimate
+  ---
+  duration_ms: 0.740334
+  type: 'test'
+  ...
+# Subtest: labels avoid open content and viewport edges, and hide when no readable space remains
+ok 78 - labels avoid open content and viewport edges, and hide when no readable space remains
+  ---
+  duration_ms: 4.232583
+  type: 'test'
+  ...
+# Subtest: every source object has a stable finite 3D home, independent of source row ordering
+ok 79 - every source object has a stable finite 3D home, independent of source row ordering
+  ---
+  duration_ms: 14.187209
+  type: 'test'
+  ...
+# Subtest: each source prerequisite appears at both endpoints with its original direction and reason
+ok 80 - each source prerequisite appears at both endpoints with its original direction and reason
+  ---
+  duration_ms: 8.324125
+  type: 'test'
+  ...
+# Subtest: aggregated cross-theme connections preserve all and only original cross-theme edges
+ok 81 - aggregated cross-theme connections preserve all and only original cross-theme edges
+  ---
+  duration_ms: 0.645042
+  type: 'test'
+  ...
+# Subtest: view restoration rejects broken geometry without touching learning data
+ok 82 - view restoration rejects broken geometry without touching learning data
+  ---
+  duration_ms: 0.225125
+  type: 'test'
+  ...
+# Subtest: two live activity surfaces retain both working copies even when they began from stale snapshots
+ok 83 - two live activity surfaces retain both working copies even when they began from stale snapshots
+  ---
+  duration_ms: 6.115334
+  type: 'test'
+  ...
+# Subtest: live persistence cannot resurrect removed bookmarks or erase another surface hint history
+ok 84 - live persistence cannot resurrect removed bookmarks or erase another surface hint history
+  ---
+  duration_ms: 0.4965
+  type: 'test'
+  ...
+1..84
+# tests 84
+# suites 0
+# pass 81
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 286.560083

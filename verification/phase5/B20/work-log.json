@@ -1,0 +1,12 @@
+{
+  "batch": "B20",
+  "startedAt": "2026-10-27T02:06:36.424819+00:00",
+  "snapshot": "snapshots/v24-before-b20-20261027T020636Z.tar.gz",
+  "activeHours": null,
+  "reason": "Wall-clock spans include interruptions and are not active labor.",
+  "finishedAt": "2026-10-27T04:22:07.828541+00:00",
+  "status": "technical-complete",
+  "childTrial": false,
+  "userAcceptance": false,
+  "summary": "summary.json"
+}

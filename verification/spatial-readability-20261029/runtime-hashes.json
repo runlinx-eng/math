@@ -1,0 +1,10 @@
+{
+  "dist/space.js": "e2026b10e99100be84fc80301b0e7947d8ae9364794bae213f69cfd76e7cea52",
+  "dist/space.css": "a3e85522c00deea9a83c3ab542699745c649e8f6c25585abe68056468c7aeaad",
+  "dist/spatial-scene.js": "7e7dbc6ff2ec6682e3196af6ee7c90f82f204acbe6562f1c147103e0398b8779",
+  "dist/spatial-global.js": "610c9eb6600571474f546e1b8608c02e5a6192e200948c3ca4aa2eba1743e13b",
+  "dist/spatial-labels.js": "b085761a7fc11ad3c9f500b683a60f3d0c90e9f390b2049acd601b8de1819908",
+  "dist/index.html": "5f9bd7234d199cfba81d0b4a9779c8f7f2cfd30e9c6bc5b3436eeb51662c7c85",
+  "dist/sw.js": "7b4c82d905a9e8ab3bd377b6f959f926f3d65a4fa0ee92bf31dc9328c5608ae7",
+  "dist/exploration.js": "540d67238757c6b6b9884bb383c48f4d292638898e7b5b473177741acf7e6752"
+}

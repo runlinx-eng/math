@@ -1,0 +1,4698 @@
+[
+  {
+    "id": "mt_yJmvUCCym7",
+    "name": "Addition and subtraction word problems",
+    "title": "加减法应用题",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_OvyoRo47K-",
+    "name": "Addition as combining or putting together two",
+    "title": "合起来就是加法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_e8CZ7E5qW7",
+    "name": "Number bonds to 9",
+    "title": "9以内数的分与合",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_7XcCG43ZZW",
+    "name": "Numbers up to 10 into pairs",
+    "title": "把10以内的数分成两部分",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_PgsHGYJMH-",
+    "name": "Representing Addition and Subtraction",
+    "title": "表示加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_zuKAX6lcYR",
+    "name": "Subtraction as taking away or separating",
+    "title": "拿走与分开：减法的意义",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_mr_Vk7FGzK",
+    "name": "Adding and subtracting",
+    "title": "加法与减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_VAWV_l7J0D",
+    "name": "Early Word Problems",
+    "title": "从生活故事列算式",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_ghF3Vv6taM",
+    "name": "Fluent adding and subtracting within 5",
+    "title": "熟练计算5以内加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_s2mfRBoTal",
+    "name": "Number bonds",
+    "title": "数的分与合",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_Y6_cq3UMyy",
+    "name": "Number stories on screen",
+    "title": "用数字工具表示数量故事",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_8RmpkDxT9L",
+    "name": "Reading +, −, and = symbols",
+    "title": "认识加号、减号与等号",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_biGHAbkoV2",
+    "name": "Adding and subtracting on screen",
+    "title": "用数字工具探索加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_I5j1ZWo2cn",
+    "name": "Adding and subtracting tens mentally",
+    "title": "整十数的口算",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_Zx1xZM-RbX",
+    "name": "Adding Three Small Numbers",
+    "title": "三个小整数相加",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_UQnAFPs83F",
+    "name": "Adding two two-digit numbers",
+    "title": "两位数加两位数",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_glPPG-kTQY",
+    "name": "Adding within 100",
+    "title": "100以内的加法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_PpWSHA-0kv",
+    "name": "Addition and subtraction strategies",
+    "title": "加减法的策略",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_m1W6nTQJ2b",
+    "name": "Addition and subtraction within 20",
+    "title": "20以内的加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_QCgbiVrwnp",
+    "name": "Addition in any order",
+    "title": "交换顺序来相加",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_ezc2m_0dzN",
+    "name": "Finding a missing number in addition",
+    "title": "寻找加法中的未知数",
+    "pack": "unknowns",
+    "rationale": "relations and unknowns",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt__we2TDqnJx",
+    "name": "Fluent adding and subtracting within 10",
+    "title": "熟练计算10以内加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_3e_PQxwC12",
+    "name": "Fluent addition and subtraction",
+    "title": "熟练使用加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_T76hKqXf0z",
+    "name": "Grouping numbers to add",
+    "title": "把数凑成一组再相加",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_ehGS_uVSJv",
+    "name": "Inverse: addition undoes subtraction",
+    "title": "加减法的互逆关系",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_AKAtWEwpcj",
+    "name": "Mental addition and subtraction (age 6+)",
+    "title": "加减法口算",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_wzAZ8qFDc4",
+    "name": "Mental and written addition and subtraction",
+    "title": "口算与笔算加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_HJTuIGHvcR",
+    "name": "Subtracting multiples of 10",
+    "title": "减去整十数",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_Eqk6oSbySH",
+    "name": "Three-number word problems",
+    "title": "含三个数的应用题",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_3JgrHY221M",
+    "name": "Unknown in Addition & Subtraction",
+    "title": "加减法中的未知数",
+    "pack": "unknowns",
+    "rationale": "relations and unknowns",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_oIzycTBeE4",
+    "name": "What the equals sign means",
+    "title": "等号表示什么",
+    "pack": "unknowns",
+    "rationale": "relations and unknowns",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_SrrsLiJkr3",
+    "name": "Adding and subtracting (age 7+)",
+    "title": "加法与减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_TiQbi027PE",
+    "name": "Adding numbers",
+    "title": "数的相加",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_zxST3MarI9",
+    "name": "Addition and subtraction strategies (age 7+)",
+    "title": "加减法的策略",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_ewmuMMPAzP",
+    "name": "Addition and subtraction within 1000",
+    "title": "1000以内的加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_QaYfeVL-0C",
+    "name": "Estimating by rounding",
+    "title": "用四舍五入估算",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_cChv2j_-Da",
+    "name": "Fluent adding and subtracting within 100",
+    "title": "熟练计算100以内加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt__t4afSyZRm",
+    "name": "Fluent adding and subtracting within 20",
+    "title": "熟练计算20以内加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_oDU_8zMZjp",
+    "name": "Mental addition and subtraction (age 7+)",
+    "title": "加减法口算",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_xPqczp7zPX",
+    "name": "Mentally adding hundreds to 3-digit numbers",
+    "title": "三位数加整百数",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_aHQ9kNt3is",
+    "name": "Mentally adding tens to 3-digit numbers",
+    "title": "三位数加整十数",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_XuHmIn2xje",
+    "name": "Missing number problems (age 7+)",
+    "title": "求未知数",
+    "pack": "unknowns",
+    "rationale": "relations and unknowns",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_19j_5AuuQI",
+    "name": "Numbers on a number line",
+    "title": "数轴上的数",
+    "pack": "number-sense",
+    "rationale": "number magnitude",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_yTWxkzzoOZ",
+    "name": "Two-Step Word Problems",
+    "title": "两步应用题",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_mpS-JK_p_m",
+    "name": "Adding and subtracting (age 8+)",
+    "title": "加法与减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_HFRYjTb-Z5",
+    "name": "Fluent adding and subtracting within 1000",
+    "title": "熟练计算1000以内加减",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_CDa5AVakLE",
+    "name": "Two-step addition and subtraction problems",
+    "title": "两步加减法问题",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_anAe11HAEH",
+    "name": "Two-Step Equations",
+    "title": "两步方程",
+    "pack": "unknowns",
+    "rationale": "relations and unknowns",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_-F_Lv_apzH",
+    "name": "Adding and subtracting (age 9+)",
+    "title": "加法与减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_G3sVFQNCme",
+    "name": "Checking Answers by Rounding",
+    "title": "用近似数检查答案",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_Yw1_4Nfsql",
+    "name": "Fluent addition and subtraction (age 9+)",
+    "title": "熟练使用加减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_MWXPiaTnEu",
+    "name": "Mental addition and subtraction (age 9+)",
+    "title": "加减法口算",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_M1tnXqmYbn",
+    "name": "Adding and subtracting (age 10+)",
+    "title": "加法与减法",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_JH_6RpNWjr",
+    "name": "Addition and subtraction strategies (age 10+)",
+    "title": "加减法的策略",
+    "pack": "add-subtract",
+    "rationale": "addition and subtraction",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_9QzSnn8m80",
+    "name": "Positive and Negative Numbers",
+    "title": "正数与负数",
+    "pack": "number-sense",
+    "rationale": "number magnitude",
+    "sourceDomain": "Addition & Subtraction"
+  },
+  {
+    "id": "mt_ZjIFGc6zPW",
+    "name": "Finding the repeating unit",
+    "title": "找出重复的部分",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_W3VOAuFwVw",
+    "name": "Describing growing number patterns",
+    "title": "描述数列的增长规律",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_zQfWqImxva",
+    "name": "Following number algorithms",
+    "title": "按照步骤运算",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_QeKWt4BZn3",
+    "name": "Algorithms that generate number sets",
+    "title": "按规则生成一组数",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_nx4a3kH-59",
+    "name": "Designing number algorithms",
+    "title": "设计数的运算步骤",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_YFS7JFk64p",
+    "name": "Equations with Two Unknowns",
+    "title": "含两个未知数的等式",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_hBZwbst0ow",
+    "name": "Linear number sequences",
+    "title": "等差数列",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_fxPtngwUfz",
+    "name": "Number Pattern Relationships",
+    "title": "数的规律与关系",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_gu0NPDvlhY",
+    "name": "Systematic Listing",
+    "title": "有序地列出所有可能",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_Jvg8X0N5u0",
+    "name": "Using Simple Formulae",
+    "title": "使用简单公式",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_i9rJbuFO3p",
+    "name": "Writing Algebraic Equations",
+    "title": "把问题写成方程",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_KwdjWEmMNo",
+    "name": "Algebraic Notation",
+    "title": "用字母表示数",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_z5iwdZyeDr",
+    "name": "Algebraic Transformations",
+    "title": "代数式的变形",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_nNNVrLqPW3",
+    "name": "Collecting Like Terms",
+    "title": "合并同类项",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_hVpGOEz2kG",
+    "name": "Coordinates (age 11+)",
+    "title": "坐标",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_FX4a2Q8XXN",
+    "name": "Expanding Single Brackets",
+    "title": "展开单个括号",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_g_fkAqmz72",
+    "name": "Expressions & Equations Vocabulary",
+    "title": "代数式与方程的语言",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_yXO7lQ9Yn7",
+    "name": "Generating Sequences",
+    "title": "按规律生成数列",
+    "pack": "patterns",
+    "rationale": "patterns and generative rules",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_i2F1nWxJjv",
+    "name": "Numbers on a number line",
+    "title": "数轴上的数",
+    "pack": "number-sense",
+    "rationale": "number representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_QhFEDyIwSO",
+    "name": "Solving Linear Equations",
+    "title": "解一元一次方程",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_vHzVa3SURC",
+    "name": "Substituting into Formulae",
+    "title": "把数代入公式",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_uESbzWCZIq",
+    "name": "Factorising Expressions",
+    "title": "因式分解",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_WBdHkc2HTf",
+    "name": "Linear Function Graphs",
+    "title": "一次函数图像",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_HRKzwEQJgO",
+    "name": "Nth-Term Rules",
+    "title": "数列的第n项规律",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_-3udyo6VyB",
+    "name": "Plotting Linear Graphs",
+    "title": "绘制直线图像",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_3qrCtdoVAU",
+    "name": "Simple formulae",
+    "title": "简单公式",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_Yw27nweoTj",
+    "name": "Estimating answers (age 13+)",
+    "title": "估计答案",
+    "pack": "reasoning",
+    "rationale": "reasonableness and verification",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_KhS7K1Mgrw",
+    "name": "Expanding Double Brackets",
+    "title": "展开两个括号的乘积",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_GZuoYaDdWd",
+    "name": "Quadratic Graphs",
+    "title": "二次函数图像",
+    "pack": "functions",
+    "rationale": "covariation and representation",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt_mqgu72aCMz",
+    "name": "Simultaneous Equations",
+    "title": "联立方程",
+    "pack": "unknowns",
+    "rationale": "symbolic relations",
+    "sourceDomain": "Algebra"
+  },
+  {
+    "id": "mt__h7hvT4tEb",
+    "name": "Comparing groups: more or fewer",
+    "title": "比较哪一组更多",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_dmNvjroCPT",
+    "name": "How Many in Total?",
+    "title": "一共有多少",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_sYpKWbq5ra",
+    "name": "One More Each Time",
+    "title": "每次多一个",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_WcfaSfVT33",
+    "name": "One-to-one counting",
+    "title": "一一对应地数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_pAcaehday5",
+    "name": "Representing numbers with objects",
+    "title": "用实物表示数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_nvdpxAJTBG",
+    "name": "Counting in 2s",
+    "title": "两个两个地数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_yqAL6O5i_v",
+    "name": "Counting objects to 20",
+    "title": "数20以内的物品",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_M5PPDJStGm",
+    "name": "Rote counting to 100",
+    "title": "顺序数到100",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_BK5xwkrD5C",
+    "name": "Seeing parts within 10",
+    "title": "观察10以内数的组成",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_t9BICauBSI",
+    "name": "Subitising to 5",
+    "title": "一眼看出5以内的数量",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt__YRJ23GuIK",
+    "name": "Two written numerals between 1 and 10",
+    "title": "比较1到10的数字",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_0ZDouU664X",
+    "name": "Counting big collections in groups",
+    "title": "分组数大量物品",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_aHAM29nidj",
+    "name": "Counting forwards and backwards",
+    "title": "顺着数与倒着数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_OkSJfrmFb_",
+    "name": "Counting forwards and backwards (age 6+)",
+    "title": "顺着数与倒着数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_M2v1A9OEuM",
+    "name": "Counting Within 1,000",
+    "title": "1000以内的数数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_IzQvs7k_sE",
+    "name": "Skip Counting (4s, 8s, 50s, 100s)",
+    "title": "按4、8、50、100跳着数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_7rJM8eWUfw",
+    "name": "Counting in 6s",
+    "title": "六个六个地数",
+    "pack": "number-sense",
+    "rationale": "counting and quantity",
+    "sourceDomain": "Counting & Cardinality"
+  },
+  {
+    "id": "mt_c29FaCTNsx",
+    "name": "Pictograms and tally charts",
+    "title": "象形统计图与计数表",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_xppl18avyY",
+    "name": "Sorting into categories",
+    "title": "按特征分类",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_X53txVXOcG",
+    "name": "Data with digital tools",
+    "title": "用数字工具处理数据",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_u5HkSxZECM",
+    "name": "Pictograms and tally charts (age 6+)",
+    "title": "象形统计图与计数表",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_VhBH8wrFC6",
+    "name": "Picture & Bar Graphs",
+    "title": "象形图与条形图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_ylXdiVRAYv",
+    "name": "Sorting Data into Categories",
+    "title": "把数据分类",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_1VSfm9yiLn",
+    "name": "Sorting into categories (age 6+)",
+    "title": "按特征分类",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt__yvsKKp3TS",
+    "name": "Comparing two data displays",
+    "title": "比较两幅统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_ChjMU2GDJa",
+    "name": "Bar graphs",
+    "title": "条形统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_QpJydot2Kh",
+    "name": "Choosing displays for a purpose",
+    "title": "选择合适的统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_ebQURBOsM5",
+    "name": "Collecting data for a question",
+    "title": "围绕问题收集数据",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_kxeuXm6EyC",
+    "name": "Guided statistical investigation",
+    "title": "在引导下开展统计调查",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_r8XnXwRA6g",
+    "name": "Scaled picture and bar graphs",
+    "title": "带比例刻度的统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_yrvYKSwSRZ",
+    "name": "Collecting data with digital tools",
+    "title": "用数字工具收集数据",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_TiFjjvBMaY",
+    "name": "Comparing displays and distributions",
+    "title": "比较图表与数据分布",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_Y6JmLjnfRP",
+    "name": "Conducting a statistical investigation",
+    "title": "开展统计调查",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_H6LlpWgEYS",
+    "name": "Line graph problems",
+    "title": "解决折线图问题",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_Cqm8iy48UI",
+    "name": "Reading tables",
+    "title": "读懂表格",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_fmm-P17Vka",
+    "name": "Statistical Analysis Vocabulary",
+    "title": "统计分析的语言",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_Cg8VPguS_V",
+    "name": "Calculating the Mean",
+    "title": "计算平均数",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_HlNSurPVDp",
+    "name": "Line graphs",
+    "title": "折线统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_IHipFGTFEY",
+    "name": "Line plots with fractions",
+    "title": "带分数刻度的点图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_bESTSBB0wK",
+    "name": "Pie charts",
+    "title": "扇形统计图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_SHVyE1CLUa",
+    "name": "Planning a statistical investigation",
+    "title": "规划统计调查",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_QHT16CrFO-",
+    "name": "Validating and describing categorical data",
+    "title": "检查并描述分类数据",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_ZfpeI1CFyP",
+    "name": "Average distance from the mean",
+    "title": "到平均数的平均距离",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_XSXnTQoQ4l",
+    "name": "Averages and range",
+    "title": "平均数与极差",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_8VjmxR1yfw",
+    "name": "Box plots",
+    "title": "箱线图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_mn765HbXi1",
+    "name": "Comparing data sets digitally",
+    "title": "用数字工具比较数据",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_8IsaoMPvod",
+    "name": "Critiquing statistics in the media",
+    "title": "辨析媒体中的统计信息",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_OwYms2tB1L",
+    "name": "Describing distributions",
+    "title": "描述数据分布",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_JRzXQl9M7c",
+    "name": "Dot plots",
+    "title": "点图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_oderfUBZPw",
+    "name": "Histograms",
+    "title": "直方图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_eKJG-0eC6D",
+    "name": "Pictograms and tally charts (age 11+)",
+    "title": "象形统计图与计数表",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_4zgPzc6yu5",
+    "name": "Populations, samples and fair sampling",
+    "title": "总体、样本与公平抽样",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_KCS9GbZgU_",
+    "name": "Quartiles and interquartile range",
+    "title": "四分位数与四分位距",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_O-U263ukg1",
+    "name": "Refining a statistical investigation",
+    "title": "改进统计调查",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_iykH2P5oFq",
+    "name": "Statistical questions",
+    "title": "提出统计问题",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_6gpryAnpoZ",
+    "name": "What was measured, and how",
+    "title": "测量了什么，怎样测量",
+    "pack": "collect",
+    "rationale": "question and data collection",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_tuEnyrp5Ia",
+    "name": "Writing a data summary",
+    "title": "写出数据结论",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_km4V6d5IAh",
+    "name": "Comparing two populations",
+    "title": "比较两个总体",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_fQ9Rw10fss",
+    "name": "Estimating from a sample",
+    "title": "用样本进行估计",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_A2hKhHXgL5",
+    "name": "How far apart two groups are",
+    "title": "两组数据差多少",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_x7V1qrkiqH",
+    "name": "How samples vary",
+    "title": "不同样本的差异",
+    "pack": "summarize",
+    "rationale": "summary, distributions and inference",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_BdAeZJUOir",
+    "name": "Scatter Graphs",
+    "title": "散点图",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_8atyuvPUZc",
+    "name": "Scatter Graphs & Correlation",
+    "title": "散点图与相关关系",
+    "pack": "display",
+    "rationale": "data representations",
+    "sourceDomain": "Data & Statistics"
+  },
+  {
+    "id": "mt_g3W0mdADVu",
+    "name": "Finding halves and quarters (age 5+)",
+    "title": "寻找二分之一与四分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_-hTTat0mBR",
+    "name": "What Is a Half?",
+    "title": "什么是二分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_hyvHv2BCwb",
+    "name": "Decomposing a shape into more equal shares",
+    "title": "把图形分得更细",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_vKcxX6iNOA",
+    "name": "Fraction Notation",
+    "title": "分数怎样写",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_cFltwUQi-d",
+    "name": "Fractions of amounts",
+    "title": "一个数量的几分之几",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_xACS3rWWDp",
+    "name": "Halves & Quarters of Shapes",
+    "title": "图形的二分之一与四分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_MyGblah2yY",
+    "name": "Understanding fractions",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_IfEgu0X449",
+    "name": "Comparing fractions",
+    "title": "比较分数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_SsLWS_APM7",
+    "name": "Comparing fractions (age 7+)",
+    "title": "比较分数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_FbDKeLfBCo",
+    "name": "Equivalent fractions",
+    "title": "等值分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Kr3IyA6m-O",
+    "name": "Fractions on a number line",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_gC-6JXAG5S",
+    "name": "Halves, quarters and eighths",
+    "title": "二分之一、四分之一与八分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_a1FdAsRKOF",
+    "name": "Simple Fraction Sums",
+    "title": "简单的分数相加",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Xp-rj46S2w",
+    "name": "Splitting shapes into equal parts (age 7+)",
+    "title": "把图形平均分",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_YzM5goBctT",
+    "name": "Tenths",
+    "title": "认识十分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_k2WE0-22-4",
+    "name": "Unit fractions",
+    "title": "单位分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_CBHwluE6Lp",
+    "name": "Adding Fractions (Same Denominator)",
+    "title": "同分母分数相加",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_HnKbuCliNS",
+    "name": "Comparing fractions (age 8+)",
+    "title": "比较分数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_TqDq6jyOmL",
+    "name": "Decimal equivalents of tenths and hundredths",
+    "title": "分数与小数对应",
+    "pack": "same-amount",
+    "rationale": "core exploration anchor",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_W17Kbwm0-u",
+    "name": "Decimal & Percent Notation",
+    "title": "小数与百分数的写法",
+    "pack": "scaling",
+    "rationale": "proportional representation",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Fl7b8q9pI1",
+    "name": "Decimal place value",
+    "title": "一位小数取整",
+    "pack": "number-sense",
+    "rationale": "rounding decimals, clarified from original description",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_IegHBHERVa",
+    "name": "Decimal place value (age 8+)",
+    "title": "比较两位小数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_wB-GBDkoNr",
+    "name": "Decimals and fractions",
+    "title": "小数与分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_kDMKJ5Ztt6",
+    "name": "Dividing by 10 and 100",
+    "title": "除以10和100",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_FP-mjXaq3B",
+    "name": "Equivalent fractions (age 8+)",
+    "title": "等值分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Ep7TDFuYUa",
+    "name": "Equivalent fractions on a number line",
+    "title": "数轴上的等值分数",
+    "pack": "same-amount",
+    "rationale": "core exploration anchor",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_DRlbMok2lT",
+    "name": "Fraction-Decimal Equivalents",
+    "title": "分数与小数的等值关系",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_idbKDrf9qZ",
+    "name": "Fractions as parts of shapes",
+    "title": "图形中的分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_3y7xKP9MjU",
+    "name": "Fractions of amounts (harder)",
+    "title": "求一个数量的几分之几：进阶",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_ndGqFPWyen",
+    "name": "Fractions of a whole",
+    "title": "分数的意义",
+    "pack": "same-amount",
+    "rationale": "core exploration anchor",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_AYzE1EAvI0",
+    "name": "Fractions of a whole (age 8+)",
+    "title": "分数的意义",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_NoB20kVa4w",
+    "name": "Fractions on a number line (age 8+)",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_doX1BhmFgk",
+    "name": "Tenths (age 8+)",
+    "title": "认识十分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_70qDTI14td",
+    "name": "Adding and subtracting mixed numbers",
+    "title": "带分数的加减法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_-V7EnqU7gG",
+    "name": "Adding fractions (different denominators)",
+    "title": "通分后做分数加减法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_ZLqYE7la4Z",
+    "name": "Addition and subtraction word problems",
+    "title": "加减法应用题",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_933BohS9BH",
+    "name": "Comparing Decimals",
+    "title": "比较小数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_SXbZ3bC9z7",
+    "name": "Comparing fractions (age 9+)",
+    "title": "比较分数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_NaqEP8xDhZ",
+    "name": "Converting tenths to hundredths",
+    "title": "十分之几与百分之几",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Ii1hV4V5ql",
+    "name": "Decimal place value (age 9+)",
+    "title": "两位小数的近似数",
+    "pack": "number-sense",
+    "rationale": "rounding decimals, clarified from original description",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_Vi4Vo5xs_g",
+    "name": "Decimals for Tenths & Hundredths",
+    "title": "十分位与百分位",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_sA2OvTiech",
+    "name": "Decimals to three places",
+    "title": "三位小数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_ebPelt-qAl",
+    "name": "Equivalent fractions (age 9+)",
+    "title": "等值分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_VgOePicFYK",
+    "name": "Fraction Addition Concepts",
+    "title": "分数加法的意义",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_HJA2Oz-Zh1",
+    "name": "Fractions of a whole (age 9+)",
+    "title": "分数的意义",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_o_p-3tCxiM",
+    "name": "Mixed numbers and improper fractions",
+    "title": "带分数与假分数互化",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_TgHxujL81r",
+    "name": "Multiplying fractions",
+    "title": "分数乘法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_4ubP_RMg9o",
+    "name": "Percentage and decimal equivalents",
+    "title": "百分数与小数互化",
+    "pack": "scaling",
+    "rationale": "proportional representation",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_kdWoAel3Zl",
+    "name": "Tenths (age 9+)",
+    "title": "认识十分之一",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_09sySPqM9Z",
+    "name": "Understanding fractions (age 9+)",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_ZM9mhHsyYZ",
+    "name": "Understanding Percentages",
+    "title": "理解百分数",
+    "pack": "scaling",
+    "rationale": "proportional representation",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_14T5yPXUq_",
+    "name": "Adding Fractions (Unlike Denominators)",
+    "title": "异分母分数相加",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_gx6KQK5-Kx",
+    "name": "Area with Fractions",
+    "title": "用分数计算面积",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_PL9VkDwXfh",
+    "name": "Comparing fractions (age 10+)",
+    "title": "比较分数大小",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_4K1dr204Hi",
+    "name": "Decimals and fractions (age 10+)",
+    "title": "小数与分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_1PAWhRhpdg",
+    "name": "Dividing by Fractions",
+    "title": "除以分数",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_ifPDOYvUqm",
+    "name": "Dividing fractions (unit fractions)",
+    "title": "单位分数的除法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_rCMdwG-YOE",
+    "name": "Dividing unit fractions and whole numbers",
+    "title": "单位分数与整数相除",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_4Km38F4L-6",
+    "name": "Fractions of a whole (age 10+)",
+    "title": "分数的意义",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_e7filQgayF",
+    "name": "Fraction Word Problems",
+    "title": "分数应用题",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_VKW8lOcFaw",
+    "name": "Multiplication as scaling",
+    "title": "乘法与放大缩小",
+    "pack": "scaling",
+    "rationale": "proportional representation",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_AabJisinfi",
+    "name": "Multiplying fractions (age 10+)",
+    "title": "分数乘法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_lvaSGHwvQ5",
+    "name": "Real-world fraction multiplication",
+    "title": "生活中的分数乘法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_b7T-CjOYUR",
+    "name": "Simplifying Fractions",
+    "title": "约分",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_SBkTGjiZjZ",
+    "name": "Decimals and fractions (age 11+)",
+    "title": "小数与分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_9Y96vxG_LH",
+    "name": "Dividing fractions",
+    "title": "分数除法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_gNUE4B3vuk",
+    "name": "Mixed & Improper Fractions",
+    "title": "带分数与假分数",
+    "pack": "same-amount",
+    "rationale": "parts, number line and equivalent representations",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_J339bO7qLe",
+    "name": "Multiplying fractions (age 11+)",
+    "title": "分数乘法",
+    "pack": "fraction-operations",
+    "rationale": "operations with fractions",
+    "sourceDomain": "Fractions"
+  },
+  {
+    "id": "mt_KJeEeTutJI",
+    "name": "2-D shapes",
+    "title": "平面图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Qcp2d_kuta",
+    "name": "3-D shapes",
+    "title": "立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_qeZYF6HZ4o",
+    "name": "Positional Language",
+    "title": "描述位置的语言",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_yGv8doDAmp",
+    "name": "3-D shapes (age 5+)",
+    "title": "立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_2VR963szuk",
+    "name": "Building & Drawing Shapes",
+    "title": "搭建与画出图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_XjwUlmxdCT",
+    "name": "Combining Simple Shapes",
+    "title": "组合简单图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_mnEVZNkX3p",
+    "name": "Flat vs Solid Shapes",
+    "title": "平面图形与立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_WXW0hjNhph",
+    "name": "Patterns & Sequences",
+    "title": "图案与排列规律",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Y9XKzLrUAZ",
+    "name": "Turns & Directions",
+    "title": "转向与方向",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_UooUHC_V7U",
+    "name": "2-D faces on 3-D shapes",
+    "title": "立体图形的平面",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_sBcRdUfAzV",
+    "name": "2-D shapes (age 6+)",
+    "title": "平面图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_QNxFnxikCN",
+    "name": "Building with 3-D Shapes",
+    "title": "用立体图形搭建",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_MqqR7VUoz1",
+    "name": "Composing Shapes",
+    "title": "拼成新的图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_bfhng6mOuy",
+    "name": "Defining attributes of shapes",
+    "title": "图形的关键特征",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Mnodea7mG_",
+    "name": "Edges, vertices, and faces",
+    "title": "棱、顶点与面",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_TdV9YGJEoY",
+    "name": "Position, direction, and movement",
+    "title": "位置、方向与移动",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_fEuoBYw6bU",
+    "name": "Sorting 2-D and 3-D shapes",
+    "title": "平面与立体图形分类",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_vJUa62bxeR",
+    "name": "2-D shapes (age 7+)",
+    "title": "平面图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_u23IGDxOpk",
+    "name": "Parallel and perpendicular lines",
+    "title": "平行与垂直",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_zuOGOGFAKb",
+    "name": "Recognising and drawing shapes by attributes",
+    "title": "按特征辨认和绘制图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_MFfYcnv6Tv",
+    "name": "Right Angles & Turns",
+    "title": "直角与转弯",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_8OAGVdeTJ_",
+    "name": "Understanding angles",
+    "title": "理解角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_hRZyKvz1KN",
+    "name": "2-D shapes (age 8+)",
+    "title": "平面图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Xt1cRqaBOW",
+    "name": "Classifying quadrilaterals",
+    "title": "四边形分类",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_i5_HnoFOYw",
+    "name": "Coordinates (age 8+)",
+    "title": "坐标",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Uq5vYqboCR",
+    "name": "Describing Movements",
+    "title": "描述物体的移动",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_jBQS-CicNn",
+    "name": "First Quadrant Coordinates",
+    "title": "第一象限的坐标",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_hR2Y7NhMSY",
+    "name": "Lines of symmetry",
+    "title": "对称轴",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_vnJEztczji",
+    "name": "Nets of 3-D Shapes",
+    "title": "立体图形的展开图",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_SH7QgFl8-v",
+    "name": "Transformations on a grid",
+    "title": "网格上的图形变换",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_h0CVtqI2xo",
+    "name": "Types of angles",
+    "title": "角的分类",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_e4V6hvcuEJ",
+    "name": "Types of angles (age 8+)",
+    "title": "角的分类",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_mN4Ye_vtR7",
+    "name": "Why objects suit their uses",
+    "title": "物体的形状与用途",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_wUSbRt3-qw",
+    "name": "3-D shapes (age 9+)",
+    "title": "立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_oqziWKry-L",
+    "name": "Angle Sum Rules",
+    "title": "角的和有什么规律",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_SK7WntVZ6y",
+    "name": "Approximating objects with shapes",
+    "title": "用图形近似表示物体",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_r8c43QB6wx",
+    "name": "Classifying shapes by line properties",
+    "title": "按边的特征给图形分类",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_qUGMyMYn9m",
+    "name": "Degrees and turns",
+    "title": "角度与旋转",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_YUJ5pwalqL",
+    "name": "Estimating Angles",
+    "title": "估计角的大小",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_QysgF57dxh",
+    "name": "Lines, Rays & Angles",
+    "title": "直线、射线与角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_4MFUAsbx_6",
+    "name": "Measuring angles",
+    "title": "测量角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_89riIKwGYp",
+    "name": "Measuring angles (age 9+)",
+    "title": "测量角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_8H2kO4k2B9",
+    "name": "Regular and irregular polygons",
+    "title": "正多边形与不规则多边形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_NM5I3yN-Q6",
+    "name": "Rotational symmetry",
+    "title": "旋转对称",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_LBT-9jz7kR",
+    "name": "Straight, reflex and revolution angles",
+    "title": "平角、优角与周角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_efOeaGFyGM",
+    "name": "Transformations on a Grid",
+    "title": "网格上的图形变换",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_KFKUR_gBg_",
+    "name": "Understanding angles (age 9+)",
+    "title": "理解角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_3S10OOGPqu",
+    "name": "What Is an Angle?",
+    "title": "什么是角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_hdrMoiTgqu",
+    "name": "2-D shapes (age 10+)",
+    "title": "平面图形",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_REwgr0d_ss",
+    "name": "3-D shapes (age 10+)",
+    "title": "立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_cdMlC7EpTJ",
+    "name": "Angles in triangles (age 10+)",
+    "title": "三角形中的角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_liIW336odh",
+    "name": "Classifying shapes by properties",
+    "title": "按特征给图形分类",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_R4AY0LKxfl",
+    "name": "Coordinates (age 10+)",
+    "title": "坐标",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_xq3YHZ2zeR",
+    "name": "Parts of a circle",
+    "title": "认识圆的各部分",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_snlqRCiA1R",
+    "name": "Plotting points in the first quadrant",
+    "title": "在第一象限描点",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_oDlduFnemk",
+    "name": "The coordinate grid",
+    "title": "坐标网格",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_RdfzwInyAj",
+    "name": "Transformations with geometry software",
+    "title": "用几何软件变换图形",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_lxaM6iVpdr",
+    "name": "Translating and reflecting shapes",
+    "title": "图形的平移与轴对称",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_QDTO3GAgcq",
+    "name": "Understanding angles (age 10+)",
+    "title": "理解角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_nRksLqt-iR",
+    "name": "3-D shapes (age 11+)",
+    "title": "立体图形",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_J03RFlVdas",
+    "name": "Angle sums in triangles and polygons",
+    "title": "三角形与多边形的内角和",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_tAJH5BrpOx",
+    "name": "Area and volume formulae",
+    "title": "面积与体积公式",
+    "pack": "area",
+    "rationale": "measurement of shape",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_K0Y15w48SY",
+    "name": "Coordinate Transformations",
+    "title": "坐标变换",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_h02-C8PRrj",
+    "name": "Cross-sections of prisms",
+    "title": "棱柱的截面",
+    "pack": "solids",
+    "rationale": "three dimensional structure",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Jf8xcX4UTq",
+    "name": "Drawing triangles accurately",
+    "title": "准确绘制三角形",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_WtIFJSCQIT",
+    "name": "Geometry notation and sketching",
+    "title": "几何符号与草图",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_DNYQLahbfa",
+    "name": "Properties of triangles and quadrilaterals",
+    "title": "三角形与四边形的特征",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_h7zVgCDVmx",
+    "name": "Shapes on a coordinate grid",
+    "title": "坐标网格上的图形",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_61Nhj8W78f",
+    "name": "Tessellations and transformation patterns",
+    "title": "平面铺砌与变换图案",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_tedML_iu4Y",
+    "name": "Understanding angles (age 11+)",
+    "title": "理解角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_H_pNJ3ZI_S",
+    "name": "Angles with parallel lines",
+    "title": "平行线中的角",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_svFa6_mjO_",
+    "name": "Circles: Circumference & Area",
+    "title": "圆的周长与面积",
+    "pack": "area",
+    "rationale": "measurement of shape",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_167X6Ax8P7",
+    "name": "Congruent triangles",
+    "title": "全等三角形",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_ZrsqGVG-Wt",
+    "name": "Ruler and compass constructions",
+    "title": "尺规作图",
+    "pack": "shapes",
+    "rationale": "shape properties and construction",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_y-BuQAfw4B",
+    "name": "Similarity and enlargement",
+    "title": "相似与放大",
+    "pack": "positions",
+    "rationale": "position and transformations",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_Sij9ByyHq6",
+    "name": "Surface area and volume of solids",
+    "title": "立体图形的表面积与体积",
+    "pack": "area",
+    "rationale": "measurement of shape",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_4bc3EAxhlY",
+    "name": "Which triangles are possible",
+    "title": "哪些边长能组成三角形",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_1VmTUxBrNd",
+    "name": "Applying Pythagoras' theorem",
+    "title": "使用勾股定理",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_KB_Czd7RQH",
+    "name": "Trigonometry basics",
+    "title": "三角函数初步",
+    "pack": "angles",
+    "rationale": "angle and side relationships",
+    "sourceDomain": "Geometry"
+  },
+  {
+    "id": "mt_lMz9nAs7VO",
+    "name": "Early Maths Vocabulary",
+    "title": "基础数学词汇",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_RFeVlw0QvX",
+    "name": "Finding efficient methods",
+    "title": "寻找更高效的方法",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_20WfHhnL39",
+    "name": "Hands-On Problem Solving",
+    "title": "动手解决问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_WkKkb7W9Qd",
+    "name": "Making Sense of Problems",
+    "title": "读懂问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_IM1G_7QzTa",
+    "name": "Real-World to Maths Connections",
+    "title": "从生活走向数学",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_nyK25mNOeR",
+    "name": "Showing Your Working",
+    "title": "展示解题过程",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_uG2mjHFOlO",
+    "name": "Spotting mathematical patterns",
+    "title": "发现数学规律",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_fLOkq-HfPB",
+    "name": "Using objects to model real problems",
+    "title": "用实物表示真实问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_f67qGDhyfi",
+    "name": "Connecting maths to real life",
+    "title": "把数学与生活联系起来",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_EBYGhd8X3x",
+    "name": "Connecting Representations",
+    "title": "连接不同表示方式",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_kJ5wYzO8qC",
+    "name": "Explaining Mathematical Reasoning",
+    "title": "讲清数学推理",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_fZTn0W_iZR",
+    "name": "Generalising Patterns",
+    "title": "从规律中概括结论",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_O_UOTiMvT_",
+    "name": "Guided Multi-Step Problem Solving",
+    "title": "分步骤解决问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_zMEvtigoM3",
+    "name": "Numbers on a number line",
+    "title": "数轴上的数",
+    "pack": "number-sense",
+    "rationale": "number representation",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_TMoHjMhRS2",
+    "name": "Precise Maths Communication",
+    "title": "清楚准确地交流数学",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_DW2D1c0fKx",
+    "name": "Shape patterns",
+    "title": "图形规律",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_mQcWGh02no",
+    "name": "Choosing the right strategy",
+    "title": "选择解题策略",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_2jbUekyTu4",
+    "name": "Extending Table Patterns",
+    "title": "延续表格中的规律",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_pyMD_SIiYO",
+    "name": "Justifying mathematical reasoning",
+    "title": "说明推理的依据",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_RKeheOL9uo",
+    "name": "Multi-Step Problem Solving",
+    "title": "解决多步问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_FAXjFkgG6X",
+    "name": "Shape patterns (age 7+)",
+    "title": "图形规律",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_dXq9VWm31W",
+    "name": "Understanding fractions",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_HY8Yycu_rz",
+    "name": "Understanding fractions (age 7+)",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_iQYPw8bMfN",
+    "name": "Working with money",
+    "title": "与钱有关的数学",
+    "pack": "money",
+    "rationale": "financial reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_FVVSQR9vGg",
+    "name": "Calculator checks for money",
+    "title": "用计算器检查金额",
+    "pack": "money",
+    "rationale": "financial reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_d-WZC2OyMB",
+    "name": "Choosing mathematical tools",
+    "title": "选择合适的数学工具",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_3VmBdlAeOZ",
+    "name": "Fractions on a number line",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_a3dov8CZkq",
+    "name": "Justifying mathematical reasoning (age 8+)",
+    "title": "说明推理的依据",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_mywsN77hGZ",
+    "name": "Mathematical Precision",
+    "title": "准确地表达数学",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_K3R0yaHVcx",
+    "name": "Modelling with multiplication and fractions",
+    "title": "用乘法与分数建立模型",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_SmghasIvbT",
+    "name": "Multi-Step Problem Solving",
+    "title": "解决多步问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_aivrWs6jrS",
+    "name": "Times tables (age 8+)",
+    "title": "乘法口诀与乘法表",
+    "pack": "groups",
+    "rationale": "multiplicative reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt__Itf4aQZUj",
+    "name": "Using Mathematical Structure",
+    "title": "运用数学结构",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_IwEOCN6bL1",
+    "name": "Choosing representations strategically",
+    "title": "选择合适的表示方式",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_GpltXPoaoc",
+    "name": "Complex Multi-Step Problems",
+    "title": "复杂的多步问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_hlGKg5M7qJ",
+    "name": "Fractions, Decimals & Percentages",
+    "title": "分数、小数与百分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_CUmjcE7W6c",
+    "name": "Fractions on a number line (age 9+)",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_xfwv0M83mJ",
+    "name": "Precise Maths Vocabulary",
+    "title": "准确使用数学词汇",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_8xVHooT4aI",
+    "name": "Real-World Maths Modelling",
+    "title": "生活中的数学建模",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_jCy07DyBNU",
+    "name": "Reasoning with Equivalences",
+    "title": "利用等值关系推理",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_2ESZh70NyS",
+    "name": "Understanding fractions (age 9+)",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_ish_uH8vZe",
+    "name": "Using a calculator well",
+    "title": "合理使用计算器",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_3rTIyJDw7-",
+    "name": "Advanced Maths Vocabulary",
+    "title": "进阶数学词汇",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_FieL-vVTI_",
+    "name": "Advanced Multi-Step Problems",
+    "title": "进阶多步问题",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_ZJC7JnnPCu",
+    "name": "Choosing Maths Tools",
+    "title": "选择数学工具",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_j5YqQnN6xe",
+    "name": "Constructing mathematical arguments",
+    "title": "构建数学论证",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_iyovKgZC1q",
+    "name": "Generalising with repeated reasoning",
+    "title": "从重复推理中概括规律",
+    "pack": "patterns",
+    "rationale": "patterns and generalization",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_hImiKNiaNh",
+    "name": "Order of operations (age 10+)",
+    "title": "运算顺序",
+    "pack": "groups",
+    "rationale": "multiplicative reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_yqZiX6vS7D",
+    "name": "Real-World Mathematical Modelling",
+    "title": "为生活问题建立数学模型",
+    "pack": "reasoning",
+    "rationale": "reasoning applies across all themes",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_9KmVWCuh5_",
+    "name": "Understanding fractions (age 10+)",
+    "title": "理解分数",
+    "pack": "same-amount",
+    "rationale": "fraction reasoning",
+    "sourceDomain": "Mathematical Thinking"
+  },
+  {
+    "id": "mt_zkFbMLpu3U",
+    "name": "Comparing Capacity",
+    "title": "比较容积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_TcG90kS8nu",
+    "name": "Comparing durations",
+    "title": "比较时长",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_uhuxX8sg9f",
+    "name": "Comparing Lengths & Heights",
+    "title": "比较长度与高度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_NtJYlJdUe9",
+    "name": "Measurable Attributes of Objects",
+    "title": "物体有哪些可测量的量",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_-P1kdZhHbL",
+    "name": "Measuring mass and weight (age 4+)",
+    "title": "测量质量与重量",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_-vvVxpOHG2",
+    "name": "Ordering Events in Time",
+    "title": "按时间给事件排序",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_4lp_b5Pzik",
+    "name": "Capacity and volume",
+    "title": "容积与体积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_cPZwlUk8Nd",
+    "name": "Coin Values",
+    "title": "硬币的面值",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_bj1YCgNWUx",
+    "name": "Days, Weeks, Months & Years",
+    "title": "日、周、月与年",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt__N55B7u7HD",
+    "name": "Hours, minutes and seconds",
+    "title": "时、分、秒",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_KaF0SQvaiu",
+    "name": "Measuring length and height (age 5+)",
+    "title": "测量长度与高度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_zd0YkB3xNj",
+    "name": "Measuring mass and weight",
+    "title": "测量质量与重量",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_0XxyaQLRhn",
+    "name": "Telling Time: Hours and Half Hours",
+    "title": "认识整时与半时",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_AF2BeFQwfX",
+    "name": "Adding money and giving change",
+    "title": "计算总价与找零",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_FSLJbKkryb",
+    "name": "Australian coins and simple purchases",
+    "title": "澳大利亚硬币与购物",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_DOe893F6gN",
+    "name": "Choosing measurement units",
+    "title": "选择测量单位",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_BFJ-ch_8QU",
+    "name": "Comparing and ordering measurements",
+    "title": "比较与排列测量结果",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_bnwHo5wfCD",
+    "name": "Comparing mass and capacity indirectly",
+    "title": "间接比较质量与容积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_skYly2Qm01",
+    "name": "Measuring length",
+    "title": "测量长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_cqSf213hSa",
+    "name": "Measuring length (age 6+)",
+    "title": "测量长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_6J1wmCWf41",
+    "name": "Money Addition & Subtraction",
+    "title": "金额的加减法",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_2XDGT5tei1",
+    "name": "Number of minutes in an hour",
+    "title": "一小时有多少分钟",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_pbuhUQJjtt",
+    "name": "Pounds & Pence Notation",
+    "title": "英镑与便士的写法",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_6XCURuNwPw",
+    "name": "Sequence intervals of time",
+    "title": "排列时间间隔",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_HNOPGJYiRK",
+    "name": "Telling time to 5 minutes",
+    "title": "读时间：精确到5分钟",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_DLcEzmmj2r",
+    "name": "Addition and subtraction word problems",
+    "title": "加减法应用题",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_4m8BimI4G5",
+    "name": "a.m. and p.m. times",
+    "title": "上午与下午的时间",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_6oxQPNLHNv",
+    "name": "Calculating with measurements",
+    "title": "带测量单位的计算",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_xWg0lI_gG4",
+    "name": "Comparing lengths by measuring",
+    "title": "通过测量比较长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_4emC463IyW",
+    "name": "Comparing Time Durations",
+    "title": "比较经过的时间",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_OzRZ89GrQW",
+    "name": "Estimating Lengths",
+    "title": "估计长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_Jz9UuT8BXW",
+    "name": "Fractions of time and events",
+    "title": "时间与事件中的分数",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_6_O6THdEDK",
+    "name": "Giving Change",
+    "title": "找零钱",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_e4x3l2JeLI",
+    "name": "Measuring length (age 7+)",
+    "title": "测量长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_wE7-Gs9ENL",
+    "name": "Measuring Perimeters",
+    "title": "测量周长",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_mayItsxMUu",
+    "name": "Measuring & Plotting Lengths",
+    "title": "测量并记录长度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_jHv4BgRK8B",
+    "name": "Measuring with different units",
+    "title": "使用不同单位测量",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_8cs4YPkp23",
+    "name": "Money transactions in dollars",
+    "title": "以元为单位的交易",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_3tz3Otap5j",
+    "name": "Money word problems",
+    "title": "购物应用题",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_MgsDabdnr1",
+    "name": "Quarter past and quarter to",
+    "title": "几点一刻与差一刻",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_5J2quSTspi",
+    "name": "Roman numeral and 24-hour clocks",
+    "title": "罗马数字钟面与24时制",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_e7tLi9SCIE",
+    "name": "Smaller units for accuracy",
+    "title": "用更小的单位提高精度",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_UNzojLkNdm",
+    "name": "Time to the nearest minute",
+    "title": "读出最接近的分钟",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_EXlmTURK_o",
+    "name": "Time Units and Calendar Facts",
+    "title": "时间单位与日历",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_tVvZVWO5d6",
+    "name": "Using a calendar",
+    "title": "使用日历",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_WfrE_4r-kY",
+    "name": "12-hour and 24-hour time",
+    "title": "12时制与24时制",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_y1n0Zwhoca",
+    "name": "Area (age 8+)",
+    "title": "认识面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_AQo4u7O4sM",
+    "name": "Area and the distributive property",
+    "title": "用面积理解分配律",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_Jvvh5P06NV",
+    "name": "Area by Tiling",
+    "title": "铺满方格来求面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_eMtV6tBSJm",
+    "name": "Area of compound shapes",
+    "title": "组合图形的面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_GzcJEVkNRn",
+    "name": "Area of rectangles by multiplication",
+    "title": "用乘法求长方形面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_d8al9JcajP",
+    "name": "Converting measurement units",
+    "title": "测量单位换算",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_9L5qyBYmg-",
+    "name": "Dollars and cents",
+    "title": "元与分的换算",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_IL86kadLSS",
+    "name": "Elapsed time problems",
+    "title": "经过时间的问题",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_mFJ-2ZF6Tk",
+    "name": "Estimating and comparing money",
+    "title": "估算与比较金额",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_ghK1mnEstc",
+    "name": "Halves and quarters (age 8+)",
+    "title": "一半与四分之一",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_-af65bxfdp",
+    "name": "Measuring Liquids & Masses",
+    "title": "测量液体与质量",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_WtcFrxGOgw",
+    "name": "Perimeters of polygons",
+    "title": "多边形的周长",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_6xNmQLzuqm",
+    "name": "Understanding Area",
+    "title": "理解面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_eiB3-6pu6a",
+    "name": "Area and perimeter of rectangles",
+    "title": "长方形的面积与周长",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_Zks8xyInSG",
+    "name": "Converting measurement units (age 9+)",
+    "title": "测量单位换算",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_d7XktBQPxm",
+    "name": "Counting Unit Cubes",
+    "title": "数单位立方体",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_NSC3LT_-ch",
+    "name": "Estimating capacity",
+    "title": "估计容积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_5bmrA-0pBi",
+    "name": "Estimating money totals",
+    "title": "估计总价",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_5HV4mbgSGH",
+    "name": "Fractions on a number line",
+    "title": "数轴上的分数",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_42QD6nYjiZ",
+    "name": "Measurement Line Plots",
+    "title": "用点图表示测量数据",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_p6MhZJYYPN",
+    "name": "Metric & Imperial Conversion",
+    "title": "公制与英制换算",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_n0AlyLQwC9",
+    "name": "Perimeter of Compound Shapes",
+    "title": "组合图形的周长",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_SOM6Imm2sO",
+    "name": "Reading between scale marks",
+    "title": "读出刻度之间的数值",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_2yas4Unc8o",
+    "name": "Telling time to the minute (age 9+)",
+    "title": "读时间：精确到分钟",
+    "pack": "time",
+    "rationale": "time measurement",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_IuHa5UI5od",
+    "name": "What volume means",
+    "title": "体积表示什么",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_ML5t7n2-U8",
+    "name": "Area of Triangles & Parallelograms",
+    "title": "三角形与平行四边形面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_Qe2PsFmSAH",
+    "name": "Budgets and best buys",
+    "title": "预算与购物选择",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_2VpdPjvewx",
+    "name": "Decimal place value",
+    "title": "小数的数位与运用",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_SqhXQhAEUf",
+    "name": "Measurement Conversions",
+    "title": "测量单位的转换",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_3tPI0HqqcN",
+    "name": "Miles & Kilometres",
+    "title": "英里与千米",
+    "pack": "units",
+    "rationale": "units, scales and comparison",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_MJZA90uc6H",
+    "name": "Perimeter (age 10+)",
+    "title": "周长",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_5TBUFnCy5-",
+    "name": "Volume as additive",
+    "title": "体积可以相加",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_nTL-owFJTF",
+    "name": "Volume of cuboids",
+    "title": "长方体的体积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_i2-QaXbyzB",
+    "name": "Area by splitting shapes",
+    "title": "分割图形求面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_oMkQQ2O-ML",
+    "name": "Discounts, GST and balances",
+    "title": "折扣、消费税与余额",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_mMDpLugX2X",
+    "name": "Spreadsheets for money problems",
+    "title": "用电子表格解决金额问题",
+    "pack": "money",
+    "rationale": "money context",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_tegkuJA5gM",
+    "name": "Surface area using nets",
+    "title": "用展开图求表面积",
+    "pack": "area",
+    "rationale": "area and boundary",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_IlDaxVr60U",
+    "name": "Volume with fraction lengths",
+    "title": "边长为分数的体积",
+    "pack": "volume",
+    "rationale": "volume and capacity",
+    "sourceDomain": "Measurement"
+  },
+  {
+    "id": "mt_LpSuPgL31x",
+    "name": "Division as equal sharing",
+    "title": "平均分与除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_GRWwTDZ3wD",
+    "name": "Arrays for multiplication",
+    "title": "用排列方阵表示乘法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_PZ909yPrEC",
+    "name": "Multiplication as repeated addition",
+    "title": "乘法是相同加数的和",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_1GDEHyEZYH",
+    "name": "Sharing and grouping on screen",
+    "title": "用数字工具平均分与分组",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_C9ZfT-4cgn",
+    "name": "Commutative Multiplication",
+    "title": "乘法交换律",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_wh3UqnWsa7",
+    "name": "Multiplication as repeated addition (age 6+)",
+    "title": "乘法是相同加数的和",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_0u4KLbvBa1",
+    "name": "Odd and even numbers",
+    "title": "奇数与偶数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_zOWwLxa77y",
+    "name": "Reading ×, ÷, and = Symbols",
+    "title": "认识乘号、除号与等号",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_qUjW0N1cYO",
+    "name": "Sharing and grouping problems",
+    "title": "平均分与分组问题",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_HhuSDxwDNM",
+    "name": "Times tables",
+    "title": "乘法口诀与乘法表",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_B1zj1RwQ3a",
+    "name": "Arrays for multiplication (age 7+)",
+    "title": "用排列方阵表示乘法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_EmR5n58jZt",
+    "name": "Multi-Step Multiply & Divide",
+    "title": "多步乘除问题",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_UTnDKQkVX5",
+    "name": "Rows & Columns in Rectangles",
+    "title": "长方形中的行与列",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_wQ89AEXhz3",
+    "name": "Times tables (age 7+)",
+    "title": "乘法口诀与乘法表",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_DyGBW3ZHh3",
+    "name": "Written Multiplication & Division",
+    "title": "笔算乘法与除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_K5jM7vlVhA",
+    "name": "All times tables to 12×12",
+    "title": "12×12以内的乘法表",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_GDG9_SZmsO",
+    "name": "Division as Unknown Factor",
+    "title": "把除法看成求未知因数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_nZkL5-XjRX",
+    "name": "Factor Pairs & Commutativity",
+    "title": "因数对与交换律",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_WX30dzi4dt",
+    "name": "Fluent multiplication and division facts",
+    "title": "熟练使用乘除法事实",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_pjfmCMMPjO",
+    "name": "Mental multiplication and division",
+    "title": "乘除法口算",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_Zdv-b-iW5K",
+    "name": "Multiplication and Division Word Problems",
+    "title": "乘除法应用题",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_AR-K72OIIO",
+    "name": "Multiply & Add Problems",
+    "title": "乘法与加法结合的问题",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_isojCL9yy-",
+    "name": "Multiplying by Tens",
+    "title": "乘整十数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_w6MxaaoMXZ",
+    "name": "Patterns in Times Tables",
+    "title": "乘法表中的规律",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_Lb2ZnMdkYR",
+    "name": "Properties of Operations",
+    "title": "运算性质",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_xZvDCYA5Ae",
+    "name": "Unknown in Multiplication & Division",
+    "title": "乘除法中的未知数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_iNdrM2-oJf",
+    "name": "What Division Means",
+    "title": "除法的意义",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_gtTl3R5buH",
+    "name": "What Multiplication Means",
+    "title": "乘法的意义",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_18fK9sQdIz",
+    "name": "Written Multiplication",
+    "title": "笔算乘法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_p-nbe0w_lf",
+    "name": "Division with remainders",
+    "title": "有余数的除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_FHIAv6dfhU",
+    "name": "Factors, multiples, and primes",
+    "title": "因数、倍数与质数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_0Wg5F97osg",
+    "name": "Factors, multiples, and primes (age 9+)",
+    "title": "因数、倍数与质数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_q9EaJc2FP8",
+    "name": "Long multiplication",
+    "title": "乘法竖式",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_8A3pZNOp7Z",
+    "name": "Mental multiplication and division (age 9+)",
+    "title": "乘除法口算",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_U4cIBXVug4",
+    "name": "Multiplicative Comparison",
+    "title": "用倍数比较",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_6-j1NO2ZUH",
+    "name": "Multiplicative Comparison",
+    "title": "用倍数比较",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_LlMl2PbaZe",
+    "name": "Multiplying and dividing",
+    "title": "乘法与除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_oxfxzbat3k",
+    "name": "Odd and even number rules",
+    "title": "奇数与偶数的规律",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_y1XCVsIelg",
+    "name": "Prime numbers",
+    "title": "质数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_A-FyLLLLzy",
+    "name": "Shape patterns",
+    "title": "图形规律",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_MCu_SNg_OW",
+    "name": "Short division with remainders",
+    "title": "简式除法与余数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_gxCIASSezX",
+    "name": "Square and cube numbers",
+    "title": "平方数与立方数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_ZOJ6EbdPOb",
+    "name": "Understanding fractions",
+    "title": "理解分数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_8jFSnXxqQD",
+    "name": "Brackets in Expressions",
+    "title": "算式中的括号",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_NmvuwVUFRS",
+    "name": "Calculators for multiplying and dividing",
+    "title": "用计算器进行乘除",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_SoDP1fSQEB",
+    "name": "Decimal place value",
+    "title": "小数乘整数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_FvEq4heNBx",
+    "name": "Dividing by two-digit numbers",
+    "title": "除数是两位数的除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_lU-2aTRB9f",
+    "name": "Division with Decimals",
+    "title": "商是小数的除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_WsM4EmdOLe",
+    "name": "Division with remainders (age 10+)",
+    "title": "有余数的除法",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_ilPrU0cbtT",
+    "name": "Estimation to check answers to calculations",
+    "title": "用估算检查计算结果",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_bZC-wqWX7Y",
+    "name": "Factor algorithms and spreadsheets",
+    "title": "寻找因数的步骤与工具",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_XLP1IM3Qbb",
+    "name": "Long multiplication (age 10+)",
+    "title": "乘法竖式",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_vmW2cb5c7A",
+    "name": "Mental calculation strategies",
+    "title": "口算策略",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_wPgpMJ0-PA",
+    "name": "Multiplying and dividing (age 10+)",
+    "title": "乘除10、100与1000",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_RXnyhCRYXA",
+    "name": "Multi-step problems: choosing operations",
+    "title": "多步问题：选择运算",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_jHgRQ4hR0g",
+    "name": "Order of operations",
+    "title": "运算顺序",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_QU5R7Aajy9",
+    "name": "Rounding Answers",
+    "title": "给答案取近似值",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_4WaKWECpcv",
+    "name": "Writing Number Sentences",
+    "title": "把数量关系写成算式",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_3m0pA-aeat",
+    "name": "Estimating to check decimals",
+    "title": "估算检查小数运算",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_xhoOWnhtHq",
+    "name": "Factors, multiples, and primes (age 11+)",
+    "title": "因数、倍数与质数",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_X5cypSGoGU",
+    "name": "Priority of operations",
+    "title": "运算的先后顺序",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_rxInpOQ74w",
+    "name": "Sign Rules for Multiplication",
+    "title": "正负数相乘的符号",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_VUQNveSYjQ",
+    "name": "Using inverse operations",
+    "title": "使用逆运算",
+    "pack": "groups",
+    "rationale": "grouping and multiplicative operations",
+    "sourceDomain": "Multiplication & Division"
+  },
+  {
+    "id": "mt_9IzhGUZ30z",
+    "name": "Number Words to Twenty",
+    "title": "20以内数的英文读法",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_dJOKkYMsCv",
+    "name": "Ordering numbers to 20",
+    "title": "排列20以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_x8TshvbbQT",
+    "name": "Reading and writing numbers to 100",
+    "title": "100以内数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_fR0UtsSREU",
+    "name": "Reading and writing numbers to 20",
+    "title": "20以内数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_xmmgAzxe5j",
+    "name": "The teen numbers",
+    "title": "十几的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_kw7xmp68rU",
+    "name": "10 More or 10 Less",
+    "title": "多10或少10",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_r0VXbfAmsH",
+    "name": "A Ten Is Ten Ones",
+    "title": "一个十是十个一",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_U0waNfD8PB",
+    "name": "Comparing and ordering numbers",
+    "title": "比较数并排序",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_QguIGVMB1o",
+    "name": "Numbers to 120 everywhere",
+    "title": "不同形式的120以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_76SPWvdI7r",
+    "name": "Number Words to 100",
+    "title": "100以内数的英文读法",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_kJGCjnuelW",
+    "name": "Place value understanding and number facts",
+    "title": "用数位理解运算",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_XV0B4kWwqL",
+    "name": "Reading and writing numbers to 120",
+    "title": "120以内数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_Bt-iORUzdO",
+    "name": "Renaming two-digit numbers",
+    "title": "两位数的不同表示",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_9L3NQqgqRd",
+    "name": "Representing numbers to 100",
+    "title": "表示100以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_zfy1gOEewd",
+    "name": "The multiples of 10",
+    "title": "10的倍数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_THl9GLxwoL",
+    "name": "The two digits of a two-digit number",
+    "title": "两位数的两个数位",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_izien3ZX51",
+    "name": "10 or 100 More or Less",
+    "title": "多或少10、100",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_8gy7uxRlF6",
+    "name": "A Hundred Is Ten Tens",
+    "title": "一百是十个十",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_HczwO1sr-y",
+    "name": "Numbers to 1000 on screen",
+    "title": "用数字工具探索千以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_hniI4E-OCE",
+    "name": "Odd or Even",
+    "title": "判断奇偶",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_AQcVRBddko",
+    "name": "Ordering Numbers to 1000",
+    "title": "排列1000以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_98c2qwEF7Q",
+    "name": "Place Value to 1000",
+    "title": "千以内的数位",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_VFsuftfvYM",
+    "name": "Reading and writing numbers to 1000",
+    "title": "1000以内数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_F_zEAJ8VIo",
+    "name": "Representing numbers to 1000",
+    "title": "表示1000以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_R2ccrI-nKD",
+    "name": "The multiples of 100",
+    "title": "100的倍数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_aPBzD28_mT",
+    "name": "The three digits of a three-digit number",
+    "title": "三位数的三个数位",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_9XVFje6Tyr",
+    "name": "1000 More or Less",
+    "title": "多1000或少1000",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_MHaiUd2FLA",
+    "name": "Comparing Large Numbers",
+    "title": "比较大数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_vXRzMbiPff",
+    "name": "Negative Numbers",
+    "title": "负数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_lC_Q5mSL_I",
+    "name": "Numbers to 10,000",
+    "title": "万以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_jY7uf0Cb7o",
+    "name": "Place value of each digit",
+    "title": "每个数字的位值",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt__sMrmOv3bx",
+    "name": "Place Value Problem-Solving",
+    "title": "用数位知识解决问题",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_JwP9QFv6gQ",
+    "name": "Reading and writing numbers (age 9+)",
+    "title": "数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_MewIRdzpzz",
+    "name": "Roman numerals to 100",
+    "title": "100以内的罗马数字",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_NLSfvB9vUl",
+    "name": "Rounding to 10, 100, 1000",
+    "title": "取整十、整百、整千的近似数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_tAtMET4EIU",
+    "name": "Counting forwards and backwards (age 9+)",
+    "title": "顺着数与倒着数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_1KkvzwYxbR",
+    "name": "Negative numbers in context",
+    "title": "生活中的负数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_QqG6IdmTSE",
+    "name": "Place Value × 10 Pattern",
+    "title": "相邻数位的10倍关系",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_To9HdLy8vq",
+    "name": "Roman numerals to 1000",
+    "title": "1000以内的罗马数字",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_5NwqN6pf_A",
+    "name": "Rounding Large Numbers",
+    "title": "大数的近似值",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_xMt1TLTs--",
+    "name": "Working with Large Numbers",
+    "title": "使用大数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt__casygEB85",
+    "name": "Decimal place value",
+    "title": "小数的近似数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_RVK655t391",
+    "name": "Measuring temperature",
+    "title": "测量温度",
+    "pack": "units",
+    "rationale": "measurement context",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_XNmGwNggdU",
+    "name": "Numbers to Ten Million",
+    "title": "千万以内的数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_HLUqHJ9Y7n",
+    "name": "Patterns with Powers of Ten",
+    "title": "10的幂与数位规律",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_EDgw64OmfA",
+    "name": "Place Value × 10 and ÷ 10",
+    "title": "数位之间乘10与除以10",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_Ac7oMWhyPw",
+    "name": "Reading and writing numbers (age 10+)",
+    "title": "数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_Gag_h98jWP",
+    "name": "Reading and writing numbers to 10,000,000",
+    "title": "千万以内数的读写",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_lNGpnILM5C",
+    "name": "Reading Decimal Places",
+    "title": "读懂小数的数位",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_RWUY7_IXvw",
+    "name": "Absolute value as distance",
+    "title": "用距离理解绝对值",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_U9sme87C32",
+    "name": "Decimal place value (age 11+)",
+    "title": "小数的数位与运用",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_PsylzZ9lHW",
+    "name": "Fractions on a number line",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "fractions as numbers",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_uDJY0X0hgo",
+    "name": "Fractions on a number line (age 11+)",
+    "title": "数轴上的分数",
+    "pack": "same-amount",
+    "rationale": "fractions as numbers",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_hCVPYlF-7Y",
+    "name": "Square and cube numbers",
+    "title": "平方数与立方数",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_VVn1IXjkzn",
+    "name": "Estimating by rounding",
+    "title": "用四舍五入估算",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_bO-njVOige",
+    "name": "Powers of Ten Notation",
+    "title": "10的幂的写法",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_b4lbTOJYwI",
+    "name": "Number Sets & Infinity",
+    "title": "数集与无穷",
+    "pack": "number-sense",
+    "rationale": "number representation and magnitude",
+    "sourceDomain": "Number Representation & Place Value"
+  },
+  {
+    "id": "mt_iFFKZd-Vgv",
+    "name": "Likelihood Language",
+    "title": "描述可能性",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_J4j7d3iAfg",
+    "name": "Simple Chance Experiments",
+    "title": "简单随机实验",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_xSgAgg9Ej_",
+    "name": "Equally Likely Outcomes",
+    "title": "等可能的结果",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_-bMnJcPJy8",
+    "name": "Experimental vs Theoretical",
+    "title": "实验结果与理论概率",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_dlg6i-Lw0I",
+    "name": "Independent and dependent events",
+    "title": "独立与相互影响的事件",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_UcGn2hjhYU",
+    "name": "Ordering Likelihoods",
+    "title": "给可能性排序",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_-c4Ca_nBzX",
+    "name": "Probability as a Fraction",
+    "title": "用分数表示概率",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_Zt30Gxi-qp",
+    "name": "Calculating Simple Probability",
+    "title": "计算简单概率",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_3fwYu7imd4",
+    "name": "Probabilities Sum to One",
+    "title": "所有结果的概率和为1",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_t0g2SlP404",
+    "name": "The 0-to-1 Probability Scale",
+    "title": "0到1之间的概率",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_XfyqXLqzpx",
+    "name": "Complementary events",
+    "title": "互补事件",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_sHJqh6UUya",
+    "name": "Experimental probability",
+    "title": "用实验估计概率",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_8DT3LXwwH-",
+    "name": "Simulating chance with digital tools",
+    "title": "用数字工具模拟随机事件",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_vmQJAtAFuy",
+    "name": "The Probability Scale",
+    "title": "概率的刻度",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_aCwj2PCoRV",
+    "name": "Probability models",
+    "title": "概率模型",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_1YwOCMMwD8",
+    "name": "Sets & Venn Diagrams",
+    "title": "集合与韦恩图",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_nzdtOLXWWa",
+    "name": "Simulating chance events",
+    "title": "模拟随机事件",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_GDtFU5fyUv",
+    "name": "Tree diagrams",
+    "title": "树状图",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_eSv_w46u6H",
+    "name": "Venn Diagrams and Counting Outcomes",
+    "title": "用韦恩图数结果",
+    "pack": "chance",
+    "rationale": "chance and uncertainty",
+    "sourceDomain": "Probability"
+  },
+  {
+    "id": "mt_ePXg_XyCKU",
+    "name": "Bar Models for Ratios",
+    "title": "用条形图表示比",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_ESgc4YBw-a",
+    "name": "Percentages (age 9+)",
+    "title": "百分数的应用",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_PNSyfH56eQ",
+    "name": "Calculating Percentages",
+    "title": "计算百分数",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_h0gJcSuwdL",
+    "name": "Ratio Problems",
+    "title": "比的应用题",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_2OtRUM_0zW",
+    "name": "Scale and similar shapes",
+    "title": "比例尺与相似图形",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_FnUJMXPUZX",
+    "name": "Understanding fractions",
+    "title": "理解分数",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_kLQOzZYrd5",
+    "name": "Compound Units",
+    "title": "复合单位",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_nOCPx5qw0Z",
+    "name": "Dividing Quantities by Ratio",
+    "title": "按比分配",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_xAf2bu9wYK",
+    "name": "One Quantity as a Fraction",
+    "title": "一个量占另一个量的几分之几",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_ALUrJpY0cZ",
+    "name": "Percentages as Fractions",
+    "title": "把百分数写成分数",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_ATYLKt0je-",
+    "name": "Proportional Reasoning Vocabulary",
+    "title": "比例推理的语言",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_FspV_imUGK",
+    "name": "Proportion Graphs",
+    "title": "比例关系的图像",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_XWSGuFW7It",
+    "name": "Ratio Notation",
+    "title": "比的写法",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_1badik7iKJ",
+    "name": "Scale drawings and maps",
+    "title": "比例图与地图",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_tpT9brpI6D",
+    "name": "Unit Conversions",
+    "title": "单位换算",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_CUJr8L5_Wn",
+    "name": "Area from scale drawings",
+    "title": "由比例图求面积",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_iEXqN48w3x",
+    "name": "Percentages (age 12+)",
+    "title": "百分数的应用",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_5mIcmKRCgA",
+    "name": "Proportion",
+    "title": "正比例与比例关系",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  },
+  {
+    "id": "mt_yK51ZnKA8m",
+    "name": "Ratio Notation and Relationships",
+    "title": "比的写法与关系",
+    "pack": "scaling",
+    "rationale": "ratio and proportional relationships",
+    "sourceDomain": "Ratio & Proportion"
+  }
+]

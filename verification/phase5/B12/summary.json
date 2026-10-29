@@ -1,0 +1,69 @@
+{
+  "batch": "B12",
+  "at": "2026-10-26T04:55:50.510389+00:00",
+  "technicalComplete": true,
+  "childTrials": 0,
+  "userAcceptance": "not claimed",
+  "counts": {
+    "availableNodes": 175,
+    "newNodes": 3,
+    "nodeTasks": 572,
+    "newNodeTasks": 14,
+    "sourceGoals": 529,
+    "newSourceGoals": 9,
+    "routes": 60,
+    "availableConnections": 107,
+    "connectionTasks": 214,
+    "newConnections": 6,
+    "newConnectionTasks": 12,
+    "localResearchSupplements": 20,
+    "remainingUnimplementedNodes": 412,
+    "remainingResearchGaps": 65
+  },
+  "unitChecks": 232,
+  "browserAssertions": 303,
+  "browserSuites": [
+    {
+      "file": "browser-final.json",
+      "assertions": 153
+    },
+    {
+      "file": "integration-final.json",
+      "assertions": 33
+    },
+    {
+      "file": "phase5-b11-integration-browser.json",
+      "assertions": 68
+    },
+    {
+      "file": "spatial-browser.json",
+      "assertions": 37
+    },
+    {
+      "file": "phase3-continuation-browser.json",
+      "assertions": 8
+    },
+    {
+      "file": "phase5-b09-readiness-browser.json",
+      "assertions": 4
+    }
+  ],
+  "coverageChecks": [
+    "build_content_plan.py --check",
+    "build_phase2_coverage.mjs --check",
+    "build_phase3_coverage.mjs --check",
+    "build_phase4_coverage.mjs --check",
+    "build_phase5_coverage.mjs --check"
+  ],
+  "runtime": "runtime-final.json",
+  "distBytes": 6170575,
+  "distMiB": 5.88,
+  "upstreamCommit": "a8719737ff86ef7940ba5feca11940de1204103e",
+  "newRuntimeDependencies": 0,
+  "nextBatch": {
+    "id": "B13",
+    "nodes": 24,
+    "researchGaps": 2,
+    "expectedCumulativeNodes": 199
+  }
+}

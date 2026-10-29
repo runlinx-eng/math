@@ -1,0 +1,11 @@
+{
+  "changedInputs": [
+    {
+      "path": "dist/exploration.js",
+      "before": "644980f9405ca12c6370c5d0a407f7d146df9acb1e3de77bd2bb32644be0ea65",
+      "after": "540d67238757c6b6b9884bb383c48f4d292638898e7b5b473177741acf7e6752"
+    }
+  ],
+  "unchangedInputs": 18,
+  "baselineContentUnchanged": true
+}

@@ -1,0 +1,34 @@
+{
+  "checks": [
+    "full current records round trip without dropping attempts",
+    "large record compresses below half the size",
+    "main state and pre-import snapshot coexist within browser quota",
+    "3D world reads every completed node from compressed storage",
+    "actual backup download is ordinary complete JSON",
+    "original explanation remains in actual downloaded backup",
+    "large backup import 1 preserves unique progress",
+    "large backup import 2 preserves unique progress",
+    "lesson reads compressed historical completed work",
+    "lesson saves its current position without quota error",
+    "read-edit-write retains all nodes, links and action history",
+    "read-edit-write retains original words",
+    "flat fallback can read the compressed state",
+    "compressed storage and decoder reopen offline",
+    "no runtime errors"
+  ],
+  "errors": [],
+  "capacity": {
+    "nodes": 486,
+    "connections": 638,
+    "characters": 10958562,
+    "bytes": 10975810,
+    "storedChars": 2073483,
+    "lossless": true,
+    "twoCopiesSaved": true,
+    "writeMs": 881,
+    "format": "math-storage/lzw16-v1"
+  },
+  "downloadBytes": 36459007,
+  "syntheticCompletedRecords": true,
+  "childTrial": false
+}

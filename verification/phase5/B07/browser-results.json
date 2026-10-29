@@ -1,0 +1,56 @@
+{
+  "checks": [
+    "tenexchange begins incomplete",
+    "tenexchange:0 opens",
+    "tenexchange:0 empty submission cannot complete",
+    "tenexchange:0 real controls complete",
+    "tenexchange:0 record valid",
+    "tenexchange:0 no horizontal overflow",
+    "tenexchange:1 opens",
+    "tenexchange:1 real controls complete",
+    "tenexchange:1 record valid",
+    "tenexchange:1 no horizontal overflow",
+    "tenexchange complete",
+    "tenexchange survives reload",
+    "twoplaces begins incomplete",
+    "twoplaces:0 opens",
+    "twoplaces:0 empty submission cannot complete"
+  ],
+  "errors": [],
+  "remote": [],
+  "current": "twoplaces:0",
+  "failed": "TypeError: Cannot read properties of null (reading 'u')",
+  "url": "http://127.0.0.1:43827/learn.html#twoplaces",
+  "body": "← 回到空间\n十颗、一条、两位数\n留到下次\n未完成\nX–01 ✓\n十颗装成一条，还是十颗吗\nX–02\n同一个4，站哪里很重要\nX–03\n只有整条，最后写什么\n同一个4，站哪里很重要\n试一试\n1\n2\n3\n收一收\n\n搭出来的数量还不对应。每条是十颗，每板是十条。\n\n整板 · 每板100\n空着\n\n0 板\n\n整条 · 每条10\n空着\n\n0 条\n\n散颗 · 每颗1\n空着\n\n0 颗\n\n＋ 一板\n−\n＋ 一条\n−\n＋ 一颗\n−\n十颗合一条\n拆开一条\n总量写成数字\n百的部分值多少\n十的部分值多少\n一的部分值多少\n↶ 回去试\n给一点帮助\n看看我的作品\n这次留下的记录",
+  "snapshot": {
+    "id": "twoplaces",
+    "view": "task",
+    "index": 0,
+    "summary": {
+      "completed": false,
+      "independent": false,
+      "done": 0,
+      "total": 3,
+      "cases": [
+        {
+          "complete": false,
+          "independent": false,
+          "attempts": 1
+        },
+        {
+          "complete": false,
+          "independent": false,
+          "attempts": 0
+        },
+        {
+          "complete": false,
+          "independent": false,
+          "attempts": 0
+        }
+      ],
+      "explanation": "missing"
+    },
+    "cube": null,
+    "extra": null
+  }
+}

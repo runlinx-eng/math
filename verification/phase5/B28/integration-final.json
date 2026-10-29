@@ -1,0 +1,42 @@
+{
+  "checks": [
+    "area retains both historical routes",
+    "volume retains both historical routes",
+    "445 unique nodes",
+    "three measurement directions",
+    "at most three choices and old E is present",
+    "fourth route is reachable",
+    "FJ contains two nodes",
+    "route survives refresh",
+    "overlapping units leave first error and support",
+    "two overlapping pieces are actual saved work",
+    "simulated next day shows exact question",
+    "unfinished overlapping pieces and original prose restored",
+    "later corrected pieces retained separately",
+    "question words restored",
+    "world camera restored",
+    "actual backup contains original pieces",
+    "repeat import keeps question and first error",
+    "import opens original question",
+    "all four B28 files cached",
+    "original work opens offline",
+    "offline measuring completes",
+    "first overlap remains supported",
+    "first overlap remains after correction",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v33",
+    "count": 177,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "wrong conversion displays actual shorter bar",
+    "wrong first conversion records support",
+    "correct conversion makes the bars equal",
+    "equal bars have visible feedback",
+    "editing removes stale success feedback",
+    "pending edit cannot reuse the previous conversion",
+    "corrected conversion completes with support retained",
+    "first simulated object is measured and recorded",
+    "editing invalidates the earlier recorded length",
+    "direct click places a point at the chosen value",
+    "desktop layout fits",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

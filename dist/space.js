@@ -1,0 +1,258 @@
+import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
+import {SpatialScene} from './spatial-scene.js';
+import {buildSpace,relationsFor,VIEW_KEY,LAYOUT_VERSION,parseView,objectKey} from './spatial-model.js';
+import {buildGlobalSpace} from './spatial-global.js';
+import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
+import {KEY,OLD_KEY,fresh,validate,migrateLegacy,merge,nodeState,evidenceSummary,PROGRESS,completionClass,completionSummary,backup,parseBackup,now} from './exploration-core.js';
+import {ACTIVITIES,activityIds} from './exploration-content.js';
+import {ROUTE_ID,ROUTE_TITLE,ROUTE_STEPS,routeStep} from './journey-model.js';
+
+import {LESSONS,ROUTES,ROUTE_SECTIONS,lessonForTopic,routeFor,routeForPack,routesForPack} from './learning/catalog.js';
+import {BRIDGES,sessionMeta,sessionRoute} from './learning/bridges.js';
+import {lessonSummary} from './learning/state.js';
+import {dayKey,dailySummary,continuation,pendingQuestions,addQuestion,resumeQuestion,questionAction,questionDone} from './learning/daily.js';
+import {askQuestion} from './learning/question-ui.js';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const date=s=>new Date(s).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const button=(action,text,attrs='',css='soft-button')=>`<button type="button" class="${css}" data-action="${action}" ${attrs}>${text}</button>`;
+const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
+const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
+let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
+const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
+let worldLayout='network';
+const panels=new Map(),visits=[];
+let renderedDay=null,activeRouteId=null;
+let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
+const displayTitle=o=>o?.kind==='node'&&LESSONS[lessonForTopic(o.id)]?.title||o?.kind==='pack'&&routesForPack(o.id).length===1&&routeForPack(o.id)?.title||o?.kind==='node'&&routeStep(o.id)?.title||o?.key==='pack:same-amount'&&ROUTE_TITLE||o?.title;
+
+function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
+function warning(message){$('#storage-warning').textContent=message;$('#storage-warning').hidden=false;}
+function readLearning(){
+  try {const raw=readStored(KEY);if(raw)learning=validate(JSON.parse(raw),atlas);else learning=fresh();return learning;}
+  catch {readBlocked=true;warning('原有学习记录暂时无法读取，已停止覆盖。空间仍可浏览，请先保留原始记录。');return learning;}
+}
+function mutateLearning(fn){if(readBlocked)return false;readLearning();if(readBlocked)return false;try{const working=structuredClone(learning);fn(working);const next=validate(working,atlas);writeStored(KEY,JSON.stringify(next));learning=next;refreshLearning();return true;}catch(error){warning('还没保存成功，原记录已保留。'+error.message);return false;}}
+function questionComposer(context={}){const v=scene.snapshot();const world={position:v.position,target:v.target,selected:v.selected,...(worldLayout==='network'?{layout:'network',networkView:v.networkView,networkVersion:v.networkVersion,...(v.cameraZoom?{cameraZoom:v.cameraZoom}:{})}:{})};askQuestion(text=>{const ok=mutateLearning(s=>addQuestion(s,text,{...context,world}));if(ok)toast('已留下，下次从这里继续。');return ok;});}
+function renderContinue(){const card=$('#continue-card');if(!scene)return;card.hidden=journeyOpen||!!scene.selected||!!panels.size;if(card.hidden)return;const next=continuation(learning),q=next.kind==='question'&&learning.daily.questions.find(q=>q.id===next.questionId),missing=q&&!q.scene&&!lessonForTopic(q.nodeId);card.innerHTML=`<small>${q?'接着上次的问题':'接着试一试'}</small><p>${esc(next.title)}</p>${missing?'<small>这里还没有对应活动，问题先留着。</small>':''}<div>${button('continue',q?(missing?'回到这个位置':'从这里继续'):'开始', '', 'primary-button')}${q?button('question-later','先放着',`data-id="${q.id}"`,'plain-button'):''}</div>`;}
+function questionList(){closePopovers();const el=$('#questions-popover');el.hidden=false;const list=learning.daily.questions,render=q=>`<article><p>${esc(q.text)}</p><div>${button('resume-question',q.scene?'回到当时':'回到这个位置',`data-id="${q.id}"`)}${!questionDone(q)?button('question-finish','想明白了',`data-id="${q.id}"`,'plain-button'):'<small>✓ 完成</small>'}</div></article>`;el.innerHTML=`<div class="popover-heading"><strong>留下的问题</strong>${button('close-popover','×','aria-label="关闭问题"','plain-button')}</div>${[...list].reverse().filter(q=>!questionDone(q)).map(render).join('')||'<p class="quiet">还没有待继续的问题。</p>'}${list.some(questionDone)?`<details><summary>已经想明白的</summary>${[...list].reverse().filter(questionDone).map(render).join('')}</details>`:''}`;}
+function resume(id){readLearning();const pending=learning.daily.questions.find(q=>q.id===id),needed=pending?.world?(pending.world.layout||'classic'):null;if(needed&&needed!==worldLayout){try{sessionStorage.setItem(PENDING_RESUME_KEY,id);}catch{toast('暂时无法切换回问题所在的空间。');return;}switchWorld(needed,true);return;}let q;if(!mutateLearning(s=>q=structuredClone(resumeQuestion(s,id))))return;closePopovers();if(journeyOpen)closeJourney(false);if(q.world){scene.restore(q.world);setHash(q.world.selected);}else if(q.nodeId)scene.focus('node:'+q.nodeId,{animate:false});if(q.scene){scene.select('node:'+q.nodeId);setHash('node:'+q.nodeId);openLearningLesson(q.scene.record.id,{restore:!!q.world,questionId:id});}else if(lessonForTopic(q.nodeId)){scene.select('node:'+q.nodeId);openLearningLesson(lessonForTopic(q.nodeId),{restore:!!q.world,questionId:id});}else{toast('问题和位置都还在。这里还没有对应活动，可以继续观察。');renderFocus();renderLocation();renderContinue();}scheduleSave();}
+function continueLearning(){readLearning();const next=continuation(learning);if(next.kind==='question')resume(next.questionId);else if(next.kind==='session'){choose('node:'+sessionMeta(next.sessionId).topicId,{openLesson:false});openLearningLesson(next.sessionId);}else choose('pack:'+next.packId);}
+
+function refreshLearning(){renderedDay=dayKey();if(scene){const daily=dailySummary(learning,atlas);scene.setPersonalProgress(daily.completedConnections);if(worldLayout==='network'){const scenes=new Set(),questions=new Set();for(const [id,record]of Object.entries(learning.lessons))if(LESSONS[id]&&!lessonSummary(record).completed&&Object.keys(record.models||{}).length)scenes.add(LESSONS[id].topicId);for(const id of activityIds){const record=learning.activities[id];if(record&&nodeState(learning,ACTIVITIES[id].topicId).progress!=='completed'&&(Object.keys(record.models||{}).length||record.draft||record.notes?.length||record.observations?.length))scenes.add(ACTIVITIES[id].topicId);}for(const q of learning.daily.questions){if(questionDone(q))continue;const node=q.nodeId||(q.world?.selected?.startsWith('node:')?q.world.selected.slice(5):null);if(node&&space.nodes.has(node))questions.add(node);}scene.setPersonalMarkers(scenes,questions);}$('#today-progress').textContent=`今天 +${daily.nodes.length} 个点 · +${daily.connections.length} 条连接`;$('#today-progress').hidden=!daily.nodes.length&&!daily.connections.length;}scene?.refresh(id=>nodeState(learning,id),selectedFilter);const {done,total}=completionSummary(learning);$('#overall-count').textContent=`${done} / ${total}`;const meter=$('#overall-progress');meter.max=total||1;meter.value=done;meter.setAttribute('aria-label',`已开放任务，完成 ${done} / ${total}`);for(const panel of panels.values()){if(panel.tab==='records')renderPanelSection(panel,'records',{activate:false});}renderFocus();renderContinue();}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveView,250);}
+function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...scene.snapshot(),activePanel,journeyOpen,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(worldLayout==='network'?NETWORK_VIEW_KEY:VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
+function switchWorld(mode,forQuestion=false){if(!forQuestion&&(journeyOpen||panels.size)){toast('先回到空间并收起工作面，再切换视图。');return;}saveView();try{writeStored(WORLD_MODE_KEY,mode);}catch{warning('视图选择暂时无法保存，学习记录没有改变。');return;}const url=new URL(location.href);url.searchParams.set('world',mode);url.hash='#space';location.assign(url.href);}
+function remember(){if(!scene)return;const view=scene.snapshot();if(visits.length&&JSON.stringify(visits.at(-1))===JSON.stringify(view))return;visits.push(view);if(visits.length>30)visits.shift();$('#back-button').disabled=false;}
+function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
+function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
+function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'}={}){const object=space.byKey.get(key);if(!object)return;if(journeyOpen)closeJourney(false);if(history)remember();closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.focus(key,{animate});setHash(key);
+  if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
+  else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
+  if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
+  renderFocus();renderLocation();scheduleSave();
+}
+function overview(){if(journeyOpen)closeJourney(false);remember();closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.overview();setHash(null);renderFocus();renderLocation();scheduleSave();}
+function back(){if(journeyOpen)closeJourney(false);const previous=visits.pop();if(!previous)return;scene.restore(previous,true);activeRouteId=scene.learningRouteId;setHash(previous.selected);$('#back-button').disabled=!visits.length;renderFocus();renderLocation();scheduleSave();}
+function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=o?({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]:'全貌';}
+function renderNetworkGuide(){
+  if(!scene||worldLayout!=='network')return;
+  const mode=scene.networkView,current=scene.global;
+  document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.selected?.split(':')[0]||'overview';
+  $('.tool-rail [data-action="front"]').textContent='归位';
+  $('#network-view-title').textContent=current?(mode==='map'?'顶视 · 主题与分组':mode==='relations'?'侧视 · 前置层次':'立体总览 · 整张知识地图'):'保存时的空间';
+  $('#network-view-description').textContent=current?(mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入新版整体地图。';
+  for(const b of document.querySelectorAll('[data-action="network-view"]')){const match=b.dataset.view==='side'?'relations':b.dataset.view==='top'?'map':'oblique';b.setAttribute('aria-pressed',String(current&&match===mode));b.disabled=false;b.title='只转动镜头，知识点保持原位';}
+}
+function networkRelations(o,relations){
+  const sections=['before','after'].map(side=>{const list=relations.filter(l=>side==='before'?l.to===o.key:l.from===o.key);return `<section><h3>${side==='before'?'这里会用到':'还会连到哪里'} · ${list.length}</h3>${list.map(l=>{const other=space.byKey.get(side==='before'?l.from:l.to),edge=l.edges[0],bridge=Object.values(BRIDGES).find(b=>b.fromTopicId===edge.prerequisiteId&&b.topicId===edge.topicId);return `<div class="network-relation">${button('choose',`${esc(displayTitle(other))}<small>${esc(space.packs.get(other.packId).title)} · ${edge.strength==='hard'?'源图标为关键基础':'源图标为辅助关联'}</small>`,`data-key="${other.key}"`,'relation-button')}${edge.reason?`<details><summary>来源原文</summary><p>${esc(edge.reason)}</p></details>`:''}${bridge?button('bridge',`一起做：${esc(bridge.title)} · ${lessonSummary(learning.daily.bridges[bridge.id]).completed?'✓ 完成':'○ 未完成'}`,`data-id="${bridge.id}"`,'plain-button'):''}</div>`;}).join('')||'<p class="quiet">源图没有列出这个方向的联系。</p>'}</section>`;});
+  return `<details class="network-relations"><summary>展开 ${relations.length} 条直接联系</summary>${sections.join('')}</details>`;
+}
+function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||journeyOpen||panels.has(o.id)){card.hidden=true;return;}
+  card.dataset.kind=o.kind;if(worldLayout==='network')card.style.visibility='visible';card.style.setProperty('--object-color',o.color);
+  const relations=relationsFor(space,o.key),before=relations.filter(e=>e.to===o.key).length,after=relations.filter(e=>e.from===o.key).length;
+  let body='';
+  if(o.kind==='node'){const state=nodeState(learning,o.id),legacy=activityFor(o.id),lesson=lessonForTopic(o.id),a=legacy||lesson,markers=worldLayout==='network'?[scene.savedScenes?.has(o.id)?'有未完现场':'',scene.queuedQuestions?.has(o.id)?'有待续问题':''].filter(Boolean):[];body=`${a?`<p class="status-text"><i class="status-dot ${completionClass(state)}"></i>${PROGRESS[state.progress]}</p>`:''}<div class="focus-actions">${button('open',a?(worldLayout==='network'&&lesson&&learning.lessons[lesson]?'继续活动':'开始'):'查看联系',`data-id="${o.id}"`,'primary-button')}${button('bookmark',learning.bookmarks.includes(o.id)?'已收藏':'收藏',`data-id="${o.id}"`)}${worldLayout==='network'&&legacy&&learning.activities[legacy]?button('open-legacy','打开早期现场',`data-id="${o.id}"`):''}${worldLayout==='network'&&scene.queuedQuestions?.has(o.id)?button('questions','看看留下的问题'):''}</div><p class="quiet">${markers.length?markers.join(' · '):a?'这里已有动手活动':'动手活动准备中，可以先看联系'}</p>${worldLayout==='network'?`<p class="network-concept">数学想法：${esc(o.title)}</p><div class="activity-forms">${activityForms(o.id).map(f=>`<span>${activityGlyph(f)}${ACTIVITY_FORMS[f].label}</span>`).join('')}</div>${relations.length?'<p class="network-focus-key"><span class="before">基础 → 这里</span><span class="after">这里 → 后续</span></p>':''}${button('network-view','从侧面看整张图','data-view="side"','soft-button')}${networkRelations(o,relations)}`:''}`;}
+  else if(o.kind==='pack'&&routeForPack(o.id)){const routes=routesForPack(o.id),route=routes.find(r=>r.id===activeRouteId)||(routes.length===1?routes[0]:null);if(!route){const sections=ROUTE_SECTIONS.filter(s=>routes.some(r=>routeSection(r,o.id)===s.id)),section=sections.find(s=>s.id===scene.learningSectionId);if(sections.length&&!section)body=`<p class="quiet">先挑一个想试的方向。</p><div class="route-choices">${sections.map(s=>button('choose-section',esc(s.title),`data-id="${s.id}"`,'route-choice route-set')).join('')}</div>`;else{const allChoices=section?routes.filter(r=>routeSection(r,o.id)===section.id):routes,page=Math.min(scene.learningRoutePage||0,Math.floor((allChoices.length-1)/3)),choices=allChoices.slice(page*3,page*3+3);body=`<p class="quiet">${section?esc(section.title):'选一条小路线开始，也可以随时换。'}</p><div class="route-choices">${choices.map(r=>button('choose-route',`${esc(r.title)}<small>${r.ids.length} 个想法</small>`,`data-id="${r.id}"`,'route-choice route-set')).join('')}</div>${allChoices.length>3?`<div class="route-pages">${button('route-page','上一组',`data-page="${page-1}" ${page===0?'disabled':''}`,'plain-button')}${button('route-page','再看看',`data-page="${page+1}" ${(page+1)*3>=allChoices.length?'disabled':''}`,'plain-button')}</div>`:''}${section?button('choose-section','换个方向','data-id=""','plain-button'):''}`;}}else{const links=Object.values(BRIDGES).filter(b=>route.ids.includes(b.to));body=`<p class="quiet">${esc(route.title)} · 可以跳着看</p><ol class="route-choices">${route.ids.map((id,i)=>{const n=LESSONS[id],status=nodeState(learning,n.topicId).progress==='completed'?'✓ 完成':'○ 未完成';return `<li>${button('choose',`<span class="route-number">${route.id}–${String(i+1).padStart(2,'0')}</span><span>${n.title}<small>${status}</small></span>`,`data-key="node:${n.topicId}"`,'route-choice')}</li>`;}).join('')}</ol>${links.length?`<details class="route-links"><summary>把想法连起来</summary>${links.map(b=>button('bridge',`<small>${LESSONS[b.from].title} ↔ ${LESSONS[b.to].title}</small>${esc(b.title)}<small>${esc(b.summary)}</small><small>${lessonSummary(learning.daily.bridges[b.id]).completed?'✓ 完成':'○ 未完成'}</small>`,`data-id="${b.id}"`,'bridge-choice')).join('')}</details>`:''}${routes.length>1?button('choose-route','换条小路线','data-id=""','plain-button'):''}`;}body+=`<div class="focus-actions">${button('list-pack','查看这里的全部知识',`data-id="${o.id}"`,'plain-button')}</div>`;}
+
+  else if(o.kind==='pack'){body=`<p>${esc(o.question)}</p><p class="quiet">${o.nodeIds.length} 个想法${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','看看这里的想法',`data-id="${o.id}"`)}</div>`;}
+  else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
+  card.innerHTML=`<div class="focus-heading"><span class="overline">${({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]}</span>${button('deselect','×','aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2>${body}${relations.length?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;
+}
+function openJourney(step,{restore=false}={}){
+  for(const id of [...panels.keys()])closePanel(id);
+  scene.setRelations('off');
+  journeyOpen=true;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
+  $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');frame.src=`journey.html#${step}`;
+  if(!restore){const n=space.nodes.get(ROUTE_STEPS[step-1].id),{right,direction}=scene.basis();const target=n.position.map((x,i)=>x+right.getComponent(i)*(innerWidth>800?155:0));const d=innerWidth>800?620:800;scene.fly(target.map((x,i)=>x+direction.getComponent(i)*d),target,650);}
+  scheduleSave();
+}
+function openLearningLesson(id,{restore=false,questionId=null}={}){
+ if(!sessionMeta(id))return;for(const key of [...panels.keys()])closePanel(key);
+ activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations('off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
+ $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';$('#journey-frame').src=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
+ if(!restore){const n=space.nodes.get(sessionMeta(id).topicId),{right,direction}=scene.basis();const target=n.position.map((x,i)=>x+right.getComponent(i)*160);scene.fly(target.map((x,i)=>x+direction.getComponent(i)*720),target,650);}
+ renderLocation();scheduleSave();
+}
+
+function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}scheduleSave();}
+function openSearch(packId=null){searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'想靠近哪个想法？';renderSearch();$('#search-input').focus();}
+function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
+  if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
+  else if(!q)matches=[...space.themes.values(),...learning.bookmarks.map(id=>space.nodes.get(id))];
+  else matches=space.objects.filter(o=>(o.title+' '+(o.name||'')+' '+o.id).toLowerCase().includes(q));
+  if(searchPack&&q)matches=matches.filter(o=>(o.title+' '+(o.name||'')+' '+o.id).toLowerCase().includes(q));
+  $('#search-results').innerHTML=matches.length?matches.slice(0,searchLimit).map(o=>button('choose',`<span>${esc(displayTitle(o))}<small>${o.kind==='node'?`${space.packs.get(o.packId).title}${(activityFor(o.id)||lessonForTopic(o.id))?' · '+PROGRESS[nodeState(learning,o.id).progress]:''}`:o.kind==='pack'?'知识簇':'主题区域'}</small></span><span aria-hidden="true">↗</span>`,`data-key="${o.key}"`,'search-result')).join(''):'<p class="empty-search">还没找到这个名字，可以换个词。</p>';
+  $('#search-count').textContent=q||searchPack?`找到 ${matches.length} 个，显示 ${Math.min(searchLimit,matches.length)} 个`:'选一个方向，或输入想找的名字';
+  $('#search-more').hidden=matches.length<=searchLimit;
+}
+function relationButtons(id){const links=relationsFor(space,objectKey('node',id));return ['before','after'].map(side=>{const list=links.filter(e=>side==='before'?e.to===objectKey('node',id):e.from===objectKey('node',id));return `<section class="panel-relations"><h3>${side==='before'?'这里会用到':'还会连到哪里'} <small>${list.length}</small></h3>${list.map(e=>{const other=space.byKey.get(side==='before'?e.from:e.to);return button('choose',`${esc(other.title)}<small>${space.packs.get(other.packId).title} · ${e.edges[0].strength==='hard'?'关键基础':'辅助关联'}</small>`,`data-key="${other.key}"`,'relation-button');}).join('')||'<p class="quiet">原图暂未列出这个方向的数学联系。</p>'}</section>`;}).join('');}
+function overviewContent(id){const n=space.nodes.get(id),activity=activityFor(id),s=nodeState(learning,id);return `<div class="panel-intro">${activity?`<span class="status-text"><i class="status-dot ${completionClass(s)}"></i>${PROGRESS[s.progress]}</span>`:''}<h2>${esc(n.title)}</h2><p>${activity?esc(ACTIVITIES[activity].goal):'这个想法的动手内容还在准备。可以沿着连接看看它与哪些想法有关。'}</p>${button('bookmark',learning.bookmarks.includes(id)?'已收藏':'收藏',`data-id="${id}"`)}</div>${relationButtons(id)}<details class="source-details"><summary>原始定义与目标</summary><p>${esc(n.name)}</p><p>${esc(n.description)}</p><ul>${n.evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul><p class="quiet">原始节点 ${esc(n.id)} · 来源 os-taxonomy。空间分类为本地组织。</p></details>`;}
+function recordContent(id){const k=activityFor(id),a=k&&learning.activities[k],s=nodeState(learning,id);if(!a)return `<div class="panel-intro"><h2>留在这里的足迹</h2><p>${learning.visited[id]?`看过联系 · ${date(learning.visited[id])}`:'这里还没有探索记录。'}</p><p class="quiet">打开、浏览和收藏会保留；它们不代表已经理解。</p></div>`;
+  const e=evidenceSummary(a);return `<div class="panel-intro"><h2>留在这里的足迹</h2><p>${PROGRESS[s.progress]} · ${e.demonstrated?'有独立操作与迁移证据':e.needsSupport?'还有需要支持的地方':'正在收集理解证据'}</p><p class="quiet">解释单独保存，内容待确认。</p></div>${e.kinds.map(k=>`<div class="record-item"><b>${k.kind==='construct'?'自己的构造':'换情境的尝试'}</b><p>${({none:'还没有提交作品',independent:'有本次独立操作证据',supported:'有支持的尝试'})[k.status]}${k.attempts?` · ${k.attempts} 次提交`:''}</p></div>`).join('')}<div class="record-item"><b>自由探索</b><p>保存了 ${a.observations.length} 次发现</p></div>${a.notes.map(n=>`<div class="record-item"><small>${date(n.at)} · 解释待确认</small><p>${esc(n.text)}</p></div>`).join('')}${button('journal','查看完整作品与备份','','soft-button')}`;
+}
+function renderPanelSection(panel,tab,{activate=true}={}){panel.tab=tab;for(const [key,section]of Object.entries(panel.sections))section.hidden=key!==tab;panel.el.querySelectorAll('[data-panel-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.panelTab===tab)));
+  if(tab==='overview')panel.sections.overview.innerHTML=overviewContent(panel.id);
+  if(tab==='records')panel.sections.records.innerHTML=recordContent(panel.id);
+  if(tab==='activity'&&!panel.iframe){const key=activityFor(panel.id),frame=document.createElement('iframe');frame.title=ACTIVITIES[key].title;frame.className='activity-frame';frame.src=`v2.html?embedded=1#activity/${key}`;panel.sections.activity.append(frame);panel.iframe=frame;}
+  if(activate){panel.minimized=false;panel.el.classList.remove('minimized');}scheduleSave();scene.dirty=true;
+}
+function openPanel(id,{anchor=null,minimized=false,restore=false,tab=null,expanded=false}={}){if(!space.nodes.has(id))return;closePopovers();if(panels.has(id)){activePanel=id;panels.get(id).minimized=false;arrangePanels();return;}
+  if(panels.size===2){toast('已经展开两个工作面。关闭其中一个后，可以再打开新的。');return;}
+  const n=space.nodes.get(id),activity=activityFor(id),el=document.createElement('section');el.className='work-panel';el.dataset.node=id;el.setAttribute('aria-label',n.title+'的工作面');el.style.setProperty('--object-color',n.color);
+  el.innerHTML=`<header class="work-header"><span class="work-title" title="${esc(n.title)}">${esc(n.title)}</span><div>${button('resize-panel','放大',`data-id="${id}" aria-label="调整${esc(n.title)}工作面大小"`,'plain-button')}${button('minimize-panel','收起',`data-id="${id}"`,'plain-button')}${button('close-panel','×',`data-id="${id}" aria-label="关闭${esc(n.title)}工作面"`,'plain-button')}</div></header><nav class="work-tabs" aria-label="工作面内容">${[['overview','联系'],...(activity?[['activity','动手']]:[]),['records','记录']].map(([key,title])=>`<button type="button" data-panel-tab="${key}" data-id="${id}">${title}</button>`).join('')}</nav><div class="work-content"><div class="work-section" data-section="overview"></div>${activity?'<div class="work-section iframe-section" data-section="activity" hidden></div>':''}<div class="work-section" data-section="records" hidden></div></div>`;
+  const sections=Object.fromEntries([...el.querySelectorAll('[data-section]')].map(s=>[s.dataset.section,s]));
+  const p={id,el,sections,anchor:anchor||[...n.position],minimized,expanded,tab:'overview'};panels.set(id,p);activePanel=id;$('#workspaces').append(el);renderPanelSection(p,Object.hasOwn(sections,tab)?tab:activity?'activity':'overview');p.minimized=minimized;
+  if(!restore){mutateLearning(s=>{s.visited[id]??=now();s.openedPacks[n.packId]??=now();});scene.select(n.key);setHash(n.key);arrangePanels();}
+  renderWorkspaceButtons();renderFocus();scheduleSave();scene.dirty=true;
+}
+function closePanel(id){const p=panels.get(id);if(!p)return;p.el.remove();panels.delete(id);if(activePanel===id)activePanel=[...panels.keys()].at(-1)||null;renderWorkspaceButtons();renderFocus();scheduleSave();scene.dirty=true;}
+function renderWorkspaceButtons(){document.body.classList.toggle('has-workspaces',!!panels.size);const bar=$('#workspace-list');bar.hidden=!panels.size;bar.innerHTML=[...panels.values()].map(p=>button('locate-panel',esc(space.nodes.get(p.id).title),`data-id="${p.id}"`,p.id===activePanel?'workspace-chip active':'workspace-chip')).join('')+(panels.size===2?button('arrange','并排看','','workspace-chip'):'');}
+function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene.basis(),list=[...panels.values()],center=[0,0,0];for(const p of list){const n=space.nodes.get(p.id);n.position.forEach((x,i)=>center[i]+=x/list.length);}
+  const ratio=Math.max(1,.8/scene.camera.aspect),d=(list.length===1?600:890)*ratio;
+  const target=center.map((x,i)=>x+(list.length===1?right.getComponent(i)*105:0));
+  const width=d*Math.tan(20*Math.PI/180)*scene.camera.aspect;
+  list.forEach((p,i)=>{const offset=list.length===1?width*.41:(i===0?-1:1)*width*.52;p.anchor=target.map((x,j)=>x+right.getComponent(j)*offset+up.getComponent(j)*8);});
+  scene.fly(target.map((x,i)=>x+direction.getComponent(i)*d),target,850);renderWorkspaceButtons();scheduleSave();
+}
+function updateOverlays(){
+  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){card.style.left='30px';card.style.top=`${$('#network-guide').getBoundingClientRect().bottom+12}px`;}else{card.style.left=`${left}px`;card.style.top=`${docked?142:Math.max(110,Math.min(innerHeight-height-145,p.y-height*.25))}px`;}}}
+  const tethers=[];for(const p of panels.values()){
+    const projected=scene.project(p.anchor),source=scene.project(space.nodes.get(p.id).position),far=projected.distance>1450,compact=innerWidth<760;
+    const visible=projected.visible&&(!compact||activePanel===p.id);p.el.hidden=!visible;if(!visible)continue;
+    const minimized=p.minimized||far;p.el.classList.toggle('minimized',minimized);p.el.classList.toggle('distant',far);
+    const width=minimized?230:Math.min(panels.size===2&&!compact?Math.min(innerWidth*.42,p.expanded?680:560):p.expanded?720:520,innerWidth-32),height=minimized?46:Math.min(innerHeight-265,p.expanded?740:590);
+    p.el.style.width=`${width}px`;p.el.style.height=`${height}px`;
+    const x=Math.max(16,Math.min(innerWidth-width-16,projected.x-width/2)),y=Math.max(100,Math.min(innerHeight-height-165,projected.y-height/2));
+    p.el.style.transform=`translate(${x}px,${y}px)`;p.el.style.zIndex=p.id===activePanel?'5':'4';
+    const toggle=p.el.querySelector('[data-action="minimize-panel"]');toggle.textContent=minimized?'展开':'收起';
+    p.el.querySelector('[data-action="resize-panel"]').textContent=p.expanded?'缩小':'放大';
+    if(source.visible){const edgeX=source.x<x?x:source.x>x+width?x+width:source.x,edgeY=Math.max(y+24,Math.min(y+height-24,source.y));tethers.push(`<path d="M ${source.x.toFixed(1)} ${source.y.toFixed(1)} Q ${((source.x+edgeX)/2).toFixed(1)} ${(source.y-24).toFixed(1)} ${edgeX.toFixed(1)} ${edgeY.toFixed(1)}"/><circle cx="${source.x.toFixed(1)}" cy="${source.y.toFixed(1)}" r="4"/>`);}
+  }
+  if(journeyOpen&&o?.kind==='node'){const source=scene.project(o.position),r=$('#journey-surface').getBoundingClientRect();if(source.visible)tethers.push(`<path d="M ${source.x} ${source.y} L ${Math.max(r.left,Math.min(r.right,source.x))} ${Math.max(r.top+25,Math.min(r.bottom-25,source.y))}"/>`);}
+  $('#work-tethers').innerHTML=tethers.join('');
+  const d=scene.camera.position.distanceTo(scene.controls.target)/(scene.global?scene.camera.zoom:1);$('#distance-meter').style.width=`${Math.max(8,Math.min(100,Math.log(8000/d)/Math.log(8000/30)*100))}%`;
+  return [...document.querySelectorAll('#focus-card,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
+}
+function showUtility(which){closePopovers();const drawer=$('#utility-drawer');drawer.hidden=false;$('#utility-title').textContent=which==='trail'?'记录与备份':'地图与学习的依据';const frame=$('#utility-frame');frame.src=`v2.html?embedded=1#${which}`;}
+function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
+function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split('/');if(bits[0]==='space'&&bits[1]&&bits[2]){choose(objectKey(bits[1],bits[2]),{animate:!initial,history:!initial});return true;}
+  if(['theme','pack','node'].includes(bits[0])&&bits[1]){choose(objectKey(bits[0],bits[1]),{animate:!initial,history:!initial});return true;}
+  if(bits[0]==='activity'&&activityIds.includes(bits[1])){const id=ACTIVITIES[bits[1]].topicId;choose(objectKey('node',id),{animate:false,history:!initial,openLesson:false});openPanel(id);return true;}
+  if(bits[0]==='atlas'){if(bits[1])choose(objectKey('pack',bits[1]),{animate:!initial,history:!initial});else {scene.overview(!initial);renderLocation();}return true;}
+  if(bits[0]==='trail'||bits[0]==='about'){showUtility(bits[0]);return true;}return false;
+}
+
+document.addEventListener('click',event=>{
+  const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
+  const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
+  if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
+  else if(action==='search')openSearch();else if(action==='list-pack')openSearch(id);else if(action==='search-more'){searchLimit+=24;renderSearch();}
+  else if(action==='close-popover')closePopovers();
+  else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
+  else if(action==='mode'){scene.setMode(el.dataset.mode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));}
+  else if(action==='zoom')scene.zoom(Number(el.dataset.factor));else if(action==='front')scene.front();
+  else if(action==='network-view'){remember();scene.viewFrom(el.dataset.view);renderLocation();renderFocus();scheduleSave();}
+  else if(action==='network-theme')choose('theme:'+id);
+  else if(action==='switch-world')switchWorld(worldLayout==='network'?'classic':'network');
+  else if(action==='help'||action==='menu'){const target=$(`#${action}-popover`),was=target.hidden;closePopovers();target.hidden=!was;}
+  else if(action==='all-nodes'){scene.setAllNodes(!scene.showAllNodes);el.setAttribute('aria-pressed',String(scene.showAllNodes));el.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';closePopovers();scheduleSave();}
+  else if(action==='toggle-relations'){scene.setRelations(scene.relationMode==='off'?'source':'off');renderFocus();scheduleSave();}
+  else if(action==='close-journey')closeJourney(true);
+  else if(action==='filter'){selectedFilter=el.dataset.filter;document.querySelectorAll('[data-action="filter"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));scene.refresh(i=>nodeState(learning,i),selectedFilter);}
+  else if(action==='bookmark'){mutateLearning(s=>{s.bookmarks=s.bookmarks.includes(id)?s.bookmarks.filter(n=>n!==id):[...s.bookmarks,id];});if(panels.has(id)&&panels.get(id).tab==='overview')renderPanelSection(panels.get(id),'overview');}
+  else if(action==='close-panel')closePanel(id);
+  else if(action==='resize-panel'){const p=panels.get(id);if(p){p.expanded=!p.expanded;activePanel=id;scheduleSave();scene.dirty=true;}}
+  else if(action==='minimize-panel'){const p=panels.get(id);if(p){if(p.el.classList.contains('minimized')){p.minimized=false;activePanel=id;arrangePanels();}else p.minimized=true;scheduleSave();scene.dirty=true;}}
+  else if(action==='locate-panel'){const p=panels.get(id);if(p){activePanel=id;p.minimized=false;scene.select(objectKey('node',id));arrangePanels();renderFocus();renderLocation();}}
+  else if(action==='arrange')arrangePanels();else if(action==='journal')showUtility('trail');else if(action==='about')showUtility('about');
+  else if(action==='close-utility'){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}
+  else if(action==='export'){readLearning();download(backup(learning),`数学探索-${new Date().toISOString().slice(0,10)}.json`);}
+  else if(action==='import')$('#import-file').click();
+  else if(action==='continue')continueLearning();
+  else if(action==='choose-section'){activeRouteId=null;scene.setLearningSection(id||null);renderFocus();scheduleSave();}
+  else if(action==='route-page'){scene.learningRoutePage=Math.max(0,Number(el.dataset.page)||0);renderFocus();scheduleSave();}
+  else if(action==='choose-route'){activeRouteId=id||null;scene.setLearningRoute(activeRouteId);renderFocus();scheduleSave();}
+  else if(action==='bridge')openLearningLesson(id);
+  else if(action==='question'){closePopovers();if(journeyOpen&&activeSessionId)$('#journey-frame').contentWindow.postMessage({type:'math-space:request-question'},location.origin);else questionComposer({nodeId:space.byKey.get(scene.selected)?.kind==='node'?space.byKey.get(scene.selected).id:null});}
+  else if(action==='questions')questionList();
+  else if(action==='resume-question')resume(id);
+  else if(action==='question-later'||action==='question-finish'){if(mutateLearning(s=>questionAction(s,id,action==='question-later'?'later':'finish'))){if(!$('#questions-popover').hidden)questionList();if(action==='question-later')toast('先放着，仍在“问题”里。');}}
+
+});
+function cardHide(){$('#focus-card').hidden=true;}
+$('#search-input').addEventListener('input',()=>{searchLimit=24;renderSearch();});
+$('#search-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('#search-results button')?.click();});
+$('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{readLearning();if(readBlocked)throw new Error('原始存储无法读取，暂时不能覆盖或合并。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');const incoming=parseBackup(await file.text(),atlas),combined=validate(merge(learning,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(learning)));writeStored(KEY,JSON.stringify(combined));learning=combined;refreshLearning();toast('备份已合并，已有作品和提示历史已保留。');}catch(e){toast(e.message);}finally{event.target.value='';}});
+window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();refreshLearning();}});
+window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
+  if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
+    if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];scene.select('node:'+n.topicId);setHash('node:'+n.topicId);readLearning();refreshLearning();renderLocation();scheduleSave();return;}
+    if(e.data.type==='math-space:question-request'){questionComposer({nodeId:e.data.nodeId,scene:e.data.scene});return;}
+    if(e.data.type==='math-space:lesson-close'){closeJourney(true);return;}
+    if(e.data.type==='math-space:lesson-relations'){scene.setRelations(scene.relationMode==='off'?'source':'off');scheduleSave();return;}
+    if(e.data.type==='math-space:journey-change'){const step=ROUTE_STEPS.find(s=>s.step===e.data.step);if(step){scene.select('node:'+step.id);setHash('node:'+step.id);readLearning();refreshLearning();renderLocation();scheduleSave();}return;}
+    if(e.data.type==='math-space:journey-relations'){scene.setRelations(e.data.open?'route':'off');scheduleSave();return;}
+  }
+  if(e.data.type!=='math-space:navigate')return;
+  const sources=[...panels.values()].map(p=>p.iframe?.contentWindow).concat($('#utility-frame').contentWindow,$('#journey-frame').contentWindow);if(!sources.includes(e.source))return;
+  if(e.source===$('#utility-frame').contentWindow){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}
+  const {kind,id}=e.data;if(['activity','legacy-activity'].includes(kind)&&activityIds.includes(id)){const node=ACTIVITIES[id].topicId;choose(objectKey('node',node),{openLesson:false});openPanel(node);}
+  else if(['node','pack','theme'].includes(kind)&&space.byKey.has(objectKey(kind,id)))choose(objectKey(kind,id));else if(['map','atlas'].includes(kind))overview();
+});
+window.addEventListener('hashchange',()=>applyRoute());
+window.addEventListener('pagehide',saveView);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();else if(scene){readLearning();refreshLearning();scene.dirty=true;}});
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#utility-drawer').hidden){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}else cardHide();}});
+
+async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
+  const check=async()=>{const cache=await caches.open('math-explorer-20261027-learning-v50');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','index.html','space.js','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
+ }catch{$('#offline-status').textContent='本机保存';}}
+async function boot(){try {
+  const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=await response.json();
+  let previous=null,preference=null;try{previous=JSON.parse(readStored(VIEW_KEY));preference=readStored(WORLD_MODE_KEY);}catch{}
+  const requested=new URL(location.href).searchParams.get('world');
+  worldLayout=['classic','network'].includes(requested)?requested:['classic','network'].includes(preference)?preference:previous&&(previous.journeyOpen||previous.panels?.length)?'classic':'network';
+  document.body.dataset.world=worldLayout;space=worldLayout==='network'?buildGlobalSpace(atlas):buildSpace(atlas);if(worldLayout==='network')document.body.dataset.networkVersion=String(space.networkVersion);readLearning();
+  $('[data-action="switch-world"]').textContent=worldLayout==='network'?'原有空间':'关系全图';
+  $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}"`)).join(''):'';
+  if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
+  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id),onOverview:overview,onMove:updateOverlays,onSettled:scheduleSave,onError:warning});
+  scene.setMode('pan');let stored=null;try{stored=parseView(JSON.parse(readStored(worldLayout==='network'?NETWORK_VIEW_KEY:VIEW_KEY)),space);if(!stored&&worldLayout==='network'){const old=parseView(JSON.parse(readStored(LEGACY_NETWORK_VIEW_KEY)),space);if(old&&(old.journeyOpen||old.panels.length))stored=old;}}catch{}
+  const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null;
+  const due=pendingQuestions(learning)[0],last=learning.daily.continuation,sameDayActive=due&&stored?.journeyOpen&&stored.questionId===due.id&&last?.questionId===due.id&&dayKey(last.at)===dayKey();
+  const showQuestionEntry=!!due&&!sameDayActive&&(!routeKey||routeKey===stored?.selected);
+  if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&(!routeKey||routeKey===stored.selected)){const selectedId=space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true});}}else scene.overview(false);
+  if(showQuestionEntry){scene.select(null);setHash(null);}
+  // Restoring an open lesson updates the hash itself. Do not treat that new hash
+  // as a navigation request and immediately close the lesson again.
+  const initialRouteRequested=!stored||routeKey&&routeKey!==stored.selected||!routeKey&&(!stored.journeyOpen||route[0]&&route[0]!=='space');
+  if(!showQuestionEntry&&initialRouteRequested)applyRoute({initial:true});
+  const allButton=$('[data-action="all-nodes"]');allButton.setAttribute('aria-pressed',String(scene.showAllNodes));allButton.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';
+  refreshLearning();renderLocation();$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();
+  // Read-only diagnostics used by local browser checks; no learning-state setters.
+  window.mathSpace={snapshot:()=>({...scene.snapshot(),layout:worldLayout,relationBands:space.relationLayout?{before:space.relationLayout.before,after:space.relationLayout.after}:null,backgroundEdges:(scene.networkEdges?.geometry.attributes.position.count||0)/2+(scene.networkSoftEdges?.geometry.attributes.position.count||0)/2,backgroundEdgesVisible:!!scene.networkEdges?.visible,sourceLayers:scene.global?space.globalInfo.maxLayer+1:null,globalCoordinates:scene.global,sceneMarkers:[...(scene.savedScenes||[])],questionMarkers:[...(scene.queuedQuestions||[])],counts:{themes:space.themes.size,packs:space.packs.size,nodes:space.nodes.size,edges:atlas.edges.length},journeyOpen,visibleNodes:[...(scene.visibleNodes||[])],relations:scene.relations.map(l=>({from:l.from,to:l.to,count:l.edges.length,strength:l.edges[0]?.strength,lit:!!l.lit})),panels:[...panels.values()].map(p=>({id:p.id,anchor:[...p.anchor],tab:p.tab})),positions:space.objects.map(o=>({key:o.key,position:[...o.position]})),rendered:true}),project:key=>{const o=space.byKey.get(key);return o?scene.project(o.position):null;}};
+  let pendingResume=null;try{pendingResume=sessionStorage.getItem(PENDING_RESUME_KEY);sessionStorage.removeItem(PENDING_RESUME_KEY);}catch{}if(pendingResume)queueMicrotask(()=>resume(pendingResume));
+ }catch(error){$('#loading').innerHTML=`<h1>空间暂时没有展开</h1><p>${esc(error.message)}</p><p>学习记录没有被清除。可以重新打开，或使用保留的平面入口。</p><a href="v2.html#map" class="primary-button">打开平面入口</a>`;}}
+setInterval(()=>{if(scene&&!document.hidden&&dayKey()!==renderedDay){readLearning();refreshLearning();}},60000);
+boot();

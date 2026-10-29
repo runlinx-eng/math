@@ -1,0 +1,5128 @@
+{
+  "checks": [
+    "countonce begins incomplete",
+    "countonce:0 opens",
+    "countonce:0 empty work cannot complete",
+    "countonce:0 manipulation completes",
+    "countonce:0 records persist",
+    "countonce:1 opens",
+    "countonce:1 manipulation completes",
+    "countonce:1 records persist",
+    "countonce complete",
+    "countonce completion survives refresh",
+    "lastcount begins incomplete",
+    "lastcount:0 opens",
+    "lastcount:0 empty work cannot complete",
+    "lastcount:0 manipulation completes",
+    "lastcount:0 records persist",
+    "lastcount:1 opens",
+    "lastcount:1 manipulation completes",
+    "lastcount:1 records persist",
+    "lastcount:2 opens",
+    "lastcount:2 manipulation completes",
+    "lastcount:2 records persist",
+    "lastcount complete",
+    "lastcount completion survives refresh",
+    "counttwenty begins incomplete",
+    "counttwenty:0 opens",
+    "counttwenty:0 empty work cannot complete",
+    "counttwenty:0 manipulation completes",
+    "counttwenty:0 records persist",
+    "counttwenty:1 opens",
+    "counttwenty:1 manipulation completes",
+    "counttwenty:1 records persist",
+    "counttwenty:2 opens",
+    "counttwenty:2 manipulation completes",
+    "counttwenty:2 records persist",
+    "counttwenty complete",
+    "counttwenty completion survives refresh",
+    "paircounts begins incomplete",
+    "paircounts:0 opens",
+    "paircounts:0 empty work cannot complete",
+    "paircounts:0 manipulation completes",
+    "paircounts:0 records persist",
+    "paircounts:1 opens",
+    "paircounts:1 manipulation completes",
+    "paircounts:1 records persist",
+    "paircounts:2 opens",
+    "paircounts:2 manipulation completes",
+    "paircounts:2 records persist",
+    "paircounts complete",
+    "paircounts completion survives refresh",
+    "nextone begins incomplete",
+    "nextone:0 opens",
+    "nextone:0 empty work cannot complete",
+    "nextone:0 manipulation completes",
+    "nextone:0 records persist",
+    "nextone:1 opens",
+    "nextone:1 manipulation completes",
+    "nextone:1 records persist",
+    "nextone:2 opens",
+    "nextone:2 manipulation completes",
+    "nextone:2 records persist",
+    "nextone complete",
+    "nextone completion survives refresh",
+    "manyfaces begins incomplete",
+    "manyfaces:0 opens",
+    "manyfaces:0 empty work cannot complete",
+    "manyfaces:0 manipulation completes",
+    "manyfaces:0 records persist",
+    "manyfaces:1 opens",
+    "manyfaces:1 manipulation completes",
+    "manyfaces:1 records persist",
+    "manyfaces complete",
+    "manyfaces completion survives refresh",
+    "quickfive begins incomplete",
+    "quickfive:0 opens",
+    "quickfive:0 empty work cannot complete",
+    "quickfive:0 flash reveals representation",
+    "quickfive:0 manipulation completes",
+    "quickfive:0 records persist",
+    "quickfive:1 opens",
+    "quickfive:1 flash reveals representation",
+    "quickfive:1 manipulation completes",
+    "quickfive:1 records persist",
+    "quickfive:2 opens",
+    "quickfive:2 flash reveals representation",
+    "quickfive:2 manipulation completes",
+    "quickfive:2 records persist",
+    "quickfive:3 opens",
+    "quickfive:3 manipulation completes",
+    "quickfive:3 records persist",
+    "quickfive complete",
+    "quickfive completion survives refresh",
+    "partswithin begins incomplete",
+    "partswithin:0 opens",
+    "partswithin:0 empty work cannot complete",
+    "partswithin:0 flash reveals representation",
+    "partswithin:0 manipulation completes",
+    "partswithin:0 records persist",
+    "partswithin:1 opens",
+    "partswithin:1 flash reveals representation",
+    "partswithin:1 manipulation completes",
+    "partswithin:1 records persist",
+    "partswithin:2 opens",
+    "partswithin:2 manipulation completes",
+    "partswithin:2 records persist",
+    "partswithin complete",
+    "partswithin completion survives refresh",
+    "bundles begins incomplete",
+    "bundles:0 opens",
+    "bundles:0 empty work cannot complete",
+    "bundles:0 manipulation completes",
+    "bundles:0 records persist",
+    "bundles:1 opens",
+    "bundles:1 manipulation completes",
+    "bundles:1 records persist",
+    "bundles:2 opens",
+    "bundles:2 manipulation completes",
+    "bundles:2 records persist",
+    "bundles complete",
+    "bundles completion survives refresh",
+    "countline begins incomplete",
+    "countline:0 opens",
+    "countline:0 empty work cannot complete",
+    "countline:0 manipulation completes",
+    "countline:0 records persist",
+    "countline:1 opens",
+    "countline:1 manipulation completes",
+    "countline:1 records persist",
+    "countline:2 opens",
+    "countline:2 manipulation completes",
+    "countline:2 records persist",
+    "countline complete",
+    "countline completion survives refresh",
+    "skipbasic begins incomplete",
+    "skipbasic:0 opens",
+    "skipbasic:0 empty work cannot complete",
+    "skipbasic:0 manipulation completes",
+    "skipbasic:0 records persist",
+    "skipbasic:1 opens",
+    "skipbasic:1 manipulation completes",
+    "skipbasic:1 records persist",
+    "skipbasic:2 opens",
+    "skipbasic:2 manipulation completes",
+    "skipbasic:2 records persist",
+    "skipbasic complete",
+    "skipbasic completion survives refresh",
+    "skipthree begins incomplete",
+    "skipthree:0 opens",
+    "skipthree:0 empty work cannot complete",
+    "skipthree:0 manipulation completes",
+    "skipthree:0 records persist",
+    "skipthree:1 opens",
+    "skipthree:1 manipulation completes",
+    "skipthree:1 records persist",
+    "skipthree complete",
+    "skipthree completion survives refresh",
+    "anytens begins incomplete",
+    "anytens:0 opens",
+    "anytens:0 empty work cannot complete",
+    "anytens:0 manipulation completes",
+    "anytens:0 records persist",
+    "anytens:1 opens",
+    "anytens:1 manipulation completes",
+    "anytens:1 records persist",
+    "anytens complete",
+    "anytens completion survives refresh",
+    "withinthousand begins incomplete",
+    "withinthousand:0 opens",
+    "withinthousand:0 empty work cannot complete",
+    "withinthousand:0 manipulation completes",
+    "withinthousand:0 records persist",
+    "withinthousand:1 opens",
+    "withinthousand:1 manipulation completes",
+    "withinthousand:1 records persist",
+    "withinthousand:2 opens",
+    "withinthousand:2 manipulation completes",
+    "withinthousand:2 records persist",
+    "withinthousand:3 opens",
+    "withinthousand:3 manipulation completes",
+    "withinthousand:3 records persist",
+    "withinthousand:4 opens",
+    "withinthousand:4 manipulation completes",
+    "withinthousand:4 records persist",
+    "withinthousand complete",
+    "withinthousand completion survives refresh",
+    "skipfour begins incomplete",
+    "skipfour:0 opens",
+    "skipfour:0 empty work cannot complete",
+    "skipfour:0 manipulation completes",
+    "skipfour:0 records persist",
+    "skipfour:1 opens",
+    "skipfour:1 manipulation completes",
+    "skipfour:1 records persist",
+    "skipfour:2 opens",
+    "skipfour:2 manipulation completes",
+    "skipfour:2 records persist",
+    "skipfour:3 opens",
+    "skipfour:3 manipulation completes",
+    "skipfour:3 records persist",
+    "skipfour complete",
+    "skipfour completion survives refresh",
+    "skipbig begins incomplete",
+    "skipbig:0 opens",
+    "skipbig:0 empty work cannot complete",
+    "skipbig:0 manipulation completes",
+    "skipbig:0 records persist",
+    "skipbig:1 opens",
+    "skipbig:1 manipulation completes",
+    "skipbig:1 records persist",
+    "skipbig:2 opens",
+    "skipbig:2 manipulation completes",
+    "skipbig:2 records persist",
+    "skipbig:3 opens",
+    "skipbig:3 manipulation completes",
+    "skipbig:3 records persist",
+    "skipbig:4 opens",
+    "skipbig:4 manipulation completes",
+    "skipbig:4 records persist",
+    "skipbig complete",
+    "skipbig completion survives refresh",
+    "powersteps begins incomplete",
+    "powersteps:0 opens",
+    "powersteps:0 empty work cannot complete",
+    "powersteps:0 manipulation completes",
+    "powersteps:0 records persist",
+    "powersteps:1 opens",
+    "powersteps:1 manipulation completes",
+    "powersteps:1 records persist",
+    "powersteps:2 opens",
+    "powersteps:2 manipulation completes",
+    "powersteps:2 records persist",
+    "powersteps:3 opens",
+    "powersteps:3 manipulation completes",
+    "powersteps:3 records persist",
+    "powersteps:4 opens",
+    "powersteps:4 manipulation completes",
+    "powersteps:4 records persist",
+    "powersteps:5 opens",
+    "powersteps:5 manipulation completes",
+    "powersteps:5 records persist",
+    "powersteps:6 opens",
+    "powersteps:6 manipulation completes",
+    "powersteps:6 records persist",
+    "powersteps complete",
+    "powersteps completion survives refresh",
+    "write20 begins incomplete",
+    "write20:0 opens",
+    "write20:0 empty work cannot complete",
+    "write20:0 manipulation completes",
+    "write20:0 records persist",
+    "write20:1 opens",
+    "write20:1 manipulation completes",
+    "write20:1 records persist",
+    "write20:2 opens",
+    "write20:2 manipulation completes",
+    "write20:2 records persist",
+    "write20 complete",
+    "write20 completion survives refresh",
+    "teenbuild begins incomplete",
+    "teenbuild:0 opens",
+    "teenbuild:0 empty work cannot complete",
+    "teenbuild:0 manipulation completes",
+    "teenbuild:0 records persist",
+    "teenbuild:1 opens",
+    "teenbuild:1 manipulation completes",
+    "teenbuild:1 records persist",
+    "teenbuild:2 opens",
+    "teenbuild:2 manipulation completes",
+    "teenbuild:2 records persist",
+    "teenbuild complete",
+    "teenbuild completion survives refresh",
+    "numberwords begins incomplete",
+    "numberwords:0 opens",
+    "numberwords:0 empty work cannot complete",
+    "numberwords:0 manipulation completes",
+    "numberwords:0 records persist",
+    "numberwords:1 opens",
+    "numberwords:1 manipulation completes",
+    "numberwords:1 records persist",
+    "numberwords:2 opens",
+    "numberwords:2 manipulation completes",
+    "numberwords:2 records persist",
+    "numberwords complete",
+    "numberwords completion survives refresh",
+    "digitcompare begins incomplete",
+    "digitcompare:0 opens",
+    "digitcompare:0 empty work cannot complete",
+    "digitcompare:0 manipulation completes",
+    "digitcompare:0 records persist",
+    "digitcompare:1 opens",
+    "digitcompare:1 manipulation completes",
+    "digitcompare:1 records persist",
+    "digitcompare:2 opens",
+    "digitcompare:2 manipulation completes",
+    "digitcompare:2 records persist",
+    "digitcompare complete",
+    "digitcompare completion survives refresh",
+    "order20 begins incomplete",
+    "order20:0 opens",
+    "order20:0 empty work cannot complete",
+    "order20:0 manipulation completes",
+    "order20:0 records persist",
+    "order20:1 opens",
+    "order20:1 manipulation completes",
+    "order20:1 records persist",
+    "order20:2 opens",
+    "order20:2 manipulation completes",
+    "order20:2 records persist",
+    "order20 complete",
+    "order20 completion survives refresh",
+    "write100 begins incomplete",
+    "write100:0 opens",
+    "write100:0 empty work cannot complete",
+    "write100:0 manipulation completes",
+    "write100:0 records persist",
+    "write100:1 opens",
+    "write100:1 manipulation completes",
+    "write100:1 records persist",
+    "write100:2 opens",
+    "write100:2 manipulation completes",
+    "write100:2 records persist",
+    "write100:3 opens",
+    "write100:3 manipulation completes",
+    "write100:3 records persist",
+    "write100 complete",
+    "write100 completion survives refresh",
+    "link-countonce-lastcount begins incomplete"
+  ],
+  "errors": [],
+  "remote": [],
+  "current": "write100:3",
+  "failed": "TimeoutError: locator.click: Timeout 8000ms exceeded.\nCall log:\n  - waiting for locator('[data-do=\"start\"]')\n",
+  "url": "http://127.0.0.1:43827/learn.html#link-countonce-lastcount",
+  "body": "← 回到空间\n数清楚，再挪一挪\n留到下次\n未完成\nP–01 ✓\n数过的，别数第二次\nP–02 ✓\n挪个位置，还这么多吗\nP–03 ✓\n从一堆里，正好取出这些\n每件只数一次，最后的数才可靠\n连起来\n1\n2\n收一收\n\n小木偶数到一颗时重复了。指出出错的那一步，再亲自正确数一次。\n\n小木偶的记录：\n1 → 珠 A\n2 → 珠 B\n3 → 珠 C\n4 → 珠 C\n5 → 珠 D\n6 → 珠 E\n7 → 珠 F\nA\nB\nC\nD\nE\nF\n\n0 次标记\n\n小木偶第几步重复了\n撤回一次\n重新数\n第一次的总数\n你发现了什么\n选择\n同一颗拿到了两个序号\n只是排列不够整齐\n回去试一个想法\n给一点帮助\n看看我的作品\n这次留下的记录",
+  "state": {
+    "schema": 2,
+    "daily": {
+      "bridges": {
+        "link-countonce-lastcount": {
+          "id": "link-countonce-lastcount",
+          "view": "task",
+          "index": 0,
+          "models": {
+            "0": {
+              "taps": [],
+              "total": null,
+              "badStep": null,
+              "why": "",
+              "prediction": null,
+              "before": null,
+              "moved": false,
+              "again": [],
+              "after": null
+            }
+          },
+          "cases": {},
+          "notes": [],
+          "draft": "",
+          "updatedAt": "2026-10-25T04:14:23.328Z",
+          "ui": {
+            "spread": 0,
+            "view": null,
+            "camera": null
+          }
+        }
+      },
+      "questions": [],
+      "continuation": {
+        "id": "link-countonce-lastcount",
+        "at": "2026-10-25T04:14:23.328Z",
+        "questionId": null
+      }
+    },
+    "visited": {
+      "mt_WcfaSfVT33": "2026-10-25T04:13:47.336Z",
+      "mt_dmNvjroCPT": "2026-10-25T04:13:48.192Z",
+      "mt_yqAL6O5i_v": "2026-10-25T04:13:49.477Z",
+      "mt__h7hvT4tEb": "2026-10-25T04:13:51.257Z",
+      "mt_sYpKWbq5ra": "2026-10-25T04:13:52.451Z",
+      "mt_pAcaehday5": "2026-10-25T04:13:52.895Z",
+      "mt_t9BICauBSI": "2026-10-25T04:13:53.951Z",
+      "mt_BK5xwkrD5C": "2026-10-25T04:13:57.681Z",
+      "mt_0ZDouU664X": "2026-10-25T04:14:00.393Z",
+      "mt_M5PPDJStGm": "2026-10-25T04:14:03.029Z",
+      "mt_nvdpxAJTBG": "2026-10-25T04:14:04.441Z",
+      "mt_aHAM29nidj": "2026-10-25T04:14:05.773Z",
+      "mt_OkSJfrmFb_": "2026-10-25T04:14:06.712Z",
+      "mt_M2v1A9OEuM": "2026-10-25T04:14:07.596Z",
+      "mt_IzQvs7k_sE": "2026-10-25T04:14:09.291Z",
+      "mt_7rJM8eWUfw": "2026-10-25T04:14:11.515Z",
+      "mt_tAtMET4EIU": "2026-10-25T04:14:14.866Z",
+      "mt_fR0UtsSREU": "2026-10-25T04:14:16.275Z",
+      "mt_xmmgAzxe5j": "2026-10-25T04:14:17.144Z",
+      "mt_9IzhGUZ30z": "2026-10-25T04:14:19.127Z",
+      "mt__YRJ23GuIK": "2026-10-25T04:14:19.840Z",
+      "mt_dJOKkYMsCv": "2026-10-25T04:14:20.318Z",
+      "mt_x8TshvbbQT": "2026-10-25T04:14:21.878Z"
+    },
+    "openedPacks": {
+      "number-sense": "2026-10-25T04:13:47.336Z"
+    },
+    "bookmarks": [],
+    "activities": {},
+    "lessons": {
+      "countonce": {
+        "id": "countonce",
+        "view": "summary",
+        "index": 1,
+        "models": {
+          "0": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "total": 7,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          },
+          "1": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "total": 6,
+            "badStep": 4,
+            "why": "twice",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          },
+          "-1": {
+            "taps": [],
+            "total": null,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "f323a371-78f5-46fa-8bec-b2ad48829613",
+                "at": "2026-10-25T04:13:47.487Z",
+                "value": {
+                  "taps": [],
+                  "total": null,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "fff892ed-6086-4261-8aef-30bab967f7fe",
+                "at": "2026-10-25T04:13:47.787Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "total": 7,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e72203be-2eb3-4f4b-afeb-415441d829b8",
+                "at": "2026-10-25T04:13:48.103Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "total": 6,
+                  "badStep": 4,
+                  "why": "twice",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:48.187Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "lastcount": {
+        "id": "lastcount",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "total": 7,
+            "badStep": null,
+            "why": "same",
+            "prediction": 7,
+            "before": 7,
+            "moved": true,
+            "again": [],
+            "after": 7
+          },
+          "1": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "total": 6,
+            "badStep": null,
+            "why": "same",
+            "prediction": 6,
+            "before": 6,
+            "moved": true,
+            "again": [
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "after": 6
+          },
+          "2": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "total": 5,
+            "badStep": null,
+            "why": "start",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          },
+          "-1": {
+            "taps": [],
+            "total": null,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "bbe6d50e-8dd3-4665-9fb6-6c223fe5ebd1",
+                "at": "2026-10-25T04:13:48.269Z",
+                "value": {
+                  "taps": [],
+                  "total": null,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "a3bb07df-7104-4486-8efa-d283c0027cc2",
+                "at": "2026-10-25T04:13:48.603Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "total": 7,
+                  "badStep": null,
+                  "why": "same",
+                  "prediction": 7,
+                  "before": 7,
+                  "moved": true,
+                  "again": [],
+                  "after": 7
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "c87a9320-9c5a-4e08-a1c4-811243ad6b13",
+                "at": "2026-10-25T04:13:49.137Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "total": 6,
+                  "badStep": null,
+                  "why": "same",
+                  "prediction": 6,
+                  "before": 6,
+                  "moved": true,
+                  "again": [
+                    5,
+                    4,
+                    3,
+                    2,
+                    1,
+                    0
+                  ],
+                  "after": 6
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "955e2a98-a2c2-4aee-91f4-d20add48157d",
+                "at": "2026-10-25T04:13:49.388Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  "total": 5,
+                  "badStep": null,
+                  "why": "start",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:49.467Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "counttwenty": {
+        "id": "counttwenty",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19
+            ],
+            "total": 20,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          },
+          "1": {
+            "taps": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "total": 9,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          },
+          "2": {
+            "selected": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "dots": [],
+            "mark": 0,
+            "numeral": 13,
+            "before": null,
+            "after": null
+          },
+          "-1": {
+            "taps": [],
+            "total": null,
+            "badStep": null,
+            "why": "",
+            "prediction": null,
+            "before": null,
+            "moved": false,
+            "again": [],
+            "after": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "cbb796af-37c5-4f8e-b106-02858cbe81a2",
+                "at": "2026-10-25T04:13:49.553Z",
+                "value": {
+                  "taps": [],
+                  "total": null,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "9bd4e1ae-4e9f-4c4b-a3ff-6d7af89f7818",
+                "at": "2026-10-25T04:13:50.287Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "total": 20,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "5d422b93-9864-49e7-8024-d2779c3c1335",
+                "at": "2026-10-25T04:13:50.671Z",
+                "value": {
+                  "taps": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  "total": 9,
+                  "badStep": null,
+                  "why": "",
+                  "prediction": null,
+                  "before": null,
+                  "moved": false,
+                  "again": [],
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "bf7ff9db-14b9-4f88-8709-782384911dc8",
+                "at": "2026-10-25T04:13:51.171Z",
+                "value": {
+                  "selected": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "dots": [],
+                  "mark": 0,
+                  "numeral": 13,
+                  "before": null,
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:51.246Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "paircounts": {
+        "id": "paircounts",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "pairs": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            "pending": null,
+            "a": 5,
+            "b": 6,
+            "relation": "fewer",
+            "most": "",
+            "least": ""
+          },
+          "1": {
+            "pairs": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "pending": null,
+            "a": 4,
+            "b": 4,
+            "relation": "equal",
+            "most": "",
+            "least": ""
+          },
+          "2": {
+            "pairs": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "pending": null,
+            "a": 8,
+            "b": 3,
+            "relation": "more",
+            "most": "0",
+            "least": "1"
+          },
+          "-1": {
+            "pairs": [],
+            "pending": null,
+            "a": null,
+            "b": null,
+            "relation": "",
+            "most": "",
+            "least": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "03f4ffce-45ec-48f6-9fc9-7849ceafd420",
+                "at": "2026-10-25T04:13:51.337Z",
+                "value": {
+                  "pairs": [],
+                  "pending": null,
+                  "a": null,
+                  "b": null,
+                  "relation": "",
+                  "most": "",
+                  "least": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "a435a733-8a0e-41cb-8c84-66ebe9dbf62d",
+                "at": "2026-10-25T04:13:51.720Z",
+                "value": {
+                  "pairs": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      2,
+                      2
+                    ],
+                    [
+                      3,
+                      3
+                    ],
+                    [
+                      4,
+                      4
+                    ]
+                  ],
+                  "pending": null,
+                  "a": 5,
+                  "b": 6,
+                  "relation": "fewer",
+                  "most": "",
+                  "least": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "82a5c116-1d28-4dcd-b456-33cc8aa332fc",
+                "at": "2026-10-25T04:13:52.070Z",
+                "value": {
+                  "pairs": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      2,
+                      2
+                    ],
+                    [
+                      3,
+                      3
+                    ]
+                  ],
+                  "pending": null,
+                  "a": 4,
+                  "b": 4,
+                  "relation": "equal",
+                  "most": "",
+                  "least": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "ab8b4153-6cac-4e10-9d96-c695f70d58f3",
+                "at": "2026-10-25T04:13:52.370Z",
+                "value": {
+                  "pairs": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      2,
+                      2
+                    ]
+                  ],
+                  "pending": null,
+                  "a": 8,
+                  "b": 3,
+                  "relation": "more",
+                  "most": "0",
+                  "least": "1"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:52.441Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "nextone": {
+        "id": "nextone",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "guess": 6,
+            "committed": 6,
+            "changed": true,
+            "total": 6,
+            "why": "next"
+          },
+          "1": {
+            "guess": 7,
+            "committed": 7,
+            "changed": true,
+            "total": 7,
+            "why": "previous"
+          },
+          "2": {
+            "guess": 10,
+            "committed": 10,
+            "changed": true,
+            "total": 10,
+            "why": "next"
+          },
+          "-1": {
+            "guess": null,
+            "committed": null,
+            "changed": false,
+            "total": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "a71aba88-8b15-46c0-bacc-c2aaeb5a65d6",
+                "at": "2026-10-25T04:13:52.520Z",
+                "value": {
+                  "guess": null,
+                  "committed": null,
+                  "changed": false,
+                  "total": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "eaeae431-52a7-4a69-a6aa-2eb83a89a897",
+                "at": "2026-10-25T04:13:52.587Z",
+                "value": {
+                  "guess": 6,
+                  "committed": 6,
+                  "changed": true,
+                  "total": 6,
+                  "why": "next"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "03bf0b99-a849-4ae5-9880-86bb28d2e0b2",
+                "at": "2026-10-25T04:13:52.687Z",
+                "value": {
+                  "guess": 7,
+                  "committed": 7,
+                  "changed": true,
+                  "total": 7,
+                  "why": "previous"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "8fcc174d-5212-4401-b539-bbf83f62ea56",
+                "at": "2026-10-25T04:13:52.787Z",
+                "value": {
+                  "guess": 10,
+                  "committed": 10,
+                  "changed": true,
+                  "total": 10,
+                  "why": "next"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:52.886Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "manyfaces": {
+        "id": "manyfaces",
+        "view": "summary",
+        "index": 1,
+        "models": {
+          "0": {
+            "selected": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "dots": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "mark": 5,
+            "numeral": 5,
+            "before": null,
+            "after": null
+          },
+          "1": {
+            "selected": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "dots": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "mark": 6,
+            "numeral": 6,
+            "before": null,
+            "after": null
+          },
+          "-1": {
+            "selected": [],
+            "dots": [],
+            "mark": 0,
+            "numeral": null,
+            "before": null,
+            "after": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "56d0cc70-7cd9-424e-922f-627dfba8e365",
+                "at": "2026-10-25T04:13:52.970Z",
+                "value": {
+                  "selected": [],
+                  "dots": [],
+                  "mark": 0,
+                  "numeral": null,
+                  "before": null,
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "f4db2294-f02b-4710-b6b3-669af4a090ce",
+                "at": "2026-10-25T04:13:53.370Z",
+                "value": {
+                  "selected": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  "dots": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  "mark": 5,
+                  "numeral": 5,
+                  "before": null,
+                  "after": null
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "503bfa43-f173-4d9c-8355-930410ed114c",
+                "at": "2026-10-25T04:13:53.870Z",
+                "value": {
+                  "selected": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "dots": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "mark": 6,
+                  "numeral": 6,
+                  "before": null,
+                  "after": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:53.946Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "quickfive": {
+        "id": "quickfive",
+        "view": "summary",
+        "index": 3,
+        "models": {
+          "0": {
+            "open": false,
+            "until": 1792901635053,
+            "reveals": 1,
+            "answer": 4,
+            "a": null,
+            "b": null
+          },
+          "1": {
+            "open": false,
+            "until": 1792901636187,
+            "reveals": 1,
+            "answer": 2,
+            "a": null,
+            "b": null
+          },
+          "2": {
+            "open": false,
+            "until": 1792901637320,
+            "reveals": 1,
+            "answer": 5,
+            "a": null,
+            "b": null
+          },
+          "3": {
+            "selected": [
+              0,
+              1,
+              2
+            ],
+            "shown": true,
+            "total": 3
+          },
+          "-1": {
+            "open": false,
+            "until": 0,
+            "reveals": 0,
+            "answer": null,
+            "a": null,
+            "b": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "17f33f2d-ef88-4a2f-865b-20ee193d0e7d",
+                "at": "2026-10-25T04:13:54.020Z",
+                "value": {
+                  "open": false,
+                  "until": 0,
+                  "reveals": 0,
+                  "answer": null,
+                  "a": null,
+                  "b": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "b5bc3a72-d552-4b18-a3ac-e98c6198dacf",
+                "at": "2026-10-25T04:13:55.121Z",
+                "value": {
+                  "open": false,
+                  "until": 1792901635053,
+                  "reveals": 1,
+                  "answer": 4,
+                  "a": null,
+                  "b": null
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "172169d5-0888-462e-902e-03bb50f57823",
+                "at": "2026-10-25T04:13:56.255Z",
+                "value": {
+                  "open": false,
+                  "until": 1792901636187,
+                  "reveals": 1,
+                  "answer": 2,
+                  "a": null,
+                  "b": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "0a0a2869-5642-4c86-bf0c-9e63671ec131",
+                "at": "2026-10-25T04:13:57.388Z",
+                "value": {
+                  "open": false,
+                  "until": 1792901637320,
+                  "reveals": 1,
+                  "answer": 5,
+                  "a": null,
+                  "b": null
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "8bd3b5a5-8fb7-4a91-9295-7f243b7440d5",
+                "at": "2026-10-25T04:13:57.588Z",
+                "value": {
+                  "selected": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "shown": true,
+                  "total": 3
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:13:57.670Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "partswithin": {
+        "id": "partswithin",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "open": false,
+            "until": 1792901638787,
+            "reveals": 1,
+            "answer": 7,
+            "a": 5,
+            "b": 2
+          },
+          "1": {
+            "open": false,
+            "until": 1792901639954,
+            "reveals": 1,
+            "answer": 6,
+            "a": 4,
+            "b": 2
+          },
+          "2": {
+            "red": 5,
+            "blue": 3,
+            "saved": [
+              [
+                4,
+                4
+              ],
+              [
+                5,
+                3
+              ]
+            ],
+            "total": 8
+          },
+          "-1": {
+            "open": false,
+            "until": 0,
+            "reveals": 0,
+            "answer": null,
+            "a": null,
+            "b": null
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e54ef406-78c7-4f51-b69c-20a3ad4c3ee4",
+                "at": "2026-10-25T04:13:57.754Z",
+                "value": {
+                  "open": false,
+                  "until": 0,
+                  "reveals": 0,
+                  "answer": null,
+                  "a": null,
+                  "b": null
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "0b503804-c971-4ace-8c37-bfb59ba6e656",
+                "at": "2026-10-25T04:13:58.888Z",
+                "value": {
+                  "open": false,
+                  "until": 1792901638787,
+                  "reveals": 1,
+                  "answer": 7,
+                  "a": 5,
+                  "b": 2
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "9e257b1f-e91a-4211-8bc8-43be2b73e518",
+                "at": "2026-10-25T04:14:00.021Z",
+                "value": {
+                  "open": false,
+                  "until": 1792901639954,
+                  "reveals": 1,
+                  "answer": 6,
+                  "a": 4,
+                  "b": 2
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "1f217760-548c-4d1f-9b50-2078d792b8ac",
+                "at": "2026-10-25T04:14:00.220Z",
+                "value": {
+                  "red": 5,
+                  "blue": 3,
+                  "saved": [
+                    [
+                      4,
+                      4
+                    ],
+                    [
+                      5,
+                      3
+                    ]
+                  ],
+                  "total": 8
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:00.384Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "bundles": {
+        "id": "bundles",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "selected": [],
+            "groups": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              [
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29
+              ],
+              [
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ],
+              [
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+              ],
+              [
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59
+              ],
+              [
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69
+              ],
+              [
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79
+              ]
+            ],
+            "groupsCount": 8,
+            "remainder": 5,
+            "total": 85,
+            "why": ""
+          },
+          "1": {
+            "selected": [],
+            "groups": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                10,
+                11
+              ],
+              [
+                12,
+                13
+              ],
+              [
+                14,
+                15
+              ],
+              [
+                16,
+                17
+              ],
+              [
+                18,
+                19
+              ],
+              [
+                20,
+                21
+              ],
+              [
+                22,
+                23
+              ],
+              [
+                24,
+                25
+              ],
+              [
+                26,
+                27
+              ],
+              [
+                28,
+                29
+              ],
+              [
+                30,
+                31
+              ],
+              [
+                32,
+                33
+              ],
+              [
+                34,
+                35
+              ],
+              [
+                36,
+                37
+              ],
+              [
+                38,
+                39
+              ],
+              [
+                40,
+                41
+              ],
+              [
+                42,
+                43
+              ],
+              [
+                44,
+                45
+              ]
+            ],
+            "groupsCount": 23,
+            "remainder": 0,
+            "total": 46,
+            "why": ""
+          },
+          "2": {
+            "selected": [],
+            "groups": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              [
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29
+              ],
+              [
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39
+              ],
+              [
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+              ],
+              [
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59
+              ],
+              [
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69
+              ],
+              [
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79
+              ],
+              [
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89
+              ],
+              [
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99
+              ],
+              [
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109
+              ],
+              [
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119
+              ]
+            ],
+            "groupsCount": 12,
+            "remainder": 0,
+            "total": 120,
+            "why": "units"
+          },
+          "-1": {
+            "selected": [],
+            "groups": [],
+            "groupsCount": null,
+            "remainder": null,
+            "total": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "23e76886-a4a7-47cd-8e6e-f1177dcc99e1",
+                "at": "2026-10-25T04:14:00.470Z",
+                "value": {
+                  "selected": [],
+                  "groups": [],
+                  "groupsCount": null,
+                  "remainder": null,
+                  "total": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "48c436a5-7de2-45b1-bdee-ed41ff6f2ae8",
+                "at": "2026-10-25T04:14:01.138Z",
+                "value": {
+                  "selected": [],
+                  "groups": [
+                    [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9
+                    ],
+                    [
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19
+                    ],
+                    [
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29
+                    ],
+                    [
+                      30,
+                      31,
+                      32,
+                      33,
+                      34,
+                      35,
+                      36,
+                      37,
+                      38,
+                      39
+                    ],
+                    [
+                      40,
+                      41,
+                      42,
+                      43,
+                      44,
+                      45,
+                      46,
+                      47,
+                      48,
+                      49
+                    ],
+                    [
+                      50,
+                      51,
+                      52,
+                      53,
+                      54,
+                      55,
+                      56,
+                      57,
+                      58,
+                      59
+                    ],
+                    [
+                      60,
+                      61,
+                      62,
+                      63,
+                      64,
+                      65,
+                      66,
+                      67,
+                      68,
+                      69
+                    ],
+                    [
+                      70,
+                      71,
+                      72,
+                      73,
+                      74,
+                      75,
+                      76,
+                      77,
+                      78,
+                      79
+                    ]
+                  ],
+                  "groupsCount": 8,
+                  "remainder": 5,
+                  "total": 85,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "bbb8462d-e929-41ac-8072-d317e5f1c09f",
+                "at": "2026-10-25T04:14:02.104Z",
+                "value": {
+                  "selected": [],
+                  "groups": [
+                    [
+                      0,
+                      1
+                    ],
+                    [
+                      2,
+                      3
+                    ],
+                    [
+                      4,
+                      5
+                    ],
+                    [
+                      6,
+                      7
+                    ],
+                    [
+                      8,
+                      9
+                    ],
+                    [
+                      10,
+                      11
+                    ],
+                    [
+                      12,
+                      13
+                    ],
+                    [
+                      14,
+                      15
+                    ],
+                    [
+                      16,
+                      17
+                    ],
+                    [
+                      18,
+                      19
+                    ],
+                    [
+                      20,
+                      21
+                    ],
+                    [
+                      22,
+                      23
+                    ],
+                    [
+                      24,
+                      25
+                    ],
+                    [
+                      26,
+                      27
+                    ],
+                    [
+                      28,
+                      29
+                    ],
+                    [
+                      30,
+                      31
+                    ],
+                    [
+                      32,
+                      33
+                    ],
+                    [
+                      34,
+                      35
+                    ],
+                    [
+                      36,
+                      37
+                    ],
+                    [
+                      38,
+                      39
+                    ],
+                    [
+                      40,
+                      41
+                    ],
+                    [
+                      42,
+                      43
+                    ],
+                    [
+                      44,
+                      45
+                    ]
+                  ],
+                  "groupsCount": 23,
+                  "remainder": 0,
+                  "total": 46,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "63360a60-f736-430b-bc47-58c35b978912",
+                "at": "2026-10-25T04:14:02.938Z",
+                "value": {
+                  "selected": [],
+                  "groups": [
+                    [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9
+                    ],
+                    [
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19
+                    ],
+                    [
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29
+                    ],
+                    [
+                      30,
+                      31,
+                      32,
+                      33,
+                      34,
+                      35,
+                      36,
+                      37,
+                      38,
+                      39
+                    ],
+                    [
+                      40,
+                      41,
+                      42,
+                      43,
+                      44,
+                      45,
+                      46,
+                      47,
+                      48,
+                      49
+                    ],
+                    [
+                      50,
+                      51,
+                      52,
+                      53,
+                      54,
+                      55,
+                      56,
+                      57,
+                      58,
+                      59
+                    ],
+                    [
+                      60,
+                      61,
+                      62,
+                      63,
+                      64,
+                      65,
+                      66,
+                      67,
+                      68,
+                      69
+                    ],
+                    [
+                      70,
+                      71,
+                      72,
+                      73,
+                      74,
+                      75,
+                      76,
+                      77,
+                      78,
+                      79
+                    ],
+                    [
+                      80,
+                      81,
+                      82,
+                      83,
+                      84,
+                      85,
+                      86,
+                      87,
+                      88,
+                      89
+                    ],
+                    [
+                      90,
+                      91,
+                      92,
+                      93,
+                      94,
+                      95,
+                      96,
+                      97,
+                      98,
+                      99
+                    ],
+                    [
+                      100,
+                      101,
+                      102,
+                      103,
+                      104,
+                      105,
+                      106,
+                      107,
+                      108,
+                      109
+                    ],
+                    [
+                      110,
+                      111,
+                      112,
+                      113,
+                      114,
+                      115,
+                      116,
+                      117,
+                      118,
+                      119
+                    ]
+                  ],
+                  "groupsCount": 12,
+                  "remainder": 0,
+                  "total": 120,
+                  "why": "units"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:03.021Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "countline": {
+        "id": "countline",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "values": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              80,
+              90,
+              100
+            ]
+          },
+          "1": {
+            "hops": [
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "2": {
+            "hops": [
+              19,
+              18,
+              17,
+              16,
+              15,
+              14,
+              13,
+              12,
+              11,
+              10,
+              9,
+              8,
+              7,
+              6,
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e2f87111-a7df-4b2d-8d2a-e352186d808c",
+                "at": "2026-10-25T04:14:03.104Z",
+                "value": {
+                  "values": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                  ]
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "bdc5d8b6-ae94-4508-beb4-c23216db59ec",
+                "at": "2026-10-25T04:14:03.204Z",
+                "value": {
+                  "values": [
+                    10,
+                    20,
+                    30,
+                    40,
+                    50,
+                    60,
+                    70,
+                    80,
+                    90,
+                    100
+                  ]
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "db4205be-02d8-4cd2-a1af-9552c375c901",
+                "at": "2026-10-25T04:14:03.621Z",
+                "value": {
+                  "hops": [
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "a70a2aa4-53a5-4993-be12-fc0d405ee048",
+                "at": "2026-10-25T04:14:04.354Z",
+                "value": {
+                  "hops": [
+                    19,
+                    18,
+                    17,
+                    16,
+                    15,
+                    14,
+                    13,
+                    12,
+                    11,
+                    10,
+                    9,
+                    8,
+                    7,
+                    6,
+                    5,
+                    4,
+                    3,
+                    2,
+                    1,
+                    0
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:04.431Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "skipbasic": {
+        "id": "skipbasic",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "hops": [
+              2,
+              4,
+              6,
+              8,
+              10,
+              12,
+              14,
+              16,
+              18,
+              20
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "1": {
+            "hops": [
+              5,
+              10,
+              15,
+              20,
+              25,
+              30,
+              35,
+              40,
+              45,
+              50
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "2": {
+            "hops": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              80,
+              90,
+              100
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "64e9f095-04e8-4aed-817f-7b6c8cb58e35",
+                "at": "2026-10-25T04:14:04.521Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "05a3bd49-e65f-4a3a-8279-01f7ea8a5251",
+                "at": "2026-10-25T04:14:04.887Z",
+                "value": {
+                  "hops": [
+                    2,
+                    4,
+                    6,
+                    8,
+                    10,
+                    12,
+                    14,
+                    16,
+                    18,
+                    20
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "af5531bf-8859-4cb1-9ce9-1dc76048390a",
+                "at": "2026-10-25T04:14:05.287Z",
+                "value": {
+                  "hops": [
+                    5,
+                    10,
+                    15,
+                    20,
+                    25,
+                    30,
+                    35,
+                    40,
+                    45,
+                    50
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "102cdd00-37d1-45b2-a23e-41f2974b6463",
+                "at": "2026-10-25T04:14:05.688Z",
+                "value": {
+                  "hops": [
+                    10,
+                    20,
+                    30,
+                    40,
+                    50,
+                    60,
+                    70,
+                    80,
+                    90,
+                    100
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:05.766Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "skipthree": {
+        "id": "skipthree",
+        "view": "summary",
+        "index": 1,
+        "models": {
+          "0": {
+            "hops": [
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21,
+              24,
+              27,
+              30
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "1": {
+            "hops": [
+              27,
+              24,
+              21,
+              18,
+              15,
+              12,
+              9,
+              6,
+              3,
+              0
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "738730b9-2450-4fe9-b573-6ee6ee5594be",
+                "at": "2026-10-25T04:14:05.854Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "11502356-bb51-4db2-8e4b-5bc50652f572",
+                "at": "2026-10-25T04:14:06.221Z",
+                "value": {
+                  "hops": [
+                    3,
+                    6,
+                    9,
+                    12,
+                    15,
+                    18,
+                    21,
+                    24,
+                    27,
+                    30
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "bff5bac8-a6fc-46a9-828d-c8bb6335b65f",
+                "at": "2026-10-25T04:14:06.621Z",
+                "value": {
+                  "hops": [
+                    27,
+                    24,
+                    21,
+                    18,
+                    15,
+                    12,
+                    9,
+                    6,
+                    3,
+                    0
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:06.701Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "anytens": {
+        "id": "anytens",
+        "view": "summary",
+        "index": 1,
+        "models": {
+          "0": {
+            "hops": [
+              17,
+              27,
+              37,
+              47,
+              57,
+              67,
+              77,
+              87,
+              97,
+              107
+            ],
+            "next": null,
+            "step": null,
+            "why": "ones"
+          },
+          "1": {
+            "hops": [
+              73,
+              63,
+              53,
+              43,
+              33,
+              23,
+              13,
+              3
+            ],
+            "next": null,
+            "step": null,
+            "why": "ones"
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "ee997724-9b9e-4ed7-aeea-18bd736701d0",
+                "at": "2026-10-25T04:14:06.787Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "80a6ab83-12c9-4c2f-955e-507b44d106a7",
+                "at": "2026-10-25T04:14:07.154Z",
+                "value": {
+                  "hops": [
+                    17,
+                    27,
+                    37,
+                    47,
+                    57,
+                    67,
+                    77,
+                    87,
+                    97,
+                    107
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "ones"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "605ee579-a7cc-469e-86fe-acd401063279",
+                "at": "2026-10-25T04:14:07.488Z",
+                "value": {
+                  "hops": [
+                    73,
+                    63,
+                    53,
+                    43,
+                    33,
+                    23,
+                    13,
+                    3
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "ones"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:07.586Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "withinthousand": {
+        "id": "withinthousand",
+        "view": "summary",
+        "index": 4,
+        "models": {
+          "0": {
+            "hops": [
+              996,
+              997,
+              998,
+              999,
+              1000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "1": {
+            "hops": [
+              502,
+              501,
+              500,
+              499,
+              498,
+              497
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "2": {
+            "hops": [
+              955,
+              960,
+              965,
+              970,
+              975,
+              980,
+              985,
+              990,
+              995,
+              1000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "3": {
+            "hops": [
+              660,
+              670,
+              680,
+              690,
+              700,
+              710,
+              720,
+              730
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "4": {
+            "hops": [
+              250,
+              350,
+              450,
+              550,
+              650,
+              750,
+              850,
+              950
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "d425eea2-e82b-4882-b6d9-f6d5065de577",
+                "at": "2026-10-25T04:14:07.671Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "21ab36f1-cff8-43ec-a428-afd2d4728cec",
+                "at": "2026-10-25T04:14:07.871Z",
+                "value": {
+                  "hops": [
+                    996,
+                    997,
+                    998,
+                    999,
+                    1000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "1a5f3ac9-8b86-441e-a5c8-9570c5fece87",
+                "at": "2026-10-25T04:14:08.138Z",
+                "value": {
+                  "hops": [
+                    502,
+                    501,
+                    500,
+                    499,
+                    498,
+                    497
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "1ccb716a-db49-479e-a38b-d1be18c80d88",
+                "at": "2026-10-25T04:14:08.537Z",
+                "value": {
+                  "hops": [
+                    955,
+                    960,
+                    965,
+                    970,
+                    975,
+                    980,
+                    985,
+                    990,
+                    995,
+                    1000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e5722ec3-3148-47b0-b9f5-7f4b8794177b",
+                "at": "2026-10-25T04:14:08.871Z",
+                "value": {
+                  "hops": [
+                    660,
+                    670,
+                    680,
+                    690,
+                    700,
+                    710,
+                    720,
+                    730
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "4": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "9349fdc1-edf9-4ee7-83d9-05a6a13dbded",
+                "at": "2026-10-25T04:14:09.204Z",
+                "value": {
+                  "hops": [
+                    250,
+                    350,
+                    450,
+                    550,
+                    650,
+                    750,
+                    850,
+                    950
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:09.281Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "skipfour": {
+        "id": "skipfour",
+        "view": "summary",
+        "index": 3,
+        "models": {
+          "0": {
+            "hops": [
+              4,
+              8,
+              12,
+              16,
+              20,
+              24,
+              28,
+              32,
+              36,
+              40,
+              44,
+              48
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "1": {
+            "hops": [
+              8,
+              16,
+              24,
+              32,
+              40,
+              48,
+              56,
+              64,
+              72,
+              80,
+              88,
+              96
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "2": {
+            "hops": [
+              50,
+              100,
+              150,
+              200,
+              250,
+              300,
+              350,
+              400,
+              450,
+              500,
+              550,
+              600,
+              650,
+              700,
+              750,
+              800,
+              850,
+              900,
+              950,
+              1000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "3": {
+            "hops": [
+              100,
+              200,
+              300,
+              400,
+              500,
+              600,
+              700,
+              800,
+              900,
+              1000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "b286be7b-d62a-4f8f-943e-8f15a8f3013c",
+                "at": "2026-10-25T04:14:09.371Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "8009ab53-9099-4eaa-b4ca-806066f0d98c",
+                "at": "2026-10-25T04:14:09.804Z",
+                "value": {
+                  "hops": [
+                    4,
+                    8,
+                    12,
+                    16,
+                    20,
+                    24,
+                    28,
+                    32,
+                    36,
+                    40,
+                    44,
+                    48
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "db2c8b88-d254-4235-aabf-66ab4a850fb8",
+                "at": "2026-10-25T04:14:10.271Z",
+                "value": {
+                  "hops": [
+                    8,
+                    16,
+                    24,
+                    32,
+                    40,
+                    48,
+                    56,
+                    64,
+                    72,
+                    80,
+                    88,
+                    96
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "d0e08d0f-5497-4a27-b20f-bcc65f3336cf",
+                "at": "2026-10-25T04:14:11.005Z",
+                "value": {
+                  "hops": [
+                    50,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450,
+                    500,
+                    550,
+                    600,
+                    650,
+                    700,
+                    750,
+                    800,
+                    850,
+                    900,
+                    950,
+                    1000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "52b2fc69-fb3b-4a73-98a5-109246acfe70",
+                "at": "2026-10-25T04:14:11.404Z",
+                "value": {
+                  "hops": [
+                    100,
+                    200,
+                    300,
+                    400,
+                    500,
+                    600,
+                    700,
+                    800,
+                    900,
+                    1000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:11.504Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "skipbig": {
+        "id": "skipbig",
+        "view": "summary",
+        "index": 4,
+        "models": {
+          "0": {
+            "hops": [
+              6,
+              12,
+              18,
+              24,
+              30,
+              36,
+              42,
+              48,
+              54,
+              60,
+              66,
+              72
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "1": {
+            "hops": [
+              7,
+              14,
+              21,
+              28,
+              35,
+              42,
+              49,
+              56,
+              63,
+              70,
+              77,
+              84
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "2": {
+            "hops": [
+              9,
+              18,
+              27,
+              36,
+              45,
+              54,
+              63,
+              72,
+              81,
+              90,
+              99,
+              108
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "3": {
+            "hops": [
+              25,
+              50,
+              75,
+              100,
+              125,
+              150,
+              175,
+              200,
+              225,
+              250,
+              275,
+              300,
+              325,
+              350,
+              375,
+              400,
+              425,
+              450,
+              475,
+              500,
+              525,
+              550,
+              575,
+              600,
+              625,
+              650,
+              675,
+              700,
+              725,
+              750,
+              775,
+              800,
+              825,
+              850,
+              875,
+              900,
+              925,
+              950,
+              975,
+              1000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "4": {
+            "hops": [
+              1000,
+              2000,
+              3000,
+              4000,
+              5000,
+              6000,
+              7000,
+              8000,
+              9000,
+              10000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "b6cd53fc-40ad-44cf-8e93-84f10eed0386",
+                "at": "2026-10-25T04:14:11.588Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "69a416c2-a8e6-45b1-96c2-3049d646ab6f",
+                "at": "2026-10-25T04:14:12.021Z",
+                "value": {
+                  "hops": [
+                    6,
+                    12,
+                    18,
+                    24,
+                    30,
+                    36,
+                    42,
+                    48,
+                    54,
+                    60,
+                    66,
+                    72
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "b1806cbe-4510-4437-86ef-c31f5d36a69b",
+                "at": "2026-10-25T04:14:12.488Z",
+                "value": {
+                  "hops": [
+                    7,
+                    14,
+                    21,
+                    28,
+                    35,
+                    42,
+                    49,
+                    56,
+                    63,
+                    70,
+                    77,
+                    84
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e2b362d6-1433-4787-98a8-34177c9b6d27",
+                "at": "2026-10-25T04:14:12.955Z",
+                "value": {
+                  "hops": [
+                    9,
+                    18,
+                    27,
+                    36,
+                    45,
+                    54,
+                    63,
+                    72,
+                    81,
+                    90,
+                    99,
+                    108
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "c1d0e98e-6cbe-494b-9dac-40a6d3f819fe",
+                "at": "2026-10-25T04:14:14.372Z",
+                "value": {
+                  "hops": [
+                    25,
+                    50,
+                    75,
+                    100,
+                    125,
+                    150,
+                    175,
+                    200,
+                    225,
+                    250,
+                    275,
+                    300,
+                    325,
+                    350,
+                    375,
+                    400,
+                    425,
+                    450,
+                    475,
+                    500,
+                    525,
+                    550,
+                    575,
+                    600,
+                    625,
+                    650,
+                    675,
+                    700,
+                    725,
+                    750,
+                    775,
+                    800,
+                    825,
+                    850,
+                    875,
+                    900,
+                    925,
+                    950,
+                    975,
+                    1000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "4": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "1e8023ff-a45c-439b-9374-b8f55cc5bc71",
+                "at": "2026-10-25T04:14:14.772Z",
+                "value": {
+                  "hops": [
+                    1000,
+                    2000,
+                    3000,
+                    4000,
+                    5000,
+                    6000,
+                    7000,
+                    8000,
+                    9000,
+                    10000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:14.856Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "powersteps": {
+        "id": "powersteps",
+        "view": "summary",
+        "index": 6,
+        "models": {
+          "0": {
+            "hops": [
+              107,
+              117,
+              127
+            ],
+            "next": null,
+            "step": null,
+            "why": "carry"
+          },
+          "1": {
+            "hops": [
+              1050,
+              1150,
+              1250
+            ],
+            "next": null,
+            "step": null,
+            "why": "carry"
+          },
+          "2": {
+            "hops": [
+              35500,
+              36500,
+              37500
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "3": {
+            "hops": [
+              472000,
+              482000,
+              492000,
+              502000,
+              512000
+            ],
+            "next": null,
+            "step": null,
+            "why": "carry"
+          },
+          "4": {
+            "hops": [
+              700000,
+              600000,
+              500000,
+              400000,
+              300000
+            ],
+            "next": null,
+            "step": null,
+            "why": ""
+          },
+          "5": {
+            "hops": [
+              675000,
+              775000,
+              875000
+            ],
+            "next": null,
+            "step": 100000,
+            "why": ""
+          },
+          "6": {
+            "hops": [
+              1000000
+            ],
+            "next": null,
+            "step": null,
+            "why": "carry"
+          },
+          "-1": {
+            "hops": [],
+            "next": null,
+            "step": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "012c252a-30c7-4aea-a379-2fe45156d0df",
+                "at": "2026-10-25T04:14:14.938Z",
+                "value": {
+                  "hops": [],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "723f546b-852b-46b9-9d77-28d6114b1983",
+                "at": "2026-10-25T04:14:15.071Z",
+                "value": {
+                  "hops": [
+                    107,
+                    117,
+                    127
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "carry"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "f18ba947-9ba5-430e-8719-3eda265bdc4f",
+                "at": "2026-10-25T04:14:15.238Z",
+                "value": {
+                  "hops": [
+                    1050,
+                    1150,
+                    1250
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "carry"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "be480dc0-36dc-4819-ad1e-e5ccbd739956",
+                "at": "2026-10-25T04:14:15.405Z",
+                "value": {
+                  "hops": [
+                    35500,
+                    36500,
+                    37500
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "81e99c4e-8e8b-4206-96a2-0d58b8113628",
+                "at": "2026-10-25T04:14:15.638Z",
+                "value": {
+                  "hops": [
+                    472000,
+                    482000,
+                    492000,
+                    502000,
+                    512000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "carry"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "4": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "136ebe1a-a38e-44ba-91ad-2825c458a4e5",
+                "at": "2026-10-25T04:14:15.872Z",
+                "value": {
+                  "hops": [
+                    700000,
+                    600000,
+                    500000,
+                    400000,
+                    300000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "5": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "c5d00702-8a0b-4f1c-b3e9-bef6703d9e1f",
+                "at": "2026-10-25T04:14:16.038Z",
+                "value": {
+                  "hops": [
+                    675000,
+                    775000,
+                    875000
+                  ],
+                  "next": null,
+                  "step": 100000,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "6": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "6d22aa1b-78fd-47ea-8f09-2e7108a050ab",
+                "at": "2026-10-25T04:14:16.138Z",
+                "value": {
+                  "hops": [
+                    1000000
+                  ],
+                  "next": null,
+                  "step": null,
+                  "why": "carry"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:16.264Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "write20": {
+        "id": "write20",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "hundreds": 0,
+            "tens": 1,
+            "ones": 7,
+            "numeral": "17",
+            "word": "十七",
+            "heard": 1,
+            "textHelp": false,
+            "ink": []
+          },
+          "1": {
+            "hundreds": 0,
+            "tens": 0,
+            "ones": 0,
+            "numeral": "0",
+            "word": "零",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "2": {
+            "hundreds": 0,
+            "tens": 2,
+            "ones": 0,
+            "numeral": "20",
+            "word": "二十",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "-1": {
+            "hundreds": 0,
+            "tens": 0,
+            "ones": 0,
+            "numeral": "",
+            "word": "",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "ab77b90d-a3f8-4c77-9a03-bc5acf9950ef",
+                "at": "2026-10-25T04:14:16.355Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 0,
+                  "ones": 0,
+                  "numeral": "",
+                  "word": "",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "53666190-71aa-4a8a-968f-7905c505cc27",
+                "at": "2026-10-25T04:14:16.822Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 1,
+                  "ones": 7,
+                  "numeral": "17",
+                  "word": "十七",
+                  "heard": 1,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "81b1cd24-6f27-4c14-a977-fe99ee0495f5",
+                "at": "2026-10-25T04:14:16.905Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 0,
+                  "ones": 0,
+                  "numeral": "0",
+                  "word": "零",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "6c2db839-8848-481c-b875-101725a09e9d",
+                "at": "2026-10-25T04:14:17.055Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 2,
+                  "ones": 0,
+                  "numeral": "20",
+                  "word": "二十",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:17.133Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "teenbuild": {
+        "id": "teenbuild",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "selected": [],
+            "bundle": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "unpacked": false,
+            "rebundled": false,
+            "tens": 1,
+            "ones": 4,
+            "total": 14,
+            "why": "ten"
+          },
+          "1": {
+            "selected": [],
+            "bundle": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "unpacked": true,
+            "rebundled": true,
+            "tens": 1,
+            "ones": 7,
+            "total": 17,
+            "why": "ten"
+          },
+          "2": {
+            "selected": [],
+            "bundle": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "unpacked": false,
+            "rebundled": false,
+            "tens": 1,
+            "ones": 3,
+            "total": 13,
+            "why": "ten"
+          },
+          "-1": {
+            "selected": [],
+            "bundle": [],
+            "unpacked": false,
+            "rebundled": false,
+            "tens": null,
+            "ones": null,
+            "total": null,
+            "why": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "59af96f3-5395-40a2-a627-7cfd8d2d729c",
+                "at": "2026-10-25T04:14:17.221Z",
+                "value": {
+                  "selected": [],
+                  "bundle": [],
+                  "unpacked": false,
+                  "rebundled": false,
+                  "tens": null,
+                  "ones": null,
+                  "total": null,
+                  "why": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "46bd7f51-f662-4525-bb3d-73f824b3caf4",
+                "at": "2026-10-25T04:14:17.655Z",
+                "value": {
+                  "selected": [],
+                  "bundle": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                  ],
+                  "unpacked": false,
+                  "rebundled": false,
+                  "tens": 1,
+                  "ones": 4,
+                  "total": 14,
+                  "why": "ten"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "31c18f2f-f12f-419a-a70e-3625529fdeb2",
+                "at": "2026-10-25T04:14:18.522Z",
+                "value": {
+                  "selected": [],
+                  "bundle": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                  ],
+                  "unpacked": true,
+                  "rebundled": true,
+                  "tens": 1,
+                  "ones": 7,
+                  "total": 17,
+                  "why": "ten"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "deab8f59-6115-48d6-9350-7d3b5a3151c8",
+                "at": "2026-10-25T04:14:19.039Z",
+                "value": {
+                  "selected": [],
+                  "bundle": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                  ],
+                  "unpacked": false,
+                  "rebundled": false,
+                  "tens": 1,
+                  "ones": 3,
+                  "total": 13,
+                  "why": "ten"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:19.119Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "numberwords": {
+        "id": "numberwords",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "hundreds": 0,
+            "tens": 1,
+            "ones": 2,
+            "numeral": "12",
+            "word": "十二",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "1": {
+            "hundreds": 0,
+            "tens": 1,
+            "ones": 4,
+            "numeral": "14",
+            "word": "十四",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "2": {
+            "hundreds": 0,
+            "tens": 2,
+            "ones": 0,
+            "numeral": "20",
+            "word": "二十",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "-1": {
+            "hundreds": 0,
+            "tens": 0,
+            "ones": 0,
+            "numeral": "",
+            "word": "",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "e75255e2-d85a-434c-a54d-48daffd531cc",
+                "at": "2026-10-25T04:14:19.205Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 0,
+                  "ones": 0,
+                  "numeral": "",
+                  "word": "",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "3f74e002-0f50-43c7-8dea-ceb02f77de8a",
+                "at": "2026-10-25T04:14:19.355Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 1,
+                  "ones": 2,
+                  "numeral": "12",
+                  "word": "十二",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "bbd98ba6-9918-4e46-8901-a1334ef079e5",
+                "at": "2026-10-25T04:14:19.605Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 1,
+                  "ones": 4,
+                  "numeral": "14",
+                  "word": "十四",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "100ac766-793a-41ba-8dd8-8233de9ba31d",
+                "at": "2026-10-25T04:14:19.755Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 2,
+                  "ones": 0,
+                  "numeral": "20",
+                  "word": "二十",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:19.829Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "digitcompare": {
+        "id": "digitcompare",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "a": 4,
+            "b": 7,
+            "relation": "less"
+          },
+          "1": {
+            "a": 8,
+            "b": 3,
+            "relation": "greater"
+          },
+          "2": {
+            "a": 6,
+            "b": 6,
+            "relation": "equal"
+          },
+          "-1": {
+            "a": 0,
+            "b": 0,
+            "relation": ""
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "257b9a8a-a083-42c4-b2dc-c8a533c6e7f5",
+                "at": "2026-10-25T04:14:19.921Z",
+                "value": {
+                  "a": 0,
+                  "b": 0,
+                  "relation": ""
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "65d97629-c48c-441f-b27e-a678f47bec79",
+                "at": "2026-10-25T04:14:20.005Z",
+                "value": {
+                  "a": 4,
+                  "b": 7,
+                  "relation": "less"
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "55e10b61-355b-4234-b55b-01399433db32",
+                "at": "2026-10-25T04:14:20.121Z",
+                "value": {
+                  "a": 8,
+                  "b": 3,
+                  "relation": "greater"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "c959282e-cd3b-46e7-b6d8-419bb6ebb846",
+                "at": "2026-10-25T04:14:20.238Z",
+                "value": {
+                  "a": 6,
+                  "b": 6,
+                  "relation": "equal"
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:20.312Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "order20": {
+        "id": "order20",
+        "view": "summary",
+        "index": 2,
+        "models": {
+          "0": {
+            "order": [
+              3,
+              1,
+              4,
+              0,
+              2
+            ]
+          },
+          "1": {
+            "selected": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "dots": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "mark": 13,
+            "numeral": 13,
+            "before": 12,
+            "after": 14
+          },
+          "2": {
+            "order": [
+              3,
+              2,
+              1,
+              0
+            ]
+          },
+          "-1": {
+            "order": []
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "ad893b4d-5cb6-47b4-9a8f-0dc3ca91a41d",
+                "at": "2026-10-25T04:14:20.388Z",
+                "value": {
+                  "order": []
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "8623c6db-e409-4ea4-a766-3fd1ad5070cb",
+                "at": "2026-10-25T04:14:20.589Z",
+                "value": {
+                  "order": [
+                    3,
+                    1,
+                    4,
+                    0,
+                    2
+                  ]
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "9a0bfead-a42c-4403-8895-87c5b5b383b1",
+                "at": "2026-10-25T04:14:21.588Z",
+                "value": {
+                  "selected": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "dots": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "mark": 13,
+                  "numeral": 13,
+                  "before": 12,
+                  "after": 14
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "2f109aea-ed08-4be1-8400-a07d0b718c90",
+                "at": "2026-10-25T04:14:21.788Z",
+                "value": {
+                  "order": [
+                    3,
+                    2,
+                    1,
+                    0
+                  ]
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:21.867Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      },
+      "write100": {
+        "id": "write100",
+        "view": "summary",
+        "index": 3,
+        "models": {
+          "0": {
+            "hundreds": 0,
+            "tens": 4,
+            "ones": 0,
+            "numeral": "40",
+            "word": "四十",
+            "heard": 1,
+            "textHelp": false,
+            "ink": []
+          },
+          "1": {
+            "hundreds": 0,
+            "tens": 1,
+            "ones": 4,
+            "numeral": "14",
+            "word": "十四",
+            "heard": 1,
+            "textHelp": false,
+            "ink": []
+          },
+          "2": {
+            "hundreds": 0,
+            "tens": 7,
+            "ones": 5,
+            "numeral": "75",
+            "word": "七十五",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          },
+          "3": {
+            "hundreds": 1,
+            "tens": 0,
+            "ones": 0,
+            "numeral": "100",
+            "word": "一百",
+            "heard": 1,
+            "textHelp": false,
+            "ink": []
+          },
+          "-1": {
+            "hundreds": 0,
+            "tens": 0,
+            "ones": 0,
+            "numeral": "",
+            "word": "",
+            "heard": 0,
+            "textHelp": false,
+            "ink": []
+          }
+        },
+        "cases": {
+          "0": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "cd0231b1-a489-441a-9fbc-f53523ad9f3d",
+                "at": "2026-10-25T04:14:21.955Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 0,
+                  "ones": 0,
+                  "numeral": "",
+                  "word": "",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              },
+              {
+                "id": "b1a1b34b-f08d-4191-9565-cf9746aae005",
+                "at": "2026-10-25T04:14:22.205Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 4,
+                  "ones": 0,
+                  "numeral": "40",
+                  "word": "四十",
+                  "heard": 1,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": true
+              }
+            ]
+          },
+          "1": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "f7cabcc4-fbae-44cf-aa17-ae6f400ad36d",
+                "at": "2026-10-25T04:14:22.572Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 1,
+                  "ones": 4,
+                  "numeral": "14",
+                  "word": "十四",
+                  "heard": 1,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "2": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "a4a817cd-1a29-4391-b9aa-27c940130e75",
+                "at": "2026-10-25T04:14:23.055Z",
+                "value": {
+                  "hundreds": 0,
+                  "tens": 7,
+                  "ones": 5,
+                  "numeral": "75",
+                  "word": "七十五",
+                  "heard": 0,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          },
+          "3": {
+            "support": false,
+            "attempts": [
+              {
+                "id": "5659acec-09c6-4b51-9759-ca7da50ed01c",
+                "at": "2026-10-25T04:14:23.239Z",
+                "value": {
+                  "hundreds": 1,
+                  "tens": 0,
+                  "ones": 0,
+                  "numeral": "100",
+                  "word": "一百",
+                  "heard": 1,
+                  "textHelp": false,
+                  "ink": []
+                },
+                "supported": false,
+                "exposed": false
+              }
+            ]
+          }
+        },
+        "notes": [],
+        "draft": "",
+        "updatedAt": "2026-10-25T04:14:23.319Z",
+        "ui": {
+          "spread": 0,
+          "view": null,
+          "camera": null
+        }
+      }
+    },
+    "lessonContinuation": "lastcount",
+    "journeys": {},
+    "journeyContinuation": null,
+    "continuation": null,
+    "legacy": null
+  }
+}

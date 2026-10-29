@@ -1,0 +1,74 @@
+{
+  "verifiedAt": "2026-10-25T04:32:22.617783+00:00",
+  "scope": "B06 content and scoped technical checks; no child trial or learning-effect claim",
+  "availableNodes": 73,
+  "newNodes": 23,
+  "nodeTasks": 212,
+  "newNodeTasks": 76,
+  "sourceGoals": 220,
+  "newSourceGoals": 67,
+  "routes": 23,
+  "availableConnections": 31,
+  "connectionTasks": 62,
+  "newConnections": 10,
+  "newConnectionTasks": 20,
+  "localResearchSupplements": 13,
+  "remainingUnimplementedNodes": 514,
+  "remainingResearchGaps": 72,
+  "unitChecks": 119,
+  "browserAssertions": 821,
+  "browserGroups": {
+    "browser-results-final.json": 431,
+    "integration-browser-results.json": 45,
+    "audio-browser-results.json": 14,
+    "phase2-regression-results.json": 123,
+    "phase3-regression-results.json": 63,
+    "phase4-integration-regression-results.json": 45,
+    "continuation-regression-results.json": 8,
+    "spatial-regression-results.json": 37,
+    "legacy-regression-results.json": 55
+  },
+  "sourceAtlasSha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+  "legacyContentSha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+  "childTrials": 0,
+  "childLearningEffects": "unverified",
+  "localUrl": "http://127.0.0.1:43827/?v=11#space",
+  "nextBatch": {
+    "id": "B07",
+    "nodes": 21,
+    "researchGaps": 4,
+    "expectedCumulativeNodes": 94
+  },
+  "audioContent": {
+    "14": {
+      "seconds": 0.6024489795918367,
+      "sampleRate": 22050,
+      "frames": 13284,
+      "audioBytes": 26568,
+      "rms": 0.1047262183026787
+    },
+    "17": {
+      "seconds": 0.672108843537415,
+      "sampleRate": 22050,
+      "frames": 14820,
+      "audioBytes": 29640,
+      "rms": 0.10706398440152899
+    },
+    "40": {
+      "seconds": 0.6727891156462585,
+      "sampleRate": 22050,
+      "frames": 14835,
+      "audioBytes": 29670,
+      "rms": 0.09207783393515097
+    },
+    "100": {
+      "seconds": 0.5226303854875284,
+      "sampleRate": 22050,
+      "frames": 11524,
+      "audioBytes": 23048,
+      "rms": 0.11695953078131296
+    }
+  },
+  "distBytes": 5885227,
+  "activeWorkTimeSeconds": null
+}

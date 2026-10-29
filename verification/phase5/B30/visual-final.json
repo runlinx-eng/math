@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "3D solid and matching net are side by side on desktop",
+    "both solid and net fit in the initial viewport",
+    "clicking the actual 3D solid selects a face",
+    "matching face in the net is highlighted",
+    "selected button text has readable contrast",
+    "dragging rotates the actual 3D camera",
+    "rotation is retained as actual interaction",
+    "lesson 3D camera survives reload",
+    "3-4-5 prism task completes with real controls",
+    "the stack actually separates",
+    "two previously hidden contact surfaces appear when separated",
+    "the pieces rejoin and hidden faces disappear",
+    "joined solid counts exposed surface 80 and volume 40",
+    "shorter desktop layout has no horizontal overflow",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "contrast": 5.309683528685443,
+  "colors": {
+    "color": "rgb(255, 255, 255)",
+    "background": "rgb(61, 118, 95)"
+  }
+}

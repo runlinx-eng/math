@@ -1,0 +1,79 @@
+{
+  "version": 48,
+  "runtime": [
+    {
+      "file": "index.html",
+      "sha256": "07ccd3820740a9bf4635bf1023be472778de802dd34616193043966353d7c154",
+      "matchesServed": true
+    },
+    {
+      "file": "space.css",
+      "sha256": "280d73d23aafec0bc1c31b4546d46a845200942ffb9a1c7e423e381036a51145",
+      "matchesServed": true
+    },
+    {
+      "file": "space.js",
+      "sha256": "25793cef4d358785b15ad209261afd2491ccfde06059d0ff01e68deb5ebd35a4",
+      "matchesServed": true
+    },
+    {
+      "file": "spatial-model.js",
+      "sha256": "6b72076ff25b9b49e01410ca272043b4db839bbe6a16dac24e12bb02a1ea6777",
+      "matchesServed": true
+    },
+    {
+      "file": "spatial-network.js",
+      "sha256": "5ee5d794cb501b6201a79c0f265fa74eb945fd4e3a5dc7ba0b38f6935730f25d",
+      "matchesServed": true
+    },
+    {
+      "file": "spatial-scene.js",
+      "sha256": "1a7b34d3fa3ac13eafa19dc969974fa5fa9f3c0c0953b94e68d05bfe5c4b47ee",
+      "matchesServed": true
+    },
+    {
+      "file": "spatial-activities.js",
+      "sha256": "727d859ff1256efa3184cc09ced43ce79b81d96c335434cd5330df35695e6602",
+      "matchesServed": true
+    },
+    {
+      "file": "learning/daily.js",
+      "sha256": "a2188e3b4ec897d1061d25b1ecfd1d45b8b4fcbda39ba25323033dbe5d9c9564",
+      "matchesServed": true
+    },
+    {
+      "file": "exploration.js",
+      "sha256": "77398c2c8d8a781138177182e43370ebf998e043f6740ad8c115cd413caa8712",
+      "matchesServed": true
+    },
+    {
+      "file": "sw.js",
+      "sha256": "74bf4ea1e5a41a04d95af2310f5e9fa15be0b7cd50ba02b50e6677912c92efc0",
+      "matchesServed": true
+    }
+  ],
+  "planningInputChanges": [
+    "dist/exploration.js"
+  ],
+  "unchangedPlanningInputs": [
+    "vendor/os-taxonomy/data/topics.json",
+    "vendor/os-taxonomy/data/teaching-research.json",
+    "vendor/os-taxonomy/data/dependencies.json",
+    "dist/data/atlas.json",
+    "vendor/upstream.json",
+    "scripts/content_plan_choices.py",
+    "scripts/build_content_plan.py",
+    "dist/exploration-content.js",
+    "dist/journey-model.js",
+    "dist/journey.js",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/design.md",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/app.js",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/tasks.js",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/design.md",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/source/app.js",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/ANIDOODLE-NOTICE.txt",
+    "vendor/os-taxonomy/LICENSE",
+    "vendor/os-taxonomy/LICENSE-CONTENT"
+  ],
+  "childTrial": false
+}

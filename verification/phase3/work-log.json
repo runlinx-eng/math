@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-10-24T13:18:28.111965+00:00",
+  "measurement": "墙钟时间，分段记录；不推断持续有效工时。",
+  "events": [
+    {
+      "at": "2026-10-24T13:18:28.111965+00:00",
+      "phase": "daily-and-connection-model-start"
+    },
+    {
+      "at": "2026-10-24T13:57:26.029623+00:00",
+      "phase": "stage3-implementation-and-verification-complete",
+      "unitChecks": 75,
+      "desktopChecks": 285,
+      "childTrial": "not performed"
+    }
+  ],
+  "completedAt": "2026-10-24T13:57:26.029623+00:00"
+}

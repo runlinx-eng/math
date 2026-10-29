@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "question button cannot accept a click while modules are still loading",
+    "question button becomes available after the work is ready",
+    "standalone early question really saves after loading",
+    "no runtime errors"
+  ],
+  "errors": []
+}

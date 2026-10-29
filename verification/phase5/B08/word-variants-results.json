@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "millionwords begins incomplete",
+    "millionwords:0 opens",
+    "millionwords:0 empty attempt cannot complete",
+    "millionwords:0 actual controls complete",
+    "millionwords:0 valid persisted record",
+    "millionwords:0 no horizontal overflow",
+    "millionwords:1 opens",
+    "millionwords:1 actual controls complete",
+    "millionwords:1 valid persisted record",
+    "millionwords:1 no horizontal overflow",
+    "millionwords:2 opens",
+    "millionwords:2 actual controls complete",
+    "millionwords:2 valid persisted record",
+    "millionwords:2 no horizontal overflow",
+    "millionwords complete",
+    "millionwords survives reload",
+    "expected unique source-node records",
+    "expected distinct source-edge records",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "nodes": 1,
+  "nodeTasks": 3,
+  "connections": 0,
+  "connectionTasks": 0
+}

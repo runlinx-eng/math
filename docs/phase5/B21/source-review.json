@@ -1,0 +1,1061 @@
+[
+  {
+    "topic": {
+      "id": "mt_fmm-P17Vka",
+      "type": "LANGUAGE",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Statistical Analysis Vocabulary",
+      "description": "Read, write, and use the vocabulary of statistical analysis — mean, median, mode, range, frequency, data, sample, average, chart, table, graph, pie chart, scatter graph, correlation — with understanding of what each term describes",
+      "ageRangeStart": 9,
+      "ageRangeEnd": 11,
+      "centrality": 0.02572347266881029,
+      "evidence": [
+        "Correctly define and calculate the mean, median, mode, and range of a small data set",
+        "Use 'outlier' correctly to identify a value that doesn't fit the pattern, and explain its effect on the mean",
+        "Use 'correlation' correctly when describing the relationship shown in a scatter graph"
+      ],
+      "assessmentPrompt": "If {{name}} looked at a set of test scores from their class, could they find the mean, the median, and the range — and explain what each one tells you about how the class did?",
+      "standards": [
+        "acara-v9:AC9M5ST01",
+        "ccss-math:MP.6"
+      ]
+    },
+    "topicPointer": "/topics/744",
+    "research": {
+      "topicId": "mt_fmm-P17Vka",
+      "pedagogy": {
+        "summary": "This is the LANGUAGE of statistical analysis — mean, median, mode, average, range, frequency, data, sample, outlier, correlation, and the chart words (bar/pie/scatter graph, table). The teaching goal is not reciting definitions but USING each term for the right thing when describing real data. The characteristic difficulty is that these words are 'the distilled wisdom of generations' worn down into everyday speech: 'average' collapses into the add-and-divide rule with no sense of what it represents, the three measures of centre get swapped (the most common value gets called the 'average'; the median is taken before ordering), 'range' is given as the two extreme values rather than their difference, and 'correlation' is used for any relationship and slid into causation. Because 'mean' carries rich colloquial connotations that 'median' and 'mode' lack, children lean on it and leave the others as empty labels. Vocabulary is therefore best built ON real data sets and graphs — name each measure aloud as it is computed, say what it tells us, and contrast the terms on the same data so the words attach to distinct ideas rather than to a single procedure.",
+        "bestPractices": [
+          "Introduce each term ON a real, meaningful data set (goals per match, heights in the class) and immediately ask 'what does this number tell us about the data?', so the word attaches to a meaning, not just a calculation",
+          "Contrast mean, median and mode on the SAME data set (especially a skewed one where they differ) so the three words come apart and cannot collapse into 'the average'",
+          "Insist that 'range' names ONE number — the difference/spread from lowest to highest — not the two extreme values; show it as a distance",
+          "Distinguish 'correlation' as the DIRECTION of a trend (positive/negative/none) between two variables, and keep it explicitly separate from causation ('a link, not a cause')",
+          "Use the terms receptively and productively: give the child data and have them narrate it using the words, then listen for correct use rather than asking for definitions",
+          "Flag the outlier as a value that doesn't fit the pattern and connect it to its EFFECT (it drags the mean toward it because the mean is influenced by every value), rather than treating it as a mistake to delete"
+        ],
+        "keyRepresentations": [
+          "A small real data set laid out as an ordered list (so median and mode are visible) alongside its mean and range",
+          "A skewed data set where mean, median and mode clearly differ — the canonical way to separate the three terms",
+          "A scatter graph showing positive / negative / no correlation for the direction-of-trend vocabulary",
+          "A number line marking lowest and highest with the range shown as the distance between them",
+          "A word wall / glossary tying each term to a one-line 'what it tells us' and an example"
+        ],
+        "commonMisconceptions": [
+          "Treating 'average'/mean as only the add-and-divide rule, with no sense of what the number represents about the data",
+          "Swapping the measures of centre: calling the most frequent value the 'average', or finding the median without ordering / from the frequency column",
+          "Giving 'range' as the two extreme values ('0 and 8') rather than their difference (8)",
+          "Using 'correlation' for any relationship and sliding it into causation ('taller people cause bigger feet'), or calling a patternless scatter 'correlated'",
+          "Not connecting an outlier to its effect — assuming the mean sits in the middle regardless of an extreme value"
+        ]
+      },
+      "learn": {
+        "summary": "Builds the language of statistical analysis (mean, median, mode, range, outlier, correlation, plus data/sample/frequency and chart words) for 9–11 year-olds by attaching each term to what it tells us about real data, not to a recited definition or a single add-and-divide rule. The core teaching move is contrasting the three measures of centre on the SAME data set — especially a skewed one — so 'mean', 'median' and 'mode' come apart instead of collapsing into 'the average', naming range as ONE number (a distance), tying 'outlier' to its pull on the mean, and keeping 'correlation' as direction-of-trend distinct from causation. Activities span a draggable live data set (primary builder of meaning), use-in-context narration, categorisation/matching checks, an in-role data detective, and a static glossary reference — each with a different pedagogical purpose.",
+        "activities": [
+          {
+            "title": "Draggable data set: watch the measures behave differently",
+            "feedback": [
+              "When the mean chases the dragged value while the median stays put: 'The mean is pulled by every value, so an extreme score drags it — the median, the middle after ordering, barely moves.'",
+              "If the child expects all three to move together: 'Notice the mode didn't change at all and the median stayed at 2 — only the mean (and the range) moved. These words name different things.'",
+              "On the range strip: 'The range is the gap you can see — one number, the distance from lowest to highest, not the two end values.'",
+              "On the scatter: 'That's positive correlation — taller tends to go with bigger feet. It's a link, not proof that one makes the other happen.'"
+            ],
+            "rationale": "Statistical vocabulary attaches to meaning when the words are tied to data the child manipulates and sees respond. Live, simultaneous recomputation of mean/median/mode/range as a value is dragged makes visible which word tracks what — the specific difficulty that 'average' collapses into a procedure and the three centres get swapped. The interactive affordance (dragging, live relabelling, a correlation slider) makes the mechanism concrete; it is one strong way to separate the terms, not the only possible medium.",
+            "sourceClaims": [
+              "Knowing the computational rule for the mean does not imply understanding: students with only computational knowledge make predictable errors, and the mean is influenced by every value (so adding an extreme value shifts it); a frequent error is to situate the mean at the centre of the range even when the distribution is skewed",
+              "Russell & Mokros classified students' notions of average into 'most frequent value/mode', 'reasonable value', 'midpoint' and 'algorithmic relationship'; and Barr found students confused about what the median is the 'middle' of (the values, the frequency column, or the unordered list)",
+              "'Correlation' refers to association/co-variation between two quantitative variables and does NOT imply cause and effect; people show 'illusory correlation', overestimating association when they believe a causal link exists; the intuitive notion of variability is 'unalikeability' — how much values differ from each other"
+            ],
+            "learnerActions": [
+              "Start with a small, meaningful data set shown as dots on a value strip — e.g. goals a team scored across seven matches: 2, 0, 1, 3, 2, 2, 8 (ordered: 0, 1, 2, 2, 2, 3, 8, so the mode is a single clear value, 2).",
+              "Read the mean, median, mode and range displayed and labelled live beside the data, each with a one-line 'what it tells us'.",
+              "Drag one match's score (say the 3) up to 20 and watch the mean slide up to chase it, the median barely move, and the mode stay unchanged — the moment the three labelled numbers behave DIFFERENTLY.",
+              "Drag a value far from the rest to create an outlier, then recompute the mean with and without it and compare how little the median shifts.",
+              "See the range marked on a number line as the labelled distance from lowest to highest, so it reads as one number, not two.",
+              "Switch to a scatter panel (e.g. height vs shoe size) and move a correlation slider from negative through none to positive, labelled as the trend's direction, with a standing caption 'a link, not a cause'."
+            ],
+            "intendedInsight": "Mean, median and mode are not interchangeable words for 'average': they track different things, and seeing them respond differently to the same change is what pulls the words apart. The mean is influenced by every value, so an outlier drags it while the median hardly moves; range is a single distance; correlation names the direction of a trend, not a cause."
+          },
+          {
+            "title": "Narrate the data: use the words for the right thing",
+            "feedback": [
+              "If the child restates the calculation when asked what the mean tells us: 'That's how you find it — but if the team scored this average every match, how many is that? The mean is a typical / fair-share score.'",
+              "If the mode is called the 'average' or the median given from the unordered list: say each word aloud as its value is found, ordering the list first for the median, so the three attach to three distinct things.",
+              "If the range is given as '0 and 8': 'Can a range be two numbers? Mark both ends on a number line — the range is the gap between them, 8.'",
+              "If the outlier is spotted but disconnected: recompute the mean with and without the 8 and compare to the median, tying 'outlier' to its pull on the mean.",
+              "If correlation is read as cause: offer a link-not-cause counterexample (ice-cream sales and sunburn both rise in summer) so 'correlation' names co-variation, not causation."
+            ],
+            "rationale": "Checking use in context — productive narration with responsive probing — tests whether the words carry meaning, which definition recall does not. The probes are targeted at the documented confusions (average-as-procedure, swapped centres, range-as-extremes, outlier-mean link, correlation-vs-cause).",
+            "sourceClaims": [
+              "Knowing the computational rule for the mean does not imply understanding: students with only computational knowledge make predictable errors, and the mean is influenced by every value (so adding an extreme value shifts it); a frequent error is to situate the mean at the centre of the range even when the distribution is skewed",
+              "In school years 4-6, pupils primarily express procedural knowledge and sometimes mix up the definitions of mean and median; 'mean' carries everyday colloquial connotations that 'median' and 'mode' lack (median is seen as only existing in school), so the latter are harder to explain",
+              "'Correlation' refers to association/co-variation between two quantitative variables and does NOT imply cause and effect; people show 'illusory correlation', overestimating association when they believe a causal link exists; the intuitive notion of variability is 'unalikeability' — how much values differ from each other"
+            ],
+            "learnerActions": [
+              "Take a small real data set — e.g. 2, 0, 1, 3, 2, 2, 8 — and a scatter graph of height against shoe size, and tell the story of the data aloud using mean, median, mode and range as you go.",
+              "For each term, say not just the value but what it tells us: the mode is the most frequent value (2, appearing three times); the median is the middle AFTER ordering (2); the mean (≈2.57) is a typical / fair-share score; the range is 8, the difference 8−0.",
+              "Name the 8 as an outlier and say what it does — it drags the mean UP while the median barely moves.",
+              "Describe the scatter with the right word: 'positive correlation' meaning taller children tend to have bigger feet — a link, not a cause.",
+              "Answer follow-up probes: 'What does that 2.57 actually tell us about how this team scores?'; 'Why did you have to order the numbers for the median but not the mode?'; 'If that 8 had been 80, which number would change most and which hardly at all?'; 'Does being tall MAKE feet grow, or is there a word for the link without saying one causes the other?'"
+            ],
+            "intendedInsight": "Owning the vocabulary means using each word for the thing it names when describing freely — not reciting definitions. Narrating real data exposes and corrects swaps (mode called 'average', range given as two numbers, correlation slid into cause) that a definition task would let a child recite around."
+          },
+          {
+            "title": "Match and sort: check correct use, not definitions",
+            "feedback": [
+              "If the 'range = two extremes' sentence is picked: 'Range is one number — the difference. The two end values are the extremes, a different thing.'",
+              "If a patternless scatter is sorted as 'positive' or 'negative': 'No clear trend means no correlation — correlation is about the direction of a trend.'",
+              "If the mode is matched to the 'average' slot: 'The most frequent value is the mode; the mean is the add-and-divide typical value — different words.'"
+            ],
+            "rationale": "Selected-response and matching items keep every item anchored to a data context and avoid 'define X', so they assess use rather than recall. This is a complement to construction, not a substitute for it: recognition items do not by themselves elicit the independent narration that shows ownership.",
+            "sourceClaims": [
+              "Russell & Mokros classified students' notions of average into 'most frequent value/mode', 'reasonable value', 'midpoint' and 'algorithmic relationship'; and Barr found students confused about what the median is the 'middle' of (the values, the frequency column, or the unordered list)"
+            ],
+            "learnerActions": [
+              "On a given ordered data set, match each word — mean, median, mode, range — to the value it names.",
+              "Sort a set of scatter graphs into positive / negative / no correlation.",
+              "Choose which sentence uses 'range' correctly, where a distractor names the two extreme values ('0 and 8') instead of their difference (8).",
+              "Judge statements as 'uses the word correctly' or 'incorrectly' (e.g. 'the median is the middle of the unordered list', 'the mode is the average')."
+            ],
+            "intendedInsight": "Correct use can be probed by matching and categorising against a data context — this surfaces swaps without asking the child to recite a definition."
+          },
+          {
+            "title": "Data detective: catch the swap in conversation",
+            "feedback": [
+              "Character confirms correct use: 'Yes — the mode is the most common score, and you named it right.'",
+              "Character queries a misuse: 'You called the most common value the average — is that the mode or the mean?'"
+            ],
+            "rationale": "In-role dialogue draws the child into using the terms and can query misuse responsively. It supports USE rather than building the underlying meaning, because conversation alone cannot compute the measures or show them move as data changes — best as a follow-on to hands-on data work, not the primary builder.",
+            "sourceClaims": [
+              "In school years 4-6, pupils primarily express procedural knowledge and sometimes mix up the definitions of mean and median; 'mean' carries everyday colloquial connotations that 'median' and 'mode' lack (median is seen as only existing in school), so the latter are harder to explain"
+            ],
+            "learnerActions": [
+              "Take on a 'data detective' role: a character presents a data story and asks the child to describe it.",
+              "Describe the data aloud, choosing the right statistical words.",
+              "Respond when the character echoes back correct usage or queries a misuse — e.g. 'You said the range is 0 and 8 — can a range be two numbers?'"
+            ],
+            "intendedInsight": "Talking through a data story and being gently pressed on word choice surfaces swaps in the moment and rehearses precise use."
+          },
+          {
+            "title": "Glossary reference: anchor each term to its meaning",
+            "feedback": [
+              "Each card restates the meaning plainly: e.g. 'Range: one number — the distance from lowest to highest.'"
+            ],
+            "rationale": "A static annotated reference anchors each term to a meaning and example and is useful alongside active work. Because it is fixed, it cannot show the measures respond to changing data — the very contrast that separates the terms — so it serves as a reference, not as the builder of use.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "On a fixed, annotated data set, reveal cards for 'mean', 'median', 'mode', 'range' and 'outlier', each giving what it names and a one-line 'what it tells us' with an example.",
+              "Use the glossary as a reference while working on the other activities."
+            ],
+            "intendedInsight": "Each term is tied to a one-line meaning and an example, giving a stable reference point for the vocabulary."
+          }
+        ],
+        "constraints": [
+          "Teach each term ON a real, meaningful data set and immediately ask 'what does this number tell us about the data?', so the word attaches to a meaning rather than to a calculation.",
+          "Contrast mean, median and mode on the SAME data set — ideally a skewed one where they differ — so the three words cannot collapse into 'the average'. When demonstrating mode, use a data set with a single clear most-frequent value to avoid bimodal ambiguity.",
+          "Order the list before finding the median; make clear the median is the middle of the ordered values, not the unordered list or the frequency column.",
+          "'Range' names ONE number — the difference/spread from lowest to highest (e.g. 8−0 = 8) — shown as a distance, never given as the two extreme values.",
+          "Keep 'correlation' as the direction of a trend (positive/negative/none) and explicitly separate from causation ('a link, not a cause'); do not call a patternless scatter 'correlated'.",
+          "Treat the outlier as a value that doesn't fit the pattern and connect it to its EFFECT (it pulls the mean because the mean is influenced by every value), not as a mistake to delete.",
+          "Assess by listening for correct USE in free description, not by asking for definitions; recognition/matching items check use against a data context but do not by themselves show independent construction.",
+          "Observable affordances/limits, not claims of medium superiority: the static glossary cannot show the measures respond to changing data, and the in-role conversation cannot compute the measures or show them move as data changes. The live data manipulation can display the measures behaving differently as a value is dragged, and narration on the same data can also contrast the terms; no single medium is universally required to build meaning.",
+          "A third spatial dimension is unnecessary for 1D data sets and 2D scatter relationships and risks obscuring the terms; prefer the 1D strip and 2D scatter."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of a saved teaching-research row; sources were NOT re-fetched or re-verified. All activities are research-informed proposals, not validated interventions, and citations support general teaching principles rather than proving any specific activity was tested.",
+          "Original assess states 'range = 7 (the difference 8−0, one number)', which is internally inconsistent because 8−0 = 8. All learner-facing text here uses the correct value, range = 8.",
+          "Original example 2,0,1,3,2,1,8 is bimodal (1 and 2 each appear twice) yet the source asserts a unique mode = 2 and mean ≈ 2.4 (17/7 ≈ 2.43). To give a clean single-mode demonstration, the data set was adjusted to 2,0,1,3,2,2,8 (ordered 0,1,2,2,2,3,8): mode = 2 (three times), median = 2, range = 8, mean = 18/7 ≈ 2.57. This mean differs from the original correctAnswer's ≈2.4; reviewers should confirm the intended data set and reconcile the saved assess fields.",
+          "'High' confidence and any claim that static or conversational media 'cannot build meaning' are not independently verified; these were softened to narrowly scoped affordance/limit statements, and no comparative efficacy of media is established by the sources."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "use_in_context",
+        "poeTask": null,
+        "probeDeeper": [
+          "'You said the mean is about 2.4 — what does that 2.4 actually tell us about how this team scores?' — pushes 'average' from procedure to meaning",
+          "'Why did you have to put the numbers in order to find the median, but not to find the mode?' — forces the distinction between the terms into the open",
+          "Counterexample: 'If that 8 had been 80 instead, which of your numbers — mean, median, mode, range — would change the most, and which would hardly move?' — tests outlier/spread vocabulary on a fresh case",
+          "'Taller children here tend to have bigger feet — does being tall MAKE feet grow? What word describes the link without saying one causes the other?' — probes correlation-vs-cause"
+        ],
+        "correctAnswer": "No single scored answer — listen for correct USE: mode = 2 (most frequent), median = 2 (the middle AFTER ordering), mean ≈ 2.4 and a sense of what it represents (a fair-share / typical score), range = 7 (the difference 8−0, one number), the 8 named as an outlier that pulls the mean UP (because the mean is influenced by every value) while the median barely moves, and the scatter described with 'positive correlation' meaning taller children tend to have bigger feet — a link, not stated as a cause. Terms used precisely and for the right thing is mastery.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "'Average' as bare procedure: uses 'average'/'mean' only for the add-and-divide calculation and cannot say what the resulting number represents about the data",
+            "nextMove": "Confront by pressing for meaning: 'if the team scored this average every match, how many is that?' — tie the mean to a fair-share / typical value on the actual data, so the word carries a meaning, not just a rule",
+            "distractor": null,
+            "revealedBy": "The child computes the mean but, asked what it tells us, restates the calculation ('you add them and divide') rather than what it says about the team's scoring",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Swapping the measures of centre: calls the most frequent value the 'average'/'mean', or gives the median without ordering (or from the frequency column) — the three terms collapse into one",
+            "nextMove": "Contrast all three on this same data set, saying each word aloud as its value is found (order the list first for the median), so mean, median and mode attach to three distinct things",
+            "distractor": null,
+            "revealedBy": "The child labels the mode as the 'average', or names a 'median' that is the middle of the UNORDERED list, using the wrong word for the value they found",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "'Range' as the extremes, not their difference: gives the range as the two end values ('0 and 8') rather than the single number 8",
+            "nextMove": "Establish that 'range' names ONE number — the distance from lowest to highest — by marking both ends on a number line and showing the gap; contrast 'what are the extremes?' with 'what is the range?'",
+            "distractor": null,
+            "revealedBy": "Asked for the range, the child says two numbers (the lowest and highest) instead of computing and stating their difference",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Outlier disconnected from its effect: names the 8 as odd but does not connect it to the mean, assuming the mean sits in the middle regardless of an extreme value",
+            "nextMove": "Show the mean is influenced by every value: recompute the mean with and without the 8 (and compare to the median, which barely moves), so 'outlier' is tied to its pull on the mean",
+            "distractor": null,
+            "revealedBy": "The child spots the 8 as unusual but, asked what it does to the mean, says it makes no difference or that the mean is 'in the middle' — not that it drags the mean up",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "'Correlation' used loosely or as causation: applies 'correlation' to any relationship, calls a patternless scatter 'correlated', or reads it as one variable causing the other",
+            "nextMove": "Separate correlation from cause explicitly: describe the trend's DIRECTION (positive/negative/none) and offer a link-not-cause counterexample (ice-cream sales and sunburn both rise in summer) so 'correlation' names co-variation, not causation",
+            "distractor": null,
+            "revealedBy": "On the scatter the child says 'being tall makes your feet bigger', or uses 'correlation' for a scatter with no trend, rather than naming the direction of the trend as a link",
+            "reteachPrerequisiteId": null
+          }
+        ],
+        "responseLevels": {
+          "gap": "Swaps the terms when describing — the most common value is called the 'average', the range comes out as two numbers, 'correlation' is used for any link or not at all; the words are labels without attached meanings",
+          "full": "In an unprompted description of a fresh data set, uses mean, median, mode, range, outlier and correlation precisely and for the right thing — says what each tells us, notes the outlier's pull on the mean, and keeps correlation distinct from causation",
+          "partial": "Uses each term correctly when prompted one at a time, but in free description reverts to 'average' loosely, cannot say what a measure represents, or does not spontaneously flag the outlier's effect or keep correlation distinct from cause — lists the terms without coordinating them on real data"
+        },
+        "diagnosticPrompt": "Give the child a small real data set — e.g. goals a team scored in seven matches: 2, 0, 1, 3, 2, 1, 8 — and a simple scatter graph of, say, height against shoe size for the class. Set a talking task, NOT a definition task: 'Tell me the story of this team's scoring — use the words mean, median, mode and range as you go, and say what each one tells us. There's an 8 in there: what would you call that value, and what does it do to the mean? Now look at this scatter graph and describe the relationship using the right word.' Listen for which terms they USE and whether each is used for the right thing. (Do not ask 'what does mean/range/correlation mean?' — listen for correct USE in the description.)",
+        "whatMakesItDiscriminate": "A child who owns the vocabulary attaches each word to a distinct thing when describing freely; a child holding only labels reveals it the moment they describe — the most common value gets called 'the average', the range comes out as 'nought and eight', 'correlation' is used for any link or slid into 'taller makes your feet grow'. Narrating real data exposes swaps that a term-by-term definition quiz would let the child recite around."
+      },
+      "sources": [
+        {
+          "claim": "Knowing the computational rule for the mean does not imply understanding: students with only computational knowledge make predictable errors, and the mean is influenced by every value (so adding an extreme value shifts it); a frequent error is to situate the mean at the centre of the range even when the distribution is skewed",
+          "source": "Batanero, Godino, Vallecillos, Green & Holmes (1994), 'Errors and difficulties in understanding elementary statistical concepts', Int. J. Math. Ed. Sci. Tech. 25(4)",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "Russell & Mokros classified students' notions of average into 'most frequent value/mode', 'reasonable value', 'midpoint' and 'algorithmic relationship'; and Barr found students confused about what the median is the 'middle' of (the values, the frequency column, or the unordered list)",
+          "source": "Batanero et al. (1994), citing Russell & Mokros and Barr",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "'Correlation' refers to association/co-variation between two quantitative variables and does NOT imply cause and effect; people show 'illusory correlation', overestimating association when they believe a causal link exists; the intuitive notion of variability is 'unalikeability' — how much values differ from each other",
+          "source": "Batanero et al. (1994), 'Errors and difficulties in understanding elementary statistical concepts'",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "In school years 4-6, pupils primarily express procedural knowledge and sometimes mix up the definitions of mean and median; 'mean' carries everyday colloquial connotations that 'median' and 'mode' lack (median is seen as only existing in school), so the latter are harder to explain",
+          "source": "Malinen, 'Mean, median and mode in school years 4-6: aspects of statistical literacy' (doctoral thesis abstract, Stockholm University / CORE mirror)",
+          "url": "https://core.ac.uk/works/148475871",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T16:23:25.775Z",
+        "updatedAt": "2026-10-19T15:22:00.629Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "/records/377"
+  },
+  {
+    "topic": {
+      "id": "mt_Cg8VPguS_V",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Calculating the Mean",
+      "description": "Calculate and interpret the mean as an average of a data set",
+      "ageRangeStart": 10,
+      "ageRangeEnd": 12,
+      "centrality": 0.1243301178992497,
+      "evidence": [
+        "Calculate the mean of five test scores: 72, 85, 90, 68, 95",
+        "Explain what the mean represents and how it differs from individual data values",
+        "Find a missing data value given the mean and all other values"
+      ],
+      "assessmentPrompt": "If the family scored 6, 8, 7, 5, and 9 on a board game over five rounds, can {{name}} work out the mean (average) score?",
+      "standards": [
+        "ccss-math:6.SP.5c",
+        "uk-nc-2013:Ma6/5.1b"
+      ]
+    },
+    "topicPointer": "/topics/745",
+    "research": {
+      "topicId": "mt_Cg8VPguS_V",
+      "pedagogy": {
+        "summary": "At age 10-11 children calculate the mean (add the values, divide by how many) AND interpret what it represents: the fair-share or typical value if the total were shared equally among the data points. The pedagogy's whole battle is against learning the rule as an empty procedure. A child who knows only 'add up and divide' makes predictable errors the moment a problem is not transparent — they cannot find a missing value given the mean, they believe adding a score of 0 leaves the mean unchanged, and they cannot say what the mean tells them or accept that it need not equal any actual data value. So the mean should be built as LEVELLING/FAIR SHARE (physically evening out towers of cubes to a common height) before or alongside the algorithm, and taught with the two 'non-transparent' tasks that reveal understanding: the reverse problem (find the missing value from the mean, using total = mean × count) and reasoning about how adding a value shifts the mean.",
+        "bestPractices": [
+          "Build the mean as LEVELLING/FAIR SHARE first — even out unequal towers of cubes to a common height — so the algorithm is seen as sharing the total equally, not just a rule",
+          "Always ask 'what does this mean value tell us about the data?' after computing, and accept/expect that the mean need not equal any actual value (nobody scored 82, yet 82 is the mean)",
+          "Teach the mean as total = mean × count, so the reverse problem (find a missing value given the mean) is accessible — this is the task that reveals conceptual, not just procedural, knowledge",
+          "Probe the effect of changing the data: adding a 0, or an extreme value, MUST change the mean because it is influenced by every value — confront the common belief that a 0 leaves it unchanged",
+          "Connect the mean to its properties (it lies between the lowest and highest values; it balances the data) so children can sanity-check an answer that falls outside the data range",
+          "Keep the arithmetic (decimal addition and division) reliable so procedural slips don't masquerade as conceptual gaps"
+        ],
+        "keyRepresentations": [
+          "Towers of cubes / bars levelled to a common height (the fair-share / levelling model of the mean)",
+          "A balance-point image on a number line (the mean as the balancing value of the data)",
+          "The relationship triangle total = mean × count, used forwards (find mean) and backwards (find a missing value)",
+          "A data set with its mean marked, shown falling between the lowest and highest values but equal to none of them"
+        ],
+        "commonMisconceptions": [
+          "Knowing only the add-and-divide rule with no sense of what the mean represents, so any non-standard problem fails",
+          "Believing that adding a data value of 0 does not change the mean (not seeing that the mean is influenced by every value and that the count also rises)",
+          "Being unable to find a missing value given the mean — re-averaging the known values instead of using total = mean × count",
+          "Expecting the mean to equal one of the data values, or placing it outside the range of the data",
+          "Dividing by the wrong count (e.g. ignoring a zero or a repeated value when counting the data points)"
+        ]
+      },
+      "learn": {
+        "summary": "Teach 10-11 year olds to calculate the mean (add the values, divide by the count) AND interpret it as the fair-share/levelling value: what each data point would be if the total were shared equally. The central aim is to prevent the mean becoming an empty procedure. Build it as levelling/fair share (evening out towers of cubes to a common height) alongside the algorithm, then use two revealing non-transparent tasks — the reverse problem (find a missing value using total = mean \\u00d7 count) and reasoning about how adding a value (including 0) shifts the mean. Reinforce the properties that let children sanity-check: the mean lies between the lowest and highest values, is influenced by every value, and need not equal any actual data value.",
+        "activities": [
+          {
+            "title": "Level the towers: the mean as fair share",
+            "feedback": [
+              "If a child only restates 'you add them and divide' when asked what the mean tells us, point back to the levelled towers: 'if everyone scored the same, this is the score each would get.'",
+              "Mirror the algorithm (sum \\u00f7 count) next to the levelled towers so the child sees the two give the same number.",
+              "Optional interactive version: let the child drag cubes between towers and watch a read-out show the running mean; a 'balance beam' number line can show the mean as the balancing point of the data."
+            ],
+            "rationale": "Grounding the algorithm in levelling/fair share gives the mean a meaning children can reason from, addressing the misconception of knowing only the bare rule.",
+            "sourceClaims": [
+              "The mean is productively taught as 'fair share' / levelling — evening out the data so each shares the total equally — which grounds the algorithm in a meaning",
+              "Knowing the computational rule for the mean does not imply understanding; students with only computational knowledge make predictable errors on all but the most transparent problems, and some believe that adding a value of 0 does not change the mean (though the mean is influenced by every value)"
+            ],
+            "learnerActions": [
+              "Start with five towers of cubes at different heights (e.g. representing scores), choosing heights whose total is a multiple of 5 so whole cubes can be shared equally, and even them out by moving cubes from the tall towers onto the short ones until every tower is the same height.",
+              "State that this common height IS the mean — what each would be if the total were shared equally.",
+              "Compute sum \\u00f7 count and confirm it equals the levelled height, so the fair-share meaning and the rule are seen as the same thing.",
+              "Answer 'if all five pupils had scored the same, what would each have scored?' and 'what does this mean value tell us about the scores?'"
+            ],
+            "intendedInsight": "The mean is the value every data point would share if the total were distributed equally; the add-and-divide algorithm computes exactly this fair share, so the rule has a meaning rather than being an arbitrary procedure."
+          },
+          {
+            "title": "The reverse problem: find the missing value",
+            "feedback": [
+              "If the child adds 7+9+6+10 and divides by 4, or divides by 5, point out they have ignored that the mean already describes five scores: ask 'what must all five add up to if their mean is 8?'",
+              "Optional interactive version: fix the mean line, hide one tower's height, and let the child drag it up and down until the row levels — discovering the total is fixed at mean \\u00d7 count.",
+              "Confirm success when the child computes the total first (8\\u00d75=40) then subtracts the known 32 to get 8."
+            ],
+            "rationale": "The reverse problem cannot be solved by the add-and-divide rule alone, so it reveals whether a child owns the fair-share meaning rather than just a procedure.",
+            "sourceClaims": [
+              "Knowing the computational rule for the mean does not imply understanding; students with only computational knowledge make predictable errors on all but the most transparent problems, and some believe that adding a value of 0 does not change the mean (though the mean is influenced by every value)",
+              "The mean is productively taught as 'fair share' / levelling — evening out the data so each shares the total equally — which grounds the algorithm in a meaning"
+            ],
+            "learnerActions": [
+              "Given a mean and all-but-one of the values (e.g. four of five spelling scores were 7, 9, 6 and 10; the mean of all five is 8), find the missing value.",
+              "Reconstruct the total using total = mean \\u00d7 count (8 \\u00d7 5 = 40), subtract the known values (40 \\u2212 32 = 8) to recover the missing one.",
+              "Explain why re-averaging only the known four values is wrong — the mean refers to all five."
+            ],
+            "intendedInsight": "Because the mean is the total shared equally, the total is fixed at mean \\u00d7 count; recovering a missing value means finding that total and subtracting what is known, not re-averaging the visible data."
+          },
+          {
+            "title": "Does a zero change the mean?",
+            "feedback": [
+              "If the child says 'you're only adding a zero so it stays the same', recompute with and without the 0 and highlight both that the 0 sits below the current (positive) mean and that the count changed too, so the mean falls.",
+              "Optional interactive version: an 'add a new pupil who scored 0' button so the mean visibly shifts and the count updates as the child predicts then watches.",
+              "Reinforce that the mean is influenced by every value, so adding a value above the current mean (like 100) moves it up while a value below it (like 0 here) moves it down."
+            ],
+            "rationale": "Directly confronts the documented belief that adding a 0 leaves the mean unchanged, by having the child predict and then recompute on a concrete positive-score case.",
+            "sourceClaims": [
+              "Knowing the computational rule for the mean does not imply understanding; students with only computational knowledge make predictable errors on all but the most transparent problems, and some believe that adding a value of 0 does not change the mean (though the mean is influenced by every value)",
+              "Strauss & Bichler's conceptual properties of the average include: it lies between the extreme values, it is influenced by every value, it need not equal one of the values, and it can be a fraction with no physical counterpart — properties children find harder than the bare procedure"
+            ],
+            "learnerActions": [
+              "Start from a stated data set of positive test scores with a known mean (e.g. 72, 85, 90, 68, 95 with mean 82), predict what happens to the mean when a new value of 0 is added, then recompute to check.",
+              "Notice that both the total and the count change (here from 5 values to 6), and that the new 0 still counts as a data point.",
+              "State that, because the existing scores are positive, the current mean is positive, so the added 0 lies below it: the mean goes DOWN (e.g. 410 \\u00f7 6 \\u2248 68.3), pulled toward zero as part of the fair share.",
+              "Extend to an extreme value: predict then compute the effect of adding one more score of 100 to the stated set (which, being above the current mean, pulls the mean up)."
+            ],
+            "intendedInsight": "Every value — including 0 — influences the mean, and adding a data point also increases the count; for positive scores an added 0 sits below the current mean and lowers it, so it does not leave the mean unchanged."
+          },
+          {
+            "title": "Properties of the mean: sanity-checking an answer",
+            "feedback": [
+              "If a child expects the mean to match one of the scores, show a clear example where it does not and tie it back to fair share.",
+              "If a child produces a mean outside the data range, prompt: 'can a fair share be bigger than the biggest value?'",
+              "Optional reference: tapping a data set to reveal its total, count and mean, with a note that the mean equals none of the values, can serve as a static check — though it cannot let the child test how a new value moves the mean."
+            ],
+            "rationale": "Knowing the properties lets children detect errors and accept that the mean need not equal a data value, which is harder than the bare procedure.",
+            "sourceClaims": [
+              "Strauss & Bichler's conceptual properties of the average include: it lies between the extreme values, it is influenced by every value, it need not equal one of the values, and it can be a fraction with no physical counterpart — properties children find harder than the bare procedure"
+            ],
+            "learnerActions": [
+              "For a data set with its mean marked, confirm the mean lies between the lowest and highest values and check it is not greater than every score nor less than every score.",
+              "Point out a case where the mean equals none of the actual values (e.g. nobody scored 82, yet 82 is the mean) and explain why that is fine.",
+              "Given a computed mean, judge whether it is plausible by checking it falls within the data range.",
+              "Answer the counterexample 'could the mean ever be higher than every single score? Why or why not?'"
+            ],
+            "intendedInsight": "The mean always lies between the lowest and highest values (inclusive) and need not equal any actual data value (it can even be a fraction with no physical counterpart), so a mean outside the data range signals a computation error."
+          },
+          {
+            "title": "Scorable practice and self-check",
+            "feedback": [
+              "For the zero item, confirm 'down' for the positive-score set and explain the 0 sits below the current mean and the count rises; correct 'stays the same' by recomputing.",
+              "For the reverse item, confirm success only when the child uses the total (mean \\u00d7 count), not re-averaging.",
+              "Keep data sets small and the arithmetic clean so a wrong answer reflects reasoning, not a calculation slip."
+            ],
+            "rationale": "Recognition and short-answer items give a scorable check that targets the specific misconceptions, though they verify less than independent construction and reasoning.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Compute the mean of a small clean data set (fill-in-the-blank).",
+              "Solve a reverse item: 'four of five scores are…; the mean is 8; find the fifth.'",
+              "Answer a multiple-choice item: 'a new pupil scores 0 — does the mean go up, down, or stay the same?' (for a set of positive scores).",
+              "Spot an implausible mean: choose which proposed mean cannot be right because it falls outside the data range."
+            ],
+            "intendedInsight": "Calculating, interpreting, reversing and sanity-checking the mean can each be checked against a correct answer, catching the zero and missing-value errors."
+          }
+        ],
+        "constraints": [
+          "The levelling/fair-share model and the algorithm must be presented as the same thing, not as two separate topics; always ask what the mean value tells us after computing.",
+          "A static annotated data set can label the mean and show it between the extremes, but it cannot let the child level the data or test how a new value moves the mean; use it as reference only, not as the main builder.",
+          "Quiz/recognition items give a scorable check but do not elicit independent construction or explanation; pair them with tasks where the child computes, reverses and explains in their own words.",
+          "Keep decimal addition and division reliable so procedural slips are not mistaken for conceptual gaps; have the child count the data points first and recheck the arithmetic.",
+          "An interactive levelling model is one good way to make the fair-share idea concrete, but cube towers and a number line on paper can carry the same meaning; do not treat any one medium as required.",
+          "State direction-of-change predictions against the stated data: for positive scores an added 0 lowers the mean and a value above the current mean raises it; do not present a direction as a rule detached from the data set.",
+          "The mean of a one-dimensional data set does not use a third spatial dimension, so a 3D representation adds nothing for this particular content."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research without fresh source verification; sources were not re-fetched. All activities are research-informed proposals, not validated interventions.",
+          "Arithmetic self-audit: 72+85+90+68+95 = 410, 410\\u00f75 = 82 (correct). Reverse example: 7+9+6+10 = 32; mean 8 \\u00d7 5 = 40; 40\\u221232 = 8 (correct). Adding a 0 to the five values (mean 82) gives total 410 over 6 = ~68.3, so the mean falls (consistent with 'down' for positive scores).",
+          "The 'adding a 0 lowers the mean' claim is conditioned on positive scores (so the current mean is positive); it is not stated as an unconditional rule for arbitrary data.",
+          "The Year 6 statutory curriculum claim establishes only topic and age-appropriateness; it was not cited as support for any specific teaching principle, so it was removed from activity sourceClaims where it only matched the topic.",
+          "The legacy framing that an in-role dialogue 'adds no verification' and that a static image 'cannot teach the core of understanding' was softened: these media offer different affordances and limits rather than being universally incapable.",
+          "Optional interactive features (drag cubes, balance-beam number line, hide-a-tower reverse mode, add-a-0 button) are presented as examples that make the mechanism concrete, not as mandatory mechanisms."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'Your mean is 82 but nobody actually scored 82 — how can that be?' — probes that the mean need not equal a data value",
+          "'If all five pupils had scored the same, what would each have scored?' — surfaces the fair-share meaning",
+          "Counterexample: 'Could the mean ever be higher than every single score? Why or why not?' — tests the between-the-extremes property",
+          "'What happens to the mean if I add one more score of 100? Predict, then work it out.' — checks that every value influences the mean, on a fresh case"
+        ],
+        "correctAnswer": "A correct performance: for (1) sums to 410 and divides by 5 to get 82, and describes 82 as a typical / fair-share score that need not equal any actual score; for (2) uses total = mean × count (8×5 = 40), subtracts the known 32, giving 8 — not re-averaging the four; for (3) recomputes and states the mean goes DOWN because the 0 counts and pulls it toward zero (the count also rises). Solving the reverse problem and reasoning correctly about the zero are the marks of conceptual mastery.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Mean as bare rule: computes add-and-divide but cannot say what the mean represents, treating it as just the answer to a calculation",
+            "nextMove": "Reteach meaning via the vocabulary/fair-share prerequisite: level cube towers to a common height and ask 'if everyone scored the same, what would each score be?' so the mean carries a meaning, not just a rule",
+            "distractor": null,
+            "revealedBy": "On task (1) the child gets 82 but, asked what it tells us, restates 'you add them and divide' rather than describing a typical / fair-share score",
+            "reteachPrerequisiteId": "mt_fmm-P17Vka"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Cannot reverse: given the mean and all-but-one values, re-averages the known values or divides by the wrong count instead of using total = mean × count",
+            "nextMove": "Reteach the mean as the total shared equally: establish total = mean × count on a levelling model, then subtract the known values to recover the missing one",
+            "distractor": null,
+            "revealedBy": "On task (2) the child adds 7+9+6+10 and divides by 4 (getting 8) or by 5, rather than computing the total (8×5=40) and subtracting 32 to get 8",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Zero doesn't count: believes adding a data value of 0 leaves the mean unchanged, not seeing that the mean is influenced by every value and that the count rises too",
+            "nextMove": "Confront by recomputing with and without the 0 (and note the count changed from 5 to 6); every value, including 0, is part of the fair share",
+            "distractor": null,
+            "revealedBy": "On task (3) the child says the mean stays the same because 'you're only adding a zero', rather than recomputing to see it fall",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "performance",
+            "pattern": "Arithmetic slip: uses the right method but makes a decimal addition or division error, or miscounts the data points, giving a wrong mean",
+            "nextMove": "Scaffold, do not reteach: have the child count the data points first and recheck the addition/division; the concept is intact, only the calculation slipped",
+            "distractor": null,
+            "revealedBy": "The method is sound (sum then divide by the correct count) but the total or the quotient is wrong",
+            "reteachPrerequisiteId": "mt_lU-2aTRB9f"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Applies add-and-divide unreliably (divides by the wrong count) or not at all; treats the mean as a real data value and thinks adding a 0 leaves it unchanged",
+          "full": "Computes the mean, interprets it as the fair-share / typical value that lies between the extremes and need not equal any score, solves the reverse problem via total = mean × count, and reasons correctly that adding a value (including 0) shifts it — transferring to a fresh data set",
+          "partial": "Computes the mean of a plain list correctly and names it the average, but cannot solve the reverse missing-value problem and cannot explain what the mean represents or that it need not equal an actual value — has the rule, not the fair-share meaning"
+        },
+        "diagnosticPrompt": "Set these tasks and WATCH how the child works, saying little. (1) 'Here are five test scores: 72, 85, 90, 68, 95. Work out the mean, and tell me what that number tells us about the scores.' (2) A reverse task: 'Four of five spelling scores were 7, 9, 6 and 10. The mean of all five was 8. What was the fifth score?' (3) 'A new pupil then scored 0 on the spelling test. Does the mean go up, down, or stay the same? Work it out.' (Set the task and WATCH — do not hint at total = mean × count or at what happens with the zero.)",
+        "whatMakesItDiscriminate": "Task (1) alone cannot separate rule-following from understanding — both produce 82. Task (2) can only be solved by treating the mean as the total shared equally (total = mean × count); a child with only the add-and-divide rule re-averages the four values or divides by the wrong count. Task (3) directly exposes the well-documented belief that adding a 0 leaves the mean unchanged. The three together separate a child who owns the fair-share meaning from one who has only the procedure."
+      },
+      "sources": [
+        {
+          "claim": "Knowing the computational rule for the mean does not imply understanding; students with only computational knowledge make predictable errors on all but the most transparent problems, and some believe that adding a value of 0 does not change the mean (though the mean is influenced by every value)",
+          "source": "Batanero, Godino, Vallecillos, Green & Holmes (1994), 'Errors and difficulties in understanding elementary statistical concepts'",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "Strauss & Bichler's conceptual properties of the average include: it lies between the extreme values, it is influenced by every value, it need not equal one of the values, and it can be a fraction with no physical counterpart — properties children find harder than the bare procedure",
+          "source": "Batanero et al. (1994), citing Strauss & Bichler",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "The mean is productively taught as 'fair share' / levelling — evening out the data so each shares the total equally — which grounds the algorithm in a meaning",
+          "source": "GAISE II (Guidelines for Assessment and Instruction in Statistics Education), ASA",
+          "url": "https://www.amstat.org/asa/files/pdfs/GAISE/GAISEIIPreK-12_Full.pdf",
+          "verified": true
+        },
+        {
+          "claim": "Year 6 pupils calculate and interpret the mean as an average (statutory statistics content for this age)",
+          "source": "National Curriculum in England: Mathematics programmes of study (KS2, Year 6 Statistics)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T16:25:55.416Z",
+        "updatedAt": "2026-10-19T15:19:57.957Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "/records/280"
+  },
+  {
+    "topic": {
+      "id": "mt_ZfpeI1CFyP",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Average distance from the mean",
+      "description": "Calculate the mean absolute deviation (MAD) of a small numerical data set — find the mean, find each value's distance from the mean (a non-negative number: a value equal to the mean has distance 0), then find the mean of those distances; interpret the MAD as the average distance of the values from the mean, stated in the original units of the data (e.g. minutes, cm, points); and use MADs to compare the spread or consistency of two data sets, recognising that a larger MAD means values typically sit further from the mean and that the MAD is 0 only when every value equals the mean",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.1607717041800643,
+      "evidence": [
+        "Calculate the MAD of 4, 6, 8, 9, 13 (mean 8; distances 4, 2, 0, 1, 5; MAD 2.4), counting the value equal to the mean as a distance of 0",
+        "Explain that a MAD of 3 cm for a set of plant heights means the heights are, on average, 3 cm away from the mean height",
+        "Decide which of two bowlers, both with a mean score of 120, is more consistent when their MADs are 8 and 21 points, and justify the choice"
+      ],
+      "assessmentPrompt": "If {{name}} wrote down how many minutes late the school bus was each day for a week, could they work out how far each day was from the average lateness, average those distances, and explain what that number says about how reliable the bus is?",
+      "standards": [
+        "ccss-math:6.SP.5c"
+      ]
+    },
+    "topicPointer": "/topics/751",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_XSXnTQoQ4l",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Averages and range",
+      "description": "Describe, interpret, and compare observed distributions of a single variable using measures of central tendency (mean, median, mode) and spread (range), including choosing a suitable average and the effect of outliers; comparisons describe the observed data sets themselves and do not yet scale the difference in centres by a measure of variability or generalise from samples to wider populations",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 13,
+      "centrality": 0.1211146838156485,
+      "evidence": [
+        "Find the mean, median and mode of 3, 5, 5, 6, 11 (6, 5 and 5) and say which average best represents a typical value",
+        "Find the range of 12, 14, 15, 15, 48 and explain why the outlier 48 pulls the mean (20.8) well above the median (15)",
+        "Compare two classes' spelling scores using their medians and ranges and write one conclusion about which class did better and one about which was more consistent"
+      ],
+      "assessmentPrompt": "If {{name}} had the test scores of a whole class, could they find the mean, median, and range, and explain what each tells you about how the class performed?",
+      "standards": [
+        "acara-v9:AC9M6ST01",
+        "ccss-math:6.SP.3",
+        "ccss-math:6.SP.5c",
+        "ccss-math:6.SP.5d",
+        "uk-nc-2013:KS3.Maths.Stat.1"
+      ]
+    },
+    "topicPointer": "/topics/752",
+    "research": {
+      "topicId": "mt_XSXnTQoQ4l",
+      "pedagogy": {
+        "summary": "At KS3 (ages 11-13) children move from calculating a single mean to DESCRIBING and COMPARING whole distributions: computing mean, median, mode and range, choosing which average best represents a data set, and reasoning about how an outlier affects each measure. Two ideas carry the teaching, and both are about judgement rather than calculation. First, the three averages are not interchangeable: the mean is influenced by every value (so a single outlier drags it), while the median is robust and stays representative when the data is skewed — so the CHOICE of average must fit the shape of the data. Second, an average alone does not describe a distribution: comparing two data sets requires a measure of CENTRE and a measure of SPREAD (range) together, because two sets with the same mean can differ wildly in variability. The characteristic errors are reporting the mean regardless of skew, treating the outlier as affecting all averages equally (or deleting it unthinkingly), and comparing sets on the mean alone while ignoring spread.",
+        "bestPractices": [
+          "Compute all three averages on the SAME data set (especially a skewed one or one with an outlier) so children see them diverge and can discuss which best represents a typical value",
+          "Make the outlier's differential effect explicit: recompute mean and median with and without the outlier — the mean chases it, the median barely moves — so 'robust' has a concrete meaning",
+          "Teach that describing a distribution needs CENTRE and SPREAD together; compare two data sets on an average AND the range, and show two sets with equal means but different spreads",
+          "Tie the choice of average to the data's shape: median for skewed data or data with an outlier, mode for categorical / most-common questions, mean for roughly symmetric numerical data",
+          "Insist the range is a single number (highest minus lowest), a measure of spread — not the two extreme values",
+          "Draw conclusions in context ('Class A did better on average but was less consistent') so measures are used to argue, not just calculated"
+        ],
+        "keyRepresentations": [
+          "A data set shown on a number line with mean and median both marked, and an outlier that can be added/removed to see each measure respond",
+          "Side-by-side dot plots of two data sets with the same mean but different spreads (centre vs spread made visible)",
+          "A skewed distribution where mean, median and mode fall in visibly different places",
+          "The range shown as a labelled distance from lowest to highest value"
+        ],
+        "commonMisconceptions": [
+          "Reporting the mean as 'the average' regardless of skew or outliers, when the median would better represent a typical value",
+          "Thinking an outlier affects the mean and median equally, or deleting an outlier without justification, rather than seeing the mean is dragged while the median is robust",
+          "Comparing two data sets on their averages alone and ignoring the spread (a frequent error is to ignore variability entirely)",
+          "Giving the range as the two extreme values rather than their difference; or situating the mean at the centre of the range even when the data is skewed"
+        ]
+      },
+      "learn": {
+        "summary": "KS3 learners (ages 11-13) move from calculating a single mean to describing and comparing whole distributions of one variable: computing mean, median, mode and range, judging which average best represents a data set given its shape, and reasoning about how an outlier affects each measure differently. Two judgements carry the topic: (1) the three averages are not interchangeable — the mean is pulled by every value (so an outlier drags it) while the median is robust, so the choice of average must fit the data's shape; and (2) an average alone does not describe a distribution — comparing two sets needs a measure of centre AND a measure of spread (range) together, because two sets with the same mean can differ widely in variability.",
+        "activities": [
+          {
+            "title": "Watch the averages diverge: move a value far out",
+            "feedback": [
+              "If the learner says the median moved as much as the mean, have them recount the ordered values: the middle position stays near the cluster, whereas the sum rises by how far the value was moved, so the mean shifts by that amount divided by the number of values — a change the median does not share.",
+              "If the learner deletes the far-out value without justification, ask what real reason (e.g. a recording error versus a genuine value) would justify removing it, and show what each average does when it is kept.",
+              "If the learner reports the pulled-up mean as 'the typical score', point to the cluster and ask whether that mean sits among most of the data."
+            ],
+            "rationale": "Computing all three averages on a clustered set and recomputing them after one value is moved far out lets learners see the measures diverge, giving 'the mean is pulled by outliers, the median is robust' a concrete meaning rather than being a slogan. Moving an existing point (rather than adding one) keeps the count fixed so the median's stability is clearly attributable to order statistics.",
+            "sourceClaims": [
+              "The mean is influenced by every value, so a single extreme value shifts it, whereas exploratory methods based on order statistics (such as the median) are robust and not very sensitive to outliers; a frequent error is to situate the mean at the centre of the range even when the distribution is skewed, where the median or mode would be a better representative"
+            ],
+            "learnerActions": [
+              "Start with a small set of values on a stated scale (for example reaction times in whole seconds, or scores out of 40) clustered around 4-5, and compute the mean, median, mode and range by hand.",
+              "Record all four measures, then take ONE of those values and move it far out to a value the scale allows (for example 30), keeping the number of data points the same.",
+              "Recompute the mean and median with the far-out value, and compare each to its value before.",
+              "State in words which measure moved a lot and which barely moved, and explain why the mean was dragged while the median held.",
+              "If a draggable dot plot with mean, median, mode and range read out live is available, drag one point far from the cluster and watch the mean line chase it while the median stays put or moves at most to a neighbouring value in the cluster (for example, if the dragged point crosses from below the middle to above it) — this makes the differential effect visible in real time."
+            ],
+            "intendedInsight": "The mean is influenced by every value, so a single extreme value shifts it a lot; the median, based on order/position, is robust and barely moves. 'Robust' becomes concrete when you see the two measures respond differently to the same far-out value."
+          },
+          {
+            "title": "Same mean, different spread: why centre is not enough",
+            "feedback": [
+              "If the learner concludes the sets are 'the same' from equal means, show the two ranges side by side and ask which class has students scoring far from the average.",
+              "If the learner lists the two extreme values instead of the range, ask for the single distance between them (highest − lowest).",
+              "If the learner reports only the range and forgets the centre, point out that spread without a centre also fails to describe the data."
+            ],
+            "rationale": "Describing and comparing distributions needs centre and spread together; comparing on an average alone is a frequent error, so building the comparison from both measures targets that gap directly.",
+            "sourceClaims": [
+              "A frequent error is to ignore the spread of data; the intuitive notion of variability concerns how much values differ from each other, and different words (variation, dispersion, spread) are open to different interpretations — so describing data needs an explicit measure of spread",
+              "KS3 pupils describe, interpret and compare observed distributions of a single variable through appropriate measures of central tendency (mean, mode, median) and spread (range), including consideration of outliers"
+            ],
+            "learnerActions": [
+              "Take two data sets (for example two classes' test scores) that have the same mean but clearly different spreads.",
+              "Compute the mean and the range (highest minus lowest, a single number) for each set.",
+              "Decide whether 'same mean' means the classes performed identically, and justify the answer using the ranges.",
+              "Write a conclusion in context that mentions BOTH centre and spread, e.g. 'Both classes scored about the same on average, but Class A was far more consistent.'",
+              "If side-by-side dot plots with adjustable spreads at a fixed mean are available, line the two plots up and compare how wide each is while the mean stays equal."
+            ],
+            "intendedInsight": "An average alone does not describe a distribution. Two sets with equal means can differ widely in variability, so a fair comparison reports a measure of centre AND a measure of spread."
+          },
+          {
+            "title": "Which average would you report, and why?",
+            "feedback": [
+              "If the learner defaults to the mean on a skewed set, ask whether that mean sits among most of the values or is pulled toward the tail.",
+              "If the learner assumes the mean is always central, have them locate the mean and the bulk of the data on the skewed set and compare.",
+              "If the learner picks the mode where values are all distinct numerical measurements, ask whether 'most common' is meaningful here."
+            ],
+            "rationale": "Tying the choice of average to the data's shape confronts the fragmented notions of 'average' and the characteristic error of reporting the mean regardless of skew.",
+            "sourceClaims": [
+              "Students' notions of 'average' fragment into most-frequent-value/mode, reasonable value, midpoint and algorithmic relationship — each true in some circumstances but not others — so which average is appropriate depends on the data",
+              "The mean is influenced by every value, so a single extreme value shifts it, whereas exploratory methods based on order statistics (such as the median) are robust and not very sensitive to outliers; a frequent error is to situate the mean at the centre of the range even when the distribution is skewed, where the median or mode would be a better representative"
+            ],
+            "learnerActions": [
+              "Given a skewed data set (or one with an outlier), compute mean, median and mode and note where each falls.",
+              "Choose which average best represents a typical value and write a one-sentence justification tied to the data's shape.",
+              "For a most-common / categorical question, decide whether the mode is the right choice and say why.",
+              "Check a tempting claim such as 'the mean always sits in the middle of the range' against your skewed data and explain whether it holds."
+            ],
+            "intendedInsight": "The appropriate average depends on the data: the median represents a typical value better for skewed data or data with an outlier; the mode suits most-common / categorical questions; the mean suits roughly symmetric numerical data. Learners' informal notions of 'average' (most frequent, reasonable value, midpoint, algorithm) are each true only in some circumstances."
+          },
+          {
+            "title": "Compute-and-justify checks",
+            "feedback": [
+              "If a comparison answer mentions only averages, prompt: 'What about how spread out each set is?'",
+              "If the range is given as two values, require the single difference.",
+              "If the learner says the mean and median change equally when the outlier is removed, have them actually recompute both."
+            ],
+            "rationale": "Short scorable items using data sets where the averages genuinely diverge give a check that can catch report-the-mean-regardless and ignore-the-spread errors. Such items verify both procedure and judgement but do not by themselves build the underlying reasoning, which the manipulation and comparison activities develop.",
+            "sourceClaims": [],
+            "learnerActions": [
+              "Compute mean, median, mode and range for a given set, stating the range as one number (highest − lowest).",
+              "For a skewed set, pick which average best represents it and give the reason.",
+              "For two sets, write a conclusion that cites BOTH an average AND the range, so a centre-only comparison is marked incomplete.",
+              "For an outlier item, state which of the mean or median changes more when the outlier is removed, and by roughly how much.",
+              "Optional: a usable worked set is sleep hours 7, 8, 8, 7, 9, 8, 2 (mean 7, median 8, mode 8, range 7), where the outlier 2 pulls the mean DOWN below the cluster — note this direction is opposite to an upward-pulling outlier, and the median stays representative."
+            ],
+            "intendedInsight": "Correct computation plus correct judgement (choice of average, differential outlier effect, centre-and-spread comparison) are both required; getting the arithmetic right is not the same as reasoning about the distribution."
+          }
+        ],
+        "constraints": [
+          "Use data sets where the three averages genuinely diverge (skewed data or a clear outlier); on near-symmetric data the point about choosing the right average is invisible.",
+          "State the measurement context/scale for any example so the outlier is a plausible value on that scale (not off-scale), and match the direction of pull (up or down) to the data.",
+          "State the range as a single number (highest − lowest), a measure of spread, not the pair of extreme values.",
+          "Always draw conclusions in context (e.g. 'better on average but less consistent') so measures are used to argue, not merely calculated.",
+          "A fixed annotated distribution can mark where mean, median and mode fall and label the range as a distance, and is useful as a reference or worked example; because its data cannot be moved, pair it with an activity where learners change the data and watch the measures respond.",
+          "Scorable compute-and-justify items can assess both procedure and judgement and can be used during teaching, but recognition/selection responses do not by themselves elicit the independent reasoning that choosing an average and comparing distributions require; include construction and explanation.",
+          "An in-role 'data analyst' who argues a naive claim ('same mean, so the classes are identical') for the learner to challenge can surface and sharpen reasoning; use it as a follow-on once learners have manipulated or computed the measures, since dialogue alone does not show the measures changing.",
+          "Removing an outlier must be justified by a reason (e.g. a recording error), not done reflexively to tidy the data."
+        ],
+        "reviewNotes": [
+          "This is an agent semantic rewrite of saved teaching research; sources were NOT re-fetched or re-verified. All activities are research-informed proposals, not validated interventions.",
+          "The original claimed a live manipulable tool achieves what 'calculation alone cannot', that a static image 'cannot' teach the core idea, and that a third spatial dimension 'adds nothing'. These comparative-necessity claims are not established by the cited sources and have been softened to affordances/limits (manipulation makes the differential effect visible; a fixed image serves as reference; single-variable data is one-dimensional so an extra spatial axis is not needed here).",
+          "The outlier direction differs between the upward illustration (moving a value to 30) and the original diagnostic (sleep value 2 pulling the mean DOWN). Both are valid; facilitators should ensure the chosen direction matches the data so learners see the correct direction of pull. The concrete sleep dataset (7, 8, 8, 7, 9, 8, 2; mean 7, median 8, mode 8, range 7) from the original diagnostic is retained as an optional worked example.",
+          "Activity 1 was adjusted to MOVE an existing value far out (count fixed) rather than ADD a value, so the median's robustness is clearly due to order statistics and not to a change in the number of data points. Feedback was corrected so the mean's sensitivity is stated accurately: the sum changes by the displacement and the mean by that displacement divided by the number of values, not by the 'full size' of the value.",
+          "Source claims were retained only where they directly support an activity's teaching principle; the fourth activity cites none because no source establishes efficacy of scorable items.",
+          "Legacy confidence was 'high'; this has not been independently re-validated here."
+        ],
+        "schemaVersion": 2
+      },
+      "assess": {
+        "method": "performance_task",
+        "poeTask": null,
+        "probeDeeper": [
+          "'The mean is about 7 but one person slept only 2 hours — which number better describes a typical night, and why?' — pushes the skew/outlier → median reasoning into words",
+          "'What happens to the mean and to the median if I remove the 2? Which changes more?' — tests the differential effect directly",
+          "Counterexample: 'Both classes have a mean of 60 — does that mean they did equally well? What else would you check?' — forces spread into the comparison",
+          "'When would the MODE be the best average to report?' — probes appropriateness of measure on a fresh case"
+        ],
+        "correctAnswer": "A correct performance: computes mean, median, mode and range correctly (range = highest − lowest, one number); recognises the 2 as an outlier that drags the MEAN down while the MEDIAN stays representative, and reports the median as the typical value with that reason; and when comparing the two classes uses BOTH an average AND the range/spread ('similar on average but Class A is more consistent'), not the average alone. Seeing the outlier's differential effect and comparing on centre AND spread are the marks of mastery.",
+        "errorPatterns": [
+          {
+            "kind": "misconception",
+            "pattern": "Outlier treated as affecting all averages equally, or reported mean regardless of the outlier — not seeing the mean is dragged while the median is robust",
+            "nextMove": "Reteach on the mean prerequisite: recompute mean and median with and without the outlier so the child sees the mean chase it while the median holds; the mean is influenced by every value, the median is not",
+            "distractor": null,
+            "revealedBy": "On tasks (1)-(2) the child reports the mean as the typical value despite the 2 pulling it below the cluster, or claims the median is affected as much as the mean, or deletes the 2 without justification",
+            "reteachPrerequisiteId": "mt_Cg8VPguS_V"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Compares two data sets on the average alone, ignoring the spread — concludes two sets with similar means are 'the same'",
+            "nextMove": "Confront in place: show two sets with equal means but very different ranges and ask 'are these really the same?'; describing a distribution needs centre AND spread",
+            "distractor": null,
+            "revealedBy": "On task (3) the child bases the conclusion only on the means and does not mention the range/spread, missing that one class is far more variable",
+            "reteachPrerequisiteId": null
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Chooses the wrong average for the data's shape — uses the mean for skewed data (or thinks the mean always sits in the middle of the range) rather than the more representative median/mode",
+            "nextMove": "Tie the choice to the shape: for skewed data or data with an outlier the median represents a typical value better; for most-common/categorical questions the mode; reteach the meaning of the measures via the vocabulary prerequisite",
+            "distractor": null,
+            "revealedBy": "On task (2) the child defaults to the mean without considering that the skew/outlier makes the median more representative, or expects the mean to be central regardless of shape",
+            "reteachPrerequisiteId": "mt_fmm-P17Vka"
+          },
+          {
+            "kind": "misconception",
+            "pattern": "Range as the extremes, not their difference: gives the range as the two end values rather than the single number highest − lowest",
+            "nextMove": "Establish the range as one number — a distance/spread from lowest to highest — by marking both ends and computing the difference; reteach the term via the vocabulary prerequisite",
+            "distractor": null,
+            "revealedBy": "On task (1) the child states the range as '2 to 9' (or names lowest and highest) instead of 7",
+            "reteachPrerequisiteId": "mt_fmm-P17Vka"
+          }
+        ],
+        "responseLevels": {
+          "gap": "Computes the measures unreliably or gives the range as two numbers; reports the mean regardless of an outlier; compares two sets on the mean alone",
+          "full": "Computes all four measures, recognises and explains the outlier's differential pull on mean versus median, chooses the appropriate average for the data's shape, and compares two distributions on BOTH centre and spread — transferring the reasoning to a fresh pair of data sets",
+          "partial": "Correctly computes mean, median, mode and range, but treats the mean as the average to report regardless of skew/outliers, or compares distributions using centre only — has the procedures without the judgement about which measure fits or that spread matters"
+        },
+        "diagnosticPrompt": "Give the child a small data set with a clear outlier — e.g. hours of sleep: 7, 8, 8, 7, 9, 8, 2 — and a second pair of data sets for comparison (two classes' test scores with similar means but different spreads). Set these tasks and WATCH how they work: (1) 'Find the mean, median, mode and range of the sleep data.' (2) 'Which average best describes a typical night's sleep here? Use it.' (3) 'Compare these two classes and tell me what you can conclude.' (Set the task and WATCH — do not hint that the 2 is an outlier, nor that comparing needs spread as well as an average.)",
+        "whatMakesItDiscriminate": "Task (2) forces the choice of average: a child who reports the mean regardless reveals they don't grasp that an outlier makes it unrepresentative, while a child who has the idea switches to the median and says why. Task (3) is built with similar means but different spreads, so a child comparing on the mean alone concludes 'the same' whereas a child who understands distributions cites the spread. The two separate calculation from the judgement the topic is about."
+      },
+      "sources": [
+        {
+          "claim": "The mean is influenced by every value, so a single extreme value shifts it, whereas exploratory methods based on order statistics (such as the median) are robust and not very sensitive to outliers; a frequent error is to situate the mean at the centre of the range even when the distribution is skewed, where the median or mode would be a better representative",
+          "source": "Batanero, Godino, Vallecillos, Green & Holmes (1994), 'Errors and difficulties in understanding elementary statistical concepts'",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "A frequent error is to ignore the spread of data; the intuitive notion of variability concerns how much values differ from each other, and different words (variation, dispersion, spread) are open to different interpretations — so describing data needs an explicit measure of spread",
+          "source": "Batanero et al. (1994), citing Campbell and Loosen et al.",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "Students' notions of 'average' fragment into most-frequent-value/mode, reasonable value, midpoint and algorithmic relationship — each true in some circumstances but not others — so which average is appropriate depends on the data",
+          "source": "Batanero et al. (1994), citing Russell & Mokros",
+          "url": "https://www.ugr.es/~batanero/pages/ARTICULOS/errors.PDF",
+          "verified": true
+        },
+        {
+          "claim": "KS3 pupils describe, interpret and compare observed distributions of a single variable through appropriate measures of central tendency (mean, mode, median) and spread (range), including consideration of outliers",
+          "source": "National Curriculum in England: Mathematics programmes of study (KS3 Statistics)",
+          "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study",
+          "verified": true
+        }
+      ],
+      "confidence": "high",
+      "provenance": {
+        "originalResearchGeneratedBy": "claude-opus-4-8 (teaching-research plugin)",
+        "createdAt": "2026-07-28T16:33:04.676Z",
+        "updatedAt": "2026-10-19T15:21:52.894Z"
+      },
+      "publicationNotes": {
+        "omittedCurriculumText": []
+      }
+    },
+    "researchPointer": "/records/962"
+  },
+  {
+    "topic": {
+      "id": "mt_OwYms2tB1L",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Describing distributions",
+      "description": "Describe the distribution of a numerical data set by its centre, spread and overall shape — recognising clusters, gaps, peaks, symmetry or skew (a longer tail on one side) and unusual values — and interpret each feature in the context in which the data were collected, recognising that distributions with similar centres can differ greatly in spread and shape",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 13,
+      "centrality": 0.157556270096463,
+      "evidence": [
+        "Describe a dot plot of 25 pupils' reaction times by its centre (a typical value), its spread (where most values lie and how far they extend) and its shape — naming any cluster, gap, symmetry or skew and unusual value — and link each feature to the context (e.g. a gap between two groups of times might reflect pupils who had practised and pupils who had not)",
+        "Compare two distributions with the same mean — e.g. two classes both averaging 60% on a test, one with scores clustered between 52% and 68%, the other spread from 20% to 95% in two separate clusters — and explain what the shared mean hides and why the difference matters in context",
+        "Use the context to judge whether an unusual value is more likely a recording error or a genuine extreme (e.g. a reaction time of 4.2 s among times near 0.3 s), and identify claims the display alone cannot support, such as the reason for a skew or that the same pattern would hold for a different group"
+      ],
+      "assessmentPrompt": "If {{name}} sees a dot plot of how long children in their class took to run 100 m, could they describe where most times bunch up, how spread out they are and whether there are any odd ones out — and suggest a sensible reason for what they see?",
+      "standards": [
+        "acara-v9:AC9HS6S03",
+        "acara-v9:AC9M6ST01",
+        "ccss-math:6.SP.2",
+        "ccss-math:6.SP.5c",
+        "uk-nc-2013:KS3.Maths.Stat.1"
+      ]
+    },
+    "topicPointer": "/topics/756",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_KCS9GbZgU_",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Quartiles and interquartile range",
+      "description": "Find the median, lower quartile and upper quartile of a data set using one explicit convention — order the data, find the median, split the data into a lower and an upper half (leaving out the median itself when there is an odd number of values), and take the median of each half as the lower and upper quartile — while recognising that other textbooks, calculators and software may use slightly different conventions; calculate the interquartile range (IQR = upper quartile − lower quartile) and interpret it as the spread of the middle half of the data; and compare what the range and the IQR reveal, including their different sensitivity to extreme values",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 14,
+      "centrality": 0.1543408360128617,
+      "evidence": [
+        "Using the stated convention, find the median (9), lower quartile (6, the median of 3, 5, 6, 7, 8) and upper quartile (14, the median of 11, 12, 14, 15, 21) of the 11 values 3, 5, 6, 7, 8, 9, 11, 12, 14, 15, 21, giving IQR = 8; and for the 10 values 2, 4, 4, 5, 7, 8, 9, 10, 12, 15, find median 7.5, lower quartile 4 and upper quartile 10, giving IQR = 6",
+        "Interpret an IQR in context (e.g. 'the middle half of the puzzle times lie between 6 and 14 minutes, a spread of 8 minutes') and explain that about half of the values lie between the quartiles, with about a quarter below the lower quartile and about a quarter above the upper quartile",
+        "Show that changing the largest value from 21 to 40 increases the range from 18 to 37 but leaves the IQR at 8, and use this to decide — and justify — whether the range or the IQR gives the better summary of spread for a data set with an extreme value or a long tail"
+      ],
+      "assessmentPrompt": "If {{name}} lines up the times their friends took to finish a puzzle, could they find the middle time and the 'quarter-way' times either side of it — and explain why the gap between those quarter-way times is a better guide to how spread out most of the group is than the gap between the very fastest and slowest?",
+      "standards": [
+        "ccss-math:6.SP.5c",
+        "ccss-math:6.SP.5d"
+      ]
+    },
+    "topicPointer": "/topics/761",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_tuEnyrp5Ia",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Writing a data summary",
+      "description": "Write a complete summary of a numerical data set in relation to its context, bringing together: the number of observations; the attribute, how it was measured and its units; a measure of centre with a matching measure of variability, each with units, chosen between median with IQR and mean with MAD; the overall pattern and any striking deviations, interpreted in context; and a justification of that choice by the shape of the distribution and the context (e.g. median and IQR for skewed data or data with extreme values, mean and MAD for roughly symmetric data without extreme values)",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.1596998928188639,
+      "evidence": [
+        "Write a summary of 25 pupils' reaction times that states n, the attribute, how it was measured and the units, a centre and a matching measure of spread with units, and any unusual value",
+        "Choose the median and IQR rather than the mean and MAD for a set of journey times with a long tail of slow journeys, and justify the choice by that tail",
+        "Rewrite the summary 'the average is 14' as 'the 30 pupils' median journey time is 14 minutes, with the middle half of times between 9 and 22 minutes'"
+      ],
+      "assessmentPrompt": "If {{name}} timed how long 25 friends took to solve a puzzle, could they write a short report saying how many were timed, how the times were measured, a typical time and how spread out the times were (with units) — and mention any time that stood out?",
+      "standards": [
+        "acara-v9:AC9HS6S03",
+        "acara-v9:AC9M6ST03",
+        "ccss-math:6.SP.5",
+        "ccss-math:6.SP.5c",
+        "ccss-math:6.SP.5d"
+      ]
+    },
+    "topicPointer": "/topics/765",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_mn765HbXi1",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Comparing data sets digitally",
+      "description": "Interpret and compare data sets for nominal and ordinal categorical and discrete and continuous numerical variables using comparative displays (side-by-side column graphs with ordinal categories in a common order, back-to-back dot plots) made with digital tools, processing the data (percentages, ranges) and comparing distributions by mode, range and shape",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.1243301178992497,
+      "evidence": [
+        "Make a side-by-side column graph in a spreadsheet comparing the favourite sports (nominal) of Year 3 and Year 6 students and state the mode for each group",
+        "Compare two classes' ratings of 'How much do you enjoy reading?' (never, sometimes, often, always) as percentages on side-by-side graphs with the categories in the same order, and say which class's ratings sit higher on the scale",
+        "Compare two classes' jump distances by mode, range and shape using back-to-back dot plots made with a digital tool"
+      ],
+      "assessmentPrompt": "If {{name}} has survey results from two classes of different sizes, can they use a spreadsheet to make a side-by-side graph, turn the counts into percentages, and compare the two fairly?",
+      "standards": [
+        "acara-v9:AC9M6ST01",
+        "acara-v9:AC9S6I04"
+      ]
+    },
+    "topicPointer": "/topics/754",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_8IsaoMPvod",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Critiquing statistics in the media",
+      "description": "Identify statistically informed arguments in traditional and digital media and critique their methods, data representations (e.g. truncated axes, distorted pictographs, selective data) and conclusions",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 12,
+      "centrality": 0.02893890675241157,
+      "evidence": [
+        "Explain how a bar graph whose vertical axis starts at 90 exaggerates a small difference",
+        "Identify the sample size and who was surveyed in a news claim such as '9 out of 10 kids prefer Brand X' and judge whether the conclusion is justified",
+        "Rewrite a misleading online headline so that it matches what the data actually show"
+      ],
+      "assessmentPrompt": "If {{name}} sees an ad saying '9 out of 10 kids prefer this cereal' or a graph with a stretched-out axis, can they ask who was asked and whether the graph makes the difference look bigger than it is?",
+      "standards": [
+        "acara-v9:AC9M6ST02"
+      ]
+    },
+    "topicPointer": "/topics/755",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_4zgPzc6yu5",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Populations, samples and fair sampling",
+      "description": "Distinguish a population from a sample drawn from it; explain why a convenient or biased sample (choosing whoever is easiest to reach, volunteers, or a group linked to the answer) can misrepresent the population; explain that random selection gives every member of the population an equal chance of being chosen, which tends to produce representative samples — while recognising that any single random sample can still, by chance, be unrepresentative",
+      "ageRangeStart": 11,
+      "ageRangeEnd": 13,
+      "centrality": 0.02679528403001072,
+      "evidence": [
+        "In a described survey (e.g. a school asks 40 of its 800 pupils about the lunch menu), identify the population and the sample, and explain why a sample is used instead of asking everyone",
+        "Identify the selection bias in a sampling method (e.g. asking people leaving a gym how often they exercise, or surveying only the lunch queue on pizza day), explain the direction in which it would likely distort the result, and propose a better method using random selection from the whole population (e.g. drawing names from the full school register)",
+        "Explain the difference between random selection and simply choosing whoever is easiest to reach, and explain — with an example such as a random sample of 10 pupils that happens to contain mostly Year 7s — why random sampling makes a representative sample likely but does not guarantee it"
+      ],
+      "assessmentPrompt": "If a school wanted to know what all its pupils think of the lunch menu but only asked children in the lunch queue on pizza day, could {{name}} explain why that might give a misleading answer — and suggest a fairer way to choose who to ask, like picking names at random from the whole school list?",
+      "standards": [
+        "acara-v9:AC9M6ST02",
+        "ccss-math:7.SP.1",
+        "uk-nc-2013:KS3.Maths.WM.RM.7"
+      ]
+    },
+    "topicPointer": "/topics/760",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_km4V6d5IAh",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Comparing two populations",
+      "description": "Use measures of centre and variability calculated from random samples of two populations to make informal comparative inferences about those populations (e.g. whether words in a Grade 7 science book are generally longer than words in a Grade 4 science book): check that each sample was randomly drawn from the population it is meant to describe and is reasonably representative; weigh the difference between the sample centres against the variability within the samples and against how much centres vary from one random sample to another; and state qualified conclusions ('generally', 'on average', 'probably') rather than claiming every member of one population exceeds every member of the other — recognising that a small difference between two samples may be due to chance alone",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 13,
+      "centrality": 0.1918542336548767,
+      "evidence": [
+        "Compare random samples of 20 word lengths from two books (means 6.2 and 4.4 letters, both MADs about 0.9) and conclude that the first book probably uses longer words on average",
+        "Explain why surveying volunteers at one school's sports club cannot support a conclusion that all pupils at that school are fitter than pupils at another school",
+        "Judge that a 1-point difference between two sample medians is not convincing when repeated random samples from one population give medians that vary by about 3 points"
+      ],
+      "assessmentPrompt": "If {{name}} randomly picked 20 words from a Year 7 science book and 20 from a Year 4 science book, could they use the averages and spreads to decide whether the older book generally uses longer words — and explain why they'd say 'probably' rather than 'definitely'?",
+      "standards": [
+        "ccss-math:7.SP.4"
+      ]
+    },
+    "topicPointer": "/topics/766",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_fQ9Rw10fss",
+      "type": "PROCEDURAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "Estimating from a sample",
+      "description": "Use data from a random sample to estimate a characteristic of the population, such as a proportion, total count, or mean; present the result as an estimate rather than an exact population measurement; state the assumptions the inference relies on (the sample was randomly drawn from the population being described and is reasonably representative) and explain how the conclusion is limited or invalid when those assumptions fail",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 13,
+      "centrality": 0.1543408360128617,
+      "evidence": [
+        "Use a sample proportion to estimate a population count — e.g. 18 of a random sample of 60 pupils walk to school, so estimate about 270 of the school's 900 pupils walk — and state the answer as an approximate estimate rather than an exact count",
+        "Use the mean of a random sample (e.g. the mean weekly reading time of 25 randomly chosen pupils) to estimate the population mean, and explain why the true population mean is likely to be close to, but probably not exactly equal to, the sample mean",
+        "State the assumptions behind an estimate and explain why it becomes unreliable or invalid when they fail — e.g. using a sample of only Year 7 pupils to estimate for the whole school, or using a volunteer online poll — and identify what can and cannot be concluded from the data"
+      ],
+      "assessmentPrompt": "If {{name}} learns that 12 out of 40 randomly chosen pupils at their school play an instrument, could they estimate how many of the school's 600 pupils play one — and explain why that number is a sensible estimate rather than an exact count?",
+      "standards": [
+        "ccss-math:7.SP.2",
+        "uk-nc-2013:KS3.Maths.WM.RM.7"
+      ]
+    },
+    "topicPointer": "/topics/767",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_A2hKhHXgL5",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "How far apart two groups are",
+      "description": "Compare two numerical distributions with similar variability shown on a shared scale (e.g. dot plots) in two distinct ways: (1) judge their actual visual overlap directly from the displays — how much of each group's data lies among the other group's values; and (2) separately, find the difference between their centres and express it as a multiple of a clearly named measure of variability of either group, using matching measures (difference in means ÷ MAD, or difference in medians ÷ IQR), interpreting a larger multiple as centres that are further apart relative to the typical spread. Recognise that the same difference in centres means more when the variability is small, and that for similarly shaped, roughly symmetric, single-peaked distributions a larger multiple usually goes with less overlap — but that the ratio alone does not determine overlap: skew, clusters, gaps or outliers can make the visible overlap greater or smaller than the ratio suggests, so overlap is always checked on the display; and this simple ratio is only appropriate when the two variabilities are similar",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 13,
+      "centrality": 0.1661307609860664,
+      "evidence": [
+        "Describe two dot plots of team heights drawn on the same scale as overlapping a lot, a little, or hardly at all, pointing to the range of heights the two teams share",
+        "Express a 10 cm difference in mean heights as about 2 MADs when each team's MAD is about 5 cm, naming MAD as the measure used",
+        "Use two dot plots whose means are 2 MADs apart, one with a long tail towards the other group, to explain why they overlap more than the 2-MAD gap alone would suggest"
+      ],
+      "assessmentPrompt": "If the basketball team's average height is 10 cm more than the football team's, and players on each team are typically about 5 cm from their own team's average, could {{name}} explain that the gap is about twice the usual spread — and then look at a chart of both teams' heights to check how much they actually overlap, rather than guessing it from that number?",
+      "standards": [
+        "ccss-math:7.SP.3"
+      ]
+    },
+    "topicPointer": "/topics/768",
+    "research": null,
+    "researchPointer": null
+  },
+  {
+    "topic": {
+      "id": "mt_x7V1qrkiqH",
+      "type": "CONCEPTUAL",
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "name": "How samples vary",
+      "description": "Generate or compare several random samples of the same size from the same population (by drawing physically — returning and remixing the items before each new sample — from a list, or by simulation), observe that their estimates differ by chance, and use the spread of those estimates to judge how uncertain a single estimate or prediction is — distinguishing chance variation between random samples from the consistent error caused by a biased sampling method, and distinguishing variation between sample estimates from the variation among individual observations within a sample",
+      "ageRangeStart": 12,
+      "ageRangeEnd": 14,
+      "centrality": 0.1768488745980707,
+      "evidence": [
+        "Take or are given several random samples of the same size from one population (e.g. draw 20 counters from a bag without looking, record them, return all 20 and mix thoroughly, then draw the next 20 — five times; or five random samples of 20 names from a list), calculate each sample's proportion or mean, and show that the estimates differ",
+        "Explain that equal-sized random samples give different estimates because of chance in which individuals are selected, so a different result does not mean a sample was wrong — and contrast this with a biased method whose estimates are consistently too high or too low",
+        "Use the spread of several sample estimates (e.g. 'the estimates ranged from 25% to 40%') to say how far off a single estimate might be, and explain why one sample cannot make a prediction certain and why larger samples tend to give estimates that vary less",
+        "Distinguish the variation among individual observations within one sample (e.g. pupils' sleep times in one sample range from 6 to 11 hours) from the variation between sample estimates (e.g. the means of five samples of 20 pupils range from 8.6 to 9.3 hours), and explain why sample means usually vary much less than the individual values they are calculated from"
+      ],
+      "assessmentPrompt": "If {{name}}'s class takes turns drawing 20 sweets from the same big jar without looking — counting the red ones, then putting all 20 back and giving the jar a good shake before the next person draws — could {{name}} explain why each person gets a slightly different number of reds, and use the spread of everyone's results to say how sure they can be about the fraction of red sweets in the whole jar?",
+      "standards": [
+        "ccss-math:7.SP.2",
+        "uk-nc-2013:KS3.Maths.WM.RM.7"
+      ]
+    },
+    "topicPointer": "/topics/769",
+    "research": null,
+    "researchPointer": null
+  }
+]

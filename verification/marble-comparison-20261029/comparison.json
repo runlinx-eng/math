@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-29",
+  "scope": "Reference comparison: overview, focus, and following a source prerequisite. Recommendations only; application files unchanged.",
+  "reference": "https://withmarble.com/curriculum/",
+  "local": "http://127.0.0.1:43827/?world=network&v=49#space",
+  "viewport": [
+    1280,
+    720
+  ],
+  "capture": {
+    "reference": "Current in-app browser, screenshot bytes saved unchanged.",
+    "local": "Fresh isolated Chromium context, no user storage."
+  },
+  "steps": [
+    {
+      "step": 1,
+      "view": "Overview",
+      "reference": "01-marble-overview.jpg",
+      "local": "04-ours-overview.png",
+      "findings": [
+        "Marble keeps names off individual points in the overview.",
+        "The current app gives large white theme and pack labels much more visual area than source points.",
+        "The current app reserves left space even without a selected concept, leaving its graph comparatively small."
+      ]
+    },
+    {
+      "step": 2,
+      "view": "Select a concept",
+      "reference": "03-marble-selected.jpg",
+      "local": "05-ours-selected.png",
+      "findings": [
+        "Marble dims the wider graph and emphasizes selected relationships while keeping its detail card separate.",
+        "The current app also dims context and preserves coordinates, but large theme labels still compete with focused node labels.",
+        "Reference and local selected concepts differ; this comparison concerns hierarchy, not matching subject content."
+      ]
+    },
+    {
+      "step": 3,
+      "view": "Follow a prerequisite",
+      "reference": "06-marble-followed.jpg",
+      "findings": [
+        "The reference offers direct prerequisites, subsequent concepts, a total ancestral count and a back control.",
+        "The local app already lists direct source neighbors; optional tracing of a complete hard-edge chain would extend that behavior without rearrangement."
+      ]
+    }
+  ],
+  "recommendedOrder": [
+    "Make the map larger and progressively disclose labels.",
+    "Simplify theme envelopes and strengthen selected source links.",
+    "Optimize horizontal pack/node positions subject to stable themes and global hard-edge heights, with old coordinate versions preserved.",
+    "Add optional ancestor-chain tracing and theme emphasis without hiding cross-topic boundary links."
+  ],
+  "accessibilityObservations": [
+    "Small visible points need enlarged hit areas plus search and keyboard-accessible neighbor lists.",
+    "Do not rely on color alone: retain text, arrows, solid/dashed distinctions.",
+    "No accessibility compliance or child comprehension test was conducted."
+  ],
+  "boundaries": [
+    "Keep one global coordinate system across all views.",
+    "No age or grade routes, invented prerequisite edges, mastery inference or forced three-entry limit.",
+    "All recommendations are proposed adaptations, not claims about the mathematical meaning of Marble geometry."
+  ]
+}

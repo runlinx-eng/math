@@ -1,0 +1,14 @@
+{
+  "healthStatus": 200,
+  "health": {
+    "app": "local-math-explorer",
+    "version": 1
+  },
+  "progress": "0 / 50",
+  "world": {
+    "themes": 5,
+    "packs": 23,
+    "nodes": 587,
+    "edges": 1223
+  }
+}

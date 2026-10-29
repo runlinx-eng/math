@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-25T06:36:56.369Z",
+  "healthStatus": 200,
+  "health": {
+    "app": "local-math-explorer",
+    "version": 1
+  },
+  "counts": {
+    "themes": 5,
+    "packs": 23,
+    "nodes": 587,
+    "edges": 1223
+  },
+  "progress": "0 / 94",
+  "cache": "math-explorer-20261025-learning-v12",
+  "cachedResources": 80,
+  "finalWording": true
+}

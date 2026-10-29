@@ -1,0 +1,60 @@
+{
+  "batch": "B10",
+  "snapshot": "snapshots/v14-before-b10-20261025T162946Z.tar.gz",
+  "snapshotAt": "2026-10-25T16:29:46Z",
+  "finishedAt": "2026-10-25T18:39:22.589968+00:00",
+  "activeHours": null,
+  "basis": "Snapshot and file timestamps are evidence of wall-clock events, not active labor.",
+  "interruptions": [
+    "Context recovery",
+    "User continuation",
+    "Tool waiting",
+    "One final runtime-probe approval review failed for workspace credits; same action later succeeded after user continuation."
+  ],
+  "milestones": [
+    {
+      "file": "unit.tap",
+      "modifiedAt": "2026-10-25T16:49:36.658825+00:00"
+    },
+    {
+      "file": "browser-final.json",
+      "modifiedAt": "2026-10-25T16:51:32.330554+00:00"
+    },
+    {
+      "file": "integration-first.json",
+      "modifiedAt": "2026-10-25T16:49:14.911439+00:00"
+    },
+    {
+      "file": "phase5-b09-integration-browser.json",
+      "modifiedAt": "2026-10-25T16:51:39.786568+00:00"
+    },
+    {
+      "file": "phase5-b06-audio-browser.json",
+      "modifiedAt": "2026-10-25T16:51:44.700259+00:00"
+    },
+    {
+      "file": "phase4-integration-browser.json",
+      "modifiedAt": "2026-10-25T16:51:52.625562+00:00"
+    },
+    {
+      "file": "phase3-continuation-browser.json",
+      "modifiedAt": "2026-10-25T16:51:56.504753+00:00"
+    },
+    {
+      "file": "spatial-browser.json",
+      "modifiedAt": "2026-10-25T16:52:06.583471+00:00"
+    },
+    {
+      "file": "exploration-browser.json",
+      "modifiedAt": "2026-10-25T16:52:20.460913+00:00"
+    },
+    {
+      "file": "phase5-b09-readiness-browser.json",
+      "modifiedAt": "2026-10-25T16:52:23.426376+00:00"
+    },
+    {
+      "file": "runtime-final.json",
+      "modifiedAt": "2026-10-25T18:37:26.218078+00:00"
+    }
+  ]
+}

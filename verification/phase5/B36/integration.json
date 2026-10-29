@@ -1,0 +1,40 @@
+{
+  "checks": [
+    "overview counts available nodes",
+    "this small collection opens without an extra section",
+    "three directions are available",
+    "direction HD is reachable",
+    "direction HE is reachable",
+    "direction HF is reachable",
+    "line route has two nodes",
+    "selected route survives reload",
+    "partial graphs and the first incomplete submission are saved",
+    "simulated next day shows the exact question",
+    "question restores the original partial graphs",
+    "later work is preserved separately",
+    "the first incomplete submission remains in the record",
+    "world position is restored",
+    "actual backup includes the original partial graphs",
+    "repeated import preserves the question and partial graphs",
+    "import opens the original question",
+    "all four B36 files are cached",
+    "original question opens offline",
+    "the partial activity can be completed offline",
+    "the earlier incomplete submission is retained",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v41",
+    "count": 213,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

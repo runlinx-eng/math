@@ -1,0 +1,6 @@
+async original=>{
+ const ctx=await original.context().browser().newContext({viewport:{width:1366,height:900}}),p=await ctx.newPage(),checks=[],errors=[];let release;const gate=new Promise(r=>release=r),check=(v,t)=>{if(!v)throw Error(t);checks.push(t);};p.on('pageerror',e=>errors.push(String(e)));p.setDefaultTimeout(10000);
+ try{
+  await ctx.route('**/learning/phase5/b09-model.js',async r=>{await gate;await r.continue();});const nav=p.goto('http://127.0.0.1:43827/learn.html#share');const button=p.locator('[data-do="question"]');await button.waitFor({state:'visible'});check(await button.isDisabled(),'question button cannot accept a click while modules are still loading');release();await nav;await p.waitForFunction(()=>window.mathLesson);check(await button.isEnabled(),'question button becomes available after the work is ready');await button.click();await p.locator('#question-text').fill('刚开始试，也可以先留一个问题。');await p.locator('.question-dialog [type="submit"]').click();check(await p.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).daily.questions[0].text)==='刚开始试，也可以先留一个问题。','standalone early question really saves after loading');check(errors.length===0,'no runtime errors');return{checks,errors};
+ }catch(e){return{checks,errors,failed:String(e)};}finally{release();await ctx.close();}
+}

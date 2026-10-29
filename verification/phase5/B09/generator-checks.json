@@ -1,0 +1,42 @@
+[
+  {
+    "command": "python3 scripts/build_content_plan.py --check",
+    "chunk_id": "a40adc",
+    "wall_time_seconds": 0.388362166,
+    "exit_code": 0,
+    "original_token_count": 93,
+    "output": "{\"mode\": \"check\", \"mathTopics\": 587, \"internalRelations\": 1223, \"externalReferences\": 32, \"researchTopics\": 502, \"missingResearchTopics\": 85, \"existingActivities\": 3, \"previewOnly\": 1, \"nodesWithoutFullActivity\": 584, \"firstSample\": 12, \"firstRelease\": 50, \"remainingAfterFirstRelease\": 537, \"sharedAuthoringGroups\": 93, \"proposedTaskUnits\": 161, \"deliveryBatches\": 39}\n"
+  },
+  {
+    "command": "node scripts/build_phase2_coverage.mjs --check",
+    "chunk_id": "4bf7cd",
+    "wall_time_seconds": 0.030695084,
+    "exit_code": 0,
+    "original_token_count": 32,
+    "output": "{\"availableNodes\":12,\"newNodes\":9,\"tasks\":30,\"sourceGoals\":36,\"localResearchSupplements\":2,\"remainingUnimplementedNodes\":575}\n"
+  },
+  {
+    "command": "node scripts/build_phase3_coverage.mjs --check",
+    "chunk_id": "ca392e",
+    "wall_time_seconds": 9.792e-06,
+    "exit_code": 0,
+    "original_token_count": 17,
+    "output": "{\"mode\":\"check\",\"nodes\":12,\"connections\":9,\"connectionTasks\":18}\n"
+  },
+  {
+    "command": "node scripts/build_phase4_coverage.mjs --check",
+    "chunk_id": "8178a2",
+    "wall_time_seconds": 0.045562375,
+    "exit_code": 0,
+    "original_token_count": 60,
+    "output": "{\n  availableNodes: 50,\n  newNodes: 38,\n  nodeTasks: 136,\n  sourceGoals: 153,\n  routes: 15,\n  availableConnections: 21,\n  connectionTasks: 42,\n  localResearchSupplements: 9,\n  remainingUnimplementedNodes: 537,\n  remainingResearchGaps: 76\n}\n"
+  },
+  {
+    "command": "node scripts/build_phase5_coverage.mjs --check",
+    "chunk_id": "766d49",
+    "wall_time_seconds": 0.088893708,
+    "exit_code": 0,
+    "original_token_count": 83,
+    "output": "{\n  availableNodes: 127,\n  newNodes: 9,\n  nodeTasks: 407,\n  newNodeTasks: 44,\n  sourceGoals: 382,\n  newSourceGoals: 27,\n  routes: 43,\n  availableConnections: 62,\n  connectionTasks: 124,\n  newConnections: 6,\n  newConnectionTasks: 12,\n  localResearchSupplements: 17,\n  remainingUnimplementedNodes: 460,\n  remainingResearchGaps: 68\n}\n"
+  }
+]

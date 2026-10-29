@@ -1,0 +1,17 @@
+import{esc,button,input,select,range}from'../phase4/ui.js';
+import{expression}from'./b12-model.js';
+const f=(key,label,value)=>input(key,label,value,'autocomplete="off" spellcheck="false"');
+const pick=(action,i,label,selected,disabled=false)=>button(action,esc(label),`data-index="${i}" aria-pressed="${selected}" ${disabled?'disabled':''}`);
+const nice=s=>s.replaceAll('+','＋').replaceAll('-','−');
+function bar(t,m,i){const n=m.lengths[i];return `<div class="b12-bar-row"><b>${esc(t.labels[i])}</b><div class="b12-bar-track"><div class="b12-bar tone-${i}" style="width:${n*5}%">${Array.from({length:n},()=>'<i></i>').join('')}</div></div><strong>${n}</strong></div>`;}
+function planName(t,g){return g.ids.length===1?t.labels[g.ids[0]]:g.ids.map(i=>t.labels[i]).join('、');}
+export function visual(t,m){
+ if(t.type==='x-storyparts')return `<p class="b12-next">${!m.built?'让每条带子装下故事里的数量。':!m.merged?'点两份，先把它们接起来。':'两份接好了，还有一份。把三份一起写进算式。'}</p><div class="b12-bars">${t.values.map((_,i)=>bar(t,m,i)).join('')}</div><p class="muted">每一小格表示 1 ${esc(t.unit)}，不是物体的实际长度。</p>${m.built?`<div class="b12-cards">${t.values.map((v,i)=>pick('b12-parts-pick',i,`${t.labels[i]} · ${v}`,m.selected.includes(i),!!m.merged)).join('')}</div>`:''}${m.merged?`<div class="b12-joined"><span>${m.merged.ids.map(i=>esc(t.labels[i])).join(' ＋ ')} = <b>${esc(m.merged.subtotal)}</b></span><span>还要带上：${esc(t.labels[t.values.findIndex((_,i)=>!m.merged.ids.includes(i))])}</span></div>`:''}`;
+ return `<p class="b12-next">${m.groups.length>1?'依次点两张卡片，决定这一步怎么算。':'两步接上了。再用一个算式讲清整个故事。'}</p><div class="b12-plan-cards">${m.groups.map((g,i)=>`<section class="${m.selected.includes(i)?'selected':''}">${pick('b12-plan-pick',i,String(g.value),m.selected.includes(i),m.groups.length===1)}<span>${esc(planName(t,g))}</span>${g.ids.length>1?`<small>${esc(nice(expression(t,g.tree)))}</small>`:''}${m.selected.includes(i)?`<em>第 ${m.selected.indexOf(i)+1} 张</em>`:''}</section>`).join('')}</div>${m.selected.length?`<p class="b12-selection">这一步：${m.selected.map(i=>m.groups[i].value).join(` ${m.op==='+'?'＋':m.op==='-'?'−':'…'} `)}${m.selected.length===1?' … 再选一张':''}</p>`:''}${m.merges.length?`<ol class="b12-trail">${m.merges.map(r=>{const name=ids=>ids.map(i=>t.labels[i]).join('、');return `<li><span>${esc(name(r.leftIds))} ${r.op==='+'?'＋':'−'} ${esc(name(r.rightIds))}</span><b>得到 ${esc(r.result)} ${esc(t.unit)}</b></li>`;}).join('')}</ol>`:''}`;
+}
+function finish(t,m){return f('equation','用 □ 或 ? 留出不知道的量，写出整个故事的算式',m.equation)+f('answer',`问题的答案（${esc(t.unit)}）`,m.answer);}
+export function controls(t,m){
+ if(t.type==='x-storyparts')return !m.built?`<div class="b12-lengths">${t.labels.map((label,i)=>range(`lengths.${i}`,esc(label),m.lengths[i],0,20)).join('')}</div>`+button('b12-parts-lock','三份摆好了'):(!m.merged?f('subtotal','选中的两份合起来有多少',m.subtotal)+button('b12-parts-merge','接起这两份',m.selected.length!==2?'disabled':''):finish(t,m)+button('b12-parts-undo','换一对试试'))+button('b12-parts-reset','重新摆带子');
+ return (m.groups.length>1?select('op','选中的两张卡片之间',m.op,[['+','加起来'],['-','第一张减去第二张']])+f('result','这一步得到多少',m.result)+select('method','这一步你用了什么办法',m.method,[['mental','在心里想'],['written','画一画或写下来'],['tool','借助计算工具']])+button('b12-plan-merge','留下这一步',m.selected.length!==2?'disabled':''):finish(t,m))+(m.merges.length?button('b12-plan-undo','退一步换个安排'):'');
+}
+export const render=(t,m)=>`<section class="b12-work"><div id="extra-visual">${visual(t,m)}</div><div id="extra-controls">${controls(t,m)}${m.issue?`<p role="status" class="b12-issue">${esc(m.issue)}</p>`:''}</div></section>`;

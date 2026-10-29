@@ -1,0 +1,57 @@
+[
+  {
+    "file": "index.html",
+    "equal": true,
+    "sha256": "060d7b1274a7c65330176a05eb3d4fde79f382b383bf97fbf57c12c502b465e1"
+  },
+  {
+    "file": "space.js",
+    "equal": true,
+    "sha256": "c8e09beb10f65d21ee0d7675de188c8e8c8a4056b62568a18455126c954fa348"
+  },
+  {
+    "file": "space.css",
+    "equal": true,
+    "sha256": "79b224170bd3e01b66bd37499a627d076361cf2ea190530a816662240a64a48c"
+  },
+  {
+    "file": "spatial-global.js",
+    "equal": true,
+    "sha256": "610c9eb6600571474f546e1b8608c02e5a6192e200948c3ca4aa2eba1743e13b"
+  },
+  {
+    "file": "spatial-network.js",
+    "equal": true,
+    "sha256": "5ee5d794cb501b6201a79c0f265fa74eb945fd4e3a5dc7ba0b38f6935730f25d"
+  },
+  {
+    "file": "spatial-scene.js",
+    "equal": true,
+    "sha256": "a4cd5ed25bed557d3cf2e9950381ca754d125884888a76847263e666bf712fb9"
+  },
+  {
+    "file": "spatial-model.js",
+    "equal": true,
+    "sha256": "2535d0d27de29646c81f0866c2a77990ad0f27e661e3693f3a6ddd2cb11454d1"
+  },
+  {
+    "file": "spatial-labels.js",
+    "equal": true,
+    "sha256": "b085761a7fc11ad3c9f500b683a60f3d0c90e9f390b2049acd601b8de1819908"
+  },
+  {
+    "file": "learning/daily.js",
+    "equal": true,
+    "sha256": "af7e6df496e8013f59e7933c4fb123b65e1a907681f507c9a17b7927b4e63ff0"
+  },
+  {
+    "file": "sw.js",
+    "equal": true,
+    "sha256": "64fec85bf8cec95e3087cb0e89222d522373e35f3cf5e3cb641802aca25abeb9"
+  },
+  {
+    "file": "exploration.js",
+    "equal": true,
+    "sha256": "644980f9405ca12c6370c5d0a407f7d146df9acb1e3de77bd2bb32644be0ea65"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "folds begins incomplete",
+    "folds task 0 opens",
+    "folds cannot finish empty",
+    "folds task 0 accepts actual construction",
+    "folds fits desktop width",
+    "folds task 1 opens",
+    "folds task 1 accepts actual construction",
+    "folds task 2 opens",
+    "folds task 2 accepts actual construction",
+    "folds task 3 opens",
+    "folds task 3 accepts actual construction",
+    "folds restores saved work",
+    "folds completes only with all tasks",
+    "no page errors"
+  ],
+  "errors": []
+}

@@ -1,0 +1,218 @@
+✔ all source topics have exactly one delivery, group and work-unit assignment (5.887708ms)
+✔ every source definition and every learning goal survives with an explicit task slot (1.251959ms)
+✔ 502 research records and 85 gaps reconcile by ID, with valid activity pointers (9.033708ms)
+✔ 12 → 50 → 587 counts use distinct source nodes; A03 is not the old decimal activity (0.220875ms)
+✔ all 1223 internal and 32 external source relations retain direction, strength and reason (19.584333ms)
+✔ batch entry and onward references do not invent prerequisites or hide later foundations (12.298125ms)
+✔ 85 research gaps have a release batch, individual goals and review/transfer requirements (0.447833ms)
+✔ reuse assets are real local sources; all proposed families specify action and validation (0.48425ms)
+✔ proposed placement fixes are isolated from the current atlas and documented by ID (3.38925ms)
+✔ stage-one baseline preserves its original three activities and preview, separate from current coverage (0.289083ms)
+✔ cross-subject references remain references and do not become required new subject delivery (0.167583ms)
+✖ source fingerprints and all generated views are current and reproducible (15.229084ms)
+✔ every original node and relation survives classification; pack arrows cite actual edges (21.197583ms)
+✔ both cases accept mathematically equivalent constructions across all six representations (0.919583ms)
+✔ diagnostics distinguish unequal parts, whole/set, additive equivalence, and decimal place value (0.23ms)
+✔ browsing, free manipulation and written explanations do not create independent evidence (9.495541ms)
+✔ two submitted works mean activity complete even when evidence still needs support (0.717708ms)
+✔ a corrected retry cannot erase the first error, across reload or case switching (1.394ms)
+✔ using a hint survives reload and import and cannot count as unaided evidence (1.358042ms)
+✔ new independent constructions and transfers have bounded evidence, never confirmed explanations (2.003291ms)
+✔ legacy records, ongoing sessions, answers and bookmarks are retained without new credit (2.564958ms)
+✔ backup roundtrip and repeated merge retain draft, support, notes and both histories (2.318625ms)
+✔ malformed imports fail without mutation; asserted scores cannot override actual work (1.938875ms)
+✔ suggested route links use actual directed source edges, including the distinct decimal preview node (3.400583ms)
+✔ each repartition preserves the selected amount, including non-half selections (9.936834ms)
+✔ navigation, a preview, and a cup check alone cannot create completion or independent evidence (0.475667ms)
+✔ overall completion counts available tasks once; old preview browsing grants no completion (0.70175ms)
+✔ the fair task completes only after equal division and confirmation, and survives backup merging (1.187958ms)
+✔ first error survives later success, reload, export and repeated merge; a guided sample never grants independent evidence (25.69275ms)
+✔ stale legacy activity writes retain route records, working state, draft and first attempt (1.940875ms)
+✔ v2 backups without the new optional route fields remain valid and invalid route data fail atomically (2.960583ms)
+✔ full source projection, every node translated, no dangling math dependencies (18.999459ms)
+✔ all lesson forms have gradeable unique questions and explanations (1.550417ms)
+✔ visiting or guided work cannot count as independent; help and first mistakes persist (19.446167ms)
+✔ independent result returns to review after seven days (0.163125ms)
+✔ backup roundtrip keeps answers, active and paused sessions (3.27475ms)
+✔ bad or tampered backup is rejected atomically, scores recalculated (2.963084ms)
+✔ merge keeps current active work and both histories, repeat import does not duplicate (21.855334ms)
+✔ phase2 has exactly the twelve planned source nodes, including nine beyond legacy activities (2.508625ms)
+✔ equal partition is necessary; sixths accept precise noninteger cut locations (0.844459ms)
+✔ equivalence preserves the whole and the same number-line point (0.421125ms)
+✔ decimal positions and arbitrary shading patterns remain mathematically equivalent (0.629708ms)
+✔ quarters can be rebuilt through hundredths and transferred to three cups (0.126375ms)
+✔ volume counts filled cubes, not surface squares or duplicated placements (0.342709ms)
+✔ a correct cube total cannot conceal wrong layer factors; estimate is not judged by exactness (1.221292ms)
+✔ cuboid formula is rejected for an incomplete bounding box (0.106333ms)
+✔ different valid disjoint decompositions give the same total; incomplete parts fail (0.229ms)
+✔ data graphs require correct category counts, axis roles and a difference rather than taller height (0.120459ms)
+✔ collection must observe the whole source and retain correct categorical and discrete frequencies (0.092167ms)
+✔ representation preference is free, while each read value and category still must match (0.075625ms)
+✔ opening, submitting wrong work, or forcing summary never completes a new activity (8.527083ms)
+✔ hints, first errors and later corrections survive without becoming independent first success (0.695333ms)
+✔ new and old records roundtrip and merge without replacing working drafts or immutable history (2.551125ms)
+✔ all twelve can complete with deduplicated global progress and separate explanation status (2.020041ms)
+✔ delivery coverage includes every original goal, with local research gaps kept explicit (98.285541ms)
+✔ nine joint activities use only real directed source relations and eighteen valid tasks (14.990625ms)
+✔ two finished endpoints, visiting and hints cannot light a connection (3.276042ms)
+✔ joint completion lights exactly one source edge without inventing new node completions (1.664084ms)
+✔ daily totals use first completion dates and local midnight, with no duplicate points on retry or import (46.3445ms)
+✔ support, initial errors and repeated attempts remain in the joint record (0.284417ms)
+✔ original question text and exact model, view, camera and world survive roundtrip (0.825208ms)
+✔ resuming preserves newer attempts and saves displaced working draft without rewriting the question scene (0.502167ms)
+✔ multiple questions can be deferred today and return next day; finishing one never completes a node (0.386875ms)
+✔ unmatched question keeps location and original words with no fabricated lesson (0.800416ms)
+✔ no-question fallback chooses unfinished work, then next available lesson, then an uncompleted connection (19.294ms)
+✔ old v2 files gain optional daily state without changing lesson history (0.24425ms)
+✔ backup merge is idempotent and stale writes preserve questions, joint work and evidence (1.093166ms)
+✔ malformed question, mismatched node, camera, joint edge or forged completion rejects atomically (0.691375ms)
+✔ B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them (7.1415ms)
+✔ tiling requires equal unit squares and the full interior without exterior squares (0.204583ms)
+✔ rectangles accept alternative factor pairs and separate area from perimeter (0.201208ms)
+✔ pond estimation uses polygon intersection and the stated half-square rule (0.857958ms)
+✔ solids count unique mathematical features including hidden ones (0.615ms)
+✔ fold model distinguishes known nets and finds all eleven free cube nets (6.163542ms)
+✔ net checks use committed predictions and opposite faces, not an answer edited after reveal (0.320375ms)
+✔ measurements require the correct instrument, unit and actual model operation (0.08475ms)
+✔ capacity separates estimate, full capacity and contents; no forced perfect estimate (0.377416ms)
+✖ exactly the planned 50 unique nodes, bounded routes and source connections are present (2.030166ms)
+✔ all new task models start incomplete and accept constructed work with durable records (21.822542ms)
+✔ same amount accepts different shapes but color renaming is not a second partition (0.117125ms)
+✔ unit fractions are proper too; overflowing quarters also require a correct mixed expression (0.079041ms)
+✔ fractions refer to the entire set and the correct number-line unit (0.309917ms)
+✔ equivalence requires preserved quantity and decimal place-value errors do not pass (0.086833ms)
+✔ scaling checks pre-action predictions and ratio models must account for total parts (0.194208ms)
+✔ classification keeps every object, handles tied ordering and measured quantities (0.167292ms)
+✔ statistics anticipates variation, including repeated observations of one person (0.067917ms)
+✔ same chart data must survive scale and representation changes; choice of display is not a single-answer trap (0.267791ms)
+✔ trial data replay exactly, forged outcomes fail, prediction need not equal observed counts (0.317209ms)
+✔ repeated spinner runs advance the random stream; areas, not equal observed counts, determine equal chance (0.957042ms)
+✔ simulation plots unedited samples and accepts even a less-concentrated observed batch (10.494042ms)
+✔ repetition, fixed growth and equality are structural checks rather than count-only answers (0.346708ms)
+✔ story equations retain the whole/parts; arithmetic coincidence is insufficient (0.053208ms)
+✔ exchange preserves quantity and examples without a general reason cannot finish proof (0.12625ms)
+✔ all current nodes plus joint work survive backup, deduplication, errors and next-day question continuation (63.375959ms)
+✔ route choice does not fabricate source edges, and overview exposes only actual completed links (0.903083ms)
+✔ dictation clips contain real PCM samples with speech-length duration and non-silent energy (5.876667ms)
+✖ B06 adds exactly its 23 planned source nodes and 10 actual edges with at most three choices (1.253458ms)
+✔ every activity starts incomplete, examples are valid and completion survives records (7.803958ms)
+✔ a correct total does not rescue duplicate counts or omission (0.075416ms)
+✔ different counting order and conservation need actual before and after actions (0.073625ms)
+✔ pairing cannot reuse a partner and length is not cardinality (0.282084ms)
+✔ an incorrect prediction is retained while a corrected one-change result can complete (0.076834ms)
+✔ all quantity representations and neighbors must agree (0.095292ms)
+✔ a flash cannot be submitted while still visible; repeated views are counted (0.08475ms)
+✔ swapping colors alone is not a second part-whole construction (0.099ms)
+✔ groups preserve individual objects, remainders and units (0.267333ms)
+✔ jumping checks every station, including carry, borrow, signed steps and one million (0.129167ms)
+✔ digit order is numeric, and equal cards need the same place (0.058375ms)
+✔ teen quantities survive unbundling, and the required re-bundling is recorded (0.067666ms)
+✔ dictation requires completed playback or explicit text help, and 14 is not 40 (0.046958ms)
+✔ ink is bounded evidence, never a legibility score (0.087875ms)
+✖ unfinished walk, audio help and ink survive backup and question continuation (1.813208ms)
+✔ labels avoid open content and viewport edges, and hide when no readable space remains (0.782708ms)
+✔ every source object has a stable finite 3D home, independent of source row ordering (11.517125ms)
+✔ each source prerequisite appears at both endpoints with its original direction and reason (8.255041ms)
+✔ aggregated cross-theme connections preserve all and only original cross-theme edges (0.719875ms)
+✔ view restoration rejects broken geometry without touching learning data (0.26425ms)
+✔ two live activity surfaces retain both working copies even when they began from stale snapshots (3.702541ms)
+✔ live persistence cannot resurrect removed bookmarks or erase another surface hint history (0.462542ms)
+ℹ tests 119
+ℹ suites 0
+ℹ pass 115
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 324.702959
+
+✖ failing tests:
+
+test at tests/content-plan.test.mjs:201:1
+✖ source fingerprints and all generated views are current and reproducible (15.229084ms)
+  AssertionError [ERR_ASSERTION]: dist/exploration.js
+  + actual - expected
+  
+  + '9251aa6a1541616ef63a352ee82bf5d319e211a122f0081fcf4f5b400ad3da18'
+  - '61edfa48a475156825c3d2b726acba6403ce182273b0015e24ca2bc63a311318'
+  
+      at TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/content-plan.test.mjs:203:12)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19)
+      at Test.run (node:internal/test_runner/test:1166:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '9251aa6a1541616ef63a352ee82bf5d319e211a122f0081fcf4f5b400ad3da18',
+    expected: '61edfa48a475156825c3d2b726acba6403ce182273b0015e24ca2bc63a311318',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/phase4.test.mjs:8:1
+✖ exactly the planned 50 unique nodes, bounded routes and source connections are present (2.030166ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  71 !== 50
+  
+      at TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/phase4.test.mjs:8:138)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.start (node:internal/test_runner/test:1006:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 71,
+    expected: 50,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/phase5-b06.test.mjs:6:1
+✖ B06 adds exactly its 23 planned source nodes and 10 actual edges with at most three choices (1.253458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  94 !== 73
+  
+      at TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/phase5-b06.test.mjs:6:254)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19)
+      at Test.run (node:internal/test_runner/test:1166:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 94,
+    expected: 73,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/phase5-b06.test.mjs:21:1
+✖ unfinished walk, audio help and ink survive backup and question continuation (1.813208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      done: 0,
+  +   total: 94
+  -   total: 73
+    }
+  
+      at TestContext.<anonymous> (file:///Users/zj1-6/dev/agents/experiments/math-explorer/tests/phase5-b06.test.mjs:21:526)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19)
+      at Test.run (node:internal/test_runner/test:1166:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { done: 0, total: 94 },
+    expected: { done: 0, total: 73 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

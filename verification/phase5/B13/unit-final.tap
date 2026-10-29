@@ -1,0 +1,1522 @@
+TAP version 13
+# Subtest: all source topics have exactly one delivery, group and work-unit assignment
+ok 1 - all source topics have exactly one delivery, group and work-unit assignment
+  ---
+  duration_ms: 3.169667
+  type: 'test'
+  ...
+# Subtest: every source definition and every learning goal survives with an explicit task slot
+ok 2 - every source definition and every learning goal survives with an explicit task slot
+  ---
+  duration_ms: 1.243208
+  type: 'test'
+  ...
+# Subtest: 502 research records and 85 gaps reconcile by ID, with valid activity pointers
+ok 3 - 502 research records and 85 gaps reconcile by ID, with valid activity pointers
+  ---
+  duration_ms: 5.313333
+  type: 'test'
+  ...
+# Subtest: 12 → 50 → 587 counts use distinct source nodes; A03 is not the old decimal activity
+ok 4 - 12 → 50 → 587 counts use distinct source nodes; A03 is not the old decimal activity
+  ---
+  duration_ms: 0.2175
+  type: 'test'
+  ...
+# Subtest: all 1223 internal and 32 external source relations retain direction, strength and reason
+ok 5 - all 1223 internal and 32 external source relations retain direction, strength and reason
+  ---
+  duration_ms: 52.9955
+  type: 'test'
+  ...
+# Subtest: batch entry and onward references do not invent prerequisites or hide later foundations
+ok 6 - batch entry and onward references do not invent prerequisites or hide later foundations
+  ---
+  duration_ms: 78.201459
+  type: 'test'
+  ...
+# Subtest: 85 research gaps have a release batch, individual goals and review/transfer requirements
+ok 7 - 85 research gaps have a release batch, individual goals and review/transfer requirements
+  ---
+  duration_ms: 2.114541
+  type: 'test'
+  ...
+# Subtest: reuse assets are real local sources; all proposed families specify action and validation
+ok 8 - reuse assets are real local sources; all proposed families specify action and validation
+  ---
+  duration_ms: 1.880542
+  type: 'test'
+  ...
+# Subtest: proposed placement fixes are isolated from the current atlas and documented by ID
+ok 9 - proposed placement fixes are isolated from the current atlas and documented by ID
+  ---
+  duration_ms: 4.087084
+  type: 'test'
+  ...
+# Subtest: stage-one baseline preserves its original three activities and preview, separate from current coverage
+ok 10 - stage-one baseline preserves its original three activities and preview, separate from current coverage
+  ---
+  duration_ms: 0.287375
+  type: 'test'
+  ...
+# Subtest: cross-subject references remain references and do not become required new subject delivery
+ok 11 - cross-subject references remain references and do not become required new subject delivery
+  ---
+  duration_ms: 0.181375
+  type: 'test'
+  ...
+# Subtest: source fingerprints and all generated views are current and reproducible
+ok 12 - source fingerprints and all generated views are current and reproducible
+  ---
+  duration_ms: 387.834833
+  type: 'test'
+  ...
+# Subtest: every original node and relation survives classification; pack arrows cite actual edges
+ok 13 - every original node and relation survives classification; pack arrows cite actual edges
+  ---
+  duration_ms: 18.875
+  type: 'test'
+  ...
+# Subtest: both cases accept mathematically equivalent constructions across all six representations
+ok 14 - both cases accept mathematically equivalent constructions across all six representations
+  ---
+  duration_ms: 1.619208
+  type: 'test'
+  ...
+# Subtest: diagnostics distinguish unequal parts, whole/set, additive equivalence, and decimal place value
+ok 15 - diagnostics distinguish unequal parts, whole/set, additive equivalence, and decimal place value
+  ---
+  duration_ms: 0.161083
+  type: 'test'
+  ...
+# Subtest: browsing, free manipulation and written explanations do not create independent evidence
+ok 16 - browsing, free manipulation and written explanations do not create independent evidence
+  ---
+  duration_ms: 7.464916
+  type: 'test'
+  ...
+# Subtest: two submitted works mean activity complete even when evidence still needs support
+ok 17 - two submitted works mean activity complete even when evidence still needs support
+  ---
+  duration_ms: 0.541625
+  type: 'test'
+  ...
+# Subtest: a corrected retry cannot erase the first error, across reload or case switching
+ok 18 - a corrected retry cannot erase the first error, across reload or case switching
+  ---
+  duration_ms: 1.59425
+  type: 'test'
+  ...
+# Subtest: using a hint survives reload and import and cannot count as unaided evidence
+ok 19 - using a hint survives reload and import and cannot count as unaided evidence
+  ---
+  duration_ms: 1.223583
+  type: 'test'
+  ...
+# Subtest: new independent constructions and transfers have bounded evidence, never confirmed explanations
+ok 20 - new independent constructions and transfers have bounded evidence, never confirmed explanations
+  ---
+  duration_ms: 0.530459
+  type: 'test'
+  ...
+# Subtest: legacy records, ongoing sessions, answers and bookmarks are retained without new credit
+ok 21 - legacy records, ongoing sessions, answers and bookmarks are retained without new credit
+  ---
+  duration_ms: 2.850416
+  type: 'test'
+  ...
+# Subtest: backup roundtrip and repeated merge retain draft, support, notes and both histories
+ok 22 - backup roundtrip and repeated merge retain draft, support, notes and both histories
+  ---
+  duration_ms: 11.855375
+  type: 'test'
+  ...
+# Subtest: malformed imports fail without mutation; asserted scores cannot override actual work
+ok 23 - malformed imports fail without mutation; asserted scores cannot override actual work
+  ---
+  duration_ms: 1.223125
+  type: 'test'
+  ...
+# Subtest: suggested route links use actual directed source edges, including the distinct decimal preview node
+ok 24 - suggested route links use actual directed source edges, including the distinct decimal preview node
+  ---
+  duration_ms: 4.525041
+  type: 'test'
+  ...
+# Subtest: each repartition preserves the selected amount, including non-half selections
+ok 25 - each repartition preserves the selected amount, including non-half selections
+  ---
+  duration_ms: 13.250167
+  type: 'test'
+  ...
+# Subtest: navigation, a preview, and a cup check alone cannot create completion or independent evidence
+ok 26 - navigation, a preview, and a cup check alone cannot create completion or independent evidence
+  ---
+  duration_ms: 0.446791
+  type: 'test'
+  ...
+# Subtest: overall completion counts available tasks once; old preview browsing grants no completion
+ok 27 - overall completion counts available tasks once; old preview browsing grants no completion
+  ---
+  duration_ms: 3.1215
+  type: 'test'
+  ...
+# Subtest: the fair task completes only after equal division and confirmation, and survives backup merging
+ok 28 - the fair task completes only after equal division and confirmation, and survives backup merging
+  ---
+  duration_ms: 1.44125
+  type: 'test'
+  ...
+# Subtest: first error survives later success, reload, export and repeated merge; a guided sample never grants independent evidence
+ok 29 - first error survives later success, reload, export and repeated merge; a guided sample never grants independent evidence
+  ---
+  duration_ms: 14.512
+  type: 'test'
+  ...
+# Subtest: stale legacy activity writes retain route records, working state, draft and first attempt
+ok 30 - stale legacy activity writes retain route records, working state, draft and first attempt
+  ---
+  duration_ms: 1.209708
+  type: 'test'
+  ...
+# Subtest: v2 backups without the new optional route fields remain valid and invalid route data fail atomically
+ok 31 - v2 backups without the new optional route fields remain valid and invalid route data fail atomically
+  ---
+  duration_ms: 2.97275
+  type: 'test'
+  ...
+# Subtest: full source projection, every node translated, no dangling math dependencies
+ok 32 - full source projection, every node translated, no dangling math dependencies
+  ---
+  duration_ms: 22.163791
+  type: 'test'
+  ...
+# Subtest: all lesson forms have gradeable unique questions and explanations
+ok 33 - all lesson forms have gradeable unique questions and explanations
+  ---
+  duration_ms: 1.940125
+  type: 'test'
+  ...
+# Subtest: visiting or guided work cannot count as independent; help and first mistakes persist
+ok 34 - visiting or guided work cannot count as independent; help and first mistakes persist
+  ---
+  duration_ms: 13.6085
+  type: 'test'
+  ...
+# Subtest: independent result returns to review after seven days
+ok 35 - independent result returns to review after seven days
+  ---
+  duration_ms: 0.481584
+  type: 'test'
+  ...
+# Subtest: backup roundtrip keeps answers, active and paused sessions
+ok 36 - backup roundtrip keeps answers, active and paused sessions
+  ---
+  duration_ms: 3.312042
+  type: 'test'
+  ...
+# Subtest: bad or tampered backup is rejected atomically, scores recalculated
+ok 37 - bad or tampered backup is rejected atomically, scores recalculated
+  ---
+  duration_ms: 0.545458
+  type: 'test'
+  ...
+# Subtest: merge keeps current active work and both histories, repeat import does not duplicate
+ok 38 - merge keeps current active work and both histories, repeat import does not duplicate
+  ---
+  duration_ms: 19.741917
+  type: 'test'
+  ...
+# Subtest: phase2 has exactly the twelve planned source nodes, including nine beyond legacy activities
+ok 39 - phase2 has exactly the twelve planned source nodes, including nine beyond legacy activities
+  ---
+  duration_ms: 3.331958
+  type: 'test'
+  ...
+# Subtest: equal partition is necessary; sixths accept precise noninteger cut locations
+ok 40 - equal partition is necessary; sixths accept precise noninteger cut locations
+  ---
+  duration_ms: 0.405125
+  type: 'test'
+  ...
+# Subtest: equivalence preserves the whole and the same number-line point
+ok 41 - equivalence preserves the whole and the same number-line point
+  ---
+  duration_ms: 0.077459
+  type: 'test'
+  ...
+# Subtest: decimal positions and arbitrary shading patterns remain mathematically equivalent
+ok 42 - decimal positions and arbitrary shading patterns remain mathematically equivalent
+  ---
+  duration_ms: 0.255
+  type: 'test'
+  ...
+# Subtest: quarters can be rebuilt through hundredths and transferred to three cups
+ok 43 - quarters can be rebuilt through hundredths and transferred to three cups
+  ---
+  duration_ms: 0.129208
+  type: 'test'
+  ...
+# Subtest: volume counts filled cubes, not surface squares or duplicated placements
+ok 44 - volume counts filled cubes, not surface squares or duplicated placements
+  ---
+  duration_ms: 0.19
+  type: 'test'
+  ...
+# Subtest: a correct cube total cannot conceal wrong layer factors; estimate is not judged by exactness
+ok 45 - a correct cube total cannot conceal wrong layer factors; estimate is not judged by exactness
+  ---
+  duration_ms: 0.161834
+  type: 'test'
+  ...
+# Subtest: cuboid formula is rejected for an incomplete bounding box
+ok 46 - cuboid formula is rejected for an incomplete bounding box
+  ---
+  duration_ms: 0.105083
+  type: 'test'
+  ...
+# Subtest: different valid disjoint decompositions give the same total; incomplete parts fail
+ok 47 - different valid disjoint decompositions give the same total; incomplete parts fail
+  ---
+  duration_ms: 0.236125
+  type: 'test'
+  ...
+# Subtest: data graphs require correct category counts, axis roles and a difference rather than taller height
+ok 48 - data graphs require correct category counts, axis roles and a difference rather than taller height
+  ---
+  duration_ms: 0.130125
+  type: 'test'
+  ...
+# Subtest: collection must observe the whole source and retain correct categorical and discrete frequencies
+ok 49 - collection must observe the whole source and retain correct categorical and discrete frequencies
+  ---
+  duration_ms: 0.161042
+  type: 'test'
+  ...
+# Subtest: representation preference is free, while each read value and category still must match
+ok 50 - representation preference is free, while each read value and category still must match
+  ---
+  duration_ms: 0.12275
+  type: 'test'
+  ...
+# Subtest: opening, submitting wrong work, or forcing summary never completes a new activity
+ok 51 - opening, submitting wrong work, or forcing summary never completes a new activity
+  ---
+  duration_ms: 8.066792
+  type: 'test'
+  ...
+# Subtest: hints, first errors and later corrections survive without becoming independent first success
+ok 52 - hints, first errors and later corrections survive without becoming independent first success
+  ---
+  duration_ms: 1.087417
+  type: 'test'
+  ...
+# Subtest: new and old records roundtrip and merge without replacing working drafts or immutable history
+ok 53 - new and old records roundtrip and merge without replacing working drafts or immutable history
+  ---
+  duration_ms: 1.669083
+  type: 'test'
+  ...
+# Subtest: all twelve can complete with deduplicated global progress and separate explanation status
+ok 54 - all twelve can complete with deduplicated global progress and separate explanation status
+  ---
+  duration_ms: 4.990125
+  type: 'test'
+  ...
+# Subtest: delivery coverage includes every original goal, with local research gaps kept explicit
+ok 55 - delivery coverage includes every original goal, with local research gaps kept explicit
+  ---
+  duration_ms: 192.864917
+  type: 'test'
+  ...
+# Subtest: nine joint activities use only real directed source relations and eighteen valid tasks
+ok 56 - nine joint activities use only real directed source relations and eighteen valid tasks
+  ---
+  duration_ms: 22.572834
+  type: 'test'
+  ...
+# Subtest: two finished endpoints, visiting and hints cannot light a connection
+ok 57 - two finished endpoints, visiting and hints cannot light a connection
+  ---
+  duration_ms: 2.255708
+  type: 'test'
+  ...
+# Subtest: joint completion lights exactly one source edge without inventing new node completions
+ok 58 - joint completion lights exactly one source edge without inventing new node completions
+  ---
+  duration_ms: 2.196
+  type: 'test'
+  ...
+# Subtest: daily totals use first completion dates and local midnight, with no duplicate points on retry or import
+ok 59 - daily totals use first completion dates and local midnight, with no duplicate points on retry or import
+  ---
+  duration_ms: 84.210708
+  type: 'test'
+  ...
+# Subtest: support, initial errors and repeated attempts remain in the joint record
+ok 60 - support, initial errors and repeated attempts remain in the joint record
+  ---
+  duration_ms: 0.294334
+  type: 'test'
+  ...
+# Subtest: original question text and exact model, view, camera and world survive roundtrip
+ok 61 - original question text and exact model, view, camera and world survive roundtrip
+  ---
+  duration_ms: 0.769958
+  type: 'test'
+  ...
+# Subtest: resuming preserves newer attempts and saves displaced working draft without rewriting the question scene
+ok 62 - resuming preserves newer attempts and saves displaced working draft without rewriting the question scene
+  ---
+  duration_ms: 1.241916
+  type: 'test'
+  ...
+# Subtest: multiple questions can be deferred today and return next day; finishing one never completes a node
+ok 63 - multiple questions can be deferred today and return next day; finishing one never completes a node
+  ---
+  duration_ms: 0.691959
+  type: 'test'
+  ...
+# Subtest: unmatched question keeps location and original words with no fabricated lesson
+ok 64 - unmatched question keeps location and original words with no fabricated lesson
+  ---
+  duration_ms: 1.091208
+  type: 'test'
+  ...
+# Subtest: no-question fallback chooses unfinished work, then next available lesson, then an uncompleted connection
+ok 65 - no-question fallback chooses unfinished work, then next available lesson, then an uncompleted connection
+  ---
+  duration_ms: 253.753625
+  type: 'test'
+  ...
+# Subtest: old v2 files gain optional daily state without changing lesson history
+ok 66 - old v2 files gain optional daily state without changing lesson history
+  ---
+  duration_ms: 0.242834
+  type: 'test'
+  ...
+# Subtest: backup merge is idempotent and stale writes preserve questions, joint work and evidence
+ok 67 - backup merge is idempotent and stale writes preserve questions, joint work and evidence
+  ---
+  duration_ms: 0.486042
+  type: 'test'
+  ...
+# Subtest: malformed question, mismatched node, camera, joint edge or forged completion rejects atomically
+ok 68 - malformed question, mismatched node, camera, joint edge or forged completion rejects atomically
+  ---
+  duration_ms: 3.787333
+  type: 'test'
+  ...
+# Subtest: B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+ok 69 - B02 has ten distinct lessons with 27 reachable tasks; opening does not complete them
+  ---
+  duration_ms: 9.623417
+  type: 'test'
+  ...
+# Subtest: tiling requires equal unit squares and the full interior without exterior squares
+ok 70 - tiling requires equal unit squares and the full interior without exterior squares
+  ---
+  duration_ms: 0.112083
+  type: 'test'
+  ...
+# Subtest: rectangles accept alternative factor pairs and separate area from perimeter
+ok 71 - rectangles accept alternative factor pairs and separate area from perimeter
+  ---
+  duration_ms: 0.310125
+  type: 'test'
+  ...
+# Subtest: pond estimation uses polygon intersection and the stated half-square rule
+ok 72 - pond estimation uses polygon intersection and the stated half-square rule
+  ---
+  duration_ms: 0.913709
+  type: 'test'
+  ...
+# Subtest: solids count unique mathematical features including hidden ones
+ok 73 - solids count unique mathematical features including hidden ones
+  ---
+  duration_ms: 0.461417
+  type: 'test'
+  ...
+# Subtest: fold model distinguishes known nets and finds all eleven free cube nets
+ok 74 - fold model distinguishes known nets and finds all eleven free cube nets
+  ---
+  duration_ms: 7.009167
+  type: 'test'
+  ...
+# Subtest: net checks use committed predictions and opposite faces, not an answer edited after reveal
+ok 75 - net checks use committed predictions and opposite faces, not an answer edited after reveal
+  ---
+  duration_ms: 0.583917
+  type: 'test'
+  ...
+# Subtest: measurements require the correct instrument, unit and actual model operation
+ok 76 - measurements require the correct instrument, unit and actual model operation
+  ---
+  duration_ms: 0.094167
+  type: 'test'
+  ...
+# Subtest: capacity separates estimate, full capacity and contents; no forced perfect estimate
+ok 77 - capacity separates estimate, full capacity and contents; no forced perfect estimate
+  ---
+  duration_ms: 0.165875
+  type: 'test'
+  ...
+# Subtest: exactly the planned 50 unique nodes, bounded routes and source connections are present
+ok 78 - exactly the planned 50 unique nodes, bounded routes and source connections are present
+  ---
+  duration_ms: 2.35725
+  type: 'test'
+  ...
+# Subtest: all new task models start incomplete and accept constructed work with durable records
+ok 79 - all new task models start incomplete and accept constructed work with durable records
+  ---
+  duration_ms: 34.829083
+  type: 'test'
+  ...
+# Subtest: same amount accepts different shapes but color renaming is not a second partition
+ok 80 - same amount accepts different shapes but color renaming is not a second partition
+  ---
+  duration_ms: 0.260709
+  type: 'test'
+  ...
+# Subtest: unit fractions are proper too; overflowing quarters also require a correct mixed expression
+ok 81 - unit fractions are proper too; overflowing quarters also require a correct mixed expression
+  ---
+  duration_ms: 0.193667
+  type: 'test'
+  ...
+# Subtest: fractions refer to the entire set and the correct number-line unit
+ok 82 - fractions refer to the entire set and the correct number-line unit
+  ---
+  duration_ms: 0.163792
+  type: 'test'
+  ...
+# Subtest: equivalence requires preserved quantity and decimal place-value errors do not pass
+ok 83 - equivalence requires preserved quantity and decimal place-value errors do not pass
+  ---
+  duration_ms: 0.71575
+  type: 'test'
+  ...
+# Subtest: scaling checks pre-action predictions and ratio models must account for total parts
+ok 84 - scaling checks pre-action predictions and ratio models must account for total parts
+  ---
+  duration_ms: 0.208834
+  type: 'test'
+  ...
+# Subtest: classification keeps every object, handles tied ordering and measured quantities
+ok 85 - classification keeps every object, handles tied ordering and measured quantities
+  ---
+  duration_ms: 0.185334
+  type: 'test'
+  ...
+# Subtest: statistics anticipates variation, including repeated observations of one person
+ok 86 - statistics anticipates variation, including repeated observations of one person
+  ---
+  duration_ms: 0.1465
+  type: 'test'
+  ...
+# Subtest: same chart data must survive scale and representation changes; choice of display is not a single-answer trap
+ok 87 - same chart data must survive scale and representation changes; choice of display is not a single-answer trap
+  ---
+  duration_ms: 0.244833
+  type: 'test'
+  ...
+# Subtest: trial data replay exactly, forged outcomes fail, prediction need not equal observed counts
+ok 88 - trial data replay exactly, forged outcomes fail, prediction need not equal observed counts
+  ---
+  duration_ms: 0.654125
+  type: 'test'
+  ...
+# Subtest: repeated spinner runs advance the random stream; areas, not equal observed counts, determine equal chance
+ok 89 - repeated spinner runs advance the random stream; areas, not equal observed counts, determine equal chance
+  ---
+  duration_ms: 0.355167
+  type: 'test'
+  ...
+# Subtest: simulation plots unedited samples and accepts even a less-concentrated observed batch
+ok 90 - simulation plots unedited samples and accepts even a less-concentrated observed batch
+  ---
+  duration_ms: 15.946708
+  type: 'test'
+  ...
+# Subtest: repetition, fixed growth and equality are structural checks rather than count-only answers
+ok 91 - repetition, fixed growth and equality are structural checks rather than count-only answers
+  ---
+  duration_ms: 0.119334
+  type: 'test'
+  ...
+# Subtest: story equations retain the whole/parts; arithmetic coincidence is insufficient
+ok 92 - story equations retain the whole/parts; arithmetic coincidence is insufficient
+  ---
+  duration_ms: 0.053208
+  type: 'test'
+  ...
+# Subtest: exchange preserves quantity and examples without a general reason cannot finish proof
+ok 93 - exchange preserves quantity and examples without a general reason cannot finish proof
+  ---
+  duration_ms: 0.259916
+  type: 'test'
+  ...
+# Subtest: all current nodes plus joint work survive backup, deduplication, errors and next-day question continuation
+ok 94 - all current nodes plus joint work survive backup, deduplication, errors and next-day question continuation
+  ---
+  duration_ms: 410.448666
+  type: 'test'
+  ...
+# Subtest: route choice does not fabricate source edges, and overview exposes only actual completed links
+ok 95 - route choice does not fabricate source edges, and overview exposes only actual completed links
+  ---
+  duration_ms: 0.435916
+  type: 'test'
+  ...
+# Subtest: dictation clips contain real PCM samples with speech-length duration and non-silent energy
+ok 96 - dictation clips contain real PCM samples with speech-length duration and non-silent energy
+  ---
+  duration_ms: 4.93825
+  type: 'test'
+  ...
+# Subtest: B06 adds exactly its 23 planned source nodes and 10 actual edges with at most three choices
+ok 97 - B06 adds exactly its 23 planned source nodes and 10 actual edges with at most three choices
+  ---
+  duration_ms: 1.032792
+  type: 'test'
+  ...
+# Subtest: every activity starts incomplete, examples are valid and completion survives records
+ok 98 - every activity starts incomplete, examples are valid and completion survives records
+  ---
+  duration_ms: 23.994458
+  type: 'test'
+  ...
+# Subtest: a correct total does not rescue duplicate counts or omission
+ok 99 - a correct total does not rescue duplicate counts or omission
+  ---
+  duration_ms: 0.221375
+  type: 'test'
+  ...
+# Subtest: different counting order and conservation need actual before and after actions
+ok 100 - different counting order and conservation need actual before and after actions
+  ---
+  duration_ms: 0.205083
+  type: 'test'
+  ...
+# Subtest: pairing cannot reuse a partner and length is not cardinality
+ok 101 - pairing cannot reuse a partner and length is not cardinality
+  ---
+  duration_ms: 0.446083
+  type: 'test'
+  ...
+# Subtest: an incorrect prediction is retained while a corrected one-change result can complete
+ok 102 - an incorrect prediction is retained while a corrected one-change result can complete
+  ---
+  duration_ms: 0.138667
+  type: 'test'
+  ...
+# Subtest: all quantity representations and neighbors must agree
+ok 103 - all quantity representations and neighbors must agree
+  ---
+  duration_ms: 0.126542
+  type: 'test'
+  ...
+# Subtest: a flash cannot be submitted while still visible; repeated views are counted
+ok 104 - a flash cannot be submitted while still visible; repeated views are counted
+  ---
+  duration_ms: 0.296667
+  type: 'test'
+  ...
+# Subtest: swapping colors alone is not a second part-whole construction
+ok 105 - swapping colors alone is not a second part-whole construction
+  ---
+  duration_ms: 0.136458
+  type: 'test'
+  ...
+# Subtest: groups preserve individual objects, remainders and units
+ok 106 - groups preserve individual objects, remainders and units
+  ---
+  duration_ms: 0.286542
+  type: 'test'
+  ...
+# Subtest: jumping checks every station, including carry, borrow, signed steps and one million
+ok 107 - jumping checks every station, including carry, borrow, signed steps and one million
+  ---
+  duration_ms: 0.159833
+  type: 'test'
+  ...
+# Subtest: digit order is numeric, and equal cards need the same place
+ok 108 - digit order is numeric, and equal cards need the same place
+  ---
+  duration_ms: 0.052541
+  type: 'test'
+  ...
+# Subtest: teen quantities survive unbundling, and the required re-bundling is recorded
+ok 109 - teen quantities survive unbundling, and the required re-bundling is recorded
+  ---
+  duration_ms: 0.073
+  type: 'test'
+  ...
+# Subtest: dictation requires completed playback or explicit text help, and 14 is not 40
+ok 110 - dictation requires completed playback or explicit text help, and 14 is not 40
+  ---
+  duration_ms: 0.049666
+  type: 'test'
+  ...
+# Subtest: ink is bounded evidence, never a legibility score
+ok 111 - ink is bounded evidence, never a legibility score
+  ---
+  duration_ms: 0.090917
+  type: 'test'
+  ...
+# Subtest: unfinished walk, audio help and ink survive backup and question continuation
+ok 112 - unfinished walk, audio help and ink survive backup and question continuation
+  ---
+  duration_ms: 4.537458
+  type: 'test'
+  ...
+# Subtest: B07 delivers the exact 21 planned nodes and 11 real source edges
+ok 113 - B07 delivers the exact 21 planned nodes and 11 real source edges
+  ---
+  duration_ms: 1.639541
+  type: 'test'
+  ...
+# Subtest: all new nodes and links begin incomplete, have valid examples and can retain completion
+ok 114 - all new nodes and links begin incomplete, have valid examples and can retain completion
+  ---
+  duration_ms: 18.215042
+  type: 'test'
+  ...
+# Subtest: every exchange preserves value; insufficient and excessive exchanges do nothing
+ok 115 - every exchange preserves value; insufficient and excessive exchanges do nothing
+  ---
+  duration_ms: 0.132542
+  type: 'test'
+  ...
+# Subtest: the swap path and final composition are required, not only the numeric answer
+ok 116 - the swap path and final composition are required, not only the numeric answer
+  ---
+  duration_ms: 0.059791
+  type: 'test'
+  ...
+# Subtest: renaming needs distinct decompositions and independent reconstructions for two forms
+ok 117 - renaming needs distinct decompositions and independent reconstructions for two forms
+  ---
+  duration_ms: 0.155875
+  type: 'test'
+  ...
+# Subtest: digit values and zeros are structural, not face values or concatenated words
+ok 118 - digit values and zeros are structural, not face values or concatenated words
+  ---
+  duration_ms: 0.063917
+  type: 'test'
+  ...
+# Subtest: prediction is immutable and quantity changes must preserve accounting even across hundreds
+ok 119 - prediction is immutable and quantity changes must preserve accounting even across hundreds
+  ---
+  duration_ms: 0.069792
+  type: 'test'
+  ...
+# Subtest: an incorrect move can be corrected without erasing its trace
+ok 120 - an incorrect move can be corrected without erasing its trace
+  ---
+  duration_ms: 0.062833
+  type: 'test'
+  ...
+# Subtest: comparison includes highest differing place, ties, > < = and actual quantities
+ok 121 - comparison includes highest differing place, ties, > < = and actual quantities
+  ---
+  duration_ms: 0.066667
+  type: 'test'
+  ...
+# Subtest: numeric ordering and proportional positions must both agree
+ok 122 - numeric ordering and proportional positions must both agree
+  ---
+  duration_ms: 0.086541
+  type: 'test'
+  ...
+# Subtest: approximate positions respect the stated nearer benchmark and side of halfway
+ok 123 - approximate positions respect the stated nearer benchmark and side of halfway
+  ---
+  duration_ms: 0.057375
+  type: 'test'
+  ...
+# Subtest: estimation preserves an inaccurate first guess, requires one marking per object and exact recount
+ok 124 - estimation preserves an inaccurate first guess, requires one marking per object and exact recount
+  ---
+  duration_ms: 0.109167
+  type: 'test'
+  ...
+# Subtest: pairing cannot reuse objects; zero is even and the two equal groups must sum to the total
+ok 125 - pairing cannot reuse objects; zero is even and the two equal groups must sum to the total
+  ---
+  duration_ms: 0.214959
+  type: 'test'
+  ...
+# Subtest: how many complete tens differs from the tens digit; simulated money keeps its unit
+ok 126 - how many complete tens differs from the tens digit; simulated money keeps its unit
+  ---
+  duration_ms: 0.115708
+  type: 'test'
+  ...
+# Subtest: partial exchanges, saved forms and original question survive backup and displaced drafts
+ok 127 - partial exchanges, saved forms and original question survive backup and displaced drafts
+  ---
+  duration_ms: 22.172375
+  type: 'test'
+  ...
+# Subtest: B08 covers precisely its 24 planned source nodes; routes stay short and source edges are real
+ok 128 - B08 covers precisely its 24 planned source nodes; routes stay short and source edges are real
+  ---
+  duration_ms: 2.859459
+  type: 'test'
+  ...
+# Subtest: all 80 activities start incomplete and valid examples meet the actual contracts
+ok 129 - all 80 activities start incomplete and valid examples meet the actual contracts
+  ---
+  duration_ms: 10.799459
+  type: 'test'
+  ...
+# Subtest: exact decimal arithmetic rejects nonfinite input and gets ties without binary drift
+ok 130 - exact decimal arithmetic rejects nonfinite input and gets ties without binary drift
+  ---
+  duration_ms: 0.12225
+  type: 'test'
+  ...
+# Subtest: effective digits differ from decimal places and preserve magnitude and precision
+ok 131 - effective digits differ from decimal places and preserve magnitude and precision
+  ---
+  duration_ms: 0.119208
+  type: 'test'
+  ...
+# Subtest: first predictions survive edits; crossing ten thousand requires an actual conserved swap
+ok 132 - first predictions survive edits; crossing ten thousand requires an actual conserved swap
+  ---
+  duration_ms: 0.206209
+  type: 'test'
+  ...
+# Subtest: place movement is bidirectional, exact and bounded, including the million-fold gap
+ok 133 - place movement is bidirectional, exact and bounded, including the million-fold gap
+  ---
+  duration_ms: 0.48775
+  type: 'test'
+  ...
+# Subtest: scientific notation must normalize and compensate, not change the original magnitude
+ok 134 - scientific notation must normalize and compensate, not change the original magnitude
+  ---
+  duration_ms: 0.381333
+  type: 'test'
+  ...
+# Subtest: decimal comparison uses aligned positions; count of digits is not magnitude
+ok 135 - decimal comparison uses aligned positions; count of digits is not magnitude
+  ---
+  duration_ms: 0.32575
+  type: 'test'
+  ...
+# Subtest: negative depth sorting agrees with numeric order, not absolute depth
+ok 136 - negative depth sorting agrees with numeric order, not absolute depth
+  ---
+  duration_ms: 0.199417
+  type: 'test'
+  ...
+# Subtest: rounding needs positioning and exact requested trailing zeros; equality in an estimate is allowed
+ok 137 - rounding needs positioning and exact requested trailing zeros; equality in an estimate is allowed
+  ---
+  duration_ms: 0.23725
+  type: 'test'
+  ...
+# Subtest: error intervals include the lower tie and exclude upper tie; both endpoints must be tested
+ok 138 - error intervals include the lower tie and exclude upper tie; both endpoints must be tested
+  ---
+  duration_ms: 0.256541
+  type: 'test'
+  ...
+# Subtest: Roman canonical combinations and Chinese myriad grouping preserve zero positions
+ok 139 - Roman canonical combinations and Chinese myriad grouping preserve zero positions
+  ---
+  duration_ms: 0.424166
+  type: 'test'
+  ...
+# Subtest: malformed imported arrays, forged shift history and overlarge inputs cannot become evidence
+ok 140 - malformed imported arrays, forged shift history and overlarge inputs cannot become evidence
+  ---
+  duration_ms: 3.020333
+  type: 'test'
+  ...
+# Subtest: valid Chinese two-thousand variants are accepted without accepting a missing zero
+ok 141 - valid Chinese two-thousand variants are accepted without accepting a missing zero
+  ---
+  duration_ms: 0.2705
+  type: 'test'
+  ...
+# Subtest: B09 exactly covers its nine planned sources and six real source edges
+ok 142 - B09 exactly covers its nine planned sources and six real source edges
+  ---
+  duration_ms: 12.131292
+  type: 'test'
+  ...
+# Subtest: 44 node tasks and all joint tasks dispatch; untouched work cannot be completed
+ok 143 - 44 node tasks and all joint tasks dispatch; untouched work cannot be completed
+  ---
+  duration_ms: 10.745583
+  type: 'test'
+  ...
+# Subtest: exact fractions normalize signs and reject unsafe or ambiguous input
+ok 144 - exact fractions normalize signs and reject unsafe or ambiguous input
+  ---
+  duration_ms: 0.117667
+  type: 'test'
+  ...
+# Subtest: counting through zero preserves an initial error when corrected
+ok 145 - counting through zero preserves an initial error when corrected
+  ---
+  duration_ms: 0.911625
+  type: 'test'
+  ...
+# Subtest: number line uses positions and interval lengths, not tick counting or copied answers
+ok 146 - number line uses positions and interval lengths, not tick counting or copied answers
+  ---
+  duration_ms: 0.100334
+  type: 'test'
+  ...
+# Subtest: opposite operation and negative operand stay distinct, with original guess retained
+ok 147 - opposite operation and negative operand stay distinct, with original guess retained
+  ---
+  duration_ms: 0.106333
+  type: 'test'
+  ...
+# Subtest: changing start clears the drawn path but keeps correction history and remains valid
+ok 148 - changing start clears the drawn path but keeps correction history and remains valid
+  ---
+  duration_ms: 0.050625
+  type: 'test'
+  ...
+# Subtest: self-chosen two jumps accept alternate correct decompositions
+ok 149 - self-chosen two jumps accept alternate correct decompositions
+  ---
+  duration_ms: 0.063667
+  type: 'test'
+  ...
+# Subtest: signed value and distance comparisons differ; decimal distances and zero require tracing
+ok 150 - signed value and distance comparisons differ; decimal distances and zero require tracing
+  ---
+  duration_ms: 0.078
+  type: 'test'
+  ...
+# Subtest: inequality ray includes a continuous range and requires real boundary tests
+ok 151 - inequality ray includes a continuous range and requires real boundary tests
+  ---
+  duration_ms: 0.1875
+  type: 'test'
+  ...
+# Subtest: two-sided interval has separate endpoint membership
+ok 152 - two-sided interval has separate endpoint membership
+  ---
+  duration_ms: 0.101875
+  type: 'test'
+  ...
+# Subtest: equivalent reversed inequality expressions are accepted without changing membership
+ok 153 - equivalent reversed inequality expressions are accepted without changing membership
+  ---
+  duration_ms: 0.136334
+  type: 'test'
+  ...
+# Subtest: range probes may be any correct interior/exterior values, including fractions
+ok 154 - range probes may be any correct interior/exterior values, including fractions
+  ---
+  duration_ms: 0.208792
+  type: 'test'
+  ...
+# Subtest: inequality operations change both sides exactly and positive divisors only
+ok 155 - inequality operations change both sides exactly and positive divisors only
+  ---
+  duration_ms: 0.131583
+  type: 'test'
+  ...
+# Subtest: both calculation tools work, but selecting a tool without doing the work is insufficient
+ok 156 - both calculation tools work, but selecting a tool without doing the work is insufficient
+  ---
+  duration_ms: 0.347084
+  type: 'test'
+  ...
+# Subtest: measurement conserves joined lengths, uses units and limits segments rather than forbidding short rulers
+ok 157 - measurement conserves joined lengths, uses units and limits segments rather than forbidding short rulers
+  ---
+  duration_ms: 0.289542
+  type: 'test'
+  ...
+# Subtest: cube roots require all equal-sided layers and three factors, with first prediction retained
+ok 158 - cube roots require all equal-sided layers and three factors, with first prediction retained
+  ---
+  duration_ms: 0.131542
+  type: 'test'
+  ...
+# Subtest: higher powers are repeated products and exponentiation precedes addition
+ok 159 - higher powers are repeated products and exponentiation precedes addition
+  ---
+  duration_ms: 0.065375
+  type: 'test'
+  ...
+# Subtest: root brackets use exact squaring without overflow at six decimal places
+ok 160 - root brackets use exact squaring without overflow at six decimal places
+  ---
+  duration_ms: 0.121833
+  type: 'test'
+  ...
+# Subtest: root brackets must shrink and justify the requested rounding, with failed guesses retained
+ok 161 - root brackets must shrink and justify the requested rounding, with failed guesses retained
+  ---
+  duration_ms: 0.073666
+  type: 'test'
+  ...
+# Subtest: decimal classification follows actual division remainders, including delayed repetition
+ok 162 - decimal classification follows actual division remainders, including delayed repetition
+  ---
+  duration_ms: 0.074208
+  type: 'test'
+  ...
+# Subtest: rational vs irrational cannot be inferred from long decimals or a radical sign
+ok 163 - rational vs irrational cannot be inferred from long decimals or a radical sign
+  ---
+  duration_ms: 0.047667
+  type: 'test'
+  ...
+# Subtest: density zoom uses exact internal fractions and distinguishes a display limit from a mathematical claim
+ok 164 - density zoom uses exact internal fractions and distinguishes a display limit from a mathematical claim
+  ---
+  duration_ms: 0.148875
+  type: 'test'
+  ...
+# Subtest: malformed imported model data is rejected without crashing shared validation
+ok 165 - malformed imported model data is rejected without crashing shared validation
+  ---
+  duration_ms: 0.989791
+  type: 'test'
+  ...
+# Subtest: B10 has exactly 22 planned source IDs, eight short routes and 16 actual source edges
+ok 166 - B10 has exactly 22 planned source IDs, eight short routes and 16 actual source edges
+  ---
+  duration_ms: 1.572666
+  type: 'test'
+  ...
+# Subtest: all 65 node tasks and 32 joint tasks dispatch, persist and reject untouched work
+ok 167 - all 65 node tasks and 32 joint tasks dispatch, persist and reject untouched work
+  ---
+  duration_ms: 10.205417
+  type: 'test'
+  ...
+# Subtest: equations allow equal sign reversal, unicode symbols and additive order; never evaluate code
+ok 168 - equations allow equal sign reversal, unicode symbols and additive order; never evaluate code
+  ---
+  duration_ms: 0.395291
+  type: 'test'
+  ...
+# Subtest: story requires constructed parts and chosen action, retaining first failed guess and experiment
+ok 169 - story requires constructed parts and chosen action, retaining first failed guess and experiment
+  ---
+  duration_ms: 1.057625
+  type: 'test'
+  ...
+# Subtest: zero actions must be actually performed; comparison and missing-start stories retain source meanings
+ok 170 - zero actions must be actually performed; comparison and missing-start stories retain source meanings
+  ---
+  duration_ms: 0.158375
+  type: 'test'
+  ...
+# Subtest: equal-valued expressions must correspond to the two constructed sides
+ok 171 - equal-valued expressions must correspond to the two constructed sides
+  ---
+  duration_ms: 0.644375
+  type: 'test'
+  ...
+# Subtest: split enumeration conserves token IDs, includes zero and does not double count reversals
+ok 172 - split enumeration conserves token IDs, includes zero and does not double count reversals
+  ---
+  duration_ms: 0.497
+  type: 'test'
+  ...
+# Subtest: specific 8 partitions accept reversed order and do not accept an unrelated pair
+ok 173 - specific 8 partitions accept reversed order and do not accept an unrelated pair
+  ---
+  duration_ms: 0.886916
+  type: 'test'
+  ...
+# Subtest: make-ten needs actual landmark and both conserved parts, not only the final result
+ok 174 - make-ten needs actual landmark and both conserved parts, not only the final result
+  ---
+  duration_ms: 1.232458
+  type: 'test'
+  ...
+# Subtest: wrong landmark and reset retain original guess and action history
+ok 175 - wrong landmark and reset retain original guess and action history
+  ---
+  duration_ms: 0.753958
+  type: 'test'
+  ...
+# Subtest: fact family requires all four real transformations and correctly ordered subtractions
+ok 176 - fact family requires all four real transformations and correctly ordered subtractions
+  ---
+  duration_ms: 1.50375
+  type: 'test'
+  ...
+# Subtest: recall preserves a wrong first answer, correction and visual support without a speed criterion
+ok 177 - recall preserves a wrong first answer, correction and visual support without a speed criterion
+  ---
+  duration_ms: 0.271417
+  type: 'test'
+  ...
+# Subtest: count-on excludes the starting number and retains corrected steps
+ok 178 - count-on excludes the starting number and retains corrected steps
+  ---
+  duration_ms: 0.183917
+  type: 'test'
+  ...
+# Subtest: swapping addition does not license swapping subtraction
+ok 179 - swapping addition does not license swapping subtraction
+  ---
+  duration_ms: 0.140333
+  type: 'test'
+  ...
+# Subtest: three-part work accepts different valid pairing orders and keeps the third addend
+ok 180 - three-part work accepts different valid pairing orders and keeps the third addend
+  ---
+  duration_ms: 0.309458
+  type: 'test'
+  ...
+# Subtest: subtraction regrouping preserves two different intermediate paths
+ok 181 - subtraction regrouping preserves two different intermediate paths
+  ---
+  duration_ms: 0.07825
+  type: 'test'
+  ...
+# Subtest: ones versus tens must change actual value; exchange conserves quantity
+ok 182 - ones versus tens must change actual value; exchange conserves quantity
+  ---
+  duration_ms: 0.418542
+  type: 'test'
+  ...
+# Subtest: malformed imports are rejected by shared validation without crashing
+ok 183 - malformed imports are rejected by shared validation without crashing
+  ---
+  duration_ms: 16.807
+  type: 'test'
+  ...
+# Subtest: B11 covers exactly its 23 planned source nodes, eight short routes and 23 source edges
+ok 184 - B11 covers exactly its 23 planned source nodes, eight short routes and 23 source edges
+  ---
+  duration_ms: 3.097125
+  type: 'test'
+  ...
+# Subtest: all 72 B11 source goals have existing task references and explicit bounded claims
+ok 185 - all 72 B11 source goals have existing task references and explicit bounded claims
+  ---
+  duration_ms: 3.566375
+  type: 'test'
+  ...
+# Subtest: all 86 new tasks and 46 joint tasks dispatch through shared state and survive JSON
+ok 186 - all 86 new tasks and 46 joint tasks dispatch through shared state and survive JSON
+  ---
+  duration_ms: 16.647209
+  type: 'test'
+  ...
+# Subtest: place exchanges conserve exact integer units across varied sizes and decimal displays
+ok 187 - place exchanges conserve exact integer units across varied sizes and decimal displays
+  ---
+  duration_ms: 37.345375
+  type: 'test'
+  ...
+# Subtest: rounding feasibility always includes the true sum and difference, including zero and ties
+ok 188 - rounding feasibility always includes the true sum and difference, including zero and ties
+  ---
+  duration_ms: 0.406209
+  type: 'test'
+  ...
+# Subtest: B11 exact integer parsing rejects float artifacts, expressions and excess precision
+ok 189 - B11 exact integer parsing rejects float artifacts, expressions and excess precision
+  ---
+  duration_ms: 1.009333
+  type: 'test'
+  ...
+# Subtest: B11 cannot complete by writing only an arithmetic answer
+ok 190 - B11 cannot complete by writing only an arithmetic answer
+  ---
+  duration_ms: 1.312417
+  type: 'test'
+  ...
+# Subtest: B11 carry and splitting conserve original quantity at each action
+ok 191 - B11 carry and splitting conserve original quantity at each action
+  ---
+  duration_ms: 1.059708
+  type: 'test'
+  ...
+# Subtest: B11 insufficient subtraction records feedback and keeps quantity until exchange
+ok 192 - B11 insufficient subtraction records feedback and keeps quantity until exchange
+  ---
+  duration_ms: 0.443708
+  type: 'test'
+  ...
+# Subtest: B11 original prediction survives correcting bad alignment
+ok 193 - B11 original prediction survives correcting bad alignment
+  ---
+  duration_ms: 0.212584
+  type: 'test'
+  ...
+# Subtest: B11 exchange across five zero columns reaches exact large subtraction
+ok 194 - B11 exchange across five zero columns reaches exact large subtraction
+  ---
+  duration_ms: 1.635292
+  type: 'test'
+  ...
+# Subtest: B11 three addends can carry two into a column
+ok 195 - B11 three addends can carry two into a column
+  ---
+  duration_ms: 0.873792
+  type: 'test'
+  ...
+# Subtest: B11 decimals align by actual terminal digit and retain zero columns
+ok 196 - B11 decimals align by actual terminal digit and retain zero columns
+  ---
+  duration_ms: 0.534166
+  type: 'test'
+  ...
+# Subtest: B11 repeat exchanges never create an invalid save
+ok 197 - B11 repeat exchanges never create an invalid save
+  ---
+  duration_ms: 0.233375
+  type: 'test'
+  ...
+# Subtest: B11 malformed/tampered stored quantities and NaN are rejected
+ok 198 - B11 malformed/tampered stored quantities and NaN are rejected
+  ---
+  duration_ms: 0.098917
+  type: 'test'
+  ...
+# Subtest: B11 any coherent split route is accepted and undo keeps original attempts
+ok 199 - B11 any coherent split route is accepted and undo keeps original attempts
+  ---
+  duration_ms: 0.66575
+  type: 'test'
+  ...
+# Subtest: B11 wrong landing is feedback, not an accepted route segment
+ok 200 - B11 wrong landing is feedback, not an accepted route segment
+  ---
+  duration_ms: 0.170833
+  type: 'test'
+  ...
+# Subtest: B11 compensation and count-up require the actual chosen pathway
+ok 201 - B11 compensation and count-up require the actual chosen pathway
+  ---
+  duration_ms: 0.479833
+  type: 'test'
+  ...
+# Subtest: B11 group merge preserves all original identities and wrong subtotals
+ok 202 - B11 group merge preserves all original identities and wrong subtotals
+  ---
+  duration_ms: 1.097375
+  type: 'test'
+  ...
+# Subtest: B11 story operations must match each event and preserve first incorrect decision
+ok 203 - B11 story operations must match each event and preserve first incorrect decision
+  ---
+  duration_ms: 0.507084
+  type: 'test'
+  ...
+# Subtest: B11 decimal story uses exact hundredths without binary accumulation
+ok 204 - B11 decimal story uses exact hundredths without binary accumulation
+  ---
+  duration_ms: 0.252791
+  type: 'test'
+  ...
+# Subtest: B11 estimate must be committed before exact inverse work
+ok 205 - B11 estimate must be committed before exact inverse work
+  ---
+  duration_ms: 0.316916
+  type: 'test'
+  ...
+# Subtest: B11 rounding interval rejects only impossible values, not every wrong value
+ok 206 - B11 rounding interval rejects only impossible values, not every wrong value
+  ---
+  duration_ms: 0.433833
+  type: 'test'
+  ...
+# Subtest: B11 inverse uses actual exact result and original changed part
+ok 207 - B11 inverse uses actual exact result and original changed part
+  ---
+  duration_ms: 1.44725
+  type: 'test'
+  ...
+# Subtest: B11 either original addend is valid for an addition inverse check
+ok 208 - B11 either original addend is valid for an addition inverse check
+  ---
+  duration_ms: 0.105333
+  type: 'test'
+  ...
+# Subtest: B11 examples remain serializable over a varied arithmetic sample
+ok 209 - B11 examples remain serializable over a varied arithmetic sample
+  ---
+  duration_ms: 13.110334
+  type: 'test'
+  ...
+# Subtest: B11 rendered child-supplied strings are escaped and names stay explicit
+ok 210 - B11 rendered child-supplied strings are escaped and names stay explicit
+  ---
+  duration_ms: 0.641708
+  type: 'test'
+  ...
+# Subtest: B11 written tasks need correctly positioned result digits, beyond the final answer
+ok 211 - B11 written tasks need correctly positioned result digits, beyond the final answer
+  ---
+  duration_ms: 0.526125
+  type: 'test'
+  ...
+# Subtest: B11 written decimal and zero results preserve internal and trailing zero places
+ok 212 - B11 written decimal and zero results preserve internal and trailing zero places
+  ---
+  duration_ms: 0.382042
+  type: 'test'
+  ...
+# Subtest: B11 old prototype writing drafts retain operation history but do not inherit writing evidence
+ok 213 - B11 old prototype writing drafts retain operation history but do not inherit writing evidence
+  ---
+  duration_ms: 0.595084
+  type: 'test'
+  ...
+# Subtest: B11 efficient one-hop routes are valid unless the task explicitly asks for a split
+ok 214 - B11 efficient one-hop routes are valid unless the task explicitly asks for a split
+  ---
+  duration_ms: 0.237542
+  type: 'test'
+  ...
+# Subtest: B12 all node and joint tasks need operations and survive serialization
+ok 215 - B12 all node and joint tasks need operations and survive serialization
+  ---
+  duration_ms: 29.408542
+  type: 'test'
+  ...
+# Subtest: B12 writing only the target and equation does not replace construction
+ok 216 - B12 writing only the target and equation does not replace construction
+  ---
+  duration_ms: 0.663875
+  type: 'test'
+  ...
+# Subtest: B12 wrong bars and subtotal survive correction, undo and reset
+ok 217 - B12 wrong bars and subtotal survive correction, undo and reset
+  ---
+  duration_ms: 1.450834
+  type: 'test'
+  ...
+# Subtest: B12 special make-ten prompt requires the selected pair, other tasks allow any pair
+ok 218 - B12 special make-ten prompt requires the selected pair, other tasks allow any pair
+  ---
+  duration_ms: 0.301083
+  type: 'test'
+  ...
+# Subtest: B12 unknown may appear in original or solved relation, on either side
+ok 219 - B12 unknown may appear in original or solved relation, on either side
+  ---
+  duration_ms: 0.199
+  type: 'test'
+  ...
+# Subtest: B12 equation requires exact known quantity multiset and signed meaning even for coincidences
+ok 220 - B12 equation requires exact known quantity multiset and signed meaning even for coincidences
+  ---
+  duration_ms: 0.073208
+  type: 'test'
+  ...
+# Subtest: B12 alternatives have actual expression trees with each fact used once
+ok 221 - B12 alternatives have actual expression trees with each fact used once
+  ---
+  duration_ms: 0.377167
+  type: 'test'
+  ...
+# Subtest: B12 arithmetically correct but contextually wrong plan cannot pass
+ok 222 - B12 arithmetically correct but contextually wrong plan cannot pass
+  ---
+  duration_ms: 0.206417
+  type: 'test'
+  ...
+# Subtest: B12 arithmetic errors are retained without advancing, and tampering is rejected
+ok 223 - B12 arithmetic errors are retained without advancing, and tampering is rejected
+  ---
+  duration_ms: 0.228334
+  type: 'test'
+  ...
+# Subtest: B12 missing start and net increase are accepted without keyword rules
+ok 224 - B12 missing start and net increase are accepted without keyword rules
+  ---
+  duration_ms: 0.300458
+  type: 'test'
+  ...
+# Subtest: B12 fields stay outside redraw-only visual and child text is escaped
+ok 225 - B12 fields stay outside redraw-only visual and child text is escaped
+  ---
+  duration_ms: 0.623
+  type: 'test'
+  ...
+# Subtest: B13 every node and joint task rejects blank work and replays valid serializable examples
+ok 226 - B13 every node and joint task rejects blank work and replays valid serializable examples
+  ---
+  duration_ms: 38.842333
+  type: 'test'
+  ...
+# Subtest: B13 equal shares conserve original object identities across drag, click and moving back
+ok 227 - B13 equal shares conserve original object identities across drag, click and moving back
+  ---
+  duration_ms: 1.157708
+  type: 'test'
+  ...
+# Subtest: B13 right total does not excuse unequal shares or swapped story roles
+ok 228 - B13 right total does not excuse unequal shares or swapped story roles
+  ---
+  duration_ms: 0.15225
+  type: 'test'
+  ...
+# Subtest: B13 grouping needs independently created complete groups, not the sharing count
+ok 229 - B13 grouping needs independently created complete groups, not the sharing count
+  ---
+  duration_ms: 0.124708
+  type: 'test'
+  ...
+# Subtest: B13 cannot create extra fixed-pool objects and corrections retain failed attempts
+ok 230 - B13 cannot create extra fixed-pool objects and corrections retain failed attempts
+  ---
+  duration_ms: 0.084834
+  type: 'test'
+  ...
+# Subtest: B13 unused objects can return to the build supply without blocking a valid construction
+ok 231 - B13 unused objects can return to the build supply without blocking a valid construction
+  ---
+  duration_ms: 0.116375
+  type: 'test'
+  ...
+# Subtest: B13 remainders are retained as whole leftovers and cannot be silently distributed unequally
+ok 232 - B13 remainders are retained as whole leftovers and cannot be silently distributed unequally
+  ---
+  duration_ms: 0.132583
+  type: 'test'
+  ...
+# Subtest: B13 building empty groups proves a zero product without dividing by zero
+ok 233 - B13 building empty groups proves a zero product without dividing by zero
+  ---
+  duration_ms: 0.20425
+  type: 'test'
+  ...
+# Subtest: B13 a filled arithmetic answer cannot replace committing an array
+ok 234 - B13 a filled arithmetic answer cannot replace committing an array
+  ---
+  duration_ms: 0.073041
+  type: 'test'
+  ...
+# Subtest: B13 a changed dimension previews a new array and cannot submit the previous shape
+ok 235 - B13 a changed dimension previews a new array and cannot submit the previous shape
+  ---
+  duration_ms: 0.685041
+  type: 'test'
+  ...
+# Subtest: B13 rotation preserves same cells and first prediction while allowing a corrected outcome
+ok 236 - B13 rotation preserves same cells and first prediction while allowing a corrected outcome
+  ---
+  duration_ms: 0.144584
+  type: 'test'
+  ...
+# Subtest: B13 alternative array cuts are valid and both parts must include the common factor
+ok 237 - B13 alternative array cuts are valid and both parts must include the common factor
+  ---
+  duration_ms: 0.353209
+  type: 'test'
+  ...
+# Subtest: B13 scaled units and estimates are distinct from unit counts and exact results
+ok 238 - B13 scaled units and estimates are distinct from unit counts and exact results
+  ---
+  duration_ms: 0.096542
+  type: 'test'
+  ...
+# Subtest: B13 unknowns in every position require substitution back into the original equation
+ok 239 - B13 unknowns in every position require substitution back into the original equation
+  ---
+  duration_ms: 0.282208
+  type: 'test'
+  ...
+# Subtest: B13 recall keeps incorrect input and structural help without a timing threshold
+ok 240 - B13 recall keeps incorrect input and structural help without a timing threshold
+  ---
+  duration_ms: 0.081625
+  type: 'test'
+  ...
+# Subtest: B13 factor pairs include one and square roots, and mirrors do not inflate count
+ok 241 - B13 factor pairs include one and square roots, and mirrors do not inflate count
+  ---
+  duration_ms: 0.143166
+  type: 'test'
+  ...
+# Subtest: B13 any first pair in a three-factor product is accepted, undo retains first error
+ok 242 - B13 any first pair in a three-factor product is accepted, undo retains first error
+  ---
+  duration_ms: 0.208917
+  type: 'test'
+  ...
+# Subtest: B13 division reversal supports exact fractions and decimals but not reversed arithmetic
+ok 243 - B13 division reversal supports exact fractions and decimals but not reversed arithmetic
+  ---
+  duration_ms: 0.159709
+  type: 'test'
+  ...
+# Subtest: B13 forged quantities or accepted steps cannot pass the action replay validator
+ok 244 - B13 forged quantities or accepted steps cannot pass the action replay validator
+  ---
+  duration_ms: 0.275625
+  type: 'test'
+  ...
+# Subtest: B13 text fields are outside the redrawn visuals and child strings are escaped
+ok 245 - B13 text fields are outside the redrawn visuals and child strings are escaped
+  ---
+  duration_ms: 0.07825
+  type: 'test'
+  ...
+# Subtest: labels avoid open content and viewport edges, and hide when no readable space remains
+ok 246 - labels avoid open content and viewport edges, and hide when no readable space remains
+  ---
+  duration_ms: 0.899042
+  type: 'test'
+  ...
+# Subtest: every source object has a stable finite 3D home, independent of source row ordering
+ok 247 - every source object has a stable finite 3D home, independent of source row ordering
+  ---
+  duration_ms: 15.297541
+  type: 'test'
+  ...
+# Subtest: each source prerequisite appears at both endpoints with its original direction and reason
+ok 248 - each source prerequisite appears at both endpoints with its original direction and reason
+  ---
+  duration_ms: 12.318542
+  type: 'test'
+  ...
+# Subtest: aggregated cross-theme connections preserve all and only original cross-theme edges
+ok 249 - aggregated cross-theme connections preserve all and only original cross-theme edges
+  ---
+  duration_ms: 0.658625
+  type: 'test'
+  ...
+# Subtest: view restoration rejects broken geometry without touching learning data
+ok 250 - view restoration rejects broken geometry without touching learning data
+  ---
+  duration_ms: 0.254625
+  type: 'test'
+  ...
+# Subtest: two live activity surfaces retain both working copies even when they began from stale snapshots
+ok 251 - two live activity surfaces retain both working copies even when they began from stale snapshots
+  ---
+  duration_ms: 3.701917
+  type: 'test'
+  ...
+# Subtest: live persistence cannot resurrect removed bookmarks or erase another surface hint history
+ok 252 - live persistence cannot resurrect removed bookmarks or erase another surface hint history
+  ---
+  duration_ms: 0.387583
+  type: 'test'
+  ...
+1..252
+# tests 252
+# suites 0
+# pass 252
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 843.670291

@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "the construction board has readable desktop width",
+    "slider can be moved with keyboard",
+    "moving the slider visibly moves the boundary at the same scale",
+    "wrong cut is recorded",
+    "corrected construction completes",
+    "correcting does not erase first error",
+    "subsequent editing cannot become independent evidence",
+    "a moved, uncommitted boundary cannot pass on a stale cut",
+    "desktop page has no horizontal overflow",
+    "clock input example does not reveal the answer",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": []
+}

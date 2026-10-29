@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-25T12:36:14.680Z",
+  "healthStatus": 200,
+  "health": {
+    "app": "local-math-explorer",
+    "version": 1
+  },
+  "counts": {
+    "themes": 5,
+    "packs": 23,
+    "nodes": 587,
+    "edges": 1223
+  },
+  "progress": "0 / 127",
+  "cache": "math-explorer-20261025-learning-v14",
+  "cachedResources": 92,
+  "precacheResources": 91,
+  "availableNodes": 127,
+  "nodeTasks": 407,
+  "routes": 43,
+  "connections": 62,
+  "newModules": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "sourceHashes": {
+    "data/atlas.json": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "exploration-content.js": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+    "learning/learn.js": "b842646c5b1c83113b33b9913b1a3b0662797a1fb8213ca9d2eb5210ade9279f",
+    "learn.html": "39cd2366a3b1d737c9d1e8a31d5b5992abe4de72fb20eb3020102ecdda133a87",
+    "learning/phase5/b09-model.js": "994bcc6cb873f9ebe7a038fd94ca1112296aea09fa2a5ef8e930cbf00656ec53"
+  }
+}

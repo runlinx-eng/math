@@ -1,0 +1,31 @@
+{"mode": "check", "mathTopics": 587, "internalRelations": 1223, "externalReferences": 32, "researchTopics": 502, "missingResearchTopics": 85, "existingActivities": 3, "previewOnly": 1, "nodesWithoutFullActivity": 584, "firstSample": 12, "firstRelease": 50, "remainingAfterFirstRelease": 537, "sharedAuthoringGroups": 93, "proposedTaskUnits": 161, "deliveryBatches": 39}
+{"availableNodes":12,"newNodes":9,"tasks":30,"sourceGoals":36,"localResearchSupplements":2,"remainingUnimplementedNodes":575}
+{"mode":"check","nodes":12,"connections":9,"connectionTasks":18}
+{
+  availableNodes: 50,
+  newNodes: 38,
+  nodeTasks: 136,
+  sourceGoals: 153,
+  routes: 15,
+  availableConnections: 21,
+  connectionTasks: 42,
+  localResearchSupplements: 9,
+  remainingUnimplementedNodes: 537,
+  remainingResearchGaps: 76
+}
+{
+  availableNodes: 118,
+  newNodes: 24,
+  nodeTasks: 363,
+  newNodeTasks: 80,
+  sourceGoals: 355,
+  newSourceGoals: 72,
+  routes: 39,
+  availableConnections: 56,
+  connectionTasks: 112,
+  newConnections: 14,
+  newConnectionTasks: 28,
+  localResearchSupplements: 17,
+  remainingUnimplementedNodes: 469,
+  remainingResearchGaps: 68
+}

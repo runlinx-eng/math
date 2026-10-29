@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-25T03:46:11.359978+00:00",
+  "scope": "stage4 content and technical verification; child trial remains pending",
+  "availableNodes": 50,
+  "nodeTasks": 136,
+  "sourceGoals": 153,
+  "routes": 15,
+  "connections": 21,
+  "connectionTasks": 42,
+  "remainingNodes": 537,
+  "remainingResearchGaps": 76,
+  "unitChecks": 102,
+  "mainBrowserAssertions": 810,
+  "browserGroups": {
+    "B02/browser-results-final.json": 79,
+    "B03/browser-results-final.json": 121,
+    "B04/browser-results-final.json": 93,
+    "B05/browser-results-final.json": 87,
+    "geometry-links-browser-results.json": 26,
+    "links/browser-results-final.json": 73,
+    "integration-browser-results.json": 45,
+    "phase2-regression-results.json": 123,
+    "phase3-regression-results.json": 63,
+    "continuation-final-browser-results.json": 8,
+    "spatial-regression-results.json": 37,
+    "legacy-regression-results.json": 55
+  },
+  "childTrials": 0,
+  "childLearningEffects": "unverified",
+  "localUrl": "http://127.0.0.1:43827/?v=10#space",
+  "sourceAtlasSha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+  "activeWorkTimeSeconds": null
+}

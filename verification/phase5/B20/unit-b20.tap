@@ -1,0 +1,172 @@
+TAP version 13
+# Subtest: B20 digitalcharts construction, round trip, untouched and replay integrity
+ok 1 - B20 digitalcharts construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 15.773916
+  type: 'test'
+  ...
+# Subtest: B20 timeorcategory construction, round trip, untouched and replay integrity
+ok 2 - B20 timeorcategory construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 2.485292
+  type: 'test'
+  ...
+# Subtest: B20 linequestions construction, round trip, untouched and replay integrity
+ok 3 - B20 linequestions construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 0.656166
+  type: 'test'
+  ...
+# Subtest: B20 timetable construction, round trip, untouched and replay integrity
+ok 4 - B20 timetable construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 1.706333
+  type: 'test'
+  ...
+# Subtest: B20 timebuilder construction, round trip, untouched and replay integrity
+ok 5 - B20 timebuilder construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 2.888625
+  type: 'test'
+  ...
+# Subtest: B20 fractiondots construction, round trip, untouched and replay integrity
+ok 6 - B20 fractiondots construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 3.479084
+  type: 'test'
+  ...
+# Subtest: B20 dotrecords construction, round trip, untouched and replay integrity
+ok 7 - B20 dotrecords construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 6.609875
+  type: 'test'
+  ...
+# Subtest: B20 piepieces construction, round trip, untouched and replay integrity
+ok 8 - B20 piepieces construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 1.783958
+  type: 'test'
+  ...
+# Subtest: B20 chartfamilies construction, round trip, untouched and replay integrity
+ok 9 - B20 chartfamilies construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 4.321334
+  type: 'test'
+  ...
+# Subtest: B20 displaychoices construction, round trip, untouched and replay integrity
+ok 10 - B20 displaychoices construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 1.067125
+  type: 'test'
+  ...
+# Subtest: B20 histogram construction, round trip, untouched and replay integrity
+ok 11 - B20 histogram construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 8.111
+  type: 'test'
+  ...
+# Subtest: B20 boxsummary construction, round trip, untouched and replay integrity
+ok 12 - B20 boxsummary construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 1.74225
+  type: 'test'
+  ...
+# Subtest: B20 scattercraft construction, round trip, untouched and replay integrity
+ok 13 - B20 scattercraft construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 6.926333
+  type: 'test'
+  ...
+# Subtest: B20 scattermeaning construction, round trip, untouched and replay integrity
+ok 14 - B20 scattermeaning construction, round trip, untouched and replay integrity
+  ---
+  duration_ms: 5.47775
+  type: 'test'
+  ...
+# Subtest: B20 exact equivalent fractions and no blank-as-zero
+ok 15 - B20 exact equivalent fractions and no blank-as-zero
+  ---
+  duration_ms: 0.253625
+  type: 'test'
+  ...
+# Subtest: B20 random draws and first wrong tally survive reset and restore
+ok 16 - B20 random draws and first wrong tally survive reset and restore
+  ---
+  duration_ms: 0.483125
+  type: 'test'
+  ...
+# Subtest: B20 histogram boundaries and alternative equal widths
+ok 17 - B20 histogram boundaries and alternative equal widths
+  ---
+  duration_ms: 9.606792
+  type: 'test'
+  ...
+# Subtest: B20 histogram given view never reveals individual raw values
+ok 18 - B20 histogram given view never reveals individual raw values
+  ---
+  duration_ms: 0.098833
+  type: 'test'
+  ...
+# Subtest: B20 pie checks each fraction, not just 360 degrees
+ok 19 - B20 pie checks each fraction, not just 360 degrees
+  ---
+  duration_ms: 0.800292
+  type: 'test'
+  ...
+# Subtest: B20 clock crossing supports alternate jumps; decimal subtraction rejected
+ok 20 - B20 clock crossing supports alternate jumps; decimal subtraction rejected
+  ---
+  duration_ms: 0.963459
+  type: 'test'
+  ...
+# Subtest: B20 dot identities, empty ticks and liquid conservation
+ok 21 - B20 dot identities, empty ticks and liquid conservation
+  ---
+  duration_ms: 2.261916
+  type: 'test'
+  ...
+# Subtest: B20 box counterexample preserves five numbers with different data
+ok 22 - B20 box counterexample preserves five numbers with different data
+  ---
+  duration_ms: 0.235625
+  type: 'test'
+  ...
+# Subtest: B20 multiple reasonable scatter lines, impossible fits and no-trend boundary
+ok 23 - B20 multiple reasonable scatter lines, impossible fits and no-trend boundary
+  ---
+  duration_ms: 1.722667
+  type: 'test'
+  ...
+# Subtest: B20 slope scaling preserves r, pulling residuals closer increases it
+ok 24 - B20 slope scaling preserves r, pulling residuals closer increases it
+  ---
+  duration_ms: 0.511208
+  type: 'test'
+  ...
+# Subtest: B20 partial point, history and unassessed explanation retained
+ok 25 - B20 partial point, history and unassessed explanation retained
+  ---
+  duration_ms: 0.331667
+  type: 'test'
+  ...
+# Subtest: B20 graph choices allow both justified representations
+ok 26 - B20 graph choices allow both justified representations
+  ---
+  duration_ms: 0.221625
+  type: 'test'
+  ...
+# Subtest: B20 source corpus shape is 14 nodes, 45 tasks and 26 joint activities
+ok 27 - B20 source corpus shape is 14 nodes, 45 tasks and 26 joint activities
+  ---
+  duration_ms: 0.048916
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 149.490417

@@ -1,0 +1,226 @@
+TAP version 13
+# Subtest: B17 exactly 22 planned source nodes, 98 tasks and 44 real links have runnable persisted constructions
+ok 1 - B17 exactly 22 planned source nodes, 98 tasks and 44 real links have runnable persisted constructions
+  ---
+  duration_ms: 75.077
+  type: 'test'
+  ...
+# Subtest: B17 exact fraction and percent values reject malformed and approximate values
+ok 2 - B17 exact fraction and percent values reject malformed and approximate values
+  ---
+  duration_ms: 0.09275
+  type: 'test'
+  ...
+# Subtest: B17 first ordering prediction persists through successful correction and reset
+ok 3 - B17 first ordering prediction persists through successful correction and reset
+  ---
+  duration_ms: 0.353083
+  type: 'test'
+  ...
+# Subtest: B17 same-whole alignment and constructed quantities are required before ranking is sufficient
+ok 4 - B17 same-whole alignment and constructed quantities are required before ranking is sufficient
+  ---
+  duration_ms: 0.409542
+  type: 'test'
+  ...
+# Subtest: B17 exact placement permits thirds but rejects replacing them with finite decimal approximations
+ok 5 - B17 exact placement permits thirds but rejects replacing them with finite decimal approximations
+  ---
+  duration_ms: 0.377458
+  type: 'test'
+  ...
+# Subtest: B17 common denominator must repartition every original and alternative multiples remain valid
+ok 6 - B17 common denominator must repartition every original and alternative multiples remain valid
+  ---
+  duration_ms: 0.436125
+  type: 'test'
+  ...
+# Subtest: B17 complement and benchmark reasoning retain per-fraction values
+ok 7 - B17 complement and benchmark reasoning retain per-fraction values
+  ---
+  duration_ms: 0.56025
+  type: 'test'
+  ...
+# Subtest: B17 equal cards may be ordered either way
+ok 8 - B17 equal cards may be ordered either way
+  ---
+  duration_ms: 0.214166
+  type: 'test'
+  ...
+# Subtest: B17 repeated common-factor division is valid, stopping at 9/12 is unfinished
+ok 9 - B17 repeated common-factor division is valid, stopping at 9/12 is unfinished
+  ---
+  duration_ms: 0.108209
+  type: 'test'
+  ...
+# Subtest: B17 invalid merge cannot change the quantity, and split then merge is reversible
+ok 10 - B17 invalid merge cannot change the quantity, and split then merge is reversible
+  ---
+  duration_ms: 0.105
+  type: 'test'
+  ...
+# Subtest: B17 equivalent families need genuinely different names and original quantity stays fixed
+ok 11 - B17 equivalent families need genuinely different names and original quantity stays fixed
+  ---
+  duration_ms: 0.10725
+  type: 'test'
+  ...
+# Subtest: B17 additive move is not equivalence but the whole-fraction exception stays true
+ok 12 - B17 additive move is not equivalence but the whole-fraction exception stays true
+  ---
+  duration_ms: 0.131875
+  type: 'test'
+  ...
+# Subtest: B17 decimal-to-fraction begins with the actual last place before simplification
+ok 13 - B17 decimal-to-fraction begins with the actual last place before simplification
+  ---
+  duration_ms: 0.093167
+  type: 'test'
+  ...
+# Subtest: B17 ragged decimals compare from the highest place and preserve wrong predictions
+ok 14 - B17 ragged decimals compare from the highest place and preserve wrong predictions
+  ---
+  duration_ms: 0.289292
+  type: 'test'
+  ...
+# Subtest: B17 trailing zeros preserve value and all tied columns must be examined
+ok 15 - B17 trailing zeros preserve value and all tied columns must be examined
+  ---
+  duration_ms: 0.141333
+  type: 'test'
+  ...
+# Subtest: B17 thousandths are two real subdivisions of the original unit
+ok 16 - B17 thousandths are two real subdivisions of the original unit
+  ---
+  duration_ms: 0.0695
+  type: 'test'
+  ...
+# Subtest: B17 hundredths retain separate source pieces and cannot reuse occupied cells
+ok 17 - B17 hundredths retain separate source pieces and cannot reuse occupied cells
+  ---
+  duration_ms: 0.2025
+  type: 'test'
+  ...
+# Subtest: B17 three-place recording accepts zeros without falsely changing value and accepts varied complements
+ok 18 - B17 three-place recording accepts zeros without falsely changing value and accepts varied complements
+  ---
+  duration_ms: 0.0895
+  type: 'test'
+  ...
+# Subtest: B17 long division validates each quotient and remainder, not only final decimal
+ok 19 - B17 long division validates each quotient and remainder, not only final decimal
+  ---
+  duration_ms: 0.086583
+  type: 'test'
+  ...
+# Subtest: B17 repeated remainder records a genuine repeating block, not a finite approximation
+ok 20 - B17 repeated remainder records a genuine repeating block, not a finite approximation
+  ---
+  duration_ms: 0.097041
+  type: 'test'
+  ...
+# Subtest: B17 termination uses the denominator after reduction: 6/15 and 4/15 differ
+ok 21 - B17 termination uses the denominator after reduction: 6/15 and 4/15 differ
+  ---
+  duration_ms: 0.091125
+  type: 'test'
+  ...
+# Subtest: B17 denominator decomposition rejects composite factors and preserves failed attempts
+ok 22 - B17 denominator decomposition rejects composite factors and preserves failed attempts
+  ---
+  duration_ms: 0.115667
+  type: 'test'
+  ...
+# Subtest: B17 percentage pieces scale with the same whole and can be assembled in alternative ways
+ok 23 - B17 percentage pieces scale with the same whole and can be assembled in alternative ways
+  ---
+  duration_ms: 0.102917
+  type: 'test'
+  ...
+# Subtest: B17 affine rules require known and far cases and permit equivalent rule construction
+ok 24 - B17 affine rules require known and far cases and permit equivalent rule construction
+  ---
+  duration_ms: 0.161459
+  type: 'test'
+  ...
+# Subtest: B17 fraction four operations keep their different meanings and exact outputs
+ok 25 - B17 fraction four operations keep their different meanings and exact outputs
+  ---
+  duration_ms: 0.597459
+  type: 'test'
+  ...
+# Subtest: B17 multiplication after a valid common-denominator rename is allowed
+ok 26 - B17 multiplication after a valid common-denominator rename is allowed
+  ---
+  duration_ms: 0.246167
+  type: 'test'
+  ...
+# Subtest: B17 mixed quantity division includes every whole and leftover piece
+ok 27 - B17 mixed quantity division includes every whole and leftover piece
+  ---
+  duration_ms: 0.295959
+  type: 'test'
+  ...
+# Subtest: B17 unlike whole counts in operand bars keep one shared visual scale
+ok 28 - B17 unlike whole counts in operand bars keep one shared visual scale
+  ---
+  duration_ms: 0.192083
+  type: 'test'
+  ...
+# Subtest: B17 straight-line angle uses the actual gap and a relational equation
+ok 29 - B17 straight-line angle uses the actual gap and a relational equation
+  ---
+  duration_ms: 0.099916
+  type: 'test'
+  ...
+# Subtest: B17 finite recall separates decimal from percent without inventing physical units
+ok 30 - B17 finite recall separates decimal from percent without inventing physical units
+  ---
+  duration_ms: 0.09025
+  type: 'test'
+  ...
+# Subtest: B17 seventh hundredths example uses an exact percentage field
+ok 31 - B17 seventh hundredths example uses an exact percentage field
+  ---
+  duration_ms: 0.143667
+  type: 'test'
+  ...
+# Subtest: B17 replay rejects forged boards and preserves first attempts after restart
+ok 32 - B17 replay rejects forged boards and preserves first attempts after restart
+  ---
+  duration_ms: 13.793625
+  type: 'test'
+  ...
+# Subtest: B17 three entry directions retain original routes and all 21 fraction routes
+ok 33 - B17 three entry directions retain original routes and all 21 fraction routes
+  ---
+  duration_ms: 0.153792
+  type: 'test'
+  ...
+# Subtest: B17 reused written arithmetic retains exact thousandths and rejects discarded precision
+ok 34 - B17 reused written arithmetic retains exact thousandths and rejects discarded precision
+  ---
+  duration_ms: 0.28125
+  type: 'test'
+  ...
+# Subtest: B17 three decimal columns align by written precision and require every result digit
+ok 35 - B17 three decimal columns align by written precision and require every result digit
+  ---
+  duration_ms: 0.484375
+  type: 'test'
+  ...
+# Subtest: B17 exact independent three decimal examples produce expected results
+ok 36 - B17 exact independent three decimal examples produce expected results
+  ---
+  duration_ms: 0.222333
+  type: 'test'
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 36
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 223.533375

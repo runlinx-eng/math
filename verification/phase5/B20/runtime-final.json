@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-27T04:18:44.170Z",
+  "health": 200,
+  "nodes": 321,
+  "routes": 119,
+  "connections": 365,
+  "directions": 3,
+  "progress": "0 / 321",
+  "cache": "math-explorer-20261027-learning-v25",
+  "cachedFiles": 136,
+  "assets": {
+    "sw.js": {
+      "status": 200,
+      "bytes": 5041,
+      "sha256": "93b6155cb39c064f854498522fa728af964d3908b39024b37e3cab636ac202c2"
+    },
+    "space.js": {
+      "status": 200,
+      "bytes": 41832,
+      "sha256": "6ce5f30dfa8f46ba08dbf485b33521ea91df536f89badb0998afe9b4b29dba09"
+    },
+    "exploration.js": {
+      "status": 200,
+      "bytes": 51203,
+      "sha256": "3e0f5914acda26274da119fddc5841cf19eee4fcdc4b8e9b22588a30da03f2b8"
+    },
+    "learning/learn.js": {
+      "status": 200,
+      "bytes": 38768,
+      "sha256": "a510faa321e93349357198baa061d8fb1fbe4b34f1fad9655c7585d73050ab1e"
+    },
+    "learning/learn.css": {
+      "status": 200,
+      "bytes": 16005,
+      "sha256": "8d78ce8e5ab804c61055a302e4c34625ef53ec3f1ecb503f2d9fb9a9fc331844"
+    },
+    "learning/phase4/catalog.js": {
+      "status": 200,
+      "bytes": 1363,
+      "sha256": "deafc7800063c5e11a8dec75fbe1fe390e6b0ab3773895907e97182c0528f814"
+    },
+    "learning/phase4/engine.js": {
+      "status": 200,
+      "bytes": 4285,
+      "sha256": "d712944ae66c7bcca054a537edb95ff11dcc0767d9b623b738f81d955eb91116"
+    },
+    "learning/phase5/b20.js": {
+      "status": 200,
+      "bytes": 23752,
+      "sha256": "e17bcbae907694db58084e8c98ab123cb04c079d48a33ff8ea78e0c7a528e9f8"
+    },
+    "learning/phase5/b20-model.js": {
+      "status": 200,
+      "bytes": 16498,
+      "sha256": "5cb969c078815ca75974eb1c1fe42a416b3f1cf31b02179924cdd4243bd2de9c"
+    },
+    "learning/phase5/b20-view.js": {
+      "status": 200,
+      "bytes": 20240,
+      "sha256": "164a3551e24da05baf1e6668f277478e915a8d59a278d989c3d2427e16f38ca5"
+    },
+    "learning/phase5/b20.css": {
+      "status": 200,
+      "bytes": 2687,
+      "sha256": "a504f8f203a07cee747803832a938cd51e36bbdd316d0ec1894c10844bda8e36"
+    },
+    "learning/catalog.js": {
+      "status": 200,
+      "bytes": 6610,
+      "sha256": "60840487da82c2c2e5fffbff46a1cc4bede0f8928a3bc542631da569d96ede9e"
+    },
+    "learning/state.js": {
+      "status": 200,
+      "bytes": 5026,
+      "sha256": "988b5b208fc3abf419198f1b15c66a1f4380c4631730c5a165c386523219122b"
+    },
+    "learning/phase4/b04.js": {
+      "status": 200,
+      "bytes": 9797,
+      "sha256": "f0be323b84e37edc26f7e33b0171fdd351afb2a078d8dd6fe3531fd7db4f1759"
+    },
+    "data/atlas.json": {
+      "status": 200,
+      "bytes": 1051830,
+      "sha256": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf"
+    },
+    "exploration-content.js": {
+      "status": 200,
+      "bytes": 7895,
+      "sha256": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397"
+    }
+  },
+  "errors": []
+}

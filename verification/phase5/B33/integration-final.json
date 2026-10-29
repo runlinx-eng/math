@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "502 unique available nodes",
+    "money opens with three directions",
+    "transaction routes reachable",
+    "budget routes reachable",
+    "value direction has two choices",
+    "GK has three nodes",
+    "selected route survives reload",
+    "wrong first coin set and support are retained",
+    "simulated next day shows exact question",
+    "original partial coins restored",
+    "later setting retained separately",
+    "wrong first combination remains in restored record",
+    "world camera restored",
+    "actual backup contains original setting",
+    "repeat import preserves question and first attempt",
+    "import opens original question",
+    "all four B33 files cached",
+    "original work opens offline",
+    "different coin combinations can be completed offline",
+    "wrong initial combination is not independent evidence",
+    "no runtime errors",
+    "no remote requests"
+  ],
+  "errors": [],
+  "remote": [],
+  "cache": {
+    "name": "math-explorer-20261027-learning-v38",
+    "count": 200,
+    "modules": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "childTrial": false
+}

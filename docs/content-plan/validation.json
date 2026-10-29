@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "scope": "阶段1资料与制作映射；不代表内容已实现或孩子已学会",
+  "date": "2026-10-24",
+  "counts": {
+    "mathTopics": 587,
+    "internalRelations": 1223,
+    "externalReferences": 32,
+    "researchTopics": 502,
+    "missingResearchTopics": 85,
+    "existingActivities": 3,
+    "previewOnly": 1,
+    "nodesWithoutFullActivity": 584,
+    "firstSample": 12,
+    "firstRelease": 50,
+    "remainingAfterFirstRelease": 537,
+    "sharedAuthoringGroups": 93,
+    "proposedTaskUnits": 161,
+    "deliveryBatches": 39
+  },
+  "checks": [
+    {
+      "name": "源数学节点逐项覆盖且每个只有一个主交付批次",
+      "passed": true
+    },
+    {
+      "name": "原始1223条数学关系及32条外部参考的方向强弱理由一致",
+      "passed": true
+    },
+    {
+      "name": "502份教学方案与85个缺研究节点按ID联接",
+      "passed": true
+    },
+    {
+      "name": "12包含现有3；50包含12；余量537；新增9+38+537=584",
+      "passed": true
+    },
+    {
+      "name": "所有源目标保留且逐项映射到任务组；不是实际实现声明",
+      "passed": true
+    },
+    {
+      "name": "85项缺口均有补充顺序、批次与数学/迁移验证要求",
+      "passed": true
+    },
+    {
+      "name": "分组无遗漏重复；年龄年级字段不参与选择和排序",
+      "passed": true
+    }
+  ],
+  "inputHashes": {
+    "vendor/os-taxonomy/data/topics.json": "e5b037a5309ed12bbecd4ead88655231ff55a6fe49d98383e00f79bcfeb07bab",
+    "vendor/os-taxonomy/data/teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3",
+    "vendor/os-taxonomy/data/dependencies.json": "ca5c67a7bcb6c60a008e31bac7b1004893e2c0bc36425af2b48604ba9e3e5c82",
+    "dist/data/atlas.json": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf",
+    "vendor/upstream.json": "d5c50f38991ca8f43bef03b1abecd3cace3c1ac6e2354db34f88afac75d705ed",
+    "scripts/content_plan_choices.py": "8ca0d4233e6a2a1423fe556bc3a53f1ce910f89e5713180e1865a879cbfd1ad3",
+    "scripts/build_content_plan.py": "3a54c8cf59af85e01bb7c649b7b6bc8b423dc9406f3b982707a113f9906abe52",
+    "dist/exploration-content.js": "05d9974122025d7551af92208d86d586144545b940c10915c366d579c5d3a397",
+    "dist/journey-model.js": "18f83392633a722301163386a7e27b087b666f5fc10c1d2fee016d03d2594104",
+    "dist/exploration.js": "540d67238757c6b6b9884bb383c48f4d292638898e7b5b473177741acf7e6752",
+    "dist/journey.js": "92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/design.md": "a69f1ac8714a882d42a3c7bdbc5b22aa00157f17d59a132d695a81474f2bce85",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/app.js": "4621b9c9ab0ed09be25f672afa623e05633805cfdb57d68f0c6bf265def07bcd",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/hidden-cubes/source/tasks.js": "34750db75ec7a49736845b5954f0932078786329d118a45ef7fdcf64123304e5",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/design.md": "2fbc3675f4cee7d1f4b555eb7b092dd30b32c6a60827cc0e984001c07aaf97e9",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/source/app.js": "04b3b8982e0b1a2cf62da3d0be3fd8afdb2a7b06aa15a2118caf5a3672a11d19",
+    "vendor/os-taxonomy/.agents/skills/marble-builder/examples/bee-builder/ANIDOODLE-NOTICE.txt": "a64251fc9012656f4d335dadf3c7182794981235d11f4a5c77161830b1ac7a2e",
+    "vendor/os-taxonomy/LICENSE": "77d2692c3d64efdd4db18dce2407699baf62930e2b50d6e5ed90b48acf16b7c1",
+    "vendor/os-taxonomy/LICENSE-CONTENT": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966"
+  },
+  "nextVerification": "阶段2实现时验证数学内容、桌面交互和记录；真实孩子使用仍待阶段4。"
+}
