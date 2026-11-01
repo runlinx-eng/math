@@ -5,7 +5,7 @@ import {buildRelationshipSpace,selectRelationshipVersion,RELATIONSHIP_VERSION} f
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {makeKnowledgeNames} from './spatial-names.js';
 import {relationExplanation} from './spatial-reasons.js';
-import {buildStructureGuide,linkedSuggestions,GUIDE_ID} from './spatial-guide.js';
+import {buildStructureGuide,linkedSuggestions,guideNextTargets,guideStepReady,GUIDE_ID} from './spatial-guide.js';
 import {KEY,OLD_KEY,fresh,validate,migrateLegacy,merge,nodeState,evidenceSummary,PROGRESS,completionClass,completionSummary,backup,parseBackup,now} from './exploration-core.js';
 import {ACTIVITIES,activityIds} from './exploration-content.js';
 import {ROUTE_ID,ROUTE_TITLE,ROUTE_STEPS,routeStep} from './journey-model.js';
@@ -27,7 +27,7 @@ let worldLayout='network';
 const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
 let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
-let guideSteps=[],guideVisible=false,guideSuspended=false;
+let guideSteps=[],guideVisible=false,guideSuspended=false,guideWalkSeen=new Set();
 const displayTitle=o=>worldLayout==='network'&&o?.kind==='node'?(space.knowledgeNames.get(o.id)||o.title):o?.kind==='node'&&LESSONS[lessonForTopic(o.id)]?.title||o?.kind==='pack'&&routesForPack(o.id).length===1&&routeForPack(o.id)?.title||o?.kind==='node'&&routeStep(o.id)?.title||o?.key==='pack:same-amount'&&ROUTE_TITLE||o?.title;
 
 function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
@@ -38,7 +38,7 @@ function readLearning(){
 }
 function mutateLearning(fn){if(readBlocked)return false;readLearning();if(readBlocked)return false;try{const working=structuredClone(learning);fn(working);const next=validate(working,atlas);writeStored(KEY,JSON.stringify(next));learning=next;refreshLearning();return true;}catch(error){warning('还没保存成功，原记录已保留。'+error.message);return false;}}
 function questionComposer(context={}){const v=captureView(),guide=learning.daily.guide;const world={position:v.position,target:v.target,selected:v.selected,...(worldLayout==='network'?{layout:'network',networkView:v.networkView,networkVersion:v.networkVersion,...(v.cameraZoom?{cameraZoom:v.cameraZoom,traceMode:v.traceMode,traceScroll:v.traceScroll}:{}),...(v.edgeDisplay?{edgeDisplay:v.edgeDisplay}:{}),...(guide?.active&&(guideVisible||guideSuspended)?{guideStep:guide.step}:{})}:{})};askQuestion(text=>{const ok=mutateLearning(s=>addQuestion(s,text,{...context,world}));if(ok)toast('已留下，下次从这里继续。');return ok;});}
-function renderContinue(){const card=$('#continue-card');if(!scene)return;card.hidden=journeyOpen||!!scene.selected||!!panels.size;if(card.hidden)return;const next=continuation(learning),q=next.kind==='question'&&learning.daily.questions.find(q=>q.id===next.questionId),missing=q&&!q.scene&&!lessonForTopic(q.nodeId);card.innerHTML=`<small>${q?'接着上次的问题':'接着试一试'}</small><p>${esc(next.title)}</p>${missing?'<small>这里还没有对应活动，问题先留着。</small>':''}<div>${button('continue',q?(missing?'回到这个位置':'从这里继续'):'开始', '', 'primary-button')}${q?button('question-later','先放着',`data-id="${q.id}"`,'plain-button'):''}</div>`;}
+function renderContinue(){const card=$('#continue-card');if(!scene)return;card.hidden=guideVisible||journeyOpen||!!scene.selected||!!panels.size;if(card.hidden)return;const next=continuation(learning),q=next.kind==='question'&&learning.daily.questions.find(q=>q.id===next.questionId),missing=q&&!q.scene&&!lessonForTopic(q.nodeId);card.innerHTML=`<small>${q?'接着上次的问题':'接着试一试'}</small><p>${esc(next.title)}</p>${missing?'<small>这里还没有对应活动，问题先留着。</small>':''}<div>${button('continue',q?(missing?'回到这个位置':'从这里继续'):'开始', '', 'primary-button')}${q?button('question-later','先放着',`data-id="${q.id}"`,'plain-button'):''}</div>`;}
 function questionList(){closePopovers();const el=$('#questions-popover');el.hidden=false;const list=learning.daily.questions,render=q=>`<article><p>${esc(q.text)}</p><div>${button('resume-question',q.scene?'回到当时':'回到这个位置',`data-id="${q.id}"`)}${!questionDone(q)?button('question-finish','想明白了',`data-id="${q.id}"`,'plain-button'):'<small>✓ 完成</small>'}</div></article>`;el.innerHTML=`<div class="popover-heading"><strong>留下的问题</strong>${button('close-popover','×','aria-label="关闭问题"','plain-button')}</div>${[...list].reverse().filter(q=>!questionDone(q)).map(render).join('')||'<p class="quiet">还没有待继续的问题。</p>'}${list.some(questionDone)?`<details><summary>已经想明白的</summary>${[...list].reverse().filter(questionDone).map(render).join('')}</details>`:''}`;}
 function resume(id){
   readLearning();const pending=learning.daily.questions.find(q=>q.id===id),needed=pending?.world?(pending.world.layout||'classic'):null;
@@ -65,18 +65,102 @@ function switchWorld(mode,forQuestion=false){if(!forQuestion&&(journeyOpen||pane
 function switchLayout(){if(journeyOpen||panels.size){toast('先回到空间并收起工作面，再切换地图。');return;}if(guideVisible||guideSuspended)leaveGuide();saveView();const next=scene.relationshipMap?49:RELATIONSHIP_VERSION;try{writeStored(NETWORK_LAYOUT_KEY,String(next));}catch{warning('地图选择暂时无法保存，学习记录没有改变。');return;}const url=new URL(location.href);url.searchParams.set('world','network');url.searchParams.set('layout',String(next));url.hash=scene.selected?'#space/'+scene.selected.replace(':','/'):'#space';location.assign(url.href);}
 function remember(){if(!scene)return;const view=captureView();if(visits.length&&JSON.stringify(visits.at(-1))===JSON.stringify(view))return;visits.push(view);if(visits.length>30)visits.shift();$('#back-button').disabled=false;}
 function recordGuide(step,active){return mutateLearning(s=>{s.daily.guide={id:GUIDE_ID,step,active,updatedAt:now()};});}
-function positionGuide(){const panel=$('#guide-panel');if(!guideVisible||panel.hidden)return;const top=$('#network-guide').getBoundingClientRect().bottom+12;panel.style.top=`${top}px`;panel.style.maxHeight=`${Math.max(200,innerHeight-top-100)}px`;}
-function renderGuide(){const panel=$('#guide-panel');document.body.classList.toggle('guide-mode',!!guideVisible&&!journeyOpen&&!!scene?.relationshipMap);panel.hidden=!guideVisible||journeyOpen||!scene?.relationshipMap;if(panel.hidden)return;positionGuide();const step=guideSteps[learning.daily.guide?.step||0],index=guideSteps.indexOf(step);if(!step){panel.hidden=true;return;}
-  document.body.dataset.guideStep=String(index);
-  const guideContext=step.overview?'<p class="guide-context">先认识五大主题的整体位置。下一步开始只强调真实的局部关系。</p>':`<p class="guide-context">本步强调 ${step.edges.length} 条真实基础联系。背景仍是完整数学地图。</p>`;
-  panel.innerHTML=`<div class="guide-step">认识知识怎样相连 · ${String(index+1).padStart(2,'0')} / ${String(guideSteps.length).padStart(2,'0')}</div><progress class="guide-progress" max="${guideSteps.length}" value="${index+1}" aria-label="导览观察步骤 ${index+1} / ${guideSteps.length}"></progress><h2>${esc(step.title)}</h2>${guideContext}<p>${esc(step.text)}</p><p class="guide-prompt">${esc(step.prompt)}</p><div class="guide-nodes">${step.overview?'<span class="guide-context">数与运算 · 图形与空间 · 测量与变化 · 规律与推理 · 数据与可能性</span>':step.nodes.map(id=>button('guide-node',esc(displayTitle(space.nodes.get(id))),`data-id="${id}"`)).join('')}</div><p class="guide-note">走过的联系会留在图上。导览高亮不是学习完成。</p><div class="guide-actions">${button('guide-step','上一步',`data-step="${index-1}" ${index===0?'disabled':''}`)}${button('guide-step',index===guideSteps.length-1?'自己探索':'继续观察',`data-step="${index+1}"`,'primary-button')}${step.overview?'':button('guide-learn','动手试试',`data-id="${step.anchor}"`)}${button('guide-exit','先自由探索','','plain-button')}${index?button('guide-reset','从头看','','plain-button'):''}</div>`;
+function guideThemeId(){return space.nodes.get(guideSteps[1]?.anchor)?.themeId||null;}
+function guideTargets(){return guideNextTargets(guideSteps,learning.daily.guide?.step||0,[...guideWalkSeen],guideThemeId());}
+function guideReady(){return guideStepReady(guideSteps,learning.daily.guide?.step||0,[...guideWalkSeen],guideThemeId());}
+function guideStepMessage(index){
+  if(guideReady())return [
+    '找到了入口。下一步看看第一条知识连接。',
+    '你已经沿真实关系走了一段路。',
+    '一个基础可以分成不同方向。',
+    '两个基础可以汇合到同一个知识。'
+  ][index]||'';
+  if(index===1&&guideWalkSeen.size)return '已经找到起点。沿线去下一处。';
+  if(index===2&&guideWalkSeen.size)return '已经看过一条分支。再试试另一条。';
+  if(index===4)return '这次没有唯一指定路线，自己选一条。';
+  return '地图上标出了下一处，可以直接点击。';
 }
-function activateGuide(index,{record=true,animate=true,fit=true,rememberView=false}={}){if(!scene?.relationshipMap||!guideSteps[index]||journeyOpen)return;if(rememberView)remember();if(record&&!recordGuide(index,true))return;guideVisible=true;guideSuspended=false;closePopovers();scene.setGuideFocus(guideSteps,index,{animate,fit});setHash('node:'+guideSteps[index].anchor);renderFocus();renderGuide();renderLocation();scheduleSave();}
-function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;const step=learning.daily.guide?.step||0;guideVisible=false;guideSuspended=false;scene.clearGuideFocus();if(record)recordGuide(step,false);renderGuide();renderFocus();renderLocation();scheduleSave();}
+function positionGuide(){
+  const panel=$('#guide-panel');
+  if(!guideVisible||panel.hidden)return;
+  const top=$('#network-guide').getBoundingClientRect().bottom+12;
+  panel.style.top=`${top}px`;
+  panel.style.maxHeight=`${Math.max(170,innerHeight-top-100)}px`;
+}
+// An on-map cue follows the projection of an unchanged source point; it is not a
+// new graph edge, route coordinate or camera instruction.
+function renderGuideCues(){
+  const layer=$('#guide-cues');
+  layer.hidden=!guideVisible||journeyOpen||!scene?.relationshipMap;
+  if(layer.hidden){layer.replaceChildren();return;}
+  const panel=$('#guide-panel').getBoundingClientRect(),targets=guideTargets(),shown=[];
+  for(const target of targets){
+    const object=space.byKey.get(target.key);
+    if(!object||!scene.canLocate(object))continue;
+    const p=scene.project(object.position);
+    const clear=p.visible&&p.x>50&&p.x<innerWidth-90&&p.y>155&&p.y<innerHeight-120
+      &&!(p.x>panel.left-45&&p.x<panel.right+75&&p.y>panel.top-40&&p.y<panel.bottom+65);
+    if(clear){
+      shown.push(`<button type="button" class="guide-cue" data-action="guide-visit" data-key="${esc(target.key)}" style="left:${p.x.toFixed(1)}px;top:${p.y.toFixed(1)}px" aria-label="${esc(target.label)}：${esc(displayTitle(object))}"><span class="guide-cue-action">${esc(target.label)}</span><strong>${esc(displayTitle(object))}</strong></button>`);
+    }else{
+      const cx=Math.max(panel.right+100,Math.min(innerWidth-135,Math.max(p.x||0,0))),cy=Math.max(185,Math.min(innerHeight-155,Math.max(p.y||0,0)));
+      const dx=p.x-cx,dy=p.y-cy,arrow=Math.abs(dx)>Math.abs(dy)?dx<0?'←':'→':dy<0?'↑':'↓';
+      shown.push(`<span class="guide-cue guide-cue-offscreen" style="left:${cx.toFixed(1)}px;top:${cy.toFixed(1)}px" aria-label="目标在当前可视区域外">${arrow} ${esc(target.label)} · 手动移动地图</span>`);
+    }
+  }
+  const html=shown.join('');
+  if(layer.innerHTML!==html)layer.innerHTML=html;
+}
+function renderGuide(){
+  const panel=$('#guide-panel');
+  document.body.classList.toggle('guide-mode',!!guideVisible&&!journeyOpen&&!!scene?.relationshipMap);
+  panel.hidden=!guideVisible||journeyOpen||!scene?.relationshipMap;
+  if(panel.hidden){renderGuideCues();return;}
+  const step=guideSteps[learning.daily.guide?.step||0],index=guideSteps.indexOf(step);
+  if(!step){panel.hidden=true;renderGuideCues();return;}
+  document.body.dataset.guideStep=String(index);
+  const nextText=['沿连接出发','观察分叉','观察汇合','自己选路'][index]||'';
+  panel.innerHTML=`<div class="guide-step">认识这张图 · ${String(index+1).padStart(2,'0')} / ${String(guideSteps.length).padStart(2,'0')}</div>
+    <progress class="guide-progress" max="${guideSteps.length}" value="${index+1}" aria-label="导览观察步骤 ${index+1} / ${guideSteps.length}"></progress>
+    <h2>${esc(step.title)}</h2><p class="guide-hint">${esc(step.hint)}</p>
+    <p class="guide-status" role="status">${esc(guideStepMessage(index))}</p>
+    <div class="guide-actions">
+      ${index<4?button('guide-step',nextText,`data-step="${index+1}" ${guideReady()?'':'disabled'}`,'primary-button'):''}
+      ${index?button('guide-step','上一步',`data-step="${index-1}"`,'plain-button'):''}
+      ${button('guide-exit','退出引导','','plain-button')}
+    </div>`;
+  positionGuide();renderGuideCues();
+}
+function activateGuide(index,{record=true,animate=true,fit=true,rememberView=false}={}){
+  if(!scene?.relationshipMap||!guideSteps[index]||journeyOpen)return;
+  if(rememberView)remember();
+  if(record&&!recordGuide(index,true))return;
+  if(scene.guideFocus?.step!==index||!guideVisible)guideWalkSeen=new Set();
+  guideVisible=true;guideSuspended=false;closePopovers();
+  scene.setGuideFocus(guideSteps,index,{animate,fit});
+  scene.setGuideTargets(guideTargets().map(t=>t.key));
+  setHash(guideSteps[index].overview?null:'node:'+guideSteps[index].anchor);
+  renderFocus();renderGuide();renderLocation();scheduleSave();
+}
+function visitGuideTarget(key){
+  if(!guideVisible||!guideTargets().some(t=>t.key===key))return false;
+  const index=learning.daily.guide?.step||0;
+  if(index===4){
+    leaveGuide();
+    choose(key,{openLesson:false});
+    return true;
+  }
+  guideWalkSeen.add(key);
+  if(index===0){activateGuide(1);return true;}
+  scene.setGuideTargets(guideTargets().map(t=>t.key));
+  renderGuide();scheduleSave();
+  return true;
+}
+function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;const step=learning.daily.guide?.step||0;guideVisible=false;guideSuspended=false;guideWalkSeen=new Set();scene.clearGuideFocus();if(record)recordGuide(step,false);renderGuide();renderFocus();renderLocation();scheduleSave();}
 function returnFromLesson(){const resumeGuide=guideSuspended&&learning.daily.guide?.active&&scene.relationshipMap&&guideSteps[learning.daily.guide.step];if(!resumeGuide)guideSuspended=false;const stableKnowledge=scene.relationshipMap&&!resumeGuide&&space.byKey.get(scene.selected)?.kind==='node';const selected=scene.selected;closeJourney(!resumeGuide&&!stableKnowledge);if(resumeGuide)activateGuide(learning.daily.guide.step,{record:false});else if(stableKnowledge){scene.select(selected);scene.setRelations('source');setHash(selected);renderFocus();renderLocation();scheduleSave();}}
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
-function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'}={}){const object=space.byKey.get(key);if(!object)return;if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.focus(key,{animate});setHash(key);
+function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible&&visitGuideTarget(key))return;if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.focus(key,{animate});setHash(key);
   if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
   else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
@@ -248,7 +332,7 @@ function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene
   scene.fly(target.map((x,i)=>x+direction.getComponent(i)*d),target,850);renderWorkspaceButtons();scheduleSave();
 }
 function updateOverlays(){
-  positionGuide();
+  positionGuide();renderGuideCues();
   const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){
       // The browser can have a left vertical-tabs/sidebar overlay. Keep the
       // knowledge card in a safe interior column, never behind that chrome.
@@ -299,10 +383,11 @@ document.addEventListener('click',event=>{
   else if(action==='overview-shells'){scene.setOverviewShells(!scene.overviewShellsEnabled);renderNetworkGuide();scheduleSave();}
   else if(action==='overview-structure'){scene.setStructureMode(el.dataset.structure);renderNetworkGuide();scheduleSave();}
   else if(action==='guide-start'){const saved=learning.daily.guide,index=saved&&saved.step<guideSteps.length-1?saved.step:0;activateGuide(index,{rememberView:true});}
-  else if(action==='guide-step'){const index=Number(el.dataset.step);if(index>=guideSteps.length)leaveGuide();else activateGuide(index);}
+  else if(action==='guide-step'){const index=Number(el.dataset.step),current=learning.daily.guide?.step||0;if(index===current+1&&!guideReady())return;if(index>=guideSteps.length)leaveGuide();else activateGuide(index);}
   else if(action==='guide-reset')activateGuide(0);
   else if(action==='guide-exit')leaveGuide();
-  else if(action==='guide-node'){leaveGuide();choose('node:'+id);}
+  else if(action==='guide-visit'){visitGuideTarget(key);}
+  else if(action==='guide-node'){if(!visitGuideTarget('node:'+id)){leaveGuide();choose('node:'+id);}}
   else if(action==='guide-learn'){const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);}
   else if(action==='network-theme')choose('theme:'+id);
   else if(action==='switch-world')switchWorld(worldLayout==='network'?'classic':'network');
@@ -366,7 +451,7 @@ $('#focus-card').addEventListener('scroll',()=>{if(scene?.global)scheduleSave();
 $('#search-input').addEventListener('input',()=>{searchLimit=24;renderSearch();});
 $('#search-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('#search-results button')?.click();});
 $('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{readLearning();if(readBlocked)throw new Error('原始存储无法读取，暂时不能覆盖或合并。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');const incoming=parseBackup(await file.text(),atlas),combined=validate(merge(learning,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(learning)));writeStored(KEY,JSON.stringify(combined));learning=combined;refreshLearning();toast('备份已合并，已有作品和提示历史已保留。');}catch(e){toast(e.message);}finally{event.target.value='';}});
-window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){scene.setGuideFocus(guideSteps,saved.step,{animate:false});setHash('node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
+window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key));setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
   if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
     if(e.data.type==='math-space:lesson-height'){
