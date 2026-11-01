@@ -35,11 +35,15 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check(render.selectedLabel.includes('一一对应地数'),'selected title remains visible');
   check(await page.locator('.space-label.node.selected .activity-glyph').evaluate(el=>getComputedStyle(el).display==='none'),'learning-form glyph is not mistaken for a different type of knowledge node');
   await page.screenshot({path:path.join(out,'01-refined-focus.png')});
-  // zooming must not inflate SVG strokes or mathematical point radii
-  await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
-  await page.waitForTimeout(260);
+  // A knowledge panel must have no zoom feature; wheel zoom is also locked.
+  check(await page.locator('.tool-rail [data-action="zoom"]').first().isHidden(),'knowledge detail has no visible zoom action');
+  const fixedZoom=(await snap()).cameraZoom;
+  await page.mouse.move(710,470);
+  await page.mouse.wheel(0,-360);
+  await page.waitForTimeout(160);
+  check(Math.abs((await snap()).cameraZoom-fixedZoom)<.0001,'knowledge wheel zoom is disabled');
   const scaled=await page.evaluate(([a,b])=>({root:mathSpace.nodeRadius(a),neighbor:mathSpace.nodeRadius(b),widths:[...document.querySelectorAll('.spatial-focus-links path')].map(p=>Number(p.getAttribute('stroke-width')))}),[ROOT,NEXT]);
-  check(scaled.widths.every(w=>w<=2.8)&&scaled.widths.length===render.lineWidths.length,'line thickness stays unchanged after zoom');
+  check(scaled.widths.every(w=>w<=2.8)&&scaled.widths.length===render.lineWidths.length,'thin relationship strokes stay consistent without zoom');
   check(Math.abs(scaled.root-render.rootPx)<1.2&&Math.abs(scaled.neighbor-render.neighborPx)<1.2,'node size stays approximately fixed in screen pixels after zoom');
   check(JSON.stringify((await snap()).positions)===positions,'visual size is independent of the real math coordinates');
   await page.screenshot({path:path.join(out,'02-refined-zoom.png')});
