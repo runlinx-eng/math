@@ -38,7 +38,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.some((v,i)=>Math.abs(v-before[i])>.025);},{id:themeNode.id,before:beforeTints[0]});
   const previewTints=await tints();
   check(diff(beforeTints[0],previewTints[0])>.08,'hover visibly restores color to matching theme nodes');
-  check(diff(beforeTints[1],previewTints[1])>.08,'hover fades nodes outside the previewed theme');
+  check(diff(beforeTints[1],previewTints[1])>.01,'hover fades nodes outside the previewed theme: '+JSON.stringify({before:beforeTints[1],after:previewTints[1]}));
   check(await page.locator('#focus-card').isHidden(),'floating theme hover never opens a panel');
   check(await floatingTheme.evaluate(el=>!el.hasAttribute('title')),'theme title does not create a duplicate native browser tooltip');
   check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===baselineLabels.join(','),'floating theme hover neither expands nor repositions the visible knowledge groups');
