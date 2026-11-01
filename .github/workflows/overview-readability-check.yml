@@ -8,6 +8,7 @@ on:
       - 'dist/space.css'
       - 'dist/index.html'
       - 'tests/spatial-overview.test.mjs'
+      - 'tests/spatial-overview-browser.cjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
 
@@ -27,3 +28,29 @@ jobs:
           node --check dist/space.js
       - name: Check relationship data and honest grouping
         run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs
+
+  overview-browser-acceptance:
+    needs: math-structure-and-ui-syntax
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium test runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Visit live UI in a fresh browser profile
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
+          sleep 2
+          node tests/spatial-overview-browser.cjs
+      - name: Preserve panorama screenshots and checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-overview-browser-evidence
+          path: verification/overview-readability-v1/
+          if-no-files-found: warn
