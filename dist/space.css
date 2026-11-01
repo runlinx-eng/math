@@ -253,3 +253,20 @@ body[data-world="network"][data-local-focus="true"] #network-edge-hint{display:n
 body[data-local-focus=true] .overview-structure-controls,body.has-journey .overview-structure-controls{display:none!important}
 @media(max-width:900px){.overview-structure-controls{top:183px;left:108px;max-width:calc(100vw - 185px);overflow-x:auto}.overview-structure-controls .structure-caption{min-width:115px}}
 @media(max-width:600px){.overview-structure-controls{top:170px;left:16px;max-width:calc(100vw - 32px)}}
+
+/* v53 semantics: colored circles = knowledge, rings = completion, lines = real relations.
+   Saved work and pending questions live in the detail panel, not extra geometric nodes. */
+.spatial-focus-links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.spatial-focus-links path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+body[data-network-version="53"] .network-marker-key{display:none!important}
+body[data-network-version="53"][data-map-focus="node"] .space-label.node{background:transparent;border-color:transparent;box-shadow:none;padding:3px 5px;min-height:0;line-height:1.35;text-shadow:0 0 5px #f5f4ef,0 0 7px #f5f4ef}
+body[data-network-version="53"][data-map-focus="node"] .space-label.node::before{display:none}
+body[data-network-version="53"][data-map-focus="node"] .space-label.node.selected{border:1px solid #a9c3b5;background:#fffef9ef;border-radius:7px;padding:5px 8px;box-shadow:0 2px 9px #29453b10}
+body[data-network-version="53"][data-map-focus="node"] .space-label.node.related{background:#f5f4efb8;border-color:transparent}
+body.guide-mode .tool-rail,body.guide-mode .network-legend,body.guide-mode .network-marker-key,body.guide-mode #network-edge-controls,body.guide-mode #overview-structure-controls,body.guide-mode #network-view-description,body.guide-mode .bottom-bar{display:none!important}
+body.guide-mode .top-tools [data-action="back"],body.guide-mode .top-tools .search-button{display:none}
+body.guide-mode .guide-panel{width:270px;max-width:calc(100vw - 32px);font-size:13px}
+body.guide-mode .guide-panel .guide-nodes{gap:6px}
+body.guide-mode .guide-panel .guide-nodes button{padding:9px 10px}
+body.guide-mode .guide-panel .guide-prompt{font-size:13px;line-height:1.65}
+@media(max-width:700px){body.guide-mode .guide-panel{width:240px}}
