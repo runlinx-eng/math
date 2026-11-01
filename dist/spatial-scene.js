@@ -56,8 +56,10 @@ export class SpatialScene {
     const fill=new THREE.DirectionalLight(0xd8e8ef,.75);fill.position.set(400,-100,-350);this.scene.add(fill);
     const grid=new THREE.GridHelper(6000,60,0xc4cec8,0xd2d8d2);grid.position.y=-400;grid.material.transparent=true;grid.material.opacity=.045;this.scene.add(grid);
     this.pickables=[];this.nodeList=[...space.nodes.values()];
-    const nodeGeometry=new THREE.SphereGeometry(1,12,10);
-    this.nodeMesh=new THREE.InstancedMesh(nodeGeometry,new THREE.MeshStandardMaterial({roughness:.65,metalness:.03}),this.nodeList.length);
+    // Each node is a fixed point in 3D space, not a lit 3D ball.
+    // Face a flat color disc toward the camera; leave surrounding state rings separate.
+    const nodeGeometry=new THREE.CircleGeometry(1,24);
+    this.nodeMesh=new THREE.InstancedMesh(nodeGeometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),this.nodeList.length);
     this.nodeMesh.userData.kind='nodes';this.scene.add(this.nodeMesh);this.pickables.push(this.nodeMesh);
     this.progressMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.10,6,24),new THREE.MeshBasicMaterial({color:0x698377,transparent:true,opacity:.8,depthWrite:false}),this.nodeList.length);
     this.evidenceMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.07,6,24),new THREE.MeshBasicMaterial({color:0x5b899b,transparent:true,opacity:.85,depthWrite:false}),this.nodeList.length);
@@ -290,7 +292,7 @@ export class SpatialScene {
       const level=visible?(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)):0,match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
       color.set(o.color).lerp(paper,1-(this.network ? .87 : s.progress==='completed' ? .92 : .68)*focus*(match?1:.16));
       const size=(this.global?5:this.network?4:3.2)*cap;
-      transform.position.copy(V(o.position));transform.quaternion.identity();transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
+      transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+1.6*cap)*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
       transform.scale.setScalar(0);transform.updateMatrix();this.evidenceMesh.setMatrixAt(i,transform.matrix);
       if(this.network){
