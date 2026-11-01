@@ -359,7 +359,7 @@ function updateOverlays(){
   if(journeyOpen&&o?.kind==='node'&&scene.canLocate(o)){const source=scene.project(o.position),r=$('#journey-surface').getBoundingClientRect();if(source.visible)tethers.push(`<path d="M ${source.x} ${source.y} L ${Math.max(r.left,Math.min(r.right,source.x))} ${Math.max(r.top+25,Math.min(r.bottom-25,source.y))}"/>`);}
   $('#work-tethers').innerHTML=tethers.join('');
   const d=scene.camera.position.distanceTo(scene.controls.target)/(scene.global?scene.camera.zoom:1);$('#distance-meter').style.width=`${Math.max(8,Math.min(100,Math.log(8000/d)/Math.log(8000/30)*100))}%`;
-  return [...document.querySelectorAll('#focus-card,#guide-panel,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
+  return [...document.querySelectorAll('#focus-card,#guide-panel,#guide-cues .guide-cue,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
 }
 function showUtility(which){closePopovers();const drawer=$('#utility-drawer');drawer.hidden=false;$('#utility-title').textContent=which==='trail'?'记录与备份':'地图与学习的依据';const frame=$('#utility-frame');frame.src=`v2.html?embedded=1#${which}`;}
 function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
