@@ -27,6 +27,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const urlBeforeHover=page.url(),storageBeforeHover=await page.evaluate(()=>JSON.stringify({...localStorage}));
   const floatingTheme=page.locator('.space-label.theme:visible').first();
   const themeId=(await floatingTheme.getAttribute('data-key')).replace('theme:','');
+  const themeRectBefore=await floatingTheme.boundingBox();
   const themeNode=atlas.nodes.find(n=>n.themeId===themeId&&n.domainId!=='thinking');
   const differentNode=atlas.nodes.find(n=>n.themeId!==themeId&&n.domainId!=='thinking');
   const tints=()=>page.evaluate(keys=>keys.map(key=>mathSpace.nodeTint('node:'+key)),[themeNode.id,differentNode.id]);
@@ -44,9 +45,23 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const previewGroups=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key.replace('pack:','')));
   check(previewGroups.length>=2,'hover restores multiple source-backed subtopic titles');
   check(previewGroups.every(id=>atlas.packs.some(p=>p.id===id&&p.themeId===themeId)),'hover shows subtopics only from the previewed theme');
-  check(await floatingTheme.evaluate(el=>getComputedStyle(el).opacity==='0'),'hovered main title is not visually layered over the subtopic labels');
+  const themeRectDuring=await floatingTheme.boundingBox();
+  check(await floatingTheme.evaluate(el=>getComputedStyle(el).opacity==='1'&&el.classList.contains('preview-theme-target')),
+    'hovered world-theme title remains visibly highlighted under the pointer');
+  check(themeRectBefore&&themeRectDuring&&Math.abs(themeRectBefore.x-themeRectDuring.x)<2&&Math.abs(themeRectBefore.y-themeRectDuring.y)<2,
+    'hovered world-theme title keeps its screen-space position without jumping');
+  const labelCollision=await page.evaluate(key=>{
+    const main=document.querySelector('.space-label.theme[data-key="'+key+'"]');
+    const a=main.getBoundingClientRect();
+    return [...document.querySelectorAll('.space-label.pack:not([hidden])')].some(el=>{
+      const b=el.getBoundingClientRect();
+      return a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+    });
+  },'theme:'+themeId);
+  check(!labelCollision,'the primary theme title does not overlap the previewed knowledge-group titles');
+  await page.screenshot({path:path.join(out,'theme-hover-title-visible.png')});
   await page.waitForTimeout(200);
-  check(await page.locator('#network-legend [data-hover="true"]').count()===1,'floating main-title hit target survives the subtopic reveal without flicker');
+  check(await page.locator('#network-legend [data-hover="true"]').count()===1,'visible floating theme title keeps its hover and the group preview without flicker');
   check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);

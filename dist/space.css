@@ -418,3 +418,10 @@ body[data-world="network"][data-network-version="53"] #network-view-title[title]
   display:block;min-width:0;max-width:min(62vw,710px);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
+
+/* Keep the theme under the pointer visible while its real knowledge groups preview.
+   Outline/shadow change no hit-target dimensions and do not move world coordinates. */
+body[data-world="network"][data-network-version="53"] .space-label.theme.preview-theme-target{
+  background:#fffef9;outline:2px solid var(--object-color);outline-offset:1px;
+  box-shadow:0 4px 16px #24463c24;font-weight:750;
+}
