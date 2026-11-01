@@ -367,7 +367,7 @@ export class SpatialScene {
     if(!duration){this.camera.position.copy(V(position));this.controls.target.copy(V(target));if(zoom!==null)this.camera.zoom=zoom;this.controls.update();this.updateProjection();this.camera.updateMatrixWorld();this.dirty=true;this.callbacks.onSettled?.();return;}
     this.tween={start:performance.now(),duration,from:this.camera.position.clone(),to:V(position),fromTarget:this.controls.target.clone(),toTarget:V(target),fromZoom:this.camera.zoom,toZoom:zoom===null?this.camera.zoom:zoom};
   }
-  zoom(factor){if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
+  zoom(factor){if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,this.controls.minZoom,this.controls.maxZoom);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
   front(){if(this.relationshipMap){this.fitGlobalView(true);return;}if(this.network&&this.networkView!=='legacy'){if(this.localRelationshipFocus)this.fitGlobalView(true,this.nodeList.filter(n=>this.focusKeys().has(n.key)));else this.fitNetworkView();return;}const distance=this.camera.position.distanceTo(this.controls.target);this.fly(this.controls.target.clone().add(new THREE.Vector3(0,0,distance)).toArray(),this.controls.target.toArray(),700);}
   viewFrom(name){if(this.network){
     if(!this.global)this.networkVersion=this.defaultNetworkVersion;this.networkView=name==='side'?'relations':name==='top'?'map':'oblique';
@@ -437,6 +437,12 @@ export class SpatialScene {
     const pixels=Math.min((w-72)/Math.max(minSpan,maxX-minX),(h-56)/Math.max(minSpan,maxY-minY));
     const target=right.clone().multiplyScalar((minX+maxX)/2-(left-rightMargin)/(2*pixels)).addScaledVector(up,(minY+maxY)/2+(top-bottom)/(2*pixels)).addScaledVector(dir,center.dot(dir));
     const distance=2200,targetZoom=pixels*2*distance*Math.tan(Math.PI/9)/this.height;
+    if(this.relationshipMap&&!objects){
+      // Bounds derive from the real graph, not an arbitrary zoom number.
+      // Even repeated wheel zoom-outs should leave a recognizable atlas.
+      this.controls.minZoom=Math.max(.15,targetZoom*.32);
+      this.controls.maxZoom=Math.max(35,targetZoom*5);
+    }
     this.fly(target.clone().addScaledVector(dir,distance).toArray(),target.toArray(),animated?1050:0,targetZoom);
   }
 
