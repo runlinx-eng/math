@@ -390,14 +390,9 @@ body[data-world="network"][data-network-version="53"][data-map-focus="theme"] .s
   font-size:11px;border-radius:6px;background:#fffef9e8;color:#3d6251;
 }
 
-/* Header theme hover is a temporary inspection, not a selected theme. */
-body[data-world="network"] #network-legend button[data-preview="true"]{background:#edf2eb;color:#244f3e;box-shadow:inset 0 0 0 1px #c9dccc}
-body[data-world="network"] #network-legend button[data-preview="true"][aria-pressed="true"]{background:#e2eee6}
-
-/* Hovering floating theme labels previews the same source theme as the legend.
-   The active label stays visible and above pack labels to avoid hover flicker. */
-body[data-world="network"][data-network-version="53"] .space-label.theme.theme-previewing{
-  background:#fffef9!important;border-color:color-mix(in srgb,var(--object-color) 70%,#fffef9)!important;
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--object-color) 18%,transparent),0 5px 20px #24463c2b!important;
-  color:#1c4638!important;
+/* Hierarchy cue: map theme / pack hover only highlights its parent header.
+   It deliberately does not expand or reposition labels in the 3D map. */
+body[data-world="network"][data-network-version="53"] #network-legend [data-action="network-theme"][data-hover="true"]{
+  background:#e1ece5;color:#234f40;font-weight:700;
+  box-shadow:inset 0 0 0 1px #a8c5b3;
 }

@@ -36,7 +36,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.themePreviewId=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -178,28 +178,14 @@ export class SpatialScene {
         el.dataset.activityForm=form;el.title+=' · '+forms.map(f=>ACTIVITY_FORMS[f].label).join('、');
       }
       if(object.kind==='pack'&&routeForPack(object.id)){title.textContent=routesForPack(object.id).length===1?routeForPack(object.id).title:object.title;el.classList.add('has-route');el.title=title.textContent+' · 有动手路线';}
-      if(object.kind==='theme'){
-        const sub=document.createElement('small');sub.textContent=`${object.children.length} 个知识簇`;el.append(sub);
-        // This title is already visible as text. The browser's native title
-        // tooltip duplicates it and covers the labels underneath on hover.
-        el.removeAttribute('title');
-      }
-      // Floating titles in the 3D map share the top legend's hover preview.
-      // Keep the title under the pointer during its temporary theme emphasis.
-      if(object.kind==='theme'){
-        el.addEventListener('pointerenter',event=>{
-          if(event.pointerType==='touch')return;
-          // Freeze the hovered label's screen rectangle while the new pack labels
-          // are laid out. Otherwise the source label jumps and cancels hover.
-          const r=el.getBoundingClientRect(),host=this.host.getBoundingClientRect();
-          this.themeHoverAnchor={key:object.key,x:r.left-host.left,y:r.top-host.top,w:r.width,h:r.height};
-          callbacks.onThemePreview?.(object.id);
-        });
-        el.addEventListener('pointerleave',event=>{
-          if(event.pointerType==='touch')return;
-          this.themeHoverAnchor=null;
-          if(this.themePreviewId===object.id)callbacks.onThemePreview?.(null);
-        });
+      if(object.kind==='theme'){const sub=document.createElement('small');sub.textContent=`${object.children.length} 个知识簇`;el.append(sub);}
+      // Hovering a world-space theme or pack only identifies its parent theme
+      // in the header. It never alters graph rendering or opens group labels.
+      if(this.relationshipMap&&(object.kind==='theme'||object.kind==='pack')){
+        const themeId=object.kind==='theme'?object.id:object.themeId;
+        if(object.kind==='theme')el.removeAttribute('title');
+        el.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')callbacks.onThemeHover?.(themeId);});
+        el.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch')callbacks.onThemeHover?.(null);});
       }
       el.addEventListener('click',event=>{event.stopPropagation();callbacks.onSelect?.(object.key);});
       el.addEventListener('dblclick',event=>{event.stopPropagation();if(object.kind==='node')callbacks.onOpen?.(object.id);});
@@ -325,15 +311,6 @@ export class SpatialScene {
     // unfinished camera animation; never refit, rotate or zoom for a guide step.
     this.tween=null;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.select('node:'+current.anchor);this.setRelations('source');this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
-  setThemePreview(id){
-    // Ephemeral presentation only. Never select, fly, save history, or record learning.
-    const next=this.relationshipMap&&this.space.themes.has(id)&&!this.guideFocus?id:null;
-    if(next===this.themePreviewId)return;
-    this.themePreviewId=next;
-    // Hide existing focused overlays without rebuilding or losing selected links.
-    this.edgesGroup.visible=!next;
-    this.dirty=true;
-  }
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
   updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
   setFocusFilter(direction=this.focusDirection,depth=this.focusDepth){
@@ -351,7 +328,7 @@ export class SpatialScene {
     if(!this.relationshipMap||!['all',...OVERVIEW_ROLES,'off'].includes(mode)||this.structureMode===mode)return;
     this.structureMode=mode;this.rebuildRelations();this.dirty=true;
   }
-  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&!this.themePreviewId&&this.structureMode!=='off';}
+  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&this.structureMode!=='off';}
   transitionProgress(time=performance.now()){
     const t=this.viewTransition;if(!t)return 1;
     const p=clamp((time-t.start)/t.duration,0,1);
@@ -498,7 +475,7 @@ export class SpatialScene {
     this.dirty=true;
   }
   paintObjects(){
-    const selected=this.themePreviewId?this.space.themes.get(this.themePreviewId):this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+    const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.70:.14;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?.18:o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
@@ -523,7 +500,7 @@ export class SpatialScene {
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (this.guideFocus.currentNodes.has(o.key)?6.5:this.guideFocus.seenNodes.has(o.key)?4.8:3.4):
-        structureActive?(structuralNode?5.4:3.4):this.themePreviewId?(o.themeId===this.themePreviewId?6.5:3.5):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+        structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
       const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -540,7 +517,7 @@ export class SpatialScene {
     this.nodeMesh.instanceMatrix.needsUpdate=true;this.nodeMesh.instanceColor.needsUpdate=true;this.progressMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceMatrix.needsUpdate=true;
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
-    this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&!this.themePreviewId&&this.overviewShellsEnabled;
+    this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
   }
   rebuildRelations(){this.focusVisualLinks=[];this.focusView=this.localRelationshipFocus?
     buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth):null;
@@ -593,7 +570,7 @@ export class SpatialScene {
     const transitioningOut=t?.kind==='to-overview',transitioningIn=t?.kind==='to-focus';
     const links=transitioningOut?this.outgoingVisualLinks:this.focusVisualLinks;
     const opacity=transitioningOut?1-p:transitioningIn?p:1;
-    if(this.themePreviewId||!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
+    if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
     layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     layer.style.opacity=String(opacity);
     const paths=[];
@@ -619,7 +596,7 @@ export class SpatialScene {
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
-    const selected=this.themePreviewId?this.space.themes.get(this.themePreviewId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
+    const selected=this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
     for(const entry of this.labels){const {object:o,el}=entry,p=this.project(o.position),isSelected=o.key===this.selected,related=this.related?.has(o.key);let show=false,priority=0;
       if(o.kind==='theme'){show=p.distance>410;priority=50;}
       else if(o.kind==='pack'){show=p.distance<1200&&p.distance>115&&((!this.network&&this.showAllNodes)||selected?.kind==='theme'&&o.themeId===selected.id||o.key===this.selected);priority=o.id==='same-amount'?35:25;}
@@ -632,12 +609,7 @@ export class SpatialScene {
       if(this.global){
         const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
         if(landmark){show=true;priority=96;}
-        if(o.kind==='theme'){
-          // A map-title preview must keep its own hover target visible, or
-          // pointerleave immediately cancels the preview and makes it flicker.
-          show=this.themePreviewId?o.id===this.themePreviewId:selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<2.2;
-          priority=this.themePreviewId&&o.id===this.themePreviewId?120:this.relationshipMap?92:60;
-        }
+        if(o.kind==='theme'){show=selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<2.2;priority=this.relationshipMap?92:60;}
         else if(o.kind==='pack')show=selected?.kind==='theme'?o.themeId===selected.id:selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||isSelected);
         else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey||!!landmark);
         if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
@@ -645,13 +617,13 @@ export class SpatialScene {
           if(o.kind==='node')show=!!landmark||o.key===this.hovered;
           else if(o.kind==='pack')show=false;
         }
-        if(!this.themePreviewId&&this.localRelationshipFocus&&o.kind==='node'&&this.focusView){
+        if(this.localRelationshipFocus&&o.kind==='node'&&this.focusView){
           const hop=this.focusView.distances.get(o.id);
           show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop!==undefined&&hop<=1;
           if(hop===undefined&&this.explorationTrail.includes(o.key))show=false;
         }
-        if(!this.themePreviewId&&this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
-        if(!this.themePreviewId&&this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
+        if(this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
+        if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
         // Theme selection is a knowledge-group overview, not the all-node-name
         // panorama. Only this theme's packs label the map; names emerge after
         // further manual zoom or on direct hover. Other themes remain as points.
@@ -668,15 +640,9 @@ export class SpatialScene {
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
-      if(o.key===this.previewKey)priority=95;
-      const pinnedRect=this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId&&this.themeHoverAnchor?.key===o.key?this.themeHoverAnchor:null;
-      el.classList.toggle('theme-previewing',this.relationshipMap&&!!this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId);
-      // Do not temporarily hide the hovered DOM element during relayout.
-      el.hidden=!pinnedRect;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show||pinnedRect)candidates.push({...entry,p,priority,isSelected,related,pinnedRect});
+      if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
     }
-    candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[],screenRects=[];let nodes=0;
-    const intersects=(a,b,gap=7)=>a.x<b.x+b.w+gap&&a.x+a.w+gap>b.x&&a.y<b.y+b.h+gap&&a.y+a.h+gap>b.y;
-    const screenIntersects=(a,b,gap=4)=>a.left<b.right+gap&&a.right+gap>b.left&&a.top<b.bottom+gap&&a.bottom+gap>b.top;
+    candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
     for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
       const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
@@ -687,39 +653,11 @@ export class SpatialScene {
       const side=!this.global&&this.networkView==='relations'&&o.kind==='node',highlight=c.isSelected||o.key===this.hovered||o.key===this.previewKey;
       const width=this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
-      // Theme and pack CSS use larger paddings/min-heights than the old
-      // 30px screen-space estimate. Measure the actual element before
-      // collision detection so nearby labels cannot stack on one another.
-      // Keep a pinned hover title continuously visible to avoid pointerleave.
-      const pinned=!!c.pinnedRect;
-      if(!pinned)el.style.visibility='hidden';
-      el.hidden=false;
-      const measured=el.getBoundingClientRect();
-      const actualWidth=Math.ceil(measured.width),actualHeight=Math.ceil(measured.height);
-      const rect=c.pinnedRect||placeLabel({x:p.x,y:p.y,w:actualWidth,h:actualHeight,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});
-      if(!rect){el.hidden=true;el.style.visibility='';continue;}
-      // DOM boxes are the ultimate authority: pinned hover titles may be
-      // slightly different from their cached bounds. Try nearby free slots
-      // instead of leaving real cards visibly stacked behind the title.
-      const jumps=pinned?[[0,0]]:[[0,0],[0,-actualHeight-14],[0,actualHeight+14],
-        [-actualWidth-14,0],[actualWidth+14,0],[-actualWidth-14,-actualHeight-14],
-        [actualWidth+14,-actualHeight-14],[-actualWidth-14,actualHeight+14],
-        [actualWidth+14,actualHeight+14],[0,-2*actualHeight-28],[0,2*actualHeight+28]];
-      let placed=null,painted=null;
-      for(const [dx,dy] of jumps){
-        const candidate={x:rect.x+dx,y:rect.y+dy,w:actualWidth,h:actualHeight};
-        if(candidate.x<16||candidate.y<Math.max(90,this.global?this.globalInsets().top-14:94)||candidate.x+actualWidth>this.width-16||candidate.y+actualHeight>this.height-78)continue;
-        if((dx||dy)&&rects.some(r=>intersects(candidate,r)))continue;
-        el.style.transform=`translate(${candidate.x}px,${candidate.y}px)`;
-        const screen=el.getBoundingClientRect();
-        if(screenRects.some(r=>screenIntersects(screen,r)))continue;
-        placed=candidate;painted=screen;break;
-      }
-      if(!placed){el.hidden=true;el.style.visibility='';continue;}
-      el.style.visibility='';
-      const cx=placed.x+placed.w/2,cy=placed.y+placed.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
-      rects.push(placed);screenRects.push(painted);if(o.kind==='node')nodes++;
-      el.hidden=false;el.style.width=`${width}px`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
+      const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
+      const rect=placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
+      const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
+      rects.push(rect);if(o.kind==='node')nodes++;
+      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
     }
     for(const c of this.captionCandidates||[]){if(!c.el)continue;c.el.hidden=true;const p=this.project(c.position);if(!p.visible)continue;const r=placeLabel({x:p.x,y:p.y,w:102,h:28,viewport:{w:this.width,h:this.height},occupied:rects});if(!r)continue;rects.push(r);c.el.style.transform=`translate(${r.x}px,${r.y}px)`;c.el.hidden=false;}
     for(const b of this.bandLabels||[]){const p=this.project([0,b.y,0]);b.el.hidden=!p.visible;b.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
@@ -749,7 +687,7 @@ export class SpatialScene {
     }
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
-    const o=this.space.byKey.get(this.selected);this.halo.visible=!this.themePreviewId&&this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
+    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
     this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.updateFocusLinkLayer();
     // Pointer-independent overlays need not trigger a full DOM layout on every camera frame.
     // Keep WebGL movement and 3D relationship projections frequent; refresh labels/panels at

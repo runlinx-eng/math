@@ -15,86 +15,39 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
   const atlas=await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json());
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
+  // A mouse hover provides a hierarchical cue in the header ONLY.
+  const hoverCamera=await camera();
+  const rawSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
+  const baselineLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
+  const urlBeforeHover=page.url(),storageBeforeHover=await page.evaluate(()=>JSON.stringify({...localStorage}));
+  const floatingTheme=page.locator('.space-label.theme:visible').first();
+  const themeId=(await floatingTheme.getAttribute('data-key')).replace('theme:','');
+  await floatingTheme.hover();
+  await page.waitForFunction(id=>document.querySelector('#network-legend [data-id="'+id+'"]')?.dataset.hover==='true',themeId);
+  check(await page.locator('#network-legend [data-hover="true"]').count()===1,'floating theme hover highlights only its corresponding top-left title');
+  check(await page.locator('#focus-card').isHidden(),'floating theme hover never opens a panel');
+  check(await floatingTheme.evaluate(el=>!el.hasAttribute('title')),'theme title does not create a duplicate native browser tooltip');
+  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===baselineLabels.join(','),'floating theme hover neither expands nor repositions the visible knowledge groups');
+  check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+  check(page.url()===urlBeforeHover,'hover does not modify URL');
+  // Hover the top-left theme title itself. It should provide the same cue.
+  const legendTheme=page.locator('#network-legend [data-action="network-theme"][data-id="data"]');
+  await legendTheme.hover();
+  check(await legendTheme.getAttribute('data-hover')==='true','top-left theme hover only highlights the same header');
+  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===baselineLabels.join(','),'top-left theme hover does not reveal subtopics');
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+  check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
+  check(JSON.stringify(await camera())===JSON.stringify(hoverCamera),'all hover operations leave the camera untouched');
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
   const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
-  // Exercise the floating world-space theme labels, not just the top legend.
-  // The map title must remain a stable pointer target during preview.
-  const floating=page.locator('.space-label.theme:visible').first();
-  await floating.waitFor({state:'visible'});
-  const floatingId=(await floating.getAttribute('data-key')).slice('theme:'.length);
-  const worldBefore=await camera(),urlBefore=page.url();
-  await floating.hover();
-  await page.waitForFunction(id=>mathSpace.snapshot().themePreviewId===id,floatingId);
-  await page.waitForTimeout(160);
-  check(await floating.isVisible()&&await floating.evaluate(el=>el.classList.contains('theme-previewing')),'floating map theme label remains visible and active throughout hover');
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating map theme hover never commits a selection');
-  check(await page.locator('#focus-card').isHidden(),'floating theme hover does not open the detail panel');
-  check(sameCamera(worldBefore,await camera())&&page.url()===urlBefore,'floating theme hover keeps camera and route unchanged');
-  const labeled=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
-  check(labeled.every(k=>atlas.packs.some(p=>p.themeId===floatingId&&'pack:'+p.id===k)),'floating map preview only displays the hovered theme\'s real groups');
-  await page.screenshot({path:path.join(out,'floating-theme-hover.png')});
-  // Regression for the screenshot: "规律与推理" theme and its four
-  // knowledge-group labels must not overlap or show a duplicate native tooltip.
-  const noOverlaps=async()=>page.evaluate(()=>{
-    const boxes=[...document.querySelectorAll('.space-label.theme:not([hidden]),.space-label.pack:not([hidden])')]
-      .filter(e=>getComputedStyle(e).visibility!=='hidden').map(e=>({name:e.textContent.trim(),type:e.classList.contains('theme')?'theme':'pack',r:e.getBoundingClientRect()}));
-    const collisions=[];
-    for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){
-      const a=boxes[i],b=boxes[j],x=Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left),y=Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top);
-      if(x>1&&y>1)collisions.push({a:a.name,b:b.name,x,y});
-    }
-    return {count:boxes.length,collisions};
-  });
-  const beforeThemeCollision=await noOverlaps();
-  check(beforeThemeCollision.collisions.length===0,'floating theme preview never overlaps actual visible theme and pack rectangles: '+JSON.stringify(beforeThemeCollision.collisions));
-  check(await floating.evaluate(el=>!el.hasAttribute('title')),'floating theme title does not create a duplicate native browser tooltip');
-  await page.mouse.move(800,400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  await page.locator('#network-legend [data-action="network-theme"][data-id="patterns"]').hover();
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='patterns');
-  await page.waitForTimeout(170);
-  const patternsOverlap=await noOverlaps();
-  check(patternsOverlap.collisions.length===0,'patterns theme and its knowledge groups have non-overlapping rendered boxes');
-  await page.screenshot({path:path.join(out,'patterns-hover-no-overlap.png')});
-  await page.mouse.move(800,400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  // The reported screenshot was a tall desktop browser. Check this aspect
-  // ratio in addition to the CI's conventional 1440x900 viewport.
-  await page.setViewportSize({width:1440,height:1600});
-  await page.locator('#network-legend [data-action="network-theme"][data-id="patterns"]').hover();
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='patterns');
-  await page.waitForTimeout(170);
-  const tallOverlap=await noOverlaps();
-  check(tallOverlap.collisions.length===0,'tall desktop view keeps the patterns theme and group labels apart: '+JSON.stringify(tallOverlap.collisions));
-  await page.screenshot({path:path.join(out,'patterns-hover-tall-no-overlap.png')});
-  await page.mouse.move(1100,1400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  await page.setViewportSize({width:1440,height:900});
-  await page.mouse.move(800,400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating theme pointerleave restores the unselected map');
   // Manual zoom changes the camera; subsequent theme selection must not.
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   const afterManualZoom=await camera();
   check(afterManualZoom.zoom>0&&afterManualZoom.tween===null,'manual zoom stays available before theme selection');
-  // Manual zoom saves asynchronously; settle its own save before attributing
-  // any storage change to the subsequent hover-only interaction.
-  await page.waitForTimeout(450);
-  const initialUrl=page.url(),initialStorage=await page.evaluate(()=>JSON.stringify({...localStorage}));
-  const firstLabel=page.locator('#network-legend [data-action="network-theme"][data-id="data"]');
-  const initialCamera=await camera();
-  await firstLabel.hover();
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='data');
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'hover only previews a theme without selecting it');
-  check(await page.locator('#focus-card').isHidden(),'hover does not open the detail panel');
-  check(sameCamera(initialCamera,await camera()),'hover never moves the camera or changes zoom');
-  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).every(k=>atlas.packs.some(p=>p.themeId==='data'&&'pack:'+p.id===k)),'hover labels belong only to the preview theme');
-  check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'hover retains all 537 domain nodes');
-  await page.mouse.move(800,400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null&&await page.locator('#focus-card').isHidden(),'leaving header restores the unselected panorama without opening a panel');
-  check(page.url()===initialUrl&&await page.evaluate(()=>JSON.stringify({...localStorage}))===initialStorage,'hover never changes navigation, learning or saved view');
   for(const id of ids){
    const theme=atlas.themes.find(t=>t.id===id);
    const groups=atlas.packs.filter(p=>p.themeId===id);
@@ -131,20 +84,26 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    check(bounds.left>=0&&bounds.right<=bounds.innerW&&bounds.top>=0&&bounds.bottom<=bounds.innerH,theme.title+' overview card remains inside the viewport');
    check(bounds.client>0&&bounds.scroll>=bounds.client,theme.title+' knowledge groups remain in a scrollable card');
    await page.screenshot({path:path.join(out,id+'-theme.png')});
+   // Knowledge-group titles have a different hierarchy from theme titles.
+   // Hover only their parent theme's header; the selected panel remains open.
+   const packTitle=page.locator('.space-label.pack:visible').first();
+   if(await packTitle.count()){
+     const packId=(await packTitle.getAttribute('data-key')).slice(5);
+     const parent=atlas.packs.find(p=>p.id===packId)?.themeId;
+     const originalSelected=(await page.evaluate(()=>mathSpace.snapshot())).selected;
+     const oldGroupLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
+     const oldCamera=await camera();
+     await packTitle.hover();
+     await page.waitForFunction(parent=>document.querySelector('#network-legend [data-id="'+parent+'"]')?.dataset.hover==='true',parent);
+     check(await page.locator('#network-legend [data-hover="true"]').count()===1,theme.title+' group hover highlights exactly its parent theme');
+     check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover never selects or replaces detail panel');
+     check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===oldGroupLabels.join(','),theme.title+' group hover does not expand or move labels');
+     check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover leaves the camera unchanged');
+     await page.mouse.move(800,400);
+     await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+     check(await card.isVisible(),theme.title+' retains its clicked theme detail after group hover');
+   }
   }
-  // Hovering a different theme temporarily overrides a locked theme, then restores it.
-  await page.locator('#network-legend [data-action="network-theme"][data-id="data"]').click();
-  await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:data');
-  const lockedBefore=await camera();
-  await page.locator('#network-legend [data-action="network-theme"][data-id="space"]').hover();
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='space');
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected==='theme:data','hovering another theme keeps the locked selection');
-  check(await page.locator('#focus-card h2').textContent()==='数据与可能性','hovering another theme keeps the locked detail panel');
-  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).every(k=>atlas.packs.some(p=>p.themeId==='space'&&'pack:'+p.id===k)),'temporary theme replaces map labels without changing locked details');
-  await page.mouse.move(800,400);
-  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
-  check((await page.evaluate(()=>mathSpace.snapshot())).selected==='theme:data','leaving hover restores the locked theme');
-  check(sameCamera(lockedBefore,await camera()),'preview and restoration keep the camera fixed');
   // The rule also holds after the user explicitly changes the camera view.
   await page.locator('[data-action="network-view"][data-view="top"]').click();
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
