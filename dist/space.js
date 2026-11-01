@@ -104,6 +104,20 @@ function renderNetworkGuide(){
     $('#network-view-title').textContent='全貌 · 观察'+(labels[scene.structureMode]||'真实关系');
     $('#network-view-description').textContent=scene.structureMode==='all'?'正在同时对照三组真实关系示例；可切回单一结构减少干扰。':'仅突出一组真实关系示例。其他知识点仍在原三维坐标，可点击观察或主动切换；不代表唯一数学主干。';
   }
+  const hoverObject=scene.relationshipMap?space.byKey.get(scene.hoverMapKey):null;
+  const hoverTitle=$('#network-view-title');
+  if(hoverObject?.kind==='pack'||hoverObject?.kind==='node'){
+    const theme=space.themes.get(hoverObject.themeId),group=hoverObject.kind==='node'?space.packs.get(hoverObject.packId):null;
+    const path=[theme?.title,group?.title,hoverObject.kind==='node'?displayTitle(hoverObject):hoverObject.title].filter(Boolean).join(' › ');
+    hoverTitle.textContent=path;
+    hoverTitle.title=path;
+    if(hoverObject.kind==='node'){
+      const links=relationsFor(space,hoverObject.key);
+      $('#network-view-description').textContent=`正在观察这个知识点 · 直接前置 ${links.filter(l=>l.to===hoverObject.key).length} · 直接后续 ${links.filter(l=>l.from===hoverObject.key).length} · 点击查看详情`;
+    }else{
+      $('#network-view-description').textContent=`正在观察知识群 · ${hoverObject.nodeIds.filter(id=>space.relationshipIds.has(id)).length} 个地图知识点 · 点击查看详情`;
+    }
+  }else hoverTitle.removeAttribute('title');
   $('#network-edge-controls').hidden=!scene.relationshipMap;
   const structureControls=$('#overview-structure-controls');
   if(structureControls){structureControls.hidden=!scene.relationshipMap||!!scene.selected||guideVisible||journeyOpen;
@@ -326,13 +340,6 @@ function syncHoverHeader(){
   for(const button of document.querySelectorAll('#network-legend [data-action="network-theme"]'))
     button.dataset.hover=String(button.dataset.id===parentId);
   renderNetworkGuide();
-  if(object?.kind==='pack'){
-    const theme=space.themes.get(object.themeId);
-    $('#network-view-description').textContent=`预览知识群「${object.title}」 · 属于主题「${theme?.title||''}」 · ${object.nodeIds.filter(id=>space.relationshipIds.has(id)).length} 个地图知识点；点击进入详情。`;
-  }else if(object?.kind==='node'){
-    const theme=space.themes.get(object.themeId),pack=space.packs.get(object.packId),links=relationsFor(space,object.key);
-    $('#network-view-description').textContent=`预览「${displayTitle(object)}」 · ${theme?.title||''} / ${pack?.title||''} · 直接基础 ${links.filter(l=>l.to===object.key).length}，直接后续 ${links.filter(l=>l.from===object.key).length}；点击进入详情。`;
-  }
 }
 function highlightThemeHeader(id){
   scene?.setThemeHover(scene.relationshipMap&&space.themes.has(id)?id:null);

@@ -700,7 +700,9 @@ export class SpatialScene {
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;
       el.hidden=!anchor;el.style.opacity=anchor&&o.kind==='theme'?'0':'';
-      el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');
+      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after');
+      el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);
+      el.setAttribute('aria-pressed','false');
       if(show||anchor)candidates.push({...entry,p,priority,isSelected,related,anchor});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
@@ -718,7 +720,12 @@ export class SpatialScene {
       const rect=c.anchor||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
-      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.classList.toggle('preview-neighbor',this.hoverRelatedKeys.has(o.key)&&o.key!==this.hoverMapKey);el.setAttribute('aria-pressed',String(c.isSelected));
+      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);const hoverNode=hoverObject?.kind==='node',target=hoverNode&&o.key===this.hoverMapKey,neighbor=hoverNode&&this.hoverRelatedKeys.has(o.key)&&!target;
+      el.classList.toggle('preview-target',!!target);
+      el.classList.toggle('preview-neighbor',!!neighbor);
+      el.classList.toggle('preview-before',!!neighbor&&this.hoverVisualLinks.some(l=>l.fromKey===o.key&&l.toKey===this.hoverMapKey));
+      el.classList.toggle('preview-after',!!neighbor&&this.hoverVisualLinks.some(l=>l.toKey===o.key&&l.fromKey===this.hoverMapKey));
+      el.setAttribute('aria-pressed',String(c.isSelected));
     }
     for(const c of this.captionCandidates||[]){if(!c.el)continue;c.el.hidden=true;const p=this.project(c.position);if(!p.visible)continue;const r=placeLabel({x:p.x,y:p.y,w:102,h:28,viewport:{w:this.width,h:this.height},occupied:rects});if(!r)continue;rects.push(r);c.el.style.transform=`translate(${r.x}px,${r.y}px)`;c.el.hidden=false;}
     for(const b of this.bandLabels||[]){const p=this.project([0,b.y,0]);b.el.hidden=!p.visible;b.el.style.transform=`translate(${p.x}px,${p.y}px)`;}

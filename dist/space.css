@@ -400,3 +400,21 @@ body[data-world="network"][data-network-version="53"] #network-legend [data-acti
 /* Group and direct-neighbor labels remain recognizable during transient previews. */
 body[data-world="network"][data-network-version="53"] .space-label.pack.hovered{font-weight:700;background:#fffef9f5;border-radius:6px;box-shadow:0 2px 9px #29453b15}
 body[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor{background:#fffef9ef;border-color:#9bb5aa}
+
+/* v53 transient direct-relation preview: target > real neighbors > background.
+   These rules override node-focus's text-only labels without changing clicked state. */
+body[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node.preview-neighbor{
+  background:#fffef9dc;border:1px solid #c5d0c8;border-radius:6px;
+  padding:4px 7px;box-shadow:0 1px 5px #2a473611;font-weight:450;
+}
+body[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node.preview-neighbor.preview-before{border-color:#cfa783}
+body[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node.preview-neighbor.preview-after{border-color:#93b8c3}
+body[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node.preview-target{
+  background:#fffef9;border:2px solid #276958;border-radius:8px;
+  padding:6px 9px;box-shadow:0 0 0 3px #68a58a24,0 4px 14px #24483a25;
+  color:#204d40;font-weight:750;text-shadow:none;
+}
+body[data-world="network"][data-network-version="53"] #network-view-title[title]{
+  display:block;min-width:0;max-width:min(62vw,710px);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}

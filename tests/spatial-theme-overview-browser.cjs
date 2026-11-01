@@ -131,7 +131,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      check(groupPreviewLabels.every(key=>key==='pack:'+packId),theme.title+' group hover is group-specific, not a duplicate theme preview');
      check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover keeps clicked theme detail');
      check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover never moves the camera');
-     check((await page.locator('#network-view-description').textContent()).includes(pack.title),theme.title+' group context names the inspected group');
+     check((await page.locator('#network-view-title').textContent()).includes(pack.title),theme.title+' group breadcrumb names the inspected group');
      await page.mouse.move(4,4);
      await page.waitForFunction(()=>mathSpace.hoverPreview().key===null&&document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
      const restored=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
@@ -164,11 +164,26 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const actual=preview.edges.map(e=>e.from.slice(5)+'>'+e.to.slice(5)).sort();
   check(JSON.stringify(actual)===JSON.stringify(expected),'node hover presents every mapped direct source edge and invents none');
   check(preview.related.includes('node:'+nodeId),'node hover includes the hovered source node');
-  check((await page.locator('#network-view-description').textContent()).includes('/'),'node preview shows source group and parent theme');
+  const node=atlas.nodes.find(n=>n.id===nodeId),group=atlas.packs.find(p=>p.id===node.packId),parent=atlas.themes.find(t=>t.id===node.themeId);
+  const breadcrumb=await page.locator('#network-view-title').textContent();
+  check(breadcrumb.includes(parent.title)&&breadcrumb.includes(group.title)&&breadcrumb.includes('›'),'node preview displays its true theme → group → knowledge path');
+  await page.waitForFunction(key=>document.querySelector('.space-label.node.preview-target:not([hidden])')?.dataset.key===key,preview.key);
+  const focusLabel=page.locator('.space-label.node.preview-target:visible');
+  check(await focusLabel.count()===1,'exactly one currently hovered node has the primary visual frame');
+  const focusStyle=await focusLabel.evaluate(el=>{const c=getComputedStyle(el);return {border:parseFloat(c.borderTopWidth),weight:parseFloat(c.fontWeight),shadow:c.boxShadow}});
+  check(focusStyle.border>=2&&focusStyle.weight>=700&&focusStyle.shadow!=='none','hover target has a strong border, bold name and visible shadow');
+  const relatedLabels=page.locator('.space-label.node.preview-neighbor:visible');
+  if(await relatedLabels.count()){
+    const nearby=await relatedLabels.first().evaluate(el=>{const c=getComputedStyle(el);return {border:parseFloat(c.borderTopWidth),weight:parseFloat(c.fontWeight)}});
+    check(nearby.border<focusStyle.border&&nearby.weight<focusStyle.weight,'real direct neighbors are framed more lightly than the hover target');
+  }
+  await page.screenshot({path:path.join(out,'node-hover-hierarchy.png')});
   check(JSON.stringify(await camera())===JSON.stringify(nodeCamera),'node hover does not pan, zoom or rotate');
   check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'node hover never modifies selected map snapshot');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>mathSpace.hoverPreview().key===null);
+  check(await page.locator('.space-label.node.preview-target:visible').count()===0,'hover target framing disappears on leave');
+  check((await page.locator('#network-view-title').textContent())!==breadcrumb,'top-left breadcrumb restores the prior map state on leave');
   check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'leaving node restores the panorama');
   check(await page.evaluate(()=>JSON.stringify({...localStorage}))===nodeStorage,'hover records no learning behavior');
   // The rule also holds after the user explicitly changes the camera view.
