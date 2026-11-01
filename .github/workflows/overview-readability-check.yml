@@ -10,6 +10,7 @@ on:
       - 'tests/spatial-overview.test.mjs'
       - 'tests/spatial-overview-structure.test.mjs'
       - 'tests/spatial-overview-browser.cjs'
+      - 'tests/spatial-focus-transition-browser.cjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
 
@@ -48,10 +49,13 @@ jobs:
           python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
           sleep 2
           node tests/spatial-overview-browser.cjs
+          node tests/spatial-focus-transition-browser.cjs
       - name: Preserve panorama screenshots and checks
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: math-overview-browser-evidence
-          path: verification/overview-readability-v1/
+          path: |
+            verification/overview-readability-v1/
+            verification/spatial-focus-transition/
           if-no-files-found: warn
