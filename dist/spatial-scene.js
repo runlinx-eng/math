@@ -531,6 +531,15 @@ export class SpatialScene {
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
     const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar((o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
-    this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.exclusions=this.callbacks.onMove?.()||[];this.updateLabels();this.dirty=false;
+    this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);
+    // Pointer-independent overlays need not trigger a full DOM layout on every camera frame.
+    // Keep WebGL movement and 3D relationship projections frequent; refresh labels/panels at
+    // most about 10 times per second during animation, and always on the settled frame.
+    const isMoving=!!this.tween||!!this.viewTransition;
+    if(!isMoving||this.lastOverlayFrame===undefined||time-this.lastOverlayFrame>=95){
+      this.exclusions=this.callbacks.onMove?.()||[];
+      this.updateLabels();this.lastOverlayFrame=time;
+    }else this.updateStructureLines();
+    this.dirty=false;
   }
 }
