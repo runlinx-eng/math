@@ -263,7 +263,7 @@ body[data-network-version="53"][data-map-focus="node"] .space-label.node{backgro
 body[data-network-version="53"][data-map-focus="node"] .space-label.node::before{display:none}
 body[data-network-version="53"][data-map-focus="node"] .space-label.node.selected{border:1px solid #a9c3b5;background:#fffef9ef;border-radius:7px;padding:5px 8px;box-shadow:0 2px 9px #29453b10}
 body[data-network-version="53"][data-map-focus="node"] .space-label.node.related{background:#f5f4efb8;border-color:transparent}
-body.guide-mode .tool-rail,body.guide-mode .network-legend,body.guide-mode .network-marker-key,body.guide-mode #network-edge-controls,body.guide-mode #overview-structure-controls,body.guide-mode #network-view-description,body.guide-mode .bottom-bar{display:none!important}
+body.guide-mode .network-legend,body.guide-mode .network-marker-key,body.guide-mode #network-edge-controls,body.guide-mode #overview-structure-controls,body.guide-mode #network-view-description,body.guide-mode .bottom-bar{display:none!important}
 body.guide-mode .top-tools [data-action="back"],body.guide-mode .top-tools .search-button{display:none}
 body.guide-mode .guide-panel{width:270px;max-width:calc(100vw - 32px);font-size:13px}
 body.guide-mode .guide-panel .guide-nodes{gap:6px}
@@ -289,11 +289,8 @@ body[data-network-version="53"] .network-explore .network-relations:not([open]){
 
 /* Knowledge inspection is not a separate zoomable camera mode. Keep only
    pan / rotate / help in the v53 focused toolbar; full-map controls return on exit. */
-body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="zoom"],
-body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="front"],
-body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="network-view"],
-body[data-network-version="53"][data-map-focus="node"] .tool-rail .tool-divider,
-body[data-network-version="53"][data-map-focus="node"] .lens-indicator{display:none!important}
+/* The 3D map keeps its ordinary zoom and view controls when a node is selected.
+   Only the separate activity workspace (body.has-journey) hides map controls. */
 
 /* A learning activity is a stable reading / work surface, not a magnified map.
    Preserve a compact desktop height and scroll long activities within the iframe. */
