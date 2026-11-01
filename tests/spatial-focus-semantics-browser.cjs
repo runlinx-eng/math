@@ -35,7 +35,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check(render.selectedLabel.includes('一一对应地数'),'selected title remains visible');
   await page.screenshot({path:path.join(out,'01-refined-focus.png')});
   // zooming must not inflate SVG strokes or mathematical point radii
-  await page.locator('.tool-rail [data-action="zoom-in"]').count().then(async n=>{if(n)await page.locator('.tool-rail [data-action="zoom-in"]').first().click();});
+  await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   await page.waitForTimeout(260);
   const scaled=await page.evaluate(([a,b])=>({root:mathSpace.nodeRadius(a),neighbor:mathSpace.nodeRadius(b),widths:[...document.querySelectorAll('.spatial-focus-links path')].map(p=>Number(p.getAttribute('stroke-width')))}),[ROOT,NEXT]);
   check(scaled.widths.every(w=>w<=2.8)&&scaled.widths.length===render.lineWidths.length,'line thickness stays unchanged after zoom');
