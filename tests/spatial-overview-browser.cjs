@@ -42,6 +42,7 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
     await page.locator('[data-action="overview-structure"][data-structure="'+role+'"]').click();
     await page.waitForFunction(r=>mathSpace.snapshot().structureMode===r,role);
     check(await page.locator('.overview-structure-lines .structure-path.'+role).count()>=2,'specific '+role+' motif remains a real multi-edge path');
+    await page.waitForFunction(r=>[...document.querySelectorAll('.overview-structure-lines .structure-path')].every(p=>p.classList.contains(r)),role);
     check(await page.locator('.overview-structure-lines .structure-path:not(.'+role+')').count()===0,'the selected lens filters unrelated example paths');
     await page.screenshot({path:path.join(out,'02-'+role+'-motif.png')});
   }
