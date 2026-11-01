@@ -27,6 +27,9 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((v,i)=>s
   check(focus.backgroundEdgesVisible,'full-map source relation outline remains a faint guide backdrop');
   check(focus.visibleNodes.length===537,'all 537 domain nodes remain as background knowledge');
   check(await page.locator('#guide-panel').isVisible(),'the step instructions are visible');
+   check(focus.guide.currentNodes.length===0&&focus.guide.edges.length===0,'first step shows the complete map without an isolated highlighted example');
+   check(await page.locator('#guide-panel h2').textContent()==='先看整张数学地图','first step explains how to read the overall structure');
+   check(await page.locator('.space-label.theme:visible').count()>=3,'the five-theme map remains recognizable during the guide');
   check(await page.locator('.space-label.node:visible').count()<25,'background names remain muted instead of crowding the guide');
   const background=initial.visibleNodes.find(k=>!focus.guide.seenNodes.includes(k));
   const current=focus.guide.currentNodes[0];
