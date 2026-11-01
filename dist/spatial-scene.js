@@ -672,7 +672,7 @@ export class SpatialScene {
       const pinnedRect=this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId&&this.themeHoverAnchor?.key===o.key?this.themeHoverAnchor:null;
       el.classList.toggle('theme-previewing',this.relationshipMap&&!!this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId);
       // Do not temporarily hide the hovered DOM element during relayout.
-      el.hidden=!pinnedRect;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related,pinnedRect});
+      el.hidden=!pinnedRect;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show||pinnedRect)candidates.push({...entry,p,priority,isSelected,related,pinnedRect});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[],screenRects=[];let nodes=0;
     const intersects=(a,b,gap=7)=>a.x<b.x+b.w+gap&&a.x+a.w+gap>b.x&&a.y<b.y+b.h+gap&&a.y+a.h+gap>b.y;
