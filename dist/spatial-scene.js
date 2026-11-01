@@ -201,7 +201,17 @@ export class SpatialScene {
   }
   get global(){return this.network&&(this.networkVersion===GLOBAL_VERSION||this.networkVersion===this.space.relationshipVersion);}
   get relationshipMap(){return this.network&&this.networkVersion===this.space.relationshipVersion;}
-  get localRelationshipFocus(){return this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='node'&&!this.guideFocus&&!this.traceResult;}
+  get knowledgeFocus(){return this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='node'&&!this.guideFocus;}
+  get localRelationshipFocus(){return this.knowledgeFocus&&!this.traceResult;}
+  syncKnowledgeCameraControls(){if(this.controls)this.controls.enableZoom=!this.knowledgeFocus;}
+  panIntoViewWithoutZoom(object,animate=true){
+    const p=this.project(object.position),insets=this.globalInsets();
+    if(p.visible&&p.x>=insets.left&&p.x<=this.width-insets.right&&p.y>=insets.top&&p.y<=this.height-insets.bottom)return;
+    // Search can select a point outside the viewport. Pan only: preserve zoom,
+    // distance and orientation; clicking a visible node never moves the camera.
+    const target=V(object.position),delta=target.clone().sub(this.controls.target);
+    this.fly(this.camera.position.clone().add(delta).toArray(),target.toArray(),animate?650:0);
+  }
   focusKeys(){return new Set([this.selected,...(this.related||[])]);}
   // Recorded navigation contains only pairs with an actual source edge; it never moves coordinates.
   trailLinks(){
@@ -251,11 +261,15 @@ export class SpatialScene {
     const previous=this.selected;
     const adjacent=this.localRelationshipFocus&&o.kind==='node'&&previous!==o.key&&relationsFor(this.space,previous)
       .some(l=>(l.from===previous&&l.to===o.key)||(l.to===previous&&l.from===o.key));
-    if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',1050);
+    if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',850);
     else this.viewTransition=null;
-    this.select(key);
-    if(adjacent){this.tween=null;return;}
-    if(this.global){if(o.kind==='node'){if(!this.canLocate(o))return;const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
+    this.tween=null;this.select(key);
+    if(adjacent)return;
+    if(this.global){if(o.kind==='node'){
+      if(!this.canLocate(o))return;
+      if(this.relationshipMap)this.panIntoViewWithoutZoom(o,animate);
+      else {const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}
+    }else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
     if(this.network&&o.kind==='node'){if(this.networkView==='relations')this.fitNetworkView(animate);return;}
     const ratio=Math.max(1,.85/this.camera.aspect),d=(o.kind==='theme'?570:o.kind==='pack'?Math.max(225,o.radius*4.7):175)*ratio;
     const direction=this.camera.position.clone().sub(this.controls.target).normalize();this.fly(V(o.position).addScaledVector(direction,d).toArray(),o.position,animate?1000:0);
@@ -266,7 +280,7 @@ export class SpatialScene {
       const adjacent=this.relationshipMap&&!this.guideFocus&&!this.traceResult&&from?.kind==='node'&&to?.kind==='node'&&relationsFor(this.space,previous).some(l=>(l.from===previous&&l.to===key)||(l.to===previous&&l.from===key));
       this.explorationTrail=to?.kind==='node'?(adjacent?[...this.explorationTrail.filter(Boolean),...(this.explorationTrail.length?[]:[previous]),key].slice(-16):[key]):[];
     }
-    if(changed){this.relationMode=this.network&&key?.startsWith('node:')?'source':'off';this.traceMode='direct';this.traceResult=null;this.previewKey=null;}this.selected=this.space.byKey.has(key)?key:null;if(this.network)this.applyNetworkLayout();this.rebuildRelations();this.dirty=true;}
+    if(changed){this.relationMode=this.network&&key?.startsWith('node:')?'source':'off';this.traceMode='direct';this.traceResult=null;this.previewKey=null;}this.selected=this.space.byKey.has(key)?key:null;if(this.network)this.applyNetworkLayout();this.syncKnowledgeCameraControls();this.rebuildRelations();this.dirty=true;}
   setTrace(mode){this.traceMode=this.global&&this.selected?.startsWith('node:')&&['before','after'].includes(mode)?mode:'direct';this.traceResult=this.traceMode==='direct'?null:traceCritical(this.space.atlas,this.selected.slice(5),this.traceMode);this.previewKey=null;this.rebuildRelations();this.dirty=true;}
   setGuideFocus(steps,index,{animate=true,fit=true}={}){if(!this.relationshipMap||!steps[index])return;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.select('node:'+current.anchor);this.setRelations('source');if(fit)this.fitGlobalView(animate,[...this.guideFocus.seenNodes].map(key=>this.space.byKey.get(key)).filter(Boolean));this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
@@ -338,14 +352,14 @@ export class SpatialScene {
     if(!duration){this.camera.position.copy(V(position));this.controls.target.copy(V(target));if(zoom!==null)this.camera.zoom=zoom;this.controls.update();this.updateProjection();this.camera.updateMatrixWorld();this.dirty=true;this.callbacks.onSettled?.();return;}
     this.tween={start:performance.now(),duration,from:this.camera.position.clone(),to:V(position),fromTarget:this.controls.target.clone(),toTarget:V(target),fromZoom:this.camera.zoom,toZoom:zoom===null?this.camera.zoom:zoom};
   }
-  zoom(factor){if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
+  zoom(factor){if(this.knowledgeFocus)return;if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
   front(){if(this.network&&this.networkView!=='legacy'){if(this.localRelationshipFocus)this.fitGlobalView(true,this.nodeList.filter(n=>this.focusKeys().has(n.key)));else this.fitNetworkView();return;}const distance=this.camera.position.distanceTo(this.controls.target);this.fly(this.controls.target.clone().add(new THREE.Vector3(0,0,distance)).toArray(),this.controls.target.toArray(),700);}
   viewFrom(name){if(this.network){
     if(!this.global)this.networkVersion=this.defaultNetworkVersion;this.networkView=name==='side'?'relations':name==='top'?'map':'oblique';
     this.applyNetworkLayout();this.rebuildRelations();if(this.localRelationshipFocus)this.fitGlobalView(true,this.nodeList.filter(n=>this.focusKeys().has(n.key)));else this.fitNetworkView(true);this.dirty=true;return true;
   }const distance=this.camera.position.distanceTo(this.controls.target),v=name==='top'?new THREE.Vector3(.01,1,.01):name==='side'?new THREE.Vector3(0,0,1):new THREE.Vector3(.3,.27,1);this.fly(this.controls.target.clone().add(v.normalize().multiplyScalar(distance)).toArray(),this.controls.target.toArray(),700);}
   applyNetworkLayout(){
-    if(this.space.globalInfo&&!!this.camera.isOrthographicCamera!==this.global){const old=this.camera;this.camera=this.global?new THREE.OrthographicCamera(-800,800,600,-600,1,20000):new THREE.PerspectiveCamera(40,this.width/this.height,1,20000);this.camera.fov=40;this.camera.aspect=this.width/this.height;this.camera.position.copy(old.position);this.camera.quaternion.copy(old.quaternion);this.controls.object=this.camera;this.updateProjection();}
+    if(this.space.globalInfo&&!!this.camera.isOrthographicCamera!==this.global){const old=this.camera;this.camera=this.global?new THREE.OrthographicCamera(-800,800,600,-600,1,20000):new THREE.PerspectiveCamera(40,this.width/this.height,1,20000);this.camera.fov=40;this.camera.aspect=this.width/this.height;this.camera.position.copy(old.position);this.camera.quaternion.copy(old.quaternion);this.controls.object=this.camera;this.syncKnowledgeCameraControls();this.updateProjection();}
     this.networkView=this.space.globalPositions?restoreNetworkCoordinates(this.space,this.networkVersion,this.networkView,this.selected):applyNetworkView(this.space,this.networkView,this.selected);
     for(const [id,mesh]of this.packMeshes)mesh.parent.position.copy(V(this.space.packs.get(id).position));
     this.refreshNetworkEdges();
