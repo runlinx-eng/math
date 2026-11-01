@@ -136,8 +136,21 @@ from guided activity restores the guide step. Keep real node completion and
 completed joint links visible while attention moves; two completed endpoints do
 not complete a link. If a curated source edge is absent, disable only the
 optional orientation. On storage events reread current storage rather than using
-stale event payloads, and do not reset the camera when the guide step is unchanged.
+stale event payloads, and do not move or reset the camera automatically on any guide step change.
 Implementation boundaries and source examples are in docs/spatial-learning/GUIDE.md.
+
+Current v53+ map interaction contract (2026-11-01): the “现行关系地图交互约定” section in
+`docs/spatial-learning/GUIDE.md` overrides historical local-only focus and auto-camera
+rules. Panorama, manual zoom/rotation/pan, node selection and “认识这张图” share
+one map and camera. Selection emphasizes true edges while keeping unrelated
+nodes dimmed in place; starting or stepping through the guide must not move
+or reset the camera. Zoom and map gestures remain available even when a node
+is selected or the guide is open. Only an explicit “开始” learning entry switches
+to the fixed, adaptive task panel; returning restores the prior map context.
+Named camera views and “全貌” are explicit user actions. Earlier claims that
+selection disables zoom or removes all surrounding nodes, and old focus tests,
+are historical, not current acceptance criteria. Do not claim implementation
+acceptance from this document-only update; preserve legacy v49 restoration.
 
 The v56 `dist/learning/thinking-feedback.js` describes actual submitted,
 replay-valid `x-fracrename` and `x-r38-counterexample` work. Show it only when
