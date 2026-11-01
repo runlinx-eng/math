@@ -270,3 +270,7 @@ body.guide-mode .guide-panel .guide-nodes{gap:6px}
 body.guide-mode .guide-panel .guide-nodes button{padding:9px 10px}
 body.guide-mode .guide-panel .guide-prompt{font-size:13px;line-height:1.65}
 @media(max-width:700px){body.guide-mode .guide-panel{width:240px}}
+
+/* Activity type is explained in the lesson/detail, not encoded as another knowledge-node shape. */
+body[data-network-version="53"][data-map-focus="node"] .space-label.node .activity-glyph,
+body.guide-mode .space-label.node .activity-glyph{display:none!important}
