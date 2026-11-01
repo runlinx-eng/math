@@ -393,3 +393,11 @@ body[data-world="network"][data-network-version="53"][data-map-focus="theme"] .s
 /* Header theme hover is a temporary inspection, not a selected theme. */
 body[data-world="network"] #network-legend button[data-preview="true"]{background:#edf2eb;color:#244f3e;box-shadow:inset 0 0 0 1px #c9dccc}
 body[data-world="network"] #network-legend button[data-preview="true"][aria-pressed="true"]{background:#e2eee6}
+
+/* Hovering floating theme labels previews the same source theme as the legend.
+   The active label stays visible and above pack labels to avoid hover flicker. */
+body[data-world="network"][data-network-version="53"] .space-label.theme.theme-previewing{
+  background:#fffef9!important;border-color:color-mix(in srgb,var(--object-color) 70%,#fffef9)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--object-color) 18%,transparent),0 5px 20px #24463c2b!important;
+  color:#1c4638!important;
+}

@@ -18,6 +18,25 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
   const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
+  // Exercise the floating world-space theme labels, not just the top legend.
+  // The map title must remain a stable pointer target during preview.
+  const floating=page.locator('.space-label.theme:visible').first();
+  await floating.waitFor({state:'visible'});
+  const floatingId=(await floating.getAttribute('data-key')).slice('theme:'.length);
+  const worldBefore=await camera(),urlBefore=page.url();
+  await floating.hover();
+  await page.waitForFunction(id=>mathSpace.snapshot().themePreviewId===id,floatingId);
+  await page.waitForTimeout(160);
+  check(await floating.isVisible()&&await floating.evaluate(el=>el.classList.contains('theme-previewing')),'floating map theme label remains visible and active throughout hover');
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating map theme hover never commits a selection');
+  check(await page.locator('#focus-card').isHidden(),'floating theme hover does not open the detail panel');
+  check(sameCamera(worldBefore,await camera())&&page.url()===urlBefore,'floating theme hover keeps camera and route unchanged');
+  const labeled=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
+  check(labeled.every(k=>atlas.packs.some(p=>p.themeId===floatingId&&'pack:'+p.id===k)),'floating map preview only displays the hovered theme\'s real groups');
+  await page.screenshot({path:path.join(out,'floating-theme-hover.png')});
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating theme pointerleave restores the unselected map');
   // Manual zoom changes the camera; subsequent theme selection must not.
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   const afterManualZoom=await camera();
