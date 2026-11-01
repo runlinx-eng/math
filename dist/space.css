@@ -210,6 +210,21 @@ html{width:100%;height:100%;overflow:hidden}
 body.has-journey #local-overview-exit{display:none}
 @media(max-width:800px){#local-overview-exit{top:175px;right:12px;padding:8px 12px;font-size:12px}}
 
+/* Full-map readability: theme anchors are positional labels, not fake roots or lessons. */
+body[data-world="network"][data-network-version="53"] .space-label.theme{
+  padding:7px 12px;border:1px solid color-mix(in srgb,var(--object-color) 50%,#f5f4ef);
+  border-left:3px solid var(--object-color);border-radius:12px;background:#fffef9ed;
+  color:#2a4f43;font-size:14px;font-weight:700;box-shadow:0 3px 12px #24463c14;
+}
+body[data-world="network"][data-network-version="53"] .space-label.theme::before{
+  width:8px;height:8px;vertical-align:1px;margin-right:7px;
+}
+body[data-world="network"][data-network-version="53"] .space-label.pack{
+  font-size:12px;background:#fffef9c9;border-radius:7px;
+}
+body[data-world="network"] [data-action="overview-shells"][aria-pressed="true"]{background:#e1ebe0;color:#265b4b}
+body[data-world="network"][data-local-focus="true"] [data-action="overview-shells"]{display:none!important}
+
 /* The local knowledge view keeps the guide entry, but removes panorama-only edge density controls. */
 body[data-world="network"][data-local-focus="true"] #network-edge-controls>span,
 body[data-world="network"][data-local-focus="true"] #network-edge-controls>[data-action="edge-display"],
