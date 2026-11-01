@@ -18,12 +18,13 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await page.locator('#search-input').fill('mt_WcfaSfVT33');
   await page.locator('#search-results [data-key="'+ROOT+'"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_WcfaSfVT33'&&mathSpace.snapshot().visibleNodes.length===537);
+  await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null&&!!document.querySelector('.space-label.node.selected:not([hidden])'));
   await page.waitForTimeout(120);
   const focus=await snap(),render=await page.evaluate(([a,b])=>{
    const root=document.querySelector('.space-label.node.selected'),relation=document.querySelector('.spatial-focus-links');
    const paths=[...relation.querySelectorAll('path')];
    return {rootPx:mathSpace.nodeRadius(a),neighborPx:mathSpace.nodeRadius(b),lineWidths:paths.map(p=>Number(p.getAttribute('stroke-width'))),
-     lines:paths.filter(p=>p.getAttribute('d')?.startsWith('M')).length,cssStroke:getComputedStyle(root).borderTopWidth,
+     lines:paths.filter(p=>p.getAttribute('d')?.startsWith('M')).length,cssStroke:root?getComputedStyle(root).borderTopWidth:null,
      markerLegend:getComputedStyle(document.querySelector('.network-marker-key')).display,
      layerVisible:!relation.hidden,selectedLabel:root?.textContent?.trim()};
   },[ROOT,NEXT]);
