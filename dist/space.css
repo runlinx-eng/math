@@ -396,3 +396,7 @@ body[data-world="network"][data-network-version="53"] #network-legend [data-acti
   background:#e1ece5;color:#234f40;font-weight:700;
   box-shadow:inset 0 0 0 1px #a8c5b3;
 }
+
+/* Group and direct-neighbor labels remain recognizable during transient previews. */
+body[data-world="network"][data-network-version="53"] .space-label.pack.hovered{font-weight:700;background:#fffef9f5;border-radius:6px;box-shadow:0 2px 9px #29453b15}
+body[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor{background:#fffef9ef;border-color:#9bb5aa}

@@ -20,7 +20,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
   await page.waitForTimeout(450);
   // Hover previews REAL node colors while its theme title reflects hierarchy.
-  // No pack labels, selected state, camera, or learning storage are changed.
+  // Hover does not select, move the camera or write learning storage.
   const hoverCamera=await camera();
   const rawSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
   const baselineLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
@@ -48,7 +48,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForTimeout(200);
   check(await page.locator('#network-legend [data-hover="true"]').count()===1,'floating main-title hit target survives the subtopic reveal without flicker');
   check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
-  await page.mouse.move(800,400);
+  await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.every((v,i)=>Math.abs(v-before[i])<.0001);},{id:themeNode.id,before:beforeTints[0]});
   check(page.url()===urlBeforeHover,'hover does not modify URL');
@@ -62,7 +62,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const legendPacks=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key.replace('pack:','')));
   check(legendPacks.length>=2&&legendPacks.every(id=>atlas.packs.some(p=>p.id===id&&p.themeId==='data')),'top-left theme hover reveals several of its real subtopics');
   check(diff(beforeTints[1],await page.evaluate(id=>mathSpace.nodeTint('node:'+id),differentNode.id))>.02,'legend theme hover also changes real node color');
-  await page.mouse.move(800,400);
+  await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
   check(JSON.stringify(await camera())===JSON.stringify(hoverCamera),'all hover operations leave the camera untouched');
@@ -107,29 +107,70 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    check(bounds.left>=0&&bounds.right<=bounds.innerW&&bounds.top>=0&&bounds.bottom<=bounds.innerH,theme.title+' overview card remains inside the viewport');
    check(bounds.client>0&&bounds.scroll>=bounds.client,theme.title+' knowledge groups remain in a scrollable card');
    await page.screenshot({path:path.join(out,id+'-theme.png')});
-   // Knowledge-group titles have a different hierarchy from theme titles.
-   // Hover only their parent theme's header; the selected panel remains open.
+   // Hover a real group: illuminate only its members, with its parent in the header.
    const packTitle=page.locator('.space-label.pack:visible').first();
    if(await packTitle.count()){
      const packId=(await packTitle.getAttribute('data-key')).slice(5);
-     const parent=atlas.packs.find(p=>p.id===packId)?.themeId;
+     const pack=atlas.packs.find(p=>p.id===packId),parent=pack.themeId;
+     const own=atlas.nodes.find(n=>n.packId===packId&&n.domainId!=='thinking');
+     const sibling=atlas.nodes.find(n=>n.themeId===parent&&n.packId!==packId&&n.domainId!=='thinking');
      const originalSelected=(await page.evaluate(()=>mathSpace.snapshot())).selected;
      const oldGroupLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
      const oldCamera=await camera();
      await packTitle.hover();
-     await page.waitForFunction(parent=>document.querySelector('#network-legend [data-id="'+parent+'"]')?.dataset.hover==='true',parent);
-     check(await page.locator('#network-legend [data-hover="true"]').count()===1,theme.title+' group hover highlights exactly its parent theme');
-     const onTheme=all.find(n=>n.domainId!=='thinking');
-     if(onTheme){const tint=await page.evaluate(id=>mathSpace.nodeTint('node:'+id),onTheme.id);check(tint&&tint.every(Number.isFinite),theme.title+' group hover keeps source-node preview available');}
-     check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover never selects or replaces detail panel');
-     const groupPreviewLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key.slice(5)));
-     check(groupPreviewLabels.every(id=>atlas.packs.some(p=>p.id===id&&p.themeId===parent)),theme.title+' group hover previews only its own theme groups');
-     check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover leaves the camera unchanged');
-     await page.mouse.move(800,400);
-     await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+     await page.waitForFunction(key=>mathSpace.hoverPreview().key===key,'pack:'+packId);
+     check(await page.locator('#network-legend [data-hover="true"]').count()===1,theme.title+' group hover highlights its parent theme');
+     check(await page.locator('#network-legend [data-id="'+parent+'"]').getAttribute('data-hover')==='true',theme.title+' group shows its real parent');
+     check((await page.evaluate(()=>mathSpace.hoverPreview())).edges.length===0,theme.title+' group hover does not invent direct node edges');
+     if(own&&sibling){
+       const ownTint=await page.evaluate(id=>mathSpace.nodeTint('node:'+id),own.id);
+       const siblingTint=await page.evaluate(id=>mathSpace.nodeTint('node:'+id),sibling.id);
+       check(diff(ownTint,siblingTint)>.02,theme.title+' group hover emphasizes its own source nodes over sibling groups');
+     }
+     const groupPreviewLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
+     check(groupPreviewLabels.every(key=>key==='pack:'+packId),theme.title+' group hover is group-specific, not a duplicate theme preview');
+     check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover keeps clicked theme detail');
+     check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover never moves the camera');
+     check((await page.locator('#network-view-description').textContent()).includes(pack.title),theme.title+' group context names the inspected group');
+     await page.mouse.move(4,4);
+     await page.waitForFunction(()=>mathSpace.hoverPreview().key===null&&document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+     const restored=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
+     check(JSON.stringify(restored)===JSON.stringify(oldGroupLabels),theme.title+' restores the clicked theme labels on mouse leave');
      check(await card.isVisible(),theme.title+' retains its clicked theme detail after group hover');
    }
   }
+  // Direct-node hover uses only real source edges and is reversible.
+  await page.locator('[data-action="overview"]').first().click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected===null);
+  await page.mouse.move(4,4);
+  const nodeCamera=await camera(),nodeSnapshot=JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()));
+  const nodeStorage=await page.evaluate(()=>JSON.stringify({...localStorage}));
+  const candidates=atlas.nodes.filter(n=>n.domainId!=='thinking'&&atlas.edges.some(e=>e.topicId===n.id||e.prerequisiteId===n.id));
+  const projected=await page.evaluate(nodes=>nodes.map(n=>({id:n.id,p:mathSpace.project('node:'+n.id)})).filter(v=>v.p?.visible&&v.p.x>390&&v.p.x<1250&&v.p.y>180&&v.p.y<700),candidates);
+  check(projected.length>0,'panorama exposes a real node that can be inspected without navigation');
+  const isolated=projected.map(v=>({...v,nearest:Math.min(...projected.filter(w=>w!==v).map(w=>Math.hypot(v.p.x-w.p.x,v.p.y-w.p.y)))})).sort((a,b)=>b.nearest-a.nearest);
+  let preview=null;
+  for(const target of isolated.slice(0,25)){
+    await page.mouse.move(target.p.x,target.p.y);
+    await page.waitForTimeout(75);
+    const candidate=await page.evaluate(()=>mathSpace.hoverPreview());
+    if(candidate.key?.startsWith('node:')&&candidate.edges.length){preview=candidate;break;}
+  }
+  check(!!preview,'canvas hover previews a real knowledge node');
+  const nodeId=preview.key.slice(5);
+  const mappedIds=new Set(atlas.nodes.filter(n=>n.domainId!=='thinking').map(n=>n.id));
+  const expected=atlas.edges.filter(e=>(e.topicId===nodeId||e.prerequisiteId===nodeId)&&mappedIds.has(e.topicId)&&mappedIds.has(e.prerequisiteId))
+    .map(e=>e.prerequisiteId+'>'+e.topicId).sort();
+  const actual=preview.edges.map(e=>e.from.slice(5)+'>'+e.to.slice(5)).sort();
+  check(JSON.stringify(actual)===JSON.stringify(expected),'node hover presents every mapped direct source edge and invents none');
+  check(preview.related.includes('node:'+nodeId),'node hover includes the hovered source node');
+  check((await page.locator('#network-view-description').textContent()).includes('/'),'node preview shows source group and parent theme');
+  check(JSON.stringify(await camera())===JSON.stringify(nodeCamera),'node hover does not pan, zoom or rotate');
+  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'node hover never modifies selected map snapshot');
+  await page.mouse.move(4,4);
+  await page.waitForFunction(()=>mathSpace.hoverPreview().key===null);
+  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'leaving node restores the panorama');
+  check(await page.evaluate(()=>JSON.stringify({...localStorage}))===nodeStorage,'hover records no learning behavior');
   // The rule also holds after the user explicitly changes the camera view.
   await page.locator('[data-action="network-view"][data-view="top"]').click();
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
