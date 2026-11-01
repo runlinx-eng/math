@@ -378,11 +378,12 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
 window.addEventListener('hashchange',()=>applyRoute());
 window.addEventListener('pagehide',saveView);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();else if(scene){readLearning();refreshLearning();scene.dirty=true;}});
-// The lesson overlay is a fixed workspace. Trackpad pinch gestures must not
-// accidentally magnify the surrounding web page when focus is outside iframe.
-document.addEventListener('wheel',e=>{if(journeyOpen&&e.ctrlKey&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
-window.addEventListener('gesturestart',e=>{if(journeyOpen&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
-window.addEventListener('gesturechange',e=>{if(journeyOpen&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
+// Only the WebGL canvas owns spatial zoom through OrbitControls.
+// Prevent browser-level pinch zoom anywhere in the page, including on future UI;
+// this does not stop wheel gestures reaching the canvas or scrolling UI panels.
+document.addEventListener('wheel',e=>{if(e.ctrlKey&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
+window.addEventListener('gesturestart',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
+window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#utility-drawer').hidden){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}else cardHide();}});
 
 async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
