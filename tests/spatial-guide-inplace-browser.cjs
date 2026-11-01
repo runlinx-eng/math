@@ -1,67 +1,64 @@
-// The optional panorama orientation stays in place and keeps all original
-// domain knowledge as faint context. Only genuine guide relationships stand out.
+// Five-step action-oriented guided walk on the unchanged source atlas.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/spatial-guide-inplace');
 const base='http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas';
-const checks=[],errors=[],check=(ok,description)=>{if(!ok)throw Error(description);checks.push(description);};
+const checks=[],errors=[],check=(ok,message)=>{if(!ok)throw Error(message);checks.push(message);};
 const same=(a,b,eps=1e-5)=>Math.abs(a-b)<eps;
-const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((v,i)=>same(v,b.position[i]))&&a.target.every((v,i)=>same(v,b.target[i]));
+const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>same(n,b.position[i]))&&a.target.every((n,i)=>same(n,b.target[i]));
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
- const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
- const page=await context.newPage();
- page.on('pageerror',e=>errors.push(String(e)));
- const snapshot=()=>page.evaluate(()=>mathSpace.snapshot());
+ const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+ const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
+ const snap=()=>page.evaluate(()=>mathSpace.snapshot());
+ const target=()=>page.locator('#guide-cues [data-action="guide-visit"]').first();
+ const visit=async()=>{await target().waitFor({state:'visible'});await target().click();};
  try{
-  await page.goto(base);
-  await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
-  const initial=await snapshot(),coordinates=JSON.stringify(initial.positions);
-  check(!initial.cameraTween&&initial.backgroundEdgesVisible,'overview starts as a stable full map');
-  await page.screenshot({path:path.join(out,'01-panorama-before-guide.png')});
+  await page.goto(base);await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
+  const initial=await snap(),positions=JSON.stringify(initial.positions);
   await page.locator('[data-action="guide-start"]').click();
-  await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===0&&mathSpace.snapshot().visibleNodes.length===537);
-  let focus=await snapshot();
-  check(samePose(initial,focus)&&focus.cameraTween===null,'starting orientation does not move, zoom or rotate camera');
-  check(focus.backgroundEdgesVisible,'full-map source relation outline remains a faint guide backdrop');
-  check(focus.visibleNodes.length===537,'all 537 domain nodes remain as background knowledge');
-  check(await page.locator('#guide-panel').isVisible(),'the step instructions are visible');
-   check(focus.guide.currentNodes.length===0&&focus.guide.edges.length===0,'first step shows the complete map without an isolated highlighted example');
-   check(await page.locator('#guide-panel h2').textContent()==='先看整张数学地图','first step explains how to read the overall structure');
-   check(await page.locator('.space-label.theme:visible').count()>=3,'the five-theme map remains recognizable during the guide');
-  check(await page.locator('.space-label.node:visible').count()<25,'background names remain muted instead of crowding the guide');
-  await page.screenshot({path:path.join(out,'02-guide-start-same-camera.png')});
-  for(let step=1;step<5;step++){
-   await page.locator('[data-action="guide-step"][data-step="'+step+'"]').click();
-   await page.waitForFunction(i=>mathSpace.snapshot().guide?.step===i&&mathSpace.snapshot().visibleNodes.length===537,step);
-   focus=await snapshot();
-   if(step===1){
-    const background=initial.visibleNodes.find(k=>!focus.guide.seenNodes.includes(k));
-    const current=focus.guide.currentNodes[0];
-    const radii=await page.evaluate(([a,b])=>({ordinary:mathSpace.nodeRadius(a),current:mathSpace.nodeRadius(b)}),[background,current]);
-    check(radii.ordinary>=4&&radii.ordinary<5,'background nodes remain small but readable');
-    check(radii.current>radii.ordinary+1,'example nodes are more prominent than the context');
-   }
-   check(samePose(initial,focus)&&!focus.cameraTween,'step '+step+' keeps the original camera pose and zoom');
-   check(focus.backgroundEdgesVisible&&focus.visibleNodes.length===537,'step '+step+' retains all faint panorama knowledge points');
-   check(JSON.stringify(focus.positions)===coordinates,'step '+step+' does not alter the fixed mathematics coordinates');
-   await page.screenshot({path:path.join(out,'0'+(step+2)+'-guide-step-'+step+'.png')});
-  }
-  // Restart and exit must not initiate a camera tween either.
-  await page.locator('[data-action="guide-reset"]').click();
-  focus=await snapshot();
-  check(focus.guide?.step===0&&samePose(initial,focus),'restarting the orientation never reframes the map');
+  await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===0);
+  let state=await snap();
+  check(samePose(initial,state)&&!state.cameraTween,'entering guide does not change camera');
+  check(state.guide.currentNodes.length===0&&state.guide.edges.length===0,'first step retains whole forest without a forced local route');
+  check((await page.locator('.space-label.theme:visible').count())>=3,'main themes remain legible');
+  check(await page.locator('.space-label.pack:visible').count()===0,'first step suppresses knowledge-group labels');
+  check(await page.locator('[data-action="guide-step"][data-step="1"]').isDisabled(),'cannot skip the first on-map action');
+  await page.screenshot({path:path.join(out,'01-forest.png')});
+  await visit();await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
+  check((await target().count())===1,'guide points to the next source location');
+  await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isDisabled(),'finding start alone is not a full source connection');
+  await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isEnabled(),'following a source edge unlocks the next discovery');
+  await page.locator('[data-action="guide-step"][data-step="2"]').click();
+  state=await snap();
+  check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
+  check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
+  await page.screenshot({path:path.join(out,'02-fork.png')});
+  await visit();check(await page.locator('[data-action="guide-step"][data-step="3"]').isDisabled(),'observing only one branch does not finish the fork');
+  await visit();check(await page.locator('[data-action="guide-step"][data-step="3"]').isEnabled(),'both source branches allow proceeding');
+  await page.locator('[data-action="guide-step"][data-step="3"]').click();
+  await visit();
+  check(await page.locator('[data-action="guide-step"][data-step="4"]').isEnabled(),'touching the convergence target completes the observation');
+  await page.locator('[data-action="guide-step"][data-step="4"]').click();
+  state=await snap();
+  check(state.guide.step===4&&await target().count()>=1,'free-choice step offers real outgoing source neighbors');
+  check(!await page.locator('[data-action="guide-step"][data-step="5"]').count(),'last stage is a user choice, not an automatic finish');
+  check(samePose(initial,state)&&JSON.stringify(state.positions)===positions,'all five steps preserve camera and original node coordinates');
+  await page.screenshot({path:path.join(out,'03-free-choice.png')});
+  await visit();
+  state=await snap();
+  check(state.guide===null&&state.selected?.startsWith('node:')&&state.visibleNodes.length===537,'choosing a real neighbor returns to ordinary free exploration on the same map');
+  check(samePose(initial,state),'choosing an in-view guide target does not jump camera');
+  await page.locator('[data-action="guide-start"]').click();
+  state=await snap();
+  check(state.guide?.step===0&&samePose(initial,state),'restarting guide remains in place');
   await page.locator('[data-action="guide-exit"]').click();
-  const exited=await snapshot();
-  check(exited.guide===null&&!exited.cameraTween&&samePose(initial,exited),'exiting guide does not cause a camera jump');
-  check(JSON.stringify(exited.positions)===coordinates,'all original knowledge coordinates survive the complete guide');
+  state=await snap();
+  check(state.guide===null&&samePose(initial,state),'exiting guide keeps camera unchanged');
   check(errors.length===0,'no uncaught browser errors');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false,guide:5,initialZoom:initial.cameraZoom,visibleGuideNodes:537},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false,guide:5,visibleNodes:537},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
- }catch(error){
-  await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(error),childTrial:false},null,2));
-  console.error(error.stack);process.exitCode=1;
- }finally{await context.close();await browser.close();}
+ }catch(e){await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(e),childTrial:false},null,2));console.error(e.stack);process.exitCode=1;}
+ finally{await context.close();await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
