@@ -197,7 +197,16 @@ function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene
 }
 function updateOverlays(){
   positionGuide();
-  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){card.style.left='30px';card.style.top=`${$('#network-guide').getBoundingClientRect().bottom+12}px`;}else{card.style.left=`${left}px`;card.style.top=`${docked?142:Math.max(110,Math.min(innerHeight-height-145,p.y-height*.25))}px`;}}}
+  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){
+      // The browser can have a left vertical-tabs/sidebar overlay. Keep the
+      // knowledge card in a safe interior column, never behind that chrome.
+      const inset=innerWidth>900?124:innerWidth>620?96:18;
+      const available=Math.max(180,innerWidth-inset-18);
+      card.style.maxWidth=`${available}px`;
+      card.style.left=`${inset}px`;
+      const guide=$('#network-guide'),guideBottom=guide&&!guide.hidden?guide.getBoundingClientRect().bottom:0;
+      card.style.top=`${Math.max(innerWidth>620?170:100,guideBottom+14)}px`;
+    }else{card.style.left=`${left}px`;card.style.top=`${docked?142:Math.max(110,Math.min(innerHeight-height-145,p.y-height*.25))}px`;}}}
   const tethers=[];for(const p of panels.values()){
     const projected=scene.project(p.anchor),source=scene.project(space.nodes.get(p.id).position),far=projected.distance>1450,compact=innerWidth<760;
     const visible=projected.visible&&(!compact||activePanel===p.id);p.el.hidden=!visible;if(!visible)continue;
