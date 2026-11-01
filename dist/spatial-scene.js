@@ -57,7 +57,7 @@ export class SpatialScene {
     const sun=new THREE.DirectionalLight(0xfff7e9,2.8);sun.position.set(-350,600,650);this.scene.add(sun);
     const fill=new THREE.DirectionalLight(0xd8e8ef,.75);fill.position.set(400,-100,-350);this.scene.add(fill);
     const grid=new THREE.GridHelper(6000,60,0xc4cec8,0xd2d8d2);grid.position.y=-400;grid.material.transparent=true;grid.material.opacity=.045;this.scene.add(grid);
-    this.pickables=[];this.nodeList=[...space.nodes.values()];
+    this.pickables=[];this.nodeList=[...space.nodes.values()];this.viewTransition=null;
     this.overviewStructure=this.relationshipMap?buildOverviewStructure(space):{links:[],landmarks:[],nodeRoles:new Map(),stats:{selected:0}};
     this.structureMode='all';
     // Each node is a fixed point in 3D space, not a lit 3D ball.
@@ -234,9 +234,19 @@ export class SpatialScene {
       if(valid.at(-1)===view.selected)this.explorationTrail=valid;
       this.rebuildRelations();
     }if(this.global){this.camera.zoom=view.cameraZoom||1;this.setTrace(view.traceMode||'direct');}this.setRelations(view.relationMode||(this.global&&o?.kind==='node'?'source':'off'));this.fly(view.position,view.target,animated?850:0);}
-  overview(animated=true){if(this.network){if(!this.global)this.networkVersion=this.defaultNetworkVersion;this.networkView='oblique';this.select(null);this.fitNetworkView(animated);return;}const factor=Math.max(1,1/this.camera.aspect);this.select(null);this.fly(this.network?[345*factor,310*factor,1150*factor]:[260*factor,160*factor,1580*factor],this.network?[0,0,0]:[0,-15,-70],animated?1100:0);}
-  focus(key,{animate=true}={}){const o=this.space.byKey.get(key);if(!o)return;const overview=this.global&&!this.selected&&this.wholeMapVisible(),enteringFocus=this.relationshipMap&&!this.selected;this.select(key);
-    if(this.global){if(o.kind==='node'){if(!this.canLocate(o))return;const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
+  overview(animated=true){if(this.network){
+    if(this.localRelationshipFocus&&animated)this.beginViewTransition('to-overview',1050);
+    if(!this.global)this.networkVersion=this.defaultNetworkVersion;
+    this.networkView='oblique';this.select(null);this.fitNetworkView(animated);return;}const factor=Math.max(1,1/this.camera.aspect);this.select(null);this.fly(this.network?[345*factor,310*factor,1150*factor]:[260*factor,160*factor,1580*factor],this.network?[0,0,0]:[0,-15,-70],animated?1100:0);}
+  focus(key,{animate=true}={}){const o=this.space.byKey.get(key);if(!o)return;
+    const overview=this.global&&!this.selected&&this.wholeMapVisible(),enteringFocus=this.relationshipMap&&!this.selected;
+    const previous=this.selected;
+    const adjacent=this.localRelationshipFocus&&o.kind==='node'&&previous!==o.key&&relationsFor(this.space,previous)
+      .some(l=>(l.from===previous&&l.to===o.key)||(l.to===previous&&l.from===o.key));
+    if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',1050);
+    else this.viewTransition=null;
+    this.select(key);
+    if(this.global){if(o.kind==='node'){if(!this.canLocate(o)||adjacent)return;const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
     if(this.network&&o.kind==='node'){if(this.networkView==='relations')this.fitNetworkView(animate);return;}
     const ratio=Math.max(1,.85/this.camera.aspect),d=(o.kind==='theme'?570:o.kind==='pack'?Math.max(225,o.radius*4.7):175)*ratio;
     const direction=this.camera.position.clone().sub(this.controls.target).normalize();this.fly(V(o.position).addScaledVector(direction,d).toArray(),o.position,animate?1000:0);
@@ -262,9 +272,21 @@ export class SpatialScene {
     this.structureMode=mode;this.rebuildRelations();this.dirty=true;
   }
   get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&this.structureMode!=='off';}
+  transitionProgress(time=performance.now()){
+    const t=this.viewTransition;if(!t)return 1;
+    const p=clamp((time-t.start)/t.duration,0,1);
+    return p*p*(3-2*p);
+  }
+  beginViewTransition(kind,duration=1050){
+    if(!this.relationshipMap||matchMedia('(prefers-reduced-motion: reduce)').matches){this.viewTransition=null;return;}
+    this.viewTransition={kind,start:performance.now(),duration,fromKeys:new Set(this.visibleNodes||[])};
+    this.dirty=true;
+  }
   updateStructureLines(){
     if(!this.structureLayer)return;
-    this.structureLayer.hidden=!this.structuralOverview;
+    const leaving=this.viewTransition?.kind==='to-focus'&&this.structureMode!=='off';
+    this.structureLayer.hidden=!this.structuralOverview&&!leaving;
+    this.structureLayer.style.opacity=String(leaving?1-this.transitionProgress():this.viewTransition?.kind==='to-overview'?this.transitionProgress():1);
     if(this.structureLayer.hidden){this.structureLayer.replaceChildren();return;}
     this.structureLayer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     const seen=new Set(),html=[];
@@ -293,12 +315,12 @@ export class SpatialScene {
       if(!this.selected)return true;
     }
     if(this.global)return this.showAllNodes||o.key===this.selected||this.related?.has(o.key)||this.completedNodes?.has(o.id);if(this.networkView==='relations')return this.space.relationIds.has(o.id);const selected=this.space.byKey.get(this.selected);return this.showAllNodes||this.completedNodes?.has(o.id)||o.key===this.selected||this.related?.has(o.key)||(selected?.kind==='pack'&&(this.selectedRoute()===undefined?routeForPack(selected.id):this.selectedRoute())?.ids.includes(lessonForTopic(o.id)));}
-  fly(position,target,duration=900){if(matchMedia('(prefers-reduced-motion: reduce)').matches)duration=0;
+  fly(position,target,duration=900,zoom=null){if(matchMedia('(prefers-reduced-motion: reduce)').matches)duration=0;
     this.tween=null;
     // A saved pose or named view must not inherit the previous drag's momentum.
     const damping=this.controls.enableDamping;this.controls.enableDamping=false;this.controls.update();this.controls.enableDamping=damping;
-    if(!duration){this.camera.position.copy(V(position));this.controls.target.copy(V(target));this.controls.update();this.updateProjection();this.camera.updateMatrixWorld();this.dirty=true;this.callbacks.onSettled?.();return;}
-    this.tween={start:performance.now(),duration,from:this.camera.position.clone(),to:V(position),fromTarget:this.controls.target.clone(),toTarget:V(target)};
+    if(!duration){this.camera.position.copy(V(position));this.controls.target.copy(V(target));if(zoom!==null)this.camera.zoom=zoom;this.controls.update();this.updateProjection();this.camera.updateMatrixWorld();this.dirty=true;this.callbacks.onSettled?.();return;}
+    this.tween={start:performance.now(),duration,from:this.camera.position.clone(),to:V(position),fromTarget:this.controls.target.clone(),toTarget:V(target),fromZoom:this.camera.zoom,toZoom:zoom===null?this.camera.zoom:zoom};
   }
   zoom(factor){if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
   front(){if(this.network&&this.networkView!=='legacy'){if(this.localRelationshipFocus)this.fitGlobalView(true,this.nodeList.filter(n=>this.focusKeys().has(n.key)));else this.fitNetworkView();return;}const distance=this.camera.position.distanceTo(this.controls.target);this.fly(this.controls.target.clone().add(new THREE.Vector3(0,0,distance)).toArray(),this.controls.target.toArray(),700);}
@@ -353,8 +375,8 @@ export class SpatialScene {
     // use the same source coordinates; only the orthographic camera changes.
     const pixels=Math.min((w-72)/Math.max(160,maxX-minX),(h-56)/Math.max(160,maxY-minY));
     const target=right.clone().multiplyScalar((minX+maxX)/2-(left-rightMargin)/(2*pixels)).addScaledVector(up,(minY+maxY)/2+(top-bottom)/(2*pixels)).addScaledVector(dir,center.dot(dir));
-    const distance=2200;this.camera.zoom=pixels*2*distance*Math.tan(Math.PI/9)/this.height;
-    this.fly(target.clone().addScaledVector(dir,distance).toArray(),target.toArray(),animated?850:0);
+    const distance=2200,targetZoom=pixels*2*distance*Math.tan(Math.PI/9)/this.height;
+    this.fly(target.clone().addScaledVector(dir,distance).toArray(),target.toArray(),animated?1050:0,targetZoom);
   }
 
   basis(){const right=new THREE.Vector3(1,0,0).applyQuaternion(this.camera.quaternion),up=new THREE.Vector3(0,1,0).applyQuaternion(this.camera.quaternion);return {right,up,direction:this.camera.position.clone().sub(this.controls.target).normalize()};}
@@ -371,16 +393,21 @@ export class SpatialScene {
     this.dirty=true;
   }
   paintObjects(){
-    const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview;
+    const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+      transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.65:.15;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;
     for(let i=0;i<this.nodeList.length;i++){
       const o=this.nodeList[i],s=this.states?.[i]||{progress:'unseen',evidence:'none'},d=this.camera.position.distanceTo(V(o.position))/(this.global?this.camera.zoom:1),focus=emphasis(o);
       const visible=this.nodeVisible(o);if(visible)this.visibleNodes.add(o.key);
-      const level=visible?(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)):0,match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
+      const oldVisible=fadeOut&&transition.fromKeys.has(o.key);
+      const visualAmount=fadeOut?(visible?1:oldVisible?1-progress:0):fadeIn?(transition.fromKeys.has(o.key)?1:progress):(visible?1:0);
+      const level=visualAmount*(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)),match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
       const structuralRole=this.overviewStructure.nodeRoles.get(o.id);
       const structuralNode=structureActive&&(this.structureMode==='all'?!!structuralRole:!!this.overviewStructure.roleNodeSets?.get(this.structureMode)?.has(o.id));
       color.set(o.color).lerp(paper,1-(structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus*(match?1:.16));
+      if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
+      if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
       const size=(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+1.6*cap)*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -399,7 +426,7 @@ export class SpatialScene {
   }
   rebuildRelations(){for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
-    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?!this.selected:this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
+    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?(!this.selected||this.viewTransition?.kind==='to-focus'):this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
     let links=this.guideFocus?this.guideFocus.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e],guideCurrent:this.guideFocus.current.has(e.prerequisiteId+'>'+e.topicId)})):this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
     if(this.guideFocus){const shown=new Set(links.map(l=>l.from+'>'+l.to));for(const l of personalRelations(this.space.atlas,null,this.litConnections||[],null))if(l.lit&&!shown.has(l.from+'>'+l.to))links.push({...l,guideCurrent:false});}
@@ -480,8 +507,25 @@ export class SpatialScene {
   }
   frame(time){if(document.hidden)return;let moving=false;
     if(this.tween){const t=this.tween,x=clamp((time-t.start)/t.duration,0,1),e=x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
-      this.camera.position.lerpVectors(t.from,t.to,e);this.controls.target.lerpVectors(t.fromTarget,t.toTarget,e);this.dirty=true;moving=true;
+      this.camera.position.lerpVectors(t.from,t.to,e);this.controls.target.lerpVectors(t.fromTarget,t.toTarget,e);
+      this.camera.zoom=t.fromZoom+(t.toZoom-t.fromZoom)*e;this.dirty=true;moving=true;
       if(x===1){this.tween=null;this.callbacks.onSettled?.();}}
+    if(this.viewTransition){
+      const t=this.viewTransition,p=this.transitionProgress(time);
+      this.dirty=true;moving=true;
+      if(this.networkEdges){
+        this.networkEdges.visible=t.kind==='to-focus'||!this.selected;
+        const base=this.structuralOverview?.023:this.relationshipMap?.085:.16;
+        this.networkEdges.material.opacity=base*(t.kind==='to-focus'?1-p:p);
+        this.networkSoftEdges.visible=this.networkEdges.visible;
+        this.networkSoftEdges.material.opacity=.055*(t.kind==='to-focus'?1-p:p);
+      }
+      for(const edge of this.edgesGroup.children)if(edge.userData.relation&&edge.material){
+        const original=this.previewKey?(edge.userData.relation.includes(this.previewKey)?1:.12):edge.userData.baseOpacity??edge.material.opacity;
+        edge.material.opacity=original*(t.kind==='to-focus'?p:1-p);
+      }
+      if(time>=t.start+t.duration){this.viewTransition=null;this.rebuildRelations();this.dirty=true;}
+    }
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
     const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar((o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
