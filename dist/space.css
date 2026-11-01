@@ -274,3 +274,15 @@ body.guide-mode .guide-panel .guide-prompt{font-size:13px;line-height:1.65}
 /* Activity type is explained in the lesson/detail, not encoded as another knowledge-node shape. */
 body[data-network-version="53"][data-map-focus="node"] .space-label.node .activity-glyph,
 body.guide-mode .space-label.node .activity-glyph{display:none!important}
+
+/* Focus filters work from actual prerequisites, not camera distance or color. */
+.focus-filter{background:#f1f5ef;border:1px solid #d7e3d6;border-radius:11px;padding:10px 11px;margin:8px 0 12px;display:grid;gap:11px}
+.focus-filter-row{display:grid;gap:5px}
+.focus-filter-row>strong{font-size:11px;font-weight:650;color:#517366}
+.focus-filter-row>div{display:flex;gap:4px;flex-wrap:wrap}
+.focus-filter-button{border:1px solid #d7dfd5;border-radius:7px;background:#fffef9;color:#587063;font-size:11px;padding:6px 8px;line-height:1.25;cursor:pointer}
+.focus-filter-button[aria-pressed="true"]{background:#2b6155;color:#fff;border-color:#2b6155;font-weight:650}
+.focus-filter-button:focus-visible{outline:2px solid #568f85;outline-offset:2px}
+.focus-filter-count{margin:0!important;padding:0;color:#58746b!important;font-size:11px!important;line-height:1.5!important}
+body[data-network-version="53"] .overview-structure-controls button[data-structure="all"]{opacity:.83}
+body[data-network-version="53"] .network-explore .network-relations:not([open]){opacity:.88}
