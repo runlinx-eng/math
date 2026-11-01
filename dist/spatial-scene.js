@@ -6,6 +6,7 @@ import {applyNetworkView} from './spatial-network.js';
 import {GLOBAL_VERSION,restoreNetworkCoordinates} from './spatial-global.js';
 import {overviewShellCandidates} from './spatial-relationship.js';
 import {buildOverviewStructure,OVERVIEW_ROLES} from './spatial-overview-structure.js';
+import {buildFocusFilter,FOCUS_DIRECTIONS,FOCUS_DEPTHS} from './spatial-focus-filter.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {traceCritical} from './spatial-trace.js';
 import {ACTIVITIES,activityIds} from './exploration-content.js';
@@ -59,7 +60,7 @@ export class SpatialScene {
     const grid=new THREE.GridHelper(6000,60,0xc4cec8,0xd2d8d2);grid.position.y=-400;grid.material.transparent=true;grid.material.opacity=.045;this.scene.add(grid);
     this.pickables=[];this.nodeList=[...space.nodes.values()];this.viewTransition=null;
     this.overviewStructure=this.relationshipMap?buildOverviewStructure(space):{links:[],landmarks:[],nodeRoles:new Map(),stats:{selected:0}};
-    this.structureMode='all';
+    this.structureMode='origin';this.focusDirection='both';this.focusDepth='1';this.focusView=null;
     // Each node is a fixed point in 3D space, not a lit 3D ball.
     // Face a flat color disc toward the camera; leave surrounding state rings separate.
     const nodeGeometry=new THREE.CircleGeometry(1,24);
@@ -232,8 +233,8 @@ export class SpatialScene {
     let o=isNodeMesh(hit.object)?this.nodeList[hit.instanceId]:this.space.byKey.get(hit.object.userData.key);
     const d=this.camera.position.distanceTo(V(o.position));if(!this.network&&o.kind==='node'&&d>350)o=this.space.packs.get(o.packId);if(!this.network&&d>1000)o=this.space.themes.get(o.themeId);return o.key;
   }
-  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom,traceMode:this.traceMode}:{}),...(this.relationshipMap?{edgeDisplay:this.edgeDisplay}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.relationshipMap&&this.explorationTrail.length?{explorationTrail:[...this.explorationTrail]}:{}),...(this.relationshipMap?{overviewShellsEnabled:this.overviewShellsEnabled,structureMode:this.structureMode}:{}),...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
-  restore(view,animated=false){this.viewTransition=null;if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';if(this.relationshipMap){this.edgeDisplay=['outline','critical','all'].includes(view.edgeDisplay)?view.edgeDisplay:'all';this.structureMode=['all','origin','fork','join','off'].includes(view.structureMode)?view.structureMode:'all';}}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;if(this.relationshipMap)this.overviewShellsEnabled=view.overviewShellsEnabled===true;this.explorationTrail=[];this.select(view.selected);
+  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom,traceMode:this.traceMode}:{}),...(this.relationshipMap?{edgeDisplay:this.edgeDisplay}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.relationshipMap&&this.explorationTrail.length?{explorationTrail:[...this.explorationTrail]}:{}),...(this.relationshipMap?{overviewShellsEnabled:this.overviewShellsEnabled,structureMode:this.structureMode,overviewFilterVersion:1,focusDirection:this.focusDirection,focusDepth:this.focusDepth}:{}),...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
+  restore(view,animated=false){this.viewTransition=null;if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';if(this.relationshipMap){this.edgeDisplay=['outline','critical','all'].includes(view.edgeDisplay)?view.edgeDisplay:'all';this.structureMode=view.overviewFilterVersion===1&&['all','origin','fork','join','off'].includes(view.structureMode)?view.structureMode:'origin';this.focusDirection=FOCUS_DIRECTIONS.includes(view.focusDirection)?view.focusDirection:'both';this.focusDepth=FOCUS_DEPTHS.includes(String(view.focusDepth))?String(view.focusDepth):'1';}}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;if(this.relationshipMap)this.overviewShellsEnabled=view.overviewShellsEnabled===true;this.explorationTrail=[];this.select(view.selected);
     if(this.relationshipMap&&this.space.byKey.get(view.selected)?.kind==='node'&&Array.isArray(view.explorationTrail)){
       const trail=view.explorationTrail.filter(key=>this.space.byKey.get(key)?.kind==='node').slice(-16),valid=[];
       for(const key of trail){if(!valid.length||relationsFor(this.space,valid.at(-1)).some(l=>(l.from===valid.at(-1)&&l.to===key)||(l.to===valid.at(-1)&&l.from===key)))valid.push(key);else break;}
@@ -271,6 +272,13 @@ export class SpatialScene {
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
   updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
+  setFocusFilter(direction=this.focusDirection,depth=this.focusDepth){
+    if(!this.relationshipMap||!this.space.byKey.get(this.selected)?.kind==='node'||this.guideFocus)return;
+    this.focusDirection=FOCUS_DIRECTIONS.includes(direction)?direction:'both';
+    this.focusDepth=FOCUS_DEPTHS.includes(String(depth))?String(depth):'1';
+    this.traceMode='direct';this.traceResult=null;this.previewKey=null;
+    this.rebuildRelations();this.dirty=true;
+  }
   setRelations(mode){this.relationMode=['source','route'].includes(mode)?mode:'off';this.rebuildRelations();this.dirty=true;}
   setEdgeDisplay(mode){if(!this.relationshipMap||!['outline','critical','all'].includes(mode)||mode===this.edgeDisplay)return;this.edgeDisplay=mode;this.refreshNetworkEdges();this.rebuildRelations();this.dirty=true;}
   setAllNodes(show){this.showAllNodes=!!show;this.rebuildRelations();this.dirty=true;}
@@ -319,7 +327,7 @@ export class SpatialScene {
     if(this.relationshipMap){
       if(this.guideFocus)return o.key===this.selected||this.guideFocus.seenNodes.has(o.key)||this.guideFocus.currentNodes.has(o.key);
       if(this.traceResult)return o.key===this.selected||this.traceResult.distances.has(o.id);
-      if(this.localRelationshipFocus)return o.key===this.selected||this.related?.has(o.key);
+      if(this.localRelationshipFocus)return o.key===this.selected||this.related?.has(o.key)||this.focusView?.ids.has(o.id);
       if(!this.selected)return true;
     }
     if(this.global)return this.showAllNodes||o.key===this.selected||this.related?.has(o.key)||this.completedNodes?.has(o.id);if(this.networkView==='relations')return this.space.relationIds.has(o.id);const selected=this.space.byKey.get(this.selected);return this.showAllNodes||this.completedNodes?.has(o.id)||o.key===this.selected||this.related?.has(o.key)||(selected?.kind==='pack'&&(this.selectedRoute()===undefined?routeForPack(selected.id):this.selectedRoute())?.ids.includes(lessonForTopic(o.id)));}
@@ -438,11 +446,14 @@ export class SpatialScene {
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
     this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
   }
-  rebuildRelations(){this.focusVisualLinks=[];for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
+  rebuildRelations(){this.focusVisualLinks=[];this.focusView=this.localRelationshipFocus?
+    buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth):null;
+    for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
     if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?(!this.selected||this.viewTransition?.kind==='to-focus'):this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
     let links=this.guideFocus?this.guideFocus.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e],guideCurrent:this.guideFocus.current.has(e.prerequisiteId+'>'+e.topicId)})):this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
+    if(this.focusView&&this.relationMode!=='off')links=this.focusView.links.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]}));
     if(this.guideFocus){const shown=new Set(links.map(l=>l.from+'>'+l.to));for(const l of personalRelations(this.space.atlas,null,this.litConnections||[],null))if(l.lit&&!shown.has(l.from+'>'+l.to))links.push({...l,guideCurrent:false});}
     if(this.localRelationshipFocus&&this.explorationTrail.length>1){
       const seen=new Set(links.map(l=>l.from+'>'+l.to));
@@ -526,6 +537,15 @@ export class SpatialScene {
         else if(o.kind==='pack')show=selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||selected?.kind==='theme'&&o.themeId===selected.id||isSelected);
         else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey||!!landmark);
         if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
+        if(this.relationshipMap&&!selected&&!this.guideFocus){
+          if(o.kind==='node')show=!!landmark||o.key===this.hovered;
+          else if(o.kind==='pack')show=false;
+        }
+        if(this.localRelationshipFocus&&o.kind==='node'&&this.focusView){
+          const hop=this.focusView.distances.get(o.id);
+          show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop!==undefined&&hop<=1;
+          if(hop===undefined&&this.explorationTrail.includes(o.key))show=false;
+        }
         if(this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
         if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
@@ -536,7 +556,7 @@ export class SpatialScene {
       if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
-    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&this.traceResult?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
+    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
       const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
       const titleSpan=el.querySelector('span');if(titleSpan&&titleSpan.textContent!==wantedTitle)titleSpan.textContent=wantedTitle;
