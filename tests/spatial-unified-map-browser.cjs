@@ -70,7 +70,7 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    let guide=await snap();
    check(samePose(returned,guide)&&guide.visibleNodes.length===537,'guide reuses the last panorama camera and all background points');
    check(guide.zoomEnabled&&await page.locator('.tool-rail [data-action="zoom"]').first().isVisible(),'guide stays in the same zoomable 3D map');
-   await page.locator('[data-action="guide-step"][data-step="1"]').click();
+   await page.locator('#guide-cues [data-action="guide-visit"]').first().click();
    await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
    guide=await snap();
    check(samePose(returned,guide)&&guide.visibleNodes.length===537,'guide advances without camera jump or removing surrounding nodes');
