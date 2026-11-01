@@ -37,12 +37,12 @@ const close=(x,y,tolerance=.00001)=>Math.abs(x-y)<=tolerance;
     check(first.focusTransition?.kind==='to-focus'&&first.focusTransition.progress>0&&first.focusTransition.progress<1,'focus transition has an intermediate frame');
     check(first.cameraZoom>Math.min(enter.cameraTween.fromZoom,enter.cameraTween.toZoom)&&first.cameraZoom<Math.max(enter.cameraTween.fromZoom,enter.cameraTween.toZoom),'zoom moves continuously through an intermediate value');
     check(radiusFirst>0,'unrelated locations fade rather than disappearing on click');
-    await page.screenshot({path:path.join(out,'02-mid-zoom.png')});
-    await page.waitForTimeout(350);
+    // Measure the next frame before screenshots: GPU screenshot capture may take longer than the animation.
+    await page.waitForTimeout(160);
     const second=await snap();
     check(second.focusTransition?.progress>first.focusTransition.progress,'opacity fade advances with animation');
     check(!close(second.cameraZoom,first.cameraZoom,.00001),'zoom keeps changing across intermediate frames');
-    await page.screenshot({path:path.join(out,'03-late-zoom.png')});
+    await page.screenshot({path:path.join(out,'02-mid-zoom.png')});
     await page.waitForFunction(()=>mathSpace.snapshot().focusTransition===null&&mathSpace.snapshot().cameraTween===null,{timeout:5000});
     const focused=await snap(),radiusFinal=await page.evaluate(key=>mathSpace.nodeRadius(key),irrelevant);
     check(focused.visibleNodes.length<30&&!focused.backgroundEdgesVisible,'focus settles into the local relationships');
