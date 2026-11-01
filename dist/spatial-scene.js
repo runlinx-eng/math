@@ -4,6 +4,7 @@ import {relationsFor} from './spatial-model.js';
 import {placeLabel} from './spatial-labels.js';
 import {applyNetworkView} from './spatial-network.js';
 import {GLOBAL_VERSION,restoreNetworkCoordinates} from './spatial-global.js';
+import {overviewShellCandidates} from './spatial-relationship.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {traceCritical} from './spatial-trace.js';
 import {ACTIVITIES,activityIds} from './exploration-content.js';
@@ -101,6 +102,30 @@ export class SpatialScene {
       this.networkSoftEdges=makeEdges(space.atlas.edges.filter(e=>e.strength!=='hard'),true);
     }
     this.globalRegions=new THREE.Group();this.scene.add(this.globalRegions);
+    this.overviewShellsEnabled=false;
+    this.overviewShells=[];
+    this.overviewShellGroup=new THREE.Group();
+    this.scene.add(this.overviewShellGroup);
+    if(this.relationshipMap){
+      for(const shell of overviewShellCandidates(space)){
+        const theme=space.themes.get(shell.themeId),group=new THREE.Group();
+        group.position.copy(V(shell.center));
+        const fill=new THREE.Mesh(new THREE.SphereGeometry(shell.radius,20,12),
+          new THREE.MeshBasicMaterial({color:theme.color,transparent:true,opacity:.028,side:THREE.BackSide,depthWrite:false}));
+        group.add(fill);
+        for(const plane of ['xy','xz','yz']){
+          const points=Array.from({length:65},(_,i)=>{
+            const angle=i*Math.PI*2/64,a=Math.cos(angle)*shell.radius,b=Math.sin(angle)*shell.radius;
+            return plane==='xy'?new THREE.Vector3(a,b,0):plane==='xz'?new THREE.Vector3(a,0,b):new THREE.Vector3(0,a,b);
+          });
+          const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),
+            new THREE.LineDashedMaterial({color:theme.color,transparent:true,opacity:.24,dashSize:7,gapSize:6,depthWrite:false}));
+          line.computeLineDistances();group.add(line);
+        }
+        this.overviewShellGroup.add(group);
+        this.overviewShells.push(shell);
+      }
+    }
     this.globalAxis=new THREE.Group();this.scene.add(this.globalAxis);
     if(space.globalInfo){
       for(const t of space.themes.values()){
@@ -196,8 +221,8 @@ export class SpatialScene {
     let o=isNodeMesh(hit.object)?this.nodeList[hit.instanceId]:this.space.byKey.get(hit.object.userData.key);
     const d=this.camera.position.distanceTo(V(o.position));if(!this.network&&o.kind==='node'&&d>350)o=this.space.packs.get(o.packId);if(!this.network&&d>1000)o=this.space.themes.get(o.themeId);return o.key;
   }
-  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom,traceMode:this.traceMode}:{}),...(this.relationshipMap?{edgeDisplay:this.edgeDisplay}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.relationshipMap&&this.explorationTrail.length?{explorationTrail:[...this.explorationTrail]}:{}),...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
-  restore(view,animated=false){if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';if(this.relationshipMap)this.edgeDisplay=['outline','critical','all'].includes(view.edgeDisplay)?view.edgeDisplay:'all';}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;this.explorationTrail=[];this.select(view.selected);
+  snapshot(){return {...(this.network?{networkView:this.networkView,networkVersion:this.networkVersion,...(this.global?{cameraZoom:this.camera.zoom,traceMode:this.traceMode}:{}),...(this.relationshipMap?{edgeDisplay:this.edgeDisplay}:{})}:{}),position:this.camera.position.toArray(),target:this.controls.target.toArray(),selected:this.selected,showAllNodes:this.showAllNodes,relationMode:this.relationMode,...(this.relationshipMap&&this.explorationTrail.length?{explorationTrail:[...this.explorationTrail]}:{}),...(this.relationshipMap?{overviewShellsEnabled:this.overviewShellsEnabled}:{}),...(this.learningRouteId?{learningRouteId:this.learningRouteId}:{}),...(this.learningSectionId?{learningSectionId:this.learningSectionId,learningRoutePage:this.learningRoutePage||0}:{})};}
+  restore(view,animated=false){if(this.network){this.networkVersion=view.networkVersion||(view.networkView?48:47);this.networkView=view.networkView||'legacy';if(this.relationshipMap)this.edgeDisplay=['outline','critical','all'].includes(view.edgeDisplay)?view.edgeDisplay:'all';}const o=this.space.byKey.get(view.selected),r=ROUTES.find(r=>r.id===view.learningRouteId);this.learningRouteId=r&&(o?.kind==='pack'&&r.packIds.includes(o.id)||o?.kind==='node'&&r.ids.includes(lessonForTopic(o.id)))?r.id:null;this.learningSectionId=this.learningRouteId?r.section||null:o?.kind==='pack'&&ROUTES.some(x=>x.section===view.learningSectionId&&x.packIds.includes(o.id))?view.learningSectionId:null;this.learningRoutePage=this.learningRouteId?Math.floor(ROUTES.filter(x=>x.section===this.learningSectionId).findIndex(x=>x.id===this.learningRouteId)/3):Math.max(0,Math.min(Number.isInteger(view.learningRoutePage)?view.learningRoutePage:0,Math.floor((ROUTES.filter(x=>x.section===this.learningSectionId).length-1)/3)));if(typeof view.showAllNodes==='boolean')this.showAllNodes=view.showAllNodes;if(this.relationshipMap)this.overviewShellsEnabled=view.overviewShellsEnabled===true;this.explorationTrail=[];this.select(view.selected);
     if(this.relationshipMap&&this.space.byKey.get(view.selected)?.kind==='node'&&Array.isArray(view.explorationTrail)){
       const trail=view.explorationTrail.filter(key=>this.space.byKey.get(key)?.kind==='node').slice(-16),valid=[];
       for(const key of trail){if(!valid.length||relationsFor(this.space,valid.at(-1)).some(l=>(l.from===valid.at(-1)&&l.to===key)||(l.to===valid.at(-1)&&l.from===key)))valid.push(key);else break;}
@@ -226,6 +251,7 @@ export class SpatialScene {
   setRelations(mode){this.relationMode=['source','route'].includes(mode)?mode:'off';this.rebuildRelations();this.dirty=true;}
   setEdgeDisplay(mode){if(!this.relationshipMap||!['outline','critical','all'].includes(mode)||mode===this.edgeDisplay)return;this.edgeDisplay=mode;this.refreshNetworkEdges();this.rebuildRelations();this.dirty=true;}
   setAllNodes(show){this.showAllNodes=!!show;this.rebuildRelations();this.dirty=true;}
+  setOverviewShells(enabled){this.overviewShellsEnabled=!!enabled&&this.overviewShells.length>0;this.dirty=true;}
   setLearningSection(id){this.learningSectionId=id;this.learningRoutePage=0;this.learningRouteId=null;this.rebuildRelations();this.dirty=true;}
   setLearningRoute(id){this.learningRouteId=id;if(id){this.learningSectionId=ROUTES.find(r=>r.id===id)?.section||null;this.learningRoutePage=Math.floor(ROUTES.filter(r=>r.section===this.learningSectionId).findIndex(r=>r.id===id)/3);}this.rebuildRelations();this.dirty=true;}
   selectedRoute(){const o=this.space.byKey.get(this.selected);return o?.kind==='pack'&&this.learningRouteId?ROUTES.find(r=>r.id===this.learningRouteId):o?.kind==='pack'&&routesForPack(o.id).length>1?null:undefined;}
@@ -324,7 +350,7 @@ export class SpatialScene {
       const o=this.nodeList[i],s=this.states?.[i]||{progress:'unseen',evidence:'none'},d=this.camera.position.distanceTo(V(o.position))/(this.global?this.camera.zoom:1),focus=emphasis(o);
       const visible=this.nodeVisible(o);if(visible)this.visibleNodes.add(o.key);
       const level=visible?(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)):0,match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
-      color.set(o.color).lerp(paper,1-(this.network ? .87 : s.progress==='completed' ? .92 : .68)*focus*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(this.relationshipMap&&!selected?.kind ? .68 : this.network ? .87 : s.progress==='completed' ? .92 : .68)*focus*(match?1:.16));
       const size=(this.global?5:this.network?4:3.2)*cap;
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+1.6*cap)*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -339,10 +365,11 @@ export class SpatialScene {
     this.nodeMesh.instanceMatrix.needsUpdate=true;this.nodeMesh.instanceColor.needsUpdate=true;this.progressMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceMatrix.needsUpdate=true;
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
+    this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
   }
   rebuildRelations(){for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
-    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?!this.selected:this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
+    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?!this.selected:this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:this.relationshipMap?.085:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
     let links=this.guideFocus?this.guideFocus.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e],guideCurrent:this.guideFocus.current.has(e.prerequisiteId+'>'+e.topicId)})):this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
     if(this.guideFocus){const shown=new Set(links.map(l=>l.from+'>'+l.to));for(const l of personalRelations(this.space.atlas,null,this.litConnections||[],null))if(l.lit&&!shown.has(l.from+'>'+l.to))links.push({...l,guideCurrent:false});}
@@ -384,14 +411,14 @@ export class SpatialScene {
       if(!this.global&&this.networkView==='relations'&&o.kind!=='node')show=false;
       if(!this.global&&this.networkView==='relations'&&o.kind==='node'){show=this.nodeVisible(o);priority=isSelected?100:70;}
       if(this.global){
-        if(o.kind==='theme'){show=selected?.kind!=='node'&&scale<2.2;priority=60;}
-        else if(o.kind==='pack')show=selected?.kind!=='node'&&(scale>1.15||selected?.kind==='theme'&&o.themeId===selected.id||isSelected);
+        if(o.kind==='theme'){show=selected?.kind!=='node'&&scale<2.2;priority=this.relationshipMap?92:60;}
+        else if(o.kind==='pack')show=selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||selected?.kind==='theme'&&o.themeId===selected.id||isSelected);
         else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey);
         if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
         if(this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
         if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
-      if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node')show=false;
+      if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node')show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
