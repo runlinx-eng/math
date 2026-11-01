@@ -1,0 +1,24 @@
+{
+  "nodes": 537,
+  "hardEdges": 808,
+  "softEdges": 0,
+  "viewport": [
+    590,
+    460
+  ],
+  "projectionDirection": [
+    0.5026090374675883,
+    0.3866223365135295,
+    0.773244673027059
+  ],
+  "nodeRadiusPixels": 2.8,
+  "old": {
+    "nearNodePairsUnder6Pixels": 307,
+    "projectedCrossingsWithoutSharedEndpoint": 7204
+  },
+  "current": {
+    "nearNodePairsUnder6Pixels": 202,
+    "projectedCrossingsWithoutSharedEndpoint": 2283
+  },
+  "limitations": "Same nodes, edges, direction, point size and viewport; each is independently fitted. Screen-space overlap is not comprehension, correctness or a 3D quality metric."
+}

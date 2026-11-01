@@ -1,0 +1,243 @@
+{
+  "schema": "math-relation-use-review/1",
+  "date": "2026-11-01",
+  "scope": "Local code review of nine source relationships; no independent mathematics review or child trial.",
+  "codeFingerprints": {
+    "dist/learning/bridges.js": "cd4976288affbf8b97850b365b82fffb7a4c072f11e80afaccf5b4f05abc0408",
+    "dist/learning/catalog.js": "0c2551111e3377f365a2f63e8b2d479d2e9d46296c499c89f439992d2007a47f",
+    "dist/learning/tasks.js": "e460e35a2f31461214b8019dad19a91f64a8f2a39a40dd82edd5526480370520",
+    "dist/learning/phase4/engine.js": "0596c943d1f399b6cc8355ea6e3ff4d08138f544fbf4c7775459ed5fe05b856b",
+    "dist/learning/phase4/b03.js": "9a238aa038ab5ca94f1549d604e57ad2a8796dae695549c54a994c05f26a0cc5",
+    "dist/learning/phase4/b03-model.js": "dedebd84eb2c0b259ca5bcd4053689e1b17e9a8e5f5b274310b7d70da8551d13",
+    "dist/learning/phase5/b13.js": "bdec1556eb45457a2ad075a33c6a6b9314af8ad09f3ccf1a7b0add4965300275",
+    "dist/learning/phase5/b13-model.js": "d5a146c466ac846dd555f833823453252f1268e6be4f4d1d845ad07c7c434cb3",
+    "dist/learning/phase5/b16.js": "32dd356d23a765122b60e0c40d804d7ee9353e3950757386704a6e9435e39d79",
+    "dist/learning/phase5/b16-model.js": "ab907c6334f7d0b0fb557a1f2a036be8228dd25253ff11736236865de6d53fab",
+    "dist/learning/phase5/b17.js": "7598232e6f0d99ffbfedbd1e2bd923c45dec5afc935bfc7fca415ed5370bb9b2",
+    "dist/learning/phase5/b17-model.js": "52e8665b482c26ad444c95096130ef87c89b0793038db101fcc2cce23320ae78",
+    "dist/learning/phase5/b38.js": "8953ff1e7e76a2bab98c2d0d94a24f9a896c5540b0127df4e95befcd5bcbcbe3",
+    "dist/learning/phase5/b38-model.js": "690c467b924a5adcb29e412c535e073bebdd99ddcc63b78a9eb0eb2a0a7bef69",
+    "dist/learning/phase5/b39.js": "f282d5afe8b478b1e6ff623424f473d42f70212142556a0a433d68d369670838",
+    "dist/learning/phase5/b39-model.js": "76d3a16b0db5e3c078eaacf66b87e9fc1aeedc7447c8cd8b1fc456736294ec0e",
+    "dist/learning/state.js": "56c4cc1cad3e3a913129ab14a729321e9ea6d2a550fc160c6425c7e5eafc8960",
+    "dist/learning/learn.js": "dc78cd6f0a779bf088e9e0f30aeda8ab07983c3e32298365095a6e63a26428d0",
+    "dist/learning/phase4/b03-view.js": "ca980b03cc9f7610b6709dae3506ae371cd9715cf347d1059d6e5406ca32b8f3",
+    "dist/learning/phase5/b13-view.js": "1cece24dc00f47b3d54bb1e0405d5f05270e625cd23841872cf38c96c024b6a8",
+    "dist/learning/phase5/b16-view.js": "ad8b205450b38286857d1212fe0c0843e4b7db5499a2780ca88d9b3df9a6cb75",
+    "dist/learning/phase5/b17-view.js": "7ae3320116fc5d75cc4d576794c207d1d1ea54b490f46f406403d21b1e0c5d27",
+    "dist/learning/phase5/b38-view.js": "a827aab06ed215e29a586b0dec1d23852a26a09de535a799858e360ef792612b",
+    "dist/learning/phase5/b39-view.js": "27e205182fa04e8de3f3c11d841742cd09fd79d47a3e458f36a1c4cea73dc7f4"
+  },
+  "records": [
+    {
+      "from": "mt_Ep7TDFuYUa",
+      "to": "mt_FP-mjXaq3B",
+      "sourceFingerprint": "b466224ea79b2023869c224a05eefb5dfc0fd65fb8f27ae2501ad0a913520a1f",
+      "classification": "joint-limited",
+      "note": "等量叠放后细分另一个量；不评独立迁移。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "link-equivalent-recutnames:0",
+          "sha256": "28be103a1d67aab80ee70ab25de050157be52df30bbf76d10d15c5a8ab34189a"
+        },
+        {
+          "key": "link-equivalent-recutnames:1",
+          "sha256": "47a187a932d8a15474fd6d0674a349c33d1726d92ab86ba48cf82b6196ea2984"
+        }
+      ]
+    },
+    {
+      "from": "mt_Ep7TDFuYUa",
+      "to": "mt_ebPelt-qAl",
+      "sourceFingerprint": "731a48df57d9da9317d1449ea6bc7c51bb1440ce58cf95cd57aa054f3ce0634a",
+      "classification": "joint-limited",
+      "note": "等量叠放并生成等值分数；预设理由不评独立解释。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "link-equivalent-samenames:0",
+          "sha256": "28be103a1d67aab80ee70ab25de050157be52df30bbf76d10d15c5a8ab34189a"
+        },
+        {
+          "key": "link-equivalent-samenames:1",
+          "sha256": "4222df77c2eee2e47af7dddbe58887090c372cc4be9b4361f7bdf216270213ba"
+        }
+      ]
+    },
+    {
+      "from": "mt_FP-mjXaq3B",
+      "to": "mt_ebPelt-qAl",
+      "sourceFingerprint": "9ba3067525cbddbcfb644c528d9d3d0019ae3e7abb7a56c4aca89c656db62577",
+      "classification": "joint-limited",
+      "note": "先将1/3细分再自选3/5等值名字；不评一般证明。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "link-recutnames-samenames:0",
+          "sha256": "ff0b25ab8115aefb64fa51962da788d49e6be7b997ffff28bd08143197c38364"
+        },
+        {
+          "key": "link-recutnames-samenames:1",
+          "sha256": "346a3511673fa403697e5cfe6f61a3a4d0962cdfd52a9561478bf93868002180"
+        }
+      ]
+    },
+    {
+      "from": "mt_FbDKeLfBCo",
+      "to": "mt_Ep7TDFuYUa",
+      "sourceFingerprint": "a067a5e56fae654b74a5641d9daaf3700239e1a2b9bd0cec5d5f9550583879ed",
+      "classification": "endpoint-limited",
+      "note": "目标活动有纸带等量和数轴定位；未评自主连接解释。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "visualeq:0",
+          "sha256": "7e131c23cf55f5c6271d6030837454d2c0f9242708b910e144e36f9d753b4ad0"
+        },
+        {
+          "key": "visualeq:1",
+          "sha256": "d5b8a93abb94842a73d584c86d02444a019ecd616b68ccfc925a9d0c2f9aa4d7"
+        },
+        {
+          "key": "equivalent:0",
+          "sha256": "aaecd6b45b411580083e163b35deeccf08a867d1b34f90fb3f9f21d1ae10126f"
+        },
+        {
+          "key": "equivalent:1",
+          "sha256": "54cff564971b6b4d0440650955c3091100ed18cd47b163911b85b277a2ff3f76"
+        },
+        {
+          "key": "equivalent:2",
+          "sha256": "be5af36541b13ddd4722f1930b6ce35100a137f8a6c40828f08cd8d100e48071"
+        }
+      ]
+    },
+    {
+      "from": "mt_NoB20kVa4w",
+      "to": "mt_Ep7TDFuYUa",
+      "sourceFingerprint": "ce7ca86054c3ffdd3e9600746a01d20623e3edc528d7b53a46937b373dff5aee",
+      "classification": "endpoint-limited",
+      "note": "分等段走单位份，目标活动定位等量；未评位置相同的自主解释。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "fractionline:0",
+          "sha256": "b58a5dd67492158281d43e230bf728f8b7dee6cd2c44dac4c4aa9078d6850cfb"
+        },
+        {
+          "key": "fractionline:1",
+          "sha256": "bd5da7fdeb8709c6bac5a55bac0dc965b240dcc94ab5bb2b5591062f9a834af5"
+        },
+        {
+          "key": "fractionline:3",
+          "sha256": "510e1a3f9621eac658dcd70268ada8c21d714696e25fc9e88066cd780c634991"
+        },
+        {
+          "key": "equivalent:1",
+          "sha256": "54cff564971b6b4d0440650955c3091100ed18cd47b163911b85b277a2ff3f76"
+        },
+        {
+          "key": "equivalent:2",
+          "sha256": "be5af36541b13ddd4722f1930b6ce35100a137f8a6c40828f08cd8d100e48071"
+        }
+      ]
+    },
+    {
+      "from": "mt_Ep7TDFuYUa",
+      "to": "mt_aivrWs6jrS",
+      "sourceFingerprint": "c27ab7bafc6beb8d628d77e1063d94b85a7f4f867e859051284727a6492b92ee",
+      "classification": "endpoint-limited",
+      "note": "有限等值与不等值样例；不评一般证明。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "equivalent:0",
+          "sha256": "aaecd6b45b411580083e163b35deeccf08a867d1b34f90fb3f9f21d1ae10126f"
+        },
+        {
+          "key": "equivalent:1",
+          "sha256": "54cff564971b6b4d0440650955c3091100ed18cd47b163911b85b277a2ff3f76"
+        },
+        {
+          "key": "derivepatterns:1",
+          "sha256": "f9483f379d1326aeb76f974dfb9e632f3f34bb22a435af1e2870008d097fe7f4"
+        },
+        {
+          "key": "derivepatterns:2",
+          "sha256": "ef56218e826fc8d061c03d8527630607ac4e6fb85f7889fb4b1a286775c4ddcc"
+        }
+      ]
+    },
+    {
+      "from": "mt_ebPelt-qAl",
+      "to": "mt_VKW8lOcFaw",
+      "sourceFingerprint": "062e5e7ab4bb360a1c7f7cfe6abcc81137e8fa26f0783eaba993d621410562a0",
+      "classification": "endpoint-limited",
+      "note": "目标活动对齐3/4与6/8并提示乘2/2；自由解释未评。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "samenames:0",
+          "sha256": "4222df77c2eee2e47af7dddbe58887090c372cc4be9b4361f7bdf216270213ba"
+        },
+        {
+          "key": "samenames:1",
+          "sha256": "346a3511673fa403697e5cfe6f61a3a4d0962cdfd52a9561478bf93868002180"
+        },
+        {
+          "key": "scale:3",
+          "sha256": "a35edc6bc40cb0c858b062a9a9e58353e7c9693380e1a152aa3d79f2f5d45b47"
+        }
+      ]
+    },
+    {
+      "from": "mt_FP-mjXaq3B",
+      "to": "mt_a3dov8CZkq",
+      "sourceFingerprint": "e935a84d81085ae4374d09bea6c14c6d66f07ad127ccf25f34b5f1ac5a6f3aa4",
+      "classification": "insufficient",
+      "note": "各自有相关活动，未要求解释刚才生成的等值分数。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "recutnames:0",
+          "sha256": "ff0b25ab8115aefb64fa51962da788d49e6be7b997ffff28bd08143197c38364"
+        },
+        {
+          "key": "because38:0",
+          "sha256": "3d0f52bdd86d7c03f46a993a9aa26fa2fff5b905c0a803de0d6d4998c6fccd2f"
+        },
+        {
+          "key": "because38:1",
+          "sha256": "4b99dc5a88ff6dfa7a9ad8bc2aa5b7b6c3bfed960ecb9be3b1e87f097a3e7a8f"
+        },
+        {
+          "key": "because38:2",
+          "sha256": "e2adccf6ad9d575274f029c0807e648b831f7a6037ab335a81708ba697af6047"
+        }
+      ]
+    },
+    {
+      "from": "mt_Ep7TDFuYUa",
+      "to": "mt_d-WZC2OyMB",
+      "sourceFingerprint": "c8bb5951b17a7e0c8f32ea179f9e44e5f837cceb2800db60ba4f5c96cb210231",
+      "classification": "insufficient",
+      "note": "固定纸带比较3/8与1/4，未评在模型间自主选择或使用该等值关系。",
+      "independentMathematicalReview": "pending",
+      "evidence": [
+        {
+          "key": "equivalent:0",
+          "sha256": "aaecd6b45b411580083e163b35deeccf08a867d1b34f90fb3f9f21d1ae10126f"
+        },
+        {
+          "key": "equivalent:1",
+          "sha256": "54cff564971b6b4d0440650955c3091100ed18cd47b163911b85b277a2ff3f76"
+        },
+        {
+          "key": "tools39:2",
+          "sha256": "5d4fdced3de7412c271b293d91434f49088f8122901cbf911306c3da899d7a1a"
+        }
+      ]
+    }
+  ]
+}

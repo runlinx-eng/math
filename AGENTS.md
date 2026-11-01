@@ -26,10 +26,10 @@ Top, side and oblique views change the orthographic camera only. Selection never
 rearranges coordinates or hides the rest of the graph by default. Inspect local
 examples in the same world. Labels may move in screen space with tethers; nodes
 may not. Base node size is uniform; glyphs come from existing activity types.
-`spatial-global.js` owns current coordinates; `spatial-network.js` retains older
-layouts. Restore v47 questions without networkView and v48 questions without
-networkVersion to their original coordinates and perspective camera. New worlds
-record networkVersion 49 and cameraZoom as well as networkView.
+`spatial-global.js` owns the preserved v49 coordinates; `spatial-network.js`
+retains older layouts. Restore v47 questions without networkView and v48
+questions without networkVersion to their original coordinates and perspective
+camera. v49 worlds record networkVersion 49 and cameraZoom as well as networkView.
 
 The v50 interface keeps coordinate version 49. Fit the overview from source-node
 positions, not annotation bounds. Names appear progressively by projected scale:
@@ -63,6 +63,7 @@ in either direction. Dragging is never a click even if it returns to its start.
 Named view buttons return to their actual fixed camera orientations; a rotated
 camera is labelled as a free view. Camera inertia must settle into saved views.
 The separate human usability acceptance of these gestures is still pending.
+The v53 relationship world retains these same gesture semantics.
 
 Learner progress has only complete/incomplete, an overall bar and compact task
 steps. Browsing is not completion. Both endpoints completed is not a completed
@@ -100,6 +101,66 @@ Authority and sources:
   not live delivery coverage. Their 3-activity baseline is deliberately frozen.
 - vendor/upstream.json pins the source; build_data.py then build_atlas.py create
   the math projection and local classification without discarding source edges.
+
+Spatial update, 2026-10-31 onward: the default new relationship world uses coordinate
+version 53 and the current interface/cache version is 56. `spatial-relationship.js` and its generated data
+import 537 source-ID-keyed positions from the selected full-graph prototype;
+the 808 displayed hard edges rise, and 272 soft edges retain their source type.
+The other 50 thinking nodes and 143 incident edges remain accessible in search,
+direct lists and activity contexts without a fabricated map point. Their hard
+edges also participate in complete hard traces. All 587 nodes, 1,223 edges, activities and records remain in the
+underlying model. Existing v49 coordinates and the older storage keys must be
+restorable; v53 and v49 have separate saved cameras. The inventory and source
+reference are in docs/spatial-learning/, and the source-mapping generator is
+scripts/build_spatial_relationship_inventory.mjs. Step 1–4 implementation and
+bounded technical checks are complete. Step 5 is in progress: nine local
+relation-use reviews and two types of thinking feedback are pilots, not a full
+relation audit. Independent maths review and real child use remain pending.
+The v49 rules above describe the preserved world and its legacy restoration.
+The v54 world offers outline (508 real hard edges), all 808 domain hard edges,
+and hard plus 272 soft edges as background display choices. These do not filter
+direct relation lists or complete hard traces. Keep v53 snapshots with no
+edgeDisplay on their original all-links view; save new range choices in views and
+questions. Traces retain all source edges while using finer, hop-weighted lines.
+
+The v55 interface adds an optional five-step source-edge orientation in
+`spatial-guide.js`; it is one curated example, not an automatically generated
+five-step route from every node. Free exploration suggestions use actual outgoing
+source edges with available activities, preferring due questions, incomplete work
+and hard edges. The full direct list remains accessible; no available outgoing
+activity means no suggestion. Never infer new edges from positions or mark
+observation as learning. `daily.guide` saves separate orientation state and
+merges with backups; `q.world.guideStep` restores guide context for v53 questions.
+An unfinished activity or due question takes precedence on reopening; returning
+from guided activity restores the guide step. Keep real node completion and
+completed joint links visible while attention moves; two completed endpoints do
+not complete a link. If a curated source edge is absent, disable only the
+optional orientation. On storage events reread current storage rather than using
+stale event payloads, and do not reset the camera when the guide step is unchanged.
+Implementation boundaries and source examples are in docs/spatial-learning/GUIDE.md.
+
+The v56 `dist/learning/thinking-feedback.js` describes actual submitted,
+replay-valid `x-fracrename` and `x-r38-counterexample` work. Show it only when
+the current model still equals the latest successful submission; edits clear stale
+feedback. Display actual values, comparison, correction and recorded support as
+applicable. Do not infer a free-text explanation, general proof, ability level,
+mastery or completed source relation. Feedback is derived without changing stored
+evidence or completion conditions. Other thinking contexts remain unaudited.
+The initial relation-use findings and explicit evidence gaps are in
+docs/spatial-learning/RELATION-USE-REVIEW.md, with reviewed task and code
+fingerprints in relation-use-review.json. `node scripts/check_relation_use_reviews.mjs`
+detects changes in the registered files, not every transitive dependency; the inventory's `pending` fields retain their original
+mapping baseline and must not be silently upgraded by keyword matching.
+`node scripts/build_relation_evidence_index.mjs --check` verifies the full
+source-edge-to-candidate-task index. Candidate endpoint tasks or the presence of
+a joint task do not by themselves establish that a relationship is taught.
+The pinned source has 48 thinking nodes with MP.1–MP.8 tags (six each and five
+actual hard source edges within each group); two calculator nodes have no MP tag.
+Preserve their own standards and source edges, never invent an MP.5 tag or turn
+the source chains into required ability levels. The reproducible mapping is in
+docs/spatial-learning/THINKING-SOURCE-MAP.md and is checked by
+`node scripts/build_thinking_source_map.mjs --check`. Actual activity behavior and
+child understanding remain separate, incomplete reviews.
 
 Implementation: dist/learning/phase5/b06*.js owns counting/representations,
 flash timers, local audio and optional bounded ink; b06.css owns its styling.
@@ -143,9 +204,9 @@ labels align by their actual last digit. Preserve first guesses after wrong
 alignment; either original addend may be used for an addition inverse check.
 Written task completion does not establish handwriting or an independent paper
 algorithm. Method selection does not establish actual mental or calculator use.
-Keep sw.js, space.js and exploration.js cache versions synchronized (current v52).
+Keep sw.js, space.js and exploration.js cache versions synchronized (current v56).
 
-The global network is the default for a new world. Before a view preference is
+The v53 relationship network is the default for a new world. Before a view preference is
 chosen, existing unfinished classic sessions return to their saved view; unfinished
 old network sessions also restore their saved coordinates. Keep old view storage
 intact. The classic and current network have separate saved cameras. Switching
@@ -158,10 +219,23 @@ Short-route navigation remains optional. Current unit and browser checks are
 `tests/spatial-global.test.mjs`, `tests/spatial-global-browser.js` and
 `tests/spatial-global-camera-browser.js`, plus `tests/spatial-exploration.test.mjs`,
 `tests/spatial-exploration-browser.js` and `tests/spatial-rotation-browser.js`.
-Run the isolated current-browser suites through `scripts/verify_spatial_rotation.cjs`
-with rotation, exploration, global, camera and classic arguments. It adapts
-historical cache checks without altering coordinate-version assertions. Current
-evidence is in `verification/spatial-rotation-20261029/`; v51 evidence remains
+Run `tests/spatial-relationship.test.mjs`, `tests/spatial-guide.test.mjs`,
+`tests/thinking-feedback.test.mjs`, `tests/relation-use-review.test.mjs`,
+`tests/relation-evidence-index.test.mjs`,
+`tests/thinking-source-map.test.mjs` and the
+isolated browser suites `tests/spatial-relationship-browser.cjs`,
+`tests/spatial-readability-v54-browser.cjs`, `tests/spatial-guide-browser.cjs`
+and `tests/thinking-feedback-browser.cjs` for the current view and feedback.
+Run B17 and B38 actual-control regressions via
+`scripts/verify_thinking_feedback_regressions.cjs`. Run preserved v49 regressions
+through `scripts/verify_spatial_relationship_legacy.cjs` with rotation,
+exploration, global, camera and classic arguments. It adapts historical cache
+checks without altering coordinate-version assertions. Current evidence is in
+`verification/thinking-feedback-v56-20261101/`; v55 evidence remains in
+`verification/spatial-guide-v55-20261031/`, v54 evidence remains in
+`verification/spatial-readability-v54-20261031/`, and v53 evidence remains in
+`verification/spatial-relationship-20261031/`, v52 evidence remains in
+`verification/spatial-rotation-20261029/` and v51 evidence remains
 in `verification/spatial-exploration-20261029/`, and earlier v49/v50 evidence remains in
 `verification/spatial-global-20261029/` and `verification/spatial-readability-20261029/`. No child
 trial or user acceptance is implied.
@@ -192,7 +266,7 @@ drafts. Former A03 source ID now has the quarters lesson at A04; never renumber
 stored source IDs or upgrade old completion to new independent evidence.
 Imports must merge without dropping current work, help or exposure history.
 
-Run node --test tests/*.test.mjs for learning/data changes (current 1036 checks).
+Run node --test tests/*.test.mjs for learning/data changes (current 1057 checks).
 Run build_content_plan.py --check and the phase2, phase3 and phase4 coverage
 generators plus build_phase5_coverage.mjs with --check. Phase2/3/4 generators
 are frozen historical baselines; phase5 is the current cumulative inventory. Regenerate planning fingerprints when relevant

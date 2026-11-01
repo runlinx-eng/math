@@ -1,0 +1,3046 @@
+{
+  "schema": "math-thinking-source-map/1",
+  "date": "2026-11-01",
+  "sources": {
+    "vendor/os-taxonomy/data/topics.json": "e5b037a5309ed12bbecd4ead88655231ff55a6fe49d98383e00f79bcfeb07bab",
+    "vendor/os-taxonomy/data/dependencies.json": "ca5c67a7bcb6c60a008e31bac7b1004893e2c0bc36425af2b48604ba9e3e5c82",
+    "vendor/os-taxonomy/data/curriculum-standards.json": "1b5fe054a2184f108e0eb335edd7ee944265befbab7f377ae270101c01e2a6c9",
+    "dist/data/atlas.json": "b30b16783f518e47fed8dd6e412bb6ee6e323b5250834c0ee1c0bb68dff94caf"
+  },
+  "summary": {
+    "sourceThinkingNodes": 50,
+    "explicitPracticeTaggedNodes": 48,
+    "groups": 8,
+    "sourceEdgesWithinGroups": 40,
+    "withoutPracticeTag": 2
+  },
+  "limits": [
+    "这些是来源中的标签和关系，不是孩子的能力等级或强制顺序。",
+    "展示名称为本地适配，源名称、目标和ID均保留；不能只凭名称推断能力。",
+    "两条无MP代码的计算器内容保留原标准与全部关系，不自动分配到MP.5。",
+    "单次操作、课程完成或本地标签不能证明掌握、迁移或一般证明。"
+  ],
+  "groups": [
+    {
+      "code": "ccss-math:MP.1",
+      "label": "理解和解决问题",
+      "sourceTitle": "Make sense of problems and persevere in solving them",
+      "nodes": [
+        {
+          "id": "mt_WkKkb7W9Qd",
+          "displayName": "读懂问题",
+          "sourceName": "Making Sense of Problems",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "sense38",
+          "lessonUrl": "learn.html#sense38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "When given a word problem within 10, explain what the problem is asking before attempting to solve",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r38-chain",
+                  "prompt": "原有3颗，又来4颗。先别算：知道什么，想找什么？"
+                }
+              ],
+              "implementedAction": "先标记已知及所问；自由解释未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Choose objects, fingers, or drawings to represent a problem situation",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "原来3颗弹珠，又来了4颗。把变化演出来。"
+                }
+              ],
+              "implementedAction": "用屏幕圆片表达合并过程；不推断真实实物使用。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "After finding an answer, check it makes sense (e.g. re-count objects to verify a total)",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-factfamily",
+                  "prompt": "4与3合成7，再从7中找回两部分。"
+                }
+              ],
+              "implementedAction": "同一组部分和整体做加减事实检查；不识别口述复数。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_O_UOTiMvT_",
+          "displayName": "分步骤解决问题",
+          "sourceName": "Guided Multi-Step Problem Solving",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "plan38",
+          "lessonUrl": "learn.html#plan38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "When given a word problem within 20 or 100, identify the known information and what needs to be found",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r38-chain",
+                  "prompt": "有18张卡，送出7张，还有一张蓝色桌子。先找到有用的量与问题。"
+                }
+              ],
+              "implementedAction": "在固定故事中区分已知、所求与无关信息。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Try a strategy (drawing, number line, known fact) and switch approach if the first attempt stalls",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                }
+              ],
+              "implementedAction": "在给定屏幕模型中选择表示；是否自行切换策略未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Check the reasonableness of an answer using estimation or a different method",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-estimatecheck",
+                  "prompt": "有人说412+389=121。先用估计检查，再算清楚。"
+                }
+              ],
+              "implementedAction": "先估计再核对；估计接近不作为精确性证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_RKeheOL9uo",
+          "displayName": "解决多步问题 · 拆分问题与检查",
+          "sourceName": "Multi-Step Problem Solving",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "multi38",
+          "lessonUrl": "learn.html#multi38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Break a two-step word problem within 1000 into sub-problems and solve each part",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-storyplan",
+                  "prompt": "原来有35元，花掉12元，后来又找到5元。现在有多少？自己选先算哪两份。"
+                }
+              ],
+              "implementedAction": "把三项量按自己选择的两个步骤组合。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Estimate an answer before calculating to set a reasonableness benchmark",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-estimatecheck",
+                  "prompt": "有人说412+389=121。先用估计检查，再算清楚。"
+                }
+              ],
+              "implementedAction": "先估数量级再准确计算，有限情境不能证明迁移。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Check an answer using a different method or inverse operation and revise if needed",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-estimatecheck",
+                  "prompt": "623−178，先估一个范围，再用加法倒着验。"
+                }
+              ],
+              "implementedAction": "以逆运算检查差；迁移到任意问题未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_SmghasIvbT",
+          "displayName": "解决多步问题 · 四则、分数与面积体积",
+          "sourceName": "Multi-Step Problem Solving",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "multiShape38",
+          "lessonUrl": "learn.html#multiShape38",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Break a two-step word problem into parts and explain a plan before calculating",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-storyplan",
+                  "prompt": "小林有28颗珠子，小安比他多9颗。小安送出4颗后，还剩多少？"
+                }
+              ],
+              "implementedAction": "选择并连接两个故事运算；开放计划说明未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Choose between drawing a diagram or writing equations for a perimeter problem",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-a30-grid",
+                  "prompt": "长 8 cm、宽 5 cm。沿外边逐段走一圈。"
+                }
+              ],
+              "implementedAction": "沿图中外边走一圈；未评独立选择图或方程。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Check a fraction-of-quantity answer by estimating: 3/5 of 20 must be more than half of 20",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-portiongroups",
+                  "prompt": "20颗平均分五份，取三份，找出选中部分的数量。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-r38-chain",
+                  "prompt": "20的3/5应该比一半多还是少？把比较的理由接起来。"
+                }
+              ],
+              "implementedAction": "计算20的3/5，并用一半作为范围判断；开放解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_GpltXPoaoc",
+          "displayName": "复杂的多步问题",
+          "sourceName": "Complex Multi-Step Problems",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "complex38",
+          "lessonUrl": "learn.html#complex38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Break a three-step problem involving unit conversion and multiplication into sub-problems and solve systematically",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r37-steps",
+                  "prompt": "每袋2.5千克，3袋平均分给5份。每份多少克？"
+                }
+              ],
+              "implementedAction": "按给定步骤换克、求总量并平均分；未评自由规划。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Estimate 4,832 × 7 as roughly 5,000 × 7 = 35,000 to check a calculated answer of 33,824",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-r37-steps",
+                  "prompt": "4832×7先估一估。有人算得33824，量级是否说得通？"
+                }
+              ],
+              "implementedAction": "4832按千位估算乘7并与33824比较；估计不证明精确。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Identify that a percentage answer over 100% doesn't make sense in context",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "一次调查每人只记一票，40人中有48人投了A。这张记录说“120%的人投A”，哪里需要检查？"
+                }
+              ],
+              "implementedAction": "在每人最多一票的条件下检查120%；不把所有超100%的情况都当错。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_FieL-vVTI_",
+          "displayName": "进阶多步问题",
+          "sourceName": "Advanced Multi-Step Problems",
+          "standards": [
+            "ccss-math:MP.1"
+          ],
+          "lessonId": "advancedPlan38",
+          "lessonUrl": "learn.html#advancedPlan38",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Break down a three-step ratio problem into sub-problems and plan a solution pathway",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r37-share",
+                  "prompt": "40颗按3:5分给甲和乙。先分成一样大的小份。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-r37-steps",
+                  "prompt": "54颗按2:3:4分给三个篮子。最少的那篮，每3颗装一袋，能装几袋？"
+                }
+              ],
+              "implementedAction": "实际按比分配，再按步骤完成三篮分配与装袋。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Identify which quantities are known/unknown in an algebraic word problem and set up equations",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-a35-build",
+                  "prompt": "一个数先乘2再加5，结果是17。排好动作，试一个数，再把关系写下来。"
+                }
+              ],
+              "implementedAction": "搭建一个数乘2再加5的关系并代入；未评自由方程建模。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use estimation to check whether a decimal division answer is reasonable before finalising",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-r37-steps",
+                  "prompt": "19.8÷4.1有人得到约4.83。先估一估，这个数量级说得通吗？"
+                }
+              ],
+              "implementedAction": "用20÷4估计19.8÷4.1的数量级；不将估计当作精确验算。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_WkKkb7W9Qd",
+          "to": "mt_O_UOTiMvT_",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 problem-solving builds directly on age 5-6 problem-sense-making"
+        },
+        {
+          "from": "mt_O_UOTiMvT_",
+          "to": "mt_RKeheOL9uo",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 problem-solving builds on age 6-7 problem-solving"
+        },
+        {
+          "from": "mt_RKeheOL9uo",
+          "to": "mt_SmghasIvbT",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 problem-sense-making is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_SmghasIvbT",
+          "to": "mt_GpltXPoaoc",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 problem sense-making is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_GpltXPoaoc",
+          "to": "mt_FieL-vVTI_",
+          "strength": "hard",
+          "sourceReason": "Y6 problem-solving extends Y5 multi-step problem analysis"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.2",
+      "label": "抽象与数量推理",
+      "sourceTitle": "Reason abstractly and quantitatively",
+      "nodes": [
+        {
+          "id": "mt_IM1G_7QzTa",
+          "displayName": "从生活走向数学",
+          "sourceName": "Real-World to Maths Connections",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "story38",
+          "lessonUrl": "learn.html#story38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Given a story about combining groups, represent it with counters or cubes and find the total",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "十格池塘里原来4只青蛙，后来跳来3只。用圆片表示它们。"
+                }
+              ],
+              "implementedAction": "用屏幕圆片表示合并并计算，不评现实操作。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Given a set of objects, tell a simple addition or subtraction story to match",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "看见3颗和4颗一共7颗。你能讲一个合起来的故事吗？"
+                }
+              ],
+              "implementedAction": "可写匹配图的自创故事，原话保存、不自动判断。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Connect a physical action (putting together, taking away) to the matching operation",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "十格池塘里原来4只青蛙，后来跳来3只。用圆片表示它们。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "原来9只气球，飞走2只。圆片怎样移动才能表示这个故事？"
+                }
+              ],
+              "implementedAction": "比较屏幕上合并和拿走两种动作，记录相应算式。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_EBYGhd8X3x",
+          "displayName": "连接不同表示方式",
+          "sourceName": "Connecting Representations",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "represent",
+          "lessonUrl": "learn.html#represent",
+          "taskCount": 2,
+          "goals": [
+            {
+              "sourceGoal": "Write a number sentence (e.g. 14 + 5 = 19) to match a word problem and explain the connection",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-story",
+                  "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+                }
+              ],
+              "implementedAction": "将贴纸故事的两部分对应到 14+5=19",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Draw a bar model or part-whole diagram to represent a problem, then solve using the diagram",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-story",
+                  "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-story",
+                  "prompt": "先认出哪个数是整体，再搭图；写一个能求绿色数量的算式。"
+                }
+              ],
+              "implementedAction": "用两部分与整体搭图并求未知部分",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Translate between a concrete model and a symbolic equation, describing what each number represents",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-story",
+                  "prompt": "搭出两部分和整体，再把同一件事写成算式。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-story",
+                  "prompt": "先认出哪个数是整体，再搭图；写一个能求绿色数量的算式。"
+                }
+              ],
+              "implementedAction": "图、算式和数字角色对应；接受同一关系的加减两种形式",
+              "claim": "任务对应，不宣称掌握"
+            }
+          ]
+        },
+        {
+          "id": "mt_dXq9VWm31W",
+          "displayName": "理解分数 · 情境、图形与算式",
+          "sourceName": "Understanding fractions",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "storyfraction",
+          "lessonUrl": "learn.html#storyfraction",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Write an equation with three-digit numbers to match a measurement or money word problem",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-orderlab",
+                  "prompt": "一条320厘米的绳用掉125厘米。写出找剩余长度的关系，再实际算出来。"
+                }
+              ],
+              "implementedAction": "320厘米用去125的情境先建减法表达式再计算；三位数同值错误关系不能通过。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Draw a bar model to represent a fraction problem and use it to solve",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-portionbar",
+                  "prompt": "120厘米的带子取3/4，用条形把整个与要取的部分说清楚。"
+                }
+              ],
+              "implementedAction": "120厘米条形四等分取三份，图、结果、单位与等式对应；不自动评估自由画图。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain how a number line diagram relates to the quantities in a word problem",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-unitwalk",
+                  "prompt": "步道每一整段长1千米。走3/4千米，在图上表示这段路，写出走了几个完整段与零头。"
+                }
+              ],
+              "implementedAction": "0到4范围内仍以0到1为一单位，走3/4千米，并记录完整段与零头；独立解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_3VmBdlAeOZ",
+          "displayName": "数轴上的分数 · 数轴、情境与算式",
+          "sourceName": "Fractions on a number line",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "translateamount",
+          "lessonUrl": "learn.html#translateamount",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Represent a sharing problem as both a fraction diagram and a division equation",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-wholeshare",
+                  "prompt": "把3个整体分给4人，图上的每人一份怎样写成除法与分数？"
+                }
+              ],
+              "implementedAction": "分享3个给4人的图与除法、分数对应。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain how a bar model for 4 × 23 connects to the area model and the written method",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-areaproduct",
+                  "prompt": "4条各23，把每条的20与3分开。面积里的两块怎样对应80与12？"
+                },
+                {
+                  "index": 2,
+                  "type": "x-multable",
+                  "prompt": "同一个4×23，用按位计算再做一次。这里的进位与刚才的80、12怎样相接？"
+                }
+              ],
+              "implementedAction": "4×23的条形分块/矩形面积与逐位计算相接，分别显出80与12；独立解释和纸笔算法未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Translate a decimal on a number line into a fraction and explain the equivalence",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-unitwalk",
+                  "prompt": "把0.3所在的量走出来，给同一点写出分数与小数两个名字。"
+                }
+              ],
+              "implementedAction": "三份十分之一落在同一数轴终点，记录3/10与0.3。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_CUmjcE7W6c",
+          "displayName": "数轴上的分数 · 连接小数与百分数",
+          "sourceName": "Fractions on a number line (age 9+)",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "viewlinks",
+          "lessonUrl": "learn.html#viewlinks",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Represent a scaling problem as both a bar model and a multiplication equation",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-comparebars",
+                  "prompt": "4人份食谱扩大到3份。搭出条形，再用n记需要准备的人份。"
+                }
+              ],
+              "implementedAction": "复制4人份的条形得到3倍，并写出相应乘法等式。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Show how 0.35, 35/100, and 35% all represent the same quantity on a hundredths grid",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-fdpboard",
+                  "prompt": "涂出35个百分之一。看方格、圆图和位置怎样指向同一个量。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-fdpboard",
+                  "prompt": "换成8个百分之一，自己写出三个名字。"
+                }
+              ],
+              "implementedAction": "实际涂35/100并换圆图与数轴，记录0.35和35%；另以8/100迁移。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Translate a line-graph reading into a subtraction equation to find the difference",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-graphpoints",
+                  "prompt": "把记录放进图中，选第2次和第4次，写出两次相差多少。"
+                }
+              ],
+              "implementedAction": "从数据实际画线图，选择第2、4次，写7−5=2；不是纯数字抄写。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_9KmVWCuh5_",
+          "displayName": "理解分数 · 多种表示之间的联系",
+          "sourceName": "Understanding fractions (age 10+)",
+          "standards": [
+            "ccss-math:MP.2"
+          ],
+          "lessonId": "representationmap",
+          "lessonUrl": "learn.html#representationmap",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Translate a word problem into an algebraic equation and also represent it on a bar model",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-algebrabar",
+                  "prompt": "同一个未知数取4份，再添27，一共87。先搭好，再让两边一起变化，找一份。"
+                }
+              ],
+              "implementedAction": "4份未知量加27等于87，实际两边同减、同除，并用n写原始关系；指定模型不等于独立选择建模。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Plot data from a table onto a coordinate grid and interpret the relationship",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-graphpoints",
+                  "prompt": "每袋2颗。把袋数与总颗数同时放进图里，说清每个点表示什么。"
+                }
+              ],
+              "implementedAction": "按表实际放坐标，横轴袋数与纵轴总颗数保留；每袋2颗的关系检查。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain how a pie chart, a fraction, and a percentage all represent the same proportion",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-fdpboard",
+                  "prompt": "在圆图取四等份中的三份，再给同一个比例写出分数、小数与百分数。"
+                }
+              ],
+              "implementedAction": "圆图取3/4，换成小数与75%，同一点的比例不变；开放说明未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_IM1G_7QzTa",
+          "to": "mt_EBYGhd8X3x",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 quantitative reasoning builds on age 5-6 concrete-to-representation skills"
+        },
+        {
+          "from": "mt_EBYGhd8X3x",
+          "to": "mt_dXq9VWm31W",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 quantitative reasoning builds on age 6-7"
+        },
+        {
+          "from": "mt_dXq9VWm31W",
+          "to": "mt_3VmBdlAeOZ",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 quantitative reasoning is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_3VmBdlAeOZ",
+          "to": "mt_CUmjcE7W6c",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 quantitative reasoning is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_CUmjcE7W6c",
+          "to": "mt_9KmVWCuh5_",
+          "strength": "hard",
+          "sourceReason": "Y6 representation fluency extends Y5 multi-representation skills"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.3",
+      "label": "论证与质疑",
+      "sourceTitle": "Construct viable arguments and critique the reasoning of others",
+      "nodes": [
+        {
+          "id": "mt_nyK25mNOeR",
+          "displayName": "展示解题过程",
+          "sourceName": "Showing Your Working",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "show38",
+          "lessonUrl": "learn.html#show38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Use objects or drawings to demonstrate how an addition or subtraction was solved",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "已经有3位小伙伴，又来了2位。用圆片摆出两部分，再让他们汇合。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "5块饼干，吃掉2块。摆出原来的一堆和要拿走的数量，再实际拿走。"
+                }
+              ],
+              "implementedAction": "用圆片实际合并和拿走；屏幕操作不能证明真实实物或自由绘画能力。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Respond to 'how do you know?' by pointing to objects or a drawing and describing what was done",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "已经有3位小伙伴，又来了2位。用圆片摆出两部分，再让他们汇合。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "5块饼干，吃掉2块。摆出原来的一堆和要拿走的数量，再实际拿走。"
+                }
+              ],
+              "implementedAction": "保留操作过程，可写自己的说明；自由说明与口述内容未自动评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Listen to a peer's explanation and say whether they agree or disagree",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "有人说5减2剩2。点出最先不对的一步，再摆出能让人看懂的两句话。"
+                }
+              ],
+              "implementedAction": "在模拟的他人方法中标记最早错误并重排两步；没有真人同伴或语音交流。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_kJ5wYzO8qC",
+          "displayName": "讲清数学推理",
+          "sourceName": "Explaining Mathematical Reasoning",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "explain",
+          "lessonUrl": "learn.html#explain",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Explain a solution strategy using a drawing or number sentence (e.g. 'I made ten first, then added the rest')",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-reason",
+                  "prompt": "8 + 5：从五颗中拿一些补足十颗，剩下的还要算。用图展示你的拆法。"
+                }
+              ],
+              "implementedAction": "将五拆成二和三，用图展示凑十",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Justify why an answer is correct by showing an alternative method that gives the same result",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-reason",
+                  "prompt": "换一种办法：从 8 出发，在数轴上走五步，与刚才的办法比较。"
+                }
+              ],
+              "implementedAction": "用数轴五步得到同一结果，作为第二种方法",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Identify and explain an error in a worked example or a peer's solution",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-reason",
+                  "prompt": "有人写：8 + 5 = 8 + 2 + 5 = 15。找出错误，重新分这五颗，修好这条推理。"
+                }
+              ],
+              "implementedAction": "指出拆分后的五重复计算，并修复作品",
+              "claim": "任务对应，不宣称掌握"
+            }
+          ]
+        },
+        {
+          "id": "mt_pyMD_SIiYO",
+          "displayName": "说明推理的依据 · 跟随推理并找错",
+          "sourceName": "Justifying mathematical reasoning",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "justify",
+          "lessonUrl": "learn.html#justify",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Explain step by step why a columnar addition method gives the correct answer",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-regroup",
+                  "prompt": "把 27 与 18 合到一起，再把十个一换成一个十。每一步总量都要保持。"
+                }
+              ],
+              "implementedAction": "合并位值块、换十，和竖式进位同步呈现",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Find and explain an error in a worked example (e.g. incorrect regrouping)",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-regroup",
+                  "prompt": "有人把 27 + 18 写成 315：三个十、十五个一直接连起来。用换十修好它，并指出错误。"
+                }
+              ],
+              "implementedAction": "修复 315 的位值错误并指出换十原因",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Construct a simple argument for why a general statement is true (e.g. 'adding two even numbers always gives an even number')",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-proof",
+                  "prompt": "先把两组完整的“对”拼在一起，换一组再试。然后用理由解释任意偶数都成立；最后为“任何两个数相加都为偶数”搭一个反例。"
+                }
+              ],
+              "implementedAction": "拼完整对子，组装适用于任意偶数的理由，再造反例区别更广的假命题",
+              "claim": "任务对应，不宣称掌握"
+            }
+          ]
+        },
+        {
+          "id": "mt_a3dov8CZkq",
+          "displayName": "说明推理的依据 · 呈现推理并评价",
+          "sourceName": "Justifying mathematical reasoning (age 8+)",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "because38",
+          "lessonUrl": "learn.html#because38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Explain why 1/3 > 1/5 using the idea that more parts means smaller pieces",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-samefraction",
+                  "prompt": "两条一样长的纸带，分别分成3份和5份。各取一份，先猜再叠起来。"
+                }
+              ],
+              "implementedAction": "同一长度的纸带上操作并比较三分之一和五分之一；自由解释未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Find and explain an error in a peer's column subtraction with exchanges",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-r38-chain",
+                  "prompt": "有人把71−46算成35。先指出第一次错误，再拆开一捆十，排好修正的思路。"
+                }
+              ],
+              "implementedAction": "标记71−46错误步骤，实际拆分十位并排列修正；文字解释不自动评分。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Present a chain of reasoning: since 6×8=48 and 6×2=12, then 6×10=60 so 6×8=60−12=48",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "每列有6个点，一共有10列，拿走两列。把“6个8为什么是48”连成一条思路。"
+                }
+              ],
+              "implementedAction": "从10列中选两列拿走，再将6×10和6×2接到6×8；允许两条前提互换。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_2ESZh70NyS",
+          "displayName": "理解分数 · 多步论证与检错",
+          "sourceName": "Understanding fractions (age 9+)",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "fractionreason",
+          "lessonUrl": "learn.html#fractionreason",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Prove that 3/4 > 2/3 using a common denominator argument and a visual model",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-samefraction",
+                  "prompt": "同样大的整体取3/4与2/3，继续分出共同的小份，把大小理由写出来。"
+                }
+              ],
+              "implementedAction": "保持同一整体，亲自细分到共同分母，写9/12>8/12；固定理由与图证据不等于开放证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Find and explain an error in a long multiplication where a partial product was misaligned",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-rowrepair",
+                  "prompt": "23×14的第二行被放错了。移动这一行，找出错的是哪一个单位，再合起来。"
+                }
+              ],
+              "implementedAction": "23×14的几十行实际移到十位后重算322，并识别位值原因。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Present a chain of reasoning to show that angles in a triangle sum to 180° by tearing and arranging",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-anglejoin",
+                  "prompt": "点原图的三个角，分别搬到右边同一点，转动后摆成无缝的半圈。最后把理由排成一条。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-anglejoin",
+                  "prompt": "换一种三角形再试。三个角形状变了，拼到同一点以后怎样相接？"
+                }
+              ],
+              "implementedAction": "两种三角形的原角同点搬移旋转，无缝无重叠拼成180°，排列说明链；屏幕操作不等于实体撕纸或任意三角形的一般证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_j5YqQnN6xe",
+          "displayName": "构建数学论证",
+          "sourceName": "Constructing mathematical arguments",
+          "standards": [
+            "ccss-math:MP.3"
+          ],
+          "lessonId": "argument38",
+          "lessonUrl": "learn.html#argument38",
+          "taskCount": 5,
+          "goals": [
+            {
+              "sourceGoal": "Prove that a given angle must be 60° by chaining angle facts in a logical sequence",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r38-chain",
+                  "prompt": "三角形里两个角是50°和70°。不用量角器，能把剩下的角说清楚吗？"
+                }
+              ],
+              "implementedAction": "依据给定50度、70度和三角形内角和排序，有限情境不评独立通用证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Find and explain the error in a peer's fraction division calculation",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-fractioncase",
+                  "prompt": "3/4升果汁，每份1/2升。亲手装一装，不足一份的部分也要算。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "有人算3/4÷1/2，把第一个分数倒过来。先指出错误，再用装果汁的过程说明。"
+                }
+              ],
+              "implementedAction": "分装3/4并分析倒错第一个分数的模拟错误，开放解释未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Construct a counter-example to disprove a false conjecture (e.g. 'multiplying always makes bigger')",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-r38-counterexample",
+                  "prompt": "有人说：大于0的数，乘0或正数后总会变大。自己找一个让这句话不成立的例子。"
+                },
+                {
+                  "index": 4,
+                  "type": "x-r38-counterexample",
+                  "prompt": "那人改口说：大于0的数，乘0或正数后总不会变小。再自己找一个例子试试。"
+                }
+              ],
+              "implementedAction": "自行输入非负乘数，比较变化并构造反例；两个“总是”条件分开判断。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_nyK25mNOeR",
+          "to": "mt_kJ5wYzO8qC",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 explaining with diagrams/logic builds on age 5-6 showing and telling with objects"
+        },
+        {
+          "from": "mt_kJ5wYzO8qC",
+          "to": "mt_pyMD_SIiYO",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 arguing/justifying builds on age 6-7"
+        },
+        {
+          "from": "mt_pyMD_SIiYO",
+          "to": "mt_a3dov8CZkq",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 explaining/justifying is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_a3dov8CZkq",
+          "to": "mt_2ESZh70NyS",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 constructing arguments is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_2ESZh70NyS",
+          "to": "mt_j5YqQnN6xe",
+          "strength": "hard",
+          "sourceReason": "Y6 formal reasoning extends Y5 multi-step argument construction"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.4",
+      "label": "数学建模",
+      "sourceTitle": "Model with mathematics",
+      "nodes": [
+        {
+          "id": "mt_fLOkq-HfPB",
+          "displayName": "用实物表示真实问题",
+          "sourceName": "Using objects to model real problems",
+          "standards": [
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "objects38",
+          "lessonUrl": "learn.html#objects38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Draw a picture or use objects to represent a simple real-world situation involving counting or comparing",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "5块饼干，吃掉2块。摆出原来的一堆和要拿走的数量，再实际拿走。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "盒子有7颗珠子，其中4颗红珠，其余蓝珠。摆出两部分，找蓝珠有多少。"
+                }
+              ],
+              "implementedAction": "用屏幕圆片表示拿走及比较；自由绘画未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Write or dictate a number sentence to describe a real-world situation (e.g. 'I had 5 apples and ate 2')",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "5块饼干，吃掉2块。摆出原来的一堆和要拿走的数量，再实际拿走。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-joinstory",
+                  "prompt": "盒子有7颗珠子，其中4颗红珠，其余蓝珠。摆出两部分，找蓝珠有多少。"
+                }
+              ],
+              "implementedAction": "把对象动作写成对应算式，听写未实现。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use the model to answer a question about the situation",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-storyplan",
+                  "prompt": "原来有35元，花掉12元，后来又找到5元。现在有多少？自己选先算哪两份。"
+                }
+              ],
+              "implementedAction": "搭出三项关系并找最后数量，开放情境解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_f67qGDhyfi",
+          "displayName": "把数学与生活联系起来",
+          "sourceName": "Connecting maths to real life",
+          "standards": [
+            "acara-v9:AC9M1N05",
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "lifemath38",
+          "lessonUrl": "learn.html#lifemath38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Choose and write an appropriate number sentence for a measurement or money word problem",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-m33-cart",
+                  "prompt": "英国商店：一支笔£1.20，一本册子£2.30。先合计，再看£5应找回多少。"
+                }
+              ],
+              "implementedAction": "把绳长和虚构购物情境写成计算并保留单位。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Draw a bar model or diagram to represent a two-step or comparison problem",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-storyplan",
+                  "prompt": "红票原有46张，用掉8张；蓝票有29张。剩下的红票比蓝票多多少？"
+                }
+              ],
+              "implementedAction": "构造并组合带符号的数量部分，非自由手绘条形图。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Interpret the numerical answer in context (e.g. '15 cm means the ribbon is 15 centimetres long')",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                }
+              ],
+              "implementedAction": "将差对应绳子剩余厘米；自由解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_iQYPw8bMfN",
+          "displayName": "用数学表示测量、钱和时间",
+          "sourceName": "Working with money",
+          "standards": [
+            "acara-v9:AC9M2N06",
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "modmoney",
+          "lessonUrl": "learn.html#modmoney",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Choose whether to use a bar model, number line, or equation for a measurement problem",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                }
+              ],
+              "implementedAction": "为长度故事选择条形、数轴或算式表示；不评自由绘图或自发选法。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Model a multi-step money problem with equations and interpret the final answer as change or total cost",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-m33-cart",
+                  "prompt": "英国商店：一支笔£1.20，一本册子£2.30。先合计，再看£5应找回多少。"
+                }
+              ],
+              "implementedAction": "选入两件商品、记录总价与找零并辨认结果含义；自由解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Create a line plot from measurement data and use it to answer questions about the real-world situation",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-m28-plot",
+                  "prompt": "逐个量模拟纸条，取最近的整厘米，再画点图。"
+                }
+              ],
+              "implementedAction": "量模拟纸条、画点图并读取频数和范围；不评现实测量。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_K3R0yaHVcx",
+          "displayName": "用乘法与分数建立模型",
+          "sourceName": "Modelling with multiplication and fractions",
+          "standards": [
+            "acara-v9:AC9M3N06",
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "modelrecipe",
+          "lessonUrl": "learn.html#modelrecipe",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Model a tiling/area problem with an array and write the corresponding multiplication",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-areaproduct",
+                  "prompt": "6米乘4米的地面，每格一平方米。分成两块计算，再合起来看总面积。"
+                }
+              ],
+              "implementedAction": "6×4面积切块与两块乘积合成；屏幕模型不评估真实铺地或独立绘图。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Represent a recipe-scaling problem as a fraction calculation and interpret the answer in grams",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-portionbar",
+                  "prompt": "一份食谱用500克面粉，只做它的3/4。先画出分与取，再把结果带回克。"
+                }
+              ],
+              "implementedAction": "500克四等分取三份、记录375克并写分数计算。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use a bar model to set up a unit conversion problem (metres to centimetres)",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-portionbar",
+                  "prompt": "整条1米，也就是100厘米。取它的3/4，用厘米记录长度。"
+                }
+              ],
+              "implementedAction": "固定1米=100厘米整体，取3/4记录75厘米；是本任务的比例换算，不宣称所有单位已学会。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_8xVHooT4aI",
+          "displayName": "生活中的数学建模",
+          "sourceName": "Real-World Maths Modelling",
+          "standards": [
+            "acara-v9:AC9M4N08",
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "model38",
+          "lessonUrl": "learn.html#model38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Model a recipe-scaling problem with multiplication and fractions, then interpret the answer in grams",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-m28-convert",
+                  "prompt": "每份面粉0.75千克，做3份，需要多少克？"
+                }
+              ],
+              "implementedAction": "3份0.75千克换算为克，等值3/4的具体情境；自由说明未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Represent a room-carpet problem by drawing a scale diagram and applying the area formula",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-r37-steps",
+                  "prompt": "1:50图上的房间为6 cm×4 cm。实际面积多少？"
+                }
+              ],
+              "implementedAction": "按给定比例尺计算房间面积；没有独立比例绘图。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use a percentage bar model to find a sale price and explain the answer in £",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-scalechain",
+                  "prompt": "虚构商店：40元减去25%，剩下多少？先区分拿走与留下。"
+                }
+              ],
+              "implementedAction": "将25%折扣与剩余金额分开；为虚构价格。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_yqZiX6vS7D",
+          "displayName": "为生活问题建立数学模型",
+          "sourceName": "Real-World Mathematical Modelling",
+          "standards": [
+            "acara-v9:AC9M5N09",
+            "acara-v9:AC9M6N09",
+            "ccss-math:MP.4"
+          ],
+          "lessonId": "modelChoice38",
+          "lessonUrl": "learn.html#modelChoice38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Choose a bar model or double number line to represent a ratio problem and solve it",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-r37-share",
+                  "prompt": "40颗按3:5分给甲和乙。先分成一样大的小份。"
+                }
+              ],
+              "implementedAction": "实际分配等份并记录比；没有自由选择条形或双数轴。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Model a volume problem with a labelled diagram, apply the formula, and interpret the result in context",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-m31-cubes",
+                  "prompt": "边长 1 cm 的盒子，用边长 1/2 cm 的小立方体填满，再打开层。"
+                }
+              ],
+              "implementedAction": "填充并观察模拟立体体积；自由画图和现实容积操作未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Determine whether a measurement answer should be rounded and to what degree of accuracy",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-m28-plot",
+                  "prompt": "逐个量模拟纸条，取最近的整厘米，再画点图。"
+                }
+              ],
+              "implementedAction": "量模拟纸条并按指定精度取整；未评真实测量及自主精度决定。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_fLOkq-HfPB",
+          "to": "mt_f67qGDhyfi",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 modelling with bar models/diagrams builds on age 5-6 modelling with objects and pictures"
+        },
+        {
+          "from": "mt_f67qGDhyfi",
+          "to": "mt_iQYPw8bMfN",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 modelling builds on age 6-7"
+        },
+        {
+          "from": "mt_iQYPw8bMfN",
+          "to": "mt_K3R0yaHVcx",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 modelling is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_K3R0yaHVcx",
+          "to": "mt_8xVHooT4aI",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 modelling is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_8xVHooT4aI",
+          "to": "mt_yqZiX6vS7D",
+          "strength": "hard",
+          "sourceReason": "Y6 modelling extends Y5 real-world problem modelling"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.5",
+      "label": "策略性使用工具",
+      "sourceTitle": "Use appropriate tools strategically",
+      "nodes": [
+        {
+          "id": "mt_20WfHhnL39",
+          "displayName": "动手解决问题",
+          "sourceName": "Hands-On Problem Solving",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "tools38",
+          "lessonUrl": "learn.html#tools38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Choose cubes, counters, or fingers to help solve an addition or subtraction problem",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-tenbridge",
+                  "prompt": "8+6，先让十出现。哪些圆片搬过去，哪些还在后面？"
+                },
+                {
+                  "index": 1,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                }
+              ],
+              "implementedAction": "操作十格与选一种屏幕表示；不能识别现实中手指或方块的选择。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use a ten frame to organise objects for counting or comparing",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-tenbridge",
+                  "prompt": "8+6，先让十出现。哪些圆片搬过去，哪些还在后面？"
+                }
+              ],
+              "implementedAction": "在屏幕十格中实际移动并经过十，不评实物操作。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain why a particular tool (e.g. cubes rather than fingers) was chosen for a given problem",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-m33-model",
+                  "prompt": "一根绳原来45 cm，剪掉18 cm。挑一种表示，再找剩下的长度。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-r38-chain",
+                  "prompt": "想看清一根绳剪掉一段后还剩多少。哪种表示能把原来、剪掉和剩下放在一起？"
+                }
+              ],
+              "implementedAction": "可留选择理由，开放解释未评；预置情境不评一般策略。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_zMEvtigoM3",
+          "displayName": "数轴上的数 · 选择数轴等工具",
+          "sourceName": "Numbers on a number line",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "toolchoice",
+          "lessonUrl": "learn.html#toolchoice",
+          "taskCount": 5,
+          "goals": [
+            {
+              "sourceGoal": "Choose a number line or hundred square to support adding or subtracting two-digit numbers",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-toolwork",
+                  "prompt": "算34+28。选数轴或百数表，用十和一走到结果；也可以换工具比较。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-toolwork",
+                  "prompt": "换成72−36，选一个工具实际做一遍。"
+                }
+              ],
+              "implementedAction": "可选数轴或百数表，实际按十与一完成两位数加减；不是只选工具名称",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Select a ruler when a problem requires measuring length",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-toolwork",
+                  "prompt": "这条模拟丝带有多长？选尺，零点对起端，末端读到哪里就留下这一段。"
+                },
+                {
+                  "index": 4,
+                  "type": "x-toolwork",
+                  "prompt": "给模拟门量高，尽量只量两段。短尺还是米尺更合适？每段接着前一段，最后用米记录。"
+                }
+              ],
+              "implementedAction": "短尺与米尺实际对零、逐段拼接，记录18厘米与1.8米；屏幕模拟不证明会用实物",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain why one representation (e.g. a number line vs cubes) is more helpful for a particular problem",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-toolwork",
+                  "prompt": "算34+28。选数轴或百数表，用十和一走到结果；也可以换工具比较。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-toolwork",
+                  "prompt": "换成72−36，选一个工具实际做一遍。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-toolwork",
+                  "prompt": "两颗红珠和三颗蓝珠合起来。选能直接看见两小堆的工具，亲自摆出来。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-toolwork",
+                  "prompt": "这条模拟丝带有多长？选尺，零点对起端，末端读到哪里就留下这一段。"
+                },
+                {
+                  "index": 4,
+                  "type": "x-toolwork",
+                  "prompt": "给模拟门量高，尽量只量两段。短尺还是米尺更合适？每段接着前一段，最后用米记录。"
+                }
+              ],
+              "implementedAction": "少量双色物品与长短测量提供用途对照，个人选工具理由在总结保存，未自动评估",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_mQcWGh02no",
+          "displayName": "选择解题策略",
+          "sourceName": "Choosing the right strategy",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "strategy39",
+          "lessonUrl": "learn.html#strategy39",
+          "taskCount": 5,
+          "goals": [
+            {
+              "sourceGoal": "Choose a mental method for 345 + 200 but a written method for 345 + 278",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-s39-choose",
+                  "prompt": "345＋200，你想怎样算？"
+                },
+                {
+                  "index": 1,
+                  "type": "x-s39-choose",
+                  "prompt": "换成345＋278。还想用同一种方法吗？"
+                }
+              ],
+              "implementedAction": "自己选数的关系、书写或计算器并计算；不能推断真实心算或纸笔使用。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Select a ruler vs a metre stick based on the object being measured",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-m28-ruler",
+                  "prompt": "量一条短书边：选工具，零刻度对齐。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-toolwork",
+                  "prompt": "给模拟门量高，尽量只量两段。短尺还是米尺更合适？每段接着前一段，最后用米记录。"
+                }
+              ],
+              "implementedAction": "在模拟场景中按长度与分段要求量；现实工具使用未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Decide when a number line is more useful than base-ten blocks for a given problem",
+              "tasks": [
+                {
+                  "index": 4,
+                  "type": "x-toolwork",
+                  "prompt": "算34+28。选数轴或百数表，用十和一走到结果；也可以换工具比较。"
+                }
+              ],
+              "implementedAction": "在数轴与百数表间选并实际移动；未实现与实物十进制块的自由对比。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_d-WZC2OyMB",
+          "displayName": "选择合适的数学工具",
+          "sourceName": "Choosing mathematical tools",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "tools39",
+          "lessonUrl": "learn.html#tools39",
+          "taskCount": 5,
+          "goals": [
+            {
+              "sourceGoal": "Decide to use mental multiplication for 25×4 but a written method for 167×3",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-s39-choose",
+                  "prompt": "25×4，你会怎样算？"
+                },
+                {
+                  "index": 1,
+                  "type": "x-s39-choose",
+                  "prompt": "换成167×3。你可以继续选自己的方法。"
+                }
+              ],
+              "implementedAction": "对25×4和167×3任选可行算法，不把一种偏好当唯一答案。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Choose fraction strips rather than a number line to compare 3/8 and 1/4",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-samefraction",
+                  "prompt": "同一个整体取3/8与1/4。先猜，再用纸带叠一叠。"
+                }
+              ],
+              "implementedAction": "同整体用分数条比较3/8和1/4；没有评估自主选择数轴。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use a ruler and squared paper to verify area by counting squares after calculating l×w",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-s39-choose",
+                  "prompt": "长4厘米、宽3厘米，先算4×3。"
+                },
+                {
+                  "index": 4,
+                  "type": "x-a30-grid",
+                  "prompt": "刚才算出4×3。铺满3行、每行4格，再数一数能否对上。"
+                }
+              ],
+              "implementedAction": "先计算4×3再铺方格核对；模拟方格不代表现实纸笔测量。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_IwEOCN6bL1",
+          "displayName": "选择合适的表示方式",
+          "sourceName": "Choosing representations strategically",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "representations39",
+          "lessonUrl": "learn.html#representations39",
+          "taskCount": 6,
+          "goals": [
+            {
+              "sourceGoal": "Choose mental multiplication for 25 × 40 but long multiplication for 347 × 26",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-s39-choose",
+                  "prompt": "25×40，用自己选的方法算。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-s39-choose",
+                  "prompt": "换成347×26，你想换一种方法吗？"
+                }
+              ],
+              "implementedAction": "分别对25×40和347×26选择方法并计算；口述理由与真实工具使用未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Select a protractor to verify an estimated angle rather than relying on visual inspection alone",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-g25-estimate",
+                  "prompt": "先和直角比较：这个开口大约是多少度？"
+                },
+                {
+                  "index": 3,
+                  "type": "x-g25-protractor",
+                  "prompt": "刚才估过开口。现在把量角器对准同一个角，看看实际刻度。"
+                }
+              ],
+              "implementedAction": "先估130度，再对准模拟量角器验证；未评现实量角。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Choose a common-denominator approach vs. benchmark comparison for ordering fractions, and explain why",
+              "tasks": [
+                {
+                  "index": 4,
+                  "type": "x-fracorder",
+                  "prompt": "这次先看各自在一半哪边，再决定大小。"
+                },
+                {
+                  "index": 5,
+                  "type": "x-fracorder",
+                  "prompt": "5/8和4/7都在一半以上。换成共同的小份，再比较大小。"
+                }
+              ],
+              "implementedAction": "用一半比较异侧分数，再以共同分母比较两个都大于一半的分数；自由方法选择与解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_ZJC7JnnPCu",
+          "displayName": "选择数学工具",
+          "sourceName": "Choosing Maths Tools",
+          "standards": [
+            "ccss-math:MP.5"
+          ],
+          "lessonId": "tooladv39",
+          "lessonUrl": "learn.html#tooladv39",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Explain why long division is more appropriate than mental methods for 4,752 ÷ 13",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-divtable",
+                  "prompt": "4752÷13：把每次乘回、拿走和下一位都留下；最后用分数表示未分尽的部分。"
+                }
+              ],
+              "implementedAction": "逐位处理4752÷13并保留365余7；理由文字与实际纸笔使用未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Choose a coordinate grid approach to verify a translation rather than computing from a description alone",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-p24-transform",
+                  "prompt": "点A从(2,3)向右走3格。先猜它会到哪里，再让它移动。"
+                }
+              ],
+              "implementedAction": "在坐标图上实际移动点并比较前后位置；不评现实绘图。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Select a formula-based approach rather than counting cubes to find volume efficiently",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "cube-plan",
+                  "prompt": "一层4×3，一共5层。用数每层与相乘两种说法核对整箱。"
+                }
+              ],
+              "implementedAction": "使用每层数量与层数核对4×3×5盒子的体积；未评无支架自由选择。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_20WfHhnL39",
+          "to": "mt_zMEvtigoM3",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 strategic tool selection builds on age 5-6 familiarity with basic tools"
+        },
+        {
+          "from": "mt_zMEvtigoM3",
+          "to": "mt_mQcWGh02no",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 strategic tool use builds on age 6-7"
+        },
+        {
+          "from": "mt_mQcWGh02no",
+          "to": "mt_d-WZC2OyMB",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 strategic tool use is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_d-WZC2OyMB",
+          "to": "mt_IwEOCN6bL1",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 strategic tool use is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_IwEOCN6bL1",
+          "to": "mt_ZJC7JnnPCu",
+          "strength": "hard",
+          "sourceReason": "Y6 strategic tool use extends Y5 tool selection"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.6",
+      "label": "准确表达",
+      "sourceTitle": "Attend to precision",
+      "nodes": [
+        {
+          "id": "mt_lMz9nAs7VO",
+          "displayName": "基础数学词汇",
+          "sourceName": "Early Maths Vocabulary",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "words38",
+          "lessonUrl": "learn.html#words38",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Use 'more than', 'fewer than', and 'the same as' correctly when comparing groups",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "红珠有7颗，蓝珠有4颗。把两排一一配对，看看红珠多几颗。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-digitcompare",
+                  "prompt": "把 4 和 7 放到数轴上，再给它们一个正确的关系符号。"
+                }
+              ],
+              "implementedAction": "比较两组数量及数轴上的关系；中文表达适配，不评口语词汇。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Name shapes correctly and describe their features using words like 'sides' and 'corners'",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-s23-sides",
+                  "prompt": "沿边一条条点亮，数一数这个倾斜图形有几条边。"
+                }
+              ],
+              "implementedAction": "沿图形边逐条标记，计数并描述；自由描述未评分。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use positional words (above, below, next to) precisely to describe where objects are",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-p24-place",
+                  "prompt": "把小球放在桌子上面。"
+                }
+              ],
+              "implementedAction": "把小球放到参照物上方，操作为屏幕模拟。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_TMoHjMhRS2",
+          "displayName": "清楚准确地交流数学",
+          "sourceName": "Precise Maths Communication",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "communicate38",
+          "lessonUrl": "learn.html#communicate38",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Use the = sign correctly to mean 'is the same as' rather than 'the answer is'",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-balance",
+                  "prompt": "“答案”在左边也能成立吗？用两盘珠子检查。"
+                }
+              ],
+              "implementedAction": "平衡两边5与2+3，答案也可在左；等号一般含义不由单例证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Include units when giving a measurement answer (e.g. '12 cm' not just '12')",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-m28-ruler",
+                  "prompt": "把尺的零刻度对准左端，读出这条模拟桌边。"
+                }
+              ],
+              "implementedAction": "模拟对齐尺并读出厘米；实际测量能力未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use precise terms such as 'edge', 'vertex', 'face' when describing 3-D shapes, and 'greater than', 'less than' when comparing numbers",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-solid",
+                  "prompt": "转动这个方盒，分别把所有平的面、接缝线和角点标记一遍。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-digitcompare",
+                  "prompt": "这次较大的数在左边，开口应该朝哪边？"
+                }
+              ],
+              "implementedAction": "标记模拟立体的面、棱、顶点并比较数字；口述未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_HY8Yycu_rz",
+          "displayName": "理解分数 · 准确使用词语与符号",
+          "sourceName": "Understanding fractions (age 7+)",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "precisefractions",
+          "lessonUrl": "learn.html#precisefractions",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Consistently specify units in measurement answers (e.g. '35 cm' not '35')",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-fractiontalk",
+                  "prompt": "同样一个数，少了单位可能是另一件事。把这几条记录写清楚。"
+                }
+              ],
+              "implementedAction": "两种量必须连同厘米或克的单位提交；有限任务不代表长期总能坚持。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use fraction vocabulary precisely (numerator, denominator, equivalent)",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-samefraction",
+                  "prompt": "先把两种写法叠齐，下一步再给这些位置和关系叫名字。"
+                },
+                {
+                  "index": 2,
+                  "type": "x-fractiontalk",
+                  "prompt": "刚才用过的几个说法，最后给它们正式的名字。"
+                }
+              ],
+              "implementedAction": "先比较1/2与2/4，再正式辨认分子、分母、等值；术语回忆不等于自由交流能力。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Write equations with correct notation including £/p, >, <, = and fraction symbols",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-fractiontalk",
+                  "prompt": "刚才用过的几个说法，最后给它们正式的名字。"
+                }
+              ],
+              "implementedAction": "本地元/分金额格式与分数比较；3.5=3.50明确保留，不把书写惯例当数量错误。未自动评估£/p或独立读写所有记号。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_mywsN77hGZ",
+          "displayName": "准确地表达数学",
+          "sourceName": "Mathematical Precision",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "precise38",
+          "lessonUrl": "learn.html#precise38",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Distinguish between 'three fourths' and 'three quarters' and use both correctly",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-portiongroups",
+                  "prompt": "还是12颗分四等份，这次取三份。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-r38-chain",
+                  "prompt": "一整条平均分成四份，取三份。把两种说法连到同一段。"
+                }
+              ],
+              "implementedAction": "三份四分之一与四分之三采用中文表达；英文不同说法未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "State an answer in the correct unit: '63 square centimetres' not just '63'",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-floor",
+                  "prompt": "用一平方厘米的小方片铺满这本模拟书的封面，再与刚才 14 平方厘米的 L 形比较。"
+                }
+              ],
+              "implementedAction": "铺单位方片并记录面积及平方厘米。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Write 15:45 in 24-hour notation and explain the distinction from 3:45 pm",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-t32-clock",
+                  "prompt": "下午3:45，写成24小时制。"
+                }
+              ],
+              "implementedAction": "读下午3:45并记录24小时制15:45；口述解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_xfwv0M83mJ",
+          "displayName": "准确使用数学词汇",
+          "sourceName": "Precise Maths Vocabulary",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "term38",
+          "lessonUrl": "learn.html#term38",
+          "taskCount": 5,
+          "goals": [
+            {
+              "sourceGoal": "Distinguish 'factor' from 'multiple' in a written explanation",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-factorrects",
+                  "prompt": "24颗不添不减，能排出哪些不同的长方形？把每一种留下。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-numbersearch",
+                  "prompt": "从一份7开始，接出前五个正倍数。"
+                }
+              ],
+              "implementedAction": "构造因数矩形并生成倍数；自由书面说明未评分。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Write an area answer as 48 cm² (not just 48) and a volume estimate as approximately 60 cm³",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-a30-grid",
+                  "prompt": "铺满这片 3 行、每行 4 格的地面，边缘也要算。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-m31-cubes",
+                  "prompt": "边长 1 cm 的盒子，用边长 1/2 cm 的小立方体填满，再打开层。"
+                }
+              ],
+              "implementedAction": "模拟平面铺格与小块填空间并区分平方和立方单位；量级估计未完全覆盖原例。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use 5² notation correctly and read it as 'five squared'",
+              "tasks": [
+                {
+                  "index": 4,
+                  "type": "x-powerbuild",
+                  "prompt": "把每边5块的正方形铺满。5²说的是几个5相乘？"
+                }
+              ],
+              "implementedAction": "构造5×5的正方形并记录平方；口述读法未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_3rTIyJDw7-",
+          "displayName": "进阶数学词汇",
+          "sourceName": "Advanced Maths Vocabulary",
+          "standards": [
+            "ccss-math:MP.6"
+          ],
+          "lessonId": "advancedWords38",
+          "lessonUrl": "learn.html#advancedWords38",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Use 'radius', 'diameter', and 'circumference' correctly when describing a circle",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-s23-circle",
+                  "prompt": "先画一个半径4.5厘米的圆，再画从圆心到边缘的线和穿过圆心的整条线。"
+                }
+              ],
+              "implementedAction": "在圆中操作半径和直径；圆周指圆边，不评自由讲述。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Distinguish between an expression, an equation, and a formula in mathematical writing",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-a35-sort",
+                  "prompt": "公式也是等式。这三张分别是表达式、具体等式，还是表示面积关系的公式？"
+                }
+              ],
+              "implementedAction": "归类表达式、具体等式和面积公式；公式也属于等式。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Specify units correctly when presenting volume calculations (e.g. 60 cm³ not just 60)",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-m31-cubes",
+                  "prompt": "边长 1 cm 的盒子，用边长 1/2 cm 的小立方体填满，再打开层。"
+                }
+              ],
+              "implementedAction": "用半厘米小方块填模拟盒并记录立方单位；自由绘图未评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_lMz9nAs7VO",
+          "to": "mt_TMoHjMhRS2",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 precise mathematical communication builds on age 5-6 careful use of basic vocabulary"
+        },
+        {
+          "from": "mt_TMoHjMhRS2",
+          "to": "mt_HY8Yycu_rz",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 precision builds on age 6-7"
+        },
+        {
+          "from": "mt_HY8Yycu_rz",
+          "to": "mt_mywsN77hGZ",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 precision is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_mywsN77hGZ",
+          "to": "mt_xfwv0M83mJ",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 precision is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_xfwv0M83mJ",
+          "to": "mt_3rTIyJDw7-",
+          "strength": "hard",
+          "sourceReason": "Y6 precision extends Y5 mathematical vocabulary"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.7",
+      "label": "发现与利用结构",
+      "sourceTitle": "Look for and make use of structure",
+      "nodes": [
+        {
+          "id": "mt_uG2mjHFOlO",
+          "displayName": "发现数学规律",
+          "sourceName": "Spotting mathematical patterns",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "notice34",
+          "lessonUrl": "learn.html#notice34",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Notice that 3 + 2 gives the same answer as 2 + 3 (early commutativity)",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-joinstory",
+                  "prompt": "摆出3颗与2颗，交换两组的位置。总数变了吗？"
+                }
+              ],
+              "implementedAction": "摆出3和2并交换两组次序。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Recognise that teen numbers are 'ten and some more' (e.g. 14 is 10 and 4)",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-teenbuild",
+                  "prompt": "从十四颗里选十颗扎成一束，再记录整束和剩下的。"
+                }
+              ],
+              "implementedAction": "把十个一捆成十并与散数合成十几。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Spot a pattern in a sequence of objects or numbers and predict what comes next",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-p34-repeat",
+                  "prompt": "圆和方依次轮流，接上后面两块。"
+                }
+              ],
+              "implementedAction": "补出圆与方的交替图案。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_DW2D1c0fKx",
+          "displayName": "图形规律 · 运算、数位与图形结构",
+          "sourceName": "Shape patterns",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "structure",
+          "lessonUrl": "learn.html#structure",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Use the commutative property deliberately (e.g. reorder 3 + 9 as 9 + 3 to count on from the larger number)",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-commute",
+                  "prompt": "交换这两堆珠子的位置。亲自试过后，写出交换后的算式，看看总数有没有变。"
+                }
+              ],
+              "implementedAction": "交换 3 与 9 的位置并写新算式",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Use place-value structure to add or subtract tens (e.g. 47 + 10 = 57 because only the tens digit changes)",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-placevalue",
+                  "prompt": "47 颗已经按十颗一束放好。加一束十颗，不拆开重数，记录现在有几个十、几个一。"
+                }
+              ],
+              "implementedAction": "在四十七上增加一个十并描述位值",
+              "claim": "任务对应，不宣称掌握"
+            },
+            {
+              "sourceGoal": "Recognise structural similarities between shapes (e.g. rectangles and squares both have 4 sides and 4 right angles)",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-shapefacts",
+                  "prompt": "分别描出长方形与正方形的边和直角，再比较什么相同。拉长长方形，观察这些数量会不会变。"
+                }
+              ],
+              "implementedAction": "分别标记长方形与正方形的边和直角并比较",
+              "claim": "任务对应，不宣称掌握"
+            }
+          ]
+        },
+        {
+          "id": "mt_FAXjFkgG6X",
+          "displayName": "图形规律 · 三位数、乘除与图形",
+          "sourceName": "Shape patterns (age 7+)",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "structure34",
+          "lessonUrl": "learn.html#structure34",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Use the structure of place value to explain why adding hundreds only changes the hundreds digit",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-pvshift",
+                  "prompt": "638添一板百，会改变哪里？"
+                }
+              ],
+              "implementedAction": "加整百后检查个位和十位；跨整千时百位回卷，源“只改百位”的说法不适用于所有情形。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use commutativity and the relationship between multiplication and division to derive unknown facts",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-mularray",
+                  "prompt": "6行4颗，转向后怎样读？"
+                },
+                {
+                  "index": 2,
+                  "type": "x-mulgroups",
+                  "prompt": "24颗平均放到4份，写出对应的除法；它怎样接回刚才的6×4？"
+                }
+              ],
+              "implementedAction": "旋转乘法阵列并填写对应的除法；自由解释未自动评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Classify shapes by their structural properties (number of sides, right angles, parallel lines)",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-s23-lines",
+                  "prompt": "同一个长方形，既找一组平行边，也找一组垂直边。"
+                }
+              ],
+              "implementedAction": "依据边、平行和直角属性分类所给图形。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt__Itf4aQZUj",
+          "displayName": "运用数学结构",
+          "sourceName": "Using Mathematical Structure",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "structure39",
+          "lessonUrl": "learn.html#structure39",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Decompose 7×13 into 7×10 + 7×3 using the distributive property",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-areaproduct",
+                  "prompt": "把7×13拆开。13可以分成10和3，两块各有多少？也可以试别的分法。"
+                }
+              ],
+              "implementedAction": "把7×13拆成两块并逐块计算；允许其他有效分法。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Explain why multiplying by 10 shifts digits one place left using place-value structure",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-wideshift",
+                  "prompt": "2.5乘10，数字各自走到什么单位？小数点仍在原来的位置。"
+                }
+              ],
+              "implementedAction": "2.5乘10，实际移动数字位置；自由解释未自动评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use the fact that a square is a special rectangle to reason about quadrilateral properties",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-s23-quad",
+                  "prompt": "检查这个正方形：它还能属于哪些家族？"
+                },
+                {
+                  "index": 3,
+                  "type": "x-s23-nest",
+                  "prompt": "把四个图形放进一层套一层的范围：四边形、长方形、正方形。"
+                }
+              ],
+              "implementedAction": "检查正方形的性质并放入长方形集合；有限示例不代替一般证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_hlGKg5M7qJ",
+          "displayName": "运算、分数与图形的结构",
+          "sourceName": "Fractions, Decimals & Percentages",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "structurechoices",
+          "lessonUrl": "learn.html#structurechoices",
+          "taskCount": 6,
+          "goals": [
+            {
+              "sourceGoal": "Use the structure 25 × 16 = 25 × 4 × 4 = 100 × 4 = 400 by exploiting factor pairs",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-mulchain",
+                  "prompt": "16可以分成4×4。自己选先配哪一对，让25×16变好算。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-mulchain",
+                  "prompt": "把25换成23，相同的结构还能让一对变成100吗？算完对比两次作品。"
+                }
+              ],
+              "implementedAction": "25×4×4可自选先配哪对，换23后检查不能照抄凑100。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Recognise that 0.75 = 3/4 = 75% and use whichever form is most efficient for the problem",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-portionbar",
+                  "prompt": "75%与3/4是同一个量。80元取3/4，先搭图再写自己的计算关系。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-portionbar",
+                  "prompt": "12.5%与1/8一样多。同样80元，这次选八等份中的一份。"
+                }
+              ],
+              "implementedAction": "预给分数条计算80的75%和12.5%；表示转换可操作，独立选择最有效方法未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use the fact that angles on a straight line sum to 180° as a structural tool to find missing angles",
+              "tasks": [
+                {
+                  "index": 4,
+                  "type": "x-straightgap",
+                  "prompt": "两块沿一条直线相接。已知110°，不用测量，算出缺角再把它拼好。"
+                },
+                {
+                  "index": 5,
+                  "type": "x-straightgap",
+                  "prompt": "换成64°，这次沿用哪一条关系？先计算，再转动补上的角核对。"
+                }
+              ],
+              "implementedAction": "分别以180−110及180−64求缺角，旋转拼合并写关系等式；不评估真实量角操作。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_hImiKNiaNh",
+          "displayName": "运算顺序 · 发现运算与图形结构",
+          "sourceName": "Order of operations (age 10+)",
+          "standards": [
+            "ccss-math:MP.7"
+          ],
+          "lessonId": "structurebridge",
+          "lessonUrl": "learn.html#structurebridge",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Use the property that all rectangles are parallelograms to deduce missing angle facts",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-shapeangle",
+                  "prompt": "先把斜四边形摆正，再斜回去比较，最后摆正。标出始终平行的两对边，用A角90°推出另外三个角。"
+                }
+              ],
+              "implementedAction": "斜四边形与摆正状态都留下两对平行边，再由一个直角、对角相等和邻角互补填出三个角。固定图与结构理由，不评估独立一般证明",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Recognise that 3 × (n + 5) = 3n + 15 by applying distributive structure",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-lawtiles",
+                  "prompt": "每份有一条长度n和一块5，共3份。把两种块全部拆到右边，改变n两次，看看是否仍一样多。"
+                }
+              ],
+              "implementedAction": "亲自放齐3条n与3块5；错误3n+5能实际出现并与原量比较，至少换两种n。填写3与15，开放概括未自动判懂",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use the equivalence 1/8 = 0.125 = 12.5% flexibly to solve a comparison problem",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-fractionbridge",
+                  "prompt": "先在八等份中涂出一份，再把另一条涂到同样长。用它与同一整体的12%比较。"
+                }
+              ],
+              "implementedAction": "八等份涂一份、千分条调到125并写12.5%；比较同一整体上的12%。这同时作为后批前置的实际准备，不给那些节点记完成",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_uG2mjHFOlO",
+          "to": "mt_DW2D1c0fKx",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 using structure deliberately builds on age 5-6 noticing simple patterns and structure"
+        },
+        {
+          "from": "mt_DW2D1c0fKx",
+          "to": "mt_FAXjFkgG6X",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 using structure builds on age 6-7"
+        },
+        {
+          "from": "mt_FAXjFkgG6X",
+          "to": "mt__Itf4aQZUj",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 using structure is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt__Itf4aQZUj",
+          "to": "mt_hlGKg5M7qJ",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 using structure is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_hlGKg5M7qJ",
+          "to": "mt_hImiKNiaNh",
+          "strength": "hard",
+          "sourceReason": "Y6 structural reasoning extends Y5 structure use"
+        }
+      ]
+    },
+    {
+      "code": "ccss-math:MP.8",
+      "label": "从重复推理中发现规律",
+      "sourceTitle": "Look for and express regularity in repeated reasoning",
+      "nodes": [
+        {
+          "id": "mt_RFeVlw0QvX",
+          "displayName": "寻找更高效的方法",
+          "sourceName": "Finding efficient methods",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "pattern39",
+          "lessonUrl": "learn.html#pattern39",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Notice that skip counting by 2s follows a repeating odd/even pattern",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-s39-chart",
+                  "prompt": "从2出发，每次加2，猜接下来的三站。"
+                },
+                {
+                  "index": 1,
+                  "type": "x-s39-chart",
+                  "prompt": "起点改成3，每次加2。这次停在哪里？"
+                }
+              ],
+              "implementedAction": "从偶数和奇数分别每次加2，观察仍保持各自的奇偶；有限步不构成一般证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Recognise that adding 1 to any number always gives the next counting number",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-s39-chart",
+                  "prompt": "从19开始每次加1。经过行末后会去哪里？"
+                }
+              ],
+              "implementedAction": "从19加1跨行到20和21；开放解释未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use a repeated pattern (e.g. +10 on a hundred chart always moves down one row) to predict answers",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-s39-chart",
+                  "prompt": "百数表每行10个数。从24出发，每次加10。"
+                }
+              ],
+              "implementedAction": "百数表以24为起点连续加10，预测并实际移动；范围限1到100。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_fZTn0W_iZR",
+          "displayName": "从规律中概括结论",
+          "sourceName": "Generalising Patterns",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "general34",
+          "lessonUrl": "learn.html#general34",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Use a known doubles fact to derive a near-doubles answer (e.g. 6 + 7 = 6 + 6 + 1 = 13)",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-threegroups",
+                  "prompt": "把6＋7看成6＋6＋1。先找一样多的两堆，再把1带上。"
+                }
+              ],
+              "implementedAction": "把6+7拆为6+6+1。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Notice that subtracting 10 from any two-digit number always reduces the tens digit by 1",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-placecalc",
+                  "prompt": "82拿走一捆十，观察十位与个位怎样变化。"
+                }
+              ],
+              "implementedAction": "观察82减10的数位变化；不是对全部两位数逐一评估。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Describe a rule for a pattern and use it to extend or predict (e.g. 'each time we add 5, the ones digit alternates between 0 and 5')",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-p34-sequence",
+                  "prompt": "从0开始每次加5，接到20。看个位怎样交替。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-p34-sequence",
+                  "prompt": "起点换成2，仍然每次加5。"
+                }
+              ],
+              "implementedAction": "对两个不同起点每次加5，比较个位；自由描述未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_2jbUekyTu4",
+          "displayName": "延续表格中的规律",
+          "sourceName": "Extending Table Patterns",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "tables34",
+          "lessonUrl": "learn.html#tables34",
+          "taskCount": 3,
+          "goals": [
+            {
+              "sourceGoal": "Notice that all multiples of 4 are even and use this to check answers",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-p34-sequence",
+                  "prompt": "从0开始每次加4，接出4的倍数。看看每个数能否两两配对。"
+                }
+              ],
+              "implementedAction": "构造几个4的倍数并识别为偶数；一般证明未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Derive 8 × 7 from 8 × 5 + 8 × 2 by spotting the pattern",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-mularray",
+                  "prompt": "把8×7切成8×5与8×2，再合起来。为什么两块都乘8？"
+                }
+              ],
+              "implementedAction": "把8×7的阵列拆成8×5与8×2。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Describe a rule for a growing pattern (e.g. 'add 50 each time') and use it to predict the next terms",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-p34-sequence",
+                  "prompt": "从50开始，每次加50。接出四项，再预测下一项。"
+                }
+              ],
+              "implementedAction": "每次加50构造和预测数列。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_aivrWs6jrS",
+          "displayName": "乘法口诀与乘法表 · 从已知规律推出新事实",
+          "sourceName": "Times tables (age 8+)",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "derivepatterns",
+          "lessonUrl": "learn.html#derivepatterns",
+          "taskCount": 7,
+          "goals": [
+            {
+              "sourceGoal": "Notice that all fractions equivalent to 1/2 have a numerator that is half the denominator",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-fwall",
+                  "prompt": "把不同分法都涂出半份。取的份数与全部份数有什么关系？"
+                },
+                {
+                  "index": 2,
+                  "type": "x-fwall",
+                  "prompt": "把两条分别涂成5/10和5/9，都是半份吗？"
+                }
+              ],
+              "implementedAction": "半份的2/4/6分法与5/10对5/9反例；有限例子不当一般证明",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Use the pattern 3×4=12, 3×40=120, 3×400=1200 and explain the generalisation",
+              "tasks": [
+                {
+                  "index": 3,
+                  "type": "x-mularray",
+                  "prompt": "先摆3份4，留下这幅图的关系。"
+                },
+                {
+                  "index": 4,
+                  "type": "x-mularray",
+                  "prompt": "同样3份，每格改成十：现在是3×40。单位改变了什么？"
+                },
+                {
+                  "index": 5,
+                  "type": "x-mularray",
+                  "prompt": "每格再改成百：现在是3×400。"
+                }
+              ],
+              "implementedAction": "3×4、3×40、3×400同样阵列不同单位；一般理由保存，未自动评估",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Derive 8×7 from 8×5=40 plus 8×2=16 and describe the strategy as a general approach",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-mularray",
+                  "prompt": "先做一个准备：3份4颗，每份拆成2与2。两边各是多少？再看这些数量能不能分成两份。"
+                },
+                {
+                  "index": 6,
+                  "type": "x-mularray",
+                  "prompt": "把8×7切成8×5与8×2，再合起来。为什么两块都乘8？"
+                }
+              ],
+              "implementedAction": "先实做3×4拆2+2准备，再8×7拆5+2；不点亮尚未制作的推理前置节点",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_jCy07DyBNU",
+          "displayName": "利用等值关系推理",
+          "sourceName": "Reasoning with Equivalences",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "percentpatterns",
+          "lessonUrl": "learn.html#percentpatterns",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Notice that multiplying any number by 25 can be done by multiplying by 100 then dividing by 4, and explain why",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-rulejump",
+                  "prompt": "每份25。试用“先乘100，再除4”搭规则；用不同份数检查它与每份25是否相同。"
+                }
+              ],
+              "implementedAction": "执行×100÷4等价规则，检查4、7、16份；有限代入不等于任意数的一般证明。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Describe the general rule for a sequence and predict the 20th term",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-rulejump",
+                  "prompt": "搭一条从“第几项”直接走到数值的规则。先检查已知项，再跳到20与100。"
+                }
+              ],
+              "implementedAction": "构造4n+1或等价规则，检查已知项、第20项及第100项。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Generalise: to find 10% divide by 10, to find 5% halve 10%, and use this to find 35% of any number",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-percentkit",
+                  "prompt": "80元的35%：先分出10%和5%，再自己选这些小块来拼。"
+                },
+                {
+                  "index": 3,
+                  "type": "x-percentkit",
+                  "prompt": "整体变成140元，这次要65%。还是同样比例的小块，金额怎样跟着变？"
+                }
+              ],
+              "implementedAction": "先构造10%和5%量块，拼35%与65%，整体80换140；允许不同拼法，不宣称任意数泛化。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        },
+        {
+          "id": "mt_iyovKgZC1q",
+          "displayName": "从重复推理中概括规律",
+          "sourceName": "Generalising with repeated reasoning",
+          "standards": [
+            "ccss-math:MP.8"
+          ],
+          "lessonId": "reason34",
+          "lessonUrl": "learn.html#reason34",
+          "taskCount": 4,
+          "goals": [
+            {
+              "sourceGoal": "Explain that the interior angle sum of an n-sided polygon is (n−2) × 180° based on the pattern for triangles, quadrilaterals, pentagons",
+              "tasks": [
+                {
+                  "index": 0,
+                  "type": "x-g25-polygon",
+                  "prompt": "从一个顶点把六边形分成三角形。"
+                }
+              ],
+              "implementedAction": "在给定凸多边形中划分三角形并计算角和；一般证明未评。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Predict the 20th term of a linear sequence by identifying and applying the general rule",
+              "tasks": [
+                {
+                  "index": 1,
+                  "type": "x-p34-sequence",
+                  "prompt": "从5开始每次加4。先接几项，再想第20项。"
+                }
+              ],
+              "implementedAction": "在5、9、13等例子中计算第20项。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            },
+            {
+              "sourceGoal": "Generalise that dividing by n always gives a denominator of n in the fraction, for any whole numbers",
+              "tasks": [
+                {
+                  "index": 2,
+                  "type": "x-wholeshare",
+                  "prompt": "把3个整体分给4人，图上的每人一份怎样写成除法与分数？"
+                },
+                {
+                  "index": 3,
+                  "type": "x-p34-relation",
+                  "prompt": "6÷3能写成哪些相同的数？再看分母会不会一直是3。"
+                }
+              ],
+              "implementedAction": "选择6÷3、6/3及约分后的等值形式，并明确除数非零；修正上游分母不变的错误。",
+              "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+            }
+          ]
+        }
+      ],
+      "sourceEdges": [
+        {
+          "from": "mt_RFeVlw0QvX",
+          "to": "mt_fZTn0W_iZR",
+          "strength": "hard",
+          "sourceReason": "Age 6-7 generalising from repeated reasoning builds on age 5-6 noticing repeated patterns"
+        },
+        {
+          "from": "mt_fZTn0W_iZR",
+          "to": "mt_2jbUekyTu4",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 repeated reasoning builds on age 6-7"
+        },
+        {
+          "from": "mt_2jbUekyTu4",
+          "to": "mt_aivrWs6jrS",
+          "strength": "hard",
+          "sourceReason": "Age 7-8 repeated reasoning is prerequisite to age 8-9 level"
+        },
+        {
+          "from": "mt_aivrWs6jrS",
+          "to": "mt_jCy07DyBNU",
+          "strength": "hard",
+          "sourceReason": "Age 8-9 repeated reasoning is prerequisite to age 9-10 level"
+        },
+        {
+          "from": "mt_jCy07DyBNU",
+          "to": "mt_iyovKgZC1q",
+          "strength": "hard",
+          "sourceReason": "Y6 generalisation extends Y5 repeated reasoning"
+        }
+      ]
+    }
+  ],
+  "untagged": [
+    {
+      "id": "mt_FVVSQR9vGg",
+      "displayName": "用计算器检查金额",
+      "sourceName": "Calculator checks for money",
+      "standards": [
+        "acara-v9:AC9M3N06"
+      ],
+      "lessonId": "moneycalc",
+      "lessonUrl": "learn.html#moneycalc",
+      "taskCount": 3,
+      "goals": [
+        {
+          "sourceGoal": "Use a calculator to total $4.85, $12.30 and $7.95 for a shopping list and check it is about $25",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-m33-calc",
+              "prompt": "澳元购物单：$4.85、$12.30、$7.95，先估算总价再计算。"
+            }
+          ],
+          "implementedAction": "先估算再输入4.85＋12.30＋7.95，精确得到$25.10。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        },
+        {
+          "sourceGoal": "Enter 10 - 6.45 to find the change from a $10 note and read the display 3.55 as $3.55",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-m33-calc",
+              "prompt": "澳元$10减去$6.45，计算找回的钱。"
+            }
+          ],
+          "implementedAction": "计算10−6.45并把3.55读为$3.55。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        },
+        {
+          "sourceGoal": "Decide that 4 x $5 is quicker mentally but 6 x $3.95 is easier on a calculator, and explain why",
+          "tasks": [
+            {
+              "index": 2,
+              "type": "x-m33-calc",
+              "prompt": "澳元$3.95的东西买6份。可以选择顺手的方法，算完与4份$5比较。"
+            }
+          ],
+          "implementedAction": "计算6×$3.95，并记录自行选择的方法；不评真实心算或解释。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        }
+      ]
+    },
+    {
+      "id": "mt_ish_uH8vZe",
+      "displayName": "合理使用计算器",
+      "sourceName": "Using a calculator well",
+      "standards": [
+        "acara-v9:AC9M4N06",
+        "acara-v9:AC9M4N08"
+      ],
+      "lessonId": "calculator39",
+      "lessonUrl": "learn.html#calculator39",
+      "taskCount": 4,
+      "goals": [
+        {
+          "sourceGoal": "Use a calculator to find the total of 1468 + 2975 + 813 and check it against an estimate of about 5300",
+          "tasks": [
+            {
+              "index": 0,
+              "type": "x-s39-calc",
+              "prompt": "1468＋2975＋813，先估个大概，再用计算器核对。"
+            }
+          ],
+          "implementedAction": "先估约5300，再输入1468、2975和813之和并核对5256。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        },
+        {
+          "sourceGoal": "Decide whether to use mental strategies or a calculator for 400 x 3 and for 387 x 46, and explain the choice",
+          "tasks": [
+            {
+              "index": 1,
+              "type": "x-s39-choose",
+              "prompt": "400×3，选你喜欢的办法。"
+            },
+            {
+              "index": 2,
+              "type": "x-s39-choose",
+              "prompt": "387×46，这次你想怎样算？"
+            }
+          ],
+          "implementedAction": "对400×3与387×46接受心算、书写或计算器等选择；自由理由和实际心算未评。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        },
+        {
+          "sourceGoal": "Spot that a calculator answer of 4 150 for 83 x 5 must be a keying error because 80 x 5 = 400",
+          "tasks": [
+            {
+              "index": 3,
+              "type": "x-s39-calc",
+              "prompt": "83×5，有人得到4150。先估，再检查输入和结果。"
+            }
+          ],
+          "implementedAction": "先估83×5约400，识别4150明显不合理并重新核对输入；错误原因不唯一。",
+          "claim": "有限情境的任务对应；不宣称掌握所有源目标"
+        }
+      ]
+    }
+  ]
+}

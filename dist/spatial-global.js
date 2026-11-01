@@ -40,10 +40,11 @@ export function buildGlobalSpace(atlas){
 }
 
 export function restoreNetworkCoordinates(space,version,view,selected){
-  if(version===GLOBAL_VERSION){
+  if(version===GLOBAL_VERSION||version===space.relationshipVersion&&space.relationshipPositions){
+    const positions=version===GLOBAL_VERSION?space.globalPositions:space.relationshipPositions;
     // Current view/selection updates are coordinate-invariant, including array identity.
-    if(space.networkVersion!==GLOBAL_VERSION)for(const o of space.objects)o.position=[...space.globalPositions.get(o.key)];
-    space.networkVersion=GLOBAL_VERSION;space.networkView=view;space.relationLayout=null;space.relationIds=null;
+    if(space.networkVersion!==version)for(const o of space.objects)o.position=[...positions.get(o.key)];
+    space.networkVersion=version;space.networkView=view;space.relationLayout=null;space.relationIds=null;
     return view;
   }
   space.networkVersion=version;
