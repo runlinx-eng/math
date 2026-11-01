@@ -13,6 +13,8 @@ on:
       - 'tests/spatial-focus-transition-browser.cjs'
       - 'tests/spatial-focus-semantics-browser.cjs'
       - 'tests/spatial-focus-filter-browser.cjs'
+      - 'tests/learning-workspace-browser.cjs'
+      - 'dist/learning/learn.css'
       - 'tests/spatial-focus-filter.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
@@ -56,6 +58,7 @@ jobs:
           node tests/spatial-focus-transition-browser.cjs
           node tests/spatial-focus-semantics-browser.cjs
           node tests/spatial-focus-filter-browser.cjs
+          node tests/learning-workspace-browser.cjs
       - name: Preserve panorama screenshots and checks
         if: always()
         uses: actions/upload-artifact@v4
@@ -66,4 +69,5 @@ jobs:
             verification/spatial-focus-transition/
             verification/spatial-focus-semantics/
             verification/spatial-focus-filter/
+            verification/learning-workspace/
           if-no-files-found: warn
