@@ -59,6 +59,7 @@ export function buildOverviewStructure(space){
     if(!nodeRoles.has(e.to))nodeRoles.set(e.to,role);
   }
   for(const anchor of anchors)nodeRoles.set(anchor.id,anchor.role);
-  return {paths:OVERVIEW_ROLES.map(role=>({role,links:[...linksByRole.get(role).values()]})),links,landmarks:anchors,nodeRoles,
+  const roleNodeSets=new Map(OVERVIEW_ROLES.map(role=>[role,new Set([...linksByRole.get(role).values()].flatMap(link=>[link.from,link.to]))]));
+  return {paths:OVERVIEW_ROLES.map(role=>({role,links:[...linksByRole.get(role).values()]})),links,landmarks:anchors,nodeRoles,roleNodeSets,
     stats:{hard:byEdge.size,selected:new Set(links.map(e=>e.from+'>'+e.to)).size,roots:roots.length,forkCount:forks.length,joinCount:joins.length,originCoverage:reach.get(origin).size,visibleNodeCount:nodes.size}};
 }
