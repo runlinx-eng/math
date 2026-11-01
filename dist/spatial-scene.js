@@ -402,7 +402,9 @@ export class SpatialScene {
   }
   globalInsets(){
     const guide=document.querySelector('#network-guide')?.getBoundingClientRect(),footer=document.querySelector('.bottom-bar')?.getBoundingClientRect();
-    return {left:this.selected?340:42,right:120,top:Math.max(138,(guide?.bottom||116)+22),bottom:Math.max(88,this.height-(footer?.top||this.height-70)+18)};
+    const themeFocus=this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='theme';
+    const left=themeFocus?(this.width>1050?500:this.width>760?440:Math.min(320,this.width*.43)):this.selected?340:42;
+    return {left,right:120,top:Math.max(138,(guide?.bottom||116)+22),bottom:Math.max(88,this.height-(footer?.top||this.height-70)+18)};
   }
   globalScale(){return this.height*this.camera.zoom/(2*this.camera.position.distanceTo(this.controls.target)*Math.tan(Math.PI/9));}
   nodeScreenRadius(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0||!this.global)return null;const matrix=new THREE.Matrix4();this.nodeMesh.getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x*this.globalScale();}
@@ -594,8 +596,8 @@ export class SpatialScene {
       if(this.global){
         const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
         if(landmark){show=true;priority=96;}
-        if(o.kind==='theme'){show=selected?.kind!=='node'&&scale<2.2;priority=this.relationshipMap?92:60;}
-        else if(o.kind==='pack')show=selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||selected?.kind==='theme'&&o.themeId===selected.id||isSelected);
+        if(o.kind==='theme'){show=selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<2.2;priority=this.relationshipMap?92:60;}
+        else if(o.kind==='pack')show=selected?.kind==='theme'?o.themeId===selected.id:selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||isSelected);
         else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey||!!landmark);
         if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
         if(this.relationshipMap&&!selected&&!this.guideFocus){

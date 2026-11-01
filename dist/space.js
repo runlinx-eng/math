@@ -92,6 +92,13 @@ function renderNetworkGuide(){
   $('.tool-rail [data-action="front"]').textContent='归位';
   $('#network-view-title').textContent=scene.localRelationshipFocus?'局部探索 · 从当前知识出发':current?(rotated?'自由视角 · 整张知识地图':mode==='map'?'顶视 · 知识分布':mode==='relations'?'侧视 · 基础到后续':'立体总览 · 整张知识地图'):'保存时的空间';
   $('#network-view-description').textContent=scene.localRelationshipFocus?`当前知识、真实直接联系与走过的路径高亮（${Math.max(0,scene.explorationTrail.length-1)} 步）；其他知识仍以浅色保留在同一张图。点「全貌」取消选择，镜头不变；点「归位」主动重新取景。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
+  const activeTheme=space.byKey.get(scene.selected);
+  if(scene.relationshipMap&&activeTheme?.kind==='theme'){
+    const packs=activeTheme.children.map(k=>space.byKey.get(k)).filter(p=>p?.kind==='pack');
+    const mapped=packs.reduce((sum,p)=>sum+p.nodeIds.filter(id=>space.relationshipIds.has(id)).length,0);
+    $('#network-view-title').textContent=`主题 · ${activeTheme.title}`;
+    $('#network-view-description').textContent=`聚焦 ${packs.length} 个真实知识群、${mapped} 个地图知识点。左侧可按问题选一个知识群；其他主题仍在背景中。`;
+  }
   if(scene.structuralOverview&&!scene.localRelationshipFocus){
     const labels={origin:'起点',fork:'分叉',join:'汇合',all:'同时比较'};
     $('#network-view-title').textContent='全貌 · 观察'+(labels[scene.structureMode]||'真实关系');
@@ -105,6 +112,7 @@ function renderNetworkGuide(){
    const localExit=$('#local-overview-exit');if(localExit)localExit.hidden=!scene.localRelationshipFocus||journeyOpen||guideVisible;
    const allNodesButton=$('[data-action="all-nodes"]');if(allNodesButton)allNodesButton.hidden=scene.relationshipMap;
   if(scene.relationshipMap){const shellButton=$('[data-action="overview-shells"]');if(shellButton){shellButton.hidden=!!scene.selected||!scene.overviewShells.length;shellButton.setAttribute('aria-pressed',String(scene.overviewShellsEnabled));shellButton.textContent=scene.overviewShellsEnabled?'隐藏知识群外壳':`试看知识群外壳 · ${scene.overviewShells.length}`;}for(const b of document.querySelectorAll('[data-action="edge-display"]'))b.setAttribute('aria-pressed',String(b.dataset.edgeDisplay===scene.edgeDisplay));$('#network-edge-hint').textContent=scene.edgeDisplay==='outline'?'只简化背景；选中后仍显示全部直接联系':scene.edgeDisplay==='critical'?'显示全部关键联系；辅助联系可在节点中查看':'显示关键与辅助联系';}
+  for(const b of document.querySelectorAll('#network-legend [data-action="network-theme"]'))b.setAttribute('aria-pressed',String(scene.selected==='theme:'+b.dataset.id));
   const guide=learning.daily.guide,guideEntry=$('[data-action="guide-start"]');guideEntry.hidden=!guideSteps.length||guideVisible||journeyOpen;guideEntry.textContent=guide?.step>0&&guide.step<guideSteps.length-1?'继续认识这张图':'认识这张图';
   $('[data-action="switch-layout"]').textContent=scene.relationshipMap?'切换到旧关系地图':'切换到新关系地图';
   for(const b of document.querySelectorAll('[data-action="network-view"]')){const match=b.dataset.view==='side'?'relations':b.dataset.view==='top'?'map':'oblique';b.setAttribute('aria-pressed',String(current&&!rotated&&match===mode));b.disabled=false;if(b.dataset.view==='oblique')b.textContent=scene.localRelationshipFocus?'立体视角':'立体总览';b.title='只转动镜头，知识点保持原位';}
@@ -125,6 +133,27 @@ function networkRelations(o,relations){
   return `<div class="network-explore">${directions}<details class="network-relations" ${scene.global?'open':''}><summary>直接联系 · ${relations.length}</summary>${sections.join('')}</details></div>`;
 }
 function nextIdea(o){if(!scene.relationshipMap||o.kind!=='node')return '';const pending=pendingQuestions(learning).map(q=>q.nodeId).filter(Boolean),edge=linkedSuggestions(atlas,o.id,{hasActivity:id=>!!lessonForTopic(id),isComplete:id=>nodeState(learning,id).progress==='completed',pendingNodes:pending})[0];if(!edge)return '';const target=space.nodes.get(edge.topicId),why=relationExplanation(edge);return `<section class="next-idea"><small>${pending.includes(target.id)?'这里有你留下的问题':'从这里可以接着看'}</small>${button('choose',`${esc(displayTitle(target))} →`,`data-key="${target.key}"`,'plain-button')}<details><summary>为什么可以接着看？</summary><p>${why.reviewed?esc(why.text):'来源中列出了这条联系，理由正在核对。'}</p></details></section>`;}
+
+function themeOverview(o){
+  // A theme is a choice of real knowledge groups, never a prescribed study order.
+  const packs=o.children.map(key=>space.byKey.get(key)).filter(p=>p?.kind==='pack');
+  const visible=id=>space.relationshipIds?.has(id);
+  const nodeCount=packs.reduce((sum,p)=>sum+p.nodeIds.length,0);
+  const mapCount=packs.reduce((sum,p)=>sum+p.nodeIds.filter(visible).length,0);
+  const thinkingCount=nodeCount-mapCount;
+  const choices=packs.map(p=>{
+    const mapped=p.nodeIds.filter(visible).length,extra=p.nodeIds.length-mapped;
+    const meta=extra? `图中 ${mapped} 个 · 学习中 ${extra} 个`:`${p.nodeIds.length} 个知识点`;
+    return button('choose',`<span class="theme-pack-title">${esc(p.title)}</span><span class="theme-pack-question">${esc(p.question||'查看本组的知识和联系')}</span><span class="theme-pack-meta">${meta}<span aria-hidden="true">→</span></span>`,`data-key="${p.key}"`,'theme-pack-choice');
+  }).join('');
+  return `<div class="theme-overview" data-theme-id="${esc(o.id)}" data-pack-count="${packs.length}" data-node-count="${nodeCount}" data-map-count="${mapCount}">
+    <p class="theme-overview-intro">${esc(o.description)}</p>
+    <div class="theme-overview-counts" aria-label="该主题的真实内容规模"><span><strong>${packs.length}</strong> 个知识群</span><span><strong>${mapCount}</strong> 个地图知识点</span>${thinkingCount?`<span class="theme-thinking-count">另有 ${thinkingCount} 个思维节点在学习中</span>`:''}</div>
+    <div class="theme-overview-guide"><strong>从哪个问题开始？</strong><p>任选一个知识群，进一步查看它的知识与真实联系。这里没有规定的学习顺序。</p></div>
+    <nav class="theme-pack-list" aria-label="${esc(o.title)}的知识群">${choices}</nav>
+    <p class="theme-overview-footnote">地图上仍保留其他主题作为空间参照；主题分组不代表新增数学前置关系。</p>
+  </div>`;
+}
 function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||journeyOpen||guideVisible||panels.has(o.id)){card.hidden=true;return;}
   card.dataset.kind=o.kind;if(worldLayout==='network')card.style.visibility='visible';card.style.setProperty('--object-color',o.color);
   const same=card.dataset.currentKey===scene.selected,priorScroll=same?card.scrollTop:0,priorFocus=same?document.activeElement?.closest?.('[data-preview-key]')?.dataset.previewKey:null;const relations=relationsFor(space,o.key),before=relations.filter(e=>e.to===o.key).length,after=relations.filter(e=>e.from===o.key).length;
@@ -133,6 +162,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   else if(o.kind==='pack'&&routeForPack(o.id)){const routes=routesForPack(o.id),route=routes.find(r=>r.id===activeRouteId)||(routes.length===1?routes[0]:null);if(!route){const sections=ROUTE_SECTIONS.filter(s=>routes.some(r=>routeSection(r,o.id)===s.id)),section=sections.find(s=>s.id===scene.learningSectionId);if(sections.length&&!section)body=`<p class="quiet">先挑一个想试的方向。</p><div class="route-choices">${sections.map(s=>button('choose-section',esc(s.title),`data-id="${s.id}"`,'route-choice route-set')).join('')}</div>`;else{const allChoices=section?routes.filter(r=>routeSection(r,o.id)===section.id):routes,page=Math.min(scene.learningRoutePage||0,Math.floor((allChoices.length-1)/3)),choices=allChoices.slice(page*3,page*3+3);body=`<p class="quiet">${section?esc(section.title):'选一条小路线开始，也可以随时换。'}</p><div class="route-choices">${choices.map(r=>button('choose-route',`${esc(r.title)}<small>${r.ids.length} 个想法</small>`,`data-id="${r.id}"`,'route-choice route-set')).join('')}</div>${allChoices.length>3?`<div class="route-pages">${button('route-page','上一组',`data-page="${page-1}" ${page===0?'disabled':''}`,'plain-button')}${button('route-page','再看看',`data-page="${page+1}" ${(page+1)*3>=allChoices.length?'disabled':''}`,'plain-button')}</div>`:''}${section?button('choose-section','换个方向','data-id=""','plain-button'):''}`;}}else{const links=Object.values(BRIDGES).filter(b=>route.ids.includes(b.to));body=`<p class="quiet">${esc(route.title)} · 可以跳着看</p><ol class="route-choices">${route.ids.map((id,i)=>{const n=LESSONS[id],status=nodeState(learning,n.topicId).progress==='completed'?'✓ 完成':'○ 未完成';return `<li>${button('choose',`<span class="route-number">${route.id}–${String(i+1).padStart(2,'0')}</span><span>${n.title}<small>${status}</small></span>`,`data-key="node:${n.topicId}"`,'route-choice')}</li>`;}).join('')}</ol>${links.length?`<details class="route-links"><summary>把想法连起来</summary>${links.map(b=>button('bridge',`<small>${LESSONS[b.from].title} ↔ ${LESSONS[b.to].title}</small>${esc(b.title)}<small>${esc(b.summary)}</small><small>${lessonSummary(learning.daily.bridges[b.id]).completed?'✓ 完成':'○ 未完成'}</small>`,`data-id="${b.id}"`,'bridge-choice')).join('')}</details>`:''}${routes.length>1?button('choose-route','换条小路线','data-id=""','plain-button'):''}`;}body+=`<div class="focus-actions">${button('list-pack','查看这里的全部知识',`data-id="${o.id}"`,'plain-button')}</div>`;}
 
   else if(o.kind==='pack'){body=`<p>${esc(o.question)}</p><p class="quiet">${o.nodeIds.length} 个想法${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','看看这里的想法',`data-id="${o.id}"`)}</div>`;}
+  else if(o.kind==='theme'&&scene.relationshipMap)body=themeOverview(o);
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
   card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
 }
@@ -345,7 +375,7 @@ async function boot(){try {
   worldLayout=['classic','network'].includes(requested)?requested:['classic','network'].includes(preference)?preference:previous&&(previous.journeyOpen||previous.panels?.length)?'classic':'network';
   document.body.dataset.world=worldLayout;space=worldLayout==='network'?buildRelationshipSpace(atlas):buildSpace(atlas);if(worldLayout==='network'){space.defaultNetworkVersion=chosenNetworkVersion;if(chosenNetworkVersion===49)selectRelationshipVersion(space,49);}space.knowledgeNames=makeKnowledgeNames(atlas);if(worldLayout==='network')document.body.dataset.networkVersion=String(space.networkVersion);readLearning();
   $('[data-action="switch-world"]').textContent=worldLayout==='network'?'原有空间':'关系全图';
-  $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}"`)).join(''):'';
+  $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}" aria-pressed="false"`)).join(''):'';
   if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
   scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id),onOverview:overview,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
   const defaultMode=worldLayout==='network'?'rotate':'pan';scene.setMode(defaultMode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===defaultMode)));let stored=null;try{stored=parseView(JSON.parse(readStored(worldLayout==='network'?(chosenNetworkVersion===RELATIONSHIP_VERSION?RELATIONSHIP_VIEW_KEY:NETWORK_VIEW_KEY):VIEW_KEY)),space);if(!stored&&worldLayout==='network'&&chosenNetworkVersion===49){const old=parseView(JSON.parse(readStored(LEGACY_NETWORK_VIEW_KEY)),space);if(old&&(old.journeyOpen||old.panels.length))stored=old;}}catch{}
