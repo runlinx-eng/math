@@ -203,7 +203,9 @@ export class SpatialScene {
   get relationshipMap(){return this.network&&this.networkVersion===this.space.relationshipVersion;}
   get knowledgeFocus(){return this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='node'&&!this.guideFocus;}
   get localRelationshipFocus(){return this.knowledgeFocus&&!this.traceResult;}
-  syncKnowledgeCameraControls(){if(this.controls)this.controls.enableZoom=!this.knowledgeFocus;}
+  // v53 remains one navigable spatial map whether or not a knowledge point
+  // is selected. Only the independent learning activity uses a fixed panel.
+  syncKnowledgeCameraControls(){if(this.controls)this.controls.enableZoom=true;}
   panIntoViewWithoutZoom(object,animate=true){
     const p=this.project(object.position),insets=this.globalInsets();
     if(p.visible&&p.x>=insets.left&&p.x<=this.width-insets.right&&p.y>=insets.top&&p.y<=this.height-insets.bottom)return;
@@ -252,6 +254,13 @@ export class SpatialScene {
       this.rebuildRelations();
     }if(this.global){this.camera.zoom=view.cameraZoom||1;this.setTrace(view.traceMode||'direct');}this.setRelations(view.relationMode||(this.global&&o?.kind==='node'?'source':'off'));this.fly(view.position,view.target,animated?850:0);}
   overview(animated=true){if(this.network){
+    if(this.relationshipMap&&this.selected){
+      this.outgoingVisualLinks=animated?[...this.focusVisualLinks]:null;
+      if(animated)this.beginViewTransition('to-overview',650);
+      else this.viewTransition=null;
+      // Deselect in place: never auto-fit, zoom or rotate the shared map.
+      this.tween=null;this.select(null);return;
+    }
     this.outgoingVisualLinks=this.localRelationshipFocus&&animated?[...this.focusVisualLinks]:null;
     if(this.localRelationshipFocus&&animated)this.beginViewTransition('to-overview',1050);
     if(!this.global)this.networkVersion=this.defaultNetworkVersion;
@@ -343,8 +352,9 @@ export class SpatialScene {
   nodeVisible(o){if(!this.canLocate(o))return false;
     if(this.relationshipMap){
       if(this.guideFocus)return true; // Keep the same 537 knowledge points as the panorama, softly dimmed.
-      if(this.traceResult)return o.key===this.selected||this.traceResult.distances.has(o.id);
-      if(this.localRelationshipFocus)return o.key===this.selected||this.related?.has(o.key)||this.focusView?.ids.has(o.id);
+      // Focus and depth filters change emphasis, labels and highlighted source
+      // edges only. They must never erase the rest of the 537-point panorama.
+      if(this.traceResult||this.localRelationshipFocus)return true;
       if(!this.selected)return true;
     }
     if(this.global)return this.showAllNodes||o.key===this.selected||this.related?.has(o.key)||this.completedNodes?.has(o.id);if(this.networkView==='relations')return this.space.relationIds.has(o.id);const selected=this.space.byKey.get(this.selected);return this.showAllNodes||this.completedNodes?.has(o.id)||o.key===this.selected||this.related?.has(o.key)||(selected?.kind==='pack'&&(this.selectedRoute()===undefined?routeForPack(selected.id):this.selectedRoute())?.ids.includes(lessonForTopic(o.id)));}
@@ -355,7 +365,7 @@ export class SpatialScene {
     if(!duration){this.camera.position.copy(V(position));this.controls.target.copy(V(target));if(zoom!==null)this.camera.zoom=zoom;this.controls.update();this.updateProjection();this.camera.updateMatrixWorld();this.dirty=true;this.callbacks.onSettled?.();return;}
     this.tween={start:performance.now(),duration,from:this.camera.position.clone(),to:V(position),fromTarget:this.controls.target.clone(),toTarget:V(target),fromZoom:this.camera.zoom,toZoom:zoom===null?this.camera.zoom:zoom};
   }
-  zoom(factor){if(this.knowledgeFocus)return;if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
+  zoom(factor){if(this.global){this.camera.zoom=clamp(this.camera.zoom/factor,.15,35);this.updateProjection();this.dirty=true;this.callbacks.onSettled?.();return;}const offset=this.camera.position.clone().sub(this.controls.target);const length=clamp(offset.length()*factor,30,8000);this.fly(this.controls.target.clone().add(offset.normalize().multiplyScalar(length)).toArray(),this.controls.target.toArray(),250);}
   front(){if(this.network&&this.networkView!=='legacy'){if(this.localRelationshipFocus)this.fitGlobalView(true,this.nodeList.filter(n=>this.focusKeys().has(n.key)));else this.fitNetworkView();return;}const distance=this.camera.position.distanceTo(this.controls.target);this.fly(this.controls.target.clone().add(new THREE.Vector3(0,0,distance)).toArray(),this.controls.target.toArray(),700);}
   viewFrom(name){if(this.network){
     if(!this.global)this.networkVersion=this.defaultNetworkVersion;this.networkView=name==='side'?'relations':name==='top'?'map':'oblique';
@@ -429,7 +439,7 @@ export class SpatialScene {
   paintObjects(){
     const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
-    const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.70:.14;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return o.packId===selected.packId?.42:.18;};
+    const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.70:.14;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?.18:o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
@@ -443,10 +453,13 @@ export class SpatialScene {
       const guideUnrelated=this.relationshipMap&&this.guideFocus&&!this.guideFocus.currentNodes.has(o.key)&&!this.guideFocus.seenNodes.has(o.key);
       // Reuse the panorama's softly translucent background treatment. Only the
       // guide's real current/visited nodes are allowed to regain saturation.
-      color.set(o.color).lerp(paper,1-(guideUnrelated?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus*(match?1:.16));
-      if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
-      if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
-      if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
+      const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
+      color.set(o.color).lerp(paper,1-(guideUnrelated?.80:focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus*(match?1:.16));
+      if(!this.relationshipMap){
+        if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
+        if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
+        if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
+      }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (this.guideFocus.currentNodes.has(o.key)?6.5:this.guideFocus.seenNodes.has(o.key)?4.8:3.4):
         structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
@@ -472,10 +485,10 @@ export class SpatialScene {
     buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth):null;
     for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
-    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?(!this.selected||!!this.guideFocus||this.viewTransition?.kind==='to-focus'):this.showAllNodes)&&(this.global||this.networkView!=='relations');
-      this.networkEdges.material.opacity=this.guideFocus?.023:this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);
+    if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?true:this.showAllNodes)&&(this.global||this.networkView!=='relations');
+      this.networkEdges.material.opacity=this.guideFocus?.023:this.relationshipMap&&this.selected?.025:this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);
       this.networkSoftEdges.visible=this.networkEdges.visible;
-      this.networkSoftEdges.material.opacity=this.guideFocus?.012:this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
+      this.networkSoftEdges.material.opacity=this.guideFocus?.012:this.relationshipMap&&this.selected?.010:this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
     let links=this.guideFocus?this.guideFocus.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e],guideCurrent:this.guideFocus.current.has(e.prerequisiteId+'>'+e.topicId)})):this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
     if(this.focusView&&this.relationMode!=='off')links=this.focusView.links.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]}));
@@ -611,11 +624,11 @@ export class SpatialScene {
       const t=this.viewTransition,p=this.transitionProgress(time);
       this.dirty=true;moving=true;
       if(this.networkEdges){
-        this.networkEdges.visible=t.kind==='to-focus'||!this.selected;
+        this.networkEdges.visible=this.relationshipMap||t.kind==='to-focus'||!this.selected;
         const base=this.structuralOverview?.023:this.relationshipMap?.085:.16;
-        this.networkEdges.material.opacity=base*(t.kind==='to-focus'?1-p:p);
+        this.networkEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?base*(1-p)+.025*p:.025*(1-p)+base*p):base*(t.kind==='to-focus'?1-p:p);
         this.networkSoftEdges.visible=this.networkEdges.visible;
-        this.networkSoftEdges.material.opacity=.055*(t.kind==='to-focus'?1-p:p);
+        this.networkSoftEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?.012*(1-p)+.010*p:.010*(1-p)+.012*p):.055*(t.kind==='to-focus'?1-p:p);
       }
       for(const edge of this.edgesGroup.children)if(edge.userData.relation&&edge.material){
         const original=this.previewKey?(edge.userData.relation.includes(this.previewKey)?1:.12):edge.userData.baseOpacity??edge.material.opacity;
