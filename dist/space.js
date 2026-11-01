@@ -93,8 +93,9 @@ function renderNetworkGuide(){
   $('#network-view-title').textContent=scene.localRelationshipFocus?'局部探索 · 从当前知识出发':current?(rotated?'自由视角 · 整张知识地图':mode==='map'?'顶视 · 知识分布':mode==='relations'?'侧视 · 基础到后续':'立体总览 · 整张知识地图'):'保存时的空间';
   $('#network-view-description').textContent=scene.localRelationshipFocus?`只显示当前知识、直接联系与沿真实关系走过的路径（${Math.max(0,scene.explorationTrail.length-1)} 步）。点相邻知识继续展开；点「全貌」才看整棵树。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
   if(scene.structuralOverview&&!scene.localRelationshipFocus){
-    $('#network-view-title').textContent='全貌 · 观察真实结构';
-    $('#network-view-description').textContent='三种可追溯的知识关系示例：起点、分叉、汇合。其余知识点保留原坐标并退到背景；这不是唯一主干或规定的课程路线。';
+    const labels={origin:'起点',fork:'分叉',join:'汇合',all:'同时比较'};
+    $('#network-view-title').textContent='全貌 · 观察'+(labels[scene.structureMode]||'真实关系');
+    $('#network-view-description').textContent=scene.structureMode==='all'?'正在同时对照三组真实关系示例；可切回单一结构减少干扰。':'仅突出一组真实关系示例。其他知识点仍在原三维坐标，可点击观察或主动切换；不代表唯一数学主干。';
   }
   $('#network-edge-controls').hidden=!scene.relationshipMap;
   const structureControls=$('#overview-structure-controls');
