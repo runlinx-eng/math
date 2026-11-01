@@ -17,6 +17,14 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537&&!mathSpace.snapshot().selected);
    const whole=await snap(),positions=JSON.stringify(whole.positions);
    check(whole.zoomEnabled&&whole.backgroundEdgesVisible,'full map has normal zoom and true background connections');
+   for(let i=0;i<12;i++)await page.locator('.tool-rail [data-action="zoom"][data-factor="1.333333"]').click();
+   const bounded=await snap();
+   check(bounded.cameraZoom>=whole.cameraZoom*.30-.001,'repeated zoom-outs cannot collapse the full atlas into a tiny cluster');
+   await page.screenshot({path:path.join(dir,'00b-zoom-out-boundary.png')});
+   await page.locator('[data-action="front"]').click();
+   await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null);
+   const restoredAtlas=await snap();
+   check(restoredAtlas.visibleNodes.length===537&&restoredAtlas.backgroundEdgesVisible,'explicit Home returns to recognizable full atlas with all original nodes');
    const landmark=page.locator('.space-label.node.structure-landmark:visible').first();
    await landmark.waitFor();
    // This is a genuine visible node click, not an offscreen search result.
