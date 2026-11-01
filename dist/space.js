@@ -360,6 +360,9 @@ async function boot(){try {
   const initialRouteRequested=!stored||routeKey&&routeKey!==stored.selected||!routeKey&&(!stored.journeyOpen||route[0]&&route[0]!=='space');
   if(!showQuestionEntry&&!showUnfinishedEntry&&initialRouteRequested)applyRoute({initial:true});
   if(guideSteps.length&&learning.daily.guide?.active&&scene.relationshipMap&&!showQuestionEntry&&!showUnfinishedEntry&&!explicitOverview){if(journeyOpen)guideSuspended=true;else if(!routeKey||routeKey===stored?.selected)activateGuide(learning.daily.guide.step,{record:false,animate:false,fit:!stored||stored.networkVersion!==RELATIONSHIP_VERSION||stored.selected!=='node:'+guideSteps[learning.daily.guide.step].anchor});}
+  // Never refit while navigating; repair only an unreadably distant saved view
+  // once at startup, after all saved route/guide selections have been restored.
+  if(stored&&!journeyOpen&&scene.relationshipMap)scene.recoverUnreadableSavedCamera();
   const allButton=$('[data-action="all-nodes"]');allButton.setAttribute('aria-pressed',String(scene.showAllNodes));allButton.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';
   refreshLearning();renderLocation();if(stored)restoreFocus(stored);$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();
   // Read-only diagnostics used by local browser checks; no learning-state setters.
