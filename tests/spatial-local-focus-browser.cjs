@@ -12,7 +12,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
  const snap=()=>page.evaluate(()=>mathSpace.snapshot()),selected=id=>'node:'+id;
  const ROOT='mt_WcfaSfVT33',COUNT='mt_dmNvjroCPT';
- const choice=id=>page.locator('#focus-card [data-action="choose"][data-key="'+selected(id)+'"]');
+ const choice=id=>page.locator('#focus-card .network-relations [data-action="choose"][data-key="'+selected(id)+'"]');
  try{
   await page.goto(base+'?world=network&layout=53#space');
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
