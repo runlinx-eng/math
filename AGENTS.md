@@ -1,5 +1,7 @@
 # Math Explorer
 
+**Current v53 spatial interaction contract:** [docs/spatial-learning/INTERACTION-RULES.md](docs/spatial-learning/INTERACTION-RULES.md) (updated 2026-11-01). For present or future v53 implementation and acceptance, this contract overrides conflicting v49–v55 interaction experiments, including older instructions to hide non-focused points, disable zoom when a node is selected, or auto-fit the camera during the guide. Historical layout/version recovery rules remain valid. Do not treat automated checks as user visual acceptance.
+
 Working root: `/Users/zj1-6/dev/math`. The former `agents/experiments/math-explorer` directory is a retained pre-migration copy. Continue project work in this root; Codex project and older chat directory settings must also point here.
 
 Scope: local, offline Chinese mathematics exploration for a child. Grade, age,
@@ -205,6 +207,8 @@ alignment; either original addend may be used for an addition inverse check.
 Written task completion does not establish handwriting or an independent paper
 algorithm. Method selection does not establish actual mental or calculator use.
 Keep sw.js, space.js and exploration.js cache versions synchronized (current v56).
+
+The v53 current map interaction is shared among overview, user zoom/pan/rotation, selected node, source-relationship filters and the five-step orientation. Always retain the 537 background nodes as softly dimmed context. Selecting a visible node, changing filter depth, entering guide, advancing guide, or deselecting must not automatically reframe or zoom; manual zoom controls remain usable in every map state. The explicit Home/归位 control alone reframes the entire atlas. A genuinely offscreen search result may pan into view without zoom. Bound extreme zoom-out using the source atlas; repair an unreadably tiny saved view only during startup. The selected detail card must fit inside the usable screen, including browsers with a left sidebar. Only opening an actual learning activity switches to an independent, height-responsive panel with map tools hidden. The current browser acceptance for this contract is `tests/spatial-unified-map-browser.cjs`, `tests/spatial-guide-inplace-browser.cjs`, `tests/spatial-focus-filter-browser.cjs`, and `tests/learning-workspace-browser.cjs`. Do not revive superseded no-zoom focused-map tests.
 
 The v53 relationship network is the default for a new world. Before a view preference is
 chosen, existing unfinished classic sessions return to their saved view; unfinished
