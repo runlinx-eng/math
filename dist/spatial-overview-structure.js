@@ -42,7 +42,7 @@ export function buildOverviewStructure(space){
   }
   const joins=[...nodes.keys()].filter(id=>incoming.get(id).length>=2&&depth.get(id)>=2)
     .sort((a,b)=>(reach.get(b).size+depth.get(b)*2)-(reach.get(a).size+depth.get(a)*2)||a.localeCompare(b));
-  const forkSegment=new Set(linksByRole.get('fork').values().flatMap(e=>[e.from,e.to]));
+  const forkSegment=new Set([...linksByRole.get('fork').values()].flatMap(e=>[e.from,e.to]));
   const join=joins.find(id=>!forkSegment.has(id)&&id!==origin)||joins[0];
   if(join){
     for(const parent of incoming.get(join).slice(0,Math.min(3,incoming.get(join).length))){
