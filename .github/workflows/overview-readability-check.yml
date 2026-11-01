@@ -8,6 +8,7 @@ on:
       - 'dist/space.css'
       - 'dist/index.html'
       - 'tests/spatial-overview.test.mjs'
+      - 'tests/spatial-overview-structure.test.mjs'
       - 'tests/spatial-overview-browser.cjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
@@ -27,7 +28,7 @@ jobs:
           node --check dist/spatial-model.js
           node --check dist/space.js
       - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
