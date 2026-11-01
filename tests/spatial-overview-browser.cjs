@@ -48,11 +48,11 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
     await page.screenshot({path:path.join(out,'02-'+role+'-motif.png')});
   }
   await page.locator('[data-action="overview-structure"][data-structure="off"]').click();
-  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='off');
+  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='off'&&document.querySelectorAll('.overview-structure-lines .structure-path').length===0);
   check(await page.locator('.overview-structure-lines .structure-path').count()===0,'all-dots mode restores the unannotated point cloud');
   await page.screenshot({path:path.join(out,'03-all-dots-comparison.png')});
   await page.locator('[data-action="overview-structure"][data-structure="all"]').click();
-  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='all');
+  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='all'&&document.querySelectorAll('.overview-structure-lines .structure-path').length>=12);
   const shells=page.locator('[data-action="overview-shells"]');
   if(full.overviewShellCount){
    check(await shells.isVisible(),'eligible group shells have a user-controlled preview');
