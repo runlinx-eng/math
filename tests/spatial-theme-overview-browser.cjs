@@ -34,6 +34,31 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const labeled=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
   check(labeled.every(k=>atlas.packs.some(p=>p.themeId===floatingId&&'pack:'+p.id===k)),'floating map preview only displays the hovered theme\'s real groups');
   await page.screenshot({path:path.join(out,'floating-theme-hover.png')});
+  // Regression for the screenshot: "规律与推理" theme and its four
+  // knowledge-group labels must not overlap or show a duplicate native tooltip.
+  const noOverlaps=async()=>page.evaluate(()=>{
+    const boxes=[...document.querySelectorAll('.space-label.theme:not([hidden]),.space-label.pack:not([hidden])')]
+      .filter(e=>getComputedStyle(e).visibility!=='hidden').map(e=>({name:e.textContent.trim(),type:e.classList.contains('theme')?'theme':'pack',r:e.getBoundingClientRect()}));
+    const collisions=[];
+    for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){
+      const a=boxes[i],b=boxes[j],x=Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left),y=Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top);
+      if(x>1&&y>1)collisions.push({a:a.name,b:b.name,x,y});
+    }
+    return {count:boxes.length,collisions};
+  });
+  const beforeThemeCollision=await noOverlaps();
+  check(beforeThemeCollision.collisions.length===0,'floating theme preview never overlaps actual visible theme and pack rectangles');
+  check(await floating.evaluate(el=>!el.hasAttribute('title')),'floating theme title does not create a duplicate native browser tooltip');
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  await page.locator('#network-legend [data-action="network-theme"][data-id="patterns"]').hover();
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='patterns');
+  await page.waitForTimeout(170);
+  const patternsOverlap=await noOverlaps();
+  check(patternsOverlap.collisions.length===0,'patterns theme and its knowledge groups have non-overlapping rendered boxes');
+  await page.screenshot({path:path.join(out,'patterns-hover-no-overlap.png')});
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
   check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating theme pointerleave restores the unselected map');

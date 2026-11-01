@@ -178,7 +178,12 @@ export class SpatialScene {
         el.dataset.activityForm=form;el.title+=' · '+forms.map(f=>ACTIVITY_FORMS[f].label).join('、');
       }
       if(object.kind==='pack'&&routeForPack(object.id)){title.textContent=routesForPack(object.id).length===1?routeForPack(object.id).title:object.title;el.classList.add('has-route');el.title=title.textContent+' · 有动手路线';}
-      if(object.kind==='theme'){const sub=document.createElement('small');sub.textContent=`${object.children.length} 个知识簇`;el.append(sub);}
+      if(object.kind==='theme'){
+        const sub=document.createElement('small');sub.textContent=`${object.children.length} 个知识簇`;el.append(sub);
+        // This title is already visible as text. The browser's native title
+        // tooltip duplicates it and covers the labels underneath on hover.
+        el.removeAttribute('title');
+      }
       // Floating titles in the 3D map share the top legend's hover preview.
       // Keep the title under the pointer during its temporary theme emphasis.
       if(object.kind==='theme'){
@@ -680,8 +685,18 @@ export class SpatialScene {
       const side=!this.global&&this.networkView==='relations'&&o.kind==='node',highlight=c.isSelected||o.key===this.hovered||o.key===this.previewKey;
       const width=this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
-      const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
-      const rect=c.pinnedRect||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
+      // Theme and pack CSS use larger paddings/min-heights than the old
+      // 30px screen-space estimate. Measure the actual element before
+      // collision detection so nearby labels cannot stack on one another.
+      // Keep a pinned hover title continuously visible to avoid pointerleave.
+      const pinned=!!c.pinnedRect;
+      if(!pinned)el.style.visibility='hidden';
+      el.hidden=false;
+      const measured=el.getBoundingClientRect();
+      const actualWidth=Math.ceil(measured.width),actualHeight=Math.ceil(measured.height);
+      const rect=c.pinnedRect||placeLabel({x:p.x,y:p.y,w:actualWidth,h:actualHeight,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});
+      if(!rect){el.hidden=true;el.style.visibility='';continue;}
+      el.style.visibility='';
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
       el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
