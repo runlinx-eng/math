@@ -15,14 +15,25 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
   const atlas=await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json());
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
+  const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
+  const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
+  await page.waitForFunction(()=>mathSpace.motion().tween===null);
+  // Manual zoom changes the camera; subsequent theme selection must not.
+  await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
+  const afterManualZoom=await camera();
+  check(afterManualZoom.zoom>0&&afterManualZoom.tween===null,'manual zoom stays available before theme selection');
   for(const id of ids){
    const theme=atlas.themes.find(t=>t.id===id);
    const groups=atlas.packs.filter(p=>p.themeId===id);
    const all=atlas.nodes.filter(n=>n.themeId===id);
    const mapped=all.filter(n=>n.domainId!=='thinking');
+   const before=await camera();
    await page.locator('#network-legend [data-action="network-theme"][data-id="'+id+'"]').click();
    await page.waitForFunction(id=>mathSpace.snapshot().selected==='theme:'+id,id);
-   await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null);
+   await page.waitForTimeout(150);
+   const after=await camera();
+   check(sameCamera(before,after),theme.title+' leaves camera position, target and zoom unchanged');
+   check(after.tween===null&&after.transition===null,theme.title+' never schedules a camera tween or view transition');
    const s=await page.evaluate(()=>mathSpace.snapshot());
    const card=page.locator('#focus-card[data-kind="theme"]'),overview=card.locator('.theme-overview');
    check(s.selected==='theme:'+id&&s.visibleNodes.length===537,theme.title+' selects the whole source theme without hiding atlas nodes');
@@ -46,6 +57,14 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    check(bounds.client>0&&bounds.scroll>=bounds.client,theme.title+' knowledge groups remain in a scrollable card');
    await page.screenshot({path:path.join(out,id+'-theme.png')});
   }
+  // The rule also holds after the user explicitly changes the camera view.
+  await page.locator('[data-action="network-view"][data-view="top"]').click();
+  await page.waitForFunction(()=>mathSpace.motion().tween===null);
+  const angled=await camera();
+  await page.locator('#network-legend [data-action="network-theme"][data-id="data"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:data');
+  await page.waitForTimeout(150);
+  check(sameCamera(angled,await camera()),'theme selection preserves a manually chosen top view');
   await page.locator('#network-legend [data-action="network-theme"][data-id="numbers"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:numbers');
   const first=atlas.packs.find(p=>p.themeId==='numbers');

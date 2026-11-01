@@ -275,6 +275,11 @@ export class SpatialScene {
     if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',850);
     else this.viewTransition=null;
     this.tween=null;this.select(key);
+    // All five theme-title actions are in-place selection, like the shared
+    // panorama. They may change emphasis, labels and cards, but must not pan,
+    // orbit, zoom, fit bounds or move the rotation target. The separate
+    // explicitly requested camera controls are the only way to reframe.
+    if(this.relationshipMap&&o.kind==='theme')return;
     if(adjacent)return;
     if(this.global){if(o.kind==='node'){
       if(!this.canLocate(o))return;
