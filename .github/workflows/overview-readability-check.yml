@@ -14,6 +14,7 @@ on:
       - 'tests/spatial-focus-semantics-browser.cjs'
       - 'tests/spatial-focus-filter-browser.cjs'
       - 'tests/spatial-guide-inplace-browser.cjs'
+      - 'tests/spatial-unified-map-browser.cjs'
       - 'tests/learning-workspace-browser.cjs'
       - 'dist/learning/learn.css'
       - 'dist/learning/learn.js'
@@ -62,6 +63,7 @@ jobs:
           node tests/spatial-focus-semantics-browser.cjs
           node tests/spatial-focus-filter-browser.cjs
           node tests/spatial-guide-inplace-browser.cjs
+          node tests/spatial-unified-map-browser.cjs
           node tests/learning-workspace-browser.cjs
       - name: Preserve panorama screenshots and checks
         if: always()
@@ -74,5 +76,6 @@ jobs:
             verification/spatial-focus-semantics/
             verification/spatial-focus-filter/
             verification/spatial-guide-inplace/
+            verification/spatial-unified-map/
             verification/learning-workspace/
           if-no-files-found: warn
