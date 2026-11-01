@@ -286,3 +286,11 @@ body.guide-mode .space-label.node .activity-glyph{display:none!important}
 .focus-filter-count{margin:0!important;padding:0;color:#58746b!important;font-size:11px!important;line-height:1.5!important}
 body[data-network-version="53"] .overview-structure-controls button[data-structure="all"]{opacity:.83}
 body[data-network-version="53"] .network-explore .network-relations:not([open]){opacity:.88}
+
+/* Knowledge inspection is not a separate zoomable camera mode. Keep only
+   pan / rotate / help in the v53 focused toolbar; full-map controls return on exit. */
+body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="zoom"],
+body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="front"],
+body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="network-view"],
+body[data-network-version="53"][data-map-focus="node"] .tool-rail .tool-divider,
+body[data-network-version="53"][data-map-focus="node"] .lens-indicator{display:none!important}
