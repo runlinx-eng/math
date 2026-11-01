@@ -161,6 +161,12 @@ export class SpatialScene {
     this.labelLayer=document.createElement('div');this.labelLayer.className='space-labels';host.append(this.labelLayer);
     this.structureLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
     this.structureLayer.classList.add('overview-structure-lines');this.structureLayer.setAttribute('aria-hidden','true');this.labelLayer.prepend(this.structureLayer);
+    // Focused links are drawn in screen pixels; world positions and source relations stay unchanged.
+    this.focusLinkLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    this.focusLinkLayer.classList.add('spatial-focus-links');
+    this.focusLinkLayer.setAttribute('aria-hidden','true');
+    this.labelLayer.append(this.focusLinkLayer);
+    this.focusVisualLinks=[];this.outgoingVisualLinks=null;
     this.labelTethers=document.createElementNS('http://www.w3.org/2000/svg','svg');this.labelTethers.classList.add('label-tethers');this.labelTethers.setAttribute('aria-hidden','true');this.labelLayer.append(this.labelTethers);
     this.relationLayer=document.createElement('div');this.relationLayer.className='relation-captions';this.labelLayer.append(this.relationLayer);
     for(const object of space.objects){
@@ -235,6 +241,7 @@ export class SpatialScene {
       this.rebuildRelations();
     }if(this.global){this.camera.zoom=view.cameraZoom||1;this.setTrace(view.traceMode||'direct');}this.setRelations(view.relationMode||(this.global&&o?.kind==='node'?'source':'off'));this.fly(view.position,view.target,animated?850:0);}
   overview(animated=true){if(this.network){
+    this.outgoingVisualLinks=this.localRelationshipFocus&&animated?[...this.focusVisualLinks]:null;
     if(this.localRelationshipFocus&&animated)this.beginViewTransition('to-overview',1050);
     if(!this.global)this.networkVersion=this.defaultNetworkVersion;
     this.networkView='oblique';this.select(null);this.fitNetworkView(animated);return;}const factor=Math.max(1,1/this.camera.aspect);this.select(null);this.fly(this.network?[345*factor,310*factor,1150*factor]:[260*factor,160*factor,1580*factor],this.network?[0,0,0]:[0,-15,-70],animated?1100:0);}
@@ -397,7 +404,8 @@ export class SpatialScene {
     const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.65:.15;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return o.packId===selected.packId?.42:.18;};
-    this.visibleNodes=new Set();const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;
+    this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
+    const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
       const o=this.nodeList[i],s=this.states?.[i]||{progress:'unseen',evidence:'none'},d=this.camera.position.distanceTo(V(o.position))/(this.global?this.camera.zoom:1),focus=emphasis(o);
       const visible=this.nodeVisible(o);if(visible)this.visibleNodes.add(o.key);
@@ -410,13 +418,16 @@ export class SpatialScene {
       if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
       if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
       if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
-      const size=(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
-      transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
-      transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+1.6*cap)*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
+      const pixelRadius=structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+      const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
+      transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
+      transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
       transform.scale.setScalar(0);transform.updateMatrix();this.evidenceMesh.setMatrixAt(i,transform.matrix);
       if(this.network){
-        transform.position.copy(V(o.position)).add(new THREE.Vector3(8*cap,8*cap,0).applyQuaternion(this.camera.quaternion));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(visible&&this.savedScenes.has(o.id)?4*cap*level*focus:0);transform.updateMatrix();this.sceneMarkers.setMatrixAt(i,transform.matrix);
-        transform.position.copy(V(o.position)).add(new THREE.Vector3(-8*cap,8*cap,0).applyQuaternion(this.camera.quaternion));transform.scale.setScalar(visible&&this.queuedQuestions.has(o.id)?4.5*cap*level*focus:0);transform.updateMatrix();this.questionMarkers.setMatrixAt(i,transform.matrix);
+        transform.position.copy(V(o.position)).add(new THREE.Vector3(8*cap,8*cap,0).applyQuaternion(this.camera.quaternion));transform.quaternion.copy(this.camera.quaternion);
+        // A saved activity is a record, not a different kind of knowledge node.
+        transform.scale.setScalar(!this.relationshipMap&&visible&&this.savedScenes.has(o.id)?4*cap*level*focus:0);transform.updateMatrix();this.sceneMarkers.setMatrixAt(i,transform.matrix);
+        transform.position.copy(V(o.position)).add(new THREE.Vector3(-8*cap,8*cap,0).applyQuaternion(this.camera.quaternion));transform.scale.setScalar(!this.relationshipMap&&visible&&this.queuedQuestions.has(o.id)?4.5*cap*level*focus:0);transform.updateMatrix();this.questionMarkers.setMatrixAt(i,transform.matrix);
       }
     }
     for(const [id,core]of this.packMeshes){const o=this.space.packs.get(id);core.visible=this.network?!this.relationshipMap&&(this.global||this.networkView!=='relations')&&!!selected&&(selected.kind==='theme'?o.themeId===selected.id:o.id===selected.packId||o.id===selected.id):this.showAllNodes||!!selected&&(selected.kind==='theme'?o.themeId===selected.id:o.id===selected.packId||o.id===selected.id);core.material.color.set(o.color).lerp(paper,1-emphasis(o)*.9);}
@@ -426,7 +437,7 @@ export class SpatialScene {
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
     this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
   }
-  rebuildRelations(){for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
+  rebuildRelations(){this.focusVisualLinks=[];for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
     if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?(!this.selected||this.viewTransition?.kind==='to-focus'):this.showAllNodes)&&(this.global||this.networkView!=='relations');this.networkEdges.material.opacity=this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);this.networkSoftEdges.visible=this.networkEdges.visible;this.networkSoftEdges.material.opacity=this.global?(this.selected?.015:.055):(this.selected?.025:.065);}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
@@ -447,6 +458,13 @@ export class SpatialScene {
     for(const l of links){const a=this.space.byKey.get(l.from),b=this.space.byKey.get(l.to);if(!this.canLocate(a)||!this.canLocate(b))continue;const v=V(a.position),w=V(b.position);const c=v.clone().lerp(w,.5);c.z+=Math.min(70,v.distanceTo(w)*.18);
       const curve=new THREE.QuadraticBezierCurve3(v,c,w),before=this.traceMode==='before'||this.traceMode==='direct'&&l.to===this.selected,color=l.lit?0xb48b36:this.guideFocus?(l.guideCurrent?0x286f7c:0x76988a):this.relationMode==='off'?0x9ca99c:this.selected?(before?0x985b2f:0x286f7c):0xb3bcb3;
       const traced=this.relationshipMap&&!!this.traceResult,hop=traced?Math.min(this.traceResult.distances.get(a.id)??0,this.traceResult.distances.get(b.id)??0):0;
+      // v53 focused view: a source-linked screen-space line, never a zoom-inflated 3D tube.
+      if(this.relationshipMap&&this.selected){
+        const soft=l.edges[0]?.strength==='soft',muted=this.guideFocus&&!l.guideCurrent;
+        this.focusVisualLinks.push({from:v,to:w,control:c,color,soft,muted,arrow:!soft&&!l.trail&&(!this.guideFocus||l.guideCurrent),
+          fromKey:l.from,toKey:l.to,lit:!!l.lit});
+        continue;
+      }
       const line=traced?new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(36)),new THREE.LineBasicMaterial({color,transparent:true,opacity:l.lit?.9:Math.max(.2,.72-hop*.055),depthWrite:false})):
         l.lit||this.selected&&this.relationMode!=='off'?new THREE.Mesh(new THREE.TubeGeometry(curve,36,l.lit?.8:this.global?1.35:this.networkView==='relations'?.7:a.kind==='node'?.20:.38,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity:this.global?.92:.75,depthWrite:false})):
          new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(36)),new THREE.LineBasicMaterial({color,transparent:true,opacity:this.relationMode==='off'?.3:.14,depthWrite:false}));let rendered=line;if(this.network&&l.edges[0]?.strength==='soft'){
@@ -457,6 +475,37 @@ export class SpatialScene {
       }
     }
     if(this.selected&&this.relationLayer&&!this.global&&this.networkView!=='relations')for(const before of [true,false]){const candidate=this.captionCandidates.filter(c=>c.before===before).sort((a,b)=>a.length-b.length)[0];if(!candidate)continue;const el=document.createElement('span');el.className=`relation-caption ${before?'before':'after'}`;el.textContent=before?'这里会用到':'可以继续到';el.hidden=true;this.relationLayer.append(el);candidate.el=el;}this.updateRelationPreview();
+  }
+  updateFocusLinkLayer(){
+    const layer=this.focusLinkLayer;if(!layer)return;
+    const t=this.viewTransition,p=this.transitionProgress();
+    const transitioningOut=t?.kind==='to-overview',transitioningIn=t?.kind==='to-focus';
+    const links=transitioningOut?this.outgoingVisualLinks:this.focusVisualLinks;
+    const opacity=transitioningOut?1-p:transitioningIn?p:1;
+    if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
+    layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
+    layer.style.opacity=String(opacity);
+    const paths=[];
+    for(const l of links){
+      const curve=new THREE.QuadraticBezierCurve3(l.from,l.control,l.to);
+      const start=this.project(curve.getPoint(.025)),mid=this.project(curve.getPoint(.5)),tip=this.project(curve.getPoint(.88));
+      if(!start.visible||!tip.visible)continue;
+      const isPreview=this.previewKey&&(l.fromKey===this.previewKey||l.toKey===this.previewKey);
+      const fading=this.previewKey&&!isPreview;
+      const stroke='#'+l.color.toString(16).padStart(6,'0');
+      const lineOpacity=fading?.12:l.muted?.35:l.soft?.58:.84;
+      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:2;
+      const dash=l.soft?'stroke-dasharray="4 5"':'';
+      paths.push(`<path d="M ${start.x.toFixed(1)} ${start.y.toFixed(1)} Q ${mid.x.toFixed(1)} ${mid.y.toFixed(1)} ${tip.x.toFixed(1)} ${tip.y.toFixed(1)}" stroke="${stroke}" stroke-width="${width}" opacity="${lineOpacity}" ${dash}/>`);
+      if(l.arrow&&!fading){
+        const near=this.project(curve.getPoint(.83)),dx=tip.x-near.x,dy=tip.y-near.y,length=Math.hypot(dx,dy)||1;
+        const ux=dx/length,uy=dy/length,s=4.5;
+        const lx=tip.x-ux*s-uy*s*.65,ly=tip.y-uy*s+ux*s*.65;
+        const rx=tip.x-ux*s+uy*s*.65,ry=tip.y-uy*s-ux*s*.65;
+        paths.push(`<path d="M ${lx.toFixed(1)} ${ly.toFixed(1)} L ${tip.x.toFixed(1)} ${tip.y.toFixed(1)} L ${rx.toFixed(1)} ${ry.toFixed(1)}" stroke="${stroke}" stroke-width="1.7" opacity="${lineOpacity}"/>`);
+      }
+    }
+    layer.innerHTML=paths.join('');
   }
   updateLabels(){
     const selected=this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
@@ -530,8 +579,8 @@ export class SpatialScene {
     }
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
-    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar((o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
-    this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);
+    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
+    this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.updateFocusLinkLayer();
     // Pointer-independent overlays need not trigger a full DOM layout on every camera frame.
     // Keep WebGL movement and 3D relationship projections frequent; refresh labels/panels at
     // most about 10 times per second during animation, and always on the settled frame.
