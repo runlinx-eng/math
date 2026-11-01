@@ -94,6 +94,7 @@ function renderNetworkGuide(){
   $('#network-view-description').textContent=scene.localRelationshipFocus?`只显示当前知识、直接联系与沿真实关系走过的路径（${Math.max(0,scene.explorationTrail.length-1)} 步）。点相邻知识继续展开；点「全貌」才看整棵树。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
   $('#network-edge-controls').hidden=!scene.relationshipMap;
    document.body.dataset.localFocus=scene.localRelationshipFocus?'true':'false';
+   const localExit=$('#local-overview-exit');if(localExit)localExit.hidden=!scene.localRelationshipFocus||journeyOpen||guideVisible;
    const allNodesButton=$('[data-action="all-nodes"]');if(allNodesButton)allNodesButton.hidden=scene.relationshipMap;
   if(scene.relationshipMap){for(const b of document.querySelectorAll('[data-action="edge-display"]'))b.setAttribute('aria-pressed',String(b.dataset.edgeDisplay===scene.edgeDisplay));$('#network-edge-hint').textContent=scene.edgeDisplay==='outline'?'只简化背景；选中后仍显示全部直接联系':scene.edgeDisplay==='critical'?'显示全部关键联系；辅助联系可在节点中查看':'显示关键与辅助联系';}
   const guide=learning.daily.guide,guideEntry=$('[data-action="guide-start"]');guideEntry.hidden=!guideSteps.length||guideVisible||journeyOpen;guideEntry.textContent=guide?.step>0&&guide.step<guideSteps.length-1?'继续认识这张图':'认识这张图';
