@@ -31,6 +31,16 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    check(!!ghost,'there is an unrelated source node in the panorama');
    check((await page.evaluate(key=>mathSpace.nodeRadius(key),ghost))>2,'an unrelated knowledge point remains visible as faint background');
    await page.screenshot({path:path.join(dir,'01-selected-with-full-context.png')});
+   // Reproduce the narrow desktop with a left browser-sidebar overlay. The
+   // entire source card must be inside a safe interior area and fully usable.
+   await page.setViewportSize({width:1024,height:1320});
+   await page.waitForTimeout(140);
+   const card=await page.locator('#focus-card').boundingBox();
+   check(card&&card.x>=100&&card.y>=135,'knowledge detail never begins underneath the left browser sidebar');
+   check(card.x+card.width<=1024-16&&card.y+card.height<=1320-12,'knowledge detail is fully contained in the available desktop');
+   await page.screenshot({path:path.join(dir,'01b-card-with-browser-sidebar.png')});
+   await page.setViewportSize({width:1440,height:900});
+   await page.waitForTimeout(140);
    await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
    await page.waitForTimeout(140);
    const zoomed=await snap();
