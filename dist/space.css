@@ -425,3 +425,12 @@ body[data-world="network"][data-network-version="53"] .space-label.theme.preview
   background:#fffef9;outline:2px solid var(--object-color);outline-offset:1px;
   box-shadow:0 4px 16px #24463c24;font-weight:750;
 }
+
+/* Keep the guide in the same recognizable map, while giving its examples priority. */
+body.guide-mode .guide-panel{width:305px;max-width:calc(100vw - 32px);padding:16px 17px}
+body.guide-mode .guide-panel h2{font-size:19px;margin:9px 0}
+body.guide-mode .guide-panel .guide-context{font-size:11px;line-height:1.6;color:#496b5b;margin:6px 0}
+body.guide-mode .guide-panel .guide-nodes button{font-size:12px}
+body.guide-mode .space-label.node{font-weight:650;font-size:13px;text-shadow:0 0 6px #f5f4ef,0 0 9px #f5f4ef}
+body.guide-mode .space-label.theme{opacity:.88;box-shadow:0 2px 9px #24463c0e}
+@media(max-width:700px){body.guide-mode .guide-panel{width:240px}}
