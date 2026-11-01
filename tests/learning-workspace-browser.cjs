@@ -26,15 +26,37 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
   const frame=page.frameLocator('#journey-frame');
   await frame.locator('#lesson').waitFor();
+  await page.waitForFunction(()=>!!document.querySelector('#journey-surface').style.getPropertyValue('--learning-desired-height'));
   const opened=await snap(),surface=await layout();
+  const childContent=await frame.locator('#lesson').evaluate(el=>Math.ceil(el.scrollHeight));
+  const panelHeader=await page.locator('#journey-surface>header').evaluate(el=>el.getBoundingClientRect().height);
   check(opened.cameraTween===null,'opening a lesson cancels hidden map camera motion');
   check(near(opened.cameraZoom,before.cameraZoom),'the lesson does not change the map camera zoom');
   check(opened.position.every((v,i)=>near(v,before.position[i]))&&opened.target.every((v,i)=>near(v,before.target[i])),'opening lesson preserves map camera pose');
   check(surface.lessonVisible&&surface.x>=0&&surface.y>=0&&surface.right<=surface.viewportW&&surface.bottom<=surface.viewportH,'learning surface fully fits the desktop viewport');
-  check(surface.h<=830&&surface.h>=500&&surface.frame>300,'lesson uses a bounded activity height instead of a huge empty full-screen panel');
+  check(surface.h<=surface.viewportH-30&&surface.h>=250&&surface.frame>100,'lesson height follows content but never exceeds the usable viewport');
+  const expected=Math.min(childContent+panelHeader+2,surface.viewportH-32);
+  check(near(surface.h,expected,3),'panel height matches measured real lesson content, capped by the viewport');
   check(surface.topbar==='none'&&surface.rail==='none','map navigation is absent in focused learning mode');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
+  // More room must expose additional content rather than leaving the panel 820px tall.
+  await page.setViewportSize({width:1440,height:1450});
+  await page.waitForTimeout(100);
+  const tall=await layout();
+  const tallContent=await frame.locator('#lesson').evaluate(el=>Math.ceil(el.scrollHeight));
+  check(near(tall.h,Math.min(tallContent+panelHeader+2,1450-32),3),
+      'on a tall screen the panel expands to its actual content height, not a fixed 820px');
+  const lastControl=await frame.locator('#actions').evaluate(el=>({
+    bottom:el.getBoundingClientRect().bottom,
+    viewport:innerHeight,
+    scrollHeight:document.scrollingElement.scrollHeight
+  }));
+  check(lastControl.bottom<=lastControl.viewport+3,
+      'when the content fits on a tall screen the final activity controls are fully visible');
+  await page.screenshot({path:path.join(out,'01c-full-content-tall-screen.png')});
+  await page.setViewportSize({width:1440,height:900});
+  await page.waitForTimeout(100);
   // Reproduce a Mac trackpad pinch. Chrome emits Ctrl+wheel inside the active iframe;
   // the app should consume that event rather than letting Chrome zoom its entire page.
   const gesture=await frame.locator('#lesson').evaluate(el=>{
@@ -70,6 +92,13 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.setViewportSize({width:1280,height:620});
   const small=await layout();
   check(small.y>=0&&small.bottom<=620&&small.w<=1280,'compact learning layout remains inside a shorter viewport');
+  // Overflow should scroll INSIDE the frame; the final button must remain reachable.
+  await frame.locator('#lesson').evaluate(()=>window.scrollTo(0,document.scrollingElement.scrollHeight));
+  const actions=await frame.locator('#actions').evaluate(el=>({
+    bottom:el.getBoundingClientRect().bottom,
+    view:innerHeight,at:scrollY
+  }));
+  check(actions.bottom<=actions.view+3,'short viewport can scroll to the complete bottom action area');
   await frame.locator('#lesson').evaluate(()=>window.scrollTo(0,360));
   const scroll=await frame.locator('#lesson>header').evaluate(el=>({headerTop:el.getBoundingClientRect().top,scrollY:scrollY,viewport:innerHeight}));
   check(scroll.headerTop>=-1&&scroll.headerTop<80,'lesson return and status header remains visible while content scrolls');
