@@ -71,7 +71,7 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   await page.locator('[data-action="search"]').click();await page.locator('#search-input').fill('mt_WcfaSfVT33');
   await page.locator('#search-results [data-key="node:mt_WcfaSfVT33"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_WcfaSfVT33');
-  const focused=await snap();check(focused.visibleNodes.length<30&&!focused.backgroundEdgesVisible,'selecting a knowledge point still enters local focus');
+  const focused=await snap();check(focused.visibleNodes.length===537&&focused.backgroundEdgesVisible,'selection highlights local links without hiding any panorama knowledge');
   check(JSON.stringify(focused.positions)===initial,'focus and outline toggle never change source coordinates');
   check(await page.locator('[data-action="overview-shells"]').isHidden(),'group preview does not compete with focused exploration');
   await page.locator('#local-overview-exit').click();
