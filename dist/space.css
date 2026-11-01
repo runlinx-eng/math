@@ -201,3 +201,8 @@ body:is([data-network-version="49"],[data-network-version="53"]) .focus-card[dat
 body.has-journey::before{content:"";position:fixed;inset:0;z-index:49;background:#f5f4ef;pointer-events:auto}
 body.has-journey #journey-surface{top:24px;bottom:24px;left:50%;right:auto;transform:translateX(-50%);width:min(1020px,calc(100vw - 48px));box-shadow:0 12px 45px #28483c1c}
 @media(max-width:800px){body.has-journey #journey-surface{top:10px;bottom:10px;width:calc(100vw - 20px)}}
+
+/* The local knowledge view keeps the guide entry, but removes panorama-only edge density controls. */
+body[data-world="network"][data-local-focus="true"] #network-edge-controls>span,
+body[data-world="network"][data-local-focus="true"] #network-edge-controls>[data-action="edge-display"],
+body[data-world="network"][data-local-focus="true"] #network-edge-hint{display:none}
