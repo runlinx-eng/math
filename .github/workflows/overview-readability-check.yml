@@ -15,6 +15,7 @@ on:
       - 'tests/spatial-focus-filter-browser.cjs'
       - 'tests/learning-workspace-browser.cjs'
       - 'dist/learning/learn.css'
+      - 'dist/learning/learn.js'
       - 'tests/spatial-focus-filter.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
@@ -33,6 +34,7 @@ jobs:
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
           node --check dist/space.js
+          node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
       - name: Check relationship data and honest grouping
         run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
