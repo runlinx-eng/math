@@ -1,3 +1,14 @@
+// Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
+// in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
+// Consume only accidental pinch gestures inside an embedded lesson; normal
+// scrolling, input editing and explicit browser accessibility zoom remain.
+if(window!==window.top){
+  const stopPinch=e=>{if(e.ctrlKey&&e.cancelable)e.preventDefault();};
+  const stopGesture=e=>{if(e.cancelable)e.preventDefault();};
+  window.addEventListener('wheel',stopPinch,{capture:true,passive:false});
+  window.addEventListener('gesturestart',stopGesture,{capture:true,passive:false});
+  window.addEventListener('gesturechange',stopGesture,{capture:true,passive:false});
+}
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from '../storage.js';
 import {syncControls as syncB20Controls} from './phase5/b20-view.js';
 import {csv as dataCsv} from './phase5/b19-view.js';
