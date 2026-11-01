@@ -165,6 +165,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.locator('[data-action="overview"]').first().click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null);
   await page.mouse.move(4,4);
+  // Navigation intentionally schedules an asynchronous view save. Let it
+  // settle BEFORE measuring storage, so hover is not blamed for that write.
+  await page.waitForTimeout(500);
   const nodeCamera=await camera(),nodeSnapshot=JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()));
   const nodeStorage=await page.evaluate(()=>JSON.stringify({...localStorage}));
   const candidates=atlas.nodes.filter(n=>n.domainId!=='thinking'&&atlas.edges.some(e=>e.topicId===n.id||e.prerequisiteId===n.id));
