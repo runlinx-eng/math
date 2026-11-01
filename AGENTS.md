@@ -1,6 +1,6 @@
 # Math Explorer
 
-**Current v53 spatial interaction contract:** [docs/spatial-learning/INTERACTION-RULES.md](docs/spatial-learning/INTERACTION-RULES.md) (updated 2026-11-01). For present or future v53 implementation and acceptance, this contract overrides conflicting v49–v55 interaction experiments, including older instructions to hide non-focused points, disable zoom when a node is selected, or auto-fit the camera during the guide. Historical layout/version recovery rules remain valid. Do not treat automated checks as user visual acceptance.
+**Current v53 spatial interaction contract:** [docs/spatial-learning/INTERACTION-RULES.md](docs/spatial-learning/INTERACTION-RULES.md) (updated 2026-11-01; reconciles main e8f7210). For present or future v53 implementation and acceptance, this contract overrides conflicting v49–v55 interaction experiments, including older instructions to hide non-focused points, disable zoom when a node is selected, or auto-fit the camera during the guide. Historical layout/version recovery rules remain valid. Do not treat automated checks as user visual acceptance. Direct source relationships must be visible by default on selecting a knowledge node, with a user-controlled collapse and scrolling for long lists. “全貌” only deselects without moving the camera, while “归位” explicitly frames the whole map.
 
 Working root: `/Users/zj1-6/dev/math`. The former `agents/experiments/math-explorer` directory is a retained pre-migration copy. Continue project work in this root; Codex project and older chat directory settings must also point here.
 
@@ -138,7 +138,7 @@ from guided activity restores the guide step. Keep real node completion and
 completed joint links visible while attention moves; two completed endpoints do
 not complete a link. If a curated source edge is absent, disable only the
 optional orientation. On storage events reread current storage rather than using
-stale event payloads, and do not reset the camera when the guide step is unchanged.
+stale event payloads, and never move or reset the camera automatically on ANY guide step change.
 Implementation boundaries and source examples are in docs/spatial-learning/GUIDE.md.
 
 The v56 `dist/learning/thinking-feedback.js` describes actual submitted,
