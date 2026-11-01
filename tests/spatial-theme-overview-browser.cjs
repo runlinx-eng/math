@@ -22,6 +22,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   const afterManualZoom=await camera();
   check(afterManualZoom.zoom>0&&afterManualZoom.tween===null,'manual zoom stays available before theme selection');
+  // Manual zoom saves asynchronously; settle its own save before attributing
+  // any storage change to the subsequent hover-only interaction.
+  await page.waitForTimeout(450);
   const initialUrl=page.url(),initialStorage=await page.evaluate(()=>JSON.stringify({...localStorage}));
   const firstLabel=page.locator('#network-legend [data-action="network-theme"][data-id="data"]');
   const initialCamera=await camera();
