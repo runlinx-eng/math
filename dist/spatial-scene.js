@@ -207,8 +207,10 @@ export class SpatialScene {
   // is selected. Only the independent learning activity uses a fixed panel.
   syncKnowledgeCameraControls(){if(this.controls)this.controls.enableZoom=true;}
   panIntoViewWithoutZoom(object,animate=true){
-    const p=this.project(object.position),insets=this.globalInsets();
-    if(p.visible&&p.x>=insets.left&&p.x<=this.width-insets.right&&p.y>=insets.top&&p.y<=this.height-insets.bottom)return;
+    const p=this.project(object.position);
+    // A node already visible in the canvas must NEVER move the camera just
+    // because it is near a panel or outside a preferred composition inset.
+    if(p.visible&&p.x>=0&&p.x<=this.width&&p.y>=0&&p.y<=this.height)return;
     // Search can select a point outside the viewport. Pan only: preserve zoom,
     // distance and orientation; clicking a visible node never moves the camera.
     const target=V(object.position),delta=target.clone().sub(this.controls.target);
