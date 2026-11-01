@@ -36,7 +36,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -311,6 +311,13 @@ export class SpatialScene {
     // unfinished camera animation; never refit, rotate or zoom for a guide step.
     this.tween=null;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.select('node:'+current.anchor);this.setRelations('source');this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
+  setThemeHover(id){
+    // Keep the real source nodes as the only visual preview. Never rebuild
+    // labels, reframe the camera, select a route or save learning state.
+    const next=this.relationshipMap&&this.space.themes.has(id)&&!this.guideFocus?id:null;
+    if(this.hoverThemeId===next)return;
+    this.hoverThemeId=next;this.dirty=true;
+  }
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
   updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
   setFocusFilter(direction=this.focusDirection,depth=this.focusDepth){
@@ -492,7 +499,10 @@ export class SpatialScene {
       // Reuse the panorama's softly translucent background treatment. Only the
       // guide's real current/visited nodes are allowed to regain saturation.
       const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
-      color.set(o.color).lerp(paper,1-(guideUnrelated?.80:focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus*(match?1:.16));
+      // A theme hover is an ephemeral COLOR preview of existing source nodes.
+      // It does not introduce subtopic labels or override true graph relations.
+      const hoverTint=this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?.80:focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       if(!this.relationshipMap){
         if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
         if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
@@ -500,7 +510,7 @@ export class SpatialScene {
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (this.guideFocus.currentNodes.has(o.key)?6.5:this.guideFocus.seenNodes.has(o.key)?4.8:3.4):
-        structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+        this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
       const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);

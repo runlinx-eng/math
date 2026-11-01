@@ -19,28 +19,43 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
   await page.waitForTimeout(450);
-  // A mouse hover provides a hierarchical cue in the header ONLY.
+  // Hover previews REAL node colors while its theme title reflects hierarchy.
+  // No pack labels, selected state, camera, or learning storage are changed.
   const hoverCamera=await camera();
   const rawSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
   const baselineLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
   const urlBeforeHover=page.url(),storageBeforeHover=await page.evaluate(()=>JSON.stringify({...localStorage}));
   const floatingTheme=page.locator('.space-label.theme:visible').first();
   const themeId=(await floatingTheme.getAttribute('data-key')).replace('theme:','');
+  const themeNode=atlas.nodes.find(n=>n.themeId===themeId&&n.domainId!=='thinking');
+  const differentNode=atlas.nodes.find(n=>n.themeId!==themeId&&n.domainId!=='thinking');
+  const tints=()=>page.evaluate(keys=>keys.map(key=>mathSpace.nodeTint('node:'+key)),[themeNode.id,differentNode.id]);
+  const beforeTints=await tints();
+  const diff=(a,b)=>a.map((c,i)=>Math.abs(c-b[i])).reduce((x,y)=>x+y,0);
   await floatingTheme.hover();
   await page.waitForFunction(id=>document.querySelector('#network-legend [data-id="'+id+'"]')?.dataset.hover==='true',themeId);
   check(await page.locator('#network-legend [data-hover="true"]').count()===1,'floating theme hover highlights only its corresponding top-left title');
+  await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.some((v,i)=>Math.abs(v-before[i])>.025);},{id:themeNode.id,before:beforeTints[0]});
+  const previewTints=await tints();
+  check(diff(beforeTints[0],previewTints[0])>.08,'hover visibly restores color to matching theme nodes');
+  check(diff(beforeTints[1],previewTints[1])>.08,'hover fades nodes outside the previewed theme');
   check(await page.locator('#focus-card').isHidden(),'floating theme hover never opens a panel');
   check(await floatingTheme.evaluate(el=>!el.hasAttribute('title')),'theme title does not create a duplicate native browser tooltip');
   check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===baselineLabels.join(','),'floating theme hover neither expands nor repositions the visible knowledge groups');
   check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
+  await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.every((v,i)=>Math.abs(v-before[i])<.0001);},{id:themeNode.id,before:beforeTints[0]});
   check(page.url()===urlBeforeHover,'hover does not modify URL');
   // Hover the top-left theme title itself. It should provide the same cue.
   const legendTheme=page.locator('#network-legend [data-action="network-theme"][data-id="data"]');
   await legendTheme.hover();
-  check(await legendTheme.getAttribute('data-hover')==='true','top-left theme hover only highlights the same header');
+  check(await legendTheme.getAttribute('data-hover')==='true','top-left theme hover highlights the corresponding header');
+  const dataNode=atlas.nodes.find(n=>n.themeId==='data'&&n.domainId!=='thinking');
+  const baselineDataTint=await page.evaluate(id=>mathSpace.nodeTint('node:'+id),dataNode.id);
+  check(baselineDataTint.every(Number.isFinite),'top-left theme preview has a real source-node color');
   check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===baselineLabels.join(','),'top-left theme hover does not reveal subtopics');
+  check(diff(beforeTints[1],await page.evaluate(id=>mathSpace.nodeTint('node:'+id),differentNode.id))>.02,'legend theme hover also changes real node color');
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
@@ -98,6 +113,8 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      await packTitle.hover();
      await page.waitForFunction(parent=>document.querySelector('#network-legend [data-id="'+parent+'"]')?.dataset.hover==='true',parent);
      check(await page.locator('#network-legend [data-hover="true"]').count()===1,theme.title+' group hover highlights exactly its parent theme');
+     const onTheme=all.find(n=>n.domainId!=='thinking');
+     if(onTheme){const tint=await page.evaluate(id=>mathSpace.nodeTint('node:'+id),onTheme.id);check(tint&&tint.every(Number.isFinite),theme.title+' group hover keeps source-node preview available');}
      check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover never selects or replaces detail panel');
      check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).join(',')===oldGroupLabels.join(','),theme.title+' group hover does not expand or move labels');
      check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover leaves the camera unchanged');
