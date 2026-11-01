@@ -47,7 +47,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
     return {count:boxes.length,collisions};
   });
   const beforeThemeCollision=await noOverlaps();
-  check(beforeThemeCollision.collisions.length===0,'floating theme preview never overlaps actual visible theme and pack rectangles');
+  check(beforeThemeCollision.collisions.length===0,'floating theme preview never overlaps actual visible theme and pack rectangles: '+JSON.stringify(beforeThemeCollision.collisions));
   check(await floating.evaluate(el=>!el.hasAttribute('title')),'floating theme title does not create a duplicate native browser tooltip');
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
