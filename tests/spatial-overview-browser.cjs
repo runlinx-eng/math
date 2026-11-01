@@ -22,7 +22,7 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
    return !!text&&text.right<=container.right-7&&el.scrollWidth<=el.clientWidth+2;
   })),'full-map themes display complete names rather than ellipses');
   check(full.backgroundEdgesVisible,'full view has a genuine relation outline');
-  check(full.structureMode==='all','overview defaults to true-relationship structure instead of equally weighted dots');
+  check(full.structureMode==='origin','overview defaults to one grounded structure instead of three competing motifs');
   check(full.structureExamples.length===3&&full.structureExamples.every(p=>p.edges.length>=2),'three source-derived motifs are available');
   check(await page.locator('#overview-structure-controls').isVisible(),'purposeful overview lens controls are visible');
   const graph=await page.evaluate(async()=>{
@@ -31,9 +31,11 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
     return snapshot.structureExamples.every(p=>p.edges.every(e=>hard.has(e.from+'>'+e.to)));
   });
   check(graph,'every prominent line belongs to a real hard prerequisite edge');
-  await page.waitForFunction(()=>document.querySelectorAll('.overview-structure-lines .structure-path').length>=12);
+  await page.waitForFunction(()=>document.querySelectorAll('.overview-structure-lines .structure-path.origin').length>=2);
   const pathCount=await page.locator('.overview-structure-lines .structure-path').count();
-  check(pathCount>=12&&pathCount<90,'visible structure is substantial but avoids the full-link hairball');
+  check(pathCount>=2&&pathCount<50,'one genuine structural motif is visible without showing the other paths');
+  check(await page.locator('.overview-structure-lines .structure-path:not(.origin)').count()===0,'other motifs are initially hidden');
+  check(await page.locator('.space-label.node:visible').count()<=4,'overview does not show hundreds of incidental knowledge names');
   check(await page.locator('.space-label.node.structure-landmark:visible').count()>=1,'the structure offers named source-node anchors');
 
   const initial=JSON.stringify(full.positions);
