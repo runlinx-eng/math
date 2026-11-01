@@ -17,7 +17,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await page.locator('[data-action="search"]').click();
   await page.locator('#search-input').fill('mt_WcfaSfVT33');
   await page.locator('#search-results [data-key="'+ROOT+'"]').click();
-  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_WcfaSfVT33'&&mathSpace.snapshot().visibleNodes.length<30);
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_WcfaSfVT33'&&mathSpace.snapshot().visibleNodes.length===537);
   await page.waitForTimeout(120);
   const focus=await snap(),render=await page.evaluate(([a,b])=>{
    const root=document.querySelector('.space-label.node.selected'),relation=document.querySelector('.spatial-focus-links');
@@ -35,15 +35,14 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check(render.selectedLabel.includes('一一对应地数'),'selected title remains visible');
   check(await page.locator('.space-label.node.selected .activity-glyph').evaluate(el=>getComputedStyle(el).display==='none'),'learning-form glyph is not mistaken for a different type of knowledge node');
   await page.screenshot({path:path.join(out,'01-refined-focus.png')});
-  // A knowledge panel must have no zoom feature; wheel zoom is also locked.
-  check(await page.locator('.tool-rail [data-action="zoom"]').first().isHidden(),'knowledge detail has no visible zoom action');
+  // Map zoom is uniform across overview, selection and guided observation.
+  check(await page.locator('.tool-rail [data-action="zoom"]').first().isVisible(),'map zoom stays visible when a node is selected');
   const fixedZoom=(await snap()).cameraZoom;
-  await page.mouse.move(710,470);
-  await page.mouse.wheel(0,-360);
+  await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   await page.waitForTimeout(160);
-  check(Math.abs((await snap()).cameraZoom-fixedZoom)<.0001,'knowledge wheel zoom is disabled');
+  check(Math.abs((await snap()).cameraZoom-fixedZoom)>.0001,'manual map zoom works during node selection');
   const scaled=await page.evaluate(([a,b])=>({root:mathSpace.nodeRadius(a),neighbor:mathSpace.nodeRadius(b),widths:[...document.querySelectorAll('.spatial-focus-links path')].map(p=>Number(p.getAttribute('stroke-width')))}),[ROOT,NEXT]);
-  check(scaled.widths.every(w=>w<=2.8)&&scaled.widths.length===render.lineWidths.length,'thin relationship strokes stay consistent without zoom');
+  check(scaled.widths.every(w=>w<=2.8)&&scaled.widths.length===render.lineWidths.length,'thin relationship strokes stay consistent across manual zoom');
   check(Math.abs(scaled.root-render.rootPx)<1.2&&Math.abs(scaled.neighbor-render.neighborPx)<1.2,'node size stays approximately fixed in screen pixels after zoom');
   check(JSON.stringify((await snap()).positions)===positions,'visual size is independent of the real math coordinates');
   await page.screenshot({path:path.join(out,'02-refined-zoom.png')});
@@ -51,7 +50,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await page.locator('[data-action="guide-start"]').click();
   await page.waitForFunction(()=>document.body.classList.contains('guide-mode')&&!document.querySelector('#guide-panel').hidden);
   const guide=await page.evaluate(()=>({rail:getComputedStyle(document.querySelector('.tool-rail')).display,footer:getComputedStyle(document.querySelector('.bottom-bar')).display,panelVisible:!document.querySelector('#guide-panel').hidden,paths:document.querySelectorAll('.spatial-focus-links path').length}));
-  check(guide.panelVisible&&guide.rail==='none'&&guide.footer==='none','guided observation hides unrelated map controls and footer');
+  check(guide.panelVisible&&guide.rail!=='none'&&guide.footer==='none','guided observation shares the same camera controls as the main map');
   check(guide.paths>0,'guided observation retains true knowledge relationships');
   await page.screenshot({path:path.join(out,'03-guided-focus.png')});
   await page.locator('#guide-panel [data-action="guide-exit"]').click();
