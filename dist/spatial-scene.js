@@ -381,7 +381,8 @@ export class SpatialScene {
     const {left,right:rightMargin,top,bottom}=this.globalInsets(),w=Math.max(260,this.width-left-rightMargin),h=Math.max(200,this.height-top-bottom);
     // Fit the projected point bounds, not the large annotation boxes. All views
     // use the same source coordinates; only the orthographic camera changes.
-    const pixels=Math.min((w-72)/Math.max(160,maxX-minX),(h-56)/Math.max(160,maxY-minY));
+    const minSpan=this.guideFocus?85:this.localRelationshipFocus?110:160;
+    const pixels=Math.min((w-72)/Math.max(minSpan,maxX-minX),(h-56)/Math.max(minSpan,maxY-minY));
     const target=right.clone().multiplyScalar((minX+maxX)/2-(left-rightMargin)/(2*pixels)).addScaledVector(up,(minY+maxY)/2+(top-bottom)/(2*pixels)).addScaledVector(dir,center.dot(dir));
     const distance=2200,targetZoom=pixels*2*distance*Math.tan(Math.PI/9)/this.height;
     this.fly(target.clone().addScaledVector(dir,distance).toArray(),target.toArray(),animated?1050:0,targetZoom);
@@ -488,7 +489,7 @@ export class SpatialScene {
     const paths=[];
     for(const l of links){
       const curve=new THREE.QuadraticBezierCurve3(l.from,l.control,l.to);
-      const start=this.project(curve.getPoint(.025)),mid=this.project(curve.getPoint(.5)),tip=this.project(curve.getPoint(.88));
+      const start=this.project(curve.getPoint(.025)),mid=this.project(l.control),tip=this.project(curve.getPoint(.88));
       if(!start.visible||!tip.visible)continue;
       const isPreview=this.previewKey&&(l.fromKey===this.previewKey||l.toKey===this.previewKey);
       const fading=this.previewKey&&!isPreview;
