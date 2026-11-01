@@ -674,7 +674,9 @@ export class SpatialScene {
       // Do not temporarily hide the hovered DOM element during relayout.
       el.hidden=!pinnedRect;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related,pinnedRect});
     }
-    candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
+    candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[],screenRects=[];let nodes=0;
+    const intersects=(a,b,gap=7)=>a.x<b.x+b.w+gap&&a.x+a.w+gap>b.x&&a.y<b.y+b.h+gap&&a.y+a.h+gap>b.y;
+    const screenIntersects=(a,b,gap=4)=>a.left<b.right+gap&&a.right+gap>b.left&&a.top<b.bottom+gap&&a.bottom+gap>b.top;
     for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
       const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
@@ -696,10 +698,28 @@ export class SpatialScene {
       const actualWidth=Math.ceil(measured.width),actualHeight=Math.ceil(measured.height);
       const rect=c.pinnedRect||placeLabel({x:p.x,y:p.y,w:actualWidth,h:actualHeight,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});
       if(!rect){el.hidden=true;el.style.visibility='';continue;}
+      // DOM boxes are the ultimate authority: pinned hover titles may be
+      // slightly different from their cached bounds. Try nearby free slots
+      // instead of leaving real cards visibly stacked behind the title.
+      const jumps=pinned?[[0,0]]:[[0,0],[0,-actualHeight-14],[0,actualHeight+14],
+        [-actualWidth-14,0],[actualWidth+14,0],[-actualWidth-14,-actualHeight-14],
+        [actualWidth+14,-actualHeight-14],[-actualWidth-14,actualHeight+14],
+        [actualWidth+14,actualHeight+14],[0,-2*actualHeight-28],[0,2*actualHeight+28]];
+      let placed=null,painted=null;
+      for(const [dx,dy] of jumps){
+        const candidate={x:rect.x+dx,y:rect.y+dy,w:actualWidth,h:actualHeight};
+        if(candidate.x<16||candidate.y<Math.max(90,this.global?this.globalInsets().top-14:94)||candidate.x+actualWidth>this.width-16||candidate.y+actualHeight>this.height-78)continue;
+        if((dx||dy)&&rects.some(r=>intersects(candidate,r)))continue;
+        el.style.transform=`translate(${candidate.x}px,${candidate.y}px)`;
+        const screen=el.getBoundingClientRect();
+        if(screenRects.some(r=>screenIntersects(screen,r)))continue;
+        placed=candidate;painted=screen;break;
+      }
+      if(!placed){el.hidden=true;el.style.visibility='';continue;}
       el.style.visibility='';
-      const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
-      rects.push(rect);if(o.kind==='node')nodes++;
-      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
+      const cx=placed.x+placed.w/2,cy=placed.y+placed.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
+      rects.push(placed);screenRects.push(painted);if(o.kind==='node')nodes++;
+      el.hidden=false;el.style.width=`${width}px`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
     }
     for(const c of this.captionCandidates||[]){if(!c.el)continue;c.el.hidden=true;const p=this.project(c.position);if(!p.visible)continue;const r=placeLabel({x:p.x,y:p.y,w:102,h:28,viewport:{w:this.width,h:this.height},occupied:rects});if(!r)continue;rects.push(r);c.el.style.transform=`translate(${r.x}px,${r.y}px)`;c.el.hidden=false;}
     for(const b of this.bandLabels||[]){const p=this.project([0,b.y,0]);b.el.hidden=!p.visible;b.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
