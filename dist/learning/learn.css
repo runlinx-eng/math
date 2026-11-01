@@ -66,3 +66,5 @@ body.p03-focus #work{min-height:240px}
 body.p03-focus #actions{border-top:1px solid var(--line);padding-top:18px;margin-top:24px}
 .p03-done{font-size:14px;color:#3b7254;font-weight:600}
 @media(max-width:700px){body.p03-focus #route{grid-template-columns:1fr}body.p03-focus #steps li{font-size:11px}body.p03-focus #lesson{padding:16px}}
+
+#route-collapsible:not([open]) #route{display:none}
