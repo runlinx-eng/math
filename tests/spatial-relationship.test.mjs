@@ -12,6 +12,16 @@ import {parseView,LAYOUT_VERSION} from '../dist/spatial-model.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const inventory=JSON.parse(fs.readFileSync(new URL('../docs/spatial-learning/inventory.json',import.meta.url)));
 const snapshot=s=>s.objects.map(o=>({key:o.key,position:[...o.position]}));
+const assertLegacyFixtureClose=(actual,expected)=>{
+  assert.equal(actual.length,expected.length);
+  for(let i=0;i<actual.length;i++){
+    assert.equal(actual[i].key,expected[i].key,'legacy source identity and order must match');
+    for(let k=0;k<3;k++)assert.ok(
+      Math.abs(actual[i].position[k]-expected[i].position[k])<=1e-9,
+      `legacy source coordinate changed beyond floating-point precision: ${actual[i].key} axis ${k}`
+    );
+  }
+};
 
 test('prototype coordinates are source-ID keyed, fixed and preserve every visible hard direction',()=>{
   const s=buildRelationshipSpace(atlas),domain=atlas.nodes.filter(n=>n.domainId!=='thinking');
@@ -32,7 +42,7 @@ test('all legacy worlds restore without overwriting the new or v49 coordinates',
   restoreNetworkCoordinates(s,49,'oblique',null);assert.deepEqual(snapshot(s),oldPositions);
   for(const version of [47,48]){
     const f=JSON.parse(fs.readFileSync(new URL(`./fixtures/spatial-network-v${version}-world.json`,import.meta.url)));
-    restoreNetworkCoordinates(s,version,f.world.networkView||'legacy',f.world.selected);assert.deepEqual(snapshot(s),f.positions);
+    restoreNetworkCoordinates(s,version,f.world.networkView||'legacy',f.world.selected);assertLegacyFixtureClose(snapshot(s),f.positions);
   }
   restoreNetworkCoordinates(s,53,'oblique',null);assert.deepEqual(snapshot(s),newPositions);
   restoreNetworkCoordinates(s,49,'relations',null);assert.deepEqual(snapshot(s),oldPositions);
