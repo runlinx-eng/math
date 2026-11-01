@@ -12,6 +12,8 @@ on:
       - 'tests/spatial-overview-browser.cjs'
       - 'tests/spatial-focus-transition-browser.cjs'
       - 'tests/spatial-focus-semantics-browser.cjs'
+      - 'tests/spatial-focus-filter-browser.cjs'
+      - 'tests/spatial-focus-filter.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
 
@@ -29,8 +31,9 @@ jobs:
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
           node --check dist/space.js
+          node --check dist/spatial-focus-filter.js
       - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
@@ -52,6 +55,7 @@ jobs:
           node tests/spatial-overview-browser.cjs
           node tests/spatial-focus-transition-browser.cjs
           node tests/spatial-focus-semantics-browser.cjs
+          node tests/spatial-focus-filter-browser.cjs
       - name: Preserve panorama screenshots and checks
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,4 +65,5 @@ jobs:
             verification/overview-readability-v1/
             verification/spatial-focus-transition/
             verification/spatial-focus-semantics/
+            verification/spatial-focus-filter/
           if-no-files-found: warn
