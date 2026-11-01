@@ -44,3 +44,25 @@
 .x-column{font-size:26px;border-collapse:collapse;margin:12px auto;min-width:125px;text-align:center}.x-column td{padding:2px 8px}.x-column .sum{border-top:2px solid #84917f}
 
 .x-fields .field:has(select){flex-direction:column;align-items:stretch;gap:8px}.x-fields .field>select{width:100%}#extra-controls .field>input[type=text]{width:min(520px,100%)}.x-column{border-collapse:collapse;margin:16px auto;font-size:24px;text-align:center;font-variant-numeric:tabular-nums}.x-column td{width:36px;height:32px}.x-column .sum td{border-top:2px solid #688f88}
+
+/* P-03 pilot: show only the operation needed for the current step. */
+body.p03-focus #lesson{max-width:960px;padding-top:22px}
+#route-collapsible>summary{display:none}
+body.p03-focus #route-collapsible{margin:10px 0 22px}
+body.p03-focus #route-collapsible>summary{display:list-item;font-size:12px;color:#667f72;cursor:pointer;width:max-content;max-width:100%}
+body.p03-focus #route{grid-template-columns:repeat(3,minmax(0,1fr));margin:10px 0}
+body.p03-focus .stage-top{align-items:flex-start;flex-direction:column;gap:12px}
+body.p03-focus #steps{gap:8px;flex-wrap:wrap}
+body.p03-focus #steps li{font-size:12px;padding:7px 12px}
+body.p03-focus #steps li[aria-current=step]{background:#d6e9dc;color:#244c40;font-weight:650}
+body.p03-focus #instruction{font-size:clamp(22px,3vw,28px);margin:18px 0}
+body.p03-focus #work{min-height:240px}
+.p03-guidance{border-left:3px solid #528776;border-radius:7px;background:#eff5ee;padding:13px 18px;margin:8px 0 22px}
+.p03-step-label{display:block;font-size:12px;font-weight:650;color:#517064;margin-bottom:7px}
+.p03-guidance p{margin:0;font-size:16px;line-height:1.7}
+.p03-feedback{padding:11px 15px;background:#fff2df;border:1px solid #e0c8a0;border-radius:8px;line-height:1.5}
+.p03-task[data-phase="count"] #extra-controls .field,
+.p03-task[data-phase="choose"] #extra-controls .field{display:none}
+body.p03-focus #actions{border-top:1px solid var(--line);padding-top:18px;margin-top:24px}
+.p03-done{font-size:14px;color:#3b7254;font-weight:600}
+@media(max-width:700px){body.p03-focus #route{grid-template-columns:1fr}body.p03-focus #steps li{font-size:11px}body.p03-focus #lesson{padding:16px}}
