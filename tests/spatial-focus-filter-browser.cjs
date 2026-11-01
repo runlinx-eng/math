@@ -27,7 +27,8 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   check(direct.nodes<537&&direct.nodes>1,'a direct focus shows a meaningful small real neighborhood');
   check(await select('depth','2').count()===1&&await select('direction','after').count()===1,'user can choose relation direction and expansion level');
   check(await select('depth','1').getAttribute('aria-pressed')==='true','depth 1 reflects active visual state');
-  check(await page.locator('#focus-card .network-relations').evaluate(el=>!el.open),'full source relation list is available but collapsed by default');
+  check(await page.locator('#focus-card .network-relations').evaluate(el=>el.open),'direct source relation list opens by default, with manual collapse available');
+  check(await page.locator('#focus-card .network-relations .network-relation').count()>0,'actual direct neighbors appear immediately in the expanded list');
   const hardEdges=await page.evaluate(async()=>{
    const atlas=await(await fetch('./data/atlas.json')).json();
    return new Set(atlas.edges.filter(e=>e.strength==='hard').map(e=>e.prerequisiteId+'>'+e.topicId)).size;
