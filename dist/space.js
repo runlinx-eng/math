@@ -139,7 +139,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
 function openJourney(step,{restore=false}={}){
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
-  journeyOpen=true;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
+  journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
   $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');frame.src=`journey.html#${step}`;
   // The task workspace is independent of the 3D camera: never fly a map behind a lesson.
   scene.tween=null;scene.viewTransition=null;
@@ -148,14 +148,14 @@ function openJourney(step,{restore=false}={}){
 function openLearningLesson(id,{restore=false,questionId=null}={}){
  if(!sessionMeta(id))return;closePopovers();for(const key of [...panels.keys()])closePanel(key);
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
- activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations('off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
+ activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations('off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';$('#journey-frame').src=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
  renderLocation();scheduleSave();
 }
 
-function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}scheduleSave();}
+function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}scheduleSave();}
 function openSearch(packId=null){searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'想靠近哪个想法？';renderSearch();$('#search-input').focus();}
 function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
   if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
@@ -292,6 +292,14 @@ $('#import-file').addEventListener('change',async event=>{const file=event.targe
 window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){scene.setGuideFocus(guideSteps,saved.step,{animate:false});setHash('node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
   if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
+    if(e.data.type==='math-space:lesson-height'){
+      const height=Number(e.data.height);
+      if(Number.isFinite(height)&&height>100&&height<60000){
+        const header=$('#journey-surface>header')?.getBoundingClientRect().height||38;
+        $('#journey-surface').style.setProperty('--learning-desired-height',Math.ceil(height+header+2)+'px');
+      }
+      return;
+    }
     if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];scene.select('node:'+n.topicId);setHash('node:'+n.topicId);readLearning();refreshLearning();renderLocation();scheduleSave();return;}
     if(e.data.type==='math-space:question-request'){questionComposer({nodeId:e.data.nodeId,scene:e.data.scene});return;}
     if(e.data.type==='math-space:lesson-close'){returnFromLesson();return;}
