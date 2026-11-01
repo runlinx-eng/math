@@ -59,6 +59,18 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.screenshot({path:path.join(out,'patterns-hover-no-overlap.png')});
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  // The reported screenshot was a tall desktop browser. Check this aspect
+  // ratio in addition to the CI's conventional 1440x900 viewport.
+  await page.setViewportSize({width:1440,height:1600});
+  await page.locator('#network-legend [data-action="network-theme"][data-id="patterns"]').hover();
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='patterns');
+  await page.waitForTimeout(170);
+  const tallOverlap=await noOverlaps();
+  check(tallOverlap.collisions.length===0,'tall desktop view keeps the patterns theme and group labels apart: '+JSON.stringify(tallOverlap.collisions));
+  await page.screenshot({path:path.join(out,'patterns-hover-tall-no-overlap.png')});
+  await page.mouse.move(1100,1400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  await page.setViewportSize({width:1440,height:900});
   await page.mouse.move(800,400);
   await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
   check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'floating theme pointerleave restores the unselected map');
