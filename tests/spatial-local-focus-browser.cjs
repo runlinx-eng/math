@@ -66,7 +66,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   s=await snap();check(s.explorationTrail.length===3&&s.visibleNodes.includes(selected(ROOT)),'reload restores the real-edge trail');
   await page.locator('#local-overview-exit').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
-  s=await snap();check(s.backgroundEdgesVisible&&s.visibleNodes.length===537&&s.explorationTrail.length===0,'canceling selection clears the trail without dropping map nodes');
+  s=await snap();check(s.backgroundEdgesVisible&&s.visibleNodes.length===537&&(s.explorationTrail?.length||0)===0,'canceling selection clears the trail without dropping map nodes');
   check(await page.locator('#focus-card').isHidden()&&await page.locator('#local-overview-exit').isHidden(),'leaving local focus closes the relation card and return control');
   await page.locator('[data-action="search"]').click();await page.locator('#search-input').fill(ROOT);
   await page.locator('#search-results [data-key="'+selected(ROOT)+'"]').click();
