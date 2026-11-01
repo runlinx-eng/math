@@ -141,7 +141,8 @@ function openJourney(step,{restore=false}={}){
   scene.setRelations('off');
   journeyOpen=true;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
   $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');frame.src=`journey.html#${step}`;
-  if(!restore&&scene.canLocate(space.nodes.get(ROUTE_STEPS[step-1].id))){const n=space.nodes.get(ROUTE_STEPS[step-1].id),{right,direction}=scene.basis();const target=n.position.map((x,i)=>x+right.getComponent(i)*(innerWidth>800?155:0));const d=innerWidth>800?620:800;scene.fly(target.map((x,i)=>x+direction.getComponent(i)*d),target,650);}
+  // The task workspace is independent of the 3D camera: never fly a map behind a lesson.
+  scene.tween=null;scene.viewTransition=null;
   scheduleSave();
 }
 function openLearningLesson(id,{restore=false,questionId=null}={}){
@@ -149,7 +150,8 @@ function openLearningLesson(id,{restore=false,questionId=null}={}){
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations('off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';$('#journey-frame').src=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
- if(!restore&&scene.canLocate(space.nodes.get(sessionMeta(id).topicId))){const n=space.nodes.get(sessionMeta(id).topicId),{right,direction}=scene.basis();const target=n.position.map((x,i)=>x+right.getComponent(i)*160);scene.fly(target.map((x,i)=>x+direction.getComponent(i)*720),target,650);}
+ // Learning should open as a stable workspace, not move or zoom the hidden map.
+ scene.tween=null;scene.viewTransition=null;
  renderLocation();scheduleSave();
 }
 
