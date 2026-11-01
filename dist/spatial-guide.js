@@ -18,7 +18,7 @@ export function buildStructureGuide(atlas){
     if(!nodes.has(step.anchor))throw Error('导览起点不在当前来源中。');
     // The final step offers real alternate branches, never invented shortcuts.
     const options=i===4?[...step.pairs,
-      ...atlas.edges.filter(e=>e.strength==='hard'&&e.prerequisiteId===MINUS&&e.topicId!==DIVIDE&&domainNodes.has(e.topicId))
+      ...atlas.edges.filter(e=>e.strength==='hard'&&e.prerequisiteId===MINUS&&e.topicId!==DIVIDE&&e.topicId!==MERGE&&domainNodes.has(e.topicId))
         .sort((a,b)=>a.topicId.localeCompare(b.topicId)).slice(0,2).map(e=>[MINUS,e.topicId])]:step.pairs;
     const links=options.map(([from,to])=>{const edge=edges.get(from+'>'+to);if(!edge)throw Error('导览联系与当前来源不一致。');return edge;});
     return {...step,edges:links,nodes:step.overview?[]:[...new Set([step.anchor,...options.flat()])]};
