@@ -91,7 +91,7 @@ function renderNetworkGuide(){
   document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.selected?.split(':')[0]||'overview';
   $('.tool-rail [data-action="front"]').textContent='归位';
   $('#network-view-title').textContent=scene.localRelationshipFocus?'局部探索 · 从当前知识出发':current?(rotated?'自由视角 · 整张知识地图':mode==='map'?'顶视 · 知识分布':mode==='relations'?'侧视 · 基础到后续':'立体总览 · 整张知识地图'):'保存时的空间';
-  $('#network-view-description').textContent=scene.localRelationshipFocus?`只显示当前知识、直接联系与沿真实关系走过的路径（${Math.max(0,scene.explorationTrail.length-1)} 步）。点相邻知识继续展开；点「全貌」才看整棵树。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
+  $('#network-view-description').textContent=scene.localRelationshipFocus?`当前知识、真实直接联系与走过的路径高亮（${Math.max(0,scene.explorationTrail.length-1)} 步）；其他知识仍以浅色保留在同一张图。点「全貌」取消选择，镜头不变；点「归位」主动重新取景。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
   if(scene.structuralOverview&&!scene.localRelationshipFocus){
     const labels={origin:'起点',fork:'分叉',join:'汇合',all:'同时比较'};
     $('#network-view-title').textContent='全貌 · 观察'+(labels[scene.structureMode]||'真实关系');
@@ -114,7 +114,7 @@ function networkRelations(o,relations){
   const focusFilters=fv?`<div class="focus-filter" aria-label="按真实数学关系过滤">
     <div class="focus-filter-row"><strong>观察方向</strong><div role="group" aria-label="观察方向">${[['before','看基础'],['after','看后续'],['both','两边都看']].map(([value,label])=>button('focus-direction',label,`data-direction="${value}" aria-pressed="${scene.focusDirection===value}"`,'focus-filter-button')).join('')}</div></div>
     <div class="focus-filter-row"><strong>展开范围</strong><div role="group" aria-label="展开范围">${[['1','直接联系'],['2','再展开一层'],['all','完整关系']].map(([value,label])=>button('focus-depth',label,`data-depth="${value}" aria-pressed="${scene.focusDepth===value}"`,'focus-filter-button')).join('')}</div></div>
-    <p class="focus-filter-count" role="status">当前显示 ${fv.counts.nodes} 个知识点、${fv.counts.edges} 条真实联系；另有 ${fv.counts.hidden} 个领域知识点暂未展开。</p>
+    <p class="focus-filter-count" role="status">当前高亮 ${fv.counts.nodes} 个知识点、${fv.counts.edges} 条真实联系；其余 ${fv.counts.hidden} 个领域知识点仍以浅色背景保留。</p>
   </div>`:'';
   const mode=scene.global?scene.traceMode:'direct',directions=fv?focusFilters:scene.global?`<div class="trace-modes" aria-label="关系范围">${[['direct','直接联系'],['before','追溯基础'],['after','查看后续']].map(([id,title])=>button('trace-mode',title,`data-mode="${id}" aria-pressed="${mode===id}"`,'trace-button')).join('')}</div>${scene.relationMode==='off'?'<p class="trace-note">当前连线处于收起状态，点“直接联系”可以点亮。</p>':''}`:'';
   if(mode!=='direct'){
