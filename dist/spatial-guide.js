@@ -32,7 +32,7 @@ export function buildStructureGuide(atlas){
   return sample.map(step=>{
     if(!nodes.has(step.anchor))throw Error('导览起点不在当前来源中。');
     const links=step.pairs.map(([from,to])=>{const edge=edges.get(from+'>'+to);if(!edge)throw Error('导览联系与当前来源不一致。');return edge;});
-    return {...step,edges:links,nodes:[...new Set([step.anchor,...step.pairs.flat()])]};
+    return {...step,edges:links,nodes:step.overview?[]:[...new Set([step.anchor,...step.pairs.flat()])]};
   });
 }
 
