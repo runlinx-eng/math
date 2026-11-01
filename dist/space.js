@@ -219,6 +219,7 @@ document.addEventListener('click',event=>{
   else if(action==='zoom')scene.zoom(Number(el.dataset.factor));else if(action==='front')scene.front();
   else if(action==='network-view'){remember();scene.viewFrom(el.dataset.view);renderLocation();renderFocus();scheduleSave();}
   else if(action==='edge-display'){scene.setEdgeDisplay(el.dataset.edgeDisplay);renderNetworkGuide();scheduleSave();}
+  else if(action==='overview-shells'){scene.setOverviewShells(!scene.overviewShellsEnabled);renderNetworkGuide();scheduleSave();}
   else if(action==='guide-start'){const saved=learning.daily.guide,index=saved&&saved.step<guideSteps.length-1?saved.step:0;activateGuide(index,{rememberView:true});}
   else if(action==='guide-step'){const index=Number(el.dataset.step);if(index>=guideSteps.length)leaveGuide();else activateGuide(index);}
   else if(action==='guide-reset')activateGuide(0);
