@@ -1,0 +1,29 @@
+name: Math Tree overview checks
+
+on:
+  pull_request:
+    paths:
+      - 'dist/spatial-*.js'
+      - 'dist/space.js'
+      - 'dist/space.css'
+      - 'dist/index.html'
+      - 'tests/spatial-overview.test.mjs'
+      - '.github/workflows/overview-readability-check.yml'
+  workflow_dispatch:
+
+jobs:
+  math-structure-and-ui-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check modified browser module syntax
+        run: |
+          node --check dist/spatial-scene.js
+          node --check dist/spatial-relationship.js
+          node --check dist/spatial-model.js
+          node --check dist/space.js
+      - name: Check relationship data and honest grouping
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs
