@@ -29,3 +29,22 @@ export function buildRelationshipSpace(atlas){
 export function selectRelationshipVersion(space,version,view='oblique',selected=null){
   return restoreNetworkCoordinates(space,version,view,selected);
 }
+
+
+// Visual grouping only. A shell is allowed only around an already-defined pack
+// whose source nodes form a compact, mostly unmixed spatial neighborhood.
+// Neither a shell nor its radius creates a mathematical prerequisite relation.
+export function overviewShellCandidates(space){
+  if(!space.relationshipIds)return [];
+  const domain=[...space.nodes.values()].filter(n=>space.relationshipIds.has(n.id));
+  const sqDist=(a,b)=>a.reduce((v,x,i)=>v+(x-b[i])**2,0);
+  return [...space.packs.values()].map(pack=>{
+    const members=pack.nodeIds.filter(id=>space.relationshipIds.has(id)).map(id=>space.nodes.get(id));
+    if(members.length<6)return null;
+    const center=[0,1,2].map(i=>members.reduce((s,n)=>s+n.position[i],0)/members.length);
+    const radius=Math.sqrt(Math.max(...members.map(n=>sqDist(n.position,center))))+9;
+    const outsiders=domain.filter(n=>n.packId!==pack.id&&sqDist(n.position,center)<radius*radius).length;
+    if(radius>95||outsiders>Math.max(2,Math.floor(members.length*.15)))return null;
+    return {id:pack.id,themeId:pack.themeId,center,radius,memberCount:members.length,outsiders};
+  }).filter(Boolean);
+}

@@ -1,0 +1,86 @@
+name: Math Tree overview checks
+
+on:
+  pull_request:
+    paths:
+      - 'dist/spatial-*.js'
+      - 'dist/space.js'
+      - 'dist/space.css'
+      - 'dist/index.html'
+      - 'tests/spatial-overview.test.mjs'
+      - 'tests/spatial-overview-structure.test.mjs'
+      - 'tests/spatial-overview-browser.cjs'
+      - 'tests/spatial-focus-transition-browser.cjs'
+      - 'tests/spatial-focus-semantics-browser.cjs'
+      - 'tests/spatial-focus-filter-browser.cjs'
+      - 'tests/spatial-guide-inplace-browser.cjs'
+      - 'tests/spatial-unified-map-browser.cjs'
+      - 'tests/spatial-theme-overview-browser.cjs'
+      - 'tests/spatial-local-focus-browser.cjs'
+      - 'tests/learning-workspace-browser.cjs'
+      - 'dist/learning/learn.css'
+      - 'dist/learning/learn.js'
+      - 'tests/spatial-focus-filter.test.mjs'
+      - '.github/workflows/overview-readability-check.yml'
+  workflow_dispatch:
+
+jobs:
+  math-structure-and-ui-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check modified browser module syntax
+        run: |
+          node --check dist/spatial-scene.js
+          node --check dist/spatial-relationship.js
+          node --check dist/spatial-model.js
+          node --check dist/space.js
+          node --check dist/learning/learn.js
+          node --check dist/spatial-focus-filter.js
+      - name: Check relationship data and honest grouping
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
+
+  overview-browser-acceptance:
+    needs: math-structure-and-ui-syntax
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium test runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Visit live UI in a fresh browser profile
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
+          sleep 2
+          node tests/spatial-overview-browser.cjs
+          node tests/spatial-focus-transition-browser.cjs
+          node tests/spatial-focus-semantics-browser.cjs
+          node tests/spatial-focus-filter-browser.cjs
+          node tests/spatial-guide-inplace-browser.cjs
+          node tests/spatial-unified-map-browser.cjs
+          node tests/spatial-theme-overview-browser.cjs
+          node tests/spatial-local-focus-browser.cjs
+          node tests/learning-workspace-browser.cjs
+      - name: Preserve panorama screenshots and checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-overview-browser-evidence
+          path: |
+            verification/overview-readability-v1/
+            verification/spatial-focus-transition/
+            verification/spatial-focus-semantics/
+            verification/spatial-focus-filter/
+            verification/spatial-guide-inplace/
+            verification/spatial-unified-map/
+            verification/spatial-theme-overview/
+            verification/learning-workspace/
+          if-no-files-found: warn
