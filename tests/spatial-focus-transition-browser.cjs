@@ -23,7 +23,7 @@ const close=(x,y,tolerance=.00001)=>Math.abs(x-y)<=tolerance;
     await page.locator('[data-action="search"]').click();
     await page.locator('#search-input').fill('mt_WcfaSfVT33');
     await page.locator('#search-results [data-key="'+ROOT+'"]').click();
-    await page.waitForFunction(()=>mathSpace.snapshot().focusTransition?.kind==='to-focus');
+    await page.waitForFunction(()=>mathSpace.snapshot().focusTransition?.kind==='to-focus'&&mathSpace.snapshot().visibleNodes.length<30);
     const enter=await snap();
     check(enter.selected===ROOT&&enter.focusTransition.fromCount===537,'focus starts from full original map');
     check(!!enter.cameraTween,'focus camera has a live motion plan');
