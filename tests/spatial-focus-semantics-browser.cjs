@@ -33,6 +33,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check(render.neighborPx>=3.8&&render.neighborPx<=5.6,'related knowledge nodes remain 8-10px circles');
   check(render.markerLegend==='none','ambiguous saved-scene square and question diamond are not map-node categories');
   check(render.selectedLabel.includes('一一对应地数'),'selected title remains visible');
+  check(await page.locator('.space-label.node.selected .activity-glyph').evaluate(el=>getComputedStyle(el).display==='none'),'learning-form glyph is not mistaken for a different type of knowledge node');
   await page.screenshot({path:path.join(out,'01-refined-focus.png')});
   // zooming must not inflate SVG strokes or mathematical point radii
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
