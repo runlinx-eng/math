@@ -434,3 +434,49 @@ body.guide-mode .guide-panel .guide-nodes button{font-size:12px}
 body.guide-mode .space-label.node{font-weight:650;font-size:13px;text-shadow:0 0 6px #f5f4ef,0 0 9px #f5f4ef}
 body.guide-mode .space-label.theme{opacity:.88;box-shadow:0 2px 9px #24463c0e}
 @media(max-width:700px){body.guide-mode .guide-panel{width:240px}}
+
+
+/* v57 guided walk: concise instructions stay separate from projected source nodes. */
+body.guide-mode .guide-panel{
+  z-index:34;width:228px;max-width:calc(100vw - 32px);padding:12px 14px;
+  background:#fffef9f5;box-shadow:0 8px 25px #29453b12;
+}
+body.guide-mode .guide-panel .guide-step{font-size:10px;letter-spacing:.04em}
+body.guide-mode .guide-panel h2{font-size:16px;margin:8px 0 4px;line-height:1.4}
+body.guide-mode .guide-panel .guide-hint{font-size:12px;line-height:1.55;color:#315c4c;margin:4px 0}
+body.guide-mode .guide-panel .guide-status{
+  font-size:11px;line-height:1.55;color:#66806e;margin:7px 0 0;
+}
+body.guide-mode .guide-panel .guide-actions{margin-top:8px;align-items:center}
+body.guide-mode .guide-panel .guide-actions .primary-button{font-size:11px;padding:8px 10px}
+body.guide-mode .guide-panel .guide-actions .plain-button{font-size:10px}
+body.guide-mode .space-label.guide-target{
+  color:#1d493e;font-weight:700;background:#fffef9;border-color:#4b9c7b;
+  box-shadow:0 0 0 3px #68ac8424,0 4px 18px #1c46311e;
+}
+.guide-cues{position:fixed;inset:0;z-index:32;pointer-events:none}
+.guide-cue{
+  position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;
+  transform:translate(-50%,-125%);width:max-content;max-width:175px;
+  padding:7px 10px;background:#234e44;color:#fffef9;border-radius:10px;
+  border:1px solid #315b4d;box-shadow:0 5px 18px #234e4438;
+  font-size:11px;line-height:1.35;text-align:center;pointer-events:auto;
+}
+.guide-cue:hover,.guide-cue:focus-visible{background:#376e5e}
+.guide-cue::after{
+  content:"";position:absolute;bottom:-7px;left:calc(50% - 6px);
+  border-left:6px solid transparent;border-right:6px solid transparent;
+  border-top:7px solid #234e44;
+}
+.guide-cue strong{font-size:12px;font-weight:650}
+.guide-cue-action{font-size:10px;color:#d7efe1}
+.guide-cue-offscreen{
+  max-width:170px;width:auto;white-space:normal;
+  padding:8px 11px;background:#f3f6ef;border:1px dashed #8ba999;color:#456554;
+  box-shadow:0 3px 13px #24463c0d;pointer-events:none;
+}
+.guide-cue-offscreen::after{display:none}
+@media(max-width:700px){
+  body.guide-mode .guide-panel{width:200px;padding:10px 11px}
+  .guide-cue{max-width:135px;font-size:10px}
+}
