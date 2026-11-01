@@ -17,6 +17,10 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   check(full.selected===null&&full.globalCoordinates,'explicit overview is the complete fixed-coordinate map');
   check(await page.locator('#network-legend [data-action="network-theme"]').count()===5,'all five thematic directions have names and entry points');
   check(await page.locator('.space-label.theme:visible').count()>=3,'theme labels are anchored in the spatial map');
+  check(await page.locator('.space-label.theme:visible').evaluateAll(labels=>labels.every(el=>{
+   const name=el.querySelector('span'),container=el.getBoundingClientRect(),text=name?.getBoundingClientRect();
+   return !!text&&text.right<=container.right-7&&el.scrollWidth<=el.clientWidth+2;
+  })),'full-map themes display complete names rather than ellipses');
   check(full.backgroundEdgesVisible,'full view has a genuine relation outline');
   const initial=JSON.stringify(full.positions);
   await page.screenshot({path:path.join(out,'01-overview.png')});
