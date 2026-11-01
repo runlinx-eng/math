@@ -408,6 +408,7 @@ export class SpatialScene {
       const structuralNode=structureActive&&(this.structureMode==='all'?!!structuralRole:!!this.overviewStructure.roleNodeSets?.get(this.structureMode)?.has(o.id));
       color.set(o.color).lerp(paper,1-(structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus*(match?1:.16));
       if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
+      if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
       if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
       const size=(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
