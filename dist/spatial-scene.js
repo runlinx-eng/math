@@ -184,15 +184,16 @@ export class SpatialScene {
         if(object.kind==='theme')el.removeAttribute('title');
         el.addEventListener('pointerenter',event=>{
           if(event.pointerType==='touch')return;
-          if(object.kind==='theme'){
-            const rect=el.getBoundingClientRect(),host=this.host.getBoundingClientRect();
-            this.themeHoverAnchor={key:object.key,x:rect.left-host.left,y:rect.top-host.top,w:rect.width,h:rect.height};
-          }
+          // Stabilize the original DOM hit area for ALL three hierarchy levels.
+          // Otherwise a group label can jump when preview filters siblings,
+          // immediately firing pointerleave and clearing the parent highlight.
+          const rect=el.getBoundingClientRect(),host=this.host.getBoundingClientRect();
+          this.labelHoverAnchor={key:object.key,x:rect.left-host.left,y:rect.top-host.top,w:rect.width,h:rect.height};
           this.hovered=object.key;this.setMapHover(object.key);
         });
         el.addEventListener('pointerleave',event=>{
           if(event.pointerType==='touch')return;
-          if(this.themeHoverAnchor?.key===object.key)this.themeHoverAnchor=null;
+          if(this.labelHoverAnchor?.key===object.key)this.labelHoverAnchor=null;
           if(this.hoverMapKey===object.key)this.setMapHover(null);
           if(this.hovered===object.key)this.hovered=null;
         });
@@ -703,10 +704,10 @@ export class SpatialScene {
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node')show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
-      // Preserve the hovered theme label at its original screen-space anchor.
-      // The already-existing label collision policy places secondary pack names
-      // around it; header highlighting supplements rather than replaces it.
-      const anchor=this.hoverThemeId&&this.themeHoverAnchor?.key===o.key?this.themeHoverAnchor:null;
+      // Keep the exact hovered map label under the pointer when the preview
+      // changes sibling visibility; other labels use ordinary collision placement.
+      // This is screen-space-only and never changes the source node coordinates.
+      const anchor=this.hoverMapKey===o.key&&this.labelHoverAnchor?.key===o.key?this.labelHoverAnchor:null;
       if(anchor){show=true;priority=125;}
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;

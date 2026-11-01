@@ -132,8 +132,15 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      const originalSelected=(await page.evaluate(()=>mathSpace.snapshot())).selected;
      const oldGroupLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
      const oldCamera=await camera();
+     const oldBounds=await packTitle.boundingBox();
      await packTitle.hover();
      await page.waitForFunction(key=>mathSpace.hoverPreview().key===key,'pack:'+packId);
+     await page.waitForTimeout(250);
+     check((await page.evaluate(()=>mathSpace.hoverPreview())).key==='pack:'+packId,
+       theme.title+' group hover remains stable after label relayout');
+     const hoverBounds=await packTitle.boundingBox();
+     check(oldBounds&&hoverBounds&&Math.abs(oldBounds.x-hoverBounds.x)<2&&Math.abs(oldBounds.y-hoverBounds.y)<2,
+       theme.title+' hovered group label stays anchored under the mouse');
      check(await page.locator('#network-legend [data-hover="true"]').count()===1,theme.title+' group hover highlights its parent theme');
      check(await page.locator('#network-legend [data-id="'+parent+'"]').getAttribute('data-hover')==='true',theme.title+' group shows its real parent');
      check((await page.evaluate(()=>mathSpace.hoverPreview())).edges.length===0,theme.title+' group hover does not invent direct node edges');
