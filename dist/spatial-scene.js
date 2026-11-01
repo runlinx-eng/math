@@ -36,7 +36,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.themePreviewId=null;this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -303,6 +303,15 @@ export class SpatialScene {
     // unfinished camera animation; never refit, rotate or zoom for a guide step.
     this.tween=null;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.select('node:'+current.anchor);this.setRelations('source');this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
+  setThemePreview(id){
+    // Ephemeral presentation only. Never select, fly, save history, or record learning.
+    const next=this.relationshipMap&&this.space.themes.has(id)&&!this.guideFocus?id:null;
+    if(next===this.themePreviewId)return;
+    this.themePreviewId=next;
+    // Hide existing focused overlays without rebuilding or losing selected links.
+    this.edgesGroup.visible=!next;
+    this.dirty=true;
+  }
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
   updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
   setFocusFilter(direction=this.focusDirection,depth=this.focusDepth){
@@ -320,7 +329,7 @@ export class SpatialScene {
     if(!this.relationshipMap||!['all',...OVERVIEW_ROLES,'off'].includes(mode)||this.structureMode===mode)return;
     this.structureMode=mode;this.rebuildRelations();this.dirty=true;
   }
-  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&this.structureMode!=='off';}
+  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&!this.themePreviewId&&this.structureMode!=='off';}
   transitionProgress(time=performance.now()){
     const t=this.viewTransition;if(!t)return 1;
     const p=clamp((time-t.start)/t.duration,0,1);
@@ -467,7 +476,7 @@ export class SpatialScene {
     this.dirty=true;
   }
   paintObjects(){
-    const selected=this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+    const selected=this.themePreviewId?this.space.themes.get(this.themePreviewId):this.space.byKey.get(this.selected),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus)return this.guideFocus.currentNodes.has(o.key)?1:this.guideFocus.seenNodes.has(o.key)?.70:.14;if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?.18:o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
@@ -492,7 +501,7 @@ export class SpatialScene {
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (this.guideFocus.currentNodes.has(o.key)?6.5:this.guideFocus.seenNodes.has(o.key)?4.8:3.4):
-        structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+        structureActive?(structuralNode?5.4:3.4):o.key===this.selected&&!this.themePreviewId?6.5:this.related?.has(o.key)&&!this.themePreviewId?4.8:4.3;
       const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -509,7 +518,7 @@ export class SpatialScene {
     this.nodeMesh.instanceMatrix.needsUpdate=true;this.nodeMesh.instanceColor.needsUpdate=true;this.progressMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceMatrix.needsUpdate=true;
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
-    this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
+    this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&!this.themePreviewId&&this.overviewShellsEnabled;
   }
   rebuildRelations(){this.focusVisualLinks=[];this.focusView=this.localRelationshipFocus?
     buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth):null;
@@ -562,7 +571,7 @@ export class SpatialScene {
     const transitioningOut=t?.kind==='to-overview',transitioningIn=t?.kind==='to-focus';
     const links=transitioningOut?this.outgoingVisualLinks:this.focusVisualLinks;
     const opacity=transitioningOut?1-p:transitioningIn?p:1;
-    if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
+    if(this.themePreviewId||!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
     layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     layer.style.opacity=String(opacity);
     const paths=[];
@@ -588,7 +597,7 @@ export class SpatialScene {
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
-    const selected=this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
+    const selected=this.themePreviewId?this.space.themes.get(this.themePreviewId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
     for(const entry of this.labels){const {object:o,el}=entry,p=this.project(o.position),isSelected=o.key===this.selected,related=this.related?.has(o.key);let show=false,priority=0;
       if(o.kind==='theme'){show=p.distance>410;priority=50;}
       else if(o.kind==='pack'){show=p.distance<1200&&p.distance>115&&((!this.network&&this.showAllNodes)||selected?.kind==='theme'&&o.themeId===selected.id||o.key===this.selected);priority=o.id==='same-amount'?35:25;}
@@ -609,13 +618,13 @@ export class SpatialScene {
           if(o.kind==='node')show=!!landmark||o.key===this.hovered;
           else if(o.kind==='pack')show=false;
         }
-        if(this.localRelationshipFocus&&o.kind==='node'&&this.focusView){
+        if(!this.themePreviewId&&this.localRelationshipFocus&&o.kind==='node'&&this.focusView){
           const hop=this.focusView.distances.get(o.id);
           show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop!==undefined&&hop<=1;
           if(hop===undefined&&this.explorationTrail.includes(o.key))show=false;
         }
-        if(this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
-        if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
+        if(!this.themePreviewId&&this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
+        if(!this.themePreviewId&&this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
         // Theme selection is a knowledge-group overview, not the all-node-name
         // panorama. Only this theme's packs label the map; names emerge after
         // further manual zoom or on direct hover. Other themes remain as points.
@@ -679,7 +688,7 @@ export class SpatialScene {
     }
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
-    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
+    const o=this.space.byKey.get(this.selected);this.halo.visible=!this.themePreviewId&&this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
     this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.updateFocusLinkLayer();
     // Pointer-independent overlays need not trigger a full DOM layout on every camera frame.
     // Keep WebGL movement and 3D relationship projections frequent; refresh labels/panels at

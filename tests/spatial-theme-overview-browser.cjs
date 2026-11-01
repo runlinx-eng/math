@@ -22,6 +22,20 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
   const afterManualZoom=await camera();
   check(afterManualZoom.zoom>0&&afterManualZoom.tween===null,'manual zoom stays available before theme selection');
+  const initialUrl=page.url(),initialStorage=await page.evaluate(()=>JSON.stringify({...localStorage}));
+  const firstLabel=page.locator('#network-legend [data-action="network-theme"][data-id="data"]');
+  const initialCamera=await camera();
+  await firstLabel.hover();
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='data');
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null,'hover only previews a theme without selecting it');
+  check(await page.locator('#focus-card').isHidden(),'hover does not open the detail panel');
+  check(sameCamera(initialCamera,await camera()),'hover never moves the camera or changes zoom');
+  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).every(k=>atlas.packs.some(p=>p.themeId==='data'&&'pack:'+p.id===k)),'hover labels belong only to the preview theme');
+  check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'hover retains all 537 domain nodes');
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected===null&&await page.locator('#focus-card').isHidden(),'leaving header restores the unselected panorama without opening a panel');
+  check(page.url()===initialUrl&&await page.evaluate(()=>JSON.stringify({...localStorage}))===initialStorage,'hover never changes navigation, learning or saved view');
   for(const id of ids){
    const theme=atlas.themes.find(t=>t.id===id);
    const groups=atlas.packs.filter(p=>p.themeId===id);
@@ -59,6 +73,19 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    check(bounds.client>0&&bounds.scroll>=bounds.client,theme.title+' knowledge groups remain in a scrollable card');
    await page.screenshot({path:path.join(out,id+'-theme.png')});
   }
+  // Hovering a different theme temporarily overrides a locked theme, then restores it.
+  await page.locator('#network-legend [data-action="network-theme"][data-id="data"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:data');
+  const lockedBefore=await camera();
+  await page.locator('#network-legend [data-action="network-theme"][data-id="space"]').hover();
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId==='space');
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected==='theme:data','hovering another theme keeps the locked selection');
+  check(await page.locator('#focus-card h2').textContent()==='数据与可能性','hovering another theme keeps the locked detail panel');
+  check((await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key))).every(k=>atlas.packs.some(p=>p.themeId==='space'&&'pack:'+p.id===k)),'temporary theme replaces map labels without changing locked details');
+  await page.mouse.move(800,400);
+  await page.waitForFunction(()=>mathSpace.snapshot().themePreviewId===null);
+  check((await page.evaluate(()=>mathSpace.snapshot())).selected==='theme:data','leaving hover restores the locked theme');
+  check(sameCamera(lockedBefore,await camera()),'preview and restoration keep the camera fixed');
   // The rule also holds after the user explicitly changes the camera view.
   await page.locator('[data-action="network-view"][data-view="top"]').click();
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
