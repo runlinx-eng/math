@@ -182,8 +182,19 @@ export class SpatialScene {
       // Floating titles in the 3D map share the top legend's hover preview.
       // Keep the title under the pointer during its temporary theme emphasis.
       if(object.kind==='theme'){
-        el.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')callbacks.onThemePreview?.(object.id);});
-        el.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch'&&this.themePreviewId===object.id)callbacks.onThemePreview?.(null);});
+        el.addEventListener('pointerenter',event=>{
+          if(event.pointerType==='touch')return;
+          // Freeze the hovered label's screen rectangle while the new pack labels
+          // are laid out. Otherwise the source label jumps and cancels hover.
+          const r=el.getBoundingClientRect(),host=this.host.getBoundingClientRect();
+          this.themeHoverAnchor={key:object.key,x:r.left-host.left,y:r.top-host.top,w:r.width,h:r.height};
+          callbacks.onThemePreview?.(object.id);
+        });
+        el.addEventListener('pointerleave',event=>{
+          if(event.pointerType==='touch')return;
+          this.themeHoverAnchor=null;
+          if(this.themePreviewId===object.id)callbacks.onThemePreview?.(null);
+        });
       }
       el.addEventListener('click',event=>{event.stopPropagation();callbacks.onSelect?.(object.key);});
       el.addEventListener('dblclick',event=>{event.stopPropagation();if(object.kind==='node')callbacks.onOpen?.(object.id);});
@@ -653,8 +664,10 @@ export class SpatialScene {
       if(isSelected&&o.kind==='theme')show=false;
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;
+      const pinnedRect=this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId&&this.themeHoverAnchor?.key===o.key?this.themeHoverAnchor:null;
       el.classList.toggle('theme-previewing',this.relationshipMap&&!!this.themePreviewId&&o.kind==='theme'&&o.id===this.themePreviewId);
-      el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
+      // Do not temporarily hide the hovered DOM element during relayout.
+      el.hidden=!pinnedRect;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related,pinnedRect});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
     for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
@@ -668,7 +681,7 @@ export class SpatialScene {
       const width=this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
       const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
-      const rect=placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
+      const rect=c.pinnedRect||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
       el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));
