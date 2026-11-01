@@ -12,7 +12,7 @@ test('the optional orientation highlights only actual critical source relations'
   const steps=buildStructureGuide(atlas),hard=new Set(atlas.edges.filter(e=>e.strength==='hard').map(e=>e.prerequisiteId+'>'+e.topicId));
   assert.equal(steps.length,5);assert.equal(GUIDE_STEP_COUNT,5);
   for(const step of steps){assert.ok(lessonForTopic(step.anchor));assert.ok(step.nodes.includes(step.anchor));for(const e of step.edges)assert.ok(hard.has(e.prerequisiteId+'>'+e.topicId));}
-  assert.equal(steps[0].anchor,'mt_WcfaSfVT33');assert.equal(steps[0].overview,true);assert.equal(steps[0].edges.length,0);assert.equal(steps[1].edges.length,3);assert.equal(steps[2].edges.length,2);assert.equal(steps[3].edges.length,2);assert.equal(steps[4].edges.length,2);
+  assert.equal(steps[0].anchor,'mt_WcfaSfVT33');assert.equal(steps[0].overview,true);assert.equal(steps[0].edges.length,0);assert.deepEqual(steps[0].nodes,[]);assert.equal(steps[1].edges.length,3);assert.equal(steps[2].edges.length,2);assert.equal(steps[3].edges.length,2);assert.equal(steps[4].edges.length,2);
   const broken={...atlas,edges:atlas.edges.filter(e=>!(e.prerequisiteId===steps[1].edges[0].prerequisiteId&&e.topicId===steps[1].edges[0].topicId))};
   assert.throws(()=>buildStructureGuide(broken),/当前来源不一致/);
 });
