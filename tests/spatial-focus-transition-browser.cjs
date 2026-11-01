@@ -52,7 +52,7 @@ const close=(x,y,tolerance=.00001)=>Math.abs(x-y)<=tolerance;
     check(JSON.stringify(focused.positions)===coords,'fixed 3D source positions are unchanged');
     await page.screenshot({path:path.join(out,'04-focused.png')});
     const stablePos=[...focused.position],stableTarget=[...focused.target],stableZoom=focused.cameraZoom;
-    await page.locator('#focus-card [data-action="choose"][data-key="'+NEXT+'"]').click();
+    await page.locator('#focus-card [data-action="choose"][data-key="'+NEXT+'"]').first().click();
     await page.waitForFunction(next=>mathSpace.snapshot().selected===next,NEXT);
     await page.waitForTimeout(100);
     const adjacent=await snap();
