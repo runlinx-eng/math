@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {buildStructureGuide,linkedSuggestions,GUIDE_ID,GUIDE_STEP_COUNT} from '../dist/spatial-guide.js';
+import {buildStructureGuide,linkedSuggestions,guideNextTargets,guideStepReady,GUIDE_ID,GUIDE_STEP_COUNT} from '../dist/spatial-guide.js';
 import {lessonForTopic} from '../dist/learning/catalog.js';
 import {fresh,validate,backup,parseBackup,merge,completionSummary} from '../dist/exploration-core.js';
 import {addQuestion} from '../dist/learning/daily.js';
@@ -11,10 +11,33 @@ const inventory=JSON.parse(fs.readFileSync(new URL('../docs/spatial-learning/inv
 test('the optional orientation highlights only actual critical source relations',()=>{
   const steps=buildStructureGuide(atlas),hard=new Set(atlas.edges.filter(e=>e.strength==='hard').map(e=>e.prerequisiteId+'>'+e.topicId));
   assert.equal(steps.length,5);assert.equal(GUIDE_STEP_COUNT,5);
-  for(const step of steps){assert.ok(lessonForTopic(step.anchor));assert.ok(step.nodes.includes(step.anchor));for(const e of step.edges)assert.ok(hard.has(e.prerequisiteId+'>'+e.topicId));}
-  assert.equal(steps[0].anchor,'mt_WcfaSfVT33');assert.equal(steps[0].overview,true);assert.equal(steps[0].edges.length,0);assert.deepEqual(steps[0].nodes,[]);assert.equal(steps[1].edges.length,3);assert.equal(steps[2].edges.length,2);assert.equal(steps[3].edges.length,2);assert.equal(steps[4].edges.length,2);
+  for(const step of steps){assert.ok(lessonForTopic(step.anchor));if(!step.overview)assert.ok(step.nodes.includes(step.anchor));for(const e of step.edges)assert.ok(hard.has(e.prerequisiteId+'>'+e.topicId));}
+  assert.equal(steps[0].anchor,'mt_WcfaSfVT33');assert.equal(steps[0].overview,true);assert.equal(steps[0].edges.length,0);assert.deepEqual(steps[0].nodes,[]);assert.equal(steps[1].edges.length,3);assert.equal(steps[2].edges.length,2);assert.equal(steps[3].edges.length,2);assert.ok(steps[4].edges.length>=1&&steps[4].edges.length<=3);assert.equal(steps[4].anchor,'mt_zuKAX6lcYR');
   const broken={...atlas,edges:atlas.edges.filter(e=>!(e.prerequisiteId===steps[1].edges[0].prerequisiteId&&e.topicId===steps[1].edges[0].topicId))};
   assert.throws(()=>buildStructureGuide(broken),/当前来源不一致/);
+});
+
+
+test('map-guided walk requires source-backed target clicks, then hands over to free exploration',()=>{
+  const steps=buildStructureGuide(atlas),themeId=atlas.nodes.find(n=>n.id===steps[1].anchor).themeId;
+  const first=guideNextTargets(steps,0,[],themeId);
+  assert.deepEqual(first,[{key:'theme:'+themeId,label:'从这里进入'}]);
+  assert.equal(guideStepReady(steps,0,[],themeId),false);
+  assert.equal(guideStepReady(steps,0,[first[0].key],themeId),true);
+  const root='node:'+steps[1].anchor,count='node:'+steps[1].edges[0].topicId;
+  assert.equal(guideNextTargets(steps,1,[],themeId)[0].key,root);
+  assert.equal(guideNextTargets(steps,1,[root],themeId)[0].key,count);
+  assert.equal(guideStepReady(steps,1,[root,count],themeId),true);
+  const branches=guideNextTargets(steps,2,[],themeId);
+  assert.equal(branches.length,2);
+  assert.notEqual(branches[0].key,branches[1].key);
+  assert.equal(guideNextTargets(steps,2,[branches[0].key],themeId).length,1);
+  assert.equal(guideStepReady(steps,2,branches.map(b=>b.key),themeId),true);
+  assert.equal(guideStepReady(steps,3,['node:'+steps[3].anchor],themeId),true);
+  const choices=guideNextTargets(steps,4,[],themeId);
+  assert.equal(choices.length,steps[4].edges.length);
+  for(const choice of choices)assert.ok(steps[4].edges.some(e=>'node:'+e.topicId===choice.key&&e.prerequisiteId===steps[4].anchor));
+  assert.equal(guideStepReady(steps,4,choices.map(c=>c.key),themeId),false);
 });
 
 test('suggestions across all source nodes use only actual outgoing edges and available activities',()=>{
