@@ -65,6 +65,23 @@ function syncP03(t,m){
 const task=()=>{const t=taskFor(id,a.view==='play'?-1:a.index);return a.view==='play'&&t.type==='cube-plan'&&a.models[-1]?.shape?{...t,dims:a.models[-1].shape}:t;};
 const model=()=>modelForLesson(a);
 function notify(type,extra={}){if(parent!==window)parent.postMessage({type,...extra},location.origin);}
+// Each activity has its own actual content height. The parent bounds it to the
+// available viewport instead of forcing every lesson into a fixed 820px iframe.
+if(parent!==window&&typeof ResizeObserver!=='undefined'){
+  const lessonRoot=document.querySelector('#lesson');
+  let lastHeight=-1;
+  const reportHeight=()=>{
+    const height=Math.ceil(lessonRoot.scrollHeight);
+    if(height>0&&height!==lastHeight){
+      lastHeight=height;
+      notify('math-space:lesson-height',{height});
+    }
+  };
+  new ResizeObserver(reportHeight).observe(lessonRoot);
+  window.addEventListener('load',reportHeight);
+  window.addEventListener('resize',reportHeight);
+  requestAnimationFrame(reportHeight);
+}
 function read(){const raw=readStored(KEY);return raw?validate(JSON.parse(raw),atlas):fresh();}
 function uiSnapshot(){const c=cube?.snapshot()||extraLab?.snapshot();return {spread,view,camera:c?{position:c.camera,target:c.target}:null};}
 function update(fn){if(blocked)return false;try{const stored=read(),previous=sessionRecord(stored,id),working=previous?mergeLesson(a,previous):structuredClone(a);working.ui=uiSnapshot();fn(working);working.updatedAt=now();const record=validateLesson(working,id,{allowBridge:true});if(BRIDGES[id])stored.daily.bridges[id]=record;else stored.lessons[id]=record;rememberSession(stored,id,questionId);stored.lessonContinuation=BRIDGES[id]?.to||id;stored.visited[sessionMeta(id).topicId]??=now();stored.openedPacks[sessionRoute(id).packIds[0]]??=now();all=validate(stored,atlas);writeStored(KEY,JSON.stringify(all));a=sessionRecord(all,id);notify('math-space:lesson-change',{id:BRIDGES[id]?.to||id,sessionId:id,questionId,topicId:sessionMeta(id).topicId});return true;}catch(error){blocked=true;$('#storage-warning').hidden=false;$('#storage-warning').textContent='保存遇到问题，已停止覆盖原记录。'+error.message;return false;}}
