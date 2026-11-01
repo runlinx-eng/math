@@ -127,6 +127,7 @@ function renderGuide(){
     <div class="guide-actions">
       ${index<4?button('guide-step',nextText,`data-step="${index+1}" ${guideReady()?'':'disabled'}`,'primary-button'):''}
       ${index?button('guide-step','上一步',`data-step="${index-1}"`,'plain-button'):''}
+      ${index>0?button('guide-learn','动手试试',`data-id="${step.anchor}"`,'plain-button'):''}
       ${button('guide-exit','退出引导','','plain-button')}
     </div>`;
   positionGuide();renderGuideCues();
