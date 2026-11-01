@@ -184,8 +184,19 @@ export class SpatialScene {
       if(this.relationshipMap&&(object.kind==='theme'||object.kind==='pack')){
         const themeId=object.kind==='theme'?object.id:object.themeId;
         if(object.kind==='theme')el.removeAttribute('title');
-        el.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')callbacks.onThemeHover?.(themeId);});
-        el.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch')callbacks.onThemeHover?.(null);});
+        el.addEventListener('pointerenter',event=>{
+          if(event.pointerType==='touch')return;
+          const rect=el.getBoundingClientRect(),host=this.host.getBoundingClientRect();
+          // Preserve the trigger's hit area while its main title moves to the
+          // header. Real pack labels can then appear without pointer flicker.
+          this.themeHoverAnchor={key:object.key,x:rect.left-host.left,y:rect.top-host.top,w:rect.width,h:rect.height};
+          callbacks.onThemeHover?.(themeId);
+        });
+        el.addEventListener('pointerleave',event=>{
+          if(event.pointerType==='touch')return;
+          this.themeHoverAnchor=null;
+          callbacks.onThemeHover?.(null);
+        });
       }
       el.addEventListener('click',event=>{event.stopPropagation();callbacks.onSelect?.(object.key);});
       el.addEventListener('dblclick',event=>{event.stopPropagation();if(object.kind==='node')callbacks.onOpen?.(object.id);});
@@ -335,7 +346,7 @@ export class SpatialScene {
     if(!this.relationshipMap||!['all',...OVERVIEW_ROLES,'off'].includes(mode)||this.structureMode===mode)return;
     this.structureMode=mode;this.rebuildRelations();this.dirty=true;
   }
-  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&this.structureMode!=='off';}
+  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&!this.hoverThemeId&&this.structureMode!=='off';}
   transitionProgress(time=performance.now()){
     const t=this.viewTransition;if(!t)return 1;
     const p=clamp((time-t.start)/t.duration,0,1);
@@ -606,7 +617,9 @@ export class SpatialScene {
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
-    const selected=this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
+    // Hover temporarily reuses the clicked-theme label policy, but never
+    // changes the persisted selection or camera.
+    const selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
     for(const entry of this.labels){const {object:o,el}=entry,p=this.project(o.position),isSelected=o.key===this.selected,related=this.related?.has(o.key);let show=false,priority=0;
       if(o.kind==='theme'){show=p.distance>410;priority=50;}
       else if(o.kind==='pack'){show=p.distance<1200&&p.distance>115&&((!this.network&&this.showAllNodes)||selected?.kind==='theme'&&o.themeId===selected.id||o.key===this.selected);priority=o.id==='same-amount'?35:25;}
@@ -649,8 +662,15 @@ export class SpatialScene {
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node')show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
+      // Keep the source label as an invisible stable hit target. Its text is
+      // represented only by the highlighted parent title in the upper-left.
+      const anchor=this.hoverThemeId&&this.themeHoverAnchor?.key===o.key?this.themeHoverAnchor:null;
+      if(anchor){show=true;priority=125;}
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
-      if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
+      if(o.key===this.previewKey)priority=95;
+      el.hidden=!anchor;el.style.opacity=anchor&&o.kind==='theme'?'0':'';
+      el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');
+      if(show||anchor)candidates.push({...entry,p,priority,isSelected,related,anchor});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
     for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
@@ -664,7 +684,7 @@ export class SpatialScene {
       const width=this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
       const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
-      const rect=placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
+      const rect=c.anchor||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
       el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.setAttribute('aria-pressed',String(c.isSelected));

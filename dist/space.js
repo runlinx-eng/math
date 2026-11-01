@@ -88,7 +88,7 @@ function renderNetworkGuide(){
   const mode=scene.networkView,current=scene.global,direction=scene.camera.position.clone().sub(scene.controls.target).normalize();
   const expected=mode==='map'?[0,1,.0001]:mode==='relations'?[0,0,1]:[.65,.5,1],length=Math.hypot(...expected);
   const rotated=current&&(direction.x*expected[0]+direction.y*expected[1]+direction.z*expected[2])/length<.99995;
-  document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.selected?.split(':')[0]||'overview';
+  document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.hoverThemeId?'theme':scene.selected?.split(':')[0]||'overview';
   $('.tool-rail [data-action="front"]').textContent='归位';
   $('#network-view-title').textContent=scene.localRelationshipFocus?'局部探索 · 从当前知识出发':current?(rotated?'自由视角 · 整张知识地图':mode==='map'?'顶视 · 知识分布':mode==='relations'?'侧视 · 基础到后续':'立体总览 · 整张知识地图'):'保存时的空间';
   $('#network-view-description').textContent=scene.localRelationshipFocus?`当前知识、真实直接联系与走过的路径高亮（${Math.max(0,scene.explorationTrail.length-1)} 步）；其他知识仍以浅色保留在同一张图。点「全貌」取消选择，镜头不变；点「归位」主动重新取景。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
@@ -326,6 +326,7 @@ function highlightThemeHeader(id){
     button.dataset.hover=String(button.dataset.id===next);
   }
   scene?.setThemeHover(next);
+  document.body.dataset.mapFocus=next?'theme':scene?.selected?.split(':')[0]||'overview';
 }
 $('#network-legend').addEventListener('pointerover',event=>{if(event.pointerType!=='touch')highlightThemeHeader(themeOfLegendTarget(event.target));});
 $('#network-legend').addEventListener('pointerout',event=>{if(event.pointerType!=='touch')highlightThemeHeader(themeOfLegendTarget(event.relatedTarget));});
