@@ -246,7 +246,8 @@ export class SpatialScene {
     if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',1050);
     else this.viewTransition=null;
     this.select(key);
-    if(this.global){if(o.kind==='node'){if(!this.canLocate(o)||adjacent)return;const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
+    if(adjacent){this.tween=null;return;}
+    if(this.global){if(o.kind==='node'){if(!this.canLocate(o))return;const p=this.project(o.position),insets=this.globalInsets();if(enteringFocus||!p.visible||p.x<insets.left||p.x>this.width-insets.right||p.y<insets.top||p.y>this.height-insets.bottom)this.fitGlobalView(animate,[o,...this.nodeList.filter(n=>this.related.has(n.key))]);else if(overview)this.fitGlobalView(animate);}else this.fitGlobalView(animate,this.nodeList.filter(n=>o.kind==='theme'?n.themeId===o.id:n.packId===o.id));return;}
     if(this.network&&o.kind==='node'){if(this.networkView==='relations')this.fitNetworkView(animate);return;}
     const ratio=Math.max(1,.85/this.camera.aspect),d=(o.kind==='theme'?570:o.kind==='pack'?Math.max(225,o.radius*4.7):175)*ratio;
     const direction=this.camera.position.clone().sub(this.controls.target).normalize();this.fly(V(o.position).addScaledVector(direction,d).toArray(),o.position,animate?1000:0);
