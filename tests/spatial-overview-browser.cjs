@@ -22,8 +22,35 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
    return !!text&&text.right<=container.right-7&&el.scrollWidth<=el.clientWidth+2;
   })),'full-map themes display complete names rather than ellipses');
   check(full.backgroundEdgesVisible,'full view has a genuine relation outline');
+  check(full.structureMode==='all','overview defaults to true-relationship structure instead of equally weighted dots');
+  check(full.structureExamples.length===3&&full.structureExamples.every(p=>p.edges.length>=2),'three source-derived motifs are available');
+  check(await page.locator('#overview-structure-controls').isVisible(),'purposeful overview lens controls are visible');
+  const graph=await page.evaluate(async()=>{
+    const atlas=await(await fetch('./data/atlas.json')).json(),snapshot=mathSpace.snapshot();
+    const hard=new Set(atlas.edges.filter(e=>e.strength==='hard').map(e=>e.prerequisiteId+'>'+e.topicId));
+    return snapshot.structureExamples.every(p=>p.edges.every(e=>hard.has(e.from+'>'+e.to)));
+  });
+  check(graph,'every prominent line belongs to a real hard prerequisite edge');
+  await page.waitForFunction(()=>document.querySelectorAll('.overview-structure-lines .structure-path').length>=12);
+  const pathCount=await page.locator('.overview-structure-lines .structure-path').count();
+  check(pathCount>=12&&pathCount<90,'visible structure is substantial but avoids the full-link hairball');
+  check(await page.locator('.space-label.node.structure-landmark:visible').count()>=1,'the structure offers named source-node anchors');
+
   const initial=JSON.stringify(full.positions);
   await page.screenshot({path:path.join(out,'01-overview.png')});
+  for(const role of ['origin','fork','join']){
+    await page.locator('[data-action="overview-structure"][data-structure="'+role+'"]').click();
+    await page.waitForFunction(r=>mathSpace.snapshot().structureMode===r,role);
+    check(await page.locator('.overview-structure-lines .structure-path.'+role).count()>=2,'specific '+role+' motif remains a real multi-edge path');
+    check(await page.locator('.overview-structure-lines .structure-path:not(.'+role+')').count()===0,'the selected lens filters unrelated example paths');
+    await page.screenshot({path:path.join(out,'02-'+role+'-motif.png')});
+  }
+  await page.locator('[data-action="overview-structure"][data-structure="off"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='off');
+  check(await page.locator('.overview-structure-lines .structure-path').count()===0,'all-dots mode restores the unannotated point cloud');
+  await page.screenshot({path:path.join(out,'03-all-dots-comparison.png')});
+  await page.locator('[data-action="overview-structure"][data-structure="all"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().structureMode==='all');
   const shells=page.locator('[data-action="overview-shells"]');
   if(full.overviewShellCount){
    check(await shells.isVisible(),'eligible group shells have a user-controlled preview');
@@ -47,7 +74,7 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
   check(errors.length===0,'no browser runtime errors');
-  await page.screenshot({path:path.join(out,'03-return-overview.png')});
+  await page.screenshot({path:path.join(out,'04-return-overview.png')});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(err){
