@@ -611,6 +611,17 @@ export class SpatialScene {
         }
         if(this.relationshipMap&&this.traceResult&&o.kind==='node'){const hop=this.traceResult.distances.get(o.id);show=isSelected||o.key===this.hovered||o.key===this.previewKey||hop===1&&scale>1.3||hop!==undefined&&scale>2.5;if(hop>1)priority=20;}
         if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
+        // Theme selection is a knowledge-group overview, not the all-node-name
+        // panorama. Only this theme's packs label the map; names emerge after
+        // further manual zoom or on direct hover. Other themes remain as points.
+        if(this.relationshipMap&&selected?.kind==='theme'){
+          if(o.kind==='node'){
+            const inspection=o.key===this.hovered||o.key===this.previewKey;
+            show=inspection||o.themeId===selected.id&&scale>5.6;
+            priority=inspection?95:14;
+          }else if(o.kind==='pack'){show=o.themeId===selected.id;priority=82;}
+          else show=false;
+        }
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node')show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
@@ -619,7 +630,7 @@ export class SpatialScene {
       if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
-    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
+    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
       const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
       const titleSpan=el.querySelector('span');if(titleSpan&&titleSpan.textContent!==wantedTitle)titleSpan.textContent=wantedTitle;
