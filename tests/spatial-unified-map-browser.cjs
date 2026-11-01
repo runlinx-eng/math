@@ -72,6 +72,22 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    const guideExit=await snap();
    check(samePose(returned,guideExit)&&guideExit.visibleNodes.length===537,'leaving guide preserves the same camera and all source knowledge');
    check(JSON.stringify(guideExit.positions)===positions,'none of these interaction states changes a knowledge coordinate');
+   // Persist an intentionally unreadable wide-angle pose and reload. Restore
+   // must repair only that extreme case before the user starts interacting.
+   await page.evaluate(()=>window.dispatchEvent(new Event('pagehide')));
+   const cacheKey='math-explorer-network-relationship-view-v1';
+   const stored=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)||'null'),cacheKey);
+   check(!!stored&&stored.networkVersion===53,'the v53 saved camera is available for recovery testing');
+   await page.addInitScript(key=>{
+     const item=JSON.parse(localStorage.getItem(key)||'null');
+     if(item){item.cameraZoom=.05;localStorage.setItem(key,JSON.stringify(item));}
+   },cacheKey);
+   await page.reload();
+   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
+   const recovered=await snap();
+   check(recovered.cameraZoom>.05+.01,'reloading an unusably tiny saved map repairs the framing');
+   check(recovered.visibleNodes.length===537&&recovered.backgroundEdgesVisible,'automatic startup recovery retains all 537 source knowledge points');
+   await page.screenshot({path:path.join(dir,'05-recovered-extreme-saved-zoom.png')});
    check(errors.length===0,'no browser JavaScript exceptions');
    fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
    console.log(JSON.stringify({passed:checks.length,errors}));
