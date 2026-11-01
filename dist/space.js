@@ -99,6 +99,12 @@ function renderNetworkGuide(){
     $('#network-view-title').textContent=`主题 · ${activeTheme.title}`;
     $('#network-view-description').textContent=`聚焦 ${packs.length} 个真实知识群、${mapped} 个地图知识点。左侧可按问题选一个知识群；其他主题仍在背景中。`;
   }
+  if(scene.relationshipMap&&activeTheme?.kind==='pack'){
+    const theme=space.themes.get(activeTheme.themeId);
+    const mapped=activeTheme.nodeIds.filter(id=>space.relationshipIds.has(id)).length;
+    $('#network-view-title').textContent=`知识群 · ${activeTheme.title}`;
+    $('#network-view-description').textContent=`属于「${theme?.title||''}」 · ${mapped} 个地图知识点；仅本群名称参与地图标注，其余知识点保留为淡色背景。`;
+  }
   if(scene.structuralOverview&&!scene.localRelationshipFocus){
     const labels={origin:'起点',fork:'分叉',join:'汇合',all:'同时比较'};
     $('#network-view-title').textContent='全貌 · 观察'+(labels[scene.structureMode]||'真实关系');

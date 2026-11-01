@@ -212,12 +212,51 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.locator('#network-legend [data-action="network-theme"][data-id="numbers"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:numbers');
   const first=atlas.packs.find(p=>p.themeId==='numbers');
+  const groupCamera=await camera(),groupCoordinates=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
   await page.locator('#focus-card .theme-pack-choice[data-key="pack:'+first.id+'"]').click();
   await page.waitForFunction(k=>mathSpace.snapshot().selected===k,'pack:'+first.id);
-  check((await page.locator('#focus-card h2').textContent()).length>0,'a real theme group opens its existing knowledge/route overview');
+  await page.waitForTimeout(180);
+  check((await camera()).tween===null,'group click never schedules a hidden camera animation');
+  const groupSnapshot=await page.evaluate(()=>mathSpace.snapshot());
+  check(sameCamera(groupCamera,await camera())&&groupSnapshot.selected==='pack:'+first.id,
+    'clicking a theme group changes selection but never automatically zooms, pans or rotates');
+  check(JSON.stringify(groupSnapshot.positions)===groupCoordinates&&groupSnapshot.visibleNodes.length===537,
+    'group selection preserves all 537 fixed knowledge positions');
+  check((await page.locator('#focus-card h2').textContent()).includes(first.title),
+    'group detail identifies the chosen source knowledge group');
+  check((await page.locator('#network-view-title').textContent()).includes(first.title),
+    'top-left map context identifies the selected group');
+  const groupLabels=await page.locator('.space-label.node:visible').evaluateAll(els=>els.map(el=>el.dataset.key.slice(5)));
+  check(groupLabels.length<=10&&groupLabels.every(id=>first.nodeIds.includes(id)),
+    'group selection only shows a readable number of this group\'s real node names');
+  const otherDots=groupSnapshot.visibleNodes.filter(key=>key.startsWith('node:')&&!first.nodeIds.includes(key.slice(5)));
+  check(otherDots.length>0,'other groups are not erased from the shared background');
+  await page.screenshot({path:path.join(out,'group-selected-no-global-label-cloud.png')});
+  // A manual zoom is still allowed and must not resurrect unrelated names.
+  await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
+  await page.waitForFunction(()=>mathSpace.motion().tween===null);
+  const zoomedGroupLabels=await page.locator('.space-label.node:visible').evaluateAll(els=>els.map(el=>el.dataset.key.slice(5)));
+  check(zoomedGroupLabels.every(id=>first.nodeIds.includes(id))&&zoomedGroupLabels.length<=16,
+    'manual zoom within a selected group never exposes labels from all 537 nodes');
   await page.locator('#back-button').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:numbers');
   check(await page.locator('#focus-card .theme-overview').isVisible(),'back returns to the theme with its group choices');
+  await page.locator('#network-legend [data-action="network-theme"][data-id="data"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:data');
+  const chance=atlas.packs.find(p=>p.id==='chance');
+  check(chance?.themeId==='data','reproduction group belongs to the correct source theme');
+  const chanceBefore=await camera();
+  await page.locator('#focus-card .theme-pack-choice[data-key="pack:chance"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='pack:chance');
+  await page.waitForTimeout(180);
+  check((await camera()).tween===null,'data → chance never starts a fit animation');
+  check(sameCamera(chanceBefore,await camera()),'data → chance preserves the exact saved camera');
+  const chanceNames=await page.locator('.space-label.node:visible').evaluateAll(els=>els.map(el=>el.dataset.key.slice(5)));
+  check(chanceNames.length<=10&&chanceNames.every(id=>chance.nodeIds.includes(id)),
+    'data → chance displays only the chosen real group names instead of 537-name clutter');
+  check((await page.locator('#focus-card h2').textContent()).includes(chance.title),
+    'data → chance retains its group detail and routes');
+  await page.screenshot({path:path.join(out,'chance-group-click.png')});
   await page.locator('[data-action="overview"]').first().click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null);
   check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'return to panorama keeps the full map intact');

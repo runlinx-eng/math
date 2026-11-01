@@ -293,11 +293,11 @@ export class SpatialScene {
     if(enteringFocus&&o.kind==='node'&&animate)this.beginViewTransition('to-focus',850);
     else this.viewTransition=null;
     this.tween=null;this.select(key);
-    // All five theme-title actions are in-place selection, like the shared
+    // v53 themes and knowledge groups select in place, like the shared
     // panorama. They may change emphasis, labels and cards, but must not pan,
     // orbit, zoom, fit bounds or move the rotation target. The separate
     // explicitly requested camera controls are the only way to reframe.
-    if(this.relationshipMap&&o.kind==='theme')return;
+    if(this.relationshipMap&&(o.kind==='theme'||o.kind==='pack'))return;
     if(adjacent)return;
     if(this.global){if(o.kind==='node'){
       if(!this.canLocate(o))return;
@@ -680,6 +680,16 @@ export class SpatialScene {
           }else if(o.kind==='pack'){show=o.themeId===selected.id;priority=82;}
           else show=false;
         }
+        // A clicked knowledge group is NOT a zoom-based 537-label view.
+        // Only source members get names; other knowledge points remain as dots.
+        if(this.relationshipMap&&selected?.kind==='pack'&&!this.guideFocus){
+          if(o.kind==='node'){
+            const inspection=o.key===this.hovered||o.key===this.previewKey;
+            show=inspection||o.packId===selected.id;
+            priority=inspection?95:o.packId===selected.id?75:0;
+          }else if(o.kind==='pack'){show=o.key===selected.key;priority=110;}
+          else show=false;
+        }
         if(this.relationshipMap&&hoverObject?.kind==='pack'){
           if(o.kind==='pack'){show=o.key===hoverObject.key;priority=110;}
           else if(o.kind==='node'){show=o.key===this.hovered&&o.packId===hoverObject.id;priority=95;}
@@ -707,7 +717,7 @@ export class SpatialScene {
       if(show||anchor)candidates.push({...entry,p,priority,isSelected,related,anchor});
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
-    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&hoverObject?.kind==='node'?12:this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
+    for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&hoverObject?.kind==='node'?12:this.relationshipMap&&selected?.kind==='pack'?(scale>5.6?16:10):this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
       const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
       const titleSpan=el.querySelector('span');if(titleSpan&&titleSpan.textContent!==wantedTitle)titleSpan.textContent=wantedTitle;
