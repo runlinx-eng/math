@@ -31,16 +31,18 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((v,i)=>s
    check(await page.locator('#guide-panel h2').textContent()==='先看整张数学地图','first step explains how to read the overall structure');
    check(await page.locator('.space-label.theme:visible').count()>=3,'the five-theme map remains recognizable during the guide');
   check(await page.locator('.space-label.node:visible').count()<25,'background names remain muted instead of crowding the guide');
-  const background=initial.visibleNodes.find(k=>!focus.guide.seenNodes.includes(k));
-  const current=focus.guide.currentNodes[0];
-  const radii=await page.evaluate(([a,b])=>({ordinary:mathSpace.nodeRadius(a),current:mathSpace.nodeRadius(b)}),[background,current]);
-  check(radii.ordinary>2&&radii.ordinary<5,'background points remain small, faint visual context');
-  check(radii.current>radii.ordinary+1,'current guide knowledge is visually distinguished from the panorama');
   await page.screenshot({path:path.join(out,'02-guide-start-same-camera.png')});
   for(let step=1;step<5;step++){
    await page.locator('[data-action="guide-step"][data-step="'+step+'"]').click();
    await page.waitForFunction(i=>mathSpace.snapshot().guide?.step===i&&mathSpace.snapshot().visibleNodes.length===537,step);
    focus=await snapshot();
+   if(step===1){
+    const background=initial.visibleNodes.find(k=>!focus.guide.seenNodes.includes(k));
+    const current=focus.guide.currentNodes[0];
+    const radii=await page.evaluate(([a,b])=>({ordinary:mathSpace.nodeRadius(a),current:mathSpace.nodeRadius(b)}),[background,current]);
+    check(radii.ordinary>=4&&radii.ordinary<5,'background nodes remain small but readable');
+    check(radii.current>radii.ordinary+1,'example nodes are more prominent than the context');
+   }
    check(samePose(initial,focus)&&!focus.cameraTween,'step '+step+' keeps the original camera pose and zoom');
    check(focus.backgroundEdgesVisible&&focus.visibleNodes.length===537,'step '+step+' retains all faint panorama knowledge points');
    check(JSON.stringify(focus.positions)===coordinates,'step '+step+' does not alter the fixed mathematics coordinates');
