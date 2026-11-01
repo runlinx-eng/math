@@ -202,6 +202,14 @@ body.has-journey::before{content:"";position:fixed;inset:0;z-index:49;background
 body.has-journey #journey-surface{top:24px;bottom:24px;left:50%;right:auto;transform:translateX(-50%);width:min(1020px,calc(100vw - 48px));box-shadow:0 12px 45px #28483c1c}
 @media(max-width:800px){body.has-journey #journey-surface{top:10px;bottom:10px;width:calc(100vw - 20px)}}
 
+/* Never let browser scrolling displace fixed map navigation and its return action. */
+html{width:100%;height:100%;overflow:hidden}
+#local-overview-exit{position:fixed;z-index:36;right:22px;top:205px;min-height:40px;padding:9px 18px;border:1px solid #9bb9a7;border-radius:10px;background:#fffef9;box-shadow:0 4px 18px #24463c18;font-size:13px;font-weight:650;color:#25594a}
+#local-overview-exit:hover{background:#e8f1e9}
+#local-overview-exit:focus-visible{outline:3px solid #4e8d86;outline-offset:3px}
+body.has-journey #local-overview-exit{display:none}
+@media(max-width:800px){#local-overview-exit{top:175px;right:12px;padding:8px 12px;font-size:12px}}
+
 /* The local knowledge view keeps the guide entry, but removes panorama-only edge density controls. */
 body[data-world="network"][data-local-focus="true"] #network-edge-controls>span,
 body[data-world="network"][data-local-focus="true"] #network-edge-controls>[data-action="edge-display"],
