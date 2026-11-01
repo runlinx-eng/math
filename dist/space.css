@@ -321,3 +321,26 @@ body.has-journey #journey-frame{display:block;flex:1 1 auto;min-height:0;overflo
 @media(max-width:800px){
   body.has-journey #journey-surface{top:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px)}
 }
+
+/* Content-height responsive learning workspace. Never crop a lesson at a
+   fixed 820px. Only scroll if the task genuinely exceeds usable screen height. */
+body.has-journey #journey-surface{
+  top:clamp(12px,2vh,24px);
+  bottom:auto;
+  height:min(var(--learning-desired-height, 620px),calc(100dvh - 32px));
+  max-height:calc(100dvh - 32px);
+  min-height:0;
+}
+body.has-journey #journey-frame{
+  height:auto;
+  min-height:0;
+  flex:1 1 auto;
+  width:100%;
+}
+@media(max-width:800px){
+  body.has-journey #journey-surface{
+    top:8px;
+    height:min(var(--learning-desired-height, 620px),calc(100dvh - 16px));
+    max-height:calc(100dvh - 16px);
+  }
+}
