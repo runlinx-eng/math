@@ -47,6 +47,7 @@ function syncP03(t,m){
  if(!isP03()||a.view!=='task')return;
  const stage=p03Stage(t,m),hint=$('#p03-guidance'),check=$('#actions [data-do="check"]');
  if(hint)hint.textContent=stage.instruction;
+ if(!feedback)$('#work .p03-feedback')?.remove();
  if(check)check.disabled=!stage.ready;
  if(!feedback)$('#instruction').textContent=P03_NAMES[a.index];
 }
