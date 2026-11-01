@@ -392,6 +392,7 @@ export class SpatialScene {
         if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node')show=false;
+       if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;el.hidden=true;el.classList.remove('selected','related');el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);el.setAttribute('aria-pressed','false');if(show)candidates.push({...entry,p,priority,isSelected,related});
