@@ -294,3 +294,30 @@ body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="
 body[data-network-version="53"][data-map-focus="node"] .tool-rail [data-action="network-view"],
 body[data-network-version="53"][data-map-focus="node"] .tool-rail .tool-divider,
 body[data-network-version="53"][data-map-focus="node"] .lens-indicator{display:none!important}
+
+/* A learning activity is a stable reading / work surface, not a magnified map.
+   Preserve a compact desktop height and scroll long activities within the iframe. */
+body.has-journey .topbar,
+body.has-journey .tool-rail,
+body.has-journey .place-indicator,
+body.has-journey .bottom-bar,
+body.has-journey .network-guide,
+body.has-journey .overview-structure-controls,
+body.has-journey #network-edge-controls{display:none!important}
+body.has-journey #journey-surface{
+  top:clamp(12px,5vh,46px);
+  bottom:auto;
+  left:50%;right:auto;
+  width:min(1040px,calc(100vw - 36px));
+  height:min(820px,calc(100dvh - 56px));
+  min-height:0;
+  transform:translateX(-50%);
+  overflow:hidden;
+  z-index:55;
+  display:flex;flex-direction:column;
+}
+body.has-journey #journey-surface>header{flex:0 0 auto;position:relative;z-index:1}
+body.has-journey #journey-frame{display:block;flex:1 1 auto;min-height:0;overflow:auto}
+@media(max-width:800px){
+  body.has-journey #journey-surface{top:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px)}
+}
