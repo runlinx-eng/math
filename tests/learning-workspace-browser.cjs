@@ -35,6 +35,37 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   check(surface.topbar==='none'&&surface.rail==='none','map navigation is absent in focused learning mode');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
+  // Reproduce a Mac trackpad pinch. Chrome emits Ctrl+wheel inside the active iframe;
+  // the app should consume that event rather than letting Chrome zoom its entire page.
+  const gesture=await frame.locator('#lesson').evaluate(el=>{
+    const pinch=new WheelEvent('wheel',{bubbles:true,cancelable:true,ctrlKey:true,deltaY:-220});
+    el.dispatchEvent(pinch);
+    const normal=new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaY:220});
+    el.dispatchEvent(normal);
+    return {pinchBlocked:pinch.defaultPrevented,ordinaryScrollAllowed:!normal.defaultPrevented,
+      ratio:devicePixelRatio,viewportScale:visualViewport?.scale??1};
+  });
+  check(gesture.pinchBlocked,'embedded lesson blocks trackpad-style pinch webpage zoom');
+  check(gesture.ordinaryScrollAllowed,'ordinary scrolling stays enabled inside the lesson');
+  const parentPinch=await page.evaluate(()=>{
+    const ev=new WheelEvent('wheel',{bubbles:true,cancelable:true,ctrlKey:true,deltaY:-180});
+    document.querySelector('#journey-surface').dispatchEvent(ev);
+    return ev.defaultPrevented;
+  });
+  check(parentPinch,'parent overlay also blocks pinch zoom outside the learning iframe');
+  const initialRatio=await page.evaluate(()=>devicePixelRatio);
+  const initialScale=await page.evaluate(()=>visualViewport?.scale??1);
+  const area=await page.locator('#journey-frame').boundingBox();
+  await page.mouse.move(area.x+area.width/2,area.y+Math.min(area.height/2,200));
+  await page.keyboard.down('Control');
+  await page.mouse.wheel(0,-250);
+  await page.keyboard.up('Control');
+  await page.waitForTimeout(130);
+  const actual=await layout();
+  const afterRatio=await page.evaluate(()=>devicePixelRatio),afterScale=await page.evaluate(()=>visualViewport?.scale??1);
+  check(near(afterRatio,initialRatio)&&near(afterScale,initialScale),'actual browser Ctrl+wheel does not enlarge the document');
+  check(near(surface.w,actual.w,2)&&near(surface.h,actual.h,2)&&near(surface.x,actual.x,2)&&near(surface.y,actual.y,2),'panel bounds stay unchanged after the real pinch event');
+  await page.screenshot({path:path.join(out,'01b-after-pinch-attempt.png')});
   // Test scrolling on a shorter screen without resizing or shifting the lesson panel.
   await page.setViewportSize({width:1280,height:620});
   const small=await layout();
