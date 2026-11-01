@@ -408,6 +408,21 @@ export class SpatialScene {
   nodeScreenRadius(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0||!this.global)return null;const matrix=new THREE.Matrix4();this.nodeMesh.getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x*this.globalScale();}
   completionMarkerVisible(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0)return false;const matrix=new THREE.Matrix4();this.progressMesh.getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x>0;}
   wholeMapVisible(){const {top,bottom}=this.globalInsets();return this.nodeList.filter(n=>this.canLocate(n)).every(n=>{const p=this.project(n.position);return p.visible&&p.x>24&&p.x<this.width-110&&p.y>top-8&&p.y<this.height-bottom+8;});}
+  recoverUnreadableSavedCamera(){
+    // Only during initial restoration, not on clicks, focus/guide steps or
+    // ordinary user zoom: a persisted extreme zoom may reduce the entire map
+    // to a tiny, unusable dot cluster. Do not change normal saved camera poses.
+    if(!this.relationshipMap||!this.global||this.nodeList.length<100)return false;
+    this.camera.updateMatrixWorld();this.updateProjection();
+    const coords=this.nodeList.filter(n=>this.canLocate(n)).map(n=>this.project(n.position));
+    if(coords.length<100)return false;
+    const xs=coords.map(p=>p.x).sort((a,b)=>a-b),ys=coords.map(p=>p.y).sort((a,b)=>a-b);
+    const i=Math.floor(coords.length*.05),j=Math.ceil(coords.length*.95)-1;
+    const width=xs[j]-xs[i],height=ys[j]-ys[i];
+    if(!Number.isFinite(width)||!Number.isFinite(height)||width>=this.width*.17||height>=this.height*.17)return false;
+    this.fitGlobalView(false);
+    return true;
+  }
   fitGlobalView(animated=true,objects=null){
     const points=(objects||this.nodeList).filter(o=>this.canLocate(o)).map(o=>V(o.position));if(!points.length)return;
     const center=new THREE.Box3().setFromPoints(points).getCenter(new THREE.Vector3());
