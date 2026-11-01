@@ -21,7 +21,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().selected==='node:mt_6_O6THdEDK');
   await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null);
   const before=await snap(),coords=JSON.stringify(before.positions);
-  check(before.zoomEnabled===false,'knowledge selection is independent of zoom mode');
+  check(before.zoomEnabled===true,'knowledge selection shares panorama zoom; only the actual learning workspace hides map tools');
   await page.locator('#focus-card [data-action="open"]').first().click();
   await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
   const frame=page.frameLocator('#journey-frame');
