@@ -89,3 +89,30 @@ test('statistical and proportional explanations keep inference and formula bound
     assert.match(explanation.text,required,'mathematics qualification must be retained');
   }
 });
+
+
+// These checks prevent losing the stated mathematical conditions during copy edits.
+// They are not a replacement for teaching review or real-world child comprehension.
+test('measurement and geometry explanations preserve their mathematical boundaries',()=>{
+  const cases=[
+    ['mt_NSC3LT_-ch','mt_IuHa5UI5od',/容积.*固体.*体积.*当前液体.*不一定等于/],
+    ['mt_4lp_b5Pzik','mt_e7tLi9SCIE',/刻度足够细.*更小.*只更换单位名称.*不会/],
+    ['mt_cqSf213hSa','mt_e7tLi9SCIE',/更小而等长.*不留缝.*不重叠.*只更换单位名称/],
+    ['mt_EXlmTURK_o','mt_d8al9JcajP',/60秒＝1分钟.*各月天数.*不能.*固定/],
+    ['mt_MFfYcnv6Tv','mt_h0CVtqI2xo',/锐角.*0°.*90°.*钝角.*小于180°/],
+    ['mt_YUJ5pwalqL','mt_8H2kO4k2B9',/正多边形.*所有边等长.*所有内角相等.*仅比较/],
+    ['mt_KwdjWEmMNo','mt_J03RFlVdas',/不自交.*n至少为3.*n−2.*自交.*不能直接/],
+    ['mt_y1n0Zwhoca','mt_Jvvh5P06NV',/单位正方形.*无空隙.*不重叠.*长方形/],
+    ['mt_IuHa5UI5od','mt_d7XktBQPxm',/单位立方体.*不留空隙.*不重叠.*看不见/],
+    ['mt_GzcJEVkNRn','mt_eMtV6tBSJm',/组合图形.*完整.*不重叠.*重叠或遗漏/],
+    ['mt_tpT9brpI6D','mt_kLQOzZYrd5',/千米\/时.*米\/秒.*1000\/3600/],
+    ['mt_KaF0SQvaiu','mt_cqSf213hSa',/等长单位.*首尾相接.*不留空隙.*不重叠/]
+  ];
+  for(const [prerequisiteId,topicId,required] of cases){
+    const edge=math.edges.find(e=>e.prerequisiteId===prerequisiteId&&e.topicId===topicId);
+    assert.ok(edge,'source edge missing: '+prerequisiteId+'>'+topicId);
+    const explanation=relationExplanation(edge);
+    assert.equal(explanation.reviewed,true);
+    assert.match(explanation.text,required,'math boundary should remain in UI copy');
+  }
+});
