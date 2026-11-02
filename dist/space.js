@@ -28,7 +28,7 @@ let worldLayout='network';
 const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
 let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
-let guideSteps=[],guideVisible=false,guideSuspended=false,guideWalkSeen=new Set();
+let guideSteps=[],guideVisible=false,guideSuspended=false,guideWalkSeen=new Set(),guideObserved=new Set();
 const displayTitle=o=>worldLayout==='network'&&o?.kind==='node'?(space.knowledgeNames.get(o.id)||o.title):o?.kind==='node'&&LESSONS[lessonForTopic(o.id)]?.title||o?.kind==='pack'&&routesForPack(o.id).length===1&&routeForPack(o.id)?.title||o?.kind==='node'&&routeStep(o.id)?.title||o?.key==='pack:same-amount'&&ROUTE_TITLE||o?.title;
 
 function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
@@ -174,10 +174,11 @@ function activateGuide(index,{record=true,animate=true,fit=true,rememberView=fal
   if(!scene?.relationshipMap||!guideSteps[index]||journeyOpen)return;
   if(rememberView)remember();
   if(record&&!recordGuide(index,true))return;
+  if(!guideVisible||index===0)guideObserved=new Set();
   if(scene.guideFocus?.step!==index||!guideVisible)guideWalkSeen=new Set();
   guideVisible=true;guideSuspended=false;closePopovers();
   scene.setGuideFocus(guideSteps,index,{animate,fit});
-  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);
+  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideObserved]);
   setHash(guideSteps[index].overview?null:'node:'+guideSteps[index].anchor);
   renderFocus();renderGuide();renderLocation();scheduleSave();
 }
@@ -189,13 +190,13 @@ function visitGuideTarget(key){
     choose(key,{openLesson:false,inPlace:true});
     return true;
   }
-  guideWalkSeen.add(key);
+  guideWalkSeen.add(key);guideObserved.add(key);
   if(index===0){activateGuide(1);return true;}
-  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);
+  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideObserved]);
   renderGuide();scheduleSave();
   return true;
 }
-function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;const step=learning.daily.guide?.step||0;guideVisible=false;guideSuspended=false;guideWalkSeen=new Set();scene.clearGuideFocus();if(record)recordGuide(step,false);renderGuide();renderFocus();renderLocation();scheduleSave();}
+function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;const step=learning.daily.guide?.step||0;guideVisible=false;guideSuspended=false;guideWalkSeen=new Set();guideObserved=new Set();scene.clearGuideFocus();if(record)recordGuide(step,false);renderGuide();renderFocus();renderLocation();scheduleSave();}
 function returnFromLesson(){const resumeGuide=guideSuspended&&learning.daily.guide?.active&&scene.relationshipMap&&guideSteps[learning.daily.guide.step];if(!resumeGuide)guideSuspended=false;const stableKnowledge=scene.relationshipMap&&!resumeGuide&&space.byKey.get(scene.selected)?.kind==='node';const selected=scene.selected;closeJourney(!resumeGuide&&!stableKnowledge);if(resumeGuide)activateGuide(learning.daily.guide.step,{record:false});else if(stableKnowledge){scene.select(selected);scene.setRelations('source');setHash(selected);renderFocus();renderLocation();scheduleSave();}}
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
@@ -490,7 +491,7 @@ $('#focus-card').addEventListener('scroll',()=>{if(scene?.global)scheduleSave();
 $('#search-input').addEventListener('input',()=>{searchLimit=24;renderSearch();});
 $('#search-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('#search-results button')?.click();});
 $('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{readLearning();if(readBlocked)throw new Error('原始存储无法读取，暂时不能覆盖或合并。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');const incoming=parseBackup(await file.text(),atlas),combined=validate(merge(learning,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(learning)));writeStored(KEY,JSON.stringify(combined));learning=combined;refreshLearning();toast('备份已合并，已有作品和提示历史已保留。');}catch(e){toast(e.message);}finally{event.target.value='';}});
-window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
+window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideObserved]);setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
   if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
     if(e.data.type==='math-space:lesson-height'){
