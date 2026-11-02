@@ -57,8 +57,7 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:'袋 A 红球有 4 个，比袋 B 的 3 个多，但红球数量多不一定表示抽红机会更大。',
     tryIt:'各画一张袋 A 和袋 B 的球数图，先猜哪袋更容易抽红，再比较红球占各袋总数的比例。',
     why:'比较的是每次随机抽取时红球所占的机会，而不是脱离总数只比红球个数。'
-  }
-
+  },
   'mt_THl9GLxwoL':{
     formal:'两位数的数位值',
     definition:'在两位数中，数字所在的位置决定它表示多少：十位上的数字表示几个十，个位上的数字表示几个一。',
