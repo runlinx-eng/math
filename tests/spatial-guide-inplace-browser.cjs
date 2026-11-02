@@ -24,6 +24,9 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   check(state.guide.currentNodes.length===0&&state.guide.edges.length===0,'first step retains whole forest without a forced local route');
   check((await page.locator('.space-label.theme:visible').count())>=3,'main themes remain legible');
   check(await page.locator('.space-label.pack:visible').count()===0,'first step suppresses knowledge-group labels');
+  check(await page.locator('#guide-panel .guide-head .guide-count').innerText()==='01 / 05','compact progress keeps the exact step and total');
+  check((await page.locator('#guide-panel .guide-hint').innerText()).includes('数与运算')
+    &&await page.locator('[data-action="guide-exit"]').isVisible(),'clear step purpose and exit remain visible');
   check(await page.locator('[data-action="guide-step"][data-step="1"]').isDisabled(),'cannot skip the first on-map action');
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'01-forest.png')});
@@ -37,6 +40,13 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   state=await snap();
   check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
+  const cueText=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>({
+    action:el.querySelector('.guide-cue-action')?.textContent?.trim(),
+    title:el.querySelector('.guide-cue-name')?.textContent?.trim(),
+    full:el.getAttribute('aria-label')
+  })));
+  check(cueText.every(item=>item.action&&item.title&&item.full.includes(item.title)),
+    'each redesigned prompt keeps its complete knowledge name and action');
   const cueRects=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>{
     const r=el.getBoundingClientRect();return {key:el.dataset.key,x:r.x,y:r.y,w:r.width,h:r.height};
   }));
