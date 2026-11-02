@@ -37,6 +37,12 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   state=await snap();
   check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
+  const cueRects=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>{
+    const r=el.getBoundingClientRect();return {key:el.dataset.key,x:r.x,y:r.y,w:r.width,h:r.height};
+  }));
+  const intersect=(a,b)=>a.x<b.x+b.w+8&&a.x+a.w+8>b.x&&a.y<b.y+b.h+8&&a.y+a.h+8>b.y;
+  check(!intersect(cueRects[0],cueRects[1]),'fork choices do not overlap or intercept each other');
+  check(cueRects.every(r=>r.w>50&&r.h>25&&r.x>=0&&r.y>=0&&r.x+r.w<=1440&&r.y+r.h<=900),'both fork choices remain fully on screen');
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'03-fork.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="3"]').isDisabled(),'observing only one branch does not finish the fork');
