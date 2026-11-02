@@ -43,3 +43,26 @@ test('both map views share exact revised source titles, preserve original search
   assert.match(olderView,/活动完成 \$\{s\.done\} \/ \$\{s\.total\}/);
   assert.match(olderView,/不代表所有源目标都已完整评估/);
 });
+
+
+// Content-boundary regression examples: these protect reviewed conditions,
+// but a passing wording test is not an independent mathematics audit.
+test('selected mathematics explanations retain their necessary conditions',()=>{
+  const boundaryCases=[
+    ['mt_MyGblah2yY','mt_FbDKeLfBCo',/同一个整体.*二分之一.*四分之二/],
+    ['mt_4bc3EAxhlY','mt_167X6Ax8P7',/任意两边之和.*大于第三边.*未必能唯一确定/],
+    ['mt_AabJisinfi','mt_ML5t7n2-U8',/底.*垂直高.*除以2/],
+    ['mt_ebPelt-qAl','mt_b7T-CjOYUR',/分子和分母.*同时除以.*公因数.*大小不变/],
+    ['mt_ebPelt-qAl','mt_NaqEP8xDhZ',/十分之三.*百分之三十.*量不变/],
+    ['mt_sHJqh6UUya','mt_aCwj2PCoRV',/相对频率.*估计概率.*新的观察/],
+    ['mt_GzcJEVkNRn','mt_aivrWs6jrS',/一条边.*2倍.*另一条边不变.*两条边.*4倍/],
+    ['mt_oqziWKry-L','mt_bESTSBB0wK',/扇形统计图.*不重叠也不遗漏.*360°/]
+  ];
+  for(const [prerequisiteId,topicId,condition] of boundaryCases){
+    const edge=math.edges.find(e=>e.prerequisiteId===prerequisiteId&&e.topicId===topicId);
+    assert.ok(edge,'reviewed relationship must exist: '+prerequisiteId+'>'+topicId);
+    const explanation=relationExplanation(edge);
+    assert.equal(explanation.reviewed,true);
+    assert.match(explanation.text,condition,'do not omit a mathematics condition');
+  }
+});
