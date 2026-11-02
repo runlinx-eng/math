@@ -9,13 +9,19 @@ on:
       - 'scripts/deploy-vps.sh'
       - '.github/workflows/deploy-vps.yml'
   workflow_dispatch:
+    inputs:
+      confirm_deploy:
+        description: Confirm this one-time deployment to the VPS
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' && vars.VPS_DEPLOY_ENABLED == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' && (vars.VPS_DEPLOY_ENABLED == 'true' || (github.event_name == 'workflow_dispatch' && inputs.confirm_deploy == true)) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

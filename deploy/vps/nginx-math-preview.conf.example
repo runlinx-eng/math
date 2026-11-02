@@ -1,5 +1,8 @@
 # Math Explorer preview.
 # TCP 443 is intentionally not used: the existing Xray service owns it.
+# Shared-password login is checked by a localhost-only auth service.
+
+limit_req_zone $binary_remote_addr zone=preview_login:10m rate=5r/m;
 
 server {
     listen 80;
@@ -7,9 +10,7 @@ server {
     server_name math.664357788.xyz;
     server_tokens off;
 
-    # Keep Let's Encrypt HTTP-01 renewal independent of the HTTPS listener.
     location ^~ /.well-known/acme-challenge/ {
-        auth_basic off;
         root /var/www/certbot;
         default_type text/plain;
         try_files $uri =404;
@@ -39,18 +40,46 @@ server {
     add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
     add_header Cache-Control "no-cache" always;
 
-    # Public, fixed response used only by the deployment health check.
     location = /health {
-        auth_basic off;
         default_type application/json;
         return 200 '{"app":"math-explorer","status":"ok"}';
     }
 
-    # All application routes and assets require the preview password.
+    location = /login {
+        alias /var/www/math-preview-login/index.html;
+        default_type text/html;
+    }
+
+    location = /auth/login {
+        limit_req zone=preview_login burst=5 nodelay;
+        limit_req_status 429;
+        proxy_pass http://127.0.0.1:8765/login;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location = /auth/logout {
+        proxy_pass http://127.0.0.1:8765/logout;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location = /__preview_auth {
+        internal;
+        proxy_pass http://127.0.0.1:8765/verify;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header Cookie $http_cookie;
+    }
+
     location / {
-        auth_basic "Math Explorer preview";
-        auth_basic_user_file /etc/nginx/.htpasswd-math-preview;
+        auth_request /__preview_auth;
+        error_page 401 = @preview_login;
         try_files $uri $uri/ =404;
+    }
+
+    location @preview_login {
+        return 302 /login?next=$uri;
     }
 
     gzip on;
