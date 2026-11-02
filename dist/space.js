@@ -109,7 +109,7 @@ function renderGuideCues(){
       const cx=Math.max(panel.right+100,Math.min(innerWidth-135,Math.max(p.x||0,0))),cy=Math.max(185,Math.min(innerHeight-155,Math.max(p.y||0,0)));
       const dx=p.x-cx,dy=p.y-cy,arrow=Math.abs(dx)>Math.abs(dy)?dx<0?'←':'→':dy<0?'↑':'↓';
       projections.set(target.key,{x:cx,y:cy,visible:false});
-      shown.push(`<span class="guide-cue guide-cue-offscreen" data-key="${esc(target.key)}" aria-label="目标在当前可视区域外">${arrow} ${esc(target.label)} · 手动移动地图</span>`);
+      shown.push(`<span class="guide-cue guide-cue-offscreen" data-key="${esc(target.key)}" aria-label="目标在当前可视区域外：${esc(displayTitle(object))}"><span class="guide-cue-action">${arrow} ${esc(target.label)}</span><strong class="guide-cue-name">${esc(displayTitle(object))}</strong><small>移动地图寻找</small></span>`);
     }
   }
   // Compare the content, not innerHTML after positioning. The positions are
