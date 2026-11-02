@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('thirty-nine exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,39);
+test('forty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,45);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -168,4 +168,27 @@ test('the review standard distinguishes editorial calibration from independent m
   assert.match(pilot,/21 个补充了来源目标/);
   assert.match(pilot,/7 个研究缺口/);
   assert.match(pilot,/均未完成真实儿童理解验证/);
+});
+
+
+test('first expansion batch explains six additional source goals without changing source identities',()=>{
+  const cardinality=conceptHelpFor('mt_dmNvjroCPT');
+  assert.match(cardinality.definition,/最后说出的数词.*总数/);
+  assert.match(cardinality.definition,/怎样摆放.*从哪件开始数/);
+  const teen=conceptHelpFor('mt_xmmgAzxe5j');
+  assert.match(teen.definition,/11 到 19.*1 个十.*1 到 9 个一/);
+  assert.match(teen.example,/14＝10＋4/);
+  const fractions=conceptHelpFor('mt_IfEgu0X449');
+  assert.match(fractions.definition,/分母相同.*分子较大/);
+  assert.match(fractions.definition,/单位分数 1\/n.*分母越大/);
+  assert.match(fractions.counterexample,/1\/4 小于 2\/3/);
+  const multiplication=conceptHelpFor('mt_PZ909yPrEC');
+  assert.match(multiplication.definition,/每组数量相同.*重复相加/);
+  assert.match(multiplication.example,/3＋3＋3＋3＝12.*4×3＝12/);
+  const position=conceptHelpFor('mt_qeZYF6HZ4o');
+  assert.match(position.definition,/相对于参照物.*观察方向/);
+  assert.match(position.counterexample,/左右方向可能改变/);
+  const sorting=conceptHelpFor('mt_ylXdiVRAYv');
+  assert.match(sorting.definition,/最多三个类别.*分别计数.*排序/);
+  assert.match(sorting.counterexample,/重复放进两组/);
 });
