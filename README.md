@@ -349,6 +349,7 @@ python3 scripts/server.py --open
 - [全量清单](docs/CONTENT-INVENTORY.md)：587 个节点的制作安排，文中的 3 个活动是阶段 1 基线。
 - [文字表达规范](docs/language/TERMS.md)：统一产品层级、数学术语、解释原则和验收边界；[587 节点名称台账](docs/language/NODE-NAME-AUDIT.json)记录逐项来源对照。
 - [概念解释覆盖](docs/language/CONCEPT-EXPLANATION-COVERAGE.md)与[解释样板](docs/language/CONCEPT-PILOT.md)：分别记录 39/537 的样板覆盖和具体内容；不把样板或 CI 通过写成儿童理解通过。
+- [知识点内容审查标准](docs/language/CONCEPT-REVIEW-STANDARD.md)：定义 537 个知识地图节点的来源核对、数学准确性、解释字段、适龄与验收要求；39 个样板的首轮校准结果记录在[解释样板文档](docs/language/CONCEPT-PILOT.md)。
 - [主题与知识群文案](docs/language/THEME-GROUP-REVIEW.md)、[关系与活动反馈审查](docs/language/RELATIONS-ACTIVITIES-REVIEW.md)：记录当前导航文案、关系方向、活动和反馈用词。
 - `dist/learning/phase5/`：B06 数量、计数、短时显示、本地音频与笔迹；B07 单位交换、数轴、比较、估计与实际问题；B08 大数、小数、近似值、区间与罗马数字；B09 数轴、负数、距离、可选范围、整数幂与数集；B10 合分、凑十、加减策略与互逆；B11 多位数及小数加减、逐列结果、自选走法、连续故事和估计检查；B12 三份构造、未知量和自选两步计划。未自动评分口述与字迹。
 - B13 同目录新增守恒分物品、阵列转向和切分、有限乘除回忆、因数对、三数自选分组及除法反例；动作历史随未完成现场与备份保存。
