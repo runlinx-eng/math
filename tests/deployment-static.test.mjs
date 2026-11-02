@@ -47,7 +47,7 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.match(nginx, /root \/var\/www\/math-explorer-preview\/current;/);
   assert.match(nginx, /listen 8443 ssl;/);
   assert.match(nginx, /listen \[::\]:8443 ssl;/);
-  assert.doesNotMatch(nginx, /listen \[::\]?:?443(?:\s|;)/);
+  assert.doesNotMatch(nginx, /^\s*listen\s+(?:\[::\]:)?443(?:\s|;)/m);
   assert.match(nginx, /return 308 https:\/\/\$host:8443\$request_uri;/);
   assert.match(nginx, /location \^~ \/\.well-known\/acme-challenge\//);
   assert.match(nginx, /location = \/health[\s\S]*?auth_basic off;/);
