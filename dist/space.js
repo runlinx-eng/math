@@ -177,7 +177,7 @@ function visitGuideTarget(key){
   const index=learning.daily.guide?.step||0;
   if(index===4){
     leaveGuide();
-    choose(key,{openLesson:false});
+    choose(key,{openLesson:false,inPlace:true});
     return true;
   }
   guideWalkSeen.add(key);
@@ -190,7 +190,7 @@ function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;c
 function returnFromLesson(){const resumeGuide=guideSuspended&&learning.daily.guide?.active&&scene.relationshipMap&&guideSteps[learning.daily.guide.step];if(!resumeGuide)guideSuspended=false;const stableKnowledge=scene.relationshipMap&&!resumeGuide&&space.byKey.get(scene.selected)?.kind==='node';const selected=scene.selected;closeJourney(!resumeGuide&&!stableKnowledge);if(resumeGuide)activateGuide(learning.daily.guide.step,{record:false});else if(stableKnowledge){scene.select(selected);scene.setRelations('source');setHash(selected);renderFocus();renderLocation();scheduleSave();}}
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
-function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible&&visitGuideTarget(key))return;if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.focus(key,{animate});setHash(key);
+function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network',inPlace=false}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible&&visitGuideTarget(key))return;if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace)scene.select(key);else scene.focus(key,{animate});setHash(key);
   if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
   else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
