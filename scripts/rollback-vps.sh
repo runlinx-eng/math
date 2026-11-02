@@ -42,5 +42,18 @@ mv -Tf "$root/.rollback" "$root/current"
 ln -sfn "$current_target" "$root/previous"
 REMOTE
 
-curl -fsS --max-time 8 "${VPS_URL%/}/health" | grep -q '"app":"math-explorer"'
+if ! curl -fsS --max-time 8 "${VPS_URL%/}/health" | grep -q '"app":"math-explorer"'; then
+  echo "Rollback health check failed; restoring the prior current release." >&2
+  ssh "${ssh_opts[@]}" "$VPS_USER@$VPS_HOST" "VPS_WEB_ROOT='$VPS_WEB_ROOT' bash -s" <<'REMOTE'
+set -euo pipefail
+root="$VPS_WEB_ROOT"
+current_target="$(readlink "$root/current")"
+previous_target="$(readlink "$root/previous")"
+ln -sfn "$previous_target" "$root/.restore"
+mv -Tf "$root/.restore" "$root/current"
+ln -sfn "$current_target" "$root/previous"
+REMOTE
+  exit 1
+fi
+
 echo "Rollback completed: $VPS_URL"
