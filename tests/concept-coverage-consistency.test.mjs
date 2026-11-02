@@ -101,7 +101,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
   assert.match(termsDoc,/84 个展示名修正/);
   assert.match(termsDoc,/重名节点 38 个/);
-  assert.match(termsDoc,/46 个非重名节点/);
+  assert.match(termsDoc,/非重名节点 46 个/);
   assert.match(termsDoc,/92 个重名限定语/);
   assert.match(termsDoc,/406 个非重名名称/);
   assert.match(termsDoc,/44 条理由已完成专项数学条件核对/);
