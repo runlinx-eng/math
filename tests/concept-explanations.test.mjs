@@ -115,6 +115,8 @@ test('four geometry samples explain coordinates, transformations, and area proce
   assert.match(conceptHelpFor('mt_i2-QaXbyzB').definition,/分成.*长方形和三角形.*相加.*补成.*减去多出来的部分.*不能重叠或留空/);
   assert.match(conceptHelpFor('mt_i2-QaXbyzB').example,/底长分别为 1 厘米和 3 厘米.*虽然大小不同.*底长合计为 10−6＝4 厘米.*对应的高都是 4 厘米.*4×4÷2＝8 平方厘米.*24＋8＝32 平方厘米/);
   assert.match(conceptHelpFor('mt_i2-QaXbyzB').counterexample,/重叠.*空隙.*补成长方形/);
+  assert.equal(conceptHelpFor('mt_ZfpeI1CFyP').formal,'平均绝对偏差（mean absolute deviation）');
+  assert.match(conceptHelpFor('mt_i2-QaXbyzB').counterexample,/对于一般四边形.*两条对角线不垂直/);
 });
 
 test('source names and node counts remain unchanged; help is supplemental',()=>{
