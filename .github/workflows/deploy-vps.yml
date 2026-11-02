@@ -9,13 +9,19 @@ on:
       - 'scripts/deploy-vps.sh'
       - '.github/workflows/deploy-vps.yml'
   workflow_dispatch:
+    inputs:
+      confirm_deploy:
+        description: Confirm this one-time deployment to the VPS
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' && vars.VPS_DEPLOY_ENABLED == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' && (vars.VPS_DEPLOY_ENABLED == 'true' || (github.event_name == 'workflow_dispatch' && inputs.confirm_deploy == true)) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,8 +46,8 @@ jobs:
           test -n "$VPS_SSH_KEY"
           test -n "$VPS_KNOWN_HOSTS"
           install -m 700 -d "$HOME/.ssh"
-          printf '%s\n' "$VPS_SSH_KEY" > "$RUNNER_TEMP/vps_deploy_key"
-          printf '%s\n' "$VPS_KNOWN_HOSTS" > "$RUNNER_TEMP/vps_known_hosts"
+          printf '%s\\n' "$VPS_SSH_KEY" > "$RUNNER_TEMP/vps_deploy_key"
+          printf '%s\\n' "$VPS_KNOWN_HOSTS" > "$RUNNER_TEMP/vps_known_hosts"
           chmod 600 "$RUNNER_TEMP/vps_deploy_key" "$RUNNER_TEMP/vps_known_hosts"
           echo "VPS_SSH_KEY_FILE=$RUNNER_TEMP/vps_deploy_key" >> "$GITHUB_ENV"
           echo "VPS_KNOWN_HOSTS_FILE=$RUNNER_TEMP/vps_known_hosts" >> "$GITHUB_ENV"
