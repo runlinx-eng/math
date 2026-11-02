@@ -25,19 +25,25 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   check((await page.locator('.space-label.theme:visible').count())>=3,'main themes remain legible');
   check(await page.locator('.space-label.pack:visible').count()===0,'first step suppresses knowledge-group labels');
   check(await page.locator('[data-action="guide-step"][data-step="1"]').isDisabled(),'cannot skip the first on-map action');
+  await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'01-forest.png')});
   await visit();await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
   check((await target().count())===1,'guide points to the next source location');
+  await page.waitForTimeout(180);
+  await page.screenshot({path:path.join(out,'02-first-connection.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isDisabled(),'finding start alone is not a full source connection');
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isEnabled(),'following a source edge unlocks the next discovery');
   await page.locator('[data-action="guide-step"][data-step="2"]').click();
   state=await snap();
   check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
-  await page.screenshot({path:path.join(out,'02-fork.png')});
+  await page.waitForTimeout(180);
+  await page.screenshot({path:path.join(out,'03-fork.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="3"]').isDisabled(),'observing only one branch does not finish the fork');
   await visit();check(await page.locator('[data-action="guide-step"][data-step="3"]').isEnabled(),'both source branches allow proceeding');
   await page.locator('[data-action="guide-step"][data-step="3"]').click();
+  await page.waitForTimeout(180);
+  await page.screenshot({path:path.join(out,'04-merge.png')});
   await visit();
   check(await page.locator('[data-action="guide-step"][data-step="4"]').isEnabled(),'touching the convergence target completes the observation');
   await page.locator('[data-action="guide-step"][data-step="4"]').click();
@@ -45,7 +51,8 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   check(state.guide.step===4&&await target().count()>=1,'free-choice step offers real outgoing source neighbors');
   check(!await page.locator('[data-action="guide-step"][data-step="5"]').count(),'last stage is a user choice, not an automatic finish');
   check(samePose(initial,state)&&JSON.stringify(state.positions)===positions,'all five steps preserve camera and original node coordinates');
-  await page.screenshot({path:path.join(out,'03-free-choice.png')});
+  await page.waitForTimeout(180);
+  await page.screenshot({path:path.join(out,'05-free-choice.png')});
   await visit();
   state=await snap();
   check(state.guide===null&&state.selected?.startsWith('node:')&&state.visibleNodes.length===537,'choosing a real neighbor returns to ordinary free exploration on the same map');
@@ -57,6 +64,7 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   state=await snap();
   check(state.guide===null&&samePose(initial,state),'exiting guide keeps camera unchanged');
   check(errors.length===0,'no uncaught browser errors');
+  fs.writeFileSync(path.join(out,'screenshots.json'),JSON.stringify([{"step":1,"file":"01-forest.png","goal":"Find a real entrance in the five themes"},{"step":2,"file":"02-first-connection.png","goal":"Walk a real prerequisite connection"},{"step":3,"file":"03-fork.png","goal":"Observe two outgoing branches"},{"step":4,"file":"04-merge.png","goal":"Observe two incoming prerequisites"},{"step":5,"file":"05-free-choice.png","goal":"Choose a real outgoing connection independently"}],null,2));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false,guide:5,visibleNodes:537},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(e){await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(e),childTrial:false},null,2));console.error(e.stack);process.exitCode=1;}
