@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('eighteen exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,18);
+  assert.equal(samples.length,22);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -41,6 +41,14 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_Qcp2d_kuta').counterexample,/圆是平面图形，球是立体图形/);
   assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/按顺序.*倍数关系.*同时乘或除以同一个正数/);
   assert.match(conceptHelpFor('mt_yK51ZnKA8m').counterexample,/2\/7，不是 2\/5/);
+  assert.match(conceptHelpFor('mt_KaF0SQvaiu').definition,/大小相同的单位.*0 刻度.*数值和单位/);
+  assert.match(conceptHelpFor('mt_KaF0SQvaiu').counterexample,/留了空隙或互相重叠.*实际长度是 15 厘米/);
+  assert.match(conceptHelpFor('mt_PNSyfH56eQ').definition,/p%.*p\/100.*原数量/);
+  assert.match(conceptHelpFor('mt_PNSyfH56eQ').example,/360 的 15%.*36＋18＝54/);
+  assert.match(conceptHelpFor('mt_Sij9ByyHq6').definition,/体积.*立方单位.*表面积.*平方单位.*外露面/);
+  assert.match(conceptHelpFor('mt_Sij9ByyHq6').example,/40 立方厘米.*80 平方厘米/);
+  assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/1:50.*实际 50 个相同的长度单位.*统一单位/);
+  assert.match(conceptHelpFor('mt_1badik7iKJ').example,/9×50＝450 厘米.*4.5 米/);
 });
 test('meta samples explain strategy selection, verification, and investigation limits',()=>{
   assert.match(conceptHelpFor('mt_QaYfeVL-0C').definition,/四舍五入.*大致范围.*逆运算.*合理/);
