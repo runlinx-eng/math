@@ -90,7 +90,7 @@ test('seven research-gap samples have external evidence records and actual expla
  for(const id of ids){const record=evidence.records.find(item=>item.id===id);assert.ok(record,id);assert.ok(record.sourceIds.length>0,id);assert.ok(record.revision.length>20,id);assert.equal(record.independentMathReviewStatus,'not_completed');const sample=sampleReview.records.find(item=>item.id===id);assert.equal(sample.externalSourcesVerified,true);assert.equal(sample.revisionApplied,true);}
  assert.match(CONCEPT_EXPLANATIONS['mt_SHVyE1CLUa'].example,/上学夜.*周末夜/);
  assert.match(CONCEPT_EXPLANATIONS['mt_Sij9ByyHq6'].example,/132 平方厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_Sij9ByyHq6'].example,/3 立方米/);
- assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].example,/3 厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].tryIt,/平均绝对偏差为 8 分.*平均绝对偏差为 21 分/);
+ assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].example,/3 厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].tryIt,/甲的平均绝对偏差为 8 分.*乙的平均绝对偏差为 21 分/);
  assert.match(CONCEPT_EXPLANATIONS['mt_JRzXQl9M7c'].example,/数值 3 出现 4 次/);assert.match(CONCEPT_EXPLANATIONS['mt_oderfUBZPw'].example,/150≤h<160.*6 人.*10 人/);
  assert.match(CONCEPT_EXPLANATIONS['mt_8VjmxR1yfw'].example,/相同的五数概括/);assert.match(CONCEPT_EXPLANATIONS['mt_i2-QaXbyzB'].example,/48 平方厘米.*24 平方厘米.*24 平方厘米/);
 });
