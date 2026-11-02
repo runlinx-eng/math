@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('twenty-six exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,26);
+test('thirty-one exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,31);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -50,6 +50,18 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').example,/40 立方厘米.*80 平方厘米/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/1:50.*实际 50 个相同的长度单位.*统一单位/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').example,/9×50＝450 厘米.*4.5 米/);
+});
+test('five procedural samples explain steps, place value, units, and data spread',()=>{
+  assert.match(conceptHelpFor('mt_m1W6nTQJ2b').example,/8＋6.*2＋4.*14/);
+  assert.match(conceptHelpFor('mt_m1W6nTQJ2b').counterexample,/剩下的是 4/);
+  assert.match(conceptHelpFor('mt_q9EaJc2FP8').example,/34×27.*238＋680＝918/);
+  assert.match(conceptHelpFor('mt_q9EaJc2FP8').counterexample,/代表 20/);
+  assert.match(conceptHelpFor('mt_Jvg8X0N5u0').example,/长＋宽.*22 厘米/);
+  assert.match(conceptHelpFor('mt_Jvg8X0N5u0').counterexample,/2×长＋宽/);
+  assert.match(conceptHelpFor('mt_kLQOzZYrd5').definition,/速度＝路程÷时间.*单价＝总价÷数量.*密度＝质量÷体积/);
+  assert.match(conceptHelpFor('mt_kLQOzZYrd5').example,/150÷2.5＝60 千米\/小时/);
+  assert.match(conceptHelpFor('mt_ZfpeI1CFyP').definition,/绝对距离.*距离不能是负数/);
+  assert.match(conceptHelpFor('mt_ZfpeI1CFyP').example,/平均数是 8.*4、2、0、1、5.*2.4/);
 });
 test('four representational samples connect visual structure to the mathematical relationship',()=>{
   assert.equal(conceptHelpFor('mt_ePXg_XyCKU').visual,'ratio-bar-model');
