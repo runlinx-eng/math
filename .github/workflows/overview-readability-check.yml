@@ -7,6 +7,9 @@ on:
       - 'dist/space.js'
       - 'dist/space.css'
       - 'dist/index.html'
+      - 'docs/language/**'
+      - 'tests/language-terms.test.mjs'
+      - 'dist/exploration.js'
       - 'tests/spatial-overview.test.mjs'
       - 'tests/spatial-overview-structure.test.mjs'
       - 'tests/spatial-overview-browser.cjs'
@@ -42,7 +45,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
       - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/language-terms.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
