@@ -60,3 +60,64 @@ test('coverage ledger matches every implemented sample and source distribution',
   assert.ok(coverage.includes('| **合计** | **537** | **39** | **498** | **7.3%** |'));
   assert.ok(coverage.includes(`当前有 **${visualCount} 个样板节点**提供真实 SVG 图示`));
 });
+
+
+const nameAudit=JSON.parse(fs.readFileSync(new URL('../docs/language/NODE-NAME-AUDIT.json',import.meta.url),'utf8'));
+const termsDoc=fs.readFileSync(new URL('../docs/language/TERMS.md',import.meta.url),'utf8');
+const duplicateReview=fs.readFileSync(new URL('../docs/language/DUPLICATE-NAME-REVIEW.md',import.meta.url),'utf8');
+const uniqueReview=fs.readFileSync(new URL('../docs/language/UNIQUE-NAME-REVIEW.md',import.meta.url),'utf8');
+const relationsReview=fs.readFileSync(new URL('../docs/language/RELATIONS-ACTIVITIES-REVIEW.md',import.meta.url),'utf8');
+const mainReadme=fs.readFileSync(new URL('../README.md',import.meta.url),'utf8');
+const spatialReadme=fs.readFileSync(new URL('../docs/spatial-learning/README.md',import.meta.url),'utf8');
+
+test('language documentation agrees with the machine-readable name audit and current review scope',()=>{
+  const entries=nameAudit.entries;
+  const count=(predicate)=>entries.filter(predicate).length;
+  const correctedDuplicate=count(entry=>entry.class==='corrected'&&entry.qualified===true);
+  const correctedUnique=count(entry=>entry.class==='corrected'&&entry.qualified!==true);
+  const qualifierReviewed=count(entry=>entry.class==='qualifier_reviewed');
+  const uniqueReviewed=count(entry=>entry.class==='source_reviewed');
+  const namedExplanationPilots=count(entry=>entry.class==='explanation');
+  const explanationPilotEntries=entries.filter(entry=>entry.explanationPilot===true);
+
+  assert.equal(nameAudit.counts.total,source.nodes.length);
+  assert.equal(nameAudit.counts.duplicateGroupCount,44);
+  assert.equal(nameAudit.counts.duplicateNodes,130);
+  assert.equal(nameAudit.counts.byClass.corrected,84);
+  assert.equal(nameAudit.counts.byClass.qualifier_reviewed,92);
+  assert.equal(nameAudit.counts.byClass.source_reviewed,406);
+  assert.equal(nameAudit.counts.byClass.explanation,5);
+  assert.equal(correctedDuplicate,38);
+  assert.equal(correctedUnique,46);
+  assert.equal(qualifierReviewed,92);
+  assert.equal(uniqueReviewed,406);
+  assert.equal(namedExplanationPilots,5);
+  assert.equal(explanationPilotEntries.length,6);
+  assert.ok(explanationPilotEntries.every(entry=>CONCEPT_EXPLANATIONS[entry.id]),
+    'all six name-audit explanation pilot nodes must exist in the current explanation module');
+
+  assert.match(termsDoc,/39 个节点完成样板/);
+  assert.match(termsDoc,/15 个节点有按概念制作的静态 SVG 图示/);
+  assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
+  assert.match(termsDoc,/84 个展示名修正/);
+  assert.match(termsDoc,/38 个重名节点/);
+  assert.match(termsDoc,/46 个非重名节点/);
+  assert.match(termsDoc,/92 个重名限定语/);
+  assert.match(termsDoc,/406 个非重名名称/);
+  assert.match(termsDoc,/44 条理由已完成专项数学条件核对/);
+
+  assert.match(duplicateReview,/剩余 108 个节点/);
+  assert.match(duplicateReview,/16 项需要修正/);
+  assert.match(duplicateReview,/92 项暂保留/);
+  assert.match(duplicateReview,/前序批次已修正 22 个展示名/);
+  assert.match(uniqueReview,/452 个非重名来源节点/);
+  assert.match(uniqueReview,/46 项标题过窄/);
+  assert.match(uniqueReview,/406 项未发现足够改名的明确依据/);
+
+  assert.match(relationsReview,/累计专项修订 \*\*44 条\*\*/);
+  assert.match(relationsReview,/累计 \*\*39 条专项防回退断言\*\*/);
+  assert.doesNotMatch(mainReadme,/重名想法/);
+  assert.match(mainReadme,/docs\/language\/TERMS\.md/);
+  assert.match(spatialReadme,/44 条/);
+  assert.match(spatialReadme,/39 条/);
+});
