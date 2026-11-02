@@ -17,6 +17,19 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
  try{
   await page.goto(base);await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
   const initial=await snap(),positions=JSON.stringify(initial.positions);
+  const backgroundId='node:mt_dmNvjroCPT'; // real directly connected knowledge
+  await page.evaluate(key=>{
+    document.querySelector('.space-label.node[data-key="'+key+'"]')
+      ?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'}));
+  },backgroundId);
+  await page.waitForTimeout(80);
+  const overviewHover=await page.evaluate(()=>mathSpace.hoverPreview());
+  check(overviewHover.key===backgroundId&&overviewHover.edges.length>0,
+    'free overview exposes the source-backed direct relationship preview');
+  await page.evaluate(key=>{
+    document.querySelector('.space-label.node[data-key="'+key+'"]')
+      ?.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'}));
+  },backgroundId);
   await page.locator('[data-action="guide-start"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===0);
   let state=await snap();
@@ -38,7 +51,6 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await lockedTheme.evaluate(el=>el.click());
   check((await snap()).guide?.step===0&&samePose(await snap(),initialGuide),
     'clicking a non-target theme does not change the guide or camera');
-  const backgroundId='node:mt_dmNvjroCPT'; // known, source-connected non-task example
   const hoveredNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
   check((await snap()).visibleNodes.includes(backgroundId),'background knowledge point stays in the 537-node forest');
   await page.evaluate(key=>{
@@ -48,7 +60,10 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await page.waitForTimeout(120);
   const guideHover=await page.evaluate(()=>mathSpace.hoverPreview());
   check(guideHover.key===backgroundId&&guideHover.edges.length>0&&guideHover.related.length>0,
-    'locked knowledge has the full overview hover preview and real direct relations');
+    'locked knowledge has full source-backed direct relations');
+  check(JSON.stringify(guideHover.edges)===JSON.stringify(overviewHover.edges)
+      &&JSON.stringify(guideHover.related)===JSON.stringify(overviewHover.related),
+    'guide hover information is identical to full overview for the same knowledge point');
   check(await hoveredNode.isVisible()&&await hoveredNode.getAttribute('aria-disabled')==='true',
     'locked knowledge still reveals its complete name without click permission');
   await hoveredNode.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('dblclick',{bubbles:true}));});
