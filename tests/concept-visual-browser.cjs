@@ -96,7 +96,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
           const el=svg.querySelector('[data-part="'+name+'"]');
           if(!el)return null;
           const box=el.getBBox();
-          return {x:box.x,y:box.y,width:box.width,height:box.height};
+          return {x:box.x,y:box.y,width:box.width,height:box.height,d:el.getAttribute('d')};
         };
         return {width:svg.getBoundingClientRect().width,
           accessibility:svg.getAttribute('aria-label'),
@@ -105,7 +105,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
           parts:{
             leftTriangle:part('left-triangle'),
             rightTriangle:part('right-triangle'),
-            remainingRectangle:part('remaining-rectangle'),
+            remainingTrapezoid:part('remaining-trapezoid'),
             movedTriangle:part('moved-triangle')
           }};
       });
@@ -122,11 +122,14 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
           tag+': trapezoid side triangles have unequal bases, equal heights, and bases summing to the difference between the parallel sides');
       }
       if(id==='mt_ML5t7n2-U8'){
-        check(info.parts.remainingRectangle&&info.parts.movedTriangle&&
-          Math.abs(info.parts.remainingRectangle.width-75)<0.01&&
+        check(info.parts.remainingTrapezoid&&info.parts.movedTriangle&&
+          Math.abs(info.parts.remainingTrapezoid.width-100)<0.01&&
+          Math.abs(info.parts.remainingTrapezoid.height-65)<0.01&&
           Math.abs(info.parts.movedTriangle.width-25)<0.01&&
-          Math.abs(info.parts.remainingRectangle.width+info.parts.movedTriangle.width-100)<0.01,
-          tag+': moved triangle fills the missing wedge beside the remaining rectangle rather than overlapping a full rectangle');
+          Math.abs(info.parts.movedTriangle.height-65)<0.01&&
+          info.parts.remainingTrapezoid.d?.includes('L265 120')&&
+          info.parts.movedTriangle.d?.includes('M265 120L290 55'),
+          tag+': remaining trapezoid and moved triangle share the same diagonal edge to form a rectangle');
       }
     }else await help.locator('.concept-mode').first().locator('summary').click();
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
