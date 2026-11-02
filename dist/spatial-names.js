@@ -47,8 +47,35 @@ export const NODE_QUALIFIERS=Object.freeze({
   'mt_ESgc4YBw-a':'比例与百分数的词语','mt_iEXqN48w3x':'增减、原值与利息'
 });
 
+// Source-goal checked UI corrections. Never rewrite source titles, IDs or mathematical edges.
+// Searches continue to include the original source titles for compatibility.
+export const NODE_DISPLAY_CORRECTIONS=Object.freeze({
+  "mt_doX1BhmFgk": "认识百分之一",
+  "mt_kdWoAel3Zl": "认识千分之一",
+  "mt_e4V6hvcuEJ": "读懂几何图形的标记",
+  "mt_U9sme87C32": "按指定精度取近似数",
+  "mt_hImiKNiaNh": "运算与几何结构的联系",
+  "mt_DW2D1c0fKx": "发现并利用数学结构",
+  "mt_FAXjFkgG6X": "数位、运算与图形中的结构",
+  "mt_HY8Yycu_rz": "准确使用数学词汇和符号",
+  "mt_dXq9VWm31W": "在情境、图形与算式间转换",
+  "mt_2ESZh70NyS": "说明并检验多步数学推理",
+  "mt_9KmVWCuh5_": "连接情境、图表与代数表示",
+  "mt_ZOJ6EbdPOb": "分数倍与简单速率问题",
+  "mt_FnUJMXPUZX": "用分数与倍数解决不等分问题",
+  "mt_HJA2Oz-Zh1": "分数乘整数的应用题",
+  "mt_3VmBdlAeOZ": "连接数轴、情境与算式",
+  "mt_CUmjcE7W6c": "连接分数、小数与百分数的表示",
+  "mt_5HV4mbgSGH": "用数轴表示测量应用题",
+  "mt_2VpdPjvewx": "用小数换算测量单位",
+  "mt_QaYfeVL-0C": "估算与逆运算验算",
+  "mt_VVn1IXjkzn": "四舍五入的误差与上下界",
+  "mt_KFKUR_gBg_": "长方形的角与边长关系",
+  "mt_SsLWS_APM7": "综合分数问题"
+});
+
 export function makeKnowledgeNames(atlas){
   const count=new Map();for(const n of atlas.nodes)count.set(n.title,(count.get(n.title)||0)+1);
   const exact={'mt_nvdpxAJTBG':'按2、5、10跳着数','mt_gNUE4B3vuk':'整数、小数与分数的四则运算','mt_hlGKg5M7qJ':'运算、分数与图形的结构','mt_iQYPw8bMfN':'用数学表示测量、钱和时间'};
-  return new Map(atlas.nodes.map(n=>[n.id,exact[n.id]|| (count.get(n.title)>1&&NODE_QUALIFIERS[n.id]?`${n.title} · ${NODE_QUALIFIERS[n.id]}`:n.title)]));
+  return new Map(atlas.nodes.map(n=>[n.id,NODE_DISPLAY_CORRECTIONS[n.id]||exact[n.id]|| (count.get(n.title)>1&&NODE_QUALIFIERS[n.id]?`${n.title} · ${NODE_QUALIFIERS[n.id]}`:n.title)]));
 }
