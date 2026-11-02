@@ -8,7 +8,7 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('eighteen exact-source explanation samples preserve identities and distinct concept goals',()=>{
+test('twenty-two exact-source explanation samples preserve identities and distinct concept goals',()=>{
   assert.equal(samples.length,22);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
