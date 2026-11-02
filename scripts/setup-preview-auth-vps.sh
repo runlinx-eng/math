@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$\{EUID}" -ne 0 ]]; then
+if [[ "${EUID}" -ne 0 ]]; then
   echo "Run this script as root on the VPS." >&2
   exit 1
 fi
@@ -15,15 +15,15 @@ BACKUP="/etc/nginx/sites-available/math-preview.before-shared-login.$(date +%Y%m
 trap 'rm -rf "$TMP_DIR"' EXIT
 
 echo "Downloading reviewed shared-login files from main..."
-curl -fsSL "$\{RAW_BASE}/deploy/vps/preview-auth.py" -o "$\{TMP_DIR}/preview-auth.py"
-curl -fsSL "$\{RAW_BASE}/deploy/vps/preview-auth.service" -o "$\{TMP_DIR}/preview-auth.service"
-curl -fsSL "$\{RAW_BASE}/deploy/vps/preview-login.html" -o "$\{TMP_DIR}/preview-login.html"
-curl -fsSL "$\{RAW_BASE}/deploy/vps/nginx-math-preview.conf.example" -o "$\{TMP_DIR}/math-preview"
+curl -fsSL "${RAW_BASE}/deploy/vps/preview-auth.py" -o "${TMP_DIR}/preview-auth.py"
+curl -fsSL "${RAW_BASE}/deploy/vps/preview-auth.service" -o "${TMP_DIR}/preview-auth.service"
+curl -fsSL "${RAW_BASE}/deploy/vps/preview-login.html" -o "${TMP_DIR}/preview-login.html"
+curl -fsSL "${RAW_BASE}/deploy/vps/nginx-math-preview.conf.example" -o "${TMP_DIR}/math-preview"
 
 install -d -o root -g root -m 755 /opt/math-preview-auth /var/www/math-preview-login
-install -m 644 "$\{TMP_DIR}/preview-auth.py" /opt/math-preview-auth/preview-auth.py
-install -m 644 "$\{TMP_DIR}/preview-login.html" /var/www/math-preview-login/index.html
-install -m 644 "$\{TMP_DIR}/preview-auth.service" /etc/systemd/system/math-preview-auth.service
+install -m 644 "${TMP_DIR}/preview-auth.py" /opt/math-preview-auth/preview-auth.py
+install -m 644 "${TMP_DIR}/preview-login.html" /var/www/math-preview-login/index.html
+install -m 644 "${TMP_DIR}/preview-auth.service" /etc/systemd/system/math-preview-auth.service
 
 echo
 echo "Set the shared preview password. You may reuse the current preview password."
@@ -36,7 +36,7 @@ if [[ "$password" != "$password_confirm" ]]; then
   echo "Passwords do not match. No Nginx changes have been made." >&2
   exit 1
 fi
-if [[ "$\{#password}" -lt 12 ]]; then
+if [[ "${#password}" -lt 12 ]]; then
   unset password password_confirm
   echo "Use at least 12 characters. No Nginx changes have been made." >&2
   exit 1
@@ -78,12 +78,12 @@ if ! systemctl is-active --quiet math-preview-auth.service; then
 fi
 
 if [[ -f /etc/nginx/sites-available/math-preview ]]; then
-  cp -a /etc/nginx/sites-available/math-preview "$\{BACKUP}"
+  cp -a /etc/nginx/sites-available/math-preview "${BACKUP}"
 fi
-install -m 644 "$\{TMP_DIR}/math-preview" /etc/nginx/sites-available/math-preview
+install -m 644 "${TMP_DIR}/math-preview" /etc/nginx/sites-available/math-preview
 if ! nginx -t; then
-  if [[ -f "$\{BACKUP}" ]]; then
-    cp -a "$\{BACKUP}" /etc/nginx/sites-available/math-preview
+  if [[ -f "${BACKUP}" ]]; then
+    cp -a "${BACKUP}" /etc/nginx/sites-available/math-preview
     nginx -t && systemctl reload nginx
   fi
   echo "Nginx validation failed; previous configuration was restored." >&2
@@ -107,4 +107,4 @@ echo "=== Ports (443 must remain Xray; 8443 must remain Nginx) ==="
 ss -ltnp | grep -E ':(22|80|443|8443|8765)\b' || true
 echo
 echo "The old htpasswd file is retained as a rollback fallback but is no longer referenced by Nginx."
-echo "Previous Nginx configuration backup: $\{BACKUP}"
+echo "Previous Nginx configuration backup: ${BACKUP}"
