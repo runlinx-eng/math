@@ -328,6 +328,48 @@ function conceptVisualHtml(kind){
       '<text x="54" y="113">(0,1)</text><text x="124" y="65">(1,3)</text><text x="194" y="19">(2,5)</text>'+
       '</svg><figcaption>每个点都满足同一个关系式 y＝2x＋1；横坐标 x 对应纵坐标 y，三个点落在同一条直线上。</figcaption></figure></details>';
   }
+  if(kind==='ratio-bar-model'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 118" role="img" aria-label="30张贴纸按2比3分成5个相等单位，第一份占2格得到12张，第二份占3格得到18张">'+
+      '<text x="110" y="19" text-anchor="middle">第一份：2份</text><text x="210" y="19" text-anchor="middle">第二份：3份</text>'+
+      '<rect x="70" y="30" width="40" height="42" fill="#dfb477" stroke="#74897f"/><rect x="110" y="30" width="40" height="42" fill="#dfb477" stroke="#74897f"/>'+
+      '<rect x="150" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/><rect x="190" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/><rect x="230" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/>'+
+      '<text x="110" y="94" text-anchor="middle">12张</text><text x="210" y="94" text-anchor="middle">18张</text>'+
+      '</svg><figcaption>5 格大小相同，每格 6 张：前 2 格是 12 张，后 3 格是 18 张。</figcaption></figure></details>';
+  }
+  if(kind==='venn-two-sets'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 320 190" role="img" aria-label="30名学生的韦恩图：只喜欢足球10人，两项都喜欢6人，只喜欢板球8人，两项都不喜欢6人">'+
+      '<rect x="12" y="10" width="296" height="166" rx="5" fill="none" stroke="#74897f"/>'+
+      '<circle cx="112" cy="92" r="58" fill="#dfb477" fill-opacity=".42" stroke="#b18a50" stroke-width="2"/>'+
+      '<circle cx="208" cy="92" r="58" fill="#a8c5d6" fill-opacity=".48" stroke="#688ba0" stroke-width="2"/>'+
+      '<text x="95" y="25" text-anchor="middle">喜欢足球</text><text x="225" y="25" text-anchor="middle">喜欢板球</text><text x="292" y="25" text-anchor="end">共30人</text>'+
+      '<text x="78" y="98" text-anchor="middle">10</text><text x="160" y="98" text-anchor="middle">6</text><text x="242" y="98" text-anchor="middle">8</text>'+
+      '<text x="160" y="164" text-anchor="middle">都不喜欢：6</text>'+
+      '</svg><figcaption>交叠处的 6 人同时属于两组；两个圆合起来有 24 人，圆外还有 6 人。</figcaption></figure></details>';
+  }
+  if(kind==='multiplication-array'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 184" role="img" aria-label="3行4列的排列方阵，共12个圆点；3乘4等于12，12除以3等于4">'+
+      '<text x="160" y="17" text-anchor="middle">每行 4 个</text><text x="10" y="82">3 行</text>'+
+      '<g fill="#dfb477" stroke="#9a794c" stroke-width="1">'+
+      '<circle cx="78" cy="42" r="11"/><circle cx="123" cy="42" r="11"/><circle cx="168" cy="42" r="11"/><circle cx="213" cy="42" r="11"/>'+
+      '<circle cx="78" cy="82" r="11"/><circle cx="123" cy="82" r="11"/><circle cx="168" cy="82" r="11"/><circle cx="213" cy="82" r="11"/>'+
+      '<circle cx="78" cy="122" r="11"/><circle cx="123" cy="122" r="11"/><circle cx="168" cy="122" r="11"/><circle cx="213" cy="122" r="11"/>'+
+      '</g><text x="150" y="164" text-anchor="middle">3×4＝12　12÷3＝4</text>'+
+      '</svg><figcaption>3 行、每行 4 个，共 12 个；已知总数和行数，也能反过来求每行数量。</figcaption></figure></details>';
+  }
+  if(kind==='area-distributive-model'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 180" role="img" aria-label="一个高3、宽4加2的长方形分成两个部分，左边面积3乘4等于12，右边面积3乘2等于6，总面积18">'+
+      '<text x="120" y="25" text-anchor="middle">4</text><text x="210" y="25" text-anchor="middle">2</text><text x="42" y="88">3</text>'+
+      '<rect x="60" y="38" width="120" height="90" fill="#dfb477" fill-opacity=".65" stroke="#74897f" stroke-width="1.5"/>'+
+      '<rect x="180" y="38" width="60" height="90" fill="#a8c5d6" fill-opacity=".7" stroke="#74897f" stroke-width="1.5"/>'+
+      '<path d="M90 38V128 M120 38V128 M150 38V128 M210 38V128 M60 68H240 M60 98H240" fill="none" stroke="#74897f" stroke-width=".8"/>'+
+      '<text x="120" y="88" text-anchor="middle">12</text><text x="210" y="88" text-anchor="middle">6</text>'+
+      '<text x="150" y="158" text-anchor="middle">3×(4＋2)＝12＋6＝18</text>'+
+      '</svg><figcaption>把大长方形分成两块，面积相加；括号里的 4 和 2 都要乘以高度 3。</figcaption></figure></details>';
+  }
   return '';
 }
 function conceptExplanationHtml(id){
