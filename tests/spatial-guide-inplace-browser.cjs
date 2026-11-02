@@ -30,8 +30,47 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   check(await page.locator('[data-action="guide-step"][data-step="1"]').isDisabled(),'cannot skip the first on-map action');
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'01-forest.png')});
+  // The guided panorama remains inspectable, but non-target knowledge and
+  // themes are locked to this task. No click may exit the guide implicitly.
+  const lockedTheme=page.locator('.space-label.theme[aria-disabled="true"]:visible').first();
+  check(await lockedTheme.count()>0,'other themes remain visible but locked');
+  const initialGuide=await snap();
+  await lockedTheme.evaluate(el=>el.click());
+  check((await snap()).guide?.step===0&&samePose(await snap(),initialGuide),
+    'clicking a non-target theme does not change the guide or camera');
+  const backgroundId=await page.evaluate(()=>mathSpace.snapshot().visibleNodes
+    .find(key=>key!=='node:mt_WcfaSfVT33'));
+  check(!!backgroundId,'a background knowledge point remains present');
+  await page.evaluate(key=>{
+    const el=[...document.querySelectorAll('.space-label.node')].find(e=>e.dataset.key===key);
+    el?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'}));
+  },backgroundId);
+  await page.waitForTimeout(80);
+  const hover=await page.evaluate(()=>mathSpace.hoverPreview());
+  check(hover.key===backgroundId&&hover.edges.length===0&&hover.related.length===0,
+    'hovering a locked knowledge point reveals its name without foreign relations');
+  check(await page.locator('.space-label.node').filter({has:page.locator('span')}).count()>0,
+    'knowledge labels remain in the DOM for readable hover');
+  const lockedName=page.locator('.space-label.node').filter({has:page.locator('span')});
+  const hoveredNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
+  check(await hoveredNode.isVisible()&&await hoveredNode.getAttribute('aria-disabled')==='true',
+    'background hover shows its actual name but keeps click permission locked');
+  await hoveredNode.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('dblclick',{bubbles:true}));});
+  check((await snap()).guide?.step===0&&!(await snap()).journeyOpen&&samePose(await snap(),initialGuide),
+    'click and double-click on locked background cannot open learning or change guide');
+  await hoveredNode.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'})));
+  await page.waitForTimeout(50);
+  check((await snap()).guide?.step===0,'leaving locked hover restores the existing guide');
+
   await visit();await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
   check((await target().count())===1,'guide points to the next source location');
+  const actionable=await page.locator('.space-label.node.guide-target').first();
+  check(await actionable.getAttribute('aria-disabled')==='false',
+    'current task knowledge is clickable');
+  const other=page.locator('.space-label.node.guide-locked').first();
+  check(await other.getAttribute('aria-disabled')==='true',
+    'non-task knowledge is explicitly locked');
+
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'02-first-connection.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isDisabled(),'finding start alone is not a full source connection');
@@ -73,6 +112,10 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   state=await snap();
   check(state.guide===null&&state.selected?.startsWith('node:')&&state.visibleNodes.length===537,'choosing a real neighbor returns to ordinary free exploration on the same map');
   check(samePose(initial,state),'choosing an in-view guide target does not jump camera');
+  const ordinaryNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
+  check(await ordinaryNode.getAttribute('aria-disabled')===null,
+    'all knowledge points regain ordinary click permission after guide exit');
+
   await page.locator('[data-action="guide-start"]').click();
   state=await snap();
   check(state.guide?.step===0&&samePose(initial,state),'restarting guide remains in place');
