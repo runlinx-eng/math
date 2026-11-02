@@ -1,7 +1,7 @@
 # 数学树 · 概念解释覆盖台账
 
-日期：2026-11-02  
-分支：`feat/language-concept-audit-v1`  
+日期：2026-11-02\
+分支：`feat/language-concept-audit-v1`\
 来源：`dist/data/math.json`、`dist/concept-explanations.js`
 
 ## 当前范围
