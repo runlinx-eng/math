@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('twenty-two exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,22);
+test('twenty-six exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,26);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -50,6 +50,19 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').example,/40 立方厘米.*80 平方厘米/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/1:50.*实际 50 个相同的长度单位.*统一单位/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').example,/9×50＝450 厘米.*4.5 米/);
+});
+test('four representational samples connect visual structure to the mathematical relationship',()=>{
+  assert.equal(conceptHelpFor('mt_ePXg_XyCKU').visual,'ratio-bar-model');
+  assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/30 张贴纸.*5 格.*每格 30÷5＝6 张.*12 张和 18 张/);
+  assert.match(conceptHelpFor('mt_ePXg_XyCKU').counterexample,/不同长度/);
+  assert.equal(conceptHelpFor('mt_eSv_w46u6H').visual,'venn-two-sets');
+  assert.match(conceptHelpFor('mt_eSv_w46u6H').example,/10＋6＋8＝24 人/);
+  assert.match(conceptHelpFor('mt_eSv_w46u6H').counterexample,/不能.*重复算两次/);
+  assert.equal(conceptHelpFor('mt_GRWwTDZ3wD').visual,'multiplication-array');
+  assert.match(conceptHelpFor('mt_GRWwTDZ3wD').example,/3×4＝12.*12÷3＝4/);
+  assert.equal(conceptHelpFor('mt_AQo4u7O4sM').visual,'area-distributive-model');
+  assert.match(conceptHelpFor('mt_AQo4u7O4sM').definition,/a×\(b＋c\)＝a×b＋a×c/);
+  assert.match(conceptHelpFor('mt_AQo4u7O4sM').counterexample,/3×2/);
 });
 test('meta samples explain strategy selection, verification, and investigation limits',()=>{
   assert.match(conceptHelpFor('mt_QaYfeVL-0C').definition,/四舍五入.*大致范围.*逆运算.*合理/);
