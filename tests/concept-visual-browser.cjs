@@ -1,4 +1,4 @@
-// Thirty-nine-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
+// Forty-five-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -22,7 +22,10 @@ const ids=[
   ['dot-plot','mt_JRzXQl9M7c'],['histogram','mt_oderfUBZPw'],
   ['box-plot','mt_8VjmxR1yfw'],['cube-net','mt_vnJEztczji'],
   ['coordinates','mt_i5_HnoFOYw'],['transformations','mt_SH7QgFl8-v'],
-  ['triangle-parallelogram-area','mt_ML5t7n2-U8'],['polygon-area-decomposition','mt_i2-QaXbyzB']
+  ['triangle-parallelogram-area','mt_ML5t7n2-U8'],['polygon-area-decomposition','mt_i2-QaXbyzB'],
+  ['cardinality','mt_dmNvjroCPT'],['teen-numbers','mt_xmmgAzxe5j'],
+  ['compare-fractions','mt_IfEgu0X449'],['multiplication-repeated-addition','mt_PZ909yPrEC'],
+  ['positional-language','mt_qeZYF6HZ4o'],['sorting-data','mt_ylXdiVRAYv']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -36,7 +39,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34],ids[35],ids[36],ids[37],ids[38]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34],ids[35],ids[36],ids[37],ids[38],ids[39],ids[40],ids[41],ids[42],ids[43],ids[44]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
