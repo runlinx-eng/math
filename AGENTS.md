@@ -9,6 +9,7 @@
 - 当前执行阶段、待办：`docs/EXECUTION-PLAN.md`。
 - 已有技术验证及其边界：`docs/VALIDATION.md`。
 - 操作、运行与维护：`README.md`。
+- VPS 静态预览、发布和回滚：`docs/deployment/vps.md`；部署不得引入云端学习记录或账号系统。
 - 数学源数据、内容/覆盖映射：`vendor/upstream.json`、`docs/phase5/COVERAGE.md` 和相关源码；源 ID、数学关系及学习记录不得凭视觉造型随意改写。
 - 旧版详细代理规则：`docs/history/AGENTS-pre-workflow-20261102.md`，**仅作历史查阅，不是当前执行规范**。
 
