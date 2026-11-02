@@ -50,4 +50,9 @@ test('auxiliary links show as direct association but never extend a hard prerequ
 test('unknown selected IDs do not invent coordinates or nodes',()=>{
  const view=buildFocusFilter(atlas,ids,'nonexistent','both','all');
  assert.equal(view.links.length,0);assert.equal(view.ids.size,0);
+ assert.ok(view.distances instanceof Map);assert.equal(view.distances.size,0);
+ const thinking=atlas.nodes.find(n=>n.domainId==='thinking');
+ const unlocated=buildFocusFilter(atlas,ids,thinking.id,'both','all');
+ assert.equal(unlocated.ids.size,0);assert.equal(unlocated.links.length,0);
+ assert.ok(unlocated.distances instanceof Map);assert.equal(unlocated.distances.size,0);
 });
