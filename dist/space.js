@@ -304,6 +304,17 @@ function themeOverview(o){
   </div>`;
 }
 
+function conceptVisualHtml(kind){
+  if(kind!=='equal-fraction-bars')return '';
+  return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+    '<figure class="concept-visual"><svg viewBox="0 0 240 112" role="img" aria-label="两个等长整体，上面二等分涂一份，下面四等分涂两份，涂色长度一样">'+
+    '<text x="4" y="25">1/2</text><rect x="42" y="8" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+    '<rect x="42" y="8" width="90" height="26" fill="#dfb477"/><path d="M132 8V34" stroke="#74897f"/>'+
+    '<text x="4" y="76">2/4</text><rect x="42" y="59" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+    '<rect x="42" y="59" width="90" height="26" fill="#dfb477"/>'+
+    '<path d="M87 59V85 M132 59V85 M177 59V85" stroke="#74897f"/>'+
+    '</svg><figcaption>整体相同、涂色长度相同：1/2＝2/4。只改变分法，不改变所表示的数。</figcaption></figure></details>';
+}
 function conceptExplanationHtml(id){
   const c=conceptHelpFor(id);
   if(!c)return '';
@@ -316,7 +327,7 @@ function conceptExplanationHtml(id){
   const content=modes.map(([label,parts])=>
     '<details class="concept-mode"><summary>'+esc(label)+'</summary>'+
     parts.map(part=>'<p>'+esc(part)+'</p>').join('')+'</details>'
-  ).join('');
+  ).join('')+conceptVisualHtml(c.visual);
   return '<section class="concept-help" aria-label="理解数学概念">'+
     '<p class="concept-term">数学概念 · '+esc(c.formal)+'</p>'+
     '<p class="concept-definition">'+esc(c.definition)+'</p>'+
