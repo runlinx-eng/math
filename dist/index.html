@@ -12,7 +12,7 @@
     <svg id="work-tethers" class="work-tethers" aria-hidden="true"></svg>
     <div id="workspaces" class="workspaces"></div>
     <aside id="focus-card" class="focus-card" aria-label="选中对象" hidden></aside>
-    <aside id="guide-panel" class="guide-panel" aria-label="认识数学知识怎样相连" hidden></aside>
+    <aside id="guide-panel" class="guide-panel" aria-label="发现数学知识之间的联系" hidden></aside>
     <div id="guide-cues" class="guide-cues" aria-label="地图上的下一处" hidden></div>
   </main>
   <section id="journey-surface" class="journey-surface" aria-label="学习操作现场" hidden><header><span>学习现场</span><button type="button" data-action="close-journey">回到空间 ×</button></header><iframe id="journey-frame" title="分一份，换个名字 · 操作现场" src="about:blank"></iframe></section>
@@ -55,7 +55,7 @@
       <button type="button" data-action="edge-display" data-edge-display="all" aria-pressed="false">含辅助</button>
       <small id="network-edge-hint" aria-live="polite">只简化背景；选中后仍显示全部直接联系</small>
       <button type="button" data-action="overview-shells" aria-pressed="false" hidden title="只显示空间上紧凑、与其他节点较少混杂的真实知识群">试看知识群外壳</button>
-      <button type="button" data-action="guide-start" class="guide-entry">认识这张图</button>
+      <button type="button" data-action="guide-start" class="guide-entry">发现知识的联系</button>
     </div>
     <details><summary>图形与标记</summary><p>颜色对应五个主题；点主题可以聚焦，查找可以进入分组和知识。靠近后出现更多名称，选中或停在一个点上，会出现它的活动图形。</p><p>背景“轮廓”只显示部分真实关键联系，不代表唯一的主干；切换可看全部关键联系或加上辅助联系。选中节点时仍可查看所有直接联系。</p><p>选中节点可以查看直接联系、追溯关键基础或查看关键后续。橙线指向这里，蓝线指向后续；虚线表示辅助联系。追溯中的数字是隔了几条联系，不改变知识点的位置，也不规定学习路线。</p><p>圆环表示节点任务完成；金线表示共同任务完成。方形是未完现场，菱形是待续问题。</p></details>
   </aside>
@@ -70,12 +70,12 @@
   <aside id="continue-card" class="continue-card" aria-label="继续学习" hidden></aside>
   <div class="lens-indicator"><span>远</span><span class="meter"><i id="distance-meter"></i></span><span>近</span></div>
   <footer class="bottom-bar">
-    <div class="overall-progress"><span>整体进度</span><progress id="overall-progress" max="12" value="0" aria-label="已开放任务，完成 0 / 73"></progress><b id="overall-count">0 / 73</b></div>
+    <div class="overall-progress"><span>学习任务进度</span><progress id="overall-progress" max="12" value="0" aria-label="已开放任务，完成 0 / 73"></progress><b id="overall-count">0 / 73</b></div>
     <span id="today-progress" class="today-progress" hidden></span><div class="save-status"><button type="button" data-action="questions">问题</button><button type="button" data-action="question">留到下次</button><button type="button" id="trail-count" data-action="journal">记录</button><span id="offline-status" hidden>本机保存</span></div>
   </footer>
   <section id="search-popover" class="popover search-popover" aria-label="查找知识" hidden>
     <div class="popover-heading"><strong id="search-label">想靠近哪个想法？</strong><button type="button" data-action="close-popover" class="plain-button" aria-label="关闭查找">×</button></div>
-    <label for="search-input" class="sr-only">查找主题、知识簇或知识点</label><input id="search-input" type="search" autocomplete="off" placeholder="例如：分数、面积、对称…">
+    <label for="search-input" class="sr-only">查找主题、知识群或知识点</label><input id="search-input" type="search" autocomplete="off" placeholder="例如：分数、面积、对称…">
     <div id="search-results" class="search-results"></div><div class="search-footer"><span id="search-count"></span><button type="button" id="search-more" data-action="search-more" class="plain-button" hidden>再显示一些</button></div>
   </section>
   <section id="questions-popover" class="popover questions-popover" aria-label="留下的问题" hidden></section>
