@@ -623,7 +623,7 @@ body.guide-mode[data-world="network"][data-network-version="53"] .space-label.no
 /* Guide uses the same source map but a different action permission: inspect
    any label, interact only with the current task targets. No UI masking. */
 body.guide-mode .space-label.guide-locked{
-  cursor:help;
+  cursor:default; /* Same hover information as Full View; click is task-locked. */
 }
 body.guide-mode[data-world="network"][data-network-version="53"] .space-label.node.guide-locked:not(.guide-visited):not(.guide-current){
   color:#6f8277;
