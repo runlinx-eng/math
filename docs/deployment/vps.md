@@ -53,14 +53,15 @@ sudo install -d -o www-data -g www-data -m 755 /var/www/certbot/.well-known/acme
 sudo certbot certonly --webroot -w /var/www/certbot -d math.664357788.xyz -m <your-email> --agree-tos
 ```
 
-3. 将 `deploy/vps/nginx-math-preview.conf.example` 覆盖到同一站点配置，确认 `server_name` 和证书路径正确，再执行 `sudo nginx -t && sudo systemctl reload nginx`。
-4. 创建预览密码文件，限制读取权限：
+3. 创建预览密码文件，限制读取权限：
 
 ```sh
 sudo htpasswd -cB /etc/nginx/.htpasswd-math-preview preview
 sudo chown root:www-data /etc/nginx/.htpasswd-math-preview
 sudo chmod 640 /etc/nginx/.htpasswd-math-preview
 ```
+
+4. 将 `deploy/vps/nginx-math-preview.conf.example` 覆盖到同一站点配置，确认 `server_name` 和证书路径正确，再执行 `sudo nginx -t && sudo systemctl reload nginx`。
 
 5. 配置证书续期后重载 Nginx：
 
