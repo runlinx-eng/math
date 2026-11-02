@@ -370,6 +370,60 @@ function conceptVisualHtml(kind){
       '<text x="150" y="158" text-anchor="middle">3×(4＋2)＝12＋6＝18</text>'+
       '</svg><figcaption>把大长方形分成两块，面积相加；括号里的 4 和 2 都要乘以高度 3。</figcaption></figure></details>';
   }
+  if(kind==='dot-plot'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="20名学生读书本数的点图，每个点代表1名学生，5本出现6次，7本没有出现">'+
+      '<text x="170" y="16" text-anchor="middle">每个点代表 1 名学生</text><path d="M16 150H324" stroke="#74897f" stroke-width="1.5"/>'+
+      '<g fill="#dfb477" stroke="#9a794c" stroke-width=".8">'+
+      '<circle cx="24" cy="140" r="4.5"/><circle cx="48" cy="140" r="4.5"/>'+
+      '<circle cx="72" cy="140" r="4.5"/><circle cx="72" cy="127" r="4.5"/>'+
+      '<circle cx="96" cy="140" r="4.5"/><circle cx="96" cy="127" r="4.5"/><circle cx="96" cy="114" r="4.5"/><circle cx="96" cy="101" r="4.5"/>'+
+      '<circle cx="120" cy="140" r="4.5"/><circle cx="120" cy="127" r="4.5"/>'+
+      '<circle cx="144" cy="140" r="4.5"/><circle cx="144" cy="127" r="4.5"/><circle cx="144" cy="114" r="4.5"/><circle cx="144" cy="101" r="4.5"/><circle cx="144" cy="88" r="4.5"/><circle cx="144" cy="75" r="4.5"/>'+
+      '<circle cx="168" cy="140" r="4.5"/><circle cx="216" cy="140" r="4.5"/><circle cx="264" cy="140" r="4.5"/><circle cx="312" cy="140" r="4.5"/>'+
+      '</g>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle">'+
+      '<text x="24" y="170">0</text><text x="48" y="170">1</text><text x="72" y="170">2</text><text x="96" y="170">3</text><text x="120" y="170">4</text><text x="144" y="170">5</text><text x="168" y="170">6</text><text x="192" y="170">7</text><text x="216" y="170">8</text><text x="240" y="170">9</text><text x="264" y="170">10</text><text x="288" y="170">11</text><text x="312" y="170">12</text>'+
+      '</g><text x="170" y="196" text-anchor="middle">读书本数（本）</text>'+
+      '</svg><figcaption>5 本上方有 6 个点，表示 6 名学生各读了 5 本；7 的位置留空，表示没有人读 7 本。</figcaption></figure></details>';
+  }
+  if(kind==='histogram'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 320 200" role="img" aria-label="30名学生身高直方图，五个连续区间的频数分别为3、7、10、6、4，区间宽度均为10厘米">'+
+      '<path d="M30 24V150H292" fill="none" stroke="#74897f" stroke-width="1.5"/><text x="8" y="18">人数</text>'+
+      '<g fill="#a8c5d6" stroke="#688ba0" stroke-width="1">'+
+      '<rect x="30" y="126" width="52" height="24"/><rect x="82" y="94" width="52" height="56"/><rect x="134" y="70" width="52" height="80"/><rect x="186" y="102" width="52" height="48"/><rect x="238" y="118" width="52" height="32"/>'+
+      '</g>'+
+      '<g fill="#394c42" font-size="12" text-anchor="middle">'+
+      '<text x="56" y="120">3</text><text x="108" y="88">7</text><text x="160" y="64">10</text><text x="212" y="96">6</text><text x="264" y="112">4</text>'+
+      '<text x="30" y="170">130</text><text x="82" y="170">140</text><text x="134" y="170">150</text><text x="186" y="170">160</text><text x="238" y="170">170</text><text x="290" y="170">180</text>'+
+      '</g><text x="160" y="195" text-anchor="middle">身高（厘米）</text>'+
+      '</svg><figcaption>区间连续，所以长条相连；150 厘米归入 150≤h＜160 这一组。</figcaption></figure></details>';
+  }
+  if(kind==='box-plot'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 330 190" role="img" aria-label="箱线图五数概括为3、6、9、14、21，中位数9，四分位距8，极差18">'+
+      '<text x="165" y="16" text-anchor="middle">五数概括：3、6、9、14、21</text>'+
+      '<path d="M58 78H91 M181 78H259 M58 62V94 M259 62V94" fill="none" stroke="#74897f" stroke-width="2"/>'+
+      '<rect x="91" y="52" width="90" height="52" fill="#dfb477" fill-opacity=".55" stroke="#9a794c" stroke-width="2"/>'+
+      '<path d="M125 52V104" stroke="#9a794c" stroke-width="3"/>'+
+      '<path d="M24 118H304" stroke="#74897f" stroke-width="1.5"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle">'+
+      '<text x="58" y="48">3</text><text x="91" y="42">6</text><text x="125" y="42">9</text><text x="181" y="42">14</text><text x="259" y="48">21</text>'+
+      '<text x="24" y="136">0</text><text x="80" y="136">5</text><text x="136" y="136">10</text><text x="192" y="136">15</text><text x="248" y="136">20</text><text x="304" y="136">25</text>'+
+      '</g><text x="165" y="172" text-anchor="middle">四分位距＝14－6＝8；极差＝21－3＝18</text>'+
+      '</svg><figcaption>箱体表示中间一半数据；须线长短表示数值跨度，不表示这一段有更多或更少的人。</figcaption></figure></details>';
+  }
+  if(kind==='cube-net'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 260 180" role="img" aria-label="一种正方体展开图，由四个正方形排成一行，第二个正方形上方和下方各连接一个正方形">'+
+      '<g fill="#dfb477" fill-opacity=".65" stroke="#74897f" stroke-width="1.5">'+
+      '<rect x="30" y="70" width="40" height="40"/><rect x="70" y="70" width="40" height="40"/><rect x="110" y="70" width="40" height="40"/><rect x="150" y="70" width="40" height="40"/><rect x="70" y="30" width="40" height="40"/><rect x="70" y="110" width="40" height="40"/>'+
+      '</g><g fill="#394c42" font-size="14" font-weight="650" text-anchor="middle">'+
+      '<text x="50" y="95">1</text><text x="90" y="95">2</text><text x="130" y="95">3</text><text x="170" y="95">4</text><text x="90" y="55">5</text><text x="90" y="135">6</text>'+
+      '</g><text x="130" y="170" text-anchor="middle">六个面折起后组成正方体</text>'+
+      '</svg><figcaption>每个正方形对应一个面；折起后六个面各出现一次，不能互相重叠。</figcaption></figure></details>';
+  }
   return '';
 }
 function conceptExplanationHtml(id){
