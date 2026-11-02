@@ -324,10 +324,13 @@ function conceptExplanationHtml(id){
     ['自己试一试',[c.tryIt]],
     ['为什么',[c.why]]
   ];
-  const content=modes.map(([label,parts])=>
+  const textModes=modes.map(([label,parts])=>
     '<details class="concept-mode"><summary>'+esc(label)+'</summary>'+
     parts.map(part=>'<p>'+esc(part)+'</p>').join('')+'</details>'
-  ).join('')+conceptVisualHtml(c.visual);
+  );
+  // The visual aid follows the plain-language option, so it is discoverable
+  // without scrolling past every written explanation.
+  const content=textModes[0]+conceptVisualHtml(c.visual)+textModes.slice(1).join('');
   return '<section class="concept-help" aria-label="理解数学概念">'+
     '<p class="concept-term">数学概念 · '+esc(c.formal)+'</p>'+
     '<p class="concept-definition">'+esc(c.definition)+'</p>'+
