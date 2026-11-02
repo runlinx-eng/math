@@ -20,7 +20,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);};
  const errors=[],checks=[];
  try{
   const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
-  page.on('pageerror',error=>errors.push(String(error)));
+  page.on('pageerror',error=>{const detail=error.stack||String(error);errors.push(detail);console.error('RENAME_PAGE_ERROR',detail);});
   await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
   const initialPositions=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
