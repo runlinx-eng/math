@@ -116,3 +116,28 @@ test('measurement and geometry explanations preserve their mathematical boundari
     assert.match(explanation.text,required,'math boundary should remain in UI copy');
   }
 });
+
+
+// Protect the conditions behind mathematical examples, not only their wording.
+test('arithmetic relation explanations preserve valid domain and operation rules',()=>{
+  const cases=[
+    ['mt_AabJisinfi','mt_1PAWhRhpdg',/4÷五分之一＝20.*商乘除数/],
+    ['mt_LpSuPgL31x','mt_0u4KLbvBa1',/不剩余.*偶数.*剩下一个.*奇数.*0也属于偶数/],
+    ['mt_QhFEDyIwSO','mt_3qrCtdoVAU',/等式两边.*保持相等.*不为0/],
+    ['mt_4Km38F4L-6','mt_4K1dr204Hi',/a\/b.*非零.*3\/8＝0\.375/],
+    ['mt_WsM4EmdOLe','mt_4Km38F4L-6',/17÷5＝3余2.*3又2\/5.*看情境/],
+    ['mt_MCu_SNg_OW','mt_FvEq4heNBx',/被除数＝除数×商＋余数.*余数非负.*小于除数/],
+    ['mt_GzcJEVkNRn','mt_AQo4u7O4sM',/a×\(b＋c\).*a×b＋a×c/],
+    ['mt_TqDq6jyOmL','mt_Fl7b8q9pI1',/非负.*小于5.*大于或等于5.*3\.4.*3\.5/],
+    ['mt_PZ909yPrEC','mt_C9ZfT-4cgn',/3×4.*4×3.*交换律.*除法一般不能交换/],
+    ['mt_3qrCtdoVAU','mt_1VmTUxBrNd',/直角三角形.*斜边.*a²＋b²＝c².*a²＝c²－b²/],
+    ['mt_QqG6IdmTSE','mt_EDgw64OmfA',/相邻数位.*10倍.*非零数字.*除以10.*十分之一/]
+  ];
+  for(const [prerequisiteId,topicId,condition] of cases){
+    const edge=math.edges.find(e=>e.prerequisiteId===prerequisiteId&&e.topicId===topicId);
+    assert.ok(edge,'source relation exists: '+prerequisiteId+'>'+topicId);
+    const explanation=relationExplanation(edge);
+    assert.equal(explanation.reviewed,true);
+    assert.match(explanation.text,condition,'retain necessary calculation assumptions');
+  }
+});
