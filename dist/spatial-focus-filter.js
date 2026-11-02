@@ -4,7 +4,7 @@ export const FOCUS_DIRECTIONS=['both','before','after'];
 export const FOCUS_DEPTHS=['1','2','all'];
 export function buildFocusFilter(atlas,domainIds,selected,direction='both',depth='1'){
   const ids=domainIds instanceof Set?domainIds:new Set(domainIds);
-  if(!ids.has(selected))return {ids:new Set(),links:[],counts:{nodes:0,edges:0,hidden:0}};
+  if(!ids.has(selected))return {ids:new Set(),links:[],distances:new Map(),counts:{nodes:0,edges:0,hidden:0}};
   const dir=FOCUS_DIRECTIONS.includes(direction)?direction:'both';
   const range=FOCUS_DEPTHS.includes(String(depth))?String(depth):'1';
   const source=atlas.edges.filter(e=>ids.has(e.prerequisiteId)&&ids.has(e.topicId));
