@@ -177,7 +177,7 @@ function activateGuide(index,{record=true,animate=true,fit=true,rememberView=fal
   if(scene.guideFocus?.step!==index||!guideVisible)guideWalkSeen=new Set();
   guideVisible=true;guideSuspended=false;closePopovers();
   scene.setGuideFocus(guideSteps,index,{animate,fit});
-  scene.setGuideTargets(guideTargets().map(t=>t.key));
+  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);
   setHash(guideSteps[index].overview?null:'node:'+guideSteps[index].anchor);
   renderFocus();renderGuide();renderLocation();scheduleSave();
 }
@@ -191,7 +191,7 @@ function visitGuideTarget(key){
   }
   guideWalkSeen.add(key);
   if(index===0){activateGuide(1);return true;}
-  scene.setGuideTargets(guideTargets().map(t=>t.key));
+  scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);
   renderGuide();scheduleSave();
   return true;
 }
@@ -199,7 +199,7 @@ function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;c
 function returnFromLesson(){const resumeGuide=guideSuspended&&learning.daily.guide?.active&&scene.relationshipMap&&guideSteps[learning.daily.guide.step];if(!resumeGuide)guideSuspended=false;const stableKnowledge=scene.relationshipMap&&!resumeGuide&&space.byKey.get(scene.selected)?.kind==='node';const selected=scene.selected;closeJourney(!resumeGuide&&!stableKnowledge);if(resumeGuide)activateGuide(learning.daily.guide.step,{record:false});else if(stableKnowledge){scene.select(selected);scene.setRelations('source');setHash(selected);renderFocus();renderLocation();scheduleSave();}}
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
-function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network',inPlace=false}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible&&visitGuideTarget(key))return;if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace)scene.select(key);else scene.focus(key,{animate});setHash(key);
+function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network',inPlace=false}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible){visitGuideTarget(key);return;}if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace)scene.select(key);else scene.focus(key,{animate});setHash(key);
   if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
   else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
@@ -411,7 +411,7 @@ function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split(
 document.addEventListener('click',event=>{
   const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
   const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
-  if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
+  if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
   else if(action==='search')openSearch();else if(action==='list-pack')openSearch(id);else if(action==='search-more'){searchLimit+=24;renderSearch();}
   else if(action==='close-popover')closePopovers();
   else if(action==='deselect'&&scene.relationshipMap)overview();else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
@@ -490,7 +490,7 @@ $('#focus-card').addEventListener('scroll',()=>{if(scene?.global)scheduleSave();
 $('#search-input').addEventListener('input',()=>{searchLimit=24;renderSearch();});
 $('#search-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('#search-results button')?.click();});
 $('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{readLearning();if(readBlocked)throw new Error('原始存储无法读取，暂时不能覆盖或合并。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');const incoming=parseBackup(await file.text(),atlas),combined=validate(merge(learning,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(learning)));writeStored(KEY,JSON.stringify(combined));learning=combined;refreshLearning();toast('备份已合并，已有作品和提示历史已保留。');}catch(e){toast(e.message);}finally{event.target.value='';}});
-window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key));setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
+window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideWalkSeen]);setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
   if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
     if(e.data.type==='math-space:lesson-height'){
@@ -540,7 +540,7 @@ async function boot(){try {
   $('[data-action="switch-world"]').textContent=worldLayout==='network'?'原有空间':'关系全图';
   $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}" aria-pressed="false"`)).join(''):'';
   if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
-  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id),onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
+  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>{if(guideVisible)return;return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
   const defaultMode=worldLayout==='network'?'rotate':'pan';scene.setMode(defaultMode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===defaultMode)));let stored=null;try{stored=parseView(JSON.parse(readStored(worldLayout==='network'?(chosenNetworkVersion===RELATIONSHIP_VERSION?RELATIONSHIP_VIEW_KEY:NETWORK_VIEW_KEY):VIEW_KEY)),space);if(!stored&&worldLayout==='network'&&chosenNetworkVersion===49){const old=parseView(JSON.parse(readStored(LEGACY_NETWORK_VIEW_KEY)),space);if(old&&(old.journeyOpen||old.panels.length))stored=old;}}catch{}
   const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null,explicitOverview=route[0]==='atlas'&&!route[1];
   const due=pendingQuestions(learning)[0],last=learning.daily.continuation,sameDayActive=due&&stored?.journeyOpen&&stored.questionId===due.id&&last?.questionId===due.id&&dayKey(last.at)===dayKey();
