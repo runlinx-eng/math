@@ -7,24 +7,10 @@ on:
       - 'dist/space.js'
       - 'dist/space.css'
       - 'dist/index.html'
-      - 'docs/language/**'
-      - 'tests/language-terms.test.mjs'
-      - 'dist/exploration.js'
-      - 'dist/navigation-copy.js'
-      - 'dist/concept-explanations.js'
-      - 'tests/concept-explanations.test.mjs'
-      - 'tests/concept-visual-browser.cjs'
-      - 'tests/navigation-copy.test.mjs'
-      - 'tests/relationship-wording.test.mjs'
-      - 'tests/relationship-wording-browser.cjs'
-      - 'tests/node-name-audit.test.mjs'
-      - 'tests/node-name-browser.cjs'
-      - 'dist/spatial-names.js'
       - 'tests/spatial-overview.test.mjs'
       - 'tests/spatial-overview-structure.test.mjs'
       - 'tests/spatial-overview-browser.cjs'
       - 'tests/spatial-focus-transition-browser.cjs'
-      - 'tests/spatial-focus-semantics-browser.cjs'
       - 'tests/spatial-focus-semantics-browser.cjs'
       - 'tests/spatial-focus-filter-browser.cjs'
       - 'tests/spatial-guide-inplace-browser.cjs'
@@ -34,6 +20,11 @@ on:
       - 'tests/learning-workspace-browser.cjs'
       - 'dist/learning/learn.css'
       - 'dist/learning/learn.js'
+      - 'AGENTS.md'
+      - 'docs/DEVELOPMENT-WORKFLOW.md'
+      - 'docs/spatial-learning/INTERACTION-RULES.md'
+      - 'docs/language/**'
+      - 'README.md'
       - 'tests/spatial-focus-filter.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
@@ -52,12 +43,10 @@ jobs:
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
           node --check dist/space.js
-          node --check dist/navigation-copy.js
-          node --check dist/concept-explanations.js
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
       - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/language-terms.test.mjs tests/navigation-copy.test.mjs tests/concept-explanations.test.mjs tests/node-name-audit.test.mjs tests/relationship-wording.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
@@ -79,9 +68,6 @@ jobs:
           node tests/spatial-overview-browser.cjs
           node tests/spatial-focus-transition-browser.cjs
           node tests/spatial-focus-semantics-browser.cjs
-          node tests/concept-visual-browser.cjs
-          node tests/node-name-browser.cjs
-          node tests/relationship-wording-browser.cjs
           node tests/spatial-focus-filter-browser.cjs
           node tests/spatial-guide-inplace-browser.cjs
           node tests/spatial-unified-map-browser.cjs
@@ -97,9 +83,6 @@ jobs:
             verification/overview-readability-v1/
             verification/spatial-focus-transition/
             verification/spatial-focus-semantics/
-            verification/concept-language-pilot/
-            verification/node-name-review/
-            verification/language-direction/
             verification/spatial-focus-filter/
             verification/spatial-guide-inplace/
             verification/spatial-unified-map/

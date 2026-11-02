@@ -1,0 +1,157 @@
+name: Pull request required checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  required-checks:
+    name: required-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Determine whether browser regression is relevant
+        id: scope
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
+            echo "run_browser=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          changed_files="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")"
+          if printf '%s\n' "$changed_files" | grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/)'; then
+            echo "run_browser=true" >> "$GITHUB_OUTPUT"
+            echo "Browser regression is required for this change."
+          else
+            echo "run_browser=false" >> "$GITHUB_OUTPUT"
+            echo "Browser regression is not relevant to the changed files."
+          fi
+
+      - name: Check patch whitespace and merge markers
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          else
+            git diff --check HEAD^ HEAD
+          fi
+          if git grep -n -E '^(<<<<<<< |=======|>>>>>>> )' -- ':!docs/history/**'; then
+            echo "Unresolved merge-conflict markers found"
+            exit 1
+          fi
+
+      - name: Check runtime module syntax
+        run: |
+          node --check dist/spatial-scene.js
+          node --check dist/spatial-relationship.js
+          node --check dist/spatial-model.js
+          node --check dist/space.js
+          node --check dist/learning/learn.js
+          node --check dist/spatial-focus-filter.js
+
+      - name: Run active Node.js unit and invariant tests
+        shell: bash
+        run: |
+          test_files=(
+            tests/spatial-relationship.test.mjs
+            tests/spatial-overview.test.mjs
+            tests/spatial-overview-structure.test.mjs
+            tests/spatial-focus-filter.test.mjs
+            tests/deployment-static.test.mjs
+          )
+
+          for candidate in \
+            tests/concept-explanations.test.mjs \
+            tests/concept-coverage-consistency.test.mjs \
+            tests/language-terms.test.mjs \
+            tests/navigation-copy.test.mjs \
+            tests/node-name-audit.test.mjs \
+            tests/relationship-wording.test.mjs
+          do
+            if [[ -f "$candidate" ]]; then
+              test_files+=("$candidate")
+            fi
+          done
+
+          node --test "${test_files[@]}"
+
+      - name: Check deployment script syntax
+        run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
+
+      - name: Install isolated Chromium test runtime
+        if: steps.scope.outputs.run_browser == 'true'
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+
+      - name: Run browser regression suite
+        if: steps.scope.outputs.run_browser == 'true'
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          ready=false
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [[ "$ready" != true ]]; then
+            cat /tmp/math-http.log
+            echo "Local preview server did not become ready."
+            exit 1
+          fi
+
+          for test_file in \
+            tests/spatial-overview-browser.cjs \
+            tests/spatial-focus-transition-browser.cjs \
+            tests/spatial-focus-semantics-browser.cjs \
+            tests/spatial-focus-filter-browser.cjs \
+            tests/spatial-guide-inplace-browser.cjs \
+            tests/spatial-unified-map-browser.cjs \
+            tests/spatial-theme-overview-browser.cjs \
+            tests/spatial-local-focus-browser.cjs \
+            tests/learning-workspace-browser.cjs \
+            tests/concept-visual-browser.cjs \
+            tests/node-name-browser.cjs \
+            tests/relationship-wording-browser.cjs
+          do
+            if [[ -f "$test_file" ]]; then
+              echo "::group::${test_file}"
+              node "$test_file"
+              echo "::endgroup::"
+            fi
+          done
+
+      - name: Preserve browser screenshots and verification evidence
+        if: always() && steps.scope.outputs.run_browser == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-required-checks-browser-evidence
+          path: |
+            verification/overview-readability-v1/
+            verification/spatial-focus-transition/
+            verification/spatial-focus-semantics/
+            verification/spatial-focus-filter/
+            verification/spatial-guide-inplace/
+            verification/spatial-unified-map/
+            verification/spatial-theme-overview/
+            verification/learning-workspace/
+          if-no-files-found: warn
