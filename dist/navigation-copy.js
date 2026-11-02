@@ -37,3 +37,14 @@ export function applyNavigationCopy(atlas){
   for(const group of atlas.packs||[]){const copy=GROUP_COPY[group.id];if(copy)Object.assign(group,copy);}
   return atlas;
 }
+
+// Direction of each original math edge: from source prerequisite to target topic.
+// "Related" does not mean every edge is a required lesson or a prescribed path.
+export const RELATION_COPY=Object.freeze({
+  before:'相关基础',
+  after:'相关后续',
+  hard:'关键基础',
+  soft:'辅助联系'
+});
+export const relationHeading=side=>RELATION_COPY[side==='before'?'before':'after'];
+export const relationStrength=strength=>strength==='hard'?RELATION_COPY.hard:RELATION_COPY.soft;
