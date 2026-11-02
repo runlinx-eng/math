@@ -6,6 +6,7 @@ import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.j
 import {makeKnowledgeNames} from './spatial-names.js';
 import {relationExplanation} from './spatial-reasons.js';
 import {buildStructureGuide,linkedSuggestions,guideNextTargets,guideStepReady,GUIDE_ID} from './spatial-guide.js';
+import {placeGuideCue} from './spatial-labels.js';
 import {KEY,OLD_KEY,fresh,validate,migrateLegacy,merge,nodeState,evidenceSummary,PROGRESS,completionClass,completionSummary,backup,parseBackup,now} from './exploration-core.js';
 import {ACTIVITIES,activityIds} from './exploration-content.js';
 import {ROUTE_ID,ROUTE_TITLE,ROUTE_STEPS,routeStep} from './journey-model.js';
@@ -89,11 +90,12 @@ function positionGuide(){
 }
 // An on-map cue follows the projection of an unchanged source point; it is not a
 // new graph edge, route coordinate or camera instruction.
+let lastGuideCueMarkup='';
 function renderGuideCues(){
   const layer=$('#guide-cues');
   layer.hidden=!guideVisible||journeyOpen||!scene?.relationshipMap;
-  if(layer.hidden){layer.replaceChildren();return;}
-  const panel=$('#guide-panel').getBoundingClientRect(),targets=guideTargets(),shown=[];
+  if(layer.hidden){layer.replaceChildren();lastGuideCueMarkup='';return;}
+  const panel=$('#guide-panel').getBoundingClientRect(),targets=guideTargets(),shown=[],projections=new Map();
   for(const target of targets){
     const object=space.byKey.get(target.key);
     if(!object||!scene.canLocate(object))continue;
@@ -101,15 +103,41 @@ function renderGuideCues(){
     const clear=p.visible&&p.x>50&&p.x<innerWidth-90&&p.y>155&&p.y<innerHeight-120
       &&!(p.x>panel.left-45&&p.x<panel.right+75&&p.y>panel.top-40&&p.y<panel.bottom+65);
     if(clear){
-      shown.push(`<button type="button" class="guide-cue" data-action="guide-visit" data-key="${esc(target.key)}" style="left:${p.x.toFixed(1)}px;top:${p.y.toFixed(1)}px" aria-label="${esc(target.label)}：${esc(displayTitle(object))}"><span class="guide-cue-action">${esc(target.label)}</span><strong>${esc(displayTitle(object))}</strong></button>`);
+      projections.set(target.key,{x:p.x,y:p.y,visible:true});
+      shown.push(`<button type="button" class="guide-cue" data-action="guide-visit" data-key="${esc(target.key)}" aria-label="${esc(target.label)}：${esc(displayTitle(object))}"><span class="guide-cue-action">${esc(target.label)}</span><strong>${esc(displayTitle(object))}</strong></button>`);
     }else{
       const cx=Math.max(panel.right+100,Math.min(innerWidth-135,Math.max(p.x||0,0))),cy=Math.max(185,Math.min(innerHeight-155,Math.max(p.y||0,0)));
       const dx=p.x-cx,dy=p.y-cy,arrow=Math.abs(dx)>Math.abs(dy)?dx<0?'←':'→':dy<0?'↑':'↓';
-      shown.push(`<span class="guide-cue guide-cue-offscreen" style="left:${cx.toFixed(1)}px;top:${cy.toFixed(1)}px" aria-label="目标在当前可视区域外">${arrow} ${esc(target.label)} · 手动移动地图</span>`);
+      projections.set(target.key,{x:cx,y:cy,visible:false});
+      shown.push(`<span class="guide-cue guide-cue-offscreen" data-key="${esc(target.key)}" aria-label="目标在当前可视区域外">${arrow} ${esc(target.label)} · 手动移动地图</span>`);
     }
   }
-  const html=shown.join('');
-  if(layer.innerHTML!==html)layer.innerHTML=html;
+  // Compare the content, not innerHTML after positioning. The positions are
+  // updated in place on camera movement, so clicking is not repeatedly reset.
+  const html='<svg class="guide-cue-leaders" aria-hidden="true"></svg>'+shown.join('');
+  if(lastGuideCueMarkup!==html){layer.innerHTML=html;lastGuideCueMarkup=html;}
+  const occupied=[{x:panel.left,y:panel.top,w:panel.width,h:panel.height}],tethers=[];
+  for(const cue of layer.querySelectorAll('.guide-cue')){
+    const point=projections.get(cue.dataset.key);
+    if(!point)continue;
+    const rect=placeGuideCue({x:point.x,y:point.y,w:cue.offsetWidth,h:cue.offsetHeight,
+      viewport:{w:innerWidth,h:innerHeight},occupied});
+    if(!rect){cue.hidden=true;continue;}
+    cue.hidden=false;
+    cue.style.left=`${rect.x.toFixed(1)}px`;
+    cue.style.top=`${rect.y.toFixed(1)}px`;
+    occupied.push(rect);
+    if(point.visible){
+      // Dotted neutral tethers indicate only where the on-screen instruction
+      // belongs; they do NOT represent mathematical prerequisite edges.
+      const tx=Math.max(rect.x,Math.min(rect.x+rect.w,point.x));
+      const ty=Math.max(rect.y,Math.min(rect.y+rect.h,point.y));
+      if(Math.hypot(tx-point.x,ty-point.y)>8)
+        tethers.push(`<path d="M ${tx.toFixed(1)} ${ty.toFixed(1)} L ${point.x.toFixed(1)} ${point.y.toFixed(1)}"/>`);
+    }
+  }
+  const leaders=layer.querySelector('.guide-cue-leaders');
+  if(leaders){leaders.setAttribute('viewBox',`0 0 ${innerWidth} ${innerHeight}`);leaders.innerHTML=tethers.join('');}
 }
 function renderGuide(){
   const panel=$('#guide-panel');
