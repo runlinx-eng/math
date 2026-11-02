@@ -663,3 +663,23 @@ body.guide-mode .space-label.guide-locked:focus-visible{
   outline:2px solid #8faa99;
   outline-offset:2px;
 }
+
+/* Six-node language pilot: precise anchor remains visible, alternative explanations on demand. */
+body[data-world="network"] .focus-card[data-kind="node"] .concept-help{
+  border-top:1px solid #e2e8dc;margin:9px 0 6px;padding-top:7px;
+}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-term{
+  font-size:11px;color:#536a52;font-weight:650;margin:2px 0 3px;line-height:1.5;
+}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-definition{
+  font-size:12px;color:#354637;line-height:1.65;margin:3px 0 6px;
+}
+body[data-world="network"] .concept-alternatives>summary{
+  font-size:12px;color:#37636b;cursor:pointer;padding:6px 0;
+}
+body[data-world="network"] .concept-modes{padding:2px 0 5px 9px;border-left:2px solid #e0e8e4}
+body[data-world="network"] .concept-mode{padding:3px 0}
+body[data-world="network"] .concept-mode>summary{font-size:12px;color:#49635b;cursor:pointer}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-mode p{
+  margin:5px 0 7px;font-size:12px;color:#536052;line-height:1.65;
+}
