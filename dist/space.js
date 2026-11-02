@@ -120,6 +120,7 @@ function renderGuideCues(){
   for(const cue of layer.querySelectorAll('.guide-cue')){
     const point=projections.get(cue.dataset.key);
     if(!point)continue;
+    cue.hidden=false; // Re-measure if a prior narrow viewport could not fit it.
     const rect=placeGuideCue({x:point.x,y:point.y,w:cue.offsetWidth,h:cue.offsetHeight,
       viewport:{w:innerWidth,h:innerHeight},occupied});
     if(!rect){cue.hidden=true;continue;}
