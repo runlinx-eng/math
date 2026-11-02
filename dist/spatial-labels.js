@@ -33,12 +33,15 @@ export function placeGuideCue({x,y,w,h,viewport,occupied=[]}){
     const r={x:left,y:upper,w,h};
     if(fits(r)&&!occupied.some(o=>overlaps(r,o,10)))return r;
   }
-  // Fallback is inside the reachable viewport and stays interactive even
-  // when many targets share one projected location; never stack them there.
-  for(let cy=top;cy<=viewport.h-bottom-h;cy+=h+14)
-    for(let cx=margin;cx<=viewport.w-right-w;cx+=w+14){
+  // Prefer a nearby free location before considering the rest of the
+  // screen: a prompt should still visually belong to its source node.
+  const options=[];
+  for(let cy=top;cy<=viewport.h-bottom-h;cy+=Math.max(18,h/2))
+    for(let cx=margin;cx<=viewport.w-right-w;cx+=Math.max(25,w/2)){
       const r={x:cx,y:cy,w,h};
-      if(!occupied.some(o=>overlaps(r,o,10)))return r;
+      if(!occupied.some(o=>overlaps(r,o,10)))
+        options.push({r,d:(cx+w/2-x)**2+(cy+h/2-y)**2});
     }
-  return null;
+  options.sort((a,b)=>a.d-b.d||a.r.y-b.r.y||a.r.x-b.r.x);
+  return options[0]?.r||null;
 }
