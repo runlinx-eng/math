@@ -458,7 +458,7 @@ function conceptVisualHtml(kind){
       '<text x="12" y="88" fill="#394c42" font-size="10">高 h</text><text x="66" y="137" fill="#394c42" font-size="11">底 b</text>'+
       '<path d="M145 88H176 M169 82L176 88L169 94" fill="none" stroke="#74897f" stroke-width="1.8"/>'+
       '<rect x="190" y="55" width="100" height="65" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
-      '<path d="M265 55L290 55L265 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M265 120L290 55L290 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
       '<path d="M190 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M190 111H199V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
       '<text x="178" y="88" fill="#394c42" font-size="10">h</text><text x="230" y="137" fill="#394c42" font-size="11">底 b</text>'+
       '<text x="170" y="158" text-anchor="middle" fill="#394c42" font-size="11">平行四边形：b×h　　三角形：b×h÷2</text>'+
