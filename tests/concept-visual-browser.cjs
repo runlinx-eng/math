@@ -1,4 +1,4 @@
-// Eighteen-node UI review: five source types and all eleven domains seeded, progressive explanation, and map invariants.
+// Twenty-two-node UI review: five source types, eleven domains, and four procedural patterns; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -11,7 +11,9 @@ const ids=[
   ['arithmetic-symbols','mt_8RmpkDxT9L'],['fraction-notation','mt_vKcxX6iNOA'],
   ['correlation','mt_8atyuvPUZc'],['simultaneous-equations','mt_mqgu72aCMz'],
   ['rounding-estimation','mt_QaYfeVL-0C'],['statistical-investigation','mt_SHVyE1CLUa'],
-  ['solid-shapes','mt_Qcp2d_kuta'],['ratio','mt_yK51ZnKA8m']
+  ['solid-shapes','mt_Qcp2d_kuta'],['ratio','mt_yK51ZnKA8m'],
+  ['measuring-length','mt_KaF0SQvaiu'],['calculating-percentages','mt_PNSyfH56eQ'],
+  ['surface-area-volume','mt_Sij9ByyHq6'],['scale-drawings','mt_1badik7iKJ']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -25,7 +27,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
