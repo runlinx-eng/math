@@ -1,4 +1,4 @@
-// Thirty-one-node UI review: five source types, eleven domains, procedural patterns, and seven exact visuals; progressive explanation and map invariants.
+// Thirty-five-node UI review: five source types, eleven domains, procedural patterns, and eleven exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -18,7 +18,9 @@ const ids=[
   ['multiplication-array','mt_GRWwTDZ3wD'],['area-distributive-model','mt_AQo4u7O4sM'],
   ['making-ten','mt_m1W6nTQJ2b'],['long-multiplication','mt_q9EaJc2FP8'],
   ['formula-substitution','mt_Jvg8X0N5u0'],['compound-units','mt_kLQOzZYrd5'],
-  ['mean-absolute-deviation','mt_ZfpeI1CFyP']
+  ['mean-absolute-deviation','mt_ZfpeI1CFyP'],
+  ['dot-plot','mt_JRzXQl9M7c'],['histogram','mt_oderfUBZPw'],
+  ['box-plot','mt_8VjmxR1yfw'],['cube-net','mt_vnJEztczji']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -32,7 +34,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
@@ -75,7 +77,9 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     const visualLabels={
       'mt_Ep7TDFuYUa':'二等分','mt_FP-mjXaq3B':'二等分','mt_-3udyo6VyB':'y=2x+1',
       'mt_ePXg_XyCKU':'2比3','mt_eSv_w46u6H':'韦恩图',
-      'mt_GRWwTDZ3wD':'3行4列','mt_AQo4u7O4sM':'宽4加2'
+      'mt_GRWwTDZ3wD':'3行4列','mt_AQo4u7O4sM':'宽4加2',
+      'mt_JRzXQl9M7c':'点图','mt_oderfUBZPw':'直方图',
+      'mt_8VjmxR1yfw':'箱线图','mt_vnJEztczji':'展开图'
     };
     const expectedVisual=Object.hasOwn(visualLabels,id);
     check(types.includes('看图理解')===expectedVisual,tag+': only nodes with a real visual show the diagram entry');
