@@ -26,3 +26,7 @@ jobs:
           fi
       - name: Check core mathematical relationship invariants
         run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
+      - name: Check static deployment assets and script syntax
+        run: |
+          bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
+          node --test tests/deployment-static.test.mjs
