@@ -40,7 +40,7 @@ test('all 45 samples receive an AI second-pass review without overstating accept
  }
 });
 
-test('85 research gaps match taxonomy and plan, with correct phase and B01 review accounting',()=>{
+test('85 research gaps match taxonomy and plan, with correct phase and B01/B02 review accounting',()=>{
  assert.equal(researchFalse.size,85);
  assert.equal(gapIds.size,85);
  assert.deepEqual(researchFalse,gapIds);
@@ -56,16 +56,25 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01 revie
  assert.equal(researchTriage.summary.phaseCounts[5],76);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInThisPass,7);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB01,2);
- assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,9);
- assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,2);
+ assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB02,1);
+ assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,10);
+ assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,3);
+ assert.equal(researchTriage.summary.remainingUnverifiedKnowledgeMapNodesWithoutSamples,73);
+ assert.equal(researchTriage.summary.remainingUnverifiedMathThinkingNodes,2);
+ assert.deepEqual(researchTriage.summary.researchBatchesExternallyReviewed,['B01','B02']);
  assert.equal(researchTriage.summary.nodesWithSourceCoverageRevisions,7);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,9);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,76);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,10);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,75);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_not_independently_math_validated').length,7);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B01_2026-11-03').length,2);
- assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,76);
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B02_2026-11-03').length,1);
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,75);
  const b01Ids=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS']);
  for(const id of b01Ids){const record=researchTriage.records.find(item=>item.id===id);assert.ok(record,id);assert.equal(record.externalSourcesVerified,true);assert.equal(record.explanationSamplePresent,false);assert.equal(record.nextAction,'await_authorization_before_explanation_drafting');}
+ const b02Record=researchTriage.records.find(item=>item.id==='mt_NSC3LT_-ch');
+ assert.ok(b02Record);assert.equal(b02Record.externalSourcesVerified,true);assert.equal(b02Record.explanationSamplePresent,false);
+ assert.equal(b02Record.researchVerificationStatus,'external_sources_reviewed_B02_2026-11-03');
+ assert.equal(b02Record.nextAction,'await_authorization_before_explanation_drafting');assert.equal(b02Record.externalSourceIds.length,6);
  const phaseBreakdown={};
  for(const record of researchTriage.records){const phase=String(record.phase);phaseBreakdown[phase]??={knowledge_map:0,math_thinking:0};phaseBreakdown[phase][record.scope]++;}
  assert.deepEqual(researchTriage.summary.phaseBreakdownByScope,phaseBreakdown);
@@ -104,4 +113,19 @@ test('seven research-gap samples have external evidence records and actual expla
  assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].example,/3 厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].tryIt,/甲的平均绝对偏差为 8 分.*乙的平均绝对偏差为 21 分/);
  assert.match(CONCEPT_EXPLANATIONS['mt_JRzXQl9M7c'].example,/数值 3 出现 4 次/);assert.match(CONCEPT_EXPLANATIONS['mt_oderfUBZPw'].example,/150≤h<160.*6 人.*10 人/);
  assert.match(CONCEPT_EXPLANATIONS['mt_8VjmxR1yfw'].example,/相同的五数概括/);assert.match(CONCEPT_EXPLANATIONS['mt_i2-QaXbyzB'].example,/48 平方厘米.*24 平方厘米.*24 平方厘米/);
+});
+
+ 
+test('B02 capacity research gate is documented without drafting an explanation',()=>{
+ const b02=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B02.json',import.meta.url),'utf8'));
+ assert.equal(b02.batchId,'B02');
+ assert.equal(b02.summary.nodesReviewed,1);
+ assert.equal(b02.summary.externalSourcesCatalogued,6);
+ assert.equal(b02.summary.explanationDraftsCreated,0);
+ const node=b02.records.find(item=>item.id==='mt_NSC3LT_-ch');
+ assert.ok(node);
+ assert.equal(node.sourceIds.length,6);
+ assert.match(node.coverageAudit.join(' '),/30 mL, 300 mL and 3 L/);
+ assert.match(node.coverageAudit.join(' '),/500 mL/);
+ assert.match(node.relationshipBoundary,/No new dependency/);
 });
