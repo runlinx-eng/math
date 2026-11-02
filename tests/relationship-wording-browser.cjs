@@ -72,8 +72,8 @@ const check=(value,label)=>{if(!value)throw Error(label);};
   check(relation.includes('相关基础')&&relation.includes('相关后续'),'secondary node detail preserves relationship directions');
   await alternate.screenshot({path:path.join(output,'02-secondary-directions.png')});
   check(errors.length===0,'no browser runtime errors');
-  fs.writeFileSync(path.join(output,'results.json'),JSON.stringify({passed:9,errors,childTrial:false},null,2));
-  console.log(JSON.stringify({passed:9,errors:[],childTrial:false}));
+  fs.writeFileSync(path.join(output,'results.json'),JSON.stringify({passed:17,errors,childTrial:false},null,2));
+  console.log(JSON.stringify({passed:17,errors:[],childTrial:false}));
  }catch(e){fs.writeFileSync(path.join(output,'results.json'),JSON.stringify({errors,failed:String(e)},null,2));console.error(e.stack);process.exitCode=1;}
  finally{for(const page of pages)await page.close().catch(()=>{});await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
