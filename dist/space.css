@@ -618,3 +618,48 @@ body.guide-mode[data-world="network"][data-network-version="53"] .space-label.no
   body.guide-mode .guide-cue{max-width:138px;padding:7px 9px}
   body.guide-mode .guide-cue .guide-cue-name{font-size:10.5px}
 }
+
+
+/* Guide uses the same source map but a different action permission: inspect
+   any label, interact only with the current task targets. No UI masking. */
+body.guide-mode .space-label.guide-locked{
+  cursor:help;
+}
+body.guide-mode[data-world="network"][data-network-version="53"] .space-label.node.guide-locked:not(.guide-visited):not(.guide-current){
+  color:#6f8277;
+  background:#fffefa82;
+  border-color:transparent;
+  box-shadow:none;
+  font-weight:500;
+  opacity:.72;
+}
+body.guide-mode[data-world="network"][data-network-version="53"] .space-label.node.guide-locked.hovered{
+  color:#385c4a;
+  background:#fffefae8;
+  border:1px solid #dce6dd;
+  opacity:1;
+  font-weight:600;
+}
+body.guide-mode[data-world="network"][data-network-version="53"] .space-label.node.guide-visited{
+  color:#55796a;
+  background:#f4f8f1e8;
+  border-color:#d0e0d3;
+  opacity:.87;
+}
+body.guide-mode[data-world="network"][data-network-version="53"] .space-label.node.guide-current{
+  color:#285747;
+  background:#fffefaF5;
+  border-color:#82ac94;
+  box-shadow:0 0 0 2px #7eb39318;
+  opacity:1;
+  font-weight:720;
+}
+body.guide-mode .space-label.theme.guide-locked{opacity:.82}
+body.guide-mode .space-label.guide-target{
+  cursor:pointer;
+  opacity:1;
+}
+body.guide-mode .space-label.guide-locked:focus-visible{
+  outline:2px solid #8faa99;
+  outline-offset:2px;
+}
