@@ -621,7 +621,7 @@ export class SpatialScene {
     if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
     layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     layer.style.opacity=String(opacity);
-    const paths=[];
+    const paths=[],guideEndpoints=new Map();
     for(const l of links){
       const curve=new THREE.QuadraticBezierCurve3(l.from,l.control,l.to);
       const start=this.project(curve.getPoint(.025)),mid=this.project(l.control),tip=this.project(curve.getPoint(.88));
@@ -629,18 +629,28 @@ export class SpatialScene {
       const isPreview=this.previewKey&&(l.fromKey===this.previewKey||l.toKey===this.previewKey);
       const fading=this.previewKey&&!isPreview;
       const stroke='#'+l.color.toString(16).padStart(6,'0');
-      const lineOpacity=fading?.12:l.muted?.40:l.soft?.66:this.guideFocus?.95:.84;
-      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?2.7:2;
+      const lineOpacity=fading?.12:l.muted?.33:l.soft?.66:this.guideFocus?.97:.84;
+      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?(l.muted?1.65:3.15):2;
+      if(this.guideFocus&&!l.muted&&!fading){
+        // Highlight the exact projected endpoints of existing source edges,
+        // not new waypoints or spatial coordinates.
+        for(const node of [l.from,l.to]){
+          const p=this.project(node),key=`${Math.round(p.x)}:${Math.round(p.y)}`;
+          if(p.visible&&!guideEndpoints.has(key))guideEndpoints.set(key,p);
+        }
+      }
       const dash=l.soft?'stroke-dasharray="4 5"':'';
       paths.push(`<path d="M ${start.x.toFixed(1)} ${start.y.toFixed(1)} Q ${mid.x.toFixed(1)} ${mid.y.toFixed(1)} ${tip.x.toFixed(1)} ${tip.y.toFixed(1)}" stroke="${stroke}" stroke-width="${width}" opacity="${lineOpacity}" ${dash}/>`);
       if(l.arrow&&!fading){
         const near=this.project(curve.getPoint(.83)),dx=tip.x-near.x,dy=tip.y-near.y,length=Math.hypot(dx,dy)||1;
-        const ux=dx/length,uy=dy/length,s=4.5;
+        const ux=dx/length,uy=dy/length,s=this.guideFocus?6:4.5;
         const lx=tip.x-ux*s-uy*s*.65,ly=tip.y-uy*s+ux*s*.65;
         const rx=tip.x-ux*s+uy*s*.65,ry=tip.y-uy*s-ux*s*.65;
         paths.push(`<path d="M ${lx.toFixed(1)} ${ly.toFixed(1)} L ${tip.x.toFixed(1)} ${tip.y.toFixed(1)} L ${rx.toFixed(1)} ${ry.toFixed(1)}" stroke="${stroke}" stroke-width="1.7" opacity="${lineOpacity}"/>`);
       }
     }
+    if(this.guideFocus)for(const p of guideEndpoints.values())
+      paths.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="6" fill="none" stroke="#33816f" stroke-width="1.8" opacity=".82"/>`);
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
