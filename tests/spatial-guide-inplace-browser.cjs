@@ -51,7 +51,6 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
     'hovering a locked knowledge point reveals its name without foreign relations');
   check(await page.locator('.space-label.node').filter({has:page.locator('span')}).count()>0,
     'knowledge labels remain in the DOM for readable hover');
-  const lockedName=page.locator('.space-label.node').filter({has:page.locator('span')});
   const hoveredNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
   check(await hoveredNode.isVisible()&&await hoveredNode.getAttribute('aria-disabled')==='true',
     'background hover shows its actual name but keeps click permission locked');
@@ -74,10 +73,25 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'02-first-connection.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isDisabled(),'finding start alone is not a full source connection');
+  const seenStart=page.locator('.space-label.node[data-key="node:mt_WcfaSfVT33"]');
+  check(await seenStart.getAttribute('aria-disabled')==='true'
+    &&await seenStart.evaluate(el=>el.classList.contains('guide-visited')),
+    'observed start becomes visible but locked once its task action is complete');
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isEnabled(),'following a source edge unlocks the next discovery');
   await page.locator('[data-action="guide-step"][data-step="2"]').click();
   state=await snap();
   check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
+  const pathBeforeHover=await page.locator('.spatial-focus-links path').count();
+  await page.evaluate(key=>{
+    const el=document.querySelector('.space-label.node[data-key="'+key+'"]');
+    el?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'}));
+  },backgroundId);
+  await page.waitForTimeout(80);
+  check((await snap()).guide?.step===2
+    &&await page.locator('.spatial-focus-links path').count()===pathBeforeHover,
+    'hovering a locked background knowledge point does not replace the current guided path');
+  await page.evaluate(key=>document.querySelector('.space-label.node[data-key="'+key+'"]')
+    ?.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'})),backgroundId);
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
   const cueText=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>({
     action:el.querySelector('.guide-cue-action')?.textContent?.trim(),
