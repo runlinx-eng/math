@@ -71,7 +71,23 @@ export const NODE_DISPLAY_CORRECTIONS=Object.freeze({
   "mt_QaYfeVL-0C": "估算与逆运算验算",
   "mt_VVn1IXjkzn": "四舍五入的误差与上下界",
   "mt_KFKUR_gBg_": "长方形的角与边长关系",
-  "mt_SsLWS_APM7": "综合分数问题"
+  "mt_SsLWS_APM7": "综合分数问题",
+  "mt_aivrWs6jrS": "乘法表与分数中的规律",
+  "mt_wh3UqnWsa7": "用阵列与加法解决乘除",
+  "mt_A-FyLLLLzy": "按规则生成数列与图形",
+  "mt_hCVPYlF-7Y": "整数幂与平方根、立方根",
+  "mt_i2F1nWxJjv": "用数轴表示不等式的解",
+  "mt_zMEvtigoM3": "根据问题选择数学表示与工具",
+  "mt_uDJY0X0hgo": "比较正负数、分数与小数",
+  "mt_PsylzZ9lHW": "在数轴上表示正负数、小数与分数",
+  "mt_ESgc4YBw-a": "比、比例与百分数的语言",
+  "mt_eKJG-0eC6D": "频数表与多种统计图",
+  "mt_skYly2Qm01": "比较与排列物体的长度",
+  "mt_89riIKwGYp": "用角的加减求未知角",
+  "mt_yGv8doDAmp": "比较平面与立体图形",
+  "mt_u5HkSxZECM": "统计数据与图表术语",
+  "mt_J339bO7qLe": "求数量的几分之几或百分之几",
+  "mt_4K1dr204Hi": "分数、小数与百分数互换"
 });
 
 export function makeKnowledgeNames(atlas){
