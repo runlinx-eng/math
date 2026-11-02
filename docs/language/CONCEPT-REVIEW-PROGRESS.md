@@ -1,7 +1,7 @@
 # 数学树全量文字质量优化 · 进度台账
 
-更新日期：2026-11-02  
-工作分支：`feat/language-concept-audit-v1`  
+更新日期：2026-11-02
+工作分支：`feat/language-concept-audit-v1`
 PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull/3)（Open / Draft，未合并）
 
 ## 一、项目范围与不变项
