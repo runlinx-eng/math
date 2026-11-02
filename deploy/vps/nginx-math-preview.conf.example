@@ -1,7 +1,33 @@
+# Math Explorer preview.
+# TCP 443 is intentionally not used: the existing Xray service owns it.
+
 server {
     listen 80;
     listen [::]:80;
-    server_name math-preview.example.com;
+    server_name math.664357788.xyz;
+    server_tokens off;
+
+    # Keep Let's Encrypt HTTP-01 renewal independent of the HTTPS listener.
+    location ^~ /.well-known/acme-challenge/ {
+        auth_basic off;
+        root /var/www/certbot;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 308 https://$host:8443$request_uri;
+    }
+}
+
+server {
+    listen 8443 ssl;
+    listen [::]:8443 ssl;
+    server_name math.664357788.xyz;
+
+    ssl_certificate /etc/letsencrypt/live/math.664357788.xyz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/math.664357788.xyz/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
 
     root /var/www/math-explorer-preview/current;
     index index.html;
@@ -13,21 +39,14 @@ server {
     add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
     add_header Cache-Control "no-cache" always;
 
-    # Keep the health endpoint minimal and public for deployment checks.
+    # Public, fixed response used only by the deployment health check.
     location = /health {
         auth_basic off;
         default_type application/json;
         return 200 '{"app":"math-explorer","status":"ok"}';
     }
 
-    # Let's Encrypt HTTP-01 challenge path.
-    location ^~ /.well-known/acme-challenge/ {
-        auth_basic off;
-        root /var/www/certbot;
-        try_files $uri =404;
-    }
-
-    # Password-protected preview. Create this file on the VPS; never commit it.
+    # All application routes and assets require the preview password.
     location / {
         auth_basic "Math Explorer preview";
         auth_basic_user_file /etc/nginx/.htpasswd-math-preview;
