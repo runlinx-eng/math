@@ -49,4 +49,11 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.match(nginx, /auth_basic_user_file \/etc\/nginx\/\.htpasswd-math-preview;/);
   assert.match(nginx, /try_files \$uri \$uri\/ =404;/);
   assert.match(nginx, /Cache-Control "no-cache"/);
+
+  const deploy = fs.readFileSync(path.join(root, '.github/workflows/deploy-vps.yml'), 'utf8');
+  const rollback = fs.readFileSync(path.join(root, '.github/workflows/rollback-vps.yml'), 'utf8');
+  for (const workflow of [deploy, rollback]) {
+    assert.match(workflow, /github\\.ref == 'refs\\/heads\\/main'/);
+    assert.match(workflow, /vars\\.VPS_DEPLOY_ENABLED == 'true'/);
+  }
 });
