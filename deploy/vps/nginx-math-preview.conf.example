@@ -1,0 +1,39 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name math-preview.example.com;
+
+    root /var/www/math-explorer-preview/current;
+    index index.html;
+    server_tokens off;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    add_header Cache-Control "no-cache" always;
+
+    # Keep the health endpoint minimal and public for deployment checks.
+    location = /health {
+        auth_basic off;
+        default_type application/json;
+        return 200 '{"app":"math-explorer","status":"ok"}';
+    }
+
+    # Let's Encrypt HTTP-01 challenge path.
+    location ^~ /.well-known/acme-challenge/ {
+        auth_basic off;
+        root /var/www/certbot;
+        try_files $uri =404;
+    }
+
+    # Password-protected preview. Create this file on the VPS; never commit it.
+    location / {
+        auth_basic "Math Explorer preview";
+        auth_basic_user_file /etc/nginx/.htpasswd-math-preview;
+        try_files $uri $uri/ =404;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+}
