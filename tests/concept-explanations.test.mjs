@@ -140,6 +140,7 @@ test('first-pass calibration closes identified source-scope gaps without claimin
   assert.match(conceptHelpFor('mt_8atyuvPUZc').definition,/最佳拟合线.*已有数据范围内/);
   assert.match(conceptHelpFor('mt_SHVyE1CLUa').definition,/报告出来.*结论的限制/);
   assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/化简.*6:9＝2:3/);
+  assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/商 a\/b.*多少倍.*y＝\(a\/b\)x/);
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').definition,/直棱柱的体积等于底面积乘高/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/实际长度求图上长度/);
   assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/12\/30＝2\/5/);
