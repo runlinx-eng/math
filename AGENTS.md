@@ -105,7 +105,7 @@ Authority and sources:
   the math projection and local classification without discarding source edges.
 
 Spatial update, 2026-10-31 onward: the default new relationship world uses coordinate
-version 53 and the current interface/cache version is 59. `spatial-relationship.js` and its generated data
+version 53 and the current interface/cache version is 60. `spatial-relationship.js` and its generated data
 import 537 source-ID-keyed positions from the selected full-graph prototype;
 the 808 displayed hard edges rise, and 272 soft edges retain their source type.
 The other 50 thinking nodes and 143 incident edges remain accessible in search,
@@ -206,7 +206,7 @@ labels align by their actual last digit. Preserve first guesses after wrong
 alignment; either original addend may be used for an addition inverse check.
 Written task completion does not establish handwriting or an independent paper
 algorithm. Method selection does not establish actual mental or calculator use.
-Keep sw.js, space.js and exploration.js cache versions synchronized (current v59).
+Keep sw.js, space.js and exploration.js cache versions synchronized (current v60).
 
 The v53 current map interaction is shared among overview, user zoom/pan/rotation, selected node, source-relationship filters and the five-step orientation. Always retain the 537 background nodes as softly dimmed context. Selecting a visible node, changing filter depth, entering guide, advancing guide, or deselecting must not automatically reframe or zoom; manual zoom controls remain usable in every map state. The explicit Home/归位 control alone reframes the entire atlas. A genuinely offscreen search result may pan into view without zoom. Bound extreme zoom-out using the source atlas; repair an unreadably tiny saved view only during startup. The selected detail card must fit inside the usable screen, including browsers with a left sidebar. Only opening an actual learning activity switches to an independent, height-responsive panel with map tools hidden. The current browser acceptance for this contract is `tests/spatial-unified-map-browser.cjs`, `tests/spatial-guide-inplace-browser.cjs`, `tests/spatial-focus-filter-browser.cjs`, and `tests/learning-workspace-browser.cjs`. Do not revive superseded no-zoom focused-map tests.
 
