@@ -67,8 +67,9 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     const types=await help.locator('.concept-mode > summary').allInnerTexts();
     check(types.includes('换个说法')&&types.includes('举例与反例')&&types.includes('自己试一试')&&types.includes('为什么'),
       tag+': four useful alternative text explanation routes remain available');
-    const expectedVisual=['mt_Ep7TDFuYUa','mt_FP-mjXaq3B'].includes(id);
-    check(types.includes('看图理解')===expectedVisual,tag+': only equivalent fractions show the exact-math diagram');
+    const visualIds=['mt_Ep7TDFuYUa','mt_FP-mjXaq3B','mt_-3udyo6VyB'];
+    const expectedVisual=visualIds.includes(id);
+    check(types.includes('看图理解')===expectedVisual,tag+': only nodes with a real visual show the diagram entry');
     if(expectedVisual){
       await help.locator('.concept-visual-mode > summary').click();
       const image=help.locator('.concept-visual svg');
@@ -76,8 +77,9 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       const info=await image.evaluate(svg=>({width:svg.getBoundingClientRect().width,
         accessibility:svg.getAttribute('aria-label'),
         inside:svg.getBoundingClientRect().right<=svg.closest('.focus-card').getBoundingClientRect().right+1}));
-      check(info.width>=150&&info.inside&&info.accessibility?.includes('二等分'),
-        tag+': same-whole fraction visual fits the card and has a textual description');
+      const labelNeedle=id==='mt_-3udyo6VyB'?'y=2x+1':'二等分';
+      check(info.width>=150&&info.inside&&info.accessibility?.includes(labelNeedle),
+        tag+': exact-math visual fits the card and has an accessible description');
     }else await help.locator('.concept-mode').first().locator('summary').click();
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
     check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===before,
