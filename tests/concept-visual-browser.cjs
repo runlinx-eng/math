@@ -115,6 +115,13 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       const labelNeedle=visualLabels[id];
       check(info.width>=150&&info.inside&&info.accessibility?.includes(labelNeedle),
         tag+': exact-math visual fits the card and has an accessible description');
+      await image.evaluate(el=>el.scrollIntoView({block:'nearest',inline:'nearest'}));
+      const visible=await image.evaluate(el=>{
+        const image=el.getBoundingClientRect(),card=el.closest('.focus-card').getBoundingClientRect();
+        return {top:image.top,bottom:image.bottom,cardTop:card.top,cardBottom:card.bottom};
+      });
+      check(visible.top>=visible.cardTop-1&&visible.bottom<=visible.cardBottom+1,
+        tag+': diagram can be scrolled fully into the visible knowledge-card area');
       if(id==='mt_i2-QaXbyzB'){
         check(info.accessibility?.includes('两个三角形不相等')&&info.text.includes('1 cm')&&info.text.includes('3 cm'),
           tag+': trapezoid diagram labels unequal side triangles and their base lengths');
