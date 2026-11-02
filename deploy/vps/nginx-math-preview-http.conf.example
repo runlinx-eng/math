@@ -1,0 +1,20 @@
+# Temporary HTTP-only Nginx site used to obtain the first Let's Encrypt certificate.
+# After the certificate exists, replace this with nginx-math-preview.conf.example.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name math.664357788.xyz;
+    server_tokens off;
+
+    location ^~ /.well-known/acme-challenge/ {
+        auth_basic off;
+        root /var/www/certbot;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 404;
+    }
+}
