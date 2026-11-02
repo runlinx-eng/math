@@ -1,6 +1,6 @@
 # 数学探索：现有 VPS 预览部署
 
-状态：部署自动化已准备；**尚未修改真实 VPS、DNS 或发布公网版本**。当前方案适配已有服务器，保留原有 Xray 服务。
+状态：VPS、DNS、Nginx、HTTPS、预览密码和 GitHub SSH 凭据均已配置，并通过公网健康检查；**首次网页发布尚未执行**。当前方案适配已有服务器，保留原有 Xray 服务。
 
 ## 已知服务器与端口边界
 
@@ -8,7 +8,7 @@
 - 系统：Debian 12 x64；公网 IP：`173.242.119.233`。
 - SSH：TCP 22。
 - TCP 443 已由现有 Xray（VLESS + REALITY + Vision）监听，**数学树不得占用、重启、改写或替换该服务**。
-- 建议预览域名：`math.664357788.xyz`。这是待用户确认的建议，不代表 DNS 已创建。
+- 预览域名：`math.664357788.xyz`，DNS A 记录已解析到本机 VPS，公网 HTTP/HTTPS 健康检查已通过。
 - Cloudflare DNS 新增独立 A 记录：`math` → `173.242.119.233`，使用 DNS only（灰云）。不要复用 `vpn.664357788.xyz`，现有记录指向旧服务器 IP。
 - 端口规划：TCP 80 用于 Let's Encrypt HTTP-01 验证及跳转；TCP 8443 提供数学树 HTTPS；TCP 443 完全保留给 Xray。
 
@@ -83,7 +83,7 @@ sudo systemctl enable --now certbot.timer
 
 | Variable | 值 | 说明 |
 | --- | --- | --- |
-| `VPS_DEPLOY_ENABLED` | 最后设置为 `true` | 未设置时自动部署保持关闭 |
+| `VPS_DEPLOY_ENABLED` | 当前保持 `false` | 关闭 main 推送后的自动部署；首次发布通过手动确认单独授权 |
 | `VPS_HOST` | `173.242.119.233` | 当前 VPS |
 | `VPS_USER` | `math-deploy` | 专用低权限部署用户 |
 | `VPS_PORT` | `22` | SSH 端口 |
@@ -99,7 +99,7 @@ sudo systemctl enable --now certbot.timer
 
 SSH host key 应通过 VPS 控制台指纹或已有可信连接核验后再保存；不要把未经核验的 `ssh-keyscan` 输出直接当作可信密钥。
 
-先配置除 `VPS_DEPLOY_ENABLED` 以外的变量和 secrets。检查 Nginx、证书、Basic Auth、健康检查、SSH 登录和 443/Xray 状态。全部确认后，最后把 `VPS_DEPLOY_ENABLED` 设为 `true`。工作流只允许从 `main` 发布。
+配置完变量和 secrets 后，先保持 `VPS_DEPLOY_ENABLED=false`。首次发布从 GitHub Actions 手动运行 **Deploy Math Explorer preview**，选择 `main`，并明确勾选 `confirm_deploy=true`。该次手动确认只授权本次发布，不会打开后续自动部署。首次发布和产品验收通过后，如果希望 main 的相关变更自动发布，再单独将 `VPS_DEPLOY_ENABLED` 改为 `true`。所有发布只允许从 `main` 执行。
 
 ## 发布、回滚与验收
 
@@ -111,8 +111,6 @@ SSH host key 应通过 VPS 控制台指纹或已有可信连接核验后再保�
 
 ## 尚未完成
 
-- 用户确认是否采用 `math.664357788.xyz`。
-- 创建 Cloudflare DNS A 记录并核实传播。
-- 在 VPS 上创建部署用户、Nginx、证书、Basic Auth 和防火墙规则。
-- 配置 GitHub Variables/Secrets 后首次发布。
-- 真实公网浏览器验收。
+- 从 GitHub Actions 手动触发首次发布（`confirm_deploy=true`，全局自动部署开关仍为 false）。
+- 使用预览密码进入网站，完成真实公网浏览器验收。
+- 决定是否启用后续 main 推送自动部署。
