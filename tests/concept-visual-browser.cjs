@@ -1,4 +1,4 @@
-// Thirty-nine-node UI review: five source types, eleven domains, procedural patterns, and eleven exact visuals; progressive explanation and map invariants.
+// Thirty-nine-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
