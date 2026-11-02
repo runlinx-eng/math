@@ -3,7 +3,7 @@
     "date": "2026-11-02",
     "branch": "feat/language-concept-audit-v1",
     "source": "dist/data/math.json",
-    "sourceNameRule": "dist/spatial-names.js",
+    "sourceNameRule": "dist/spatial-names.js: NODE_DISPLAY_CORRECTIONS > existing exact > NODE_QUALIFIERS > source title",
     "scope": "587 个来源节点的静态分类及 22 个来源目标复核修正",
     "accuracyNote": "仅 22 个修正名称完成逐项来源描述核对；其他属于自动初筛或现有消歧机制检查，不得视为 587 个逐一数学审定。原始 title/name/description/ID/edges 保持不变。",
     "statusCodes": {
@@ -1023,12 +1023,13 @@
       "id": "mt_nvdpxAJTBG",
       "domainId": "counting",
       "original": "两个两个地数",
-      "display": "两个两个地数",
+      "display": "按2、5、10跳着数",
       "class": "candidate",
       "qualified": false,
       "qualifier": null,
       "explanationPilot": false,
-      "sourceName": "Counting in 2s"
+      "sourceName": "Counting in 2s",
+      "existingDisplayOverride": true
     },
     {
       "id": "mt_yqAL6O5i_v",
@@ -2395,12 +2396,13 @@
       "id": "mt_gNUE4B3vuk",
       "domainId": "fractions",
       "original": "带分数与假分数",
-      "display": "带分数与假分数",
+      "display": "整数、小数与分数的四则运算",
       "class": "candidate",
       "qualified": false,
       "qualifier": null,
       "explanationPilot": false,
-      "sourceName": "Mixed & Improper Fractions"
+      "sourceName": "Mixed & Improper Fractions",
+      "existingDisplayOverride": true
     },
     {
       "id": "mt_J339bO7qLe",
@@ -3551,12 +3553,13 @@
       "id": "mt_iQYPw8bMfN",
       "domainId": "thinking",
       "original": "与钱有关的数学",
-      "display": "与钱有关的数学",
+      "display": "用数学表示测量、钱和时间",
       "class": "candidate",
       "qualified": false,
       "qualifier": null,
       "explanationPilot": false,
-      "sourceName": "Working with money"
+      "sourceName": "Working with money",
+      "existingDisplayOverride": true
     },
     {
       "id": "mt_FVVSQR9vGg",
@@ -3685,12 +3688,13 @@
       "id": "mt_hlGKg5M7qJ",
       "domainId": "thinking",
       "original": "分数、小数与百分数",
-      "display": "分数、小数与百分数",
+      "display": "运算、分数与图形的结构",
       "class": "candidate",
       "qualified": false,
       "qualifier": null,
       "explanationPilot": false,
-      "sourceName": "Fractions, Decimals & Percentages"
+      "sourceName": "Fractions, Decimals & Percentages",
+      "existingDisplayOverride": true
     },
     {
       "id": "mt_CUmjcE7W6c",
