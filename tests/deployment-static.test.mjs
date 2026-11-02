@@ -45,10 +45,20 @@ test('every service-worker precache entry resolves inside dist', () => {
 test('the preview server keeps the app under a protected root and a public health check', () => {
   const nginx = fs.readFileSync(path.join(root, 'deploy/vps/nginx-math-preview.conf.example'), 'utf8');
   assert.match(nginx, /root \/var\/www\/math-explorer-preview\/current;/);
+  assert.match(nginx, /listen 8443 ssl;/);
+  assert.match(nginx, /listen \[::\]:8443 ssl;/);
+  assert.doesNotMatch(nginx, /listen \[::\]?:?443(?:\s|;)/);
+  assert.match(nginx, /return 308 https:\/\/\$host:8443\$request_uri;/);
+  assert.match(nginx, /location \^~ \/\.well-known\/acme-challenge\//);
   assert.match(nginx, /location = \/health[\s\S]*?auth_basic off;/);
   assert.match(nginx, /auth_basic_user_file \/etc\/nginx\/\.htpasswd-math-preview;/);
   assert.match(nginx, /try_files \$uri \$uri\/ =404;/);
   assert.match(nginx, /Cache-Control "no-cache"/);
+
+  const httpOnly = fs.readFileSync(path.join(root, 'deploy/vps/nginx-math-preview-http.conf.example'), 'utf8');
+  assert.match(httpOnly, /listen 80;/);
+  assert.match(httpOnly, /location \^~ \/\.well-known\/acme-challenge\//);
+  assert.doesNotMatch(httpOnly, /listen 443|listen 8443/);
 
   const deploy = fs.readFileSync(path.join(root, '.github/workflows/deploy-vps.yml'), 'utf8');
   const rollback = fs.readFileSync(path.join(root, '.github/workflows/rollback-vps.yml'), 'utf8');
