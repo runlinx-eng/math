@@ -52,7 +52,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await page.waitForFunction(()=>document.body.classList.contains('guide-mode')&&!document.querySelector('#guide-panel').hidden);
   const guide=await page.evaluate(()=>({rail:getComputedStyle(document.querySelector('.tool-rail')).display,footer:getComputedStyle(document.querySelector('.bottom-bar')).display,panelVisible:!document.querySelector('#guide-panel').hidden,paths:document.querySelectorAll('.spatial-focus-links path').length}));
   check(guide.panelVisible&&guide.rail!=='none'&&guide.footer==='none','guided observation shares the same camera controls as the main map');
-  check(guide.paths>0,'guided observation retains true knowledge relationships');
+  check(guide.paths===0,'first guided step shows theme entry without inventing knowledge prerequisite lines');
   await page.screenshot({path:path.join(out,'03-guided-focus.png')});
   await page.locator('#guide-panel [data-action="guide-exit"]').click();
   await page.waitForFunction(()=>!document.body.classList.contains('guide-mode'));
