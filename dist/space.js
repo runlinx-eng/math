@@ -117,6 +117,12 @@ function renderGuideCues(){
   const html='<svg class="guide-cue-leaders" aria-hidden="true"></svg>'+shown.join('');
   if(lastGuideCueMarkup!==html){layer.innerHTML=html;lastGuideCueMarkup=html;}
   const occupied=[{x:panel.left,y:panel.top,w:panel.width,h:panel.height}],tethers=[];
+  // Keep persistent theme landmarks unobstructed. The map labels themselves
+  // retain their full text and remain clickable throughout the guide.
+  for(const el of document.querySelectorAll('.space-label.theme:not([hidden])')){
+    const r=el.getBoundingClientRect();
+    if(r.width&&r.height)occupied.push({x:r.left,y:r.top,w:r.width,h:r.height});
+  }
   for(const cue of layer.querySelectorAll('.guide-cue')){
     const point=projections.get(cue.dataset.key);
     if(!point)continue;
