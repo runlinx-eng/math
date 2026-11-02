@@ -56,7 +56,7 @@ test('four chart and geometry representations preserve their reading rules',()=>
   assert.match(conceptHelpFor('mt_JRzXQl9M7c').definition,/每个点代表一次观测.*相同数值的点竖直堆叠/);
   assert.match(conceptHelpFor('mt_JRzXQl9M7c').counterexample,/6 名学生各读了 5 本/);
   assert.equal(conceptHelpFor('mt_oderfUBZPw').visual,'histogram');
-  assert.match(conceptHelpFor('mt_oderfUBZPw').definition,/长条.*不能留缝.*150≤h＜160/);
+  assert.match(conceptHelpFor('mt_oderfUBZPw').definition,/长条.*不能留缝.*150≤h<160/);
   assert.match(conceptHelpFor('mt_oderfUBZPw').counterexample,/不能告诉我们.*精确身高/);
   assert.equal(conceptHelpFor('mt_8VjmxR1yfw').visual,'box-plot');
   assert.match(conceptHelpFor('mt_8VjmxR1yfw').example,/中位数是 9.*四分位距是 14－6＝8.*极差是 21－3＝18/);
