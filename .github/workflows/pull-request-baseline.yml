@@ -1,0 +1,28 @@
+name: Pull request baseline
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check patch whitespace and merge markers
+        run: |
+          git diff --check "origin/${{ github.base_ref }}...HEAD"
+          if git grep -n -E '^(<<<<<<< |=======|>>>>>>> )' -- ':!docs/history/**'; then
+            echo "Unresolved merge-conflict markers found"
+            exit 1
+          fi
+      - name: Check core mathematical relationship invariants
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
