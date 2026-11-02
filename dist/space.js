@@ -457,8 +457,9 @@ function conceptVisualHtml(kind){
       '<path d="M30 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M30 111H39V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
       '<text x="12" y="88" fill="#394c42" font-size="10">高 h</text><text x="66" y="137" fill="#394c42" font-size="11">底 b</text>'+
       '<path d="M145 88H176 M169 82L176 88L169 94" fill="none" stroke="#74897f" stroke-width="1.8"/>'+
-      '<rect x="190" y="55" width="100" height="65" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
-      '<path d="M265 120L290 55L290 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<rect data-part="remaining-rectangle" x="190" y="55" width="75" height="65" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path data-part="moved-triangle" d="M265 120L290 55L290 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M190 55H290V120H190Z" fill="none" stroke="#9a794c" stroke-width="1.7"/>'+
       '<path d="M190 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M190 111H199V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
       '<text x="178" y="88" fill="#394c42" font-size="10">h</text><text x="230" y="137" fill="#394c42" font-size="11">底 b</text>'+
       '<text x="170" y="158" text-anchor="middle" fill="#394c42" font-size="11">平行四边形：b×h　　三角形：b×h÷2</text>'+
@@ -466,14 +467,17 @@ function conceptVisualHtml(kind){
   }
   if(kind==='polygon-area-decomposition'){
     return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
-      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="梯形分割：把上底6厘米、下底10厘米、高4厘米的梯形分成一个长方形和两个三角形，面积为32平方厘米">'+
-      '<text x="150" y="18" text-anchor="middle" fill="#394c42" font-size="12">梯形分成：长方形＋两个三角形</text>'+
-      '<path d="M70 48L220 48L260 118L30 118Z" fill="#dfb477" fill-opacity=".3" stroke="#9a794c" stroke-width="1.7"/>'+
-      '<path d="M70 48V118 M220 48V118" stroke="#688ba0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
-      '<path d="M30 118L70 48L70 118Z" fill="#a8c5d6" fill-opacity=".8"/><path d="M220 48L260 118L220 118Z" fill="#a8c5d6" fill-opacity=".8"/>'+
-      '<path d="M70 48V118 M220 48V118" stroke="#688ba0" stroke-width="1.5"/>'+
-      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="145" y="40">上底 6 cm</text><text x="145" y="136">下底 10 cm</text><text x="53" y="82">高 4 cm</text><text x="145" y="163">6×4＋(10−6)×4÷2＝32 cm²</text></g>'+
-      '</svg><figcaption>长方形面积为 6×4＝24 平方厘米；两侧三角形合计 8 平方厘米。分割不能重叠，也不能留下空隙。</figcaption></figure></details>';
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="不等腰梯形：上底6厘米，下底10厘米，高4厘米；左侧三角形底1厘米，右侧三角形底3厘米，两个三角形不相等，合计底长4厘米；分割面积32平方厘米">'+
+      '<text x="160" y="18" text-anchor="middle" fill="#394c42" font-size="12">不等腰梯形：长方形＋两个不等三角形</text>'+
+      '<path d="M80 50L200 50L260 122L60 122Z" fill="#dfb477" fill-opacity=".3" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path data-part="left-triangle" d="M60 122L80 50L80 122Z" fill="#a8c5d6" fill-opacity=".85"/>'+
+      '<rect data-part="central-rectangle" x="80" y="50" width="120" height="72" fill="#dfb477" fill-opacity=".38"/>'+
+      '<path data-part="right-triangle" d="M200 50L260 122L200 122Z" fill="#a8c5d6" fill-opacity=".85"/>'+
+      '<path d="M80 50V122 M200 50V122" stroke="#688ba0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
+      '<path d="M80 112H90V122" fill="none" stroke="#74897f" stroke-width="1.2"/>'+
+      '<path d="M80 50L200 50L260 122L60 122Z" fill="none" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="140" y="42">上底 6 cm</text><text x="160" y="160">下底 10 cm</text><text x="97" y="91">高 4 cm</text><text x="70" y="141">1 cm</text><text x="230" y="141">3 cm</text><text x="170" y="188">6×4＋(10−6)×4÷2＝32 cm²</text></g>'+
+      '</svg><figcaption>中间长方形面积为 6×4＝24 平方厘米；两侧三角形的底长合计 10−6＝4 厘米，面积合计 4×4÷2＝8 平方厘米。两侧三角形不必相等。</figcaption></figure></details>';
   }
   return '';
 }

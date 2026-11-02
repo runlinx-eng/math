@@ -106,12 +106,14 @@ test('four geometry samples explain coordinates, transformations, and area proce
   assert.match(conceptHelpFor('mt_SH7QgFl8-v').counterexample,/关于 y 轴反射后是.*−1，2.*不是.*1，−2/);
   assert.match(conceptHelpFor('mt_SH7QgFl8-v').why,/平移和旋转保持朝向，反射会翻转朝向/);
   assert.equal(conceptHelpFor('mt_ML5t7n2-U8').visual,'triangle-parallelogram-area');
-  assert.match(conceptHelpFor('mt_ML5t7n2-U8').definition,/平行四边形面积.*底×对应的垂直高.*三角形面积.*÷2.*钝角三角形的高可能落在图形外/);
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').definition,/平行四边形面积.*底×对应的垂直高.*三角形面积.*÷2.*高是与所选底边垂直的距离.*钝角三角形的高可能落在图形外/);
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').simpler,/与它垂直的高/);
+  assert.doesNotMatch(conceptHelpFor('mt_ML5t7n2-U8').simpler,/直上直下/);
   assert.match(conceptHelpFor('mt_ML5t7n2-U8').counterexample,/10×5＝50.*不是 10×6＝60.*斜边不是对应的高/);
   assert.match(conceptHelpFor('mt_ML5t7n2-U8').example,/8×5＝40 平方厘米.*8×5÷2＝20 平方厘米/);
   assert.equal(conceptHelpFor('mt_i2-QaXbyzB').visual,'polygon-area-decomposition');
   assert.match(conceptHelpFor('mt_i2-QaXbyzB').definition,/分成.*长方形和三角形.*相加.*补成.*减去多出来的部分.*不能重叠或留空/);
-  assert.match(conceptHelpFor('mt_i2-QaXbyzB').example,/6×4.*\(10−6\)×4÷2＝8 平方厘米.*24＋8＝32 平方厘米/);
+  assert.match(conceptHelpFor('mt_i2-QaXbyzB').example,/底长分别为 1 厘米和 3 厘米.*虽然大小不同.*底长合计为 10−6＝4 厘米.*对应的高都是 4 厘米.*4×4÷2＝8 平方厘米.*24＋8＝32 平方厘米/);
   assert.match(conceptHelpFor('mt_i2-QaXbyzB').counterexample,/重叠.*空隙.*补成长方形/);
 });
 

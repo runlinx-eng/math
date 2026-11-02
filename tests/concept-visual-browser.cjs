@@ -91,12 +91,43 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       await help.locator('.concept-visual-mode > summary').click();
       const image=help.locator('.concept-visual svg');
       check(await image.count()===1,tag+': diagram exists');
-      const info=await image.evaluate(svg=>({width:svg.getBoundingClientRect().width,
-        accessibility:svg.getAttribute('aria-label'),
-        inside:svg.getBoundingClientRect().right<=svg.closest('.focus-card').getBoundingClientRect().right+1}));
+      const info=await image.evaluate(svg=>{
+        const part=name=>{
+          const el=svg.querySelector('[data-part="'+name+'"]');
+          if(!el)return null;
+          const box=el.getBBox();
+          return {x:box.x,y:box.y,width:box.width,height:box.height};
+        };
+        return {width:svg.getBoundingClientRect().width,
+          accessibility:svg.getAttribute('aria-label'),
+          text:svg.textContent,
+          inside:svg.getBoundingClientRect().right<=svg.closest('.focus-card').getBoundingClientRect().right+1,
+          parts:{
+            leftTriangle:part('left-triangle'),
+            rightTriangle:part('right-triangle'),
+            remainingRectangle:part('remaining-rectangle'),
+            movedTriangle:part('moved-triangle')
+          }};
+      });
       const labelNeedle=visualLabels[id];
       check(info.width>=150&&info.inside&&info.accessibility?.includes(labelNeedle),
         tag+': exact-math visual fits the card and has an accessible description');
+      if(id==='mt_i2-QaXbyzB'){
+        check(info.accessibility?.includes('两个三角形不相等')&&info.text.includes('1 cm')&&info.text.includes('3 cm'),
+          tag+': trapezoid diagram labels unequal side triangles and their base lengths');
+        check(info.parts.leftTriangle&&info.parts.rightTriangle&&
+          Math.abs(info.parts.rightTriangle.width/info.parts.leftTriangle.width-3)<0.01&&
+          Math.abs(info.parts.leftTriangle.height-info.parts.rightTriangle.height)<0.01&&
+          Math.abs(info.parts.leftTriangle.width+info.parts.rightTriangle.width-80)<0.01,
+          tag+': trapezoid side triangles have unequal bases, equal heights, and bases summing to the difference between the parallel sides');
+      }
+      if(id==='mt_ML5t7n2-U8'){
+        check(info.parts.remainingRectangle&&info.parts.movedTriangle&&
+          Math.abs(info.parts.remainingRectangle.width-75)<0.01&&
+          Math.abs(info.parts.movedTriangle.width-25)<0.01&&
+          Math.abs(info.parts.remainingRectangle.width+info.parts.movedTriangle.width-100)<0.01,
+          tag+': moved triangle fills the missing wedge beside the remaining rectangle rather than overlapping a full rectangle');
+      }
     }else await help.locator('.concept-mode').first().locator('summary').click();
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
     check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===before,
