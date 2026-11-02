@@ -1,8 +1,8 @@
 # B02 教学研究依据核查：估计容积
 
-核查日期：2026-11-03  
-工作分支：feat/language-concept-audit-v1  
-研究批次：B02（原计划 Phase 4）  
+核查日期：2026-11-03
+工作分支：feat/language-concept-audit-v1
+研究批次：B02（原计划 Phase 4）
 状态：**外部来源核查完成；解释起草未开始。**
 
 ## 一、范围与结论
