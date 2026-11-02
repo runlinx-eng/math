@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-02",
+  "branch": "feat/language-concept-audit-v1",
+  "scope": "对7个已有解释样板核对外部课程标准、统计教育框架、实证研究和技术定义，并落实与来源目标相关的解释修订。来源记录与内容修订不等于独立数学教研或儿童理解验收。",
+  "method": {
+    "rules": [
+      "课程标准用于内容与年级目标对齐，不证明某种讲法有效。",
+      "实证研究保留样本、年龄、研究设计和限制，不把小样本结果泛化。",
+      "技术手册用于核对定义和图表约定，不当作儿童学习效果研究。",
+      "区分外部来源支持、数学事实核验、教学设计推断和本项目儿童测试。",
+      "源 taxonomy 的 hasResearch=false 保持原值；外部证据先独立登记，不伪装成已接入产品研究资料系统。"
+    ]
+  },
+  "summary": {
+    "nodesReviewed": 7,
+    "externalSourcesCatalogued": 17,
+    "empiricalStudiesOrReports": 10,
+    "officialCurriculumStandards": 2,
+    "professionalFrameworks": 1,
+    "technicalReferences": 4,
+    "contentNodesRevised": 7,
+    "independentMathReviewsCompleted": 0,
+    "manualVisualReviewsPending": 4,
+    "childUnderstandingTestsCompleted": 0
+  },
+  "sourceCatalog": [
+    {
+      "id": "SRC-01",
+      "title": "Australian Curriculum v9 — AC9M5ST03",
+      "year": "Version 9",
+      "type": "official_curriculum",
+      "url": "https://www.scootle.edu.au/ec/search?accContentId=AC9M5ST03",
+      "supports": "Year 5 plan and conduct investigations by posing questions, collecting relevant data, choosing displays, interpreting data and communicating findings in context; elaborations include objective, unbiased survey questions.",
+      "limitation": "Curriculum expectation, not evidence that a particular teaching design is effective."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Pre-K–12 Guidelines for Assessment and Instruction in Statistics Education II (GAISE II)",
+      "year": 2020,
+      "type": "professional_framework",
+      "url": "https://www.amstat.org/docs/default-source/amstat-documents/gaiseiiprek-12_full.pdf",
+      "supports": "ASA Pre-K–12 framework: formulate questions, collect/consider data, analyze data and interpret results; defines mean absolute deviation as average distance from the mean and develops it at Level B.",
+      "limitation": "Professional framework, not a controlled trial of each individual lesson or display."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Effects of an Inquiry-Oriented Curriculum and Professional Development Program on Grade 7 Students’ Understanding of Statistics and on Statistics Instruction",
+      "authors": "Sharon Koon and Robert Schoen",
+      "year": 2021,
+      "type": "cluster_randomized_impact_study",
+      "url": "https://ies.ed.gov/use-work/resource-library/report/impact-study/effects-inquiry-oriented-curriculum-and-professional-development-program-grade-7-students",
+      "supports": "40 middle schools randomly assigned to an inquiry-oriented statistics unit plus four days of teacher professional development or usual practice; student statistics understanding improved by 0.23 SD (about 9 percentile points).",
+      "limitation": "Curriculum and teacher development were bundled; one Florida district; no isolated effect for a single explanation field."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Attending to Middle School Students’ Understanding of Study Design: The Often Overlooked or Contrived Step in the Statistical Problem-Solving Process",
+      "authors": "Sarai Hedges, Shelly Sheats Harkness and Kim Given",
+      "year": 2022,
+      "type": "empirical_teaching_research",
+      "url": "https://doi.org/10.1108/MGRJ-05-2022-0004",
+      "supports": "Middle-school lesson study on nonexperimental study design; students intuitively used a naïve conception of stratified random sampling and recognized some forms of bias.",
+      "limitation": "Lesson-based discourse analysis, not a universal effect-size estimate."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Common Core State Standards for Mathematics",
+      "year": 2010,
+      "type": "official_curriculum_standard",
+      "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "supports": "6.SP.B.4 includes dot plots, histograms and box plots; 6.SP.B.5c includes mean absolute deviation; 6.G.A.1 covers polygon decomposition; 6.G.A.4 covers nets and surface area; 7.G.B.6 covers composite area, volume and surface area.",
+      "limitation": "Defines expected content, not the best teaching method or proof of learning."
+    },
+    {
+      "id": "SRC-06",
+      "title": "The Effects of 3D-Representation Instruction on Composite-Solid Surface-Area Learning for Elementary School Students",
+      "authors": "Yao-Ting Sung, Pao-Chen Shih and Kuo-En Chang",
+      "year": 2015,
+      "type": "peer_reviewed_intervention_study",
+      "url": "https://eric.ed.gov/?id=EJ1049021",
+      "supports": "111 fifth-grade students; a Google SketchUp-supported program (56 students) was compared with traditional instruction (55); the intervention group performed better on immediate and maintained achievement tests.",
+      "limitation": "Specific software-supported intervention and grade-five sample; does not validate every prism formula or task."
+    },
+    {
+      "id": "SRC-07",
+      "title": "Learning to calculate surface area: a focus on strategy choice",
+      "authors": "Timothy H. Lehmann",
+      "year": 2023,
+      "type": "peer_reviewed_classroom_study",
+      "url": "https://doi.org/10.1080/14794802.2022.2081991",
+      "supports": "Year 8 classroom intervention with 47 students aged 13–14 elicited multiple strategies and justifications for surface area of cubes and simple prisms.",
+      "limitation": "Small classroom study on simple prisms; age range slightly above this node’s 12–13 range."
+    },
+    {
+      "id": "SRC-08",
+      "title": "Dynamic Measurement Reasoning for Area and Volume",
+      "authors": "Nicole Panorkou",
+      "year": 2020,
+      "type": "research_based_conceptual_article",
+      "url": "https://eric.ed.gov/?id=EJ1275898",
+      "supports": "Design experiments with fourth-grade students illustrate dynamic measurement reasoning for generating rectangles, right prisms and right cylinders.",
+      "limitation": "Conceptual article and design experiments, not a controlled trial of this project’s tasks."
+    },
+    {
+      "id": "SRC-09",
+      "title": "NIST Engineering Statistics Handbook — Measures of Scale",
+      "type": "technical_reference",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm",
+      "supports": "Defines average absolute deviation from the mean as AAD and median absolute deviation from the median as MAD; differs from school-statistics usage in GAISE II, where MAD means mean absolute deviation.",
+      "limitation": "Acronym is convention-dependent; spell out mean absolute deviation when introducing this node."
+    },
+    {
+      "id": "SRC-10",
+      "title": "School Students’ Understanding of Stacked Dot (or Line) Plots",
+      "authors": "Jane M. Watson and Ben A. Kelly",
+      "year": 2002,
+      "type": "refereed_empirical_study",
+      "url": "https://aare.edu.au/data/publications/2002/wat02243.pdf",
+      "supports": "Students in Grades 5–10 compared stacked dot plots with usual number-line scaling and plots that omitted zero-value gaps.",
+      "limitation": "Conference research paper with task-specific findings; not a universal teaching sequence."
+    },
+    {
+      "id": "SRC-11",
+      "title": "NIST Dataplot — Strip Plot (also known as a dot plot)",
+      "type": "technical_reference",
+      "url": "https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/striplot.htm",
+      "supports": "Defines dot/strip plots as observations along a value axis and explains stacking repeated values; notes typical use with small data sets.",
+      "limitation": "Technical display definition, not age-specific teaching research."
+    },
+    {
+      "id": "SRC-12",
+      "title": "NIST Engineering Statistics Handbook — Histogram",
+      "type": "technical_reference",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm",
+      "supports": "Defines common histograms using equal-sized bins and frequency counts; identifies center, spread, skewness, outliers and multiple modes.",
+      "limitation": "Node covers equal-width frequency histograms, not unequal-width frequency-density histograms."
+    },
+    {
+      "id": "SRC-13",
+      "title": "Students’ Understanding of Bar Graphs and Histograms: Results From the LOCUS Assessments",
+      "authors": "Douglas Whitaker and Tim Jacobbe",
+      "year": 2017,
+      "type": "peer_reviewed_empirical_assessment_study",
+      "url": "https://doi.org/10.1080/10691898.2017.1321974",
+      "supports": "LOCUS assessment responses from Grades 6–12 reveal misunderstandings in reading histograms and distinguishing them from bar graphs.",
+      "limitation": "Broad grade range; findings should not be assumed to apply equally to every child aged 11–13."
+    },
+    {
+      "id": "SRC-14",
+      "title": "NIST Engineering Statistics Handbook — Box Plot",
+      "type": "technical_reference",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/boxplot.htm",
+      "supports": "Defines five-number-summary box plots with min/max whiskers and separately documents a fence-based variant using 1.5-IQR limits and outlier points.",
+      "limitation": "More than one whisker convention is used; teaching materials must state which convention is shown."
+    },
+    {
+      "id": "SRC-15",
+      "title": "Interpretations of Boxplots: Helping Middle School Students to Think Outside the Box",
+      "authors": "Thomas G. Edwards, Aslı Özgün-Koca and John Barr",
+      "year": 2017,
+      "type": "peer_reviewed_empirical_study",
+      "url": "https://doi.org/10.1080/10691898.2017.1288556",
+      "supports": "Two-school study with 259 middle-school students found that students who could construct box plots could still struggle to interpret aggregated data and quartiles.",
+      "limitation": "Two convenience-sampled schools; not a population-wide prevalence estimate."
+    },
+    {
+      "id": "SRC-16",
+      "title": "Comparing Box Plot Distributions: A Teacher’s Reasoning",
+      "authors": "Maxine Pfannkuch",
+      "year": 2006,
+      "type": "refereed_empirical_study",
+      "url": "https://iase-pub.org/ojs/SERJ/article/view/498",
+      "supports": "Analyzes a Year 11 teacher’s reasoning when comparing box-plot distributions and develops a model of distinguishable reasoning elements, including sampling and reference context.",
+      "limitation": "One teacher in a Year 11 class context; supplementary, not a direct age match."
+    },
+    {
+      "id": "SRC-17",
+      "title": "Learning to measure the area of composite shapes",
+      "authors": "Timothy H. Lehmann",
+      "year": 2023,
+      "type": "peer_reviewed_classroom_study",
+      "url": "https://doi.org/10.1007/s10649-022-10191-z",
+      "supports": "Classroom design study in two Year 8 classes (31 participating students) documents decomposition, component-area measurement and recomposition strategies; discusses errors such as adding rather than subtracting outside pieces.",
+      "limitation": "Small classroom design study; supports strategy development but does not prove every child will master it without instruction."
+    }
+  ],
+  "records": [
+    {
+      "id": "mt_SHVyE1CLUa",
+      "title": "规划统计调查",
+      "ageRange": [
+        10,
+        11
+      ],
+      "sourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05"
+      ],
+      "alignment": "AC9M5ST03 directly aligns with posing an investigative question, collecting relevant data, selecting displays, interpreting results and communicating findings in context. GAISE II supplies the broader investigation cycle.",
+      "research": "The IES STEPSS cluster-randomized study provides evidence for inquiry-oriented statistics instruction at Grade 7. Hedges et al. identify study design and data collection as a distinct reasoning challenge for middle-school students.",
+      "coverageAudit": [
+        "Make the comparison question explicit: school-night versus weekend sleep duration.",
+        "Distinguish population, sample, variable, unit and collection method, including self-report and sample limitations.",
+        "Explain why a paired table and comparative dot plots serve different purposes."
+      ],
+      "revision": "Replaced the generic sleep example with a school-night/weekend comparison using the same pupils; clarified paired records versus distribution comparison; strengthened sample, measurement, bias and display rationale.",
+      "remaining": "Independent mathematical review of the investigation design and real-child comprehension testing remain pending.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_Sij9ByyHq6",
+      "title": "立体图形的表面积与体积",
+      "ageRange": [
+        12,
+        13
+      ],
+      "sourceIds": [
+        "SRC-05",
+        "SRC-06",
+        "SRC-07",
+        "SRC-08"
+      ],
+      "alignment": "CCSS 7.G.B.6 covers composite objects made from polygons, cubes and right prisms; 6.G.A.4 covers nets and surface area.",
+      "research": "Sung et al. provide a specific 3D-representation intervention with 111 fifth-grade students. Lehmann supports flexible face/net strategy choice for simple prisms; Panorkou provides a conceptual account of area and volume reasoning.",
+      "coverageAudit": [
+        "The prior sample included the glued-cube case but omitted a triangular-prism surface-area calculation.",
+        "It omitted the L-shaped planter case distinguishing footprint area, soil volume and exterior surface area."
+      ],
+      "revision": "Added a 3–4–5 right-triangular prism of length 10 cm: 2×6 + 12×10 = 132 cm². Added an L-shaped 3 m × 3 m footprint with a 1.5 m × 2 m corner removed: base area 6 m², 0.5 m depth gives 3 m³ soil volume; 12 m perimeter gives 6 m² sidewall area, or 12 m² including the base but not the open top. Retained glued-cube result (40 cm³ and 80 cm²).",
+      "remaining": "Independent review must verify right-triangle dimensions, exposed-face accounting and the open-top planter surface-area convention.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_ZfpeI1CFyP",
+      "title": "到平均数的平均距离",
+      "ageRange": [
+        11,
+        12
+      ],
+      "sourceIds": [
+        "SRC-02",
+        "SRC-05",
+        "SRC-09"
+      ],
+      "alignment": "CCSS 6.SP.B.5c explicitly names mean absolute deviation; GAISE II Level B defines it as average distance from the mean.",
+      "research": "GAISE II confirms the school-statistics meaning of MAD as mean absolute deviation. NIST distinguishes average absolute deviation (AAD, from the mean) from median absolute deviation (MAD, from the median).",
+      "coverageAudit": [
+        "Interpret the result in the original unit.",
+        "Compare two data sets with the same mean to isolate differences in consistency."
+      ],
+      "revision": "Spelled out mean absolute deviation to avoid acronym ambiguity; added plant heights 4, 6, 10 and 12 cm (mean 8 cm, MAD 3 cm); added two four-game bowling sets with the same mean 120 and MAD values 8 and 21.",
+      "remaining": "Independent review should verify the convention and each calculation in original units.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_JRzXQl9M7c",
+      "title": "点图",
+      "ageRange": [
+        11,
+        12
+      ],
+      "sourceIds": [
+        "SRC-02",
+        "SRC-05",
+        "SRC-10",
+        "SRC-11"
+      ],
+      "alignment": "CCSS 6.SP.B.4 includes dot plots on a number line; the node requires equal spacing, visible gaps, one dot per observation and frequency interpretation.",
+      "research": "Watson and Kelly directly studied Grades 5–10 students interpreting stacked dot plots, including omitted zero-value gaps. NIST documents stacking repeated observations.",
+      "coverageAudit": [
+        "The previous example omitted the full 0–12 scale, four observations at 3, minimum, maximum and mode.",
+        "Provide a complete frequency set that can be checked against the stated total of 20 pupils."
+      ],
+      "revision": "Added a complete 0–12 frequency sequence for 20 pupils: 3 occurs four times, 5 occurs six times, 7/10/11 are empty, minimum 0, maximum 12 and mode 5.",
+      "remaining": "The dot-plot SVG still requires manual visual checking against the complete scale and stack counts.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_oderfUBZPw",
+      "title": "直方图",
+      "ageRange": [
+        11,
+        13
+      ],
+      "sourceIds": [
+        "SRC-02",
+        "SRC-05",
+        "SRC-12",
+        "SRC-13"
+      ],
+      "alignment": "CCSS 6.SP.B.4 includes histograms; NIST defines the common equal-bin histogram with frequency counts and distribution features.",
+      "research": "Whitaker and Jacobbe’s LOCUS study documents misunderstandings about reading histograms and distinguishing them from bar graphs in Grades 6–12. NIST supports equal-width bins and frequency-axis definitions.",
+      "coverageAudit": [
+        "Explicitly answer the two required frequency-reading questions.",
+        "Require axis labels and justify the difference between continuous intervals and categories."
+      ],
+      "revision": "Made interval boundaries explicit and added exact counts: 150≤h<160 contains 6 pupils; below 150 contains 10. Strengthened the task to label height/frequency axes, draw touching equal-width bins and explain the bar-chart distinction.",
+      "remaining": "The histogram SVG still requires manual checking for touching bars, continuous numeric axis, interval boundaries and axis labels.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_8VjmxR1yfw",
+      "title": "箱线图",
+      "ageRange": [
+        11,
+        14
+      ],
+      "sourceIds": [
+        "SRC-02",
+        "SRC-05",
+        "SRC-14",
+        "SRC-15",
+        "SRC-16"
+      ],
+      "alignment": "CCSS 6.SP.B.4 includes box plots. NIST confirms both min/max-whisker and 1.5-IQR fence-based variants.",
+      "research": "Edwards et al. found a construction/interpretation gap among 259 middle-school students, including difficulty interpreting aggregated data and quartiles. Pfannkuch analyzes the reasoning demands of comparing box-plot distributions.",
+      "coverageAudit": [
+        "State that different raw data sets can share the same five-number summary and box plot.",
+        "Distinguish min/max whiskers from 1.5-IQR fence-based box plots."
+      ],
+      "revision": "Made the min/max whisker convention explicit, contrasted it with 1.5-IQR fence-based plots, and explained that a five-number summary cannot reveal every cluster, gap or raw value.",
+      "remaining": "The box-plot SVG still requires manual checking; independent review must confirm quartile interpretation and selected whisker convention.",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_i2-QaXbyzB",
+      "title": "分割图形求面积",
+      "ageRange": [
+        11,
+        12
+      ],
+      "sourceIds": [
+        "SRC-05",
+        "SRC-17"
+      ],
+      "alignment": "CCSS 6.G.A.1 explicitly requires composing polygons into rectangles or decomposing them into triangles and other shapes for real-world area problems.",
+      "research": "Lehmann’s Year 8 classroom study (31 participating students) documents decomposition, component-area calculation and recomposition strategies, including errors when students add rather than subtract outside pieces.",
+      "coverageAudit": [
+        "Add the kite-in-an-enclosing-rectangle example.",
+        "State the perpendicular-diagonal condition; retain the garden task."
+      ],
+      "revision": "Added a kite with perpendicular diagonals 8 cm and 6 cm: enclosing rectangle 48 cm² minus four corner triangles totalling 24 cm² gives 24 cm²; direct half-product formula provides a check. Retained trapezoid and 108 m² garden tasks.",
+      "remaining": "The polygon-area SVG still requires manual visual checking; independent review must verify perpendicular diagonals and corner-triangle subtraction.",
+      "independentMathReviewStatus": "not_completed"
+    }
+  ]
+}

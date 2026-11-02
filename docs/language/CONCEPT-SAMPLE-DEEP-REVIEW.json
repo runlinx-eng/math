@@ -5,12 +5,15 @@
   "scope": "45个概念解释样板的AI二轮内容审查；不代表独立数学教研、人工图示验收或儿童理解验收。",
   "summary": {
     "samplesReviewed": 45,
-    "revisionsApplied": 11,
+    "revisionsApplied": 17,
     "samplesWithResearchGap": 7,
     "samplesWithResearchRecord": 38,
     "visualsManualReviewPending": 15,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "revisionOperations": 18,
+    "researchInformedNodesRevised": 7,
+    "samplesWithExternalSourcesReviewed": 7
   },
   "records": [
     {
@@ -354,16 +357,18 @@
         "end": 11
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "明确上学夜与周末夜比较、同一批学生的配对记录、样本范围、自我报告限制及表格/点图用途。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "no_visual_in_sample_or_not_applicable"
+      "visualStatus": "no_visual_in_sample_or_not_applicable",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_SHVyE1CLUa"
     },
     {
       "id": "mt_Qcp2d_kuta",
@@ -464,16 +469,18 @@
         "end": 13
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "补入三棱柱表面积132 cm²、L形花坛底面积6 m²/装土体积3 m³/侧壁面积6 m²，并保留粘合组合体40 cm³/80 cm²。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "no_visual_in_sample_or_not_applicable"
+      "visualStatus": "no_visual_in_sample_or_not_applicable",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_Sij9ByyHq6"
     },
     {
       "id": "mt_1badik7iKJ",
@@ -684,16 +691,18 @@
         "end": 12
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "明确MAD是平均绝对偏差；补入3 cm解释及平均分同为120、MAD为8与21的投手比较。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "no_visual_in_sample_or_not_applicable"
+      "visualStatus": "no_visual_in_sample_or_not_applicable",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_ZfpeI1CFyP"
     },
     {
       "id": "mt_JRzXQl9M7c",
@@ -706,16 +715,18 @@
         "end": 12
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "补全0–12数轴频数、3出现4次、5出现6次、7/10/11空缺、最小值、最大值、众数和20个观测。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "manual_visual_review_pending"
+      "visualStatus": "manual_visual_review_pending",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_JRzXQl9M7c"
     },
     {
       "id": "mt_oderfUBZPw",
@@ -728,16 +739,18 @@
         "end": 13
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "补入150≤h<160为6人、低于150为10人，并明确横纵轴、等宽相连区间和边界规则。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "manual_visual_review_pending"
+      "visualStatus": "manual_visual_review_pending",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_oderfUBZPw"
     },
     {
       "id": "mt_8VjmxR1yfw",
@@ -750,16 +763,18 @@
         "end": 14
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "revised_to_cover_source_evidence_or_remove_ambiguity",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
       "revisionApplied": true,
-      "reviewNote": "修正四分位覆盖表述：箱体两半各约四分之一、两条须各约四分之一；补充箱线图不能显示的统计信息。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "reviewNote": "明确本样板使用最小/最大值须线，并与1.5IQR围栏式箱线图区分；补充五数概括不能还原原始分布细节。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "manual_visual_review_pending"
+      "visualStatus": "manual_visual_review_pending",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_8VjmxR1yfw"
     },
     {
       "id": "mt_vnJEztczji",
@@ -860,16 +875,18 @@
         "end": 12
       },
       "hasResearch": false,
-      "reviewRound": "ai_second_pass_2026-11-02",
+      "reviewRound": "ai_second_pass_2026-11-02;research_informed_followup_2026-11-02",
       "sourceScopeReview": "checked_against_description_evidence_assessment_prompt_age_range_and_direct_relations",
-      "contentReviewStatus": "ai_second_pass_completed",
-      "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
-      "revisionApplied": false,
-      "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
-      "researchGateStatus": "confirmed_missing_teaching_research_record",
+      "contentReviewStatus": "research_informed_revision_completed",
+      "contentCoverageStatus": "source_evidence_coverage_revised_pending_independent_review",
+      "revisionApplied": true,
+      "reviewNote": "补入对角线互相垂直、长度8和6厘米的风筝形补形例子，面积24 cm²；保留梯形和108 m²花园任务。",
+      "researchGateStatus": "external_sources_recorded_but_source_taxonomy_flag_remains_false",
       "independentMathReviewStatus": "not_completed",
       "childUnderstandingStatus": "not_tested",
-      "visualStatus": "manual_visual_review_pending"
+      "visualStatus": "manual_visual_review_pending",
+      "externalSourcesVerified": true,
+      "researchEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_i2-QaXbyzB"
     },
     {
       "id": "mt_dmNvjroCPT",

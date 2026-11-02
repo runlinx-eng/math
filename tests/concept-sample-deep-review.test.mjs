@@ -19,7 +19,10 @@ test('all 45 samples receive an AI second-pass review without overstating accept
  assert.equal(sampleIds.size,45);
  assert.deepEqual(new Set(sampleReview.records.map(record=>record.id)),sampleIds);
  assert.equal(sampleReview.summary.samplesReviewed,45);
- assert.equal(sampleReview.summary.revisionsApplied,11);
+ assert.equal(sampleReview.summary.revisionsApplied,17);
+ assert.equal(sampleReview.summary.revisionOperations,18);
+ assert.equal(sampleReview.summary.researchInformedNodesRevised,7);
+ assert.equal(sampleReview.summary.samplesWithExternalSourcesReviewed,7);
  assert.equal(sampleReview.summary.samplesWithResearchGap,7);
  assert.equal(sampleReview.summary.samplesWithResearchRecord,38);
  assert.equal(sampleReview.summary.visualsManualReviewPending,15);
@@ -30,10 +33,10 @@ test('all 45 samples receive an AI second-pass review without overstating accept
   assert.ok(node);
   assert.equal(record.sourceTitle,node.title);
   assert.equal(record.hasResearch,node.hasResearch);
-  assert.equal(record.contentReviewStatus,'ai_second_pass_completed');
+  assert.ok(['ai_second_pass_completed','research_informed_revision_completed'].includes(record.contentReviewStatus));
   assert.equal(record.independentMathReviewStatus,'not_completed');
   assert.equal(record.childUnderstandingStatus,'not_tested');
-  assert.equal(record.researchGateStatus,node.hasResearch===false?'confirmed_missing_teaching_research_record':'teaching_research_record_exists_but_source_validation_still_required');
+  assert.equal(record.researchGateStatus,record.externalSourcesVerified?'external_sources_recorded_but_source_taxonomy_flag_remains_false':node.hasResearch===false?'confirmed_missing_teaching_research_record':'teaching_research_record_exists_but_source_validation_still_required');
  }
 });
 
@@ -51,9 +54,13 @@ test('85 research gaps exactly match the taxonomy research flags and original pl
  assert.equal(researchTriage.summary.phaseCounts[2],2);
  assert.equal(researchTriage.summary.phaseCounts[4],7);
  assert.equal(researchTriage.summary.phaseCounts[5],76);
- assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInThisPass,0);
- assert.ok(researchTriage.records.every(record=>record.planStatus==='已排期，研究未补齐'));
- assert.ok(researchTriage.records.every(record=>record.researchVerificationStatus==='not_verified_in_this_pass'));
+ assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInThisPass,7);
+ assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,7);
+ assert.equal(researchTriage.summary.nodesWithSourceCoverageRevisions,7);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,7);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,78);
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_not_independently_math_validated').length,7);
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,78);
  assert.equal(knowledge.filter(node=>node.hasResearch===false).length,83);
  assert.equal(thinking.filter(node=>node.hasResearch===false).length,2);
 });
@@ -73,4 +80,17 @@ test('sample and research review scope stays separate from the 492 unconfigured 
  assert.equal(sampleIds.size,45);
  assert.equal(knowledge.length-sampleIds.size,492);
  assert.ok(researchTriage.records.filter(record=>record.scope==='math_thinking').every(record=>!sampleIds.has(record.id)));
+});
+
+
+test('seven research-gap samples have external evidence records and actual explanation revisions',()=>{
+ const evidence=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-EVIDENCE.json',import.meta.url),'utf8'));
+ const ids=['mt_SHVyE1CLUa','mt_Sij9ByyHq6','mt_ZfpeI1CFyP','mt_JRzXQl9M7c','mt_oderfUBZPw','mt_8VjmxR1yfw','mt_i2-QaXbyzB'];
+ assert.equal(evidence.records.length,7);assert.equal(evidence.sourceCatalog.length,17);assert.equal(evidence.summary.empiricalStudiesOrReports,10);
+ for(const id of ids){const record=evidence.records.find(item=>item.id===id);assert.ok(record,id);assert.ok(record.sourceIds.length>0,id);assert.ok(record.revision.length>20,id);assert.equal(record.independentMathReviewStatus,'not_completed');const sample=sampleReview.records.find(item=>item.id===id);assert.equal(sample.externalSourcesVerified,true);assert.equal(sample.revisionApplied,true);}
+ assert.match(CONCEPT_EXPLANATIONS['mt_SHVyE1CLUa'].example,/上学夜.*周末夜/);
+ assert.match(CONCEPT_EXPLANATIONS['mt_Sij9ByyHq6'].example,/132 平方厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_Sij9ByyHq6'].example,/3 立方米/);
+ assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].example,/3 厘米/);assert.match(CONCEPT_EXPLANATIONS['mt_ZfpeI1CFyP'].tryIt,/平均绝对偏差为 8 分.*平均绝对偏差为 21 分/);
+ assert.match(CONCEPT_EXPLANATIONS['mt_JRzXQl9M7c'].example,/数值 3 出现 4 次/);assert.match(CONCEPT_EXPLANATIONS['mt_oderfUBZPw'].example,/150≤h<160.*6 人.*10 人/);
+ assert.match(CONCEPT_EXPLANATIONS['mt_8VjmxR1yfw'].example,/相同的五数概括/);assert.match(CONCEPT_EXPLANATIONS['mt_i2-QaXbyzB'].example,/48 平方厘米.*24 平方厘米.*24 平方厘米/);
 });

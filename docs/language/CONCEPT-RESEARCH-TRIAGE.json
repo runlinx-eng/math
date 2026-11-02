@@ -14,8 +14,8 @@
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "已排期，研究未补齐",
-    "sourceRecordsExternallyVerifiedInThisPass": 0,
+    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订，独立数学复核待完成；76个无样板知识点与2个数学思维节点尚未核查",
+    "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
         "total": 9,
@@ -105,7 +105,11 @@
         "withSample": 0,
         "withoutSample": 1
       }
-    }
+    },
+    "nodesWithExternalSourcesVerified": 7,
+    "nodesWithSourceCoverageRevisions": 7,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0
   },
   "records": [
     {
@@ -519,14 +523,17 @@
         "end": 11
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_SHVyE1CLUa"
     },
     {
       "id": "mt_QHT16CrFO-",
@@ -561,14 +568,17 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_ZfpeI1CFyP"
     },
     {
       "id": "mt_8VjmxR1yfw",
@@ -582,14 +592,17 @@
         "end": 14
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_8VjmxR1yfw"
     },
     {
       "id": "mt_mn765HbXi1",
@@ -666,14 +679,17 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_JRzXQl9M7c"
     },
     {
       "id": "mt_oderfUBZPw",
@@ -687,14 +703,17 @@
         "end": 13
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_oderfUBZPw"
     },
     {
       "id": "mt_4zgPzc6yu5",
@@ -1107,14 +1126,17 @@
         "end": 13
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_Sij9ByyHq6"
     },
     {
       "id": "mt_4bc3EAxhlY",
@@ -1464,14 +1486,17 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_i2-QaXbyzB"
     },
     {
       "id": "mt_oMkQQ2O-ML",
