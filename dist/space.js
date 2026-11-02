@@ -424,6 +424,57 @@ function conceptVisualHtml(kind){
       '</g><text x="130" y="170" text-anchor="middle">六个面折起后组成正方体</text>'+
       '</svg><figcaption>每个正方形对应一个面；折起后六个面各出现一次，不能互相重叠。</figcaption></figure></details>';
   }
+
+  if(kind==='coordinate-grid'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 190" role="img" aria-label="坐标网格：A(1，1)、B(1，4)、C(5，4)、D(5，1)依次连接成一个长方形；先读横坐标，再读纵坐标">'+
+      '<path d="M48 154H250 M48 154V18" fill="none" stroke="#74897f" stroke-width="1.6"/>'+
+      '<path d="M78 34V154 M108 34V154 M138 34V154 M168 34V154 M198 34V154 M228 34V154 M48 124H228 M48 94H228 M48 64H228 M48 34H228" fill="none" stroke="#dfe4dc" stroke-width="1"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="78" y="170">1</text><text x="108" y="170">2</text><text x="138" y="170">3</text><text x="168" y="170">4</text><text x="198" y="170">5</text></g>'+
+      '<g fill="#394c42" font-size="11" text-anchor="end"><text x="39" y="128">1</text><text x="39" y="98">2</text><text x="39" y="68">3</text><text x="39" y="38">4</text></g>'+
+      '<path d="M78 124L78 34L198 34L198 124Z" fill="#dfb477" fill-opacity=".35" stroke="#b18a50" stroke-width="2.5"/>'+
+      '<g fill="#c98e45" stroke="#fff" stroke-width="1.2"><circle cx="78" cy="124" r="4.5"/><circle cx="78" cy="34" r="4.5"/><circle cx="198" cy="34" r="4.5"/><circle cx="198" cy="124" r="4.5"/></g>'+
+      '<g fill="#394c42" font-size="11" font-weight="650"><text x="84" y="141">A</text><text x="84" y="24">B</text><text x="204" y="24">C</text><text x="204" y="141">D</text><text x="258" y="158">x</text><text x="39" y="14">y</text></g>'+
+      '</svg><figcaption>先按第一个数找到横向位置，再按第二个数找到纵向位置。A、B、C、D 依次连接，得到长 4 格、宽 3 格的长方形。</figcaption></figure></details>';
+  }
+  if(kind==='grid-transformations'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 360 190" role="img" aria-label="网格上的三种图形变换：平移让三角形整体移动，反射让三角形关于竖直镜线翻转，旋转让三角形绕中心转动">'+
+      '<g fill="none" stroke="#dfe4dc" stroke-width=".8"><path d="M10 50H112 M10 80H112 M10 110H112 M10 140H112 M30 40V150 M55 40V150 M80 40V150 M105 40V150 M128 50H232 M128 80H232 M128 110H232 M128 140H232 M148 40V150 M173 40V150 M198 40V150 M223 40V150 M246 50H350 M246 80H350 M246 110H350 M246 140H350 M266 40V150 M291 40V150 M316 40V150 M341 40V150"/></g>'+
+      '<g fill="#394c42" font-size="12" font-weight="650" text-anchor="middle"><text x="61" y="24">平移</text><text x="180" y="24">反射</text><text x="299" y="24">旋转</text></g>'+
+      '<path d="M22 130L42 130L22 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M55 110L75 110L55 90Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/><path d="M43 120L52 111" stroke="#74897f" stroke-width="1.4"/>'+
+      '<path d="M180 42V150" stroke="#74897f" stroke-width="1.7" stroke-dasharray="4 3"/><path d="M142 130L162 130L142 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M218 130L198 130L218 110Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M260 130L280 130L260 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M280 70L280 90L300 70Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/><circle cx="300" cy="110" r="3" fill="#394c42"/>'+
+      '<g fill="#394c42" font-size="10" text-anchor="middle"><text x="61" y="166">整体挪动</text><text x="180" y="166">镜线翻转</text><text x="299" y="166">绕中心转</text></g>'+
+      '</svg><figcaption>三种变换都保持图形的大小和形状；平移与旋转保持朝向，反射会把朝向翻转。</figcaption></figure></details>';
+  }
+  if(kind==='triangle-parallelogram-area'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 170" role="img" aria-label="垂直高：平行四边形剪下左端三角形并移到右端，拼成同底同高的长方形；高与底垂直">'+
+      '<text x="70" y="20" text-anchor="middle" fill="#394c42" font-size="12">原来的平行四边形</text><text x="242" y="20" text-anchor="middle" fill="#394c42" font-size="12">剪拼后的长方形</text>'+
+      '<path d="M30 55L130 55L105 120L5 120Z" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path d="M5 120L30 55L30 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M30 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M30 111H39V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
+      '<text x="12" y="88" fill="#394c42" font-size="10">高 h</text><text x="66" y="137" fill="#394c42" font-size="11">底 b</text>'+
+      '<path d="M145 88H176 M169 82L176 88L169 94" fill="none" stroke="#74897f" stroke-width="1.8"/>'+
+      '<rect x="190" y="55" width="100" height="65" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path d="M265 55L290 55L265 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M190 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M190 111H199V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
+      '<text x="178" y="88" fill="#394c42" font-size="10">h</text><text x="230" y="137" fill="#394c42" font-size="11">底 b</text>'+
+      '<text x="170" y="158" text-anchor="middle" fill="#394c42" font-size="11">平行四边形：b×h　　三角形：b×h÷2</text>'+
+      '</svg><figcaption>剪下并移动三角形，面积不变，平行四边形变成长方形；同底同高的三角形面积是它的一半。高必须垂直于底。</figcaption></figure></details>';
+  }
+  if(kind==='polygon-area-decomposition'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="梯形分割：把上底6厘米、下底10厘米、高4厘米的梯形分成一个长方形和两个三角形，面积为32平方厘米">'+
+      '<text x="150" y="18" text-anchor="middle" fill="#394c42" font-size="12">梯形分成：长方形＋两个三角形</text>'+
+      '<path d="M70 48L220 48L260 118L30 118Z" fill="#dfb477" fill-opacity=".3" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path d="M70 48V118 M220 48V118" stroke="#688ba0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
+      '<path d="M30 118L70 48L70 118Z" fill="#a8c5d6" fill-opacity=".8"/><path d="M220 48L260 118L220 118Z" fill="#a8c5d6" fill-opacity=".8"/>'+
+      '<path d="M70 48V118 M220 48V118" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="145" y="40">上底 6 cm</text><text x="145" y="136">下底 10 cm</text><text x="53" y="82">高 4 cm</text><text x="145" y="163">6×4＋(10−6)×4÷2＝32 cm²</text></g>'+
+      '</svg><figcaption>长方形面积为 6×4＝24 平方厘米；两侧三角形合计 8 平方厘米。分割不能重叠，也不能留下空隙。</figcaption></figure></details>';
+  }
   return '';
 }
 function conceptExplanationHtml(id){

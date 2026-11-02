@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('thirty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,35);
+test('thirty-nine exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,39);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -95,6 +95,26 @@ test('meta samples explain strategy selection, verification, and investigation l
   assert.match(conceptHelpFor('mt_SHVyE1CLUa').definition,/提出清楚的问题.*向谁收集.*怎样收集.*结论的限制/);
   assert.match(conceptHelpFor('mt_SHVyE1CLUa').counterexample,/样本可能不具代表性/);
 });
+
+test('four geometry samples explain coordinates, transformations, and area procedures',()=>{
+  assert.equal(conceptHelpFor('mt_i5_HnoFOYw').visual,'coordinate-grid');
+  assert.match(conceptHelpFor('mt_i5_HnoFOYw').definition,/第一个数.*横向位置.*第二个数.*纵向位置/);
+  assert.match(conceptHelpFor('mt_i5_HnoFOYw').counterexample,/1，4.*4，1.*不是同一个点/);
+  assert.match(conceptHelpFor('mt_i5_HnoFOYw').example,/A\(1，1\).*B\(1，4\).*C\(5，4\).*D\(5，1\).*长 4 格、宽 3 格/);
+  assert.equal(conceptHelpFor('mt_SH7QgFl8-v').visual,'grid-transformations');
+  assert.match(conceptHelpFor('mt_SH7QgFl8-v').definition,/平移.*反射.*旋转.*保持长度和角度.*反射会改变朝向/);
+  assert.match(conceptHelpFor('mt_SH7QgFl8-v').counterexample,/关于 y 轴反射后是.*−1，2.*不是.*1，−2/);
+  assert.match(conceptHelpFor('mt_SH7QgFl8-v').why,/平移和旋转保持朝向，反射会翻转朝向/);
+  assert.equal(conceptHelpFor('mt_ML5t7n2-U8').visual,'triangle-parallelogram-area');
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').definition,/平行四边形面积.*底×对应的垂直高.*三角形面积.*÷2.*钝角三角形的高可能落在图形外/);
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').counterexample,/10×5＝50.*不是 10×6＝60.*斜边不是对应的高/);
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').example,/8×5＝40 平方厘米.*8×5÷2＝20 平方厘米/);
+  assert.equal(conceptHelpFor('mt_i2-QaXbyzB').visual,'polygon-area-decomposition');
+  assert.match(conceptHelpFor('mt_i2-QaXbyzB').definition,/分成.*长方形和三角形.*相加.*补成.*减去多出来的部分.*不能重叠或留空/);
+  assert.match(conceptHelpFor('mt_i2-QaXbyzB').example,/6×4.*\(10−6\)×4÷2＝8 平方厘米.*24＋8＝32 平方厘米/);
+  assert.match(conceptHelpFor('mt_i2-QaXbyzB').counterexample,/重叠.*空隙.*补成长方形/);
+});
+
 test('source names and node counts remain unchanged; help is supplemental',()=>{
   const canonical=makeKnowledgeNames({nodes:source.nodes});
   assert.equal(source.nodes.length,587);

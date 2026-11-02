@@ -1,4 +1,4 @@
-// Thirty-five-node UI review: five source types, eleven domains, procedural patterns, and eleven exact visuals; progressive explanation and map invariants.
+// Thirty-nine-node UI review: five source types, eleven domains, procedural patterns, and eleven exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -20,7 +20,9 @@ const ids=[
   ['formula-substitution','mt_Jvg8X0N5u0'],['compound-units','mt_kLQOzZYrd5'],
   ['mean-absolute-deviation','mt_ZfpeI1CFyP'],
   ['dot-plot','mt_JRzXQl9M7c'],['histogram','mt_oderfUBZPw'],
-  ['box-plot','mt_8VjmxR1yfw'],['cube-net','mt_vnJEztczji']
+  ['box-plot','mt_8VjmxR1yfw'],['cube-net','mt_vnJEztczji'],
+  ['coordinates','mt_i5_HnoFOYw'],['transformations','mt_SH7QgFl8-v'],
+  ['triangle-parallelogram-area','mt_ML5t7n2-U8'],['polygon-area-decomposition','mt_i2-QaXbyzB']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -34,7 +36,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34],ids[35],ids[36],ids[37],ids[38]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
@@ -79,7 +81,9 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       'mt_ePXg_XyCKU':'2比3','mt_eSv_w46u6H':'韦恩图',
       'mt_GRWwTDZ3wD':'3行4列','mt_AQo4u7O4sM':'宽4加2',
       'mt_JRzXQl9M7c':'点图','mt_oderfUBZPw':'直方图',
-      'mt_8VjmxR1yfw':'箱线图','mt_vnJEztczji':'展开图'
+      'mt_8VjmxR1yfw':'箱线图','mt_vnJEztczji':'展开图',
+      'mt_i5_HnoFOYw':'坐标网格','mt_SH7QgFl8-v':'三种图形变换',
+      'mt_ML5t7n2-U8':'垂直高','mt_i2-QaXbyzB':'梯形分割'
     };
     const expectedVisual=Object.hasOwn(visualLabels,id);
     check(types.includes('看图理解')===expectedVisual,tag+': only nodes with a real visual show the diagram entry');
