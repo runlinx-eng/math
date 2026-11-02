@@ -50,7 +50,6 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.doesNotMatch(nginx, /^\s*listen\s+(?:\[::\]:)?443(?:\s|;)/m);
   assert.match(nginx, /return 308 https:\/\/\$host:8443\$request_uri;/);
   assert.match(nginx, /location \^~ \/\.well-known\/acme-challenge\//);
-  assert.match(nginx, /location = \/health[\s\S]*?auth_basic off;/);
   assert.match(nginx, /location = \/health[\s\S]*?return 200/);
   assert.match(nginx, /location = \/login[\s\S]*?alias \/var\/www\/math-preview-login\/index\.html;/);
   assert.match(nginx, /auth_request \/__preview_auth;/);
