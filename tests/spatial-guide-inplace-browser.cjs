@@ -89,6 +89,10 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await page.screenshot({path:path.join(out,'02-first-connection.png')});
   await visit();check(await page.locator('[data-action="guide-step"][data-step="2"]').isDisabled(),'finding start alone is not a full source connection');
   const seenStart=page.locator('.space-label.node[data-key="node:mt_WcfaSfVT33"]');
+  await page.waitForFunction(()=>{
+    const el=document.querySelector('.space-label.node[data-key="node:mt_WcfaSfVT33"]');
+    return el?.getAttribute('aria-disabled')==='true'&&el.classList.contains('guide-visited');
+  });
   check(await seenStart.getAttribute('aria-disabled')==='true'
     &&await seenStart.evaluate(el=>el.classList.contains('guide-visited')),
     'observed start becomes visible but locked once its task action is complete');
