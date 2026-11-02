@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -89,4 +90,12 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.ok(deploy.includes("inputs.confirm_deploy == true"));
   assert.ok(rollback.includes("github.ref == 'refs/heads/main'"));
   assert.ok(rollback.includes("vars.VPS_DEPLOY_ENABLED == 'true'"));
+});
+
+
+test('shared preview auth service tests and installer syntax pass', () => {
+  const python = spawnSync('python3', [path.join(root, 'tests/preview-auth.test.py')], { encoding: 'utf8' });
+  assert.equal(python.status, 0, `Python auth tests failed:\n${python.stdout}\n${python.stderr}`);
+  const shell = spawnSync('bash', ['-n', path.join(root, 'scripts/setup-preview-auth-vps.sh')], { encoding: 'utf8' });
+  assert.equal(shell.status, 0, `VPS setup script syntax failed:\n${shell.stdout}\n${shell.stderr}`);
 });
