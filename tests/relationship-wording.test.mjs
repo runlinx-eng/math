@@ -66,3 +66,26 @@ test('selected mathematics explanations retain their necessary conditions',()=>{
     assert.match(explanation.text,condition,'do not omit a mathematics condition');
   }
 });
+
+
+// This set protects mathematical prerequisites that short UI explanations
+// must not silently omit. It does not certify pedagogy or learning outcomes.
+test('statistical and proportional explanations keep inference and formula boundaries',()=>{
+  const cases=[
+    ['mt_WBdHkc2HTf','mt_5mIcmKRCgA',/正比例关系.*y＝kx.*k为不等于0.*经过原点/],
+    ['mt_FspV_imUGK','mt_5mIcmKRCgA',/正比例.*经过原点.*反比例.*x不为0/],
+    ['mt_Cg8VPguS_V','mt_ZfpeI1CFyP',/平均数.*绝对值.*距离不会是负数.*平均数/],
+    ['mt_Cg8VPguS_V','mt_fQ9Rw10fss',/随机抽取.*代表性.*估计总体平均数.*不是.*精确/],
+    ['mt_xAf2bu9wYK','mt_fQ9Rw10fss',/样本.*随机抽取.*代表性.*估计总体数量/],
+    ['mt_xSgAgg9Ej_','mt_4zgPzc6yu5',/简单随机抽取.*相同.*仍可能.*不能代表总体/],
+    ['mt_XSXnTQoQ4l','mt_KCS9GbZgU_',/四分位距＝上四分位数－下四分位数.*中间一半/],
+    ['mt_KCS9GbZgU_','mt_A2hKhHXgL5',/中位数.*四分位距.*不能只凭.*重叠/]
+  ];
+  for(const [prerequisiteId,topicId,required] of cases){
+    const edge=math.edges.find(e=>e.prerequisiteId===prerequisiteId&&e.topicId===topicId);
+    assert.ok(edge,'source edge missing: '+prerequisiteId+'>'+topicId);
+    const explanation=relationExplanation(edge);
+    assert.equal(explanation.reviewed,true);
+    assert.match(explanation.text,required,'mathematics qualification must be retained');
+  }
+});
