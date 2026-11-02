@@ -16,6 +16,15 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
       frame:frame.getBoundingClientRect().height,topbar:c('.topbar'),rail:c('.tool-rail'),
       lessonVisible:!panel.hidden};
  });
+ // Wait for the parent panel to reflect the iframe's latest measured content,
+ // not merely for the first (possibly stale) ResizeObserver message to arrive.
+ const waitForMeasuredPanel=()=>page.waitForFunction(()=>{
+   const panel=document.querySelector('#journey-surface'),frame=document.querySelector('#journey-frame');
+   const lesson=frame?.contentDocument?.querySelector('#lesson'),header=panel?.querySelector(':scope > header');
+   if(!panel||!lesson||!header||panel.hidden)return false;
+   const expected=Math.min(Math.ceil(lesson.scrollHeight)+header.getBoundingClientRect().height+2,innerHeight-32);
+   return Math.abs(panel.getBoundingClientRect().height-expected)<=3;
+ });
  try{
   await page.goto(base);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().selected==='node:mt_6_O6THdEDK');
@@ -26,7 +35,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
   const frame=page.frameLocator('#journey-frame');
   await frame.locator('#lesson').waitFor();
-  await page.waitForFunction(()=>!!document.querySelector('#journey-surface').style.getPropertyValue('--learning-desired-height'));
+  await waitForMeasuredPanel();
   const opened=await snap(),surface=await layout();
   const childContent=await frame.locator('#lesson').evaluate(el=>Math.ceil(el.scrollHeight));
   const panelHeader=await page.locator('#journey-surface>header').evaluate(el=>el.getBoundingClientRect().height);
@@ -42,7 +51,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
   // More room must expose additional content rather than leaving the panel 820px tall.
   await page.setViewportSize({width:1440,height:1450});
-  await page.waitForTimeout(100);
+  await waitForMeasuredPanel();
   const tall=await layout();
   const tallContent=await frame.locator('#lesson').evaluate(el=>Math.ceil(el.scrollHeight));
   check(near(tall.h,Math.min(tallContent+panelHeader+2,1450-32),3),
@@ -56,7 +65,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
       'when the content fits on a tall screen the final activity controls are fully visible');
   await page.screenshot({path:path.join(out,'01c-full-content-tall-screen.png')});
   await page.setViewportSize({width:1440,height:900});
-  await page.waitForTimeout(100);
+  await waitForMeasuredPanel();
   // Reproduce a Mac trackpad pinch. Chrome emits Ctrl+wheel inside the active iframe;
   // the app should consume that event rather than letting Chrome zoom its entire page.
   const gesture=await frame.locator('#lesson').evaluate(el=>{
