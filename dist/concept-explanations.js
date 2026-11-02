@@ -86,6 +86,7 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     why:'单位要和测量对象相匹配，读数才容易理解和比较；单位改变时，数值也会随之改变。'
   },
   'mt_-3udyo6VyB':{
+    visual:'linear-function-graph',
     formal:'绘制直线图像',
     definition:'根据直线关系式为不同的 x 取值算出对应的 y 值，把每组 (x，y) 标在坐标平面上，再用直线表示这些点所体现的关系。',
     simpler:'先选几个 x，算出每个 x 对应的 y，再把一对一对的数标成点。',
