@@ -184,7 +184,7 @@ test('first expansion batch explains six additional source goals without changin
   assert.match(fractions.counterexample,/1\/4 小于 2\/3/);
   const multiplication=conceptHelpFor('mt_PZ909yPrEC');
   assert.match(multiplication.definition,/每组数量相同.*重复相加/);
-  assert.match(multiplication.definition,/排列方阵.*每行数量相同/);
+  assert.match(multiplication.definition,/每行数量相同的排列方阵/);
   assert.match(multiplication.example,/3＋3＋3＋3＝12.*4×3＝12/);
   const position=conceptHelpFor('mt_qeZYF6HZ4o');
   assert.match(position.definition,/相对于参照物.*观察方向/);
