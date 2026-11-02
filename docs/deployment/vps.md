@@ -1,6 +1,6 @@
 # 数学探索：现有 VPS 预览部署
 
-状态：VPS、DNS、Nginx、HTTPS、预览密码和 GitHub SSH 凭据均已配置，并通过公网健康检查；**首次网页发布尚未执行**。当前方案适配已有服务器，保留原有 Xray 服务。
+状态：数学树已发布到 VPS，公网 HTTPS 健康检查通过；当前线上仍使用 Nginx Basic Auth。共享密码登录页已在独立分支实现，合并后需在 VPS 执行一次安装脚本才会切换。保留原有 Xray 服务。
 
 ## 已知服务器与端口边界
 
@@ -14,8 +14,8 @@
 
 ## 部署边界
 
-- 只发布仓库 `dist/` 静态文件；不运行 Python 服务，不新增数据库、账号系统、模型 API 或云端学习记录。
-- 预览默认使用 Nginx Basic Auth。只有固定内容的 `/health` 健康检查公开，不返回学习数据。
+- 数学树仍只发布仓库 `dist/` 静态文件；为改善微信内置浏览器兼容性，预览入口使用一个仅监听 `127.0.0.1:8765` 的轻量 Python 标准库认证服务，不运行数学业务后端、不新增数据库或云端学习记录。
+- 目标登录方式为共享账号 `preview` + 邀请密码；密码只保存为服务器端 PBKDF2 哈希，登录成功后签发 12 小时有效的 `Secure; HttpOnly; SameSite=Lax` 签名 Cookie。只有固定内容的 `/health` 健康检查公开。
 - 学习进度、草稿和地图视角仍保存在访问者自己的浏览器本地存储。新域名是新的浏览器 origin，不会自动迁移 localhost 的已有记录，也不会在设备间同步。
 - Service Worker 按相对路径注册并预缓存资源，因此部署在独立子域名根路径，不要挂在网站的 `/math/` 子目录下。
 - 不改变数学树节点、关系、坐标、视觉、学习路线或文字优化分支。
@@ -53,15 +53,16 @@ sudo install -d -o www-data -g www-data -m 755 /var/www/certbot/.well-known/acme
 sudo certbot certonly --webroot -w /var/www/certbot -d math.664357788.xyz -m <your-email> --agree-tos
 ```
 
-3. 创建预览密码文件，限制读取权限：
+3. 共享密码登录不再使用 Nginx Basic Auth。将新版本合并到 `main` 后，在 VPS root 终端下载并运行一次安装脚本：
 
 ```sh
-sudo htpasswd -cB /etc/nginx/.htpasswd-math-preview preview
-sudo chown root:www-data /etc/nginx/.htpasswd-math-preview
-sudo chmod 640 /etc/nginx/.htpasswd-math-preview
+curl -fsSLo /root/setup-preview-auth-vps.sh https://raw.githubusercontent.com/runlinx-eng/math/main/scripts/setup-preview-auth-vps.sh
+bash /root/setup-preview-auth-vps.sh
 ```
 
-4. 将 `deploy/vps/nginx-math-preview.conf.example` 覆盖到同一站点配置，确认 `server_name` 和证书路径正确，再执行 `sudo nginx -t && sudo systemctl reload nginx`。
+脚本会先启动本机认证服务，再备份旧 Nginx 配置、检查新配置并 reload。输入体验密码时可沿用原来的密码，也可设置新密码（至少 12 位）；密码不会写入仓库或输出到终端。旧 `/etc/nginx/.htpasswd-math-preview` 文件保留作回滚备用，但新配置不再引用它。
+
+4. 安装脚本完成后，`/login` 应返回 200，未登录访问首页应跳转到登录页（302），正确密码登录后应进入数学树。认证服务只监听 VPS 本机的 `127.0.0.1:8765`；Nginx 对登录请求限制为每 IP 每分钟 5 次，超限返回 429。登录会话有效期 12 小时。
 
 5. 配置证书续期后重载 Nginx：
 
@@ -75,7 +76,18 @@ sudo chmod 755 /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
 sudo systemctl enable --now certbot.timer
 ```
 
-验证 `https://math.664357788.xyz:8443/health` 返回 `{"app":"math-explorer","status":"ok"}`，未登录访问首页应收到 401。HTTP 首页应跳转到 HTTPS 8443。确认 Xray 仍 active 且 443 仍由 Xray 监听。
+验证 `https://math.664357788.xyz:8443/health` 返回 `{"app":"math-explorer","status":"ok"}`；`/login` 返回 200；未登录访问首页返回 302 并进入登录页；正确密码登录后获得会话 Cookie 并可访问数学树。HTTP 首页应跳转到 HTTPS 8443。确认认证服务与 Nginx 均 active，Xray 仍 active 且 443 仍由 Xray 监听。
+
+## 体验登录与账号管理
+
+- 体验地址：`https://math.664357788.xyz:8443`；账号固定为 `preview`，体验者只需输入共享密码。
+- 登录成功后签发 12 小时有效的签名 Cookie；Cookie 带 `Secure`、`HttpOnly`、`SameSite=Lax`，密码不进入浏览器存储。
+- 密码由服务器端 PBKDF2-HMAC-SHA256 哈希验证；原始密码不写入仓库、Nginx 配置或日志。
+- 登录接口由 Nginx 限速，每个来源 IP 每分钟 5 次，超限返回 429。
+- 退出登录：访问 `https://math.664357788.xyz:8443/auth/logout`。
+- 修改共享密码：重新运行 `setup-preview-auth-vps.sh` 并输入新密码。脚本同时轮换签名密钥，因此会让所有现有登录会话失效。
+- 当前是共享账号，不支持按人单独撤销；如果需要撤销所有体验者访问，修改共享密码即可。
+- 旧 Basic Auth 密码文件仅作为回滚备用，不再被新 Nginx 配置引用。
 
 ## GitHub Actions 配置
 
