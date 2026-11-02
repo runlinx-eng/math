@@ -154,4 +154,7 @@ jobs:
             verification/spatial-unified-map/
             verification/spatial-theme-overview/
             verification/learning-workspace/
+            verification/concept-language-pilot/
+            verification/node-name-review/
+            verification/language-direction/
           if-no-files-found: warn
