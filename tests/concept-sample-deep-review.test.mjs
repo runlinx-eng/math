@@ -115,7 +115,7 @@ test('seven research-gap samples have external evidence records and actual expla
  assert.match(CONCEPT_EXPLANATIONS['mt_8VjmxR1yfw'].example,/相同的五数概括/);assert.match(CONCEPT_EXPLANATIONS['mt_i2-QaXbyzB'].example,/48 平方厘米.*24 平方厘米.*24 平方厘米/);
 });
 
- 
+
 test('B02 capacity research gate is documented without drafting an explanation',()=>{
  const b02=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B02.json',import.meta.url),'utf8'));
  assert.equal(b02.batchId,'B02');
