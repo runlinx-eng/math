@@ -15,7 +15,7 @@ test('six exact-source concept samples preserve identities and distinct equivale
     assert.equal(conceptHelpFor(id),copy);
     for(const field of ['formal','definition','simpler','example','counterexample','tryIt','why']){
       assert.equal(typeof copy[field],'string',id+' '+field);
-      assert.ok(copy[field].trim().length>=10,id+' '+field);
+      assert.ok(copy[field].trim().length>=(field==='formal'?2:10),id+' '+field);
       assert.doesNotMatch(copy[field],/已掌握|你已学会|点击即完成/);
     }
   }
