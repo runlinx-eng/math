@@ -16,6 +16,7 @@ on:
       - 'tests/concept-visual-browser.cjs'
       - 'tests/navigation-copy.test.mjs'
       - 'tests/node-name-audit.test.mjs'
+      - 'tests/node-name-browser.cjs'
       - 'dist/spatial-names.js'
       - 'tests/spatial-overview.test.mjs'
       - 'tests/spatial-overview-structure.test.mjs'
@@ -77,6 +78,7 @@ jobs:
           node tests/spatial-focus-transition-browser.cjs
           node tests/spatial-focus-semantics-browser.cjs
           node tests/concept-visual-browser.cjs
+          node tests/node-name-browser.cjs
           node tests/spatial-focus-filter-browser.cjs
           node tests/spatial-guide-inplace-browser.cjs
           node tests/spatial-unified-map-browser.cjs
@@ -93,6 +95,7 @@ jobs:
             verification/spatial-focus-transition/
             verification/spatial-focus-semantics/
             verification/concept-language-pilot/
+            verification/node-name-review/
             verification/spatial-focus-filter/
             verification/spatial-guide-inplace/
             verification/spatial-unified-map/
