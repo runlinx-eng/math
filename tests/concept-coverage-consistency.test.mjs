@@ -96,7 +96,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.ok(explanationPilotEntries.every(entry=>CONCEPT_EXPLANATIONS[entry.id]),
     'all six name-audit explanation pilot nodes must exist in the current explanation module');
 
-  assert.match(termsDoc,/39 个节点完成样板/);
+  assert.match(termsDoc,/45 个节点完成样板/);
   assert.match(termsDoc,/15 个节点有按概念制作的静态 SVG 图示/);
   assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
   assert.match(termsDoc,/84 个展示名修正/);
