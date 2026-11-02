@@ -33,6 +33,7 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_LpSuPgL31x').definition,/平均分.*按每组指定的数量分组/);
   assert.match(conceptHelpFor('mt_DOe893F6gN').definition,/长度.*厘米或米.*质量.*克或千克/);
   assert.match(conceptHelpFor('mt_-3udyo6VyB').example,/y＝2x＋1.*\(0，1\).*\(1，3\).*\(2，5\)/);
+  assert.equal(conceptHelpFor('mt_-3udyo6VyB').visual,'linear-function-graph');
   assert.match(conceptHelpFor('mt_8RmpkDxT9L').definition,/等号.*数量相同/);
   assert.match(conceptHelpFor('mt_vKcxX6iNOA').definition,/分母.*平均分成几份.*分子.*取其中几份.*不能为 0/);
   assert.match(conceptHelpFor('mt_8atyuvPUZc').counterexample,/不等于.*造成/);
