@@ -82,7 +82,7 @@ test('four representational samples connect visual structure to the mathematical
   assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/30 张贴纸.*5 格.*每格 30÷5＝6 张.*12 张和 18 张/);
   assert.match(conceptHelpFor('mt_ePXg_XyCKU').counterexample,/不同长度/);
   assert.equal(conceptHelpFor('mt_eSv_w46u6H').visual,'venn-two-sets');
-  assert.match(conceptHelpFor('mt_eSv_w46u6H').example,/10＋6＋8＝24 人/);
+  assert.match(conceptHelpFor('mt_eSv_w46u6H').example,/P\(至少喜欢一项\)＝24\/30/);
   assert.match(conceptHelpFor('mt_eSv_w46u6H').counterexample,/不能.*重复算两次/);
   assert.equal(conceptHelpFor('mt_GRWwTDZ3wD').visual,'multiplication-array');
   assert.match(conceptHelpFor('mt_GRWwTDZ3wD').example,/3×4＝12.*12÷3＝4/);
@@ -140,7 +140,7 @@ test('first-pass calibration closes identified source-scope gaps without claimin
   assert.match(conceptHelpFor('mt_8atyuvPUZc').definition,/最佳拟合线.*已有数据范围内/);
   assert.match(conceptHelpFor('mt_SHVyE1CLUa').definition,/报告出来.*结论的限制/);
   assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/化简.*6:9＝2:3/);
-  assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/商 a\/b.*多少倍.*y＝\(a\/b\)x/);
+  assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/a\/b 表示第一个数量是第二个数量的多少倍.*第二个数量记作 x、把第一个数量记作 y.*y＝\(a\/b\)x/);
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').definition,/直棱柱的体积等于底面积乘高/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/实际长度求图上长度/);
   assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/12\/30＝2\/5/);

@@ -4,6 +4,8 @@
 工作分支：`feat/language-concept-audit-v1`
 PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull/3)（Open / Draft，未合并）
 
+> 当前状态源：`CONCEPT-REVIEW-INVENTORY.json` 保留首轮机器盘点快照，其中的首轮样板校准字段是历史记录；45个样板的当前二轮状态以 `CONCEPT-SAMPLE-DEEP-REVIEW.json` 为准，85个研究缺口的当前分流以 `CONCEPT-RESEARCH-TRIAGE.json` 为准。
+
 ## 一、项目范围与不变项
 
 - **537 个知识地图节点**：逐项审查名称、数学概念、定义、通俗解释、例子、反例、操作任务、理由和适龄表达。
