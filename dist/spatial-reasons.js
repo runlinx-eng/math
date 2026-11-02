@@ -2,16 +2,16 @@
 // Missing or changed upstream reasons must never be presented as reviewed.
 const REVIEWED={
   'mt_FP-mjXaq3B>mt_a3dov8CZkq':['Generating/explaining equivalent fractions exercises justification skills','生成等值分数并解释它们相等，可以练习给出理由。'],
-  'mt_ebPelt-qAl>mt_b7T-CjOYUR':['Simplifying fractions extends Y5 equivalent fractions concept','约分是把一个分数换成表示同样大小、写法更简单的分数。'],
+  'mt_ebPelt-qAl>mt_b7T-CjOYUR':['Simplifying fractions extends Y5 equivalent fractions concept','约分时，分子和分母同时除以一个大于1的公因数，分数的大小不变；继续约分可得到最简分数。'],
   'mt_Ep7TDFuYUa>mt_ebPelt-qAl':['Understanding equivalence conceptually is prerequisite to explaining algebraically','先看懂不同分数可以表示同一个位置，再解释它们的分子和分母如何变化。'],
   'mt_FP-mjXaq3B>mt_ebPelt-qAl':['Generating equivalent fractions with visual models is prerequisite to algebraic explanation of equivalence','把每一份再等分，能帮助看懂分子、分母为什么同时乘同一个数。'],
   'mt_FbDKeLfBCo>mt_Ep7TDFuYUa':['Diagram-based equivalent fractions is prerequisite to formal equivalence understanding','先从图中辨认相等的分数，再看它们在数轴上处于同一个位置。'],
   'mt_Kr3IyA6m-O>mt_FbDKeLfBCo':['Number line supports seeing equivalent fractions as the same point','数轴上表示同一个位置的分数，可以帮助看见它们的量相等。'],
-  'mt_MyGblah2yY>mt_FbDKeLfBCo':['Extends equivalence of 2/4 and 1/2 to broader equivalent fractions','从二分之一等于四分之二，继续观察其他表示相同量的分数。'],
+  'mt_MyGblah2yY>mt_FbDKeLfBCo':['Extends equivalence of 2/4 and 1/2 to broader equivalent fractions','对同一个整体，二分之一与四分之二表示相同的量；再观察更多表示相同数量的等值分数。'],
   'mt_vKcxX6iNOA>mt_FbDKeLfBCo':['Recognising and showing equivalent fractions requires that vocabulary','认识分数的写法与词语，有助于说清图中相等的分数。'],
   'mt_Ep7TDFuYUa>mt_FP-mjXaq3B':['Must understand equivalence before generating equivalent fractions','先理解不同写法可以表示相同的量，再通过细分或合并得到新的写法。'],
   'mt_ebPelt-qAl>mt_jCy07DyBNU':['Equivalent fraction patterns exercise generalisation','观察等值分数中重复出现的变化，可以练习概括规律。'],
-  'mt_ebPelt-qAl>mt_NaqEP8xDhZ':['Generating equivalent fractions supports converting 10ths to 100ths','把每个十分之一再等分成十份，就能用百分之几表示相同的量。'],
+  'mt_ebPelt-qAl>mt_NaqEP8xDhZ':['Generating equivalent fractions supports converting 10ths to 100ths','把十分之三的每个十分之一再等分成十份，就得到百分之三十；分法变了，表示的量不变。'],
   'mt_ebPelt-qAl>mt_SXbZ3bC9z7':['Must generate equivalent fractions before using common denominators to compare','先把分数换成相同大小的小份，有助于用共同分母比较。'],
   'mt_ebPelt-qAl>mt_-V7EnqU7gG':['Must generate equivalent fractions to find common denominators','换成等值分数可以得到共同分母，方便把同样大小的小份相加或相减。'],
   'mt_ebPelt-qAl>mt_VKW8lOcFaw':['Relating n/n × a/b to equivalence connects to equivalent fractions','分子和分母同乘一个非零数，相当于把分数乘以等于1的数，量保持不变。']
@@ -128,7 +128,7 @@ const REVIEWED={
   ,"mt_r0VXbfAmsH>mt_0ZDouU664X":["Bundling into tens draws on knowing a ten is ten ones", "把物品十个一捆时，每一捆都代表十个一。"]
   ,"mt_t9BICauBSI>mt_0ZDouU664X":["Recognising small groups instantly speeds up counting collections in groups", "认出小组里有几个物品，可以帮助数清一组一组摆放的总数。"]
   ,"mt_o_p-3tCxiM>mt_14T5yPXUq_":["Mixed number operations benefit from mixed/improper conversion", "带分数和假分数可以表示同一个量；互相转换后，可以选择方便的方式计算。"]
-  ,"mt_4bc3EAxhlY>mt_167X6Ax8P7":["Congruence criteria are exactly the sets of conditions that determine a unique triangle, and explaining why SSA fails uses the two-triangle case", "判断哪些边角条件能确定三角形，有助于理解全等判定；例如三边可以确定形状，两边及非夹角却可能出现不同三角形。"]
+  ,"mt_4bc3EAxhlY>mt_167X6Ax8P7":["Congruence criteria are exactly the sets of conditions that determine a unique triangle, and explaining why SSA fails uses the two-triangle case", "先检查任意两边之和是否大于第三边；能构成三角形时，三边可确定它的形状和大小，两边及非夹角则未必能唯一确定。"]
   ,"mt_Jf8xcX4UTq>mt_167X6Ax8P7":["Determining congruence requires constructing triangles from given conditions", "按给定边和角画三角形，可以观察这些条件是否确定了相同形状和大小。"]
   ,"mt_WtIFJSCQIT>mt_167X6Ax8P7":["Triangle congruence criteria require standard labelling conventions", "看懂顶点字母、角和边的标记，有助于准确表达三角形全等的条件。"]
   ,"mt_DyGBW3ZHh3>mt_18fK9sQdIz":["Formal short multiplication extends Y3 written multiplication", "笔算乘法把熟悉的乘法步骤按数位记录下来。"]
@@ -311,7 +311,7 @@ const REVIEWED={
   ,"mt_933BohS9BH>mt_Ac7oMWhyPw":["Compare decimals to thousandths extends Y5 decimal comparison", "比较小数时，从较高数位开始逐位比较的方法也适用于更多小数位。"]
   ,"mt_EDgw64OmfA>mt_Ac7oMWhyPw":["Place-value understanding supports decimal comparison reasoning", "理解相邻数位相差10倍，可以帮助比较小数中各位数字的值。"]
   ,"mt_kdWoAel3Zl>mt_Ac7oMWhyPw":["Reading/writing decimals to thousandths requires understanding thousandths place", "知道千分位表示多少个千分之一，有助于读写并比较这一数位上的数字。"]
-  ,"mt_sHJqh6UUya>mt_aCwj2PCoRV":["A non-uniform model uses relative frequencies from experiments as its probabilities, and judging a model against data compares it with observed frequencies", "用实验中各结果的相对频率建立模型，再比较模型与实际观察的数据。"]
+  ,"mt_sHJqh6UUya>mt_aCwj2PCoRV":["A non-uniform model uses relative frequencies from experiments as its probabilities, and judging a model against data compares it with observed frequencies", "根据多次实验中各结果的相对频率估计概率，建立模型后还要与新的观察结果比较；实验估计不等于精确概率。"]
   ,"mt_XfyqXLqzpx>mt_aCwj2PCoRV":["A probability model must list outcomes whose probabilities add to 1", "概率模型要列全所有可能且互不重叠的基本结果，各结果的概率相加为1。"]
   ,"mt_Zt30Gxi-qp>mt_aCwj2PCoRV":["A uniform model applies favourable ÷ total outcomes when every outcome is equally likely", "各结果等可能时，可以用有利结果数除以全部结果数；不等可能时不能只靠结果数量判断概率。"]
   ,"mt_OvyoRo47K->mt_AF2BeFQwfX":["Combining coins involves addition", "把每枚硬币的面值相加，可以得到总金额。"]
@@ -323,7 +323,7 @@ const REVIEWED={
   ,"mt_aPBzD28_mT>mt_aHQ9kNt3is":["Mental add/sub of tens to three-digit numbers requires three-digit PV", "理解三位数的百位、十位和个位，有助于计算加减整十数。"]
   ,"mt_izien3ZX51>mt_aHQ9kNt3is":["Extends finding 10 more/less to adding arbitrary multiples of 10", "先看一个数多10或少10，再看增加或减少几个十。"]
   ,"mt_2jbUekyTu4>mt_aivrWs6jrS":["Age 7-8 repeated reasoning is prerequisite to age 8-9 level", "观察表格里重复的变化，可以帮助从已知乘法事实推想新结果。"]
-  ,"mt_GzcJEVkNRn>mt_aivrWs6jrS":["Area calculation patterns (doubling side doubles area) exercise generalisation", "长方形一条边不变、另一条边变为2倍时，面积也变为2倍；可以据此观察规律。"]
+  ,"mt_GzcJEVkNRn>mt_aivrWs6jrS":["Area calculation patterns (doubling side doubles area) exercise generalisation", "长方形只有一条边变为2倍、另一条边不变时，面积变为2倍；若两条边都变为2倍，面积会变为4倍。"]
   ,"mt_mr_Vk7FGzK>mt_AKAtWEwpcj":["Adding ones to a two-digit number extends Y1 adding within 20", "理解较小数的加减后，可以用相同思路把一位数加到两位数上。"]
   ,"mt_THl9GLxwoL>mt_AKAtWEwpcj":["Adding ones to two-digit numbers requires understanding tens and ones", "看清两位数中的十和一，有助于加减一位数并判断是否需要换位。"]
   ,"mt_ATYLKt0je->mt_ALUrJpY0cZ":["The conceptual definition of percentage as parts per hundred extends the basic percentage vocabulary to a precise definition", "百分数表示每100份中的多少份，可以写成分母为100的分数。"]
@@ -347,7 +347,7 @@ const REVIEWED={
   ,"mt_8atyuvPUZc>mt_BdAeZJUOir":["Plotting a scatter graph is the representational skill underpinning the conceptual understanding of correlation described in mt_8atyuvPUZc", "散点图用点表示成对数据；观察点的分布可以帮助描述相关关系。"]
   ,"mt_4K1dr204Hi>mt_bESTSBB0wK":["Understanding fraction-decimal-percentage equivalence deepens pie chart interpretation (e.g. 1/4 = 25% = 90°) but is not strictly required if the child can compute percentages procedurally", "在扇形统计图中，整圆的圆心角是360°；四分之一也就是25%，对应90°的圆心角。"]
   ,"mt_4MFUAsbx_6>mt_bESTSBB0wK":["Drawing accurate pie chart sectors requires protractor skills", "用量角器量出扇形的圆心角，可以更准确地绘制扇形统计图。"]
-  ,"mt_oqziWKry-L>mt_bESTSBB0wK":["Constructing pie charts requires knowing angles at a point sum to 360°", "一个圆周的角度是360°，扇形图中所有扇形的圆心角合起来也是360°。"]
+  ,"mt_oqziWKry-L>mt_bESTSBB0wK":["Constructing pie charts requires knowing angles at a point sum to 360°", "完整的扇形统计图覆盖整个圆，各扇形不重叠也不遗漏，因此各扇形的圆心角之和是360°。"]
   ,"mt_PNSyfH56eQ>mt_bESTSBB0wK":["Calculating pie chart sector angles requires computing percentages of 360; interpreting sectors requires proportional reasoning", "扇形占全部的百分比可以对应360°的一部分，用来求扇形的角度。"]
   ,"mt_u5HkSxZECM>mt_bESTSBB0wK":["Constructing pie charts and line graphs requires the display vocabulary", "理解类别、刻度和标签等图表词语，有助于绘制和阅读扇形图。"]
   ,"mt_KJeEeTutJI>mt_bfhng6mOuy":["Distinguishing defining vs non-defining attributes requires knowing common 2-D shape names first", "认识常见图形后，可以比较哪些特征决定图形类别，哪些特征可以改变。"]
@@ -757,7 +757,7 @@ const REVIEWED={
   ,"mt_AQcVRBddko>mt_MHaiUd2FLA":["Comparing beyond 1000 extends comparing to 1000", "比较数的大小时，可以从最高数位开始，这一方法也适用于更大的数。"]
   ,"mt_jY7uf0Cb7o>mt_MHaiUd2FLA":["Comparing four-digit numbers requires four-digit PV", "看清四位数各数位表示的量，有助于比较大小。"]
   ,"mt_lC_Q5mSL_I>mt_MHaiUd2FLA":["Ordering and comparing numbers over 1000 requires the full 10,000 representations toolkit", "理解万以内数的数位和多种表示方式，有助于排列和比较大数。"]
-  ,"mt_AabJisinfi>mt_ML5t7n2-U8":["Triangle area formula (½ × b × h) requires understanding multiplying by ½", "三角形面积可由底乘高后取一半，需要理解乘以二分之一表示什么。"]
+  ,"mt_AabJisinfi>mt_ML5t7n2-U8":["Triangle area formula (½ × b × h) requires understanding multiplying by ½", "求三角形面积要用底乘对应的垂直高后除以2；乘以二分之一可以解释为什么要取一半。"]
   ,"mt_Jvg8X0N5u0>mt_ML5t7n2-U8":["Using area formulae connects to the general skill of using formulae", "把底和高代入面积公式，可以求三角形或平行四边形的面积。"]
   ,"mt_liIW336odh>mt_ML5t7n2-U8":["Must identify parallelograms/triangles and understand base/height as geometric properties", "先辨认图形并确定相应的底和垂直高度，有助于使用面积关系。"]
   ,"mt_ilPrU0cbtT>mt_mMDpLugX2X":["Estimation checks the spreadsheet results", "先估算金额，再比较表格中的计算结果，可以检查数量级是否合理。"]
