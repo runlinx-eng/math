@@ -14,7 +14,7 @@
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订；B01的2个、B02的1个无样板知识地图节点已完成外部来源核查，解释起草均未开始；其余73个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
+    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订；B01的2个、B02的1个、B03的1个无样板知识地图节点已完成外部来源核查，解释起草均未开始；其余72个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -106,16 +106,17 @@
         "withoutSample": 1
       }
     },
-    "nodesWithExternalSourcesVerified": 10,
+    "nodesWithExternalSourcesVerified": 11,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
-    "nodesWithResearchReviewedWithoutExplanation": 3,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 73,
+    "nodesWithResearchReviewedWithoutExplanation": 4,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 72,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
-      "B02"
+      "B02",
+      "B03"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -132,7 +133,8 @@
       }
     },
     "sourceRecordsExternallyVerifiedInB01": 2,
-    "sourceRecordsExternallyVerifiedInB02": 1
+    "sourceRecordsExternallyVerifiedInB02": 1,
+    "sourceRecordsExternallyVerifiedInB03": 1
   },
   "records": [
     {
@@ -977,14 +979,22 @@
         "end": 8
       },
       "phase": 4,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B03外部来源核查完成；解释起草未开始",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "researchVerificationStatus": "external_sources_reviewed_B03_2026-11-03",
+      "nextAction": "await_authorization_before_explanation_drafting",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B03.md#mt_gC-6JXAG5S"
     },
     {
       "id": "mt_mN4Ye_vtR7",
