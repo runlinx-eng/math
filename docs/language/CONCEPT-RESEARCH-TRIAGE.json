@@ -15,7 +15,7 @@
       "5": 76
     },
     "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订；B01的2个无样板知识地图节点已完成外部来源核查、解释起草未开始；其余74个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
-    "sourceRecordsExternallyVerifiedInThisPass": 2,
+    "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
         "total": 9,
@@ -110,7 +110,6 @@
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
-    "sourceRecordsExternallyVerifiedInPreviousPass": 7,
     "nodesWithResearchReviewedWithoutExplanation": 2,
     "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 74,
     "remainingUnverifiedMathThinkingNodes": 2,
@@ -130,7 +129,8 @@
         "knowledge_map": 74,
         "math_thinking": 2
       }
-    }
+    },
+    "sourceRecordsExternallyVerifiedInB01": 2
   },
   "records": [
     {
