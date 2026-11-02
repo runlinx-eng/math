@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('six exact-source concept samples preserve identities and distinct equivalent-fraction goals',()=>{
-  assert.equal(samples.length,6);
+test('fourteen exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,14);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -23,6 +23,20 @@ test('six exact-source concept samples preserve identities and distinct equivale
   assert.equal(byId.get('mt_Ep7TDFuYUa').title,'数轴上的等值分数');
   assert.equal(byId.get('mt_FP-mjXaq3B').title,'等值分数');
   assert.notEqual(conceptHelpFor('mt_Ep7TDFuYUa').definition,conceptHelpFor('mt_FP-mjXaq3B').definition);
+});
+test('explanation samples cover conceptual, procedural, representational, and language source types',()=>{
+  const types=new Set(samples.map(([id])=>byId.get(id).type));
+  for(const type of ['CONCEPTUAL','PROCEDURAL','REPRESENTATIONAL','LANGUAGE'])assert.ok(types.has(type),type+' source type is represented');
+});
+test('new samples preserve the key mathematical distinctions in their source goals',()=>{
+  assert.match(conceptHelpFor('mt_THl9GLxwoL').definition,/十位.*几个十.*个位.*几个一/);
+  assert.match(conceptHelpFor('mt_LpSuPgL31x').definition,/平均分.*按每组指定的数量分组/);
+  assert.match(conceptHelpFor('mt_DOe893F6gN').definition,/长度.*厘米或米.*质量.*克或千克/);
+  assert.match(conceptHelpFor('mt_-3udyo6VyB').example,/y＝2x＋1.*\(0，1\).*\(1，3\).*\(2，5\)/);
+  assert.match(conceptHelpFor('mt_8RmpkDxT9L').definition,/等号.*数量相同/);
+  assert.match(conceptHelpFor('mt_vKcxX6iNOA').definition,/分母.*平均分成几份.*分子.*取其中几份.*不能为 0/);
+  assert.match(conceptHelpFor('mt_8atyuvPUZc').counterexample,/不等于.*造成/);
+  assert.match(conceptHelpFor('mt_mqgu72aCMz').counterexample,/平行且不重合时无解.*重合时有无数个解/);
 });
 test('source names and node counts remain unchanged; help is supplemental',()=>{
   const canonical=makeKnowledgeNames({nodes:source.nodes});
