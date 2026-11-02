@@ -56,7 +56,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await page.screenshot({path:path.join(out,'03-guided-focus.png')});
   await page.locator('#guide-panel [data-action="guide-exit"]').click();
   await page.waitForFunction(()=>!document.body.classList.contains('guide-mode'));
-  check((await snap()).selected!==null,'leaving guide preserves exploration context');
+  check((await snap()).visibleNodes.length===537&&JSON.stringify((await snap()).positions)===positions,'leaving guide preserves complete map and stable knowledge positions');
   check(errors.length===0,'no browser page errors');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,measurements:{focus:render,zoom:scaled,guide},childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors,rootPixelRadius:render.rootPx,neighborPixelRadius:render.neighborPx,strokeWidths:[...new Set(render.lineWidths)]}));
