@@ -144,6 +144,7 @@ test('first-pass calibration closes identified source-scope gaps without claimin
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').definition,/直棱柱的体积等于底面积乘高/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/实际长度求图上长度/);
   assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/12\/30＝2\/5/);
+  assert.match(conceptHelpFor('mt_ePXg_XyCKU').definition,/部分与部分.*部分占整体.*百分数.*双数轴/);
   assert.match(conceptHelpFor('mt_eSv_w46u6H').definition,/两个或三个集合.*乘法原理/);
   assert.match(conceptHelpFor('mt_m1W6nTQJ2b').example,/8＋4＝12.*12－8＝4/);
   assert.match(conceptHelpFor('mt_q9EaJc2FP8').example,/2,347×6＝14,082/);
