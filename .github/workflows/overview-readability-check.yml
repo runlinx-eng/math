@@ -15,6 +15,8 @@ on:
       - 'tests/concept-explanations.test.mjs'
       - 'tests/concept-visual-browser.cjs'
       - 'tests/navigation-copy.test.mjs'
+      - 'tests/node-name-audit.test.mjs'
+      - 'dist/spatial-names.js'
       - 'tests/spatial-overview.test.mjs'
       - 'tests/spatial-overview-structure.test.mjs'
       - 'tests/spatial-overview-browser.cjs'
@@ -52,7 +54,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
       - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/language-terms.test.mjs tests/navigation-copy.test.mjs tests/concept-explanations.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/language-terms.test.mjs tests/navigation-copy.test.mjs tests/concept-explanations.test.mjs tests/node-name-audit.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
