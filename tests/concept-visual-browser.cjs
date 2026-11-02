@@ -1,11 +1,15 @@
-// Six-node UI review: layout, progressive explanation, diagram, and map invariants.
+// Fourteen-node UI review: four source types, progressive explanation, diagram, and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
 const ids=[
   ['count','mt_WcfaSfVT33'],['addition','mt_OvyoRo47K-'],
   ['numberline-fractions','mt_Ep7TDFuYUa'],['construct-fractions','mt_FP-mjXaq3B'],
-  ['area','mt_6xNmQLzuqm'],['chance','mt_UcGn2hjhYU']
+  ['area','mt_6xNmQLzuqm'],['chance','mt_UcGn2hjhYU'],
+  ['place-value','mt_THl9GLxwoL'],['division','mt_LpSuPgL31x'],
+  ['measurement-units','mt_DOe893F6gN'],['linear-graphs','mt_-3udyo6VyB'],
+  ['arithmetic-symbols','mt_8RmpkDxT9L'],['fraction-notation','mt_vKcxX6iNOA'],
+  ['correlation','mt_8atyuvPUZc'],['simultaneous-equations','mt_mqgu72aCMz']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -19,7 +23,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
