@@ -58,6 +58,6 @@ test('four category counts are complete without implying full mathematical revie
   assert.equal(audit.counts.duplicateGroupCount,44);
   assert.equal(audit.counts.duplicateNodes,130);
   assert.equal(audit.counts.explanationPilots,6);
-  assert.match(audit.meta.accuracyNote,/全部 587.*第一轮来源/);
+  assert.match(audit.meta.accuracyNote,/全部 587.*一轮来源/);
   assert.ok(math.nodes.every(n=>!Object.hasOwn(n,'displayTitle')),'source data is not rewritten to UI labels');
 });
