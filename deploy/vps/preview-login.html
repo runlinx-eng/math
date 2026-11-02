@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<title>数学树 · 体验登录</title>
+<style>
+:root{color-scheme:light;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f4f6fa}
+*{box-sizing:border-box}body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px}
+main{width:min(100%,390px);padding:30px;border:1px solid #e1e6ef;border-radius:18px;background:#fff;box-shadow:0 12px 36px rgba(20,35,60,.08)}
+h1{margin:0 0 8px;font-size:24px}p{margin:0;color:#647084;line-height:1.65}
+.account{margin:22px 0 16px;padding:12px 14px;border-radius:10px;background:#f4f6fa;color:#46536a;font-size:14px}
+label{display:block;margin:0 0 8px;font-size:14px;font-weight:600}
+input{width:100%;min-height:46px;padding:10px 12px;border:1px solid #cbd3df;border-radius:9px;font:inherit;font-size:16px}
+input:focus{outline:3px solid rgba(55,105,190,.16);border-color:#3769be}
+button{width:100%;min-height:46px;margin-top:16px;border:0;border-radius:9px;background:#244f91;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+button:disabled{opacity:.65;cursor:wait}#message{min-height:24px;margin-top:12px;color:#b42318;font-size:14px}
+.foot{margin-top:18px;font-size:12px;text-align:center}
+</style></head><body><main>
+<h1>数学树体验</h1><p>输入邀请人提供的体验密码，即可进入数学知识地图。</p>
+<div class="account">体验账号：<strong>preview</strong></div>
+<form id="login-form" action="/auth/login" method="post">
+<input type="hidden" name="username" value="preview">
+<label for="password">体验密码</label>
+<input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+<button id="submit" type="submit">进入数学树</button><div id="message" role="status" aria-live="polite"></div>
+</form><p class="foot">此为持续更新中的体验版本。</p>
+</main><script>
+const form=document.getElementById('login-form'),button=document.getElementById('submit'),message=document.getElementById('message');
+form.addEventListener('submit',async event=>{
+event.preventDefault();button.disabled=true;message.textContent='';
+try{
+const response=await fetch('/auth/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form))});
+if(response.ok){
+const candidate=new URLSearchParams(window.location.search).get('next');
+const destination=candidate&&candidate.startsWith('/')&&!candidate.startsWith('//')&&!candidate.includes('\\')?candidate:'/';
+window.location.replace(destination);return;
+}
+const result=await response.json().catch(()=>({}));
+message.textContent=response.status===429?'尝试次数较多，请稍后再试。':(result.error||'登录失败，请检查密码后重试。');
+}catch(_error){message.textContent='暂时无法连接服务器，请稍后重试。';}
+finally{button.disabled=false;}
+});
+</script></body></html>
