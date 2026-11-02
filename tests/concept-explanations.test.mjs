@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fourteen exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,14);
+  assert.equal(samples.length,16);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -26,7 +26,7 @@ test('fourteen exact-source explanation samples preserve identities and distinct
 });
 test('explanation samples cover conceptual, procedural, representational, and language source types',()=>{
   const types=new Set(samples.map(([id])=>byId.get(id).type));
-  for(const type of ['CONCEPTUAL','PROCEDURAL','REPRESENTATIONAL','LANGUAGE'])assert.ok(types.has(type),type+' source type is represented');
+  for(const type of ['CONCEPTUAL','PROCEDURAL','REPRESENTATIONAL','LANGUAGE','META'])assert.ok(types.has(type),type+' source type is represented');
 });
 test('new samples preserve the key mathematical distinctions in their source goals',()=>{
   assert.match(conceptHelpFor('mt_THl9GLxwoL').definition,/十位.*几个十.*个位.*几个一/);
@@ -37,6 +37,11 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_vKcxX6iNOA').definition,/分母.*平均分成几份.*分子.*取其中几份.*不能为 0/);
   assert.match(conceptHelpFor('mt_8atyuvPUZc').counterexample,/不等于.*造成/);
   assert.match(conceptHelpFor('mt_mqgu72aCMz').counterexample,/平行且不重合时无解.*重合时有无数个解/);
+});
+test('meta samples explain strategy selection, verification, and investigation limits',()=>{
+  assert.match(conceptHelpFor('mt_QaYfeVL-0C').definition,/四舍五入.*大致范围.*逆运算.*合理/);
+  assert.match(conceptHelpFor('mt_SHVyE1CLUa').definition,/提出清楚的问题.*向谁收集.*怎样收集.*结论的限制/);
+  assert.match(conceptHelpFor('mt_SHVyE1CLUa').counterexample,/样本可能不具代表性/);
 });
 test('source names and node counts remain unchanged; help is supplemental',()=>{
   const canonical=makeKnowledgeNames({nodes:source.nodes});
