@@ -19,7 +19,8 @@
 ```sh
 sudo apt update
 sudo apt install -y nginx certbot python3-certbot-nginx rsync apache2-utils
-sudo install -d -o "$USER" -g "$USER" /var/www/math-explorer-preview/releases
+sudo install -d -o math-deploy -g math-deploy /var/www/math-explorer-preview/releases
+# Replace math-deploy with the VPS_USER you configure in GitHub.
 sudo install -d -o www-data -g www-data /var/www/certbot
 ```
 
@@ -34,7 +35,7 @@ sudo htpasswd -cB /etc/nginx/.htpasswd-math-preview preview
 ```sh
 sudo ln -s /etc/nginx/sites-available/math-preview /etc/nginx/sites-enabled/math-preview
 sudo nginx -t && sudo systemctl reload nginx
-sudo certbot --nginx -d math-preview.example.com
+sudo certbot --nginx --redirect -d math-preview.example.com
 ```
 
 Certbot 完成后，确认 HTTP 自动跳转 HTTPS，且 `https://你的子域名/health` 返回 `{"app":"math-explorer","status":"ok"}`。
@@ -66,7 +67,7 @@ Certbot 完成后，确认 HTTP 自动跳转 HTTPS，且 `https://你的子域�
 ## 发布、回滚与验收
 
 - 发布脚本把每个提交放入独立 release 目录，最后原子切换 `current` 符号链接；失败时尽量恢复上一个 release，并保留当前和上一个版本，最多保留最近五个版本。
-- 回滚使用同一组 SSH 环境变量执行 `bash scripts/rollback-vps.sh`，将 `current` 与 `previous` 交换，再检查 HTTPS 健康端点。
+- 回滚可在 GitHub Actions 中手动运行 **Roll back Math Explorer preview**，使用同一组 SSH secrets 将 `current` 与 `previous` 交换，再检查 HTTPS 健康端点；也可在已配置相同 SSH 环境的可信终端运行 `bash scripts/rollback-vps.sh`。
 - 验收必须在真实域名 HTTPS 下完成：登录预览、进入三维全貌、缩放/旋转、打开学习活动、刷新恢复、Service Worker 安装与离线重开。CI 的 localhost 浏览器测试不能代替公网域名验收。
 - 若 Basic Auth 被浏览器记住，测试时用无痕窗口确认未授权访问会被拒绝；`/health` 例外，只返回固定状态文本。
 
