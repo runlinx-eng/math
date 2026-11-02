@@ -12,3 +12,36 @@ export function placeLabel({x,y,w,h,viewport,occupied,kind='node'}){
   }
   return null;
 }
+
+
+// A guide cue is an instruction attached to a real screen-projected point,
+// not a knowledge label or a prerequisite edge. Place every cue outside the
+// existing prompts so nearby fork choices stay independently clickable.
+export function placeGuideCue({x,y,w,h,viewport,occupied=[]}){
+  const margin=14,top=152,bottom=105,right=92,gap=20;
+  const candidates=[
+    [x-w/2,y-h-gap], [x-w/2,y+gap],
+    [x+gap,y-h-gap], [x-w-gap,y-h-gap],
+    [x+gap,y+gap], [x-w-gap,y+gap],
+    [x+gap,y-h/2], [x-w-gap,y-h/2],
+    [x-w/2,y-h-gap-68], [x-w/2,y+gap+68],
+    [x-w-gap,y-h-gap-68], [x+gap,y-h-gap-68],
+    [x-w-gap,y+gap+68], [x+gap,y+gap+68]
+  ];
+  const fits=r=>r.x>=margin&&r.y>=top&&r.x+r.w<=viewport.w-right&&r.y+r.h<=viewport.h-bottom;
+  for(const [left,upper] of candidates){
+    const r={x:left,y:upper,w,h};
+    if(fits(r)&&!occupied.some(o=>overlaps(r,o,10)))return r;
+  }
+  // Prefer a nearby free location before considering the rest of the
+  // screen: a prompt should still visually belong to its source node.
+  const options=[];
+  for(let cy=top;cy<=viewport.h-bottom-h;cy+=Math.max(18,h/2))
+    for(let cx=margin;cx<=viewport.w-right-w;cx+=Math.max(25,w/2)){
+      const r={x:cx,y:cy,w,h};
+      if(!occupied.some(o=>overlaps(r,o,10)))
+        options.push({r,d:(cx+w/2-x)**2+(cy+h/2-y)**2});
+    }
+  options.sort((a,b)=>a.d-b.d||a.r.y-b.r.y||a.r.x-b.r.x);
+  return options[0]?.r||null;
+}
