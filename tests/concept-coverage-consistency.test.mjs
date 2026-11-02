@@ -100,7 +100,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.match(termsDoc,/15 个节点有按概念制作的静态 SVG 图示/);
   assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
   assert.match(termsDoc,/84 个展示名修正/);
-  assert.match(termsDoc,/38 个重名节点/);
+  assert.match(termsDoc,/重名节点 38 个/);
   assert.match(termsDoc,/46 个非重名节点/);
   assert.match(termsDoc,/92 个重名限定语/);
   assert.match(termsDoc,/406 个非重名名称/);
