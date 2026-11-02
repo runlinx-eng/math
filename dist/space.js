@@ -305,15 +305,30 @@ function themeOverview(o){
 }
 
 function conceptVisualHtml(kind){
-  if(kind!=='equal-fraction-bars')return '';
-  return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
-    '<figure class="concept-visual"><svg viewBox="0 0 240 112" role="img" aria-label="两个等长整体，上面二等分涂一份，下面四等分涂两份，涂色长度一样">'+
-    '<text x="4" y="25">1/2</text><rect x="42" y="8" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
-    '<rect x="42" y="8" width="90" height="26" fill="#dfb477"/><path d="M132 8V34" stroke="#74897f"/>'+
-    '<text x="4" y="76">2/4</text><rect x="42" y="59" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
-    '<rect x="42" y="59" width="90" height="26" fill="#dfb477"/>'+
-    '<path d="M87 59V85 M132 59V85 M177 59V85" stroke="#74897f"/>'+
-    '</svg><figcaption>整体相同、涂色长度相同：1/2＝2/4。只改变分法，不改变所表示的数。</figcaption></figure></details>';
+  if(kind==='equal-fraction-bars'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 240 112" role="img" aria-label="两个等长整体，上面二等分涂一份，下面四等分涂两份，涂色长度一样">'+
+      '<text x="4" y="25">1/2</text><rect x="42" y="8" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+      '<rect x="42" y="8" width="90" height="26" fill="#dfb477"/><path d="M132 8V34" stroke="#74897f"/>'+
+      '<text x="4" y="76">2/4</text><rect x="42" y="59" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+      '<rect x="42" y="59" width="90" height="26" fill="#dfb477"/>'+
+      '<path d="M87 59V85 M132 59V85 M177 59V85" stroke="#74897f"/>'+
+      '</svg><figcaption>整体相同、涂色长度相同：1/2＝2/4。只改变分法，不改变所表示的数。</figcaption></figure></details>';
+  }
+  if(kind==='linear-function-graph'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 280 176" role="img" aria-label="直线 y=2x+1，经过 (0，1)、(1，3)、(2，5) 三个点">'+
+      '<path d="M42 24V144H254" fill="none" stroke="#74897f" stroke-width="1.5"/>'+
+      '<path d="M50 24V144 M120 24V144 M190 24V144 M42 120H254 M42 72H254 M42 24H254" fill="none" stroke="#dfe4dc" stroke-width="1"/>'+
+      '<path d="M50 120L190 24" fill="none" stroke="#c98e45" stroke-width="3"/>'+
+      '<circle cx="50" cy="120" r="4.5" fill="#c98e45"/><circle cx="120" cy="72" r="4.5" fill="#c98e45"/><circle cx="190" cy="24" r="4.5" fill="#c98e45"/>'+
+      '<text x="27" y="124">1</text><text x="27" y="76">3</text><text x="27" y="28">5</text>'+
+      '<text x="47" y="160">0</text><text x="117" y="160">1</text><text x="187" y="160">2</text>'+
+      '<text x="260" y="148">x</text><text x="31" y="16">y</text><text x="158" y="54">y = 2x + 1</text>'+
+      '<text x="54" y="113">(0,1)</text><text x="124" y="65">(1,3)</text><text x="194" y="19">(2,5)</text>'+
+      '</svg><figcaption>每个点都满足同一个关系式 y＝2x＋1；横坐标 x 对应纵坐标 y，三个点落在同一条直线上。</figcaption></figure></details>';
+  }
+  return '';
 }
 function conceptExplanationHtml(id){
   const c=conceptHelpFor(id);
