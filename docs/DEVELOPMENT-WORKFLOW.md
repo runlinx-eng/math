@@ -10,6 +10,7 @@
 - `docs/LEARNING-DESIGN.md`：学习设计、学习记录及能力推断的边界。
 - `docs/EXECUTION-PLAN.md`：当前阶段计划与未完成事项；不自动覆盖最新用户决策。
 - `README.md`：启动、使用说明与维护索引。
+- `docs/deployment/vps.md`：静态 VPS 预览、发布、隐私边界与回滚说明。
 - `docs/VALIDATION.md`：技术验证与实际使用验收的证据和局限。
 - 新增领域规范（例如文字术语）只有合并主线后才成为对应领域的正式规范。待合并分支只约束该分支自身的改动。
 
