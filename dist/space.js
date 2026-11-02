@@ -104,7 +104,7 @@ function renderGuideCues(){
       &&!(p.x>panel.left-45&&p.x<panel.right+75&&p.y>panel.top-40&&p.y<panel.bottom+65);
     if(clear){
       projections.set(target.key,{x:p.x,y:p.y,visible:true});
-      shown.push(`<button type="button" class="guide-cue" data-action="guide-visit" data-key="${esc(target.key)}" aria-label="${esc(target.label)}：${esc(displayTitle(object))}"><span class="guide-cue-action">${esc(target.label)}</span><strong>${esc(displayTitle(object))}</strong></button>`);
+      shown.push(`<button type="button" class="guide-cue" data-action="guide-visit" data-key="${esc(target.key)}" aria-label="${esc(target.label)}：${esc(displayTitle(object))}" title="${esc(target.label)}：${esc(displayTitle(object))}"><span class="guide-cue-action"><span class="guide-cue-dot" aria-hidden="true"></span>${esc(target.label)}</span><strong class="guide-cue-name">${esc(displayTitle(object))}</strong></button>`);
     }else{
       const cx=Math.max(panel.right+100,Math.min(innerWidth-135,Math.max(p.x||0,0))),cy=Math.max(185,Math.min(innerHeight-155,Math.max(p.y||0,0)));
       const dx=p.x-cx,dy=p.y-cy,arrow=Math.abs(dx)>Math.abs(dy)?dx<0?'←':'→':dy<0?'↑':'↓';
@@ -149,15 +149,18 @@ function renderGuide(){
   if(!step){panel.hidden=true;renderGuideCues();return;}
   document.body.dataset.guideStep=String(index);
   const nextText=['沿连接出发','观察分叉','观察汇合','自己选路'][index]||'';
-  panel.innerHTML=`<div class="guide-step">认识这张图 · ${String(index+1).padStart(2,'0')} / ${String(guideSteps.length).padStart(2,'0')}</div>
+  panel.innerHTML=`<div class="guide-head"><span class="guide-step">认识这张图</span><span class="guide-count">${String(index+1).padStart(2,'0')} <span aria-hidden="true">/</span> ${String(guideSteps.length).padStart(2,'0')}</span></div>
     <progress class="guide-progress" max="${guideSteps.length}" value="${index+1}" aria-label="导览观察步骤 ${index+1} / ${guideSteps.length}"></progress>
-    <h2>${esc(step.title)}</h2><p class="guide-hint">${esc(step.hint)}</p>
-    <p class="guide-status" role="status">${esc(guideStepMessage(index))}</p>
+    <h2>${esc(step.title)}</h2>
+    <p class="guide-hint">${esc(step.hint)}</p>
+    <p class="guide-status" role="status"><span class="guide-status-dot" aria-hidden="true"></span><span>${esc(guideStepMessage(index))}</span></p>
     <div class="guide-actions">
       ${index<4?button('guide-step',nextText,`data-step="${index+1}" ${guideReady()?'':'disabled'}`,'primary-button'):''}
-      ${index?button('guide-step','上一步',`data-step="${index-1}"`,'plain-button'):''}
-      ${index>0?button('guide-learn','动手试试',`data-id="${step.anchor}"`,'plain-button'):''}
-      ${button('guide-exit','退出引导','','plain-button')}
+      <div class="guide-actions-secondary">
+        ${index?button('guide-step','上一步',`data-step="${index-1}"`,'plain-button'):''}
+        ${index>0?button('guide-learn','动手试试',`data-id="${step.anchor}"`,'plain-button'):''}
+        ${button('guide-exit','退出引导','','plain-button')}
+      </div>
     </div>`;
   positionGuide();renderGuideCues();
 }
