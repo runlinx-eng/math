@@ -4,13 +4,13 @@
     "branch": "feat/language-concept-audit-v1",
     "source": "dist/data/math.json",
     "sourceNameRule": "dist/spatial-names.js: NODE_DISPLAY_CORRECTIONS > existing exact > NODE_QUALIFIERS > source title",
-    "scope": "587 个来源节点的静态分类及 22 个来源目标复核修正",
-    "accuracyNote": "仅 22 个修正名称完成逐项来源描述核对；其他属于自动初筛或现有消歧机制检查，不得视为 587 个逐一数学审定。原始 title/name/description/ID/edges 保持不变。",
+    "scope": "587 节点静态命名清查；38 个来源目标修正（第一批 22＋第二批 16）；重名组其余 92 个完成一级来源目标对照并保留；452 个非重名待独立审查。",
+    "accuracyNote": "38 个纠正已对照来源描述，其中本轮新增 16 个；另 92 个重名限定语完成一级来源描述对照并保留。其余 452 个仍属自动初筛，不代表 587 个已经逐项独立教研审定。原始 title/name/description/ID/edges 保持不变。",
     "statusCodes": {
-      "corrected": "已核对来源并修正显示名称",
-      "disambiguation": "已有重名限定语；待逐项质量审阅",
-      "explanation": "正式名称保留；已有解释样板",
-      "candidate": "仅通过来源字段与重名结构初筛；尚未逐项人工核对"
+      "corrected": "已依据来源目标修正展示名称（38）",
+      "qualifier_reviewed": "重名后缀经一级来源目标对照后保留（92）",
+      "explanation": "正式名称保留；已有解释样板（5）",
+      "candidate": "仅通过静态初筛，尚未逐项数学内容审查（452）"
     }
   },
   "counts": {
@@ -20,10 +20,10 @@
     "qualifiersApplied": 130,
     "explanationPilots": 6,
     "byClass": {
-      "disambiguation": 108,
+      "qualifier_reviewed": 92,
       "explanation": 5,
       "candidate": 452,
-      "corrected": 22
+      "corrected": 38
     }
   },
   "entries": [
@@ -32,11 +32,13 @@
       "domainId": "add",
       "original": "加减法应用题",
       "display": "加减法应用题 · 10以内的情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "10以内的情境",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction word problems"
+      "sourceName": "Addition and subtraction word problems",
+      "sourceGoal": "Solve addition and subtraction word problems within 10 using objects or drawings",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_OvyoRo47K-",
@@ -98,11 +100,13 @@
       "domainId": "add",
       "original": "加法与减法",
       "display": "加法与减法 · 20以内的数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "20以内的数",
       "explanationPilot": false,
-      "sourceName": "Adding and subtracting"
+      "sourceName": "Adding and subtracting",
+      "sourceGoal": "Add and subtract one-digit and two-digit numbers to 20, including zero",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_VAWV_l7J0D",
@@ -219,11 +223,13 @@
       "domainId": "add",
       "original": "加减法的策略",
       "display": "加减法的策略 · 往前数与往后数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "往前数与往后数",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction strategies"
+      "sourceName": "Addition and subtraction strategies",
+      "sourceGoal": "Use counting on and counting back as strategies for addition and subtraction",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_m1W6nTQJ2b",
@@ -274,11 +280,13 @@
       "domainId": "add",
       "original": "熟练使用加减法",
       "display": "熟练使用加减法 · 20以内的事实",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "20以内的事实",
       "explanationPilot": false,
-      "sourceName": "Fluent addition and subtraction"
+      "sourceName": "Fluent addition and subtraction",
+      "sourceGoal": "Recall and use addition and subtraction facts to 20 fluently, and derive and use related facts up to 100",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_T76hKqXf0z",
@@ -307,11 +315,13 @@
       "domainId": "add",
       "original": "加减法口算",
       "display": "加减法口算 · 两位数与一位数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "两位数与一位数",
       "explanationPilot": false,
-      "sourceName": "Mental addition and subtraction (age 6+)"
+      "sourceName": "Mental addition and subtraction (age 6+)",
+      "sourceGoal": "Add and subtract a two-digit number and ones mentally and using concrete/pictorial representations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_wzAZ8qFDc4",
@@ -373,11 +383,13 @@
       "domainId": "add",
       "original": "加法与减法",
       "display": "加法与减法 · 三位数竖式",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "三位数竖式",
       "explanationPilot": false,
-      "sourceName": "Adding and subtracting (age 7+)"
+      "sourceName": "Adding and subtracting (age 7+)",
+      "sourceGoal": "Add and subtract numbers with up to three digits using formal written methods of columnar addition and subtraction",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_TiQbi027PE",
@@ -395,11 +407,13 @@
       "domainId": "add",
       "original": "加减法的策略",
       "display": "加减法的策略 · 数位与运算规律",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "数位与运算规律",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction strategies (age 7+)"
+      "sourceName": "Addition and subtraction strategies (age 7+)",
+      "sourceGoal": "Explain why addition and subtraction strategies work, using place value and the properties of operations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_ewmuMMPAzP",
@@ -452,11 +466,13 @@
       "domainId": "add",
       "original": "加减法口算",
       "display": "加减法口算 · 三位数与一位数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "三位数与一位数",
       "explanationPilot": false,
-      "sourceName": "Mental addition and subtraction (age 7+)"
+      "sourceName": "Mental addition and subtraction (age 7+)",
+      "sourceGoal": "Mentally add and subtract a three-digit number and ones",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_xPqczp7zPX",
@@ -496,11 +512,13 @@
       "domainId": "add",
       "original": "数轴上的数",
       "display": "数轴上的数 · 整数与加减",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "整数与加减",
       "explanationPilot": false,
-      "sourceName": "Numbers on a number line"
+      "sourceName": "Numbers on a number line",
+      "sourceGoal": "Represent whole numbers as lengths on a number line and represent sums and differences within 100 on a number line diagram",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_yTWxkzzoOZ",
@@ -518,11 +536,13 @@
       "domainId": "add",
       "original": "加法与减法",
       "display": "加法与减法 · 四位数竖式",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "四位数竖式",
       "explanationPilot": false,
-      "sourceName": "Adding and subtracting (age 8+)"
+      "sourceName": "Adding and subtracting (age 8+)",
+      "sourceGoal": "Add and subtract numbers with up to four digits using formal written methods of columnar addition and subtraction",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_HFRYjTb-Z5",
@@ -562,11 +582,13 @@
       "domainId": "add",
       "original": "加法与减法",
       "display": "加法与减法 · 多步情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "多步情境",
       "explanationPilot": false,
-      "sourceName": "Adding and subtracting (age 9+)"
+      "sourceName": "Adding and subtracting (age 9+)",
+      "sourceGoal": "Solve addition and subtraction multi-step problems in contexts, deciding which operations and methods to use and why",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_G3sVFQNCme",
@@ -584,44 +606,52 @@
       "domainId": "add",
       "original": "熟练使用加减法",
       "display": "熟练使用加减法 · 多位数竖式",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "多位数竖式",
       "explanationPilot": false,
-      "sourceName": "Fluent addition and subtraction (age 9+)"
+      "sourceName": "Fluent addition and subtraction (age 9+)",
+      "sourceGoal": "Fluently add and subtract whole numbers with more than four digits using the standard columnar algorithm",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_MWXPiaTnEu",
       "domainId": "add",
       "original": "加减法口算",
       "display": "加减法口算 · 较大数与数位",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "较大数与数位",
       "explanationPilot": false,
-      "sourceName": "Mental addition and subtraction (age 9+)"
+      "sourceName": "Mental addition and subtraction (age 9+)",
+      "sourceGoal": "Add and subtract numbers mentally with increasingly large numbers, using place-value knowledge and derived facts",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_M1tnXqmYbn",
       "domainId": "add",
       "original": "加法与减法",
       "display": "加法与减法 · 大数与小数情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "大数与小数情境",
       "explanationPilot": false,
-      "sourceName": "Adding and subtracting (age 10+)"
+      "sourceName": "Adding and subtracting (age 10+)",
+      "sourceGoal": "Solve addition and subtraction multi-step problems in contexts, deciding which operations and methods to use and why, with numbers up to 10,000,000 and decimals",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_JH_6RpNWjr",
       "domainId": "add",
       "original": "加减法的策略",
       "display": "加减法的策略 · 小数的数位与运算",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "小数的数位与运算",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction strategies (age 10+)"
+      "sourceName": "Addition and subtraction strategies (age 10+)",
+      "sourceGoal": "Add and subtract decimals to hundredths using strategies based on place value, properties of operations, and the relationship between addition and subtraction; relate strategies to written methods and explain reasoning",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_9QzSnn8m80",
@@ -793,11 +823,13 @@
       "domainId": "algebra",
       "original": "坐标",
       "display": "坐标 · 四象限的点",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "四象限的点",
       "explanationPilot": false,
-      "sourceName": "Coordinates (age 11+)"
+      "sourceName": "Coordinates (age 11+)",
+      "sourceGoal": "Plot and read coordinates in all four quadrants of the Cartesian plane, using positive and negative x- and y-values to describe positions precisely",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_FX4a2Q8XXN",
@@ -836,12 +868,14 @@
       "id": "mt_i2F1nWxJjv",
       "domainId": "algebra",
       "original": "数轴上的数",
-      "display": "数轴上的数 · 不等式的解",
-      "class": "disambiguation",
+      "display": "用数轴表示不等式的解",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "不等式的解",
       "explanationPilot": false,
-      "sourceName": "Numbers on a number line"
+      "sourceName": "Numbers on a number line",
+      "sourceGoal": "Understand inequalities as statements comparing expressions, represent solutions on a number line, and solve simple linear inequalities using the same inverse-operation methods as equations",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_QhFEDyIwSO",
@@ -1102,22 +1136,26 @@
       "domainId": "counting",
       "original": "顺着数与倒着数",
       "display": "顺着数与倒着数 · 每次走3",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "每次走3",
       "explanationPilot": false,
-      "sourceName": "Counting forwards and backwards"
+      "sourceName": "Counting forwards and backwards",
+      "sourceGoal": "Count forwards and backwards in steps of 3 from 0",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_OkSJfrmFb_",
       "domainId": "counting",
       "original": "顺着数与倒着数",
       "display": "顺着数与倒着数 · 每次走10",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "每次走10",
       "explanationPilot": false,
-      "sourceName": "Counting forwards and backwards (age 6+)"
+      "sourceName": "Counting forwards and backwards (age 6+)",
+      "sourceGoal": "Count forwards and backwards in tens from any number (not just multiples of 10)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_M2v1A9OEuM",
@@ -1157,22 +1195,26 @@
       "domainId": "data",
       "original": "象形统计图与计数表",
       "display": "象形统计图与计数表 · 简单图表与计数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "简单图表与计数",
       "explanationPilot": false,
-      "sourceName": "Pictograms and tally charts"
+      "sourceName": "Pictograms and tally charts",
+      "sourceGoal": "Interpret and construct simple pictograms, tally charts, block diagrams, and simple tables",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_xppl18avyY",
       "domainId": "data",
       "original": "按特征分类",
       "display": "按特征分类 · 分类、计数与排序",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "分类、计数与排序",
       "explanationPilot": false,
-      "sourceName": "Sorting into categories"
+      "sourceName": "Sorting into categories",
+      "sourceGoal": "Classify objects into given categories, count the number in each category, and sort the categories by count",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_X53txVXOcG",
@@ -1189,12 +1231,14 @@
       "id": "mt_u5HkSxZECM",
       "domainId": "data",
       "original": "象形统计图与计数表",
-      "display": "象形统计图与计数表 · 收集和图表词语",
-      "class": "disambiguation",
+      "display": "统计数据与图表术语",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "收集和图表词语",
       "explanationPilot": false,
-      "sourceName": "Pictograms and tally charts (age 6+)"
+      "sourceName": "Pictograms and tally charts (age 6+)",
+      "sourceGoal": "Read, write, and use the vocabulary of data collection and display — data, tally, tally chart, frequency, frequency table, survey, pictogram, bar chart, axis/axes, scale, label, category, discrete data, continuous data, line graph, pie chart — and apply these terms when collecting, organising, and presenting data",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_VhBH8wrFC6",
@@ -1223,11 +1267,13 @@
       "domainId": "data",
       "original": "按特征分类",
       "display": "按特征分类 · 比较各类数量",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "比较各类数量",
       "explanationPilot": false,
-      "sourceName": "Sorting into categories (age 6+)"
+      "sourceName": "Sorting into categories (age 6+)",
+      "sourceGoal": "Interpret categorical data by asking and answering questions about totals, how many in each category, and how many more or less one category has than another",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt__yvsKKp3TS",
@@ -1519,12 +1565,14 @@
       "id": "mt_eKJG-0eC6D",
       "domainId": "data",
       "original": "象形统计图与计数表",
-      "display": "象形统计图与计数表 · 分类与分组数据的图表",
-      "class": "disambiguation",
+      "display": "频数表与多种统计图",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "分类与分组数据的图表",
       "explanationPilot": false,
-      "sourceName": "Pictograms and tally charts (age 11+)"
+      "sourceName": "Pictograms and tally charts (age 11+)",
+      "sourceGoal": "Construct and interpret frequency tables, bar charts, pie charts, pictograms, and vertical line charts for both categorical and grouped numerical data, choosing appropriate representations for the data type",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_4zgPzc6yu5",
@@ -1729,22 +1777,26 @@
       "domainId": "fractions",
       "original": "理解分数",
       "display": "理解分数 · 数量的一半与等值",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "数量的一半与等值",
       "explanationPilot": false,
-      "sourceName": "Understanding fractions"
+      "sourceName": "Understanding fractions",
+      "sourceGoal": "Write simple fractions (e.g. 1/2 of 6 = 3) and recognise the equivalence of 2/4 and 1/2",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_IfEgu0X449",
       "domainId": "fractions",
       "original": "比较分数大小",
       "display": "比较分数大小 · 单位分数与同分母",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "单位分数与同分母",
       "explanationPilot": false,
-      "sourceName": "Comparing fractions"
+      "sourceName": "Comparing fractions",
+      "sourceGoal": "Compare and order unit fractions, and fractions with the same denominator",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_SsLWS_APM7",
@@ -1764,22 +1816,26 @@
       "domainId": "fractions",
       "original": "等值分数",
       "display": "等值分数 · 看图识别",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "看图识别",
       "explanationPilot": false,
-      "sourceName": "Equivalent fractions"
+      "sourceName": "Equivalent fractions",
+      "sourceGoal": "Recognise and show, using diagrams, equivalent fractions with small denominators",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Kr3IyA6m-O",
       "domainId": "fractions",
       "original": "数轴上的分数",
       "display": "数轴上的分数 · 把分数放上数轴",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "把分数放上数轴",
       "explanationPilot": false,
-      "sourceName": "Fractions on a number line"
+      "sourceName": "Fractions on a number line",
+      "sourceGoal": "Recognise and use fractions as numbers: place unit fractions and non-unit fractions with small denominators on a number line",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_gC-6JXAG5S",
@@ -1819,11 +1875,13 @@
       "domainId": "fractions",
       "original": "认识十分之一",
       "display": "认识十分之一 · 分成十份",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "分成十份",
       "explanationPilot": false,
-      "sourceName": "Tenths"
+      "sourceName": "Tenths",
+      "sourceGoal": "Count up and down in tenths; recognise that tenths arise from dividing an object into 10 equal parts and from dividing one-digit numbers or quantities by 10",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_k2WE0-22-4",
@@ -1852,11 +1910,13 @@
       "domainId": "fractions",
       "original": "比较分数大小",
       "display": "比较分数大小 · 同分子或同分母",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "同分子或同分母",
       "explanationPilot": false,
-      "sourceName": "Comparing fractions (age 8+)"
+      "sourceName": "Comparing fractions (age 8+)",
+      "sourceGoal": "Compare two fractions with the same numerator or the same denominator by reasoning about size; record comparisons with >, =, or < symbols",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_TqDq6jyOmL",
@@ -1907,11 +1967,13 @@
       "domainId": "fractions",
       "original": "小数与分数",
       "display": "小数与分数 · 测量与钱的情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "测量与钱的情境",
       "explanationPilot": false,
-      "sourceName": "Decimals and fractions"
+      "sourceName": "Decimals and fractions",
+      "sourceGoal": "Solve simple measure and money problems involving fractions and decimals to two decimal places",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_kDMKJ5Ztt6",
@@ -1929,11 +1991,13 @@
       "domainId": "fractions",
       "original": "等值分数",
       "display": "等值分数 · 细分与合并",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "细分与合并",
       "explanationPilot": true,
-      "sourceName": "Equivalent fractions (age 8+)"
+      "sourceName": "Equivalent fractions (age 8+)",
+      "sourceGoal": "Generate simple equivalent fractions and explain why they are equivalent using visual fraction models",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Ep7TDFuYUa",
@@ -1984,33 +2048,39 @@
       "domainId": "fractions",
       "original": "分数的意义",
       "display": "分数的意义 · 整体中的等份",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "整体中的等份",
       "explanationPilot": false,
-      "sourceName": "Fractions of a whole"
+      "sourceName": "Fractions of a whole",
+      "sourceGoal": "Understand a fraction 1/b as the quantity formed by 1 part when a whole is partitioned into b equal parts; understand a/b as a parts of size 1/b",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_AYzE1EAvI0",
       "domainId": "fractions",
       "original": "分数的意义",
       "display": "分数的意义 · 整数与等值分数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "整数与等值分数",
       "explanationPilot": false,
-      "sourceName": "Fractions of a whole (age 8+)"
+      "sourceName": "Fractions of a whole (age 8+)",
+      "sourceGoal": "Express whole numbers as fractions (e.g. 3 = 3/1) and recognise fractions equivalent to whole numbers (e.g. 4/4 = 1, 6/1 = 6)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_NoB20kVa4w",
       "domainId": "fractions",
       "original": "数轴上的分数",
       "display": "数轴上的分数 · 一份一份走",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "一份一份走",
       "explanationPilot": false,
-      "sourceName": "Fractions on a number line (age 8+)"
+      "sourceName": "Fractions on a number line (age 8+)",
+      "sourceGoal": "Represent fractions on a number line: partition the interval 0 to 1 into b equal parts to locate 1/b, then mark off a lengths of 1/b from 0 to locate a/b",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_doX1BhmFgk",
@@ -2052,11 +2122,13 @@
       "domainId": "fractions",
       "original": "加减法应用题",
       "display": "加减法应用题 · 同分母分数情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "同分母分数情境",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction word problems"
+      "sourceName": "Addition and subtraction word problems",
+      "sourceGoal": "Solve word problems involving addition and subtraction of fractions with like denominators, using visual models and equations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_933BohS9BH",
@@ -2074,11 +2146,13 @@
       "domainId": "fractions",
       "original": "比较分数大小",
       "display": "比较分数大小 · 通分或借助参照",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "通分或借助参照",
       "explanationPilot": false,
-      "sourceName": "Comparing fractions (age 9+)"
+      "sourceName": "Comparing fractions (age 9+)",
+      "sourceGoal": "Compare and order fractions with different numerators and denominators by creating common denominators/numerators or comparing to a benchmark such as 1/2; justify conclusions with visual models",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_NaqEP8xDhZ",
@@ -2129,11 +2203,13 @@
       "domainId": "fractions",
       "original": "等值分数",
       "display": "等值分数 · 同倍变化",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "同倍变化",
       "explanationPilot": false,
-      "sourceName": "Equivalent fractions (age 9+)"
+      "sourceName": "Equivalent fractions (age 9+)",
+      "sourceGoal": "Explain why a fraction a/b is equivalent to (n×a)/(n×b) using visual models; use this principle to recognise and generate equivalent fractions, including tenths and hundredths",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_VgOePicFYK",
@@ -2175,11 +2251,13 @@
       "domainId": "fractions",
       "original": "分数乘法",
       "display": "分数乘法 · 分数乘整数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "分数乘整数",
       "explanationPilot": false,
-      "sourceName": "Multiplying fractions"
+      "sourceName": "Multiplying fractions",
+      "sourceGoal": "Understand a/b as a multiple of 1/b; multiply proper fractions and mixed numbers by whole numbers, supported by visual models (e.g. 3 × 2/5 = 6/5 = 1 1/5)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_4ubP_RMg9o",
@@ -2210,11 +2288,13 @@
       "domainId": "fractions",
       "original": "理解分数",
       "display": "理解分数 · 几个相同的小份",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "几个相同的小份",
       "explanationPilot": false,
-      "sourceName": "Understanding fractions (age 9+)"
+      "sourceName": "Understanding fractions (age 9+)",
+      "sourceGoal": "Understand a fraction a/b with a > 1 as a sum of fractions 1/b (e.g. 3/5 = 1/5 + 1/5 + 1/5)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_ZM9mhHsyYZ",
@@ -2254,22 +2334,26 @@
       "domainId": "fractions",
       "original": "比较分数大小",
       "display": "比较分数大小 · 包括大于1的分数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "包括大于1的分数",
       "explanationPilot": false,
-      "sourceName": "Comparing fractions (age 10+)"
+      "sourceName": "Comparing fractions (age 10+)",
+      "sourceGoal": "Compare and order fractions including fractions greater than 1, by converting to common denominators or using benchmarks",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_4K1dr204Hi",
       "domainId": "fractions",
       "original": "小数与分数",
-      "display": "小数与分数 · 分数除法与小数百分数",
-      "class": "disambiguation",
+      "display": "分数、小数与百分数互换",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "分数除法与小数百分数",
       "explanationPilot": false,
-      "sourceName": "Decimals and fractions (age 10+)"
+      "sourceName": "Decimals and fractions (age 10+)",
+      "sourceGoal": "Associate a fraction with division and calculate decimal fraction equivalents for simple fractions (e.g. 3/8 = 0.375); recall and use equivalences between simple fractions, decimals, and percentages in different contexts",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_1PAWhRhpdg",
@@ -2309,11 +2393,13 @@
       "domainId": "fractions",
       "original": "分数的意义",
       "display": "分数的意义 · 分数表示除法",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "分数表示除法",
       "explanationPilot": false,
-      "sourceName": "Fractions of a whole (age 10+)"
+      "sourceName": "Fractions of a whole (age 10+)",
+      "sourceGoal": "Interpret a fraction as division of the numerator by the denominator (a/b = a ÷ b); solve word problems involving division of whole numbers leading to fractional or mixed-number answers",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_e7filQgayF",
@@ -2342,11 +2428,13 @@
       "domainId": "fractions",
       "original": "分数乘法",
       "display": "分数乘法 · 分数乘分数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "分数乘分数",
       "explanationPilot": false,
-      "sourceName": "Multiplying fractions (age 10+)"
+      "sourceName": "Multiplying fractions (age 10+)",
+      "sourceGoal": "Multiply a fraction or whole number by a fraction, including proper fractions by proper fractions; interpret (a/b) × q as a parts of q partitioned into b equal parts; write answers in simplest form",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_lvaSGHwvQ5",
@@ -2375,11 +2463,13 @@
       "domainId": "fractions",
       "original": "小数与分数",
       "display": "小数与分数 · 有限小数与分数互换",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "有限小数与分数互换",
       "explanationPilot": false,
-      "sourceName": "Decimals and fractions (age 11+)"
+      "sourceName": "Decimals and fractions (age 11+)",
+      "sourceGoal": "Work interchangeably with terminating decimals and their corresponding fractions (such as 3.5 and 7/2 or 0.375 and 3/8); convert fluently between the two forms",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_9Y96vxG_LH",
@@ -2408,34 +2498,40 @@
       "id": "mt_J339bO7qLe",
       "domainId": "fractions",
       "original": "分数乘法",
-      "display": "分数乘法 · 求一个量的几分之几",
-      "class": "disambiguation",
+      "display": "求数量的几分之几或百分之几",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "求一个量的几分之几",
       "explanationPilot": false,
-      "sourceName": "Multiplying fractions (age 11+)"
+      "sourceName": "Multiplying fractions (age 11+)",
+      "sourceGoal": "Interpret fractions and percentages as operators — find a fraction or percentage of an amount by multiplying, understanding that 'of' means multiply (e.g., 3/4 of 200 = 3/4 × 200 = 150)",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_KJeEeTutJI",
       "domainId": "geometry",
       "original": "平面图形",
       "display": "平面图形 · 认识常见平面图形",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "认识常见平面图形",
       "explanationPilot": false,
-      "sourceName": "2-D shapes"
+      "sourceName": "2-D shapes",
+      "sourceGoal": "Recognise and name common 2-D shapes (circles, triangles, rectangles including squares)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Qcp2d_kuta",
       "domainId": "geometry",
       "original": "立体图形",
       "display": "立体图形 · 认识常见立体图形",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "认识常见立体图形",
       "explanationPilot": false,
-      "sourceName": "3-D shapes"
+      "sourceName": "3-D shapes",
+      "sourceGoal": "Recognise and name common 3-D shapes (cubes, cuboids, pyramids, spheres, cylinders, cones)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_qeZYF6HZ4o",
@@ -2452,12 +2548,14 @@
       "id": "mt_yGv8doDAmp",
       "domainId": "geometry",
       "original": "立体图形",
-      "display": "立体图形 · 比较平面与立体",
-      "class": "disambiguation",
+      "display": "比较平面与立体图形",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "比较平面与立体",
       "explanationPilot": false,
-      "sourceName": "3-D shapes (age 5+)"
+      "sourceName": "3-D shapes (age 5+)",
+      "sourceGoal": "Analyse and compare 2-D and 3-D shapes using informal language to describe sides, vertices, and other attributes",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_2VR963szuk",
@@ -2530,11 +2628,13 @@
       "domainId": "geometry",
       "original": "平面图形",
       "display": "平面图形 · 边与对称",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "边与对称",
       "explanationPilot": false,
-      "sourceName": "2-D shapes (age 6+)"
+      "sourceName": "2-D shapes (age 6+)",
+      "sourceGoal": "Identify and describe properties of 2-D shapes including the number of sides and line symmetry in a vertical line",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_QNxFnxikCN",
@@ -2607,11 +2707,13 @@
       "domainId": "geometry",
       "original": "平面图形",
       "display": "平面图形 · 画平面图形与建立体图形",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "画平面图形与建立体图形",
       "explanationPilot": false,
-      "sourceName": "2-D shapes (age 7+)"
+      "sourceName": "2-D shapes (age 7+)",
+      "sourceGoal": "Draw 2-D shapes and make 3-D shapes using modelling materials; recognise 3-D shapes in different orientations and describe them",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_u23IGDxOpk",
@@ -2651,22 +2753,26 @@
       "domainId": "geometry",
       "original": "理解角",
       "display": "理解角 · 图形与转动中的角",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "图形与转动中的角",
       "explanationPilot": false,
-      "sourceName": "Understanding angles"
+      "sourceName": "Understanding angles",
+      "sourceGoal": "Recognise angles as a property of shape or a description of a turn",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_hRZyKvz1KN",
       "domainId": "geometry",
       "original": "平面图形",
       "display": "平面图形 · 寻找对称轴",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "寻找对称轴",
       "explanationPilot": false,
-      "sourceName": "2-D shapes (age 8+)"
+      "sourceName": "2-D shapes (age 8+)",
+      "sourceGoal": "Identify lines of symmetry in 2-D shapes presented in different orientations; recognise line-symmetric figures and draw lines of symmetry",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Xt1cRqaBOW",
@@ -2684,11 +2790,13 @@
       "domainId": "geometry",
       "original": "坐标",
       "display": "坐标 · 连点组成图形",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "连点组成图形",
       "explanationPilot": false,
-      "sourceName": "Coordinates (age 8+)"
+      "sourceName": "Coordinates (age 8+)",
+      "sourceGoal": "Plot specified points on a coordinate grid and draw sides to complete a given polygon",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Uq5vYqboCR",
@@ -2739,22 +2847,26 @@
       "domainId": "geometry",
       "original": "网格上的图形变换",
       "display": "网格上的图形变换 · 反射、平移与旋转",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "反射、平移与旋转",
       "explanationPilot": false,
-      "sourceName": "Transformations on a grid"
+      "sourceName": "Transformations on a grid",
+      "sourceGoal": "Represent and carry out geometric transformations on squared paper or a coordinate grid: reflections (in horizontal, vertical, and diagonal mirror lines, including the axes), translations (described as a vector or as left/right/up/down moves), and rotations (90° or 180° about a stated centre point); describe each transformation precisely using the correct language; identify which transformation maps one shape onto its image by comparing position, orientation, and size",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_h0CVtqI2xo",
       "domainId": "geometry",
       "original": "角的分类",
       "display": "角的分类 · 锐角与钝角",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "锐角与钝角",
       "explanationPilot": false,
-      "sourceName": "Types of angles"
+      "sourceName": "Types of angles",
+      "sourceGoal": "Identify acute and obtuse angles; compare and order angles up to two right angles by size",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_e4V6hvcuEJ",
@@ -2785,11 +2897,13 @@
       "domainId": "geometry",
       "original": "立体图形",
       "display": "立体图形 · 从平面图认识立体",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "从平面图认识立体",
       "explanationPilot": false,
-      "sourceName": "3-D shapes (age 9+)"
+      "sourceName": "3-D shapes (age 9+)",
+      "sourceGoal": "Identify 3-D shapes, including cubes and other cuboids, from 2-D representations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_oqziWKry-L",
@@ -2862,22 +2976,26 @@
       "domainId": "geometry",
       "original": "测量角",
       "display": "测量角 · 量角与画角",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "量角与画角",
       "explanationPilot": false,
-      "sourceName": "Measuring angles"
+      "sourceName": "Measuring angles",
+      "sourceGoal": "Measure angles in whole-number degrees using a protractor; draw given angles and sketch angles of specified measure",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_89riIKwGYp",
       "domainId": "geometry",
       "original": "测量角",
-      "display": "测量角 · 角的加减与未知角",
-      "class": "disambiguation",
+      "display": "用角的加减求未知角",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "角的加减与未知角",
       "explanationPilot": false,
-      "sourceName": "Measuring angles (age 9+)"
+      "sourceName": "Measuring angles (age 9+)",
+      "sourceGoal": "Recognise angle measure as additive; find unknown angles by adding or subtracting on a diagram using equations with a symbol for the unknown",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_8H2kO4k2B9",
@@ -2917,11 +3035,13 @@
       "domainId": "geometry",
       "original": "网格上的图形变换",
       "display": "网格上的图形变换 · 反射与平移后的位置",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "反射与平移后的位置",
       "explanationPilot": false,
-      "sourceName": "Transformations on a Grid"
+      "sourceName": "Transformations on a Grid",
+      "sourceGoal": "Identify, describe, and represent the position of a shape following a reflection or translation using appropriate language; know that the shape has not changed",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_KFKUR_gBg_",
@@ -2952,22 +3072,26 @@
       "domainId": "geometry",
       "original": "平面图形",
       "display": "平面图形 · 按尺寸和角度画图",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "按尺寸和角度画图",
       "explanationPilot": false,
-      "sourceName": "2-D shapes (age 10+)"
+      "sourceName": "2-D shapes (age 10+)",
+      "sourceGoal": "Draw 2-D shapes using given dimensions and angles, using a ruler and protractor accurately",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_REwgr0d_ss",
       "domainId": "geometry",
       "original": "立体图形",
       "display": "立体图形 · 建立体与展开图",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "建立体与展开图",
       "explanationPilot": false,
-      "sourceName": "3-D shapes (age 10+)"
+      "sourceName": "3-D shapes (age 10+)",
+      "sourceGoal": "Recognise, describe, and build simple 3-D shapes, including making nets",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_cdMlC7EpTJ",
@@ -2996,11 +3120,13 @@
       "domainId": "geometry",
       "original": "坐标",
       "display": "坐标 · 用负数描述位置",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "用负数描述位置",
       "explanationPilot": false,
-      "sourceName": "Coordinates (age 10+)"
+      "sourceName": "Coordinates (age 10+)",
+      "sourceGoal": "Describe positions on the full coordinate grid (all four quadrants); use coordinates with negative values",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_xq3YHZ2zeR",
@@ -3062,22 +3188,26 @@
       "domainId": "geometry",
       "original": "理解角",
       "display": "理解角 · 交点、直线与对顶角",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "交点、直线与对顶角",
       "explanationPilot": false,
-      "sourceName": "Understanding angles (age 10+)"
+      "sourceName": "Understanding angles (age 10+)",
+      "sourceGoal": "Recognise angles where they meet at a point, are on a straight line, or are vertically opposite; find missing angles using these properties",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_nRksLqt-iR",
       "domainId": "geometry",
       "original": "立体图形",
       "display": "立体图形 · 面、棱、顶点与截面",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "面、棱、顶点与截面",
       "explanationPilot": false,
-      "sourceName": "3-D shapes (age 11+)"
+      "sourceName": "3-D shapes (age 11+)",
+      "sourceGoal": "Use the properties of faces, surfaces, edges, and vertices of 3-D shapes (cubes, cuboids, prisms, cylinders, pyramids, cones, and spheres) to solve problems, including visualising cross-sections",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_J03RFlVdas",
@@ -3183,11 +3313,13 @@
       "domainId": "geometry",
       "original": "理解角",
       "display": "理解角 · 用角的关系解决多步问题",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "用角的关系解决多步问题",
       "explanationPilot": false,
-      "sourceName": "Understanding angles (age 11+)"
+      "sourceName": "Understanding angles (age 11+)",
+      "sourceGoal": "Apply the properties of angles at a point (360°), on a straight line (180°), and vertically opposite angles to find unknown angles in multi-step problems",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_H_pNJ3ZI_S",
@@ -3435,12 +3567,14 @@
       "id": "mt_zMEvtigoM3",
       "domainId": "thinking",
       "original": "数轴上的数",
-      "display": "数轴上的数 · 选择数轴等工具",
-      "class": "disambiguation",
+      "display": "根据问题选择数学表示与工具",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "选择数轴等工具",
       "explanationPilot": false,
-      "sourceName": "Numbers on a number line"
+      "sourceName": "Numbers on a number line",
+      "sourceGoal": "Select and use appropriate tools and representations (number lines, hundred squares, rulers, part-whole models) to support problem-solving",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_TMoHjMhRS2",
@@ -3493,22 +3627,26 @@
       "domainId": "thinking",
       "original": "说明推理的依据",
       "display": "说明推理的依据 · 跟随推理并找错",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "跟随推理并找错",
       "explanationPilot": false,
-      "sourceName": "Justifying mathematical reasoning"
+      "sourceName": "Justifying mathematical reasoning",
+      "sourceGoal": "Construct and follow multi-step mathematical arguments; identify errors in reasoning and explain why a method works or does not work",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_RKeheOL9uo",
       "domainId": "thinking",
       "original": "解决多步问题",
       "display": "解决多步问题 · 拆分问题与检查",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "拆分问题与检查",
       "explanationPilot": false,
-      "sourceName": "Multi-Step Problem Solving"
+      "sourceName": "Multi-Step Problem Solving",
+      "sourceGoal": "With teacher support, make sense of multi-step problems involving larger numbers or mixed operations by breaking them into parts, choosing strategies, and checking answers for reasonableness — children at this stage are developing the habit with guidance; independent strategy evaluation comes later",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_FAXjFkgG6X",
@@ -3601,11 +3739,13 @@
       "domainId": "thinking",
       "original": "说明推理的依据",
       "display": "说明推理的依据 · 呈现推理并评价",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "呈现推理并评价",
       "explanationPilot": false,
-      "sourceName": "Justifying mathematical reasoning (age 8+)"
+      "sourceName": "Justifying mathematical reasoning (age 8+)",
+      "sourceGoal": "Construct and present multi-step mathematical arguments; critique the reasoning of others and explain clearly why a method works or fails",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_mywsN77hGZ",
@@ -3634,22 +3774,26 @@
       "domainId": "thinking",
       "original": "解决多步问题",
       "display": "解决多步问题 · 四则、分数与面积体积",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "四则、分数与面积体积",
       "explanationPilot": false,
-      "sourceName": "Multi-Step Problem Solving"
+      "sourceName": "Multi-Step Problem Solving",
+      "sourceGoal": "Make sense of multi-step problems involving four operations, fractions, and area/volume by identifying sub-steps, choosing a strategy, and monitoring progress",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_aivrWs6jrS",
       "domainId": "thinking",
       "original": "乘法口诀与乘法表",
-      "display": "乘法口诀与乘法表 · 从已知规律推出新事实",
-      "class": "disambiguation",
+      "display": "乘法表与分数中的规律",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "从已知规律推出新事实",
       "explanationPilot": false,
-      "sourceName": "Times tables (age 8+)"
+      "sourceName": "Times tables (age 8+)",
+      "sourceGoal": "Recognise and use repeated reasoning to generalise: extend patterns in times tables and equivalent fractions, derive unknown facts from known facts efficiently, describe general rules",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt__Itf4aQZUj",
@@ -3907,11 +4051,13 @@
       "domainId": "measure",
       "original": "测量质量与重量",
       "display": "测量质量与重量 · 直接比较轻重",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "直接比较轻重",
       "explanationPilot": false,
-      "sourceName": "Measuring mass and weight (age 4+)"
+      "sourceName": "Measuring mass and weight (age 4+)",
+      "sourceGoal": "Compare two objects directly by mass or weight and describe the difference using language such as heavy, light, heavier than, lighter than",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_-vvVxpOHG2",
@@ -3984,11 +4130,13 @@
       "domainId": "measure",
       "original": "测量质量与重量",
       "display": "测量质量与重量 · 用单位测量质量",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "用单位测量质量",
       "explanationPilot": false,
-      "sourceName": "Measuring mass and weight"
+      "sourceName": "Measuring mass and weight",
+      "sourceGoal": "Measure and begin to record mass/weight using non-standard and standard units",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_0XxyaQLRhn",
@@ -4060,23 +4208,27 @@
       "id": "mt_skYly2Qm01",
       "domainId": "measure",
       "original": "测量长度",
-      "display": "测量长度 · 比较与排列长度",
-      "class": "disambiguation",
+      "display": "比较与排列物体的长度",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "比较与排列长度",
       "explanationPilot": false,
-      "sourceName": "Measuring length"
+      "sourceName": "Measuring length",
+      "sourceGoal": "Order three objects by length and compare the lengths of two objects indirectly using a third object",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_cqSf213hSa",
       "domainId": "measure",
       "original": "测量长度",
       "display": "测量长度 · 用相同单位首尾相接",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "用相同单位首尾相接",
       "explanationPilot": false,
-      "sourceName": "Measuring length (age 6+)"
+      "sourceName": "Measuring length (age 6+)",
+      "sourceGoal": "Measure the length of an object using same-size length units laid end to end with no gaps or overlaps",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_6J1wmCWf41",
@@ -4138,11 +4290,13 @@
       "domainId": "measure",
       "original": "加减法应用题",
       "display": "加减法应用题 · 长度情境",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "长度情境",
       "explanationPilot": false,
-      "sourceName": "Addition and subtraction word problems"
+      "sourceName": "Addition and subtraction word problems",
+      "sourceGoal": "Solve word problems involving lengths within 100, using addition and subtraction with drawings and equations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_4m8BimI4G5",
@@ -4226,11 +4380,13 @@
       "domainId": "measure",
       "original": "测量长度",
       "display": "测量长度 · 选择工具测量",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "选择工具测量",
       "explanationPilot": false,
-      "sourceName": "Measuring length (age 7+)"
+      "sourceName": "Measuring length (age 7+)",
+      "sourceGoal": "Measure the length of an object by selecting and using appropriate tools such as rulers, yardsticks, metre sticks, and measuring tapes",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_wE7-Gs9ENL",
@@ -4424,11 +4580,13 @@
       "domainId": "measure",
       "original": "测量单位换算",
       "display": "测量单位换算 · 长度与时间单位",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "长度与时间单位",
       "explanationPilot": false,
-      "sourceName": "Converting measurement units"
+      "sourceName": "Converting measurement units",
+      "sourceGoal": "Convert between different units of measure (e.g. kilometre to metre, hour to minute, minute to second, year to month, week to day)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_9L5qyBYmg-",
@@ -4523,11 +4681,13 @@
       "domainId": "measure",
       "original": "测量单位换算",
       "display": "测量单位换算 · 常用单位的相对大小",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "常用单位的相对大小",
       "explanationPilot": false,
-      "sourceName": "Converting measurement units (age 9+)"
+      "sourceName": "Converting measurement units (age 9+)",
+      "sourceGoal": "Know relative sizes of measurement units within one system (km/m/cm/mm, kg/g, l/ml, hr/min/sec); convert between different metric units and express measurements in terms of a smaller unit; record equivalents in conversion tables",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_d7XktBQPxm",
@@ -4802,22 +4962,26 @@
       "domainId": "multiply",
       "original": "用排列方阵表示乘法",
       "display": "用排列方阵表示乘法 · 用阵列表示乘除",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "用阵列表示乘除",
       "explanationPilot": false,
-      "sourceName": "Arrays for multiplication"
+      "sourceName": "Arrays for multiplication",
+      "sourceGoal": "Use arrays to represent multiplication and division situations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_PZ909yPrEC",
       "domainId": "multiply",
       "original": "乘法是相同加数的和",
       "display": "乘法是相同加数的和 · 相同加数与成组",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "相同加数与成组",
       "explanationPilot": false,
-      "sourceName": "Multiplication as repeated addition"
+      "sourceName": "Multiplication as repeated addition",
+      "sourceGoal": "Understand multiplication as repeated addition and grouping equal sets",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_1GDEHyEZYH",
@@ -4845,12 +5009,14 @@
       "id": "mt_wh3UqnWsa7",
       "domainId": "multiply",
       "original": "乘法是相同加数的和",
-      "display": "乘法是相同加数的和 · 用阵列和事实解决问题",
-      "class": "disambiguation",
+      "display": "用阵列与加法解决乘除",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "用阵列和事实解决问题",
       "explanationPilot": false,
-      "sourceName": "Multiplication as repeated addition (age 6+)"
+      "sourceName": "Multiplication as repeated addition (age 6+)",
+      "sourceGoal": "Solve problems involving multiplication and division using arrays, repeated addition, mental methods, and known facts",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_0u4KLbvBa1",
@@ -4890,22 +5056,26 @@
       "domainId": "multiply",
       "original": "乘法口诀与乘法表",
       "display": "乘法口诀与乘法表 · 2、5、10的乘除事实",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "2、5、10的乘除事实",
       "explanationPilot": false,
-      "sourceName": "Times tables"
+      "sourceName": "Times tables",
+      "sourceGoal": "Recall and use multiplication and division facts for the 2, 5, and 10 multiplication tables",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_B1zj1RwQ3a",
       "domainId": "multiply",
       "original": "用排列方阵表示乘法",
       "display": "用排列方阵表示乘法 · 阵列中的相同加数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "阵列中的相同加数",
       "explanationPilot": false,
-      "sourceName": "Arrays for multiplication (age 7+)"
+      "sourceName": "Arrays for multiplication (age 7+)",
+      "sourceGoal": "Use addition to find the total number of objects arranged in rectangular arrays with up to 5 rows and 5 columns; write an equation to express the total as a sum of equal addends",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_EmR5n58jZt",
@@ -4934,11 +5104,13 @@
       "domainId": "multiply",
       "original": "乘法口诀与乘法表",
       "display": "乘法口诀与乘法表 · 3、4、8的乘除事实",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "3、4、8的乘除事实",
       "explanationPilot": false,
-      "sourceName": "Times tables (age 7+)"
+      "sourceName": "Times tables (age 7+)",
+      "sourceGoal": "Recall and use multiplication and division facts for the 3, 4, and 8 multiplication tables",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_DyGBW3ZHh3",
@@ -5000,11 +5172,13 @@
       "domainId": "multiply",
       "original": "乘除法口算",
       "display": "乘除法口算 · 0、1与三个数的乘除",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "0、1与三个数的乘除",
       "explanationPilot": false,
-      "sourceName": "Mental multiplication and division"
+      "sourceName": "Mental multiplication and division",
+      "sourceGoal": "Use place value, known and derived facts to multiply and divide mentally, including multiplying by 0 and 1, dividing by 1, and multiplying together three numbers",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Zdv-b-iW5K",
@@ -5110,77 +5284,91 @@
       "domainId": "multiply",
       "original": "有余数的除法",
       "display": "有余数的除法 · 情境中的余数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "情境中的余数",
       "explanationPilot": false,
-      "sourceName": "Division with remainders"
+      "sourceName": "Division with remainders",
+      "sourceGoal": "Solve multi-step word problems using the four operations with whole numbers, including interpreting remainders in context; represent with equations using a letter for the unknown; check with estimation",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_FHIAv6dfhU",
       "domainId": "multiply",
       "original": "因数、倍数与质数",
       "display": "因数、倍数与质数 · 因数对与公倍数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "因数对与公倍数",
       "explanationPilot": false,
-      "sourceName": "Factors, multiples, and primes"
+      "sourceName": "Factors, multiples, and primes",
+      "sourceGoal": "Find all factor pairs for a whole number in the range 1–100; identify common factors and common multiples of two numbers; use these concepts to solve problems",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_0Wg5F97osg",
       "domainId": "multiply",
       "original": "因数、倍数与质数",
       "display": "因数、倍数与质数 · 因数、倍数与平方立方",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "因数、倍数与平方立方",
       "explanationPilot": false,
-      "sourceName": "Factors, multiples, and primes (age 9+)"
+      "sourceName": "Factors, multiples, and primes (age 9+)",
+      "sourceGoal": "Solve problems involving multiplication and division using knowledge of factors, multiples, squares, and cubes",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_q9EaJc2FP8",
       "domainId": "multiply",
       "original": "乘法竖式",
       "display": "乘法竖式 · 竖式与面积模型",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "竖式与面积模型",
       "explanationPilot": false,
-      "sourceName": "Long multiplication"
+      "sourceName": "Long multiplication",
+      "sourceGoal": "Multiply a whole number of up to four digits by a one-digit number, and multiply two two-digit numbers, using formal written methods including long multiplication; illustrate with area models",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_8A3pZNOp7Z",
       "domainId": "multiply",
       "original": "乘除法口算",
       "display": "乘除法口算 · 利用已知事实和数位",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "利用已知事实和数位",
       "explanationPilot": false,
-      "sourceName": "Mental multiplication and division (age 9+)"
+      "sourceName": "Mental multiplication and division (age 9+)",
+      "sourceGoal": "Multiply and divide numbers mentally drawing upon known facts, including related facts and place-value adjustments",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_U4cIBXVug4",
       "domainId": "multiply",
       "original": "用倍数比较",
       "display": "用倍数比较 · 读懂倍数比较",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "读懂倍数比较",
       "explanationPilot": false,
-      "sourceName": "Multiplicative Comparison"
+      "sourceName": "Multiplicative Comparison",
+      "sourceGoal": "Interpret a multiplication equation as a comparison (e.g. 35 = 5 × 7 means 35 is 5 times as many as 7); represent verbal statements of multiplicative comparisons as equations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_6-j1NO2ZUH",
       "domainId": "multiply",
       "original": "用倍数比较",
       "display": "用倍数比较 · 倍数比较的情境问题",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "倍数比较的情境问题",
       "explanationPilot": false,
-      "sourceName": "Multiplicative Comparison"
+      "sourceName": "Multiplicative Comparison",
+      "sourceGoal": "Solve word problems involving multiplicative comparison using drawings and equations with a symbol for the unknown number",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_LlMl2PbaZe",
@@ -5219,12 +5407,14 @@
       "id": "mt_A-FyLLLLzy",
       "domainId": "multiply",
       "original": "图形规律",
-      "display": "图形规律 · 按规则生成图形或数列",
-      "class": "disambiguation",
+      "display": "按规则生成数列与图形",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "按规则生成图形或数列",
       "explanationPilot": false,
-      "sourceName": "Shape patterns"
+      "sourceName": "Shape patterns",
+      "sourceGoal": "Generate a number or shape pattern that follows a given rule; identify apparent features of the pattern not explicit in the rule and explain informally why they occur",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_MCu_SNg_OW",
@@ -5242,11 +5432,13 @@
       "domainId": "multiply",
       "original": "平方数与立方数",
       "display": "平方数与立方数 · 认识平方与立方",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "认识平方与立方",
       "explanationPilot": false,
-      "sourceName": "Square and cube numbers"
+      "sourceName": "Square and cube numbers",
+      "sourceGoal": "Recognise and use square numbers and cube numbers, and the notation for squared (²) and cubed (³)",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_ZOJ6EbdPOb",
@@ -5321,11 +5513,13 @@
       "domainId": "multiply",
       "original": "有余数的除法",
       "display": "有余数的除法 · 两位数除数与余数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "两位数除数与余数",
       "explanationPilot": false,
-      "sourceName": "Division with remainders (age 10+)"
+      "sourceName": "Division with remainders (age 10+)",
+      "sourceGoal": "Divide numbers up to 4 digits by a two-digit divisor using formal written long division, interpreting remainders as whole numbers, fractions, or by rounding as appropriate",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_ilPrU0cbtT",
@@ -5354,11 +5548,13 @@
       "domainId": "multiply",
       "original": "乘法竖式",
       "display": "乘法竖式 · 多位数竖式",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "多位数竖式",
       "explanationPilot": false,
-      "sourceName": "Long multiplication (age 10+)"
+      "sourceName": "Long multiplication (age 10+)",
+      "sourceGoal": "Fluently multiply multi-digit whole numbers (up to 4 digits by 2 digits) using the formal written method of long multiplication",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_vmW2cb5c7A",
@@ -5398,11 +5594,13 @@
       "domainId": "multiply",
       "original": "运算顺序",
       "display": "运算顺序 · 四则运算的次序",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "四则运算的次序",
       "explanationPilot": false,
-      "sourceName": "Order of operations"
+      "sourceName": "Order of operations",
+      "sourceGoal": "Understand and apply the conventional order of operations (PEMDAS/BODMAS) to carry out calculations involving the four operations",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_QU5R7Aajy9",
@@ -5442,11 +5640,13 @@
       "domainId": "multiply",
       "original": "因数、倍数与质数",
       "display": "因数、倍数与质数 · 质因数与公因数公倍数",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "质因数与公因数公倍数",
       "explanationPilot": false,
-      "sourceName": "Factors, multiples, and primes (age 11+)"
+      "sourceName": "Factors, multiples, and primes (age 11+)",
+      "sourceGoal": "Use the concepts and vocabulary of prime numbers, factors, multiples, common factors, common multiples, highest common factor (HCF), lowest common multiple (LCM), and prime factorisation including product notation and the unique factorisation property",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_X5cypSGoGU",
@@ -5838,11 +6038,13 @@
       "domainId": "place",
       "original": "数的读写",
       "display": "数的读写 · 整数的读写比较",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "整数的读写比较",
       "explanationPilot": false,
-      "sourceName": "Reading and writing numbers (age 9+)"
+      "sourceName": "Reading and writing numbers (age 9+)",
+      "sourceGoal": "Read, write, order, and compare whole numbers up to at least 1,000,000 using base-ten numerals, number names, expanded form, and place-value understanding",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_MewIRdzpzz",
@@ -5871,11 +6073,13 @@
       "domainId": "place",
       "original": "顺着数与倒着数",
       "display": "顺着数与倒着数 · 按10的幂走",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "按10的幂走",
       "explanationPilot": false,
-      "sourceName": "Counting forwards and backwards (age 9+)"
+      "sourceName": "Counting forwards and backwards (age 9+)",
+      "sourceGoal": "Count forwards and backwards in steps of powers of 10 (10, 100, 1000, 10,000, 100,000) for any given number up to 1,000,000",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_1KkvzwYxbR",
@@ -5992,11 +6196,13 @@
       "domainId": "place",
       "original": "数的读写",
       "display": "数的读写 · 小数的读写比较",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "小数的读写比较",
       "explanationPilot": false,
-      "sourceName": "Reading and writing numbers (age 10+)"
+      "sourceName": "Reading and writing numbers (age 10+)",
+      "sourceGoal": "Read, write, and compare decimals to thousandths using base-ten numerals, number names, and expanded form; compare using >, =, < based on place-value meaning",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_Gag_h98jWP",
@@ -6048,34 +6254,40 @@
       "id": "mt_PsylzZ9lHW",
       "domainId": "place",
       "original": "数轴上的分数",
-      "display": "数轴上的分数 · 正负数共用数轴",
-      "class": "disambiguation",
+      "display": "在数轴上表示正负数、小数与分数",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "正负数共用数轴",
       "explanationPilot": false,
-      "sourceName": "Fractions on a number line"
+      "sourceName": "Fractions on a number line",
+      "sourceGoal": "Understand and use place value for decimals, measures, and integers of any size; extend the number system to include all positive and negative integers, decimals, and fractions on a single number line",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_uDJY0X0hgo",
       "domainId": "place",
       "original": "数轴上的分数",
-      "display": "数轴上的分数 · 正负数的顺序与比较",
-      "class": "disambiguation",
+      "display": "比较正负数、分数与小数",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "正负数的顺序与比较",
       "explanationPilot": false,
-      "sourceName": "Fractions on a number line (age 11+)"
+      "sourceName": "Fractions on a number line (age 11+)",
+      "sourceGoal": "Order positive and negative integers, decimals, and fractions on a number line; use the symbols =, ≠, <, >, ≤, ≥ to compare values including negative numbers and mixed representations",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_hCVPYlF-7Y",
       "domainId": "place",
       "original": "平方数与立方数",
-      "display": "平方数与立方数 · 整数幂与实数根",
-      "class": "disambiguation",
+      "display": "整数幂与平方根、立方根",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "整数幂与实数根",
       "explanationPilot": false,
-      "sourceName": "Square and cube numbers"
+      "sourceName": "Square and cube numbers",
+      "sourceGoal": "Use integer powers and associated real roots (square, cube, and higher); recognise powers of 2, 3, 4, and 5; distinguish between exact representations of roots and their decimal approximations",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_VVn1IXjkzn",
@@ -6336,12 +6548,14 @@
       "id": "mt_ESgc4YBw-a",
       "domainId": "ratio",
       "original": "百分数的应用",
-      "display": "百分数的应用 · 比例与百分数的词语",
-      "class": "disambiguation",
+      "display": "比、比例与百分数的语言",
+      "class": "corrected",
       "qualified": true,
       "qualifier": "比例与百分数的词语",
       "explanationPilot": false,
-      "sourceName": "Percentages (age 9+)"
+      "sourceName": "Percentages (age 9+)",
+      "sourceGoal": "Know and use the vocabulary of ratio and proportion — ratio, proportion, percentage, scale, equivalent, unequal, relative size, part-to-part, part-to-whole, and out of — and understand the difference between ratio (comparing parts to parts) and proportion (comparing a part to the whole)",
+      "basis": "对照原始学习目标与举证内容，原基础名称过窄或偏离主要能力，改为来源 ID 专属展示名称；不改变来源字段。"
     },
     {
       "id": "mt_PNSyfH56eQ",
@@ -6504,11 +6718,13 @@
       "domainId": "ratio",
       "original": "百分数的应用",
       "display": "百分数的应用 · 增减、原值与利息",
-      "class": "disambiguation",
+      "class": "qualifier_reviewed",
       "qualified": true,
       "qualifier": "增减、原值与利息",
       "explanationPilot": false,
-      "sourceName": "Percentages (age 12+)"
+      "sourceName": "Percentages (age 12+)",
+      "sourceGoal": "Solve problems involving percentage increase, percentage decrease, finding the original value after a percentage change, and calculating simple interest",
+      "basis": "完成一级来源描述对照，现有后缀足以区分同名目标，暂保留；尚未完成独立教研与儿童理解验收。"
     },
     {
       "id": "mt_5mIcmKRCgA",
