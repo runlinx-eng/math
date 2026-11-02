@@ -683,3 +683,10 @@ body[data-world="network"] .concept-mode>summary{font-size:12px;color:#49635b;cu
 body[data-world="network"] .focus-card[data-kind="node"] .concept-mode p{
   margin:5px 0 7px;font-size:12px;color:#536052;line-height:1.65;
 }
+
+body[data-world="network"] .concept-visual{
+  margin:7px 0;padding:8px;border:1px solid #e1e5da;border-radius:8px;background:#fcfbf6;
+}
+body[data-world="network"] .concept-visual svg{display:block;max-width:100%;height:auto;}
+body[data-world="network"] .concept-visual svg text{fill:#394c42;font-size:14px;font-weight:650;}
+body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:11px;line-height:1.6;color:#526554;}
