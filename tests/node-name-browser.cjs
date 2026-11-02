@@ -10,7 +10,15 @@ const cases=[
   ['mt_hImiKNiaNh','运算顺序','运算与几何结构的联系'],
   ['mt_ZOJ6EbdPOb','理解分数','分数倍与简单速率问题'],
   ['mt_VVn1IXjkzn','用四舍五入估算','四舍五入的误差与上下界'],
-  ['mt_KFKUR_gBg_','理解角','长方形的角与边长关系']
+  ['mt_KFKUR_gBg_','理解角','长方形的角与边长关系'],
+  ['mt_aivrWs6jrS','乘法口诀与乘法表','乘法表与分数中的规律'],
+  ['mt_wh3UqnWsa7','乘法是相同加数的和','用阵列与加法解决乘除'],
+  ['mt_A-FyLLLLzy','图形规律','按规则生成数列与图形'],
+  ['mt_i2F1nWxJjv','数轴上的数','用数轴表示不等式的解'],
+  ['mt_zMEvtigoM3','数轴上的数','根据问题选择数学表示与工具'],
+  ['mt_PsylzZ9lHW','数轴上的分数','在数轴上表示正负数、小数与分数'],
+  ['mt_ESgc4YBw-a','百分数的应用','比、比例与百分数的语言'],
+  ['mt_eKJG-0eC6D','象形统计图与计数表','频数表与多种统计图']
 ];
 const output=path.resolve(__dirname,'../verification/node-name-review');
 const check=(ok,msg)=>{if(!ok)throw Error(msg);};
