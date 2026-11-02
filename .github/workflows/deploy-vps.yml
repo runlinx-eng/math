@@ -1,0 +1,56 @@
+name: Deploy Math Explorer preview
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/**'
+      - 'deploy/vps/**'
+      - 'scripts/deploy-vps.sh'
+      - '.github/workflows/deploy-vps.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' && vars.VPS_DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate deployment settings
+        env:
+          VPS_HOST: ${{ vars.VPS_HOST }}
+          VPS_USER: ${{ vars.VPS_USER }}
+          VPS_WEB_ROOT: ${{ vars.VPS_WEB_ROOT }}
+          VPS_URL: ${{ vars.VPS_URL }}
+        run: |
+          test -n "$VPS_HOST"
+          test -n "$VPS_USER"
+          test -n "$VPS_WEB_ROOT"
+          test -n "$VPS_URL"
+
+      - name: Prepare pinned SSH access
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          test -n "$VPS_SSH_KEY"
+          test -n "$VPS_KNOWN_HOSTS"
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$VPS_SSH_KEY" > "$RUNNER_TEMP/vps_deploy_key"
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > "$RUNNER_TEMP/vps_known_hosts"
+          chmod 600 "$RUNNER_TEMP/vps_deploy_key" "$RUNNER_TEMP/vps_known_hosts"
+          echo "VPS_SSH_KEY_FILE=$RUNNER_TEMP/vps_deploy_key" >> "$GITHUB_ENV"
+          echo "VPS_KNOWN_HOSTS_FILE=$RUNNER_TEMP/vps_known_hosts" >> "$GITHUB_ENV"
+
+      - name: Deploy atomically and verify HTTPS health
+        env:
+          VPS_HOST: ${{ vars.VPS_HOST }}
+          VPS_USER: ${{ vars.VPS_USER }}
+          VPS_PORT: ${{ vars.VPS_PORT }}
+          VPS_WEB_ROOT: ${{ vars.VPS_WEB_ROOT }}
+          VPS_URL: ${{ vars.VPS_URL }}
+        run: bash scripts/deploy-vps.sh
