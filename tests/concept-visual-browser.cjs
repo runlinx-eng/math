@@ -1,4 +1,4 @@
-// Twenty-two-node UI review: five source types, eleven domains, and four procedural patterns; progressive explanation and map invariants.
+// Twenty-six-node UI review: five source types, eleven domains, procedural patterns, and seven exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -13,7 +13,9 @@ const ids=[
   ['rounding-estimation','mt_QaYfeVL-0C'],['statistical-investigation','mt_SHVyE1CLUa'],
   ['solid-shapes','mt_Qcp2d_kuta'],['ratio','mt_yK51ZnKA8m'],
   ['measuring-length','mt_KaF0SQvaiu'],['calculating-percentages','mt_PNSyfH56eQ'],
-  ['surface-area-volume','mt_Sij9ByyHq6'],['scale-drawings','mt_1badik7iKJ']
+  ['surface-area-volume','mt_Sij9ByyHq6'],['scale-drawings','mt_1badik7iKJ'],
+  ['ratio-bar-model','mt_ePXg_XyCKU'],['venn-two-sets','mt_eSv_w46u6H'],
+  ['multiplication-array','mt_GRWwTDZ3wD'],['area-distributive-model','mt_AQo4u7O4sM']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -27,7 +29,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21]];
+   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25]];
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
@@ -67,8 +69,12 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     const types=await help.locator('.concept-mode > summary').allInnerTexts();
     check(types.includes('换个说法')&&types.includes('举例与反例')&&types.includes('自己试一试')&&types.includes('为什么'),
       tag+': four useful alternative text explanation routes remain available');
-    const visualIds=['mt_Ep7TDFuYUa','mt_FP-mjXaq3B','mt_-3udyo6VyB'];
-    const expectedVisual=visualIds.includes(id);
+    const visualLabels={
+      'mt_Ep7TDFuYUa':'二等分','mt_FP-mjXaq3B':'二等分','mt_-3udyo6VyB':'y=2x+1',
+      'mt_ePXg_XyCKU':'2比3','mt_eSv_w46u6H':'韦恩图',
+      'mt_GRWwTDZ3wD':'3行4列','mt_AQo4u7O4sM':'宽4加2'
+    };
+    const expectedVisual=Object.hasOwn(visualLabels,id);
     check(types.includes('看图理解')===expectedVisual,tag+': only nodes with a real visual show the diagram entry');
     if(expectedVisual){
       await help.locator('.concept-visual-mode > summary').click();
@@ -77,7 +83,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       const info=await image.evaluate(svg=>({width:svg.getBoundingClientRect().width,
         accessibility:svg.getAttribute('aria-label'),
         inside:svg.getBoundingClientRect().right<=svg.closest('.focus-card').getBoundingClientRect().right+1}));
-      const labelNeedle=id==='mt_-3udyo6VyB'?'y=2x+1':'二等分';
+      const labelNeedle=visualLabels[id];
       check(info.width>=150&&info.inside&&info.accessibility?.includes(labelNeedle),
         tag+': exact-math visual fits the card and has an accessible description');
     }else await help.locator('.concept-mode').first().locator('summary').click();
