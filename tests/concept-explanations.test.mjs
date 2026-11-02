@@ -126,3 +126,44 @@ test('source names and node counts remain unchanged; help is supplemental',()=>{
   assert.equal(byId.get('mt_6xNmQLzuqm').title,'理解面积');
   assert.ok(conceptHelpFor('mt_UcGn2hjhYU').definition.includes('结果等可能'));
 });
+
+
+test('first-pass calibration closes identified source-scope gaps without claiming child validation',()=>{
+  assert.doesNotMatch(conceptHelpFor('mt_Ep7TDFuYUa').simpler,/离 0 一样远/);
+  assert.match(conceptHelpFor('mt_Ep7TDFuYUa').simpler,/同一条数轴.*同一个位置/);
+  assert.match(conceptHelpFor('mt_UcGn2hjhYU').definition,/结果等可能.*结果机会不相等/);
+  assert.match(conceptHelpFor('mt_UcGn2hjhYU').example,/90°.*90\/360＝1\/4.*180°.*1\/2/);
+  assert.match(conceptHelpFor('mt_DOe893F6gN').definition,/温度用摄氏度/);
+  assert.match(conceptHelpFor('mt_-3udyo6VyB').definition,/y＝mx＋c.*梯度/);
+  assert.match(conceptHelpFor('mt_-3udyo6VyB').example,/2x＋3y＝12.*y＝−2\/3x＋4.*梯度是 −2\/3/);
+  assert.match(conceptHelpFor('mt_vKcxX6iNOA').definition,/单位分数.*真分数.*假分数.*带分数.*等值分数.*最简分数/);
+  assert.match(conceptHelpFor('mt_8atyuvPUZc').definition,/最佳拟合线.*已有数据范围内/);
+  assert.match(conceptHelpFor('mt_SHVyE1CLUa').definition,/报告出来.*结论的限制/);
+  assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/化简.*6:9＝2:3/);
+  assert.match(conceptHelpFor('mt_Sij9ByyHq6').definition,/直棱柱的体积等于底面积乘高/);
+  assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/实际长度求图上长度/);
+  assert.match(conceptHelpFor('mt_ePXg_XyCKU').example,/12\/30＝2\/5/);
+  assert.match(conceptHelpFor('mt_eSv_w46u6H').definition,/两个或三个集合.*乘法原理/);
+  assert.match(conceptHelpFor('mt_m1W6nTQJ2b').example,/8＋4＝12.*12－8＝4/);
+  assert.match(conceptHelpFor('mt_q9EaJc2FP8').example,/2,347×6＝14,082/);
+  assert.match(conceptHelpFor('mt_ZfpeI1CFyP').definition,/原数据的单位.*MAD 为 0/);
+  assert.match(conceptHelpFor('mt_JRzXQl9M7c').definition,/相等间隔.*最小值.*观测总数/);
+  assert.match(conceptHelpFor('mt_oderfUBZPw').definition,/等宽区间.*频率密度/);
+  assert.match(conceptHelpFor('mt_8VjmxR1yfw').example,/另一组的中位数是 10.*四分位距是 7/);
+  assert.match(conceptHelpFor('mt_vnJEztczji').definition,/长方体、三棱柱和底面为正方形的棱锥/);
+  assert.match(conceptHelpFor('mt_SH7QgFl8-v').definition,/水平、竖直或斜镜线.*90° 或 180°/);
+  assert.match(conceptHelpFor('mt_ML5t7n2-U8').definition,/不规则图形.*数格子估算/);
+});
+
+test('the review standard distinguishes editorial calibration from independent math and child validation',()=>{
+  const standard=fs.readFileSync(new URL('../docs/language/CONCEPT-REVIEW-STANDARD.md',import.meta.url),'utf8');
+  const pilot=fs.readFileSync(new URL('../docs/language/CONCEPT-PILOT.md',import.meta.url),'utf8');
+  assert.match(standard,/来源核对/);
+  assert.match(standard,/数学审查/);
+  assert.match(standard,/儿童理解/);
+  assert.match(standard,/hasResearch=false/);
+  assert.match(standard,/不替代完整学习活动/);
+  assert.match(pilot,/21 个补充了来源目标/);
+  assert.match(pilot,/7 个研究缺口/);
+  assert.match(pilot,/均未完成真实儿童理解验证/);
+});
