@@ -1,0 +1,1897 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-02",
+  "branch": "feat/language-concept-audit-v1",
+  "definition": "hasResearch=false 表示来源 taxonomy 没有该节点的专门 teaching-research 记录；不等于证明外部不存在研究资料。",
+  "summary": {
+    "total": 85,
+    "knowledgeMapNodes": 83,
+    "mathThinkingNodes": 2,
+    "knowledgeMapWithSamples": 7,
+    "knowledgeMapWithoutSamples": 76,
+    "phaseCounts": {
+      "2": 2,
+      "4": 7,
+      "5": 76
+    },
+    "allPlanStatuses": "已排期，研究未补齐",
+    "sourceRecordsExternallyVerifiedInThisPass": 0,
+    "byType": {
+      "REPRESENTATIONAL": {
+        "total": 9,
+        "withSample": 3,
+        "withoutSample": 6
+      },
+      "PROCEDURAL": {
+        "total": 42,
+        "withSample": 3,
+        "withoutSample": 39
+      },
+      "CONCEPTUAL": {
+        "total": 28,
+        "withSample": 0,
+        "withoutSample": 28
+      },
+      "META": {
+        "total": 4,
+        "withSample": 1,
+        "withoutSample": 3
+      }
+    },
+    "byDomain": {
+      "add": {
+        "title": "Addition & Subtraction",
+        "total": 3,
+        "withSample": 0,
+        "withoutSample": 3
+      },
+      "algebra": {
+        "title": "Algebra",
+        "total": 5,
+        "withSample": 0,
+        "withoutSample": 5
+      },
+      "counting": {
+        "title": "Counting & Cardinality",
+        "total": 3,
+        "withSample": 0,
+        "withoutSample": 3
+      },
+      "data": {
+        "title": "Data & Statistics",
+        "total": 27,
+        "withSample": 5,
+        "withoutSample": 22
+      },
+      "fractions": {
+        "title": "Fractions",
+        "total": 1,
+        "withSample": 0,
+        "withoutSample": 1
+      },
+      "geometry": {
+        "title": "Geometry",
+        "total": 10,
+        "withSample": 1,
+        "withoutSample": 9
+      },
+      "measure": {
+        "title": "Measurement",
+        "total": 18,
+        "withSample": 1,
+        "withoutSample": 17
+      },
+      "multiply": {
+        "title": "Multiplication & Division",
+        "total": 6,
+        "withSample": 0,
+        "withoutSample": 6
+      },
+      "place": {
+        "title": "Number Representation & Place Value",
+        "total": 5,
+        "withSample": 0,
+        "withoutSample": 5
+      },
+      "chance": {
+        "title": "Probability",
+        "total": 4,
+        "withSample": 0,
+        "withoutSample": 4
+      },
+      "ratio": {
+        "title": "Ratio & Proportion",
+        "total": 1,
+        "withSample": 0,
+        "withoutSample": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "mt_Y6_cq3UMyy",
+      "title": "用数字工具表示数量故事",
+      "type": "REPRESENTATIONAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_biGHAbkoV2",
+      "title": "用数字工具探索加减",
+      "type": "PROCEDURAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Eqk6oSbySH",
+      "title": "含三个数的应用题",
+      "type": "PROCEDURAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_ZjIFGc6zPW",
+      "title": "找出重复的部分",
+      "type": "CONCEPTUAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_W3VOAuFwVw",
+      "title": "描述数列的增长规律",
+      "type": "CONCEPTUAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_zQfWqImxva",
+      "title": "按照步骤运算",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_QeKWt4BZn3",
+      "title": "按规则生成一组数",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_nx4a3kH-59",
+      "title": "设计数的运算步骤",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_BK5xwkrD5C",
+      "title": "观察10以内数的组成",
+      "type": "CONCEPTUAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_t9BICauBSI",
+      "title": "一眼看出5以内的数量",
+      "type": "CONCEPTUAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_0ZDouU664X",
+      "title": "分组数大量物品",
+      "type": "PROCEDURAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_X53txVXOcG",
+      "title": "用数字工具处理数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt__yvsKKp3TS",
+      "title": "比较两幅统计图",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 2,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_QpJydot2Kh",
+      "title": "选择合适的统计图",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 10
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_ebQURBOsM5",
+      "title": "围绕问题收集数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 2,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_kxeuXm6EyC",
+      "title": "在引导下开展统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_yrvYKSwSRZ",
+      "title": "用数字工具收集数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_TiFjjvBMaY",
+      "title": "比较图表与数据分布",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Y6JmLjnfRP",
+      "title": "开展统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_SHVyE1CLUa",
+      "title": "规划统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_QHT16CrFO-",
+      "title": "检查并描述分类数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_ZfpeI1CFyP",
+      "title": "到平均数的平均距离",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_8VjmxR1yfw",
+      "title": "箱线图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_mn765HbXi1",
+      "title": "用数字工具比较数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_8IsaoMPvod",
+      "title": "辨析媒体中的统计信息",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_OwYms2tB1L",
+      "title": "描述数据分布",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_JRzXQl9M7c",
+      "title": "点图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_oderfUBZPw",
+      "title": "直方图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_4zgPzc6yu5",
+      "title": "总体、样本与公平抽样",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_KCS9GbZgU_",
+      "title": "四分位数与四分位距",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_O-U263ukg1",
+      "title": "改进统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_iykH2P5oFq",
+      "title": "提出统计问题",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_6gpryAnpoZ",
+      "title": "测量了什么，怎样测量",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_tuEnyrp5Ia",
+      "title": "写出数据结论",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_km4V6d5IAh",
+      "title": "比较两个总体",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_fQ9Rw10fss",
+      "title": "用样本进行估计",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_A2hKhHXgL5",
+      "title": "两组数据差多少",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_x7V1qrkiqH",
+      "title": "不同样本的差异",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 4,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_gC-6JXAG5S",
+      "title": "二分之一、四分之一与八分之一",
+      "type": "CONCEPTUAL",
+      "domainId": "fractions",
+      "domain": "Fractions",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_mN4Ye_vtR7",
+      "title": "物体的形状与用途",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_SK7WntVZ6y",
+      "title": "用图形近似表示物体",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_NM5I3yN-Q6",
+      "title": "旋转对称",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_LBT-9jz7kR",
+      "title": "平角、优角与周角",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_RdfzwInyAj",
+      "title": "用几何软件变换图形",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_h02-C8PRrj",
+      "title": "棱柱的截面",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_h7zVgCDVmx",
+      "title": "坐标网格上的图形",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_61Nhj8W78f",
+      "title": "平面铺砌与变换图案",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Sij9ByyHq6",
+      "title": "立体图形的表面积与体积",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_4bc3EAxhlY",
+      "title": "哪些边长能组成三角形",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_FVVSQR9vGg",
+      "title": "用计算器检查金额",
+      "type": "PROCEDURAL",
+      "domainId": "thinking",
+      "domain": "Mathematical Thinking",
+      "scope": "math_thinking",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "keep_on_separate_math_thinking_review_track"
+    },
+    {
+      "id": "mt_ish_uH8vZe",
+      "title": "合理使用计算器",
+      "type": "PROCEDURAL",
+      "domainId": "thinking",
+      "domain": "Mathematical Thinking",
+      "scope": "math_thinking",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "keep_on_separate_math_thinking_review_track"
+    },
+    {
+      "id": "mt_FSLJbKkryb",
+      "title": "澳大利亚硬币与购物",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_bnwHo5wfCD",
+      "title": "间接比较质量与容积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Jz9UuT8BXW",
+      "title": "时间与事件中的分数",
+      "type": "CONCEPTUAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_8cs4YPkp23",
+      "title": "以元为单位的交易",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_MgsDabdnr1",
+      "title": "几点一刻与差一刻",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_5J2quSTspi",
+      "title": "罗马数字钟面与24时制",
+      "type": "REPRESENTATIONAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_e7tLi9SCIE",
+      "title": "用更小的单位提高精度",
+      "type": "CONCEPTUAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_tVvZVWO5d6",
+      "title": "使用日历",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_9L5qyBYmg-",
+      "title": "元与分的换算",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_NSC3LT_-ch",
+      "title": "估计容积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_5bmrA-0pBi",
+      "title": "估计总价",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_SOM6Imm2sO",
+      "title": "读出刻度之间的数值",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Qe2PsFmSAH",
+      "title": "预算与购物选择",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_i2-QaXbyzB",
+      "title": "分割图形求面积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "verify_teaching_research_and_independent_math_review_before_sample_acceptance"
+    },
+    {
+      "id": "mt_oMkQQ2O-ML",
+      "title": "折扣、消费税与余额",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_mMDpLugX2X",
+      "title": "用电子表格解决金额问题",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_tegkuJA5gM",
+      "title": "用展开图求表面积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_IlDaxVr60U",
+      "title": "边长为分数的体积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_1GDEHyEZYH",
+      "title": "用数字工具平均分与分组",
+      "type": "REPRESENTATIONAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_qUjW0N1cYO",
+      "title": "平均分与分组问题",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_oxfxzbat3k",
+      "title": "奇数与偶数的规律",
+      "type": "CONCEPTUAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_NmvuwVUFRS",
+      "title": "用计算器进行乘除",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_bZC-wqWX7Y",
+      "title": "寻找因数的步骤与工具",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_3m0pA-aeat",
+      "title": "估算检查小数运算",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_dJOKkYMsCv",
+      "title": "排列20以内的数",
+      "type": "PROCEDURAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_QguIGVMB1o",
+      "title": "不同形式的120以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_Bt-iORUzdO",
+      "title": "两位数的不同表示",
+      "type": "CONCEPTUAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_HczwO1sr-y",
+      "title": "用数字工具探索千以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_F_zEAJ8VIo",
+      "title": "表示1000以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_dlg6i-Lw0I",
+      "title": "独立与相互影响的事件",
+      "type": "CONCEPTUAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_8DT3LXwwH-",
+      "title": "用数字工具模拟随机事件",
+      "type": "PROCEDURAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 4,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_aCwj2PCoRV",
+      "title": "概率模型",
+      "type": "CONCEPTUAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_nzdtOLXWWa",
+      "title": "模拟随机事件",
+      "type": "PROCEDURAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    },
+    {
+      "id": "mt_CUJr8L5_Wn",
+      "title": "由比例图求面积",
+      "type": "CONCEPTUAL",
+      "domainId": "ratio",
+      "domain": "Ratio & Proportion",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "已排期，研究未补齐",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "not_verified_in_this_pass",
+      "nextAction": "complete_research_review_before_explanation_drafting"
+    }
+  ]
+}

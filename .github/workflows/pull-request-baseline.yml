@@ -76,6 +76,7 @@ jobs:
             tests/concept-explanations.test.mjs \
             tests/concept-coverage-consistency.test.mjs \
             tests/concept-review-inventory.test.mjs \
+            tests/concept-sample-deep-review.test.mjs \
             tests/language-terms.test.mjs \
             tests/navigation-copy.test.mjs \
             tests/node-name-audit.test.mjs \
