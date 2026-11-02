@@ -108,8 +108,9 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await page.evaluate(key=>document.querySelector('.space-label.node[data-key="'+key+'"]')
     ?.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'})),backgroundId);
   await page.waitForTimeout(90);
-  check(await page.locator('.spatial-focus-links path').count()===pathBeforeHover,
-    'leaving the full-information preview restores the original guided links');
+  check((await snap()).guide?.step===2&&JSON.stringify((await snap()).guide.edges)===JSON.stringify(state.guide.edges)
+    &&(await page.evaluate(()=>mathSpace.hoverPreview())).key===null,
+    'leaving the preview restores unchanged source guide edges and clears hover');
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
   const cueText=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>({
     action:el.querySelector('.guide-cue-action')?.textContent?.trim(),
