@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('thirty-one exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,31);
+test('thirty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,35);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -50,6 +50,20 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_Sij9ByyHq6').example,/40 立方厘米.*80 平方厘米/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').definition,/1:50.*实际 50 个相同的长度单位.*统一单位/);
   assert.match(conceptHelpFor('mt_1badik7iKJ').example,/9×50＝450 厘米.*4.5 米/);
+});
+test('four chart and geometry representations preserve their reading rules',()=>{
+  assert.equal(conceptHelpFor('mt_JRzXQl9M7c').visual,'dot-plot');
+  assert.match(conceptHelpFor('mt_JRzXQl9M7c').definition,/每个点代表一次观测.*相同数值的点竖直堆叠/);
+  assert.match(conceptHelpFor('mt_JRzXQl9M7c').counterexample,/6 名学生各读了 5 本/);
+  assert.equal(conceptHelpFor('mt_oderfUBZPw').visual,'histogram');
+  assert.match(conceptHelpFor('mt_oderfUBZPw').definition,/长条.*不能留缝.*150≤h＜160/);
+  assert.match(conceptHelpFor('mt_oderfUBZPw').counterexample,/不能告诉我们.*精确身高/);
+  assert.equal(conceptHelpFor('mt_8VjmxR1yfw').visual,'box-plot');
+  assert.match(conceptHelpFor('mt_8VjmxR1yfw').example,/中位数是 9.*四分位距是 14－6＝8.*极差是 21－3＝18/);
+  assert.match(conceptHelpFor('mt_8VjmxR1yfw').counterexample,/不表示上面的人更多/);
+  assert.equal(conceptHelpFor('mt_vnJEztczji').visual,'cube-net');
+  assert.match(conceptHelpFor('mt_vnJEztczji').definition,/6 个相同的正方形.*不能重叠/);
+  assert.match(conceptHelpFor('mt_vnJEztczji').counterexample,/不代表一定是正方体展开图/);
 });
 test('five procedural samples explain steps, place value, units, and data spread',()=>{
   assert.match(conceptHelpFor('mt_m1W6nTQJ2b').example,/8＋6.*2＋4.*14/);
