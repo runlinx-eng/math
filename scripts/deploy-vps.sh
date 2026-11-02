@@ -49,6 +49,10 @@ root="$VPS_WEB_ROOT"
 release="$root/releases/$RELEASE_ID"
 test -s "$release/index.html"
 
+if [ -e "$root/current" ] && [ ! -L "$root/current" ]; then
+  echo "Refusing to replace a non-symlink current path." >&2
+  exit 1
+fi
 if [ -L "$root/current" ]; then
   old_target="$(readlink "$root/current")"
   ln -sfn "$old_target" "$root/previous"
