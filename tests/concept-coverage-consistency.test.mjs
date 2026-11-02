@@ -114,7 +114,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.match(uniqueReview,/46 项标题过窄/);
   assert.match(uniqueReview,/406 项未发现足够改名的明确依据/);
 
-  assert.match(relationsReview,/累计专项修订 \*\*44 条\*\*/);
+  assert.match(relationsReview,/本阶段累计 \*\*44 条专项修订\*\*/);
   assert.match(relationsReview,/累计 \*\*39 条专项防回退断言\*\*/);
   assert.doesNotMatch(mainReadme,/重名想法/);
   assert.match(mainReadme,/docs\/language\/TERMS\.md/);
