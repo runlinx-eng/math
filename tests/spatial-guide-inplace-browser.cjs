@@ -38,28 +38,28 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   await lockedTheme.evaluate(el=>el.click());
   check((await snap()).guide?.step===0&&samePose(await snap(),initialGuide),
     'clicking a non-target theme does not change the guide or camera');
-  const backgroundId=await page.evaluate(()=>mathSpace.snapshot().visibleNodes
-    .find(key=>key!=='node:mt_WcfaSfVT33'));
-  check(!!backgroundId,'a background knowledge point remains present');
+  const backgroundId='node:mt_dmNvjroCPT'; // known, source-connected non-task example
+  const hoveredNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
+  check((await snap()).visibleNodes.includes(backgroundId),'background knowledge point stays in the 537-node forest');
   await page.evaluate(key=>{
-    const el=[...document.querySelectorAll('.space-label.node')].find(e=>e.dataset.key===key);
+    const el=document.querySelector('.space-label.node[data-key="'+key+'"]');
     el?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'}));
   },backgroundId);
-  await page.waitForTimeout(80);
-  const hover=await page.evaluate(()=>mathSpace.hoverPreview());
-  check(hover.key===backgroundId&&hover.edges.length===0&&hover.related.length===0,
-    'hovering a locked knowledge point reveals its name without foreign relations');
-  check(await page.locator('.space-label.node').filter({has:page.locator('span')}).count()>0,
-    'knowledge labels remain in the DOM for readable hover');
-  const hoveredNode=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
+  await page.waitForTimeout(120);
+  const guideHover=await page.evaluate(()=>mathSpace.hoverPreview());
+  check(guideHover.key===backgroundId&&guideHover.edges.length>0&&guideHover.related.length>0,
+    'locked knowledge has the full overview hover preview and real direct relations');
   check(await hoveredNode.isVisible()&&await hoveredNode.getAttribute('aria-disabled')==='true',
-    'background hover shows its actual name but keeps click permission locked');
+    'locked knowledge still reveals its complete name without click permission');
   await hoveredNode.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('dblclick',{bubbles:true}));});
   check((await snap()).guide?.step===0&&!(await snap()).journeyOpen&&samePose(await snap(),initialGuide),
-    'click and double-click on locked background cannot open learning or change guide');
+    'click and double-click on locked background do not open learning or leave the guide');
   await hoveredNode.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'})));
-  await page.waitForTimeout(50);
-  check((await snap()).guide?.step===0,'leaving locked hover restores the existing guide');
+  await page.waitForTimeout(80);
+  check((await snap()).guide?.step===0,
+    'leaving temporary hover restores the underlying guide step');
+  check((await page.evaluate(()=>mathSpace.hoverPreview())).key===null,
+    'mouseout clears temporary overview preview, not the guide');
 
   await visit();await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
   check((await target().count())===1,'guide points to the next source location');
@@ -82,16 +82,19 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
   state=await snap();
   check(state.guide.step===2&&state.guide.edges.length>=5,'source route and two actual branches remain in the graph');
   const pathBeforeHover=await page.locator('.spatial-focus-links path').count();
-  await page.evaluate(key=>{
-    const el=document.querySelector('.space-label.node[data-key="'+key+'"]');
-    el?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'}));
-  },backgroundId);
-  await page.waitForTimeout(80);
-  check((await snap()).guide?.step===2
-    &&await page.locator('.spatial-focus-links path').count()===pathBeforeHover,
-    'hovering a locked background knowledge point does not replace the current guided path');
+  await page.evaluate(key=>document.querySelector('.space-label.node[data-key="'+key+'"]')
+    ?.dispatchEvent(new PointerEvent('pointerenter',{pointerType:'mouse'})),backgroundId);
+  await page.waitForTimeout(90);
+  const temporary=await page.evaluate(()=>mathSpace.hoverPreview());
+  check(temporary.key===backgroundId&&temporary.edges.length===guideHover.edges.length,
+    'guided hover reuses the overview real-edge preview without changing its content');
+  check((await snap()).guide?.step===2,
+    'full hover preview is read-only and does not progress or interrupt the guide');
   await page.evaluate(key=>document.querySelector('.space-label.node[data-key="'+key+'"]')
     ?.dispatchEvent(new PointerEvent('pointerleave',{pointerType:'mouse'})),backgroundId);
+  await page.waitForTimeout(90);
+  check(await page.locator('.spatial-focus-links path').count()===pathBeforeHover,
+    'leaving the full-information preview restores the original guided links');
   check((await page.locator('#guide-cues [data-action="guide-visit"]').count())===2,'branch step offers two map targets');
   const cueText=await page.locator('#guide-cues [data-action="guide-visit"]').evaluateAll(cues=>cues.map(el=>({
     action:el.querySelector('.guide-cue-action')?.textContent?.trim(),
