@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('sixteen exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,16);
+  assert.equal(samples.length,18);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -37,6 +37,10 @@ test('new samples preserve the key mathematical distinctions in their source goa
   assert.match(conceptHelpFor('mt_vKcxX6iNOA').definition,/分母.*平均分成几份.*分子.*取其中几份.*不能为 0/);
   assert.match(conceptHelpFor('mt_8atyuvPUZc').counterexample,/不等于.*造成/);
   assert.match(conceptHelpFor('mt_mqgu72aCMz').counterexample,/平行且不重合时无解.*重合时有无数个解/);
+  assert.match(conceptHelpFor('mt_Qcp2d_kuta').definition,/三维空间.*长、宽、高.*正方体.*长方体/);
+  assert.match(conceptHelpFor('mt_Qcp2d_kuta').counterexample,/圆是平面图形，球是立体图形/);
+  assert.match(conceptHelpFor('mt_yK51ZnKA8m').definition,/按顺序.*倍数关系.*同时乘或除以同一个正数/);
+  assert.match(conceptHelpFor('mt_yK51ZnKA8m').counterexample,/2\/7，不是 2\/5/);
 });
 test('meta samples explain strategy selection, verification, and investigation limits',()=>{
   assert.match(conceptHelpFor('mt_QaYfeVL-0C').definition,/四舍五入.*大致范围.*逆运算.*合理/);
