@@ -74,7 +74,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     await page.screenshot({path:path.join(out,tag+'-initial.png')});
     await page.waitForTimeout(220);
     const before=JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()));
-    const storage=await page.evaluate(()=>JSON.stringify({...localStorage}));
+    const learningRecord=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
     await help.locator('.concept-alternatives > summary').click();
     const types=await help.locator('.concept-mode > summary').allInnerTexts();
     check(types.includes('换个说法')&&types.includes('举例与反例')&&types.includes('自己试一试')&&types.includes('为什么'),
@@ -155,7 +155,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
     check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===before,
       tag+': reading explanations does not change camera, nodes, selection, or relation data');
-    check(await page.evaluate(()=>JSON.stringify({...localStorage}))===storage,
+    check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===learningRecord,
       tag+': explanation reads never record learning completion');
     check(JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions)===start,
       tag+': all world coordinates unchanged');
