@@ -12,6 +12,7 @@ on:
       - 'tests/spatial-overview-browser.cjs'
       - 'tests/spatial-focus-transition-browser.cjs'
       - 'tests/spatial-focus-semantics-browser.cjs'
+      - 'tests/spatial-focus-semantics-browser.cjs'
       - 'tests/spatial-focus-filter-browser.cjs'
       - 'tests/spatial-guide-inplace-browser.cjs'
       - 'tests/spatial-unified-map-browser.cjs'
