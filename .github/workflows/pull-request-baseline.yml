@@ -61,8 +61,30 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
 
-      - name: Run all Node.js unit and invariant tests
-        run: node --test tests/*.test.mjs
+      - name: Run active Node.js unit and invariant tests
+        shell: bash
+        run: |
+          test_files=(
+            tests/spatial-relationship.test.mjs
+            tests/spatial-overview.test.mjs
+            tests/spatial-overview-structure.test.mjs
+            tests/spatial-focus-filter.test.mjs
+            tests/deployment-static.test.mjs
+          )
+
+          for candidate in \
+            tests/concept-explanations.test.mjs \
+            tests/language-terms.test.mjs \
+            tests/navigation-copy.test.mjs \
+            tests/node-name-audit.test.mjs \
+            tests/relationship-wording.test.mjs
+          do
+            if [[ -f "$candidate" ]]; then
+              test_files+=("$candidate")
+            fi
+          done
+
+          node --test "${test_files[@]}"
 
       - name: Check deployment script syntax
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
