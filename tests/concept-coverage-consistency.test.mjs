@@ -121,3 +121,21 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.match(spatialReadme,/44 条/);
   assert.match(spatialReadme,/39 条/);
 });
+
+
+const conceptReviewStandard=fs.readFileSync(new URL('../docs/language/CONCEPT-REVIEW-STANDARD.md',import.meta.url),'utf8');
+const conceptPilot=fs.readFileSync(new URL('../docs/language/CONCEPT-PILOT.md',import.meta.url),'utf8');
+
+test('the content review standard and calibration record cover the implemented 39 samples',()=>{
+  assert.match(conceptReviewStandard,/来源核对/);
+  assert.match(conceptReviewStandard,/数学正确/);
+  assert.match(conceptReviewStandard,/范围完整/);
+  assert.match(conceptReviewStandard,/适龄/);
+  assert.match(conceptReviewStandard,/儿童理解/);
+  assert.match(conceptPilot,/39 个样板的首轮内容校准/);
+  assert.match(conceptPilot,/21 个样板/);
+  assert.match(conceptPilot,/7 个研究缺口/);
+  for(const [id] of samples){
+    assert.ok(conceptPilot.includes(id),'calibration record must retain sample source ID '+id);
+  }
+});
