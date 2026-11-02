@@ -87,7 +87,12 @@ jobs:
           node --test "${test_files[@]}"
 
       - name: Check deployment script syntax
-        run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
+        run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh scripts/setup-preview-auth-vps.sh
+
+      - name: Check shared preview login service
+        run: |
+          python3 -m py_compile deploy/vps/preview-auth.py
+          python3 tests/preview-auth.test.py
 
       - name: Install isolated Chromium test runtime
         if: steps.scope.outputs.run_browser == 'true'
