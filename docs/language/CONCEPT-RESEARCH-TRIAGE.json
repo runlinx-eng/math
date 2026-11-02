@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewDate": "2026-11-02",
+  "reviewDate": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "definition": "hasResearch=false 表示来源 taxonomy 没有该节点的专门 teaching-research 记录；不等于证明外部不存在研究资料。",
   "summary": {
@@ -14,8 +14,8 @@
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订，独立数学复核待完成；76个无样板知识点与2个数学思维节点尚未核查",
-    "sourceRecordsExternallyVerifiedInThisPass": 7,
+    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订；B01的2个无样板知识地图节点已完成外部来源核查、解释起草未开始；其余74个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
+    "sourceRecordsExternallyVerifiedInThisPass": 2,
     "byType": {
       "REPRESENTATIONAL": {
         "total": 9,
@@ -106,10 +106,31 @@
         "withoutSample": 1
       }
     },
-    "nodesWithExternalSourcesVerified": 7,
+    "nodesWithExternalSourcesVerified": 9,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "sourceRecordsExternallyVerifiedInPreviousPass": 7,
+    "nodesWithResearchReviewedWithoutExplanation": 2,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 74,
+    "remainingUnverifiedMathThinkingNodes": 2,
+    "researchBatchesExternallyReviewed": [
+      "B01"
+    ],
+    "phaseBreakdownByScope": {
+      "2": {
+        "knowledge_map": 2,
+        "math_thinking": 0
+      },
+      "4": {
+        "knowledge_map": 7,
+        "math_thinking": 0
+      },
+      "5": {
+        "knowledge_map": 74,
+        "math_thinking": 2
+      }
+    }
   },
   "records": [
     {
@@ -376,14 +397,22 @@
         "end": 8
       },
       "phase": 2,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B01外部来源核查完成；解释起草未开始",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
+      "nextAction": "await_authorization_before_explanation_drafting",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-03",
+        "SRC-07",
+        "SRC-08"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt__yvsKKp3TS"
     },
     {
       "id": "mt_QpJydot2Kh",
@@ -418,14 +447,23 @@
         "end": 9
       },
       "phase": 2,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B01外部来源核查完成；解释起草未开始",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
+      "nextAction": "await_authorization_before_explanation_drafting",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt_ebQURBOsM5"
     },
     {
       "id": "mt_kxeuXm6EyC",

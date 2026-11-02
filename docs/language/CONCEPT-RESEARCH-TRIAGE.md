@@ -1,6 +1,6 @@
 # 数学树教学研究缺口 · 85 项核对与分流
 
-核对日期：2026-11-02
+核对日期：2026-11-03
 权威计划：[docs/content-plan/RESEARCH-GAPS.md](../content-plan/RESEARCH-GAPS.md)
 
 ## 核对结论
@@ -8,18 +8,18 @@
 - 来源数据中 `hasResearch=false` 共 **85** 个节点，与原研究缺口计划中的 **85 个唯一 ID 完全匹配**，没有漏项或多项。
 - 其中 **83 个属于537个知识地图节点**：7个已有解释样板、76个尚无解释样板。
 - 另有 **2 个属于50个数学思维节点**，必须单独审查，不混入537个知识点解释任务。
-- 7 个已有样板已完成外部来源核查并按来源 evidence 修订内容；独立数学复核仍未完成。76 个无样板知识地图节点与 2 个数学思维节点尚未开始外部来源核查。
+- 7 个已有样板已完成外部来源核查并按来源 evidence 修订内容；B01另有2个无样板知识地图节点完成外部来源核查，但解释起草未开始。其余74个无样板知识地图节点与2个数学思维节点尚未核查；7个已有样板的独立数学复核仍未完成。
 - 85项都有来源描述与可观察 evidence；这些来源目标可用于确定研究问题，但不能替代专门教学研究记录。
-- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。7 个节点的外部来源已单独记录，但源标记暂不修改。
+- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有9个节点完成外部来源核查（7个已有样板、B01两个无样板节点），源标记均暂不修改。
 
 ## 按施工阶段分流
 
 | 原计划阶段 | 数量 | 范围 | 当前状态 |
 |---|---:|---|---|
-| Phase 2 | 2 | 两个数学思维节点 | 单独保留数学思维审查轨道 |
-| Phase 4 | 7 | 已有解释样板的研究缺口 | 外部来源已核查、内容已修订；独立数学复核待完成 |
-| Phase 5 | 76 | 尚无解释样板的知识地图节点 | 尚未核查外部来源；先补研究与教学设计依据，再起草解释 |
-| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **7个来源核查完成、独立复核待做；78个尚未核查** |
+| Phase 2 | 2 | B01两个知识地图节点（`mt_ebQURBOsM5`、`mt__yvsKKp3TS`） | B01外部来源核查完成；解释起草未开始 |
+| Phase 4 | 7 | 7个尚无解释样板的知识地图节点 | 尚未核查外部来源 |
+| Phase 5 | 76 | 74个知识地图节点（7个已有样板、67个无样板）及2个数学思维节点 | 7个样板来源已核查；67个无样板知识点与2个数学思维节点尚未核查 |
+| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **9个来源核查完成；76个尚未核查** |
 
 ## 83 个知识地图节点：按领域
 
@@ -70,9 +70,9 @@
 - `mt_t9BICauBSI` 一眼看出5以内的数量（Counting & Cardinality；CONCEPTUAL；Phase 5）
 - `mt_0ZDouU664X` 分组数大量物品（Counting & Cardinality；PROCEDURAL；Phase 5）
 - `mt_X53txVXOcG` 用数字工具处理数据（Data & Statistics；PROCEDURAL；Phase 5）
-- `mt__yvsKKp3TS` 比较两幅统计图（Data & Statistics；CONCEPTUAL；Phase 2）
+- `mt__yvsKKp3TS` 比较两幅统计图（Data & Statistics；CONCEPTUAL；Phase 2；B01外部来源核查完成，解释起草未开始）
 - `mt_QpJydot2Kh` 选择合适的统计图（Data & Statistics；CONCEPTUAL；Phase 4）
-- `mt_ebQURBOsM5` 围绕问题收集数据（Data & Statistics；PROCEDURAL；Phase 2）
+- `mt_ebQURBOsM5` 围绕问题收集数据（Data & Statistics；PROCEDURAL；Phase 2；B01外部来源核查完成，解释起草未开始）
 - `mt_kxeuXm6EyC` 在引导下开展统计调查（Data & Statistics；META；Phase 5）
 - `mt_yrvYKSwSRZ` 用数字工具收集数据（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_TiFjjvBMaY` 比较图表与数据分布（Data & Statistics；CONCEPTUAL；Phase 5）
@@ -135,7 +135,7 @@
 - `mt_nzdtOLXWWa` 模拟随机事件（Probability；PROCEDURAL；Phase 5）
 - `mt_CUJr8L5_Wn` 由比例图求面积（Ratio & Proportion；CONCEPTUAL；Phase 5）
 
-## 2 个数学思维节点（独立轨道）
+## 2 个数学思维节点（Phase 5，独立轨道）
 
 - `mt_FVVSQR9vGg` 用计算器检查金额：不套用知识点解释模板；审查计算器使用策略、估算检查和工具选择的行为证据。
 - `mt_ish_uH8vZe` 合理使用计算器：不套用知识点解释模板；审查计算器使用策略、估算检查和工具选择的行为证据。
@@ -151,3 +151,6 @@
 机器可读记录：[CONCEPT-RESEARCH-TRIAGE.json](CONCEPT-RESEARCH-TRIAGE.json)。
 
 7 个已有样板的外部来源与研究限制：[CONCEPT-RESEARCH-EVIDENCE.md](CONCEPT-RESEARCH-EVIDENCE.md)。
+
+
+B01研究依据与逐节点边界：[CONCEPT-RESEARCH-B01.md](CONCEPT-RESEARCH-B01.md)；机器可读记录：[CONCEPT-RESEARCH-B01.json](CONCEPT-RESEARCH-B01.json)。
