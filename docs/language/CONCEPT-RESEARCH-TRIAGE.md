@@ -1,6 +1,6 @@
 # 数学树教学研究缺口 · 85 项核对与分流
 
-核对日期：2026-11-02  
+核对日期：2026-11-02
 权威计划：[docs/content-plan/RESEARCH-GAPS.md](../content-plan/RESEARCH-GAPS.md)
 
 ## 核对结论
