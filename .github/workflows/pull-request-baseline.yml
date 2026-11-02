@@ -31,7 +31,7 @@ jobs:
           fi
 
           changed_files="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")"
-          if printf '%s\n' "$changed_files" | grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|AGENTS\.md$|docs/DEVELOPMENT-WORKFLOW\.md$|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/|README\.md$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/)'; then
             echo "run_browser=true" >> "$GITHUB_OUTPUT"
             echo "Browser regression is required for this change."
           else
@@ -40,8 +40,13 @@ jobs:
           fi
 
       - name: Check patch whitespace and merge markers
+        shell: bash
         run: |
-          git diff --check "origin/${{ github.base_ref }}...HEAD"
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          else
+            git diff --check HEAD^ HEAD
+          fi
           if git grep -n -E '^(<<<<<<< |=======|>>>>>>> )' -- ':!docs/history/**'; then
             echo "Unresolved merge-conflict markers found"
             exit 1
@@ -59,10 +64,8 @@ jobs:
       - name: Run all Node.js unit and invariant tests
         run: node --test tests/*.test.mjs
 
-      - name: Check static deployment assets and script syntax
-        run: |
-          bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
-          node --test tests/deployment-static.test.mjs
+      - name: Check deployment script syntax
+        run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
       - name: Install isolated Chromium test runtime
         if: steps.scope.outputs.run_browser == 'true'
@@ -80,7 +83,7 @@ jobs:
 
           ready=false
           for attempt in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:43827/ >/dev/null; then
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
               ready=true
               break
             fi
