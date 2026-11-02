@@ -343,7 +343,7 @@ function conceptVisualHtml(kind){
       '<rect x="12" y="10" width="296" height="166" rx="5" fill="none" stroke="#74897f"/>'+
       '<circle cx="112" cy="92" r="58" fill="#dfb477" fill-opacity=".42" stroke="#b18a50" stroke-width="2"/>'+
       '<circle cx="208" cy="92" r="58" fill="#a8c5d6" fill-opacity=".48" stroke="#688ba0" stroke-width="2"/>'+
-      '<text x="95" y="25" text-anchor="middle">喜欢足球</text><text x="225" y="25" text-anchor="middle">喜欢板球</text><text x="292" y="25" text-anchor="end">共30人</text>'+
+      '<text x="95" y="25" text-anchor="middle">喜欢足球</text><text x="160" y="25" text-anchor="middle">共30人</text><text x="225" y="25" text-anchor="middle">喜欢板球</text>'+
       '<text x="78" y="98" text-anchor="middle">10</text><text x="160" y="98" text-anchor="middle">6</text><text x="242" y="98" text-anchor="middle">8</text>'+
       '<text x="160" y="164" text-anchor="middle">都不喜欢：6</text>'+
       '</svg><figcaption>交叠处的 6 人同时属于两组；两个圆合起来有 24 人，圆外还有 6 人。</figcaption></figure></details>';
