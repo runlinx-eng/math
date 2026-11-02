@@ -467,7 +467,7 @@ function conceptVisualHtml(kind){
   }
   if(kind==='polygon-area-decomposition'){
     return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
-      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="不等腰梯形：上底6厘米，下底10厘米，高4厘米；左侧三角形底1厘米，右侧三角形底3厘米，两个三角形不相等，合计底长4厘米；分割面积32平方厘米">'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="梯形分割：不等腰梯形，上底6厘米，下底10厘米，高4厘米；左侧三角形底1厘米，右侧三角形底3厘米，两个三角形不相等，合计底长4厘米；分割面积32平方厘米">'+
       '<text x="160" y="18" text-anchor="middle" fill="#394c42" font-size="12">不等腰梯形：长方形＋两个不等三角形</text>'+
       '<path d="M80 50L200 50L260 122L60 122Z" fill="#dfb477" fill-opacity=".3" stroke="#9a794c" stroke-width="1.7"/>'+
       '<path data-part="left-triangle" d="M60 122L80 50L80 122Z" fill="#a8c5d6" fill-opacity=".85"/>'+
