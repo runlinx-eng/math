@@ -21,6 +21,7 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     why:'两部分合成整体，整体包含第一部分和第二部分的全部数量，不重复也不遗漏。'
   },
   'mt_Ep7TDFuYUa':{
+    visual:'equal-fraction-bars',
     formal:'数轴上的等值分数',
     definition:'在同一条数轴上，表示同一个数、落在同一位置的不同分数写法是等值的。',
     simpler:'虽然分数写法不一样，但它们离 0 一样远，表示的是同一个数。',
@@ -30,6 +31,7 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     why:'分得更细改变的是每小份的大小和份数，并没有改变原来所取的整体数量。'
   },
   'mt_FP-mjXaq3B':{
+    visual:'equal-fraction-bars',
     formal:'等值分数的生成与化简',
     definition:'把分数的分子、分母同时乘同一个正整数，分数的值不变；同时除以共同的正因数也不变。',
     simpler:'每一份分得更细，同时取更多份，拿到的总量仍然一样；也可以反过来合并小份。',
