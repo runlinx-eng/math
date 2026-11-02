@@ -209,7 +209,7 @@ export class SpatialScene {
     this.canvas.addEventListener('pointerdown',e=>{this.down={x:e.clientX,y:e.clientY,button:e.button,moved:false};});
     this.canvas.addEventListener('pointerup',e=>{if(this.down?.button===0&&!this.down.moved&&Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)<5){const key=this.hit(e);if(key)callbacks.onSelect?.(key);}this.down=null;});
     this.canvas.addEventListener('pointercancel',()=>{this.down=null;});
-    this.canvas.addEventListener('pointermove',e=>{if(this.down){if(Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)>=5)this.down.moved=true;return;}const key=this.hit(e);this.hovered=key;this.setMapHover(key);this.canvas.style.cursor=key?'pointer':this.mode==='rotate'?'grab':'move';this.dirty=true;});
+    this.canvas.addEventListener('pointermove',e=>{if(this.down){if(Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)>=5)this.down.moved=true;return;}const key=this.hit(e);this.hovered=key;this.setMapHover(key);this.canvas.style.cursor=key?(this.guideFocus&&!this.guideFocus.targetKeys?.has(key)?'help':'pointer'):this.mode==='rotate'?'grab':'move';this.dirty=true;});
     this.canvas.addEventListener('pointerleave',e=>{if(e.relatedTarget?.closest?.('.space-label'))return;this.hovered=null;this.setMapHover(null);this.dirty=true;});
     this.canvas.addEventListener('dblclick',e=>{const key=this.hit(e),o=space.byKey.get(key);if(o?.kind==='node')callbacks.onOpen?.(o.id);});
     this.canvas.addEventListener('keydown',e=>{if(['+','=','-','_'].includes(e.key)){e.preventDefault();this.zoom(e.key==='-'||e.key==='_'?1.3:.77);}if(e.key==='Home'){e.preventDefault();callbacks.onOverview?.();}});
@@ -321,7 +321,7 @@ export class SpatialScene {
     // Guided observation is an in-place overlay on the panorama. Cancel an
     // unfinished camera animation; never refit, rotate or zoom for a guide step.
     this.tween=null;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.select(current.overview?null:'node:'+current.anchor);this.setRelations('source');this.dirty=true;}
-  setGuideTargets(keys=[]){if(!this.guideFocus)return;this.guideFocus.targetKeys=new Set(keys);this.dirty=true;}
+  setGuideTargets(keys=[],visited=[]){if(!this.guideFocus)return;this.guideFocus.targetKeys=new Set(keys);this.guideFocus.visitedKeys=new Set(visited);this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
   setThemeHover(id){
     // The top-left legend keeps the existing multi-group theme preview.
@@ -331,11 +331,13 @@ export class SpatialScene {
     this.hoverThemeId=next;this.dirty=true;this.callbacks.onMapHover?.();
   }
   setMapHover(key){
-    const object=this.relationshipMap&&!this.guideFocus?this.space.byKey.get(key):null;
+    const object=this.relationshipMap?this.space.byKey.get(key):null;
     const next=object&&(object.kind!=='node'||this.canLocate(object))?object.key:null;
     if(this.hoverMapKey===next&&(next||!this.hoverThemeId))return;
-    this.hoverMapKey=next;this.hoverThemeId=object?.kind==='theme'?object.id:null;
+    this.hoverMapKey=next;this.hoverThemeId=this.guideFocus?null:object?.kind==='theme'?object.id:null;
     this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];
+    // During guided tasks, hover reveals names but never expands other relations.
+    if(this.guideFocus){this.dirty=true;return;}
     if(object?.kind==='node'&&next){
       // Direct, source-backed hard/soft edges only, never an inferred route.
       for(const link of relationsFor(this.space,next)){
@@ -519,7 +521,10 @@ export class SpatialScene {
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
       if(this.guideFocus.targetKeys?.has(o.key)||this.guideFocus.targetKeys?.has('theme:'+o.themeId))return 1;
-      return this.guideFocus.currentNodes.has(o.key)?.82:this.guideFocus.seenNodes.has(o.key)?.68:this.guideFocus.step===0?.70:.42;
+      if(o.key===this.selected)return .95;
+      if(o.key===this.hoverMapKey)return .75;
+      if(this.guideFocus.visitedKeys?.has(o.key))return .65;
+      return this.guideFocus.currentNodes.has(o.key)?.61:this.guideFocus.seenNodes.has(o.key)?.57:this.guideFocus.step===0?.70:.38;
     }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?.18:o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
@@ -536,7 +541,8 @@ export class SpatialScene {
       // guide's real current/visited nodes are allowed to regain saturation.
       const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
       // Hierarchy-specific, temporary node emphasis; no coordinate changes.
-      const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
+      const hoverTint=this.guideFocus?(o.key===this.hoverMapKey?.88:null):
+        hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
       color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
@@ -546,7 +552,7 @@ export class SpatialScene {
         if(fadeIn&&!transition.fromKeys.has(o.key))color.lerp(paper,1-progress);
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
-        (this.guideFocus.targetKeys?.has(o.key)?7.4:this.guideFocus.currentNodes.has(o.key)?6.2:this.guideFocus.seenNodes.has(o.key)?5.2:4.1):
+        (this.guideFocus.targetKeys?.has(o.key)?7.5:o.key===this.selected?6.5:this.guideFocus.visitedKeys?.has(o.key)?5.4:o.key===this.hoverMapKey?5:this.guideFocus.currentNodes.has(o.key)?5.2:this.guideFocus.seenNodes.has(o.key)?4.8:3.9):
         hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
       const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
@@ -686,7 +692,7 @@ export class SpatialScene {
         if(this.relationshipMap&&this.guideFocus&&o.kind==='node')show=this.guideFocus.currentNodes.has(o.key)||o.key===this.hovered||o.key===this.previewKey||this.guideFocus.seenNodes.has(o.key)&&scale>2;
         if(this.relationshipMap&&this.guideFocus&&o.kind==='theme'){show=scale<2.2;priority=this.guideFocus.targetKeys?.has(o.key)?120:72;}
         if(this.relationshipMap&&this.guideFocus&&o.kind==='pack')show=false;
-        if(this.relationshipMap&&this.guideFocus&&o.kind==='node'&&this.guideFocus.step===0)show=false;
+        if(this.relationshipMap&&this.guideFocus&&o.kind==='node'&&this.guideFocus.step===0)show=o.key===this.hovered||o.key===this.hoverMapKey;
         if(this.relationshipMap&&this.guideFocus&&this.guideFocus.targetKeys?.has(o.key)){show=true;priority=120;}
         // Theme selection is a knowledge-group overview, not the all-node-name
         // panorama. Only this theme's packs label the map; names emerge after
@@ -709,12 +715,12 @@ export class SpatialScene {
           }else if(o.kind==='pack'){show=o.key===selected.key;priority=110;}
           else show=false;
         }
-        if(this.relationshipMap&&hoverObject?.kind==='pack'){
+        if(this.relationshipMap&&!this.guideFocus&&hoverObject?.kind==='pack'){
           if(o.kind==='pack'){show=o.key===hoverObject.key;priority=110;}
           else if(o.kind==='node'){show=o.key===this.hovered&&o.packId===hoverObject.id;priority=95;}
           else show=false;
         }
-        if(this.relationshipMap&&hoverObject?.kind==='node'){
+        if(this.relationshipMap&&!this.guideFocus&&hoverObject?.kind==='node'){
           if(o.kind==='node'){show=o.key===hoverObject.key||this.hoverRelatedKeys.has(o.key);priority=o.key===hoverObject.key?115:85;}
           else show=false;
         }
@@ -730,7 +736,7 @@ export class SpatialScene {
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;
       el.hidden=!anchor;el.style.opacity='';
-      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target','guide-target');
+      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target','guide-target','guide-locked','guide-visited','guide-current');
       el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);
       el.setAttribute('aria-pressed','false');
       if(show||anchor)candidates.push({...entry,p,priority,isSelected,related,anchor});
@@ -751,6 +757,11 @@ export class SpatialScene {
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
       el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.classList.toggle('guide-target',!!this.guideFocus?.targetKeys?.has(o.key));
+      el.classList.toggle('guide-locked',!!this.guideFocus&&!this.guideFocus.targetKeys?.has(o.key));
+      el.classList.toggle('guide-visited',!!this.guideFocus?.visitedKeys?.has(o.key));
+      el.classList.toggle('guide-current',!!this.guideFocus&&o.key===this.selected);
+      if(this.guideFocus)el.setAttribute('aria-disabled',String(!this.guideFocus.targetKeys?.has(o.key)));
+      else el.removeAttribute('aria-disabled');
       el.classList.toggle('preview-theme-target',hoverObject?.kind==='theme'&&o.key===this.hoverMapKey);
       const hoverNode=hoverObject?.kind==='node',target=hoverNode&&o.key===this.hoverMapKey,neighbor=hoverNode&&this.hoverRelatedKeys.has(o.key)&&!target;
       el.classList.toggle('preview-target',!!target);
