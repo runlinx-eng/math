@@ -122,6 +122,16 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       });
       check(visible.top>=visible.cardTop-1&&visible.bottom<=visible.cardBottom+1,
         tag+': diagram can be scrolled fully into the visible knowledge-card area');
+      if(id==='mt_eSv_w46u6H'){
+        const labels=await image.evaluate(svg=>Object.fromEntries(
+          [...svg.querySelectorAll('text')].filter(el=>['喜欢足球','喜欢板球','共30人'].includes(el.textContent.trim()))
+            .map(el=>{const b=el.getBBox();return [el.textContent.trim(),{left:b.x,right:b.x+b.width,x:Number(el.getAttribute('x'))}];})
+        ));
+        check(labels['喜欢足球']&&labels['喜欢板球']&&labels['共30人']&&
+          labels['喜欢足球'].right<labels['共30人'].left&&
+          labels['共30人'].right<labels['喜欢板球'].left&&labels['共30人'].x===160,
+          tag+': total sample-size label is visually separated from both set labels');
+      }
       if(id==='mt_i2-QaXbyzB'){
         check(info.accessibility?.includes('两个三角形不相等')&&info.text.includes('1 cm')&&info.text.includes('3 cm'),
           tag+': trapezoid diagram labels unequal side triangles and their base lengths');
