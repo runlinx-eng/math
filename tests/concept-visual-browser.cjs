@@ -1,4 +1,4 @@
-// Eighteen-node UI review: five source types and all currently uncovered domains, progressive explanation, and map invariants.
+// Eighteen-node UI review: five source types and all eleven domains seeded, progressive explanation, and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
