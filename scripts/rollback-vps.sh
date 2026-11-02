@@ -15,7 +15,7 @@ VPS_WEB_ROOT="${VPS_WEB_ROOT%/}"
   exit 1
 }
 [[ "$VPS_PORT" =~ ^[0-9]{1,5}$ ]] || { echo "VPS_PORT must be numeric." >&2; exit 1; }
-[[ "$VPS_URL" == https://* ]] || { echo "VPS_URL must use HTTPS." >&2; exit 1; }
+[[ "$VPS_URL" =~ ^https://[^/]+/?$ ]] || { echo "VPS_URL must be an HTTPS origin without a path." >&2; exit 1; }
 [[ -s "$VPS_SSH_KEY_FILE" && -s "$VPS_KNOWN_HOSTS_FILE" ]] || {
   echo "SSH key and pinned known_hosts file are required." >&2
   exit 1
