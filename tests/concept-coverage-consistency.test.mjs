@@ -35,7 +35,7 @@ test('coverage ledger matches every implemented sample and source distribution',
   assert.equal(mapNodes.length,537);
   assert.equal(samples.length,39);
   assert.equal(new Set(samples.map(([id])=>id)).size,39);
-  assert.ok(samples.every(([id])=>byId.has(id),'every explanation must map to a knowledge-map source node');
+  assert.ok(samples.every(([id])=>byId.has(id)),'every explanation must map to a knowledge-map source node');
 
   for(const [type,label] of Object.entries(typeLabels)){
     const total=mapNodes.filter(node=>node.type===type).length;
