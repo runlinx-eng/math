@@ -51,9 +51,31 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.match(nginx, /return 308 https:\/\/\$host:8443\$request_uri;/);
   assert.match(nginx, /location \^~ \/\.well-known\/acme-challenge\//);
   assert.match(nginx, /location = \/health[\s\S]*?auth_basic off;/);
-  assert.match(nginx, /auth_basic_user_file \/etc\/nginx\/\.htpasswd-math-preview;/);
+  assert.match(nginx, /location = \/health[\s\S]*?return 200/);
+  assert.match(nginx, /location = \/login[\s\S]*?alias \/var\/www\/math-preview-login\/index\.html;/);
+  assert.match(nginx, /auth_request \/__preview_auth;/);
+  assert.match(nginx, /location = \/auth\/login[\s\S]*?proxy_pass http:\/\/127\.0\.0\.1:8765\/login;/);
+  assert.match(nginx, /limit_req_status 429;/);
+  assert.doesNotMatch(nginx, /auth_basic|\.htpasswd-math-preview/);
   assert.match(nginx, /try_files \$uri \$uri\/ =404;/);
   assert.match(nginx, /Cache-Control "no-cache"/);
+
+  const authService = fs.readFileSync(path.join(root, 'deploy/vps/preview-auth.py'), 'utf8');
+  assert.match(authService, /pbkdf2_hmac/);
+  assert.match(authService, /hmac\.compare_digest/);
+  assert.match(authService, /SameSite=Lax/);
+  assert.match(authService, /HttpOnly/);
+  assert.match(authService, /Secure/);
+  assert.match(authService, /127\.0\.0\.1", 8765/);
+
+  const login = fs.readFileSync(path.join(root, 'deploy/vps/preview-login.html'), 'utf8');
+  assert.match(login, /action="\/auth\/login"/);
+  assert.match(login, /name="password"/);
+  assert.doesNotMatch(login, /password\s*[:=]\s*["'][^"']+["']/i);
+
+  const serviceUnit = fs.readFileSync(path.join(root, 'deploy/vps/preview-auth.service'), 'utf8');
+  assert.match(serviceUnit, /User=www-data/);
+  assert.match(serviceUnit, /NoNewPrivileges=true/);
 
   const httpOnly = fs.readFileSync(path.join(root, 'deploy/vps/nginx-math-preview-http.conf.example'), 'utf8');
   assert.match(httpOnly, /listen 80;/);
