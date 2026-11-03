@@ -232,7 +232,7 @@ test('second-batch first five explanations preserve source-specific mathematical
   assert.match(angles.example,/120°.*95°.*145°.*4×90°＝360°.*270°/);
   assert.match(angles.why,/平角.*180°.*周角.*360°/);
   const place=conceptHelpFor('mt_aPBzD28_mT');
-  assert.match(place.definition,/个位.*十位.*百位.*100a＋10b＋c/);
+  assert.match(place.definition,/个位.*十位.*百位.*百位上的数字不能是 0/);
   assert.match(place.example,/362.*300.*60.*2.*706.*700.*0.*6/);
   assert.match(place.counterexample,/706 不是 7＋0＋6＝13/);
   const probability=conceptHelpFor('mt_3fwYu7imd4');
