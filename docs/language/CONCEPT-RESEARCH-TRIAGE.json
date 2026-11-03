@@ -110,13 +110,14 @@
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
-    "nodesWithResearchReviewedWithoutExplanation": 4,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 72,
+    "nodesWithResearchReviewedWithoutExplanation": 5,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 71,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
       "B02",
-      "B03"
+      "B03",
+      "B04"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -134,7 +135,8 @@
     },
     "sourceRecordsExternallyVerifiedInB01": 2,
     "sourceRecordsExternallyVerifiedInB02": 1,
-    "sourceRecordsExternallyVerifiedInB03": 1
+    "sourceRecordsExternallyVerifiedInB03": 1,
+    "nodesWithExternalSourcesReviewed": 1
   },
   "records": [
     {
@@ -832,14 +834,22 @@
         "end": 12
       },
       "phase": 4,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B04外部来源核查完成；解释起草未开始",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "researchVerificationStatus": "external_sources_reviewed_B04_2026-11-03",
+      "nextAction": "await_authorization_before_explanation_drafting",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B04.md#mt_iykH2P5oFq"
     },
     {
       "id": "mt_6gpryAnpoZ",

@@ -71,7 +71,7 @@
 
 ## 05 · 提出统计问题 · B04
 
-源 ID：`mt_iykH2P5oFq`；阶段 4；状态：已排期，研究未补齐。
+源 ID：`mt_iykH2P5oFq`；阶段 4；状态：B04外部来源核查完成；解释起草未开始。
 
 **需要覆盖的源目标：**
 
@@ -80,6 +80,8 @@
 - Explain why a question about a group can still be non-statistical (e.g. 'How many pupils are in my class?' has one fixed answer), and rewrite a non-statistical question as a statistical one (e.g. 'How long is my journey to school?' becomes 'How long are journeys to school for pupils in my year?')
 
 **可先比较的已有研究：** 按特征分类（`mt_1VSfm9yiLn`）；统计分析的语言（`mt_fmm-P17Vka`）；按特征分类（`mt_xppl18avyY`）
+
+**本批研究记录：** [B04 教学研究核查](../language/CONCEPT-RESEARCH-B04.md)；[机器可读记录](../language/CONCEPT-RESEARCH-B04.json)
 **拟学习动作：** 明确问题，设计类别，收集或整理一组可核查的数据。
 **验证：** 数据来自哪里、每条是否计入、类别互斥完备及缺失和重复。 换问题或加入异常记录，修改收集方案与分类。
 

@@ -4,7 +4,7 @@
 工作分支：`feat/language-concept-audit-v1`
 PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull/3)（Open / Draft，未合并）
 
-> 当前状态源：`CONCEPT-REVIEW-INVENTORY.json` 保留首轮机器盘点快照；45个样板的当前审查状态以 `CONCEPT-SAMPLE-DEEP-REVIEW.json` 为准，85个研究缺口的当前分流以 `CONCEPT-RESEARCH-TRIAGE.json` 为准，7个已有样板的外部来源与限制以 `CONCEPT-RESEARCH-EVIDENCE.json` 为准；B01、B02、B03无样板节点的外部来源与内容边界分别以 `CONCEPT-RESEARCH-B01.json` / `.md`、`CONCEPT-RESEARCH-B02.json` / `.md`、`CONCEPT-RESEARCH-B03.json` / `.md` 为准。
+> 当前状态源：`CONCEPT-REVIEW-INVENTORY.json` 保留首轮机器盘点快照；45个样板的当前审查状态以 `CONCEPT-SAMPLE-DEEP-REVIEW.json` 为准，85个研究缺口的当前分流以 `CONCEPT-RESEARCH-TRIAGE.json` 为准，7个已有样板的外部来源与限制以 `CONCEPT-RESEARCH-EVIDENCE.json` 为准；B01、B02、B03、B04无样板节点的外部来源与内容边界分别以 `CONCEPT-RESEARCH-B01.json` / `.md`、`CONCEPT-RESEARCH-B02.json` / `.md`、`CONCEPT-RESEARCH-B03.json` / `.md`、`CONCEPT-RESEARCH-B04.json` / `.md` 为准。
 
 ## 一、项目范围与不变项
 
@@ -21,7 +21,7 @@ PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull
 | 0. 工程状态整理 | 已完成并通过自动回归 | 已将 main 最新 2 个 VPS 部署提交同步进本分支；最新 PR required checks 与 Math Tree overview checks 均通过，含 Node、Chromium 浏览器回归和空白检查 |
 | 1. 537 节点全量盘点 | 已完成首版机器盘点 | 537/537 节点进入 JSON 清单，记录来源目标、年龄、研究标记、名称审查、解释状态和真实上下游 |
 | 2. 45 个样板深入验收 | AI 二轮与7项研究补充完成 | 45/45 已完成 AI 二轮审查；前轮11个样板修订，本轮7个研究缺口样板补齐来源证据并修改解释，累计17个不同样板、18次修订操作；本轮另完成7/7 AI二次独立复算、15/15静态SVG桌面截图视觉预审（4张另有紧凑视口检查）；正式独立教研复核、人工审图与儿童测试仍未完成 |
-| 3. 研究缺口分流 | 11个节点外部来源核查完成 | 85个缺口与原计划ID完全匹配；7个已有样板已记录外部来源并修订解释；B01的2个、B02的1个、B03的1个无样板知识地图节点完成来源核查但未起草解释；剩余72个无样板知识点和2个数学思维节点尚未核查 |
+| 3. 研究缺口分流 | 11个节点外部来源核查完成 | 85个缺口与原计划ID完全匹配；7个已有样板已记录外部来源并修订解释；B01的2个、B02的1个、B03的1个、B04的1个无样板知识地图节点完成来源核查但未起草解释；剩余71个无样板知识点和2个数学思维节点尚未核查 |
 | 4. 文字标准冻结 | v1.0 已在分支内冻结 | 根据45个样板二轮审查冻结统一规则；新增来源覆盖、变量方向、图表频数、数学条件、研究状态与儿童验收边界 |
 | 5. 剩余 492 个解释 | 未开始 | 492个解释仍未配置；76个无样板知识地图节点中，B01的2个、B02的1个、B03的1个已完成来源核查但未起草解释，另外72个尚未核查；7个已有样板仍需独立数学复核 |
 | 6. 整体复核与 Git 收尾 | 进行中（AI预审） | 7个样板AI二次独立复算、4张SVG截图视觉预审已完成；第三方/教研独立数学复核、15张SVG人工审图、儿童理解与迁移测试仍待完成；完整范围完成后统一收尾 |
@@ -89,7 +89,7 @@ PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull
 ## 八、下一步
 
 1. 将7个样板的AI复算结论交由独立教研人员复核；15张SVG已有模型桌面视觉预审，仍需完成正式人工审图；不把来源核查、模型复算或AI修改当作最终通过。
-2. B01、B02、B03已完成外部来源核查；下一批从 B04 开始，按原有批次推进剩余72个无样板知识地图节点的教学研究，另外2个数学思维节点继续走独立轨道。
+2. B01、B02、B03、B04已完成外部来源核查；下一批从 B05 开始，按原有批次推进剩余72个无样板知识地图节点的教学研究，另外2个数学思维节点继续走独立轨道。
 3. 研究依据达到要求后，才开始492个未配置样板的知识点分批施工；每批10–20个，持续更新台账。
 4. 对15个静态 SVG 完成正式人工视觉检查（15张已有模型桌面预审）；真实儿童理解测试另行设计，不用 CI 代替。
 
@@ -102,6 +102,7 @@ PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull
 - B01两个无样板节点研究核查：[CONCEPT-RESEARCH-B01.md](CONCEPT-RESEARCH-B01.md)
 - B02估计容积研究核查：[CONCEPT-RESEARCH-B02.md](CONCEPT-RESEARCH-B02.md)
 - B03二分之一、四分之一与八分之一研究核查：[CONCEPT-RESEARCH-B03.md](CONCEPT-RESEARCH-B03.md)
+- B04提出统计问题研究核查：[CONCEPT-RESEARCH-B04.md](CONCEPT-RESEARCH-B04.md)
 - 7个样板二次数学复算与4张SVG视觉预审：[CONCEPT-INDEPENDENT-REVIEW-2026-11-03.md](CONCEPT-INDEPENDENT-REVIEW-2026-11-03.md)
 - 覆盖统计：[CONCEPT-EXPLANATION-COVERAGE.md](CONCEPT-EXPLANATION-COVERAGE.md)
 - 内容标准：[CONCEPT-REVIEW-STANDARD.md](CONCEPT-REVIEW-STANDARD.md)
