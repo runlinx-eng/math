@@ -1,4 +1,4 @@
-// Two hundred and ninety-two source-bound explanation samples, keyed by exact source node ID.
+// Two hundred and ninety-seven source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -2659,6 +2659,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"8组10个剩5个不能记成8＋5＝13个：8表示组数，不是物品总数。",
     tryIt:"把46个物品两两分组，数出组数，再按2个一组求总数。",
     why:"每组的物品数乘完整组数，再加剩余数，才能不漏数也不重复。",
+  },
+  "mt_bnwHo5wfCD":{
+    formal:"借助第三个物体比较质量与容量",
+    definition:"不能直接比较时，可以分别用同一个参照物比较质量，或用同一个量杯测量容量，再比较结果。",
+    simpler:"每次都使用同一个中间物或同一只量杯，记下每次的结果。",
+    example:"苹果比木块重，木块比鸡蛋重，可以推出苹果比鸡蛋重。",
+    counterexample:"比较容器容量时，如果每次用大小不同的杯子，只看杯数不能确定哪个容器容量更大。",
+    tryIt:"用同一量杯分别装满三个容器，记录每个用了多少杯，再排序。",
+    why:"同一参照使比较结果可以联系起来；相同容量单位才能按杯数比较。",
+  },
+  "mt_Jz9UuT8BXW":{
+    formal:"时间中的一半、四分之一和八分之一",
+    definition:"把一段时间平均分成2、4或8份，每份分别是这段时间的1/2、1/4或1/8。",
+    simpler:"先确定整段持续多久，再平均分成指定份数。",
+    example:"半小时是60分钟的一半，即30分钟；16分钟均分8份，每份2分钟。",
+    counterexample:"一小时的1/4不是25分钟：60÷4＝15分钟。",
+    tryIt:"把一场90分钟的比赛平均分成两半，再把16分钟平均分成8份。",
+    why:"时间的分数以整段时间为整体；等分后每份时长相同。",
+  },
+  "mt_MgsDabdnr1":{
+    formal:"读钟面的过一刻与差一刻",
+    definition:"一刻钟是15分钟；过一刻表示整点后15分钟，差一刻表示离下一个整点还有15分钟。",
+    simpler:"分针从12走到3是过一刻；走到9时，距离下一整点还有一刻。",
+    example:"3:15是三点过一刻；6:45是差一刻七点。",
+    counterexample:"6:45不是六点过一刻；它是六点过45分钟，也就是距七点15分钟。",
+    tryIt:"用钟面控件设置3:15与6:45，观察分针和时针的位置。",
+    why:"一小时60分钟，四分之一小时是15分钟；时针会随分针一起移动。",
+  },
+  "mt_NM5I3yN-Q6":{
+    formal:"旋转对称",
+    definition:"如果图形绕一个固定中心旋转不到一整圈就能与原图重合，它具有旋转对称。",
+    simpler:"绕中心转一部分，看看图形能不能和转动前的位置完全重合。",
+    example:"正方形绕中心每转90度重合一次，一整圈在90、180、270、360度共重合4次。",
+    counterexample:"普通爱心图形转半圈通常不能与原图重合；外观看起来平衡不一定有旋转对称。",
+    tryIt:"将正方形绕中心依次转90度，记录一整圈重合了几次。",
+    why:"每次重合都表示旋转后图形占据与原来相同的位置；旋转次数要在完整一圈内计数。",
+  },
+  "mt_CUJr8L5_Wn":{
+    formal:"比例图中的长度与面积",
+    definition:"比例图中每个长度按比例放大k倍时，实际面积按k²倍变化；换算前后要统一长度或面积单位。",
+    simpler:"长和宽都扩大k倍，面积就要乘k两次。",
+    example:"比例1:50的图上房间长6厘米、宽4厘米，实际是3米乘2米，面积6平方米。",
+    counterexample:"长度扩大3倍时，面积不是扩大3倍；长和宽都扩大3倍后面积扩大9倍。",
+    tryIt:"把2厘米乘1厘米的长方形按3倍放大，比较放大前后的面积。",
+    why:"面积由两个方向的长度共同决定，因此每个方向都乘k时，面积乘k²。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

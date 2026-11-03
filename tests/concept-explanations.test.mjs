@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,292);
+  assert.equal(samples.length,297);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -394,4 +394,12 @@ test('counting research-gap drafts distinguish grouping from strategy assessment
   assert.match(conceptHelpFor('mt_t9BICauBSI').why,/不证明.*逐个数/);
   assert.match(conceptHelpFor('mt_0ZDouU664X').example,/8组.*剩5个/);
   assert.match(conceptHelpFor('mt_BK5xwkrD5C').example,/5和2/);
+});
+
+test('measurement research-gap drafts retain units, time and scaling boundaries',()=>{
+  assert.match(conceptHelpFor('mt_bnwHo5wfCD').counterexample,/大小不同/);
+  assert.match(conceptHelpFor('mt_Jz9UuT8BXW').counterexample,/15分钟/);
+  assert.match(conceptHelpFor('mt_MgsDabdnr1').example,/6:45/);
+  assert.match(conceptHelpFor('mt_CUJr8L5_Wn').counterexample,/9倍/);
+  assert.match(conceptHelpFor('mt_NM5I3yN-Q6').definition,/不到一整圈/);
 });

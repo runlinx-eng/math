@@ -6,11 +6,11 @@
 ## 核对结论
 
 - 来源数据中 `hasResearch=false` 共 **85** 个节点，与原研究缺口计划中的 **85 个唯一 ID 完全匹配**，没有漏项或多项。
-- 其中 **83 个属于537个知识地图节点**：20个已有解释样板或草稿、63个尚无解释样板。
+- 其中 **83 个属于537个知识地图节点**：25个已有解释样板或草稿、58个尚无解释样板。
 - 另有 **2 个属于50个数学思维节点**，必须单独审查，不混入537个知识点解释任务。
-- 7 个既有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个、B04的1个共5个新草稿节点也已完成外部来源核查、解释起草和AI自检，独立数学复核待完成。B05有5个、B06有3个新草稿，已核对课程或教学资料；其余63个无样板知识地图节点与2个数学思维节点尚未核查；20个已有样板或草稿均未完成独立数学复核。
+- 7 个既有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个、B04的1个共5个新草稿节点也已完成外部来源核查、解释起草和AI自检，独立数学复核待完成。B05有5个、B06有3个、B07有5个新草稿，已核对课程或教学资料；其余58个无样板知识地图节点与2个数学思维节点尚未核查；25个已有样板或草稿均未完成独立数学复核。
 - 85项都有来源描述与可观察 evidence；这些来源目标可用于确定研究问题，但不能替代专门教学研究记录。
-- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有20个节点完成外部来源核查（7个既有样板、B01两个新草稿节点、B02、B03、B04各一个新草稿节点和B05的5个和B06的3个新草稿节点），源标记均暂不修改。
+- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有25个节点完成外部来源核查（7个既有样板、B01两个新草稿节点、B02、B03、B04各一个新草稿节点和B05的5个、B06的3个和B07的5个新草稿节点），源标记均暂不修改。
 
 ## 按施工阶段分流
 
@@ -18,8 +18,8 @@
 |---|---:|---|---|
 | Phase 2 | 2 | B01两个知识地图节点（`mt_ebQURBOsM5`、`mt__yvsKKp3TS`） | B01外部来源核查、解释初稿和AI自检完成；独立数学复核待完成 |
 | Phase 4 | 7 | 7个知识地图节点（B02、B03、B04各1个、B05两个新草稿节点，另2个未核查） | B02–B05部分节点外部来源核查与解释初稿完成；其余2个尚未核查 |
-| Phase 5 | 76 | 74个知识地图节点（13个已有样板、61个无样板）及2个数学思维节点 | 13个样板或草稿来源已核查；61个无样板知识点与2个数学思维节点尚未核查 |
-| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **20个来源核查完成；65个尚未核查** |
+| Phase 5 | 76 | 74个知识地图节点（18个已有样板、56个无样板）及2个数学思维节点 | 18个样板或草稿来源已核查；56个无样板知识点与2个数学思维节点尚未核查 |
+| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **25个来源核查完成；60个尚未核查** |
 
 ## 83 个知识地图节点：按领域
 
@@ -30,20 +30,20 @@
 | Counting & Cardinality（counting） | 3 | 3 | 0 |
 | Data & Statistics（data） | 27 | 8 | 19 |
 | Fractions（fractions） | 1 | 1 | 0 |
-| Geometry（geometry） | 10 | 1 | 9 |
-| Measurement（measure） | 18 | 2 | 16 |
+| Geometry（geometry） | 10 | 2 | 8 |
+| Measurement（measure） | 18 | 5 | 13 |
 | Multiplication & Division（multiply） | 6 | 0 | 6 |
 | Number Representation & Place Value（place） | 5 | 0 | 5 |
 | Probability（chance） | 4 | 0 | 4 |
-| Ratio & Proportion（ratio） | 1 | 0 | 1 |
+| Ratio & Proportion（ratio） | 1 | 1 | 0 |
 
 ## 83 个知识地图节点：按来源类型
 
 | 来源类型 | 缺口数 | 已有样板 | 尚无样板 |
 |---|---:|---:|---:|
 | REPRESENTATIONAL | 9 | 4 | 5 |
-| PROCEDURAL | 42 | 8 | 34 |
-| CONCEPTUAL | 28 | 7 | 21 |
+| PROCEDURAL | 42 | 10 | 32 |
+| CONCEPTUAL | 28 | 10 | 18 |
 | META | 4 | 1 | 3 |
 
 ## 7 个已有样板的研究闸门
@@ -74,7 +74,11 @@
 
 三个节点已核对政府教学资料并起草解释，来源和活动限制见 [B06记录](CONCEPT-RESEARCH-B06-2026-11-03.md)；来源缺口标记保持不变，独立数学复核和儿童理解测试尚未完成。
 
-## 63 个尚无样板的知识地图节点
+## B07：五个测量与几何研究缺口草稿
+
+五个节点已核对课程或教学资料并起草解释，来源与限制见 [B07记录](CONCEPT-RESEARCH-B07-2026-11-03.md)；独立数学复核和儿童理解测试尚未完成。
+
+## 58 个尚无样板的知识地图节点
 
 - `mt_zQfWqImxva` 按照步骤运算（Algebra；PROCEDURAL；Phase 5）
 - `mt_QeKWt4BZn3` 按规则生成一组数（Algebra；PROCEDURAL；Phase 5）
@@ -100,7 +104,6 @@
 - `mt_x7V1qrkiqH` 不同样本的差异（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_mN4Ye_vtR7` 物体的形状与用途（Geometry；CONCEPTUAL；Phase 5）
 - `mt_SK7WntVZ6y` 用图形近似表示物体（Geometry；PROCEDURAL；Phase 5）
-- `mt_NM5I3yN-Q6` 旋转对称（Geometry；CONCEPTUAL；Phase 5）
 - `mt_LBT-9jz7kR` 平角、优角与周角（Geometry；CONCEPTUAL；Phase 5）
 - `mt_RdfzwInyAj` 用几何软件变换图形（Geometry；PROCEDURAL；Phase 5）
 - `mt_h02-C8PRrj` 棱柱的截面（Geometry；CONCEPTUAL；Phase 5）
@@ -108,10 +111,7 @@
 - `mt_61Nhj8W78f` 平面铺砌与变换图案（Geometry；PROCEDURAL；Phase 5）
 - `mt_4bc3EAxhlY` 哪些边长能组成三角形（Geometry；CONCEPTUAL；Phase 5）
 - `mt_FSLJbKkryb` 澳大利亚硬币与购物（Measurement；PROCEDURAL；Phase 5）
-- `mt_bnwHo5wfCD` 间接比较质量与容积（Measurement；PROCEDURAL；Phase 5）
-- `mt_Jz9UuT8BXW` 时间与事件中的分数（Measurement；CONCEPTUAL；Phase 5）
 - `mt_8cs4YPkp23` 以元为单位的交易（Measurement；PROCEDURAL；Phase 5）
-- `mt_MgsDabdnr1` 几点一刻与差一刻（Measurement；PROCEDURAL；Phase 5）
 - `mt_5J2quSTspi` 罗马数字钟面与24时制（Measurement；REPRESENTATIONAL；Phase 5）
 - `mt_e7tLi9SCIE` 用更小的单位提高精度（Measurement；CONCEPTUAL；Phase 5）
 - `mt_tVvZVWO5d6` 使用日历（Measurement；PROCEDURAL；Phase 5）
@@ -138,7 +138,6 @@
 - `mt_8DT3LXwwH-` 用数字工具模拟随机事件（Probability；PROCEDURAL；Phase 4）
 - `mt_aCwj2PCoRV` 概率模型（Probability；CONCEPTUAL；Phase 5）
 - `mt_nzdtOLXWWa` 模拟随机事件（Probability；PROCEDURAL；Phase 5）
-- `mt_CUJr8L5_Wn` 由比例图求面积（Ratio & Proportion；CONCEPTUAL；Phase 5）
 
 ## 2 个数学思维节点（Phase 5，独立轨道）
 
