@@ -6,13 +6,16 @@ https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf
 
 映射方法见 [NODE-MAPPING-METHOD.md](NODE-MAPPING-METHOD.md)，机器可读数据见 [node-stage-candidates.json](node-stage-candidates.json)。
 
-## 当前进度
+## 当前进度（更新于 2026-11-03）
 
 - 领域知识节点总数：537
-- 已完成第一轮逐项映射：74
-- 尚待逐项映射：463
+- 已完成第一轮逐项映射：129
+- 尚待逐项映射：408
 - 数学思维节点：50，另行处理
-- 已完成批次：01—04（数与数量、数位与数的表示）
+- 已完成批次：01—05（数与数量、数位与数的表示、加法与减法）
+
+累计证据等级：{"direct":58,"conceptual":59,"adjacent":8,"not-covered":4}。
+阶段出现次数（一个节点可跨多个阶段）：{"stage-1":93,"stage-2":47,"stage-3":21,"beyond-primary":11}。
 
 ## 批次 01：数与数量（17 个）
 
@@ -157,3 +160,98 @@ https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf
 4. 科学记数法、指数、根式、绝对值、无理数等应清楚标记为小学之后的内容，不应为了填满1—6年级视图而挤入小学高年级。
 5. “数集与无穷”与初中实数内容相关，但国家课程标准没有要求完整的集合论或无穷性证明，故标记为相邻拓展而非直接对应。
 
+
+## 批次 05：加法与减法（55 个）
+
+官方依据：教育部《义务教育数学课程标准（2022年版）》第一学段数与运算、数量关系（印刷页18—19），第二学段数与运算、数量关系（20—22），第三学段数与运算、数量关系（23—26），以及第四学段数与代数（53—61）。
+官方原文：[课程标准 PDF](https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf)。
+
+本批分为三个子批次。各节点的逐项理由和边界保存在机器可读 JSON 的 `chinaCurriculumMapping.rationale` 与 `scopeBoundary` 字段中。
+
+
+### 基础意义与20以内运算（20个）
+
+| 节点 ID | 知识点 | 阶段映射 | 证据等级 |
+|---|---|---|---|
+| `mt_yJmvUCCym7` | 加减法应用题 | 1—2主 | direct |
+| `mt_OvyoRo47K-` | 合起来就是加法 | 1—2主 | direct |
+| `mt_e8CZ7E5qW7` | 9以内数的分与合 | 1—2主 | conceptual |
+| `mt_7XcCG43ZZW` | 把10以内的数分成两部分 | 1—2主 | conceptual |
+| `mt_PgsHGYJMH-` | 表示加减法 | 1—2主 | conceptual |
+| `mt_zuKAX6lcYR` | 拿走与分开：减法的意义 | 1—2主 | direct |
+| `mt_mr_Vk7FGzK` | 加法与减法 | 1—2主 | direct |
+| `mt_VAWV_l7J0D` | 从生活故事列算式 | 1—2主 | direct |
+| `mt_ghF3Vv6taM` | 熟练计算5以内加减 | 1—2主 | direct |
+| `mt_s2mfRBoTal` | 数的分与合 | 1—2主；3—4延 | direct |
+| `mt_Y6_cq3UMyy` | 用数字工具表示数量故事 | 1—2主 | conceptual |
+| `mt_8RmpkDxT9L` | 认识加号、减号与等号 | 1—2主 | conceptual |
+| `mt_biGHAbkoV2` | 用数字工具探索加减 | 1—2主 | conceptual |
+| `mt_I5j1ZWo2cn` | 整十数的口算 | 1—2主 | conceptual |
+| `mt_Zx1xZM-RbX` | 三个小整数相加 | 1—2主 | conceptual |
+| `mt_UQnAFPs83F` | 两位数加两位数 | 1—2主 | direct |
+| `mt_glPPG-kTQY` | 100以内的加法 | 1—2主 | direct |
+| `mt_PpWSHA-0kv` | 加减法的策略 | 1—2主 | conceptual |
+| `mt_m1W6nTQJ2b` | 20以内的加减法 | 1—2主 | direct |
+
+### 运算策略、规律与应用（20个）
+
+| 节点 ID | 知识点 | 阶段映射 | 证据等级 |
+|---|---|---|---|
+| `mt_QCgbiVrwnp` | 交换顺序来相加 | 1—2延；3—4主 | direct |
+| `mt_ezc2m_0dzN` | 寻找加法中的未知数 | 1—2主；3—4延 | conceptual |
+| `mt__we2TDqnJx` | 熟练计算10以内加减 | 1—2主 | direct |
+| `mt_3e_PQxwC12` | 熟练使用加减法 | 1—2主；3—4延 | direct |
+| `mt_T76hKqXf0z` | 把数凑成一组再相加 | 1—2延；3—4主 | direct |
+| `mt_ehGS_uVSJv` | 加减法的互逆关系 | 1—2主；3—4延 | direct |
+| `mt_AKAtWEwpcj` | 加减法口算 | 1—2主 | direct |
+| `mt_wzAZ8qFDc4` | 口算与笔算加减法 | 1—2主；3—4延 | conceptual |
+| `mt_HJTuIGHvcR` | 减去整十数 | 1—2主 | conceptual |
+| `mt_Eqk6oSbySH` | 含三个数的应用题 | 1—2主 | conceptual |
+| `mt_3JgrHY221M` | 加减法中的未知数 | 1—2主；3—4延 | conceptual |
+| `mt_oIzycTBeE4` | 等号表示什么 | 1—2延；3—4主 | conceptual |
+| `mt_SrrsLiJkr3` | 加法与减法 | 1—2主 | direct |
+| `mt_TiQbi027PE` | 数的相加 | 1—2延；3—4主 | conceptual |
+| `mt_zxST3MarI9` | 加减法的策略 | 1—2延；3—4主 | conceptual |
+| `mt_ewmuMMPAzP` | 1000以内的加减法 | 1—2主；3—4延 | direct |
+| `mt_QaYfeVL-0C` | 用四舍五入估算 | 1—2延；3—4主；5—6延 | conceptual |
+| `mt_cChv2j_-Da` | 熟练计算100以内加减 | 1—2主 | direct |
+| `mt__t4afSyZRm` | 熟练计算20以内加减 | 1—2主 | direct |
+| `mt_oDU_8zMZjp` | 加减法口算 | 1—2主；3—4延 | conceptual |
+| `mt_xPqczp7zPX` | 三位数加整百数 | 1—2主；3—4延 | conceptual |
+| `mt_aHQ9kNt3is` | 三位数加整十数 | 1—2主；3—4延 | conceptual |
+| `mt_XuHmIn2xje` | 求未知数 | 1—2主；3—4延 | conceptual |
+| `mt_19j_5AuuQI` | 数轴上的数 | 1—2主；3—4延 | conceptual |
+| `mt_yTWxkzzoOZ` | 两步应用题 | 1—2延；3—4主 | conceptual |
+
+### 多位数、估算、小数与负数（15个）
+
+| 节点 ID | 知识点 | 阶段映射 | 证据等级 |
+|---|---|---|---|
+| `mt_mpS-JK_p_m` | 加法与减法 | 1—2延；3—4主 | conceptual |
+| `mt_HFRYjTb-Z5` | 熟练计算1000以内加减 | 1—2主；3—4延 | direct |
+| `mt_CDa5AVakLE` | 两步加减法问题 | 1—2延；3—4主；5—6延 | conceptual |
+| `mt_anAe11HAEH` | 两步方程 | 3—4延；5—6主 | adjacent |
+| `mt_-F_Lv_apzH` | 加法与减法 | 3—4延；5—6主 | conceptual |
+| `mt_G3sVFQNCme` | 用近似数检查答案 | 3—4主；5—6延 | conceptual |
+| `mt_Yw1_4Nfsql` | 熟练使用加减法 | 3—4主 | conceptual |
+| `mt_MWXPiaTnEu` | 加减法口算 | 3—4主；5—6延 | conceptual |
+| `mt_M1tnXqmYbn` | 加法与减法 | 3—4主；5—6延 | adjacent |
+| `mt_JH_6RpNWjr` | 加减法的策略 | 3—4延；5—6主 | direct |
+| `mt_9QzSnn8m80` | 正数与负数 | 5—6延；初中主 | direct |
+
+
+### 本批关键判断
+
+1. **第一学段要求并不只到20以内。** 标准的学业要求明确包括熟练口算20以内加减法、口算简单的百以内加减法，以及计算两位数和三位数加减法。因此，100以内、1000以内和三位数加减节点应主要映射到1—2年级学段；具体方法和熟练度不能超出标准原文推断。
+2. **运算律有明确的学段递进。** 第一学段以具体算例和策略体验为主；加法交换律、结合律在第二学段明确列为探索和理解的内容。不能把第一学段的凑十策略直接说成已经掌握形式化运算律。
+3. **第二学段开始系统拓展数量关系。** 课标明确列出“总量=分量+分量”、估算、整数四则混合运算，以及同分母分数和一位小数的加减法。
+4. **第三学段扩展小数、分数运算。** 标准要求简单的小数、分数四则运算和混合运算；不应把这一要求扩写成所有小数位数或所有复杂算法均为必学。
+5. **负数要拆分“情境认识”和“运算”。** 小学第三学段可以通过温度等情境认识负数；正负整数加减运算不属于小学这一要求，需放到初中衔接。
+6. **节点标题和实际目标存在一处明显不一致。** `mt_e8CZ7E5qW7` 的中文标题写“9以内数的分与合”，但描述目标是“补数凑成10”。本轮按实际描述映射，未擅自改标题或源数据，需进入后续内容审查。
+
+### 本批验收边界
+
+- 已逐项完成55个节点的 AI 辅助第一轮映射。
+- 所有节点 ID、原始名称、年龄候选和数学关系均保留。
+- 阶段映射按学段结束要求理解，不代表具体教材册次或唯一首次教学年级。
+- 没有把 AI 映射称为独立教研审核、教师审阅或儿童理解测试。
