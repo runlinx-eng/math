@@ -1,4 +1,4 @@
-// Three hundred and fifty-one source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and fifty-six source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3190,6 +3190,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"三个角分别为50°、60°和70°不能确定唯一大小：相同角度可组成不同大小的三角形。",
     tryIt:"比较边长3、4、8与3、5、7能否闭合，再试把50°、60°、70°的三角形放大。",
     why:"任意两边之和必须大于第三边；三个角之和要是180°。两边及其夹角可确定形状，两边和非夹角可能有不同数量的解。",
+  },
+  "mt_dJOKkYMsCv":{
+    formal:"表示并排列20以内的数",
+    definition:"20以内的数可以用数字、物品和数轴表示；排列时按数量从小到大或从大到小比较。",
+    simpler:"先看各个数表示多少，再按顺序排；0表示没有物品。",
+    example:"0、3、8、14、19从小到大已经排好；13前面是12，后面是14。",
+    counterexample:"19不是排在14前面：它们都是一个十，19还多9个一，14多4个一。",
+    tryIt:"用二十格摆出13个圆片，再在数轴上找到13。",
+    why:"同一个数可以对应数字、物品数量和数轴位置，比较这些表示可以检查顺序。",
+  },
+  "mt_QguIGVMB1o":{
+    formal:"表示并排列120以内的数",
+    definition:"100以上的数也可以用十和一表示，并按数轴顺序比较。",
+    simpler:"超过100后继续数；也可以把十个一组，数完整组和剩下的。",
+    example:"112可以表示为11个十和2个一；98＜104＜111＜120。",
+    counterexample:"112不是1个十和2个一：11个十才是110，另有2个一。",
+    tryIt:"在101到120的数表中找到107和116，再把104和111放到数轴上。",
+    why:"每个十包含10个一，完整组和剩下的一个合起来保持原来的数量。",
+  },
+  "mt_Bt-iORUzdO":{
+    formal:"用不同的十和一表示同一个数",
+    definition:"两位数可以用不同数量的十和一分组；把一个十换成十个一时，总量不变。",
+    simpler:"拆开一个十，会少一个十、多十个一，总数还是原来的数。",
+    example:"34＝3个十和4个一＝2个十和14个一。",
+    counterexample:"把3个十换成2个十后，只写4个一会丢掉一个十，总数变成24。",
+    tryIt:"用十棒和圆片表示52，交换后记录三种不同的十与一组合。",
+    why:"一个十和十个一表示相同数量，所以交换单位不会改变总数。",
+  },
+  "mt_HczwO1sr-y":{
+    formal:"用百、十、一表示并排列数",
+    definition:"千以内的数可以用百、十、一的数量表示，也可以在共同数轴上排序。",
+    simpler:"先看有几个百，再看几个十和几个一；10个百可以合成1个千。",
+    example:"347是3个百、4个十和7个一；10个百等于1000。",
+    counterexample:"608和680的百位相同，但十位0小于8，所以608小于680。",
+    tryIt:"用屏幕模型摆出347，再把86、608、680、860按大小排列。",
+    why:"数位决定单位大小；不同表示保留同一个数量，排序时从最高不同数位比较。",
+  },
+  "mt_F_zEAJ8VIo":{
+    formal:"用数轴和数位表示三位数",
+    definition:"三位数可以用数位表、百十一个数或数轴表示；数轴位置也可依据相邻刻度估计。",
+    simpler:"先看有几个百、十和一；在数轴上找它位于哪两个百之间。",
+    example:"346位于300和400之间、略小于350；507是5个百、0个十和7个一。",
+    counterexample:"3个百、14个十和2个一不是3142，而是300＋140＋2＝442。",
+    tryIt:"在0到1000的数轴上估计750的位置，再把507表示成数位表。",
+    why:"数位表示单位大小，不同分组可以换算成同一个数；数轴上的估计要看共同刻度。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

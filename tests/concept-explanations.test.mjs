@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,351);
+  assert.equal(samples.length,356);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -469,4 +469,11 @@ test('construction research-gap drafts preserve coordinate and triangle boundari
   assert.match(conceptHelpFor('mt_61Nhj8W78f').counterexample,/不等于所有不规则五边形/);
   assert.match(conceptHelpFor('mt_4bc3EAxhlY').example,/3＋4＝7/);
   assert.match(conceptHelpFor('mt_4bc3EAxhlY').counterexample,/不同大小/);
+});
+
+test('place-value research-gap drafts preserve exchange and zero boundaries',()=>{
+  assert.match(conceptHelpFor('mt_Bt-iORUzdO').example,/2个十和14个一/);
+  assert.match(conceptHelpFor('mt_QguIGVMB1o').example,/11个十和2个一/);
+  assert.match(conceptHelpFor('mt_F_zEAJ8VIo').counterexample,/442/);
+  assert.match(conceptHelpFor('mt_dJOKkYMsCv').definition,/从小到大/);
 });
