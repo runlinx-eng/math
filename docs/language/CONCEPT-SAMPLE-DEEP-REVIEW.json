@@ -230,6 +230,7 @@
       "contentReviewStatus": "ai_second_pass_completed",
       "contentCoverageStatus": "reviewed_no_major_scope_gap_found_in_this_pass",
       "revisionApplied": false,
+      "subsequentReview20261104": "后续发现并修正竖直线及梯度分母条件；原二轮判断保留为历史记录。",
       "reviewNote": "已逐项核对来源目标、可观察证据、年龄范围、直接前置/后续关系及解释字段；本轮未发现需要立即修订的重大范围或表达问题。",
       "researchGateStatus": "teaching_research_record_exists_but_source_validation_still_required",
       "independentMathReviewStatus": "not_completed",

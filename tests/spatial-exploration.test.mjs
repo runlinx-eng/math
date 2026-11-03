@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {traceCritical} from '../dist/spatial-trace.js';
-import {NODE_QUALIFIERS,makeKnowledgeNames} from '../dist/spatial-names.js';
+import {NODE_QUALIFIERS,NODE_DISPLAY_CORRECTIONS,makeKnowledgeNames} from '../dist/spatial-names.js';
 import {relationExplanation,reviewedRelationKeys} from '../dist/spatial-reasons.js';
 import {fresh,validate,backup,parseBackup} from '../dist/exploration-core.js';
 import {addQuestion} from '../dist/learning/daily.js';
@@ -35,7 +35,10 @@ test('all 130 repeated names get unique local mathematical qualifiers without re
   assert.equal(repeated.length,130);assert.equal(Object.keys(NODE_QUALIFIERS).length,130);
   assert.equal(new Set(repeated.map(n=>names.get(n.id))).size,130);
   assert.equal(new Set(names.values()).size,587);
-  assert.ok(repeated.every(n=>NODE_QUALIFIERS[n.id]&&names.get(n.id).startsWith(n.title+' · ')));
+  for(const n of repeated){
+    assert.ok(NODE_QUALIFIERS[n.id],`source qualifier retained: ${n.id}`);
+    assert.equal(names.get(n.id),NODE_DISPLAY_CORRECTIONS[n.id]||`${n.title} · ${NODE_QUALIFIERS[n.id]}`,n.id);
+  }
   assert.equal(names.get('mt_FbDKeLfBCo'),'等值分数 · 看图识别');assert.equal(names.get('mt_FP-mjXaq3B'),'等值分数 · 细分与合并');assert.equal(names.get('mt_ebPelt-qAl'),'等值分数 · 同倍变化');
   assert.equal(JSON.stringify(atlas),before);
 });

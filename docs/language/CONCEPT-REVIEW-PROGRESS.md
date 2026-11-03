@@ -6,6 +6,8 @@ PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull
 
 > 当前状态源：`CONCEPT-REVIEW-INVENTORY.json` 同步537个解释样板/草稿及逐节点状态；45个既有样板的AI二轮审查记录以 `CONCEPT-SAMPLE-DEEP-REVIEW.json` 为准，85个研究缺口的当前分流以 `CONCEPT-RESEARCH-TRIAGE.json` 为准，7个既有样板的外部来源与限制以 `CONCEPT-RESEARCH-EVIDENCE.json` 为准；B01–B04的研究来源、解释草稿状态和限制分别以对应记录为准；B05见 `CONCEPT-RESEARCH-NEXT-2026-11-03.md`。
 
+> 2026-11-04 后续：537 条说明的七个文字字段已按来源描述通读，修正 30 个节点、35 个字段；方法、具体问题及审查边界见 [文字复核记录](CONCEPT-TEXT-REVIEW-2026-11-04.md)。这不替代来源目标与实际活动的逐项完整核对、独立数学复核、人工审图或儿童使用。此前 45 个样板及第二批的判断均保留为当时历史，其中直线与角的两项旧判断已在原记录处注明后续补正。
+
 ## 一、项目范围与不变项
 
 - **537 个知识地图节点**：逐项审查名称、数学概念、定义、通俗解释、例子、反例、操作任务、理由和适龄表达。
