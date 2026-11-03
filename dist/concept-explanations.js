@@ -1,4 +1,4 @@
-// Forty-five source-bound explanation samples, keyed by exact source node ID.
+// Fifty source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
