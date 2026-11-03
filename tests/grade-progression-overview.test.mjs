@@ -134,3 +134,39 @@ test("expanded details are outside the horizontally scrolling matrix", () => {
   assert.match(css, /\.grade-detail-panel\{width:100%;min-width:0;max-width:100%/);
   assert.doesNotMatch(space, /class="grade-detail-row"/);
 });
+
+
+test("expanded groups expose each mapped domain node once with every stage role and its independent evidence level", () => {
+  assert.equal(data.nodeMappings.length, 537);
+  assert.equal(new Set(data.nodeMappings.map(item => item.nodeId)).size, 537);
+  assert.match(space, /function renderGradeNodeList\(pack,selectedStageId\)/);
+  assert.match(space, /space\.packs\.get\(pack\.packId\)/);
+  assert.match(space, /gradeNodeMappingsById\.get\(id\)/);
+  assert.match(space, /mapping\.curriculum\.roles/);
+  assert.match(space, /mapping\.curriculum\.evidenceLevelLabel/);
+  assert.match(space, /stageLabel=gradeStageForSelected\(\)/);
+  assert.match(space, /未映射/);
+  assert.match(space, /初中后续/);
+  assert.match(css, /\.grade-domain-node-list/);
+  assert.match(css, /\.grade-node-stage-tag\[data-role=transition\]/);
+});
+
+test("thinking nodes are rendered in a separate section and never enter the 537-node curriculum list", () => {
+  assert.equal(data.specialRisks.thinkingNodes.count, 50);
+  const thinkingIds = new Set(data.specialRisks.thinkingNodes.ids);
+  assert.equal(data.nodeMappings.some(item => thinkingIds.has(item.nodeId)), false);
+  assert.match(space, /pack\.mathThinkingNodeIds/);
+  assert.match(space, /数学思维 · 独立内容，不分配小学学段/);
+  assert.match(space, /不参与537个领域知识节点的小学课程阶段归属/);
+});
+
+test("not-covered and junior-high-only nodes keep their true unmapped primary status", () => {
+  const notCovered = data.nodeMappings.filter(item => item.curriculum.evidenceLevel === "not-covered");
+  assert.equal(notCovered.length, 5);
+  assert.ok(notCovered.every(item => item.curriculum.primaryStages.length === 0));
+  const unresolved = data.nodeMappings.find(item => item.nodeId === "mt_b4lbTOJYwI");
+  assert.deepEqual(unresolved.curriculum.primaryStages, []);
+  assert.equal(unresolved.curriculum.beyondPrimary.role, "main");
+  assert.equal(unresolved.curriculum.evidenceLevel, "adjacent");
+  assert.match(space, /小学阶段：未纳入当前课程阶段映射/);
+});

@@ -766,3 +766,36 @@ body[data-observation-mode="grade"] .overview-structure-controls{display:none!im
 .grade-detail-panel>header h3{margin:0;color:#294f47;font-size:13px;line-height:1.4}
 .grade-detail-panel>header p{margin:3px 0 0;color:#7b897a;font-size:10px;line-height:1.5}
 .grade-detail-close{flex:none;padding:6px 10px;border:1px solid #d5e0d3;border-radius:7px;background:#fffefb;color:#52705b;font-size:10px}
+
+/* A2-3 batch 1: source-ID-backed domain nodes and a separate thinking-node list. */
+.grade-node-list{margin-top:12px;padding-top:11px;border-top:1px solid #e2e8dd}
+.grade-node-list>header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.grade-node-list>header h4{margin:0;color:#365a49;font-size:12px}
+.grade-node-list>header p{margin:4px 0 0;color:#829080;font-size:9px;line-height:1.5}
+.grade-node-list>header>span{flex:none;color:#718071;font-size:9px}
+.grade-domain-node-list,.grade-thinking-list ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.grade-domain-node,.grade-thinking-node{min-width:0;padding:8px;border:1px solid #e4e9df;border-radius:8px;background:#fffefb}
+.grade-domain-node.is-selected,.grade-thinking-node.is-selected{border-color:#789d80;background:#eef5ec}
+.grade-domain-node-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.grade-domain-node-link,.grade-thinking-node-link{display:block;min-width:0;padding:0;background:transparent;text-align:left}
+.grade-domain-node-title,.grade-thinking-node-link>span{display:block;color:#344f43;font-size:10px;font-weight:650;line-height:1.5;overflow-wrap:anywhere}
+.grade-domain-node-link>small,.grade-thinking-node-link>small{display:block;margin-top:2px;color:#819080;font-size:9px}
+.grade-node-evidence{flex:none;padding:3px 5px;border-radius:5px;background:#eef1ec;color:#657567;font-size:9px;white-space:nowrap}
+.grade-node-evidence[data-evidence=direct]{background:#e5efe6;color:#315c45}
+.grade-node-evidence[data-evidence=conceptual]{background:#edf0e8;color:#61715e}
+.grade-node-evidence[data-evidence=adjacent]{background:#f4eee2;color:#87683c}
+.grade-node-evidence[data-evidence=not-covered]{background:#f2e9e5;color:#8a5d4b}
+.grade-node-stage-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.grade-node-stage-tag{display:inline-flex;max-width:100%;padding:3px 5px;border-radius:5px;background:#f0f3ed;color:#6d7a6b;font-size:9px;line-height:1.4;overflow-wrap:anywhere}
+.grade-node-stage-tag[data-role=main]{background:#e4efe5;color:#315c45}
+.grade-node-stage-tag[data-role=extension]{background:#f3eee1;color:#82663b}
+.grade-node-stage-tag[data-role=transition]{background:#e9edf2;color:#53677a}
+.grade-node-no-primary,.grade-node-beyond{margin:6px 0 0;color:#7b6c58;font-size:9px;line-height:1.5}
+.grade-node-beyond{color:#53677a}
+.grade-node-empty{padding:8px;color:#899388;font-size:10px}
+.grade-thinking-list{margin-top:12px;padding-top:10px;border-top:1px dashed #d9e1d6}
+.grade-thinking-list h5{margin:0;color:#526a5a;font-size:10px}
+.grade-thinking-list>p{margin:4px 0 7px;color:#879286;font-size:9px;line-height:1.5}
+.grade-thinking-node-link>span{font-weight:550}
+.grade-thinking-node>small{display:block;margin-top:4px;color:#879286;font-size:9px}
+@media(max-width:600px){.grade-node-list>header{gap:6px}.grade-domain-node,.grade-thinking-node{padding:7px}.grade-domain-node-head{align-items:flex-start}.grade-node-evidence{font-size:8px}.grade-node-stage-tag{font-size:8px}}

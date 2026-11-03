@@ -25,8 +25,9 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null;
+let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map();
 const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
+const GRADE_ROLE_LABELS=Object.freeze({main:'主要',extension:'延伸',transition:'过渡'});
 const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
 const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
@@ -223,10 +224,53 @@ function gradeMarkPresentation(judgement){
 function ensureGradeProgressionData(){
   if(gradeProgressionData)return Promise.resolve(gradeProgressionData);
   if(!gradeProgressionPromise){
-    gradeProgressionPromise=loadGradeProgressionData().then(data=>{gradeProgressionData=data;return data;}).catch(error=>{gradeProgressionPromise=null;throw error;});
+    gradeProgressionPromise=loadGradeProgressionData().then(data=>{gradeProgressionData=data;gradeNodeMappingsById=new Map(data.nodeMappings.map(item=>[item.nodeId,item]));return data;}).catch(error=>{gradeProgressionPromise=null;throw error;});
   }
   return gradeProgressionPromise;
 }
+
+function renderGradeNodeList(pack,selectedStageId){
+  const sourcePack=space.packs.get(pack.packId);
+  const entries=(sourcePack?.nodeIds||[]).map((id,index)=>({id,index,mapping:gradeNodeMappingsById.get(id)})).filter(item=>item.mapping);
+  entries.sort((a,b)=>{
+    const aCurrent=a.mapping.curriculum.primaryStages.includes(selectedStageId);
+    const bCurrent=b.mapping.curriculum.primaryStages.includes(selectedStageId);
+    return Number(bCurrent)-Number(aCurrent)||a.index-b.index;
+  });
+  const domainRows=entries.map(({id,mapping})=>{
+    const node=space.nodes.get(id);if(!node)return '';
+    const selected=scene?.selected===node.key,primary=mapping.curriculum.primaryStages||[];
+    const stageTags=gradeProgressionData.stages.map(stage=>{
+      const role=mapping.curriculum.roles?.[stage.id];
+      const label=role?`${stage.label}：${role}（${GRADE_ROLE_LABELS[role]||role}）`:`${stage.label}：未映射`;
+      return `<span class="grade-node-stage-tag" data-stage-id="${esc(stage.id)}" data-role="${esc(role||'unmapped')}">${esc(label)}</span>`;
+    }).join('');
+    const stageMarkup=primary.length?`<div class="grade-node-stage-tags" aria-label="小学各学段节点角色">${stageTags}</div>`:'<p class="grade-node-no-primary">小学阶段：未纳入当前课程阶段映射</p>';
+    const beyondRole=mapping.curriculum.beyondPrimary?.role;
+    const beyondMarkup=beyondRole?`<p class="grade-node-beyond">初中后续：${esc(beyondRole)}（${esc(GRADE_ROLE_LABELS[beyondRole]||beyondRole)}）</p>`:'';
+    const evidence=mapping.curriculum.evidenceLevelLabel||mapping.curriculum.evidenceLevel||'未提供';
+    return `<li class="grade-domain-node ${selected?'is-selected':''}" data-node-id="${esc(id)}">
+      <div class="grade-domain-node-head">
+        ${button('grade-node-select',`<span class="grade-domain-node-title">${esc(displayTitle(node))}</span><small>在原知识树中查看 →</small>`,`data-node-id="${esc(id)}" aria-current="${selected?'true':'false'}"`,'grade-domain-node-link')}
+        <span class="grade-node-evidence" data-evidence="${esc(mapping.curriculum.evidenceLevel||'unknown')}">证据：${esc(evidence)}</span>
+      </div>
+      ${stageMarkup}${beyondMarkup}
+    </li>`;
+  }).join('');
+  const thinkingIds=Array.isArray(pack.mathThinkingNodeIds)?pack.mathThinkingNodeIds:[];
+  const thinkingRows=thinkingIds.map(id=>{
+    const node=space.nodes.get(id);if(!node)return '';
+    const selected=scene?.selected===node.key;
+    return `<li class="grade-thinking-node ${selected?'is-selected':''}" data-node-id="${esc(id)}">${button('grade-node-select',`<span>${esc(displayTitle(node))}</span><small>在原知识树中查看 →</small>`,`data-node-id="${esc(id)}" aria-current="${selected?'true':'false'}"`,'grade-thinking-node-link')}<small>数学思维 · 独立内容，不分配小学学段</small></li>`;
+  }).join('');
+  const stageLabel=gradeStageForSelected()?.label||'当前学段';
+  return `<section class="grade-node-list" aria-label="${esc(pack.name)}具体知识点">
+    <header><div><h4>具体知识点</h4><p>${esc(stageLabel)}相关节点优先显示；每个节点只出现一次，其他学段信息仍保留。</p></div><span>${entries.length}个领域知识点</span></header>
+    <ul class="grade-domain-node-list">${domainRows||'<li class="grade-node-empty">当前知识群没有可展示的领域知识点映射。</li>'}</ul>
+    ${thinkingRows?`<section class="grade-thinking-list" aria-label="独立数学思维节点"><h5>数学思维 · ${thinkingIds.length}个</h5><p>这些节点保留独立属性，不参与537个领域知识节点的小学课程阶段归属。</p><ul>${thinkingRows}</ul></section>`:''}
+  </section>`;
+}
+
 function renderGradePackDetail(pack){
   const stageCards=gradeProgressionData.stages.map(stage=>{
     const judgement=pack.stageJudgements?.[stage.id]||{},mark=gradeMarkPresentation(judgement);
@@ -253,7 +297,7 @@ function renderGradePackDetail(pack){
       ${questionsMarkup}
     </section>`;
   }).join('');
-  return `<section class="grade-detail-panel" id="grade-pack-detail-${esc(pack.packId)}" aria-label="${esc(pack.name)}三个学段详情"><header><div><h3>${esc(pack.name)} · 三个学段</h3><p>以下内容来自该知识群的三个学段记录。</p></div><button type="button" class="grade-detail-close" data-action="grade-pack-toggle" data-pack-id="${esc(pack.packId)}" aria-expanded="true">收起</button></header><div class="grade-detail-grid">${stageCards}</div><p class="grade-review-disclaimer">审查状态按来源记录展示；AI辅助审查不等同于独立教研或儿童理解测试。</p></section>`;
+  return `<section class="grade-detail-panel" id="grade-pack-detail-${esc(pack.packId)}" aria-label="${esc(pack.name)}三个学段详情"><header><div><h3>${esc(pack.name)} · 三个学段</h3><p>以下内容来自该知识群的三个学段记录。</p></div><button type="button" class="grade-detail-close" data-action="grade-pack-toggle" data-pack-id="${esc(pack.packId)}" aria-expanded="true">收起</button></header><div class="grade-detail-grid">${stageCards}</div>${renderGradeNodeList(pack,gradeStageForSelected()?.id)}<p class="grade-review-disclaimer">审查状态按来源记录展示；AI辅助审查不等同于独立教研或儿童理解测试。</p></section>`;
 }
 function renderGradeObservation(){
   const host=$('#grade-observation-view');if(!host)return;
