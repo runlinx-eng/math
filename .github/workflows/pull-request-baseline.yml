@@ -31,7 +31,7 @@ jobs:
           fi
 
           changed_files="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")"
-          if printf '%s\n' "$changed_files" | grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/)'; then
             echo "run_browser=true" >> "$GITHUB_OUTPUT"
             echo "Browser regression is required for this change."
           else
@@ -130,6 +130,7 @@ jobs:
             tests/spatial-guide-inplace-browser.cjs \
             tests/spatial-unified-map-browser.cjs \
             tests/spatial-theme-overview-browser.cjs \
+            tests/grade-progression-overview-browser.cjs \
             tests/spatial-local-focus-browser.cjs \
             tests/learning-workspace-browser.cjs \
             tests/concept-visual-browser.cjs \
@@ -156,5 +157,6 @@ jobs:
             verification/spatial-guide-inplace/
             verification/spatial-unified-map/
             verification/spatial-theme-overview/
+            verification/grade-progression-overview/
             verification/learning-workspace/
           if-no-files-found: warn

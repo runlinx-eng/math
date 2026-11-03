@@ -97,3 +97,9 @@ test("incomplete group-stage detail preserves missing fields and does not infer 
   assert.match(detail, /群级判断记录不完整，待补充/);
   assert.match(detail, /审查状态待补充/);
 });
+
+test("the current two-year stage is exposed as the selected year changes", () => {
+  assert.match(space, /data-selected-stage=/);
+  assert.match(space, /selectedGrade-1/);
+  assert.match(space, /GRADE_LABELS\[selectedGrade-1\]/);
+});

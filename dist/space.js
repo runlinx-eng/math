@@ -283,7 +283,7 @@ function renderGradeObservation(){
   host.innerHTML=`<div class="grade-observation-head"><div><h2>小学1—6年级观察</h2><p>按五大主题查看23个知识群在三个两年学段中的整体发展。</p></div></div>
     <div class="grade-selector" role="group" aria-label="选择年级">${GRADE_LABELS.map((label,index)=>`<button type="button" data-action="grade-select" data-grade="${index+1}" aria-pressed="${selectedGrade===index+1}">${label}</button>`).join('')}</div>
     <p class="grade-precision-note">课程映射精度为两年学段，并非精确到单独年级；相邻两个年级共用同一份学段数据。</p>
-    <p class="grade-current-stage" aria-live="polite">当前选择：<strong>${GRADE_LABELS[selectedGrade-1]}</strong> · ${esc(selectedStage?.standardStage||'学段待确认')}（${esc(selectedStage?.label||'') }）</p>
+    <p class="grade-current-stage" data-selected-stage="${esc(selectedStageId||'')}" aria-live="polite">当前选择：<strong>${GRADE_LABELS[selectedGrade-1]}</strong> · ${esc(selectedStage?.standardStage||'学段待确认')}（${esc(selectedStage?.label||'') }）</p>
     <div class="grade-matrix-scroll"><table class="grade-matrix" aria-label="23个知识群的小学学段发展矩阵"><thead><tr><th scope="col" class="grade-pack-heading">知识群</th>${stageHeaders}</tr></thead><tbody>${groupRows}</tbody></table></div>
     <div class="grade-mark-legend" aria-label="阶段标记说明"><span><b data-mark="main">主</b>主要发展</span><span><b data-mark="extension">延</b>延伸发展</span><span><b data-mark="not-primary">—</b>非主要阶段</span><span><b data-mark="process">过程</b>贯穿过程</span><span><b data-mark="incomplete">待补充</b>记录不完整</span></div>`;
 }
