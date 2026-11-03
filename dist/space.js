@@ -26,6 +26,8 @@ const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
 let worldLayout='network',observationMode='relationship',selectedGrade=1,gradeProgressionData=null,gradeProgressionPromise=null;
+const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
+const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
 const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
 let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
