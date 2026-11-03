@@ -6,11 +6,11 @@
 ## 核对结论
 
 - 来源数据中 `hasResearch=false` 共 **85** 个节点，与原研究缺口计划中的 **85 个唯一 ID 完全匹配**，没有漏项或多项。
-- 其中 **83 个属于537个知识地图节点**：37个已有解释样板或草稿、46个尚无解释样板。
+- 其中 **83 个属于537个知识地图节点**：47个已有解释样板或草稿、36个尚无解释样板。
 - 另有 **2 个属于50个数学思维节点**，必须单独审查，不混入537个知识点解释任务。
-- 7 个既有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个、B04的1个共5个新草稿节点也已完成外部来源核查、解释起草和AI自检，独立数学复核待完成。B05有5个、B06有3个、B07有5个、B08有3个、B09有4个、B10有5个新草稿，已核对课程或教学资料；其余46个无样板知识地图节点与2个数学思维节点尚未核查；37个已有样板或草稿均未完成独立数学复核。
+- 7 个既有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个、B04的1个共5个新草稿节点也已完成外部来源核查、解释起草和AI自检，独立数学复核待完成。B05有5个、B06有3个、B07有5个、B08有3个、B09有4个、B10有5个、B11有5个、B12有5个新草稿，已核对课程或教学资料；其余36个无样板知识地图节点与2个数学思维节点尚未核查；47个已有样板或草稿均未完成独立数学复核。
 - 85项都有来源描述与可观察 evidence；这些来源目标可用于确定研究问题，但不能替代专门教学研究记录。
-- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有37个节点完成外部来源核查（7个既有样板、B01两个新草稿节点、B02、B03、B04各一个新草稿节点和B05的5个、B06的3个、B07的5个、B08的3个、B09的4个和B10的5个新草稿节点），源标记均暂不修改。
+- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有47个节点完成外部来源核查（7个既有样板、B01两个新草稿节点、B02、B03、B04各一个新草稿节点和B05的5个、B06的3个、B07的5个、B08的3个、B09的4个、B10的5个、B11的5个和B12的5个新草稿节点），源标记均暂不修改。
 
 ## 按施工阶段分流
 
@@ -18,8 +18,8 @@
 |---|---:|---|---|
 | Phase 2 | 2 | B01两个知识地图节点（`mt_ebQURBOsM5`、`mt__yvsKKp3TS`） | B01外部来源核查、解释初稿和AI自检完成；独立数学复核待完成 |
 | Phase 4 | 7 | 7个知识地图节点（B02、B03、B04各1个、B05两个、B10一个新草稿节点，另1个未核查） | B02–B10部分节点外部来源核查与解释初稿完成；其余1个尚未核查 |
-| Phase 5 | 76 | 74个知识地图节点（29个已有样板、45个无样板）及2个数学思维节点 | 29个样板或草稿来源已核查；45个无样板知识点与2个数学思维节点尚未核查 |
-| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **37个来源核查完成；48个尚未核查** |
+| Phase 5 | 76 | 74个知识地图节点（39个已有样板、35个无样板）及2个数学思维节点 | 39个样板或草稿来源已核查；35个无样板知识点与2个数学思维节点尚未核查 |
+| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **47个来源核查完成；38个尚未核查** |
 
 ## 83 个知识地图节点：按领域
 
@@ -28,7 +28,7 @@
 | Addition & Subtraction（add） | 3 | 3 | 0 |
 | Algebra（algebra） | 5 | 5 | 0 |
 | Counting & Cardinality（counting） | 3 | 3 | 0 |
-| Data & Statistics（data） | 27 | 13 | 14 |
+| Data & Statistics（data） | 27 | 23 | 4 |
 | Fractions（fractions） | 1 | 1 | 0 |
 | Geometry（geometry） | 10 | 2 | 8 |
 | Measurement（measure） | 18 | 5 | 13 |
@@ -42,9 +42,9 @@
 | 来源类型 | 缺口数 | 已有样板 | 尚无样板 |
 |---|---:|---:|---:|
 | REPRESENTATIONAL | 9 | 4 | 5 |
-| PROCEDURAL | 42 | 17 | 25 |
-| CONCEPTUAL | 28 | 14 | 14 |
-| META | 4 | 2 | 2 |
+| PROCEDURAL | 42 | 20 | 22 |
+| CONCEPTUAL | 28 | 20 | 8 |
+| META | 4 | 3 | 1 |
 
 ## 7 个已有样板的研究闸门
 
@@ -90,22 +90,20 @@
 
 五个节点已核对统计指导或课程资料并起草解释，来源和限制见 [B10记录](CONCEPT-RESEARCH-B10-2026-11-03.md)；独立数学复核和儿童理解测试尚未完成。
 
-## 46 个尚无样板的知识地图节点
+## B11：五个数据质量与抽样研究缺口草稿
 
-- `mt_Y6JmLjnfRP` 开展统计调查（Data & Statistics；META；Phase 5）
-- `mt_QHT16CrFO-` 检查并描述分类数据（Data & Statistics；PROCEDURAL；Phase 5）
+五个节点已核对统计指导或课程资料并起草解释，来源和限制见 [B11记录](CONCEPT-RESEARCH-B11-2026-11-03.md)；独立数学复核和儿童理解测试尚未完成。
+
+## B12：五个分布与样本推断研究缺口草稿
+
+五个节点已核对统计指导或课程资料并起草解释，来源和限制见 [B12记录](CONCEPT-RESEARCH-B12-2026-11-03.md)；独立数学复核和儿童理解测试尚未完成。
+
+## 36 个尚无样板的知识地图节点
+
 - `mt_mn765HbXi1` 用数字工具比较数据（Data & Statistics；PROCEDURAL；Phase 5）
-- `mt_8IsaoMPvod` 辨析媒体中的统计信息（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_OwYms2tB1L` 描述数据分布（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_4zgPzc6yu5` 总体、样本与公平抽样（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_KCS9GbZgU_` 四分位数与四分位距（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_O-U263ukg1` 改进统计调查（Data & Statistics；META；Phase 5）
-- `mt_6gpryAnpoZ` 测量了什么，怎样测量（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_tuEnyrp5Ia` 写出数据结论（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_km4V6d5IAh` 比较两个总体（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_fQ9Rw10fss` 用样本进行估计（Data & Statistics；PROCEDURAL；Phase 5）
-- `mt_A2hKhHXgL5` 两组数据差多少（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_x7V1qrkiqH` 不同样本的差异（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_mN4Ye_vtR7` 物体的形状与用途（Geometry；CONCEPTUAL；Phase 5）
 - `mt_SK7WntVZ6y` 用图形近似表示物体（Geometry；PROCEDURAL；Phase 5）
 - `mt_LBT-9jz7kR` 平角、优角与周角（Geometry；CONCEPTUAL；Phase 5）

@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,329);
+  assert.equal(samples.length,339);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -431,4 +431,20 @@ test('data research-gap drafts distinguish simulated records and graph interpret
   assert.match(conceptHelpFor('mt_kxeuXm6EyC').why,/模拟记录不等于真实调查/);
   assert.match(conceptHelpFor('mt_yrvYKSwSRZ').counterexample,/并列最多/);
   assert.match(conceptHelpFor('mt_TiFjjvBMaY').counterexample,/不能代表整组/);
+});
+
+test('sampling research-gap drafts retain bias, missing data and measurement boundaries',()=>{
+  assert.match(conceptHelpFor('mt_4zgPzc6yu5').why,/不具代表性/);
+  assert.match(conceptHelpFor('mt_QHT16CrFO-').counterexample,/没有依据/);
+  assert.match(conceptHelpFor('mt_6gpryAnpoZ').counterexample,/不能确定原因/);
+  assert.match(conceptHelpFor('mt_Y6JmLjnfRP').counterexample,/不能说成/);
+  assert.match(conceptHelpFor('mt_8IsaoMPvod').example,/相差2/);
+});
+
+test('distribution research-gap drafts preserve quartile, sampling and overlap limits',()=>{
+  assert.match(conceptHelpFor('mt_KCS9GbZgU_').definition,/排除中位数/);
+  assert.match(conceptHelpFor('mt_KCS9GbZgU_').why,/不同算法/);
+  assert.match(conceptHelpFor('mt_A2hKhHXgL5').why,/不能单独确定重叠/);
+  assert.match(conceptHelpFor('mt_x7V1qrkiqH').why,/不是保证误差上限/);
+  assert.match(conceptHelpFor('mt_fQ9Rw10fss').counterexample,/准确人数/);
 });

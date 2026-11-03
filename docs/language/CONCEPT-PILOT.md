@@ -551,3 +551,11 @@
 ## 研究缺口 5 节点（2026-11-03）
 
 `mt_X53txVXOcG`、`mt_QpJydot2Kh`、`mt_kxeuXm6EyC`、`mt_yrvYKSwSRZ`、`mt_TiFjjvBMaY`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B10-2026-11-03.md)。
+
+## 研究缺口 5 节点（2026-11-03）
+
+`mt_Y6JmLjnfRP`、`mt_QHT16CrFO-`、`mt_8IsaoMPvod`、`mt_4zgPzc6yu5`、`mt_6gpryAnpoZ`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B11-2026-11-03.md)。
+
+## 研究缺口 5 节点（2026-11-03）
+
+`mt_OwYms2tB1L`、`mt_KCS9GbZgU_`、`mt_fQ9Rw10fss`、`mt_A2hKhHXgL5`、`mt_x7V1qrkiqH`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B12-2026-11-03.md)。
