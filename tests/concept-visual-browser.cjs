@@ -422,6 +422,10 @@ const ids=[
   ['batch5g-03','mt_9Y96vxG_LH'],
   ['batch5g-04','mt_gNUE4B3vuk'],
   ['batch5g-05','mt_J339bO7qLe']
+,
+  ['batch3h-01','mt_u5HkSxZECM'],
+  ['batch3h-02','mt_eKJG-0eC6D'],
+  ['batch3h-03','mt_ESgc4YBw-a']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

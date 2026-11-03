@@ -1,4 +1,4 @@
-// Four hundred and twenty-two source-bound explanation samples, keyed by exact source node ID.
+// Four hundred and twenty-five source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3829,6 +3829,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"45元先减20%得36元，再加10%应按36元计算，加后为39.6元，不能仍按45元算第二步。",
     tryIt:"把200平均分成4份，取其中3份，再写成乘法算式。",
     why:"分数或百分数表示相对于所选整体的倍数；连续变化时，后一步的整体可能已经改变。",
+  },
+  "mt_u5HkSxZECM":{
+    formal:"统计数据与图表术语",
+    definition:"统计图通过标题、标签、刻度和图形呈现数据；频数表示某个类别或范围中记录的次数。",
+    simpler:"先弄清记录什么，再看每一类出现几次、每个图案或刻度代表多少。",
+    example:"调查喜欢的运动时，可以用计数笔画记录每类人数，再用频数表汇总。",
+    counterexample:"象形图的一个图案不一定表示一个人，必须先看图例。",
+    tryIt:"给一张柱状图补上标题、类别轴、人数轴和合适的刻度。",
+    why:"标题和标签说明数据含义，刻度与图例说明图形与数量怎样对应。",
+  },
+  "mt_eKJG-0eC6D":{
+    formal:"频数表与不同统计图",
+    definition:"频数表记录各类别或区间的次数；柱状图和饼图分别用柱长、整体中各部分的扇形呈现数据。",
+    simpler:"先把每条数据归入对应类别或区间，再选择适合的问题和图表。",
+    example:"12票分成6、4、2票时，饼图的三个圆心角分别是180°、120°和60°。",
+    counterexample:"分组时同一个边界数据不能同时算进相邻两个组；要先说明每组包含哪一端。",
+    tryIt:"把给定的测量时间按左端包含、右端不包含的区间归组，再核对总次数。",
+    why:"每条数据应按规则归入一组；饼图扇形占整圆的比例与该类别占总数的比例相同。",
+  },
+  "mt_ESgc4YBw-a":{
+    formal:"比、比例与百分数的语言",
+    definition:"比表示两个量之间的比较；比例式表示两个比相等；百分数表示以100为基准的比例。",
+    simpler:"先看比较的是哪两个量，再看另一组数量是否保持相同的比。",
+    example:"红蓝颜料为2∶3和4∶6时，两组的比相等；30%＝30/100＝0.3。",
+    counterexample:"图形放大2倍时对应长度都乘2，不是每条边都加2。",
+    tryIt:"用相同单位的量摆出2∶3和4∶6两组，检查是否等比。",
+    why:"对应量按同一非零倍数变化时，比保持不变；比例尺或放大倍数说明长度的对应关系。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
