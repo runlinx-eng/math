@@ -173,8 +173,8 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(mobileDetails.cards.length===3&&mobileDetails.cards.every(card=>card.left>=mobileDetails.panel.left&&card.right<=mobileDetails.panel.right),'all three stage details fit within the mobile panel');
   await page.screenshot({path:path.join(out,'mobile-grade-matrix.png'),fullPage:false});
 
-  await page.locator('.grade-pack-toggle[data-pack-id="solids"]').click();
-  await page.locator('#grade-pack-detail-solids').waitFor({state:'detached'});
+  await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
+  await page.locator('#grade-pack-detail-time').waitFor({state:'detached'});
   await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
   await page.locator('#grade-pack-detail-number-sense').scrollIntoViewIfNeeded();
   const mobileNodeList=await page.locator('#grade-pack-detail-number-sense .grade-node-list').evaluate(el=>{

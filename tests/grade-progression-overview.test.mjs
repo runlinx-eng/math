@@ -274,7 +274,7 @@ test("unresolved status is shown without exposing the full research-gap register
 });
 
 test("adapter and interaction documentation define the same A2-3 node identity and two-way navigation contract", () => {
-  assert.match(adapterDoc, /按唯一 nodeId/);
+  assert.match(adapterDoc, /按唯一 `nodeId`/);
   assert.match(adapterDoc, /50个数学思维节点/);
   assert.match(adapterDoc, /初中后续/);
   assert.match(adapterDoc, /不调用自动聚焦/);
