@@ -273,5 +273,5 @@ test('second-batch second five explanations preserve source-specific goals and m
   const estimate=conceptHelpFor('mt_ilPrU0cbtT');
   assert.match(estimate.definition,/近似结果.*精确计算.*精度/);
   assert.match(estimate.example,/487×23.*500×20＝10000.*487×23＝11201/);
-  assert.match(estimate.tryIt,/198×31.*200×30.*3980÷8/);
+  assert.match(estimate.tryIt,/198×31.*200.*31.*30.*3980÷8/);
 });
