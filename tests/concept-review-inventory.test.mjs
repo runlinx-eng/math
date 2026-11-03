@@ -83,8 +83,8 @@ test('each inventory entry matches its source node and review states',()=>{
     if(sampleIds.has(node.id)){
       if(newSix.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'new_six_draft_pending_deep_review');
       else if(newFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'first_five_draft_ai_self_checked_pending_independent_review');
-      else if(secondBatchFirstFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_first_five_draft_ai_self_checked_pending_independent_review');
-      else if(secondBatchSecondFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_second_five_draft_ai_self_checked_pending_independent_review');
+      else if(secondBatchFirstFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_first_five_ai_cross_review_completed_pending_independent_review');
+      else if(secondBatchSecondFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_second_five_ai_cross_review_completed_pending_independent_review');
       else assert.equal(record.explanationReview.calibrationStatus,'first_39_first_pass_calibrated');
     }else{
       assert.equal(record.explanationReview.calibrationStatus,'not_started');
