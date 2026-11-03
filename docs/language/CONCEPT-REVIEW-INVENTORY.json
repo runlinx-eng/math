@@ -8026,7 +8026,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
       "batch": "B01-B04-first-explanation-draft-2026-11-03",
@@ -8244,7 +8244,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
       "batch": "B01-B04-first-explanation-draft-2026-11-03",
@@ -9175,7 +9175,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -9310,7 +9310,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -9476,7 +9476,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -9771,7 +9771,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -9845,7 +9845,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -10205,7 +10205,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
       "batch": "B01-B04-first-explanation-draft-2026-11-03",
@@ -11672,7 +11672,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
       "batch": "B01-B04-first-explanation-draft-2026-11-03",
@@ -21041,7 +21041,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
@@ -25554,7 +25554,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
       "batch": "B01-B04-first-explanation-draft-2026-11-03",
@@ -26700,7 +26700,7 @@
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "first_pass_editor_calibrated_not_independent",
       "batch": null,
