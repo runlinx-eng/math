@@ -246,7 +246,7 @@ test('second-batch first five explanations preserve source-specific mathematical
   assert.match(equation.counterexample,/只改变了一边/);
   const statistics=conceptHelpFor('mt_XSXnTQoQ4l');
   assert.match(statistics.definition,/平均数.*中位数.*众数.*极差.*比较两组观测数据/);
-  assert.match(statistics.example,/平均数是 6.*中位数是 5.*众数是 5.*极差是 8/);
+  assert.match(statistics.example,/平均数是 30÷5＝6.*中位数是 5.*众数是 5.*极差是 8/);
   assert.match(statistics.example,/甲班.*中位数是 7.*极差是 9－6＝3.*乙班.*中位数是 8.*极差是 10－5＝5/);
   assert.match(statistics.tryIt,/分别求两组的中位数和极差/);
 });
