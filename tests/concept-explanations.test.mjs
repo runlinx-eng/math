@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,269);
+  assert.equal(samples.length,289);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -380,4 +380,12 @@ test('twenty-node batch preserves changes, equality and evidence boundaries',()=
   assert.match(conceptHelpFor('mt_BdAeZJUOir').counterexample,/不证明/);
   assert.match(conceptHelpFor('mt_hRZyKvz1KN').example,/非正方形.*2条/);
   assert.match(conceptHelpFor('mt_iEXqN48w3x').counterexample,/基准/);
+});
+
+test('twenty-node batch keeps place values, zeros and shape boundaries',()=>{
+  assert.match(conceptHelpFor('mt_aHQ9kNt3is').example,/372＋40＝412/);
+  assert.match(conceptHelpFor('mt_LlMl2PbaZe').counterexample,/不改变数值/);
+  assert.match(conceptHelpFor('mt_y1XCVsIelg').counterexample,/1既不是素数也不是合数/);
+  assert.match(conceptHelpFor('mt_933BohS9BH').example,/0\.7＝0\.70＝0\.700/);
+  assert.match(conceptHelpFor('mt_3qrCtdoVAU').simpler,/除数不为零/);
 });
