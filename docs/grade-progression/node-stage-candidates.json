@@ -9418,7 +9418,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "求1000多或少1000使用数位和计数单位关系。第一学段万以内数的认识已覆盖相关数域；第二学段可延伸到更大的数。",
+        "scopeBoundary": "课程标准没有把固定的‘多1000或少1000’单列为条目；若数字超过万以内，应按第二学段大数内容理解。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MHaiUd2FLA",
@@ -9436,7 +9455,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "比较1000以上的数，第一学段要求理解万以内数的大小关系；超过万的部分由第二学段万以上数的认识继续承接。",
+        "scopeBoundary": "节点没有给出明确上限，故跨阶段；不能仅凭‘大数’标题认定所有数都属于同一学段。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vXRzMbiPff",
@@ -9455,7 +9493,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "第三学段综合与实践明确安排‘了解负数’，并要求在熟悉情境中理解负数表达与正数意义相反的量。",
+        "scopeBoundary": "标准支持负数的情境意义；节点中的负数数轴和一般负数运算不能仅凭该条目视为小学必学要求。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_lC_Q5mSL_I",
@@ -9473,7 +9527,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "认识、表示和估计10000以内的数，直接落在第一学段明确要求理解的万以内数范围。",
+        "scopeBoundary": "标准要求理解数的意义和数位，不代表所有表示媒介或所有估计任务都被逐项规定。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_jY7uf0Cb7o",
@@ -9491,7 +9561,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解四位数中千、百、十、个位的数值，直接对应第一学段万以内数和数位含义。",
+        "scopeBoundary": "四位数是第一学段数域的一部分；更大的数在第二学段继续扩展。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__sMrmOv3bx",
@@ -9509,7 +9595,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "利用数位知识解决比较、排列和实际问题，第一学段建立万以内数位基础，第二学段将其扩展到更大的数和估算情境。",
+        "scopeBoundary": "节点包含舍入、估算等多种任务，课程标准没有规定所有舍入精度；具体任务应逐项确认。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_JwP9QFv6gQ",
@@ -9528,7 +9634,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "读写、比较和排列达到百万级的整数，超出第一学段万以内数域，对应第二学段万以上数和大数表示。",
+        "scopeBoundary": "课程标准要求认识万以上数并能用万、亿为单位表示大数，但未把100万作为统一上限；本节点的英文数词表达需本地化。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MewIRdzpzz",
@@ -9546,7 +9668,17 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [],
+        "roles": {},
+        "evidenceLevel": "not-covered",
+        "standardReferences": [],
+        "rationale": "罗马数字读写和转换没有在中国小学数学课程标准中作为数与运算的内容要求列出。",
+        "scopeBoundary": "可作为数学文化或数制比较的拓展活动，但不应标成中国小学必学知识或年级目标。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NLSfvB9vUl",
@@ -9565,7 +9697,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "按十、百、千取近似数与第二学段在实际问题中进行估算、理解大数和数位有关。",
+        "scopeBoundary": "标准要求合理估算，但没有逐项规定按10、100、1000取整的规则或全部舍入边界。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tAtMET4EIU",
@@ -9584,7 +9733,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "按10、100、1000等计数单位递增递减，与第二学段万以上数、十进制计数和数的规律探索相连。",
+        "scopeBoundary": "课程标准没有列出10到100000等全部步长序列；该节点的具体练习范围属于扩展设计。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1KkvzwYxbR",
@@ -9603,7 +9769,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "第三学段综合与实践明确要求在真实情境中了解负数，理解温度、海拔等相反意义的量。",
+        "scopeBoundary": "标准支持负数的情境意义和表达，不等于要求小学阶段进行一般负数加减乘除或完整有理数运算。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QqG6IdmTSE",
@@ -9622,7 +9804,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "相邻数位之间十倍关系是十进制计数法和位值结构的核心。第一学段建立十进制数位认识，第二学段扩展到更大数和十进制计数法。",
+        "scopeBoundary": "标准要求理解十进制计数和数位，但节点中的‘一个位置是右侧十倍’这一一般化表述应按具体数域逐步建立。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_To9HdLy8vq",
@@ -9641,7 +9842,17 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [],
+        "roles": {},
+        "evidenceLevel": "not-covered",
+        "standardReferences": [],
+        "rationale": "罗马数字到1000的读写、转换和减法规则没有在中国小学数学课程标准中列为数与运算要求。",
+        "scopeBoundary": "可作为数学文化或数制历史拓展，不作为中国小学课程阶段归属。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5NwqN6pf_A",
@@ -9660,7 +9871,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "对大数取近似值以估算和解决实际问题，与第二学段的大数认识、估算及数量关系应用相连。",
+        "scopeBoundary": "课程标准支持估算，但未逐项规定到十万位的舍入、特定精度或误差区间。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xMt1TLTs--",
@@ -9679,7 +9907,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "读写、比较、排列和处理百万级整数，属于第二学段万以上数和用大数解决实际问题的延展。",
+        "scopeBoundary": "课程标准的万以上数要求不等于本节点所有实际问题和六位数范围均被逐项规定；应用情境应本地化。",
+        "reviewBatch": "03-number-representation-extended",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__casygEB85",
@@ -10684,10 +10929,18 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "完成前26个基础数词、两位数与三位数位值节点；两项英语数词读写不属于中国小学数学课程标准，标记为not-covered；奇偶数按国家标准第三学段映射。"
+      },
+      {
+        "id": "03-number-representation-extended",
+        "domain": "Number Representation & Place Value",
+        "nodeCount": 15,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "核对大数、数位、近似数、负数及罗马数字；负数按第三学段综合与实践映射，罗马数字标记为未覆盖的拓展内容。"
       }
     ],
-    "completedNodeCount": 43,
-    "pendingNodeCount": 494,
+    "completedNodeCount": 58,
+    "pendingNodeCount": 479,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
