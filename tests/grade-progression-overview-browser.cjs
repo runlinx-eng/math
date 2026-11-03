@@ -18,7 +18,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   const source=await page.evaluate(async()=>await(await fetch('./data/grade-progression.json')).json());
   await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
   await page.waitForFunction(()=>!document.querySelector('#grade-observation-view')?.hidden&&document.querySelectorAll('.grade-pack-row').length===23);
-  check(await page.locator('#relationship-observation-content').isHidden(),'grade mode hides only the original guide content');
+  check(await page.locator('#network-view-title').isHidden(),'grade mode hides the original guide content without wrapping its grid children');
   check(await page.locator('#grade-observation-view').isVisible(),'grade mode opens inside the existing guide panel');
   check(await page.locator('[data-action="grade-select"]').count()===6,'all six year-entry buttons are present');
   check(await page.locator('.grade-theme-row').count()===5,'all five theme groups are present');
@@ -53,7 +53,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check((await pose())===originalPose,'mode, year selection and expand/collapse preserve the exact map camera and node positions');
   await page.screenshot({path:path.join(out,'desktop-grade-matrix.png'),fullPage:false});
   await page.locator('[data-action="observation-mode"][data-mode="relationship"]').click();
-  check(await page.locator('#relationship-observation-content').isVisible()&&await page.locator('#grade-observation-view').isHidden(),'returning to relationship panorama restores the original guide content');
+  check(await page.locator('#network-view-title').isVisible()&&await page.locator('#grade-observation-view').isHidden(),'returning to relationship panorama restores the original guide content');
   check((await pose())===originalPose,'returning to relationship panorama leaves the map camera and positions unchanged');
   check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'the original 537-node map remains present');
 

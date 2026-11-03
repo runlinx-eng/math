@@ -298,8 +298,8 @@ function setObservationMode(mode){
   const next=mode==='grade'?'grade':'relationship';
   observationMode=next;
   document.body.dataset.observationMode=next;
-  const relationship=$('#relationship-observation-content'),grade=$('#grade-observation-view');
-  if(relationship)relationship.hidden=next!=='relationship';
+  const guide=$('#network-guide'),grade=$('#grade-observation-view');
+  if(guide)guide.querySelectorAll(':scope > :not(#observation-mode-switch):not(#grade-observation-view)').forEach(item=>{item.hidden=next!=='relationship';});
   if(grade)grade.hidden=next!=='grade';
   document.querySelectorAll('[data-action="observation-mode"]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===next)));
   if(next==='grade')loadGradeObservation();

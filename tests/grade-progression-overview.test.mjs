@@ -12,11 +12,12 @@ const data = JSON.parse(read("../dist/data/grade-progression.json"));
 test("relationship and grade observation share the existing guide panel", () => {
   const guide = html.indexOf('id="network-guide"');
   const modeSwitch = html.indexOf('id="observation-mode-switch"');
-  const relationship = html.indexOf('id="relationship-observation-content"');
+  const relationshipTitle = html.indexOf('id="network-view-title"');
   const grade = html.indexOf('id="grade-observation-view"');
   const structure = html.indexOf('id="overview-structure-controls"');
-  assert.ok(guide >= 0 && modeSwitch > guide && relationship > modeSwitch && grade > relationship);
+  assert.ok(guide >= 0 && modeSwitch > guide && relationshipTitle > modeSwitch && grade > relationshipTitle);
   assert.ok(structure > grade);
+  assert.doesNotMatch(html, /id="relationship-observation-content"/);
   assert.match(html, /data-mode="relationship" aria-pressed="true">关系全景/);
   assert.match(html, /data-mode="grade" aria-pressed="false">年级观察/);
   assert.doesNotMatch(html, /id="grade-observation-toolbar"/);
@@ -27,7 +28,8 @@ test("switching observation mode only changes the guide panel contents", () => {
   const end = space.indexOf("\nfunction renderLocation()", start);
   assert.ok(start >= 0 && end > start);
   const implementation = space.slice(start, end);
-  assert.match(implementation, /relationship\.hidden=next!=='relationship'/);
+  assert.match(implementation, /guide\.querySelectorAll\(':scope > :not\(#observation-mode-switch\):not\(#grade-observation-view\)'\)/);
+  assert.match(implementation, /item\.hidden=next!=='relationship'/);
   assert.match(implementation, /grade\.hidden=next!=='grade'/);
   assert.match(implementation, /document\.body\.dataset\.observationMode=next/);
   assert.doesNotMatch(implementation, /scene\.|camera|zoom|fitGlobalView|setMode/);
@@ -111,4 +113,10 @@ test("network knowledge details remain inside the viewport when the guide panel 
   assert.match(implementation, /guideRect\.right\+16\+width<=innerWidth-16/);
   assert.match(implementation, /innerHeight-height-12/);
   assert.match(implementation, /card\.style\.left=.*rightLeft/);
+});
+
+test("the original guide content remains direct children of the existing grid panel", () => {
+  assert.match(html, /<aside id="network-guide"[^>]*>[\s\S]*?<div id="observation-mode-switch"/);
+  assert.match(html, /<div id="observation-mode-switch"[\s\S]*?<strong id="network-view-title"/);
+  assert.match(css, /#observation-mode-switch,#grade-observation-view\{grid-column:1\/-1/);
 });
