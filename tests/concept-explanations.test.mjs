@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('forty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,45);
+test('fifty exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,50);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -194,4 +194,33 @@ test('first expansion batch explains six additional source goals without changin
   const sorting=conceptHelpFor('mt_ylXdiVRAYv');
   assert.match(sorting.definition,/最多三个类别.*分别计数.*排序/);
   assert.match(sorting.counterexample,/重复放进两组/);
+});
+
+
+test('first five researched drafts preserve source evidence and mathematical boundaries',()=>{
+  const collect=conceptHelpFor('mt_ebQURBOsM5');
+  assert.match(collect.example,/步行3人、汽车4人、公交2人、自行车1人/);
+  assert.match(collect.example,/3＋4＋2＋1＝10/);
+  assert.match(collect.tryIt,/频数总和是否等于有效回答人数/);
+  assert.match(collect.counterexample,/0是一个真实的回答，未回答是缺失/);
+  const compare=conceptHelpFor('mt__yvsKKp3TS');
+  assert.match(compare.definition,/类别、每类频数和总数应一致/);
+  assert.match(compare.example,/狗4人.*4个图标.*都读出4人/);
+  assert.match(compare.counterexample,/计数表是表格，不是图/);
+  const capacity=conceptHelpFor('mt_NSC3LT_-ch');
+  assert.match(capacity.example,/300 mL.*30 mL.*3 L/);
+  assert.match(capacity.example,/1 L＝1000 mL.*500 mL.*容量仍是1 L/);
+  assert.match(capacity.counterexample,/只看水位高度也不能判断容量/);
+  const fractions=conceptHelpFor('mt_gC-6JXAG5S');
+  assert.match(fractions.example,/1\/2＝2\/4＝4\/8/);
+  assert.match(fractions.example,/2\/8＝1\/4/);
+  assert.match(fractions.counterexample,/等份要求面积或数量相等，不要求每块形状完全一样/);
+  assert.equal(2/8,1/4);
+  assert.equal(1/2,2/4);
+  assert.equal(1/2,4/8);
+  const statistical=conceptHelpFor('mt_iykH2P5oFq');
+  assert.match(statistical.definition,/总体.*观测单位.*变量.*预期变异/);
+  assert.match(statistical.example,/典型值约9小时.*不表示每个人都睡9小时/);
+  assert.match(statistical.counterexample,/我们班有多少名学生.*固定人数/);
+  assert.match(statistical.counterexample,/同一个人这一周每天睡多久.*答案也可能变化/);
 });
