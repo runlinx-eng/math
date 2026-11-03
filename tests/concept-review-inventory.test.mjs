@@ -81,8 +81,13 @@ test('each inventory entry matches its source node and review states',()=>{
 
 test('research flags and source relation endpoints are accounted for without conflating thinking nodes',()=>{
   assert.equal(knowledge.filter(node=>node.hasResearch===false).length,83);
-  assert.equal(knowledge.filter(node=>node.hasResearch===false&&sampleIds.has(node.id)).length,7);
-  assert.equal(knowledge.filter(node=>node.hasResearch===false&&!sampleIds.has(node.id)).length,76);
+  const researchGapSamples=knowledge.filter(node=>node.hasResearch===false&&sampleIds.has(node.id));
+  const researchGapWithoutSamples=knowledge.filter(node=>node.hasResearch===false&&!sampleIds.has(node.id));
+  assert.equal(researchGapSamples.length,12);
+  assert.equal(researchGapWithoutSamples.length,71);
+  assert.equal(inventory.summary.hasResearchFalseWithSample,researchGapSamples.length);
+  assert.equal(inventory.summary.hasResearchFalseNotConfigured,researchGapWithoutSamples.length);
+  assert.ok(researchGapSamples.every(node=>inventory.nodes.find(record=>record.id===node.id).researchTriage.status==='external_sources_reviewed_pending_independent_math_review'));
   assert.equal(source.edges.filter(edge=>!sourceById.has(edge.topicId)||!sourceById.has(edge.prerequisiteId)).length,0);
   assert.equal(source.edges.filter(edge=>sourceById.get(edge.topicId)?.domainId==='thinking'||sourceById.get(edge.prerequisiteId)?.domainId==='thinking').length,143);
   assert.equal(source.externalEdges.length,32);
