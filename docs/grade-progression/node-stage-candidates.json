@@ -6535,7 +6535,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY"
+        ],
+        "rationale": "辨认并命名圆、三角形、长方形和正方形等常见平面图形，直接对应第一学段通过实物和模型辨认平面图形的要求。",
+        "scopeBoundary": "本节点只确认常见平面图形的直观辨认与命名，不延伸到系统的性质证明或分类层级。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Qcp2d_kuta",
@@ -6553,7 +6569,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY"
+        ],
+        "rationale": "辨认并命名正方体、长方体、棱锥、球、圆柱和圆锥等常见立体图形，直接对应第一学段通过实物和模型认识立体图形。",
+        "scopeBoundary": "第一学段以直观辨认常见立体图形为主；不要求掌握所有立体图形的严格定义、展开图或体积公式。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_qeZYF6HZ4o",
@@ -6571,7 +6603,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "用上、下、旁边、前后等词描述物体相对位置，直接对应第一学段综合与实践中描述上下左右前后位置和认识基本方向的要求。",
+        "scopeBoundary": "本节点描述的是相对位置语言，不等于已经掌握平面坐标、方位角或距离定位。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_yGv8doDAmp",
@@ -6589,7 +6637,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "用直观语言比较平面图形与立体图形，并观察面、边和顶点等特征，支持第一学段认识常见立体图形及第二学段进一步抽象。",
+        "scopeBoundary": "第一学段强调直观描述；边、顶点等术语的系统使用和更细致属性分析不应全部提前为同一阶段的必学目标。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_2VR963szuk",
@@ -6607,7 +6674,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "用小棒、黏土等材料搭建并画出图形，支持第一学段动手辨认、拼图和表达图形的学习方式。",
+        "scopeBoundary": "课程标准支持直观操作和简单拼图，但没有规定必须使用某一种材料或制作步骤。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XjwUlmxdCT",
@@ -6625,7 +6711,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "把两个或多个简单图形拼成更大的图形，直接对应第一学段会用简单图形拼图的要求，并可在第二学段继续深化。",
+        "scopeBoundary": "拼合活动的复杂度可以变化；不把复杂组合图形的面积计算提前纳入本节点。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mnEVZNkX3p",
@@ -6643,7 +6748,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY"
+        ],
+        "rationale": "区分平面图形与立体图形，直接对应第一学段辨认简单平面图形和立体图形的要求。",
+        "scopeBoundary": "本节点只确认二维与三维对象的直观区别，不扩展到投影、视图或空间几何性质。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WXW0hjNhph",
@@ -6661,7 +6782,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "排列数学物体并观察重复或变化规律，对应第一学段用数或符号表达简单变化规律、第二学段探索简单规律的要求。",
+        "scopeBoundary": "本节点虽位于几何领域，核心目标是图形或物体序列中的规律；不因此把它当作几何性质或图形测量内容。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Y9XKzLrUAZ",
@@ -6680,7 +6820,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "描述整圈、半圈、四分之一圈和四分之三圈的转动，连接第一学段方向经验与第二学段感受旋转现象的要求。",
+        "scopeBoundary": "第一学段主要学习相对方向和位置；将转动作为图形运动并分析其特征主要在第二学段展开。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_UooUHC_V7U",
@@ -6698,7 +6857,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY"
+        ],
+        "rationale": "识别圆柱上的圆面、棱锥上的三角形面等立体图形中某个面对应的平面图形，直接对应第一学段的学业要求。",
+        "scopeBoundary": "只要求辨认立体图形的面与相应平面图形，不要求计算表面积或研究复杂展开图。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_sBcRdUfAzV",
@@ -6718,7 +6893,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "从辨认平面图形及其边数，逐步发展到按特征分类；对称线的识别与补全则在第三学段进一步深化。",
+        "scopeBoundary": "第一、第二学段的图形特征描述不等于掌握所有对称性质；对称轴和不同方向呈现的对称图形主要作为后续深化。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QNxFnxikCN",
@@ -6738,7 +6935,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "用正方体、长方体、圆锥和圆柱等部件搭建组合立体，承接第一学段实物模型辨认与简单图形拼搭。",
+        "scopeBoundary": "课程标准明确要求简单图形拼图和立体图形辨认；复杂组合立体的系统构造不是统一列出的独立要求。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MqqR7VUoz1",
@@ -6758,7 +6974,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "把长方形、正方形、梯形、三角形及半圆、四分之一圆等拼成组合图形，承接简单图形拼图并扩展图形组成关系。",
+        "scopeBoundary": "标准明确要求简单图形拼图和认识常见图形，但没有把源节点列出的全部组合类型规定为统一必学清单。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bfhng6mOuy",
@@ -6776,7 +7011,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "区分三角形封闭且有三条边等关键属性，与颜色、朝向、大小等非关键外观特征，支持按图形特征辨认和分类。",
+        "scopeBoundary": "课程标准要求依据图形特征分类，但没有使用“定义属性/非定义属性”作为小学阶段必须掌握的专门术语。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Mnodea7mG_",
@@ -6795,7 +7049,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "描述立体图形的面、棱和顶点数量，深化对长方体、正方体等常见立体图形特征的认识。",
+        "scopeBoundary": "第一学段要求直观描述立体图形特征；把面、棱、顶点作为系统属性逐项分析可作为第二学段的深化，不代表所有立体类别都要掌握同样细节。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TdV9YGJEoY",
@@ -6814,7 +7087,29 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "从生活中的位置和方向描述，发展到用顺逆时针、直角及四分之一圈等语言表达转动，连接第一学段方向经验与后续图形运动。",
+        "scopeBoundary": "第一学段的明确内容主要是相对位置和基本方向；旋转现象在第二学段明确出现，方格纸上的图形运动在第三学段进一步深化。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_fEuoBYw6bU",
@@ -6833,7 +7128,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "按平面或立体图形的属性比较和分类，直接对应第一学段图形分类及第二学段依据三角形、四边形特征分类的要求。",
+        "scopeBoundary": "分类依据应来自实际图形属性，不应只按颜色、大小或摆放方向等非数学特征分类。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vJUa62bxeR",
@@ -6852,7 +7166,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "画出平面图形、用材料制作立体图形，并从不同朝向辨认立体图形，连接第一学段图形辨认与第二学段观察物体的要求。",
+        "scopeBoundary": "第一学段以常见图形直观辨认为主；从不同角度观察物体的照片或直观图在第二学段有更明确要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_u23IGDxOpk",
@@ -6871,7 +7204,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "识别水平线、竖直线以及平行和垂直关系，直接对应第二学段认识同一平面内两条直线的位置关系。",
+        "scopeBoundary": "本节点限于直观识别平行和垂直，不包含平行线判定定理、证明或复杂尺规作图。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zuOGOGFAKb",
@@ -6890,7 +7239,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "根据边数、角数或相等边等特征识别并画出三角形、四边形、五边形、六边形等图形，对应第二学段图形认识和分类。",
+        "scopeBoundary": "标准明确要求认识三角形、四边形并分类；五边形、六边形等更多多边形的系统性质不应据此推断为同等深度的必学要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MFfYcnv6Tv",
@@ -6910,7 +7278,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "认识直角，并联系两个、三个、四个直角构成半圈、四分之三圈和整圈，支持第二学段角与旋转的直观认识。",
+        "scopeBoundary": "课程标准明确要求辨认直角、平角和周角并感受旋转；角度之间的系统运算及证明不属于本节点的直接范围。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8OAGVdeTJ_",
@@ -6929,7 +7316,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "把角理解为图形的一种特征或转动的描述，支持第二学段结合生活情境认识角并比较角的大小。",
+        "scopeBoundary": "本节点侧重直观概念形成；角的严格定义、射线和角的规范符号主要在初中进一步学习。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hRZyKvz1KN",
@@ -6948,7 +7351,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "识别不同朝向平面图形中的对称线，并补全简单轴对称图形，主要对应第三学段认识对称轴和补全轴对称图形的要求。",
+        "scopeBoundary": "第二学段主要感受轴对称现象；明确认识轴对称图形和对称轴、在方格纸上补全图形属于第三学段。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Xt1cRqaBOW",
@@ -6966,7 +7388,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "按边和角的特征分类长方形、正方形、菱形等四边形，承接第二学段认识四边形并比较图形共性与区别。",
+        "scopeBoundary": "课标明确列举长方形、正方形、平行四边形和梯形；菱形的系统分类及类别包含关系不应全部标为直接要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_i5_HnoFOYw",
@@ -6985,7 +7426,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "在坐标网格上标出指定点并连接成多边形，直接对应第三学段用自然数有序数对表示点的位置及方格纸作图。",
+        "scopeBoundary": "本节点限于小学自然数坐标和简单多边形；负数坐标、四象限及坐标法综合分析属于初中衔接。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Uq5vYqboCR",
@@ -7004,7 +7461,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "用左右、上下移动若干单位描述点或图形的位置变化，连接第二学段感受平移现象与第三学段在方格纸上进行简单平移的要求。",
+        "scopeBoundary": "第二学段主要感受平移现象；在网格上明确描述位移单位和画出平移后的图形主要对应第三学段。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_jBQS-CicNn",
@@ -7023,7 +7499,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "用第一象限中的有序数对描述平面网格上的位置，直接对应第三学段在方格纸上用自然数有序数对确定点的位置。",
+        "scopeBoundary": "只映射第一象限和自然数坐标；负坐标和四象限不属于该小学节点的直接范围。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hR2Y7NhMSY",
@@ -7042,7 +7534,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "补全关于指定直线对称的简单图形，主要对应第三学段认识轴对称图形、对称轴并在方格纸上补全图形。",
+        "scopeBoundary": "第二学段主要感受轴对称现象；明确识别对称轴并补全图形属于第三学段更具体的要求。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vnJEztczji",
@@ -7061,7 +7572,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "通过立体图形的展开图建立平面与立体之间的联系，支持第三学段认识长方体、正方体和圆柱展开图的要求。",
+        "scopeBoundary": "标准明确涉及长方体、正方体和圆柱的展开图；三棱柱、四棱锥等其他网格的系统判别可作为拓展，不自动视为统一必学。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SH7QgFl8-v",
@@ -7080,7 +7607,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "在方格纸或坐标网格上进行平移、轴对称和简单旋转，直接对应第三学段图形的位置与运动；更一般的变换描述可延伸到初中。",
+        "scopeBoundary": "小学标准限于简单图形、方格纸和指定方向或角度；绕任意中心旋转、向量表示及复杂反射不应全部归为小学统一要求。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_h0CVtqI2xo",
@@ -7099,7 +7645,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "辨认锐角和钝角，并按大小比较不超过两个直角的角，直接对应第二学段角的特征与分类要求。",
+        "scopeBoundary": "标准要求认识直角、锐角、钝角、平角和周角；本节点不包含反角或更复杂的角度关系。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_e4V6hvcuEJ",
@@ -7118,7 +7680,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "使用直角标记、等长刻痕和角弧等图形记号表达已知条件，并读图寻找未知量，连接小学几何直观与初中规范几何语言。",
+        "scopeBoundary": "小学阶段要求认识和测量角、三角形及图形关系，但没有要求系统使用三字母角记法和完整的几何图示约定。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mN4Ye_vtR7",
@@ -7136,7 +7717,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "通过日常用途观察立体物体的平面或曲面、棱和顶点，帮助把生活物体特征与几何图形联系起来。",
+        "scopeBoundary": "标准支持直观描述立体图形特征，但没有单列“解释物体为何适合某种用途”为独立几何知识要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wUSbRt3-qw",
@@ -7155,7 +7755,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "从二维表示中辨认正方体、长方体等立体图形，连接第二学段从不同角度观察简单物体与第三学段辨认不同方向形状图的要求。",
+        "scopeBoundary": "标准强调从不同角度观察物体和辨认前、侧、上方形状图；不代表所有复杂立体投影图都属于小学必学。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oqziWKry-L",
@@ -7174,7 +7793,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "利用周角、平角和对顶角关系求未知角；其中平角、周角的直观辨认在第二学段出现，对顶角相等及其推理属于初中。",
+        "scopeBoundary": "不能把第二学段辨认平角和周角等同于已经掌握对顶角相等的性质或多步求角。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SK7WntVZ6y",
@@ -7193,7 +7831,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "用熟悉的平面和立体图形近似表示现实中的组合物体，与图形抽象和几何直观的发展有关。",
+        "scopeBoundary": "课程标准支持从现实物体抽象出图形，但没有把所有组合物体近似建模列为这一知识节点对应的独立必学要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_r8c43QB6wx",
@@ -7212,7 +7872,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "依据平行线、垂线和角的大小特征分类平面图形，并识别直角三角形，直接对应第二学段线的位置关系和三角形分类要求。",
+        "scopeBoundary": "本节点限于平行、垂直和角的基本特征；更一般的几何证明或图形性质推导属于初中衔接。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_qUGMyMYn9m",
@@ -7231,7 +7907,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "用度数描述角的大小，并把一度理解为整圈的三百六十分之一，连接第二学段量角器测量和第三学段图形运动。",
+        "scopeBoundary": "第二学段明确要求用量角器量角、画角；一度与整圈的形式化联系可作为概念深化，不应把所有角度单位换算提前。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_YUJ5pwalqL",
@@ -7250,7 +7945,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "估计和比较锐角、钝角及反角，支持角的大小感知并连接初中角的度量与性质学习。",
+        "scopeBoundary": "第二学段明确涉及直角、锐角、钝角、平角和周角，但反角分类及其度数估算并未作为小学独立要求列出。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QysgF57dxh",
@@ -7269,7 +7983,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "辨认点、直线、线段、射线、角及平行垂直关系，直接对应第二学段认识线段、射线、直线和同一平面内直线位置关系。",
+        "scopeBoundary": "初中阶段会进一步研究线、角及其性质；本节点在小学映射中只确认基本概念和直观辨认。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4MFUAsbx_6",
@@ -7288,7 +8021,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "使用量角器测量角度并画出指定度数的角，直接对应第二学段会用量角器量角和画角的要求。",
+        "scopeBoundary": "标准要求基本测量和画角；复杂角关系、方程求角和形式化证明不属于本节点的直接范围。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_89riIKwGYp",
@@ -7307,7 +8056,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "把角度看作可加的量，通过加减和含未知数的等式求图中未知角，属于初中角与代数表达的综合应用。",
+        "scopeBoundary": "小学阶段会比较和测量角，但没有把利用未知数方程处理一般角度关系列为明确要求。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8H2kO4k2B9",
@@ -7326,7 +8091,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "根据边和角是否分别相等区分正多边形与非正多边形，对应初中阶段多边形及正多边形相关内容。",
+        "scopeBoundary": "小学标准没有把正多边形与非正多边形的系统分类列为独立要求；本节点放在初中衔接，不提前归入五六年级。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NM5I3yN-Q6",
@@ -7345,7 +8126,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "观察图形在旋转后与原图重合的次数，并联系轴对称、旋转和图案设计，深化图形运动与对称性质。",
+        "scopeBoundary": "小学标准要求感受旋转、欣赏和设计图案，但没有明确列出旋转对称阶数作为独立必学内容；正式研究对称性质属于初中衔接。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_LBT-9jz7kR",
@@ -7364,7 +8164,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "比较平角、反角和整圈，并联系直角判断角的大小，承接第二学段平角、周角的辨认并向初中角概念深化。",
+        "scopeBoundary": "标准第二学段明确要求辨认平角和周角，但未明确列出反角作为小学必学分类；反角的系统使用按初中衔接处理。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_efOeaGFyGM",
@@ -7383,7 +8202,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "描述图形平移或轴对称后的新位置，并理解图形大小和形状不变，直接对应第三学段图形运动和轴对称学习。",
+        "scopeBoundary": "小学阶段以方格纸上的简单平移、旋转和轴对称为主；更一般的变换性质和不变量分析作为初中延伸。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_KFKUR_gBg_",
@@ -7402,7 +8240,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "利用长方形的边角特征推断相关长度和角度，承接第二学段长方形、正方形的特征认识。",
+        "scopeBoundary": "小学标准要求认识和描述长方形、正方形特征；利用多条性质进行系统演绎推理和多步求未知量属于后续深化。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3S10OOGPqu",
@@ -7421,7 +8278,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "把角理解为有共同端点的两条射线所形成的图形，并在现实物体和平面图形中辨认角，连接小学角的直观认识与初中严格概念。",
+        "scopeBoundary": "小学阶段通过生活情境认识角并比较大小；两条射线和顶点的严格定义主要作为初中概念深化。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hdrMoiTgqu",
@@ -7439,7 +8315,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "用给定边长和角度准确画出平面图形，承接小学的线段、角和图形认识，并向初中的几何作图与图形性质学习过渡。",
+        "scopeBoundary": "小学阶段会用直尺和量角器作线段、画角及认识常见图形；按给定多组尺寸和角度进行系统几何构造属于更高阶要求。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_REwgr0d_ss",
@@ -7457,7 +8355,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "认识、描述和搭建长方体、正方体等立体图形，并制作展开图，直接对应第三学段立体图形认识和展开图要求。",
+        "scopeBoundary": "小学标准明确覆盖长方体、正方体、圆柱及其展开图；更复杂的棱柱、组合立体和截面问题需另行判断。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_cdMlC7EpTJ",
@@ -7475,7 +8389,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "用三角形内角和求未知角，直接对应第三学段三角形内角和为180°；四边形和正多边形角和则连接初中多边形性质。",
+        "scopeBoundary": "小学标准明确要求三角形内角和及求第三个角；一般多边形内角和、外角和和正多边形角度计算属于初中衔接。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_liIW336odh",
@@ -7493,7 +8426,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "比较图形属性并理解类别之间的包含关系，承接第二学段三角形、四边形分类，进一步连接初中图形性质与分类体系。",
+        "scopeBoundary": "小学标准支持依据特征分类，但没有要求建立完整的几何类别层级或证明所有子类继承关系。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_R4AY0LKxfl",
@@ -7511,7 +8466,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "在四个象限中使用正负坐标表示点的位置，直接对应初中平面直角坐标系及负数坐标学习。",
+        "scopeBoundary": "第三学段有序数对限于自然数；负坐标和四象限不应提前标为五六年级主要内容。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xq3YHZ2zeR",
@@ -7529,7 +8501,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "认识圆的半径、直径和周长，并理解直径与半径的关系，直接对应第三学段认识圆、圆周率及圆周长和面积的要求。",
+        "scopeBoundary": "本节点不自动包含初中圆弧、弦、圆心角、圆周角及切线等性质。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_snlqRCiA1R",
@@ -7547,7 +8535,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "在第一象限坐标平面描点并解释坐标所表示的位置，直接对应第三学段用自然数有序数对确定方格纸上点的位置。",
+        "scopeBoundary": "本节点限于第一象限和自然数坐标；负数坐标及四个象限的完整坐标系属于初中衔接。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oDlduFnemk",
@@ -7565,7 +8569,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "理解坐标轴、原点和有序数对的基本作用，直接连接第三学段自然数有序数对与初中平面直角坐标系。",
+        "scopeBoundary": "小学阶段限于方格纸上的自然数坐标；完整的坐标轴、负坐标和四象限系统在初中继续学习。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_RdfzwInyAj",
@@ -7583,7 +8606,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "用动态几何软件或手工完成平移、反射和旋转，并观察位置、方向、边长和角度的变化与不变，连接小学图形运动和初中变换性质。",
+        "scopeBoundary": "第三学段要求简单图形的平移、旋转和轴对称；软件操作、一般变换及不变量系统分析不属于小学统一的必学方式。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_lxaM6iVpdr",
@@ -7601,7 +8643,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "在坐标平面或方格纸上平移图形，并关于坐标轴作对称图形，直接对应第三学段平移和轴对称图形的要求。",
+        "scopeBoundary": "小学阶段主要使用自然数网格和简单图形；完整坐标法和更一般的反射性质属于后续延伸。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QDTO3GAgcq",
@@ -7619,7 +8680,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "利用周角、平角和对顶角关系求未知角，第二学段可形成平角与周角的直观基础，系统运用对顶角关系属于初中。",
+        "scopeBoundary": "不得将小学阶段辨认平角、周角误读为掌握对顶角相等和多步角度关系。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nRksLqt-iR",
@@ -7637,7 +8717,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "继续分析立体图形的面、曲面、棱和顶点，并把观察立体图形的经验延伸到截面想象，与小学空间观念及初中立体几何相邻。",
+        "scopeBoundary": "小学标准主要涉及常见立体图形、展开图和体积表面积；截面分析并未在本标准对应内容中明确列为要求，因此不标为直接对应。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_J03RFlVdas",
@@ -7655,7 +8754,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "三角形内角和可作为第三学段已有认识；把它推广为任意多边形内角和公式并计算正多边形内外角属于初中图形性质。",
+        "scopeBoundary": "小学标准只明确三角形内角和，不要求使用(n−2)×180°等一般多边形公式。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tAJH5BrpOx",
@@ -7673,7 +8791,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "三角形、平行四边形和梯形面积公式，以及长方体、棱柱和圆柱体积公式中的小学常见部分，对应第三学段图形面积与体积内容。",
+        "scopeBoundary": "中国标准明确列出三角形、平行四边形、梯形面积及长方体、正方体、圆柱的体积；更一般棱柱公式属于延伸，不应全部标成小学直接要求。",
+        "reviewBatch": "08e-area-volume-and-circle",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_K0Y15w48SY",
@@ -7691,7 +8827,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "理解平移、旋转和轴对称的基本性质，并判断变换前后图形全等，对应初中图形变化及其不变量学习。",
+        "scopeBoundary": "小学阶段认识和操作简单图形运动；变换性质、全等关系及系统描述属于初中衔接。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_h02-C8PRrj",
@@ -7709,7 +8861,17 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [],
+        "roles": {},
+        "evidenceLevel": "not-covered",
+        "standardReferences": [],
+        "rationale": "研究棱柱平行截面的形状及其与底面的全等关系；在本轮核对的2022年版中国义务教育数学课程标准中没有找到对应的明确内容要求。",
+        "scopeBoundary": "可保留为进一步几何拓展，但不分配小学或初中课程阶段，不把一般空间观念目标当作截面知识的直接证据。",
+        "reviewBatch": "08b-solids-and-visualisation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Jf8xcX4UTq",
@@ -7727,7 +8889,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "按边和角条件用直尺、量角器、圆规或动态几何软件作三角形，对应初中三角形尺规作图要求。",
+        "scopeBoundary": "小学阶段认识三角形、分类并探索边角关系；SSS、SAS、ASA等系统构造条件及作图验证属于初中。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WtIFJSCQIT",
@@ -7745,7 +8923,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "使用规范几何术语和符号描述、草绘平行垂直线、角、多边形及对称图形，对应初中图形性质、几何语言和推理学习。",
+        "scopeBoundary": "小学阶段以直观描述和基本图形分类为主；系统几何记号、规范草图和基于性质的表达放在初中衔接。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_DNYQLahbfa",
@@ -7763,7 +8957,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "比较三角形、四边形和圆的边角、对角线、对称及边长关系，承接小学图形分类和性质认识，并连接初中几何性质研究。",
+        "scopeBoundary": "小学阶段支持图形特征描述、分类和简单测量；对角线性质、一般关系的推导和证明不应提前标为小学直接要求。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_h7zVgCDVmx",
@@ -7781,7 +8997,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "在四个象限中描绘多边形，并用坐标差或绝对距离求边长、周长和面积，连接初中坐标系、负数和数形结合。",
+        "scopeBoundary": "第三学段坐标限于自然数有序数对；跨越坐标轴的距离计算、负数坐标和坐标法综合求解属于初中内容。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_61Nhj8W78f",
@@ -7799,7 +9032,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "组合平移、反射和旋转形成铺砌或几何图案，与小学图案设计及初中图形变化内容相邻。",
+        "scopeBoundary": "课程标准支持图形运动和图案设计，但没有把一般平面铺砌分类或完整的镶嵌理论列为明确要求。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tedML_iu4Y",
@@ -7817,7 +9069,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "在多步问题中综合使用周角、平角和对顶角性质求未知角，对应初中相交线与角的性质。",
+        "scopeBoundary": "小学阶段没有要求使用对顶角性质处理多步未知角问题。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_H_pNJ3ZI_S",
@@ -7835,7 +9103,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "研究两条平行线被第三条直线所截时的同位角、内错角和同旁内角关系，直接对应初中平行线性质和判定。",
+        "scopeBoundary": "小学阶段只要求直观辨认平行线，不要求截线形成的角关系、判定定理或证明。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_svFa6_mjO_",
@@ -7853,7 +9137,25 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "认识圆周率并计算圆的周长和面积，直接对应第三学段圆、圆周率及圆周长和面积公式。",
+        "scopeBoundary": "源节点还包括带圆弧的组合图形面积；标准明确支持圆的周长和面积，但未将所有含圆弧组合图形的复合计算列为统一必学要求。",
+        "reviewBatch": "08e-area-volume-and-circle",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_167X6Ax8P7",
@@ -7871,7 +9173,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "认识全等三角形及对应边、对应角，并运用SSS、SAS、ASA、RHS等判定条件，直接对应初中三角形全等内容。",
+        "scopeBoundary": "小学阶段图形拼合和比较不等于掌握全等三角形的判定条件及证明。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZrsqGVG-Wt",
@@ -7889,7 +9207,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "用直尺和圆规作垂直平分线、过点作垂线及角平分线，直接对应第四学段尺规作图要求。",
+        "scopeBoundary": "第二学段会用直尺和圆规作等长线段，但本节点所列垂直平分线、垂线和角平分线构造属于初中内容。",
+        "reviewBatch": "08a-shapes-and-classification",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_y-BuQAfw4B",
@@ -7907,7 +9241,26 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "按给定比例放大图形并保持形状关系，连接第三学段按比例放大或缩小简单图形与初中相似图形、相似比学习。",
+        "scopeBoundary": "小学阶段只要求在方格纸上按给定比例放大或缩小简单图形；相似概念、中心和比例因子的系统分析属于初中衔接。",
+        "reviewBatch": "08c-position-and-transformations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Sij9ByyHq6",
@@ -7925,7 +9278,26 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "把棱柱表面积理解为外露面的面积之和、体积理解为底面积乘高，并处理组合立体，与小学长方体、圆柱表面积和体积内容相邻。",
+        "scopeBoundary": "小学标准明确涉及长方体、正方体和圆柱的表面积、体积；一般直棱柱、复杂组合立体及隐藏接触面的面积处理没有在本标准中作为同等深度的明确要求。",
+        "reviewBatch": "08e-area-volume-and-circle",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4bc3EAxhlY",
@@ -7943,7 +9315,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "判断给定边角条件能否唯一确定三角形，并解释唯一、多个或不存在的情况，连接初中三角形性质和构造。",
+        "scopeBoundary": "中国课程标准列出三角形边角性质和尺规作图，但源节点对SSA等情形的完整分类超出小学要求，不作小学映射。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1VmTUxBrNd",
@@ -7961,7 +9349,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "运用勾股定理及其逆定理求直角三角形边长，并解决简单实际问题，直接对应初中图形与几何内容。",
+        "scopeBoundary": "小学阶段认识直角三角形和面积等基本性质，但不要求勾股定理或其逆定理。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_KB_Czd7RQH",
@@ -7979,7 +9383,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "使用正弦、余弦和正切关系求直角三角形未知边角，直接对应初中相似直角三角形与锐角三角函数内容。",
+        "scopeBoundary": "三角函数不属于小学1—6年级内容；本节点只放在初中衔接，不提前分配小学阶段。",
+        "reviewBatch": "08d-angles-and-geometric-relations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zkFbMLpu3U",
