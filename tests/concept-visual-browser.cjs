@@ -395,6 +395,13 @@ const ids=[
   ['batch7c-05','mt_ebPelt-qAl'],
   ['batch7c-06','mt_VgOePicFYK'],
   ['batch7c-07','mt_HJA2Oz-Zh1']
+,
+  ['batch6d-01','mt_o_p-3tCxiM'],
+  ['batch6d-02','mt_TgHxujL81r'],
+  ['batch6d-03','mt_4ubP_RMg9o'],
+  ['batch6d-04','mt_kdWoAel3Zl'],
+  ['batch6d-05','mt_09sySPqM9Z'],
+  ['batch6d-06','mt_ZM9mhHsyYZ']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

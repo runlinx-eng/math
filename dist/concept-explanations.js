@@ -1,4 +1,4 @@
-// Three hundred and ninety-nine source-bound explanation samples, keyed by exact source node ID.
+// Four hundred and five source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3622,6 +3622,60 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"15/8是吃掉的准确数量，2个是按完整披萨购买的数量，两者含义不同。",
     tryIt:"每段绳长2/3米，4段共多长？用三等分的长度条连接后检查。",
     why:"重复同样的分数份可以先合并单位份；是否向上取整取决于实际问题。",
+  },
+  "mt_o_p-3tCxiM":{
+    formal:"带分数与假分数的等值换写",
+    definition:"大于或等于1的分数可以表示成若干个完整整体和剩余分数，也可以换回同单位的假分数。",
+    simpler:"先数几个小份能组成一个整体，再看还剩几个小份。",
+    example:"11/4＝2又3/4；3又2/5＝17/5。",
+    counterexample:"11/4换成2又3/4时，分母仍是4，不能把余下的3份写成3/11。",
+    tryIt:"把11个四分之一分成完整的组，再用数轴检查位置。",
+    why:"每4个四分之一组成1个整体；重新分组不改变所表示的数量。",
+  },
+  "mt_TgHxujL81r":{
+    formal:"分数乘整数",
+    definition:"分数乘正整数可以表示将同一个分数重复相加指定次数。",
+    simpler:"每次取相同的分数，取几次就把它们合起来。",
+    example:"4×3/8＝3/8＋3/8＋3/8＋3/8＝12/8＝1又1/2。",
+    counterexample:"4×3/8不是12/32：只是在合并四组3个八分之一，每份仍是八分之一。",
+    tryIt:"在数轴上从0开始连续走5次1/4，记录终点。",
+    why:"相同单位分数的份数相加，分母描述的每份大小没有改变。",
+  },
+  "mt_4ubP_RMg9o":{
+    formal:"分数、小数和百分数的对应",
+    definition:"分数、小数和百分数可以是同一个数量关系的不同写法。",
+    simpler:"把同一个整体分成适当份数，再看看所取的部分怎样写。",
+    example:"1/5＝0.2＝20%；60的20%是12。",
+    counterexample:"25%折扣表示减去原价的四分之一，不是无论原价多少都减25元。",
+    tryIt:"把40元的四分之一作为折扣，算折后还需付多少。",
+    why:"百分数表示每100份中对应多少份；换写时比较的是同一个整体。",
+  },
+  "mt_kdWoAel3Zl":{
+    formal:"认识千分之一",
+    definition:"一个整体平均分成1000份时，每份是千分之一，小数写作0.001。",
+    simpler:"把一个十分之一再平均分成100份，就得到100个千分之一。",
+    example:"0.025＝25/1000；1/10＝100/1000。",
+    counterexample:"0.025不是25/100：小数第三位表示千分之一，不是百分之一。",
+    tryIt:"在0.34和0.35之间找到0.345，先确定这段距离代表多少。",
+    why:"每相邻小数位的单位相差10倍；逐层细分能保持同一个数轴单位。",
+  },
+  "mt_09sySPqM9Z":{
+    formal:"几个相同的单位分数",
+    definition:"分数a/b可以表示a个1/b相加，其中b为非零正整数。",
+    simpler:"先把整体平均分成b份，再把其中a个这样大小的份合起来。",
+    example:"5/8是5个1/8相加；4/3是4个1/3，等于1又1/3。",
+    counterexample:"4/3大于1：四个三分之一已经超过三个三分之一组成的一个整体。",
+    tryIt:"在数轴上从0连续走7次1/4，记录走过的整体和剩余部分。",
+    why:"分母确定每份大小，分子记录这样的份数；份数可以超过组成一个整体所需的数量。",
+  },
+  "mt_ZM9mhHsyYZ":{
+    formal:"百分数表示什么",
+    definition:"百分数表示以100为基准的比例；p%等于p/100。",
+    simpler:"把整体看作100份，百分之几就是对应其中几份。",
+    example:"35%＝35/100＝0.35；50%是整体的一半，100%是整个整体。",
+    counterexample:"35%不是35/10；百分之几的基准是100份。",
+    tryIt:"在百格图中涂40格，写出对应的百分数和分数。",
+    why:"百分数、分数和小数可表达同一比例；实际数量还取决于所比较的整体。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

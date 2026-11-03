@@ -31,6 +31,7 @@ const researchGap4=new Set(["mt_dlg6i-Lw0I", "mt_8DT3LXwwH-", "mt_aCwj2PCoRV", "
 const researchGap3b=new Set(["mt_zQfWqImxva", "mt_QeKWt4BZn3", "mt_nx4a3kH-59"]);
 const researchGap5b=new Set(["mt_bnwHo5wfCD", "mt_Jz9UuT8BXW", "mt_MgsDabdnr1", "mt_NM5I3yN-Q6", "mt_CUJr8L5_Wn"]);
 const researchGap3=new Set(["mt_BK5xwkrD5C", "mt_t9BICauBSI", "mt_0ZDouU664X"]);
+const localBatch6d=new Set(["mt_o_p-3tCxiM", "mt_TgHxujL81r", "mt_4ubP_RMg9o", "mt_kdWoAel3Zl", "mt_09sySPqM9Z", "mt_ZM9mhHsyYZ"]);
 const localBatch7c=new Set(["mt_NaqEP8xDhZ", "mt_Ii1hV4V5ql", "mt_Vi4Vo5xs_g", "mt_sA2OvTiech", "mt_ebPelt-qAl", "mt_VgOePicFYK", "mt_HJA2Oz-Zh1"]);
 const localBatch5=new Set(["mt_Yw1_4Nfsql", "mt_MWXPiaTnEu", "mt_M1tnXqmYbn", "mt_JH_6RpNWjr", "mt_9QzSnn8m80"]);
 const localBatch12=new Set(["mt__we2TDqnJx", "mt_3e_PQxwC12", "mt_cChv2j_-Da", "mt__t4afSyZRm", "mt_19j_5AuuQI", "mt_yTWxkzzoOZ", "mt_mpS-JK_p_m", "mt_HFRYjTb-Z5", "mt_CDa5AVakLE", "mt_anAe11HAEH", "mt_-F_Lv_apzH", "mt_G3sVFQNCme"]);
@@ -68,8 +69,8 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.separateMathThinkingNodes.length,50);
   assert.equal(new Set(inventory.nodes.map(node=>node.id)).size,537);
   assert.equal(new Set(inventory.separateMathThinkingNodes.map(node=>node.id)).size,50);
-  assert.equal(inventory.summary.configuredExplanationSamples,399);
-  assert.equal(inventory.summary.notConfigured,138);
+  assert.equal(inventory.summary.configuredExplanationSamples,405);
+  assert.equal(inventory.summary.notConfigured,132);
   assert.equal(inventory.summary.first39FirstPassCalibrated,39);
   assert.equal(inventory.summary.newSixDraftPendingDeepReview,6);
   assert.equal(inventory.summary.secondBatchFirstFiveDraftPendingIndependentReview,5);
@@ -128,6 +129,7 @@ test('each inventory entry matches its source node and review states',()=>{
       else if(researchGap3b.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'research_gap3b_draft_pending_independent_review');
       else if(researchGap5b.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'research_gap5b_draft_pending_independent_review');
       else if(researchGap3.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'research_gap3_draft_pending_independent_review');
+      else if(localBatch6d.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch6d_draft_pending_independent_review');
       else if(localBatch7c.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch7c_draft_pending_independent_review');
       else if(localBatch5.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch5_draft_pending_independent_review');
       else if(localBatch12.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch12_draft_pending_independent_review');
