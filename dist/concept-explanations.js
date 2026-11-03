@@ -1,4 +1,4 @@
-// Two hundred and ninety-seven source-bound explanation samples, keyed by exact source node ID.
+// Three hundred source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -2704,6 +2704,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"长度扩大3倍时，面积不是扩大3倍；长和宽都扩大3倍后面积扩大9倍。",
     tryIt:"把2厘米乘1厘米的长方形按3倍放大，比较放大前后的面积。",
     why:"面积由两个方向的长度共同决定，因此每个方向都乘k时，面积乘k²。",
+  },
+  "mt_zQfWqImxva":{
+    formal:"按条件和步骤运行算法",
+    definition:"算法是一组明确步骤，可以包含判断、不同分支和重复，并按指定条件停止。",
+    simpler:"每走一步先看当前的数；遇到判断，就按符合的条件选择下一步。",
+    example:"从7开始：奇数加1、偶数除以2，到1停止，依次得到7、8、4、2、1。",
+    counterexample:"条件是“大于50”时，50本身不符合；不能把等于50当成大于50。",
+    tryIt:"对34、50、51和80分别判断是否大于50，再记录各自走的分支。",
+    why:"步骤顺序、判断条件和停止条件共同决定算法会怎样运行。",
+  },
+  "mt_QeKWt4BZn3":{
+    formal:"按规则生成数列",
+    definition:"可以从一个起点反复执行加法或乘法规则，并用停止条件决定什么时候结束。",
+    simpler:"记录起始数，按同一规则一步步生成，注意检查什么时候停。",
+    example:"从3开始每次翻倍，首次超过100时停止：3、6、12、24、48、96、192。",
+    counterexample:"规则要求“超过100时停止”，96还没超过100，不能在96就停下。",
+    tryIt:"从0开始每次加7，在结果将达到或超过80之前停止，观察个位。",
+    why:"重复规则决定下一项，停止条件决定最后要不要记录当前项。",
+  },
+  "mt_nx4a3kH-59":{
+    formal:"设计带分支和重复的步骤",
+    definition:"设计算法时，可以按顺序安排判断和操作，对多个输入重复执行，并检查各分支是否覆盖需要处理的情况。",
+    simpler:"先列出要检查的条件，再决定符合多个条件时先处理哪一种。",
+    example:"把1到30分为3的倍数、5的倍数、两者都是或都不是时，15应归入“两者都是”。",
+    counterexample:"若先把所有3的倍数直接归组而不再检查5，15会漏掉“两者都是”的情况。",
+    tryIt:"从1开始重复10次“乘2再加1”，记录每次结果并观察奇偶。",
+    why:"条件的先后和是否互相重叠会影响分类；重复次数与每次操作决定生成的数列。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

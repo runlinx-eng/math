@@ -277,6 +277,10 @@ const ids=[
   ['research-gap5b-03','mt_MgsDabdnr1'],
   ['research-gap5b-04','mt_NM5I3yN-Q6'],
   ['research-gap5b-05','mt_CUJr8L5_Wn']
+,
+  ['research-gap3b-01','mt_zQfWqImxva'],
+  ['research-gap3b-02','mt_QeKWt4BZn3'],
+  ['research-gap3b-03','mt_nx4a3kH-59']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "6abcdbdb30cf05c0fd84d5aeab56068cf5ae95ee",
+    "explanationBlobSha": "f6b97c4382fd586369fa8b784aef5773976cd654",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -25,15 +25,15 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 297,
-    "notConfigured": 240,
+    "configuredExplanationSamples": 300,
+    "notConfigured": 237,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
     "hasResearchTrue": 454,
     "hasResearchFalse": 83,
-    "hasResearchFalseWithSample": 25,
-    "hasResearchFalseNotConfigured": 58,
+    "hasResearchFalseWithSample": 28,
+    "hasResearchFalseNotConfigured": 55,
     "hasResearchUnknown": 0,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
@@ -45,10 +45,10 @@
     "byType": {
       "PROCEDURAL": {
         "total": 304,
-        "configuredSamples": 146,
-        "notConfigured": 158,
+        "configuredSamples": 149,
+        "notConfigured": 155,
         "hasResearchFalse": 42,
-        "hasResearchFalseNotConfigured": 32
+        "hasResearchFalseNotConfigured": 29
       },
       "CONCEPTUAL": {
         "total": 156,
@@ -91,10 +91,10 @@
       "algebra": {
         "title": "规律与代数",
         "total": 30,
-        "configuredSamples": 25,
-        "notConfigured": 5,
+        "configuredSamples": 28,
+        "notConfigured": 2,
         "hasResearchFalse": 5,
-        "hasResearchFalseNotConfigured": 3
+        "hasResearchFalseNotConfigured": 0
       },
       "counting": {
         "title": "数与数量",
@@ -193,7 +193,8 @@
     "localBatch20iDraftPendingIndependentReview": 20,
     "localBatch20jDraftPendingIndependentReview": 20,
     "researchGap3DraftPendingIndependentReview": 3,
-    "researchGap5bDraftPendingIndependentReview": 5
+    "researchGap5bDraftPendingIndependentReview": 5,
+    "researchGap3bDraftPendingIndependentReview": 3
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -4345,15 +4346,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap3b_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -4415,15 +4417,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap3b_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -4485,15 +4488,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap3b_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,

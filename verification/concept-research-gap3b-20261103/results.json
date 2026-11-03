@@ -1,0 +1,231 @@
+{
+  "passed": 6,
+  "checks": [
+    "desktop-gap3b-01",
+    "desktop-gap3b-02",
+    "desktop-gap3b-03",
+    "compact-gap3b-01",
+    "compact-gap3b-02",
+    "compact-gap3b-03"
+  ],
+  "measurements": [
+    {
+      "tag": "desktop-gap3b-01",
+      "id": "mt_zQfWqImxva",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1207,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap3b-02",
+      "id": "mt_QeKWt4BZn3",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap3b-03",
+      "id": "mt_nx4a3kH-59",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 874,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap3b-01",
+      "id": "mt_zQfWqImxva",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1207,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap3b-02",
+      "id": "mt_QeKWt4BZn3",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap3b-03",
+      "id": "mt_nx4a3kH-59",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 874,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    }
+  ],
+  "errors": [],
+  "childTrial": false
+}

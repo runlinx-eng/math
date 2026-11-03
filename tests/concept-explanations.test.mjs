@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,297);
+  assert.equal(samples.length,300);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -402,4 +402,11 @@ test('measurement research-gap drafts retain units, time and scaling boundaries'
   assert.match(conceptHelpFor('mt_MgsDabdnr1').example,/6:45/);
   assert.match(conceptHelpFor('mt_CUJr8L5_Wn').counterexample,/9倍/);
   assert.match(conceptHelpFor('mt_NM5I3yN-Q6').definition,/不到一整圈/);
+});
+
+test('algorithm research-gap drafts retain conditions, termination and overlapping branches',()=>{
+  assert.match(conceptHelpFor('mt_zQfWqImxva').example,/7、8、4、2、1/);
+  assert.match(conceptHelpFor('mt_zQfWqImxva').counterexample,/50本身不符合/);
+  assert.match(conceptHelpFor('mt_QeKWt4BZn3').example,/96、192/);
+  assert.match(conceptHelpFor('mt_nx4a3kH-59').example,/两者都是/);
 });

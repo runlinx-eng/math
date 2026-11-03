@@ -535,3 +535,7 @@
 ## 研究缺口 5 节点（2026-11-03）
 
 `mt_bnwHo5wfCD`、`mt_Jz9UuT8BXW`、`mt_MgsDabdnr1`、`mt_NM5I3yN-Q6`、`mt_CUJr8L5_Wn`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B07-2026-11-03.md)。
+
+## 研究缺口 3 节点（2026-11-03）
+
+`mt_zQfWqImxva`、`mt_QeKWt4BZn3`、`mt_nx4a3kH-59`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B08-2026-11-03.md)。
