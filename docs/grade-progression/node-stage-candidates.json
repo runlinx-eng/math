@@ -3766,7 +3766,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-DATA",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "读取和制作象形图、计数表、简单表格及方块图；第一学段允许用图画或表格记录分类结果，第二学段明确要求收集、整理并表达数据。",
+        "scopeBoundary": "第一学段对应分类和简单记录；条形统计图及围绕数据问题的系统整理主要放在第二学段。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xppl18avyY",
@@ -3784,7 +3803,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-DATA",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "按颜色、大小等特征分类并计数，直接对应第一学段依据事物特征和给定标准分类的要求；分类结果可继续支持第二学段数据整理。",
+        "scopeBoundary": "排序类别数量是分类后的简单比较，不等于正式统计调查或统计图分析。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_X53txVXOcG",
@@ -3803,7 +3841,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "用数字工具收集、记录并呈现调查或观察数据，数学目标与第二、第三学段的数据收集和统计图表达相连；课程教学提示允许有条件地使用信息技术。",
+        "scopeBoundary": "数字工具是可选媒介，不是国家课标单列的必学软件技能；随机实验结果的定量概率分析不因此提前进入小学。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_u5HkSxZECM",
@@ -3822,7 +3880,29 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "节点汇总数据、计数、频数、调查、象形图和条形图等词汇，第二学段有数据收集、整理、条形图和平均数，第三学段扩展折线图、扇形图，部分统计术语延伸到第四学段。",
+        "scopeBoundary": "该词汇表还含中位数、众数、样本、相关关系和散点图等初中或更后内容；不能把整组术语都视为小学同一学段要求。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VhBH8wrFC6",
@@ -3841,7 +3921,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-DATA",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "象形图可作为分类结果的直观记录，条形统计图则直接对应第二学段认识并使用条形统计图表示、分析数据的要求。",
+        "scopeBoundary": "单单位刻度和四类别只是节点练习设定；课标没有把这一具体类别数或刻度范围规定为统一上限。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ylXdiVRAYv",
@@ -3860,7 +3959,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-DATA",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "把对象分成若干类别、计数并按数量排序，核心是第一学段的数据分类；制作列表或简单表格可延伸到第二学段的数据整理。",
+        "scopeBoundary": "给定类别下的计数和排序不能等同于第二学段完整的数据收集、分析与统计图制作。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1VSfm9yiLn",
@@ -3879,7 +3997,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-DATA",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "对分类数据回答各类数量、总数及类别间相差多少，承接第一学段分类计数，并直接服务第二学段对数据进行简单分析和表达。",
+        "scopeBoundary": "第一学段的主要要求是分类及描述分类过程；总量、差量的统计解释以第二学段的数据分析为主。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__yvsKKp3TS",
@@ -3898,7 +4035,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "比较同一组数据的计数表、象形图、条形图并解释各自呈现的信息，属于第二学段数据表达与分析的合理组成部分。",
+        "scopeBoundary": "课标要求认识和使用条形统计图，但没有把比较同一数据的多种图示形式列为独立必学术语或固定步骤。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ChjMU2GDJa",
@@ -3917,7 +4070,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "条形图直接对应第二学段；节点同时涉及连续数据的时间图，第三学段折线统计图进一步表达数据随时间变化的趋势。",
+        "scopeBoundary": "条形图主要表达类别数量，折线图主要表达变化趋势；不能因都画成图就混淆离散类别和连续时间数据。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QpJydot2Kh",
@@ -3936,7 +4108,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "根据数据类型和问题目的选择表格、象形图或条形图，联系第二学段数据整理与条形图分析，并可延伸到第三学段按问题选择统计图表。",
+        "scopeBoundary": "课标强调合理表示和分析数据，但未规定每种数据都必须比较多种图表，也未要求掌握特定软件的图表功能。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ebQURBOsM5",
@@ -3954,7 +4145,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "围绕问题收集类别或离散数值数据，并用计数表等方式记录，直接对应第二学段简单数据收集、整理和描述；复杂真实问题可延伸至第三学段。",
+        "scopeBoundary": "电子表格只是记录工具；抽样调查、样本代表性和总体推断属于初中统计内容，不由本节点的调查情境自动推出。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kxeuXm6EyC",
@@ -3972,7 +4182,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "在引导下完成简单调查、表示结果并依据问题解释数据，符合第二学段经历收集、整理、描述和分析过程的要求，也可延伸到第三学段的真实问题调查。",
+        "scopeBoundary": "本节点的课堂调查流程是教学活动示例，不代表课标规定固定的调查天数、问题数量或报告格式。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_r8XnXwRA6g",
@@ -3991,7 +4220,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "用带刻度的象形图和条形图表示数据并解决比较、总和与差量问题，直接对应第二学段条形统计图及数据分析，复杂的两步解释可延伸至第三学段。",
+        "scopeBoundary": "课标未规定每格必须代表5等固定刻度；应按数据规模选择刻度，避免把图示比例误读为实际数量。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_yrvYKSwSRZ",
@@ -4010,7 +4258,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "使用在线表单、电子表格或数据记录工具收集并展示调查数据，服务第二、第三学段的数据收集和统计图表达；信息技术属于教学支持方式。",
+        "scopeBoundary": "课程标准没有把在线问卷、电子表格操作或特定图形软件列为所有学生必须掌握的独立数学知识。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TiFjjvBMaY",
@@ -4029,7 +4297,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "比较图表呈现效果、观察数据集中和变化，联系第三学段数据分析与简单判断；对分布形状、离散程度作系统比较则更接近第四学段统计分析。",
+        "scopeBoundary": "第三学段要求分析数据并作简单判断，不等于系统掌握分布形状、离散程度或跨总体比较方法。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Y6JmLjnfRP",
@@ -4048,7 +4335,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "设计调查、收集数据、用数字工具表示并交流发现，核心对应第三学段根据实际问题经历数据收集、整理、分析并表达结论；第二学段已有简单调查铺垫。",
+        "scopeBoundary": "指定问卷题数、样本人数和电子表格展示属于活动设计，不是国家课标的统一数量门槛。",
+        "reviewBatch": "11a-data-classification-and-collection",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_H6LlpWgEYS",
@@ -4067,7 +4374,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "读取折线图中的数值、变化和差异，直接对应第三学段认识折线统计图、解释其意义并根据数据作简单判断。",
+        "scopeBoundary": "折线图表达数据变化趋势；图上读数和简单比较不等于学习变化率或用函数模型解释趋势。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Cqm8iy48UI",
@@ -4086,7 +4409,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "读取、补全表格并从中提取信息，联系第二学段数据整理、描述和分析的要求；时刻表是表格信息应用情境。",
+        "scopeBoundary": "公交时刻表和行程时长还涉及时间知识，不应将所有表格阅读都解释为统计学；双向表也不是课标单列的必学图表类型。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_fmm-P17Vka",
@@ -4105,7 +4444,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "均值、频数、统计图表等术语对应第二学段；折线图、扇形图和百分数扩展到第三学段；中位数、众数、样本等术语主要属于第四学段。",
+        "scopeBoundary": "节点词汇横跨多个学段；相关、散点图等内容未被2022年版小学课标列为明确要求，不能因出现在同一词汇表而前移。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Cg8VPguS_V",
@@ -4123,7 +4484,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "计算并解释一组数据的平均数，直接对应第二学段探索平均数意义并解决简单实际问题；平均数可在后续统计活动中继续使用。",
+        "scopeBoundary": "小学标准明确平均数的统计意义，但不据此要求掌握中位数、众数、离差或用平均数反推缺失数据的所有变式。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HlNSurPVDp",
@@ -4141,7 +4521,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "制作和解释折线统计图、读取数据变化趋势，直接对应第三学段认识折线图并用其呈现、解释相关数据。",
+        "scopeBoundary": "节点中的连续数据和中间值估读是具体扩展活动；课标强调图表功能与趋势，不规定所有插值估算方法。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IHipFGTFEY",
@@ -4159,7 +4555,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "用点图展示分数单位的测量数据，与第三学段分数意义、分数运算和数据表达存在联系，但课标没有明确规定这种点图形式。",
+        "scopeBoundary": "英寸及1/8英寸刻度是源活动的单位和精度；不能把分数点图或该测量精度认定为中国小学统计图表必学内容。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bESTSBB0wK",
@@ -4177,7 +4589,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第三学段要求认识扇形统计图并理解其表达百分数的功能；第四学段明确要求制作扇形统计图，故扇形角度计算与完整制作放在初中衔接。",
+        "scopeBoundary": "第三学段不要求按扇形角度独立绘制完整统计图；不能将认识图表和计算扇形角度混为同一要求。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SHVyE1CLUa",
@@ -4195,7 +4626,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "提出问题、规划收集方式、选择图表、解释结果并交流发现，核心对应第三学段真实问题中的数据收集、分析和结论表达。",
+        "scopeBoundary": "调查报告的结构、样本数量和局限性分析是活动深化，不是课标逐项规定的统一报告模板。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QHT16CrFO-",
@@ -4213,7 +4664,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "检查数据、整理类别并报告众数和分布，联系第三学段数据整理分析及第四学段数据分类、频数分布和众数等内容。",
+        "scopeBoundary": "名义/顺序变量术语、软件校验流程和分布形状分析不是小学明确要求；第四学段也不等于必须使用某一种电子表格软件。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZfpeI1CFyP",
@@ -4231,7 +4701,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "平均绝对偏差用数据到平均数的距离描述离散程度，与第四学段学习数据离散程度、方差等统计量的目标相邻。",
+        "scopeBoundary": "2022年版课标明确列出离差平方和与方差，但没有要求计算平均绝对偏差（MAD）；不能把两种离散程度指标视为同一公式。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XSXnTQoQ4l",
@@ -4249,7 +4735,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "平均数直接对应第二学段；中位数、众数及更系统的数据集中趋势分析属于第四学段，节点的综合比较因此跨越小学与初中。",
+        "scopeBoundary": "极差和异常值影响分析并非小学课标的明确条目；不能把均值、中位数、众数、极差的整组统计量全部归入5—6年级。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8VjmxR1yfw",
@@ -4267,7 +4775,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第四学段明确要求计算四分位数并了解四分位数与箱线图的关系，学业要求也指出箱线图可直观反映数据分布。",
+        "scopeBoundary": "课标没有规定唯一的上下四分位数算法约定；节点中五数概括、须线规则及图表不能支持的推断属于更细化的统计解释。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mn765HbXi1",
@@ -4285,7 +4809,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "用数字工具比较不同数据集并解释众数、范围和分布，联系第四学段统计图表选择、数据特征提取和结果解释。",
+        "scopeBoundary": "并列柱状图、背靠背点图、百分比比较和软件流程未被课标逐一列为指定方法；其中范围和分布形状也需按源目标边界处理。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8IsaoMPvod",
@@ -4303,7 +4843,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第三学段要求读懂媒体中的简单统计图表并作简单判断；识别截断坐标轴、选择性样本和结论夸大，则与第四学段抽样和数据分析的合理性相邻。",
+        "scopeBoundary": "媒体批判、样本偏差方向判断及因果结论审查没有作为小学统计知识的明确要求，不应把简单读图等同于完整统计素养训练。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_OwYms2tB1L",
@@ -4321,7 +4880,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "从数据中心、离散程度、形状和异常值描述分布，联系第四学段学习统计量、频数分布、箱线图和数据分析解释。",
+        "scopeBoundary": "偏态、峰态、聚类、间隙及异常值成因判断并未全部作为课标中的独立术语要求；不能仅凭均值推断数据分布形状。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_JRzXQl9M7c",
@@ -4339,7 +4914,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "点图以频数和数值分布呈现数据，与第四学段频数分布、数据图表表达目标相邻。",
+        "scopeBoundary": "2022年版课标明确列出频数直方图等形式，但没有单列这种逐点堆叠的点图；不得将其与直方图或小学测量点图混同。",
+        "reviewBatch": "11b-data-displays-and-summary",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oderfUBZPw",
@@ -4357,7 +4948,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第四学段明确要求了解频数和频数分布、绘制频数直方图并解释其中信息，直接对应本节点的直方图制作与读取。",
+        "scopeBoundary": "节点采用等宽组距和区间端点约定；课标没有规定唯一分组宽度，也未要求本节点排除的频数密度等扩展方法。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_eKJG-0eC6D",
@@ -4375,7 +4982,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第三学段涉及条形图、折线图和扇形图的认识与使用；第四学段进一步明确扇形图、频数直方图和统计图表选择，覆盖节点中的多种数据表达。",
+        "scopeBoundary": "节点还包括分组数值数据和垂直线图等扩展形式；课标未把每一种图表类型或分组算法都列为小学核心要求。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4zgPzc6yu5",
@@ -4393,7 +5019,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "区分总体与样本、理解简单随机抽样及其必要性，直接对应第四学段抽样与数据分析的内容要求和学业要求。",
+        "scopeBoundary": "随机抽样提高样本代表性但不保证每次样本都完美代表总体；具体抽样偏差诊断和误差量化不是小学内容。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_KCS9GbZgU_",
@@ -4411,7 +5053,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "第四学段明确要求计算四分位数并理解其刻画数据取值特征的作用，和本节点的中位数、上下四分位数及四分位距直接相关。",
+        "scopeBoundary": "课标未规定本节点采用的唯一分组中位数约定，也未将IQR公式和不同教材算法差异作为统一必会步骤；应注明采用的计算约定。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_O-U263ukg1",
@@ -4429,7 +5087,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "提出问题、计划收集数据、分析并交流结论，第三学段已要求围绕实际问题经历数据收集整理分析；第四学段进一步深化抽样与数据分析。",
+        "scopeBoundary": "调查问题优化、抽样设计和报告局限性是进一步深化；不代表小学必须完成固定步骤的完整统计项目。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_iykH2P5oFq",
@@ -4447,7 +5125,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "提出能通过多组数据回答的问题，联系第三学段根据实际问题开展数据分析和第四学段设计调查问卷、选择收集方法。",
+        "scopeBoundary": "统计问题及其预期变异性的形式化定义没有在2022年版小学课标中单列；群体问题也不必然是统计问题。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6gpryAnpoZ",
@@ -4465,7 +5162,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "明确观测对象、测量属性、样本数量、方法和单位，支持第三学段真实数据收集及第四学段数据整理、分析和结果解释。",
+        "scopeBoundary": "样本量n、测量精度和记录方式的系统审查不是小学课标单独规定的知识点；记录方式会影响数据解释，但不能据此推断数据偏差的成因。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tuEnyrp5Ia",
@@ -4483,7 +5199,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "围绕真实情境汇总数据、选择统计量、解释分布并形成结论，联系第三学段数据分析结论表达和第四学段统计量、图表及结果判断。",
+        "scopeBoundary": "中位数、四分位距和MAD等统计量并非都属于小学要求；中心与离散程度指标的选择应根据数据形状和问题背景说明。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_km4V6d5IAh",
@@ -4501,7 +5236,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "使用两个随机样本的中心和离散程度比较总体，联系第四学段样本与总体关系、样本平均数估计总体平均数的思想。",
+        "scopeBoundary": "跨总体的非正式推断、样本间波动和差异是否由偶然造成的判断没有被课标规定为固定计算方法；结论必须保留概率性。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_fQ9Rw10fss",
@@ -4519,7 +5270,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "用随机样本的平均数估计总体平均数，直接对应第四学段关于样本与总体关系及样本平均数估计总体平均数的要求。",
+        "scopeBoundary": "样本比例和总人数估计是对抽样思想的应用扩展；估计值不是总体的精确计数，结论依赖样本来源与代表性。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_A2hKhHXgL5",
@@ -4537,7 +5304,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "比较两组数据的中心和离散程度，与第四学段提取统计量、解释数据差异的目标相邻。",
+        "scopeBoundary": "把中心差除以MAD或IQR得到标准化差异，并据此讨论重叠程度，不是2022年版课标明确列出的计算方法；比值不能单独决定分布重叠。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_x7V1qrkiqH",
@@ -4555,7 +5338,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "比较同一总体多次随机抽样的估计差异，联系第四学段简单随机抽样、样本与总体关系及估计思想。",
+        "scopeBoundary": "重复抽样分布和样本估计波动的系统分析未被课标逐项规定；应与单个样本内部个体数据的差异区分。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_BdAeZJUOir",
@@ -4573,7 +5372,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "散点图展示两个变量的关系，属于数据图表与数据分析的拓展形式，与第四学段数据表达和分析目标相邻。",
+        "scopeBoundary": "2022年版义务教育数学课标没有把散点图、相关系数或最佳拟合线列为明确要求；不能把它们归入5—6年级核心统计图表。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8atyuvPUZc",
@@ -4591,7 +5406,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-DATA"
+        ],
+        "rationale": "用散点图描述两个变量的关联，和第四学段数据分析及图表解释方向相关，但属于课标未明确列出的拓展方法。",
+        "scopeBoundary": "正相关、负相关、无相关及拟合线预测并非小学课标要求；相关关系也不等于因果关系。",
+        "reviewBatch": "11c-data-analysis-and-inference",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_g3W0mdADVu",
@@ -17399,7 +18230,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "用可能、较可能、不太可能、一定、不可能等日常语言描述事件，直接对应第三学段对简单随机现象及可能性大小作定性描述的要求。",
+        "scopeBoundary": "本节点是定性语言，不要求给出概率小数、分数或百分数；有可能不等于等可能。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_J4j7d3iAfg",
@@ -17418,7 +18265,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "抛硬币、掷骰子和摸球等活动直接对应第三学段通过实例、试验和游戏感受随机现象；与理论概率的定量比较延伸到第四学段。",
+        "scopeBoundary": "小学阶段可记录实验结果并定性比较可能性，不要求用有利结果数除以总结果数计算理论概率，也不要求证明频率收敛。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xSgAgg9Ej_",
@@ -17437,7 +18303,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "小学第三学段可通过随机现象判断可能性大小；第四学段明确以每个可能结果概率相等的简单随机事件为概率计算基础。",
+        "scopeBoundary": "小学阶段不要求系统判定等可能样本空间；公平骰子、等分转盘等形式化条件用于初中概率计算的衔接。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-bMnJcPJy8",
@@ -17456,7 +18341,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "小学第三学段可通过实验感受随机结果；第四学段明确要求通过大量重复试验用频率估计概率，与实验频率和理论预期的比较相连。",
+        "scopeBoundary": "试验次数增加时趋近理论值是统计规律的进一步解释；课标要求理解频率估计概率，不保证每一组更长实验都更接近理论值。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_dlg6i-Lw0I",
@@ -17475,7 +18379,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "判断前一次结果是否改变下一次机会，与简单随机事件和概率计算有关，属于初中概率学习的相邻概念。",
+        "scopeBoundary": "2022年版课标没有明确列出独立事件、相依事件或条件概率；不能仅凭两次实验先后发生就判定事件相互影响。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_UcGn2hjhYU",
@@ -17494,7 +18414,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "比较并排列生活事件的可能性大小，直接对应第三学段在实际情境中对简单随机现象发生可能性作定性描述。",
+        "scopeBoundary": "排序依据是情境信息和定性判断，不要求计算精确概率；更可能不代表结果必然发生。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-c4Ca_nBzX",
@@ -17513,7 +18449,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "小学第三学段要求定性描述随机现象可能性；第四学段进一步要求理解简单随机事件概率并计算，分数是其常见数值表达。",
+        "scopeBoundary": "用有利结果数除以等可能结果总数的分数概率计算不属于小学第三学段要求；不能把分数知识已学等同于概率分数已学。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Zt30Gxi-qp",
@@ -17531,7 +18486,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "第四学段要求列出简单随机事件所有可能结果并计算简单随机事件的概率，直接对应有利结果与等可能总结果的计算。",
+        "scopeBoundary": "计算公式依赖有限且等可能的结果空间；对不等可能结果不能直接使用有利结果个数除以总数。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3fwYu7imd4",
@@ -17549,7 +18520,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "所有可能结果覆盖完整样本空间时概率总和为1，是第四学段概率模型和简单随机事件计算的基础性质。",
+        "scopeBoundary": "课标要求简单概率计算，但没有将概率总和为1或互补事件公式单列为独立内容；需要区分定义性质与明确课程条目。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_t0g2SlP404",
@@ -17567,7 +18554,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "把概率作为数值度量可能性大小，与第四学段从小学定性描述走向概率定量分析的课程衔接一致。",
+        "scopeBoundary": "课标没有单独规定必须使用0到1刻度、分数小数百分数三种形式全部互化；小学阶段只要求定性描述可能性大小。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XfyqXLqzpx",
@@ -17585,7 +18588,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "用事件A不发生的概率求补事件，和第四学段简单随机事件概率计算及完整结果空间有关。",
+        "scopeBoundary": "互补事件公式P(非A)=1−P(A)没有在课标中单列；不应把它当作小学概率内容或课标逐项要求。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_sHJqh6UUya",
@@ -17603,7 +18622,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "第四学段明确要求通过大量重复试验认识频率稳定性，并用频率估计概率，直接对应本节点的实验频率分析。",
+        "scopeBoundary": "频率是对概率的估计，不是单次实验的确定结果；有限次数的相对频率不必恰好等于理论概率。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8DT3LXwwH-",
@@ -17621,7 +18656,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "小学第三学段可通过随机实验感受结果的不确定性；第四学段要求大量重复试验并用频率估计概率，数字模拟可作为支持这一目标的工具。",
+        "scopeBoundary": "电子表格随机函数和大规模模拟不是课标指定必学工具；增加试验次数通常使频率更稳定，但不能保证某次长实验一定更接近理论值。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vmQJAtAFuy",
@@ -17639,7 +18693,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "概率刻度把小学定性可能性语言与第四学段概率的定量度量连接起来，属于初中概率概念的直观表示。",
+        "scopeBoundary": "课标未要求小学掌握0—1数轴上的精确定位或把每个日常词语换成固定数值。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_aCwj2PCoRV",
@@ -17657,7 +18728,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "建立随机过程的结果清单和概率分配，并据此求事件概率，直接对应第四学段列举简单随机事件结果、理解和计算概率的要求。",
+        "scopeBoundary": "非均匀模型、根据观测频率拟合概率以及判断模型失配属于进一步建模；不能把每个现实随机过程都假设为等可能。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1YwOCMMwD8",
@@ -17675,7 +18762,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "用集合、表格和图示组织组合事件结果，与第四学段系统列举简单随机事件结果的目标相邻。",
+        "scopeBoundary": "课标明确列举列表和树状图，但没有明确要求韦恩图、集合并交符号或集合论作为概率计算的固定方法。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nzdtOLXWWa",
@@ -17693,7 +18796,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "通过模拟重复随机过程估计复合事件概率，与第四学段大量重复试验、频率估计概率的要求相邻。",
+        "scopeBoundary": "随机数映射、复合事件模拟设计和独立性假设不是课标逐项规定的基础要求；模拟模型必须与真实过程的结果概率相匹配。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_GDtFU5fyUv",
@@ -17711,7 +18830,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "第四学段明确要求用列表、画树状图列出简单随机事件的所有可能结果，并据此理解和计算概率，直接对应本节点。",
+        "scopeBoundary": "树状图用于系统列举结果；分支概率相乘、多个骰子组合等具体计算应以等可能条件和事件结构为前提。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_eSv_w46u6H",
@@ -17729,7 +18864,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-PROBABILITY"
+        ],
+        "rationale": "用图示组织集合交并关系并统计组合结果，与第四学段列举随机事件结果和计算概率的目标相邻。",
+        "scopeBoundary": "课标明确列举列表和树状图，没有把韦恩图、乘法计数原理或三集合图示列为概率计算的明确方法。",
+        "reviewBatch": "11d-probability-and-chance",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ePXg_XyCKU",
@@ -18080,7 +19231,7 @@
   "mappingReview": {
     "method": "NODE-MAPPING-METHOD.md",
     "source": "Education Ministry of China, Mathematics Curriculum Standards for Compulsory Education (2022), official PDF",
-    "sourceUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf",
+    "sourceUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf",
     "batches": [
       {
         "id": "01-counting-cardinality",
@@ -18257,10 +19408,42 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "源目标为函数图像估值和方程近似根，不是一般估算。"
+      },
+      {
+        "id": "11a-data-classification-and-collection",
+        "domain": "Data & Statistics",
+        "nodeCount": 16,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "完成数据分类、基础图表与数据收集；区分第一学段分类、第二学段条形图和真实问题收集，数字工具仅作可选支持。"
+      },
+      {
+        "id": "11b-data-displays-and-summary",
+        "domain": "Data & Statistics",
+        "nodeCount": 16,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "完成折线图、扇形图、平均数及统计语言；把中位数、众数、分布、箱线图等后续内容明确留在初中衔接。"
+      },
+      {
+        "id": "11c-data-analysis-and-inference",
+        "domain": "Data & Statistics",
+        "nodeCount": 14,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "完成高阶数据分析、抽样与推断；区分课标明确列出的频数直方图、四分位数、样本估计总体，与MAD、散点图、标准化差异等相邻拓展。"
+      },
+      {
+        "id": "11d-probability-and-chance",
+        "domain": "Probability",
+        "nodeCount": 19,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "完成随机现象与概率；小学第三学段只作定性可能性判断，等可能结果、树状图、简单概率计算和频率估计归入初中衔接，未列明的方法保留相邻拓展。"
       }
     ],
-    "completedNodeCount": 453,
-    "pendingNodeCount": 84,
+    "completedNodeCount": 518,
+    "pendingNodeCount": 19,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
