@@ -54,7 +54,7 @@
   "curriculumStandard": {
     "title": "《义务教育数学课程标准（2022年版）》",
     "issuer": "中华人民共和国教育部",
-    "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf",
+    "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf",
     "officialNoticeUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html",
     "pageConvention": "课程标准PDF印刷页码",
     "referenceCatalog": [
@@ -63,219 +63,220 @@
         "scope": "第一学段",
         "printedPages": "11—13",
         "topic": "学段目标、核心素养表现",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-NUMBER",
         "scope": "第一学段数与运算",
         "printedPages": "18—19",
         "topic": "万以内数、数位、大小比较、四则运算意义、加减算理与算法",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
         "scope": "第一学段数与运算",
         "printedPages": "18—19",
         "topic": "简单整数乘除法；乘法是加法的简便运算；除法是乘法的逆运算；熟练口算表内乘除法",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-QUANTITY",
         "scope": "第一学段数量关系",
         "printedPages": "18—19",
         "topic": "生活情境中的简单数量关系、加减问题和变化规律",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-NUMBER",
         "scope": "第二学段数与运算",
         "printedPages": "20—22",
         "topic": "万以上数、十进制计数、小数和分数初步、整数四则混合运算及运算律",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-FRACTIONS",
         "scope": "第二学段数与运算",
         "printedPages": "20—22",
         "topic": "初步认识分数、感悟分数单位；直观比较简单分数；同分母分数加减法",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
         "scope": "第二学段数与运算",
         "printedPages": "20—22",
         "topic": "多位数乘除法；乘法交换律、结合律和分配律；整数四则混合运算及小括号、中括号",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-QUANTITY",
         "scope": "第二学段数量关系",
         "printedPages": "20—22",
         "topic": "估算、总量=分量+分量、总价=单价×数量、路程=速度×时间等常见数量关系和实际问题",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-NUMBER",
         "scope": "第三学段数与运算",
         "printedPages": "23—26",
         "topic": "倍数因数、奇偶数和质合数、小数分数四则运算及混合运算",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-FRACTIONS",
         "scope": "第三学段数与运算",
         "printedPages": "23—26",
         "topic": "理解分数意义；分数与小数转化；简单分数四则运算和混合运算；教学提示中的通分与计数单位一致性",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-FACTORS-MULTIPLES",
         "scope": "第三学段数与运算",
         "printedPages": "23—26",
         "topic": "2、3、5的倍数特征；因数、公因数、公倍数、最大公因数、最小公倍数；奇数、偶数、质数和合数",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
         "scope": "第三学段数与运算",
         "printedPages": "23—26",
         "topic": "简单小数、分数四则运算；整数除法与分数的关系",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-QUANTITY",
         "scope": "第三学段数量关系",
         "printedPages": "23—26",
         "topic": "等式性质、估算、字母表示关系；理解比和比例、计算比值、按比例分配；认识正比例量并了解 y=kx",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-GEOMETRY",
         "scope": "第一学段图形与几何",
         "printedPages": "27—28",
         "topic": "立体与平面图形辨认、分类、拼图、米和厘米",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-GEOMETRY",
         "scope": "第二学段图形与几何",
         "printedPages": "29—31",
         "topic": "线和角、三角形四边形、周长面积、观察、平移旋转轴对称",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-GEOMETRY",
         "scope": "第三学段图形与几何",
         "printedPages": "32—35",
         "topic": "三角形、圆、面积与体积、位置与运动、数对；比例尺含义、图上距离与实际距离换算、按比例放缩简单图形",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-GEOMETRY",
         "scope": "第四学段图形与几何",
         "printedPages": "62—72",
         "topic": "点线角、相交线与平行线、三角形与全等、四边形和圆的性质、图形变换；相似图形、相似比、相似三角形及面积比为相似比的平方、坐标与三角函数",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-DATA",
         "scope": "第一学段统计与概率",
         "printedPages": "36—37",
         "topic": "按特征和标准进行数据分类",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-DATA",
         "scope": "第二学段统计与概率",
         "printedPages": "37—39",
         "topic": "数据收集整理、条形统计图、平均数",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-DATA",
         "scope": "第三学段统计与概率",
         "printedPages": "39—41",
         "topic": "折线图、扇形图、百分数、简单随机现象及可能性",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-DATA",
         "scope": "第四学段统计与数据分析",
         "printedPages": "73—76",
         "topic": "简单随机抽样、样本与总体、扇形图与频数直方图、中位数众数、方差、四分位数与箱线图、样本估计总体及数据分析解释",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-PROBABILITY",
         "scope": "第四学段随机事件的概率",
         "printedPages": "73—76",
         "topic": "列表与树状图列举结果、等可能结果、简单随机事件概率计算、大量重复试验及频率估计概率",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S1-PRACTICE",
         "scope": "第一学段综合与实践",
         "printedPages": "42—44",
         "topic": "货币、时间、方向、测量等生活主题活动",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S2-PRACTICE",
         "scope": "第二学段综合与实践",
         "printedPages": "44—47",
         "topic": "综合运用知识解决真实问题",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S3-PRACTICE",
         "scope": "第三学段综合与实践",
         "printedPages": "47—52",
         "topic": "综合运用知识、项目式活动及跨学科主题",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-NUMBER",
         "scope": "第四学段数与代数",
         "printedPages": "53—61",
         "topic": "有理数、绝对值、乘方、实数、根式、科学记数法及近似数",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-RATIONAL-OPERATIONS",
         "scope": "第四学段数与代数",
         "printedPages": "53—58",
         "topic": "有理数乘除法、乘方及简单混合运算；代数式乘法和乘法公式",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-ALGEBRA",
         "scope": "第四学段代数式",
         "printedPages": "55—56",
         "topic": "字母表示、代数式求值、合并同类项、去括号、整式乘法和因式分解",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-EQUATIONS",
         "scope": "第四学段方程与方程组",
         "printedPages": "56",
         "topic": "列方程、一元一次方程、二元一次方程组及解的检验",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-INEQUALITIES",
         "scope": "第四学段不等式",
         "printedPages": "56",
         "topic": "不等式性质、一元一次不等式和数轴解集",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       },
       {
         "id": "CN-MATH-2022-S4-FUNCTIONS",
         "scope": "第四学段函数",
         "printedPages": "57—58",
         "topic": "函数概念、一次函数、二次函数与图像分析",
-        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf"
+        "officialPdfUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220510531636118932.pdf"
       }
-    ]
+    ],
+    "versionNote": "教育部通知所列数学课程标准以2022年5月9日版本为准；本文件使用该官方PDF。"
   },
   "semantics": {
     "marks": {
@@ -297,7 +298,12 @@
       "insufficient-evidence-unconfirmed": "依据不足，暂时无法确认"
     },
     "nodeEvidenceWarning": "节点级direct/conceptual/adjacent/not-covered按node-stage-candidates.json原样引用。Adjacent不等于国家课程明确要求；群级主标记须有独立课程标准锚点。",
-    "relationDirection": "原始边topicId是依赖/后续节点，prerequisiteId是其前置节点；packLinks.fromPack是前置群，toPack是依赖群。"
+    "relationDirection": "原始边topicId是依赖/后续节点，prerequisiteId是其前置节点；packLinks.fromPack是前置群，toPack是依赖群。",
+    "nodeIdLists": {
+      "supportingNodeIds": "节点级standardReferenceIds与该学段群级standardEvidence引用重合，且节点级证据等级不是Adjacent/not-covered的领域知识节点；它们是可追溯的课程锚点候选，不表示节点自身被独立教研验收。",
+      "relatedMappedNodeIds": "该知识群在节点级映射中被分配到此学段的全部领域知识节点，仅用于核对和上下文；其中的extension或Adjacent节点不自动支持群级主标记。",
+      "nodeEvidence": "逐节点保留原映射角色、证据等级和标准引用，不在本文件改写节点级映射。"
+    }
   },
   "secondStageReview": {
     "totalPacks": 23,
@@ -442,11 +448,8 @@
             "mt_t9BICauBSI",
             "mt__YRJ23GuIK",
             "mt_0ZDouU664X",
-            "mt_aHAM29nidj",
             "mt_OkSJfrmFb_",
             "mt_M2v1A9OEuM",
-            "mt_IzQvs7k_sE",
-            "mt_7rJM8eWUfw",
             "mt_dJOKkYMsCv",
             "mt_x8TshvbbQT",
             "mt_fR0UtsSREU",
@@ -994,6 +997,56 @@
                 "CN-MATH-2022-S2-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_19j_5AuuQI",
+            "mt_i2F1nWxJjv",
+            "mt__h7hvT4tEb",
+            "mt_dmNvjroCPT",
+            "mt_sYpKWbq5ra",
+            "mt_WcfaSfVT33",
+            "mt_pAcaehday5",
+            "mt_nvdpxAJTBG",
+            "mt_yqAL6O5i_v",
+            "mt_M5PPDJStGm",
+            "mt_BK5xwkrD5C",
+            "mt_t9BICauBSI",
+            "mt__YRJ23GuIK",
+            "mt_0ZDouU664X",
+            "mt_aHAM29nidj",
+            "mt_OkSJfrmFb_",
+            "mt_M2v1A9OEuM",
+            "mt_IzQvs7k_sE",
+            "mt_7rJM8eWUfw",
+            "mt_dJOKkYMsCv",
+            "mt_x8TshvbbQT",
+            "mt_fR0UtsSREU",
+            "mt_xmmgAzxe5j",
+            "mt_kw7xmp68rU",
+            "mt_r0VXbfAmsH",
+            "mt_U0waNfD8PB",
+            "mt_QguIGVMB1o",
+            "mt_kJGCjnuelW",
+            "mt_XV0B4kWwqL",
+            "mt_Bt-iORUzdO",
+            "mt_9L3NQqgqRd",
+            "mt_zfy1gOEewd",
+            "mt_THl9GLxwoL",
+            "mt_izien3ZX51",
+            "mt_8gy7uxRlF6",
+            "mt_HczwO1sr-y",
+            "mt_AQcVRBddko",
+            "mt_98c2qwEF7Q",
+            "mt_VFsuftfvYM",
+            "mt_F_zEAJ8VIo",
+            "mt_R2ccrI-nKD",
+            "mt_aPBzD28_mT",
+            "mt_9XVFje6Tyr",
+            "mt_MHaiUd2FLA",
+            "mt_lC_Q5mSL_I",
+            "mt_jY7uf0Cb7o",
+            "mt__sMrmOv3bx",
+            "mt_QqG6IdmTSE"
           ]
         },
         "stage-2": {
@@ -1046,9 +1099,6 @@
             "mt_nvdpxAJTBG",
             "mt_aHAM29nidj",
             "mt_OkSJfrmFb_",
-            "mt_IzQvs7k_sE",
-            "mt_7rJM8eWUfw",
-            "mt_Fl7b8q9pI1",
             "mt_kJGCjnuelW",
             "mt_9L3NQqgqRd",
             "mt_9XVFje6Tyr",
@@ -1060,7 +1110,6 @@
             "mt_QqG6IdmTSE",
             "mt_5NwqN6pf_A",
             "mt_xMt1TLTs--",
-            "mt_XNmGwNggdU",
             "mt_Gag_h98jWP"
           ],
           "mainNodeIds": [
@@ -1299,6 +1348,28 @@
                 "CN-MATH-2022-S2-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_19j_5AuuQI",
+            "mt_nvdpxAJTBG",
+            "mt_aHAM29nidj",
+            "mt_OkSJfrmFb_",
+            "mt_IzQvs7k_sE",
+            "mt_7rJM8eWUfw",
+            "mt_Fl7b8q9pI1",
+            "mt_kJGCjnuelW",
+            "mt_9L3NQqgqRd",
+            "mt_9XVFje6Tyr",
+            "mt_MHaiUd2FLA",
+            "mt__sMrmOv3bx",
+            "mt_JwP9QFv6gQ",
+            "mt_NLSfvB9vUl",
+            "mt_tAtMET4EIU",
+            "mt_QqG6IdmTSE",
+            "mt_5NwqN6pf_A",
+            "mt_xMt1TLTs--",
+            "mt_XNmGwNggdU",
+            "mt_Gag_h98jWP"
           ]
         },
         "stage-3": {
@@ -1333,14 +1404,7 @@
             "mt_U9sme87C32"
           ],
           "supportingNodeIds": [
-            "mt_9QzSnn8m80",
-            "mt_Ii1hV4V5ql",
             "mt_hniI4E-OCE",
-            "mt_vXRzMbiPff",
-            "mt_1KkvzwYxbR",
-            "mt__casygEB85",
-            "mt_XNmGwNggdU",
-            "mt_HLUqHJ9Y7n",
             "mt_EDgw64OmfA",
             "mt_Ac7oMWhyPw",
             "mt_lNGpnILM5C",
@@ -1481,6 +1545,20 @@
                 "CN-MATH-2022-S4-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_9QzSnn8m80",
+            "mt_Ii1hV4V5ql",
+            "mt_hniI4E-OCE",
+            "mt_vXRzMbiPff",
+            "mt_1KkvzwYxbR",
+            "mt__casygEB85",
+            "mt_XNmGwNggdU",
+            "mt_HLUqHJ9Y7n",
+            "mt_EDgw64OmfA",
+            "mt_Ac7oMWhyPw",
+            "mt_lNGpnILM5C",
+            "mt_U9sme87C32"
           ]
         }
       },
@@ -2455,6 +2533,50 @@
                 "CN-MATH-2022-S3-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_yJmvUCCym7",
+            "mt_OvyoRo47K-",
+            "mt_e8CZ7E5qW7",
+            "mt_7XcCG43ZZW",
+            "mt_PgsHGYJMH-",
+            "mt_zuKAX6lcYR",
+            "mt_mr_Vk7FGzK",
+            "mt_VAWV_l7J0D",
+            "mt_ghF3Vv6taM",
+            "mt_s2mfRBoTal",
+            "mt_Y6_cq3UMyy",
+            "mt_8RmpkDxT9L",
+            "mt_biGHAbkoV2",
+            "mt_I5j1ZWo2cn",
+            "mt_Zx1xZM-RbX",
+            "mt_UQnAFPs83F",
+            "mt_glPPG-kTQY",
+            "mt_PpWSHA-0kv",
+            "mt_m1W6nTQJ2b",
+            "mt_QCgbiVrwnp",
+            "mt__we2TDqnJx",
+            "mt_3e_PQxwC12",
+            "mt_T76hKqXf0z",
+            "mt_ehGS_uVSJv",
+            "mt_AKAtWEwpcj",
+            "mt_wzAZ8qFDc4",
+            "mt_HJTuIGHvcR",
+            "mt_Eqk6oSbySH",
+            "mt_SrrsLiJkr3",
+            "mt_TiQbi027PE",
+            "mt_zxST3MarI9",
+            "mt_ewmuMMPAzP",
+            "mt_QaYfeVL-0C",
+            "mt_cChv2j_-Da",
+            "mt__t4afSyZRm",
+            "mt_oDU_8zMZjp",
+            "mt_xPqczp7zPX",
+            "mt_aHQ9kNt3is",
+            "mt_yTWxkzzoOZ",
+            "mt_mpS-JK_p_m",
+            "mt_HFRYjTb-Z5",
+            "mt_CDa5AVakLE"
           ]
         },
         "stage-2": {
@@ -2526,7 +2648,6 @@
             "mt_G3sVFQNCme",
             "mt_Yw1_4Nfsql",
             "mt_MWXPiaTnEu",
-            "mt_M1tnXqmYbn",
             "mt_JH_6RpNWjr"
           ],
           "mainNodeIds": [
@@ -2799,6 +2920,31 @@
                 "CN-MATH-2022-S3-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_s2mfRBoTal",
+            "mt_QCgbiVrwnp",
+            "mt_3e_PQxwC12",
+            "mt_T76hKqXf0z",
+            "mt_ehGS_uVSJv",
+            "mt_wzAZ8qFDc4",
+            "mt_TiQbi027PE",
+            "mt_zxST3MarI9",
+            "mt_ewmuMMPAzP",
+            "mt_QaYfeVL-0C",
+            "mt_oDU_8zMZjp",
+            "mt_xPqczp7zPX",
+            "mt_aHQ9kNt3is",
+            "mt_yTWxkzzoOZ",
+            "mt_mpS-JK_p_m",
+            "mt_HFRYjTb-Z5",
+            "mt_CDa5AVakLE",
+            "mt_-F_Lv_apzH",
+            "mt_G3sVFQNCme",
+            "mt_Yw1_4Nfsql",
+            "mt_MWXPiaTnEu",
+            "mt_M1tnXqmYbn",
+            "mt_JH_6RpNWjr"
           ]
         },
         "stage-3": {
@@ -2827,15 +2973,7 @@
             "mt_M1tnXqmYbn",
             "mt_JH_6RpNWjr"
           ],
-          "supportingNodeIds": [
-            "mt_QaYfeVL-0C",
-            "mt_CDa5AVakLE",
-            "mt_-F_Lv_apzH",
-            "mt_G3sVFQNCme",
-            "mt_MWXPiaTnEu",
-            "mt_M1tnXqmYbn",
-            "mt_JH_6RpNWjr"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [
             "mt_-F_Lv_apzH",
             "mt_JH_6RpNWjr"
@@ -2930,6 +3068,15 @@
                 "CN-MATH-2022-S3-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_QaYfeVL-0C",
+            "mt_CDa5AVakLE",
+            "mt_-F_Lv_apzH",
+            "mt_G3sVFQNCme",
+            "mt_MWXPiaTnEu",
+            "mt_M1tnXqmYbn",
+            "mt_JH_6RpNWjr"
           ]
         }
       },
@@ -3392,7 +3539,6 @@
             "mt_B1zj1RwQ3a",
             "mt_UTnDKQkVX5",
             "mt_wQ89AEXhz3",
-            "mt_K5jM7vlVhA",
             "mt_GDG9_SZmsO",
             "mt_WX30dzi4dt",
             "mt_Zdv-b-iW5K",
@@ -3638,6 +3784,29 @@
                 "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_LpSuPgL31x",
+            "mt_GRWwTDZ3wD",
+            "mt_PZ909yPrEC",
+            "mt_1GDEHyEZYH",
+            "mt_wh3UqnWsa7",
+            "mt_zOWwLxa77y",
+            "mt_qUjW0N1cYO",
+            "mt_HhuSDxwDNM",
+            "mt_B1zj1RwQ3a",
+            "mt_UTnDKQkVX5",
+            "mt_wQ89AEXhz3",
+            "mt_K5jM7vlVhA",
+            "mt_GDG9_SZmsO",
+            "mt_WX30dzi4dt",
+            "mt_Zdv-b-iW5K",
+            "mt_isojCL9yy-",
+            "mt_w6MxaaoMXZ",
+            "mt_xZvDCYA5Ae",
+            "mt_iNdrM2-oJf",
+            "mt_gtTl3R5buH",
+            "mt_VUQNveSYjQ"
           ]
         },
         "stage-2": {
@@ -3709,7 +3878,6 @@
             "mt_UTnDKQkVX5",
             "mt_wQ89AEXhz3",
             "mt_DyGBW3ZHh3",
-            "mt_K5jM7vlVhA",
             "mt_GDG9_SZmsO",
             "mt_nZkL5-XjRX",
             "mt_WX30dzi4dt",
@@ -3724,24 +3892,18 @@
             "mt_p-nbe0w_lf",
             "mt_q9EaJc2FP8",
             "mt_8A3pZNOp7Z",
-            "mt_U4cIBXVug4",
-            "mt_6-j1NO2ZUH",
             "mt_LlMl2PbaZe",
-            "mt_A-FyLLLLzy",
             "mt_MCu_SNg_OW",
             "mt_8jFSnXxqQD",
             "mt_NmvuwVUFRS",
             "mt_FvEq4heNBx",
             "mt_WsM4EmdOLe",
-            "mt_ilPrU0cbtT",
             "mt_XLP1IM3Qbb",
             "mt_vmW2cb5c7A",
             "mt_wPgpMJ0-PA",
             "mt_RXnyhCRYXA",
             "mt_jHgRQ4hR0g",
-            "mt_QU5R7Aajy9",
             "mt_4WaKWECpcv",
-            "mt_X5cypSGoGU",
             "mt_VUQNveSYjQ"
           ],
           "mainNodeIds": [
@@ -4213,6 +4375,50 @@
                 "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_GRWwTDZ3wD",
+            "mt_C9ZfT-4cgn",
+            "mt_wh3UqnWsa7",
+            "mt_B1zj1RwQ3a",
+            "mt_EmR5n58jZt",
+            "mt_UTnDKQkVX5",
+            "mt_wQ89AEXhz3",
+            "mt_DyGBW3ZHh3",
+            "mt_K5jM7vlVhA",
+            "mt_GDG9_SZmsO",
+            "mt_nZkL5-XjRX",
+            "mt_WX30dzi4dt",
+            "mt_pjfmCMMPjO",
+            "mt_Zdv-b-iW5K",
+            "mt_AR-K72OIIO",
+            "mt_isojCL9yy-",
+            "mt_w6MxaaoMXZ",
+            "mt_Lb2ZnMdkYR",
+            "mt_xZvDCYA5Ae",
+            "mt_18fK9sQdIz",
+            "mt_p-nbe0w_lf",
+            "mt_q9EaJc2FP8",
+            "mt_8A3pZNOp7Z",
+            "mt_U4cIBXVug4",
+            "mt_6-j1NO2ZUH",
+            "mt_LlMl2PbaZe",
+            "mt_A-FyLLLLzy",
+            "mt_MCu_SNg_OW",
+            "mt_8jFSnXxqQD",
+            "mt_NmvuwVUFRS",
+            "mt_FvEq4heNBx",
+            "mt_WsM4EmdOLe",
+            "mt_ilPrU0cbtT",
+            "mt_XLP1IM3Qbb",
+            "mt_vmW2cb5c7A",
+            "mt_wPgpMJ0-PA",
+            "mt_RXnyhCRYXA",
+            "mt_jHgRQ4hR0g",
+            "mt_QU5R7Aajy9",
+            "mt_4WaKWECpcv",
+            "mt_X5cypSGoGU",
+            "mt_VUQNveSYjQ"
           ]
         },
         "stage-3": {
@@ -4269,39 +4475,11 @@
           ],
           "supportingNodeIds": [
             "mt_0u4KLbvBa1",
-            "mt_EmR5n58jZt",
             "mt_nZkL5-XjRX",
-            "mt_AR-K72OIIO",
-            "mt_p-nbe0w_lf",
             "mt_FHIAv6dfhU",
-            "mt_0Wg5F97osg",
-            "mt_q9EaJc2FP8",
-            "mt_8A3pZNOp7Z",
-            "mt_U4cIBXVug4",
-            "mt_6-j1NO2ZUH",
-            "mt_LlMl2PbaZe",
             "mt_oxfxzbat3k",
             "mt_y1XCVsIelg",
-            "mt_A-FyLLLLzy",
-            "mt_MCu_SNg_OW",
-            "mt_gxCIASSezX",
-            "mt_ZOJ6EbdPOb",
-            "mt_8jFSnXxqQD",
-            "mt_NmvuwVUFRS",
-            "mt_SoDP1fSQEB",
-            "mt_FvEq4heNBx",
-            "mt_lU-2aTRB9f",
-            "mt_WsM4EmdOLe",
-            "mt_ilPrU0cbtT",
-            "mt_bZC-wqWX7Y",
-            "mt_XLP1IM3Qbb",
-            "mt_vmW2cb5c7A",
-            "mt_wPgpMJ0-PA",
-            "mt_RXnyhCRYXA",
-            "mt_QU5R7Aajy9",
-            "mt_4WaKWECpcv",
-            "mt_3m0pA-aeat",
-            "mt_xhoOWnhtHq"
+            "mt_bZC-wqWX7Y"
           ],
           "mainNodeIds": [
             "mt_0u4KLbvBa1",
@@ -4681,6 +4859,42 @@
                 "CN-MATH-2022-S3-FACTORS-MULTIPLES"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_0u4KLbvBa1",
+            "mt_EmR5n58jZt",
+            "mt_nZkL5-XjRX",
+            "mt_AR-K72OIIO",
+            "mt_p-nbe0w_lf",
+            "mt_FHIAv6dfhU",
+            "mt_0Wg5F97osg",
+            "mt_q9EaJc2FP8",
+            "mt_8A3pZNOp7Z",
+            "mt_U4cIBXVug4",
+            "mt_6-j1NO2ZUH",
+            "mt_LlMl2PbaZe",
+            "mt_oxfxzbat3k",
+            "mt_y1XCVsIelg",
+            "mt_A-FyLLLLzy",
+            "mt_MCu_SNg_OW",
+            "mt_gxCIASSezX",
+            "mt_ZOJ6EbdPOb",
+            "mt_8jFSnXxqQD",
+            "mt_NmvuwVUFRS",
+            "mt_SoDP1fSQEB",
+            "mt_FvEq4heNBx",
+            "mt_lU-2aTRB9f",
+            "mt_WsM4EmdOLe",
+            "mt_ilPrU0cbtT",
+            "mt_bZC-wqWX7Y",
+            "mt_XLP1IM3Qbb",
+            "mt_vmW2cb5c7A",
+            "mt_wPgpMJ0-PA",
+            "mt_RXnyhCRYXA",
+            "mt_QU5R7Aajy9",
+            "mt_4WaKWECpcv",
+            "mt_3m0pA-aeat",
+            "mt_xhoOWnhtHq"
           ]
         }
       },
@@ -5227,7 +5441,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "main",
@@ -5297,9 +5512,6 @@
             "mt_YzM5goBctT",
             "mt_k2WE0-22-4",
             "mt_HnKbuCliNS",
-            "mt_TqDq6jyOmL",
-            "mt_IegHBHERVa",
-            "mt_wB-GBDkoNr",
             "mt_FP-mjXaq3B",
             "mt_Ep7TDFuYUa",
             "mt_DRlbMok2lT",
@@ -5307,10 +5519,7 @@
             "mt_ndGqFPWyen",
             "mt_AYzE1EAvI0",
             "mt_NoB20kVa4w",
-            "mt_doX1BhmFgk",
-            "mt_933BohS9BH",
             "mt_SXbZ3bC9z7",
-            "mt_Vi4Vo5xs_g",
             "mt_ebPelt-qAl",
             "mt_09sySPqM9Z"
           ],
@@ -5670,6 +5879,40 @@
                 "CN-MATH-2022-S3-FRACTIONS"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_g3W0mdADVu",
+            "mt_-hTTat0mBR",
+            "mt_hyvHv2BCwb",
+            "mt_vKcxX6iNOA",
+            "mt_cFltwUQi-d",
+            "mt_xACS3rWWDp",
+            "mt_MyGblah2yY",
+            "mt_IfEgu0X449",
+            "mt_SsLWS_APM7",
+            "mt_FbDKeLfBCo",
+            "mt_Kr3IyA6m-O",
+            "mt_gC-6JXAG5S",
+            "mt_Xp-rj46S2w",
+            "mt_YzM5goBctT",
+            "mt_k2WE0-22-4",
+            "mt_HnKbuCliNS",
+            "mt_TqDq6jyOmL",
+            "mt_IegHBHERVa",
+            "mt_wB-GBDkoNr",
+            "mt_FP-mjXaq3B",
+            "mt_Ep7TDFuYUa",
+            "mt_DRlbMok2lT",
+            "mt_idbKDrf9qZ",
+            "mt_ndGqFPWyen",
+            "mt_AYzE1EAvI0",
+            "mt_NoB20kVa4w",
+            "mt_doX1BhmFgk",
+            "mt_933BohS9BH",
+            "mt_SXbZ3bC9z7",
+            "mt_Vi4Vo5xs_g",
+            "mt_ebPelt-qAl",
+            "mt_09sySPqM9Z"
           ]
         },
         "stage-3": {
@@ -5729,34 +5972,25 @@
             "mt_MyGblah2yY",
             "mt_SsLWS_APM7",
             "mt_FbDKeLfBCo",
-            "mt_YzM5goBctT",
             "mt_k2WE0-22-4",
             "mt_TqDq6jyOmL",
-            "mt_wB-GBDkoNr",
             "mt_FP-mjXaq3B",
             "mt_Ep7TDFuYUa",
             "mt_DRlbMok2lT",
             "mt_3y7xKP9MjU",
             "mt_AYzE1EAvI0",
             "mt_NoB20kVa4w",
-            "mt_doX1BhmFgk",
-            "mt_933BohS9BH",
             "mt_SXbZ3bC9z7",
             "mt_NaqEP8xDhZ",
             "mt_Vi4Vo5xs_g",
-            "mt_sA2OvTiech",
             "mt_ebPelt-qAl",
             "mt_HJA2Oz-Zh1",
             "mt_o_p-3tCxiM",
-            "mt_kdWoAel3Zl",
             "mt_09sySPqM9Z",
             "mt_PL9VkDwXfh",
             "mt_4K1dr204Hi",
             "mt_4Km38F4L-6",
-            "mt_b7T-CjOYUR",
-            "mt_SBkTGjiZjZ",
-            "mt_gNUE4B3vuk",
-            "mt_PsylzZ9lHW"
+            "mt_b7T-CjOYUR"
           ],
           "mainNodeIds": [
             "mt_cFltwUQi-d",
@@ -6141,6 +6375,41 @@
                 "CN-MATH-2022-S4-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_vKcxX6iNOA",
+            "mt_cFltwUQi-d",
+            "mt_MyGblah2yY",
+            "mt_SsLWS_APM7",
+            "mt_FbDKeLfBCo",
+            "mt_YzM5goBctT",
+            "mt_k2WE0-22-4",
+            "mt_TqDq6jyOmL",
+            "mt_wB-GBDkoNr",
+            "mt_FP-mjXaq3B",
+            "mt_Ep7TDFuYUa",
+            "mt_DRlbMok2lT",
+            "mt_3y7xKP9MjU",
+            "mt_AYzE1EAvI0",
+            "mt_NoB20kVa4w",
+            "mt_doX1BhmFgk",
+            "mt_933BohS9BH",
+            "mt_SXbZ3bC9z7",
+            "mt_NaqEP8xDhZ",
+            "mt_Vi4Vo5xs_g",
+            "mt_sA2OvTiech",
+            "mt_ebPelt-qAl",
+            "mt_HJA2Oz-Zh1",
+            "mt_o_p-3tCxiM",
+            "mt_kdWoAel3Zl",
+            "mt_09sySPqM9Z",
+            "mt_PL9VkDwXfh",
+            "mt_4K1dr204Hi",
+            "mt_4Km38F4L-6",
+            "mt_b7T-CjOYUR",
+            "mt_SBkTGjiZjZ",
+            "mt_gNUE4B3vuk",
+            "mt_PsylzZ9lHW"
           ]
         }
       },
@@ -6828,7 +7097,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "extension",
@@ -6857,7 +7127,6 @@
           "supportingNodeIds": [
             "mt_a1FdAsRKOF",
             "mt_CBHwluE6Lp",
-            "mt_kDMKJ5Ztt6",
             "mt_ZLqYE7la4Z",
             "mt_VgOePicFYK"
           ],
@@ -6925,6 +7194,13 @@
                 "CN-MATH-2022-S3-FRACTIONS"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_a1FdAsRKOF",
+            "mt_CBHwluE6Lp",
+            "mt_kDMKJ5Ztt6",
+            "mt_ZLqYE7la4Z",
+            "mt_VgOePicFYK"
           ]
         },
         "stage-3": {
@@ -6965,14 +7241,12 @@
           ],
           "supportingNodeIds": [
             "mt_CBHwluE6Lp",
-            "mt_kDMKJ5Ztt6",
             "mt_70qDTI14td",
             "mt_-V7EnqU7gG",
             "mt_ZLqYE7la4Z",
             "mt_VgOePicFYK",
             "mt_TgHxujL81r",
             "mt_14T5yPXUq_",
-            "mt_gx6KQK5-Kx",
             "mt_1PAWhRhpdg",
             "mt_ifPDOYvUqm",
             "mt_rCMdwG-YOE",
@@ -7186,6 +7460,25 @@
                 "CN-MATH-2022-S3-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_CBHwluE6Lp",
+            "mt_kDMKJ5Ztt6",
+            "mt_70qDTI14td",
+            "mt_-V7EnqU7gG",
+            "mt_ZLqYE7la4Z",
+            "mt_VgOePicFYK",
+            "mt_TgHxujL81r",
+            "mt_14T5yPXUq_",
+            "mt_gx6KQK5-Kx",
+            "mt_1PAWhRhpdg",
+            "mt_ifPDOYvUqm",
+            "mt_rCMdwG-YOE",
+            "mt_e7filQgayF",
+            "mt_AabJisinfi",
+            "mt_lvaSGHwvQ5",
+            "mt_9Y96vxG_LH",
+            "mt_J339bO7qLe"
           ]
         }
       },
@@ -7449,9 +7742,7 @@
           "mappedDomainNodeIds": [
             "mt_tpT9brpI6D"
           ],
-          "supportingNodeIds": [
-            "mt_tpT9brpI6D"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_tpT9brpI6D"
@@ -7476,6 +7767,9 @@
                 "CN-MATH-2022-S3-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_tpT9brpI6D"
           ]
         },
         "stage-2": {
@@ -7501,9 +7795,7 @@
             "mt_tpT9brpI6D"
           ],
           "supportingNodeIds": [
-            "mt_W17Kbwm0-u",
-            "mt_kLQOzZYrd5",
-            "mt_tpT9brpI6D"
+            "mt_kLQOzZYrd5"
           ],
           "mainNodeIds": [
             "mt_W17Kbwm0-u"
@@ -7554,6 +7846,11 @@
                 "CN-MATH-2022-S3-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_W17Kbwm0-u",
+            "mt_kLQOzZYrd5",
+            "mt_tpT9brpI6D"
           ]
         },
         "stage-3": {
@@ -7604,9 +7901,6 @@
             "mt_yK51ZnKA8m"
           ],
           "supportingNodeIds": [
-            "mt_W17Kbwm0-u",
-            "mt_4ubP_RMg9o",
-            "mt_ZM9mhHsyYZ",
             "mt_VKW8lOcFaw",
             "mt_ePXg_XyCKU",
             "mt_ESgc4YBw-a",
@@ -7897,6 +8191,31 @@
                 "CN-MATH-2022-S3-FRACTIONS"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_W17Kbwm0-u",
+            "mt_4ubP_RMg9o",
+            "mt_ZM9mhHsyYZ",
+            "mt_VKW8lOcFaw",
+            "mt_ePXg_XyCKU",
+            "mt_ESgc4YBw-a",
+            "mt_PNSyfH56eQ",
+            "mt_h0gJcSuwdL",
+            "mt_2OtRUM_0zW",
+            "mt_FnUJMXPUZX",
+            "mt_kLQOzZYrd5",
+            "mt_nOCPx5qw0Z",
+            "mt_xAf2bu9wYK",
+            "mt_ALUrJpY0cZ",
+            "mt_ATYLKt0je-",
+            "mt_FspV_imUGK",
+            "mt_XWSGuFW7It",
+            "mt_1badik7iKJ",
+            "mt_tpT9brpI6D",
+            "mt_CUJr8L5_Wn",
+            "mt_iEXqN48w3x",
+            "mt_5mIcmKRCgA",
+            "mt_yK51ZnKA8m"
           ]
         }
       },
@@ -8322,13 +8641,11 @@
             "mt_KJeEeTutJI",
             "mt_2VR963szuk",
             "mt_XjwUlmxdCT",
-            "mt_WXW0hjNhph",
             "mt_sBcRdUfAzV",
             "mt_MqqR7VUoz1",
             "mt_bfhng6mOuy",
             "mt_vJUa62bxeR",
-            "mt_mN4Ye_vtR7",
-            "mt_SK7WntVZ6y"
+            "mt_mN4Ye_vtR7"
           ],
           "mainNodeIds": [
             "mt_KJeEeTutJI",
@@ -8452,6 +8769,18 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_KJeEeTutJI",
+            "mt_2VR963szuk",
+            "mt_XjwUlmxdCT",
+            "mt_WXW0hjNhph",
+            "mt_sBcRdUfAzV",
+            "mt_MqqR7VUoz1",
+            "mt_bfhng6mOuy",
+            "mt_vJUa62bxeR",
+            "mt_mN4Ye_vtR7",
+            "mt_SK7WntVZ6y"
           ]
         },
         "stage-2": {
@@ -8491,7 +8820,6 @@
           "supportingNodeIds": [
             "mt_2VR963szuk",
             "mt_XjwUlmxdCT",
-            "mt_WXW0hjNhph",
             "mt_sBcRdUfAzV",
             "mt_MqqR7VUoz1",
             "mt_bfhng6mOuy",
@@ -8500,7 +8828,6 @@
             "mt_hRZyKvz1KN",
             "mt_Xt1cRqaBOW",
             "mt_mN4Ye_vtR7",
-            "mt_SK7WntVZ6y",
             "mt_r8c43QB6wx",
             "mt_hdrMoiTgqu",
             "mt_liIW336odh"
@@ -8684,6 +9011,23 @@
                 "CN-MATH-2022-S4-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_2VR963szuk",
+            "mt_XjwUlmxdCT",
+            "mt_WXW0hjNhph",
+            "mt_sBcRdUfAzV",
+            "mt_MqqR7VUoz1",
+            "mt_bfhng6mOuy",
+            "mt_vJUa62bxeR",
+            "mt_zuOGOGFAKb",
+            "mt_hRZyKvz1KN",
+            "mt_Xt1cRqaBOW",
+            "mt_mN4Ye_vtR7",
+            "mt_SK7WntVZ6y",
+            "mt_r8c43QB6wx",
+            "mt_hdrMoiTgqu",
+            "mt_liIW336odh"
           ]
         },
         "stage-3": {
@@ -8719,7 +9063,6 @@
             "mt_zuOGOGFAKb",
             "mt_hRZyKvz1KN",
             "mt_Xt1cRqaBOW",
-            "mt_SK7WntVZ6y",
             "mt_hdrMoiTgqu",
             "mt_liIW336odh",
             "mt_xq3YHZ2zeR",
@@ -8837,6 +9180,17 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_sBcRdUfAzV",
+            "mt_zuOGOGFAKb",
+            "mt_hRZyKvz1KN",
+            "mt_Xt1cRqaBOW",
+            "mt_SK7WntVZ6y",
+            "mt_hdrMoiTgqu",
+            "mt_liIW336odh",
+            "mt_xq3YHZ2zeR",
+            "mt_snlqRCiA1R"
           ]
         }
       },
@@ -9158,6 +9512,10 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_qeZYF6HZ4o",
+            "mt_TdV9YGJEoY"
           ]
         },
         "stage-2": {
@@ -9234,6 +9592,11 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_TdV9YGJEoY",
+            "mt_Uq5vYqboCR",
+            "mt_hR2Y7NhMSY"
           ]
         },
         "stage-3": {
@@ -9280,7 +9643,6 @@
             "mt_oDlduFnemk",
             "mt_RdfzwInyAj",
             "mt_lxaM6iVpdr",
-            "mt_61Nhj8W78f",
             "mt_y-BuQAfw4B"
           ],
           "mainNodeIds": [
@@ -9436,6 +9798,21 @@
                 "CN-MATH-2022-S4-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_TdV9YGJEoY",
+            "mt_i5_HnoFOYw",
+            "mt_Uq5vYqboCR",
+            "mt_jBQS-CicNn",
+            "mt_hR2Y7NhMSY",
+            "mt_SH7QgFl8-v",
+            "mt_NM5I3yN-Q6",
+            "mt_efOeaGFyGM",
+            "mt_oDlduFnemk",
+            "mt_RdfzwInyAj",
+            "mt_lxaM6iVpdr",
+            "mt_61Nhj8W78f",
+            "mt_y-BuQAfw4B"
           ]
         }
       },
@@ -9770,9 +10147,7 @@
           "mappedDomainNodeIds": [
             "mt_Y9XKzLrUAZ"
           ],
-          "supportingNodeIds": [
-            "mt_Y9XKzLrUAZ"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_Y9XKzLrUAZ"
@@ -9792,6 +10167,9 @@
                 "CN-MATH-2022-S2-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_Y9XKzLrUAZ"
           ]
         },
         "stage-2": {
@@ -10019,6 +10397,23 @@
                 "CN-MATH-2022-S4-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_Y9XKzLrUAZ",
+            "mt_u23IGDxOpk",
+            "mt_MFfYcnv6Tv",
+            "mt_8OAGVdeTJ_",
+            "mt_h0CVtqI2xo",
+            "mt_oqziWKry-L",
+            "mt_qUGMyMYn9m",
+            "mt_YUJ5pwalqL",
+            "mt_QysgF57dxh",
+            "mt_4MFUAsbx_6",
+            "mt_LBT-9jz7kR",
+            "mt_KFKUR_gBg_",
+            "mt_3S10OOGPqu",
+            "mt_QDTO3GAgcq",
+            "mt_DNYQLahbfa"
           ]
         },
         "stage-3": {
@@ -10133,6 +10528,14 @@
                 "CN-MATH-2022-S4-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_MFfYcnv6Tv",
+            "mt_e4V6hvcuEJ",
+            "mt_qUGMyMYn9m",
+            "mt_cdMlC7EpTJ",
+            "mt_J03RFlVdas",
+            "mt_DNYQLahbfa"
           ]
         }
       },
@@ -10682,6 +11085,15 @@
                 "CN-MATH-2022-S2-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_Qcp2d_kuta",
+            "mt_yGv8doDAmp",
+            "mt_mnEVZNkX3p",
+            "mt_UooUHC_V7U",
+            "mt_QNxFnxikCN",
+            "mt_Mnodea7mG_",
+            "mt_fEuoBYw6bU"
           ]
         },
         "stage-2": {
@@ -10780,6 +11192,13 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_yGv8doDAmp",
+            "mt_QNxFnxikCN",
+            "mt_Mnodea7mG_",
+            "mt_fEuoBYw6bU",
+            "mt_wUSbRt3-qw"
           ]
         },
         "stage-3": {
@@ -10808,8 +11227,7 @@
           "supportingNodeIds": [
             "mt_vnJEztczji",
             "mt_wUSbRt3-qw",
-            "mt_REwgr0d_ss",
-            "mt_nRksLqt-iR"
+            "mt_REwgr0d_ss"
           ],
           "mainNodeIds": [
             "mt_vnJEztczji",
@@ -10864,6 +11282,12 @@
                 "CN-MATH-2022-S4-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_vnJEztczji",
+            "mt_wUSbRt3-qw",
+            "mt_REwgr0d_ss",
+            "mt_nRksLqt-iR"
           ]
         }
       },
@@ -11049,7 +11473,6 @@
             "mt_xWg0lI_gG4",
             "mt_OzRZ89GrQW",
             "mt_e4x3l2JeLI",
-            "mt_mayItsxMUu",
             "mt_jHv4BgRK8B",
             "mt_MgsDabdnr1",
             "mt_e7tLi9SCIE"
@@ -11271,6 +11694,26 @@
                 "CN-MATH-2022-S2-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_uhuxX8sg9f",
+            "mt_NtJYlJdUe9",
+            "mt_-P1kdZhHbL",
+            "mt_KaF0SQvaiu",
+            "mt_zd0YkB3xNj",
+            "mt_DOe893F6gN",
+            "mt_BFJ-ch_8QU",
+            "mt_skYly2Qm01",
+            "mt_cqSf213hSa",
+            "mt_DLcEzmmj2r",
+            "mt_6oxQPNLHNv",
+            "mt_xWg0lI_gG4",
+            "mt_OzRZ89GrQW",
+            "mt_e4x3l2JeLI",
+            "mt_mayItsxMUu",
+            "mt_jHv4BgRK8B",
+            "mt_MgsDabdnr1",
+            "mt_e7tLi9SCIE"
           ]
         },
         "stage-2": {
@@ -11327,24 +11770,15 @@
             "mt_zd0YkB3xNj",
             "mt_DOe893F6gN",
             "mt_BFJ-ch_8QU",
-            "mt_skYly2Qm01",
-            "mt_DLcEzmmj2r",
             "mt_6oxQPNLHNv",
-            "mt_xWg0lI_gG4",
             "mt_OzRZ89GrQW",
             "mt_e4x3l2JeLI",
-            "mt_mayItsxMUu",
             "mt_jHv4BgRK8B",
             "mt_MgsDabdnr1",
             "mt_e7tLi9SCIE",
             "mt_d8al9JcajP",
-            "mt_ghK1mnEstc",
             "mt_Zks8xyInSG",
-            "mt_5HV4mbgSGH",
-            "mt_42QD6nYjiZ",
-            "mt_SOM6Imm2sO",
-            "mt_2VpdPjvewx",
-            "mt_SqhXQhAEUf"
+            "mt_SOM6Imm2sO"
           ],
           "mainNodeIds": [
             "mt_zd0YkB3xNj",
@@ -11638,6 +12072,32 @@
                 "CN-MATH-2022-S3-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_NtJYlJdUe9",
+            "mt_-P1kdZhHbL",
+            "mt_KaF0SQvaiu",
+            "mt_zd0YkB3xNj",
+            "mt_DOe893F6gN",
+            "mt_BFJ-ch_8QU",
+            "mt_skYly2Qm01",
+            "mt_DLcEzmmj2r",
+            "mt_6oxQPNLHNv",
+            "mt_xWg0lI_gG4",
+            "mt_OzRZ89GrQW",
+            "mt_e4x3l2JeLI",
+            "mt_mayItsxMUu",
+            "mt_jHv4BgRK8B",
+            "mt_MgsDabdnr1",
+            "mt_e7tLi9SCIE",
+            "mt_d8al9JcajP",
+            "mt_ghK1mnEstc",
+            "mt_Zks8xyInSG",
+            "mt_5HV4mbgSGH",
+            "mt_42QD6nYjiZ",
+            "mt_SOM6Imm2sO",
+            "mt_2VpdPjvewx",
+            "mt_SqhXQhAEUf"
           ]
         },
         "stage-3": {
@@ -11671,21 +12131,7 @@
             "mt_3tPI0HqqcN",
             "mt_RVK655t391"
           ],
-          "supportingNodeIds": [
-            "mt_DOe893F6gN",
-            "mt_6oxQPNLHNv",
-            "mt_d8al9JcajP",
-            "mt_ghK1mnEstc",
-            "mt_Zks8xyInSG",
-            "mt_5HV4mbgSGH",
-            "mt_42QD6nYjiZ",
-            "mt_p6MhZJYYPN",
-            "mt_SOM6Imm2sO",
-            "mt_2VpdPjvewx",
-            "mt_SqhXQhAEUf",
-            "mt_3tPI0HqqcN",
-            "mt_RVK655t391"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [
             "mt_5HV4mbgSGH",
             "mt_SOM6Imm2sO",
@@ -11851,6 +12297,21 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_DOe893F6gN",
+            "mt_6oxQPNLHNv",
+            "mt_d8al9JcajP",
+            "mt_ghK1mnEstc",
+            "mt_Zks8xyInSG",
+            "mt_5HV4mbgSGH",
+            "mt_42QD6nYjiZ",
+            "mt_p6MhZJYYPN",
+            "mt_SOM6Imm2sO",
+            "mt_2VpdPjvewx",
+            "mt_SqhXQhAEUf",
+            "mt_3tPI0HqqcN",
+            "mt_RVK655t391"
           ]
         }
       },
@@ -12130,7 +12591,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "main",
@@ -12303,6 +12765,19 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_wE7-Gs9ENL",
+            "mt_y1n0Zwhoca",
+            "mt_AQo4u7O4sM",
+            "mt_Jvvh5P06NV",
+            "mt_eMtV6tBSJm",
+            "mt_GzcJEVkNRn",
+            "mt_WtcFrxGOgw",
+            "mt_6xNmQLzuqm",
+            "mt_eiB3-6pu6a",
+            "mt_n0AlyLQwC9",
+            "mt_MJZA90uc6H"
           ]
         },
         "stage-3": {
@@ -12342,13 +12817,9 @@
           "supportingNodeIds": [
             "mt_tAJH5BrpOx",
             "mt_svFa6_mjO_",
-            "mt_Sij9ByyHq6",
             "mt_wE7-Gs9ENL",
             "mt_y1n0Zwhoca",
-            "mt_AQo4u7O4sM",
-            "mt_Jvvh5P06NV",
             "mt_eMtV6tBSJm",
-            "mt_GzcJEVkNRn",
             "mt_WtcFrxGOgw",
             "mt_eiB3-6pu6a",
             "mt_n0AlyLQwC9",
@@ -12537,6 +13008,24 @@
                 "CN-MATH-2022-S3-GEOMETRY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_tAJH5BrpOx",
+            "mt_svFa6_mjO_",
+            "mt_Sij9ByyHq6",
+            "mt_wE7-Gs9ENL",
+            "mt_y1n0Zwhoca",
+            "mt_AQo4u7O4sM",
+            "mt_Jvvh5P06NV",
+            "mt_eMtV6tBSJm",
+            "mt_GzcJEVkNRn",
+            "mt_WtcFrxGOgw",
+            "mt_eiB3-6pu6a",
+            "mt_n0AlyLQwC9",
+            "mt_ML5t7n2-U8",
+            "mt_MJZA90uc6H",
+            "mt_i2-QaXbyzB",
+            "mt_tegkuJA5gM"
           ]
         }
       },
@@ -12766,11 +13255,7 @@
             "mt_4lp_b5Pzik",
             "mt_bnwHo5wfCD"
           ],
-          "supportingNodeIds": [
-            "mt_zkFbMLpu3U",
-            "mt_4lp_b5Pzik",
-            "mt_bnwHo5wfCD"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_zkFbMLpu3U",
@@ -12813,6 +13298,11 @@
                 "CN-MATH-2022-S2-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_zkFbMLpu3U",
+            "mt_4lp_b5Pzik",
+            "mt_bnwHo5wfCD"
           ]
         },
         "stage-2": {
@@ -12914,6 +13404,13 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_zkFbMLpu3U",
+            "mt_4lp_b5Pzik",
+            "mt_bnwHo5wfCD",
+            "mt_-af65bxfdp",
+            "mt_NSC3LT_-ch"
           ]
         },
         "stage-3": {
@@ -12944,13 +13441,10 @@
           ],
           "supportingNodeIds": [
             "mt_4lp_b5Pzik",
-            "mt_-af65bxfdp",
             "mt_d7XktBQPxm",
             "mt_NSC3LT_-ch",
             "mt_IuHa5UI5od",
-            "mt_5TBUFnCy5-",
-            "mt_nTL-owFJTF",
-            "mt_IlDaxVr60U"
+            "mt_nTL-owFJTF"
           ],
           "mainNodeIds": [
             "mt_d7XktBQPxm",
@@ -13049,6 +13543,16 @@
                 "CN-MATH-2022-S4-NUMBER"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_4lp_b5Pzik",
+            "mt_-af65bxfdp",
+            "mt_d7XktBQPxm",
+            "mt_NSC3LT_-ch",
+            "mt_IuHa5UI5od",
+            "mt_5TBUFnCy5-",
+            "mt_nTL-owFJTF",
+            "mt_IlDaxVr60U"
           ]
         }
       },
@@ -13449,6 +13953,22 @@
                 "CN-MATH-2022-S2-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_TcG90kS8nu",
+            "mt_-vvVxpOHG2",
+            "mt_bj1YCgNWUx",
+            "mt__N55B7u7HD",
+            "mt_0XxyaQLRhn",
+            "mt_2XDGT5tei1",
+            "mt_6XCURuNwPw",
+            "mt_HNOPGJYiRK",
+            "mt_4m8BimI4G5",
+            "mt_4emC463IyW",
+            "mt_Jz9UuT8BXW",
+            "mt_UNzojLkNdm",
+            "mt_EXlmTURK_o",
+            "mt_tVvZVWO5d6"
           ]
         },
         "stage-2": {
@@ -13497,7 +14017,6 @@
             "mt_4m8BimI4G5",
             "mt_4emC463IyW",
             "mt_Jz9UuT8BXW",
-            "mt_5J2quSTspi",
             "mt_UNzojLkNdm",
             "mt_EXlmTURK_o",
             "mt_tVvZVWO5d6",
@@ -13683,6 +14202,23 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_bj1YCgNWUx",
+            "mt__N55B7u7HD",
+            "mt_2XDGT5tei1",
+            "mt_6XCURuNwPw",
+            "mt_HNOPGJYiRK",
+            "mt_4m8BimI4G5",
+            "mt_4emC463IyW",
+            "mt_Jz9UuT8BXW",
+            "mt_5J2quSTspi",
+            "mt_UNzojLkNdm",
+            "mt_EXlmTURK_o",
+            "mt_tVvZVWO5d6",
+            "mt_WfrE_4r-kY",
+            "mt_IL86kadLSS",
+            "mt_2yas4Unc8o"
           ]
         },
         "stage-3": {
@@ -13692,12 +14228,7 @@
             "mt_IL86kadLSS",
             "mt_2yas4Unc8o"
           ],
-          "supportingNodeIds": [
-            "mt_5J2quSTspi",
-            "mt_WfrE_4r-kY",
-            "mt_IL86kadLSS",
-            "mt_2yas4Unc8o"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_5J2quSTspi",
@@ -13752,6 +14283,12 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_5J2quSTspi",
+            "mt_WfrE_4r-kY",
+            "mt_IL86kadLSS",
+            "mt_2yas4Unc8o"
           ]
         }
       },
@@ -13910,14 +14447,10 @@
             "mt_9L5qyBYmg-"
           ],
           "supportingNodeIds": [
-            "mt_cPZwlUk8Nd",
             "mt_AF2BeFQwfX",
-            "mt_FSLJbKkryb",
             "mt_6J1wmCWf41",
-            "mt_pbuhUQJjtt",
             "mt_6_O6THdEDK",
             "mt_8cs4YPkp23",
-            "mt_3tz3Otap5j",
             "mt_9L5qyBYmg-"
           ],
           "mainNodeIds": [
@@ -14030,6 +14563,17 @@
                 "CN-MATH-2022-S2-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_cPZwlUk8Nd",
+            "mt_AF2BeFQwfX",
+            "mt_FSLJbKkryb",
+            "mt_6J1wmCWf41",
+            "mt_pbuhUQJjtt",
+            "mt_6_O6THdEDK",
+            "mt_8cs4YPkp23",
+            "mt_3tz3Otap5j",
+            "mt_9L5qyBYmg-"
           ]
         },
         "stage-2": {
@@ -14062,16 +14606,7 @@
             "mt_Qe2PsFmSAH"
           ],
           "supportingNodeIds": [
-            "mt_AF2BeFQwfX",
-            "mt_FSLJbKkryb",
-            "mt_6J1wmCWf41",
-            "mt_6_O6THdEDK",
-            "mt_8cs4YPkp23",
-            "mt_3tz3Otap5j",
-            "mt_9L5qyBYmg-",
-            "mt_mFJ-2ZF6Tk",
-            "mt_5bmrA-0pBi",
-            "mt_Qe2PsFmSAH"
+            "mt_6_O6THdEDK"
           ],
           "mainNodeIds": [
             "mt_6_O6THdEDK",
@@ -14197,6 +14732,18 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_AF2BeFQwfX",
+            "mt_FSLJbKkryb",
+            "mt_6J1wmCWf41",
+            "mt_6_O6THdEDK",
+            "mt_8cs4YPkp23",
+            "mt_3tz3Otap5j",
+            "mt_9L5qyBYmg-",
+            "mt_mFJ-2ZF6Tk",
+            "mt_5bmrA-0pBi",
+            "mt_Qe2PsFmSAH"
           ]
         },
         "stage-3": {
@@ -14225,13 +14772,7 @@
             "mt_oMkQQ2O-ML",
             "mt_mMDpLugX2X"
           ],
-          "supportingNodeIds": [
-            "mt_mFJ-2ZF6Tk",
-            "mt_5bmrA-0pBi",
-            "mt_Qe2PsFmSAH",
-            "mt_oMkQQ2O-ML",
-            "mt_mMDpLugX2X"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [
             "mt_5bmrA-0pBi",
             "mt_Qe2PsFmSAH"
@@ -14300,6 +14841,13 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_mFJ-2ZF6Tk",
+            "mt_5bmrA-0pBi",
+            "mt_Qe2PsFmSAH",
+            "mt_oMkQQ2O-ML",
+            "mt_mMDpLugX2X"
           ]
         }
       },
@@ -14710,6 +15258,10 @@
                 "CN-MATH-2022-S2-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_ZjIFGc6zPW",
+            "mt_W3VOAuFwVw"
           ]
         },
         "stage-2": {
@@ -14739,8 +15291,6 @@
           "supportingNodeIds": [
             "mt_ZjIFGc6zPW",
             "mt_W3VOAuFwVw",
-            "mt_zQfWqImxva",
-            "mt_QeKWt4BZn3",
             "mt_gu0NPDvlhY"
           ],
           "mainNodeIds": [],
@@ -14809,6 +15359,13 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_ZjIFGc6zPW",
+            "mt_W3VOAuFwVw",
+            "mt_zQfWqImxva",
+            "mt_QeKWt4BZn3",
+            "mt_gu0NPDvlhY"
           ]
         },
         "stage-3": {
@@ -14839,15 +15396,7 @@
             "mt_gu0NPDvlhY",
             "mt_yXO7lQ9Yn7"
           ],
-          "supportingNodeIds": [
-            "mt_zQfWqImxva",
-            "mt_QeKWt4BZn3",
-            "mt_nx4a3kH-59",
-            "mt_hBZwbst0ow",
-            "mt_fxPtngwUfz",
-            "mt_gu0NPDvlhY",
-            "mt_yXO7lQ9Yn7"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_zQfWqImxva",
@@ -14939,6 +15488,15 @@
                 "CN-MATH-2022-S4-ALGEBRA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_zQfWqImxva",
+            "mt_QeKWt4BZn3",
+            "mt_nx4a3kH-59",
+            "mt_hBZwbst0ow",
+            "mt_fxPtngwUfz",
+            "mt_gu0NPDvlhY",
+            "mt_yXO7lQ9Yn7"
           ]
         }
       },
@@ -15432,6 +15990,12 @@
                 "CN-MATH-2022-S2-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_ezc2m_0dzN",
+            "mt_3JgrHY221M",
+            "mt_oIzycTBeE4",
+            "mt_XuHmIn2xje"
           ]
         },
         "stage-2": {
@@ -15466,8 +16030,7 @@
             "mt_ezc2m_0dzN",
             "mt_3JgrHY221M",
             "mt_oIzycTBeE4",
-            "mt_XuHmIn2xje",
-            "mt_anAe11HAEH"
+            "mt_XuHmIn2xje"
           ],
           "mainNodeIds": [
             "mt_oIzycTBeE4"
@@ -15537,6 +16100,13 @@
                 "CN-MATH-2022-S3-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_ezc2m_0dzN",
+            "mt_3JgrHY221M",
+            "mt_oIzycTBeE4",
+            "mt_XuHmIn2xje",
+            "mt_anAe11HAEH"
           ]
         },
         "stage-3": {
@@ -15569,7 +16139,6 @@
             "mt_HRKzwEQJgO"
           ],
           "supportingNodeIds": [
-            "mt_anAe11HAEH",
             "mt_YFS7JFk64p",
             "mt_i9rJbuFO3p",
             "mt_KwdjWEmMNo",
@@ -15680,6 +16249,16 @@
                 "CN-MATH-2022-S4-ALGEBRA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_anAe11HAEH",
+            "mt_YFS7JFk64p",
+            "mt_i9rJbuFO3p",
+            "mt_KwdjWEmMNo",
+            "mt_z5iwdZyeDr",
+            "mt_g_fkAqmz72",
+            "mt_QhFEDyIwSO",
+            "mt_HRKzwEQJgO"
           ]
         }
       },
@@ -16056,7 +16635,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "not-primary",
@@ -16078,9 +16658,7 @@
           "mappedDomainNodeIds": [
             "mt_Jvg8X0N5u0"
           ],
-          "supportingNodeIds": [
-            "mt_Jvg8X0N5u0"
-          ],
+          "supportingNodeIds": [],
           "mainNodeIds": [],
           "extensionNodeIds": [
             "mt_Jvg8X0N5u0"
@@ -16101,6 +16679,9 @@
                 "CN-MATH-2022-S3-QUANTITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_Jvg8X0N5u0"
           ]
         },
         "stage-3": {
@@ -16130,7 +16711,6 @@
           ],
           "supportingNodeIds": [
             "mt_Jvg8X0N5u0",
-            "mt_hVpGOEz2kG",
             "mt_vHzVa3SURC",
             "mt_3qrCtdoVAU"
           ],
@@ -16191,6 +16771,12 @@
                 "CN-MATH-2022-S4-EQUATIONS"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_Jvg8X0N5u0",
+            "mt_hVpGOEz2kG",
+            "mt_vHzVa3SURC",
+            "mt_3qrCtdoVAU"
           ]
         }
       },
@@ -16581,7 +17167,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "process",
@@ -16606,7 +17193,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-3": {
           "mark": "process",
@@ -16631,7 +17219,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         }
       },
       "beyondPrimaryDomainNodes": [
@@ -17604,6 +18193,11 @@
                 "CN-MATH-2022-S2-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_xppl18avyY",
+            "mt_ylXdiVRAYv",
+            "mt_1VSfm9yiLn"
           ]
         },
         "stage-2": {
@@ -17744,6 +18338,16 @@
                 "CN-MATH-2022-S3-PRACTICE"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_xppl18avyY",
+            "mt_ylXdiVRAYv",
+            "mt_1VSfm9yiLn",
+            "mt_ebQURBOsM5",
+            "mt_kxeuXm6EyC",
+            "mt_yrvYKSwSRZ",
+            "mt_Y6JmLjnfRP",
+            "mt_SHVyE1CLUa"
           ]
         },
         "stage-3": {
@@ -17781,9 +18385,7 @@
             "mt_Y6JmLjnfRP",
             "mt_SHVyE1CLUa",
             "mt_QHT16CrFO-",
-            "mt_O-U263ukg1",
-            "mt_iykH2P5oFq",
-            "mt_6gpryAnpoZ"
+            "mt_O-U263ukg1"
           ],
           "mainNodeIds": [
             "mt_Y6JmLjnfRP",
@@ -17899,6 +18501,17 @@
                 "CN-MATH-2022-S4-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_ebQURBOsM5",
+            "mt_kxeuXm6EyC",
+            "mt_yrvYKSwSRZ",
+            "mt_Y6JmLjnfRP",
+            "mt_SHVyE1CLUa",
+            "mt_QHT16CrFO-",
+            "mt_O-U263ukg1",
+            "mt_iykH2P5oFq",
+            "mt_6gpryAnpoZ"
           ]
         }
       },
@@ -18200,6 +18813,10 @@
                 "CN-MATH-2022-S2-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_c29FaCTNsx",
+            "mt_VhBH8wrFC6"
           ]
         },
         "stage-2": {
@@ -18350,6 +18967,17 @@
                 "CN-MATH-2022-S2-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_c29FaCTNsx",
+            "mt_X53txVXOcG",
+            "mt_u5HkSxZECM",
+            "mt_VhBH8wrFC6",
+            "mt__yvsKKp3TS",
+            "mt_ChjMU2GDJa",
+            "mt_QpJydot2Kh",
+            "mt_r8XnXwRA6g",
+            "mt_Cqm8iy48UI"
           ]
         },
         "stage-3": {
@@ -18388,10 +19016,8 @@
             "mt_ChjMU2GDJa",
             "mt_QpJydot2Kh",
             "mt_r8XnXwRA6g",
-            "mt_TiFjjvBMaY",
             "mt_H6LlpWgEYS",
             "mt_HlNSurPVDp",
-            "mt_IHipFGTFEY",
             "mt_bESTSBB0wK",
             "mt_eKJG-0eC6D"
           ],
@@ -18526,6 +19152,19 @@
                 "CN-MATH-2022-S4-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_X53txVXOcG",
+            "mt_u5HkSxZECM",
+            "mt_ChjMU2GDJa",
+            "mt_QpJydot2Kh",
+            "mt_r8XnXwRA6g",
+            "mt_TiFjjvBMaY",
+            "mt_H6LlpWgEYS",
+            "mt_HlNSurPVDp",
+            "mt_IHipFGTFEY",
+            "mt_bESTSBB0wK",
+            "mt_eKJG-0eC6D"
           ]
         }
       },
@@ -18918,7 +19557,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "extension",
@@ -18990,6 +19630,11 @@
                 "CN-MATH-2022-S4-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_fmm-P17Vka",
+            "mt_Cg8VPguS_V",
+            "mt_XSXnTQoQ4l"
           ]
         },
         "stage-3": {
@@ -19022,7 +19667,6 @@
             "mt_fmm-P17Vka",
             "mt_Cg8VPguS_V",
             "mt_XSXnTQoQ4l",
-            "mt_8IsaoMPvod",
             "mt_tuEnyrp5Ia"
           ],
           "mainNodeIds": [],
@@ -19092,6 +19736,13 @@
                 "CN-MATH-2022-S4-DATA"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_fmm-P17Vka",
+            "mt_Cg8VPguS_V",
+            "mt_XSXnTQoQ4l",
+            "mt_8IsaoMPvod",
+            "mt_tuEnyrp5Ia"
           ]
         }
       },
@@ -19471,7 +20122,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-2": {
           "mark": "not-primary",
@@ -19496,7 +20148,8 @@
           "extensionNodeIds": [],
           "transitionNodeIds": [],
           "nodeEvidenceLevelCounts": {},
-          "nodeEvidence": []
+          "nodeEvidence": [],
+          "relatedMappedNodeIds": []
         },
         "stage-3": {
           "mark": "main",
@@ -19618,6 +20271,15 @@
                 "CN-MATH-2022-S4-PROBABILITY"
               ]
             }
+          ],
+          "relatedMappedNodeIds": [
+            "mt_iFFKZd-Vgv",
+            "mt_J4j7d3iAfg",
+            "mt_xSgAgg9Ej_",
+            "mt_-bMnJcPJy8",
+            "mt_UcGn2hjhYU",
+            "mt_-c4Ca_nBzX",
+            "mt_8DT3LXwwH-"
           ]
         }
       },
