@@ -1,4 +1,4 @@
-// Three hundred and twenty source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and twenty-four source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -2911,6 +2911,42 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"近似数不能当作精确数量：12340取最接近的千是12000，并非原数恰好是12000。",
     tryIt:"比较模拟距离12500米与12800米，并计算相差多少。",
     why:"数位决定每个数字的值；估计适合看大致数量，精确比较需保留原始数据。",
+  },
+  "mt_dlg6i-Lw0I":{
+    formal:"独立事件与相关事件",
+    definition:"如果知道前一次结果不会改变下一事件的概率，两事件在该模型中是独立的；改变概率时它们有关联。",
+    simpler:"问一问第一次发生了什么，会不会改变第二次的机会。",
+    example:"假设每次抛公平硬币相互独立，连续三次正面后，下次正面的概率仍是1/2。",
+    counterexample:"袋中3红2蓝，先拿出1个红珠不放回后，下次抽红的概率从3/5变成2/4。",
+    tryIt:"对比抽珠后放回和不放回的情形，分别计算下一次抽红的机会。",
+    why:"独立与否由事件和过程的概率关系决定；不能只凭“连续发生”或“无放回”几个字判断所有情况。",
+  },
+  "mt_8DT3LXwwH-":{
+    formal:"用多轮模拟观察概率",
+    definition:"在明确随机模型下，可以对不同试验次数各重复多轮，记录结果比例并比较波动。",
+    simpler:"每轮都用结果次数除以这一轮的总次数，再把各轮结果放在一起看。",
+    example:"对公平骰子，模拟10、100、1000次，各做多轮，比较掷出6的比例和1/6。",
+    counterexample:"某一次1000次试验的结果仍可能比某一次10次试验离1/6更远。",
+    tryIt:"分别进行多轮10次和100次模拟，记录每轮掷出6的次数与比例。",
+    why:"在独立且规则不变的模型下，较多试验通常使比例的波动较小，但有限次没有逐轮更接近的保证。",
+  },
+  "mt_aCwj2PCoRV":{
+    formal:"建立并检查概率模型",
+    definition:"概率模型为每个可能结果分配概率，所有结果的概率之和为1；模型可以等概率，也可以不等概率。",
+    simpler:"先列全可能结果，再根据规则或观察记录给出每个结果的机会。",
+    example:"某次50次杯子试验中侧倒31次、开口向上13次、向下6次，可以用31/50、13/50、6/50作为初步估计。",
+    counterexample:"这50次的比例不证明所有杯子或以后每次试验都必然遵循同样的概率。",
+    tryIt:"假设25个人被选中的机会相等，其中12人属于某组，求选到该组的概率。",
+    why:"模型的概率必须覆盖全部结果；比较模型与观察数据时要考虑随机波动，也可进一步检查模型是否合适。",
+  },
+  "mt_nzdtOLXWWa":{
+    formal:"设计模拟估计复合事件",
+    definition:"模拟需要选择与目标情境概率对应的随机规则，定义一次完整试验和要计数的事件，再用多次结果估计概率。",
+    simpler:"先说明每个随机结果代表什么、一次试验何时结束，再重复并记录。",
+    example:"若假设每次独立且某类型的概率是40%，可用等可能数字0—3代表该类型、4—9代表其他类型。",
+    counterexample:"不能只因为用了随机数就认定模型合适；数字映射比例和各次独立条件也要与情境匹配。",
+    tryIt:"在上述假设下，反复生成数字直到第一次出现0—3，统计至少需要4次的试验比例。",
+    why:"每次模拟要对应一次完整情境；相对频率可估计目标事件概率，不同有限次运行仍会有波动。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

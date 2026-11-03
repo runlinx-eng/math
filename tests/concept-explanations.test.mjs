@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,320);
+  assert.equal(samples.length,324);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -417,4 +417,11 @@ test('twenty-node batch preserves regrouping, units and contextual remainders',(
   assert.match(conceptHelpFor('mt_p-nbe0w_lf').example,/需要6辆/);
   assert.match(conceptHelpFor('mt_e4x3l2JeLI').counterexample,/11厘米/);
   assert.match(conceptHelpFor('mt__sMrmOv3bx').example,/模拟/);
+});
+
+test('probability research-gap drafts retain independence and finite simulation boundaries',()=>{
+  assert.match(conceptHelpFor('mt_dlg6i-Lw0I').why,/不能只凭/);
+  assert.match(conceptHelpFor('mt_8DT3LXwwH-').why,/没有逐轮更接近的保证/);
+  assert.match(conceptHelpFor('mt_aCwj2PCoRV').counterexample,/不证明/);
+  assert.match(conceptHelpFor('mt_nzdtOLXWWa').counterexample,/独立条件/);
 });

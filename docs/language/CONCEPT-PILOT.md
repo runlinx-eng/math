@@ -543,3 +543,7 @@
 ## 本地 20 节点（2026-11-03）
 
 `mt_xPqczp7zPX`、`mt_XuHmIn2xje`、`mt_z5iwdZyeDr`、`mt_Yw27nweoTj`、`mt_70qDTI14td`、`mt_-V7EnqU7gG`、`mt_ZLqYE7la4Z`、`mt_SXbZ3bC9z7`、`mt_W17Kbwm0-u`、`mt_wUSbRt3-qw`、`mt_YUJ5pwalqL`、`mt_QysgF57dxh`、`mt_6oxQPNLHNv`、`mt_OzRZ89GrQW`、`mt_e4x3l2JeLI`、`mt_p-nbe0w_lf`、`mt_0Wg5F97osg`、`mt_6-j1NO2ZUH`、`mt_tAtMET4EIU`、`mt__sMrmOv3bx`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH20K-2026-11-03.md)。
+
+## 研究缺口 4 节点（2026-11-03）
+
+`mt_dlg6i-Lw0I`、`mt_8DT3LXwwH-`、`mt_aCwj2PCoRV`、`mt_nzdtOLXWWa`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B09-2026-11-03.md)。

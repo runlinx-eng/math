@@ -302,6 +302,11 @@ const ids=[
   ['batch20k-18','mt_6-j1NO2ZUH'],
   ['batch20k-19','mt_tAtMET4EIU'],
   ['batch20k-20','mt__sMrmOv3bx']
+,
+  ['research-gap4-01','mt_dlg6i-Lw0I'],
+  ['research-gap4-02','mt_8DT3LXwwH-'],
+  ['research-gap4-03','mt_aCwj2PCoRV'],
+  ['research-gap4-04','mt_nzdtOLXWWa']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
