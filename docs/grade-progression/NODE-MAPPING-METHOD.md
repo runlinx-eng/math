@@ -157,3 +157,15 @@ https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html
 - **研究缺口边界**：mt_CUJr8L5_Wn 仍在现有85个教学研究缺口中。本批完成的是课程标准学段映射，不代表该节点教学研究记录已补齐。
 
 本批仍为AI辅助第一轮课程映射；不等同于教材逐册核对、独立教研审核或儿童理解测试。
+
+## 10. 全局映射完成后的数据来源、批次与统计口径（第一阶段治理）
+
+- **数据来源及版本**：上游仓库 `withmarbleapp/os-taxonomy` 固定提交 `a8719737ff86ef7940ba5feca11940de1204103e`，原始 `vendor/os-taxonomy/data/topics.json` 包含全部学科 **1930** 个 topic；`scripts/build_data.py` 按 `subject=Mathematics` 生成 `dist/data/math.json` 的 **587** 个数学节点和 **1,223** 条数学关系；`scripts/build_atlas.py` 对这 587 个节点增加五大主题、23 个知识群的导航分类，生成 `dist/data/atlas.json`。这份课程映射只对其中 **537** 个领域节点建立独立记录，排除 **50** 个数学思维节点。所用 `dist/data/atlas.json` 的版本为 main 提交 `6705366889d1ed6a2ceca9688235124f2474b3d3`，blob SHA `6d0a8174afd19344a22d88547ea6a621fcb40f78`；工作分支中的原始图谱内容与该版本一致。
+- **两层登记**：`mappingReview.batchRegistry.parentBatches` 是台账 01—12 总批次，`subBatches` 是从逐节点 `chinaCurriculumMapping.reviewBatch` 实际分组得出的 **36** 个子批次，每个子批次包含唯一的 `parentId`、`nodeCount`。分数 07a—07c 归 07，图形 08a—08e 归 08；历史的 `07-fractions` 与 `08-geometry` 聚合记录、其余 28 条旧登记仍完整保留在 `mappingReview.batches`，共 30 条（混合粒度、只为兼容，**不得统计为 30 个实际子批次**）。任何消费者如需子批次应读取 `batchRegistry.subBatches`，不重写旧子批次 ID。
+- **完成度分母**：537/537 表示每个领域知识节点都有 AI 辅助的首轮课程映射判断；**532** 个有阶段，**5** 个 `not-covered` 没有阶段；`reviewStatus=ai-first-pass-needs-independent-review` 仍适用于全部 537 个节点。学段数及证据等级不构成教研审阅通过率。
+- **跨阶段两种口径**：`nodesAcrossMultipleStages=241` 来自上游年龄段与小学 6—7/8—9/10—11 岁范围的交叠候选；`mappingReview.chinaCurriculumMultiStageNodeCount=289` 来自课程判断 `chinaCurriculumMapping.stages.length>1`，可包含 `beyond-primary`。两者不能混称，也不能将各阶段出现次数求和当作唯一节点数量。
+- **证据等级不是置信度**：`direct` 表示与对应学段（**包括初中第四学段**）要求直接相符，`conceptual` 表示概念性支撑，`adjacent` 表示相关但不足以作为明确课程要求，`not-covered` 表示没有找到对应要求。它们描述**证据关系**，不提供概率或算法置信分数；本次不生成 `confidence` 字段。
+- **未决角色**：`mt_b4lbTOJYwI` 目前的 `beyond-primary:main` 与其 `adjacent` 证据及台账“初中衔接”简写之间存在应解释的粒度差异，完整“数集与无穷”是否应为主项证据不足。保留原 JSON 与历史判断，交独立教研定点审阅，不在本次进行数学重新归属。
+- **研究缺口独立计数**：原图谱 **85** 个缺少教学研究记录（83 个领域节点、2 个思维节点），包括 `mt_CUJr8L5_Wn`。它与课程标准映射的 5 个 `not-covered` 是两种不同缺口，彼此不能抵消。
+
+本阶段只清理数据登记与描述，既不重判 537 节点，也不改变 23 个知识群的阶段观察初稿；专门的映射 CI 自动验收留待后续阶段单独建立。
