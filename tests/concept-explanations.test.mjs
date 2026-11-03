@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,89);
+  assert.equal(samples.length,109);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -309,4 +309,12 @@ test('twenty-node batch preserves counting, fraction and time boundaries',()=>{
   assert.match(conceptHelpFor('mt_hyvHv2BCwb').counterexample,/不同大小/);
   assert.match(conceptHelpFor('mt_TcG90kS8nu').why,/开始时刻/);
   assert.match(conceptHelpFor('mt_zOWwLxa77y').counterexample,/12＝3×4/);
+});
+
+test('second twenty-node batch keeps cross-hundred, common-whole and capacity boundaries',()=>{
+  assert.match(conceptHelpFor('mt_I5j1ZWo2cn').counterexample,/85＋30＝115/);
+  assert.match(conceptHelpFor('mt_OkSJfrmFb_').example,/97加10是107/);
+  assert.match(conceptHelpFor('mt_MyGblah2yY').counterexample,/不同大小整体/);
+  assert.match(conceptHelpFor('mt_zkFbMLpu3U').definition,/容量.*当前水量/);
+  assert.match(conceptHelpFor('mt_xACS3rWWDp').counterexample,/不一定形状相同/);
 });
