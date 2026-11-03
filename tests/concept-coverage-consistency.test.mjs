@@ -139,7 +139,7 @@ test('the content review standard and calibration record cover the implemented 4
     assert.ok(conceptPilot.includes(id),'calibration record must retain sample source ID '+id);
   }
   const researchGaps=samples.filter(([id])=>byId.get(id).hasResearch===false).map(([id])=>id);
-  assert.equal(researchGaps.length,7);
+  assert.equal(researchGaps.length,12);
   for(const id of researchGaps){
     assert.ok(conceptPilot.includes(id),'research-gap list must retain source ID '+id);
   }
