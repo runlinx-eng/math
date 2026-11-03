@@ -7,14 +7,14 @@
     "total": 85,
     "knowledgeMapNodes": 83,
     "mathThinkingNodes": 2,
-    "knowledgeMapWithSamples": 7,
-    "knowledgeMapWithoutSamples": 76,
+    "knowledgeMapWithSamples": 12,
+    "knowledgeMapWithoutSamples": 71,
     "phaseCounts": {
       "2": 2,
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个已有样板已完成外部来源核查和内容修订；B01的2个、B02的1个、B03的1个无样板知识地图节点已完成外部来源核查，解释起草均未开始；其余72个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
+    "allPlanStatuses": "7个既有样板已完成外部来源核查和内容修订；B01的2个、B02的1个、B03的1个、B04的1个共5个新增节点已完成外部来源核查、解释初稿和AI自检，独立数学复核待完成；其余71个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -24,13 +24,13 @@
       },
       "PROCEDURAL": {
         "total": 42,
-        "withSample": 3,
-        "withoutSample": 39
+        "withSample": 5,
+        "withoutSample": 37
       },
       "CONCEPTUAL": {
         "total": 28,
-        "withSample": 0,
-        "withoutSample": 28
+        "withSample": 3,
+        "withoutSample": 25
       },
       "META": {
         "total": 4,
@@ -60,14 +60,14 @@
       "data": {
         "title": "Data & Statistics",
         "total": 27,
-        "withSample": 5,
-        "withoutSample": 22
+        "withSample": 8,
+        "withoutSample": 19
       },
       "fractions": {
         "title": "Fractions",
         "total": 1,
-        "withSample": 0,
-        "withoutSample": 1
+        "withSample": 1,
+        "withoutSample": 0
       },
       "geometry": {
         "title": "Geometry",
@@ -78,8 +78,8 @@
       "measure": {
         "title": "Measurement",
         "total": 18,
-        "withSample": 1,
-        "withoutSample": 17
+        "withSample": 2,
+        "withoutSample": 16
       },
       "multiply": {
         "title": "Multiplication & Division",
@@ -110,7 +110,7 @@
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
-    "nodesWithResearchReviewedWithoutExplanation": 5,
+    "nodesWithResearchReviewedWithoutExplanation": 0,
     "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 71,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
@@ -136,7 +136,8 @@
     "sourceRecordsExternallyVerifiedInB01": 2,
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
-    "sourceRecordsExternallyVerifiedInB04": 1
+    "sourceRecordsExternallyVerifiedInB04": 1,
+    "nodesWithExplanationDraftsPendingIndependentReview": 5
   },
   "records": [
     {
@@ -403,14 +404,14 @@
         "end": 8
       },
       "phase": 2,
-      "planStatus": "B01外部来源核查完成；解释起草未开始",
+      "planStatus": "B01外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
+      "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
-      "nextAction": "await_authorization_before_explanation_drafting",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "externalSourceIds": [
         "SRC-01",
@@ -418,7 +419,10 @@
         "SRC-07",
         "SRC-08"
       ],
-      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt__yvsKKp3TS"
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt__yvsKKp3TS",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_QpJydot2Kh",
@@ -453,14 +457,14 @@
         "end": 9
       },
       "phase": 2,
-      "planStatus": "B01外部来源核查完成；解释起草未开始",
+      "planStatus": "B01外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
+      "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
-      "nextAction": "await_authorization_before_explanation_drafting",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "externalSourceIds": [
         "SRC-02",
@@ -469,7 +473,10 @@
         "SRC-05",
         "SRC-06"
       ],
-      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt_ebQURBOsM5"
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt_ebQURBOsM5",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_kxeuXm6EyC",
@@ -574,10 +581,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_SHVyE1CLUa"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_SHVyE1CLUa",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_QHT16CrFO-",
@@ -619,10 +627,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_ZfpeI1CFyP"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_ZfpeI1CFyP",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_8VjmxR1yfw",
@@ -643,10 +652,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_8VjmxR1yfw"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_8VjmxR1yfw",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_mn765HbXi1",
@@ -730,10 +740,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_JRzXQl9M7c"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_JRzXQl9M7c",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_oderfUBZPw",
@@ -754,10 +765,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_oderfUBZPw"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_oderfUBZPw",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_4zgPzc6yu5",
@@ -834,14 +846,14 @@
         "end": 12
       },
       "phase": 4,
-      "planStatus": "B04外部来源核查完成；解释起草未开始",
+      "planStatus": "B04外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
+      "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_B04_2026-11-03",
-      "nextAction": "await_authorization_before_explanation_drafting",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "externalSourceIds": [
         "SRC-01",
@@ -850,7 +862,10 @@
         "SRC-04",
         "SRC-05"
       ],
-      "researchRecord": "CONCEPT-RESEARCH-B04.md#mt_iykH2P5oFq"
+      "researchRecord": "CONCEPT-RESEARCH-B04.md#mt_iykH2P5oFq",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_6gpryAnpoZ",
@@ -990,14 +1005,14 @@
         "end": 8
       },
       "phase": 4,
-      "planStatus": "B03外部来源核查完成；解释起草未开始",
+      "planStatus": "B03外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
+      "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_B03_2026-11-03",
-      "nextAction": "await_authorization_before_explanation_drafting",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "externalSourceIds": [
         "SRC-01",
@@ -1005,7 +1020,10 @@
         "SRC-03",
         "SRC-04"
       ],
-      "researchRecord": "CONCEPT-RESEARCH-B03.md#mt_gC-6JXAG5S"
+      "researchRecord": "CONCEPT-RESEARCH-B03.md#mt_gC-6JXAG5S",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_mN4Ye_vtR7",
@@ -1194,10 +1212,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_Sij9ByyHq6"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_Sij9ByyHq6",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_4bc3EAxhlY",
@@ -1463,14 +1482,14 @@
         "end": 10
       },
       "phase": 4,
-      "planStatus": "B02外部来源核查完成；解释起草未开始",
+      "planStatus": "B02外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
+      "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_B02_2026-11-03",
-      "nextAction": "await_authorization_before_explanation_drafting",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "externalSourceIds": [
         "SRC-01",
@@ -1480,7 +1499,10 @@
         "SRC-05",
         "SRC-06"
       ],
-      "researchRecord": "CONCEPT-RESEARCH-B02.md#mt_NSC3LT_-ch"
+      "researchRecord": "CONCEPT-RESEARCH-B02.md#mt_NSC3LT_-ch",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_5bmrA-0pBi",
@@ -1564,10 +1586,11 @@
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": true,
       "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
-      "nextAction": "independent_math_review_and_manual_visual_review_if_applicable",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "externalSourcesVerified": true,
       "contentCoverageRevisionApplied": true,
-      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_i2-QaXbyzB"
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_i2-QaXbyzB",
+      "independentMathReviewStatus": "not_completed"
     },
     {
       "id": "mt_oMkQQ2O-ML",
