@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,109);
+  assert.equal(samples.length,129);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -317,4 +317,11 @@ test('second twenty-node batch keeps cross-hundred, common-whole and capacity bo
   assert.match(conceptHelpFor('mt_MyGblah2yY').counterexample,/不同大小整体/);
   assert.match(conceptHelpFor('mt_zkFbMLpu3U').definition,/容量.*当前水量/);
   assert.match(conceptHelpFor('mt_xACS3rWWDp').counterexample,/不一定形状相同/);
+});
+
+test('third twenty-node batch retains unit, geometry and date boundaries',()=>{
+  assert.match(conceptHelpFor('mt_4lp_b5Pzik').counterexample,/不同大小/);
+  assert.match(conceptHelpFor('mt_sBcRdUfAzV').counterexample,/不是.*对称轴/);
+  assert.match(conceptHelpFor('mt_bj1YCgNWUx').counterexample,/365天.*364天/);
+  assert.match(conceptHelpFor('mt_a1FdAsRKOF').counterexample,/不是4\/10/);
 });
