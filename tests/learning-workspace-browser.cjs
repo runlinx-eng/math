@@ -45,7 +45,12 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   check(surface.lessonVisible&&surface.x>=0&&surface.y>=0&&surface.right<=surface.viewportW&&surface.bottom<=surface.viewportH,'learning surface fully fits the desktop viewport');
   check(surface.h<=surface.viewportH-30&&surface.h>=250&&surface.frame>100,'lesson height follows content but never exceeds the usable viewport');
   const expected=Math.min(childContent+panelHeader+2,surface.viewportH-32);
-  check(near(surface.h,expected,3),'panel height matches measured real lesson content, capped by the viewport');
+  const heightDebug=await page.evaluate(()=>{
+    const panel=document.querySelector('#journey-surface'),frame=document.querySelector('#journey-frame'),lesson=frame?.contentDocument?.querySelector('#lesson'),header=panel?.querySelector(':scope > header');
+    const style=getComputedStyle(panel);
+    return {panelHeight:panel.getBoundingClientRect().height,desiredHeight:panel.style.getPropertyValue('--learning-desired-height'),computedHeight:style.height,maxHeight:style.maxHeight,panelHeaderHeight:header?.getBoundingClientRect().height,lessonScrollHeight:lesson?.scrollHeight,lessonClientHeight:lesson?.clientHeight,lessonRectHeight:lesson?.getBoundingClientRect().height,frameHeight:frame?.getBoundingClientRect().height,viewportHeight:innerHeight,devicePixelRatio,fontsStatus:frame?.contentDocument?.fonts?.status};
+  });
+  check(near(surface.h,expected,3),`panel height matches measured real lesson content, capped by the viewport: ${JSON.stringify({surface,childContent,panelHeader,expected,heightDebug})}`);
   check(surface.topbar==='none'&&surface.rail==='none','map navigation is absent in focused learning mode');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
