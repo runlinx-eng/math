@@ -50,6 +50,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
     const style=getComputedStyle(panel);
     return {panelHeight:panel.getBoundingClientRect().height,desiredHeight:panel.style.getPropertyValue('--learning-desired-height'),computedHeight:style.height,maxHeight:style.maxHeight,panelHeaderHeight:header?.getBoundingClientRect().height,lessonScrollHeight:lesson?.scrollHeight,lessonClientHeight:lesson?.clientHeight,lessonRectHeight:lesson?.getBoundingClientRect().height,frameHeight:frame?.getBoundingClientRect().height,viewportHeight:innerHeight,devicePixelRatio,fontsStatus:frame?.contentDocument?.fonts?.status};
   });
+  console.log('learning-workspace height measurement',JSON.stringify({surface,childContent,panelHeader,expected,difference:surface.h-expected,heightDebug}));
   check(near(surface.h,expected,3),`panel height matches measured real lesson content, capped by the viewport: ${JSON.stringify({surface,childContent,panelHeader,expected,heightDebug})}`);
   check(surface.topbar==='none'&&surface.rail==='none','map navigation is absent in focused learning mode');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
