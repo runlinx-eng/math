@@ -16,14 +16,18 @@
     "upperPrimary": [
       10,
       11
-    ]
+    ],
+    "beyond-primary-transition": {
+      "label": "小学后续衔接（上游年龄范围主要在11岁以后）",
+      "ages": "12+"
+    }
   },
   "stageOverlapCounts": {
     "lower-primary": 194,
     "middle-primary": 271,
     "upper-primary": 292
   },
-  "nodesWithNoPrimaryStageCandidate": 36,
+  "nodesWithNoPrimaryStageCandidate": 0,
   "nodesAcrossMultipleStages": 241,
   "importantLimit": "上游年龄范围不是中国年级。此候选仅用于发现整体分布，所有节点仍需按中国课程标准复核；不得据此改写数学前置关系。",
   "nodes": [
@@ -1440,8 +1444,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1456,8 +1462,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1472,8 +1480,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1488,8 +1498,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1504,8 +1516,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1520,8 +1534,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1536,8 +1552,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1552,8 +1570,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -1568,8 +1588,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2630,8 +2652,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2646,8 +2670,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2662,8 +2688,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2678,8 +2706,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2694,8 +2724,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -2710,8 +2742,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5293,8 +5327,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5309,8 +5345,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5325,8 +5363,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5341,8 +5381,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5357,8 +5399,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5373,8 +5417,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5389,8 +5435,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5405,8 +5453,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -5421,8 +5471,10 @@
         13,
         15
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9166,8 +9218,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9182,8 +9236,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9198,8 +9254,10 @@
         13,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9473,8 +9531,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9489,8 +9549,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9505,8 +9567,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9521,8 +9585,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9537,8 +9603,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9825,8 +9893,10 @@
         12,
         13
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9841,8 +9911,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9857,8 +9929,10 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     },
     {
@@ -9873,9 +9947,12 @@
         12,
         14
       ],
-      "candidateStages": [],
-      "mappingStatus": "age-based-candidate-only",
+      "candidateStages": [
+        "beyond-primary-transition"
+      ],
+      "mappingStatus": "outside-primary-age-range-candidate",
       "needsChinaCurriculumReview": true
     }
-  ]
+  ],
+  "nodesOutsidePrimaryAgeRange": 36
 }
