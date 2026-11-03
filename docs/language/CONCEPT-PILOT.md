@@ -611,3 +611,7 @@
 ## 本地 6 节点（2026-11-04）
 
 `mt_rCMdwG-YOE`、`mt_4Km38F4L-6`、`mt_e7filQgayF`、`mt_VKW8lOcFaw`、`mt_AabJisinfi`、`mt_lvaSGHwvQ5`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH6F-2026-11-04.md)。
+
+## 本地 5 节点（2026-11-04）
+
+`mt_b7T-CjOYUR`、`mt_SBkTGjiZjZ`、`mt_9Y96vxG_LH`、`mt_gNUE4B3vuk`、`mt_J339bO7qLe`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH5G-2026-11-04.md)。

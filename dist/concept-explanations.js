@@ -1,4 +1,4 @@
-// Four hundred and seventeen source-bound explanation samples, keyed by exact source node ID.
+// Four hundred and twenty-two source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3784,6 +3784,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"做1又1/2份不能只加1/2杯：半份指的是原配方用量的一半。",
     tryIt:"估一估一份用2又1/3杯、做1又1/2份会用多少杯，再计算核对。",
     why:"每一份按相同用量增加；估算能检查范围，不能代替准确计算。",
+  },
+  "mt_b7T-CjOYUR":{
+    formal:"约分和通分",
+    definition:"约分是把分子、分母同时除以共同因数；通分是把分数改写成相同分母的等值分数。",
+    simpler:"约分时把相邻的小份合并；通分时把原来的份分细，让各个分数使用同样大小的份。",
+    example:"18/24的分子分母同时除以6，得到3/4；2/3和5/8可以写成16/24和15/24。",
+    counterexample:"分子和分母各加1不能保证值不变：2/3与3/4不相等。",
+    tryIt:"用等长纸条分别表示2/3和5/8，细分成二十四份后比较。",
+    why:"同时按同一个非零因数变化分子和分母，只改变份数与每份大小，不改变原量。",
+  },
+  "mt_SBkTGjiZjZ":{
+    formal:"有限小数与分数互换",
+    definition:"有限小数可以按末位的数位单位写成分数再约分；一个最简分数能写成有限小数，当且仅当其分母的质因数只有2和5。",
+    simpler:"先把小数看成十分之几、百分之几或千分之几；分数则先约分，再检查分母。",
+    example:"0.375＝375/1000＝3/8；6/15先约成2/5，再写成0.4。",
+    counterexample:"不能仅看原分母有3就断定6/15不是有限小数，因为约分后分母是5。",
+    tryIt:"把0.35写成分数并约分，再比较1/6的除法余数是否重复。",
+    why:"有限小数可写成分母为10的幂的分数；10的质因数只有2和5，需先考虑能约去的因数。",
+  },
+  "mt_9Y96vxG_LH":{
+    formal:"分数除以分数",
+    definition:"除数不为0时，分数除以分数可以求被除量中有多少个除数量，也可以乘除数的倒数。",
+    simpler:"先看每组有多少，再找原来的量相当于几组；不足一组时还要算出这一组的几分之几。",
+    example:"2/3÷4/5＝2/3×5/4＝5/6。",
+    counterexample:"3/4÷1/2＝1又1/2组；剩下的1/4是半组，不能直接写成1又1/4组。",
+    tryIt:"用同单位的条形表示3/4和1/2，找出有多少个1/2并用乘法核对。",
+    why:"把被除数和除数同时乘除数的倒数，商不变，除数变成1；除数不能为0。",
+  },
+  "mt_gNUE4B3vuk":{
+    formal:"整数、小数与分数的四则运算",
+    definition:"整数、小数和分数都可以按加减乘除的含义运算；涉及除法时除数不能为0。",
+    simpler:"先确定每个数的含义，再选择方便保持数值不变的表示方式和运算方法。",
+    example:"0.5＋3/4＝1/2＋3/4＝5/4；－3＋5＝2。",
+    counterexample:"小数相加要对齐数位单位；1.2＋0.35不能把小数点后数字直接拼接。",
+    tryIt:"把1又1/2与3/4相除，用条形比较有几个3/4，再用乘法核对。",
+    why:"换成等值表示不会改变数量；有限的题目不能证明任意大小和全部情形的运算都已熟练。",
+  },
+  "mt_J339bO7qLe":{
+    formal:"求数量的几分之几或百分之几",
+    definition:"求一个数量的几分之几或百分之几，可以把这个数量乘以相应的分数或百分数。",
+    simpler:"先确认当前的整体是多少，再看要取这个整体的多少。",
+    example:"200的3/4是150；60的20%是12；200的150%是300。",
+    counterexample:"45元先减20%得36元，再加10%应按36元计算，加后为39.6元，不能仍按45元算第二步。",
+    tryIt:"把200平均分成4份，取其中3份，再写成乘法算式。",
+    why:"分数或百分数表示相对于所选整体的倍数；连续变化时，后一步的整体可能已经改变。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
