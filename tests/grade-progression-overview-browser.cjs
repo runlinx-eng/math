@@ -8,7 +8,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
- const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
+ const page=await context.newPage();page.on('pageerror',e=>errors.push(e.stack||String(e)));
  const pose=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return JSON.stringify({position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions});});
  try{
   await page.goto(url);
