@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,289);
+  assert.equal(samples.length,292);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -388,4 +388,10 @@ test('twenty-node batch keeps place values, zeros and shape boundaries',()=>{
   assert.match(conceptHelpFor('mt_y1XCVsIelg').counterexample,/1既不是素数也不是合数/);
   assert.match(conceptHelpFor('mt_933BohS9BH').example,/0\.7＝0\.70＝0\.700/);
   assert.match(conceptHelpFor('mt_3qrCtdoVAU').simpler,/除数不为零/);
+});
+
+test('counting research-gap drafts distinguish grouping from strategy assessment',()=>{
+  assert.match(conceptHelpFor('mt_t9BICauBSI').why,/不证明.*逐个数/);
+  assert.match(conceptHelpFor('mt_0ZDouU664X').example,/8组.*剩5个/);
+  assert.match(conceptHelpFor('mt_BK5xwkrD5C').example,/5和2/);
 });

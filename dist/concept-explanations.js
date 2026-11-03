@@ -1,4 +1,4 @@
-// Two hundred and eighty-nine source-bound explanation samples, keyed by exact source node ID.
+// Two hundred and ninety-two source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -2632,6 +2632,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"－4℃比－1℃低，不是因为4大于1就更高。",
     tryIt:"从3开始每次减1数到－2，再在数轴上标出－3、－1、0、2。",
     why:"零是参照点，正负表示相反方向；跨过零时每一步仍按同样的单位变化。",
+  },
+  "mt_BK5xwkrD5C":{
+    formal:"看出10以内数量的组成",
+    definition:"有些排列可以先认出其中的几个小部分，再把部分合起来，知道整体有多少。",
+    simpler:"不一定每个点都从头数；可以先看出熟悉的部分，再想它们合起来是多少。",
+    example:"十格图中一行5个、另一行2个，可以看成5和2，一共7个。",
+    counterexample:"看到一行5个后，不能把另一行的2个忘掉；整体是7个，不是5个。",
+    tryIt:"用两种颜色把8个圆片分成两部分，试试4和4、5和3两种分法。",
+    why:"各部分合起来就是整体；熟悉排列和部分关系后，可能不必逐个数每个点。",
+  },
+  "mt_t9BICauBSI":{
+    formal:"一眼认识少量物品",
+    definition:"看到一小组物品时，有时可以不逐个数，直接认出数量；这种观察方式叫作一眼看数。",
+    simpler:"先看看有没有熟悉的点子排列，再说出你看到了几个。",
+    example:"骰子上四个角各有一点，可以认出这是4个点。",
+    counterexample:"看到两个点却说成3个，数量就没有对应上，可以再看一次核对。",
+    tryIt:"短暂看一组2个或5个点，记下数量；需要时再看或逐个数来核对。",
+    why:"认出熟悉的小数量排列可以帮助我们知道有几个；屏幕答对不证明一定没有逐个数。",
+  },
+  "mt_0ZDouU664X":{
+    formal:"分组数较多的物品",
+    definition:"把物品按每组相同数量分组，可以数完整组，再把剩余物品算进去。",
+    simpler:"先把每组放一样多，数有几组，再看有没有没装满一组的。",
+    example:"85个物品可以分成8组，每组10个，剩5个；80＋5＝85。",
+    counterexample:"8组10个剩5个不能记成8＋5＝13个：8表示组数，不是物品总数。",
+    tryIt:"把46个物品两两分组，数出组数，再按2个一组求总数。",
+    why:"每组的物品数乘完整组数，再加剩余数，才能不漏数也不重复。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
