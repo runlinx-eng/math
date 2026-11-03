@@ -17,6 +17,7 @@ const sampleIds=new Set(Object.keys(CONCEPT_EXPLANATIONS));
 const explanationBytes=fs.readFileSync(new URL('../dist/concept-explanations.js',import.meta.url));
 const nameAuditBytes=fs.readFileSync(new URL('../docs/language/NODE-NAME-AUDIT.json',import.meta.url));
 const gitBlobSha=content=>createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${content.length}\0`),content])).digest('hex');
+const localBatch20i=new Set(["mt_zxST3MarI9", "mt_ewmuMMPAzP", "mt_i2F1nWxJjv", "mt_WBdHkc2HTf", "mt_HRKzwEQJgO", "mt_BdAeZJUOir", "mt_idbKDrf9qZ", "mt_ndGqFPWyen", "mt_hRZyKvz1KN", "mt_jBQS-CicNn", "mt_hR2Y7NhMSY", "mt_DLcEzmmj2r", "mt_4m8BimI4G5", "mt_18fK9sQdIz", "mt_FHIAv6dfhU", "mt_lC_Q5mSL_I", "mt_jY7uf0Cb7o", "mt_-bMnJcPJy8", "mt_iEXqN48w3x", "mt_3y7xKP9MjU"]);
 const localBatch20h=new Set(["mt_SrrsLiJkr3", "mt_TiQbi027PE", "mt_vHzVa3SURC", "mt_uESbzWCZIq", "mt_IHipFGTFEY", "mt_bESTSBB0wK", "mt_kDMKJ5Ztt6", "mt_DRlbMok2lT", "mt_Xt1cRqaBOW", "mt_Uq5vYqboCR", "mt_6XCURuNwPw", "mt_HNOPGJYiRK", "mt_iNdrM2-oJf", "mt_gtTl3R5buH", "mt_MHaiUd2FLA", "mt_9IzhGUZ30z", "mt_1YwOCMMwD8", "mt_GDtFU5fyUv", "mt_tpT9brpI6D", "mt_5mIcmKRCgA"]);
 const localBatch20g=new Set(["mt_3JgrHY221M", "mt_oIzycTBeE4", "mt_g_fkAqmz72", "mt_yXO7lQ9Yn7", "mt_Cg8VPguS_V", "mt_HlNSurPVDp", "mt_IegHBHERVa", "mt_wB-GBDkoNr", "mt_MFfYcnv6Tv", "mt_8OAGVdeTJ_", "mt_6J1wmCWf41", "mt_2XDGT5tei1", "mt_Lb2ZnMdkYR", "mt_xZvDCYA5Ae", "mt_9XVFje6Tyr", "mt_vXRzMbiPff", "mt_sHJqh6UUya", "mt_vmQJAtAFuy", "mt_FspV_imUGK", "mt_XWSGuFW7It"]);
 const localBatch20f=new Set(["mt_wzAZ8qFDc4", "mt_FX4a2Q8XXN", "mt_fxPtngwUfz", "mt_ChjMU2GDJa", "mt_fmm-P17Vka", "mt_Fl7b8q9pI1", "mt_SsLWS_APM7", "mt_TdV9YGJEoY", "mt_zuOGOGFAKb", "mt_zd0YkB3xNj", "mt_cqSf213hSa", "mt_AR-K72OIIO", "mt_w6MxaaoMXZ", "mt_98c2qwEF7Q", "mt_J4j7d3iAfg", "mt_XfyqXLqzpx", "mt_FnUJMXPUZX", "mt_ATYLKt0je-", "mt_HJTuIGHvcR", "mt_R2ccrI-nKD"]);
@@ -48,8 +49,8 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.separateMathThinkingNodes.length,50);
   assert.equal(new Set(inventory.nodes.map(node=>node.id)).size,537);
   assert.equal(new Set(inventory.separateMathThinkingNodes.map(node=>node.id)).size,50);
-  assert.equal(inventory.summary.configuredExplanationSamples,249);
-  assert.equal(inventory.summary.notConfigured,288);
+  assert.equal(inventory.summary.configuredExplanationSamples,269);
+  assert.equal(inventory.summary.notConfigured,268);
   assert.equal(inventory.summary.first39FirstPassCalibrated,39);
   assert.equal(inventory.summary.newSixDraftPendingDeepReview,6);
   assert.equal(inventory.summary.secondBatchFirstFiveDraftPendingIndependentReview,5);
@@ -94,7 +95,8 @@ test('each inventory entry matches its source node and review states',()=>{
     assert.ok(auditById.has(node.id),'name audit entry exists: '+node.id);
     assert.equal(record.displayName,auditById.get(node.id).display||node.title);
     if(sampleIds.has(node.id)){
-      if(localBatch20h.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20h_draft_pending_independent_review');
+      if(localBatch20i.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20i_draft_pending_independent_review');
+      else if(localBatch20h.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20h_draft_pending_independent_review');
       else if(localBatch20g.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20g_draft_pending_independent_review');
       else if(localBatch20f.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20f_draft_pending_independent_review');
       else if(localBatch20e.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20e_draft_pending_independent_review');
