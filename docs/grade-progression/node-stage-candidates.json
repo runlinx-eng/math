@@ -4053,7 +4053,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "识别整体平均分成四份后的一份，属于第二学段初步认识分数、感悟分数单位的直观基础。",
+        "scopeBoundary": "源描述实际聚焦四分之一；中文标题同时写二分之一与四分之一，不能把未明确描述的二分之一目标另行推断。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-hTTat0mBR",
@@ -4072,7 +4088,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把整体平均分成两份并识别其中一份，是初步理解分数单位和部分—整体关系的基础。",
+        "scopeBoundary": "标准没有把所有生活中的对半分活动规定为正式分数教学；关键条件是两部分相等且指向同一个整体。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hyvHv2BCwb",
@@ -4091,7 +4123,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "理解把图形继续分成更多等份会使每一份变小，支持形成分数单位和等分的意义。",
+        "scopeBoundary": "结论只适用于整体不变且重新分成更多相等份；不等分不能直接称为单位分数。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vKcxX6iNOA",
@@ -4110,7 +4158,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "分数、分子、分母和单位分数等记号帮助表达整体与部分；分数类型和表示方式可随学段逐步深化。",
+        "scopeBoundary": "源目标同时列出真分数、假分数、带分数、等值分数和最简形式；课标未要求这些术语在第二学段一次性系统掌握。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_cFltwUQi-d",
@@ -4128,7 +4195,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "简单分数可以表示长度、图形、物体集合或数量中的部分；将分数用于求一个数量的几分之几，进一步连接第三学段分数运算。",
+        "scopeBoundary": "源目标列出1/3、1/4、2/4、3/4等例子，但课标没有把这组分数和所有数量情境规定为统一清单。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xACS3rWWDp",
@@ -4147,7 +4234,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把圆或长方形分成两份、四份相等的部分并命名，直接支持第二学段初步认识分数。",
+        "scopeBoundary": "图形形状可以不同，但各份面积必须相等；不能只凭外观相似判断平均分。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MyGblah2yY",
@@ -4165,7 +4268,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "用简单分数表示整体的一部分，并观察2/4与1/2表示相同大小，连接分数单位与等值关系。",
+        "scopeBoundary": "节点同时包含求数量的几分之一和等值分数；具体数量计算的复杂度应与分数四则运算要求区分。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IfEgu0X449",
@@ -4184,7 +4306,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "比较单位分数和同分母分数大小，对应第二学段直观比较简单分数大小的要求。",
+        "scopeBoundary": "本节点只覆盖单位分数及同分母分数；不能据此推断已掌握所有异分母分数的比较方法。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SsLWS_APM7",
@@ -4203,7 +4341,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "该节点把十分之一计数、数量中的分数、等值、分数加减和比较组合为综合任务，主要承接第二学段的初步分数认识与简单运算。",
+        "scopeBoundary": "源目标混合多个不同层次；不能把全部内容视为同一时间首次掌握，第三学段可继续深化等值和运算。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FbDKeLfBCo",
@@ -4222,7 +4379,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "用图示认识不同分数可能表示相同大小，支持分数意义深化，并为第三学段的数域转换与运算作准备。",
+        "scopeBoundary": "课标未将所有小分母等值分数家族逐一列成必学清单；不要求机械套用分子分母同乘规则而不理解整体不变。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Kr3IyA6m-O",
@@ -4241,7 +4417,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把简单分数放在数轴上，有助于把分数理解为数并直观比较大小。",
+        "scopeBoundary": "数轴是合理的表示方式，但不是该学段标准指定的唯一教具；本节点限于简单分数和小分母。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_gC-6JXAG5S",
@@ -4260,7 +4452,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "通过连续对半分建立二分之一、四分之一和八分之一之间的联系，帮助理解分数单位的细分关系。",
+        "scopeBoundary": "八分之一的具体呈现属于直观拓展，不代表课标逐项规定必须掌握这些固定分母。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_a1FdAsRKOF",
@@ -4279,7 +4487,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "同分母分数相加减且结果不超过1，直接对应第二学段同分母分数加减法要求。",
+        "scopeBoundary": "分母相同意味着分数单位相同；不能直接把分母相加。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Xp-rj46S2w",
@@ -4298,7 +4522,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把图形分成二、三或四份相等的部分，并理解相同整体的等份形状可以不同，支持初步分数意义。",
+        "scopeBoundary": "判断等份应看面积或数量是否相等，不是看各块轮廓是否相同；本节点不覆盖任意分母。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_YzM5goBctT",
@@ -4318,7 +4558,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "十分之一既是把整体平均分成十份所得的分数单位，也连接第二学段初步认识小数和分数的内容。",
+        "scopeBoundary": "源目标还包含除以10得到十分之一的联系；不能将所有小数位值或小数除法算法提前归入第二学段。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_k2WE0-22-4",
@@ -4337,7 +4596,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "从离散物体集合中识别单位分数和非单位分数，是把分数从图形表示迁移到数量表示的基础。",
+        "scopeBoundary": "求集合中若干份的具体数量会涉及分数乘法或数量计算；不应把所有此类问题都视为第二学段已熟练掌握。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_CBHwluE6Lp",
@@ -4356,7 +4634,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "同分母分数加减法是第二学段明确内容；结果超过1可作为分数意义和假分数表示的延伸。",
+        "scopeBoundary": "标准未规定所有结果必须化为带分数或最简形式；重点是同一分数单位下的加减。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HnKbuCliNS",
@@ -4374,7 +4671,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "根据相同分子或相同分母判断分数大小，属于简单分数大小比较的直接应用。",
+        "scopeBoundary": "源目标未覆盖一般异分母分数比较；不同分母时需进一步理解分数单位或使用等值变形。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TqDq6jyOmL",
@@ -4393,7 +4706,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "把十分位、百分位分数写成相应小数，连接第二学段的小数初步认识与第三学段明确要求的分数小数转化。",
+        "scopeBoundary": "源目标覆盖任意十分之几和百分之几；课标要求转化，但未规定必须覆盖所有分母或所有复杂小数。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_W17Kbwm0-u",
@@ -4412,7 +4745,28 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "节点同时涉及小数记法、数位和百分数记法：小数基础对应第二学段，百分数意义及分数—小数—百分数联系主要对应第三学段。",
+        "scopeBoundary": "源目标列出千分位、有限小数等多个术语；不能据此推断所有术语和三种表示的全面互换都在同一阶段完成。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Fl7b8q9pI1",
@@ -4430,7 +4784,24 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "一位小数取整可作为第二学段小数初步认识和实际估算的延伸，但课标没有把该特定取整目标单列为必学要求。",
+        "scopeBoundary": "这是估算或近似处理的具体策略，不等同于课程标准明确规定的固定小数四舍五入算法。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IegHBHERVa",
@@ -4448,7 +4819,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "比较相同小数位数、最多到百分位的小数大小，符合第二学段初步认识和比较简单小数的要求。",
+        "scopeBoundary": "源目标限定小数位数相同；不能据此推断已掌握位数不同或无限小数的比较。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wB-GBDkoNr",
@@ -4466,7 +4853,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "在测量和钱币情境中同时使用简单分数与两位小数，连接第二学段数的初步认识和生活问题解决。",
+        "scopeBoundary": "源目标的两位小数和分数应用不代表第二学段已掌握所有分数小数转换；复杂换算与运算留待第三学段。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kDMKJ5Ztt6",
@@ -4485,7 +4892,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "观察一个或两位数除以10、100后数位值如何变化，支持小数位值和十进制计数单位的理解。",
+        "scopeBoundary": "重点是数位意义变化，不把小数点移动口诀当作完整算理；更复杂的小数除法属于后续内容。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FP-mjXaq3B",
@@ -4504,7 +4930,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "借助图示生成等值分数并解释大小不变，深化对分数单位和整体不变的理解。",
+        "scopeBoundary": "课标第二学段只要求初步认识分数和简单比较；系统解释、生成等值分数更适合作为后续深化，不把图示规则说成唯一算法。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Ep7TDFuYUa",
@@ -4523,7 +4968,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "同一数轴位置或相同大小可用于说明等值分数，连接分数表示、比较和等值关系。",
+        "scopeBoundary": "数轴上的位置相同是等值的直观判据；分母、分子变化的通用规律仍需明确整体和单位。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_DRlbMok2lT",
@@ -4542,7 +5006,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "识别1/2、1/4、3/4等常见分数与小数的对应关系，作为第三学段分数小数转化的简单例子。",
+        "scopeBoundary": "课标第二学段只要求初步认识分数和小数；把两种表示系统互化主要放在第三学段观察。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_idbKDrf9qZ",
@@ -4560,7 +5044,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把图形分成面积相等的部分，并用单位分数表示每一份，符合初步认识分数的直观路径。",
+        "scopeBoundary": "各部分面积相等是必要条件；不同形状的部分也可能面积相等，不能将等形与等面积混为一谈。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3y7xKP9MjU",
@@ -4579,7 +5079,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "求一个数量的非单位分数部分，连接分数意义、分数乘法和实际问题解决，适合第三学段深化。",
+        "scopeBoundary": "源目标要求结果为整数的非单位分数情形；不扩展为所有分数乘法应用题或反求整体的复杂题型。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ndGqFPWyen",
@@ -4597,7 +5115,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS"
+        ],
+        "rationale": "把整体平均分成b份，其中一份是1/b，取a份就是a/b，直接对应初步认识分数和分数单位。",
+        "scopeBoundary": "必须说明整体被平均分成b份；分母不能解释为随意分成的份数，分子表示取了多少个同样大小的分数单位。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AYzE1EAvI0",
@@ -4615,7 +5149,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "把整数写成分母为1的分数，并识别等于整数的分数，深化分数作为数的理解。",
+        "scopeBoundary": "整数与分数的这种统一表达属于概念深化；不能据此推断第二学段需要系统掌握所有假分数形式。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NoB20kVa4w",
@@ -4634,7 +5187,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "先把0到1之间的单位长度等分，再按单位分数逐段定位，可直观表示分数大小和位置。",
+        "scopeBoundary": "源目标重点描述0到1之间的表示；超过1的分数和更复杂数轴扩展应按第三学段进一步判断。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_doX1BhmFgk",
@@ -4653,7 +5225,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "百分之一可理解为整体平均分成100份的一份，并连接小数百分位和分数单位。",
+        "scopeBoundary": "中文标题“认识十分之一”与源描述的百分之一、十分之一再除以10不完全一致；按源描述映射，具体位值范围需在内容审查中核实。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_70qDTI14td",
@@ -4672,7 +5263,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "同分母带分数的加减可纳入第三学段简单分数运算，并连接整数部分与分数部分的数量关系。",
+        "scopeBoundary": "带分数与假分数互化、借位等具体书写步骤不应冒充课标逐项规定；应保留算理和结果合理性。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-V7EnqU7gG",
@@ -4691,7 +5299,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "异分母分数加减需要先把分数单位统一；课标教学提示明确指出通分的目的在于得到相同计数单位。",
+        "scopeBoundary": "源目标限定分母存在公倍数关系的情形；不应扩写为所有复杂分数运算或固定通分算法。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZLqYE7la4Z",
@@ -4710,7 +5335,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "在情境中解决同分母分数加减问题，是第二学段简单分数运算与实际问题解决的直接结合。",
+        "scopeBoundary": "源目标限于同分母；若题目涉及异分母、混合运算或复杂数量关系，应按第三学段另行判断。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_933BohS9BH",
@@ -4729,7 +5374,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "比较到百分位的小数符合第二学段简单小数比较；扩展到三位小数时需结合第三学段更深入的小数意义。",
+        "scopeBoundary": "源目标把百分位比较和三位小数放在同一节点，后者不应仅凭本条直接标成课标明确要求。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SXbZ3bC9z7",
@@ -4748,7 +5412,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "通过通分、比较分数单位或与基准分数比较，解决不同分子和分母的分数大小比较，属于第三学段分数比较的深化。",
+        "scopeBoundary": "比较策略应根据分数特点选择；不能把通分当作唯一方法，也不能只凭分子或分母大小判断。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NaqEP8xDhZ",
@@ -4767,7 +5450,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "把分母为10的分数改写成分母为100的等值分数，并用于相加，体现通分以获得相同计数单位的教学提示。",
+        "scopeBoundary": "源目标仅涉及分母10和100的特定情形；不能据此推断所有异分母加法都采用相同的计算复杂度。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Ii1hV4V5ql",
@@ -4786,7 +5486,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "两位小数的近似处理可服务于第三学段估算和数感，但课标没有明确列出该节点的具体取整精度。",
+        "scopeBoundary": "将百分位小数取到整数或十分位是源节点的具体技能，不应写成国家课标逐项规定的统一算法。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Vi4Vo5xs_g",
@@ -4805,7 +5522,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "把分母为10或100的分数写成小数，连接第二学段初步认识小数与第三学段明确要求的分数小数转化。",
+        "scopeBoundary": "本节点限定十分位和百分位；不能扩大解释为循环小数或任意分数都能写成有限小数。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_sA2OvTiech",
@@ -4824,7 +5561,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "涉及千分位的实际问题可作为第三学段小数意义和实际应用的拓展观察。",
+        "scopeBoundary": "课标要求简单小数运算，但没有在此处明确规定所有问题必须达到三位小数；具体精度属于源节点的扩展范围。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ebPelt-qAl",
@@ -4843,7 +5597,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "用图示说明分子、分母同乘非零数后分数大小不变，支持等值分数、分数小数转化和通分理解。",
+        "scopeBoundary": "源目标涉及分子分母同时乘n的通用规则；需保持整体大小不变并说明n为非零，不能把等值关系误说成任意变形。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VgOePicFYK",
@@ -4862,7 +5636,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "把分数加减理解为部分的合并与分离，并用同分母分数拆分，帮助理解运算与分数单位的关系。",
+        "scopeBoundary": "拆分方式可以不止一种，但每个加数必须使用相同分数单位；不把分子分母分别相加当作规则。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HJA2Oz-Zh1",
@@ -4881,7 +5674,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "按源描述，本节点目标是用图示和方程解决分数乘整数问题，属于第三学段分数乘法。",
+        "scopeBoundary": "中文标题“分数的意义”与实际目标“分数乘整数应用题”不一致；映射依据采用源描述，不擅自改源标题。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_o_p-3tCxiM",
@@ -4900,7 +5710,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "认识带分数和假分数并在两种形式间转换，支持第三学段分数意义和分数运算的深化。",
+        "scopeBoundary": "课标没有逐项规定带分数、假分数互化的所有固定步骤；示例中分子大于分母不等于必须使用某种记忆口诀。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TgHxujL81r",
@@ -4919,7 +5746,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "分数乘整数属于第三学段简单分数四则运算的范围，可用多个相同分数单位解释。",
+        "scopeBoundary": "源目标包含带分数乘整数；应按具体难度处理，不能据此推断分数乘分数的所有形式都采用同一表征。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4ubP_RMg9o",
@@ -4938,7 +5782,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "常见分数、小数和百分数之间的对应关系，连接第三学段分数小数转化与百分数意义。",
+        "scopeBoundary": "源目标列出若干特定分母和百分数等值；不据此推断所有百分数都能直接心算或所有分数都有有限百分数表示。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kdWoAel3Zl",
@@ -4957,7 +5819,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "千分之一及其与十分之一、百分之一和小数的对应关系，可作为第三学段小数计数单位的延伸。",
+        "scopeBoundary": "中文标题“认识十分之一”与源描述的千分之一不匹配；课标未明确要求该节点列出的所有千分位换算，按扩展内容处理。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_09sySPqM9Z",
@@ -4976,7 +5855,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-FRACTIONS",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "把a/b理解为a个1/b相加，进一步揭示分数单位与分数大小之间的组成关系。",
+        "scopeBoundary": "这是对分数意义的结构化理解，不代表必须用重复加法完成所有分数运算。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZM9mhHsyYZ",
@@ -4995,7 +5893,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "理解百分号表示每百份中的多少份，并能用分母为100的分数和小数表达，直接对应第三学段百分数意义。",
+        "scopeBoundary": "本节点确认百分数的基本意义和表示，不自动包含复杂百分数应用、增长率或比例问题。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_14T5yPXUq_",
@@ -5013,7 +5928,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "异分母分数加减通过等值分数统一分数单位，属于第三学段简单分数四则运算的合理范围。",
+        "scopeBoundary": "混合数和较复杂分母组合可能增加运算负担；课标要求简单运算，不代表所有分母组合和多步形式均为统一必学。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_gx6KQK5-Kx",
@@ -5031,7 +5963,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "用单位分数方格解释分数边长矩形的面积，可作为分数乘法与面积模型的跨主题拓展。",
+        "scopeBoundary": "课标分别支持分数运算和常见图形面积，但未明确要求所有分数边长矩形面积乘法；按拓展内容处理。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PL9VkDwXfh",
@@ -5049,7 +5999,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "比较包含大于1的分数，进一步运用等值分数、共同分母或基准数判断大小。",
+        "scopeBoundary": "大于1的分数比较属于分数意义和大小关系的深化；不把某一种通分算法当作课标指定的唯一策略。",
+        "reviewBatch": "07a-fraction-meaning-representation",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4K1dr204Hi",
@@ -5067,7 +6033,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "把分数与除法联系起来，并将简单分数写成小数，直接连接第三学段分数小数转化及整数除法与分数的关系。",
+        "scopeBoundary": "源例3/8=0.375是具体有限小数例子；不代表所有分数都能化为有限小数，也不要求循环小数转化。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1PAWhRhpdg",
@@ -5085,7 +6069,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "整数除以单位分数属于第三学段简单分数除法内容，可结合分数与整数除法的关系解释商的意义。",
+        "scopeBoundary": "商大于被除数只在除数为0到1之间的正单位分数时成立；不能泛化为所有分数除法。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ifPDOYvUqm",
@@ -5103,7 +6104,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "单位分数除以非零整数属于第三学段简单分数除法，可用把单位分数再平均分解释结果。",
+        "scopeBoundary": "除数必须是非零整数；源目标不代表已经覆盖任意分数除以任意分数。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_rCMdwG-YOE",
@@ -5121,7 +6139,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "在真实问题中处理单位分数与整数的双向除法，综合运用分数除法意义和数量关系。",
+        "scopeBoundary": "两种除法的意义不同，需区分“一个整体中有多少个单位分数”和“把单位分数再平均分”。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4Km38F4L-6",
@@ -5139,7 +6175,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "把a/b理解为a除以b，并解释整数除法得到分数或带分数的结果，直接对应第三学段整数除法与分数关系。",
+        "scopeBoundary": "源目标还涉及带分数答案；具体表达形式可因教学材料不同而变化，不据此指定唯一写法。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_e7filQgayF",
@@ -5157,7 +6210,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "异分母分数加减的实际问题与第三学段分数运算和情境问题解决相对应。",
+        "scopeBoundary": "估算和基准分数是合理性检查策略；课标没有规定必须使用某一种视觉模型或固定估算流程。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VKW8lOcFaw",
@@ -5175,7 +6246,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "把乘以分数理解为数量缩放，比较乘数大于、等于或小于1时结果的变化，深化第三学段分数乘法与数量关系。",
+        "scopeBoundary": "课标支持简单分数运算和比与比例，但没有把所有缩放比较规则逐项列为独立要求；需保留乘数为正等条件。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AabJisinfi",
@@ -5193,7 +6282,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "分数乘分数以及整数与分数相乘，属于第三学段简单分数四则运算的范围。",
+        "scopeBoundary": "结果化为最简形式是源目标要求，但课标未规定所有题目必须使用固定约分顺序或唯一算法。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_lvaSGHwvQ5",
@@ -5211,7 +6317,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "用图示或算式解决分数与带分数乘法的生活问题，直接连接第三学段分数运算和真实情境应用。",
+        "scopeBoundary": "情境建模应先明确整体、所取部分和单位；不把“of means multiply”当作脱离情境的万能规则。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_b7T-CjOYUR",
@@ -5229,7 +6353,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "利用公因数化简分数、利用公倍数统一分数单位，与第三学段因数倍数知识和分数运算相连。",
+        "scopeBoundary": "课标教学提示明确提到通分及相同计数单位，但没有把“约分”作为独立内容要求逐项列出，因此不标为直接对应。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SBkTGjiZjZ",
@@ -5247,7 +6388,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "简单分数与有限小数的互相转换可延伸第三学段；要求对所有有限小数熟练互化，尤其涉及更复杂数域时，主要作为初中衔接观察。",
+        "scopeBoundary": "源年龄和上游标准指向更高阶段；小学课标只要求简单分数小数转化，不支持把所有有限小数互化都定为小学必学。",
+        "reviewBatch": "07c-decimals-percent-scaling",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9Y96vxG_LH",
@@ -5265,7 +6426,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "分数除以分数属于第三学段简单分数四则运算的范围，需解释除法关系和结果意义。",
+        "scopeBoundary": "“先不变、再变号、后倒数”等记忆口诀不是课标指定术语或唯一的概念解释；本映射只确认数学内容范围。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_gNUE4B3vuk",
@@ -5283,7 +6461,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "正分数、假分数和带分数的简单运算可延伸第三学段分数四则运算；同时处理负数和有理数的系统运算则进入初中。",
+        "scopeBoundary": "源目标把整数、小数、正负分数的四则运算及正式书写方法合并；小学只支持正数范围内的简单分数运算，负数运算属于初中衔接。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_J339bO7qLe",
@@ -5301,7 +6499,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FRACTIONS",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "求一个数量的几分之几或百分之几，连接分数乘法、百分数意义与实际数量关系。",
+        "scopeBoundary": "源目标同时覆盖分数和百分数作为算子的表达；百分数意义有课程依据，但具体算式策略应按问题条件判断。",
+        "reviewBatch": "07b-fraction-operations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_KJeEeTutJI",
