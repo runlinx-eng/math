@@ -1,9 +1,9 @@
 # 第二批10个知识点内容复核记录
 
-复核日期：2026-11-03  
-仓库：`runlinx-eng/math`  
-分支：`feat/language-concept-audit-v1`  
-复核基线：`4b25b7f9a9b498585dfbd687d45abc73758474cf`  
+复核日期：2026-11-03
+仓库：`runlinx-eng/math`
+分支：`feat/language-concept-audit-v1`
+复核基线：`4b25b7f9a9b498585dfbd687d45abc73758474cf`
 复核性质：AI交叉复核；不是独立教研人员签字，也不是儿童理解测试。
 
 ## 一、复核结论
