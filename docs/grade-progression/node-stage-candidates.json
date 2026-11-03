@@ -18899,7 +18899,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "条形模型和带状图把两个量的比、部分与整体以及按比分享转成等份图示，服务第三学段理解比和比例、解决简单按比例分配问题。",
+        "scopeBoundary": "条形模型、双数轴或特定块数是可选表征，不是课标指定的唯一方法；必须说明每一份代表哪个量，以及总份数对应什么整体。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ESgc4YBw-a",
@@ -18918,7 +18934,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "源描述的实际目标是ratio、proportion、percentage、scale等词汇，以及部分—部分和部分—整体关系；第三学段明确要求理解比和比例、计算比值并理解百分数意义。",
+        "scopeBoundary": "中文节点名“百分数的应用”与源描述不完全一致：该节点主要是比与比例术语辨析，不是百分数计算题。保留原始名称和源字段，不以名称替代实际目标。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PNSyfH56eQ",
@@ -18936,7 +18969,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "求一个量的百分之几并用于价格比较，直接对应第三学段理解百分数意义、解决与百分数有关的简单实际问题；课标教学提示包含折扣等真实情境。",
+        "scopeBoundary": "15%拆成10%与5%只是可用策略之一；课标不限定唯一计算算法、价格情境或折扣题型。",
+        "reviewBatch": "12b-percentage-meaning-and-applications",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_h0gJcSuwdL",
@@ -18954,7 +19004,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "已知两个量的比，并依据整数倍数关系求未知量，是第三学段理解比、计算比值及解决简单比例分配问题的直接应用。",
+        "scopeBoundary": "节点中的例子要求两个量保持同一乘法关系；不据此推断小学必须掌握复杂多步比例方程或交叉相乘算法。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_2OtRUM_0zW",
@@ -18972,7 +19038,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "第三学段要求认识比例尺并按比例放大或缩小简单图形；第四学段进一步学习图形相似、相似比及相似三角形，支持按比例求未知边长。",
+        "scopeBoundary": "小学阶段是比例尺和方格纸上的简单放缩；相似三角形判定、性质及用相似关系求未知边长属于初中衔接，不前移为五六年级核心。",
+        "reviewBatch": "12c-scale-and-proportional-relationships",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FnUJMXPUZX",
@@ -18990,7 +19075,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "用分数和倍数知识处理不等分配，尤其按比拆分总量，直接对应第三学段按比例分配及分数意义。",
+        "scopeBoundary": "简单按比分配是核心；多层倍数链和多对象复杂分配属于进一步拓展，不等同于课标明确规定的全部必学题型。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kLQOzZYrd5",
@@ -19008,7 +19110,28 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "单价×数量、路程=速度×时间等常见数量关系，为单价和速度情境提供小学阶段基础；密度及统一的复合单位体系则超出当前小学标准明确列项。",
+        "scopeBoundary": "单位率、速度单位互换、密度公式和系统复合量纲不是小学独立要求；生活情境能承载数量关系，不等于课标要求掌握所有复合单位。",
+        "reviewBatch": "12d-rates-and-unit-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nOCPx5qw0Z",
@@ -19026,7 +19149,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "把总量按给定的部分—部分或部分—整体关系拆分，求每份对应数量，直接对应第三学段理解按比例分配的含义并解决简单问题。",
+        "scopeBoundary": "两部分的简单分配是核心；三部分1:2:3等复杂情境可以拓展，不把它们自动提升为统一必学要求。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xAf2bu9wYK",
@@ -19044,7 +19184,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "一个量作为另一个量的几分之几，与分数表示、比值及部分—整体关系相连；第三学段要求判断两个量的比、计算比值，并理解分数。",
+        "scopeBoundary": "若比较的是两个独立量，a/b表示前者相对于后者，不一定是整体中的份额；只有明确整体为两量之和时，才可用a/(a+b)表示其中一部分。比值大于1时须结合量的大小解释。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ALUrJpY0cZ",
@@ -19062,7 +19219,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "百分数表示每百份的倍数关系，与第三学段百分数意义和简单百分数问题直接相连；分数、小数互化为其数的表示基础。",
+        "scopeBoundary": "百分数变化、反求原量以及超过100%的复杂情境，并非都由“简单百分数问题”直接保证；按具体目标作为拓展或后续衔接，不整体前移为小学必学。",
+        "reviewBatch": "12b-percentage-meaning-and-applications",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ATYLKt0je-",
@@ -19080,7 +19256,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S4-FUNCTIONS"
+        ],
+        "rationale": "比、比值和正比例属于第三学段数量关系；速度等常见关系可作应用语境，函数语言可为后续学习作准备。",
+        "scopeBoundary": "2022年版小学标准明确成正比的量和y=kx，但未把反比例、单位率、复合单位、密度等全部列为小学要求；该词汇表混合了不同学段内容。",
+        "reviewBatch": "12d-rates-and-unit-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FspV_imUGK",
@@ -19098,7 +19293,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "第三学段要求认识成正比的量，能根据给出的正比例数据在方格纸上画图并了解y=kx；读图求未知量是该要求的直接应用。",
+        "scopeBoundary": "双数轴和比值表是辅助表示，不是课标指定的唯一方法；过原点的直线描述正比例，不能泛化为所有线性关系，也不包含反比例曲线。",
+        "reviewBatch": "12c-scale-and-proportional-relationships",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XWSGuFW7It",
@@ -19116,7 +19327,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "比的记号、化简及与分数的联系，支持第三学段理解比、计算比值、识别比值相同的量和解决简单按比例分配问题。",
+        "scopeBoundary": "课标没有逐项规定所有小数比、分数比的通用化简算法；a:b的部分—部分关系不等同于a/(a+b)的部分—整体分数，需区分。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1badik7iKJ",
@@ -19134,7 +19362,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "第三学段明确要求了解比例尺、换算图上距离与实际距离，并在方格纸上按给定比例放大或缩小简单图形；校园平面图活动也综合运用比例尺。",
+        "scopeBoundary": "图上距离和实际距离必须使用一致单位；更换比例尺重绘和复杂地图测距是应用拓展，不是标准规定的唯一题型。",
+        "reviewBatch": "12c-scale-and-proportional-relationships",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tpT9brpI6D",
@@ -19152,7 +19397,33 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "不同学段逐步学习长度、时间、质量、面积、体积或容积等单位及换算；第三学段明确涉及面积、体积和容积单位及单位换算，承接前两学段的计量经验。",
+        "scopeBoundary": "源节点混合时间、长度、面积、体积/容量、质量和小数精度；课标不要求统一到小数后三位，也不要求所有跨量纲多步换算。面积单位换算与长度比例因子平方必须区分。",
+        "reviewBatch": "12d-rates-and-unit-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_CUJr8L5_Wn",
@@ -19170,7 +19441,26 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-GEOMETRY"
+        ],
+        "rationale": "第三学段的比例尺与简单图形放缩提供基础；第四学段相似图形内容明确相似比与面积比的平方关系，直接支撑由比例图求实际面积。",
+        "scopeBoundary": "面积因子是长度比例因子的平方，不能把长度比例直接乘到面积上；本节点还涉及大比例尺地图和单位换算，须核对单位。该节点仍属于85个教学研究缺口之一，本次课程映射不代表其教学研究记录已补齐。",
+        "reviewBatch": "12c-scale-and-proportional-relationships",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_iEXqN48w3x",
@@ -19188,7 +19478,26 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "第三学段明确要求百分数意义和简单实际问题，教学提示列举税率、利息、折扣等生活情境，可支持简单利息和百分比变化的初步体验。",
+        "scopeBoundary": "百分比增减、已知变化后反求原量和简单利息公式没有全部作为独立算法条目列出；不能把复杂逆向百分数计算当作小学统一要求。",
+        "reviewBatch": "12b-percentage-meaning-and-applications",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5mIcmKRCgA",
@@ -19206,7 +19515,26 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S4-FUNCTIONS"
+        ],
+        "rationale": "正比例是第三学段明确内容，能根据一个量的值求另一个量并表示为y=kx；节点同时包含反比例、曲线图像和代数表示，需拆清层次。",
+        "scopeBoundary": "只把正比例核心放在五六年级；2022年版小学要求未列反比例关系，不能把“一个量增加、另一个减少”简单等同于反比例，也不将其写成小学直接要求。",
+        "reviewBatch": "12c-scale-and-proportional-relationships",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_yK51ZnKA8m",
@@ -19224,7 +19552,24 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-FRACTIONS"
+        ],
+        "rationale": "用比表达两个量的乘法关系，并联系比值、分数表示和正比例关系，直接对应第三学段理解比、计算比值、认识成正比的量及其y=kx表达。",
+        "scopeBoundary": "a:b与a/b表示两个量的相对关系；若转成占两量总和的分数，分母应为a+b而不是b。y=(a/b)x只在对应的直接比例关系成立时使用。",
+        "reviewBatch": "12a-ratio-meaning-representation-and-sharing",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     }
   ],
   "nodesOutsidePrimaryAgeRange": 36,
@@ -19440,11 +19785,43 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "完成随机现象与概率；小学第三学段只作定性可能性判断，等可能结果、树状图、简单概率计算和频率估计归入初中衔接，未列明的方法保留相邻拓展。"
+      },
+      {
+        "id": "12a-ratio-meaning-representation-and-sharing",
+        "domain": "Ratio & Proportion",
+        "nodeCount": 8,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "比的意义、比值、表示、部分与整体及简单按比例分配；区分比的记号与部分占整体的分数。"
+      },
+      {
+        "id": "12b-percentage-meaning-and-applications",
+        "domain": "Ratio & Proportion",
+        "nodeCount": 3,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "百分数意义、求一个量的百分之几及变化应用；区分简单百分数问题与反求原量、超过100%等拓展。"
+      },
+      {
+        "id": "12c-scale-and-proportional-relationships",
+        "domain": "Ratio & Proportion",
+        "nodeCount": 5,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "比例尺、正比例图像、相似图形与面积比例；明确五六年级比例尺/正比例和初中相似及面积比平方的边界。"
+      },
+      {
+        "id": "12d-rates-and-unit-conversions",
+        "domain": "Ratio & Proportion",
+        "nodeCount": 3,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "速度、单价、密度等复合量与多学段单位换算；不把密度和所有复合单位提升为小学必学。"
       }
     ],
-    "completedNodeCount": 518,
-    "pendingNodeCount": 19,
+    "completedNodeCount": 537,
+    "pendingNodeCount": 0,
     "excludedThinkingNodeCount": 50,
-    "status": "partial"
+    "status": "ai-first-pass-complete"
   }
 }
