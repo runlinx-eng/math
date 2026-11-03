@@ -77,17 +77,27 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B
   assert.equal(b04.externalSourceIds.length,5);
   assert.equal(b04.explanationSamplePresent,true);
   assert.equal(b04.researchVerificationStatus,'external_sources_reviewed_B04_2026-11-03');
+  assert.equal(b04.nextAction,'independent_content_and_math_review_before_acceptance');
+  assert.equal(b04.explanationDraftStatus,'ai_draft_self_checked_pending_independent_review');
+  assert.equal(b04.independentMathReviewStatus,'not_completed');
+  assert.equal(b04.childUnderstandingStatus,'not_tested');
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,73);
  const b01Ids=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS']);
  for(const id of b01Ids){const record=researchTriage.records.find(item=>item.id===id);assert.ok(record,id);assert.equal(record.externalSourcesVerified,true);assert.equal(record.explanationSamplePresent,true);assert.equal(record.nextAction,'independent_content_and_math_review_before_acceptance');}
  const b02Record=researchTriage.records.find(item=>item.id==='mt_NSC3LT_-ch');
  assert.ok(b02Record);assert.equal(b02Record.externalSourcesVerified,true);assert.equal(b02Record.explanationSamplePresent,true);
  assert.equal(b02Record.researchVerificationStatus,'external_sources_reviewed_B02_2026-11-03');
- assert.equal(b02Record.nextAction,'await_authorization_before_explanation_drafting');assert.equal(b02Record.externalSourceIds.length,6);
+ assert.equal(b02Record.nextAction,'independent_content_and_math_review_before_acceptance');assert.equal(b02Record.externalSourceIds.length,6);
+ assert.equal(b02Record.explanationDraftStatus,'ai_draft_self_checked_pending_independent_review');
+ assert.equal(b02Record.independentMathReviewStatus,'not_completed');
+ assert.equal(b02Record.childUnderstandingStatus,'not_tested');
  const b03Record=researchTriage.records.find(item=>item.id==='mt_gC-6JXAG5S');
  assert.ok(b03Record);assert.equal(b03Record.externalSourcesVerified,true);assert.equal(b03Record.explanationSamplePresent,true);
  assert.equal(b03Record.researchVerificationStatus,'external_sources_reviewed_B03_2026-11-03');
- assert.equal(b03Record.nextAction,'await_authorization_before_explanation_drafting');assert.equal(b03Record.externalSourceIds.length,4);
+ assert.equal(b03Record.nextAction,'independent_content_and_math_review_before_acceptance');assert.equal(b03Record.externalSourceIds.length,4);
+ assert.equal(b03Record.explanationDraftStatus,'ai_draft_self_checked_pending_independent_review');
+ assert.equal(b03Record.independentMathReviewStatus,'not_completed');
+ assert.equal(b03Record.childUnderstandingStatus,'not_tested');
  const phaseBreakdown={};
  for(const record of researchTriage.records){const phase=String(record.phase);phaseBreakdown[phase]??={knowledge_map:0,math_thinking:0};phaseBreakdown[phase][record.scope]++;}
  assert.deepEqual(researchTriage.summary.phaseBreakdownByScope,phaseBreakdown);
@@ -108,7 +118,7 @@ test('critical second-pass corrections are present in the explanation source',()
  assert.match(CONCEPT_EXPLANATIONS['mt_Jvg8X0N5u0'].example,/三角形底/);
 });
 
-test('sample and research review scope stays separate from the 492 unconfigured explanations',()=>{
+test('sample and research review scope stays separate from the 487 unconfigured explanations',()=>{
  assert.equal(knowledge.length,537);
  assert.equal(sampleIds.size,50);
  assert.equal(knowledge.length-sampleIds.size,487);
@@ -129,12 +139,13 @@ test('seven research-gap samples have external evidence records and actual expla
 });
 
 
-test('B02 capacity research gate is documented without drafting an explanation',()=>{
+test('B02 capacity research record tracks the completed first draft',()=>{
  const b02=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B02.json',import.meta.url),'utf8'));
  assert.equal(b02.batchId,'B02');
  assert.equal(b02.summary.nodesReviewed,1);
  assert.equal(b02.summary.externalSourcesCatalogued,6);
- assert.equal(b02.summary.explanationDraftsCreated,0);
+ assert.equal(b02.summary.explanationDraftsCreated,1);
+ assert.equal(b02.summary.explanationDraftsPendingIndependentReview,1);
  const node=b02.records.find(item=>item.id==='mt_NSC3LT_-ch');
  assert.ok(node);
  assert.equal(node.sourceIds.length,6);
@@ -143,12 +154,13 @@ test('B02 capacity research gate is documented without drafting an explanation',
  assert.match(node.relationshipBoundary,/No new dependency/);
 });
 
-test('B03 fractions research gate preserves equal-part and same-whole boundaries',()=>{
+test('B03 fractions research record tracks the completed first draft and preserves equal-part boundaries',()=>{
  const b03=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B03.json',import.meta.url),'utf8'));
  assert.equal(b03.batchId,'B03');
  assert.equal(b03.summary.nodesReviewed,1);
  assert.equal(b03.summary.externalSourcesCatalogued,4);
- assert.equal(b03.summary.explanationDraftsCreated,0);
+ assert.equal(b03.summary.explanationDraftsCreated,1);
+ assert.equal(b03.summary.explanationDraftsPendingIndependentReview,1);
  const node=b03.records.find(item=>item.id==='mt_gC-6JXAG5S');
  assert.ok(node);
  assert.equal(node.sourceIds.length,4);
@@ -156,4 +168,20 @@ test('B03 fractions research gate preserves equal-part and same-whole boundaries
  assert.match(node.coverageAudit.join(' '),/same whole/);
  assert.match(node.knownRisks.join(' '),/congruent shapes/);
  assert.match(node.relationshipBoundary,/No new dependency/);
+});
+
+
+test('B01 and B04 research records distinguish draft completion from independent acceptance',()=>{
+ const b01=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B01.json',import.meta.url),'utf8'));
+ const b04=JSON.parse(fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-B04.json',import.meta.url),'utf8'));
+ assert.equal(b01.summary.explanationDraftsCreated,2);
+ assert.equal(b01.summary.explanationDraftsPendingIndependentReview,2);
+ assert.equal(b04.summary.explanationDraftsCreated,1);
+ assert.equal(b04.summary.explanationDraftsPendingIndependentReview,1);
+ for(const record of [...b01.records,...b04.records]){
+  assert.equal(record.explanationDraftCreated,true);
+  assert.equal(record.explanationDraftStatus,'ai_draft_self_checked_pending_independent_review');
+  assert.equal(record.independentMathReviewStatus,'not_completed');
+  assert.equal(record.childUnderstandingStatus,'not_tested');
+ }
 });
