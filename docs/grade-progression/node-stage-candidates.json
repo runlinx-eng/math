@@ -8349,7 +8349,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把物品平均分成若干份，或按每组固定数量分组，是第一学段乘除法意义的直接情境基础。",
+        "scopeBoundary": "平均分与分组是除法的两种常见解释；具体情境应说明求的是每份数量还是组数。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_GRWwTDZ3wD",
@@ -8368,7 +8384,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "用行列排列表示相同数量的组，能把乘法总数与除法分组关系直观呈现，支持第一学段理解简单整数乘除法，并可在第二学段继续作为算理模型。",
+        "scopeBoundary": "排列方阵是理解运算的表征方式，不是课标规定的唯一教学形式。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PZ909yPrEC",
@@ -8386,7 +8421,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把相同数量的几组相加，理解乘法是加法的简便运算，属于第一学段明确要求的乘法意义。",
+        "scopeBoundary": "重复加法有助于建立乘法意义，但不能把乘法长期等同于重复加法，尤其不能覆盖更一般的乘法模型。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_1GDEHyEZYH",
@@ -8404,7 +8455,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "用虚拟材料模拟平均分和分组，数学目标对应第一学段的简单整数除法及其实际意义。",
+        "scopeBoundary": "屏幕拖拽是学习媒介，不是课程标准指定的技术要求；应关注分配是否公平及每组数量。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_C9ZfT-4cgn",
@@ -8422,7 +8489,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "乘法交换律在第二学段被明确列为需要探索和理解的运算律。",
+        "scopeBoundary": "除法不满足交换律是重要数学边界，但课标未要求以形式化命题方式单独证明这一点。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wh3UqnWsa7",
@@ -8441,7 +8524,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "用方阵、重复加法、心算和已知事实解决乘除问题，第一学段建立简单乘除意义与表内事实，第二学段继续扩展多位数运算和实际问题。",
+        "scopeBoundary": "这些方法是可选策略；不能把乘法仅定义为重复加法，也不应把所有方法要求同时施加于每道题。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_0u4KLbvBa1",
@@ -8461,7 +8563,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "认识奇数和偶数是第三学段数与运算的明确内容。",
+        "scopeBoundary": "节点仅要求识别奇偶数；奇偶数运算规律和形式化证明需另行判断。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zOWwLxa77y",
@@ -8480,7 +8598,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "读写乘号、除号和等号，是表达第一学段简单整数乘除关系的基础。",
+        "scopeBoundary": "会读写符号不等于已经理解运算意义；应结合实际情境和算式解释。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_qUjW0N1cYO",
@@ -8498,7 +8632,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "在约30以内的生活情境中解决平均分和分组问题，直接对应第一学段简单整数除法及数量情境。",
+        "scopeBoundary": "“约30”是节点练习范围，不是国家课标对第一学段除法数域的精确上限。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HhuSDxwDNM",
@@ -8517,7 +8667,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "熟练掌握2、5、10的乘法口诀及相关除法事实，属于第一学段表内乘除法要求。",
+        "scopeBoundary": "课标规定表内乘除法的熟练掌握，但没有把2、5、10这三组单独规定为完整范围。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_B1zj1RwQ3a",
@@ -8536,7 +8702,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "用方阵中每行相同数量的物体表示乘法，并用相同加数求总数，支持第一学段理解乘法意义，第二学段可用于解释运算规律。",
+        "scopeBoundary": "最多5行5列是练习设计边界，不是国家课标的规定范围。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_EmR5n58jZt",
@@ -8555,7 +8740,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "多步骤乘除问题、按倍数缩放和对应关系问题，建立在第二学段多位数乘除法及常见数量关系之上，并可向第三学段复杂情境延伸。",
+        "scopeBoundary": "缩放与对应关系问题的难度差异很大；节点没有给出具体数域和步骤上限，不能将全部题型视为同一学段必学。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_UTnDKQkVX5",
@@ -8574,7 +8779,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把长方形分成行列相同大小的方格并求总数，连接了图形面积的单位铺排与乘法方阵模型，主要在第二学段用于发展乘法和面积理解。",
+        "scopeBoundary": "本节点只描述方格计数，不等于已掌握长方形面积公式；图形与面积的正式映射还需结合几何领域审查。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wQ89AEXhz3",
@@ -8593,7 +8817,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "3、4、8的乘法口诀和相关除法事实属于表内乘除法学习，并支持第二学段多位数乘除法。",
+        "scopeBoundary": "课标要求表内乘除法，但没有逐组指定口诀学习顺序或记忆时间指标。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_DyGBW3ZHh3",
@@ -8612,7 +8855,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "借助已知乘法口诀计算两位数乘一位数，并逐步形成笔算方法，符合第二学段多位数乘除法的明确要求。",
+        "scopeBoundary": "标准支持多位数乘除法，但没有规定所有学生必须按同一顺序从心算过渡到某种竖式格式。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_K5jM7vlVhA",
@@ -8630,7 +8889,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "表内乘除法在第一学段明确要求；但中国课程标准没有规定必须记忆到12×12，因此12×12只能作为超出明确要求的扩展范围。",
+        "scopeBoundary": "不能把国际课程常见的12×12乘法表误写成中国小学国家课标的硬性要求；本地化时应优先核对中国教材实际范围。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_GDG9_SZmsO",
@@ -8649,7 +8927,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把除法转化为寻找未知因数，直接体现第一学段要求理解除法是乘法的逆运算，第二学段可扩展到更大数域。",
+        "scopeBoundary": "未知因数策略不等于掌握形式化方程；示例数值范围不决定唯一教学年级。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nZkL5-XjRX",
@@ -8668,7 +8965,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "乘法交换律支持心算中交换因数的策略；因数对及其进一步应用与第三学段的因数概念相衔接。",
+        "scopeBoundary": "第二学段运算律是明确内容，但“所有因数对”主要属于第三学段；节点混合两类目标，不能整体压缩为一个年级。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WX30dzi4dt",
@@ -8687,7 +9003,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "熟练掌握表内乘除法事实是第一学段明确学业要求，利用乘除互逆关系推导相关事实也与标准要求相符。",
+        "scopeBoundary": "节点的“100以内”是练习范围，不意味着第一学段必须熟练掌握所有乘除组合至100。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_pjfmCMMPjO",
@@ -8706,7 +9041,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "利用数位、已知事实和运算律进行乘除口算，符合第二学段多位数乘除法及运算律应用。",
+        "scopeBoundary": "0和1参与运算的性质可作为基础理解；三个数相乘涉及结合律，需区分直观策略与运算律的系统理解。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Zdv-b-iW5K",
@@ -8724,7 +9075,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "用乘除法解决相同数量的组、方阵和测量数量问题，第一学段建立简单乘除模型，第二学段进一步运用乘法模型和常见数量关系解决实际问题。",
+        "scopeBoundary": "“100以内”是节点给出的任务范围，不是课标规定的统一上限；测量情境也需根据涉及的量判断难度。",
+        "reviewBatch": "06a-multiplication-division-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AR-K72OIIO",
@@ -8743,7 +9114,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "乘法对加法的分配律在第二学段明确列为需要探索和理解的运算律，乘加应用问题可作为其情境运用。",
+        "scopeBoundary": "分配律是第二学段明确内容；更复杂的整数缩放和对应关系题型需按实际数域和步骤判断。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_isojCL9yy-",
@@ -8762,7 +9153,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "一位数乘整十数依赖乘法意义和十进制数位理解，适合放在第二学段多位数乘法与位值策略的主要观察范围。",
+        "scopeBoundary": "课标未单独列出10—90整十数这一固定题型；不能仅根据乘以10就推断具体年级。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_w6MxaaoMXZ",
@@ -8780,7 +9190,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "观察乘法表中的规律并用运算性质解释，建立在第一学段表内乘除法经验上，第二学段与探索、理解运算律的要求相连。",
+        "scopeBoundary": "标准明确要求探索运算律，但未规定必须使用乘法表作为唯一探索材料。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Lb2ZnMdkYR",
@@ -8798,7 +9227,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "乘法交换律、结合律和乘法对加法的分配律均属于第二学段明确要求探索和理解的运算律。",
+        "scopeBoundary": "除法运算不能简单套用乘法的交换律、结合律和分配律；策略应用需说明适用条件。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xZvDCYA5Ae",
@@ -8817,7 +9262,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "通过乘除关系确定未知因数，承接第一学段对除法逆运算的理解，并在第二学段多位数运算和数量关系中扩展。",
+        "scopeBoundary": "节点覆盖未知数处于不同位置的算式；不应把所有形式都视为第一学段的独立要求。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_iNdrM2-oJf",
@@ -8835,7 +9299,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把商理解为每份分到的数量或可以分成的组数，直接对应第一学段理解除法意义及其与乘法的关系。",
+        "scopeBoundary": "商的两种解释分别对应平均分和包含除；题目需明确被除数、除数所代表的量。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_gtTl3R5buH",
@@ -8853,7 +9333,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "把若干组相同数量合起来求总数，直接对应第一学段理解乘法意义及乘法是加法简便运算。",
+        "scopeBoundary": "乘法模型不只有相同加数求和；后续还要发展倍数比较、面积模型和数量关系模型。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_18fK9sQdIz",
@@ -8872,7 +9368,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "两位数或三位数乘一位数的笔算，是第二学段多位数乘法要求的具体算法表现。",
+        "scopeBoundary": "标准没有把“最多三位数乘一位数”列为固定上限；应按教材与实际算理要求校准。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_p-nbe0w_lf",
@@ -8891,7 +9403,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "带余数的除法及其实际解释，建立在第二学段多位数除法和实际问题解决基础上；较复杂多步骤情境可延伸到第三学段。",
+        "scopeBoundary": "余数可能表示剩余数量、需要增加一组或按情境取整，不能一律向上或向下取整；字母表示未知量的内容也可能超出本节点核心。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FHIAv6dfhU",
@@ -8910,7 +9442,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "寻找因数对、公因数、公倍数及最大公因数、最小公倍数，属于第三学段明确内容；质数和合数也在该学段出现。",
+        "scopeBoundary": "标准规定自然数范围内的因数倍数学习，但不要求将全部相关算法统一安排在某个具体年级。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_0Wg5F97osg",
@@ -8929,7 +9477,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES",
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS"
+        ],
+        "rationale": "因数和倍数问题属于第三学段；平方数、立方数及其运算意义向初中乘方内容衔接。",
+        "scopeBoundary": "节点把因数倍数与平方数、立方数合并；小学标准明确因数倍数，但没有把平方数和立方数的系统运算作为同一要求。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_q9EaJc2FP8",
@@ -8948,7 +9515,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "多位数乘一位数和两位数乘两位数的笔算，符合第二学段多位数乘法的整体要求。",
+        "scopeBoundary": "课标没有逐项规定四位数乘一位数、两位数乘两位数及面积模型的完整清单；需按具体教材内容判断。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8A3pZNOp7Z",
@@ -8967,7 +9552,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "利用已知乘除事实和数位调整进行心算，属于第二学段多位数乘除法与运算策略的延伸。",
+        "scopeBoundary": "标准没有规定必须掌握节点列出的全部心算技巧或统一速度。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_U4cIBXVug4",
@@ -8986,7 +9589,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "把乘法等式解释为两个量之间的倍数比较，与第二学段常见数量关系和第三学段比与比例的学习相连。",
+        "scopeBoundary": "“35是7的5倍”是乘法比较关系，不应与第三学段正式的比、比例概念混为一谈。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6-j1NO2ZUH",
@@ -9005,7 +9627,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "用图示和含未知数的算式解决倍数比较问题，建立在第二学段数量关系模型基础上，并向第三学段用字母表示关系延伸。",
+        "scopeBoundary": "课标未将所有倍数比较题统一规定为某个年级；题目应按数域、步骤和未知数形式判断。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_LlMl2PbaZe",
@@ -9024,7 +9665,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "整数乘除10、100、1000可由第二学段位值和多位数运算发展；小数乘除法则与第三学段简单小数四则运算相连。",
+        "scopeBoundary": "标准没有规定所有乘除10、100、1000的具体小数位数范围；解释应基于计数单位和位值变化，不能说数字本身任意移动。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oxfxzbat3k",
@@ -9043,7 +9703,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "奇偶数及其性质属于第三学段内容；通过加减乘法观察奇偶规律，是对这些数性质的进一步探索。",
+        "scopeBoundary": "课标明确要求认识奇数、偶数，但未逐项列出节点中的每条奇偶运算规律或要求形式化证明。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_y1XCVsIelg",
@@ -9062,7 +9738,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "认识质数、合数并判断100以内自然数的质合性，直接对应第三学段数与运算要求。",
+        "scopeBoundary": "标准支持质数、合数的认识和判断；“质因数”术语及完整分解步骤需避免超出明确要求。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_A-FyLLLLzy",
@@ -9081,7 +9773,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "发现数或图形按规则变化的规律，与第二学段探索简单规律及第三学段用字母表示关系和规律相连。",
+        "scopeBoundary": "本节点并非乘除法专属内容；其归属依据是规律探索目标，而非所在知识群名称。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MCu_SNg_OW",
@@ -9100,7 +9811,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "多位数除以一位数的笔算和余数解释，属于第二学段多位数除法的具体算法拓展。",
+        "scopeBoundary": "标准未逐项规定四位数除以一位数或“短除法”格式；余数解释应依具体情境决定。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_gxCIASSezX",
@@ -9119,7 +9848,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES",
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS"
+        ],
+        "rationale": "平方数、立方数可作为第三学段乘法结构的拓展观察，并与第四学段明确学习乘方意义相衔接。",
+        "scopeBoundary": "第三学段课标未明确要求掌握平方数、立方数符号和系统概念；²、³记号及乘方意义主要属于初中内容。",
+        "reviewBatch": "06b-multiplication-division-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZOJ6EbdPOb",
@@ -9138,7 +9886,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "用简单分数进行缩放和解决简单比率问题，与第三学段分数运算、比与比例及实际问题解决相连。",
+        "scopeBoundary": "节点同时包含分数缩放和简单率，课标未将所有率问题列为统一小学目标；需按具体分数和情境审查。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8jFSnXxqQD",
@@ -9156,7 +9921,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "在整数四则混合运算中正确使用小括号和中括号，是第二学段明确的学业要求。",
+        "scopeBoundary": "标准明确小括号和中括号；大括号及更复杂表达式不应自动视为同一学段的明确要求。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NmvuwVUFRS",
@@ -9174,7 +9957,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "借助计算器计算并解决简单实际问题，是第二学段明确要求；结合估算解释计算结果可在后续阶段深化。",
+        "scopeBoundary": "标准没有要求必须使用电子表格，也未规定所有除法计算器结果都要同时转换成整数、余数、分数和小数。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SoDP1fSQEB",
@@ -9192,7 +9994,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "小数与整数相乘属于第三学段简单小数四则运算的范围。",
+        "scopeBoundary": "标准没有明确规定小数必须精确到百分位或固定乘数范围；节点示例3.47×6是具体练习，不是课程标准边界。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FvEq4heNBx",
@@ -9210,7 +10028,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "两位数除数的多位数除法建立在第二学段多位数除法基础上，复杂数位和竖式熟练度可延伸到第三学段。",
+        "scopeBoundary": "课标没有规定四位数除以两位数的固定算法格式或将其指定到某一学年；需结合教材范围核查。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_lU-2aTRB9f",
@@ -9228,7 +10064,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "商为小数的除法以及小数除以整数，属于第三学段简单小数四则运算的合理具体化。",
+        "scopeBoundary": "课标没有明确规定商必须保留两位小数或所有小数除法的统一精度；结果精度应由题目情境决定。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WsM4EmdOLe",
@@ -9246,7 +10098,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "两位数除数的多位数除法延续第二学段多位数除法；将余数解释为整数、分数或按情境取整，则与第三学段分数意义及实际问题解决衔接。",
+        "scopeBoundary": "课标没有逐项规定四位数除以两位数的长除法、余数的所有解释形式；不能机械规定余数总是写成分数或四舍五入。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ilPrU0cbtT",
@@ -9264,7 +10136,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "第二学段明确要求在实际问题中选择合适单位估算，第三学段继续要求在实际问题中选择合适方法估算并说明过程。",
+        "scopeBoundary": "估算的目的在于判断和解决实际问题，不代表每次计算都必须先估算或采用固定舍入精度。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bZC-wqWX7Y",
@@ -9282,7 +10173,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "利用步骤、判断和数字工具探索因数、倍数及整除规律，数学目标与第三学段因数、倍数和质数合数内容相连。",
+        "scopeBoundary": "课标支持相关数学内容，但未要求必须编写算法或使用电子表格；数字工具是拓展方式。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XLP1IM3Qbb",
@@ -9300,7 +10207,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "多位数乘法竖式属于第二学段多位数乘法内容；四位数乘两位数的特定范围和熟练度需作为较高层次拓展观察。",
+        "scopeBoundary": "国家课标没有逐项规定四位数乘两位数的固定范围；不能把上游年龄标签当作中国小学教学年级。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_vmW2cb5c7A",
@@ -9318,7 +10243,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "拆分、补偿和派生事实等口算策略支持第二学段整数运算及数量关系问题解决，第三学段可用于更复杂的运算选择。",
+        "scopeBoundary": "节点涉及混合运算和大数，但未给出明确数域；应按每种策略所依赖的数位和运算条件说明。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wPgpMJ0-PA",
@@ -9336,7 +10281,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS"
+        ],
+        "rationale": "整数乘除10、100、1000可在第二学段数位学习中发展；小数位值及小数乘除则主要与第三学段小数运算相连。",
+        "scopeBoundary": "三位小数的精度范围不是国家课标明确的统一要求；“数位移动”只是表面描述，必须解释计数单位和位值变化。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_RXnyhCRYXA",
@@ -9354,7 +10318,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "第二学段明确要求整数四则混合运算并在实际情境中解决问题；第三学段继续发展较复杂真实情境中的运算选择。",
+        "scopeBoundary": "国家课标第二学段以两步为主、不超过三步；复杂多步题应按数域、步骤和情境负担进一步区分。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_jHgRQ4hR0g",
@@ -9372,7 +10356,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "第二学段明确要求进行整数四则混合运算并正确使用小括号和中括号，涉及运算顺序的理解与应用。",
+        "scopeBoundary": "PEMDAS/BODMAS是不同地区的记忆缩写，不是中国课标术语；本节点应强调运算规则和括号作用，不机械照搬口诀。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QU5R7Aajy9",
@@ -9390,7 +10390,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "在问题情境中按需要确定结果精度，与第二、第三学段选择合适方法估算和解释结果相连。",
+        "scopeBoundary": "课标强调合理估算和解释，没有规定所有问题都必须按预先给定的小数位数取近似值。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4WaKWECpcv",
@@ -9408,7 +10427,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "用数和符号表达计算关系，承接第二学段运算律和常见数量关系；第三学段进一步发展用字母表达数量关系的一般性。",
+        "scopeBoundary": "节点示例表达乘法倍数关系，不等同于完整代数式运算；不应提前要求形式化代数推导。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3m0pA-aeat",
@@ -9426,7 +10465,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-DECIMAL-OPERATIONS",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "估算并检查小数乘除结果，属于第三学段小数四则运算和实际问题估算的合理应用。",
+        "scopeBoundary": "标准没有逐项规定按10的幂估算或识别小数点错位的固定题型；重点是估算判断和位值理解。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xhoOWnhtHq",
@@ -9444,7 +10500,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-FACTORS-MULTIPLES"
+        ],
+        "rationale": "第三学段明确要求认识因数、公因数、公倍数、最大公因数、最小公倍数及质数合数；质因数分解和唯一分解性质则超出该学段明确表述。",
+        "scopeBoundary": "节点包含小学标准支持的因数倍数核心，也包含未在小学课标中明确要求的质因数分解与唯一分解性质；两部分必须区分。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_X5cypSGoGU",
@@ -9462,7 +10536,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS"
+        ],
+        "rationale": "第二学段整数四则混合运算要求使用小括号和中括号；含乘方、开方、倒数等复杂表达式则属于初中数与式内容。",
+        "scopeBoundary": "节点将小学混合运算顺序与初中乘方、根式、倒数内容合并，不能整体归入小学；BIDMAS/BODMAS不是中国课标要求的术语。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_rxInpOQ74w",
@@ -9480,7 +10573,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-RATIONAL-OPERATIONS"
+        ],
+        "rationale": "正负有理数的乘除及符号法则属于第四学段有理数乘除法和混合运算内容。",
+        "scopeBoundary": "小学第三学段仅在具体情境中认识负数，不要求进行正负数乘除运算。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VUQNveSYjQ",
@@ -9498,7 +10607,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-MULTIPLICATION-DIVISION",
+          "CN-MATH-2022-S2-MULTIPLICATION-DIVISION"
+        ],
+        "rationale": "第一学段明确要求知道除法是乘法的逆运算；第二学段继续运用乘除关系进行未知到已知的转化和计算检查。",
+        "scopeBoundary": "逆运算关系可用于检验和推导，但不能据此认为所有运算都存在整数范围内的逆运算结果。",
+        "reviewBatch": "06c-multiplication-division-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9IzhGUZ30z",
@@ -12231,10 +13359,34 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "三位数以上加减、估算、多步问题、小数运算及正负数衔接。"
+      },
+      {
+        "id": "06a-multiplication-division-foundations",
+        "domain": "Multiplication & Division",
+        "nodeCount": 21,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "平均分与分组、乘法意义、方阵表征、乘除符号、表内乘除及基础口算。"
+      },
+      {
+        "id": "06b-multiplication-division-strategies",
+        "domain": "Multiplication & Division",
+        "nodeCount": 21,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "运算律、乘除关系、未知因数、多位数算法、余数、因数倍数与奇偶质合数。"
+      },
+      {
+        "id": "06c-multiplication-division-advanced",
+        "domain": "Multiplication & Division",
+        "nodeCount": 21,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "小数乘除、估算、括号与运算顺序、计算器、质因数分解和负数乘除衔接。"
       }
     ],
-    "completedNodeCount": 129,
-    "pendingNodeCount": 408,
+    "completedNodeCount": 192,
+    "pendingNodeCount": 345,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
