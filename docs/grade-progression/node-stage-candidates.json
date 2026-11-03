@@ -1610,7 +1610,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-CORE"
+        ],
+        "rationale": "节点目标是比较两组数量，判断多、少或相等。第一学段要求理解数的意义并比较数的大小，能够在具体情境中表达数量关系。",
+        "scopeBoundary": "课程标准支持数量比较，不要求必须使用一一配对这一特定策略。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_dmNvjroCPT",
@@ -1628,7 +1645,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "节点目标是理解数数结束时所说的最后一个数表示集合总量，与第一学段从具体数量到数的抽象、理解数的意义相对应。",
+        "scopeBoundary": "基数原则并未在课程标准中单独命名；重排物体后数量不变是对数的意义的具体理解，不应说成标准逐字规定。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_sYpKWbq5ra",
@@ -1646,7 +1679,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "节点目标是理解相邻计数数之间相差1，并识别多一个、少一个。第一学段覆盖万以内数的认识、大小关系及简单情境中的变化规律。",
+        "scopeBoundary": "课程标准没有单独规定每个数都必须逐一练习‘多一个、少一个’，这是数序与数量关系的基础性表现。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WcfaSfVT33",
@@ -1664,7 +1714,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "一一对应是准确计数、把具体数量抽象为数的基础策略，与第一学段从具体数量到数的抽象过程相符。",
+        "scopeBoundary": "课程标准要求理解数的意义，但没有把‘每个物体恰好对应一个数词’作为独立条目；具体操作策略需视作概念基础。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_pAcaehday5",
@@ -1682,7 +1748,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-CORE"
+        ],
+        "rationale": "节点强调用实物、图示和数轴表示数量。第一学段强调从具体数量到数的抽象、理解数的意义，并形成初步数感。",
+        "scopeBoundary": "课程标准支持具体表征和数的意义，但没有要求本节点列出的每一种表示形式都在同一阶段掌握；数轴的系统使用需结合具体内容判断。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nvdpxAJTBG",
@@ -1700,7 +1783,28 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "按2、5、10跳数可作为数序、十进制计数和乘法关系的基础。第一学段已包含简单整数乘除法和数的变化规律；第二学段继续扩展多位数与规律探索。",
+        "scopeBoundary": "课程标准未逐项列出2、5、10的跳数序列；此映射表示基础关联，不代表所有序列均为独立必学目标。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_yqAL6O5i_v",
@@ -1718,7 +1822,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "准确数出20以内物品并回答数量问题，属于第一学段理解数的意义、用数表示物体个数的直接基础内容。",
+        "scopeBoundary": "课程标准的数域要求达到万以内；20以内只是该范围中的基础子集，不应将其误读为学段上限。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_M5PPDJStGm",
@@ -1736,7 +1856,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "正数、倒数以及从给定数开始继续数，属于数序与计数能力；第一学段要求理解万以内数的意义并能认读写数。",
+        "scopeBoundary": "课程标准没有把‘顺序数到100’作为独立终点；100只是该节点练习范围，第一学段要求的数域更大。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_BK5xwkrD5C",
@@ -1754,7 +1890,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "观察10以内数的组成、把一个数看成两个部分，是理解数的意义和加减数量关系的基础，与第一学段数与运算及简单数量关系相连。",
+        "scopeBoundary": "‘十框’和快速说出组成是教学表征方法，课程标准没有规定必须使用十框，也没有将快速识别作为单独考核标准。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_t9BICauBSI",
@@ -1772,7 +1925,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "不逐个点数而直接识别少量物体的数量，有助于形成数感和数量直观，与第一学段从具体数量到数的抽象目标相符。",
+        "scopeBoundary": "课程标准没有直接使用‘subitising/瞬时识数’术语，也没有规定必须在5以内达到某一速度；这是可采用的学习方式，不是独立标准条目。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__YRJ23GuIK",
@@ -1790,7 +1959,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "比较1到10的数字大小，是第一学段比较数的大小、理解大于小于关系的基础范围。",
+        "scopeBoundary": "课程标准要求比较万以内数；1到10是较小的入门范围，符号表达需结合学生理解逐步引入。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_0ZDouU664X",
@@ -1808,7 +1993,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "把大量物品按十、二、五等方式分组后计数，利用数位和计数单位提升计数效率，与第一学段万以内数的意义、数位含义及数量表达相符。",
+        "scopeBoundary": "课程标准没有把‘数到120’或必须使用二、五、十成组作为统一目标；该节点的分组策略是支持计数的方式。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_aHAM29nidj",
@@ -1827,7 +2029,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "按3递增或递减属于数列规律与乘法相关计数。第一学段涉及简单变化规律和乘除法初步；第二学段继续探索简单规律与数量关系。",
+        "scopeBoundary": "课程标准未明确规定‘按3倒数’为独立目标；本节点应作为规律与乘法的练习，不应将其提升为单独课程要求。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_OkSJfrmFb_",
@@ -1846,7 +2067,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "从任意数开始按十递增或递减，帮助理解十进制计数单位和数位变化。第一学段要求理解数位与万以内数；第二学段扩展十进制计数和更大数域。",
+        "scopeBoundary": "标准未单独规定从任意起点按十数的完整练习序列；重点是数位和计数单位理解。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_M2v1A9OEuM",
@@ -1865,7 +2105,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "在1000以内计数，落在第一学段明确要求理解的万以内数范围之内。",
+        "scopeBoundary": "节点列出的按5、10、100跳数是辅助练习形式；标准的范围并不限于1000，也不要求所有起点和步长逐一覆盖。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IzQvs7k_sE",
@@ -1884,7 +2140,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "按4、8跳数与乘法事实相关，按50、100跳数与十进制计数和规律相关。第一学段包含简单乘除法和万以内数；第二学段继续扩展多位数与规律。",
+        "scopeBoundary": "课程标准没有明确列出4、8、50、100这组步长；不同步长对应的数学目的不同，不能仅凭同一个节点标题认定完全同阶段。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_7rJM8eWUfw",
@@ -1902,7 +2178,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "按6、7、9跳数与乘法事实有关，按25、1000跳数与计数单位、数序和规律有关。第一学段包含简单乘除法；第二学段进一步扩展大数与规律探索。",
+        "scopeBoundary": "课程标准没有逐项规定6、7、9、25、1000这些步长。该节点把乘法事实和较大步长计数放在一起，阶段映射只能作宽范围提示，需在后续内容审查中考虑是否拆分。",
+        "reviewBatch": "01-counting-cardinality",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_c29FaCTNsx",
@@ -9954,5 +10250,24 @@
       "needsChinaCurriculumReview": true
     }
   ],
-  "nodesOutsidePrimaryAgeRange": 36
+  "nodesOutsidePrimaryAgeRange": 36,
+  "mappingReview": {
+    "method": "NODE-MAPPING-METHOD.md",
+    "source": "Education Ministry of China, Mathematics Curriculum Standards for Compulsory Education (2022), official PDF",
+    "sourceUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/W020220420582346895190.pdf",
+    "batches": [
+      {
+        "id": "01-counting-cardinality",
+        "domain": "Counting & Cardinality",
+        "nodeCount": 17,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "17个节点逐一对照第一、第二学段数与代数内容要求；部分方法和步长仅为概念关联，不是标准逐项列出的独立目标。"
+      }
+    ],
+    "completedNodeCount": 17,
+    "pendingNodeCount": 520,
+    "excludedThinkingNodeCount": 50,
+    "status": "partial"
+  }
 }
