@@ -1,0 +1,453 @@
+{
+  "passed": 12,
+  "checks": [
+    "desktop-gap6b-01",
+    "desktop-gap6b-02",
+    "desktop-gap6b-03",
+    "desktop-gap6b-04",
+    "desktop-gap6b-05",
+    "desktop-gap6b-06",
+    "compact-gap6b-01",
+    "compact-gap6b-02",
+    "compact-gap6b-03",
+    "compact-gap6b-04",
+    "compact-gap6b-05",
+    "compact-gap6b-06"
+  ],
+  "measurements": [
+    {
+      "tag": "desktop-gap6b-01",
+      "id": "mt_5J2quSTspi",
+      "geometry": {
+        "box": {
+          "x": 0,
+          "y": 0,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 15,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 210.09375,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 133.59375,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap6b-02",
+      "id": "mt_e7tLi9SCIE",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1411,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap6b-03",
+      "id": "mt_tVvZVWO5d6",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1037,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap6b-04",
+      "id": "mt_SOM6Imm2sO",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1033,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap6b-05",
+      "id": "mt_tegkuJA5gM",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1413,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-gap6b-06",
+      "id": "mt_IlDaxVr60U",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1155,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-01",
+      "id": "mt_5J2quSTspi",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-02",
+      "id": "mt_e7tLi9SCIE",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1411,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-03",
+      "id": "mt_tVvZVWO5d6",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1037,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-04",
+      "id": "mt_SOM6Imm2sO",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1033,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-05",
+      "id": "mt_tegkuJA5gM",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1413,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-gap6b-06",
+      "id": "mt_IlDaxVr60U",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1155,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    }
+  ],
+  "errors": [],
+  "childTrial": false
+}

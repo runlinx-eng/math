@@ -1,4 +1,4 @@
-// Three hundred and sixty-two source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and sixty-eight source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3289,6 +3289,60 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"63.6÷20若得到31.8，应检查：60÷20约是3，31.8数量级不对。",
     tryIt:"先用2.5×400估计2.46×400，再计算准确结果并比较。",
     why:"估算可发现明显的数量级错误，但结果接近估计值不证明精确计算一定正确。",
+  },
+  "mt_5J2quSTspi":{
+    formal:"罗马数字钟面与24小时制",
+    definition:"罗马数字钟面用I到XII标小时位置；24小时制用00:00到23:59表示一天中的时刻。",
+    simpler:"钟面换成罗马数字后，分针位置不变；还要分清午夜后和正午后的12点。",
+    example:"分针指IX、时针在IV和V之间是4:45；下午3:20写成15:20。",
+    counterexample:"正午后12:20仍是12:20；午夜后12:20写作00:20，不能两者都加12小时。",
+    tryIt:"将I到XII放到钟面相应位置，再比较上午7:05与下午3:20的24小时写法。",
+    why:"罗马数字只改变小时位置的标记；24小时制用不同小时数区分一天中的两个时段。",
+  },
+  "mt_e7tLi9SCIE":{
+    formal:"用更小单位细化测量",
+    definition:"测量同一个量时，可以用较小的相同单位得到更细的刻度；单位变小后，完整单位的数量通常增多。",
+    simpler:"大单位可能剩下一截不够一整份，换较小单位可以更细地描述剩余部分。",
+    example:"60毫升的容器可用6个10毫升单位表示，而一个100毫升单位装不下。",
+    counterexample:"同一长度用9个小单位、2个大单位表示，不能只因9大于2就说前者更长。",
+    tryIt:"用同样大的短纸条量一段长度，再与较长单位的测量结果比较。",
+    why:"单位更小可提高读数的分辨程度，但实际准确性还取决于工具、对齐和读数方法。",
+  },
+  "mt_tVvZVWO5d6":{
+    formal:"用日历确定日期和间隔",
+    definition:"日历把日期按星期排列，可以查指定日期是星期几，也可以按一天一天的间隔数两个日期之间经过几天。",
+    simpler:"先找到年份和月份，再找到日期；计算间隔时从起始日之后开始数。",
+    example:"2026年3月15日是星期日；6月3日到6月17日相隔14天。",
+    counterexample:"3日至17日相隔不是15天：把起始日额外算成经过的一天会多算。",
+    tryIt:"在给定日历上找2024年2月28日至3月1日经过几天。",
+    why:"日历需要结合具体年份，因为月份天数和闰年会影响日期间隔。",
+  },
+  "mt_SOM6Imm2sO":{
+    formal:"读取刻度之间的数值",
+    definition:"读测量工具时，先看相邻标记和单位，再根据指针或液面的位置读取相应数值。",
+    simpler:"先弄清每个大格和小格代表多少，再看指针落在哪里。",
+    example:"指针在400克和600克的正中间时，读数是500克；150和200毫升中间是175毫升。",
+    counterexample:"相邻数字差200克时，中点不能只按“一个刻度”随意读，要根据比例计算。",
+    tryIt:"读一支22℃和24℃之间指在中点的温度计，再记录单位。",
+    why:"刻度间的距离对应数值变化；读数的精细程度取决于刻度和位置。",
+  },
+  "mt_tegkuJA5gM":{
+    formal:"用展开图求表面积",
+    definition:"表面积是立体外表面各部分面积的总和；展开图帮助识别需要计算的面和尺寸。",
+    simpler:"把要覆盖的各个面摊开，逐一算面积，再把需要的面加起来。",
+    example:"长5、宽4、高3厘米的长方体表面积是2×(20＋15＋12)＝94平方厘米。",
+    counterexample:"无盖盒子的用料不能把不存在的上盖面积也算进去；表面积单位是平方单位，不是立方单位。",
+    tryIt:"为30厘米×20厘米×10厘米的无盖盒计算底面和四个侧面的面积。",
+    why:"外表由所选各面组成；每个面面积相加得到覆盖面积，不是内部体积。",
+  },
+  "mt_IlDaxVr60U":{
+    formal:"用分数边长求长方体体积",
+    definition:"长方体的体积可以用长×宽×高计算，也可用合适大小的单位分数立方体填满后计数。",
+    simpler:"先看每个小立方体占多少体积，再数长、宽、高各排几个。",
+    example:"边长1/2厘米的小立方体体积是1/8立方厘米；8个恰好填满1立方厘米。",
+    counterexample:"一个边长1/2厘米的小立方体体积不是1/2立方厘米：三个方向都要乘1/2。",
+    tryIt:"用边长1/2厘米的小立方体填1又1/2×1×2又1/2厘米的盒子，比较计数和三边相乘。",
+    why:"小立方体体积是三个边长的乘积；无空隙或重叠地填满时，小块体积之和等于整体体积。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

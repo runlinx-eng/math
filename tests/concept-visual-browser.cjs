@@ -353,6 +353,13 @@ const ids=[
   ['research-gap6-04','mt_NmvuwVUFRS'],
   ['research-gap6-05','mt_bZC-wqWX7Y'],
   ['research-gap6-06','mt_3m0pA-aeat']
+,
+  ['research-gap6b-01','mt_5J2quSTspi'],
+  ['research-gap6b-02','mt_e7tLi9SCIE'],
+  ['research-gap6b-03','mt_tVvZVWO5d6'],
+  ['research-gap6b-04','mt_SOM6Imm2sO'],
+  ['research-gap6b-05','mt_tegkuJA5gM'],
+  ['research-gap6b-06','mt_IlDaxVr60U']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
