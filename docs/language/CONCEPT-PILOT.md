@@ -479,3 +479,7 @@
 ## 本地第三小批：3 个节点（2026-11-03）
 
 `mt_7XcCG43ZZW`（分成两部分）、`mt_C9ZfT-4cgn`（乘法交换律）、`mt_fR0UtsSREU`（20以内数的读写）；来源与边界详见 [本批记录](CONCEPT-LOCAL-BATCH3-2026-11-03.md)。
+
+## 本地 20 节点批次（2026-11-03）
+
+`mt_yJmvUCCym7`、`mt_e8CZ7E5qW7`、`mt_zuKAX6lcYR`、`mt_mr_Vk7FGzK`、`mt_VAWV_l7J0D`、`mt_wh3UqnWsa7`、`mt_0u4KLbvBa1`、`mt_zOWwLxa77y`、`mt_B1zj1RwQ3a`、`mt_nvdpxAJTBG`、`mt_yqAL6O5i_v`、`mt__YRJ23GuIK`、`mt_x8TshvbbQT`、`mt_kw7xmp68rU`、`mt_r0VXbfAmsH`、`mt_mnEVZNkX3p`、`mt_WXW0hjNhph`、`mt_g3W0mdADVu`、`mt_hyvHv2BCwb`、`mt_TcG90kS8nu`。逐项来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH20-2026-11-03.md)。

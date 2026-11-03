@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "8afced370c1f6b827deac6b27b633e73740ad9d5",
+    "explanationBlobSha": "8ce2a1484e38e1c88c610a326ce56d1554f2406f",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -25,8 +25,8 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 69,
-    "notConfigured": 468,
+    "configuredExplanationSamples": 89,
+    "notConfigured": 448,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
@@ -45,15 +45,15 @@
     "byType": {
       "PROCEDURAL": {
         "total": 304,
-        "configuredSamples": 22,
-        "notConfigured": 282,
+        "configuredSamples": 33,
+        "notConfigured": 271,
         "hasResearchFalse": 42,
         "hasResearchFalseNotConfigured": 37
       },
       "CONCEPTUAL": {
         "total": 156,
-        "configuredSamples": 25,
-        "notConfigured": 131,
+        "configuredSamples": 32,
+        "notConfigured": 124,
         "hasResearchFalse": 28,
         "hasResearchFalseNotConfigured": 25
       },
@@ -66,8 +66,8 @@
       },
       "LANGUAGE": {
         "total": 20,
-        "configuredSamples": 4,
-        "notConfigured": 16,
+        "configuredSamples": 6,
+        "notConfigured": 14,
         "hasResearchFalse": 0,
         "hasResearchFalseNotConfigured": 0
       },
@@ -83,8 +83,8 @@
       "add": {
         "title": "加法与减法",
         "total": 55,
-        "configuredSamples": 6,
-        "notConfigured": 49,
+        "configuredSamples": 11,
+        "notConfigured": 44,
         "hasResearchFalse": 3,
         "hasResearchFalseNotConfigured": 3
       },
@@ -99,8 +99,8 @@
       "counting": {
         "title": "数与数量",
         "total": 17,
-        "configuredSamples": 5,
-        "notConfigured": 12,
+        "configuredSamples": 8,
+        "notConfigured": 9,
         "hasResearchFalse": 3,
         "hasResearchFalseNotConfigured": 3
       },
@@ -115,40 +115,40 @@
       "fractions": {
         "title": "分数",
         "total": 68,
-        "configuredSamples": 6,
-        "notConfigured": 62,
+        "configuredSamples": 8,
+        "notConfigured": 60,
         "hasResearchFalse": 1,
         "hasResearchFalseNotConfigured": 0
       },
       "geometry": {
         "title": "图形与空间",
         "total": 79,
-        "configuredSamples": 8,
-        "notConfigured": 71,
+        "configuredSamples": 10,
+        "notConfigured": 69,
         "hasResearchFalse": 10,
         "hasResearchFalseNotConfigured": 9
       },
       "measure": {
         "title": "测量",
         "total": 84,
-        "configuredSamples": 9,
-        "notConfigured": 75,
+        "configuredSamples": 10,
+        "notConfigured": 74,
         "hasResearchFalse": 18,
         "hasResearchFalseNotConfigured": 16
       },
       "multiply": {
         "title": "乘法与除法",
         "total": 63,
-        "configuredSamples": 6,
-        "notConfigured": 57,
+        "configuredSamples": 10,
+        "notConfigured": 53,
         "hasResearchFalse": 6,
         "hasResearchFalseNotConfigured": 6
       },
       "place": {
         "title": "数位与小数",
         "total": 57,
-        "configuredSamples": 4,
-        "notConfigured": 53,
+        "configuredSamples": 7,
+        "notConfigured": 50,
         "hasResearchFalse": 5,
         "hasResearchFalseNotConfigured": 5
       },
@@ -179,7 +179,8 @@
     "localPilotDraftPendingIndependentReview": 3,
     "localPilotAiRechecked": 3,
     "localSecondBatchDraftPendingIndependentReview": 3,
-    "localThirdBatchDraftPendingIndependentReview": 3
+    "localThirdBatchDraftPendingIndependentReview": 3,
+    "localBatch20DraftPendingIndependentReview": 20
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -229,11 +230,12 @@
         "qualifier": "10以内的情境"
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -415,11 +417,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -648,11 +651,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -738,11 +742,12 @@
         "qualifier": "20以内的数"
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -805,11 +810,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6646,11 +6652,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6764,11 +6771,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -7046,11 +7054,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -10899,11 +10908,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -11049,11 +11059,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -16229,11 +16240,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -16296,11 +16308,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -21425,11 +21438,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -27502,11 +27516,12 @@
         "qualifier": "用阵列和事实解决问题"
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -27572,11 +27587,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -27638,11 +27654,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -27851,11 +27868,12 @@
         "qualifier": "阵列中的相同加数"
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -31709,11 +31727,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -31946,11 +31965,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -32021,11 +32041,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_batch20_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",

@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,69);
+  assert.equal(samples.length,89);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -301,4 +301,12 @@ test('local number concepts preserve zero, division order and place value',()=>{
   const numerals=conceptHelpFor('mt_fR0UtsSREU');
   assert.match(numerals.example,/1 个十和 7 个一/);
   assert.match(numerals.definition,/0 表示没有物品/);
+});
+
+test('twenty-node batch preserves counting, fraction and time boundaries',()=>{
+  assert.match(conceptHelpFor('mt_e8CZ7E5qW7').definition,/10/);
+  assert.match(conceptHelpFor('mt_0u4KLbvBa1').counterexample,/0.*偶数/);
+  assert.match(conceptHelpFor('mt_hyvHv2BCwb').counterexample,/不同大小/);
+  assert.match(conceptHelpFor('mt_TcG90kS8nu').why,/开始时刻/);
+  assert.match(conceptHelpFor('mt_zOWwLxa77y').counterexample,/12＝3×4/);
 });

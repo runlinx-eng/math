@@ -37,7 +37,27 @@ const ids=[
   ['estimation-check','mt_ilPrU0cbtT'],
   ['compare-groups','mt__h7hvT4tEb'],['one-more','mt_sYpKWbq5ra'],['represent-count','mt_pAcaehday5'],
   ['half','mt_-hTTat0mBR'],['plane-shapes','mt_KJeEeTutJI'],['compare-lengths','mt_uhuxX8sg9f'],
-  ['number-parts','mt_7XcCG43ZZW'],['multiply-commutes','mt_C9ZfT-4cgn'],['write-twenty','mt_fR0UtsSREU']
+  ['number-parts','mt_7XcCG43ZZW'],['multiply-commutes','mt_C9ZfT-4cgn'],['write-twenty','mt_fR0UtsSREU'],
+  ['batch20-01','mt_yJmvUCCym7'],
+  ['batch20-02','mt_e8CZ7E5qW7'],
+  ['batch20-03','mt_zuKAX6lcYR'],
+  ['batch20-04','mt_mr_Vk7FGzK'],
+  ['batch20-05','mt_VAWV_l7J0D'],
+  ['batch20-06','mt_wh3UqnWsa7'],
+  ['batch20-07','mt_0u4KLbvBa1'],
+  ['batch20-08','mt_zOWwLxa77y'],
+  ['batch20-09','mt_B1zj1RwQ3a'],
+  ['batch20-10','mt_nvdpxAJTBG'],
+  ['batch20-11','mt_yqAL6O5i_v'],
+  ['batch20-12','mt__YRJ23GuIK'],
+  ['batch20-13','mt_x8TshvbbQT'],
+  ['batch20-14','mt_kw7xmp68rU'],
+  ['batch20-15','mt_r0VXbfAmsH'],
+  ['batch20-16','mt_mnEVZNkX3p'],
+  ['batch20-17','mt_WXW0hjNhph'],
+  ['batch20-18','mt_g3W0mdADVu'],
+  ['batch20-19','mt_hyvHv2BCwb'],
+  ['batch20-20','mt_TcG90kS8nu']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
