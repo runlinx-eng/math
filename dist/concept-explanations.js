@@ -1,4 +1,4 @@
-// Four hundred and five source-bound explanation samples, keyed by exact source node ID.
+// Four hundred and eleven source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3676,6 +3676,60 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"35%不是35/10；百分之几的基准是100份。",
     tryIt:"在百格图中涂40格，写出对应的百分数和分数。",
     why:"百分数、分数和小数可表达同一比例；实际数量还取决于所比较的整体。",
+  },
+  "mt_14T5yPXUq_":{
+    formal:"异分母分数加减",
+    definition:"分母不同时，可以把分数换成大小相同的小份，再合并或取走这些份。",
+    simpler:"先找两个分母的共同倍数，把原来的量都换成同样大小的小份。",
+    example:"2/3＋5/4＝8/12＋15/12＝23/12，在1和2之间。",
+    counterexample:"2/3＋5/4不能直接把分子、分母分别相加得到7/7。",
+    tryIt:"用同一单位长度的条形表示5/6和1/4，细分成共同单位后求差。",
+    why:"通分改变每份的大小和份数，但不改变原来表示的数量。",
+  },
+  "mt_gx6KQK5-Kx":{
+    formal:"用分数计算长方形面积",
+    definition:"长方形面积等于长乘宽；分数边长也可以用同一面积单位下的分割表示。",
+    simpler:"把单位正方形按两个方向分别等分，数重合的等面积小块。",
+    example:"边长2/3和3/4时，单位正方形分成12个等面积长方形，重合6个，面积是6/12＝1/2。",
+    counterexample:"把单位正方形分成3列4行时，小块边长分别是1/3和1/4，不能说它们都是正方形。",
+    tryIt:"用单位正方形表示1/2乘4/5，数出重合的小块。",
+    why:"两个方向的分割确定每个小块占整体的比例；选中的行列共同决定覆盖面积。",
+  },
+  "mt_PL9VkDwXfh":{
+    formal:"比较包括大于1的分数",
+    definition:"比较分数时，应使用同一个整体，可以通分或观察它们在数轴上的位置。",
+    simpler:"先看是否超过1；不容易比较时，把它们换成同样大小的小份。",
+    example:"7/5＝21/15，4/3＝20/15，所以7/5较大。",
+    counterexample:"分子较大并不保证分数较大：5/6大于7/9。",
+    tryIt:"在同一数轴上标出3/4、7/8、5/6和11/12并排序。",
+    why:"用相同单位比较才能让份数有意义；数轴上越靠右的数越大。",
+  },
+  "mt_4K1dr204Hi":{
+    formal:"分数、小数和百分数互换",
+    definition:"同一个数可以用分数、小数或百分数表示；分子除以分母可以求出对应小数。",
+    simpler:"先看这些写法代表哪个数，再按需要换成方便比较的形式。",
+    example:"3/8＝0.375＝37.5%；1/5＝0.2＝20%。",
+    counterexample:"1/3不能精确写成有限小数0.33；0.33只是一个近似值。",
+    tryIt:"在同一数轴上比较30%、1/3和0.35，注意保留1/3的准确值。",
+    why:"除法可以求分数的商；百分数以100为基准，换写不改变原来的值。",
+  },
+  "mt_1PAWhRhpdg":{
+    formal:"整数除以单位分数",
+    definition:"整数除以单位分数可以理解为：这些整体中包含多少个指定大小的小份。",
+    simpler:"先看每个整体能分成几份，再合计所有整体中的小份。",
+    example:"4÷(1/5)＝20，因为4个整体共有20个五分之一。",
+    counterexample:"4÷(1/5)不是4÷5：问题问的是4里面有多少个五分之一。",
+    tryIt:"把4个整体各分成5份，数一数有几份，再用份数乘每份的大小核对。",
+    why:"除法可求有多少组；组数乘每组大小应回到原来的总量。",
+  },
+  "mt_ifPDOYvUqm":{
+    formal:"单位分数除以整数",
+    definition:"把一个单位分数平均分成若干份，可以得到更小的分数份。",
+    simpler:"先找到原来的那一份，再把它平均分给指定的几组。",
+    example:"(1/3)÷4＝1/12；4个1/12合起来是1/3。",
+    counterexample:"(1/3)÷4不是4/3：原来的1/3被分小了，而不是增加到4倍。",
+    tryIt:"把一条表示1/6的长度平均分成3份，并用乘法检查每份。",
+    why:"原整体保持不变；将原有部分等分后，各组之和仍等于原来的部分。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

@@ -402,6 +402,13 @@ const ids=[
   ['batch6d-04','mt_kdWoAel3Zl'],
   ['batch6d-05','mt_09sySPqM9Z'],
   ['batch6d-06','mt_ZM9mhHsyYZ']
+,
+  ['batch6e-01','mt_14T5yPXUq_'],
+  ['batch6e-02','mt_gx6KQK5-Kx'],
+  ['batch6e-03','mt_PL9VkDwXfh'],
+  ['batch6e-04','mt_4K1dr204Hi'],
+  ['batch6e-05','mt_1PAWhRhpdg'],
+  ['batch6e-06','mt_ifPDOYvUqm']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
