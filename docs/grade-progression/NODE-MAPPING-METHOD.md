@@ -169,3 +169,20 @@ https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html
 - **研究缺口独立计数**：原图谱 **85** 个缺少教学研究记录（83 个领域节点、2 个思维节点），包括 `mt_CUJr8L5_Wn`。它与课程标准映射的 5 个 `not-covered` 是两种不同缺口，彼此不能抵消。
 
 本阶段只清理数据登记与描述，既不重判 537 节点，也不改变 23 个知识群的阶段观察初稿；专门的映射 CI 自动验收留待后续阶段单独建立。
+
+
+## 11. 知识群群级阶段判断（第二阶段治理）
+
+群级阶段判断与节点级chinaCurriculumMapping是两个独立层次：
+
+- 群级标记描述一个知识群在小学三个宽学段中的整体观察重点，不要求与所属节点的main数量一致。
+- 主表示该学段有独立课程标准锚点，适合作为知识群整体建立或深化的主要观察阶段；不能由节点数量或Adjacent节点单独推出。
+- 延表示部分内容继续使用、复现或拓展，或提供前置经验；不表示该学段有完整正式课程单元。
+- —表示不是该群在该学段的主要观察重点，不等于所有相关经验都不存在。
+- 过程表示跨学段思维活动维度，不是年级归属。
+
+群级证据类型必须区分：national-standard-explicit（国家课程明确要求）、conceptual-component（概念性组成部分）、pedagogical-extension（教学延伸或前置经验）、cross-pack-prerequisite（跨群前置关系）和math-thinking-activity（数学思维活动）。跨群关系不证明课程要求或年级顺序；Adjacent不等于国家课程明确要求。
+
+每个判断的审查状态使用ai-assisted-review-complete、needs-independent-pedagogical-review或insufficient-evidence-unconfirmed。AI辅助审查完成不等于独立教研完成；不增加无测量方法的confidence字段。
+
+23个知识群的机器可读依据、课程标准引用目录、节点ID、跨群前置关系、17个Adjacent主角色风险、85个研究缺口和未决事项统一记录于docs/grade-progression/pack-stage-evidence.json。原始数学边中topicId是依赖节点，prerequisiteId是前置节点；packLinks.fromPack指前置群，toPack指依赖群。
