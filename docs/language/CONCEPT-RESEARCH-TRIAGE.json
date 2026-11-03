@@ -7,14 +7,14 @@
     "total": 85,
     "knowledgeMapNodes": 83,
     "mathThinkingNodes": 2,
-    "knowledgeMapWithSamples": 51,
-    "knowledgeMapWithoutSamples": 32,
+    "knowledgeMapWithSamples": 56,
+    "knowledgeMapWithoutSamples": 27,
     "phaseCounts": {
       "2": 2,
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个既有样板和 B01–B13 共44个新增草稿节点已核查部分外部课程或教学来源；32个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
+    "allPlanStatuses": "7个既有样板和 B01–B14 共49个新增草稿节点已核查部分外部课程或教学来源；27个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -24,13 +24,13 @@
       },
       "PROCEDURAL": {
         "total": 42,
-        "withSample": 22,
-        "withoutSample": 20
+        "withSample": 24,
+        "withoutSample": 18
       },
       "CONCEPTUAL": {
         "total": 28,
-        "withSample": 21,
-        "withoutSample": 7
+        "withSample": 24,
+        "withoutSample": 4
       },
       "META": {
         "total": 4,
@@ -72,8 +72,8 @@
       "geometry": {
         "title": "Geometry",
         "total": 10,
-        "withSample": 2,
-        "withoutSample": 8
+        "withSample": 7,
+        "withoutSample": 3
       },
       "measure": {
         "title": "Measurement",
@@ -106,12 +106,12 @@
         "withoutSample": 0
       }
     },
-    "nodesWithExternalSourcesVerified": 51,
+    "nodesWithExternalSourcesVerified": 56,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
     "nodesWithResearchReviewedWithoutExplanation": 0,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 32,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 27,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
@@ -126,7 +126,8 @@
       "B10",
       "B11",
       "B12",
-      "B13"
+      "B13",
+      "B14"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -146,7 +147,7 @@
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
     "sourceRecordsExternallyVerifiedInB04": 1,
-    "nodesWithExplanationDraftsPendingIndependentReview": 44,
+    "nodesWithExplanationDraftsPendingIndependentReview": 49,
     "sourceRecordsExternallyVerifiedInB05": 5,
     "sourceRecordsExternallyVerifiedInB06": 3,
     "sourceRecordsExternallyVerifiedInB07": 5,
@@ -155,7 +156,8 @@
     "sourceRecordsExternallyVerifiedInB10": 5,
     "sourceRecordsExternallyVerifiedInB11": 5,
     "sourceRecordsExternallyVerifiedInB12": 5,
-    "sourceRecordsExternallyVerifiedInB13": 4
+    "sourceRecordsExternallyVerifiedInB13": 4,
+    "sourceRecordsExternallyVerifiedInB14": 5
   },
   "records": [
     {
@@ -1338,14 +1340,24 @@
         "end": 9
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_SK7WntVZ6y",
@@ -1359,14 +1371,24 @@
         "end": 10
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_NM5I3yN-Q6",
@@ -1409,14 +1431,24 @@
         "end": 10
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_RdfzwInyAj",
@@ -1430,14 +1462,24 @@
         "end": 11
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_h02-C8PRrj",
@@ -1451,14 +1493,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_h7zVgCDVmx",

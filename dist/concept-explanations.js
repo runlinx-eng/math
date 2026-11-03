@@ -1,4 +1,4 @@
-// Three hundred and forty-three source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and forty-eight source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3118,6 +3118,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"一本书的样本均值更高，不代表它的每个词都比另一本书的每个词长。",
     tryIt:"比较两组样本的均值和分散，再考虑如果重新抽样，结论可能怎样变化。",
     why:"样本会随抽取而变化；总体比较应说明不确定性，避免把有限观察说成确定事实。",
+  },
+  "mt_mN4Ye_vtR7":{
+    formal:"立体形状的特征与用途",
+    definition:"立体物体的平面、曲面、棱和顶点等特征，会影响它怎样接触、滚动或堆放。",
+    simpler:"看看物体接触地面的部分是平的还是弯的，再观察它怎样移动或放稳。",
+    example:"圆柱侧面是曲面、两端是平面：在简化模型中侧放可滚动，平端朝下可立放。",
+    counterexample:"物体是否稳定还受材料、大小和放置方式影响，不能只凭形状断定现实中一定安全。",
+    tryIt:"在模拟中比较圆柱侧放和立放，再观察长方体怎样排列。",
+    why:"面与接触方式共同影响运动和堆放；现实产品的设计通常还有其他原因。",
+  },
+  "mt_SK7WntVZ6y":{
+    formal:"用熟悉形状近似物体",
+    definition:"复杂物体可以用若干熟悉的平面或立体形状组合、近似表示，再说明哪些地方是简化。",
+    simpler:"先把物体分成容易认识的几部分，再看每部分像什么形状。",
+    example:"简化的房屋可以表示成长方体房身和三棱柱屋顶。",
+    counterexample:"用几个规则形状拼出的叶子轮廓只是近似，不一定与真实叶子的每条边完全相同。",
+    tryIt:"用长方形和三角形组合一个简化的滑梯侧面，并指出各部分。",
+    why:"熟悉的形状帮助描述复杂物体，但近似会舍去一些细节。",
+  },
+  "mt_LBT-9jz7kR":{
+    formal:"平角、优角和一周角",
+    definition:"平角相当于两个直角；大于平角而小于一周角的是优角；一周角相当于四个直角。",
+    simpler:"把直角作为参照：半圈是两个直角，一整圈是四个直角。",
+    example:"半圈是平角；四分之三圈大于平角、小于一整圈，是优角。",
+    counterexample:"同一对射线可能围出一个较小的角和另一侧的优角，要看标记的是哪一侧。",
+    tryIt:"从一个方向转半圈、四分之三圈和一整圈，比较各自相当于几个直角。",
+    why:"转动量可以用相同的直角单位比较，不同侧的开口代表不同的角。",
+  },
+  "mt_RdfzwInyAj":{
+    formal:"平移、反射与旋转",
+    definition:"平移、反射和旋转可以改变图形的位置或方向，但保持对应的边长和角度不变。",
+    simpler:"平移是整体滑动，反射像照镜子，旋转是绕一个中心转动。",
+    example:"把三角形向右移动3格、向上移动2格后，各边长度和各角大小保持不变。",
+    counterexample:"把三角形每条边扩大2倍不是单纯平移、反射或旋转；它的大小改变了。",
+    tryIt:"在网格中平移一个三角形，再关于一条竖直线反射，比较对应边。",
+    why:"这些变换保持点之间的距离和对应角度，因此图形的大小与形状不变。",
+  },
+  "mt_h02-C8PRrj":{
+    formal:"比较平行截面",
+    definition:"直棱柱中平行于底面的截面与底面全等；棱锥或圆锥中平行于底面的截面通常越靠近顶点越小。",
+    simpler:"用同一方向切不同位置，看看截面的形状和大小怎样变化。",
+    example:"平行三棱柱三角形底面切下的截面与底面是同样大的三角形。",
+    counterexample:"圆锥平行底面的两个截面形状都是圆，但靠近顶点的圆更小，不能说它们全等。",
+    tryIt:"在立体模型中移动平行底面的切面，比较棱柱和棱锥的截面。",
+    why:"棱柱沿相同方向保持均匀截面；棱锥或圆锥向顶点收窄。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

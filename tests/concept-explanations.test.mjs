@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,343);
+  assert.equal(samples.length,348);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -454,4 +454,12 @@ test('investigation research-gap drafts preserve population and measurement boun
   assert.match(conceptHelpFor('mt_O-U263ukg1').counterexample,/所有人/);
   assert.match(conceptHelpFor('mt_tuEnyrp5Ia').example,/13分钟/);
   assert.match(conceptHelpFor('mt_km4V6d5IAh').counterexample,/每个词/);
+});
+
+test('geometry research-gap drafts retain cross-section and modelling limits',()=>{
+  assert.match(conceptHelpFor('mt_h02-C8PRrj').definition,/平行于底面/);
+  assert.match(conceptHelpFor('mt_RdfzwInyAj').counterexample,/大小改变/);
+  assert.match(conceptHelpFor('mt_mN4Ye_vtR7').counterexample,/不能.*一定安全/);
+  assert.match(conceptHelpFor('mt_SK7WntVZ6y').why,/近似/);
+  assert.match(conceptHelpFor('mt_LBT-9jz7kR').definition,/小于一周角/);
 });
