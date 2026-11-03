@@ -9417,7 +9417,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "用满、空、半满和谁装得多等语言比较容器容量，发展测量的生活经验。",
+        "scopeBoundary": "容量是容器最多能容纳的量，当前液面高度或半满不等于两个不同容器容量相等。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TcG90kS8nu",
@@ -9435,7 +9454,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "用早晚、先后、快慢描述日常事件与持续时间，是生活时间经验的起点。",
+        "scopeBoundary": "先结束不一定所用时间更短；需区分发生先后与持续时长。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_uhuxX8sg9f",
@@ -9453,7 +9489,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "直接并排比较长短和高矮，形成长度可比较的直观经验，属于第一学段测量与几何活动的基础。",
+        "scopeBoundary": "倍与一半的用语是延伸；不能把所有比例关系都视为第一学段要求。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NtJYlJdUe9",
@@ -9471,7 +9524,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "认识物体的长、高、轻重、容纳量等不同可测属性，先于选择具体计量单位。",
+        "scopeBoundary": "标准支持生活测量经验，不把完整的属性分类术语列为独立必学条目。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-P1kdZhHbL",
@@ -9489,7 +9562,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "用掂量和简单天平比较轻重，属于生活中的质量比较活动。",
+        "scopeBoundary": "重量与质量的物理概念不可混同；节点未涉及重力单位。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-vvVxpOHG2",
@@ -9508,7 +9600,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "用昨天、今天、明天和早中晚给事件排序，建立时间顺序与日常经验。",
+        "scopeBoundary": "这类生活语言不等同于掌握日历日期的正式计算。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4lp_b5Pzik",
@@ -9527,7 +9635,29 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "先用杯数等非标准单位比较容量，再过渡到升等单位记录。",
+        "scopeBoundary": "本节点同时写容量和体积，液体容量量测不等同于掌握立体图形体积公式。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_cPZwlUk8Nd",
@@ -9545,7 +9675,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "识别硬币与纸币面值关联生活购物的货币认识，可借人民币情境帮助理解面额。",
+        "scopeBoundary": "原目标专指英镑便士纸币硬币，不是中国小学必须识别的币种，故仅作关联拓展。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bj1YCgNWUx",
@@ -9564,7 +9710,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "认识星期、月份和年份名称及顺序，开展日历相关的生活实践。",
+        "scopeBoundary": "历法中的周数、各月天数不构成简单固定换算，不能由此推断闰年规则已掌握。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__N55B7u7HD",
@@ -9582,7 +9747,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "使用钟表或计时工具记录小时、分、秒，认识时间单位及简单时长。",
+        "scopeBoundary": "沙漏和秒表是示例工具，不是标准规定的统一操作方法。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_KaF0SQvaiu",
@@ -9600,7 +9784,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "从非标准单位过渡到厘米、米等标准单位测长度并记录，直接承接第一学段的长度测量。",
+        "scopeBoundary": "非标准工具是教学路径，不要求国家统一采用方块或特定尺具。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zd0YkB3xNj",
@@ -9619,7 +9823,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "用天平和刻度称量比较并记录物体质量，衔接生活测量与第二学段的综合度量。",
+        "scopeBoundary": "千克、克与仪器读数可逐步发展；非标准砝码不是标准指定方式。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_0XxyaQLRhn",
@@ -9638,7 +9861,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "在指针钟与数字钟之间对应整时和半时，建立时刻读写与钟面直观。",
+        "scopeBoundary": "半时的时针应在两数字之间，不能把时刻与持续30分钟混为一谈。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AF2BeFQwfX",
@@ -9657,7 +9896,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "用若干枚硬币拼成同一总价，理解货币面值组合及加法数量关系。",
+        "scopeBoundary": "原描述实际只讲等额硬币组合，并不直接要求找零；源为英币实例，需本地化。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_FSLJbKkryb",
@@ -9675,7 +9933,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "以澳元硬币与纸币模拟20澳元以内购物，数学上关联钱币价值和简单加减。",
+        "scopeBoundary": "澳元面额及虚拟币操作不是中国课程固定内容，不能将海外币制列为直接对应。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_DOe893F6gN",
@@ -9695,7 +9972,30 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "为长度、质量、液体容量和温度选择合适单位，综合应用不同量的测量经验。",
+        "scopeBoundary": "米厘米在第一学段直接涉及；千克克、升毫升、摄氏度不能仅凭此节点说均在同学段同深度必学。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_BFJ-ch_8QU",
@@ -9713,7 +10013,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "把量得的长度、质量、容量按数值比较排序，结合数的大小关系记录结果。",
+        "scopeBoundary": "大于小于等于符号属数与运算；不同量纲不得直接比较数值大小。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bnwHo5wfCD",
@@ -9731,7 +10051,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "用同一个容器或天平间接比较质量和容量，形成量比较的传递方法。",
+        "scopeBoundary": "比较容积须使用相同中介容器并保持倒入或装填条件一致。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_skYly2Qm01",
@@ -9749,7 +10088,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "用第三物体间接比较长度并排序，体现长度比较与传递关系。",
+        "scopeBoundary": "不要求第一学段形式化证明长度序关系的传递性。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_cqSf213hSa",
@@ -9768,7 +10126,24 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "用相同长度单位首尾紧接、无缝无重叠地量物体，理解测量数值与单位的关系。",
+        "scopeBoundary": "纸夹等非标准单位是概念支架，不能替代对米和厘米的认识。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6J1wmCWf41",
@@ -9786,7 +10161,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "在简单购物中加减金额并求找零，属于第一学段生活数量关系实践。",
+        "scopeBoundary": "英镑便士为源情境；不能因货币问题就推断已学全部小数金额计算。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_2XDGT5tei1",
@@ -9805,7 +10199,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "认识1小时60分钟、1天24小时，并处理简单时间数量关系。",
+        "scopeBoundary": "日常计时约定不是闰秒等精密天文计时；不要求复杂日期进位运算。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_pbuhUQJjtt",
@@ -9823,7 +10236,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE"
+        ],
+        "rationale": "英镑符号与便士书写可用于对比不同货币的十进制金额表示。",
+        "scopeBoundary": "人民币课程并不要求掌握£与p的符号；不可把英币符号识读标为直接课程要求。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6XCURuNwPw",
@@ -9841,7 +10270,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "比较事件经过的时间长短并按时长排列，属于生活中的时间量比较。",
+        "scopeBoundary": "与按发生先后排序是两种不同目标，不能因事件更早发生就判它持续更久。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HNOPGJYiRK",
@@ -9860,7 +10308,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "读写五分钟刻度的钟面时间，包括一刻及差一刻，联系指针钟与数字表示。",
+        "scopeBoundary": "中国课标支持生活中时间认识，但未要求所有英语说法作为独立课程标准术语。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_DLcEzmmj2r",
@@ -9879,7 +10346,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "通过图示和算式解答百以内长度增减问题，结合第一学段加减意义与长度度量。",
+        "scopeBoundary": "未知量符号仅表示问题中的待求数，不提前要求代数方程理论。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4m8BimI4G5",
@@ -9899,7 +10386,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "结合上午、下午、正午、午夜辨别相同钟面数字所指的不同时刻。",
+        "scopeBoundary": "a.m./p.m.是英语标记，不代替中国常用的上午下午或24时写法。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6oxQPNLHNv",
@@ -9918,7 +10424,30 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "对厘米毫米、千克克及升毫升测量值作比较与同单位加减，属于跨情境量的运算。",
+        "scopeBoundary": "混合单位计算须先保持单位一致；不能把所有公制单位系统提前归入一二年级。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xWg0lI_gG4",
@@ -9937,7 +10466,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "测出两段长度后作减法求相差多少，结合第一学段的长度测量和加减问题。",
+        "scopeBoundary": "比较结论必须附单位；复杂跨单位换算不在本节点的早期目标内。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_4emC463IyW",
@@ -9956,7 +10504,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "通过起止时刻求出分钟数，并比较活动持续时长，进入时间差计算。",
+        "scopeBoundary": "5:17到5:43等非整十分钟题需要进位计算，不能归为早期只作先后比较。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_OzRZ89GrQW",
@@ -9975,7 +10543,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "依熟悉参照物先估长度再测量检验，支持测量估计与量感。",
+        "scopeBoundary": "英寸、英尺是原始任务的外国单位，国家小学标准不能据此认定其为必学换算单位。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Jz9UuT8BXW",
@@ -9994,7 +10581,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "用半小时、一刻钟和均分时段联系分数意义与时间实际情境。",
+        "scopeBoundary": "八等分活动是拓展；正式分数概念以第二学段为主，不因生活经验提前认定第一学段分数教学。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6_O6THdEDK",
@@ -10013,7 +10620,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "购物中将英镑与便士金额作加减，进阶到含小数单位的找零情境。",
+        "scopeBoundary": "保留源币种；涉及两位小数的算法需配合第二学段小数初步，不能全部放到一二年级。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_e4x3l2JeLI",
@@ -10032,7 +10659,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "用直尺、卷尺等工具从零刻度开始读出长度，是小学标准长度测量能力的具体落实。",
+        "scopeBoundary": "码尺、英寸、英尺只作源情境保留；不列入中国课程统一要求。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wE7-Gs9ENL",
@@ -10052,7 +10698,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "实际测量简单平面图形的边界总长度，直接对应第二学段周长学习。",
+        "scopeBoundary": "正多边形周长可用侧边相加，不能推导所有复杂规则图形必学公式。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mayItsxMUu",
@@ -10071,7 +10736,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-DATA"
+        ],
+        "rationale": "先采集长度测量数据再用点图记录与解读，连接长度测量和数据表达。",
+        "scopeBoundary": "国家标准强调数据整理及统计图，但不把美式 line plot 点图作为独立统一图种。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_jHv4BgRK8B",
@@ -10090,7 +10774,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "同一长度用不同大小单位量得不同数值，形成单位大小与计数量的反向关系。",
+        "scopeBoundary": "厘米与英寸比较是例子，不把英制单位的精确关系误记为中国必学内容。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8cs4YPkp23",
@@ -10109,7 +10812,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "通过澳元交易中总价、找零和相同商品组数计算，联系简单加减和乘法数量关系。",
+        "scopeBoundary": "澳元最少硬币组合是情境策略，不是国家课程规定的币制或优化算法。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3tz3Otap5j",
@@ -10128,7 +10851,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "利用美元和美分情境做找零、总价计算，与小学货币实际问题在数学结构上相邻。",
+        "scopeBoundary": "quarter、dime、nickel、penny及$、¢书写不属中国课程的明确币种要求。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MgsDabdnr1",
@@ -10147,7 +10889,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "读钟面的一刻、差一刻，并把分针转过四分之一圈与15分钟联系起来。",
+        "scopeBoundary": "源数据把本节点归入单位群，但实际目标是钟表读时；保留原packId不变。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5J2quSTspi",
@@ -10167,7 +10928,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "把12时制、24时制与钟面位置联系起来，兼顾罗马数字钟面这一拓展表示。",
+        "scopeBoundary": "24时制换算可在小学时间活动中展开；罗马数字钟面不是中国小学数学课标核心要求。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_e7tLi9SCIE",
@@ -10186,7 +10966,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "为更精确量长度、质量、容量选择更小且统一的单位，感受精度与单位计数关系。",
+        "scopeBoundary": "小单位通常改善分辨率，但并不自动消除测量误差，也不是任意精度保证。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_UNzojLkNdm",
@@ -10205,7 +11004,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "读出精确到分钟的指针钟时间，比较秒、分、小时所表示的时间长短。",
+        "scopeBoundary": "英语钟表说法为情境形式；精确到一分钟是任务层次，不从课标推断统一年级节点。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_EXlmTURK_o",
@@ -10224,7 +11042,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "整理60秒1分、各月天数与平闰年天数，结合日历开展时间数量计算。",
+        "scopeBoundary": "闰年通常每4年一次但有百年及四百年例外，不能把四年一闰当无例外定律。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tVvZVWO5d6",
@@ -10243,7 +11080,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "查日历确定日期及星期并计算两个事件之间相隔的天数。",
+        "scopeBoundary": "计算间隔必须区分是否包括首尾两天，复杂跨年情况可作后续应用。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WfrE_4r-kY",
@@ -10262,7 +11118,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "在12小时与24小时表示之间换写时刻，联系生活日程与时间计量。",
+        "scopeBoundary": "00:00与12:00、上午和下午转换易混淆，不能将换算只当简单数字加12。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_y1n0Zwhoca",
@@ -10281,7 +11156,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "铺单位正方形并计数来测面积，直接对应第二学段面积意义与面积单位。",
+        "scopeBoundary": "英平方英尺是原题测量单位，不属中国小学面积度量的必学单位。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AQo4u7O4sM",
@@ -10299,7 +11193,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "把长方形切分成两个小长方形展示a×(b+c)=ab+ac，联系第二学段乘法分配律与面积模型。",
+        "scopeBoundary": "面积模型是解释运算律的方法，不表示课标要求所有变量形式的代数证明。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Jvvh5P06NV",
@@ -10318,7 +11231,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "利用方格铺满长方形并从行列乘法推出面积计算，直接对应第二学段长方形面积。",
+        "scopeBoundary": "仅在行列单位方格完整覆盖时直接相乘；不泛化到任意不规则图形。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_eMtV6tBSJm",
@@ -10337,7 +11268,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "将L形、T形直角组合图形分成互不重叠长方形求总面积，承接面积可加性。",
+        "scopeBoundary": "课标没有把所有复合平面形状列为独立公式要求，分割需不漏不重。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_GzcJEVkNRn",
@@ -10356,7 +11306,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "以行数乘列数求长方形面积并解决长方形实际问题，直接对应第二学段面积计算。",
+        "scopeBoundary": "仅限长方形或由长方形组成的明确范围，不以长×宽替代其他图形面积。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_d8al9JcajP",
@@ -10375,7 +11343,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "进行千米米、时分秒、年月日等常见单位换算，连接第二学段数量关系与实际测量。",
+        "scopeBoundary": "不同单位换算依具体量而定；月份天数不固定，不能机械用同一倍数换算。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9L5qyBYmg-",
@@ -10393,7 +11381,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-PRACTICE",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "澳元100分为1元的换算和小数形式金额，可帮助理解相同金额的不同表示。",
+        "scopeBoundary": "原币制不能直接替代人民币教学；具体澳元硬币组合不列为国家要求。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IL86kadLSS",
@@ -10412,7 +11420,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "通过数轴分段或加减运算解决跨小时的时间间隔与结束时刻问题。",
+        "scopeBoundary": "用数轴是可选表征，不把所有复杂跨日日期题视为第二学段直接要求。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mFJ-2ZF6Tk",
@@ -10431,7 +11459,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "综合估测测量值并计算英镑便士商品金额，连接第二学段估算和实际运算。",
+        "scopeBoundary": "标题仅提示钱款，实际描述也涉及长度、质量，不能把全部目标误作货币计算。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ghK1mnEstc",
@@ -10449,7 +11497,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA"
+        ],
+        "rationale": "测量到半英寸或四分之一英寸并制作点图，结合长度精度、分数及数据表示。",
+        "scopeBoundary": "英寸分刻度和固定点图格式不是中国课标明确独立要求，不设main角色。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-af65bxfdp",
@@ -10467,7 +11535,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "读刻度测量液体升数及物体质量，应用克千克和升解决简单实际问题。",
+        "scopeBoundary": "250克三袋等一题多量关系可承接乘法，但不提前推断所有体积单位与质量可互换。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_WtcFrxGOgw",
@@ -10486,7 +11573,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "求多边形周长、已知周长反求边长，并比较同周长不同面积的长方形。",
+        "scopeBoundary": "未知边的复杂推理属于拓展，不能把一条周长公式推导为所有图形面积规律。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_6xNmQLzuqm",
@@ -10505,7 +11611,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY"
+        ],
+        "rationale": "认识单位正方形面积为1平方单位，理解面积是无缝无重叠铺满的覆盖量。",
+        "scopeBoundary": "面积与周长是不同维度，不能用长度单位表示面积。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_eiB3-6pu6a",
@@ -10524,7 +11646,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "在长方形正方形中使用长宽乘积和周长关系，结合平方厘米平方米解决问题。",
+        "scopeBoundary": "7.5厘米边长等小数面积和不规则水面估测是可延伸任务，不要求第二学段一律如此精度。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Zks8xyInSG",
@@ -10543,7 +11684,28 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S2-PRACTICE"
+        ],
+        "rationale": "熟悉千米米厘米毫米、千克克及升毫升等单位关系，使用换算表表示等值量。",
+        "scopeBoundary": "带3.5千米等小数换算需要后续小数知识；不等于第二学段要求全部小数换算精度。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_d7XktBQPxm",
@@ -10562,7 +11724,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "通过数单位立方体，包括隐藏的内部小方块，理解体积的立方单位计量。",
+        "scopeBoundary": "英立方单位是源任务扩展；数隐藏方块须依已知完整结构判断，不凭投影视图臆测。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_NSC3LT_-ch",
@@ -10581,7 +11759,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "借熟悉的一升瓶估计并验证容器升毫升容量，理解容量与当前液体体积的区别。",
+        "scopeBoundary": "一升容器半满约五百毫升仅在标准容量及实际液量条件成立时适用。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5bmrA-0pBi",
@@ -10600,7 +11798,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "通过取整估计澳元总价并核对找零是否合理，连接第三学段估算与生活问题。",
+        "scopeBoundary": "澳大利亚现金四舍五入到5分的特定支付规则不是中国小学统一课程内容。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5HV4mbgSGH",
@@ -10619,7 +11836,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "实际用分数、小数进行距离、时长、质量和金额四则运算，对应第三学段的数运算综合应用。",
+        "scopeBoundary": "原题名为数轴分数，源目标却涉及多种测量量；按描述判断，不能全部简化为数轴分数。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_42QD6nYjiZ",
@@ -10638,7 +11875,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-DATA",
+          "CN-MATH-2022-S3-DATA",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "用分数刻度的点图展示测量数据，再作简单分数加减，是数据表示与运算的组合。",
+        "scopeBoundary": "八分之一英寸点图等美国教材约定未在中国标准明确列为独立统一目标。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_p6MhZJYYPN",
@@ -10657,7 +11914,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "以近似关系估算英寸厘米、磅千克和品脱升之间的值，属于跨单位实际情境拓展。",
+        "scopeBoundary": "英美制近似换算不是中国小学核心要求；近似系数的误差不可当成精确等式。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_n0AlyLQwC9",
@@ -10676,7 +11950,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "对组合直角边多边形逐边求周长，必要时推算未标出的水平或竖直边。",
+        "scopeBoundary": "复杂缺边计算是进阶应用，需明确全部外边界，不能误把内部线段计入周长。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SOM6Imm2sO",
@@ -10695,7 +11988,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "阅读刻度间未标数字的位置，并使用电子仪表读出质量、容量、温度或时间。",
+        "scopeBoundary": "需要按刻度间隔判断精度；1分26.4秒等十分秒数值不一定属于统一基本要求。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_2yas4Unc8o",
@@ -10714,7 +12027,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-PRACTICE",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "处理时分秒、周日以及年月等不同时间单位之间的实际换算。",
+        "scopeBoundary": "源标题是精确到分钟读时，描述核心却是时间单位换算，按实际目标映射。",
+        "reviewBatch": "09b-time-and-intervals",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IuHa5UI5od",
@@ -10733,7 +12065,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "把立体图形体积解释为所占空间，以单位正方体计数建立立方单位意义。",
+        "scopeBoundary": "体积与表面积、容量不等同；不把任意不规则立体体积公式列为小学要求。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ML5t7n2-U8",
@@ -10751,7 +12099,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "通过拼剪把平行四边形与三角形面积联系长方形，得到底乘高及其一半。",
+        "scopeBoundary": "高必须垂直于底；钝角三角形外部高同样适用，不把斜边误当高。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Qe2PsFmSAH",
@@ -10769,7 +12133,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "用预算、单价比较与估算选择合适商品，连接第三学段较复杂数量关系及真实问题。",
+        "scopeBoundary": "原任务为澳元；计算器或表格只是工具，按单位价格比较需注意份量规格。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_2VpdPjvewx",
@@ -10787,7 +12170,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "利用十进制数位与小数，把厘米米、克千克等公制单位数量写成等值小数。",
+        "scopeBoundary": "千分位及小数三位精度不是本标准按该节点统一列出的必学清单；时分并非十进位。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SqhXQhAEUf",
@@ -10805,7 +12208,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "运用小数和单位换算解决食谱用量、容量比较及多步实际测量问题。",
+        "scopeBoundary": "多步综合问题难度可超出基础内容；不同量纲和计量体系要分别处理。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3tPI0HqqcN",
@@ -10823,7 +12246,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "依据5英里约等于8千米进行近似换算，作为长度单位及估算的跨文化应用。",
+        "scopeBoundary": "该固定英里—千米比值不属于国家小学数学课标明确要求，不赋予main角色。",
+        "reviewBatch": "09a-units-and-conversions",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MJZA90uc6H",
@@ -10841,7 +12280,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-GEOMETRY",
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "比较同面积不同周长和同周长不同面积的图形，深化周长面积两个量的区别。",
+        "scopeBoundary": "性质探索不代表存在固定单调关系，也不把某一形状的结论推广到全部图形。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_5TBUFnCy5-",
@@ -10859,7 +12317,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "将由若干长方体组成的组合立体拆分计算体积，运用体积可加性的思想。",
+        "scopeBoundary": "标准明确常见立体体积；复杂组合立体的系统计算不作为第三学段直接内容要求。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_nTL-owFJTF",
@@ -10877,7 +12353,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "由单位立方体排列解释长方体体积等于长乘宽乘高，并解决实际测量问题。",
+        "scopeBoundary": "公式直接用于长方体；不规则立体需计数或拆分，不能任意套用。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_i2-QaXbyzB",
@@ -10895,7 +12387,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "将梯形、菱形、风筝形及不规则多边形拆拼成已知图形，计算面积并检验无漏无重。",
+        "scopeBoundary": "第三学段直接支持梯形、三角形等面积；任意复杂非直线组合图形与一般多边形面积算法为拓展。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oMkQQ2O-ML",
@@ -10913,7 +12423,28 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "用百分数计算折扣，并探讨消费税及可能为负的账户余额，连接小学百分数应用与初中负数运算。",
+        "scopeBoundary": "澳大利亚10% GST法规非中国数学标准要求；负余额的运算不能作为小学有理数运算核心内容。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mMDpLugX2X",
@@ -10931,7 +12462,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "借电子表格求含小数、百分数及税额的购物预算，属于数学应用与数字工具拓展。",
+        "scopeBoundary": "特定表格公式和澳大利亚GST 10%不是中国课程必学清单，数字工具不替代数学判断。",
+        "reviewBatch": "09c-money-and-shopping",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_tegkuJA5gM",
@@ -10949,7 +12497,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "main",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY"
+        ],
+        "rationale": "利用长方体展开图计算各面面积并求表面积，区分外表面积与内部体积。",
+        "scopeBoundary": "源目标还含三棱柱、棱锥等一般展开图与表面积，它们超出小学核心要求，另作初中衔接。",
+        "reviewBatch": "09d-perimeter-and-area",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_IlDaxVr60U",
@@ -10967,7 +12533,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "transition"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-GEOMETRY",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "用分数边长的小立方体铺满长方体并计算其体积，连接分数乘法与长方体体积。",
+        "scopeBoundary": "课标小学要求长方体体积与简单分数运算，但未明确要求任意分数边长的单位立方体铺砌及公式推广。",
+        "reviewBatch": "09e-capacity-and-volume",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_LpSuPgL31x",
@@ -16019,10 +17604,66 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "小数乘除、估算、括号与运算顺序、计算器、质因数分解和负数乘除衔接。"
+      },
+      {
+        "id": "07-fractions",
+        "domain": "Fractions",
+        "nodeCount": 68,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "分数领域68个节点：意义、计算、小数百分数与缩放跨域，见审查台账07a—07c。"
+      },
+      {
+        "id": "08-geometry",
+        "domain": "Geometry",
+        "nodeCount": 79,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "图形领域79个节点：平面、立体、位置变换、角与跨群面积体积，见台账08a—08e。"
+      },
+      {
+        "id": "09a-units-and-conversions",
+        "domain": "Measurement",
+        "nodeCount": 28,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "厘清长度与质量/容量的不同计量、英制换算不属中国小学核心、测量数据点图与小数精度的证据限制。"
+      },
+      {
+        "id": "09b-time-and-intervals",
+        "domain": "Measurement",
+        "nodeCount": 18,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "区分先后顺序与持续时间、钟表制式与时长计算、英语时间标记及罗马数字非统一必学。"
+      },
+      {
+        "id": "09c-money-and-shopping",
+        "domain": "Measurement",
+        "nodeCount": 14,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "货币计算可对应中国生活实践，但外币符号、特定币制与澳大利亚GST规则不作为国家小学直接要求。"
+      },
+      {
+        "id": "09d-perimeter-and-area",
+        "domain": "Measurement",
+        "nodeCount": 14,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "第二学段周长与长方形面积，第三学段三角形平行四边形面积与常见立体表面积；复杂组合面积慎作扩展。"
+      },
+      {
+        "id": "09e-capacity-and-volume",
+        "domain": "Measurement",
+        "nodeCount": 10,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "容量与体积不能混同；第三学段体积意义、单位立方体和长方体公式，组合立体及分数边长体积保留延伸边界。"
       }
     ],
-    "completedNodeCount": 192,
-    "pendingNodeCount": 345,
+    "completedNodeCount": 423,
+    "pendingNodeCount": 114,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
