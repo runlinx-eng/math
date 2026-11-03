@@ -14,7 +14,7 @@
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个既有样板和 B01–B19 共76个新增草稿节点已核查部分外部课程或教学来源；2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
+    "allPlanStatuses": "83个知识地图节点与2个数学思维节点已核查部分外部课程或教学来源；来源核查不等于教学效果或独立数学验证。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -106,13 +106,13 @@
         "withoutSample": 0
       }
     },
-    "nodesWithExternalSourcesVerified": 83,
+    "nodesWithExternalSourcesVerified": 85,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
-    "nodesWithResearchReviewedWithoutExplanation": 0,
+    "nodesWithResearchReviewedWithoutExplanation": 2,
     "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 0,
-    "remainingUnverifiedMathThinkingNodes": 2,
+    "remainingUnverifiedMathThinkingNodes": 0,
     "researchBatchesExternallyReviewed": [
       "B01",
       "B02",
@@ -167,7 +167,8 @@
     "sourceRecordsExternallyVerifiedInB16": 5,
     "sourceRecordsExternallyVerifiedInB17": 6,
     "sourceRecordsExternallyVerifiedInB18": 6,
-    "sourceRecordsExternallyVerifiedInB19": 7
+    "sourceRecordsExternallyVerifiedInB19": 7,
+    "thinkingCalculatorSourcesReviewed": 2
   },
   "records": [
     {
@@ -1652,14 +1653,23 @@
         "end": 9
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "计算器与估算部分外部来源核查及活动证据边界记录完成；独立复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "keep_on_separate_math_thinking_review_track"
+      "researchVerificationStatus": "external_sources_reviewed_thinking_calculator_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY-GUIDE",
+        "NSW-FLEXIBLE-STRATEGIES",
+        "NSW-BROKEN-CALCULATOR"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-THINKING-CALCULATOR-2026-11-04.md",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_ish_uH8vZe",
@@ -1673,14 +1683,23 @@
         "end": 10
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "计算器与估算部分外部来源核查及活动证据边界记录完成；独立复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
       "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "keep_on_separate_math_thinking_review_track"
+      "researchVerificationStatus": "external_sources_reviewed_thinking_calculator_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY-GUIDE",
+        "NSW-FLEXIBLE-STRATEGIES",
+        "NSW-BROKEN-CALCULATOR"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-THINKING-CALCULATOR-2026-11-04.md",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_FSLJbKkryb",
