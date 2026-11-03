@@ -20,6 +20,10 @@
     "beyond-primary-transition": {
       "label": "小学后续衔接（上游年龄范围主要在11岁以后）",
       "ages": "12+"
+    },
+    "beyond-primary": {
+      "label": "小学之后（初中衔接或初中内容）",
+      "ages": "主要对应7—9年级"
     }
   },
   "stageOverlapCounts": {
@@ -9942,7 +9946,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "小数数位与第一学段之后逐步建立的小数意义、计数单位有关；但按任意小数位数取整和规定精度的要求并非小学课标明确列出的内容。",
+        "scopeBoundary": "小学第三学段支持小数意义和运算，不足以支持节点中全部精确到小数位、有效数字和误差要求；系统近似数内容属于初中衔接。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_RVK655t391",
@@ -9960,7 +9982,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "第三学段综合与实践明确以温度等情境引入负数，要求理解相反意义的量；温度变化可作为该情境的具体应用。",
+        "scopeBoundary": "标准要求理解负数的情境意义，不表示小学阶段需要掌握跨零的有理数四则运算或一般负数计算规则。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XNmGwNggdU",
@@ -9978,7 +10016,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-PRACTICE"
+        ],
+        "rationale": "正整数部分达到千万级，属于第二学段万以上数和大数表示的延展；节点还包含负数，负数情境则对应第三学段综合与实践。",
+        "scopeBoundary": "这是混合节点：大数读写与负数情境来自不同学段，不能把全部目标归到一个阶段；建议后续内容审查考虑拆分。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HLUqHJ9Y7n",
@@ -9996,7 +10053,25 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "十进制位值与小数位置关系可延续第三学段的数与运算；使用指数记号表示10的幂则属于更形式化的数与式内容。",
+        "scopeBoundary": "小学课标支持小数和计数单位，但没有明确要求用整数指数记数10的幂或系统掌握乘除10的指数规则；指数记号应标为初中衔接。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_EDgw64OmfA",
@@ -10014,7 +10089,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "理解小数相邻数位的计数单位关系，符合第三学段小数意义、计数单位和小数运算的一致性要求。",
+        "scopeBoundary": "标准强调小数意义和计数单位，但未逐项列出所有相邻位值的10倍或十分之一关系；应以具体数位理解为主。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Ac7oMWhyPw",
@@ -10032,7 +10123,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "读写、比较到千分位的小数，与第三学段小数意义、计数单位和小数大小比较相连。",
+        "scopeBoundary": "课标没有把千分位读写作为单独列出的精度门槛；节点中的展开式和具体位数需以教材和实际内容复核。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Gag_h98jWP",
@@ -10050,7 +10157,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "读写和比较千万以内的正整数，属于第二学段万以上数的认识和大数表示范围。",
+        "scopeBoundary": "英文数词读法是语言形式，需按中文教学场景本地化；标准没有把千万作为统一的学段上限。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_lNGpnILM5C",
@@ -10068,7 +10191,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "理解小数各数位代表的计数单位及相邻位值关系，对应第三学段小数意义和计数单位。",
+        "scopeBoundary": "课程标准没有把三位小数作为统一的学习终点；应避免把千分位精度误写成全国统一的年级界线。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_RWUY7_IXvw",
@@ -10086,7 +10225,24 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-PRACTICE",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "小学第三学段只在情境中认识负数；借助数轴理解有理数的绝对值、求绝对值的方法，明确属于第四学段（7—9年级）数与式。",
+        "scopeBoundary": "不得将绝对值的正式概念和求值方法放入小学核心阶段；小学可保留负数情境经验作为前置体验。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_U9sme87C32",
@@ -10104,7 +10260,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "小数意义和位值可在第三学段继续发展；按有效数字、指定小数位数和情境精度取近似值，对应第四学段近似数和近似计算要求。",
+        "scopeBoundary": "小学阶段不应把有效数字和任意精度取整当作必学要求；正式近似数与精度处理需标注初中衔接。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PsylzZ9lHW",
@@ -10122,7 +10297,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "正分数和小数在数轴上的表示可作为第三学段数感与数的表示的延伸；把正负整数、分数和小数统一放在同一数轴上，涉及第四学段有理数及数轴。",
+        "scopeBoundary": "小学阶段可处理正分数、小数的表示；负数与有理数的统一数轴表示属于初中系统内容。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_uDJY0X0hgo",
@@ -10140,7 +10334,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "正负整数、小数、分数的统一排序与比较，直接涉及第四学段有理数意义、数轴表示和有理数大小比较。",
+        "scopeBoundary": "不能把该节点整体归入小学；小学只覆盖正数、分数和小数的相应基础部分。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hCVPYlF-7Y",
@@ -10158,7 +10368,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "整数乘方、平方根和立方根在第四学段数与式中明确出现；节点涉及的高次幂、根式及近似值超出小学标准。",
+        "scopeBoundary": "小学阶段可在适当活动中观察平方数或立方数模式，但系统乘方、开方和根式不是小学要求。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VVn1IXjkzn",
@@ -10176,7 +10402,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "上下界、误差区间和不等式表达属于第四学段数与式中的近似数、近似计算及不等式内容。",
+        "scopeBoundary": "小学阶段可以进行简单估算，但不能据此推断需要掌握上下界和不等式区间表示。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_bO-njVOige",
@@ -10194,7 +10436,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "科学记数法和整数指数幂属于第四学段数与式内容，标准明确要求了解整数指数幂并用科学记数法表示数。",
+        "scopeBoundary": "10的幂作为数位结构可以提前感知，但标准形式A×10ⁿ及指数运算不属于小学核心要求。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_b4lbTOJYwI",
@@ -10212,7 +10470,23 @@
         "beyond-primary-transition"
       ],
       "mappingStatus": "outside-primary-age-range-candidate",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "beyond-primary"
+        ],
+        "roles": {
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "有理数、无理数和实数的区分属于第四学段数与式；标准覆盖实数和无理数，但‘数集与无穷’的完整主题不属于小学课程。",
+        "scopeBoundary": "标准涉及实数、无理数及其与数轴的关系，不代表要求小学或初中完整学习集合论或证明数集的无限性。",
+        "reviewBatch": "04-decimals-and-secondary-transition",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_iFFKZd-Vgv",
@@ -10937,10 +11211,18 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "核对大数、数位、近似数、负数及罗马数字；负数按第三学段综合与实践映射，罗马数字标记为未覆盖的拓展内容。"
+      },
+      {
+        "id": "04-decimals-and-secondary-transition",
+        "domain": "Number Representation & Place Value",
+        "nodeCount": 16,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "核对小数位值、负数、绝对值、数轴、乘方、根式、近似数和数集；明确小学负数仅为情境意义，绝对值与系统有理数内容属于初中。"
       }
     ],
-    "completedNodeCount": 58,
-    "pendingNodeCount": 479,
+    "completedNodeCount": 74,
+    "pendingNodeCount": 463,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
