@@ -583,3 +583,7 @@
 ## 研究缺口 6 节点（2026-11-04）
 
 `mt_5J2quSTspi`、`mt_e7tLi9SCIE`、`mt_tVvZVWO5d6`、`mt_SOM6Imm2sO`、`mt_tegkuJA5gM`、`mt_IlDaxVr60U`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B18-2026-11-04.md)。
+
+## 研究缺口 7 节点（2026-11-04）
+
+`mt_FSLJbKkryb`、`mt_8cs4YPkp23`、`mt_9L5qyBYmg-`、`mt_5bmrA-0pBi`、`mt_Qe2PsFmSAH`、`mt_oMkQQ2O-ML`、`mt_mMDpLugX2X`。来源与范围见 [批次记录](CONCEPT-RESEARCH-B19-2026-11-04.md)。

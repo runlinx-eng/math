@@ -360,6 +360,14 @@ const ids=[
   ['research-gap6b-04','mt_SOM6Imm2sO'],
   ['research-gap6b-05','mt_tegkuJA5gM'],
   ['research-gap6b-06','mt_IlDaxVr60U']
+,
+  ['research-gap7-01','mt_FSLJbKkryb'],
+  ['research-gap7-02','mt_8cs4YPkp23'],
+  ['research-gap7-03','mt_9L5qyBYmg-'],
+  ['research-gap7-04','mt_5bmrA-0pBi'],
+  ['research-gap7-05','mt_Qe2PsFmSAH'],
+  ['research-gap7-06','mt_oMkQQ2O-ML'],
+  ['research-gap7-07','mt_mMDpLugX2X']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

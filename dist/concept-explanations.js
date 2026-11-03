@@ -1,4 +1,4 @@
-// Three hundred and sixty-eight source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and seventy-five source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3343,6 +3343,69 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"一个边长1/2厘米的小立方体体积不是1/2立方厘米：三个方向都要乘1/2。",
     tryIt:"用边长1/2厘米的小立方体填1又1/2×1×2又1/2厘米的盒子，比较计数和三边相乘。",
     why:"小立方体体积是三个边长的乘积；无空隙或重叠地填满时，小块体积之和等于整体体积。",
+  },
+  "mt_FSLJbKkryb":{
+    formal:"澳大利亚硬币和简单购物",
+    definition:"澳大利亚的硬币有不同面值；比较它们能买多少东西，要看标出的价值，而不是硬币大小。",
+    simpler:"先看每枚硬币标了几澳分或几澳元，再把同一种货币的金额相加。",
+    example:"1澳元等于100澳分，$2等于200澳分；用$5和$2能付$7。",
+    counterexample:"澳大利亚$2硬币虽然比50c硬币小，面值却更大。",
+    tryIt:"示意商店里，书$5、笔$3，一张$10够付吗？",
+    why:"钱的面值表示金额，外形大小不决定面值；合计后才能比较付款够不够。",
+  },
+  "mt_8cs4YPkp23":{
+    formal:"澳元交易与找零",
+    definition:"购买多件商品时，将同一种货币的价格相加；付款足够时，付款减去总价得到找零。",
+    simpler:"先把每件价格放在一起算，再看付出的钱比总价多多少。",
+    example:"饮料$4和三明治$7共$11；付$20找回$9。",
+    counterexample:"三个苹果每个50澳分，总价是150澳分，不是50澳分。",
+    tryIt:"给定澳大利亚硬币面值，试着用尽量少的硬币凑85澳分。",
+    why:"加法合并各次购买，减法得到付出后剩下的金额；比较硬币数量还要检查可用面值。",
+  },
+  "mt_9L5qyBYmg-":{
+    formal:"澳元和澳分的等值换写",
+    definition:"同一笔澳大利亚货币可以用澳元或澳分表示；1澳元等于100澳分。",
+    simpler:"把整澳元换成每元100澳分，再加上剩下的澳分。",
+    example:"$2.70等于270澳分；450澳分等于$4.50。",
+    counterexample:"270澳分不是270澳元；数字变大是因为使用了更小的单位。",
+    tryIt:"用两种不同的澳大利亚示意票币组合出$3.60，再互相核对。",
+    why:"换单位改变数的写法，不改变这笔钱的价值；不同面值的组合也可能等值。",
+  },
+  "mt_5bmrA-0pBi":{
+    formal:"估计金额与题定现金取整",
+    definition:"金额估计用接近原价的方便数判断数量级；准确总价要用原数计算。",
+    simpler:"先把价格改成好算的近似数，得出大约多少，再算准确金额。",
+    example:"$4.95、$2.10和$7.85合计约$15，精确总价是$14.90。",
+    counterexample:"估计约$15不表示准确总价一定是$15；现金取整还要按题目给定的规则。",
+    tryIt:"估一估付$50买$6.90和$8.15的商品会找回多少，再精算核对。",
+    why:"估算能发现明显不合理的结果，但接近的结果仍可能不准确；现金取整与估算是不同操作。",
+  },
+  "mt_Qe2PsFmSAH":{
+    formal:"预算与同量价格比较",
+    definition:"预算给出可以使用的金额；比较不同包装的价格时，可先换算到相同数量。",
+    simpler:"先合计选中的东西并与预算比较；要比哪包按重量更便宜，就算每千克多少。",
+    example:"2千克米$5.80是每千克$2.90；500克$1.60是每千克$3.20。",
+    counterexample:"一包标价更低，不一定每千克更便宜；按重量便宜也不自动决定每个人的最佳选择。",
+    tryIt:"在$60预算内选择活动用品，合计后算还剩多少，再试另一种可行组合。",
+    why:"同量价格让不同包装可以公平比较；预算还要考虑实际需要、总支出和其他条件。",
+  },
+  "mt_oMkQQ2O-ML":{
+    formal:"折扣、题定GST和余额",
+    definition:"折扣按指定的原价计算；题目给出澳大利亚税前价和GST税率时，按税前价算税再相加。",
+    simpler:"先确认百分比对应哪个金额：折扣看原价，加税看题给税前价。",
+    example:"$80商品打七五折付$60；题给税前$45加10% GST，税为$4.50，含税共$49.50。",
+    counterexample:"标明已含GST的价格不能再把同一税额加一次；打九折也不是一律减$9。",
+    tryIt:"模拟余额$20减少$35，在数轴上找出结果并说出它表示什么。",
+    why:"百分比必须对应正确的基数；余额降到零以下，在这个模拟情境中表示欠款。",
+  },
+  "mt_mMDpLugX2X":{
+    formal:"用表格公式计算金额",
+    definition:"表格公式可以引用金额所在的单元格，按加减或百分比关系计算结果。",
+    simpler:"先写清每个格子放什么，再用格子的名称写公式，改变数值后重新核对。",
+    example:"A1、A2、A3依次是$12.85、$7.60、$3.95，公式=A1+A2-A3得到$16.50。",
+    counterexample:"题目要算原价的15%作折扣时，不能把15%直接当成折后价格。",
+    tryIt:"题给A1为税前$45、GST为10%，写出计算含税价的公式并估计结果。",
+    why:"引用使公式对应表格里的金额；百分比仍需选对基数，估算可以帮助检查是否明显不合理。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

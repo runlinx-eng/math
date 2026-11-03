@@ -7,14 +7,14 @@
     "total": 85,
     "knowledgeMapNodes": 83,
     "mathThinkingNodes": 2,
-    "knowledgeMapWithSamples": 76,
-    "knowledgeMapWithoutSamples": 7,
+    "knowledgeMapWithSamples": 83,
+    "knowledgeMapWithoutSamples": 0,
     "phaseCounts": {
       "2": 2,
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个既有样板和 B01–B18 共69个新增草稿节点已核查部分外部课程或教学来源；7个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
+    "allPlanStatuses": "7个既有样板和 B01–B19 共76个新增草稿节点已核查部分外部课程或教学来源；2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -24,8 +24,8 @@
       },
       "PROCEDURAL": {
         "total": 42,
-        "withSample": 35,
-        "withoutSample": 7
+        "withSample": 42,
+        "withoutSample": 0
       },
       "CONCEPTUAL": {
         "total": 28,
@@ -78,8 +78,8 @@
       "measure": {
         "title": "Measurement",
         "total": 18,
-        "withSample": 11,
-        "withoutSample": 7
+        "withSample": 18,
+        "withoutSample": 0
       },
       "multiply": {
         "title": "Multiplication & Division",
@@ -106,12 +106,12 @@
         "withoutSample": 0
       }
     },
-    "nodesWithExternalSourcesVerified": 76,
+    "nodesWithExternalSourcesVerified": 83,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
     "nodesWithResearchReviewedWithoutExplanation": 0,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 7,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 0,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
@@ -131,7 +131,8 @@
       "B15",
       "B16",
       "B17",
-      "B18"
+      "B18",
+      "B19"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -151,7 +152,7 @@
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
     "sourceRecordsExternallyVerifiedInB04": 1,
-    "nodesWithExplanationDraftsPendingIndependentReview": 69,
+    "nodesWithExplanationDraftsPendingIndependentReview": 76,
     "sourceRecordsExternallyVerifiedInB05": 5,
     "sourceRecordsExternallyVerifiedInB06": 3,
     "sourceRecordsExternallyVerifiedInB07": 5,
@@ -165,7 +166,8 @@
     "sourceRecordsExternallyVerifiedInB15": 3,
     "sourceRecordsExternallyVerifiedInB16": 5,
     "sourceRecordsExternallyVerifiedInB17": 6,
-    "sourceRecordsExternallyVerifiedInB18": 6
+    "sourceRecordsExternallyVerifiedInB18": 6,
+    "sourceRecordsExternallyVerifiedInB19": 7
   },
   "records": [
     {
@@ -1692,14 +1694,24 @@
         "end": 7
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_bnwHo5wfCD",
@@ -1771,14 +1783,24 @@
         "end": 8
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_MgsDabdnr1",
@@ -1914,14 +1936,24 @@
         "end": 9
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_NSC3LT_-ch",
@@ -1969,14 +2001,24 @@
         "end": 10
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_SOM6Imm2sO",
@@ -2021,14 +2063,24 @@
         "end": 11
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_i2-QaXbyzB",
@@ -2067,14 +2119,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_mMDpLugX2X",
@@ -2088,14 +2150,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_tegkuJA5gM",
