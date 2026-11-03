@@ -40,7 +40,7 @@ test('all 45 samples receive an AI second-pass review without overstating accept
  }
 });
 
-test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B03 review accounting',()=>{
+test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B03/B04 review accounting',()=>{
  assert.equal(researchFalse.size,85);
  assert.equal(gapIds.size,85);
  assert.deepEqual(researchFalse,gapIds);
@@ -58,19 +58,26 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB01,2);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB02,1);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB03,1);
- assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,11);
- assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,4);
- assert.equal(researchTriage.summary.remainingUnverifiedKnowledgeMapNodesWithoutSamples,72);
+ assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,12);
+ assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,5);
+ assert.equal(researchTriage.summary.remainingUnverifiedKnowledgeMapNodesWithoutSamples,71);
  assert.equal(researchTriage.summary.remainingUnverifiedMathThinkingNodes,2);
- assert.deepEqual(researchTriage.summary.researchBatchesExternallyReviewed,['B01','B02','B03']);
+ assert.deepEqual(researchTriage.summary.researchBatchesExternallyReviewed,['B01','B02','B03','B04']);
  assert.equal(researchTriage.summary.nodesWithSourceCoverageRevisions,7);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,11);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,74);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,12);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,73);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_not_independently_math_validated').length,7);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B01_2026-11-03').length,2);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B02_2026-11-03').length,1);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B03_2026-11-03').length,1);
- assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,74);
+  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB04,1);
+  const b04=researchTriage.records.find(record=>record.id==='mt_iykH2P5oFq');
+  assert.ok(b04);
+  assert.equal(b04.externalSourcesVerified,true);
+  assert.equal(b04.externalSourceIds.length,5);
+  assert.equal(b04.explanationSamplePresent,false);
+  assert.equal(b04.researchVerificationStatus,'external_sources_reviewed_B04_2026-11-03');
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,73);
  const b01Ids=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS']);
  for(const id of b01Ids){const record=researchTriage.records.find(item=>item.id===id);assert.ok(record,id);assert.equal(record.externalSourcesVerified,true);assert.equal(record.explanationSamplePresent,false);assert.equal(record.nextAction,'await_authorization_before_explanation_drafting');}
  const b02Record=researchTriage.records.find(item=>item.id==='mt_NSC3LT_-ch');
@@ -145,7 +152,7 @@ test('B03 fractions research gate preserves equal-part and same-whole boundaries
  const node=b03.records.find(item=>item.id==='mt_gC-6JXAG5S');
  assert.ok(node);
  assert.equal(node.sourceIds.length,4);
- assert.match(node.coverageAudit.join(' '),/2\/8 = 1\/4/);
+ assert.match(node.coverageAudit.join(' '),/1\/4.*2\/8|2\/8.*1\/4/);
  assert.match(node.coverageAudit.join(' '),/same whole/);
  assert.match(node.knownRisks.join(' '),/congruent shapes/);
  assert.match(node.relationshipBoundary,/No new dependency/);

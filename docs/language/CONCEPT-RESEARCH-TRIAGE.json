@@ -106,7 +106,7 @@
         "withoutSample": 1
       }
     },
-    "nodesWithExternalSourcesVerified": 11,
+    "nodesWithExternalSourcesVerified": 12,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
@@ -136,7 +136,7 @@
     "sourceRecordsExternallyVerifiedInB01": 2,
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
-    "nodesWithExternalSourcesReviewed": 1
+    "sourceRecordsExternallyVerifiedInB04": 1
   },
   "records": [
     {
@@ -847,7 +847,8 @@
         "SRC-01",
         "SRC-02",
         "SRC-03",
-        "SRC-04"
+        "SRC-04",
+        "SRC-05"
       ],
       "researchRecord": "CONCEPT-RESEARCH-B04.md#mt_iykH2P5oFq"
     },
