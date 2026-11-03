@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,348);
+  assert.equal(samples.length,351);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -462,4 +462,11 @@ test('geometry research-gap drafts retain cross-section and modelling limits',()
   assert.match(conceptHelpFor('mt_mN4Ye_vtR7').counterexample,/不能.*一定安全/);
   assert.match(conceptHelpFor('mt_SK7WntVZ6y').why,/近似/);
   assert.match(conceptHelpFor('mt_LBT-9jz7kR').definition,/小于一周角/);
+});
+
+test('construction research-gap drafts preserve coordinate and triangle boundaries',()=>{
+  assert.match(conceptHelpFor('mt_h7zVgCDVmx').definition,/绝对值/);
+  assert.match(conceptHelpFor('mt_61Nhj8W78f').counterexample,/不等于所有不规则五边形/);
+  assert.match(conceptHelpFor('mt_4bc3EAxhlY').example,/3＋4＝7/);
+  assert.match(conceptHelpFor('mt_4bc3EAxhlY').counterexample,/不同大小/);
 });

@@ -336,6 +336,10 @@ const ids=[
   ['research-gap5f-03','mt_LBT-9jz7kR'],
   ['research-gap5f-04','mt_RdfzwInyAj'],
   ['research-gap5f-05','mt_h02-C8PRrj']
+,
+  ['research-gap3c-01','mt_h7zVgCDVmx'],
+  ['research-gap3c-02','mt_61Nhj8W78f'],
+  ['research-gap3c-03','mt_4bc3EAxhlY']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

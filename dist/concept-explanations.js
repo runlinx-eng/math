@@ -1,4 +1,4 @@
-// Three hundred and forty-eight source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and fifty-one source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3163,6 +3163,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"圆锥平行底面的两个截面形状都是圆，但靠近顶点的圆更小，不能说它们全等。",
     tryIt:"在立体模型中移动平行底面的切面，比较棱柱和棱锥的截面。",
     why:"棱柱沿相同方向保持均匀截面；棱锥或圆锥向顶点收窄。",
+  },
+  "mt_h7zVgCDVmx":{
+    formal:"用坐标求水平和竖直距离",
+    definition:"水平线段两端纵坐标相同，长度等于横坐标之差的绝对值；竖直线段同理比较纵坐标。",
+    simpler:"先确认哪一个坐标没有变，再数另一方向相差多少个单位。",
+    example:"从(－3,2)到(4,2)，水平距离是4－(－3)＝7个单位。",
+    counterexample:"跨过0时不能把两个数的绝对值相减：从－3到4的距离是3＋4＝7。",
+    tryIt:"连接(－3,2)、(4,2)、(4,－1)、(－3,－1)，求矩形边长和面积。",
+    why:"坐标差的绝对值表示数轴上两位置之间的非负距离；图上每格的实际单位还需另行换算。",
+  },
+  "mt_61Nhj8W78f":{
+    formal:"用变换创造铺砌与图案",
+    definition:"铺砌用图形覆盖平面而不留缝隙或重叠；平移、反射和旋转可以用来排列重复图案。",
+    simpler:"把一块图形滑动、翻转或转动，检查相邻边能否贴合。",
+    example:"正方形可以首尾相接地铺满平面；相邻方块可以通过平移对应。",
+    counterexample:"正五边形单独作为一种正多边形不能这样规则铺满平面，不等于所有不规则五边形都不能铺砌。",
+    tryIt:"在网格中平移几个相同图形，再反射一个图形并观察接缝。",
+    why:"铺砌要求覆盖且无重叠；变换改变位置或方向，同时保持图形大小和形状。",
+  },
+  "mt_4bc3EAxhlY":{
+    formal:"判断三角形能否确定",
+    definition:"三角形的边和角条件可能确定一个形状、多个不同形状，或无法形成三角形；需要检查条件是否相容。",
+    simpler:"先看边能否合拢、角是否能组成三角形，再看是否还有改变形状或大小的余地。",
+    example:"边长3、4、7不能形成三角形，因为3＋4＝7只会排成一条直线；3、5、7可以形成一个确定的三角形形状。",
+    counterexample:"三个角分别为50°、60°和70°不能确定唯一大小：相同角度可组成不同大小的三角形。",
+    tryIt:"比较边长3、4、8与3、5、7能否闭合，再试把50°、60°、70°的三角形放大。",
+    why:"任意两边之和必须大于第三边；三个角之和要是180°。两边及其夹角可确定形状，两边和非夹角可能有不同数量的解。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
