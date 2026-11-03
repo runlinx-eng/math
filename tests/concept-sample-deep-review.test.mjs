@@ -16,7 +16,7 @@ const researchFalse=new Set(source.nodes.filter(node=>node.hasResearch===false).
 
 test('all 45 samples receive an AI second-pass review without overstating acceptance',()=>{
  assert.equal(sampleReview.records.length,45);
- assert.equal(sampleIds.size,356);
+ assert.equal(sampleIds.size,362);
  assert.ok([...new Set(sampleReview.records.map(record=>record.id))].every(id=>sampleIds.has(id)));
  assert.equal(sampleReview.summary.samplesReviewed,45);
  assert.equal(sampleReview.summary.revisionsApplied,17);
@@ -49,8 +49,8 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B
  assert.equal(researchTriage.summary.total,85);
  assert.equal(researchTriage.summary.knowledgeMapNodes,83);
  assert.equal(researchTriage.summary.mathThinkingNodes,2);
- assert.equal(researchTriage.summary.knowledgeMapWithSamples,64);
- assert.equal(researchTriage.summary.knowledgeMapWithoutSamples,19);
+ assert.equal(researchTriage.summary.knowledgeMapWithSamples,70);
+ assert.equal(researchTriage.summary.knowledgeMapWithoutSamples,13);
  assert.equal(researchTriage.summary.phaseCounts[2],2);
  assert.equal(researchTriage.summary.phaseCounts[4],7);
  assert.equal(researchTriage.summary.phaseCounts[5],76);
@@ -58,14 +58,14 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB01,2);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB02,1);
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB03,1);
- assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,64);
+ assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,70);
  assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,0);
- assert.equal(researchTriage.summary.remainingUnverifiedKnowledgeMapNodesWithoutSamples,19);
+ assert.equal(researchTriage.summary.remainingUnverifiedKnowledgeMapNodesWithoutSamples,13);
  assert.equal(researchTriage.summary.remainingUnverifiedMathThinkingNodes,2);
- assert.deepEqual(researchTriage.summary.researchBatchesExternallyReviewed,['B01','B02','B03','B04','B05','B06','B07','B08','B09','B10','B11','B12','B13','B14','B15','B16']);
+ assert.deepEqual(researchTriage.summary.researchBatchesExternallyReviewed,['B01','B02','B03','B04','B05','B06','B07','B08','B09','B10','B11','B12','B13','B14','B15','B16','B17']);
  assert.equal(researchTriage.summary.nodesWithSourceCoverageRevisions,7);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,64);
- assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,21);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified===true).length,70);
+ assert.equal(researchTriage.records.filter(record=>record.externalSourcesVerified!==true).length,15);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_not_independently_math_validated').length,7);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B01_2026-11-03').length,2);
  assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='external_sources_reviewed_B02_2026-11-03').length,1);
@@ -81,7 +81,7 @@ test('85 research gaps match taxonomy and plan, with correct phase and B01/B02/B
   assert.equal(b04.explanationDraftStatus,'ai_draft_self_checked_pending_independent_review');
   assert.equal(b04.independentMathReviewStatus,'not_completed');
   assert.equal(b04.childUnderstandingStatus,'not_tested');
- assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,21);
+ assert.equal(researchTriage.records.filter(record=>record.researchVerificationStatus==='not_verified_in_this_pass').length,15);
  const b01Ids=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS']);
  for(const id of b01Ids){const record=researchTriage.records.find(item=>item.id===id);assert.ok(record,id);assert.equal(record.externalSourcesVerified,true);assert.equal(record.explanationSamplePresent,true);assert.equal(record.nextAction,'independent_content_and_math_review_before_acceptance');}
  const b02Record=researchTriage.records.find(item=>item.id==='mt_NSC3LT_-ch');
@@ -120,8 +120,8 @@ test('critical second-pass corrections are present in the explanation source',()
 
 test('sample and research review scope stays separate from the 477 unconfigured explanations',()=>{
  assert.equal(knowledge.length,537);
- assert.equal(sampleIds.size,356);
- assert.equal(knowledge.length-sampleIds.size,181);
+ assert.equal(sampleIds.size,362);
+ assert.equal(knowledge.length-sampleIds.size,175);
  assert.ok(researchTriage.records.filter(record=>record.scope==='math_thinking').every(record=>!sampleIds.has(record.id)));
 });
 
@@ -193,7 +193,7 @@ test('research triage JSON and Markdown stay aligned with source gaps and config
  const externallyVerified=researchTriage.records.filter(record=>record.externalSourcesVerified===true);
  assert.equal(researchTriage.records.length,85);
  assert.equal(knowledgeGaps.length,83);
- assert.equal(externallyVerified.length,64);
+ assert.equal(externallyVerified.length,70);
  assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,externallyVerified.length);
  assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,
   externallyVerified.filter(record=>!sampleIds.has(record.id)).length);
@@ -219,14 +219,14 @@ test('research triage JSON and Markdown stay aligned with source gaps and config
   assert.ok(triageMarkdown.includes('| '+summary.title+'（'+domain+'） | '+records.length+' | '+withSample+' | '+(records.length-withSample)+' |'),
    domain+' Markdown row must match triage records');
  }
- const remainingStart=triageMarkdown.indexOf('## 19 个尚无样板的知识地图节点');
+ const remainingStart=triageMarkdown.indexOf('## 13 个尚无样板的知识地图节点');
  const thinkingStart=triageMarkdown.indexOf('## 2 个数学思维节点',remainingStart);
  assert.ok(remainingStart>=0&&thinkingStart>remainingStart);
  const remainingSection=triageMarkdown.slice(remainingStart,thinkingStart);
  const remainingIds=[...remainingSection.matchAll(/`(mt_[^`]+)`/g)].map(match=>match[1]);
- assert.equal(remainingIds.length,19);
+ assert.equal(remainingIds.length,13);
  assert.ok(remainingIds.every(id=>!sampleIds.has(id)));
- assert.ok(triageMarkdown.includes("**64个来源核查完成；21个尚未核查**"));
+ assert.ok(triageMarkdown.includes("**70个来源核查完成；15个尚未核查**"));
 });
 
 test('B05 source-gap drafts retain original source flags and evidence boundaries',()=>{
@@ -299,4 +299,10 @@ test('B16 place-value drafts retain source flags and representation limits',()=>
  const ids=["mt_dJOKkYMsCv", "mt_QguIGVMB1o", "mt_Bt-iORUzdO", "mt_HczwO1sr-y", "mt_F_zEAJ8VIo"];
  for(const id of ids){const r=researchTriage.records.find(x=>x.id===id);assert.equal(r.hasResearch,false);assert.equal(r.externalSourcesVerified,true);assert.equal(r.researchVerificationStatus,'external_sources_reviewed_B16_2026-11-03');assert.equal(r.independentMathReviewStatus,'not_completed');assert.equal(r.childUnderstandingStatus,'not_tested');assert.ok(sampleIds.has(id));}
  assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB16,5);
+});
+
+test('B17 grouping drafts retain source flags and tool limits',()=>{
+ const ids=["mt_1GDEHyEZYH", "mt_qUjW0N1cYO", "mt_oxfxzbat3k", "mt_NmvuwVUFRS", "mt_bZC-wqWX7Y", "mt_3m0pA-aeat"];
+ for(const id of ids){const r=researchTriage.records.find(x=>x.id===id);assert.equal(r.hasResearch,false);assert.equal(r.externalSourcesVerified,true);assert.equal(r.researchVerificationStatus,'external_sources_reviewed_B17_2026-11-03');assert.equal(r.independentMathReviewStatus,'not_completed');assert.equal(r.childUnderstandingStatus,'not_tested');assert.ok(sampleIds.has(id));}
+ assert.equal(researchTriage.summary.sourceRecordsExternallyVerifiedInB17,6);
 });

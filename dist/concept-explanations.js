@@ -1,4 +1,4 @@
-// Three hundred and fifty-six source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and sixty-two source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3235,6 +3235,60 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"3个百、14个十和2个一不是3142，而是300＋140＋2＝442。",
     tryIt:"在0到1000的数轴上估计750的位置，再把507表示成数位表。",
     why:"数位表示单位大小，不同分组可以换算成同一个数；数轴上的估计要看共同刻度。",
+  },
+  "mt_1GDEHyEZYH":{
+    formal:"用物品表示平均分和分组",
+    definition:"可以用屏幕物品或实物表示平均分配和按固定数量分组，并检查每组是否符合条件。",
+    simpler:"一件一件移动，平均分时看每份是否一样多，分组时看每组是否达到指定数量。",
+    example:"把10颗草莓平均放到2个盘子里，每盘5颗；12块积木每3块一组有4组。",
+    counterexample:"两个盘子分别放4颗和6颗，总数虽是10，但没有平均分。",
+    tryIt:"将6个物品平均分给3个玩偶，再在屏幕上表示同样的分配。",
+    why:"总数、组数和每组数量需要同时符合题意；屏幕分配本身不证明真实物品操作已完成。",
+  },
+  "mt_qUjW0N1cYO":{
+    formal:"用分组解决乘除问题",
+    definition:"遇到等量分组的情境，可以用物品、图或阵列表示，并用重复相加或数组数来求解。",
+    simpler:"先分清已知的是总数、组数还是每组几个，再把各组摆出来。",
+    example:"18张贴纸平均分给3人，每人6张；20个苹果每5个一袋，可以装4袋。",
+    counterexample:"18张平均分给3人，如果分成5、6、7张，虽然总数正确但各份不相等。",
+    tryIt:"用4行、每行4个的阵列表示4桌各4把椅子，再数总共多少把。",
+    why:"等量的组可以对应乘法和除法；表示时既要保留总数，也要保留题目中的组。",
+  },
+  "mt_oxfxzbat3k":{
+    formal:"奇数与偶数的运算规律",
+    definition:"整数可以用成对结构讨论奇偶：奇数加奇数得到偶数，奇数加偶数得到奇数，整数乘偶数得到偶数。",
+    simpler:"奇数配完对后剩1个，两个奇数剩下的1个和1个又能配成一对。",
+    example:"347和129都是奇数，按配对结构相加得到偶数；6×37也是偶数。",
+    counterexample:"看到一个例子成立不等于已经证明所有情况；要说明任意整数的配对结构。",
+    tryIt:"用圆片分别表示奇数加奇数、奇数加偶数，检查落单部分。",
+    why:"成对部分仍可配对，两个落单的1可组成一对；偶数份整数也可以把整份两两配对。",
+  },
+  "mt_NmvuwVUFRS":{
+    formal:"用计算结果回答实际问题",
+    definition:"计算器可以帮助计算，估算可检查结果数量级；同一个商在不同情境中可能需要不同解释。",
+    simpler:"先想答案应大约多大，再根据问题判断小数、整组或余数是什么意思。",
+    example:"250÷8＝31.25：若每车8人且250人都要乘车，需要32辆；若问装满的8个一盒的盒数，有31整盒、剩2个。",
+    counterexample:"31.25辆车不适合回答“250人都要坐车需要几辆完整的车”。",
+    tryIt:"估计2365×48大约是多少，再用计算器核对，并说明差距是否合理。",
+    why:"计算给出数量关系，实际回答还要符合对象是否可分、是否必须全部容纳等条件。",
+  },
+  "mt_bZC-wqWX7Y":{
+    formal:"用步骤查找因数与倍数",
+    definition:"可以设计按顺序检查整数的步骤：能整除目标数时记录该数，从而找到因数；也可以生成倍数并筛选。",
+    simpler:"逐个试数并检查余数，满足条件才记录；要说明从哪里开始、到哪里结束。",
+    example:"检查1到24，24除以某数余0时记录它，可以得到24的正因数。",
+    counterexample:"用“余数不为0”筛选得到的数不是24的因数；判断条件写反会改变结果。",
+    tryIt:"依次列出6的倍数，找其中也是4的倍数的数，并说出观察到的规律。",
+    why:"算法的条件决定哪些结果被保留；表格可以帮助重复步骤，但不代表能使用所有软件。",
+  },
+  "mt_3m0pA-aeat":{
+    formal:"用估算检查小数乘除",
+    definition:"小数乘除后可以先用接近的简单数估算，检查结果的数量级是否合理。",
+    simpler:"先把数换成接近、容易算的数，估一个大概，再与精确计算比较。",
+    example:"4.87×30约等于5×30＝150，准确结果是146.1。",
+    counterexample:"63.6÷20若得到31.8，应检查：60÷20约是3，31.8数量级不对。",
+    tryIt:"先用2.5×400估计2.46×400，再计算准确结果并比较。",
+    why:"估算可发现明显的数量级错误，但结果接近估计值不证明精确计算一定正确。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

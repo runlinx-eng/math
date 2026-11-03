@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,356);
+  assert.equal(samples.length,362);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -476,4 +476,12 @@ test('place-value research-gap drafts preserve exchange and zero boundaries',()=
   assert.match(conceptHelpFor('mt_QguIGVMB1o').example,/11个十和2个一/);
   assert.match(conceptHelpFor('mt_F_zEAJ8VIo').counterexample,/442/);
   assert.match(conceptHelpFor('mt_dJOKkYMsCv').definition,/从小到大/);
+});
+
+test('grouping research-gap drafts retain fairness, remainders and estimation limits',()=>{
+  assert.match(conceptHelpFor('mt_1GDEHyEZYH').counterexample,/没有平均分/);
+  assert.match(conceptHelpFor('mt_NmvuwVUFRS').example,/32辆.*剩2个/);
+  assert.match(conceptHelpFor('mt_oxfxzbat3k').counterexample,/不等于.*证明所有/);
+  assert.match(conceptHelpFor('mt_3m0pA-aeat').why,/不证明精确计算/);
+  assert.match(conceptHelpFor('mt_bZC-wqWX7Y').counterexample,/余数不为0/);
 });
