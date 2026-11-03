@@ -17,6 +17,7 @@ const sampleIds=new Set(Object.keys(CONCEPT_EXPLANATIONS));
 const explanationBytes=fs.readFileSync(new URL('../dist/concept-explanations.js',import.meta.url));
 const nameAuditBytes=fs.readFileSync(new URL('../docs/language/NODE-NAME-AUDIT.json',import.meta.url));
 const gitBlobSha=content=>createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${content.length}\0`),content])).digest('hex');
+const localBatch15=new Set(["mt_T76hKqXf0z", "mt_hBZwbst0ow", "mt_gu0NPDvlhY", "mt_VhBH8wrFC6", "mt_1VSfm9yiLn", "mt_k2WE0-22-4", "mt_CBHwluE6Lp", "mt_MqqR7VUoz1", "mt_Mnodea7mG_", "mt_AF2BeFQwfX", "mt_WX30dzi4dt", "mt_pjfmCMMPjO", "mt_izien3ZX51", "mt_-c4Ca_nBzX", "mt_nOCPx5qw0Z"]);
 const researchGap5=new Set(["mt_Y6_cq3UMyy", "mt_biGHAbkoV2", "mt_Eqk6oSbySH", "mt_ZjIFGc6zPW", "mt_W3VOAuFwVw"]);
 const localBatch20d=new Set(["mt_QCgbiVrwnp", "mt_ezc2m_0dzN", "mt_YFS7JFk64p", "mt_i9rJbuFO3p", "mt_c29FaCTNsx", "mt_xppl18avyY", "mt_Xp-rj46S2w", "mt_YzM5goBctT", "mt_QNxFnxikCN", "mt_bfhng6mOuy", "mt__N55B7u7HD", "mt_0XxyaQLRhn", "mt_GDG9_SZmsO", "mt_nZkL5-XjRX", "mt_zfy1gOEewd", "mt_8gy7uxRlF6", "mt_iFFKZd-Vgv", "mt_xSgAgg9Ej_", "mt_h0gJcSuwdL", "mt_2OtRUM_0zW"]);
 const localBatch20c=new Set(["mt_ghF3Vv6taM", "mt_UQnAFPs83F", "mt_glPPG-kTQY", "mt_PpWSHA-0kv", "mt_HhuSDxwDNM", "mt_wQ89AEXhz3", "mt_DyGBW3ZHh3", "mt_XV0B4kWwqL", "mt_9L3NQqgqRd", "mt_FbDKeLfBCo", "mt_Kr3IyA6m-O", "mt_a1FdAsRKOF", "mt_Y9XKzLrUAZ", "mt_UooUHC_V7U", "mt_sBcRdUfAzV", "mt_-P1kdZhHbL", "mt_4lp_b5Pzik", "mt_bj1YCgNWUx", "mt_IzQvs7k_sE", "mt_7rJM8eWUfw"]);
@@ -43,8 +44,8 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.separateMathThinkingNodes.length,50);
   assert.equal(new Set(inventory.nodes.map(node=>node.id)).size,537);
   assert.equal(new Set(inventory.separateMathThinkingNodes.map(node=>node.id)).size,50);
-  assert.equal(inventory.summary.configuredExplanationSamples,154);
-  assert.equal(inventory.summary.notConfigured,383);
+  assert.equal(inventory.summary.configuredExplanationSamples,169);
+  assert.equal(inventory.summary.notConfigured,368);
   assert.equal(inventory.summary.first39FirstPassCalibrated,39);
   assert.equal(inventory.summary.newSixDraftPendingDeepReview,6);
   assert.equal(inventory.summary.secondBatchFirstFiveDraftPendingIndependentReview,5);
@@ -89,7 +90,8 @@ test('each inventory entry matches its source node and review states',()=>{
     assert.ok(auditById.has(node.id),'name audit entry exists: '+node.id);
     assert.equal(record.displayName,auditById.get(node.id).display||node.title);
     if(sampleIds.has(node.id)){
-      if(researchGap5.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'research_gap5_draft_pending_independent_review');
+      if(localBatch15.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch15_draft_pending_independent_review');
+      else if(researchGap5.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'research_gap5_draft_pending_independent_review');
       else if(localBatch20d.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20d_draft_pending_independent_review');
       else if(localBatch20c.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20c_draft_pending_independent_review');
       else if(localBatch20b.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_batch20b_draft_pending_independent_review');
