@@ -19613,7 +19613,7 @@
       {
         "id": "05a-addition-subtraction-foundations",
         "domain": "Addition & Subtraction",
-        "nodeCount": 20,
+        "nodeCount": 19,
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "加减法意义、数的分合、10/20以内运算、生活故事和基础表征。"
@@ -19621,7 +19621,7 @@
       {
         "id": "05b-addition-subtraction-strategies",
         "domain": "Addition & Subtraction",
-        "nodeCount": 20,
+        "nodeCount": 25,
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "口算笔算、运算策略、运算律、逆运算、未知数、数轴与应用问题。"
@@ -19629,7 +19629,7 @@
       {
         "id": "05c-addition-subtraction-advanced",
         "domain": "Addition & Subtraction",
-        "nodeCount": 15,
+        "nodeCount": 11,
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "三位数以上加减、估算、多步问题、小数运算及正负数衔接。"
