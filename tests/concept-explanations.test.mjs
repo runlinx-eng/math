@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,300);
+  assert.equal(samples.length,320);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -409,4 +409,12 @@ test('algorithm research-gap drafts retain conditions, termination and overlappi
   assert.match(conceptHelpFor('mt_zQfWqImxva').counterexample,/50本身不符合/);
   assert.match(conceptHelpFor('mt_QeKWt4BZn3').example,/96、192/);
   assert.match(conceptHelpFor('mt_nx4a3kH-59').example,/两者都是/);
+});
+
+test('twenty-node batch preserves regrouping, units and contextual remainders',()=>{
+  assert.match(conceptHelpFor('mt_70qDTI14td').example,/2又3\/6/);
+  assert.match(conceptHelpFor('mt_-V7EnqU7gG').counterexample,/2\/6/);
+  assert.match(conceptHelpFor('mt_p-nbe0w_lf').example,/需要6辆/);
+  assert.match(conceptHelpFor('mt_e4x3l2JeLI').counterexample,/11厘米/);
+  assert.match(conceptHelpFor('mt__sMrmOv3bx').example,/模拟/);
 });
