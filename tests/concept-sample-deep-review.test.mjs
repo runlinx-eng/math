@@ -226,5 +226,5 @@ test('research triage JSON and Markdown stay aligned with source gaps and config
  const remainingIds=[...remainingSection.matchAll(/`(mt_[^`]+)`/g)].map(match=>match[1]);
  assert.equal(remainingIds.length,71);
  assert.ok(remainingIds.every(id=>!sampleIds.has(id)));
- assert.match(triageMarkdown,/**12个来源核查完成；73个尚未核查**/);
+ assert.ok(triageMarkdown.includes("**12个来源核查完成；73个尚未核查**"));
 });
