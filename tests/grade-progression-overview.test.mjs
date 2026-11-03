@@ -103,3 +103,12 @@ test("the current two-year stage is exposed as the selected year changes", () =>
   assert.match(space, /selectedGrade-1/);
   assert.match(space, /GRADE_LABELS\[selectedGrade-1\]/);
 });
+
+test("network knowledge details remain inside the viewport when the guide panel grows", () => {
+  const start = space.indexOf("function updateOverlays()");
+  const end = space.indexOf("\nfunction ", start + 10);
+  const implementation = space.slice(start, end);
+  assert.match(implementation, /guideRect\.right\+16\+width<=innerWidth-16/);
+  assert.match(implementation, /innerHeight-height-12/);
+  assert.match(implementation, /card\.style\.left=.*rightLeft/);
+});

@@ -670,9 +670,9 @@ body.guide-mode .space-label.guide-locked:focus-visible{
 .observation-mode-switch button[aria-pressed=true]{background:#294f47;color:#fffef7;box-shadow:0 2px 7px #203e3318}
 .grade-observation-view h2{margin:4px 0 7px;font-size:17px;line-height:1.45;color:#294f47}
 .grade-observation-view>p{margin:6px 0;color:#667a6c;font-size:12px;line-height:1.7}
-body[data-observation-mode="grade"] .network-guide{top:96px;width:min(760px,calc(100vw - 360px));max-height:calc(100vh - 150px);overflow:auto}
+body[data-observation-mode="grade"] .network-guide{top:96px;width:min(760px,calc(100vw - 420px));max-height:calc(100vh - 150px);overflow:auto}
 body[data-observation-mode="grade"] .network-guide details{display:none}
-@media(max-width:900px){body[data-observation-mode="grade"] .network-guide{width:min(680px,calc(100vw - 330px));left:18px}}
+@media(max-width:900px){body[data-observation-mode="grade"] .network-guide{width:min(680px,calc(100vw - 370px));left:18px}}
 @media(max-width:600px){body[data-observation-mode="grade"] .network-guide{top:94px;left:12px;right:12px;width:auto;max-height:calc(100dvh - 190px);padding:12px 13px}.observation-mode-switch{margin-bottom:8px}.observation-mode-switch button{min-height:38px;font-size:12px}}
 
 /* A2-2: source-backed year-by-stage and pack matrix. */
