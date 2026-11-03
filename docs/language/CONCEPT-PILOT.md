@@ -655,3 +655,7 @@
 ## 本地 12 节点（2026-11-04）
 
 `mt_76SPWvdI7r`、`mt_VFsuftfvYM`、`mt_JwP9QFv6gQ`、`mt_QqG6IdmTSE`、`mt_To9HdLy8vq`、`mt_5NwqN6pf_A`、`mt_xMt1TLTs--`、`mt__casygEB85`、`mt_RVK655t391`、`mt_XNmGwNggdU`、`mt_HLUqHJ9Y7n`、`mt_EDgw64OmfA`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH12Q-2026-11-04.md)。
+
+## 本地 11 节点（2026-11-04）
+
+`mt_Ac7oMWhyPw`、`mt_Gag_h98jWP`、`mt_lNGpnILM5C`、`mt_RWUY7_IXvw`、`mt_U9sme87C32`、`mt_PsylzZ9lHW`、`mt_uDJY0X0hgo`、`mt_hCVPYlF-7Y`、`mt_VVn1IXjkzn`、`mt_bO-njVOige`、`mt_b4lbTOJYwI`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH11R-2026-11-04.md)。
