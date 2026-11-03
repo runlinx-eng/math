@@ -1,4 +1,4 @@
-// Sixty-three source-bound explanation samples, keyed by exact source node ID.
+// Sixty-six source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -598,6 +598,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:'画 4 个点不能表示 5；数轴上从 0 到 5 是 5 个间隔，不能把起点 0 也当成一个间隔。',
     tryIt:'用小物品摆出 6，画出相同数量的点，写下数字，并在从 0 开始每格是 1 的数轴上标出 6；说说这几种表示怎样对应。',
     why:'实物、图画和数字可以表示同一个数量；数轴上的位置由起点和每格所代表的数量共同确定。'
+  },
+  'mt_-hTTat0mBR':{
+    formal:'二分之一',
+    definition:'把一个整体分成大小相等的两份，其中每一份是这个整体的二分之一。整体也可以是一组物品；把 8 个物品平均分成两组，每组是这组物品的一半。',
+    simpler:'把同一个整体公平地分成两份，拿其中一份，就是它的一半。',
+    example:'把一张纸分成面积相等的两部分，每部分是这张纸的 1/2；把 8 个相同积木平均分成两组，每组 4 个，是 8 个积木的一半。',
+    counterexample:'一张纸分成面积不相等的两块，不能仅因为有两块就说每块都是这张纸的一半。',
+    tryIt:'把一张纸分成面积相等的两部分，指出其中一半；再把 10 个积木平均分成两组，找出一半并说出有几个。',
+    why:'两份一样大，合起来恰好是原来的整体，所以每一份占整体的二分之一。'
+  },
+  'mt_KJeEeTutJI':{
+    formal:'认识平面图形',
+    definition:'平面图形画在平面上。三角形由三条直边围成；长方形有四条直边和四个直角；正方形是四条边一样长的长方形；圆的边界上每一点到圆心的距离相等。',
+    simpler:'看形状的边和角来认图形：三角形有三条直边，长方形有四个直角；正方形的四条边还一样长。',
+    example:'一个尖角朝下的三条直边围成的图形仍是三角形；转过方向的正方形仍有四条相等的边和四个直角。',
+    counterexample:'三条线如果没有首尾连起来围成封闭图形，就不是三角形；四条边一样长但角不是直角的图形不一定是正方形。',
+    tryIt:'在纸上画一个三角形、一个长方形和一个正方形，再把纸转个方向，数一数边和角，看名称是否改变；找出生活中近似圆形的物体。',
+    why:'改变图形的大小或方向，不会改变它的边数、直角或边长之间的关系，所以名称不因此改变。'
+  },
+  'mt_uhuxX8sg9f':{
+    formal:'直接比较长度与高度',
+    definition:'比较两件物体的长度或高度时，先让被比较的长度有共同起点，再看另一端；在同一水平面上竖直放置时，可以比较各自的高度。',
+    simpler:'把两条带子的一头对齐，再看另一头；比高时让两件东西站在同一平面上。',
+    example:'两条拉直的带子左端对齐，红带另一端比蓝带伸得更远，红带更长；两座积木塔放在同一桌面，顶端较高的一座更高。',
+    counterexample:'一座塔放在书上、另一座放在桌面时，塔顶较高不一定说明这座塔本身更高，要先比较它们各自从底到顶的长度。',
+    tryIt:'把两条不同长的带子拉直并对齐一端，判断哪条更长；再把两座塔放在同一平面，判断哪座更高，说明怎样比的。',
+    why:'起点对齐后，另一端伸得更远，表示从同一起点到终点的距离更大；同一底面使比较高度的起点一致。'
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

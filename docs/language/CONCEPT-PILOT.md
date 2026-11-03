@@ -471,3 +471,7 @@
 - `mt_pAcaehday5`：实物、图画、数字与数轴位置的对应。
 
 来源目标与覆盖范围见 [本地试运行记录](CONCEPT-LOCAL-PILOT-2026-11-03.md)；独立教研和儿童测试均未完成。
+
+## 本地第二小批：3 个节点（2026-11-03）
+
+`mt_-hTTat0mBR`（二分之一）、`mt_KJeEeTutJI`（平面图形）、`mt_uhuxX8sg9f`（比较长度与高度）；来源与边界详见 [本批记录](CONCEPT-LOCAL-BATCH2-2026-11-03.md)。

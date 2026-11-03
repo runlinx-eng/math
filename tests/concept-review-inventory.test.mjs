@@ -17,6 +17,7 @@ const sampleIds=new Set(Object.keys(CONCEPT_EXPLANATIONS));
 const explanationBytes=fs.readFileSync(new URL('../dist/concept-explanations.js',import.meta.url));
 const nameAuditBytes=fs.readFileSync(new URL('../docs/language/NODE-NAME-AUDIT.json',import.meta.url));
 const gitBlobSha=content=>createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${content.length}\0`),content])).digest('hex');
+const localSecondBatch=new Set(['mt_-hTTat0mBR','mt_KJeEeTutJI','mt_uhuxX8sg9f']);
 const localPilot=new Set(['mt__h7hvT4tEb','mt_sYpKWbq5ra','mt_pAcaehday5']);
 const newSix=new Set(['mt_dmNvjroCPT','mt_xmmgAzxe5j','mt_IfEgu0X449','mt_PZ909yPrEC','mt_qeZYF6HZ4o','mt_ylXdiVRAYv']);
 const newFive=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS','mt_NSC3LT_-ch','mt_gC-6JXAG5S','mt_iykH2P5oFq']);
@@ -36,8 +37,8 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.separateMathThinkingNodes.length,50);
   assert.equal(new Set(inventory.nodes.map(node=>node.id)).size,537);
   assert.equal(new Set(inventory.separateMathThinkingNodes.map(node=>node.id)).size,50);
-  assert.equal(inventory.summary.configuredExplanationSamples,63);
-  assert.equal(inventory.summary.notConfigured,474);
+  assert.equal(inventory.summary.configuredExplanationSamples,66);
+  assert.equal(inventory.summary.notConfigured,471);
   assert.equal(inventory.summary.first39FirstPassCalibrated,39);
   assert.equal(inventory.summary.newSixDraftPendingDeepReview,6);
   assert.equal(inventory.summary.secondBatchFirstFiveDraftPendingIndependentReview,5);
@@ -82,7 +83,8 @@ test('each inventory entry matches its source node and review states',()=>{
     assert.ok(auditById.has(node.id),'name audit entry exists: '+node.id);
     assert.equal(record.displayName,auditById.get(node.id).display||node.title);
     if(sampleIds.has(node.id)){
-      if(localPilot.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_pilot_ai_rechecked_pending_independent_review');
+      if(localSecondBatch.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_second_batch_draft_pending_independent_review');
+      else if(localPilot.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_pilot_ai_rechecked_pending_independent_review');
       else if(newSix.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'new_six_draft_pending_deep_review');
       else if(newFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'first_five_draft_ai_self_checked_pending_independent_review');
       else if(secondBatchFirstFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_first_five_ai_cross_review_completed_pending_independent_review');

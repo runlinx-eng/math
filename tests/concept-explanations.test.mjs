@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,63);
+  assert.equal(samples.length,66);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -279,4 +279,16 @@ test('second-batch second five explanations preserve source-specific goals and m
   assert.match(estimate.example,/487×23.*500×20＝10000.*487×23＝11201/);
   assert.match(estimate.tryIt,/198×31.*200.*31.*30.*3980÷8/);
   assert.match(estimate.tryIt,/1120.*是否合理.*估算/);
+});
+
+test('local batch keeps equal-whole, shape, and aligned comparison boundaries',()=>{
+  const half=conceptHelpFor('mt_-hTTat0mBR');
+  assert.match(half.definition,/相等.*两份/);
+  assert.match(half.counterexample,/不相等/);
+  const shapes=conceptHelpFor('mt_KJeEeTutJI');
+  assert.match(shapes.definition,/正方形.*长方形/);
+  assert.match(shapes.counterexample,/直角/);
+  const lengths=conceptHelpFor('mt_uhuxX8sg9f');
+  assert.match(lengths.definition,/共同起点/);
+  assert.match(lengths.counterexample,/不一定/);
 });
