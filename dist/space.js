@@ -253,7 +253,7 @@ function renderGradePackDetail(pack){
       ${questionsMarkup}
     </section>`;
   }).join('');
-  return `<tr class="grade-detail-row" id="grade-pack-detail-${esc(pack.packId)}"><td colspan="4"><div class="grade-detail-grid">${stageCards}</div><p class="grade-review-disclaimer">审查状态按来源记录展示；AI辅助审查不等同于独立教研或儿童理解测试。</p></td></tr>`;
+  return `<section class="grade-detail-panel" id="grade-pack-detail-${esc(pack.packId)}" aria-label="${esc(pack.name)}三个学段详情"><header><div><h3>${esc(pack.name)} · 三个学段</h3><p>以下内容来自该知识群的三个学段记录。</p></div><button type="button" class="grade-detail-close" data-action="grade-pack-toggle" data-pack-id="${esc(pack.packId)}" aria-expanded="true">收起</button></header><div class="grade-detail-grid">${stageCards}</div><p class="grade-review-disclaimer">审查状态按来源记录展示；AI辅助审查不等同于独立教研或儿童理解测试。</p></section>`;
 }
 function renderGradeObservation(){
   const host=$('#grade-observation-view');if(!host)return;
@@ -276,15 +276,17 @@ function renderGradeObservation(){
       const count=Number.isFinite(pack.domainKnowledgeNodeCount)?pack.domainKnowledgeNodeCount:pack.totalNodeCount;
       const expanded=expandedGradePackId===pack.packId;
       const row=`<tr class="grade-pack-row" data-pack-id="${esc(pack.packId)}"><th scope="row"><button type="button" class="grade-pack-toggle" data-action="grade-pack-toggle" data-pack-id="${esc(pack.packId)}" aria-expanded="${expanded}" aria-controls="grade-pack-detail-${esc(pack.packId)}"><span class="grade-pack-name">${esc(pack.name)}</span><small class="grade-pack-count">${Number.isFinite(count)?count+'个领域知识点':''}</small><span class="grade-pack-toggle-label">${expanded?'收起':'展开'}</span></button></th>${cells}</tr>`;
-      return row+(expanded?renderGradePackDetail(pack):'');
+      return row;
     }).join('');
     return `<tr class="grade-theme-row" data-theme-id="${esc(group.themeId)}"><th colspan="4"><span>${esc(themeName)}</span><small>${group.packs.length}个知识群</small></th></tr>${rows}`;
   }).join('');
+  const expandedPack=gradeProgressionData.packs.find(pack=>pack.packId===expandedGradePackId);
+  const expandedMarkup=expandedPack?renderGradePackDetail(expandedPack):'';
   host.innerHTML=`<div class="grade-observation-head"><div><h2>小学1—6年级观察</h2><p>按五大主题查看23个知识群在三个两年学段中的整体发展。</p></div></div>
     <div class="grade-selector" role="group" aria-label="选择年级">${GRADE_LABELS.map((label,index)=>`<button type="button" data-action="grade-select" data-grade="${index+1}" aria-pressed="${selectedGrade===index+1}">${label}</button>`).join('')}</div>
     <p class="grade-precision-note">课程映射精度为两年学段，并非精确到单独年级；相邻两个年级共用同一份学段数据。</p>
     <p class="grade-current-stage" data-selected-stage="${esc(selectedStageId||'')}" aria-live="polite">当前选择：<strong>${GRADE_LABELS[selectedGrade-1]}</strong> · ${esc(selectedStage?.standardStage||'学段待确认')}（${esc(selectedStage?.label||'') }）</p>
-    <div class="grade-matrix-scroll"><table class="grade-matrix" aria-label="23个知识群的小学学段发展矩阵"><thead><tr><th scope="col" class="grade-pack-heading">知识群</th>${stageHeaders}</tr></thead><tbody>${groupRows}</tbody></table></div>
+    <div class="grade-matrix-scroll"><table class="grade-matrix" aria-label="23个知识群的小学学段发展矩阵"><thead><tr><th scope="col" class="grade-pack-heading">知识群</th>${stageHeaders}</tr></thead><tbody>${groupRows}</tbody></table></div>${expandedMarkup}
     <div class="grade-mark-legend" aria-label="阶段标记说明"><span><b data-mark="main">主</b>主要发展</span><span><b data-mark="extension">延</b>延伸发展</span><span><b data-mark="not-primary">—</b>非主要阶段</span><span><b data-mark="process">过程</b>贯穿过程</span><span><b data-mark="incomplete">待补充</b>记录不完整</span></div>`;
 }
 function loadGradeObservation(){

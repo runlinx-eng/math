@@ -126,3 +126,11 @@ test("the relationship structure controls stay below the added observation-mode 
   assert.match(css, /body\[data-observation-mode="grade"\] \.overview-structure-controls\{display:none!important\}/);
   assert.match(css, /@media\(max-width:600px\)\{body\[data-world="network"\] \.overview-structure-controls\{top:250px\}\}/);
 });
+
+test("expanded details are outside the horizontally scrolling matrix", () => {
+  assert.match(space, /const expandedPack=gradeProgressionData\.packs\.find\(pack=>pack\.packId===expandedGradePackId\)/);
+  assert.match(space, /const expandedMarkup=expandedPack\?renderGradePackDetail\(expandedPack\):''/);
+  assert.match(space, /class="grade-detail-panel"/);
+  assert.match(css, /\.grade-detail-panel\{width:100%;min-width:0;max-width:100%/);
+  assert.doesNotMatch(space, /class="grade-detail-row"/);
+});
