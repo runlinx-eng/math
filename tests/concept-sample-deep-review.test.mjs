@@ -185,3 +185,46 @@ test('B01 and B04 research records distinguish draft completion from independent
   assert.equal(record.childUnderstandingStatus,'not_tested');
  }
 });
+
+
+test('research triage JSON and Markdown stay aligned with source gaps and configured explanations',()=>{
+ const triageMarkdown=fs.readFileSync(new URL('../docs/language/CONCEPT-RESEARCH-TRIAGE.md',import.meta.url),'utf8');
+ const knowledgeGaps=researchTriage.records.filter(record=>record.scope==='knowledge_map');
+ const externallyVerified=researchTriage.records.filter(record=>record.externalSourcesVerified===true);
+ assert.equal(researchTriage.records.length,85);
+ assert.equal(knowledgeGaps.length,83);
+ assert.equal(externallyVerified.length,12);
+ assert.equal(researchTriage.summary.nodesWithExternalSourcesVerified,externallyVerified.length);
+ assert.equal(researchTriage.summary.nodesWithResearchReviewedWithoutExplanation,
+  externallyVerified.filter(record=>!sampleIds.has(record.id)).length);
+ for(const record of researchTriage.records){
+  assert.equal(record.explanationSamplePresent,sampleIds.has(record.id),
+   'triage sample flag must match explanation module: '+record.id);
+ }
+ for(const [type,summary] of Object.entries(researchTriage.summary.byType)){
+  const records=knowledgeGaps.filter(record=>record.type===type);
+  const withSample=records.filter(record=>sampleIds.has(record.id)).length;
+  assert.equal(summary.total,records.length,type+' total');
+  assert.equal(summary.withSample,withSample,type+' withSample');
+  assert.equal(summary.withoutSample,records.length-withSample,type+' withoutSample');
+  assert.ok(triageMarkdown.includes('| '+type+' | '+records.length+' | '+withSample+' | '+(records.length-withSample)+' |'),
+   type+' Markdown row must match triage records');
+ }
+ for(const [domain,summary] of Object.entries(researchTriage.summary.byDomain)){
+  const records=knowledgeGaps.filter(record=>record.domainId===domain);
+  const withSample=records.filter(record=>sampleIds.has(record.id)).length;
+  assert.equal(summary.total,records.length,domain+' total');
+  assert.equal(summary.withSample,withSample,domain+' withSample');
+  assert.equal(summary.withoutSample,records.length-withSample,domain+' withoutSample');
+  assert.ok(triageMarkdown.includes('| '+summary.title+'（'+domain+'） | '+records.length+' | '+withSample+' | '+(records.length-withSample)+' |'),
+   domain+' Markdown row must match triage records');
+ }
+ const remainingStart=triageMarkdown.indexOf('## 71 个尚无样板的知识地图节点');
+ const thinkingStart=triageMarkdown.indexOf('## 2 个数学思维节点',remainingStart);
+ assert.ok(remainingStart>=0&&thinkingStart>remainingStart);
+ const remainingSection=triageMarkdown.slice(remainingStart,thinkingStart);
+ const remainingIds=[...remainingSection.matchAll(/`(mt_[^`]+)`/g)].map(match=>match[1]);
+ assert.equal(remainingIds.length,71);
+ assert.ok(remainingIds.every(id=>!sampleIds.has(id)));
+ assert.match(triageMarkdown,/**12个来源核查完成；73个尚未核查**/);
+});
