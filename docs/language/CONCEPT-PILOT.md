@@ -623,3 +623,7 @@
 ## 本地 10 节点（2026-11-04）
 
 `mt_vJUa62bxeR`、`mt_e4V6hvcuEJ`、`mt_4MFUAsbx_6`、`mt_89riIKwGYp`、`mt_8H2kO4k2B9`、`mt_efOeaGFyGM`、`mt_KFKUR_gBg_`、`mt_3S10OOGPqu`、`mt_hdrMoiTgqu`、`mt_REwgr0d_ss`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH10I-2026-11-04.md)。
+
+## 本地 10 节点（2026-11-04）
+
+`mt_cdMlC7EpTJ`、`mt_liIW336odh`、`mt_R4AY0LKxfl`、`mt_xq3YHZ2zeR`、`mt_snlqRCiA1R`、`mt_oDlduFnemk`、`mt_lxaM6iVpdr`、`mt_QDTO3GAgcq`、`mt_nRksLqt-iR`、`mt_J03RFlVdas`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH10J-2026-11-04.md)。
