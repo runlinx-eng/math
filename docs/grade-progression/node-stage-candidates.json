@@ -8524,7 +8524,17 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [],
+        "roles": {},
+        "evidenceLevel": "not-covered",
+        "standardReferences": [],
+        "rationale": "该节点目标是读写英语数词（one、twelve等），属于英语词汇与拼写学习，不是中国小学数学课程标准中的数学内容。",
+        "scopeBoundary": "若保留，应明确定位为跨学科英语表达或双语辅助，不应作为中国数学年级知识点。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_dJOKkYMsCv",
@@ -8542,7 +8552,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "比较、排列20以内的数属于第一学段数的大小关系和数序基础，且明显低于标准要求的万以内数范围。",
+        "scopeBoundary": "数字卡片、十框和数轨是表征方式，不是标准限定的教学工具。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_x8TshvbbQT",
@@ -8560,7 +8586,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "读写100以内的数属于第一学段万以内数的认识和表达范围。",
+        "scopeBoundary": "该节点只覆盖100以内，是更广数域要求的基础部分。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_fR0UtsSREU",
@@ -8578,7 +8620,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "读写20以内的数字是第一学段理解数的意义、用数表示物体个数或顺序的基础内容。",
+        "scopeBoundary": "课程标准要求的数域更广，20以内不是学段结束要求的上限。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xmmgAzxe5j",
@@ -8596,7 +8654,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解11—19由一个十和若干个一组成，是理解十进制数位和数的意义的关键基础。",
+        "scopeBoundary": "课程标准要求理解数位含义，但没有将11—19作为独立主题逐一列出。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kw7xmp68rU",
@@ -8614,7 +8688,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "求两位数多10或少10，直接运用十位与计数单位的理解，并与简单数量变化关系相连。",
+        "scopeBoundary": "标准没有把‘多10或少10’单列为知识条目；节点中的心算速度要求也不是课程标准原文。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_r0VXbfAmsH",
@@ -8632,7 +8723,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解10个一组成1个十，是第一学段数位含义和十进制计数的基础。",
+        "scopeBoundary": "十进制计数是标准要求；用十进制积木或捆小棒只是可选表征方式。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_U0waNfD8PB",
@@ -8650,7 +8757,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "比较、排列两位数并使用大于、小于、等于关系，与第一学段比较万以内数的大小和理解相等、不等关系直接对应。",
+        "scopeBoundary": "节点只涉及两位数，是标准范围中的基础子集；用十位优先比较是位值理解的策略。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QguIGVMB1o",
@@ -8668,7 +8791,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "认识、表示和排列120以内的数，属于第一学段万以内数的意义、读写与大小比较范围。",
+        "scopeBoundary": "物理材料和屏幕材料只是不同表示媒介；120不是标准的数域上限。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_76SPWvdI7r",
@@ -8686,7 +8825,17 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [],
+        "roles": {},
+        "evidenceLevel": "not-covered",
+        "standardReferences": [],
+        "rationale": "该节点要求读写英语数词（twenty、fifty-seven等），属于英语语言学习，不是中国小学数学课程标准中的数学内容。",
+        "scopeBoundary": "若保留，应定位为双语词汇辅助或英语跨学科内容，不作为中国数学年级归属依据。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_kJGCjnuelW",
@@ -8704,7 +8853,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "运用数位拆分和数的事实解决问题，第一学段建立数位与运算基础，第二学段继续用于多位数运算、估算和数量关系问题。",
+        "scopeBoundary": "该节点描述较宽泛，具体任务可能跨越多个年级；不能据此推断所有数位策略都在两个学段同等要求。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XV0B4kWwqL",
@@ -8722,7 +8891,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "读写120以内的数属于第一学段万以内数的读写和计数范围。",
+        "scopeBoundary": "120只是节点练习范围，不是课程标准规定的学段上限。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Bt-iORUzdO",
@@ -8740,7 +8925,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "把两位数按不同方式拆分并重新组合，体现十进制数位、计数单位和数的组成。",
+        "scopeBoundary": "非标准拆分（如2个十和14个一）是深化数位理解的活动形式，课程标准未单独规定每种拆分形式。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9L3NQqgqRd",
@@ -8759,7 +8960,27 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "用数位材料、图示和数轴表示100以内数，主要对应第一学段数的意义和数位；估计与不同表征的灵活转换可延伸到第二学段。",
+        "scopeBoundary": "标准明确要求数的认识和估测长度等量的估计，但未把‘估计30—50个物体’作为统一数感测评项目。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zfy1gOEewd",
@@ -8777,7 +8998,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解整十数表示若干个十，直接依赖第一学段数位含义和十进制计数。",
+        "scopeBoundary": "课程标准未单独列出10、20、30等整十数的专题要求。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_THl9GLxwoL",
@@ -8796,7 +9033,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解两位数中十位和个位分别表示几个十和几个一，是第一学段理解数位含义的直接内容。",
+        "scopeBoundary": "节点范围为两位数；标准还要求进一步理解更大数的数位。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_izien3ZX51",
@@ -8815,7 +9068,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "求三位数多10、少10、多100或少100，使用数位和计数单位关系；第一学段数域覆盖万以内。",
+        "scopeBoundary": "课程标准没有把这些固定增减步长逐项列为独立内容要求。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8gy7uxRlF6",
@@ -8834,7 +9103,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解100由10个十组成，属于十进制计数、数位含义和计数单位理解。",
+        "scopeBoundary": "捆十个十或使用百数块是可选操作方式，不是标准要求的唯一材料。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HczwO1sr-y",
@@ -8853,7 +9138,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "认识、表示和排列1000以内的数，属于第一学段万以内数的认识和表达范围。",
+        "scopeBoundary": "使用屏幕数字工具只是媒介；课程标准并不要求必须通过某一种软件完成。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_hniI4E-OCE",
@@ -8873,7 +9174,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3"
+        ],
+        "roles": {
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "判断奇数和偶数是第三学段数与运算中明确列出的内容要求。",
+        "scopeBoundary": "节点用20以内物品配对作为直观入口；标准中的奇偶数要求不限于20以内，也不是仅凭分组活动即视为掌握。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AQcVRBddko",
@@ -8892,7 +9209,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "比较、排列1000以内的数属于第一学段万以内数的大小比较和数位理解。",
+        "scopeBoundary": "标准要求的数域更广；三位数只是练习范围。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_98c2qwEF7Q",
@@ -8911,7 +9244,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解1000以内数的百、十、个位值，是第一学段数位含义和万以内数认识的直接组成部分。",
+        "scopeBoundary": "节点中以英镑为例的货币情境不能直接作为中国本地货币课程内容；数位数学目标本身仍可映射。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VFsuftfvYM",
@@ -8930,7 +9279,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "读写1000以内数并用展开式表示，属于第一学段万以内数的读写和数位含义。",
+        "scopeBoundary": "节点中英文数词的表达应本地化；数学核心是数码、数位和分解表示。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_F_zEAJ8VIo",
@@ -8949,7 +9314,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "用数位表、材料、图示和数轴表示三位数，体现第一学段万以内数的意义与数位含义。",
+        "scopeBoundary": "空数位、非标准拆分和未标刻度数轴是深化表征的任务设计，不应全部视为标准逐项规定。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_R2ccrI-nKD",
@@ -8968,7 +9349,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "整百数表示若干个百，属于十进制计数单位和数位含义的具体表现。",
+        "scopeBoundary": "课程标准没有把100—900的整百数单独列成知识条目。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_aPBzD28_mT",
@@ -8987,7 +9384,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解三位数由百、十、个位组成，并能说明各位数字的值，直接对应第一学段理解数位含义和万以内数。",
+        "scopeBoundary": "节点仅涉及三位数，是学段要求的一部分。",
+        "reviewBatch": "02-number-representation-basic",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9XVFje6Tyr",
@@ -10263,10 +10676,18 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "17个节点逐一对照第一、第二学段数与代数内容要求；部分方法和步长仅为概念关联，不是标准逐项列出的独立目标。"
+      },
+      {
+        "id": "02-number-representation-basic",
+        "domain": "Number Representation & Place Value",
+        "nodeCount": 26,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "完成前26个基础数词、两位数与三位数位值节点；两项英语数词读写不属于中国小学数学课程标准，标记为not-covered；奇偶数按国家标准第三学段映射。"
       }
     ],
-    "completedNodeCount": 17,
-    "pendingNodeCount": 520,
+    "completedNodeCount": 43,
+    "pendingNodeCount": 494,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
