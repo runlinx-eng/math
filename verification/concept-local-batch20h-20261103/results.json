@@ -1,0 +1,1489 @@
+{
+  "passed": 40,
+  "checks": [
+    "desktop-batch20h-01",
+    "desktop-batch20h-02",
+    "desktop-batch20h-03",
+    "desktop-batch20h-04",
+    "desktop-batch20h-05",
+    "desktop-batch20h-06",
+    "desktop-batch20h-07",
+    "desktop-batch20h-08",
+    "desktop-batch20h-09",
+    "desktop-batch20h-10",
+    "desktop-batch20h-11",
+    "desktop-batch20h-12",
+    "desktop-batch20h-13",
+    "desktop-batch20h-14",
+    "desktop-batch20h-15",
+    "desktop-batch20h-16",
+    "desktop-batch20h-17",
+    "desktop-batch20h-18",
+    "desktop-batch20h-19",
+    "desktop-batch20h-20",
+    "compact-batch20h-01",
+    "compact-batch20h-02",
+    "compact-batch20h-03",
+    "compact-batch20h-04",
+    "compact-batch20h-05",
+    "compact-batch20h-06",
+    "compact-batch20h-07",
+    "compact-batch20h-08",
+    "compact-batch20h-09",
+    "compact-batch20h-10",
+    "compact-batch20h-11",
+    "compact-batch20h-12",
+    "compact-batch20h-13",
+    "compact-batch20h-14",
+    "compact-batch20h-15",
+    "compact-batch20h-16",
+    "compact-batch20h-17",
+    "compact-batch20h-18",
+    "compact-batch20h-19",
+    "compact-batch20h-20"
+  ],
+  "measurements": [
+    {
+      "tag": "desktop-batch20h-01",
+      "id": "mt_SrrsLiJkr3",
+      "geometry": {
+        "box": {
+          "x": 0,
+          "y": 0,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 15,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 210.09375,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 133.59375,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1796,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-02",
+      "id": "mt_TiQbi027PE",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 991,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-03",
+      "id": "mt_vHzVa3SURC",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1661,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-04",
+      "id": "mt_uESbzWCZIq",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 870,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-05",
+      "id": "mt_IHipFGTFEY",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1413,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-06",
+      "id": "mt_bESTSBB0wK",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1787,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-07",
+      "id": "mt_kDMKJ5Ztt6",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1418,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-08",
+      "id": "mt_DRlbMok2lT",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1233,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-09",
+      "id": "mt_Xt1cRqaBOW",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1923,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-10",
+      "id": "mt_Uq5vYqboCR",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1285,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-11",
+      "id": "mt_6XCURuNwPw",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1199,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-12",
+      "id": "mt_HNOPGJYiRK",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-13",
+      "id": "mt_iNdrM2-oJf",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1217,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-14",
+      "id": "mt_gtTl3R5buH",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1733,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-15",
+      "id": "mt_MHaiUd2FLA",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1284,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-16",
+      "id": "mt_9IzhGUZ30z",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1044,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-17",
+      "id": "mt_1YwOCMMwD8",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1285,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-18",
+      "id": "mt_GDtFU5fyUv",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1429,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-19",
+      "id": "mt_tpT9brpI6D",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1542,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "desktop-batch20h-20",
+      "id": "mt_5mIcmKRCgA",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 650
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 646,
+        "scrollHeight": 1747,
+        "view": {
+          "width": 1440,
+          "height": 900
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-01",
+      "id": "mt_SrrsLiJkr3",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1796,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-02",
+      "id": "mt_TiQbi027PE",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 991,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-03",
+      "id": "mt_vHzVa3SURC",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1661,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-04",
+      "id": "mt_uESbzWCZIq",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 870,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-05",
+      "id": "mt_IHipFGTFEY",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1413,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-06",
+      "id": "mt_bESTSBB0wK",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1787,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-07",
+      "id": "mt_kDMKJ5Ztt6",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1418,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-08",
+      "id": "mt_DRlbMok2lT",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1233,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-09",
+      "id": "mt_Xt1cRqaBOW",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1923,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-10",
+      "id": "mt_Uq5vYqboCR",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1285,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-11",
+      "id": "mt_6XCURuNwPw",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1199,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-12",
+      "id": "mt_HNOPGJYiRK",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1381,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-13",
+      "id": "mt_iNdrM2-oJf",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1217,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-14",
+      "id": "mt_gtTl3R5buH",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1733,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-15",
+      "id": "mt_MHaiUd2FLA",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1284,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-16",
+      "id": "mt_9IzhGUZ30z",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1044,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-17",
+      "id": "mt_1YwOCMMwD8",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 59.390625
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1285,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-18",
+      "id": "mt_GDtFU5fyUv",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1429,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-19",
+      "id": "mt_tpT9brpI6D",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1542,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    },
+    {
+      "tag": "compact-batch20h-20",
+      "id": "mt_5mIcmKRCgA",
+      "geometry": {
+        "box": {
+          "x": 124,
+          "y": 178.9375,
+          "w": 280,
+          "h": 470
+        },
+        "header": {
+          "y": 193.9375,
+          "h": 82.796875
+        },
+        "definition": {
+          "y": 389.03125,
+          "h": 39.59375
+        },
+        "action": {
+          "y": 312.53125,
+          "h": 38
+        },
+        "clientHeight": 466,
+        "scrollHeight": 1747,
+        "view": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "modes": [
+        "换个说法",
+        "举例与反例",
+        "自己试一试",
+        "为什么"
+      ]
+    }
+  ],
+  "errors": [],
+  "childTrial": false
+}

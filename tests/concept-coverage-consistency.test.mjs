@@ -33,8 +33,8 @@ const domainLabels={
 test('coverage ledger matches every implemented sample and source distribution',()=>{
   assert.equal(source.nodes.length,587);
   assert.equal(mapNodes.length,537);
-  assert.equal(samples.length,229);
-  assert.equal(new Set(samples.map(([id])=>id)).size,229);
+  assert.equal(samples.length,249);
+  assert.equal(new Set(samples.map(([id])=>id)).size,249);
   assert.ok(samples.every(([id])=>byId.has(id)),'every explanation must map to a knowledge-map source node');
 
   for(const [type,label] of Object.entries(typeLabels)){
@@ -53,11 +53,11 @@ test('coverage ledger matches every implemented sample and source distribution',
     assert.ok(coverage.includes(`| ${label} | ${total} | ${covered} | ${total-covered} |`),label+' row must match source-derived counts');
   }
   assert.equal(domainTotal,537);
-  assert.equal(domainCovered,229);
+  assert.equal(domainCovered,249);
 
   const visualCount=samples.filter(([,item])=>Boolean(item.visual)).length;
   assert.equal(visualCount,15);
-  assert.ok(coverage.includes('| **合计** | **537** | **229** | **308** | **42.6%** |'));
+  assert.ok(coverage.includes('| **合计** | **537** | **249** | **288** | **46.4%** |'));
   assert.ok(coverage.includes(`当前有 **${visualCount} 个样板节点**提供真实 SVG 图示`));
 });
 
@@ -96,7 +96,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.ok(explanationPilotEntries.every(entry=>CONCEPT_EXPLANATIONS[entry.id]),
     'all six name-audit explanation pilot nodes must exist in the current explanation module');
 
-  assert.match(termsDoc,/229 个节点已有样板或草稿/);
+  assert.match(termsDoc,/249 个节点已有样板或草稿/);
   assert.match(termsDoc,/15 个节点有按概念制作的静态 SVG 图示/);
   assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
   assert.match(termsDoc,/84 个展示名修正/);
@@ -147,7 +147,7 @@ test('the content review standard and calibration record cover all 60 configured
   assert.match(conceptPilot,/第十一批：B01–B04首批5个解释草稿/);
   assert.match(conceptPilot,/第十二批第一组：已有研究标记的5个节点/);
   assert.match(conceptPilot,/第十二批第二组：已有研究标记的5个节点/);
-  assert.match(coverage,/\*\*537\*\* \| \*\*229\*\* \| \*\*308\*\* \| \*\*42\.6%\*\*/);
+  assert.match(coverage,/\*\*537\*\* \| \*\*249\*\* \| \*\*288\*\* \| \*\*46\.4%\*\*/);
   for(const id of researchGaps){
     assert.ok(conceptPilot.includes(id),'research-gap list must retain source ID '+id);
   }
