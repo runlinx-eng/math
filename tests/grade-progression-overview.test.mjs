@@ -170,3 +170,11 @@ test("not-covered and junior-high-only nodes keep their true unmapped primary st
   assert.equal(unresolved.curriculum.evidenceLevel, "adjacent");
   assert.match(space, /小学阶段：未纳入当前课程阶段映射/);
 });
+
+
+test("grade-node selection enters the original graph through its in-place node selector", () => {
+  assert.match(space, /action==='grade-node-select'/);
+  assert.match(space, /setObservationMode\('relationship'\);choose\(target\.key,\{openLesson:false,inPlace:true\}\)/);
+  assert.match(space, /scene\.select\(key\)/);
+  assert.match(css, /body\[data-observation-mode="grade"\] \.focus-card\{display:none!important\}/);
+});

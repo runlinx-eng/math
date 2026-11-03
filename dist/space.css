@@ -799,3 +799,6 @@ body[data-observation-mode="grade"] .overview-structure-controls{display:none!im
 .grade-thinking-node-link>span{font-weight:550}
 .grade-thinking-node>small{display:block;margin-top:4px;color:#879286;font-size:9px}
 @media(max-width:600px){.grade-node-list>header{gap:6px}.grade-domain-node,.grade-thinking-node{padding:7px}.grade-domain-node-head{align-items:flex-start}.grade-node-evidence{font-size:8px}.grade-node-stage-tag{font-size:8px}}
+
+/* A2-3 batch 2: selecting a node leaves the matrix and reveals the original detail card. */
+body[data-observation-mode="grade"] .focus-card{display:none!important}

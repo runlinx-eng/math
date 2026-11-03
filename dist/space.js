@@ -575,7 +575,10 @@ document.addEventListener('click',event=>{
   }else if(action==='grade-pack-toggle'){
     expandedGradePackId=expandedGradePackId===el.dataset.packId?null:el.dataset.packId;
     renderGradeObservation();
-  }else if(action==='grade-retry'){gradeProgressionPromise=null;loadGradeObservation();}
+  }else if(action==='grade-node-select'){
+     const nodeId=el.dataset.nodeId,target=space.byKey.get(objectKey('node',nodeId));
+     if(target?.kind==='node'){setObservationMode('relationship');choose(target.key,{openLesson:false,inPlace:true});}
+   }else if(action==='grade-retry'){gradeProgressionPromise=null;loadGradeObservation();}
   else if(action==='deselect'&&scene.relationshipMap)overview();else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
   else if(action==='mode'){scene.setMode(el.dataset.mode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));}
   else if(action==='zoom')scene.zoom(Number(el.dataset.factor));else if(action==='front')scene.front();

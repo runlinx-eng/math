@@ -50,6 +50,26 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(numberDetail.includes('CN-MATH-2022-S1-NUMBER'),'group detail shows the source curriculum reference ID');
   check(numberDetail.includes('明确要求理解万以内数的意义'),'group detail shows the recorded course-basis explanation');
   check(numberDetail.includes('AI辅助审查不等同于独立教研'),'AI review is not presented as independent pedagogical validation');
+
+  // A2-3 batch 2: enter the original node detail from the grade list without camera movement.
+  await page.locator('.grade-pack-toggle[data-pack-id="add-subtract"]').click();
+  await page.locator('#grade-pack-detail-add-subtract').waitFor();
+  const linkedNode=page.locator('.grade-domain-node[data-node-id="mt_s2mfRBoTal"]');
+  check(await linkedNode.count()===1,'the multi-stage domain node appears exactly once in its source knowledge group');
+  const linkedStageText=await linkedNode.locator('.grade-node-stage-tags').innerText();
+  check(linkedStageText.includes('1—2年级：main')&&linkedStageText.includes('3—4年级：extension')&&linkedStageText.includes('5—6年级：未映射'),'the node keeps all three primary-stage roles, including explicit unmapped stages');
+  check((await linkedNode.innerText()).includes('证据：Direct'),'the node evidence category is displayed separately from its roles');
+  const beforeNodeSelection=await pose();
+  await linkedNode.locator('.grade-domain-node-link').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='relationship'&&mathSpace.snapshot().selected==='node:mt_s2mfRBoTal');
+  check((await pose())===beforeNodeSelection,'selecting a grade-list node preserves camera pose, zoom and every original node coordinate');
+  check(await page.locator('#focus-card').isVisible(),'grade-list selection opens the existing original knowledge-point detail card');
+  check(await page.locator('#focus-card .network-relations').count()>0,'the original direct relationship exploration remains available from the detail card');
+  await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_s2mfRBoTal');
+  check(await page.locator('#grade-pack-detail-add-subtract').isVisible(),'returning to grade observation restores the expanded knowledge group');
+  check(await page.locator('.grade-domain-node-link[data-node-id="mt_s2mfRBoTal"]').getAttribute('aria-current')==='true','the same node identity remains selected in the grade list');
+  check((await pose())===beforeNodeSelection,'switching back to grade observation still preserves the original map pose');
   check((await pose())===originalPose,'mode, year selection and expand/collapse preserve the exact map camera and node positions');
   await page.screenshot({path:path.join(out,'desktop-grade-matrix.png'),fullPage:false});
   await page.locator('[data-action="observation-mode"][data-mode="relationship"]').click();
