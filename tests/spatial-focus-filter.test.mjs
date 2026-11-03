@@ -47,6 +47,24 @@ test('auxiliary links show as direct association but never extend a hard prerequ
  assert.ok(!all.ids.has('E'),'remote auxiliary links must not become invented multi-hop prerequisites');
  assert.ok(two.links.every(e=>e.prerequisiteId==='A'||e.prerequisiteId==='B'||e.prerequisiteId==='C'));
 });
+test('all return paths provide a distances Map, including all 50 thinking nodes',()=>{
+ const domain=buildFocusFilter(atlas,ids,ROOT,'both','1');
+ assert.ok(domain.distances instanceof Map);
+ assert.equal(domain.distances.get(ROOT),0);
+ assert.ok([...domain.ids].every(id=>domain.distances.has(id)));
+ const thinkingIds=atlas.nodes.filter(node=>node.domainId==='thinking').map(node=>node.id);
+ assert.equal(thinkingIds.length,50);
+ for(const id of thinkingIds){
+  const view=buildFocusFilter(atlas,ids,id,'both','1');
+  assert.ok(view.distances instanceof Map);
+  assert.equal(view.distances.size,0);
+  assert.equal(view.ids.size,0);
+  assert.deepEqual(view.counts,{nodes:0,edges:0,hidden:0});
+ }
+ const unknown=buildFocusFilter(atlas,ids,'nonexistent','both','all');
+ assert.ok(unknown.distances instanceof Map);
+ assert.equal(unknown.distances.size,0);
+});
 test('unknown selected IDs do not invent coordinates or nodes',()=>{
  const view=buildFocusFilter(atlas,ids,'nonexistent','both','all');
  assert.equal(view.links.length,0);assert.equal(view.ids.size,0);

@@ -31,6 +31,7 @@ on:
       - 'docs/language/**'
       - 'README.md'
       - 'tests/spatial-focus-filter.test.mjs'
+      - 'tests/spatial-exploration.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
 
@@ -52,7 +53,7 @@ jobs:
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
       - name: Check relationship and grade observation data
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/spatial-exploration.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax

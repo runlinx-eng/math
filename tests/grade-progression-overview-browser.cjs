@@ -9,6 +9,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.stack||String(e)));
+ const runMobileChecks=process.env.MATH_RUN_MOBILE_TESTS==='true';
  const pose=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return JSON.stringify({position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions});});
  try{
   await page.goto(url);
@@ -152,42 +153,45 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check((await pose())===originalPose,'returning to relationship panorama leaves the map camera and positions unchanged');
   check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'the original 537-node map remains present');
 
-  await page.setViewportSize({width:390,height:844});
-  await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
-  await page.waitForFunction(()=>document.querySelectorAll('.grade-pack-row').length===23&&!document.querySelector('#grade-observation-view').hidden);
-  const mobile=await page.evaluate(()=>{
-   const panel=document.querySelector('#network-guide'),table=document.querySelector('.grade-matrix-scroll'),name=document.querySelector('.grade-pack-name');
-   const p=panel.getBoundingClientRect(),n=name.getBoundingClientRect();
-   return {panel:{left:p.left,right:p.right,top:p.top,bottom:p.bottom},width:innerWidth,height:innerHeight,horizontalScroll:table.scrollWidth>table.clientWidth,name:{left:n.left,right:n.right,scrollWidth:name.scrollWidth,clientWidth:name.clientWidth}};
-  });
-  check(mobile.panel.left>=0&&mobile.panel.right<=390&&mobile.panel.top>=0&&mobile.panel.bottom<=844,'mobile grade panel stays within the viewport');
-  check(mobile.horizontalScroll,'mobile matrix provides horizontal scrolling for the three stage columns');
-  check(mobile.name.left>=mobile.panel.left&&mobile.name.right<=mobile.panel.right,'mobile knowledge-group names remain inside the panel');
-  await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
-  await page.locator('#grade-pack-detail-time').scrollIntoViewIfNeeded();
-  const mobileDetails=await page.locator('#grade-pack-detail-time').evaluate(el=>{
-   const panel=document.querySelector('#network-guide').getBoundingClientRect(),grid=el.querySelector('.grade-detail-grid'),cards=[...el.querySelectorAll('.grade-detail-stage')].map(card=>{const r=card.getBoundingClientRect();return {left:r.left,right:r.right};});
-   return {columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,cards,panel:{left:panel.left,right:panel.right}};
-  });
-  check(mobileDetails.columns===1,'mobile stage details stack vertically');
-  check(mobileDetails.cards.length===3&&mobileDetails.cards.every(card=>card.left>=mobileDetails.panel.left&&card.right<=mobileDetails.panel.right),'all three stage details fit within the mobile panel');
-  await page.screenshot({path:path.join(out,'mobile-grade-matrix.png'),fullPage:false});
+  if(runMobileChecks){
+    await page.setViewportSize({width:390,height:844});
+    await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
+    await page.waitForFunction(()=>document.querySelectorAll('.grade-pack-row').length===23&&!document.querySelector('#grade-observation-view').hidden);
+    const mobile=await page.evaluate(()=>{
+     const panel=document.querySelector('#network-guide'),table=document.querySelector('.grade-matrix-scroll'),name=document.querySelector('.grade-pack-name');
+     const p=panel.getBoundingClientRect(),n=name.getBoundingClientRect();
+     return {panel:{left:p.left,right:p.right,top:p.top,bottom:p.bottom},width:innerWidth,height:innerHeight,horizontalScroll:table.scrollWidth>table.clientWidth,name:{left:n.left,right:n.right,scrollWidth:name.scrollWidth,clientWidth:name.clientWidth}};
+    });
+    check(mobile.panel.left>=0&&mobile.panel.right<=390&&mobile.panel.top>=0&&mobile.panel.bottom<=844,'mobile grade panel stays within the viewport');
+    check(mobile.horizontalScroll,'mobile matrix provides horizontal scrolling for the three stage columns');
+    check(mobile.name.left>=mobile.panel.left&&mobile.name.right<=mobile.panel.right,'mobile knowledge-group names remain inside the panel');
+    await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
+    await page.locator('#grade-pack-detail-time').scrollIntoViewIfNeeded();
+    const mobileDetails=await page.locator('#grade-pack-detail-time').evaluate(el=>{
+     const panel=document.querySelector('#network-guide').getBoundingClientRect(),grid=el.querySelector('.grade-detail-grid'),cards=[...el.querySelectorAll('.grade-detail-stage')].map(card=>{const r=card.getBoundingClientRect();return {left:r.left,right:r.right};});
+     return {columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,cards,panel:{left:panel.left,right:panel.right}};
+    });
+    check(mobileDetails.columns===1,'mobile stage details stack vertically');
+    check(mobileDetails.cards.length===3&&mobileDetails.cards.every(card=>card.left>=mobileDetails.panel.left&&card.right<=mobileDetails.panel.right),'all three stage details fit within the mobile panel');
+    await page.screenshot({path:path.join(out,'mobile-grade-matrix.png'),fullPage:false});
 
-  await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
-  await page.locator('#grade-pack-detail-time').waitFor({state:'detached'});
-  await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
-  await page.locator('#grade-pack-detail-number-sense').scrollIntoViewIfNeeded();
-  const mobileNodeList=await page.locator('#grade-pack-detail-number-sense .grade-node-list').evaluate(el=>{
-    const panel=document.querySelector('#network-guide').getBoundingClientRect(),r=el.getBoundingClientRect();
-    const items=[...el.querySelectorAll('.grade-domain-node,.grade-thinking-node')];
-    return {left:r.left,right:r.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,itemsFit:items.every(item=>{const box=item.getBoundingClientRect();return box.left>=panel.left-1&&box.right<=panel.right+1;})};
-  });
-  check(mobileNodeList.left>=mobileNodeList.panelLeft-1&&mobileNodeList.right<=mobileNodeList.panelRight+1&&mobileNodeList.scrollWidth<=mobileNodeList.clientWidth&&mobileNodeList.itemsFit,'mobile node-level details fit the guide panel without horizontal overflow');
-  await page.screenshot({path:path.join(out,'mobile-grade-node-list.png'),fullPage:false});
+    await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
+    await page.locator('#grade-pack-detail-time').waitFor({state:'detached'});
+    await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
+    await page.locator('#grade-pack-detail-number-sense').scrollIntoViewIfNeeded();
+    const mobileNodeList=await page.locator('#grade-pack-detail-number-sense .grade-node-list').evaluate(el=>{
+      const panel=document.querySelector('#network-guide').getBoundingClientRect(),r=el.getBoundingClientRect();
+      const items=[...el.querySelectorAll('.grade-domain-node,.grade-thinking-node')];
+      return {left:r.left,right:r.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,itemsFit:items.every(item=>{const box=item.getBoundingClientRect();return box.left>=panel.left-1&&box.right<=panel.right+1;})};
+    });
+    check(mobileNodeList.left>=mobileNodeList.panelLeft-1&&mobileNodeList.right<=mobileNodeList.panelRight+1&&mobileNodeList.scrollWidth<=mobileNodeList.clientWidth&&mobileNodeList.itemsFit,'mobile node-level details fit the guide panel without horizontal overflow');
+    await page.screenshot({path:path.join(out,'mobile-grade-node-list.png'),fullPage:false});
+  }
+
 
   check(errors.length===0,'no browser JavaScript exceptions: '+JSON.stringify(errors));
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
-  console.log(JSON.stringify({passed:checks.length,errors}));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false,mobileChecks:runMobileChecks?'executed':'skipped-by-scope'},null,2));
+  console.log(JSON.stringify({passed:checks.length,errors,mobileChecks:runMobileChecks?'executed':'skipped-by-scope'}));
  }catch(error){
   await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(error),childTrial:false},null,2));

@@ -71,6 +71,7 @@ jobs:
             tests/spatial-overview.test.mjs
             tests/spatial-overview-structure.test.mjs
             tests/spatial-focus-filter.test.mjs
+            tests/spatial-exploration.test.mjs
             tests/deployment-static.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
