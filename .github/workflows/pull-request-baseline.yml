@@ -60,6 +60,8 @@ jobs:
           node --check dist/space.js
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
+          node --check dist/grade-progression-model.js
+          node --check scripts/build_grade_progression_data.mjs
 
       - name: Run active Node.js unit and invariant tests
         shell: bash
@@ -70,6 +72,7 @@ jobs:
             tests/spatial-overview-structure.test.mjs
             tests/spatial-focus-filter.test.mjs
             tests/deployment-static.test.mjs
+            tests/grade-progression-model.test.mjs
           )
 
           for candidate in \
