@@ -73,6 +73,7 @@ jobs:
             tests/spatial-focus-filter.test.mjs
             tests/deployment-static.test.mjs
             tests/grade-progression-model.test.mjs
+            tests/grade-progression-overview.test.mjs
           )
 
           for candidate in \
