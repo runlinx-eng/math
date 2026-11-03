@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "title": "数学树537个知识地图节点全量文字审查清单",
-  "generatedAt": "2026-11-02",
+  "generatedAt": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "source": {
     "file": "dist/data/math.json",
@@ -25,15 +25,15 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 45,
-    "notConfigured": 492,
+    "configuredExplanationSamples": 50,
+    "notConfigured": 487,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
     "hasResearchTrue": 454,
     "hasResearchFalse": 83,
-    "hasResearchFalseWithSample": 7,
-    "hasResearchFalseNotConfigured": 76,
+    "hasResearchFalseWithSample": 12,
+    "hasResearchFalseNotConfigured": 71,
     "hasResearchUnknown": 0,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
@@ -45,17 +45,17 @@
     "byType": {
       "PROCEDURAL": {
         "total": 304,
-        "configuredSamples": 15,
-        "notConfigured": 289,
+        "configuredSamples": 17,
+        "notConfigured": 287,
         "hasResearchFalse": 42,
-        "hasResearchFalseNotConfigured": 39
+        "hasResearchFalseNotConfigured": 37
       },
       "CONCEPTUAL": {
         "total": 156,
-        "configuredSamples": 13,
-        "notConfigured": 143,
+        "configuredSamples": 16,
+        "notConfigured": 140,
         "hasResearchFalse": 28,
-        "hasResearchFalseNotConfigured": 28
+        "hasResearchFalseNotConfigured": 25
       },
       "REPRESENTATIONAL": {
         "total": 45,
@@ -107,18 +107,18 @@
       "data": {
         "title": "数据与统计",
         "total": 46,
-        "configuredSamples": 7,
-        "notConfigured": 39,
+        "configuredSamples": 10,
+        "notConfigured": 36,
         "hasResearchFalse": 27,
-        "hasResearchFalseNotConfigured": 22
+        "hasResearchFalseNotConfigured": 19
       },
       "fractions": {
         "title": "分数",
         "total": 68,
-        "configuredSamples": 4,
-        "notConfigured": 64,
+        "configuredSamples": 5,
+        "notConfigured": 63,
         "hasResearchFalse": 1,
-        "hasResearchFalseNotConfigured": 1
+        "hasResearchFalseNotConfigured": 0
       },
       "geometry": {
         "title": "图形与空间",
@@ -131,10 +131,10 @@
       "measure": {
         "title": "测量",
         "total": 84,
-        "configuredSamples": 6,
-        "notConfigured": 78,
+        "configuredSamples": 7,
+        "notConfigured": 77,
         "hasResearchFalse": 18,
-        "hasResearchFalseNotConfigured": 17
+        "hasResearchFalseNotConfigured": 16
       },
       "multiply": {
         "title": "乘法与除法",
@@ -168,7 +168,8 @@
         "hasResearchFalse": 1,
         "hasResearchFalseNotConfigured": 1
       }
-    }
+    },
+    "firstFiveDraftPendingIndependentReview": 5
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -176,7 +177,8 @@
     "samplePresent": "存在解释样板；不代表独立教研、人工审图或儿童理解验收通过。",
     "firstPassCalibrated": "已完成编辑层首轮来源范围与表达校准；不等于独立数学审查。",
     "independentMathReview": "所有节点当前均未记录已完成的独立数学复核。",
-    "childUnderstanding": "所有节点当前均未记录真实儿童理解与迁移测试。"
+    "childUnderstanding": "所有节点当前均未记录真实儿童理解与迁移测试。",
+    "firstFiveDraftPendingIndependentReview": "首批5个解释草稿已写入解释模块；独立数学复核和儿童理解测试尚未完成。"
   },
   "nodes": [
     {
@@ -8016,8 +8018,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "first_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -8026,9 +8028,9 @@
         "sourceFlag": "hasResearch_false",
         "status": "triage_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "triage_research_basis_before_drafting",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "B01-B04-first-explanation-draft-2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -8234,8 +8236,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "first_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -8244,9 +8246,9 @@
         "sourceFlag": "hasResearch_false",
         "status": "triage_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "triage_research_basis_before_drafting",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "B01-B04-first-explanation-draft-2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -10195,8 +10197,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "first_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -10205,9 +10207,9 @@
         "sourceFlag": "hasResearch_false",
         "status": "triage_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "triage_research_basis_before_drafting",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "B01-B04-first-explanation-draft-2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -11662,8 +11664,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "first_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -11672,9 +11674,9 @@
         "sourceFlag": "hasResearch_false",
         "status": "triage_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "triage_research_basis_before_drafting",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "B01-B04-first-explanation-draft-2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -25544,8 +25546,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "first_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -25554,9 +25556,9 @@
         "sourceFlag": "hasResearch_false",
         "status": "triage_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "triage_research_basis_before_drafting",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "B01-B04-first-explanation-draft-2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
