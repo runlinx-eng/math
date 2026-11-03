@@ -595,3 +595,7 @@
 ## 本地 5 节点（2026-11-04）
 
 `mt_Yw1_4Nfsql`、`mt_MWXPiaTnEu`、`mt_M1tnXqmYbn`、`mt_JH_6RpNWjr`、`mt_9QzSnn8m80`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH5-2026-11-04.md)。
+
+## 本地 7 节点（2026-11-04）
+
+`mt_NaqEP8xDhZ`、`mt_Ii1hV4V5ql`、`mt_Vi4Vo5xs_g`、`mt_sA2OvTiech`、`mt_ebPelt-qAl`、`mt_VgOePicFYK`、`mt_HJA2Oz-Zh1`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH7C-2026-11-04.md)。

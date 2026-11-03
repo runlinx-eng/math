@@ -1,4 +1,4 @@
-// Three hundred and ninety-two source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and ninety-nine source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3559,6 +3559,69 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"－3不比－1大：在通常数轴上，－3位于－1的左边。",
     tryIt:"从2减去－3，可看作撤销向左3的变化，结果落在5；再用加法核对。",
     why:"同一情境中零是参照；减去负数可以用反向撤销该负变化来理解。",
+  },
+  "mt_NaqEP8xDhZ":{
+    formal:"十分之几和百分之几",
+    definition:"同一个整体中，一个十分之一等于十个百分之一，可以先换成相同大小的份再相加。",
+    simpler:"把每个十分之一继续分成10个小份，原来的量不变。",
+    example:"7/10＝70/100；3/10＋4/100＝34/100。",
+    counterexample:"3/10＋4/100不是7/100：十分之一和百分之一的份大小不同。",
+    tryIt:"用等长条表示5/10，再把每个十分之一分成十份，数一数有多少百分之一。",
+    why:"分得更细时，每份变小、份数增加；只要整体相同，覆盖的量没有变。",
+  },
+  "mt_Ii1hV4V5ql":{
+    formal:"两位小数的四舍五入",
+    definition:"按指定数位取近似数时，直接从原数看该位后一位，再决定保留的位是否进一。",
+    simpler:"先确定要保留到哪一位，再看它右边一位；至少是5就进一。",
+    example:"3.47取整是3，保留一位小数是3.5；12.95保留一位小数是13.0。",
+    counterexample:"3.47先取一位小数得3.5，再取整得4；这不是直接把原数取整的结果。",
+    tryIt:"分别直接把4.83和2.17取整，估一估它们的和，再与准确和比较。",
+    why:"取近似数会丢失信息；分两次取整可能改变结果，末尾0可以表示要求的记录位数。",
+  },
+  "mt_Vi4Vo5xs_g":{
+    formal:"十分位和百分位",
+    definition:"小数点右边第一位表示十分之一，第二位表示百分之一。",
+    simpler:"把一个整体平均分成10份是十分之一；每份再分10份是百分之一。",
+    example:"0.3＝3/10；0.07＝7/100；0.62＝62/100。",
+    counterexample:"0.07不是7/10：十分位上的0保留位置，7表示7个百分之一。",
+    tryIt:"在0到1的数轴上，先跳三次1/10，再标出0.3。",
+    why:"相邻小数数位的单位相差10倍；小数和分数可以表示同一个量。",
+  },
+  "mt_sA2OvTiech":{
+    formal:"三位小数与千分之一",
+    definition:"小数点后第三位表示千分之一；小数计算按相同数位单位对齐。",
+    simpler:"把数写在相应数位上，不足的末尾可以补0，再按单位计算。",
+    example:"1.234＋0.567＋2.199＝4.000；1.5－0.375＝1.125。",
+    counterexample:"0.4和0.400的数量相同；三位小数是记录格式，不表示后者更大。",
+    tryIt:"写出两个保留三位小数、合起来等于1的数，再用千分之一单位检查。",
+    why:"每10个千分之一等于1个百分之一，换组不改变总量；末尾补0不改变值。",
+  },
+  "mt_ebPelt-qAl":{
+    formal:"等值分数的同倍变化",
+    definition:"同一个分数的分子和分母乘同一个非零整数，可以得到等值分数。",
+    simpler:"把每一份都再分成同样多的小份，选中的份和总份数一起增加。",
+    example:"2/3＝4/6＝6/9，三条等长分数条覆盖的长度相同。",
+    counterexample:"2/3的分子、分母都加1得到3/4，它们并不相等。",
+    tryIt:"把一条3/5的纸带每份再分成两份，写出等值分数。",
+    why:"细分改变份数和每份的大小，不改变所表示的整体部分；比较时整体必须相同。",
+  },
+  "mt_VgOePicFYK":{
+    formal:"把分数拆成几部分",
+    definition:"一个分数可以拆成几个分数相加，只要这些部分合起来仍是原来的量。",
+    simpler:"先把原来的等份分成几组，再数每组有几个小份。",
+    example:"3/8＝1/8＋1/8＋1/8，也等于1/8＋2/8。",
+    counterexample:"把1/8＋2/8换成2/8＋1/8只是交换顺序，并没有得到新的分组。",
+    tryIt:"把5/6拆成两种不同的和，用六等分条检查每种组合。",
+    why:"分子记录选中的等份数量；分组前后总份数相同，整体就不变。",
+  },
+  "mt_HJA2Oz-Zh1":{
+    formal:"分数乘整数与实际数量",
+    definition:"分数乘整数可以表示相同分数量重复若干次；实际问题中要分清精确数量和需要准备的整件数。",
+    simpler:"每次取同样的一份，取几次就把这些份合起来。",
+    example:"每人吃3/8个披萨，5人共吃15/8个；若只能买完整披萨，需要买2个。",
+    counterexample:"15/8是吃掉的准确数量，2个是按完整披萨购买的数量，两者含义不同。",
+    tryIt:"每段绳长2/3米，4段共多长？用三等分的长度条连接后检查。",
+    why:"重复同样的分数份可以先合并单位份；是否向上取整取决于实际问题。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
