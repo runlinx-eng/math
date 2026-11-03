@@ -34,7 +34,7 @@ test('coverage ledger matches every implemented sample and source distribution',
   assert.equal(source.nodes.length,587);
   assert.equal(mapNodes.length,537);
   assert.equal(samples.length,55);
-  assert.equal(new Set(samples.map(([id])=>id)).size,50);
+  assert.equal(new Set(samples.map(([id])=>id)).size,55);
   assert.ok(samples.every(([id])=>byId.has(id)),'every explanation must map to a knowledge-map source node');
 
   for(const [type,label] of Object.entries(typeLabels)){
@@ -126,7 +126,7 @@ test('language documentation agrees with the machine-readable name audit and cur
 const conceptReviewStandard=fs.readFileSync(new URL('../docs/language/CONCEPT-REVIEW-STANDARD.md',import.meta.url),'utf8');
 const conceptPilot=fs.readFileSync(new URL('../docs/language/CONCEPT-PILOT.md',import.meta.url),'utf8');
 
-test('the content review standard and calibration record cover all 50 configured samples',()=>{
+test('the content review standard and calibration record cover all 55 configured samples',()=>{
   assert.match(conceptReviewStandard,/来源核对/);
   assert.match(conceptReviewStandard,/数学正确/);
   assert.match(conceptReviewStandard,/范围完整/);
