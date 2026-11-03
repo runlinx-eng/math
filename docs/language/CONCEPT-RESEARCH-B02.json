@@ -3,7 +3,7 @@
   "reviewDate": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "batchId": "B02",
-  "scope": "对一个无解释样板的知识地图节点完成外部课程标准、课程资源、评估任务与测量估计研究依据核查；本批不创建解释样板，不修改源节点或关系。",
+  "scope": "对一个无解释样板的知识地图节点完成外部课程标准、课程资源、评估任务与测量估计研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
   "method": {
     "rules": [
       "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
@@ -24,9 +24,10 @@
     "empiricalStudiesOrReports": 1,
     "researchReviews": 1,
     "nodesWithExternalSourcesReviewed": 1,
-    "explanationDraftsCreated": 0,
+    "explanationDraftsCreated": 1,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
   },
   "sourceCatalog": [
     {
@@ -138,7 +139,11 @@
         "The learner explains that a half-full 1 litre jug has 1 litre capacity but contains 500 mL of water.",
         "With a different-shaped container or a different starting liquid amount, the learner still distinguishes capacity from current contents and explains how to check the estimate."
       ],
-      "relationshipBoundary": "Preserve the existing hard prerequisite mt_6oxQPNLHNv (measuring and calculating with standard measurement units), soft prerequisite mt_mFJ-2ZF6Tk (estimating and comparing measures), and soft successor mt_IuHa5UI5od. The earlier capacity-comparison node mt_zkFbMLpu3U is useful contextual comparison but is not a direct edge for this node. No new dependency is inferred."
+      "relationshipBoundary": "Preserve the existing hard prerequisite mt_6oxQPNLHNv (measuring and calculating with standard measurement units), soft prerequisite mt_mFJ-2ZF6Tk (estimating and comparing measures), and soft successor mt_IuHa5UI5od. The earlier capacity-comparison node mt_zkFbMLpu3U is useful contextual comparison but is not a direct edge for this node. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     }
   ]
 }
