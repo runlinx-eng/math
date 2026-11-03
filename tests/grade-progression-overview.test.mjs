@@ -54,7 +54,7 @@ test("six year controls map in adjacent pairs to the same two-year stage", () =>
   assert.deepEqual(data.primaryStageIds, ["stage-1", "stage-2", "stage-3"]);
   assert.match(space, /const GRADE_LABELS=Object\.freeze\(\['一年级','二年级','三年级','四年级','五年级','六年级'\]\)/);
   assert.match(space, /Math\.floor\(\(selectedGrade-1\)\/2\)/);
-  assert.match(space, /当前课程映射精度为两年学段/);
+  assert.match(space, /课程映射精度为两年学段/);
 });
 
 test("incomplete time stage-3 is rendered as 待补充 rather than a dash", () => {
