@@ -1,4 +1,4 @@
-// Three hundred and eighty-seven source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and ninety-two source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3514,6 +3514,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"估算约71000不能证明任意接近71000的答案都准确；精确结果仍需计算或其他检查。",
     tryIt:"把24378和25621分别取近似数，判断总和3421是否合理。",
     why:"取近似数有误差；需要保证误差不超过某个界限时，还要根据取整单位分析误差。",
+  },
+  "mt_Yw1_4Nfsql":{
+    formal:"多位数竖式的加减",
+    definition:"多位数竖式按相同数位对齐，从低位开始计算，并按十进制换组。",
+    simpler:"把个位、十位、百位等分别排齐；一列达到十个低位单位时向高位换组。",
+    example:"34567＋28945＝63512；500000－234178＝265822。",
+    counterexample:"减法遇到连续的0不能直接把每列较大的数字减较小的数字，需要从可拆的高位逐层换组。",
+    tryIt:"用单位块表示500000，逐级拆分后取走234178，再用加法检查。",
+    why:"10个相同数位单位等于1个更高数位单位；实际换组前后数量不变。",
+  },
+  "mt_MWXPiaTnEu":{
+    formal:"较大数的加减策略",
+    definition:"较大数加减可以利用整千、数轴跳步和接近双倍的关系。",
+    simpler:"先把数字分成容易处理的部分，再把每步变化合起来。",
+    example:"2500＋2600可以算2500＋2500＋100＝5100。",
+    counterexample:"从3200向上走到10000时，要求的差是6800，不是终点10000。",
+    tryIt:"从3200分几跳走到10000，记录每一跳并合计跳了多少。",
+    why:"分步变化的总和等于起点到终点的差；屏幕上的选择不能证明真实心算。",
+  },
+  "mt_M1tnXqmYbn":{
+    formal:"大数与小数的多步变化",
+    definition:"多步情境中，不同大小的数量要按单位和发生顺序逐步相加或相减。",
+    simpler:"先写下开始有多少，按每次增加或减少更新，再回答最后问什么。",
+    example:"从3450000开始，减1280000、加2000000、再减675450，得到3494550。",
+    counterexample:"第一步后的2170000只是中间结果，不能当作全部变化后的结果。",
+    tryIt:"在账本中逐步记录每次变化后的金额，再用估算检查结果的大致范围。",
+    why:"每步的结果是下一步的起点；自选计算方式的记录不证明实际使用了该工具或方法。",
+  },
+  "mt_JH_6RpNWjr":{
+    formal:"小数加减与数位对齐",
+    definition:"小数加减要把相同数位单位对齐，再按十进制计算和换组。",
+    simpler:"小数点对齐是为了让十分之一对十分之一、百分之一对百分之一。",
+    example:"3.45＋2.78＝6.23；5.03－2.67＝2.36。",
+    counterexample:"4.9等于4.90，比4.11大；小数位数更多不代表数更大。",
+    tryIt:"用十分之一和百分之一的单位块表示5.03，换组后取走2.67。",
+    why:"10个百分之一等于1个十分之一；补写末尾的0不改变小数的值。",
+  },
+  "mt_9QzSnn8m80":{
+    formal:"正数、负数和零",
+    definition:"数轴上零左侧是负数，右侧是正数；正负表示相对于零点的方向或状态。",
+    simpler:"先约定零代表什么，再看一个数在零的哪一边。",
+    example:"模拟余额从－3增加5，数轴上向右走5格，到2。",
+    counterexample:"－3不比－1大：在通常数轴上，－3位于－1的左边。",
+    tryIt:"从2减去－3，可看作撤销向左3的变化，结果落在5；再用加法核对。",
+    why:"同一情境中零是参照；减去负数可以用反向撤销该负变化来理解。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
