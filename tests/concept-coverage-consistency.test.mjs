@@ -17,7 +17,7 @@ const typeLabels={
   META:'META 策略型'
 };
 const domainLabels={
-  add:'加减法（add）',
+  add:'加法与减法（add）',
   algebra:'代数（algebra）',
   chance:'概率（chance）',
   counting:'计数（counting）',
