@@ -33,8 +33,8 @@ const domainLabels={
 test('coverage ledger matches every implemented sample and source distribution',()=>{
   assert.equal(source.nodes.length,587);
   assert.equal(mapNodes.length,537);
-  assert.equal(samples.length,45);
-  assert.equal(new Set(samples.map(([id])=>id)).size,45);
+  assert.equal(samples.length,50);
+  assert.equal(new Set(samples.map(([id])=>id)).size,50);
   assert.ok(samples.every(([id])=>byId.has(id)),'every explanation must map to a knowledge-map source node');
 
   for(const [type,label] of Object.entries(typeLabels)){
@@ -53,11 +53,11 @@ test('coverage ledger matches every implemented sample and source distribution',
     assert.ok(coverage.includes(`| ${label} | ${total} | ${covered} | ${total-covered} |`),label+' row must match source-derived counts');
   }
   assert.equal(domainTotal,537);
-  assert.equal(domainCovered,45);
+  assert.equal(domainCovered,50);
 
   const visualCount=samples.filter(([,item])=>Boolean(item.visual)).length;
   assert.equal(visualCount,15);
-  assert.ok(coverage.includes('| **合计** | **537** | **45** | **492** | **8.4%** |'));
+  assert.ok(coverage.includes('| **合计** | **537** | **50** | **487** | **9.3%** |'));
   assert.ok(coverage.includes(`当前有 **${visualCount} 个样板节点**提供真实 SVG 图示`));
 });
 
