@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,324);
+  assert.equal(samples.length,329);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -424,4 +424,11 @@ test('probability research-gap drafts retain independence and finite simulation 
   assert.match(conceptHelpFor('mt_8DT3LXwwH-').why,/没有逐轮更接近的保证/);
   assert.match(conceptHelpFor('mt_aCwj2PCoRV').counterexample,/不证明/);
   assert.match(conceptHelpFor('mt_nzdtOLXWWa').counterexample,/独立条件/);
+});
+
+test('data research-gap drafts distinguish simulated records and graph interpretation',()=>{
+  assert.match(conceptHelpFor('mt_X53txVXOcG').counterexample,/代表2票/);
+  assert.match(conceptHelpFor('mt_kxeuXm6EyC').why,/模拟记录不等于真实调查/);
+  assert.match(conceptHelpFor('mt_yrvYKSwSRZ').counterexample,/并列最多/);
+  assert.match(conceptHelpFor('mt_TiFjjvBMaY').counterexample,/不能代表整组/);
 });

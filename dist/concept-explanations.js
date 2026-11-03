@@ -1,4 +1,4 @@
-// Three hundred and twenty-four source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and twenty-nine source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -2947,6 +2947,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"不能只因为用了随机数就认定模型合适；数字映射比例和各次独立条件也要与情境匹配。",
     tryIt:"在上述假设下，反复生成数字直到第一次出现0—3，统计至少需要4次的试验比例。",
     why:"每次模拟要对应一次完整情境；相对频率可估计目标事件概率，不同有限次运行仍会有波动。",
+  },
+  "mt_X53txVXOcG":{
+    formal:"用数字工具记录和展示数据",
+    definition:"可以用数字工具记录每次观察或回答，整理各类别的数量，再用表格或图形展示。",
+    simpler:"每次出现一个结果，就在对应类别记一笔；图表要来自同一份记录。",
+    example:"记录12次模拟水果投票，统计每种水果的票数，再比较哪种最多。",
+    counterexample:"图例说一个图案代表2票时，3个图案表示6票，不是3票。",
+    tryIt:"逐次记录10个模拟结果，做成计数表，再选一种图表示。",
+    why:"记录保留每次结果，图例和刻度说明每个符号表示多少，才能准确比较。",
+  },
+  "mt_QpJydot2Kh":{
+    formal:"按问题选择数据展示方式",
+    definition:"同一份数据可以用表格、条形图或象形图表示；选择方式时要看想读出什么。",
+    simpler:"查准确数量、比较类别差距或展示成组数量，可以选择不同表示。",
+    example:"运动投票表格能列出各项目票数；同数据条形图方便比较柱子的高度。",
+    counterexample:"两个图看起来不一样，不代表数据不同；要核对它们是否来自同一份记录和正确的图例。",
+    tryIt:"把同一份投票数据画成表和条形图，分别找出最多的类别与差距。",
+    why:"不同展示突出不同信息，明确用途并保留相同数据，才能作有意义的比较。",
+  },
+  "mt_kxeuXm6EyC":{
+    formal:"在引导下做统计调查",
+    definition:"统计调查可以围绕一个问题收集数据、整理展示，再结合数据回答原问题。",
+    simpler:"先说清要了解什么，再记录观察结果，用图表帮助回答。",
+    example:"模拟记录三天午休的12次器材使用，汇总后用条形图比较每种器材的次数。",
+    counterexample:"只看到一种器材用了一次，不能据此断定它在全部观察中使用最多。",
+    tryIt:"围绕给定问题记录一组模拟结果，制作带标题和标签的图，并说出数据支持的发现。",
+    why:"结论需要与实际收集的数据和问题相对应；模拟记录不等于真实调查。",
+  },
+  "mt_yrvYKSwSRZ":{
+    formal:"用数字表格整理调查数据",
+    definition:"数字工具可以帮助记录调查回答、统计每个类别的次数，并用图表展示同一份数据。",
+    simpler:"先把问题和选项说清楚，每个回答记一次，再按类别统计。",
+    example:"为一次模拟运动偏好调查设置选项，记录10份模拟回答，再把各类票数画成柱状图。",
+    counterexample:"如果有两个类别并列最多，不能只报告列表里第一个最大值。",
+    tryIt:"逐行记录模拟回答，核对类别总数与回答总数，再找出最多和最少的类别。",
+    why:"从记录到计数再到图表保持数据一致，才能根据图表作出正确比较。",
+  },
+  "mt_TiFjjvBMaY":{
+    formal:"比较图表与数据分布",
+    definition:"比较图表时，可以看它是否清楚回答问题；观察数值分布时还要看数据集中在哪里、变化有多大。",
+    simpler:"先确认图表显示的是哪份数据，再看它方便比较什么。",
+    example:"同一投票数据可用表格查具体票数，用柱状图比较类别；两种方式各有用途。",
+    counterexample:"比较两组身高时，只看最高的一个值不能代表整组的分布。",
+    tryIt:"在共同数轴上观察两组数据的集中位置和范围，再说明哪种展示帮助比较。",
+    why:"同一数据的不同表示可能突出不同信息；分布要结合全部记录与实际问题理解。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "6ace4a6cc36e56b3ad419366b76f446326b382af",
+    "explanationBlobSha": "82fcf544d3685bff13b86c2097b86e78d4c0f2e5",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -25,15 +25,15 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 324,
-    "notConfigured": 213,
+    "configuredExplanationSamples": 329,
+    "notConfigured": 208,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
     "hasResearchTrue": 454,
     "hasResearchFalse": 83,
-    "hasResearchFalseWithSample": 32,
-    "hasResearchFalseNotConfigured": 51,
+    "hasResearchFalseWithSample": 37,
+    "hasResearchFalseNotConfigured": 46,
     "hasResearchUnknown": 0,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
@@ -45,17 +45,17 @@
     "byType": {
       "PROCEDURAL": {
         "total": 304,
-        "configuredSamples": 167,
-        "notConfigured": 137,
+        "configuredSamples": 169,
+        "notConfigured": 135,
         "hasResearchFalse": 42,
-        "hasResearchFalseNotConfigured": 27
+        "hasResearchFalseNotConfigured": 25
       },
       "CONCEPTUAL": {
         "total": 156,
-        "configuredSamples": 101,
-        "notConfigured": 55,
+        "configuredSamples": 103,
+        "notConfigured": 53,
         "hasResearchFalse": 28,
-        "hasResearchFalseNotConfigured": 16
+        "hasResearchFalseNotConfigured": 14
       },
       "REPRESENTATIONAL": {
         "total": 45,
@@ -73,10 +73,10 @@
       },
       "META": {
         "total": 12,
-        "configuredSamples": 8,
-        "notConfigured": 4,
+        "configuredSamples": 9,
+        "notConfigured": 3,
         "hasResearchFalse": 4,
-        "hasResearchFalseNotConfigured": 3
+        "hasResearchFalseNotConfigured": 2
       }
     },
     "byDomain": {
@@ -107,10 +107,10 @@
       "data": {
         "title": "数据与统计",
         "total": 46,
-        "configuredSamples": 25,
-        "notConfigured": 21,
+        "configuredSamples": 30,
+        "notConfigured": 16,
         "hasResearchFalse": 27,
-        "hasResearchFalseNotConfigured": 19
+        "hasResearchFalseNotConfigured": 14
       },
       "fractions": {
         "title": "分数",
@@ -196,7 +196,8 @@
     "researchGap5bDraftPendingIndependentReview": 5,
     "researchGap3bDraftPendingIndependentReview": 3,
     "localBatch20kDraftPendingIndependentReview": 20,
-    "researchGap4DraftPendingIndependentReview": 4
+    "researchGap4DraftPendingIndependentReview": 4,
+    "researchGap5cDraftPendingIndependentReview": 5
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -7760,15 +7761,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap5c_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -8302,15 +8304,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap5c_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -8436,15 +8439,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap5c_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -8600,15 +8604,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap5c_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
@@ -8665,15 +8670,16 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "research_gap5c_draft_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_false",
-        "status": "triage_required"
+        "status": "external_sources_reviewed_pending_independent_math_review"
       },
       "contentReviewStatus": "not_started",
       "batch": null,
