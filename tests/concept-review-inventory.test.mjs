@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {createHash} from 'node:crypto';
 import {CONCEPT_EXPLANATIONS} from '../dist/concept-explanations.js';
 
 const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.meta.url),'utf8'));
@@ -13,6 +14,9 @@ const externalById=new Map((source.externalNodes||[]).map(node=>[node.id,node]))
 const inventoryById=new Map(inventory.nodes.map(node=>[node.id,node]));
 const auditById=new Map(audit.entries.map(node=>[node.id,node]));
 const sampleIds=new Set(Object.keys(CONCEPT_EXPLANATIONS));
+const explanationBytes=fs.readFileSync(new URL('../dist/concept-explanations.js',import.meta.url));
+const nameAuditBytes=fs.readFileSync(new URL('../docs/language/NODE-NAME-AUDIT.json',import.meta.url));
+const gitBlobSha=content=>createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${content.length}\\0`),content])).digest('hex');
 const newSix=new Set(['mt_dmNvjroCPT','mt_xmmgAzxe5j','mt_IfEgu0X449','mt_PZ909yPrEC','mt_qeZYF6HZ4o','mt_ylXdiVRAYv']);
 const newFive=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS','mt_NSC3LT_-ch','mt_gC-6JXAG5S','mt_iykH2P5oFq']);
 
@@ -43,6 +47,8 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.summary.separateExternalEdges,32);
   assert.deepEqual(inventory.source.sourceSha256,source.sourceSha256);
   assert.equal(inventory.source.sourceBlobSha,'559a6ac9459495ec848a79119ba182c999fff7b5');
+  assert.equal(inventory.source.explanationBlobSha,gitBlobSha(explanationBytes));
+  assert.equal(inventory.source.nameAuditBlobSha,gitBlobSha(nameAuditBytes));
 });
 
 test('each inventory entry matches its source node and review states',()=>{
