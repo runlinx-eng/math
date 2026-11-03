@@ -16,6 +16,7 @@ import {BRIDGES,sessionMeta,sessionRoute} from './learning/bridges.js';
 import {lessonSummary} from './learning/state.js';
 import {dayKey,dailySummary,continuation,pendingQuestions,addQuestion,resumeQuestion,questionAction,questionDone} from './learning/daily.js';
 import {askQuestion} from './learning/question-ui.js';
+import {loadGradeProgressionData} from './grade-progression-model.js';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=s=>new Date(s).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -24,7 +25,7 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship';
+let worldLayout='network',observationMode='relationship',selectedGrade=1,gradeProgressionData=null,gradeProgressionPromise=null;
 const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
 let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
@@ -208,6 +209,59 @@ function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network
 }
 function overview({animate=true,saveHistory=true}={}){if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();if(saveHistory)remember();closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.overview(animate);setHash(null);renderFocus();renderLocation();scheduleSave();}
 function back(){if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();const previous=visits.pop();if(!previous)return;pointerPreview=null;focusPreview=null;scene.restore(previous,true);activeRouteId=scene.learningRouteId;setHash(previous.selected);$('#back-button').disabled=!visits.length;renderFocus();renderLocation();restoreFocus(previous);scheduleSave();}
+function gradeStageForSelected(){
+  if(!gradeProgressionData)return null;
+  const stageId=gradeProgressionData.primaryStageIds[Math.floor((selectedGrade-1)/2)];
+  return gradeProgressionData.stages.find(stage=>stage.id===stageId)||null;
+}
+function gradeMarkPresentation(judgement){
+  if(!judgement||judgement.recordStatus==='incomplete'||typeof judgement.markLabel!=='string')return {label:'待补充',mark:'incomplete'};
+  return {label:judgement.markLabel,mark:judgement.mark||'unknown'};
+}
+function ensureGradeProgressionData(){
+  if(gradeProgressionData)return Promise.resolve(gradeProgressionData);
+  if(!gradeProgressionPromise){
+    gradeProgressionPromise=loadGradeProgressionData().then(data=>{gradeProgressionData=data;return data;}).catch(error=>{gradeProgressionPromise=null;throw error;});
+  }
+  return gradeProgressionPromise;
+}
+function renderGradeObservation(){
+  const host=$('#grade-observation-view');if(!host)return;
+  if(!gradeProgressionData){host.innerHTML='<div class="grade-observation-head"><h2>小学1—6年级观察</h2><p>正在读取23个知识群的群级阶段数据…</p></div>';return;}
+  const selectedStage=gradeStageForSelected(),selectedStageId=selectedStage?.id;
+  const groups=[];
+  for(const pack of gradeProgressionData.packs){
+    let group=groups.find(item=>item.themeId===pack.themeId);
+    if(!group){group={themeId:pack.themeId,packs:[]};groups.push(group);}
+    group.packs.push(pack);
+  }
+  const stageHeaders=gradeProgressionData.stages.map(stage=>`<th scope="col" class="grade-stage-heading ${stage.id===selectedStageId?'is-current':''}" data-stage-id="${esc(stage.id)}"><span>${esc(stage.standardStage||'')}</span><small>${esc(stage.label||'')}</small></th>`).join('');
+  const groupRows=groups.map(group=>{
+    const themeName=GRADE_THEME_LABELS[group.themeId]||`其他主题 · ${group.themeId}`;
+    const rows=group.packs.map(pack=>{
+      const cells=gradeProgressionData.stages.map(stage=>{
+        const judgement=pack.stageJudgements?.[stage.id],mark=gradeMarkPresentation(judgement);
+        return `<td class="grade-stage-cell ${stage.id===selectedStageId?'is-current':''}" data-stage-id="${esc(stage.id)}"><span class="grade-mark" data-mark="${esc(mark.mark)}" aria-label="${esc(stage.label)}：${esc(mark.label)}">${esc(mark.label)}</span></td>`;
+      }).join('');
+      const count=Number.isFinite(pack.domainKnowledgeNodeCount)?pack.domainKnowledgeNodeCount:pack.totalNodeCount;
+      return `<tr class="grade-pack-row" data-pack-id="${esc(pack.packId)}"><th scope="row"><span class="grade-pack-name">${esc(pack.name)}</span><small class="grade-pack-count">${Number.isFinite(count)?count+'个领域知识点':''}</small></th>${cells}</tr>`;
+    }).join('');
+    return `<tr class="grade-theme-row" data-theme-id="${esc(group.themeId)}"><th colspan="4"><span>${esc(themeName)}</span><small>${group.packs.length}个知识群</small></th></tr>${rows}`;
+  }).join('');
+  host.innerHTML=`<div class="grade-observation-head"><div><h2>小学1—6年级观察</h2><p>按五大主题查看23个知识群在三个两年学段中的整体发展。</p></div></div>
+    <div class="grade-selector" role="group" aria-label="选择年级">${GRADE_LABELS.map((label,index)=>`<button type="button" data-action="grade-select" data-grade="${index+1}" aria-pressed="${selectedGrade===index+1}">${label}</button>`).join('')}</div>
+    <p class="grade-precision-note">课程映射精度为两年学段，并非精确到单独年级；相邻两个年级共用同一份学段数据。</p>
+    <p class="grade-current-stage" aria-live="polite">当前选择：<strong>${GRADE_LABELS[selectedGrade-1]}</strong> · ${esc(selectedStage?.standardStage||'学段待确认')}（${esc(selectedStage?.label||'') }）</p>
+    <div class="grade-matrix-scroll"><table class="grade-matrix" aria-label="23个知识群的小学学段发展矩阵"><thead><tr><th scope="col" class="grade-pack-heading">知识群</th>${stageHeaders}</tr></thead><tbody>${groupRows}</tbody></table></div>
+    <div class="grade-mark-legend" aria-label="阶段标记说明"><span><b data-mark="main">主</b>主要发展</span><span><b data-mark="extension">延</b>延伸发展</span><span><b data-mark="not-primary">—</b>非主要阶段</span><span><b data-mark="process">过程</b>贯穿过程</span><span><b data-mark="incomplete">待补充</b>记录不完整</span></div>`;
+}
+function loadGradeObservation(){
+  renderGradeObservation();
+  ensureGradeProgressionData().then(()=>{if(observationMode==='grade')renderGradeObservation();}).catch(error=>{
+    const host=$('#grade-observation-view');
+    if(host&&observationMode==='grade')host.innerHTML=`<div class="grade-load-error"><h2>年级数据暂时无法读取</h2><p>${esc(error.message)}</p><button type="button" class="soft-button" data-action="grade-retry">重新加载</button></div>`;
+  });
+}
 function setObservationMode(mode){
   const next=mode==='grade'?'grade':'relationship';
   observationMode=next;
@@ -216,6 +270,7 @@ function setObservationMode(mode){
   if(relationship)relationship.hidden=next!=='relationship';
   if(grade)grade.hidden=next!=='grade';
   document.querySelectorAll('[data-action="observation-mode"]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===next)));
+  if(next==='grade')loadGradeObservation();
 }
 function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]:'全貌';}
 function renderNetworkGuide(){
@@ -425,6 +480,10 @@ document.addEventListener('click',event=>{
   else if(action==='search')openSearch();else if(action==='list-pack')openSearch(id);else if(action==='search-more'){searchLimit+=24;renderSearch();}
   else if(action==='close-popover')closePopovers();
   else if(action==='observation-mode')setObservationMode(el.dataset.mode);
+  else if(action==='grade-select'){
+    const grade=Number(el.dataset.grade);
+    if(Number.isInteger(grade)&&grade>=1&&grade<=6){selectedGrade=grade;renderGradeObservation();}
+  }else if(action==='grade-retry'){gradeProgressionPromise=null;loadGradeObservation();}
   else if(action==='deselect'&&scene.relationshipMap)overview();else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
   else if(action==='mode'){scene.setMode(el.dataset.mode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));}
   else if(action==='zoom')scene.zoom(Number(el.dataset.factor));else if(action==='front')scene.front();
@@ -537,7 +596,7 @@ window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();}
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#utility-drawer').hidden){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}else cardHide();}});
 
 async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
-  const check=async()=>{const cache=await caches.open('math-explorer-20261102-guide-hover-v60');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
+  const check=async()=>{const cache=await caches.open('math-explorer-20261103-grade-observation-a2-2-v1');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','grade-progression-model.js','data/grade-progression.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
  }catch{$('#offline-status').textContent='本机保存';}}
 async function boot(){try {
   const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=await response.json();

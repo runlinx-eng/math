@@ -674,3 +674,48 @@ body[data-observation-mode="grade"] .network-guide{top:96px;width:min(760px,calc
 body[data-observation-mode="grade"] .network-guide details{display:none}
 @media(max-width:900px){body[data-observation-mode="grade"] .network-guide{width:min(680px,calc(100vw - 330px));left:18px}}
 @media(max-width:600px){body[data-observation-mode="grade"] .network-guide{top:94px;left:12px;right:12px;width:auto;max-height:calc(100dvh - 190px);padding:12px 13px}.observation-mode-switch{margin-bottom:8px}.observation-mode-switch button{min-height:38px;font-size:12px}}
+
+/* A2-2: source-backed year-by-stage and pack matrix. */
+.grade-observation-head h2{margin:4px 0 5px;font-size:17px;line-height:1.45;color:#294f47}
+.grade-observation-head p{margin:0 0 8px;color:#667a6c;font-size:11px;line-height:1.6}
+.grade-selector{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:10px 0 8px}
+.grade-selector button{min-width:0;min-height:34px;padding:6px 3px;border-radius:8px;background:#f0f3eb;color:#637568;font-size:11px;white-space:nowrap}
+.grade-selector button[aria-pressed=true]{background:#294f47;color:#fffef7;font-weight:650}
+.grade-precision-note{margin:6px 0;padding:8px 10px;border-left:3px solid #c3a36e;border-radius:0 7px 7px 0;background:#f8f4e9;color:#725f3d;font-size:11px;line-height:1.6}
+.grade-current-stage{margin:7px 0 9px;color:#627568;font-size:11px;line-height:1.6}
+.grade-current-stage strong{color:#294f47}
+.grade-matrix-scroll{max-width:100%;overflow-x:auto;border:1px solid #e0e6dc;border-radius:10px;background:#fffefb}
+.grade-matrix{width:100%;min-width:560px;border-collapse:separate;border-spacing:0;font-size:11px}
+.grade-matrix th,.grade-matrix td{padding:8px 9px;border-bottom:1px solid #edf0e8;text-align:center;vertical-align:middle}
+.grade-matrix thead th{position:sticky;top:0;z-index:2;background:#f7f8f2;color:#617365;font-weight:600}
+.grade-matrix .grade-pack-heading{position:sticky;left:0;z-index:3;width:210px;min-width:190px;text-align:left}
+.grade-matrix .grade-stage-heading{min-width:100px}
+.grade-matrix .grade-stage-heading span,.grade-matrix .grade-stage-heading small{display:block}
+.grade-matrix .grade-stage-heading span{color:#294f47;font-size:11px}
+.grade-matrix .grade-stage-heading small{margin-top:3px;color:#758174;font-size:10px;font-weight:400}
+.grade-matrix .grade-stage-heading.is-current{background:#e7f0e5}
+.grade-theme-row th{padding:8px 10px;background:#edf2e9;color:#365a49;text-align:left;font-size:11px}
+.grade-theme-row th span{font-weight:700}
+.grade-theme-row th small{float:right;color:#718071;font-size:10px;font-weight:400}
+.grade-pack-row th{position:sticky;left:0;z-index:1;background:#fffefb;text-align:left;font-weight:500}
+.grade-pack-name{display:block;color:#344f43;font-size:11px;line-height:1.5}
+.grade-pack-count{display:block;margin-top:2px;color:#8a9588;font-size:9px;font-weight:400}
+.grade-matrix .grade-stage-cell.is-current{background:#f1f6ef}
+.grade-mark{display:inline-flex;min-width:38px;min-height:25px;align-items:center;justify-content:center;padding:3px 7px;border-radius:7px;background:#f0f3ec;color:#54695b;font-size:11px;font-weight:650}
+.grade-mark[data-mark=main]{background:#e4efe5;color:#315c45}
+.grade-mark[data-mark=extension]{background:#f3eee1;color:#82663b}
+.grade-mark[data-mark=not-primary]{background:#f1f1ed;color:#879087}
+.grade-mark[data-mark=process]{background:#e9edf2;color:#53677a}
+.grade-mark[data-mark=incomplete]{background:#f8e9df;color:#9a5735}
+.grade-mark-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin:9px 1px 2px;color:#748174;font-size:10px}
+.grade-mark-legend span{display:inline-flex;align-items:center;gap:5px}
+.grade-mark-legend b{display:inline-flex;min-width:29px;min-height:20px;align-items:center;justify-content:center;padding:2px 5px;border-radius:6px;background:#f0f3ec;font-size:10px}
+.grade-mark-legend b[data-mark=main]{background:#e4efe5;color:#315c45}
+.grade-mark-legend b[data-mark=extension]{background:#f3eee1;color:#82663b}
+.grade-mark-legend b[data-mark=not-primary]{background:#f1f1ed;color:#879087}
+.grade-mark-legend b[data-mark=process]{background:#e9edf2;color:#53677a}
+.grade-mark-legend b[data-mark=incomplete]{background:#f8e9df;color:#9a5735}
+.grade-load-error{padding:10px 2px}
+.grade-load-error h2{margin:3px 0 8px;font-size:16px;color:#294f47}
+.grade-load-error p{font-size:11px;color:#718071;line-height:1.6}
+@media(max-width:600px){.grade-selector{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.grade-selector button{min-height:40px;font-size:12px}.grade-matrix{min-width:540px}.grade-matrix .grade-pack-heading{min-width:175px;width:175px}.grade-matrix th,.grade-matrix td{padding:8px 7px}.grade-mark-legend{gap:7px 9px}}

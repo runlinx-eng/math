@@ -6,6 +6,8 @@ const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 const html = read("../dist/index.html");
 const space = read("../dist/space.js");
 const css = read("../dist/space.css");
+const sw = read("../dist/sw.js");
+const data = JSON.parse(read("../dist/data/grade-progression.json"));
 
 test("relationship and grade observation share the existing guide panel", () => {
   const guide = html.indexOf('id="network-guide"');
@@ -36,4 +38,37 @@ test("grade observation layout stays within the existing explanation area", () =
   assert.match(css, /\.observation-mode-switch/);
   assert.match(css, /body\[data-observation-mode="grade"\] \.network-guide/);
   assert.match(css, /@media\(max-width:600px\).*observation-mode-switch/s);
+});
+
+test("the matrix is built from the 23 source pack records and their five theme groups", () => {
+  assert.equal(data.packs.length, 23);
+  assert.deepEqual([...new Set(data.packs.map(pack => pack.themeId))], ["numbers", "space", "measure", "patterns", "data"]);
+  assert.deepEqual(["numbers", "space", "measure", "patterns", "data"].map(theme => data.packs.filter(pack => pack.themeId === theme).length), [6, 4, 5, 4, 4]);
+  assert.equal(data.counts.packStagePositionCount, 69);
+  assert.match(space, /gradeProgressionData\.packs/);
+  assert.match(space, /pack\.stageJudgements\?\.\[stage\.id\]/);
+  assert.doesNotMatch(space.slice(space.indexOf("function renderGradeObservation"), space.indexOf("function loadGradeObservation")), /nodeMappings|curriculum\.roles/);
+});
+
+test("six year controls map in adjacent pairs to the same two-year stage", () => {
+  assert.deepEqual(data.primaryStageIds, ["stage-1", "stage-2", "stage-3"]);
+  assert.match(space, /const GRADE_LABELS=Object\.freeze\(\['一年级','二年级','三年级','四年级','五年级','六年级'\]\)/);
+  assert.match(space, /Math\.floor\(\(selectedGrade-1\)\/2\)/);
+  assert.match(space, /当前课程映射精度为两年学段/);
+});
+
+test("incomplete time stage-3 is rendered as 待补充 rather than a dash", () => {
+  const time = data.packs.find(pack => pack.packId === "time");
+  const stage3 = time.stageJudgements["stage-3"];
+  assert.equal(stage3.recordStatus, "incomplete");
+  assert.equal(stage3.mark, null);
+  assert.equal(stage3.markLabel, null);
+  assert.deepEqual(stage3.missingFields, ["mark", "markLabel", "reviewStatus"]);
+  assert.match(space, /recordStatus==='incomplete'/);
+  assert.match(space, /label:'待补充'/);
+});
+
+test("grade runtime files are precached and included in offline readiness", () => {
+  assert.match(sw, /'\.\/grade-progression-model\.js','\.\/data\/grade-progression\.json'/);
+  assert.match(space, /'grade-progression-model\.js','data\/grade-progression\.json'/);
 });
