@@ -3,7 +3,7 @@
   "reviewDate": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "batchId": "B01",
-  "scope": "对两个无解释样板的知识地图节点完成外部课程标准、专业框架和教学研究依据核查；本批不创建解释样板，不修改源节点或关系。",
+  "scope": "对两个无解释样板的知识地图节点完成外部课程标准、专业框架和教学研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
   "method": {
     "rules": [
       "逐项核对源 description、evidence、assessmentPrompt、ageRange 和真实前后关系。",
@@ -20,9 +20,10 @@
     "nationalAcademiesReports": 1,
     "empiricalStudiesOrResearchReports": 4,
     "nodesWithExternalSourcesReviewed": 2,
-    "explanationDraftsCreated": 0,
+    "explanationDraftsCreated": 2,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 2
   },
   "sourceCatalog": [
     {
@@ -149,7 +150,11 @@
         "The spreadsheet faithfully reproduces the data and can answer the original question.",
         "In a changed context, the learner can choose a suitable collection/recording method and identify missing or duplicate records."
       ],
-      "relationshipBoundary": "Preserve the existing hard prerequisite mt_c29FaCTNsx (frequency tables build on tally charts), soft prerequisite mt_X53txVXOcG (spreadsheet recording builds on early digital data tools), and hard successors mt_kxeuXm6EyC and mt_yrvYKSwSRZ. No new dependency is inferred."
+      "relationshipBoundary": "Preserve the existing hard prerequisite mt_c29FaCTNsx (frequency tables build on tally charts), soft prerequisite mt_X53txVXOcG (spreadsheet recording builds on early digital data tools), and hard successors mt_kxeuXm6EyC and mt_yrvYKSwSRZ. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt__yvsKKp3TS",
@@ -194,7 +199,11 @@
         "The learner explains one common feature and one different feature of the two representations.",
         "With a new small data set or a changed pictograph key, the learner can still compare the displays and justify which is easier for a stated question."
       ],
-      "relationshipBoundary": "Preserve the existing hard prerequisites mt_c29FaCTNsx and mt_VhBH8wrFC6, and the hard successor mt_QpJydot2Kh. No new dependency is inferred."
+      "relationshipBoundary": "Preserve the existing hard prerequisites mt_c29FaCTNsx and mt_VhBH8wrFC6, and the hard successor mt_QpJydot2Kh. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     }
   ]
 }
