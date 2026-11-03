@@ -1,4 +1,4 @@
-// Fifty-five-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
+// Sixty-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -31,7 +31,10 @@ const ids=[
   ['statistical-questions','mt_iykH2P5oFq'],
   ['angle-sums','mt_oqziWKry-L'],['three-digit-place-value','mt_aPBzD28_mT'],
   ['probability-complements','mt_3fwYu7imd4'],['linear-equations','mt_QhFEDyIwSO'],
-  ['mean-and-range','mt_XSXnTQoQ4l']
+  ['mean-and-range','mt_XSXnTQoQ4l'],
+  ['cuboid-volume','mt_nTL-owFJTF'],['represent-add-subtract','mt_PgsHGYJMH-'],
+  ['scaled-graphs','mt_r8XnXwRA6g'],['algebraic-notation','mt_KwdjWEmMNo'],
+  ['estimation-check','mt_ilPrU0cbtT']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

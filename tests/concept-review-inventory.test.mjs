@@ -20,6 +20,7 @@ const gitBlobSha=content=>createHash('sha1').update(Buffer.concat([Buffer.from(`
 const newSix=new Set(['mt_dmNvjroCPT','mt_xmmgAzxe5j','mt_IfEgu0X449','mt_PZ909yPrEC','mt_qeZYF6HZ4o','mt_ylXdiVRAYv']);
 const newFive=new Set(['mt_ebQURBOsM5','mt__yvsKKp3TS','mt_NSC3LT_-ch','mt_gC-6JXAG5S','mt_iykH2P5oFq']);
 const secondBatchFirstFive=new Set(['mt_oqziWKry-L','mt_aPBzD28_mT','mt_3fwYu7imd4','mt_QhFEDyIwSO','mt_XSXnTQoQ4l']);
+const secondBatchSecondFive=new Set(['mt_nTL-owFJTF','mt_PgsHGYJMH-','mt_r8XnXwRA6g','mt_KwdjWEmMNo','mt_ilPrU0cbtT']);
 
 function relationIds(edges,nodeId,direction){
   return edges.filter(edge=>direction==='prerequisite'?edge.topicId===nodeId:edge.prerequisiteId===nodeId)
@@ -34,12 +35,13 @@ test('the full review inventory contains every knowledge-map node exactly once',
   assert.equal(inventory.separateMathThinkingNodes.length,50);
   assert.equal(new Set(inventory.nodes.map(node=>node.id)).size,537);
   assert.equal(new Set(inventory.separateMathThinkingNodes.map(node=>node.id)).size,50);
-  assert.equal(inventory.summary.configuredExplanationSamples,55);
-  assert.equal(inventory.summary.notConfigured,482);
+  assert.equal(inventory.summary.configuredExplanationSamples,60);
+  assert.equal(inventory.summary.notConfigured,477);
   assert.equal(inventory.summary.first39FirstPassCalibrated,39);
   assert.equal(inventory.summary.newSixDraftPendingDeepReview,6);
   assert.equal(inventory.summary.secondBatchFirstFiveDraftPendingIndependentReview,5);
-  assert.equal(inventory.summary.secondBatchSecondFiveDraftPendingIndependentReview,0);
+  assert.equal(inventory.summary.secondBatchSecondFiveDraftPendingIndependentReview,5);
+  assert.equal(inventory.summary.secondBatchTotalDraftPendingIndependentReview,10);
   assert.equal(inventory.summary.hasResearchFalse,83);
   assert.equal(inventory.summary.hasResearchFalseWithSample,12);
   assert.equal(inventory.summary.hasResearchFalseNotConfigured,71);
@@ -82,6 +84,7 @@ test('each inventory entry matches its source node and review states',()=>{
       if(newSix.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'new_six_draft_pending_deep_review');
       else if(newFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'first_five_draft_ai_self_checked_pending_independent_review');
       else if(secondBatchFirstFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_first_five_draft_ai_self_checked_pending_independent_review');
+      else if(secondBatchSecondFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_second_five_draft_ai_self_checked_pending_independent_review');
       else assert.equal(record.explanationReview.calibrationStatus,'first_39_first_pass_calibrated');
     }else{
       assert.equal(record.explanationReview.calibrationStatus,'not_started');
@@ -95,6 +98,7 @@ test('research flags and source relation endpoints are accounted for without con
   const researchGapWithoutSamples=knowledge.filter(node=>node.hasResearch===false&&!sampleIds.has(node.id));
   assert.equal(researchGapSamples.length,12);
   assert.ok([...secondBatchFirstFive].every(id=>sourceById.get(id)?.hasResearch===true));
+  assert.ok([...secondBatchSecondFive].every(id=>sourceById.get(id)?.hasResearch===true));
   assert.equal(researchGapWithoutSamples.length,71);
   assert.equal(inventory.summary.hasResearchFalseWithSample,researchGapSamples.length);
   assert.equal(inventory.summary.hasResearchFalseNotConfigured,researchGapWithoutSamples.length);

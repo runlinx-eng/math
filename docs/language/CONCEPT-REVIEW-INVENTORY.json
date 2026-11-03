@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "2596cdf1c638ff2c78b38f0e77d2c732366819a9",
+    "explanationBlobSha": "fa468a0a39bd52068ade98020bf6342663bc65d1",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -25,8 +25,8 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 55,
-    "notConfigured": 482,
+    "configuredExplanationSamples": 60,
+    "notConfigured": 477,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
@@ -45,8 +45,8 @@
     "byType": {
       "PROCEDURAL": {
         "total": 304,
-        "configuredSamples": 19,
-        "notConfigured": 285,
+        "configuredSamples": 20,
+        "notConfigured": 284,
         "hasResearchFalse": 42,
         "hasResearchFalseNotConfigured": 37
       },
@@ -59,22 +59,22 @@
       },
       "REPRESENTATIONAL": {
         "total": 45,
-        "configuredSamples": 12,
-        "notConfigured": 33,
+        "configuredSamples": 14,
+        "notConfigured": 31,
         "hasResearchFalse": 9,
         "hasResearchFalseNotConfigured": 6
       },
       "LANGUAGE": {
         "total": 20,
-        "configuredSamples": 3,
-        "notConfigured": 17,
+        "configuredSamples": 4,
+        "notConfigured": 16,
         "hasResearchFalse": 0,
         "hasResearchFalseNotConfigured": 0
       },
       "META": {
         "total": 12,
-        "configuredSamples": 2,
-        "notConfigured": 10,
+        "configuredSamples": 3,
+        "notConfigured": 9,
         "hasResearchFalse": 4,
         "hasResearchFalseNotConfigured": 3
       }
@@ -83,16 +83,16 @@
       "add": {
         "title": "加法与减法",
         "total": 55,
-        "configuredSamples": 4,
-        "notConfigured": 51,
+        "configuredSamples": 5,
+        "notConfigured": 50,
         "hasResearchFalse": 3,
         "hasResearchFalseNotConfigured": 3
       },
       "algebra": {
         "title": "规律与代数",
         "total": 30,
-        "configuredSamples": 4,
-        "notConfigured": 26,
+        "configuredSamples": 5,
+        "notConfigured": 25,
         "hasResearchFalse": 5,
         "hasResearchFalseNotConfigured": 5
       },
@@ -107,8 +107,8 @@
       "data": {
         "title": "数据与统计",
         "total": 46,
-        "configuredSamples": 11,
-        "notConfigured": 35,
+        "configuredSamples": 12,
+        "notConfigured": 34,
         "hasResearchFalse": 27,
         "hasResearchFalseNotConfigured": 19
       },
@@ -131,16 +131,16 @@
       "measure": {
         "title": "测量",
         "total": 84,
-        "configuredSamples": 7,
-        "notConfigured": 77,
+        "configuredSamples": 8,
+        "notConfigured": 76,
         "hasResearchFalse": 18,
         "hasResearchFalseNotConfigured": 16
       },
       "multiply": {
         "title": "乘法与除法",
         "total": 63,
-        "configuredSamples": 4,
-        "notConfigured": 59,
+        "configuredSamples": 5,
+        "notConfigured": 58,
         "hasResearchFalse": 6,
         "hasResearchFalseNotConfigured": 6
       },
@@ -171,8 +171,8 @@
     },
     "firstFiveDraftPendingIndependentReview": 5,
     "secondBatchFirstFiveDraftPendingIndependentReview": 5,
-    "secondBatchSecondFiveDraftPendingIndependentReview": 0,
-    "secondBatchTotalDraftPendingIndependentReview": 5
+    "secondBatchSecondFiveDraftPendingIndependentReview": 5,
+    "secondBatchTotalDraftPendingIndependentReview": 10
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -183,7 +183,8 @@
     "childUnderstanding": "所有节点当前均未记录真实儿童理解与迁移测试。",
     "firstFiveDraftPendingIndependentReview": "首批5个解释草稿已写入解释模块；独立数学复核和儿童理解测试尚未完成。",
     "secondBatchFirstFiveDraftPendingIndependentReview": "第二批第一组5个已有研究标记的节点已完成来源字段核对、解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。",
-    "secondBatchSecondFiveDraftPendingIndependentReview": "第二批第二组5个已有研究标记的节点已完成来源字段核对、解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。"
+    "secondBatchSecondFiveDraftPendingIndependentReview": "第二批第二组5个已有研究标记的节点已完成来源字段核对、解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。",
+    "secondBatchTotalDraftPendingIndependentReview": "第二批共10个节点已完成解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。"
   },
   "nodes": [
     {
@@ -557,8 +558,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -567,9 +568,9 @@
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "draft_and_review_after_batch_priority",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "second-explanation-batch-2026-11-03-group-2",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -4893,8 +4894,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -4903,9 +4904,9 @@
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "draft_and_review_after_batch_priority",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "second-explanation-batch-2026-11-03-group-2",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -8384,8 +8385,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -8394,9 +8395,9 @@
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "draft_and_review_after_batch_priority",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "second-explanation-batch-2026-11-03-group-2",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -26615,8 +26616,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -26625,9 +26626,9 @@
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "draft_and_review_after_batch_priority",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "second-explanation-batch-2026-11-03-group-2",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {
@@ -30552,8 +30553,8 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested"
@@ -30562,9 +30563,9 @@
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "not_started",
-      "batch": null,
-      "nextAction": "draft_and_review_after_batch_priority",
+      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "batch": "second-explanation-batch-2026-11-03-group-2",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
         "directPrerequisites": [
           {

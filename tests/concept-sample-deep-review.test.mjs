@@ -16,7 +16,7 @@ const researchFalse=new Set(source.nodes.filter(node=>node.hasResearch===false).
 
 test('all 45 samples receive an AI second-pass review without overstating acceptance',()=>{
  assert.equal(sampleReview.records.length,45);
- assert.equal(sampleIds.size,55);
+ assert.equal(sampleIds.size,60);
  assert.ok([...new Set(sampleReview.records.map(record=>record.id))].every(id=>sampleIds.has(id)));
  assert.equal(sampleReview.summary.samplesReviewed,45);
  assert.equal(sampleReview.summary.revisionsApplied,17);
@@ -118,10 +118,10 @@ test('critical second-pass corrections are present in the explanation source',()
  assert.match(CONCEPT_EXPLANATIONS['mt_Jvg8X0N5u0'].example,/三角形底/);
 });
 
-test('sample and research review scope stays separate from the 482 unconfigured explanations',()=>{
+test('sample and research review scope stays separate from the 477 unconfigured explanations',()=>{
  assert.equal(knowledge.length,537);
  assert.equal(sampleIds.size,55);
- assert.equal(knowledge.length-sampleIds.size,482);
+ assert.equal(knowledge.length-sampleIds.size,477);
  assert.ok(researchTriage.records.filter(record=>record.scope==='math_thinking').every(record=>!sampleIds.has(record.id)));
 });
 

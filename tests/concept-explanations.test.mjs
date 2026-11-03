@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,55);
+  assert.equal(samples.length,60);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -249,4 +249,29 @@ test('second-batch first five explanations preserve source-specific mathematical
   assert.match(statistics.example,/平均数是 30÷5＝6.*中位数是 5.*众数是 5.*极差是 11－3＝8/);
   assert.match(statistics.example,/甲班.*中位数是 7.*极差是 9－6＝3.*乙班.*中位数是 8.*极差是 10－5＝5/);
   assert.match(statistics.tryIt,/分别求两组的中位数和极差/);
+});
+
+
+test('second-batch second five explanations preserve source-specific goals and mathematical boundaries',()=>{
+  const volume=conceptHelpFor('mt_nTL-owFJTF');
+  assert.match(volume.definition,/长×宽.*底面积×高.*cm³.*m³.*不规则立体/);
+  assert.match(volume.example,/4×3＝12.*12×5＝60 cm³.*40×20×15＝12000 cm³/);
+  assert.match(volume.counterexample,/58 个 1 cm³.*不是 60 cm³/);
+  assert.match(volume.why,/每一层.*长和宽.*层数.*高/);
+  const representations=conceptHelpFor('mt_PgsHGYJMH-');
+  assert.match(representations.definition,/具体物品、图画.*头脑中的图像/);
+  assert.match(representations.example,/3 个计数片.*2 个.*3＋2＝5.*5 个苹果.*划掉 2 个.*5－2＝3/);
+  assert.match(representations.tryIt,/手指、小物品或图画/);
+  const scaled=conceptHelpFor('mt_r8XnXwRA6g');
+  assert.match(scaled.definition,/一个图形符号.*固定数量.*图例和坐标轴刻度/);
+  assert.match(scaled.example,/每格代表 5 只宠物.*足球.*网球.*20 人.*15 人.*35 票/);
+  assert.match(scaled.tryIt,/每格代表 2 本书.*6 本.*10 本.*4 本/);
+  const algebra=conceptHelpFor('mt_KwdjWEmMNo');
+  assert.match(algebra.definition,/ab.*3y.*a².*a\/b.*b 不能为 0.*系数可以是分数/);
+  assert.match(algebra.example,/3y.*a².*\(1\/2\)x.*a\/b/);
+  assert.match(algebra.counterexample,/3y 不是 3＋y.*a² 不是 2a/);
+  const estimate=conceptHelpFor('mt_ilPrU0cbtT');
+  assert.match(estimate.definition,/近似结果.*精确计算.*精度/);
+  assert.match(estimate.example,/487×23.*500×20＝10000.*487×23＝11201/);
+  assert.match(estimate.tryIt,/198×31.*200×30.*3980÷8/);
 });
