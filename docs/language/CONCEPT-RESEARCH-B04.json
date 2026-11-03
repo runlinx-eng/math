@@ -3,7 +3,7 @@
   "reviewDate": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "batchId": "B04",
-  "scope": "对一个无解释样板的知识地图节点完成课程标准、统计教育指南、政府教学活动与统计教育研究论文核查；本批不创建解释样板，不修改源节点或关系。",
+  "scope": "对一个无解释样板的知识地图节点完成课程标准、统计教育指南、政府教学活动与统计教育研究论文核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
   "method": {
     "rules": [
       "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
@@ -23,9 +23,10 @@
     "researchArticles": 1,
     "curriculumTasks": 1,
     "nodesWithExternalSourcesReviewed": 1,
-    "explanationDraftsCreated": 0,
+    "explanationDraftsCreated": 1,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
   },
   "sourceCatalog": [
     {
@@ -97,7 +98,10 @@
       ],
       "revision": "No explanation sample created in this research pass. Defined the content boundaries and acceptance evidence for a later draft.",
       "remaining": "Explanation drafting, independent mathematics/teaching review and child comprehension testing remain pending.",
-      "independentMathReviewStatus": "not_completed"
+      "independentMathReviewStatus": "not_completed",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "childUnderstandingStatus": "not_tested"
     }
   ]
 }
