@@ -426,6 +426,17 @@ const ids=[
   ['batch3h-01','mt_u5HkSxZECM'],
   ['batch3h-02','mt_eKJG-0eC6D'],
   ['batch3h-03','mt_ESgc4YBw-a']
+,
+  ['batch10i-01','mt_vJUa62bxeR'],
+  ['batch10i-02','mt_e4V6hvcuEJ'],
+  ['batch10i-03','mt_4MFUAsbx_6'],
+  ['batch10i-04','mt_89riIKwGYp'],
+  ['batch10i-05','mt_8H2kO4k2B9'],
+  ['batch10i-06','mt_efOeaGFyGM'],
+  ['batch10i-07','mt_KFKUR_gBg_'],
+  ['batch10i-08','mt_3S10OOGPqu'],
+  ['batch10i-09','mt_hdrMoiTgqu'],
+  ['batch10i-10','mt_REwgr0d_ss']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
