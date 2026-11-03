@@ -3,7 +3,7 @@
   "reviewDate": "2026-11-03",
   "branch": "feat/language-concept-audit-v1",
   "batchId": "B03",
-  "scope": "对一个无解释样板的知识地图节点完成课程标准、课程资源与分数学习研究依据核查；本批不创建解释样板，不修改源节点或关系。",
+  "scope": "对一个无解释样板的知识地图节点完成课程标准、课程资源与分数学习研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
   "method": {
     "rules": [
       "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
@@ -22,9 +22,10 @@
     "governmentTeachingResources": 1,
     "empiricalResearchReports": 1,
     "nodesWithExternalSourcesReviewed": 1,
-    "explanationDraftsCreated": 0,
+    "explanationDraftsCreated": 1,
     "independentMathReviewsCompleted": 0,
-    "childUnderstandingTestsCompleted": 0
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
   },
   "sourceCatalog": [
     {
@@ -119,7 +120,11 @@
         "The learner rejects a picture with eight unequal pieces as a valid model of eighths and explains that the parts must be equal.",
         "The learner keeps the whole fixed when explaining 2/8 = 1/4."
       ],
-      "relationshipBoundary": "Preserve the existing soft prerequisite mt_hyvHv2BCwb (decomposing a shape into more equal shares), hard prerequisite mt_xACS3rWWDp (halves and quarters of shapes), hard successor mt_Jz9UuT8BXW (fractions in time and events), and soft successor mt_k2WE0-22-4 (unit fractions). No new dependency is inferred."
+      "relationshipBoundary": "Preserve the existing soft prerequisite mt_hyvHv2BCwb (decomposing a shape into more equal shares), hard prerequisite mt_xACS3rWWDp (halves and quarters of shapes), hard successor mt_Jz9UuT8BXW (fractions in time and events), and soft successor mt_k2WE0-22-4 (unit fractions). No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     }
   ]
 }
