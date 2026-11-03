@@ -34,7 +34,8 @@ const ids=[
   ['mean-and-range','mt_XSXnTQoQ4l'],
   ['cuboid-volume','mt_nTL-owFJTF'],['represent-add-subtract','mt_PgsHGYJMH-'],
   ['scaled-graphs','mt_r8XnXwRA6g'],['algebraic-notation','mt_KwdjWEmMNo'],
-  ['estimation-check','mt_ilPrU0cbtT']
+  ['estimation-check','mt_ilPrU0cbtT'],
+  ['compare-groups','mt__h7hvT4tEb'],['one-more','mt_sYpKWbq5ra'],['represent-count','mt_pAcaehday5']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

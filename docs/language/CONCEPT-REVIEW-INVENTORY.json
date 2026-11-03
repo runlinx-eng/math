@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "0e1bfa505fd888f05527a859d70e34a7cffd08b3",
+    "explanationBlobSha": "477b807ffe398429a237b9a5c3578d9f173d9bc1",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -25,8 +25,8 @@
     "mathThinkingScope": "50个数学思维节点单独审查，不套用知识点解释模板"
   },
   "summary": {
-    "configuredExplanationSamples": 60,
-    "notConfigured": 477,
+    "configuredExplanationSamples": 63,
+    "notConfigured": 474,
     "first39FirstPassCalibrated": 39,
     "newSixDraftPendingDeepReview": 6,
     "svgSamples": 15,
@@ -52,15 +52,15 @@
       },
       "CONCEPTUAL": {
         "total": 156,
-        "configuredSamples": 19,
-        "notConfigured": 137,
+        "configuredSamples": 21,
+        "notConfigured": 135,
         "hasResearchFalse": 28,
         "hasResearchFalseNotConfigured": 25
       },
       "REPRESENTATIONAL": {
         "total": 45,
-        "configuredSamples": 14,
-        "notConfigured": 31,
+        "configuredSamples": 15,
+        "notConfigured": 30,
         "hasResearchFalse": 9,
         "hasResearchFalseNotConfigured": 6
       },
@@ -99,8 +99,8 @@
       "counting": {
         "title": "数与数量",
         "total": 17,
-        "configuredSamples": 2,
-        "notConfigured": 15,
+        "configuredSamples": 5,
+        "notConfigured": 12,
         "hasResearchFalse": 3,
         "hasResearchFalseNotConfigured": 3
       },
@@ -175,7 +175,8 @@
     "secondBatchTotalDraftPendingIndependentReview": 10,
     "secondBatchAiCrossReviewCompleted": 10,
     "secondBatchAiCrossReviewCorrected": 5,
-    "secondBatchAiCrossReviewNoChange": 5
+    "secondBatchAiCrossReviewNoChange": 5,
+    "localPilotDraftPendingIndependentReview": 3
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -6261,11 +6262,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6427,11 +6429,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6567,11 +6570,12 @@
         "qualifier": null
       },
       "explanationReview": {
-        "status": "not_configured",
-        "calibrationStatus": "not_started",
+        "status": "sample_present",
+        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",

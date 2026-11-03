@@ -1,4 +1,4 @@
-// Sixty source-bound explanation samples, keyed by exact source node ID.
+// Sixty-three source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -571,6 +571,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"不能把估算出的 10000 当成 487×23 的精确答案；也不能只因为估算值接近，就忽略题目对精确程度的要求。",
     tryIt:"先估算 198×31：把 198 看成 200、31 看成 30，得到 200×30≈6000；再精确计算 198×31＝6138，比较两者。还可以估算 3980÷8≈4000÷8＝500。最后判断：如果有人把 198×31 算成 1120，这个结果是否合理？用估算说明理由；再判断精确清点物品数量与粗略规划预算，分别需要精确值还是估算值？",
     why:"把数替换成接近的整十、整百等易算数，能快速得到合理的数量级参考；精确结果若与估算相差很大，常提示运算或数位错误。问题情境决定应使用估算还是精确值。",
+  },
+  'mt__h7hvT4tEb':{
+    formal:'比较两组物品的数量',
+    definition:'比较两组物品的个数，可以逐个配对，也可以分别数出两组的个数；判断哪组多、哪组少，或两组一样多。',
+    simpler:'把两组的东西一对一对地配起来，看有没有哪一组剩下；也可以数完两组再比较。',
+    example:'一组有 6 颗豆子，另一组有 4 颗。每组各拿一颗配对，配成 4 对后，第一组还剩 2 颗，所以第一组多、第二组少。',
+    counterexample:'5 颗豆子排得很散，6 颗排得很紧；长的一排不一定更多，数过或配对才知道这里是 6 颗更多。',
+    tryIt:'摆两组物品：一组 5 个、另一组 5 个，把一组摆得更散。先猜哪组多，再配对或数一数，说说是否一样多；再加 1 个，比较哪组最多、哪组最少。',
+    why:'每个物品恰好配一个伙伴时，两组一样多；配完后只有一组有剩余，这组的个数就更多。'
+  },
+  'mt_sYpKWbq5ra':{
+    formal:'多一个与少一个',
+    definition:'在一组物品中添入 1 个，数量比原来多 1；从非空的一组中拿走 1 个，数量比原来少 1。数数时这分别对应下一个数和上一个数。',
+    simpler:'多放一个，往后数一步；拿走一个，往前数一步。',
+    example:'5 张贴纸再添 1 张是 6 张，6 比 5 多 1；从 6 张中拿走 1 张又是 5 张。',
+    counterexample:'5 个再添 2 个是 7 个，这比原来多 2，不是多 1。',
+    tryIt:'摆 7 个小物品，猜添 1 个有多少，再实际添上检查；然后从 8 个中拿走 1 个，说出少 1 后的数。换成 4 个再试一次。',
+    why:'每添进一个物品只增加一个数量，数数时正好前进一个数；拿走一个则减少一个数量。'
+  },
+  'mt_pAcaehday5':{
+    formal:'用实物、图画和数轴表示数',
+    definition:'同一个数量可以用实物个数、图画中的标记和数字表示；在标有 0 和等距刻度的数轴上，也可以用对应的点表示这个数。',
+    simpler:'同一个数可以摆出来、画出来、写出来，也可以在数轴上找到它的位置。',
+    example:'5 可以摆 5 颗豆子，画 5 个点并写成 5；在从 0 开始、每格代表 1 的数轴上，5 在从 0 出发第 5 格的刻度处。',
+    counterexample:'画 4 个点不能表示 5；数轴上从 0 到 5 是 5 个间隔，不能把起点 0 也当成一个间隔。',
+    tryIt:'用小物品摆出 6，画出相同数量的点，写下数字，并在从 0 开始每格是 1 的数轴上标出 6；说说这几种表示怎样对应。',
+    why:'实物、图画和数字可以表示同一个数量；数轴上的位置由起点和每格所代表的数量共同确定。'
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
