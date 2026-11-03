@@ -96,7 +96,7 @@ test('language documentation agrees with the machine-readable name audit and cur
   assert.ok(explanationPilotEntries.every(entry=>CONCEPT_EXPLANATIONS[entry.id]),
     'all six name-audit explanation pilot nodes must exist in the current explanation module');
 
-  assert.match(termsDoc,/45 个节点完成样板/);
+  assert.match(termsDoc,/50 个节点已有样板或草稿/);
   assert.match(termsDoc,/15 个节点有按概念制作的静态 SVG 图示/);
   assert.doesNotMatch(termsDoc,/35 个节点|11 个节点/);
   assert.match(termsDoc,/84 个展示名修正/);
@@ -126,7 +126,7 @@ test('language documentation agrees with the machine-readable name audit and cur
 const conceptReviewStandard=fs.readFileSync(new URL('../docs/language/CONCEPT-REVIEW-STANDARD.md',import.meta.url),'utf8');
 const conceptPilot=fs.readFileSync(new URL('../docs/language/CONCEPT-PILOT.md',import.meta.url),'utf8');
 
-test('the content review standard and calibration record cover the implemented 45 samples',()=>{
+test('the content review standard and calibration record cover all 50 configured samples',()=>{
   assert.match(conceptReviewStandard,/来源核对/);
   assert.match(conceptReviewStandard,/数学正确/);
   assert.match(conceptReviewStandard,/范围完整/);
@@ -140,6 +140,8 @@ test('the content review standard and calibration record cover the implemented 4
   }
   const researchGaps=samples.filter(([id])=>byId.get(id).hasResearch===false).map(([id])=>id);
   assert.equal(researchGaps.length,12);
+  assert.match(conceptPilot,/第十一批：B01–B04首批5个解释草稿/);
+  assert.match(coverage,/\*\*537\*\* \| \*\*50\*\* \| \*\*487\*\* \| \*\*9\.3%\*\*/);
   for(const id of researchGaps){
     assert.ok(conceptPilot.includes(id),'research-gap list must retain source ID '+id);
   }
