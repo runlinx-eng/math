@@ -7,30 +7,30 @@
     "total": 85,
     "knowledgeMapNodes": 83,
     "mathThinkingNodes": 2,
-    "knowledgeMapWithSamples": 12,
-    "knowledgeMapWithoutSamples": 71,
+    "knowledgeMapWithSamples": 17,
+    "knowledgeMapWithoutSamples": 66,
     "phaseCounts": {
       "2": 2,
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个既有样板已完成外部来源核查和内容修订；B01的2个、B02的1个、B03的1个、B04的1个共5个新增节点已完成外部来源核查、解释初稿和AI自检，独立数学复核待完成；其余71个无样板知识地图节点和2个数学思维节点尚未核查。独立数学复核和儿童理解测试均未完成。",
+    "allPlanStatuses": "7个既有样板和 B01–B05 共10个新增草稿节点已核查部分外部课程或教学来源；66个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
         "total": 9,
-        "withSample": 3,
-        "withoutSample": 6
+        "withSample": 4,
+        "withoutSample": 5
       },
       "PROCEDURAL": {
         "total": 42,
-        "withSample": 5,
-        "withoutSample": 37
+        "withSample": 7,
+        "withoutSample": 35
       },
       "CONCEPTUAL": {
         "total": 28,
-        "withSample": 3,
-        "withoutSample": 25
+        "withSample": 5,
+        "withoutSample": 23
       },
       "META": {
         "total": 4,
@@ -42,14 +42,14 @@
       "add": {
         "title": "Addition & Subtraction",
         "total": 3,
-        "withSample": 0,
-        "withoutSample": 3
+        "withSample": 3,
+        "withoutSample": 0
       },
       "algebra": {
         "title": "Algebra",
         "total": 5,
-        "withSample": 0,
-        "withoutSample": 5
+        "withSample": 2,
+        "withoutSample": 3
       },
       "counting": {
         "title": "Counting & Cardinality",
@@ -106,18 +106,19 @@
         "withoutSample": 1
       }
     },
-    "nodesWithExternalSourcesVerified": 12,
+    "nodesWithExternalSourcesVerified": 17,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
     "nodesWithResearchReviewedWithoutExplanation": 0,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 71,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 66,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
       "B02",
       "B03",
-      "B04"
+      "B04",
+      "B05"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -137,7 +138,8 @@
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
     "sourceRecordsExternallyVerifiedInB04": 1,
-    "nodesWithExplanationDraftsPendingIndependentReview": 5
+    "nodesWithExplanationDraftsPendingIndependentReview": 10,
+    "sourceRecordsExternallyVerifiedInB05": 5
   },
   "records": [
     {
@@ -152,14 +154,22 @@
         "end": 6
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "K.OA"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_biGHAbkoV2",
@@ -173,14 +183,23 @@
         "end": 7
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "1.OA.C.6",
+        "K.OA"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_Eqk6oSbySH",
@@ -194,14 +213,23 @@
         "end": 7
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "1.OA.A.2",
+        "TABLE-3"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_ZjIFGc6zPW",
@@ -215,14 +243,22 @@
         "end": 7
       },
       "phase": 4,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-PATTERNS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_W3VOAuFwVw",
@@ -236,14 +272,22 @@
         "end": 8
       },
       "phase": 4,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-PATTERNS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_zQfWqImxva",

@@ -1,4 +1,4 @@
-// One hundred and forty-nine source-bound explanation samples, keyed by exact source node ID.
+// One hundred and fifty-four source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -1372,6 +1372,51 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"长3宽2都加2得到长5宽4，两条边没有按同一倍数变化。",
     tryIt:"对应边分别是3与6、4与8、5与10的三角形，求从前者到后者的缩放倍数。",
     why:"所有对应长度按同一倍数变化并保持对应角，图形的形状不变。",
+  },
+  "mt_Y6_cq3UMyy":{
+    formal:"用图形表示数量故事",
+    definition:"可以用屏幕圆片、十格框或实物表示10以内的数量故事：增加时添上，减少时取走。",
+    simpler:"让每个圆片代表故事中的一件东西，按故事发生的事情移动它们。",
+    example:"原来4只青蛙，又来了3只；用圆片摆出4个再添3个，一共有7个。",
+    counterexample:"原有9个气球、飞走2个，应该从9个中取走2个，不是再添2个。",
+    tryIt:"用十格框摆出4加3，再用小物品摆一遍，比较总数。",
+    why:"不同材料只要一件对应一个，按同样的数量关系操作，就可以表示同一个故事。",
+  },
+  "mt_biGHAbkoV2":{
+    formal:"借助材料分合与凑十",
+    definition:"可以用屏幕圆片或实物分合数，再借助凑十或拆到十计算20以内的加减。",
+    simpler:"把一部分移到另一边时，数量没有变；凑成十以后再看剩下多少。",
+    example:"8＋5时从5中拿2凑到8得到10，还剩3，所以一共13。",
+    counterexample:"8＋5不能先从5拿走2又把原来的5全部加上，否则这2被算了两次。",
+    tryIt:"把8分成5和3，再分成6和2；用圆片演示15－7先减5再减2。",
+    why:"分合改变的是组成方式，保留每个圆片的数量，才能用更方便的十来计算。",
+  },
+  "mt_Eqk6oSbySH":{
+    formal:"三个数相加的情境题",
+    definition:"当故事要合并三个部分时，可以用物品、图或算式表示三个加数和未知总数。",
+    simpler:"先找清三部分各有多少，再把三部分合起来。",
+    example:"三天摘了3、9、7个苹果：3＋9＋7＝□；先算3＋7＝10，再加9得到19个苹果。",
+    counterexample:"3＋9＝12只合并了两天，不能把12当成三天的总数。",
+    tryIt:"用三段分别表示4支红铅笔、7支蓝铅笔和6支绿铅笔，写出总数并说清单位。",
+    why:"加数可以调整顺序和分组；每一部分都恰好算一次，总数不会改变。",
+  },
+  "mt_ZjIFGc6zPW":{
+    formal:"重复规律中的单元",
+    definition:"重复规律由一个单元按相同顺序一遍遍接成；单元可以用颜色、数字、动作或图形表示。",
+    simpler:"找出从哪里开始重复、每一轮有哪些内容，以及它们的顺序。",
+    example:"红、蓝、蓝、红、蓝、蓝中，红、蓝、蓝是一个重复单元，可以记为ABB。",
+    counterexample:"红、蓝、蓝的单元不是红、蓝；照红、蓝接下去不能得到原来的顺序。",
+    tryIt:"把拍手、跺脚、跺脚用圆、方、方表示，再把这个单元连续排三次。",
+    why:"相同的结构可以换成不同材料：只要每一轮中对应部分和顺序相同，重复关系就保留下来。",
+  },
+  "mt_W3VOAuFwVw":{
+    formal:"按固定变化量排列的数列",
+    definition:"有些数列从一个起点开始，每一步都增加或减少相同的数量；明确起点和变化量就能按规则继续。",
+    simpler:"先找从哪个数开始，再看相邻两项每次增加或减少多少。",
+    example:"约定每次加3：5、8、11、14，下一项是17。",
+    counterexample:"40、35、30、25每次减5；从25往后不是21，而是20。",
+    tryIt:"按每次减5补全40、35、□、25、□、15；再自定起点，造一个每次加2的序列。",
+    why:"相邻两项的差保持不变，便可按约定逐步推算；单凭有限几项还可能编出其他规则。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
