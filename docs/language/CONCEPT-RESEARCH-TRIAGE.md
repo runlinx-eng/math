@@ -6,20 +6,20 @@
 ## 核对结论
 
 - 来源数据中 `hasResearch=false` 共 **85** 个节点，与原研究缺口计划中的 **85 个唯一 ID 完全匹配**，没有漏项或多项。
-- 其中 **83 个属于537个知识地图节点**：7个已有解释样板、76个尚无解释样板。
+- 其中 **83 个属于537个知识地图节点**：12个已有解释样板或草稿、71个尚无解释样板。
 - 另有 **2 个属于50个数学思维节点**，必须单独审查，不混入537个知识点解释任务。
-- 7 个已有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个无样板知识地图节点完成外部来源核查，但解释起草均未开始。其余72个无样板知识地图节点与2个数学思维节点尚未核查；7个已有样板的正式独立数学复核仍未完成。
+- 7 个既有样板已完成外部来源核查并按来源 evidence 修订内容；B01的2个、B02的1个、B03的1个、B04的1个共5个新草稿节点也已完成外部来源核查、解释起草和AI自检，独立数学复核待完成。其余71个无样板知识地图节点与2个数学思维节点尚未核查；12个已有样板或草稿均未完成独立数学复核。
 - 85项都有来源描述与可观察 evidence；这些来源目标可用于确定研究问题，但不能替代专门教学研究记录。
-- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有11个节点完成外部来源核查（7个已有样板、B01两个无样板节点、B02和B03各一个无样板节点），源标记均暂不修改。
+- `hasResearch=false` 的准确含义是：来源 taxonomy 没有该节点的专门 `teaching-research` 记录；不等于证明外部不存在研究资料。当前已有12个节点完成外部来源核查（7个既有样板、B01两个新草稿节点、B02、B03、B04各一个新草稿节点），源标记均暂不修改。
 
 ## 按施工阶段分流
 
 | 原计划阶段 | 数量 | 范围 | 当前状态 |
 |---|---:|---|---|
-| Phase 2 | 2 | B01两个知识地图节点（`mt_ebQURBOsM5`、`mt__yvsKKp3TS`） | B01外部来源核查完成；解释起草未开始 |
-| Phase 4 | 7 | 7个尚无解释样板的知识地图节点 | B02、B03各1个节点已完成外部来源核查；另5个尚未核查，解释起草未开始 |
+| Phase 2 | 2 | B01两个知识地图节点（`mt_ebQURBOsM5`、`mt__yvsKKp3TS`） | B01外部来源核查、解释初稿和AI自检完成；独立数学复核待完成 |
+| Phase 4 | 7 | 7个知识地图节点（B02、B03、B04各1个新草稿节点，另4个未核查） | B02、B03、B04外部来源核查、解释初稿和AI自检完成；其余4个尚未核查 |
 | Phase 5 | 76 | 74个知识地图节点（7个已有样板、67个无样板）及2个数学思维节点 | 7个样板来源已核查；67个无样板知识点与2个数学思维节点尚未核查 |
-| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **11个来源核查完成；74个尚未核查** |
+| **合计** | **85** | **83个知识地图节点 + 2个数学思维节点** | **12个来源核查完成；73个尚未核查** |
 
 ## 83 个知识地图节点：按领域
 
@@ -28,10 +28,10 @@
 | Addition & Subtraction（add） | 3 | 0 | 3 |
 | Algebra（algebra） | 5 | 0 | 5 |
 | Counting & Cardinality（counting） | 3 | 0 | 3 |
-| Data & Statistics（data） | 27 | 5 | 22 |
-| Fractions（fractions） | 1 | 0 | 1 |
+| Data & Statistics（data） | 27 | 8 | 19 |
+| Fractions（fractions） | 1 | 1 | 0 |
 | Geometry（geometry） | 10 | 1 | 9 |
-| Measurement（measure） | 18 | 1 | 17 |
+| Measurement（measure） | 18 | 2 | 16 |
 | Multiplication & Division（multiply） | 6 | 0 | 6 |
 | Number Representation & Place Value（place） | 5 | 0 | 5 |
 | Probability（chance） | 4 | 0 | 4 |
@@ -42,8 +42,8 @@
 | 来源类型 | 缺口数 | 已有样板 | 尚无样板 |
 |---|---:|---:|---:|
 | REPRESENTATIONAL | 9 | 3 | 6 |
-| PROCEDURAL | 42 | 3 | 39 |
-| CONCEPTUAL | 28 | 0 | 28 |
+| PROCEDURAL | 42 | 5 | 37 |
+| CONCEPTUAL | 28 | 3 | 25 |
 | META | 4 | 1 | 3 |
 
 ## 7 个已有样板的研究闸门
@@ -56,7 +56,17 @@
 - `mt_8VjmxR1yfw` 箱线图：外部来源已核查，解释已修订；独立数学复核和 SVG 人工审图待完成。
 - `mt_i2-QaXbyzB` 分割图形求面积：外部来源已核查，解释已修订；独立数学复核和 SVG 人工审图待完成。
 
-## 76 个尚无样板的知识地图节点
+## 2026-11-03 已完成解释初稿的5个节点（B01–B04）
+
+- `mt_ebQURBOsM5` 围绕问题收集数据（B01；PROCEDURAL；8–9岁）：外部来源核查、解释初稿和AI自检完成；独立数学复核待完成。
+- `mt__yvsKKp3TS` 比较两幅统计图（B01；CONCEPTUAL；7–8岁）：外部来源核查、解释初稿和AI自检完成；正式概念采用“同一数据的不同表示”，原始节点名称不变；独立数学复核待完成。
+- `mt_NSC3LT_-ch` 估计容积（B02；PROCEDURAL；9–10岁）：外部来源核查、解释初稿和AI自检完成；独立数学复核待完成。
+- `mt_gC-6JXAG5S` 二分之一、四分之一与八分之一（B03；CONCEPTUAL；7–8岁）：外部来源核查、解释初稿和AI自检完成；独立数学复核待完成。
+- `mt_iykH2P5oFq` 提出统计问题（B04；CONCEPTUAL；11–12岁）：外部来源核查、解释初稿和AI自检完成；独立数学复核待完成。
+
+以上5个节点仍保持来源 `hasResearch=false` 标记；这表示原 taxonomy 未配置专门研究记录，不应在源数据中擅自改写。儿童理解与迁移测试尚未进行。
+
+## 71 个尚无样板的知识地图节点
 
 - `mt_Y6_cq3UMyy` 用数字工具表示数量故事（Addition & Subtraction；REPRESENTATIONAL；Phase 5）
 - `mt_biGHAbkoV2` 用数字工具探索加减（Addition & Subtraction；PROCEDURAL；Phase 5）
@@ -70,9 +80,7 @@
 - `mt_t9BICauBSI` 一眼看出5以内的数量（Counting & Cardinality；CONCEPTUAL；Phase 5）
 - `mt_0ZDouU664X` 分组数大量物品（Counting & Cardinality；PROCEDURAL；Phase 5）
 - `mt_X53txVXOcG` 用数字工具处理数据（Data & Statistics；PROCEDURAL；Phase 5）
-- `mt__yvsKKp3TS` 比较两幅统计图（Data & Statistics；CONCEPTUAL；Phase 2；B01外部来源核查完成，解释起草未开始）
 - `mt_QpJydot2Kh` 选择合适的统计图（Data & Statistics；CONCEPTUAL；Phase 4）
-- `mt_ebQURBOsM5` 围绕问题收集数据（Data & Statistics；PROCEDURAL；Phase 2；B01外部来源核查完成，解释起草未开始）
 - `mt_kxeuXm6EyC` 在引导下开展统计调查（Data & Statistics；META；Phase 5）
 - `mt_yrvYKSwSRZ` 用数字工具收集数据（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_TiFjjvBMaY` 比较图表与数据分布（Data & Statistics；CONCEPTUAL；Phase 5）
@@ -84,14 +92,12 @@
 - `mt_4zgPzc6yu5` 总体、样本与公平抽样（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_KCS9GbZgU_` 四分位数与四分位距（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_O-U263ukg1` 改进统计调查（Data & Statistics；META；Phase 5）
-- `mt_iykH2P5oFq` 提出统计问题（Data & Statistics；CONCEPTUAL；Phase 4）
 - `mt_6gpryAnpoZ` 测量了什么，怎样测量（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_tuEnyrp5Ia` 写出数据结论（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_km4V6d5IAh` 比较两个总体（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_fQ9Rw10fss` 用样本进行估计（Data & Statistics；PROCEDURAL；Phase 5）
 - `mt_A2hKhHXgL5` 两组数据差多少（Data & Statistics；CONCEPTUAL；Phase 5）
 - `mt_x7V1qrkiqH` 不同样本的差异（Data & Statistics；CONCEPTUAL；Phase 5）
-- `mt_gC-6JXAG5S` 二分之一、四分之一与八分之一（Fractions；CONCEPTUAL；Phase 4；B03外部来源核查完成，解释起草未开始）
 - `mt_mN4Ye_vtR7` 物体的形状与用途（Geometry；CONCEPTUAL；Phase 5）
 - `mt_SK7WntVZ6y` 用图形近似表示物体（Geometry；PROCEDURAL；Phase 5）
 - `mt_NM5I3yN-Q6` 旋转对称（Geometry；CONCEPTUAL；Phase 5）
@@ -110,7 +116,6 @@
 - `mt_e7tLi9SCIE` 用更小的单位提高精度（Measurement；CONCEPTUAL；Phase 5）
 - `mt_tVvZVWO5d6` 使用日历（Measurement；PROCEDURAL；Phase 5）
 - `mt_9L5qyBYmg-` 元与分的换算（Measurement；PROCEDURAL；Phase 5）
-- `mt_NSC3LT_-ch` 估计容积（Measurement；PROCEDURAL；Phase 4；B02外部来源核查完成，解释起草未开始）
 - `mt_5bmrA-0pBi` 估计总价（Measurement；PROCEDURAL；Phase 5）
 - `mt_SOM6Imm2sO` 读出刻度之间的数值（Measurement；PROCEDURAL；Phase 5）
 - `mt_Qe2PsFmSAH` 预算与购物选择（Measurement；PROCEDURAL；Phase 5）
