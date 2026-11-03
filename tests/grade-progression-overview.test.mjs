@@ -120,3 +120,9 @@ test("the original guide content remains direct children of the existing grid pa
   assert.match(html, /<div id="observation-mode-switch"[\s\S]*?<strong id="network-view-title"/);
   assert.match(css, /#observation-mode-switch,#grade-observation-view\{grid-column:1\/-1/);
 });
+
+test("the relationship structure controls stay below the added observation-mode row", () => {
+  assert.match(css, /body\[data-world="network"\] \.overview-structure-controls\{top:230px\}/);
+  assert.match(css, /body\[data-observation-mode="grade"\] \.overview-structure-controls\{display:none!important\}/);
+  assert.match(css, /@media\(max-width:600px\)\{body\[data-world="network"\] \.overview-structure-controls\{top:250px\}\}/);
+});

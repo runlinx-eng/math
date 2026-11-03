@@ -753,3 +753,9 @@ body[data-observation-mode="grade"] .network-guide details{display:none}
 /* Keep the new controls as direct grid children so the existing guide layout is preserved. */
 #observation-mode-switch,#grade-observation-view{grid-column:1/-1;min-width:0}
 #observation-mode-switch{width:100%}
+
+/* The added mode row sits above the original guide content; keep its existing
+   structure controls below it, and remove those controls while the matrix is open. */
+body[data-world="network"] .overview-structure-controls{top:230px}
+body[data-observation-mode="grade"] .overview-structure-controls{display:none!important}
+@media(max-width:600px){body[data-world="network"] .overview-structure-controls{top:250px}}
