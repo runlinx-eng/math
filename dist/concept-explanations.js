@@ -1,4 +1,4 @@
-// Sixty-six source-bound explanation samples, keyed by exact source node ID.
+// Sixty-nine source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -625,6 +625,33 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:'一座塔放在书上、另一座放在桌面时，塔顶较高不一定说明这座塔本身更高，要先比较它们各自从底到顶的长度。',
     tryIt:'把两条不同长的带子拉直并对齐一端，判断哪条更长；再把两座塔放在同一平面，判断哪座更高，说明怎样比的。',
     why:'起点对齐后，另一端伸得更远，表示从同一起点到终点的距离更大；同一底面使比较高度的起点一致。'
+  },
+  'mt_7XcCG43ZZW':{
+    formal:'把整体分成两部分',
+    definition:'把一个数量分成两部分，两部分合起来仍是原来的整体；同一个整体可以有不同的分法，部分也可以是 0。',
+    simpler:'总数不变，换一换左右两堆的数量，仍然可以合回原来的数。',
+    example:'5 颗圆片可以分成 1 颗和 4 颗，也可以分成 2 颗和 3 颗，或 0 颗和 5 颗；分别写成 5＝1＋4、5＝2＋3、5＝0＋5。',
+    counterexample:'如果原来只有 5 颗，却分成 2 颗和 4 颗，就多出 1 颗；两部分合起来是 6，不是 5。',
+    tryIt:'把 6 个小物品分成两堆，找出不同分法并写成算式；左右交换算同一对，记得检查有没有一堆是 0。',
+    why:'分堆只是改变每颗物品所在的位置，没有增加或拿走物品，因此两堆合起来的总数不变。'
+  },
+  'mt_C9ZfT-4cgn':{
+    formal:'乘法交换律',
+    definition:'两个数相乘，交换因数的顺序，积不变：a×b＝b×a。除法一般不能这样交换被除数和除数。',
+    simpler:'乘法里交换两个数，得到的总数一样；除法不能照搬这条规律。',
+    example:'3 行每行 5 颗，共 3×5＝15 颗；把同一阵列转一转，变成 5 行每行 3 颗，5×3＝15。知道 3×8＝24，也能知道 8×3＝24。',
+    counterexample:'12÷3＝4，而 3÷12＝1/4；交换除法中两个数后，这两个结果不相等。',
+    tryIt:'摆出 2 行每行 4 颗，先写乘法算式，再转动阵列并写出另一算式，比较颗数；再比较 8÷2 与 2÷8。',
+    why:'转动阵列只改变行和列的方向，没有增减物品，因而总数相同；具体故事中的组数与每组数量仍要按题意区分。'
+  },
+  'mt_fR0UtsSREU':{
+    formal:'0 到 20 的数字读写与数量',
+    definition:'0 到 20 的每个数都可以用数字写出，读出它的数名，也可以用相应数量的物品表示；0 表示没有物品。',
+    simpler:'看到数字，说出这个数；看到一堆东西，数清后写出表示它有多少的数字。',
+    example:'17 读作十七，可以用 1 个十和 7 个一表示；没有珠子写作 0；20 读作二十，可以用 2 个十表示。',
+    counterexample:'17 和 71 的数字相同但位置不同，表示的数量不同；71 也不在 0 到 20 的范围内。',
+    tryIt:'先看数字 14，说出它的读法并摆出相应物品；再请别人说一个 0 到 20 的数，你写出数字并用物品核对。',
+    why:'数字记录的是数出来的总量；十位表示几个十，个位表示几个一，位置改变会改变数字代表的数量。'
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;

@@ -36,7 +36,8 @@ const ids=[
   ['scaled-graphs','mt_r8XnXwRA6g'],['algebraic-notation','mt_KwdjWEmMNo'],
   ['estimation-check','mt_ilPrU0cbtT'],
   ['compare-groups','mt__h7hvT4tEb'],['one-more','mt_sYpKWbq5ra'],['represent-count','mt_pAcaehday5'],
-  ['half','mt_-hTTat0mBR'],['plane-shapes','mt_KJeEeTutJI'],['compare-lengths','mt_uhuxX8sg9f']
+  ['half','mt_-hTTat0mBR'],['plane-shapes','mt_KJeEeTutJI'],['compare-lengths','mt_uhuxX8sg9f'],
+  ['number-parts','mt_7XcCG43ZZW'],['multiply-commutes','mt_C9ZfT-4cgn'],['write-twenty','mt_fR0UtsSREU']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

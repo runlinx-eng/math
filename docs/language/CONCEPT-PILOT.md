@@ -475,3 +475,7 @@
 ## 本地第二小批：3 个节点（2026-11-03）
 
 `mt_-hTTat0mBR`（二分之一）、`mt_KJeEeTutJI`（平面图形）、`mt_uhuxX8sg9f`（比较长度与高度）；来源与边界详见 [本批记录](CONCEPT-LOCAL-BATCH2-2026-11-03.md)。
+
+## 本地第三小批：3 个节点（2026-11-03）
+
+`mt_7XcCG43ZZW`（分成两部分）、`mt_C9ZfT-4cgn`（乘法交换律）、`mt_fR0UtsSREU`（20以内数的读写）；来源与边界详见 [本批记录](CONCEPT-LOCAL-BATCH3-2026-11-03.md)。
