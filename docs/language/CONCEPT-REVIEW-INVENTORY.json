@@ -176,7 +176,8 @@
     "secondBatchAiCrossReviewCompleted": 10,
     "secondBatchAiCrossReviewCorrected": 5,
     "secondBatchAiCrossReviewNoChange": 5,
-    "localPilotDraftPendingIndependentReview": 3
+    "localPilotDraftPendingIndependentReview": 3,
+    "localPilotAiRechecked": 3
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -6263,11 +6264,13 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "local_pilot_ai_rechecked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested",
-        "aiSelfCheckStatus": "completed"
+        "aiSelfCheckStatus": "completed",
+        "aiRecheckStatus": "completed",
+        "aiRecheckRecord": "docs/language/CONCEPT-LOCAL-PILOT-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6430,11 +6433,13 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "local_pilot_ai_rechecked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested",
-        "aiSelfCheckStatus": "completed"
+        "aiSelfCheckStatus": "completed",
+        "aiRecheckStatus": "completed",
+        "aiRecheckRecord": "docs/language/CONCEPT-LOCAL-PILOT-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
@@ -6571,11 +6576,13 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "local_pilot_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "local_pilot_ai_rechecked_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
         "childUnderstandingStatus": "not_tested",
-        "aiSelfCheckStatus": "completed"
+        "aiSelfCheckStatus": "completed",
+        "aiRecheckStatus": "completed",
+        "aiRecheckRecord": "docs/language/CONCEPT-LOCAL-PILOT-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",

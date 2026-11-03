@@ -82,7 +82,7 @@ test('each inventory entry matches its source node and review states',()=>{
     assert.ok(auditById.has(node.id),'name audit entry exists: '+node.id);
     assert.equal(record.displayName,auditById.get(node.id).display||node.title);
     if(sampleIds.has(node.id)){
-      if(localPilot.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_pilot_draft_ai_self_checked_pending_independent_review');
+      if(localPilot.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'local_pilot_ai_rechecked_pending_independent_review');
       else if(newSix.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'new_six_draft_pending_deep_review');
       else if(newFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'first_five_draft_ai_self_checked_pending_independent_review');
       else if(secondBatchFirstFive.has(node.id))assert.equal(record.explanationReview.calibrationStatus,'second_batch_first_five_ai_cross_review_completed_pending_independent_review');
