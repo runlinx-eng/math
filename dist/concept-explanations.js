@@ -1,4 +1,4 @@
-// Four hundred and eleven source-bound explanation samples, keyed by exact source node ID.
+// Four hundred and seventeen source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3730,6 +3730,60 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"(1/3)÷4不是4/3：原来的1/3被分小了，而不是增加到4倍。",
     tryIt:"把一条表示1/6的长度平均分成3份，并用乘法检查每份。",
     why:"原整体保持不变；将原有部分等分后，各组之和仍等于原来的部分。",
+  },
+  "mt_rCMdwG-YOE":{
+    formal:"单位分数与整数的两种除法",
+    definition:"单位分数与整数相除，可以是把一部分平均分享，也可以是数一个整体数量中有多少小份。",
+    simpler:"先看题目要找每人分多少，还是能分成多少份。",
+    example:"1/2千克平均分给3人，每人1/6千克；2杯按每份1/3杯分，可分6份。",
+    counterexample:"(1/2)÷3和2÷(1/3)问的是不同问题，不能只看都出现分数就用同一个答案。",
+    tryIt:"把1/4平均分成2份；再想一想2个整体各含几个1/4。",
+    why:"平均分享求每组的量，按份分装求组数；两者都可用乘法检查。",
+  },
+  "mt_4Km38F4L-6":{
+    formal:"分数表示除法",
+    definition:"分数a/b可以表示a除以b，b不为0；在等分情境中，它表示a个整体平均分给b份中每份的量。",
+    simpler:"把每个整体都平均分成b份，每组从每个整体各得到一份。",
+    example:"3个整体平均分给4人，每人3/4个；3/4×4＝3。",
+    counterexample:"3÷4与4÷3不同：前者是把3个整体平均分给4人。",
+    tryIt:"把50千克平均分给9人，先每人分5千克，再把余下的平均分。",
+    why:"每一份由各个整体中相同大小的小份组成；所有人的份额合起来回到总量。",
+  },
+  "mt_e7filQgayF":{
+    formal:"分数应用题的估算与计算",
+    definition:"同一整体的分数可以通分后相加；先用0、1/2或1作参照可以估计结果范围。",
+    simpler:"先确定各部分属于同一个整体，再把它们换成相同大小的小份相加。",
+    example:"同一张披萨吃了2/5和1/3，共吃11/15张。",
+    counterexample:"2/5＋1/2不能把分子分母分别相加得到3/7：两部分的和应大于1/2。",
+    tryIt:"先估计2/5＋1/3在0、1/2和1之间的位置，再算准确和。",
+    why:"估计帮助检查数量关系，准确求和还需要处理分数单位。",
+  },
+  "mt_VKW8lOcFaw":{
+    formal:"乘法中的放大和缩小",
+    definition:"正数乘大于1的正数会变大，乘介于0和1之间的数会变小，乘1保持不变。",
+    simpler:"先把倍数和1比较，再结合原来的数是否为正判断变化。",
+    example:"7×3/4比7小；3/4×2/2仍等于3/4。",
+    counterexample:"原数为0时乘任何数仍是0；原数为负时，不能直接套用正数变大变小的说法。",
+    tryIt:"在长度模型中比较7、7的3/4和7的5/3。",
+    why:"小于1的正倍数取原量的一部分，大于1的正倍数取超过一份；乘1不改变值。",
+  },
+  "mt_AabJisinfi":{
+    formal:"分数乘分数",
+    definition:"分数乘分数可以表示取一个分数量的指定部分，也可以用面积模型表示。",
+    simpler:"先在一个方向取若干等份，再在另一方向取若干等份，看重合的部分。",
+    example:"2/3×4/5＝8/15；3/4×2/3＝6/12＝1/2。",
+    counterexample:"相乘时不能把分母相加：3/4×2/3不是6/7。",
+    tryIt:"把单位矩形分成3列5行，选2列和4行，数重合的小块。",
+    why:"两个方向的等分共同决定小块占整个矩形的比例；重合块的数量决定所取面积。",
+  },
+  "mt_lvaSGHwvQ5":{
+    formal:"在生活情境中乘分数",
+    definition:"分数乘法可用于按倍数调整配方或长度；先估范围，再算准确结果并保留单位。",
+    simpler:"先看一份是多少，再看需要几份；半份也要按同样比例计算。",
+    example:"一份配方用2又1/3杯，做1又1/2份需要3又1/2杯。",
+    counterexample:"做1又1/2份不能只加1/2杯：半份指的是原配方用量的一半。",
+    tryIt:"估一估一份用2又1/3杯、做1又1/2份会用多少杯，再计算核对。",
+    why:"每一份按相同用量增加；估算能检查范围，不能代替准确计算。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
