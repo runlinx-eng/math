@@ -185,7 +185,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(mobileNodeList.left>=mobileNodeList.panelLeft-1&&mobileNodeList.right<=mobileNodeList.panelRight+1&&mobileNodeList.scrollWidth<=mobileNodeList.clientWidth&&mobileNodeList.itemsFit,'mobile node-level details fit the guide panel without horizontal overflow');
   await page.screenshot({path:path.join(out,'mobile-grade-node-list.png'),fullPage:false});
 
-  check(errors.length===0,'no browser JavaScript exceptions');
+  check(errors.length===0,'no browser JavaScript exceptions: '+JSON.stringify(errors));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(error){
