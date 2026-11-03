@@ -51,7 +51,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "在具体情境中用加法或减法解决10以内的数量问题，直接对应第一学段的四则运算意义和生活情境问题。",
+        "scopeBoundary": "10以内是基础练习范围，不是学段内容上限。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_OvyoRo47K-",
@@ -69,7 +86,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "把两组数量合起来求总量，是理解加法意义和初步加法模型的基础，第一学段明确要求在具体情境中理解四则运算意义。",
+        "scopeBoundary": "标准支持加法意义，但没有要求只用某一种实物操作方式。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_e8CZ7E5qW7",
@@ -87,7 +121,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "根据一个数求补数、凑成10，是20以内加减法的重要数事实基础，与第一学段熟练口算20以内加减法相连。",
+        "scopeBoundary": "节点标题写“9以内数的分与合”，但描述实际要求“凑成10”；本轮按描述映射，并将标题与目标不一致列为内容审查问题。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_7XcCG43ZZW",
@@ -105,7 +155,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "把10以内的数拆成不同的两部分，支持理解数的组成、加减意义及20以内计算。",
+        "scopeBoundary": "课标没有将所有数的拆分组合逐项列为独立条目；应作为数与运算的基础理解。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PgsHGYJMH-",
@@ -123,7 +189,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "用实物、图画或头脑表象表示加减情境，是第一学段理解加减意义、探索算理的合理学习方式。",
+        "scopeBoundary": "这些表示方法是教学支架，不是国家标准要求的固定工具清单。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zuKAX6lcYR",
@@ -141,7 +224,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "从一个集合中拿走或分开一部分，理解剩余数量，是第一学段减法意义的直接情境基础。",
+        "scopeBoundary": "减法还包括比较和求差等意义；不能把减法仅解释为拿走。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mr_Vk7FGzK",
@@ -159,7 +259,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "20以内一位数、两位数加减及0的参与，属于第一学段整数加减法和20以内口算要求。",
+        "scopeBoundary": "课标明确要求熟练口算20以内加减；本节点的具体题型范围是基础练习集合。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_VAWV_l7J0D",
@@ -177,7 +293,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "20以内一步加减应用题和未知数问题，直接对应第一学段在熟悉生活情境中运用数与运算解决简单问题。",
+        "scopeBoundary": "复杂多步问题不由本节点的单步描述覆盖。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ghF3Vv6taM",
@@ -195,7 +328,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "5以内加减熟练度是第一学段熟练口算20以内加减法的基础子集。",
+        "scopeBoundary": "标准规定的是20以内口算能力，不单独规定5以内的限时速度。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_s2mfRBoTal",
@@ -214,7 +363,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "20以内加法事实及相关减法事实属于第一学段熟练口算要求；相关数事实可继续支持第二学段整数运算。",
+        "scopeBoundary": "节点标题和描述较宽，第二学段是复用与迁移，不表示必须重新学习同一组基础事实。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Y6_cq3UMyy",
@@ -232,7 +400,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "用虚拟计数物和十框呈现10以内加减故事，数学目标对应第一学段的加减意义和具体情境问题。",
+        "scopeBoundary": "屏幕工具和数字材料不是课标指定平台；评价应看数学理解而非软件操作。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_8RmpkDxT9L",
@@ -250,7 +435,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "理解加号、减号和等号在算式中的作用，支持第一学段理解四则运算意义和数的关系。",
+        "scopeBoundary": "课标明确说明小于、等于、大于等符号含义；加减运算符号的教学细节不应扩大为形式化代数要求。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_biGHAbkoV2",
@@ -268,7 +469,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "借助虚拟或实物材料拆分数并运用凑十策略计算20以内加减，直接服务第一学段的20以内口算与算理探索。",
+        "scopeBoundary": "虚拟材料只是媒介；凑十策略是合理方法，不是唯一算法。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_I5j1ZWo2cn",
@@ -286,7 +503,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "两位数与整十数的口算属于第一学段简单百以内加减法能力的具体表现。",
+        "scopeBoundary": "课标未单独规定所有整十数加减题型或口算速度。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Zx1xZM-RbX",
@@ -304,7 +537,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "三个一位数相加并灵活分组，属于第一学段20以内加减法及简单运算策略的拓展练习。",
+        "scopeBoundary": "课标没有单独列出三个一位数相加的固定任务；总和和难度应保持在学段适宜范围。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_UQnAFPs83F",
@@ -323,7 +572,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "两位数之间的加减运算属于第一学段会计算两位数和三位数加减法的明确范围。",
+        "scopeBoundary": "具体表征可由实物、图画逐步过渡到算式；标准没有限定单一方法。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_glPPG-kTQY",
@@ -342,7 +607,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "百以内加法及按数位拆分计算，符合第一学段简单百以内加减口算和两位数计算要求。",
+        "scopeBoundary": "本节点只描述加法；不应将它当作完整加减法内容。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_PpWSHA-0kv",
@@ -360,7 +641,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "数数向前或向后可作为理解加法、减法和数序关系的策略，支持第一学段整数加减法学习。",
+        "scopeBoundary": "计数策略是方法，不是课程标准要求学生对所有题目都采用的算法。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_m1W6nTQJ2b",
@@ -378,7 +675,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "20以内加减法及凑十、拆分等策略，直接对应第一学段熟练口算20以内加减法和探索算理算法。",
+        "scopeBoundary": "课标关注正确理解算理与掌握算法，不应把速度作为唯一标准。",
+        "reviewBatch": "05a-addition-subtraction-foundations",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QCgbiVrwnp",
@@ -396,7 +709,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "加法交换律在第二学段被明确列为应探索并理解的运算律；第一学段可通过具体算例感受加数交换后和不变。",
+        "scopeBoundary": "第一学段只宜作直观经验，不宜要求形式化命名或证明；减法不可交换的辨析属于概念边界。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ezc2m_0dzN",
@@ -414,7 +746,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "把减法转化为求未知加数，利用减法是加法逆运算的关系，符合第一学段学业要求；更复杂未知数情境可延伸到第二学段。",
+        "scopeBoundary": "课标明确减法与加法的逆运算关系，但未规定所有未知数位置或符号形式。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__we2TDqnJx",
@@ -432,7 +784,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "10以内加减熟练计算是20以内口算能力的基础组成。",
+        "scopeBoundary": "标准对学段结束的要求是熟练口算20以内，不单独设置10以内计时指标。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3e_PQxwC12",
@@ -451,7 +819,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "20以内加减事实的熟练掌握直接对应第一学段要求；将已知事实迁移到整十数和百以内可继续发展。",
+        "scopeBoundary": "“派生事实到100”是扩展应用，不代表第一学段要求所有百以内加减事实都达到同样熟练程度。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_T76hKqXf0z",
@@ -469,7 +856,26 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "加法结合律在第二学段被明确列出；第一学段可在具体计算中体验先凑成10等分组策略。",
+        "scopeBoundary": "第一学段不要求形式化命名结合律；本节点描述的三数分组与运算律理解需区分层次。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ehGS_uVSJv",
@@ -488,7 +894,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "减法是加法的逆运算是第一学段明确的学业要求；第二学段继续用于更复杂运算和问题检查。",
+        "scopeBoundary": "逆运算关系的理解不等于掌握所有未知数方程或复杂代数变形。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_AKAtWEwpcj",
@@ -506,7 +931,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "两位数加减一位数的口算属于第一学段简单百以内数加减口算和两位数计算范围。",
+        "scopeBoundary": "是否需要借位、进位及具体策略应按任务难度分别说明。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_wzAZ8qFDc4",
@@ -524,7 +965,27 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "用口算和笔算解决数、数量与测量情境问题，第一学段覆盖简单生活问题和两、三位数加减；第二学段延伸到更复杂实际问题。",
+        "scopeBoundary": "节点未限定数域和步骤数，映射为跨学段；英镑示例应本地化为人民币或中性数量情境。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HJTuIGHvcR",
@@ -542,7 +1003,23 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "整十数之间的减法属于第一学段简单百以内加减口算和数位计算的具体练习。",
+        "scopeBoundary": "课标没有单列整十数减法这一固定题型。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Eqk6oSbySH",
@@ -560,7 +1037,24 @@
         "lower-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY"
+        ],
+        "rationale": "三个数相加、用符号表示未知总量并解释生活情境，符合第一学段的20以内口算与简单情境问题。",
+        "scopeBoundary": "本节点的总和限制在20以内；不代表第一学段所有应用题都限制为三个加数。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_3JgrHY221M",
@@ -580,7 +1074,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "在加减算式中确定未知数，基础形式可通过第一学段简单数量关系和减法逆运算建立；更复杂的数位和情境问题延伸到第二学段。",
+        "scopeBoundary": "节点跨多个年龄范围，且课标未把所有未知数位置作为独立清单；不等同于形式化方程求解。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oIzycTBeE4",
@@ -600,7 +1114,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "第一学段建立等号表示相等关系的基础；第二学段通过“等量的等量相等”等内容，进一步理解两边关系和判断等式。",
+        "scopeBoundary": "标准中的数相等符号理解，不自动等同于对任意复杂等式进行变形；本节点的非标准形式需结合教材复核。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_SrrsLiJkr3",
@@ -619,7 +1152,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "三位数以内的加减计算属于第一学段明确的学业要求，竖式是对数位对齐和算理的规范表达方式。",
+        "scopeBoundary": "标准要求能计算两位数和三位数加减法，但未规定所有题目都必须采用竖式或同一种书写格式。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_TiQbi027PE",
@@ -638,7 +1187,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "多个两位数相加涉及数位拆分与加法结合律；第一学段可处理三位数加减基础，第二学段对运算律和多步计算作更系统理解。",
+        "scopeBoundary": "课标没有单列四个两位数相加的任务；本节点主要是运算策略练习。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_zxST3MarI9",
@@ -657,7 +1225,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "解释加减策略与数位、运算性质之间的关系，第一学段重在理解算理，第二学段明确探索并理解加法交换律和结合律。",
+        "scopeBoundary": "第一学段重在具体操作和直观说明；形式化概括运算律主要放在第二学段。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ewmuMMPAzP",
@@ -676,7 +1263,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "1000以内加减属于第一学段三位数加减法的数域，第二学段在更大整数运算和混合运算中继续使用位值与算法。",
+        "scopeBoundary": "标准明确要求计算三位数加减，但未逐项指定1000以内所有进退位组合或必须使用具体材料。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_QaYfeVL-0C",
@@ -696,7 +1302,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "第一学段已涉及减法逆运算与生活问题；第二学段明确要求结合实际情境估算；第三学段继续在更复杂真实情境中选择估算方法。",
+        "scopeBoundary": "节点混合估算、取整和逆运算检查，不能把所有舍入精度或检查方式视为某一学段统一必学项目。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_cChv2j_-Da",
@@ -715,7 +1343,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "100以内加减熟练运算属于第一学段简单百以内口算和两位数加减要求。",
+        "scopeBoundary": "标准没有规定所有100以内算式都需达到相同速度；应同时关注策略选择和算理。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt__t4afSyZRm",
@@ -734,7 +1378,23 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1"
+        ],
+        "roles": {
+          "stage-1": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER"
+        ],
+        "rationale": "20以内加减及一位数加法事实的熟练掌握，是第一学段学业要求的明确内容。",
+        "scopeBoundary": "标准未规定统一的3秒答题时限；限时速度不应替代理解和正确性。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_oDU_8zMZjp",
@@ -753,7 +1413,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "三位数加减一位数依赖数位和进退位理解，属于第一学段三位数加减能力的具体应用；第二学段继续扩展。",
+        "scopeBoundary": "课标要求能计算三位数加减，但未把“心算三位数加减一位数”列为独立速度指标。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_xPqczp7zPX",
@@ -772,7 +1451,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "三位数加减整百数是数位和计数单位的直接应用，落在第一学段三位数加减的范围内。",
+        "scopeBoundary": "标准没有逐项规定只加减整百数的心算题型；重点是位值理解。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_aHQ9kNt3is",
@@ -791,7 +1489,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "三位数加减整十数使用十位计数单位关系，属于第一学段三位数加减的具体练习。",
+        "scopeBoundary": "进位或跨百时不一定只有十位数字变化，解释必须覆盖数位进位边界。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_XuHmIn2xje",
@@ -811,7 +1528,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "加减未知数基础题与第一学段简单数量关系、减法逆运算相连；多位数和多步骤问题可延伸至第二学段。",
+        "scopeBoundary": "节点未规定未知数位置和数域；复杂多步形式不能全部归为第一学段核心。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_19j_5AuuQI",
@@ -830,7 +1567,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "用数轴表示整数及100以内加减的变化，可作为第一学段数与运算的直观表征，第二学段可扩展到更大数和更复杂运算。",
+        "scopeBoundary": "课标未将数轴加减图明确列为第一学段的独立学业要求；数轴图是理解策略，不是唯一算法。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_yTWxkzzoOZ",
@@ -849,7 +1605,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY"
+        ],
+        "rationale": "第一学段要求在熟悉生活情境中解决简单加减问题；第二学段进一步运用数量关系解决实际问题，因此两步、未知数位置变化的问题以第二学段为主要观察范围。",
+        "scopeBoundary": "标准未把“100以内两步题”作为统一固定边界；具体题目应按步骤数、数域和阅读负担判断。",
+        "reviewBatch": "05b-addition-subtraction-strategies",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_mpS-JK_p_m",
@@ -868,7 +1643,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "四位数加减超出第一学段明确的两位数、三位数计算范围，第二学段万以上数和整数四则运算为其提供课程承接。",
+        "scopeBoundary": "课标没有单独规定所有四位数竖式进退位算法；具体算法难度需结合教材实施。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_HFRYjTb-Z5",
@@ -886,7 +1680,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2"
+        ],
+        "roles": {
+          "stage-1": "main",
+          "stage-2": "extension"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S1-NUMBER",
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "1000以内加减属于第一学段三位数加减的明确范围；第二学段继续发展运算策略和整数混合运算。",
+        "scopeBoundary": "标准要求能计算三位数加减，不等于规定统一的流利度时间标准。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_CDa5AVakLE",
@@ -905,7 +1718,29 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-1": "extension",
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S1-QUANTITY",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "第一学段处理简单生活情境，第二学段运用四则运算和常见数量关系解决实际问题，第三学段进一步处理较复杂真实问题。",
+        "scopeBoundary": "两步加减问题不是国家课标单独规定的统一年级标签，须结合数域和情境复杂度。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_anAe11HAEH",
@@ -923,7 +1758,26 @@
         "middle-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "用字母表示未知数量关系与第二学段探索数量关系、第三学段用字母表达关系和等式基本性质相关。",
+        "scopeBoundary": "示例3×n+5=26涉及多步代数求解，课标没有将此类两步方程作为小学统一要求；应视作第三学段拓展并保留初中衔接可能。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_-F_Lv_apzH",
@@ -942,7 +1796,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "五位数加减及多步骤实际问题建立在第二学段万以上数和整数运算基础上，较复杂真实情境的问题解决可延伸到第三学段。",
+        "scopeBoundary": "标准没有逐项规定五位数三步应用题；节点难度应按步骤数、数域和情境要求拆分理解。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_G3sVFQNCme",
@@ -961,7 +1835,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "在实际问题中估算并检查答案，第二学段明确要求选择合适单位估算；第三学段继续提高复杂情境中的估算判断。",
+        "scopeBoundary": "课标强调合理选择估算方法，没有统一规定某一舍入精度或要求所有计算都必须先四舍五入。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_Yw1_4Nfsql",
@@ -980,7 +1873,23 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2"
+        ],
+        "roles": {
+          "stage-2": "main"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER"
+        ],
+        "rationale": "多位整数的加减算法可建立在第二学段万以上数、整数运算和运算律基础上。",
+        "scopeBoundary": "标准没有逐项规定“超过四位数”的标准竖式流利度或特定最大位数，属于课程要求范围内的算法扩展。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_MWXPiaTnEu",
@@ -999,7 +1908,27 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "conceptual",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "大数心算依赖第二学段万以上数和数位理解；更复杂的估算与数量关系可在第三学段继续发展。",
+        "scopeBoundary": "标准没有明确列出45,000+8,000等所有心算题型；重点是数位和合理策略，不设统一速度门槛。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_M1tnXqmYbn",
@@ -1017,7 +1946,28 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "main",
+          "stage-3": "extension"
+        },
+        "evidenceLevel": "adjacent",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S2-QUANTITY",
+          "CN-MATH-2022-S3-NUMBER",
+          "CN-MATH-2022-S3-QUANTITY"
+        ],
+        "rationale": "千万级整数属于第二学段万以上数的延伸；小数加减和较复杂真实问题与第三学段小数运算、问题解决相连。",
+        "scopeBoundary": "节点把千万级整数、小数和多步情境合并，覆盖不同内容层次；标准没有把所有这些任务规定为同一阶段的单一要求。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_JH_6RpNWjr",
@@ -1035,7 +1985,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-2",
+          "stage-3"
+        ],
+        "roles": {
+          "stage-2": "extension",
+          "stage-3": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S2-NUMBER",
+          "CN-MATH-2022-S3-NUMBER"
+        ],
+        "rationale": "第二学段明确要求一位小数加减；第三学段明确要求简单小数四则运算，因此小数加减到百分位的策略以第三学段为主要映射。",
+        "scopeBoundary": "标准未以“百分位”为统一终点，也没有规定所有小数运算必须采用同一笔算算法。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_9QzSnn8m80",
@@ -1053,7 +2022,26 @@
         "upper-primary"
       ],
       "mappingStatus": "age-based-candidate-only",
-      "needsChinaCurriculumReview": true
+      "needsChinaCurriculumReview": true,
+      "chinaCurriculumMapping": {
+        "stages": [
+          "stage-3",
+          "beyond-primary"
+        ],
+        "roles": {
+          "stage-3": "extension",
+          "beyond-primary": "main"
+        },
+        "evidenceLevel": "direct",
+        "standardReferences": [
+          "CN-MATH-2022-S3-QUANTITY",
+          "CN-MATH-2022-S4-NUMBER"
+        ],
+        "rationale": "第三学段在具体情境中认识负数及其相反意义；正负整数在数轴上运算和负数加减法则属于第四学段有理数内容。",
+        "scopeBoundary": "小学映射仅覆盖情境中的负数认识，不覆盖对任意整数进行正负加减运算；节点整体应标注初中衔接。",
+        "reviewBatch": "05c-addition-subtraction-advanced",
+        "reviewStatus": "ai-first-pass-needs-independent-review"
+      }
     },
     {
       "id": "mt_ZjIFGc6zPW",
@@ -11219,10 +12207,34 @@
         "status": "ai-first-pass-complete",
         "date": "2026-11-03",
         "note": "核对小数位值、负数、绝对值、数轴、乘方、根式、近似数和数集；明确小学负数仅为情境意义，绝对值与系统有理数内容属于初中。"
+      },
+      {
+        "id": "05a-addition-subtraction-foundations",
+        "domain": "Addition & Subtraction",
+        "nodeCount": 20,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "加减法意义、数的分合、10/20以内运算、生活故事和基础表征。"
+      },
+      {
+        "id": "05b-addition-subtraction-strategies",
+        "domain": "Addition & Subtraction",
+        "nodeCount": 20,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "口算笔算、运算策略、运算律、逆运算、未知数、数轴与应用问题。"
+      },
+      {
+        "id": "05c-addition-subtraction-advanced",
+        "domain": "Addition & Subtraction",
+        "nodeCount": 15,
+        "status": "ai-first-pass-complete",
+        "date": "2026-11-03",
+        "note": "三位数以上加减、估算、多步问题、小数运算及正负数衔接。"
       }
     ],
-    "completedNodeCount": 74,
-    "pendingNodeCount": 463,
+    "completedNodeCount": 129,
+    "pendingNodeCount": 408,
     "excludedThinkingNodeCount": 50,
     "status": "partial"
   }
