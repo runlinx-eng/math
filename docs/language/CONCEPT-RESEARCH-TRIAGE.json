@@ -7,14 +7,14 @@
     "total": 85,
     "knowledgeMapNodes": 83,
     "mathThinkingNodes": 2,
-    "knowledgeMapWithSamples": 47,
-    "knowledgeMapWithoutSamples": 36,
+    "knowledgeMapWithSamples": 51,
+    "knowledgeMapWithoutSamples": 32,
     "phaseCounts": {
       "2": 2,
       "4": 7,
       "5": 76
     },
-    "allPlanStatuses": "7个既有样板和 B01–B12 共40个新增草稿节点已核查部分外部课程或教学来源；36个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
+    "allPlanStatuses": "7个既有样板和 B01–B13 共44个新增草稿节点已核查部分外部课程或教学来源；32个无样板知识地图节点和2个数学思维节点尚未核查。来源核查不等于教学效果或独立数学验证。",
     "sourceRecordsExternallyVerifiedInThisPass": 7,
     "byType": {
       "REPRESENTATIONAL": {
@@ -24,18 +24,18 @@
       },
       "PROCEDURAL": {
         "total": 42,
-        "withSample": 20,
-        "withoutSample": 22
+        "withSample": 22,
+        "withoutSample": 20
       },
       "CONCEPTUAL": {
         "total": 28,
-        "withSample": 20,
-        "withoutSample": 8
+        "withSample": 21,
+        "withoutSample": 7
       },
       "META": {
         "total": 4,
-        "withSample": 3,
-        "withoutSample": 1
+        "withSample": 4,
+        "withoutSample": 0
       }
     },
     "byDomain": {
@@ -60,8 +60,8 @@
       "data": {
         "title": "Data & Statistics",
         "total": 27,
-        "withSample": 23,
-        "withoutSample": 4
+        "withSample": 27,
+        "withoutSample": 0
       },
       "fractions": {
         "title": "Fractions",
@@ -106,12 +106,12 @@
         "withoutSample": 0
       }
     },
-    "nodesWithExternalSourcesVerified": 47,
+    "nodesWithExternalSourcesVerified": 51,
     "nodesWithSourceCoverageRevisions": 7,
     "independentMathReviewsCompleted": 0,
     "childUnderstandingTestsCompleted": 0,
     "nodesWithResearchReviewedWithoutExplanation": 0,
-    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 36,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 32,
     "remainingUnverifiedMathThinkingNodes": 2,
     "researchBatchesExternallyReviewed": [
       "B01",
@@ -125,7 +125,8 @@
       "B09",
       "B10",
       "B11",
-      "B12"
+      "B12",
+      "B13"
     ],
     "phaseBreakdownByScope": {
       "2": {
@@ -145,7 +146,7 @@
     "sourceRecordsExternallyVerifiedInB02": 1,
     "sourceRecordsExternallyVerifiedInB03": 1,
     "sourceRecordsExternallyVerifiedInB04": 1,
-    "nodesWithExplanationDraftsPendingIndependentReview": 40,
+    "nodesWithExplanationDraftsPendingIndependentReview": 44,
     "sourceRecordsExternallyVerifiedInB05": 5,
     "sourceRecordsExternallyVerifiedInB06": 3,
     "sourceRecordsExternallyVerifiedInB07": 5,
@@ -153,7 +154,8 @@
     "sourceRecordsExternallyVerifiedInB09": 4,
     "sourceRecordsExternallyVerifiedInB10": 5,
     "sourceRecordsExternallyVerifiedInB11": 5,
-    "sourceRecordsExternallyVerifiedInB12": 5
+    "sourceRecordsExternallyVerifiedInB12": 5,
+    "sourceRecordsExternallyVerifiedInB13": 4
   },
   "records": [
     {
@@ -849,14 +851,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_8IsaoMPvod",
@@ -1044,14 +1056,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_iykH2P5oFq",
@@ -1129,14 +1151,24 @@
         "end": 12
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_km4V6d5IAh",
@@ -1150,14 +1182,24 @@
         "end": 13
       },
       "phase": 5,
-      "planStatus": "已排期，研究未补齐",
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
       "hasResearch": false,
       "sourceDescriptionPresent": true,
       "sourceEvidenceCount": 3,
       "sourceAssessmentPromptPresent": true,
-      "explanationSamplePresent": false,
-      "researchVerificationStatus": "not_verified_in_this_pass",
-      "nextAction": "complete_research_review_before_explanation_drafting"
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
     },
     {
       "id": "mt_fQ9Rw10fss",

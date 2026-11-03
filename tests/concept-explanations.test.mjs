@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,339);
+  assert.equal(samples.length,343);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -447,4 +447,11 @@ test('distribution research-gap drafts preserve quartile, sampling and overlap l
   assert.match(conceptHelpFor('mt_A2hKhHXgL5').why,/不能单独确定重叠/);
   assert.match(conceptHelpFor('mt_x7V1qrkiqH').why,/不是保证误差上限/);
   assert.match(conceptHelpFor('mt_fQ9Rw10fss').counterexample,/准确人数/);
+});
+
+test('investigation research-gap drafts preserve population and measurement boundaries',()=>{
+  assert.match(conceptHelpFor('mt_mn765HbXi1').counterexample,/总人数不同/);
+  assert.match(conceptHelpFor('mt_O-U263ukg1').counterexample,/所有人/);
+  assert.match(conceptHelpFor('mt_tuEnyrp5Ia').example,/13分钟/);
+  assert.match(conceptHelpFor('mt_km4V6d5IAh').counterexample,/每个词/);
 });

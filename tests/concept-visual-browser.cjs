@@ -325,6 +325,11 @@ const ids=[
   ['research-gap5e-03','mt_fQ9Rw10fss'],
   ['research-gap5e-04','mt_A2hKhHXgL5'],
   ['research-gap5e-05','mt_x7V1qrkiqH']
+,
+  ['research-gap4b-01','mt_mn765HbXi1'],
+  ['research-gap4b-02','mt_O-U263ukg1'],
+  ['research-gap4b-03','mt_tuEnyrp5Ia'],
+  ['research-gap4b-04','mt_km4V6d5IAh']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

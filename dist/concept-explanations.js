@@ -1,4 +1,4 @@
-// Three hundred and thirty-nine source-bound explanation samples, keyed by exact source node ID.
+// Three hundred and forty-three source-bound explanation samples, keyed by exact source node ID.
 // These do not replace the source title, original description, prerequisites,
 // lesson work, or any evidence-based completion rule.
 export const CONCEPT_EXPLANATIONS=Object.freeze({
@@ -3082,6 +3082,42 @@ export const CONCEPT_EXPLANATIONS=Object.freeze({
     counterexample:"一次样本不同于另一次不一定说明出错；但一直只抽某个特定小组可能造成系统偏差。",
     tryIt:"重复五次抽样并记录每次比例，比较这些比例之间的范围和单次样本内部的差异。",
     why:"样本间的估计变化不同于样本内个体的变化；更多数据通常更稳定，但观察到的范围不是保证误差上限。",
+  },
+  "mt_mn765HbXi1":{
+    formal:"用共同尺度比较两组数据",
+    definition:"比较两组数据时，可以并排展示类别频数或百分比，也可以在共同数轴上比较数值分布。",
+    simpler:"先确认两组的单位和类别顺序一致；人数不同的时候，也可以比较各组比例。",
+    example:"甲组20人有10人选某项、乙组40人有16人选同一项，比例分别是50%和40%。",
+    counterexample:"不能只看16票大于10票就说乙组支持比例更高，因为两组总人数不同。",
+    tryIt:"把两组有顺序的回答按同样类别顺序画成并排图，再比较各组的百分比。",
+    why:"共同尺度和一致顺序帮助对应比较；类别频数、比例和数值分布各回答不同问题。",
+  },
+  "mt_O-U263ukg1":{
+    formal:"改进统计调查问题",
+    definition:"统计调查可以把模糊问题改成明确的对象、时间、测量内容和单位，再计划收集与分析。",
+    simpler:"先问“谁、什么时候、记录什么”，让问题能用收集到的数据回答。",
+    example:"把“大家运动吗”具体化为“这个小组上周每天参加有组织运动多少小时”。",
+    counterexample:"没有记录调查对象和时间，不能把一组结果无条件当成所有人的长期情况。",
+    tryIt:"选择一个想研究的问题，限定对象和时间，规划怎样记录并说出一种改进方式。",
+    why:"问题、数据和结论需要对应；记录方法与范围有助判断结果能说明什么。",
+  },
+  "mt_tuEnyrp5Ia":{
+    formal:"结合背景概述一组数据",
+    definition:"数值数据摘要应交代观察数量、对象、测量方法和单位，并结合中心、分散程度及分布特点描述。",
+    simpler:"先说测了谁、测了什么，再给一个典型值和与它配套的散开程度。",
+    example:"30人的通勤时间中位数是14分钟，中间一半大致在9到22分钟，四分位距是13分钟。",
+    counterexample:"只写“平均是14”没有交代人数、测量内容、单位和数据如何分散。",
+    tryIt:"观察一组带长尾的模拟时间，说明为何中位数与四分位距可能适合描述它。",
+    why:"中位数通常配四分位距，平均数可配平均绝对偏差；选择应结合形态和用途，不是机械套用。",
+  },
+  "mt_km4V6d5IAh":{
+    formal:"用样本比较两个总体",
+    definition:"用两组样本推测总体差异时，要检查样本来源，并同时比较中心、组内分散与抽样波动。",
+    simpler:"先看两组各从哪里随机抽取，再看差距与数据本身的变化相比有多大。",
+    example:"两本书各随机抽20个词，样本平均长度分别为6.2和4.4个字母，可以谨慎地说前一本可能平均更长。",
+    counterexample:"一本书的样本均值更高，不代表它的每个词都比另一本书的每个词长。",
+    tryIt:"比较两组样本的均值和分散，再考虑如果重新抽样，结论可能怎样变化。",
+    why:"样本会随抽取而变化；总体比较应说明不确定性，避免把有限观察说成确定事实。",
   },
 });
 export const conceptHelpFor=id=>CONCEPT_EXPLANATIONS[id]||null;
