@@ -9,7 +9,7 @@ const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
 test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,189);
+  assert.equal(samples.length,209);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -348,4 +348,12 @@ test('twenty-node batch keeps units, shared wholes, probability and coordinate b
   assert.match(conceptHelpFor('mt_BFJ-ch_8QU').counterexample,/先换算/);
   assert.match(conceptHelpFor('mt_hVpGOEz2kG').counterexample,/不属于任何象限/);
   assert.match(conceptHelpFor('mt_ALUrJpY0cZ').counterexample,/基准量/);
+});
+
+test('twenty-node batch preserves rounding, sample and probability boundaries',()=>{
+  assert.match(conceptHelpFor('mt_Fl7b8q9pI1').definition,/非负.*约定/);
+  assert.match(conceptHelpFor('mt_J4j7d3iAfg').counterexample,/不保证/);
+  assert.match(conceptHelpFor('mt_XfyqXLqzpx').counterexample,/重叠/);
+  assert.match(conceptHelpFor('mt_R2ccrI-nKD').counterexample,/30个十/);
+  assert.match(conceptHelpFor('mt_ChjMU2GDJa').counterexample,/不能.*实际/);
 });

@@ -162,6 +162,27 @@ const ids=[
   ['batch20e-18','mt_t0g2SlP404'],
   ['batch20e-19','mt_xAf2bu9wYK'],
   ['batch20e-20','mt_ALUrJpY0cZ']
+,
+  ['batch20f-01','mt_wzAZ8qFDc4'],
+  ['batch20f-02','mt_FX4a2Q8XXN'],
+  ['batch20f-03','mt_fxPtngwUfz'],
+  ['batch20f-04','mt_ChjMU2GDJa'],
+  ['batch20f-05','mt_fmm-P17Vka'],
+  ['batch20f-06','mt_Fl7b8q9pI1'],
+  ['batch20f-07','mt_SsLWS_APM7'],
+  ['batch20f-08','mt_TdV9YGJEoY'],
+  ['batch20f-09','mt_zuOGOGFAKb'],
+  ['batch20f-10','mt_zd0YkB3xNj'],
+  ['batch20f-11','mt_cqSf213hSa'],
+  ['batch20f-12','mt_AR-K72OIIO'],
+  ['batch20f-13','mt_w6MxaaoMXZ'],
+  ['batch20f-14','mt_98c2qwEF7Q'],
+  ['batch20f-15','mt_J4j7d3iAfg'],
+  ['batch20f-16','mt_XfyqXLqzpx'],
+  ['batch20f-17','mt_FnUJMXPUZX'],
+  ['batch20f-18','mt_ATYLKt0je-'],
+  ['batch20f-19','mt_HJTuIGHvcR'],
+  ['batch20f-20','mt_R2ccrI-nKD']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{

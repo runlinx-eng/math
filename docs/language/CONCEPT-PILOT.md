@@ -507,3 +507,7 @@
 ## 本地 20 节点（2026-11-03）
 
 `mt_ehGS_uVSJv`、`mt_AKAtWEwpcj`、`mt_nNNVrLqPW3`、`mt_hVpGOEz2kG`、`mt_H6LlpWgEYS`、`mt_Cqm8iy48UI`、`mt_HnKbuCliNS`、`mt_TqDq6jyOmL`、`mt_u23IGDxOpk`、`mt_fEuoBYw6bU`、`mt_BFJ-ch_8QU`、`mt_skYly2Qm01`、`mt_Zdv-b-iW5K`、`mt_isojCL9yy-`、`mt_hniI4E-OCE`、`mt_AQcVRBddko`、`mt_Zt30Gxi-qp`、`mt_t0g2SlP404`、`mt_xAf2bu9wYK`、`mt_ALUrJpY0cZ`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH20E-2026-11-03.md)。
+
+## 本地 20 节点（2026-11-03）
+
+`mt_wzAZ8qFDc4`、`mt_FX4a2Q8XXN`、`mt_fxPtngwUfz`、`mt_ChjMU2GDJa`、`mt_fmm-P17Vka`、`mt_Fl7b8q9pI1`、`mt_SsLWS_APM7`、`mt_TdV9YGJEoY`、`mt_zuOGOGFAKb`、`mt_zd0YkB3xNj`、`mt_cqSf213hSa`、`mt_AR-K72OIIO`、`mt_w6MxaaoMXZ`、`mt_98c2qwEF7Q`、`mt_J4j7d3iAfg`、`mt_XfyqXLqzpx`、`mt_FnUJMXPUZX`、`mt_ATYLKt0je-`、`mt_HJTuIGHvcR`、`mt_R2ccrI-nKD`。来源与范围见 [批次记录](CONCEPT-LOCAL-BATCH20F-2026-11-03.md)。
