@@ -719,3 +719,33 @@ body[data-observation-mode="grade"] .network-guide details{display:none}
 .grade-load-error h2{margin:3px 0 8px;font-size:16px;color:#294f47}
 .grade-load-error p{font-size:11px;color:#718071;line-height:1.6}
 @media(max-width:600px){.grade-selector{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.grade-selector button{min-height:40px;font-size:12px}.grade-matrix{min-width:540px}.grade-matrix .grade-pack-heading{min-width:175px;width:175px}.grade-matrix th,.grade-matrix td{padding:8px 7px}.grade-mark-legend{gap:7px 9px}}
+
+/* A2-2: expandable pack details use the same three source stage records. */
+.grade-pack-toggle{display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center;padding:2px 0;background:transparent;text-align:left}
+.grade-pack-toggle:hover .grade-pack-name{color:#1e6847;text-decoration:underline;text-underline-offset:3px}
+.grade-pack-toggle .grade-pack-name{grid-column:1;min-width:0}
+.grade-pack-toggle .grade-pack-count{grid-column:1}
+.grade-pack-toggle-label{grid-column:2;grid-row:1 / span 2;color:#6d816e;font-size:10px;white-space:nowrap}
+.grade-pack-toggle[aria-expanded=true] .grade-pack-toggle-label{color:#315c45;font-weight:650}
+.grade-detail-row>td{padding:10px;background:#f8faf5;text-align:left}
+.grade-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.grade-detail-stage{min-width:0;padding:11px;border:1px solid #e2e8dd;border-radius:9px;background:#fffefb}
+.grade-detail-stage.is-incomplete{border-color:#e7c8b4;background:#fffaf6}
+.grade-detail-stage>header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid #edf0e8}
+.grade-detail-stage>header strong,.grade-detail-stage>header small{display:block}
+.grade-detail-stage>header strong{color:#365a49;font-size:11px}
+.grade-detail-stage>header small{margin-top:3px;color:#829080;font-size:10px}
+.grade-detail-field{margin:9px 0}
+.grade-detail-field h5{margin:0 0 4px;color:#627466;font-size:10px;font-weight:700}
+.grade-detail-field p{margin:0;color:#44594c;font-size:11px;line-height:1.65;overflow-wrap:anywhere}
+.grade-detail-empty{color:#8b958a!important}
+.grade-evidence-list,.grade-unresolved-list{list-style:none;padding:0;margin:0}
+.grade-evidence-list li,.grade-unresolved-list li{margin:6px 0;padding:6px 7px;border-radius:6px;background:#f5f7f1}
+.grade-evidence-list strong{display:block;color:#496c56;font-size:10px;overflow-wrap:anywhere}
+.grade-evidence-list p{margin:4px 0;color:#4c5f51;font-size:10px;line-height:1.55}
+.grade-evidence-list small{display:block;margin-top:4px;color:#8a7755;font-size:9px;line-height:1.5}
+.grade-unresolved-list li{color:#7c6246;font-size:10px;line-height:1.55}
+.grade-review-status{margin:10px 0 0;padding-top:7px;border-top:1px solid #edf0e8;color:#6d7e6e;font-size:10px;line-height:1.5}
+.grade-incomplete-note{margin:7px 0;padding:7px;border-radius:6px;background:#f8e9df;color:#925735;font-size:10px;line-height:1.5}
+.grade-review-disclaimer{margin:9px 2px 0;color:#899388;font-size:9px;line-height:1.5}
+@media(max-width:900px){.grade-detail-grid{grid-template-columns:1fr}.grade-detail-stage{padding:10px}}

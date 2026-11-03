@@ -25,7 +25,7 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship',selectedGrade=1,gradeProgressionData=null,gradeProgressionPromise=null;
+let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null;
 const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
 const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
 const panels=new Map(),visits=[];
@@ -227,6 +227,34 @@ function ensureGradeProgressionData(){
   }
   return gradeProgressionPromise;
 }
+function renderGradePackDetail(pack){
+  const stageCards=gradeProgressionData.stages.map(stage=>{
+    const judgement=pack.stageJudgements?.[stage.id]||{},mark=gradeMarkPresentation(judgement);
+    const incomplete=judgement.recordStatus==='incomplete';
+    const development=typeof judgement.developmentContent==='string'&&judgement.developmentContent.trim()?esc(judgement.developmentContent):'当前记录未提供阶段发展内容。';
+    const rationale=typeof judgement.rationale==='string'&&judgement.rationale.trim()?esc(judgement.rationale):'当前记录未提供阶段判断说明。';
+    const scope=typeof judgement.scopeBoundary==='string'&&judgement.scopeBoundary.trim()?esc(judgement.scopeBoundary):'';
+    const evidence=Array.isArray(judgement.standardEvidence)?judgement.standardEvidence:[];
+    const evidenceMarkup=evidence.length?`<ul class="grade-evidence-list">${evidence.map(item=>`<li><strong>${esc(item.referenceId||'课程依据')}</strong><p>${esc(item.claim||'当前记录未提供依据说明。')}</p>${item.boundary?`<small>边界：${esc(item.boundary)}</small>`:''}</li>`).join('')}</ul>`:'<p class="grade-detail-empty">当前记录未提供课程依据条目。</p>';
+    const missing=Array.isArray(judgement.missingFields)?judgement.missingFields:[];
+    const missingLabels={mark:'阶段标记',markLabel:'标记文字',reviewStatus:'审查状态'};
+    const missingMarkup=incomplete?`<p class="grade-incomplete-note">群级判断记录不完整，待补充：${missing.map(field=>esc(missingLabels[field]||field)).join('、')||'必要字段'}。</p>`:'';
+    const review=judgement.reviewStatusLabel||judgement.reviewStatus||(incomplete?'审查状态待补充':'审查状态未提供');
+    const questions=Array.isArray(judgement.unresolvedQuestions)?judgement.unresolvedQuestions:[];
+    const questionsMarkup=questions.length?`<div class="grade-detail-field"><h5>尚待核实</h5><ul class="grade-unresolved-list">${questions.map(question=>`<li>${esc(typeof question==='string'?question:question?.question||question?.prompt||'存在未决问题，详见来源记录。')}</li>`).join('')}</ul></div>`:'';
+    return `<section class="grade-detail-stage ${incomplete?'is-incomplete':''}" data-stage-id="${esc(stage.id)}">
+      <header><div><strong>${esc(stage.standardStage||'学段')}</strong><small>${esc(stage.label||'')}</small></div><span class="grade-mark" data-mark="${esc(mark.mark)}">${esc(mark.label)}</span></header>
+      ${missingMarkup}
+      <div class="grade-detail-field"><h5>阶段发展内容</h5><p>${development}</p></div>
+      <div class="grade-detail-field"><h5>阶段判断说明</h5><p>${rationale}</p></div>
+      ${scope?`<div class="grade-detail-field"><h5>适用边界</h5><p>${scope}</p></div>`:''}
+      <div class="grade-detail-field"><h5>课程依据</h5>${evidenceMarkup}</div>
+      <p class="grade-review-status">审查记录：${esc(review)}</p>
+      ${questionsMarkup}
+    </section>`;
+  }).join('');
+  return `<tr class="grade-detail-row" id="grade-pack-detail-${esc(pack.packId)}"><td colspan="4"><div class="grade-detail-grid">${stageCards}</div><p class="grade-review-disclaimer">审查状态按来源记录展示；AI辅助审查不等同于独立教研或儿童理解测试。</p></td></tr>`;
+}
 function renderGradeObservation(){
   const host=$('#grade-observation-view');if(!host)return;
   if(!gradeProgressionData){host.innerHTML='<div class="grade-observation-head"><h2>小学1—6年级观察</h2><p>正在读取23个知识群的群级阶段数据…</p></div>';return;}
@@ -246,7 +274,9 @@ function renderGradeObservation(){
         return `<td class="grade-stage-cell ${stage.id===selectedStageId?'is-current':''}" data-stage-id="${esc(stage.id)}"><span class="grade-mark" data-mark="${esc(mark.mark)}" aria-label="${esc(stage.label)}：${esc(mark.label)}">${esc(mark.label)}</span></td>`;
       }).join('');
       const count=Number.isFinite(pack.domainKnowledgeNodeCount)?pack.domainKnowledgeNodeCount:pack.totalNodeCount;
-      return `<tr class="grade-pack-row" data-pack-id="${esc(pack.packId)}"><th scope="row"><span class="grade-pack-name">${esc(pack.name)}</span><small class="grade-pack-count">${Number.isFinite(count)?count+'个领域知识点':''}</small></th>${cells}</tr>`;
+      const expanded=expandedGradePackId===pack.packId;
+      const row=`<tr class="grade-pack-row" data-pack-id="${esc(pack.packId)}"><th scope="row"><button type="button" class="grade-pack-toggle" data-action="grade-pack-toggle" data-pack-id="${esc(pack.packId)}" aria-expanded="${expanded}" aria-controls="grade-pack-detail-${esc(pack.packId)}"><span class="grade-pack-name">${esc(pack.name)}</span><small class="grade-pack-count">${Number.isFinite(count)?count+'个领域知识点':''}</small><span class="grade-pack-toggle-label">${expanded?'收起':'展开'}</span></button></th>${cells}</tr>`;
+      return row+(expanded?renderGradePackDetail(pack):'');
     }).join('');
     return `<tr class="grade-theme-row" data-theme-id="${esc(group.themeId)}"><th colspan="4"><span>${esc(themeName)}</span><small>${group.packs.length}个知识群</small></th></tr>${rows}`;
   }).join('');
@@ -485,6 +515,9 @@ document.addEventListener('click',event=>{
   else if(action==='grade-select'){
     const grade=Number(el.dataset.grade);
     if(Number.isInteger(grade)&&grade>=1&&grade<=6){selectedGrade=grade;renderGradeObservation();}
+  }else if(action==='grade-pack-toggle'){
+    expandedGradePackId=expandedGradePackId===el.dataset.packId?null:el.dataset.packId;
+    renderGradeObservation();
   }else if(action==='grade-retry'){gradeProgressionPromise=null;loadGradeObservation();}
   else if(action==='deselect'&&scene.relationshipMap)overview();else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
   else if(action==='mode'){scene.setMode(el.dataset.mode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));}

@@ -72,3 +72,28 @@ test("grade runtime files are precached and included in offline readiness", () =
   assert.match(sw, /'\.\/grade-progression-model\.js','\.\/data\/grade-progression\.json'/);
   assert.match(space, /'grade-progression-model\.js','data\/grade-progression\.json'/);
 });
+
+test("knowledge groups expand and collapse into three stage-specific evidence panels", () => {
+  assert.match(space, /function renderGradePackDetail\(pack\)/);
+  assert.match(space, /data-action="grade-pack-toggle"/);
+  assert.match(space, /expandedGradePackId===el\.dataset\.packId/);
+  assert.match(space, /judgement\.developmentContent/);
+  assert.match(space, /judgement\.rationale/);
+  assert.match(space, /judgement\.standardEvidence/);
+  assert.match(space, /judgement\.scopeBoundary/);
+  assert.match(space, /judgement\.reviewStatusLabel/);
+  assert.match(space, /judgement\.unresolvedQuestions/);
+  assert.match(space, /AI辅助审查不等同于独立教研或儿童理解测试/);
+  assert.match(css, /\.grade-detail-grid/);
+  assert.match(css, /\.grade-incomplete-note/);
+});
+
+test("incomplete group-stage detail preserves missing fields and does not infer a review label", () => {
+  const time = data.packs.find(pack => pack.packId === "time");
+  const stage3 = time.stageJudgements["stage-3"];
+  assert.equal(stage3.recordStatus, "incomplete");
+  assert.deepEqual(stage3.missingFields, ["mark", "markLabel", "reviewStatus"]);
+  const detail = space.slice(space.indexOf("function renderGradePackDetail"), space.indexOf("function renderGradeObservation"));
+  assert.match(detail, /群级判断记录不完整，待补充/);
+  assert.match(detail, /审查状态待补充/);
+});
