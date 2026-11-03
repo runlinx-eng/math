@@ -118,9 +118,9 @@ test('critical second-pass corrections are present in the explanation source',()
  assert.match(CONCEPT_EXPLANATIONS['mt_Jvg8X0N5u0'].example,/三角形底/);
 });
 
-test('sample and research review scope stays separate from the 487 unconfigured explanations',()=>{
+test('sample and research review scope stays separate from the 482 unconfigured explanations',()=>{
  assert.equal(knowledge.length,537);
- assert.equal(sampleIds.size,50);
+ assert.equal(sampleIds.size,55);
  assert.equal(knowledge.length-sampleIds.size,482);
  assert.ok(researchTriage.records.filter(record=>record.scope==='math_thinking').every(record=>!sampleIds.has(record.id)));
 });
