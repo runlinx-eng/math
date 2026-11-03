@@ -120,7 +120,7 @@ test('critical second-pass corrections are present in the explanation source',()
 
 test('sample and research review scope stays separate from the 477 unconfigured explanations',()=>{
  assert.equal(knowledge.length,537);
- assert.equal(sampleIds.size,55);
+ assert.equal(sampleIds.size,60);
  assert.equal(knowledge.length-sampleIds.size,477);
  assert.ok(researchTriage.records.filter(record=>record.scope==='math_thinking').every(record=>!sampleIds.has(record.id)));
 });
