@@ -95,6 +95,57 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(await page.locator('.grade-domain-node-link[data-node-id="mt_s2mfRBoTal"]').getAttribute('aria-current')==='true','reload restores the selected node in its original knowledge group');
   check((await pose())===beforeReloadPose,'reload restores the saved map camera and original node coordinates');
 
+  // A2-3 batch 4: special nodes preserve the distinction between group and node-level status.
+  await page.locator('.grade-pack-toggle[data-pack-id="add-subtract"]').click();
+  await page.locator('#grade-pack-detail-add-subtract').waitFor({state:'detached'});
+  await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
+  await page.locator('#grade-pack-detail-time').waitFor();
+  const timeNode=page.locator('.grade-domain-node[data-node-id="mt_5J2quSTspi"]');
+  const timeNodeText=await timeNode.innerText();
+  check(timeNodeText.includes('5—6年级：extension')&&timeNodeText.includes('证据：Adjacent'),'time node keeps its stage-three extension role and adjacent evidence');
+  check(await page.locator('.grade-pack-row[data-pack-id="time"] td[data-stage-id="stage-3"] .grade-mark').textContent()==='待补充','the incomplete group-level stage-three judgment remains 待补充 while node-level roles stay visible');
+  await page.locator('.grade-pack-toggle[data-pack-id="time"]').click();
+  await page.locator('#grade-pack-detail-time').waitFor({state:'detached'});
+  await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
+  await page.locator('#grade-pack-detail-number-sense').waitFor();
+  const thinkingRow=page.locator('.grade-thinking-node[data-node-id="mt_zMEvtigoM3"]');
+  check(await thinkingRow.count()===1&&await page.locator('.grade-domain-node[data-node-id="mt_zMEvtigoM3"]').count()===0,'a mathematical-thinking node appears only in its separate list, never in the 537-domain-node list');
+  const adjacentMainRow=page.locator('.grade-domain-node[data-node-id="mt_IzQvs7k_sE"]');
+  const adjacentMainText=await adjacentMainRow.innerText();
+  check(adjacentMainText.includes('1—2年级：extension')&&adjacentMainText.includes('3—4年级：main')&&adjacentMainText.includes('5—6年级：未映射')&&adjacentMainText.includes('证据：Adjacent'),'Adjacent evidence remains separate from the node’s extension/main roles');
+  const unresolvedRow=page.locator('.grade-domain-node[data-node-id="mt_b4lbTOJYwI"]');
+  const unresolvedRowText=await unresolvedRow.innerText();
+  check(unresolvedRowText.includes('小学阶段：未纳入当前课程阶段映射')&&unresolvedRowText.includes('初中后续：main')&&unresolvedRowText.includes('证据：Adjacent')&&unresolvedRowText.includes('保留未决'),'the unresolved node keeps its non-primary status, junior-high role, adjacent evidence and unresolved note');
+  const beforeThinkingPose=await pose();
+  await thinkingRow.locator('.grade-thinking-node-link').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='relationship'&&mathSpace.snapshot().selected==='node:mt_zMEvtigoM3');
+  const thinkingPosition=await page.locator('#focus-card .grade-node-position').innerText();
+  check(thinkingPosition.includes('数学思维节点')&&thinkingPosition.includes('不分配小学学段'),'the original detail keeps mathematical thinking outside primary-stage assignment');
+  check(await page.locator('#focus-card .grade-node-position .grade-node-stage-tags').count()===0&&await page.locator('#focus-card .grade-node-position-evidence').count()===0,'mathematical-thinking detail does not fabricate stage roles or evidence');
+  check((await pose())===beforeThinkingPose,'selecting a mathematical-thinking node does not move the original map');
+  await page.locator('#focus-card [data-action="grade-view-pack"][data-node-id="mt_zMEvtigoM3"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_zMEvtigoM3');
+  check(await page.locator('.grade-thinking-node-link[data-node-id="mt_zMEvtigoM3"]').getAttribute('aria-current')==='true','the separate thinking-node selection is preserved when returning to its group');
+  await page.locator('.grade-domain-node-link[data-node-id="mt_b4lbTOJYwI"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='relationship'&&mathSpace.snapshot().selected==='node:mt_b4lbTOJYwI');
+  const unresolvedPosition=await page.locator('#focus-card .grade-node-position').innerText();
+  check(unresolvedPosition.includes('小学阶段：未纳入当前课程阶段映射')&&unresolvedPosition.includes('初中后续：main')&&unresolvedPosition.includes('证据：Adjacent')&&unresolvedPosition.includes('保留未决'),'the original detail preserves the unresolved node’s actual primary, junior-high, evidence and review states');
+  check(await page.locator('#focus-card .grade-node-position .grade-node-stage-tags').count()===0,'junior-high-only node is not assigned to an elementary stage');
+  await page.locator('#focus-card [data-action="grade-view-pack"][data-node-id="mt_b4lbTOJYwI"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_b4lbTOJYwI');
+  await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
+  await page.locator('#grade-pack-detail-number-sense').waitFor({state:'detached'});
+  await page.locator('.grade-pack-toggle[data-pack-id="solids"]').click();
+  await page.locator('#grade-pack-detail-solids').waitFor();
+  const notCoveredRow=page.locator('.grade-domain-node[data-node-id="mt_h02-C8PRrj"]');
+  check((await notCoveredRow.innerText()).includes('小学阶段：未纳入当前课程阶段映射')&&(await notCoveredRow.innerText()).includes('证据：Not-covered'),'Not-covered node stays visible without a fabricated elementary-stage assignment');
+  await notCoveredRow.locator('.grade-domain-node-link').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='relationship'&&mathSpace.snapshot().selected==='node:mt_h02-C8PRrj');
+  const notCoveredPosition=await page.locator('#focus-card .grade-node-position').innerText();
+  check(notCoveredPosition.includes('小学阶段：未纳入当前课程阶段映射')&&notCoveredPosition.includes('证据：Not-covered')&&await page.locator('#focus-card .grade-node-position .grade-node-stage-tags').count()===0,'the original detail keeps Not-covered as evidence rather than a grade');
+  await page.locator('#focus-card [data-action="grade-view-pack"][data-node-id="mt_h02-C8PRrj"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_h02-C8PRrj');
+
   await page.screenshot({path:path.join(out,'desktop-grade-matrix.png'),fullPage:false});
   await page.locator('[data-action="observation-mode"][data-mode="relationship"]').click();
   check(await page.locator('#network-view-title').isVisible()&&await page.locator('#grade-observation-view').isHidden(),'returning to relationship panorama restores the original guide content');
@@ -121,6 +172,19 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(mobileDetails.columns===1,'mobile stage details stack vertically');
   check(mobileDetails.cards.length===3&&mobileDetails.cards.every(card=>card.left>=mobileDetails.panel.left&&card.right<=mobileDetails.panel.right),'all three stage details fit within the mobile panel');
   await page.screenshot({path:path.join(out,'mobile-grade-matrix.png'),fullPage:false});
+
+  await page.locator('.grade-pack-toggle[data-pack-id="solids"]').click();
+  await page.locator('#grade-pack-detail-solids').waitFor({state:'detached'});
+  await page.locator('.grade-pack-toggle[data-pack-id="number-sense"]').click();
+  await page.locator('#grade-pack-detail-number-sense').scrollIntoViewIfNeeded();
+  const mobileNodeList=await page.locator('#grade-pack-detail-number-sense .grade-node-list').evaluate(el=>{
+    const panel=document.querySelector('#network-guide').getBoundingClientRect(),r=el.getBoundingClientRect();
+    const items=[...el.querySelectorAll('.grade-domain-node,.grade-thinking-node')];
+    return {left:r.left,right:r.right,panelLeft:panel.left,panelRight:panel.right,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,itemsFit:items.every(item=>{const box=item.getBoundingClientRect();return box.left>=panel.left-1&&box.right<=panel.right+1;})};
+  });
+  check(mobileNodeList.left>=mobileNodeList.panelLeft-1&&mobileNodeList.right<=mobileNodeList.panelRight+1&&mobileNodeList.scrollWidth<=mobileNodeList.clientWidth&&mobileNodeList.itemsFit,'mobile node-level details fit the guide panel without horizontal overflow');
+  await page.screenshot({path:path.join(out,'mobile-grade-node-list.png'),fullPage:false});
+
   check(errors.length===0,'no browser JavaScript exceptions');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));

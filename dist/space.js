@@ -249,12 +249,14 @@ function renderGradeNodeList(pack,selectedStageId){
     const beyondRole=mapping.curriculum.beyondPrimary?.role;
     const beyondMarkup=beyondRole?`<p class="grade-node-beyond">初中后续：${esc(beyondRole)}（${esc(GRADE_ROLE_LABELS[beyondRole]||beyondRole)}）</p>`:'';
     const evidence=mapping.curriculum.evidenceLevelLabel||mapping.curriculum.evidenceLevel||'未提供';
+    const unresolved=gradeProgressionData.specialRisks.unresolvedNode?.id===id;
+    const unresolvedMarkup=unresolved?`<p class="grade-node-unresolved">${esc(gradeProgressionData.specialRisks.unresolvedNode.status)}</p>`:'';
     return `<li class="grade-domain-node ${selected?'is-selected':''}" data-node-id="${esc(id)}">
       <div class="grade-domain-node-head">
         ${button('grade-node-select',`<span class="grade-domain-node-title">${esc(displayTitle(node))}</span><small>在原知识树中查看 →</small>`,`data-node-id="${esc(id)}" aria-current="${selected?'true':'false'}"`,'grade-domain-node-link')}
         <span class="grade-node-evidence" data-evidence="${esc(mapping.curriculum.evidenceLevel||'unknown')}">证据：${esc(evidence)}</span>
       </div>
-      ${stageMarkup}${beyondMarkup}
+      ${stageMarkup}${beyondMarkup}${unresolvedMarkup}
     </li>`;
   }).join('');
   const thinkingIds=Array.isArray(pack.mathThinkingNodeIds)?pack.mathThinkingNodeIds:[];
@@ -265,7 +267,7 @@ function renderGradeNodeList(pack,selectedStageId){
   }).join('');
   const stageLabel=gradeStageForSelected()?.label||'当前学段';
   return `<section class="grade-node-list" aria-label="${esc(pack.name)}具体知识点">
-    <header><div><h4>具体知识点</h4><p>${esc(stageLabel)}相关节点优先显示；每个节点只出现一次，其他学段信息仍保留。</p></div><span>${entries.length}个领域知识点</span></header>
+    <header><div><h4>具体知识点</h4><p>节点级角色与证据独立于上方群级判断；${esc(stageLabel)}相关节点优先显示，每个节点只出现一次，其他学段信息仍保留。</p></div><span>${entries.length}个领域知识点</span></header>
     <ul class="grade-domain-node-list">${domainRows||'<li class="grade-node-empty">当前知识群没有可展示的领域知识点映射。</li>'}</ul>
     ${thinkingRows?`<section class="grade-thinking-list" aria-label="独立数学思维节点"><h5>数学思维 · ${thinkingIds.length}个</h5><p>这些节点保留独立属性，不参与537个领域知识节点的小学课程阶段归属。</p><ul>${thinkingRows}</ul></section>`:''}
   </section>`;

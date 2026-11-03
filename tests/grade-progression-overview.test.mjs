@@ -8,6 +8,8 @@ const space = read("../dist/space.js");
 const css = read("../dist/space.css");
 const sw = read("../dist/sw.js");
 const spatialModel = read("../dist/spatial-model.js");
+const adapterDoc = read("../docs/grade-progression/DATA-ADAPTER.md");
+const interactionRules = read("../docs/spatial-learning/INTERACTION-RULES.md");
 const data = JSON.parse(read("../dist/data/grade-progression.json"));
 
 test("relationship and grade observation share the existing guide panel", () => {
@@ -214,4 +216,69 @@ test("grade-position data loading is deferred and does not compete with an immed
   assert.match(space, /journeyOpen\|\|observationMode!=='relationship'/);
   assert.match(space, /if\(changed&&next==='relationship'\)renderFocus\(\)/);
   assert.match(space, /clearTimeout\(gradePositionLoadTimer\)/);
+});
+
+
+test("all 23 group node counts reconcile exactly to the 537 unique curriculum mappings", () => {
+  assert.equal(data.packs.length, 23);
+  assert.equal(data.nodeMappings.length, 537);
+  assert.equal(new Set(data.nodeMappings.map(item => item.nodeId)).size, 537);
+  for (const pack of data.packs) {
+    assert.equal(data.nodeMappings.filter(item => item.packId === pack.packId).length, pack.domainKnowledgeNodeCount, pack.packId + " domain-node count");
+  }
+  assert.equal(data.packs.reduce((sum, pack) => sum + pack.domainKnowledgeNodeCount, 0), 537);
+});
+
+test("special curriculum boundaries remain separate and unchanged", () => {
+  assert.equal(data.specialRisks.thinkingNodes.count, 50);
+  assert.equal(data.specialRisks.notCoveredNodes.length, 5);
+  assert.equal(data.specialRisks.adjacentMain.count, 17);
+  assert.equal(data.specialRisks.teachingResearchGaps.count, 85);
+  assert.equal(data.nodeMappings.filter(item => item.curriculum.beyondPrimary).length, 136);
+  assert.ok(data.specialRisks.notCoveredNodes.every(item => {
+    const mapping = data.nodeMappings.find(candidate => candidate.nodeId === item.id);
+    return mapping && mapping.curriculum.primaryStages.length === 0 && mapping.curriculum.evidenceLevel === "not-covered";
+  }));
+  const unresolved = data.specialRisks.unresolvedNode;
+  assert.equal(unresolved.id, "mt_b4lbTOJYwI");
+  assert.match(unresolved.status, /保留未决/);
+  const unresolvedMapping = data.nodeMappings.find(item => item.nodeId === unresolved.id);
+  assert.deepEqual(unresolvedMapping.curriculum.primaryStages, []);
+  assert.equal(unresolvedMapping.curriculum.beyondPrimary.role, "main");
+  assert.equal(unresolvedMapping.curriculum.evidenceLevel, "adjacent");
+  const adjacentMain = data.nodeMappings.filter(item => item.curriculum.evidenceLevel === "adjacent" && Object.values(item.curriculum.roles).includes("main"));
+  assert.equal(adjacentMain.length, 17);
+  assert.ok(adjacentMain.every(item => item.curriculum.evidenceLevel === "adjacent" && Object.values(item.curriculum.roles).includes("main")));
+});
+
+test("incomplete time group status does not erase its four real node-level stage-three roles", () => {
+  const time = data.packs.find(pack => pack.packId === "time");
+  const stageThree = time.stageJudgements["stage-3"];
+  assert.equal(stageThree.recordStatus, "incomplete");
+  assert.equal(stageThree.mark, null);
+  assert.equal(stageThree.markLabel, null);
+  assert.equal(stageThree.extensionNodeIds.length, 4);
+  for (const id of stageThree.extensionNodeIds) {
+    const mapping = data.nodeMappings.find(item => item.nodeId === id);
+    assert.equal(mapping.curriculum.roles["stage-3"], "extension");
+  }
+  assert.match(space, /judgement\.recordStatus==='incomplete'/);
+  assert.match(space, /节点级角色与证据独立于上方群级判断/);
+});
+
+test("unresolved status is shown without exposing the full research-gap register", () => {
+  assert.match(space, /specialRisks\.unresolvedNode\?\.id===id/);
+  assert.match(space, /grade-node-unresolved/);
+  assert.match(space, /specialRisks\.unresolvedNode\.status/);
+  assert.doesNotMatch(space, /teachingResearchGaps/);
+});
+
+test("adapter and interaction documentation define the same A2-3 node identity and two-way navigation contract", () => {
+  assert.match(adapterDoc, /按唯一 nodeId/);
+  assert.match(adapterDoc, /50个数学思维节点/);
+  assert.match(adapterDoc, /初中后续/);
+  assert.match(adapterDoc, /不调用自动聚焦/);
+  assert.match(interactionRules, /A2-2 \/ A2-3/);
+  assert.match(interactionRules, /查看年级观察/);
+  assert.match(interactionRules, /不自动移动、缩放或旋转镜头/);
 });
