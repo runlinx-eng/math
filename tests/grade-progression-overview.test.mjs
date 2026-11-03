@@ -7,6 +7,7 @@ const html = read("../dist/index.html");
 const space = read("../dist/space.js");
 const css = read("../dist/space.css");
 const sw = read("../dist/sw.js");
+const spatialModel = read("../dist/spatial-model.js");
 const data = JSON.parse(read("../dist/data/grade-progression.json"));
 
 test("relationship and grade observation share the existing guide panel", () => {
@@ -177,4 +178,32 @@ test("grade-node selection enters the original graph through its in-place node s
   assert.match(space, /setObservationMode\('relationship'\);choose\(target\.key,\{openLesson:false,inPlace:true\}\)/);
   assert.match(space, /scene\.select\(key\)/);
   assert.match(css, /body\[data-observation-mode="grade"\] \.focus-card\{display:none!important\}/);
+});
+
+
+test("the original node detail exposes its real grade position and routes back to the same pack", () => {
+  assert.match(space, /function renderGradeNodePosition\(o\)/);
+  assert.match(space, /gradeNodeMappingsById\.get\(o\.id\)/);
+  assert.match(space, /mapping\.curriculum\.primaryStages/);
+  assert.match(space, /mapping\.curriculum\.beyondPrimary/);
+  assert.match(space, /mapping\.curriculum\.evidenceLevelLabel/);
+  assert.match(space, /grade-view-node/);
+  assert.match(space, /grade-view-pack/);
+  assert.match(space, /function revealGradeNode\(nodeId\)/);
+  assert.match(space, /expandedGradePackId=node\.packId/);
+  assert.match(space, /scrollIntoView\(\{block:'nearest'\}\)/);
+  assert.match(space, /renderGradeNodePosition\(o\)/);
+  assert.match(css, /\.grade-node-position\{/);
+});
+
+test("grade mode, selected year and expanded pack are validated and saved with the original map view", () => {
+  assert.match(space, /observationMode:worldLayout==='network'\?observationMode:'relationship'/);
+  assert.match(space, /selectedGrade,expandedGradePackId/);
+  assert.match(space, /observationMode=worldLayout==='network'\?stored\.observationMode:'relationship'/);
+  assert.match(space, /setObservationMode\(observationMode\)/);
+  assert.match(space, /selectedGrade=grade;renderGradeObservation\(\);scheduleSave\(\)/);
+  assert.match(space, /renderGradeObservation\(\);scheduleSave\(\)/);
+  assert.match(spatialModel, /observationMode:\['relationship','grade'\]\.includes\(raw\.observationMode\)\?raw\.observationMode:'relationship'/);
+  assert.match(spatialModel, /Number\.isInteger\(raw\.selectedGrade\)/);
+  assert.match(spatialModel, /space\.packs\.has\(raw\.expandedGradePackId\)/);
 });

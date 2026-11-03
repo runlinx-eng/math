@@ -71,6 +71,30 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(await page.locator('.grade-domain-node-link[data-node-id="mt_s2mfRBoTal"]').getAttribute('aria-current')==='true','the same node identity remains selected in the grade list');
   check((await pose())===beforeNodeSelection,'switching back to grade observation still preserves the original map pose');
   check((await pose())===originalPose,'mode, year selection and expand/collapse preserve the exact map camera and node positions');
+
+  // A2-3 batch 3: reverse navigation from the original node detail to its grade group.
+  await page.locator('[data-action="observation-mode"][data-mode="relationship"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='relationship'&&document.querySelector('#focus-card .grade-node-position'));
+  const positionText=await page.locator('#focus-card .grade-node-position').innerText();
+  check(positionText.includes('1—2年级：main')&&positionText.includes('3—4年级：extension')&&positionText.includes('5—6年级：未映射'),'the original node detail shows all real primary-stage roles');
+  check(positionText.includes('证据：Direct')&&positionText.includes('所属知识群：'),'the original detail keeps evidence separate and names the source knowledge group');
+  await page.locator('#focus-card [data-action="grade-view-node"][data-node-id="mt_s2mfRBoTal"]').click();
+  await page.waitForFunction(()=>document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_s2mfRBoTal');
+  check(await page.locator('#grade-pack-detail-add-subtract').isVisible(),'the reverse entry expands the node’s original knowledge group');
+  check(await page.locator('[data-action="grade-select"][data-grade="6"]').getAttribute('aria-pressed')==='true','reverse navigation preserves the user’s selected year');
+  check(await page.locator('.grade-domain-node-link[data-node-id="mt_s2mfRBoTal"]').getAttribute('aria-current')==='true','reverse navigation preserves the same node identity');
+  await page.waitForFunction(()=>{
+    const values=Object.keys(localStorage).filter(key=>/view/i.test(key)).map(key=>{try{return JSON.parse(localStorage.getItem(key));}catch{return null;}});
+    return values.some(view=>view?.observationMode==='grade'&&view.selectedGrade===6&&view.expandedGradePackId==='add-subtract'&&view.selected==='node:mt_s2mfRBoTal');
+  });
+  const beforeReloadPose=await pose();
+  await page.reload();
+  await page.waitForFunction(()=>window.mathSpace&&document.body.dataset.observationMode==='grade'&&mathSpace.snapshot().selected==='node:mt_s2mfRBoTal'&&!document.querySelector('#grade-observation-view').hidden);
+  await page.locator('#grade-pack-detail-add-subtract').waitFor();
+  check(await page.locator('[data-action="grade-select"][data-grade="6"]').getAttribute('aria-pressed')==='true','reload restores the selected year');
+  check(await page.locator('.grade-domain-node-link[data-node-id="mt_s2mfRBoTal"]').getAttribute('aria-current')==='true','reload restores the selected node in its original knowledge group');
+  check((await pose())===beforeReloadPose,'reload restores the saved map camera and original node coordinates');
+
   await page.screenshot({path:path.join(out,'desktop-grade-matrix.png'),fullPage:false});
   await page.locator('[data-action="observation-mode"][data-mode="relationship"]').click();
   check(await page.locator('#network-view-title').isVisible()&&await page.locator('#grade-observation-view').isHidden(),'returning to relationship panorama restores the original guide content');
