@@ -8,8 +8,8 @@ const source=JSON.parse(fs.readFileSync(new URL('../dist/data/math.json',import.
 const byId=new Map(source.nodes.map(n=>[n.id,n]));
 const samples=Object.entries(CONCEPT_EXPLANATIONS);
 
-test('fifty exact-source explanation samples preserve identities and distinct concept goals',()=>{
-  assert.equal(samples.length,50);
+test('fifty-five exact-source explanation samples preserve identities and distinct concept goals',()=>{
+  assert.equal(samples.length,55);
   for(const [id,copy] of samples){
     assert.ok(byId.has(id),'sample must reference source node: '+id);
     assert.equal(conceptHelpFor(id),copy);
@@ -223,4 +223,30 @@ test('first five researched drafts preserve source evidence and mathematical bou
   assert.match(statistical.example,/典型值约9小时.*不表示每个人都睡9小时/);
   assert.match(statistical.counterexample,/我们班有多少名学生.*固定人数/);
   assert.match(statistical.counterexample,/同一个人这一周每天睡多久.*答案也可能变化/);
+});
+
+
+test('second-batch first five explanations preserve source-specific mathematical goals and boundaries',()=>{
+  const angles=conceptHelpFor('mt_oqziWKry-L');
+  assert.match(angles.definition,/360°.*180°.*对顶角.*相等/);
+  assert.match(angles.example,/120°.*95°.*145°.*4×90°＝360°.*270°/);
+  assert.match(angles.why,/平角.*180°.*周角.*360°/);
+  const place=conceptHelpFor('mt_aPBzD28_mT');
+  assert.match(place.definition,/个位.*十位.*百位.*100a＋10b＋c/);
+  assert.match(place.example,/362.*300.*60.*2.*706.*700.*0.*6/);
+  assert.match(place.counterexample,/706 不是 7＋0＋6＝13/);
+  const probability=conceptHelpFor('mt_3fwYu7imd4');
+  assert.match(probability.definition,/互不重叠.*概率之和等于 1.*P\(不发生 A\)＝1－P\(A\)/);
+  assert.match(probability.example,/0.20.*0.35.*0.15.*0.30.*0.65.*1\/6.*5\/6/);
+  assert.match(probability.tryIt,/漏掉一种颜色/);
+  const equation=conceptHelpFor('mt_QhFEDyIwSO');
+  assert.match(equation.definition,/最高次数为 1.*分数或负数系数.*未知数/);
+  assert.match(equation.example,/2x＋1＝x＋8.*x＝7/);
+  assert.match(equation.tryIt,/−\(1\/2\)\(x－4\)＋3＝2/);
+  assert.match(equation.counterexample,/只改变了一边/);
+  const statistics=conceptHelpFor('mt_XSXnTQoQ4l');
+  assert.match(statistics.definition,/平均数.*中位数.*众数.*极差.*比较两组观测数据/);
+  assert.match(statistics.example,/平均数是 6.*中位数是 5.*众数是 5.*极差是 8/);
+  assert.match(statistics.example,/甲班.*中位数是 7.*极差是 9－6＝3.*乙班.*中位数是 8.*极差是 10－5＝5/);
+  assert.match(statistics.tryIt,/分别求两组的中位数和极差/);
 });

@@ -1,4 +1,4 @@
-// Fifty-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
+// Fifty-five-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
@@ -28,7 +28,10 @@ const ids=[
   ['positional-language','mt_qeZYF6HZ4o'],['sorting-data','mt_ylXdiVRAYv'],
   ['collect-data','mt_ebQURBOsM5'],['compare-data-displays','mt__yvsKKp3TS'],
   ['estimate-capacity','mt_NSC3LT_-ch'],['halves-quarters-eighths','mt_gC-6JXAG5S'],
-  ['statistical-questions','mt_iykH2P5oFq']
+  ['statistical-questions','mt_iykH2P5oFq'],
+  ['angle-sums','mt_oqziWKry-L'],['three-digit-place-value','mt_aPBzD28_mT'],
+  ['probability-complements','mt_3fwYu7imd4'],['linear-equations','mt_QhFEDyIwSO'],
+  ['mean-and-range','mt_XSXnTQoQ4l']
 ];
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
@@ -42,7 +45,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:[ids[2],ids[4],ids[8],ids[9],ids[12],ids[13],ids[14],ids[15],ids[16],ids[17],ids[18],ids[19],ids[20],ids[21],ids[22],ids[23],ids[24],ids[25],ids[26],ids[27],ids[28],ids[29],ids[30],ids[31],ids[32],ids[33],ids[34],ids[35],ids[36],ids[37],ids[38],ids[39],ids[40],ids[41],ids[42],ids[43],ids[44],ids[45],ids[46],ids[47],ids[48],ids[49]];
+   const cases=slug==='desktop'?ids:ids.slice(2);
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
