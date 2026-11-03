@@ -25,7 +25,7 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map();
+let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map(),gradePositionLoadTimer=null;
 const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
 const GRADE_ROLE_LABELS=Object.freeze({main:'主要',extension:'延伸',transition:'过渡'});
 const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
@@ -341,15 +341,19 @@ function loadGradeObservation(){
   });
 }
 function setObservationMode(mode){
-  const next=mode==='grade'?'grade':'relationship';
+  const next=mode==='grade'?'grade':'relationship',changed=next!==observationMode;
   observationMode=next;
   document.body.dataset.observationMode=next;
   const guide=$('#network-guide'),grade=$('#grade-observation-view');
   if(guide)guide.querySelectorAll(':scope > :not(#observation-mode-switch):not(#grade-observation-view)').forEach(item=>{item.hidden=next!=='relationship';});
   if(grade)grade.hidden=next!=='grade';
   document.querySelectorAll('[data-action="observation-mode"]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===next)));
-  if(next==='grade')loadGradeObservation();
-  renderFocus();renderLocation();scheduleSave();
+  if(next==='grade'){
+    if(gradePositionLoadTimer){clearTimeout(gradePositionLoadTimer);gradePositionLoadTimer=null;}
+    loadGradeObservation();
+  }
+  if(changed&&next==='relationship')renderFocus();
+  renderLocation();scheduleSave();
 }
 
 function revealGradeNode(nodeId){
@@ -464,10 +468,15 @@ function renderGradeNodePosition(o){
   if(worldLayout!=='network')return '';
   const packName=space.packs.get(o.packId)?.title||o.packId||'未记录';
   if(!gradeProgressionData){
-    ensureGradeProgressionData().then(()=>{if(scene?.selected===o.key&&observationMode==='relationship')renderFocus();}).catch(()=>{
-      const host=$('#focus-card .grade-node-position');
-      if(host&&scene?.selected===o.key)host.innerHTML='<h3>小学阶段位置</h3><p>阶段信息暂时无法读取；原知识点和关系仍可继续查看。</p>';
-    });
+    if(gradePositionLoadTimer)clearTimeout(gradePositionLoadTimer);
+    gradePositionLoadTimer=setTimeout(()=>{
+      gradePositionLoadTimer=null;
+      if(scene?.selected!==o.key||journeyOpen||observationMode!=='relationship')return;
+      ensureGradeProgressionData().then(()=>{if(scene?.selected===o.key&&!journeyOpen&&observationMode==='relationship')renderFocus();}).catch(()=>{
+        const host=$('#focus-card .grade-node-position');
+        if(host&&scene?.selected===o.key&&!journeyOpen)host.innerHTML='<h3>小学阶段位置</h3><p>阶段信息暂时无法读取；原知识点和关系仍可继续查看。</p>';
+      });
+    },800);
     return '<section class="grade-node-position"><h3>小学阶段位置</h3><p>正在读取节点课程阶段信息…</p></section>';
   }
   const thinking=gradeProgressionData.specialRisks.thinkingNodes.ids.includes(o.id);

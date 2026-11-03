@@ -207,3 +207,11 @@ test("grade mode, selected year and expanded pack are validated and saved with t
   assert.match(spatialModel, /Number\.isInteger\(raw\.selectedGrade\)/);
   assert.match(spatialModel, /space\.packs\.has\(raw\.expandedGradePackId\)/);
 });
+
+
+test("grade-position data loading is deferred and does not compete with an immediately opened learning activity", () => {
+  assert.match(space, /gradePositionLoadTimer=setTimeout\(\(\)=>/);
+  assert.match(space, /journeyOpen\|\|observationMode!=='relationship'/);
+  assert.match(space, /if\(changed&&next==='relationship'\)renderFocus\(\)/);
+  assert.match(space, /clearTimeout\(gradePositionLoadTimer\)/);
+});
