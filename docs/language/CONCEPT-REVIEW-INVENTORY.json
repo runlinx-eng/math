@@ -13,7 +13,7 @@
       "teaching-research.json": "1c98d5aa410e3fd3b348ddf4d57c80076e06e9adc57fe17eb7a9f92ed27da9c3"
     },
     "explanationFile": "dist/concept-explanations.js",
-    "explanationBlobSha": "da9c9461fbfffc237cab9676d4c8702c0e750a6e",
+    "explanationBlobSha": "0e1bfa505fd888f05527a859d70e34a7cffd08b3",
     "nameAuditFile": "docs/language/NODE-NAME-AUDIT.json",
     "nameAuditBlobSha": "1c2624a8a8446263bf22a4d8268dd17433390c2b"
   },
@@ -172,7 +172,10 @@
     "firstFiveDraftPendingIndependentReview": 5,
     "secondBatchFirstFiveDraftPendingIndependentReview": 5,
     "secondBatchSecondFiveDraftPendingIndependentReview": 5,
-    "secondBatchTotalDraftPendingIndependentReview": 10
+    "secondBatchTotalDraftPendingIndependentReview": 10,
+    "secondBatchAiCrossReviewCompleted": 10,
+    "secondBatchAiCrossReviewCorrected": 5,
+    "secondBatchAiCrossReviewNoChange": 5
   },
   "statusDefinitions": {
     "hasResearchFalse": "来源数据的 hasResearch 标记为 false；这表示需要先核查研究依据，不等于已经证明不存在任何外部研究资料。",
@@ -182,9 +185,11 @@
     "independentMathReview": "所有节点当前均未记录已完成的独立数学复核。",
     "childUnderstanding": "所有节点当前均未记录真实儿童理解与迁移测试。",
     "firstFiveDraftPendingIndependentReview": "首批5个解释草稿已写入解释模块；独立数学复核和儿童理解测试尚未完成。",
-    "secondBatchFirstFiveDraftPendingIndependentReview": "第二批第一组5个已有研究标记的节点已完成来源字段核对、解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。",
-    "secondBatchSecondFiveDraftPendingIndependentReview": "第二批第二组5个已有研究标记的节点已完成来源字段核对、解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。",
-    "secondBatchTotalDraftPendingIndependentReview": "第二批共10个节点已完成解释起草和AI自检；独立数学复核与儿童理解测试尚未完成。"
+    "secondBatchFirstFiveDraftPendingIndependentReview": "第二批第一组5个已有研究标记节点已完成来源核对、解释起草、AI自检和AI交叉复核；独立数学教研复核与儿童理解测试尚未完成。",
+    "secondBatchSecondFiveDraftPendingIndependentReview": "第二批第二组5个已有研究标记节点已完成来源核对、解释起草、AI自检和AI交叉复核；独立数学教研复核与儿童理解测试尚未完成。",
+    "secondBatchTotalDraftPendingIndependentReview": "第二批共10个节点已完成解释起草、AI自检和AI交叉复核；独立数学教研复核与儿童理解测试尚未完成。",
+    "aiSelfCheck": "起草阶段对自身草稿进行的模型自检；不代表独立复核。",
+    "aiCrossReview": "以新的审查视角复核数学准确性、教学有效性和来源边界；仍属于AI复核，不等于独立教研人员验收。"
   },
   "nodes": [
     {
@@ -559,16 +564,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_second_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_no_change",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-2",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -4895,16 +4905,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_second_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_after_correction",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-2",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -5460,16 +5475,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_first_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_first_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_no_change",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-1",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -8386,16 +8406,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_second_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_after_correction",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-2",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -9390,16 +9415,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_first_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_first_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_after_correction",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-1",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -18202,16 +18232,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_first_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_first_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_no_change",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-1",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -26617,16 +26652,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_second_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_no_change",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-2",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -30554,16 +30594,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_second_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_second_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_after_correction",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-2",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -33308,16 +33353,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_first_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_first_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_after_correction",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-1",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {
@@ -36084,16 +36134,21 @@
       },
       "explanationReview": {
         "status": "sample_present",
-        "calibrationStatus": "second_batch_first_five_draft_ai_self_checked_pending_independent_review",
+        "calibrationStatus": "second_batch_first_five_ai_cross_review_completed_pending_independent_review",
         "visualStatus": "no_svg_currently",
         "independentMathReviewStatus": "not_completed",
-        "childUnderstandingStatus": "not_tested"
+        "childUnderstandingStatus": "not_tested",
+        "aiSelfCheckStatus": "completed",
+        "aiCrossReviewStatus": "completed",
+        "aiCrossReviewResult": "passed_no_change",
+        "aiCrossReviewDate": "2026-11-03",
+        "aiCrossReviewRecord": "docs/language/CONCEPT-SECOND-BATCH-REVIEW-2026-11-03.md"
       },
       "researchTriage": {
         "sourceFlag": "hasResearch_true",
         "status": "source_flag_true_but_independent_review_still_required"
       },
-      "contentReviewStatus": "ai_draft_self_checked_pending_independent_review",
+      "contentReviewStatus": "ai_cross_review_completed_pending_independent_review",
       "batch": "second-explanation-batch-2026-11-03-group-1",
       "nextAction": "independent_content_and_math_review_before_acceptance",
       "relationships": {

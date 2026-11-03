@@ -232,6 +232,7 @@ test('second-batch first five explanations preserve source-specific mathematical
   assert.match(angles.example,/120°.*95°.*145°.*4×90°＝360°.*270°/);
   assert.match(angles.why,/平角.*180°.*周角.*360°/);
   const place=conceptHelpFor('mt_aPBzD28_mT');
+  assert.match(place.definition,/数字是 0 到 9 的记号.*数位是数字在数中的位置.*位值是这个数字在该位置表示的实际数量/);
   assert.match(place.definition,/个位.*十位.*百位.*百位上的数字不能是 0/);
   assert.match(place.example,/362.*300.*60.*2.*706.*700.*0.*6/);
   assert.match(place.counterexample,/706 不是 7＋0＋6＝13/);
@@ -245,10 +246,12 @@ test('second-batch first five explanations preserve source-specific mathematical
   assert.match(equation.tryIt,/−\(1\/2\)\(x－4\)＋3＝2/);
   assert.match(equation.counterexample,/只改变了一边/);
   const statistics=conceptHelpFor('mt_XSXnTQoQ4l');
+  assert.match(statistics.definition,/算术平均数.*选择中心指标.*极端值影响/);
   assert.match(statistics.definition,/平均数.*中位数.*众数.*极差.*比较两组观测数据/);
   assert.match(statistics.example,/平均数是 30÷5＝6.*中位数是 5.*众数是 5.*极差是 11－3＝8/);
   assert.match(statistics.example,/甲班.*中位数是 7.*极差是 9－6＝3.*乙班.*中位数是 8.*极差是 10－5＝5/);
   assert.match(statistics.tryIt,/分别求两组的中位数和极差/);
+  assert.match(statistics.tryIt,/选一个最适合表达.*典型水平.*说明理由/);
 });
 
 
@@ -263,15 +266,17 @@ test('second-batch second five explanations preserve source-specific goals and m
   assert.match(representations.example,/3 个计数片.*2 个.*3＋2＝5.*5 个苹果.*划掉 2 个.*5－2＝3/);
   assert.match(representations.tryIt,/手指、小物品或图画/);
   const scaled=conceptHelpFor('mt_r8XnXwRA6g');
+  assert.match(scaled.definition,/一个图形符号.*固定数量.*条形图.*柱顶.*坐标轴.*从 0 开始/);
   assert.match(scaled.definition,/一个图形符号.*固定数量.*图例和坐标轴刻度/);
   assert.match(scaled.example,/每格代表 5 只宠物.*足球.*网球.*20 人.*15 人.*35 票/);
   assert.match(scaled.tryIt,/每格代表 2 本书.*6 本.*10 本.*4 本/);
   const algebra=conceptHelpFor('mt_KwdjWEmMNo');
-  assert.match(algebra.definition,/ab.*3y.*a².*a\/b.*b 不能为 0.*系数可以是分数/);
+  assert.match(algebra.definition,/ab.*3y.*a².*a\/b.*b 不能为 0.*系数是与字母相乘的数.*系数也可以是分数/);
   assert.match(algebra.example,/3y.*a².*\(1\/2\)x.*a\/b/);
   assert.match(algebra.counterexample,/3y 不是 3＋y.*a² 不是 2a/);
   const estimate=conceptHelpFor('mt_ilPrU0cbtT');
   assert.match(estimate.definition,/近似结果.*精确计算.*精度/);
   assert.match(estimate.example,/487×23.*500×20＝10000.*487×23＝11201/);
   assert.match(estimate.tryIt,/198×31.*200.*31.*30.*3980÷8/);
+  assert.match(estimate.tryIt,/1120.*是否合理.*估算/);
 });
