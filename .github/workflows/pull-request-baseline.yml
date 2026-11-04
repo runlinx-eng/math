@@ -63,6 +63,8 @@ jobs:
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
           node --check scripts/build_grade_progression_data.mjs
+          node --check scripts/build_grade_panorama_lite.mjs
+          node scripts/build_grade_panorama_lite.mjs --check
 
       - name: Run active Node.js unit and invariant tests
         shell: bash
