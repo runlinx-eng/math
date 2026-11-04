@@ -28,7 +28,7 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map(),gradePositionLoadTimer=null,gradeSpatial=null,gradeSpatialEnabled=false,hoveredGradeStageId=null,selectedGradeStageId=null;
+let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map(),gradePositionLoadTimer=null,gradeSpatial=null,gradeSpatialEnabled=false,hoveredGradeStageId=null,selectedGradeStageId=null,selectedGradePackId=null;
 const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
 const GRADE_ROLE_LABELS=Object.freeze({main:'主要',extension:'延伸',transition:'过渡'});
 const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
@@ -212,6 +212,11 @@ function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network
   if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
   else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
+  if(observationMode==='grade'&&gradeSpatialEnabled){
+    if(object.kind==='pack')selectedGradePackId=object.id;
+    else if(object.kind==='node')selectedGradePackId=object.packId;
+    updateGradeSpatialFocus();renderGradeSpatialSummary();
+  }
   renderFocus();renderLocation();scheduleSave();
 }
 function overview({animate=true,saveHistory=true}={}){if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();if(saveHistory)remember();closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.overview(animate);setHash(null);renderFocus();renderLocation();scheduleSave();}
@@ -238,6 +243,14 @@ function updateGradeSpatialFocus(){
     scene?.setGradeSpatialFocus(null);return;
   }
   const stage=gradeSpatial.metadata.stages.find(item=>item.id===(hoveredGradeStageId||selectedGradeStageId));
+  if(hoveredGradeStageId&&stage){
+    scene.setGradeSpatialFocus({kind:'stage',stageId:stage.id,nodeIds:stage.nodeIds,packIds:stage.packIds});return;
+  }
+  if(selectedGradePackId){
+    const pack=space.packs.get(selectedGradePackId);
+    if(pack){scene.setGradeSpatialFocus({kind:'pack',stageId:stage?.id||null,
+      nodeIds:pack.nodeIds.filter(id=>gradeSpatial.metadata.nodes.has(id)),packIds:[pack.id]});return;}
+  }
   if(!stage){scene.setGradeSpatialFocus(null);return;}
   scene.setGradeSpatialFocus({kind:'stage',stageId:stage.id,nodeIds:stage.nodeIds,packIds:stage.packIds});
 }
@@ -246,7 +259,7 @@ function hoverGradeStage(stageId){
 }
 function selectGradeStage(grade){
   if(!Number.isInteger(grade)||grade<1||grade>6)return;
-  selectedGrade=grade;selectedGradeStageId=gradeStageForSelected()?.id||null;
+  selectedGrade=grade;selectedGradeStageId=gradeStageForSelected()?.id||null;selectedGradePackId=null;
   if(scene?.selected)scene.select(null);
   renderFocus();renderLocation();gradeSpatial?.applyGrade(grade);
   updateGradeSpatialFocus();renderGradeObservation();scheduleSave();
@@ -805,6 +818,10 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   else if(o.kind==='pack'){const mapped=o.nodeIds.filter(id=>space.relationshipIds?.has(id)).length,extra=o.nodeIds.length-mapped;body=`<p>${esc(o.question)}</p><p class="quiet">${scene.relationshipMap?`${mapped} 个地图知识点${extra?` · ${extra} 个数学思维内容`:''}`:`${o.nodeIds.length} 个相关内容`}${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','查看本群内容',`data-id="${o.id}"`)}</div>`;}
   else if(o.kind==='theme'&&scene.relationshipMap)body=themeOverview(o);
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
+  if(observationMode==='grade'&&gradeSpatialEnabled&&worldLayout==='network'){
+    if(o.kind==='pack')body=renderGradeSpatialPackNodes(o)+body;
+    else if(o.kind==='node')body=renderGradeSpatialNodeBreadcrumb(o)+body;
+  }
   card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
 }
 function openJourney(step,{restore=false}={}){
@@ -934,7 +951,14 @@ document.addEventListener('click',event=>{
     gradeSpatialEnabled=!gradeSpatialEnabled;
     document.body.dataset.gradeSpatial=String(observationMode==='grade'&&gradeSpatialEnabled);
     gradeSpatial?.applyGrade(selectedGrade);updateGradeSpatialFocus();renderGradeObservation();scene.dirty=true;
-  }else if(action==='grade-pack-toggle'){
+  }else if(action==='grade-space-pack'){
+     const packId=el.dataset.packId;if(space.packs.has(packId)){selectedGradePackId=packId;choose('pack:'+packId,{inPlace:true,openLesson:false});}
+   }else if(action==='grade-space-node-select'){
+     const id=el.dataset.nodeId;if(space.nodes.has(id))choose('node:'+id,{inPlace:true,openLesson:false});
+   }else if(action==='grade-space-return-pack'){
+     const id=el.dataset.packId;if(space.packs.has(id))choose('pack:'+id,{inPlace:true,openLesson:false});
+   }else if(action==='grade-space-return-stage')selectGradeStage(selectedGrade);
+   else if(action==='grade-pack-toggle'){
     expandedGradePackId=expandedGradePackId===el.dataset.packId?null:el.dataset.packId;
     renderGradeObservation();scheduleSave();
   }else if(action==='grade-node-select'){
@@ -1001,6 +1025,21 @@ function syncHoverHeader(){
     button.dataset.hover=String(button.dataset.id===parentId);
   renderNetworkGuide();
 }
+// Transient hover leaves the stored selected stage and the camera unchanged.
+$('#grade-observation-view').addEventListener('pointerover',event=>{
+  if(event.pointerType==='touch')return;
+  const grade=event.target.closest('[data-action="grade-select"]');
+  if(grade&&!grade.contains(event.relatedTarget))hoverGradeStage('stage-'+Math.ceil(Number(grade.dataset.grade)/2));
+  const pack=event.target.closest('[data-action="grade-space-pack"]');
+  if(pack&&!pack.contains(event.relatedTarget))scene?.setMapHover('pack:'+pack.dataset.packId);
+});
+$('#grade-observation-view').addEventListener('pointerout',event=>{
+  if(event.pointerType==='touch')return;
+  const grade=event.target.closest('[data-action="grade-select"]');
+  if(grade&&!grade.contains(event.relatedTarget))hoverGradeStage(null);
+  const pack=event.target.closest('[data-action="grade-space-pack"]');
+  if(pack&&!pack.contains(event.relatedTarget))scene?.setMapHover(null);
+});
 function highlightThemeHeader(id){
   scene?.setThemeHover(scene.relationshipMap&&space.themes.has(id)?id:null);
 }
@@ -1068,7 +1107,7 @@ async function boot(){try {
   $('[data-action="switch-world"]').textContent=worldLayout==='network'?'原有空间':'关系全图';
   $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}" aria-pressed="false"`)).join(''):'';
   if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
-  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>{if(guideVisible)return;return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
+  scene=new SpatialScene($('#space-canvas'),space,{onSelect:key=>choose(key,observationMode==='grade'?{inPlace:true,openLesson:false}:{}),onOpen:id=>{if(guideVisible)return;return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
   gradeSpatial=worldLayout==='network'?new GradeSpatialCards(scene,space,{onStageHover:hoverGradeStage}):null;
   const defaultMode=worldLayout==='network'?'rotate':'pan';scene.setMode(defaultMode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===defaultMode)));let stored=null;try{stored=parseView(JSON.parse(readStored(worldLayout==='network'?(chosenNetworkVersion===RELATIONSHIP_VERSION?RELATIONSHIP_VIEW_KEY:NETWORK_VIEW_KEY):VIEW_KEY)),space);if(!stored&&worldLayout==='network'&&chosenNetworkVersion===49){const old=parseView(JSON.parse(readStored(LEGACY_NETWORK_VIEW_KEY)),space);if(old&&(old.journeyOpen||old.panels.length))stored=old;}}catch{}
   if(stored){selectedGrade=stored.selectedGrade;expandedGradePackId=stored.expandedGradePackId||null;observationMode=worldLayout==='network'?stored.observationMode:'relationship';}
