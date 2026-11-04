@@ -934,3 +934,19 @@ body[data-world="network"][data-observation-mode="grade"] #observation-mode-swit
   body[data-world="network"][data-observation-mode="grade"] .network-guide{left:12px;top:93px;width:min(365px,calc(100vw - 40px))}
   body[data-world="network"][data-observation-mode="grade"][data-grade-matrix-expanded="true"] .network-guide{width:min(650px,calc(100vw - 40px))}
 }
+
+/* Spatial stage/group/node drill-down reuses the genuine, scrollable detail card.
+   The old grade-matrix-only mode hid it; allow it only for the spatial interaction. */
+body[data-world="network"][data-observation-mode="grade"][data-grade-spatial="true"] .focus-card:not([hidden]){
+  display:block!important;position:fixed;right:90px;left:auto;top:153px;
+  width:min(334px,calc(100vw - 485px));max-height:calc(100vh - 255px);
+  overflow-y:auto;z-index:24;background:#fffef9f5;
+}
+body[data-world="network"][data-observation-mode="grade"][data-grade-spatial="true"] .focus-card[data-kind="node"]:not([hidden]){
+  width:min(342px,calc(100vw - 485px));
+}
+@media(max-width:1100px){
+ body[data-world="network"][data-observation-mode="grade"][data-grade-spatial="true"] .focus-card:not([hidden]){
+  right:62px;width:min(300px,calc(100vw - 440px));
+ }
+}
