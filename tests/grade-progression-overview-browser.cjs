@@ -21,6 +21,9 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   await page.waitForFunction(()=>!document.querySelector('#grade-observation-view')?.hidden&&document.querySelectorAll('.grade-pack-row').length===23);
   check(await page.locator('#network-view-title').isHidden(),'grade mode hides the original guide content without wrapping its grid children');
   check(await page.locator('#grade-observation-view').isVisible(),'grade mode opens inside the existing guide panel');
+  check(await page.locator('#grade-matrix-panel').isHidden(),'the complete matrix starts collapsed');
+  await page.locator('[data-action="grade-matrix-toggle"]').click();
+  check(await page.locator('#grade-matrix-panel').isVisible(),'the complete curriculum matrix is still expandable');
   check(await page.locator('[data-action="grade-select"]').count()===6,'all six year-entry buttons are present');
   check(await page.locator('.grade-theme-row').count()===5,'all five theme groups are present');
   check(await page.locator('.grade-pack-row').count()===23,'all 23 knowledge groups are present');
