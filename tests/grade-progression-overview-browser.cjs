@@ -34,6 +34,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   check(JSON.stringify(actualPacks)===JSON.stringify(expectedPacks),'all 69 matrix labels match the source pack-stage judgements exactly');
   const years=['stage-1','stage-1','stage-2','stage-2','stage-3','stage-3'];
   for(let grade=1;grade<=6;grade++){
+   await page.locator('.grade-year-controls').evaluate(el=>el.open=true);
    await page.locator('[data-action="grade-select"][data-grade="'+grade+'"]').click();
    await page.waitForFunction(stage=>document.querySelector('.grade-current-stage')?.dataset.selectedStage===stage,years[grade-1]);
    check(await page.locator('[data-action="grade-select"][data-grade="'+grade+'"]').getAttribute('aria-pressed')==='true','year '+grade+' has a clear selected state');
