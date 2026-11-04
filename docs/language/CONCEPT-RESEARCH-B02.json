@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "branch": "feat/language-concept-audit-v1",
+  "batchId": "B02",
+  "scope": "对一个无解释样板的知识地图节点完成外部课程标准、课程资源、评估任务与测量估计研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
+  "method": {
+    "rules": [
+      "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
+      "官方课程标准用于核对目标范围，不等同于教学效果证据。",
+      "课程资源和评估任务用于识别可行的学习活动与取证方式，不冒充同行评审研究。",
+      "研究综述与实证研究记录其研究对象、设计和外推限制；相邻年龄或其他测量属性的研究只作设计参考。",
+      "保持容积（容器可容纳的最大量）与当前液体体积的项目术语区分；不把固体体积估计并入本节点。",
+      "外部来源核查完成不等于解释起草、独立数学教研或儿童理解验收完成；taxonomy hasResearch=false 保持原值。"
+    ]
+  },
+  "summary": {
+    "nodesReviewed": 1,
+    "externalSourcesCatalogued": 6,
+    "officialCurriculumStandards": 1,
+    "officialCurriculumResources": 1,
+    "assessmentResources": 1,
+    "teachingResources": 1,
+    "empiricalStudiesOrReports": 1,
+    "researchReviews": 1,
+    "nodesWithExternalSourcesReviewed": 1,
+    "explanationDraftsCreated": 1,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
+  },
+  "sourceCatalog": [
+    {
+      "id": "SRC-01",
+      "title": "National curriculum in England: mathematics programmes of study — Year 5 Measurement",
+      "year": 2021,
+      "type": "official_curriculum_standard",
+      "url": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study",
+      "supports": "Year 5 statutory content includes estimating volume and capacity, for example using water; it also names conversion between litres and millilitres. This directly aligns with source standard uk-nc-2013:Ma5/3.1e.",
+      "limitation": "Defines curriculum scope and expected content, not the effectiveness of a particular teaching method."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Morning tea volumes — New Zealand Curriculum, Level 3",
+      "year": "Current online curriculum resource",
+      "type": "official_curriculum_resource",
+      "url": "https://newzealandcurriculum.tahurangi.education.govt.nz/morning-tea-volumes/5637166546.p",
+      "supports": "Learning outcomes include estimating and accurately measuring using litres and millilitres; recommends building a sense of 1 litre and 10 millilitres, using everyday containers as benchmarks, reading scales and discussing variation in estimates.",
+      "limitation": "A curriculum activity resource, not a controlled study. It sometimes uses volume and capacity interchangeably, so the project must retain the source node's explicit distinction between container capacity and current liquid amount."
+    },
+    {
+      "id": "SRC-03",
+      "title": "How many millilitres? — NZCER Assessment Resource Banks",
+      "year": "Online assessment resource",
+      "type": "assessment_resource",
+      "url": "https://arbs.nzcer.org.nz/resources/how-many-millilitres",
+      "supports": "Students first estimate the capacity of two containers, then fill each with water and measure using a one-litre jug marked in 100 mL intervals. This directly supports the estimate-then-check task structure.",
+      "limitation": "A formative assessment task, not evidence that the task alone improves learning; its 100 mL scale is suitable for the example containers but not for every small-capacity measurement."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Year 5 Summer Term Scheme of Learning — Volume, Step 4: Estimate capacity",
+      "year": 2022,
+      "type": "teaching_scheme",
+      "url": "https://assets.whiteroseeducation.com/new-schemes/Y5%20Summer%20Term%20Scheme%20of%20Learning.pdf",
+      "supports": "Distinguishes a jug's capacity from the amount of liquid currently in it; uses familiar 330 mL cans and 2 litre bottles as benchmarks; asks learners to estimate capacity from known partial contents and warns against inferring capacity from liquid height alone.",
+      "limitation": "A teaching scheme rather than an empirical study; useful for task design and common misconceptions, not causal claims about learning."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Framework for the Parallelized Development of Estimation Tasks for Length, Area, Capacity, and Volume in Primary School — A Pilot Study",
+      "authors": "Dana Farina Weiher",
+      "year": 2019,
+      "type": "peer_reviewed_empirical_pilot_study",
+      "url": "https://doi.org/10.31756/jrsmte.212",
+      "supports": "A written estimation test with 137 students in grades 3 and 4 used eight task types for each measure, including capacity and volume. Percentage deviations differed across measures and task types, supporting the need to examine task form and estimation accuracy separately.",
+      "limitation": "A pilot assessment study, not an instructional intervention; it does not prove that one benchmark-teaching sequence causes better capacity estimation."
+    },
+    {
+      "id": "SRC-06",
+      "title": "Measurement Estimation: Learning to Map the Route from Number to Quantity and Back",
+      "authors": "Elana Joram, Kaveri Subrahmanyam, Rochel Gelman",
+      "year": 1998,
+      "type": "peer_reviewed_research_review",
+      "url": "https://doi.org/10.3102/00346543068004413",
+      "supports": "The review frames skilled measurement estimation as moving between numerical measures and mental representations of magnitude. It cautions that instruction limited to isolated referent associations is incomplete and should help learners understand measurement scales and systems.",
+      "limitation": "A broad review of measurement estimation, not specific to litre/millilitre capacity or this exact age band."
+    }
+  ],
+  "records": [
+    {
+      "id": "mt_NSC3LT_-ch",
+      "title": "估计容积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "ageRange": [
+        9,
+        10
+      ],
+      "phase": 4,
+      "sourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "alignment": "The source standard uk-nc-2013:Ma5/3.1e aligns with Year 5 estimation of volume and capacity using water. The node's age band 9–10 is consistent with this scope. NZ curriculum and Year 5 teaching resources add concrete litre/millilitre benchmarks, estimate-then-measure activity design, and the capacity/current-liquid distinction.",
+      "research": "Weiher's pilot study with 137 grade 3–4 students shows that capacity and volume estimation accuracy varies by measure and task type; it supports varying task forms and checking estimates, not a claim about intervention effectiveness. Joram et al.'s review argues that measurement estimation requires mapping numeric units to mental magnitudes and understanding measurement systems, not merely memorizing isolated container examples. Curriculum resources and the NZCER assessment task supply age-adjacent activity and diagnostic designs.",
+      "coverageAudit": [
+        "Use all three source evidence prompts: choose among 30 mL, 300 mL and 3 L for a mug; estimate a jug by comparing with a 1 litre bottle and verify by filling; explain a 1 litre jug half full has 1 litre capacity but contains 500 mL of water.",
+        "Keep container capacity (the maximum it can hold when filled to the defined fill level) distinct from the volume of liquid currently inside.",
+        "Make benchmark reasoning visible: compare with familiar 330 mL, 1 L and 2 L containers; avoid unsupported guessing.",
+        "Select a measuring vessel whose scale intervals are appropriate to the amount being checked; a 100 mL graduation is too coarse to verify a 30 mL quantity accurately.",
+        "Keep solid-object volume estimation with 1 cm³ cubes out of this node; the source explicitly assigns it to the separate Counting Unit Cubes node."
+      ],
+      "designImplications": [
+        "Begin with familiar benchmark containers such as a 330 mL can, a 1 L bottle and a 2 L bottle; learners compare the unknown container's internal space with one or more references.",
+        "For the mug choice, 300 mL is the plausible order of magnitude; 30 mL is a small shot-sized amount and 3 L is far beyond an ordinary mug. Do not imply every mug has exactly 300 mL capacity.",
+        "For the jug task, estimate how many 1 L bottlefuls it could hold, then fill and measure. If the container exceeds the measuring jug, repeat pours and add the measured amounts.",
+        "Use a 1 L jug half full as a contrast case: capacity remains 1 L; the current amount of water is 500 mL.",
+        "Include containers with different shapes and equal current liquid amounts so learners do not infer capacity from liquid height alone.",
+        "Ask learners to compare estimate with measured result and explain the likely source of difference; estimation is reasoned approximation, not random guessing."
+      ],
+      "knownRisks": [
+        "Confusing a container's capacity with the amount of liquid currently in it.",
+        "Judging capacity from height or visible water level alone; a tall narrow container and a short wide container can have different capacities even at similar liquid heights.",
+        "Guessing without a benchmark or using a reference container with a very different scale.",
+        "Using a measuring jug whose graduation interval is too large for the quantity being checked.",
+        "Overfilling, spilling, or changing the fill line between containers changes the measurement procedure.",
+        "Confusing litres and millilitres, or dropping units when recording the result.",
+        "Expanding into solid volume measured with unit cubes, which belongs to a separate source node."
+      ],
+      "acceptanceEvidence": [
+        "The learner chooses a sensible unit and order of magnitude for a familiar or unfamiliar container and explains the estimate using a known benchmark.",
+        "The learner estimates a jug by comparing it with a 1 litre bottle and can verify the estimate by filling and measuring.",
+        "The learner uses repeated fills and adds the measured amounts when a container holds more than one measuring-jug load.",
+        "The learner explains that a half-full 1 litre jug has 1 litre capacity but contains 500 mL of water.",
+        "With a different-shaped container or a different starting liquid amount, the learner still distinguishes capacity from current contents and explains how to check the estimate."
+      ],
+      "relationshipBoundary": "Preserve the existing hard prerequisite mt_6oxQPNLHNv (measuring and calculating with standard measurement units), soft prerequisite mt_mFJ-2ZF6Tk (estimating and comparing measures), and soft successor mt_IuHa5UI5od. The earlier capacity-comparison node mt_zkFbMLpu3U is useful contextual comparison but is not a direct edge for this node. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    }
+  ]
+}

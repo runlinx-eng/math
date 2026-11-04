@@ -206,3 +206,14 @@ test('source fingerprints and all generated views are current and reproducible',
     {cwd:fileURLToPath(root), encoding:'utf8', timeout:10000});
   assert.equal(JSON.parse(output).mathTopics, 587);
 });
+
+test('historical research plan keeps its scope and preserves later editorial notes', () => {
+  const gaps=fs.readFileSync(new URL('docs/content-plan/RESEARCH-GAPS.md',root),'utf8');
+  const history=fs.readFileSync(new URL('docs/content-plan/RESEARCH-GAPS-20261103-manual.md',root),'utf8');
+  assert.match(gaps,/阶段 1 计划状态/);
+  assert.match(gaps,/CONCEPT-RESEARCH-TRIAGE\.md/);
+  assert.match(gaps,/RESEARCH-GAPS-20261103-manual\.md/);
+  assert.match(history,/B02 教学研究核查/);
+  assert.match(history,/先选择合适的容量单位和熟悉的参照物/);
+  assert.match(history,/B03 教学研究核查/);
+});

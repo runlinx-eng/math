@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "branch": "feat/language-concept-audit-v1",
+  "batchId": "B04",
+  "scope": "对一个无解释样板的知识地图节点完成课程标准、统计教育指南、政府教学活动与统计教育研究论文核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
+  "method": {
+    "rules": [
+      "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
+      "以预期数据变异为统计问题判定核心；不得用“是否涉及群体”“是否需要调查”或“是否为数字答案”替代定义。",
+      "明确总体、观测单位、变量与情境；区分总体和实际样本。",
+      "数值变量与类别变量都可能产生统计变异；单一摘要值仍概括一组可能不同的数据。",
+      "课程标准、教学活动和研究论文分别记录其证据性质与限制，不将课程目标冒充因果效果研究。",
+      "外部来源核查完成不等于解释起草、独立数学教研或儿童理解验收完成；taxonomy hasResearch=false 保持原值。"
+    ]
+  },
+  "summary": {
+    "nodesReviewed": 1,
+    "externalSourcesCatalogued": 5,
+    "officialStandards": 1,
+    "professionalGuidelines": 1,
+    "governmentTeachingActivities": 1,
+    "researchArticles": 1,
+    "curriculumTasks": 1,
+    "nodesWithExternalSourcesReviewed": 1,
+    "explanationDraftsCreated": 1,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
+  },
+  "sourceCatalog": [
+    {
+      "id": "SRC-01",
+      "title": "CCSS 6.SP.A.1 — Statistical Questions",
+      "type": "official_curriculum_standard",
+      "url": "https://www.thecorestandards.org/Math/Content/6/SP/A/1/",
+      "supports": "Defines a statistical question as one that anticipates variability in related data and accounts for it in the answer; contrasts an individual's age with students' ages.",
+      "limitation": "Defines the target standard, not an instructional-effect study."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Pre-K–12 Guidelines for Assessment and Instruction in Statistics Education II (GAISE II)",
+      "type": "professional_guideline",
+      "url": "https://www.amstat.org/docs/default-source/amstat-documents/gaiseiiprek-12_full.pdf",
+      "supports": "Requires an investigative question to specify the intended population and variable and anticipate variability; explains that a single summary value can represent a distribution of varying values.",
+      "limitation": "A professional guideline synthesizing research and expert judgment, not a single causal experiment."
+    },
+    {
+      "id": "SRC-03",
+      "title": "U.S. Census Bureau — What is a Statistical Question?",
+      "type": "government_teaching_activity",
+      "url": "https://www.census.gov/programs-surveys/sis/activities/math/statistical-question.html",
+      "supports": "Grade 6 activity asks students to distinguish statistical and non-statistical questions, formulate questions, collect data and draw conclusions.",
+      "limitation": "Describes activity goals and design, not an independent impact evaluation."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Arnold & Franklin — What Makes a Good Statistical Question?",
+      "year": 2021,
+      "type": "statistics_education_research_article",
+      "url": "https://doi.org/10.1080/26939169.2021.1877582",
+      "supports": "Distinguishes investigative questions from questions used in other stages of statistical problem solving and discusses criteria for good statistical questions.",
+      "limitation": "A conceptual/research discussion, not direct validation of this project's lesson."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Illustrative Mathematics — Identifying Statistical Questions",
+      "type": "curriculum_task",
+      "url": "https://tasks.illustrativemathematics.org/content-standards/6/SP/A/1/tasks/703",
+      "supports": "Provides grade 6 examples and non-examples, including days in March, dogs' ages and the proportion of students who like watermelons.",
+      "limitation": "A curriculum task and teacher commentary, not an independent empirical study."
+    }
+  ],
+  "records": [
+    {
+      "id": "mt_iykH2P5oFq",
+      "title": "提出统计问题",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "ageRange": [
+        11,
+        12
+      ],
+      "phase": 4,
+      "sourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05"
+      ],
+      "alignment": "CCSS 6.SP.A.1 directly matches the node's distinction between questions anticipating variable data and questions with one fixed answer. GAISE II adds precision about population, variable and variability.",
+      "research": "The CCSS standard provides the direct learning target. GAISE II specifies population, variable and expected variability. The Census Bureau's Grade 6 activity offers a matching identify/formulate/answer sequence. Arnold and Franklin clarify that investigative questions are one part of a broader statistical questioning process; this node should stay focused on formulating the initial question. Illustrative Mathematics provides suitable counterexamples.",
+      "coverageAudit": [
+        "Classify all four source examples and justify each by expected variability.",
+        "For a statistical question, name population, variable and expected variation; explain why a typical single-number summary still represents varying values.",
+        "Explain why a group-count question can be non-statistical and rewrite a personal journey question as a group statistical question."
+      ],
+      "revision": "No explanation sample created in this research pass. Defined the content boundaries and acceptance evidence for a later draft.",
+      "remaining": "Explanation drafting, independent mathematics/teaching review and child comprehension testing remain pending.",
+      "independentMathReviewStatus": "not_completed",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "childUnderstandingStatus": "not_tested"
+    }
+  ]
+}

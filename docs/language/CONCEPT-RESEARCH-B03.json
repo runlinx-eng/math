@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "branch": "feat/language-concept-audit-v1",
+  "batchId": "B03",
+  "scope": "对一个无解释样板的知识地图节点完成课程标准、课程资源与分数学习研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
+  "method": {
+    "rules": [
+      "先核对来源 description、全部 evidence、assessmentPrompt、ageRange、standards 与真实前后关系。",
+      "课程标准用于核对目标范围；课程资源用于识别教学活动；研究综述、研究报告和实践指南须记录证据强度及外推限制。",
+      "本节点聚焦同一个整体的等份划分、重复对半、单位分数与简单等值关系；不扩展到分数运算、通分、十进制转换或一般数轴比较。",
+      "必须区分等面积/等数量与形状全等；等份不要求每一部分形状相同，但要求面积或数量相等。",
+      "分数比较和等值关系必须保持同一个整体；不同大小的整体中，相同分数表示相同比例，不保证绝对面积或数量相同。",
+      "外部来源核查完成不等于解释起草、独立数学教研或儿童理解验收完成；taxonomy hasResearch=false 保持原值。"
+    ]
+  },
+  "summary": {
+    "nodesReviewed": 1,
+    "externalSourcesCatalogued": 4,
+    "officialCurriculumWorkSamples": 1,
+    "practiceGuides": 1,
+    "governmentTeachingResources": 1,
+    "empiricalResearchReports": 1,
+    "nodesWithExternalSourcesReviewed": 1,
+    "explanationDraftsCreated": 1,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 1
+  },
+  "sourceCatalog": [
+    {
+      "id": "SRC-01",
+      "title": "WS01 — Fractions, Version 9 Australian Curriculum, Mathematics Year 2",
+      "year": "Current online curriculum work sample",
+      "type": "official_curriculum_work_sample",
+      "url": "https://www.australiancurriculum.edu.au/resources/work-samples/mathematics/year-2/ws01-fractions",
+      "supports": "Directly lists AC9M2N03 (recognise one-half as one of two equal parts and connect halves, quarters and eighths through repeated halving) and AC9M2M02 (represent halves, quarters and eighths in shapes, objects and events). Annotations show folding/cutting, linear models, area models and linking fraction names to symbols.",
+      "limitation": "An official work sample and curriculum illustration, not a controlled study of learning effects."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Developing Effective Fractions Instruction for Kindergarten Through 8th Grade",
+      "authors": "Robert Siegler, Thomas Carpenter, Francis Fennell, David Geary, James Lewis, Yukari Okamoto, Laurie Thompson, Jonathan Wray",
+      "year": 2010,
+      "type": "evidence_based_practice_guide",
+      "url": "https://ies.ed.gov/ncee/WWC/PracticeGuide/15",
+      "supports": "Recommendation 1 supports building early fraction concepts from equal-sharing of sets and single whole objects, then extending sharing activities to ordering and equivalence. Recommendation 2 recommends number lines as a central representation for fractions as numbers.",
+      "limitation": "The guide rates Recommendation 1 as minimal evidence and Recommendation 2 as moderate evidence. The former is directly relevant to this node; the number-line recommendation is broader and should not be forced into this node's required scope."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Proportional Thinking Part 1: Early proportional thinking",
+      "authors": "NSW Department of Education",
+      "year": 2024,
+      "type": "government_teaching_resource",
+      "url": "https://education.nsw.gov.au/content/dam/main-education/en/home/teaching-and-learning/curriculum/literacy-and-numeracy/teaching-and-learning-resources/numeracy/proportional-thinking-part-1.pdf",
+      "supports": "Names equal-sized partitioning as the basis of fractional quantities, identifies creating quarters and eighths through repeated halving as an observable learner behaviour, and provides tasks on equivalent fractions and representations.",
+      "limitation": "A government professional-learning resource, not a causal intervention study; some tasks extend beyond the age and scope of this one node."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Expanding the CBAL Mathematics Assessments to Elementary Grades: The Development of a Competency Model and a Rational Number Learning Progression",
+      "authors": "Meirav Arieli-Attali and Gabrielle Cayton-Hodges",
+      "year": 2014,
+      "type": "research_report_with_cognitive_interviews",
+      "url": "https://doi.org/10.1002/ets2.12008",
+      "supports": "The learning progression identifies halving as a foundational procedure and repeated halving as a route to equal partitions with 2, 4 and 8 parts. Its folding-task interviews highlight two important misconceptions: equating equal parts with congruent shapes, and changing the whole while naming the parts.",
+      "limitation": "The report's cognitive interviews involved 14 students in grades 3–5 and were exploratory/qualitative, not a statistically representative or causal study. Use the findings to design diagnostic checks, not to estimate prevalence or claim intervention effectiveness."
+    }
+  ],
+  "records": [
+    {
+      "id": "mt_gC-6JXAG5S",
+      "title": "二分之一、四分之一与八分之一",
+      "type": "CONCEPTUAL",
+      "domainId": "fractions",
+      "ageRange": [
+        7,
+        8
+      ],
+      "phase": 4,
+      "sourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04"
+      ],
+      "alignment": "The source standards AC9M2N03 and AC9M2M02 directly align with Year 2 (age 7–8): connect halves, quarters and eighths through repeated halving, and represent them in shapes, objects and events.",
+      "research": "The ACARA Year 2 work sample directly matches the node's repeated-halving and shape/object representation goals. The IES practice guide recommends building early fraction concepts from equal-sharing of both sets and single whole objects; its Recommendation 1 evidence rating is minimal, so this is a reasoned design foundation rather than a proven causal intervention. NSW Department of Education's 2024 resource identifies repeated halving to quarters and eighths as an observable behaviour and uses equivalence tasks. Arieli-Attali and Cayton-Hodges' 2014 learning-progression report combines literature review, expert input and exploratory cognitive interviews; it identifies equal-area versus congruent-shape confusion and the risk of changing the whole.",
+      "coverageAudit": [
+        "Cover all three source evidence prompts: fold a strip in half, then each existing part in half again to form quarters and eighths; show two eighths of the same pizza equal one quarter; shade one eighth of a square and one eighth of a circle and explain.",
+        "For repeated halving, preserve the original whole and split every existing equal part into two equal parts at each step: 1 whole → 2 halves → 4 quarters → 8 eighths.",
+        "Interpret 1/8 as one of eight equal parts of one whole; show 1/4 = 2/8 and 1/2 = 2/4 = 4/8 with the same whole.",
+        "A square and a circle can each show one eighth when each is partitioned into eight equal-area parts; the shaded pieces are the same fraction of their respective wholes, not necessarily the same absolute area.",
+        "Include a discrete collection model with eight identical counters: one half is four counters, one quarter is two, and one eighth is one.",
+        "Do not include general fraction addition, subtraction, common denominators, decimal conversion or number-line ordering as required content for this node."
+      ],
+      "designImplications": [
+        "Use a paper strip or sandwich as the first whole. Fold in half, then split both halves, then all four quarters; label the successive partitions rather than making unrelated folds.",
+        "Keep one strip or pizza visible throughout so children can see that 1/2, 2/4 and 4/8 refer to the same whole and same amount.",
+        "Combine two eighths of the same pizza to show 2/8 = 1/4; explain by grouping two equal eighth-pieces into one quarter-sized share.",
+        "For square and circle diagrams, mark eight equal-area regions in each shape and shade one. Explain that each shaded region is one eighth of its own whole; do not imply the two shaded regions have equal physical area if the wholes differ in size.",
+        "Use eight identical counters to connect continuous wholes and discrete collections: 4/8, 2/8 and 1/8 correspond to 4, 2 and 1 counters respectively.",
+        "Use physical folding and counters before asking children to label the result with 1/2, 1/4, 1/8 and 2/8; require an explanation of why the parts are equal."
+      ],
+      "knownRisks": [
+        "Unequal pieces are incorrectly called halves, quarters or eighths merely because there are two, four or eight pieces.",
+        "Children equate equal parts with congruent shapes; equal area/quantity is required, but the pieces need not have identical shapes.",
+        "The whole silently changes, such as cutting away one part and then calling the remaining three quarters 'thirds of the original whole'.",
+        "Children compare 1/8 of differently sized wholes as if the absolute pieces must be equal; the fraction denotes a proportion of its own whole.",
+        "The denominator is read as the number of selected pieces rather than the total number of equal parts; 1/8 is one part out of eight.",
+        "For collections, equal counts are used as a substitute for equal quantities even when the objects are not identical; use identical counters for the core task.",
+        "The lesson expands prematurely into general fraction operations, decimal conversion or advanced number-line work."
+      ],
+      "acceptanceEvidence": [
+        "The learner folds one strip through halves, quarters and eighths, labels each stage and can show that every part is equal in length/area.",
+        "The learner combines two eighths of the same pizza and explains why this is one quarter of that same pizza.",
+        "The learner shades one eighth of both a square and a circle by partitioning each whole into eight equal-area parts and explains that the fraction is the same proportion even if the shaded areas differ.",
+        "The learner uses eight identical counters to show one half, one quarter and one eighth of the collection.",
+        "The learner rejects a picture with eight unequal pieces as a valid model of eighths and explains that the parts must be equal.",
+        "The learner keeps the whole fixed when explaining 2/8 = 1/4."
+      ],
+      "relationshipBoundary": "Preserve the existing soft prerequisite mt_hyvHv2BCwb (decomposing a shape into more equal shares), hard prerequisite mt_xACS3rWWDp (halves and quarters of shapes), hard successor mt_Jz9UuT8BXW (fractions in time and events), and soft successor mt_k2WE0-22-4 (unit fractions). No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    }
+  ]
+}

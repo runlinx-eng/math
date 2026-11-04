@@ -1,0 +1,2749 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "branch": "feat/language-concept-audit-v1",
+  "definition": "hasResearch=false 表示来源 taxonomy 没有该节点的专门 teaching-research 记录；不等于证明外部不存在研究资料。",
+  "summary": {
+    "total": 85,
+    "knowledgeMapNodes": 83,
+    "mathThinkingNodes": 2,
+    "knowledgeMapWithSamples": 83,
+    "knowledgeMapWithoutSamples": 0,
+    "phaseCounts": {
+      "2": 2,
+      "4": 7,
+      "5": 76
+    },
+    "allPlanStatuses": "83个知识地图节点与2个数学思维节点已核查部分外部课程或教学来源；来源核查不等于教学效果或独立数学验证。",
+    "sourceRecordsExternallyVerifiedInThisPass": 7,
+    "byType": {
+      "REPRESENTATIONAL": {
+        "total": 9,
+        "withSample": 9,
+        "withoutSample": 0
+      },
+      "PROCEDURAL": {
+        "total": 42,
+        "withSample": 42,
+        "withoutSample": 0
+      },
+      "CONCEPTUAL": {
+        "total": 28,
+        "withSample": 28,
+        "withoutSample": 0
+      },
+      "META": {
+        "total": 4,
+        "withSample": 4,
+        "withoutSample": 0
+      }
+    },
+    "byDomain": {
+      "add": {
+        "title": "Addition & Subtraction",
+        "total": 3,
+        "withSample": 3,
+        "withoutSample": 0
+      },
+      "algebra": {
+        "title": "Algebra",
+        "total": 5,
+        "withSample": 5,
+        "withoutSample": 0
+      },
+      "counting": {
+        "title": "Counting & Cardinality",
+        "total": 3,
+        "withSample": 3,
+        "withoutSample": 0
+      },
+      "data": {
+        "title": "Data & Statistics",
+        "total": 27,
+        "withSample": 27,
+        "withoutSample": 0
+      },
+      "fractions": {
+        "title": "Fractions",
+        "total": 1,
+        "withSample": 1,
+        "withoutSample": 0
+      },
+      "geometry": {
+        "title": "Geometry",
+        "total": 10,
+        "withSample": 10,
+        "withoutSample": 0
+      },
+      "measure": {
+        "title": "Measurement",
+        "total": 18,
+        "withSample": 18,
+        "withoutSample": 0
+      },
+      "multiply": {
+        "title": "Multiplication & Division",
+        "total": 6,
+        "withSample": 6,
+        "withoutSample": 0
+      },
+      "place": {
+        "title": "Number Representation & Place Value",
+        "total": 5,
+        "withSample": 5,
+        "withoutSample": 0
+      },
+      "chance": {
+        "title": "Probability",
+        "total": 4,
+        "withSample": 4,
+        "withoutSample": 0
+      },
+      "ratio": {
+        "title": "Ratio & Proportion",
+        "total": 1,
+        "withSample": 1,
+        "withoutSample": 0
+      }
+    },
+    "nodesWithExternalSourcesVerified": 85,
+    "nodesWithSourceCoverageRevisions": 7,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0,
+    "nodesWithResearchReviewedWithoutExplanation": 2,
+    "remainingUnverifiedKnowledgeMapNodesWithoutSamples": 0,
+    "remainingUnverifiedMathThinkingNodes": 0,
+    "researchBatchesExternallyReviewed": [
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "B10",
+      "B11",
+      "B12",
+      "B13",
+      "B14",
+      "B15",
+      "B16",
+      "B17",
+      "B18",
+      "B19"
+    ],
+    "phaseBreakdownByScope": {
+      "2": {
+        "knowledge_map": 2,
+        "math_thinking": 0
+      },
+      "4": {
+        "knowledge_map": 7,
+        "math_thinking": 0
+      },
+      "5": {
+        "knowledge_map": 74,
+        "math_thinking": 2
+      }
+    },
+    "sourceRecordsExternallyVerifiedInB01": 2,
+    "sourceRecordsExternallyVerifiedInB02": 1,
+    "sourceRecordsExternallyVerifiedInB03": 1,
+    "sourceRecordsExternallyVerifiedInB04": 1,
+    "nodesWithExplanationDraftsPendingIndependentReview": 76,
+    "sourceRecordsExternallyVerifiedInB05": 5,
+    "sourceRecordsExternallyVerifiedInB06": 3,
+    "sourceRecordsExternallyVerifiedInB07": 5,
+    "sourceRecordsExternallyVerifiedInB08": 3,
+    "sourceRecordsExternallyVerifiedInB09": 4,
+    "sourceRecordsExternallyVerifiedInB10": 5,
+    "sourceRecordsExternallyVerifiedInB11": 5,
+    "sourceRecordsExternallyVerifiedInB12": 5,
+    "sourceRecordsExternallyVerifiedInB13": 4,
+    "sourceRecordsExternallyVerifiedInB14": 5,
+    "sourceRecordsExternallyVerifiedInB15": 3,
+    "sourceRecordsExternallyVerifiedInB16": 5,
+    "sourceRecordsExternallyVerifiedInB17": 6,
+    "sourceRecordsExternallyVerifiedInB18": 6,
+    "sourceRecordsExternallyVerifiedInB19": 7,
+    "thinkingCalculatorSourcesReviewed": 2
+  },
+  "records": [
+    {
+      "id": "mt_Y6_cq3UMyy",
+      "title": "用数字工具表示数量故事",
+      "type": "REPRESENTATIONAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "K.OA"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_biGHAbkoV2",
+      "title": "用数字工具探索加减",
+      "type": "PROCEDURAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "1.OA.C.6",
+        "K.OA"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Eqk6oSbySH",
+      "title": "含三个数的应用题",
+      "type": "PROCEDURAL",
+      "domainId": "add",
+      "domain": "Addition & Subtraction",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "1.OA.A.2",
+        "TABLE-3"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_ZjIFGc6zPW",
+      "title": "找出重复的部分",
+      "type": "CONCEPTUAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 4,
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-PATTERNS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_W3VOAuFwVw",
+      "title": "描述数列的增长规律",
+      "type": "CONCEPTUAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 4,
+      "planStatus": "B05外部课程或教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B05_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-PATTERNS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-NEXT-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_zQfWqImxva",
+      "title": "按照步骤运算",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B08外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B08_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ACARA-ALGORITHMS",
+        "ACARA-WORK-SAMPLE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B08-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_QeKWt4BZn3",
+      "title": "按规则生成一组数",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B08外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B08_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ACARA-ALGORITHMS",
+        "ACARA-WORK-SAMPLE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B08-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_nx4a3kH-59",
+      "title": "设计数的运算步骤",
+      "type": "PROCEDURAL",
+      "domainId": "algebra",
+      "domain": "Algebra",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B08外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B08_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ACARA-ALGORITHMS",
+        "ACARA-WORK-SAMPLE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B08-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_BK5xwkrD5C",
+      "title": "观察10以内数的组成",
+      "type": "CONCEPTUAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "B06外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B06_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-SPLAT"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B06-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_t9BICauBSI",
+      "title": "一眼看出5以内的数量",
+      "type": "CONCEPTUAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "B06外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B06_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-SUBITISING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B06-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_0ZDouU664X",
+      "title": "分组数大量物品",
+      "type": "PROCEDURAL",
+      "domainId": "counting",
+      "domain": "Counting & Cardinality",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B06外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B06_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-HANDFULS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B06-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_X53txVXOcG",
+      "title": "用数字工具处理数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B10外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B10_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ASA-DATA",
+        "CCSS-3MD",
+        "NSW-SURVEY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B10-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt__yvsKKp3TS",
+      "title": "比较两幅统计图",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 2,
+      "planStatus": "B01外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-03",
+        "SRC-07",
+        "SRC-08"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt__yvsKKp3TS",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_QpJydot2Kh",
+      "title": "选择合适的统计图",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 10
+      },
+      "phase": 4,
+      "planStatus": "B10外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B10_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ASA-DATA",
+        "CCSS-3MD",
+        "NSW-SURVEY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B10-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_ebQURBOsM5",
+      "title": "围绕问题收集数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 2,
+      "planStatus": "B01外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B01_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B01.md#mt_ebQURBOsM5",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_kxeuXm6EyC",
+      "title": "在引导下开展统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "B10外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B10_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ASA-DATA",
+        "CCSS-3MD",
+        "NSW-SURVEY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B10-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_yrvYKSwSRZ",
+      "title": "用数字工具收集数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B10外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B10_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ASA-DATA",
+        "CCSS-3MD",
+        "NSW-SURVEY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B10-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_TiFjjvBMaY",
+      "title": "比较图表与数据分布",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B10外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B10_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "ASA-DATA",
+        "CCSS-3MD",
+        "NSW-SURVEY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B10-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Y6JmLjnfRP",
+      "title": "开展统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B11外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B11_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP-A1",
+        "NSW-GLOSSARY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B11-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_SHVyE1CLUa",
+      "title": "规划统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_SHVyE1CLUa",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_QHT16CrFO-",
+      "title": "检查并描述分类数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B11外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B11_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP-A1",
+        "NSW-GLOSSARY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B11-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_ZfpeI1CFyP",
+      "title": "到平均数的平均距离",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_ZfpeI1CFyP",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_8VjmxR1yfw",
+      "title": "箱线图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_8VjmxR1yfw",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_mn765HbXi1",
+      "title": "用数字工具比较数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_8IsaoMPvod",
+      "title": "辨析媒体中的统计信息",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B11外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B11_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP-A1",
+        "NSW-GLOSSARY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B11-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_OwYms2tB1L",
+      "title": "描述数据分布",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B12外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B12_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-7SP-B3",
+        "CCSS-7SP-A1"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B12-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_JRzXQl9M7c",
+      "title": "点图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_JRzXQl9M7c",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_oderfUBZPw",
+      "title": "直方图",
+      "type": "REPRESENTATIONAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_oderfUBZPw",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_4zgPzc6yu5",
+      "title": "总体、样本与公平抽样",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B11外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B11_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP-A1",
+        "NSW-GLOSSARY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B11-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_KCS9GbZgU_",
+      "title": "四分位数与四分位距",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "B12外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B12_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-7SP-B3",
+        "CCSS-7SP-A1"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B12-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_O-U263ukg1",
+      "title": "改进统计调查",
+      "type": "META",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_iykH2P5oFq",
+      "title": "提出统计问题",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 4,
+      "planStatus": "B04外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B04_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B04.md#mt_iykH2P5oFq",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_6gpryAnpoZ",
+      "title": "测量了什么，怎样测量",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B11外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B11_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP-A1",
+        "NSW-GLOSSARY"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B11-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_tuEnyrp5Ia",
+      "title": "写出数据结论",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_km4V6d5IAh",
+      "title": "比较两个总体",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B13外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B13_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-6SP-B5",
+        "CCSS-7SP-B4"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B13-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_fQ9Rw10fss",
+      "title": "用样本进行估计",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B12外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B12_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-7SP-B3",
+        "CCSS-7SP-A1"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B12-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_A2hKhHXgL5",
+      "title": "两组数据差多少",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B12外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B12_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-7SP-B3",
+        "CCSS-7SP-A1"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B12-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_x7V1qrkiqH",
+      "title": "不同样本的差异",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "domain": "Data & Statistics",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 14
+      },
+      "phase": 5,
+      "planStatus": "B12外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 4,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B12_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE-II",
+        "CCSS-7SP-B3",
+        "CCSS-7SP-A1"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B12-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_gC-6JXAG5S",
+      "title": "二分之一、四分之一与八分之一",
+      "type": "CONCEPTUAL",
+      "domainId": "fractions",
+      "domain": "Fractions",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 4,
+      "planStatus": "B03外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B03_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B03.md#mt_gC-6JXAG5S",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_mN4Ye_vtR7",
+      "title": "物体的形状与用途",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_SK7WntVZ6y",
+      "title": "用图形近似表示物体",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_NM5I3yN-Q6",
+      "title": "旋转对称",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B07外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B07_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-ROTATION"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B07-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_LBT-9jz7kR",
+      "title": "平角、优角与周角",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_RdfzwInyAj",
+      "title": "用几何软件变换图形",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_h02-C8PRrj",
+      "title": "棱柱的截面",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B14外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B14_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-GEOMETRY",
+        "NSW-TURNS",
+        "NSW-SLICES"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B14-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_h7zVgCDVmx",
+      "title": "坐标网格上的图形",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B15外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B15_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-6GA3",
+        "CCSS-7GA2",
+        "NSW-TESSELLATION"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B15-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_61Nhj8W78f",
+      "title": "平面铺砌与变换图案",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B15外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B15_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-6GA3",
+        "CCSS-7GA2",
+        "NSW-TESSELLATION"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B15-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Sij9ByyHq6",
+      "title": "立体图形的表面积与体积",
+      "type": "PROCEDURAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_Sij9ByyHq6",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_4bc3EAxhlY",
+      "title": "哪些边长能组成三角形",
+      "type": "CONCEPTUAL",
+      "domainId": "geometry",
+      "domain": "Geometry",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B15外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B15_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-6GA3",
+        "CCSS-7GA2",
+        "NSW-TESSELLATION"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B15-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_FVVSQR9vGg",
+      "title": "用计算器检查金额",
+      "type": "PROCEDURAL",
+      "domainId": "thinking",
+      "domain": "Mathematical Thinking",
+      "scope": "math_thinking",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "计算器与估算部分外部来源核查及活动证据边界记录完成；独立复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "external_sources_reviewed_thinking_calculator_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY-GUIDE",
+        "NSW-FLEXIBLE-STRATEGIES",
+        "NSW-BROKEN-CALCULATOR"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-THINKING-CALCULATOR-2026-11-04.md",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_ish_uH8vZe",
+      "title": "合理使用计算器",
+      "type": "PROCEDURAL",
+      "domainId": "thinking",
+      "domain": "Mathematical Thinking",
+      "scope": "math_thinking",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "计算器与估算部分外部来源核查及活动证据边界记录完成；独立复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": false,
+      "researchVerificationStatus": "external_sources_reviewed_thinking_calculator_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY-GUIDE",
+        "NSW-FLEXIBLE-STRATEGIES",
+        "NSW-BROKEN-CALCULATOR"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-THINKING-CALCULATOR-2026-11-04.md",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_FSLJbKkryb",
+      "title": "澳大利亚硬币与购物",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_bnwHo5wfCD",
+      "title": "间接比较质量与容积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B07外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B07_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-MEASURE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B07-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Jz9UuT8BXW",
+      "title": "时间与事件中的分数",
+      "type": "CONCEPTUAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B07外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B07_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-MEASURE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B07-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_8cs4YPkp23",
+      "title": "以元为单位的交易",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_MgsDabdnr1",
+      "title": "几点一刻与差一刻",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B07外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B07_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-MEASURE"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B07-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_5J2quSTspi",
+      "title": "罗马数字钟面与24时制",
+      "type": "REPRESENTATIONAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_e7tLi9SCIE",
+      "title": "用更小的单位提高精度",
+      "type": "CONCEPTUAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_tVvZVWO5d6",
+      "title": "使用日历",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_9L5qyBYmg-",
+      "title": "元与分的换算",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 8,
+        "end": 9
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_NSC3LT_-ch",
+      "title": "估计容积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 4,
+      "planStatus": "B02外部来源核查与解释初稿完成；AI自检完成，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B02_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "SRC-01",
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B02.md#mt_NSC3LT_-ch",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_5bmrA-0pBi",
+      "title": "估计总价",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_SOM6Imm2sO",
+      "title": "读出刻度之间的数值",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Qe2PsFmSAH",
+      "title": "预算与购物选择",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_i2-QaXbyzB",
+      "title": "分割图形求面积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "外部来源已核查，内容修订已实施，独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_not_independently_math_validated",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "contentCoverageRevisionApplied": true,
+      "externalEvidenceRecord": "CONCEPT-RESEARCH-EVIDENCE.json#mt_i2-QaXbyzB",
+      "independentMathReviewStatus": "not_completed"
+    },
+    {
+      "id": "mt_oMkQQ2O-ML",
+      "title": "折扣、消费税与余额",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_mMDpLugX2X",
+      "title": "用电子表格解决金额问题",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B19外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B19_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NSW-NUMERACY",
+        "ASIC-MONEYSMART",
+        "ATO-GST"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B19-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_tegkuJA5gM",
+      "title": "用展开图求表面积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_IlDaxVr60U",
+      "title": "边长为分数的体积",
+      "type": "PROCEDURAL",
+      "domainId": "measure",
+      "domain": "Measurement",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B18外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B18_2026-11-04",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NIST-TIME",
+        "NSW-MEASURE",
+        "CCSS-6GA2"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B18-2026-11-04.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_1GDEHyEZYH",
+      "title": "用数字工具平均分与分组",
+      "type": "REPRESENTATIONAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_qUjW0N1cYO",
+      "title": "平均分与分组问题",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_oxfxzbat3k",
+      "title": "奇数与偶数的规律",
+      "type": "CONCEPTUAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_NmvuwVUFRS",
+      "title": "用计算器进行乘除",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_bZC-wqWX7Y",
+      "title": "寻找因数的步骤与工具",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 10,
+        "end": 11
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_3m0pA-aeat",
+      "title": "估算检查小数运算",
+      "type": "PROCEDURAL",
+      "domainId": "multiply",
+      "domain": "Multiplication & Division",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 5,
+      "planStatus": "B17外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B17_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-OPERATIONS",
+        "CCSS-FACTORS",
+        "ACARA-ALGORITHMS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B17-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_dJOKkYMsCv",
+      "title": "排列20以内的数",
+      "type": "PROCEDURAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 5,
+        "end": 6
+      },
+      "phase": 5,
+      "planStatus": "B16外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B16_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-1NBT",
+        "CCSS-2NBT",
+        "NSW-COUNTING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B16-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_QguIGVMB1o",
+      "title": "不同形式的120以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B16外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B16_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-1NBT",
+        "CCSS-2NBT",
+        "NSW-COUNTING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B16-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_Bt-iORUzdO",
+      "title": "两位数的不同表示",
+      "type": "CONCEPTUAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 6,
+        "end": 7
+      },
+      "phase": 5,
+      "planStatus": "B16外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B16_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-1NBT",
+        "CCSS-2NBT",
+        "NSW-COUNTING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B16-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_HczwO1sr-y",
+      "title": "用数字工具探索千以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B16外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B16_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-1NBT",
+        "CCSS-2NBT",
+        "NSW-COUNTING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B16-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_F_zEAJ8VIo",
+      "title": "表示1000以内的数",
+      "type": "REPRESENTATIONAL",
+      "domainId": "place",
+      "domain": "Number Representation & Place Value",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 7,
+        "end": 8
+      },
+      "phase": 5,
+      "planStatus": "B16外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B16_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "CCSS-1NBT",
+        "CCSS-2NBT",
+        "NSW-COUNTING"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B16-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_dlg6i-Lw0I",
+      "title": "独立与相互影响的事件",
+      "type": "CONCEPTUAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 9,
+        "end": 10
+      },
+      "phase": 5,
+      "planStatus": "B09外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B09_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP",
+        "GAISE-II"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B09-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_8DT3LXwwH-",
+      "title": "用数字工具模拟随机事件",
+      "type": "PROCEDURAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 11,
+        "end": 12
+      },
+      "phase": 4,
+      "planStatus": "B09外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B09_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP",
+        "GAISE-II"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B09-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_aCwj2PCoRV",
+      "title": "概率模型",
+      "type": "CONCEPTUAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B09外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B09_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP",
+        "GAISE-II"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B09-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_nzdtOLXWWa",
+      "title": "模拟随机事件",
+      "type": "PROCEDURAL",
+      "domainId": "chance",
+      "domain": "Probability",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B09外部课程来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B09_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "GAISE",
+        "CCSS-7SP",
+        "GAISE-II"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B09-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt_CUJr8L5_Wn",
+      "title": "由比例图求面积",
+      "type": "CONCEPTUAL",
+      "domainId": "ratio",
+      "domain": "Ratio & Proportion",
+      "scope": "knowledge_map",
+      "ageRange": {
+        "start": 12,
+        "end": 13
+      },
+      "phase": 5,
+      "planStatus": "B07外部教学来源核查与解释初稿完成；独立数学复核待完成",
+      "hasResearch": false,
+      "sourceDescriptionPresent": true,
+      "sourceEvidenceCount": 3,
+      "sourceAssessmentPromptPresent": true,
+      "explanationSamplePresent": true,
+      "researchVerificationStatus": "external_sources_reviewed_B07_2026-11-03",
+      "nextAction": "independent_content_and_math_review_before_acceptance",
+      "externalSourcesVerified": true,
+      "externalSourceIds": [
+        "NRICH-AREA",
+        "NSW-UNITS"
+      ],
+      "researchRecord": "CONCEPT-RESEARCH-B07-2026-11-03.md",
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    }
+  ]
+}

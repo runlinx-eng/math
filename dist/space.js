@@ -4,6 +4,8 @@ import {buildSpace,relationsFor,VIEW_KEY,LAYOUT_VERSION,parseView,objectKey} fro
 import {buildRelationshipSpace,selectRelationshipVersion,RELATIONSHIP_VERSION} from './spatial-relationship.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {makeKnowledgeNames} from './spatial-names.js';
+import {applyNavigationCopy,relationHeading,relationStrength} from './navigation-copy.js';
+import {conceptHelpFor} from './concept-explanations.js';
 import {relationExplanation} from './spatial-reasons.js';
 import {buildStructureGuide,linkedSuggestions,guideNextTargets,guideStepReady,GUIDE_ID} from './spatial-guide.js';
 import {placeGuideCue} from './spatial-labels.js';
@@ -33,7 +35,8 @@ const panels=new Map(),visits=[];
 let renderedDay=null,activeRouteId=null;
 let journeyOpen=false,activeLessonId=null,activeSessionId=null,activeQuestionId=null;
 let guideSteps=[],guideVisible=false,guideSuspended=false,guideWalkSeen=new Set(),guideObserved=new Set();
-const displayTitle=o=>worldLayout==='network'&&o?.kind==='node'?(space.knowledgeNames.get(o.id)||o.title):o?.kind==='node'&&LESSONS[lessonForTopic(o.id)]?.title||o?.kind==='pack'&&routesForPack(o.id).length===1&&routeForPack(o.id)?.title||o?.kind==='node'&&routeStep(o.id)?.title||o?.key==='pack:same-amount'&&ROUTE_TITLE||o?.title;
+const displayTitle=o=>worldLayout==='network'&&o?.kind==='pack'?o.title:worldLayout==='network'&&o?.kind==='node'?(space.knowledgeNames.get(o.id)||o.title):o?.kind==='node'&&LESSONS[lessonForTopic(o.id)]?.title||o?.kind==='pack'&&routesForPack(o.id).length===1&&routeForPack(o.id)?.title||o?.kind==='node'&&routeStep(o.id)?.title||o?.key==='pack:same-amount'&&ROUTE_TITLE||o?.title;
+const objectLevelLabel=o=>o?.kind==='node'?(o.domainId==='thinking'?'数学思维':'知识点'):o?.kind==='pack'?'知识群':'主题';
 
 function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4200);}
 function warning(message){$('#storage-warning').textContent=message;$('#storage-warning').hidden=false;}
@@ -159,7 +162,7 @@ function renderGuide(){
   if(!step){panel.hidden=true;renderGuideCues();return;}
   document.body.dataset.guideStep=String(index);
   const nextText=['沿连接出发','观察分叉','观察汇合','自己选路'][index]||'';
-  panel.innerHTML=`<div class="guide-head"><span class="guide-step">认识这张图</span><span class="guide-count">${String(index+1).padStart(2,'0')} <span aria-hidden="true">/</span> ${String(guideSteps.length).padStart(2,'0')}</span></div>
+  panel.innerHTML=`<div class="guide-head"><span class="guide-step">发现知识的联系</span><span class="guide-count">${String(index+1).padStart(2,'0')} <span aria-hidden="true">/</span> ${String(guideSteps.length).padStart(2,'0')}</span></div>
     <progress class="guide-progress" max="${guideSteps.length}" value="${index+1}" aria-label="导览观察步骤 ${index+1} / ${guideSteps.length}"></progress>
     <h2>${esc(step.title)}</h2>
     <p class="guide-hint">${esc(step.hint)}</p>
@@ -373,7 +376,7 @@ function revealGradeNode(nodeId){
   }).catch(()=>{});
 }
 
-function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]:'全貌';}
+function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?objectLevelLabel(o):'全貌';}
 function renderNetworkGuide(){
   if(!scene||worldLayout!=='network')return;
   const mode=scene.networkView,current=scene.global,direction=scene.camera.position.clone().sub(scene.controls.target).normalize();
@@ -424,7 +427,7 @@ function renderNetworkGuide(){
    const allNodesButton=$('[data-action="all-nodes"]');if(allNodesButton)allNodesButton.hidden=scene.relationshipMap;
   if(scene.relationshipMap){const shellButton=$('[data-action="overview-shells"]');if(shellButton){shellButton.hidden=!!scene.selected||!scene.overviewShells.length;shellButton.setAttribute('aria-pressed',String(scene.overviewShellsEnabled));shellButton.textContent=scene.overviewShellsEnabled?'隐藏知识群外壳':`试看知识群外壳 · ${scene.overviewShells.length}`;}for(const b of document.querySelectorAll('[data-action="edge-display"]'))b.setAttribute('aria-pressed',String(b.dataset.edgeDisplay===scene.edgeDisplay));$('#network-edge-hint').textContent=scene.edgeDisplay==='outline'?'只简化背景；选中后仍显示全部直接联系':scene.edgeDisplay==='critical'?'显示全部关键联系；辅助联系可在节点中查看':'显示关键与辅助联系';}
   for(const b of document.querySelectorAll('#network-legend [data-action="network-theme"]'))b.setAttribute('aria-pressed',String(scene.selected==='theme:'+b.dataset.id));
-  const guide=learning.daily.guide,guideEntry=$('[data-action="guide-start"]');guideEntry.hidden=!guideSteps.length||guideVisible||journeyOpen;guideEntry.textContent=guide?.step>0&&guide.step<guideSteps.length-1?'继续认识这张图':'认识这张图';
+  const guide=learning.daily.guide,guideEntry=$('[data-action="guide-start"]');guideEntry.hidden=!guideSteps.length||guideVisible||journeyOpen;guideEntry.textContent=guide?.step>0&&guide.step<guideSteps.length-1?'继续发现知识的联系':'发现知识的联系';
   $('[data-action="switch-layout"]').textContent=scene.relationshipMap?'切换到旧关系地图':'切换到新关系地图';
   for(const b of document.querySelectorAll('[data-action="network-view"]')){const match=b.dataset.view==='side'?'relations':b.dataset.view==='top'?'map':'oblique';b.setAttribute('aria-pressed',String(current&&!rotated&&match===mode));b.disabled=false;if(b.dataset.view==='oblique')b.textContent=scene.localRelationshipFocus?'立体视角':'立体总览';b.title='只转动镜头，知识点保持原位';}
 }
@@ -438,9 +441,9 @@ function networkRelations(o,relations){
   const mode=scene.global?scene.traceMode:'direct',directions=fv?focusFilters:scene.global?`<div class="trace-modes" aria-label="关系范围">${[['direct','直接联系'],['before','追溯基础'],['after','查看后续']].map(([id,title])=>button('trace-mode',title,`data-mode="${id}" aria-pressed="${mode===id}"`,'trace-button')).join('')}</div>${scene.relationMode==='off'?'<p class="trace-note">当前连线处于收起状态，点“直接联系”可以点亮。</p>':''}`:'';
   if(mode!=='direct'){
     const trace=scene.traceResult,groups=new Map();for(const id of trace.nodes){const d=trace.distances.get(id);if(!groups.has(d))groups.set(d,[]);groups.get(d).push(id);}
-    return `<div class="network-explore">${directions}<p class="trace-note">来源中的关键${mode==='before'?'基础':'后续'}：${trace.nodes.length} 个想法，${trace.edges.length} 条联系。数字是最短经过的联系数，不改变地图位置。</p><div class="network-relations trace-list">${[...groups].map(([d,ids])=>`<section><h3>隔 ${d} 条联系 · ${ids.length}</h3>${ids.map(id=>{const item=space.nodes.get(id);return `<div class="network-relation" data-preview-key="${item.key}">${button('choose',`<span>${esc(displayTitle(item))}</span>${scene.canLocate(item)?'':'<small>数学思维 · 在学习中查看</small>'}`,`data-key="${item.key}"`,'relation-button')}<span class="preview-hint" aria-live="polite"></span></div>`;}).join('')}</section>`).join('')||'<p class="quiet">来源没有列出这个方向的关键联系。</p>'}</div></div>`;
+    return `<div class="network-explore">${directions}<p class="trace-note">来源中的关键${mode==='before'?'基础':'后续'}：${trace.nodes.length} 个相关内容，${trace.edges.length} 条联系。数字是最短经过的联系数，不改变地图位置。</p><div class="network-relations trace-list">${[...groups].map(([d,ids])=>`<section><h3>隔 ${d} 条联系 · ${ids.length}</h3>${ids.map(id=>{const item=space.nodes.get(id);return `<div class="network-relation" data-preview-key="${item.key}">${button('choose',`<span>${esc(displayTitle(item))}</span>${scene.canLocate(item)?'':'<small>数学思维 · 可查看联系</small>'}`,`data-key="${item.key}"`,'relation-button')}<span class="preview-hint" aria-live="polite"></span></div>`;}).join('')}</section>`).join('')||'<p class="quiet">来源没有列出这个方向的关键联系。</p>'}</div></div>`;
   }
-  const sections=['before','after'].map(side=>{const list=relations.filter(l=>side==='before'?l.to===o.key:l.from===o.key);return `<section><h3>${side==='before'?'这里会用到':'还会连到哪里'} · ${list.length}</h3>${list.map(l=>{const other=space.byKey.get(side==='before'?l.from:l.to),edge=l.edges[0],bridge=Object.values(BRIDGES).find(b=>b.fromTopicId===edge.prerequisiteId&&b.topicId===edge.topicId),why=relationExplanation(edge);return `<div class="network-relation" data-preview-key="${other.key}">${button('choose',`${esc(displayTitle(other))}<small>${esc(space.packs.get(other.packId).title)} · ${edge.strength==='hard'?'关键基础':'辅助联系'}${scene.canLocate(other)?'':' · 数学思维，在学习中查看'}</small>`,`data-key="${other.key}"`,'relation-button')}<span class="preview-hint" aria-live="polite"></span><p class="relation-reason${why.reviewed?'':' pending'}">${why.reviewed?esc(why.text):'中文理由正在核对，可先看来源原文。'}</p>${edge.reason?`<details><summary>来源原文</summary><p>${esc(edge.reason)}</p></details>`:''}${bridge?button('bridge',`一起做：${esc(bridge.title)} · ${lessonSummary(learning.daily.bridges[bridge.id]).completed?'✓ 完成':'○ 未完成'}`,`data-id="${bridge.id}"`,'plain-button'):''}</div>`;}).join('')||'<p class="quiet">源图没有列出这个方向的联系。</p>'}</section>`;});
+  const sections=['before','after'].map(side=>{const list=relations.filter(l=>side==='before'?l.to===o.key:l.from===o.key);return `<section><h3>${relationHeading(side)} · ${list.length}</h3>${list.map(l=>{const other=space.byKey.get(side==='before'?l.from:l.to),edge=l.edges[0],bridge=Object.values(BRIDGES).find(b=>b.fromTopicId===edge.prerequisiteId&&b.topicId===edge.topicId),why=relationExplanation(edge);return `<div class="network-relation" data-preview-key="${other.key}">${button('choose',`${esc(displayTitle(other))}<small>${esc(space.packs.get(other.packId).title)} · ${relationStrength(edge.strength)}${scene.canLocate(other)?'':' · 数学思维，在学习中查看'}</small>`,`data-key="${other.key}"`,'relation-button')}<span class="preview-hint" aria-live="polite"></span><p class="relation-reason${why.reviewed?'':' pending'}">${why.reviewed?esc(why.text):'中文理由正在核对，可先看来源原文。'}</p>${edge.reason?`<details><summary>来源原文</summary><p>${esc(edge.reason)}</p></details>`:''}${bridge?button('bridge',`一起做：${esc(bridge.title)} · ${lessonSummary(learning.daily.bridges[bridge.id]).completed?'✓ 完成':'○ 未完成'}`,`data-id="${bridge.id}"`,'plain-button'):''}</div>`;}).join('')||'<p class="quiet">源图没有列出这个方向的联系。</p>'}</section>`;});
   return `<div class="network-explore">${directions}<details class="network-relations" ${scene.global?'open':''}><summary>直接联系 · ${relations.length}</summary>${sections.join('')}</details></div>`;
 }
 function nextIdea(o){if(!scene.relationshipMap||o.kind!=='node')return '';const pending=pendingQuestions(learning).map(q=>q.nodeId).filter(Boolean),edge=linkedSuggestions(atlas,o.id,{hasActivity:id=>!!lessonForTopic(id),isComplete:id=>nodeState(learning,id).progress==='completed',pendingNodes:pending})[0];if(!edge)return '';const target=space.nodes.get(edge.topicId),why=relationExplanation(edge);return `<section class="next-idea"><small>${pending.includes(target.id)?'这里有你留下的问题':'从这里可以接着看'}</small>${button('choose',`${esc(displayTitle(target))} →`,`data-key="${target.key}"`,'plain-button')}<details><summary>为什么可以接着看？</summary><p>${why.reviewed?esc(why.text):'来源中列出了这条联系，理由正在核对。'}</p></details></section>`;}
@@ -454,12 +457,12 @@ function themeOverview(o){
   const thinkingCount=nodeCount-mapCount;
   const choices=packs.map(p=>{
     const mapped=p.nodeIds.filter(visible).length,extra=p.nodeIds.length-mapped;
-    const meta=extra? `图中 ${mapped} 个 · 学习中 ${extra} 个`:`${p.nodeIds.length} 个知识点`;
+    const meta=extra? `地图知识点 ${mapped} 个 · 数学思维 ${extra} 个`:`${p.nodeIds.length} 个知识点`;
     return button('choose',`<span class="theme-pack-title">${esc(p.title)}</span><span class="theme-pack-question">${esc(p.question||'查看本组的知识和联系')}</span><span class="theme-pack-meta">${meta}<span aria-hidden="true">→</span></span>`,`data-key="${p.key}"`,'theme-pack-choice');
   }).join('');
   return `<div class="theme-overview" data-theme-id="${esc(o.id)}" data-pack-count="${packs.length}" data-node-count="${nodeCount}" data-map-count="${mapCount}">
     <p class="theme-overview-intro">${esc(o.description)}</p>
-    <div class="theme-overview-counts" aria-label="该主题的真实内容规模"><span><strong>${packs.length}</strong> 个知识群</span><span><strong>${mapCount}</strong> 个地图知识点</span>${thinkingCount?`<span class="theme-thinking-count">另有 ${thinkingCount} 个思维节点在学习中</span>`:''}</div>
+    <div class="theme-overview-counts" aria-label="该主题的真实内容规模"><span><strong>${packs.length}</strong> 个知识群</span><span><strong>${mapCount}</strong> 个地图知识点</span>${thinkingCount?`<span class="theme-thinking-count">另有 ${thinkingCount} 个数学思维内容（不在地图上单独显示）</span>`:''}</div>
     <div class="theme-overview-guide"><strong>从哪个问题开始？</strong><p>任选一个知识群，进一步查看它的知识与真实联系。这里没有规定的学习顺序。</p></div>
     <nav class="theme-pack-list" aria-label="${esc(o.title)}的知识群">${choices}</nav>
     <p class="theme-overview-footnote">地图上仍保留其他主题作为空间参照；主题分组不代表新增数学前置关系。</p>
@@ -501,17 +504,217 @@ function renderGradeNodePosition(o){
   return `<section class="grade-node-position" aria-label="小学阶段位置"><h3>小学阶段位置</h3>${stageMarkup}${beyondMarkup}${unresolvedMarkup}<p class="grade-node-position-evidence">证据：<strong data-evidence="${esc(mapping.curriculum.evidenceLevel)}">${esc(evidence)}</strong></p><p>所属知识群：${esc(packName)}</p>${button(action,label,`data-node-id="${esc(o.id)}"`,'soft-button')}</section>`;
 }
 
+
+function conceptVisualHtml(kind){
+  if(kind==='equal-fraction-bars'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 240 112" role="img" aria-label="两个等长整体，上面二等分涂一份，下面四等分涂两份，涂色长度一样">'+
+      '<text x="4" y="25">1/2</text><rect x="42" y="8" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+      '<rect x="42" y="8" width="90" height="26" fill="#dfb477"/><path d="M132 8V34" stroke="#74897f"/>'+
+      '<text x="4" y="76">2/4</text><rect x="42" y="59" width="180" height="26" fill="#f2eee2" stroke="#74897f"/>'+
+      '<rect x="42" y="59" width="90" height="26" fill="#dfb477"/>'+
+      '<path d="M87 59V85 M132 59V85 M177 59V85" stroke="#74897f"/>'+
+      '</svg><figcaption>整体相同、涂色长度相同：1/2＝2/4。只改变分法，不改变所表示的数。</figcaption></figure></details>';
+  }
+  if(kind==='linear-function-graph'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 280 176" role="img" aria-label="直线 y=2x+1，经过 (0，1)、(1，3)、(2，5) 三个点">'+
+      '<path d="M42 24V144H254" fill="none" stroke="#74897f" stroke-width="1.5"/>'+
+      '<path d="M50 24V144 M120 24V144 M190 24V144 M42 120H254 M42 72H254 M42 24H254" fill="none" stroke="#dfe4dc" stroke-width="1"/>'+
+      '<path d="M50 120L190 24" fill="none" stroke="#c98e45" stroke-width="3"/>'+
+      '<circle cx="50" cy="120" r="4.5" fill="#c98e45"/><circle cx="120" cy="72" r="4.5" fill="#c98e45"/><circle cx="190" cy="24" r="4.5" fill="#c98e45"/>'+
+      '<text x="27" y="124">1</text><text x="27" y="76">3</text><text x="27" y="28">5</text>'+
+      '<text x="47" y="160">0</text><text x="117" y="160">1</text><text x="187" y="160">2</text>'+
+      '<text x="260" y="148">x</text><text x="31" y="16">y</text><text x="158" y="54">y = 2x + 1</text>'+
+      '<text x="54" y="113">(0,1)</text><text x="124" y="65">(1,3)</text><text x="194" y="19">(2,5)</text>'+
+      '</svg><figcaption>每个点都满足同一个关系式 y＝2x＋1；横坐标 x 对应纵坐标 y，三个点落在同一条直线上。</figcaption></figure></details>';
+  }
+  if(kind==='ratio-bar-model'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 118" role="img" aria-label="30张贴纸按2比3分成5个相等单位，第一份占2格得到12张，第二份占3格得到18张">'+
+      '<text x="110" y="19" text-anchor="middle">第一份：2份</text><text x="210" y="19" text-anchor="middle">第二份：3份</text>'+
+      '<rect x="70" y="30" width="40" height="42" fill="#dfb477" stroke="#74897f"/><rect x="110" y="30" width="40" height="42" fill="#dfb477" stroke="#74897f"/>'+
+      '<rect x="150" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/><rect x="190" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/><rect x="230" y="30" width="40" height="42" fill="#a8c5d6" stroke="#74897f"/>'+
+      '<text x="110" y="94" text-anchor="middle">12张</text><text x="210" y="94" text-anchor="middle">18张</text>'+
+      '</svg><figcaption>5 格大小相同，每格 6 张：前 2 格是 12 张，后 3 格是 18 张。</figcaption></figure></details>';
+  }
+  if(kind==='venn-two-sets'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 320 190" role="img" aria-label="30名学生的韦恩图：只喜欢足球10人，两项都喜欢6人，只喜欢板球8人，两项都不喜欢6人">'+
+      '<rect x="12" y="10" width="296" height="166" rx="5" fill="none" stroke="#74897f"/>'+
+      '<circle cx="112" cy="92" r="58" fill="#dfb477" fill-opacity=".42" stroke="#b18a50" stroke-width="2"/>'+
+      '<circle cx="208" cy="92" r="58" fill="#a8c5d6" fill-opacity=".48" stroke="#688ba0" stroke-width="2"/>'+
+      '<text x="95" y="25" text-anchor="middle">喜欢足球</text><text x="160" y="25" text-anchor="middle">共30人</text><text x="225" y="25" text-anchor="middle">喜欢板球</text>'+
+      '<text x="78" y="98" text-anchor="middle">10</text><text x="160" y="98" text-anchor="middle">6</text><text x="242" y="98" text-anchor="middle">8</text>'+
+      '<text x="160" y="164" text-anchor="middle">都不喜欢：6</text>'+
+      '</svg><figcaption>交叠处的 6 人同时属于两组；两个圆合起来有 24 人，圆外还有 6 人。</figcaption></figure></details>';
+  }
+  if(kind==='multiplication-array'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 184" role="img" aria-label="3行4列的排列方阵，共12个圆点；3乘4等于12，12除以3等于4">'+
+      '<text x="160" y="17" text-anchor="middle">每行 4 个</text><text x="10" y="82">3 行</text>'+
+      '<g fill="#dfb477" stroke="#9a794c" stroke-width="1">'+
+      '<circle cx="78" cy="42" r="11"/><circle cx="123" cy="42" r="11"/><circle cx="168" cy="42" r="11"/><circle cx="213" cy="42" r="11"/>'+
+      '<circle cx="78" cy="82" r="11"/><circle cx="123" cy="82" r="11"/><circle cx="168" cy="82" r="11"/><circle cx="213" cy="82" r="11"/>'+
+      '<circle cx="78" cy="122" r="11"/><circle cx="123" cy="122" r="11"/><circle cx="168" cy="122" r="11"/><circle cx="213" cy="122" r="11"/>'+
+      '</g><text x="150" y="164" text-anchor="middle">3×4＝12　12÷3＝4</text>'+
+      '</svg><figcaption>3 行、每行 4 个，共 12 个；已知总数和行数，也能反过来求每行数量。</figcaption></figure></details>';
+  }
+  if(kind==='area-distributive-model'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 180" role="img" aria-label="一个高3、宽4加2的长方形分成两个部分，左边面积3乘4等于12，右边面积3乘2等于6，总面积18">'+
+      '<text x="120" y="25" text-anchor="middle">4</text><text x="210" y="25" text-anchor="middle">2</text><text x="42" y="88">3</text>'+
+      '<rect x="60" y="38" width="120" height="90" fill="#dfb477" fill-opacity=".65" stroke="#74897f" stroke-width="1.5"/>'+
+      '<rect x="180" y="38" width="60" height="90" fill="#a8c5d6" fill-opacity=".7" stroke="#74897f" stroke-width="1.5"/>'+
+      '<path d="M90 38V128 M120 38V128 M150 38V128 M210 38V128 M60 68H240 M60 98H240" fill="none" stroke="#74897f" stroke-width=".8"/>'+
+      '<text x="120" y="88" text-anchor="middle">12</text><text x="210" y="88" text-anchor="middle">6</text>'+
+      '<text x="150" y="158" text-anchor="middle">3×(4＋2)＝12＋6＝18</text>'+
+      '</svg><figcaption>把大长方形分成两块，面积相加；括号里的 4 和 2 都要乘以高度 3。</figcaption></figure></details>';
+  }
+  if(kind==='dot-plot'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="20名学生读书本数的点图，每个点代表1名学生，5本出现6次，7本没有出现">'+
+      '<text x="170" y="16" text-anchor="middle">每个点代表 1 名学生</text><path d="M16 150H324" stroke="#74897f" stroke-width="1.5"/>'+
+      '<g fill="#dfb477" stroke="#9a794c" stroke-width=".8">'+
+      '<circle cx="24" cy="140" r="4.5"/><circle cx="48" cy="140" r="4.5"/>'+
+      '<circle cx="72" cy="140" r="4.5"/><circle cx="72" cy="127" r="4.5"/>'+
+      '<circle cx="96" cy="140" r="4.5"/><circle cx="96" cy="127" r="4.5"/><circle cx="96" cy="114" r="4.5"/><circle cx="96" cy="101" r="4.5"/>'+
+      '<circle cx="120" cy="140" r="4.5"/><circle cx="120" cy="127" r="4.5"/>'+
+      '<circle cx="144" cy="140" r="4.5"/><circle cx="144" cy="127" r="4.5"/><circle cx="144" cy="114" r="4.5"/><circle cx="144" cy="101" r="4.5"/><circle cx="144" cy="88" r="4.5"/><circle cx="144" cy="75" r="4.5"/>'+
+      '<circle cx="168" cy="140" r="4.5"/><circle cx="216" cy="140" r="4.5"/><circle cx="264" cy="140" r="4.5"/><circle cx="312" cy="140" r="4.5"/>'+
+      '</g>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle">'+
+      '<text x="24" y="170">0</text><text x="48" y="170">1</text><text x="72" y="170">2</text><text x="96" y="170">3</text><text x="120" y="170">4</text><text x="144" y="170">5</text><text x="168" y="170">6</text><text x="192" y="170">7</text><text x="216" y="170">8</text><text x="240" y="170">9</text><text x="264" y="170">10</text><text x="288" y="170">11</text><text x="312" y="170">12</text>'+
+      '</g><text x="170" y="196" text-anchor="middle">读书本数（本）</text>'+
+      '</svg><figcaption>5 本上方有 6 个点，表示 6 名学生各读了 5 本；7 的位置留空，表示没有人读 7 本。</figcaption></figure></details>';
+  }
+  if(kind==='histogram'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 320 200" role="img" aria-label="30名学生身高直方图，五个连续区间的频数分别为3、7、10、6、4，区间宽度均为10厘米">'+
+      '<path d="M30 24V150H292" fill="none" stroke="#74897f" stroke-width="1.5"/><text x="8" y="18">人数</text>'+
+      '<g fill="#a8c5d6" stroke="#688ba0" stroke-width="1">'+
+      '<rect x="30" y="126" width="52" height="24"/><rect x="82" y="94" width="52" height="56"/><rect x="134" y="70" width="52" height="80"/><rect x="186" y="102" width="52" height="48"/><rect x="238" y="118" width="52" height="32"/>'+
+      '</g>'+
+      '<g fill="#394c42" font-size="12" text-anchor="middle">'+
+      '<text x="56" y="120">3</text><text x="108" y="88">7</text><text x="160" y="64">10</text><text x="212" y="96">6</text><text x="264" y="112">4</text>'+
+      '<text x="30" y="170">130</text><text x="82" y="170">140</text><text x="134" y="170">150</text><text x="186" y="170">160</text><text x="238" y="170">170</text><text x="290" y="170">180</text>'+
+      '</g><text x="160" y="195" text-anchor="middle">身高（厘米）</text>'+
+      '</svg><figcaption>区间连续，所以长条相连；150 厘米归入 150≤h＜160 这一组。</figcaption></figure></details>';
+  }
+  if(kind==='box-plot'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 330 190" role="img" aria-label="箱线图五数概括为3、6、9、14、21，中位数9，四分位距8，极差18">'+
+      '<text x="165" y="16" text-anchor="middle">五数概括：3、6、9、14、21</text>'+
+      '<path d="M58 78H91 M181 78H259 M58 62V94 M259 62V94" fill="none" stroke="#74897f" stroke-width="2"/>'+
+      '<rect x="91" y="52" width="90" height="52" fill="#dfb477" fill-opacity=".55" stroke="#9a794c" stroke-width="2"/>'+
+      '<path d="M125 52V104" stroke="#9a794c" stroke-width="3"/>'+
+      '<path d="M24 118H304" stroke="#74897f" stroke-width="1.5"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle">'+
+      '<text x="58" y="48">3</text><text x="91" y="42">6</text><text x="125" y="42">9</text><text x="181" y="42">14</text><text x="259" y="48">21</text>'+
+      '<text x="24" y="136">0</text><text x="80" y="136">5</text><text x="136" y="136">10</text><text x="192" y="136">15</text><text x="248" y="136">20</text><text x="304" y="136">25</text>'+
+      '</g><text x="165" y="172" text-anchor="middle">四分位距＝14－6＝8；极差＝21－3＝18</text>'+
+      '</svg><figcaption>箱体表示中间一半数据；须线长短表示数值跨度，不表示这一段有更多或更少的人。</figcaption></figure></details>';
+  }
+  if(kind==='cube-net'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 260 180" role="img" aria-label="一种正方体展开图，由四个正方形排成一行，第二个正方形上方和下方各连接一个正方形">'+
+      '<g fill="#dfb477" fill-opacity=".65" stroke="#74897f" stroke-width="1.5">'+
+      '<rect x="30" y="70" width="40" height="40"/><rect x="70" y="70" width="40" height="40"/><rect x="110" y="70" width="40" height="40"/><rect x="150" y="70" width="40" height="40"/><rect x="70" y="30" width="40" height="40"/><rect x="70" y="110" width="40" height="40"/>'+
+      '</g><g fill="#394c42" font-size="14" font-weight="650" text-anchor="middle">'+
+      '<text x="50" y="95">1</text><text x="90" y="95">2</text><text x="130" y="95">3</text><text x="170" y="95">4</text><text x="90" y="55">5</text><text x="90" y="135">6</text>'+
+      '</g><text x="130" y="170" text-anchor="middle">六个面折起后组成正方体</text>'+
+      '</svg><figcaption>每个正方形对应一个面；折起后六个面各出现一次，不能互相重叠。</figcaption></figure></details>';
+  }
+
+  if(kind==='coordinate-grid'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 300 190" role="img" aria-label="坐标网格：A(1，1)、B(1，4)、C(5，4)、D(5，1)依次连接成一个长方形；先读横坐标，再读纵坐标">'+
+      '<path d="M48 154H250 M48 154V18" fill="none" stroke="#74897f" stroke-width="1.6"/>'+
+      '<path d="M78 34V154 M108 34V154 M138 34V154 M168 34V154 M198 34V154 M228 34V154 M48 124H228 M48 94H228 M48 64H228 M48 34H228" fill="none" stroke="#dfe4dc" stroke-width="1"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="78" y="170">1</text><text x="108" y="170">2</text><text x="138" y="170">3</text><text x="168" y="170">4</text><text x="198" y="170">5</text></g>'+
+      '<g fill="#394c42" font-size="11" text-anchor="end"><text x="39" y="128">1</text><text x="39" y="98">2</text><text x="39" y="68">3</text><text x="39" y="38">4</text></g>'+
+      '<path d="M78 124L78 34L198 34L198 124Z" fill="#dfb477" fill-opacity=".35" stroke="#b18a50" stroke-width="2.5"/>'+
+      '<g fill="#c98e45" stroke="#fff" stroke-width="1.2"><circle cx="78" cy="124" r="4.5"/><circle cx="78" cy="34" r="4.5"/><circle cx="198" cy="34" r="4.5"/><circle cx="198" cy="124" r="4.5"/></g>'+
+      '<g fill="#394c42" font-size="11" font-weight="650"><text x="84" y="141">A</text><text x="84" y="24">B</text><text x="204" y="24">C</text><text x="204" y="141">D</text><text x="258" y="158">x</text><text x="39" y="14">y</text></g>'+
+      '</svg><figcaption>先按第一个数找到横向位置，再按第二个数找到纵向位置。A、B、C、D 依次连接，得到长 4 格、宽 3 格的长方形。</figcaption></figure></details>';
+  }
+  if(kind==='grid-transformations'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 360 190" role="img" aria-label="网格上的三种图形变换：平移让三角形整体移动，反射让三角形关于竖直镜线翻转，旋转让三角形绕中心转动">'+
+      '<g fill="none" stroke="#dfe4dc" stroke-width=".8"><path d="M10 50H112 M10 80H112 M10 110H112 M10 140H112 M30 40V150 M55 40V150 M80 40V150 M105 40V150 M128 50H232 M128 80H232 M128 110H232 M128 140H232 M148 40V150 M173 40V150 M198 40V150 M223 40V150 M246 50H350 M246 80H350 M246 110H350 M246 140H350 M266 40V150 M291 40V150 M316 40V150 M341 40V150"/></g>'+
+      '<g fill="#394c42" font-size="12" font-weight="650" text-anchor="middle"><text x="61" y="24">平移</text><text x="180" y="24">反射</text><text x="299" y="24">旋转</text></g>'+
+      '<path d="M22 130L42 130L22 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M55 110L75 110L55 90Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/><path d="M43 120L52 111" stroke="#74897f" stroke-width="1.4"/>'+
+      '<path d="M180 42V150" stroke="#74897f" stroke-width="1.7" stroke-dasharray="4 3"/><path d="M142 130L162 130L142 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M218 130L198 130L218 110Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M260 130L280 130L260 110Z" fill="#dfb477" fill-opacity=".7" stroke="#9a794c" stroke-width="1.5"/><path d="M280 70L280 90L300 70Z" fill="#a8c5d6" fill-opacity=".8" stroke="#688ba0" stroke-width="1.5"/><circle cx="300" cy="110" r="3" fill="#394c42"/>'+
+      '<g fill="#394c42" font-size="10" text-anchor="middle"><text x="61" y="166">整体挪动</text><text x="180" y="166">镜线翻转</text><text x="299" y="166">绕中心转</text></g>'+
+      '</svg><figcaption>三种变换都保持图形的大小和形状；平移与旋转保持朝向，反射会把朝向翻转。</figcaption></figure></details>';
+  }
+  if(kind==='triangle-parallelogram-area'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 170" role="img" aria-label="垂直高：平行四边形剪下左端三角形并移到右端，拼成同底同高的长方形；高与底垂直">'+
+      '<text x="70" y="20" text-anchor="middle" fill="#394c42" font-size="12">原来的平行四边形</text><text x="242" y="20" text-anchor="middle" fill="#394c42" font-size="12">剪拼后的长方形</text>'+
+      '<path d="M30 55L130 55L105 120L5 120Z" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path d="M5 120L30 55L30 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M30 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M30 111H39V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
+      '<text x="12" y="88" fill="#394c42" font-size="10">高 h</text><text x="66" y="137" fill="#394c42" font-size="11">底 b</text>'+
+      '<path d="M145 88H176 M169 82L176 88L169 94" fill="none" stroke="#74897f" stroke-width="1.8"/>'+
+      '<path data-part="remaining-trapezoid" d="M190 55H290L265 120H190Z" fill="#dfb477" fill-opacity=".38" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path data-part="moved-triangle" d="M265 120L290 55L290 120Z" fill="#a8c5d6" fill-opacity=".85" stroke="#688ba0" stroke-width="1.5"/>'+
+      '<path d="M190 55H290V120H190Z" fill="none" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path d="M190 55V120" stroke="#74897f" stroke-width="1.2" stroke-dasharray="3 3"/><path d="M190 111H199V120" fill="none" stroke="#74897f" stroke-width="1"/>'+
+      '<text x="178" y="88" fill="#394c42" font-size="10">h</text><text x="230" y="137" fill="#394c42" font-size="11">底 b</text>'+
+      '<text x="170" y="158" text-anchor="middle" fill="#394c42" font-size="11">平行四边形：b×h　　三角形：b×h÷2</text>'+
+      '</svg><figcaption>剪下并移动三角形，面积不变，平行四边形变成长方形；同底同高的三角形面积是它的一半。高必须垂直于底。</figcaption></figure></details>';
+  }
+  if(kind==='polygon-area-decomposition'){
+    return '<details class="concept-mode concept-visual-mode"><summary>看图理解</summary>'+
+      '<figure class="concept-visual"><svg viewBox="0 0 340 205" role="img" aria-label="梯形分割：不等腰梯形，上底6厘米，下底10厘米，高4厘米；左侧三角形底1厘米，右侧三角形底3厘米，两个三角形不相等，合计底长4厘米；分割面积32平方厘米">'+
+      '<text x="160" y="18" text-anchor="middle" fill="#394c42" font-size="12">不等腰梯形：长方形＋两个不等三角形</text>'+
+      '<path d="M80 50L200 50L260 122L60 122Z" fill="#dfb477" fill-opacity=".3" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<path data-part="left-triangle" d="M60 122L80 50L80 122Z" fill="#a8c5d6" fill-opacity=".85"/>'+
+      '<rect data-part="central-rectangle" x="80" y="50" width="120" height="72" fill="#dfb477" fill-opacity=".38"/>'+
+      '<path data-part="right-triangle" d="M200 50L260 122L200 122Z" fill="#a8c5d6" fill-opacity=".85"/>'+
+      '<path d="M80 50V122 M200 50V122" stroke="#688ba0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
+      '<path d="M80 112H90V122" fill="none" stroke="#74897f" stroke-width="1.2"/>'+
+      '<path d="M80 50L200 50L260 122L60 122Z" fill="none" stroke="#9a794c" stroke-width="1.7"/>'+
+      '<g fill="#394c42" font-size="11" text-anchor="middle"><text x="140" y="42">上底 6 cm</text><text x="160" y="160">下底 10 cm</text><text x="97" y="91">高 4 cm</text><text x="70" y="141">1 cm</text><text x="230" y="141">3 cm</text><text x="170" y="188">6×4＋(10−6)×4÷2＝32 cm²</text></g>'+
+      '</svg><figcaption>中间长方形面积为 6×4＝24 平方厘米；两侧三角形的底长合计 10−6＝4 厘米，面积合计 4×4÷2＝8 平方厘米。两侧三角形不必相等。</figcaption></figure></details>';
+  }
+  return '';
+}
+function conceptExplanationHtml(id){
+  const c=conceptHelpFor(id);
+  if(!c)return '';
+  const modes=[
+    ['换个说法',[c.simpler]],
+    ['举例与反例',[c.example,c.counterexample]],
+    ['自己试一试',[c.tryIt]],
+    ['为什么',[c.why]]
+  ];
+  const textModes=modes.map(([label,parts])=>
+    '<details class="concept-mode"><summary>'+esc(label)+'</summary>'+
+    parts.map(part=>'<p>'+esc(part)+'</p>').join('')+'</details>'
+  );
+  // The visual aid follows the plain-language option, so it is discoverable
+  // without scrolling past every written explanation.
+  const content=textModes[0]+conceptVisualHtml(c.visual)+textModes.slice(1).join('');
+  return '<section class="concept-help" aria-label="理解数学概念">'+
+    '<p class="concept-term">数学概念 · '+esc(c.formal)+'</p>'+
+    '<p class="concept-definition">'+esc(c.definition)+'</p>'+
+    '<details class="concept-alternatives"><summary>没看懂？换种方式理解</summary><div class="concept-modes">'+content+'</div></details>'+
+  '</section>';
+}
 function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||journeyOpen||guideVisible||panels.has(o.id)){card.hidden=true;return;}
   card.dataset.kind=o.kind;if(worldLayout==='network')card.style.visibility='visible';card.style.setProperty('--object-color',o.color);
   const same=card.dataset.currentKey===scene.selected,priorScroll=same?card.scrollTop:0,priorFocus=same?document.activeElement?.closest?.('[data-preview-key]')?.dataset.previewKey:null;const relations=relationsFor(space,o.key),before=relations.filter(e=>e.to===o.key).length,after=relations.filter(e=>e.from===o.key).length;
   let body='';
-  if(o.kind==='node'){const state=nodeState(learning,o.id),legacy=activityFor(o.id),lesson=lessonForTopic(o.id),a=legacy||lesson,markers=worldLayout==='network'?[scene.savedScenes?.has(o.id)?'有未完现场':'',scene.queuedQuestions?.has(o.id)?'有待续问题':''].filter(Boolean):[];body=`${a?`<p class="status-text"><i class="status-dot ${completionClass(state)}"></i>${PROGRESS[state.progress]}</p>`:''}${scene.canLocate(o)?'':'<p class="quiet">这个数学思维在学习中呈现；可以查看联系或开始活动。</p>'}<div class="focus-actions">${button('open',a?(worldLayout==='network'&&lesson&&learning.lessons[lesson]?'继续活动':'开始'):'查看联系',`data-id="${o.id}"`,'primary-button')}${button('bookmark',learning.bookmarks.includes(o.id)?'已收藏':'收藏',`data-id="${o.id}"`)}${worldLayout==='network'&&legacy&&learning.activities[legacy]?button('open-legacy','打开早期现场',`data-id="${o.id}"`):''}${worldLayout==='network'&&scene.queuedQuestions?.has(o.id)?button('questions','看看留下的问题'):''}</div>${scene.global&&a&&!markers.length?'':`<p class="quiet">${markers.length?markers.join(' · '):a?'这里已有动手活动':'动手活动准备中，可以先看联系'}</p>`}${worldLayout==='network'?`<p class="network-concept">可以试：${esc(LESSONS[lesson]?.title||ACTIVITIES[legacy]?.title||o.title)}</p><div class="activity-forms">${activityForms(o.id).map(f=>`<span>${activityGlyph(f)}${ACTIVITY_FORMS[f].label}</span>`).join('')}</div>${renderGradeNodePosition(o)}${nextIdea(o)}${relations.length?'<p class="network-focus-key"><span class="before">基础 → 这里</span><span class="after">这里 → 后续</span></p>':''}${scene.global?'':button('network-view','从侧面看整张图','data-view="side"','soft-button')}${networkRelations(o,relations)}`:''}`;}
-  else if(o.kind==='pack'&&routeForPack(o.id)){const routes=routesForPack(o.id),route=routes.find(r=>r.id===activeRouteId)||(routes.length===1?routes[0]:null);if(!route){const sections=ROUTE_SECTIONS.filter(s=>routes.some(r=>routeSection(r,o.id)===s.id)),section=sections.find(s=>s.id===scene.learningSectionId);if(sections.length&&!section)body=`<p class="quiet">先挑一个想试的方向。</p><div class="route-choices">${sections.map(s=>button('choose-section',esc(s.title),`data-id="${s.id}"`,'route-choice route-set')).join('')}</div>`;else{const allChoices=section?routes.filter(r=>routeSection(r,o.id)===section.id):routes,page=Math.min(scene.learningRoutePage||0,Math.floor((allChoices.length-1)/3)),choices=allChoices.slice(page*3,page*3+3);body=`<p class="quiet">${section?esc(section.title):'选一条小路线开始，也可以随时换。'}</p><div class="route-choices">${choices.map(r=>button('choose-route',`${esc(r.title)}<small>${r.ids.length} 个想法</small>`,`data-id="${r.id}"`,'route-choice route-set')).join('')}</div>${allChoices.length>3?`<div class="route-pages">${button('route-page','上一组',`data-page="${page-1}" ${page===0?'disabled':''}`,'plain-button')}${button('route-page','再看看',`data-page="${page+1}" ${(page+1)*3>=allChoices.length?'disabled':''}`,'plain-button')}</div>`:''}${section?button('choose-section','换个方向','data-id=""','plain-button'):''}`;}}else{const links=Object.values(BRIDGES).filter(b=>route.ids.includes(b.to));body=`<p class="quiet">${esc(route.title)} · 可以跳着看</p><ol class="route-choices">${route.ids.map((id,i)=>{const n=LESSONS[id],status=nodeState(learning,n.topicId).progress==='completed'?'✓ 完成':'○ 未完成';return `<li>${button('choose',`<span class="route-number">${route.id}–${String(i+1).padStart(2,'0')}</span><span>${n.title}<small>${status}</small></span>`,`data-key="node:${n.topicId}"`,'route-choice')}</li>`;}).join('')}</ol>${links.length?`<details class="route-links"><summary>把想法连起来</summary>${links.map(b=>button('bridge',`<small>${LESSONS[b.from].title} ↔ ${LESSONS[b.to].title}</small>${esc(b.title)}<small>${esc(b.summary)}</small><small>${lessonSummary(learning.daily.bridges[b.id]).completed?'✓ 完成':'○ 未完成'}</small>`,`data-id="${b.id}"`,'bridge-choice')).join('')}</details>`:''}${routes.length>1?button('choose-route','换条小路线','data-id=""','plain-button'):''}`;}body+=`<div class="focus-actions">${button('list-pack','查看这里的全部知识',`data-id="${o.id}"`,'plain-button')}</div>`;}
+  if(o.kind==='node'){const state=nodeState(learning,o.id),legacy=activityFor(o.id),lesson=lessonForTopic(o.id),a=legacy||lesson,markers=worldLayout==='network'?[scene.savedScenes?.has(o.id)?'有未完现场':'',scene.queuedQuestions?.has(o.id)?'有待续问题':''].filter(Boolean):[];body=`${a?`<p class="status-text"><i class="status-dot ${completionClass(state)}"></i>${PROGRESS[state.progress]}</p>`:''}${scene.canLocate(o)?'':'<p class="quiet">这个数学思维内容不在地图上单独显示；可以查看联系或打开相关活动。</p>'}<div class="focus-actions">${button('open',a?(worldLayout==='network'&&lesson&&learning.lessons[lesson]?'继续活动':'开始'):'查看联系',`data-id="${o.id}"`,'primary-button')}${button('bookmark',learning.bookmarks.includes(o.id)?'已收藏':'收藏',`data-id="${o.id}"`)}${worldLayout==='network'&&legacy&&learning.activities[legacy]?button('open-legacy','打开早期现场',`data-id="${o.id}"`):''}${worldLayout==='network'&&scene.queuedQuestions?.has(o.id)?button('questions','看看留下的问题'):''}</div>${worldLayout==='network'?conceptExplanationHtml(o.id):''}${scene.global&&a&&!markers.length?'':`<p class="quiet">${markers.length?markers.join(' · '):a?'这里已有动手活动':'动手活动准备中，可以先看联系'}</p>`}${worldLayout==='network'?`<p class="network-concept">可以试：${esc(LESSONS[lesson]?.title||ACTIVITIES[legacy]?.title||o.title)}</p><div class="activity-forms">${activityForms(o.id).map(f=>`<span>${activityGlyph(f)}${ACTIVITY_FORMS[f].label}</span>`).join('')}</div>${renderGradeNodePosition(o)}${nextIdea(o)}${relations.length?'<p class="network-focus-key"><span class="before">基础 → 这里</span><span class="after">这里 → 后续</span></p>':''}${scene.global?'':button('network-view','从侧面看整张图','data-view="side"','soft-button')}${networkRelations(o,relations)}`:''}`;}
+  else if(o.kind==='pack'&&routeForPack(o.id)){const routes=routesForPack(o.id),route=routes.find(r=>r.id===activeRouteId)||(routes.length===1?routes[0]:null);if(!route){const sections=ROUTE_SECTIONS.filter(s=>routes.some(r=>routeSection(r,o.id)===s.id)),section=sections.find(s=>s.id===scene.learningSectionId);if(sections.length&&!section)body=`<p class="quiet">先挑一个想试的方向。</p><div class="route-choices">${sections.map(s=>button('choose-section',esc(s.title),`data-id="${s.id}"`,'route-choice route-set')).join('')}</div>`;else{const allChoices=section?routes.filter(r=>routeSection(r,o.id)===section.id):routes,page=Math.min(scene.learningRoutePage||0,Math.floor((allChoices.length-1)/3)),choices=allChoices.slice(page*3,page*3+3);body=`<p class="quiet">${section?esc(section.title):'选一条小路线开始，也可以随时换。'}</p><div class="route-choices">${choices.map(r=>button('choose-route',`${esc(r.title)}<small>${r.ids.length} 个学习环节</small>`,`data-id="${r.id}"`,'route-choice route-set')).join('')}</div>${allChoices.length>3?`<div class="route-pages">${button('route-page','上一组',`data-page="${page-1}" ${page===0?'disabled':''}`,'plain-button')}${button('route-page','再看看',`data-page="${page+1}" ${(page+1)*3>=allChoices.length?'disabled':''}`,'plain-button')}</div>`:''}${section?button('choose-section','换个方向','data-id=""','plain-button'):''}`;}}else{const links=Object.values(BRIDGES).filter(b=>route.ids.includes(b.to));body=`<p class="quiet">${esc(route.title)} · 可以跳着看</p><ol class="route-choices">${route.ids.map((id,i)=>{const n=LESSONS[id],status=nodeState(learning,n.topicId).progress==='completed'?'✓ 完成':'○ 未完成';return `<li>${button('choose',`<span class="route-number">${route.id}–${String(i+1).padStart(2,'0')}</span><span>${n.title}<small>${status}</small></span>`,`data-key="node:${n.topicId}"`,'route-choice')}</li>`;}).join('')}</ol>${links.length?`<details class="route-links"><summary>把想法连起来</summary>${links.map(b=>button('bridge',`<small>${LESSONS[b.from].title} ↔ ${LESSONS[b.to].title}</small>${esc(b.title)}<small>${esc(b.summary)}</small><small>${lessonSummary(learning.daily.bridges[b.id]).completed?'✓ 完成':'○ 未完成'}</small>`,`data-id="${b.id}"`,'bridge-choice')).join('')}</details>`:''}${routes.length>1?button('choose-route','换条小路线','data-id=""','plain-button'):''}`;}body+=`<div class="focus-actions">${button('list-pack','查看这里的全部知识',`data-id="${o.id}"`,'plain-button')}</div>`;}
 
-  else if(o.kind==='pack'){body=`<p>${esc(o.question)}</p><p class="quiet">${o.nodeIds.length} 个想法${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','看看这里的想法',`data-id="${o.id}"`)}</div>`;}
+  else if(o.kind==='pack'){const mapped=o.nodeIds.filter(id=>space.relationshipIds?.has(id)).length,extra=o.nodeIds.length-mapped;body=`<p>${esc(o.question)}</p><p class="quiet">${scene.relationshipMap?`${mapped} 个地图知识点${extra?` · ${extra} 个数学思维内容`:''}`:`${o.nodeIds.length} 个相关内容`}${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','查看本群内容',`data-id="${o.id}"`)}</div>`;}
   else if(o.kind==='theme'&&scene.relationshipMap)body=themeOverview(o);
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
-  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${({theme:'一个方向',pack:'一簇想法',node:'一个想法'})[o.kind]}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
+  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
 }
 function openJourney(step,{restore=false}={}){
   for(const id of [...panels.keys()])closePanel(id);
@@ -533,18 +736,18 @@ function openLearningLesson(id,{restore=false,questionId=null}={}){
 }
 
 function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}scheduleSave();}
-function openSearch(packId=null){searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'想靠近哪个想法？';renderSearch();$('#search-input').focus();}
+function openSearch(packId=null){searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'查找主题、知识群或知识点';renderSearch();$('#search-input').focus();}
 function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
   if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
   else if(!q)matches=[...space.themes.values(),...learning.bookmarks.map(id=>space.nodes.get(id))];
   else matches=space.objects.filter(o=>(o.title+' '+(o.name||'')+' '+o.id+' '+displayTitle(o)+' '+(o.kind==='node'?LESSONS[lessonForTopic(o.id)]?.title||'':'')).toLowerCase().includes(q));
   if(searchPack&&q)matches=matches.filter(o=>(o.title+' '+(o.name||'')+' '+o.id+' '+displayTitle(o)+' '+(o.kind==='node'?LESSONS[lessonForTopic(o.id)]?.title||'':'')).toLowerCase().includes(q));
-  $('#search-results').innerHTML=matches.length?matches.slice(0,searchLimit).map(o=>button('choose',`<span>${esc(displayTitle(o))}<small>${o.kind==='node'?`${space.packs.get(o.packId).title}${(activityFor(o.id)||lessonForTopic(o.id))?' · '+PROGRESS[nodeState(learning,o.id).progress]:''}`:o.kind==='pack'?'知识簇':'主题区域'}</small></span><span aria-hidden="true">↗</span>`,`data-key="${o.key}"`,'search-result')).join(''):'<p class="empty-search">还没找到这个名字，可以换个词。</p>';
+  $('#search-results').innerHTML=matches.length?matches.slice(0,searchLimit).map(o=>button('choose',`<span>${esc(displayTitle(o))}<small>${o.kind==='node'?`${space.packs.get(o.packId).title}${(activityFor(o.id)||lessonForTopic(o.id))?' · '+PROGRESS[nodeState(learning,o.id).progress]:''}`:o.kind==='pack'?'知识群':'主题'}</small></span><span aria-hidden="true">↗</span>`,`data-key="${o.key}"`,'search-result')).join(''):'<p class="empty-search">还没找到这个名字，可以换个词。</p>';
   $('#search-count').textContent=q||searchPack?`找到 ${matches.length} 个，显示 ${Math.min(searchLimit,matches.length)} 个`:'选一个方向，或输入想找的名字';
   $('#search-more').hidden=matches.length<=searchLimit;
 }
-function relationButtons(id){const links=relationsFor(space,objectKey('node',id));return ['before','after'].map(side=>{const list=links.filter(e=>side==='before'?e.to===objectKey('node',id):e.from===objectKey('node',id));return `<section class="panel-relations"><h3>${side==='before'?'这里会用到':'还会连到哪里'} <small>${list.length}</small></h3>${list.map(e=>{const other=space.byKey.get(side==='before'?e.from:e.to);return button('choose',`${esc(other.title)}<small>${space.packs.get(other.packId).title} · ${e.edges[0].strength==='hard'?'关键基础':'辅助关联'}</small>`,`data-key="${other.key}"`,'relation-button');}).join('')||'<p class="quiet">原图暂未列出这个方向的数学联系。</p>'}</section>`;}).join('');}
-function overviewContent(id){const n=space.nodes.get(id),activity=activityFor(id),s=nodeState(learning,id);return `<div class="panel-intro">${activity?`<span class="status-text"><i class="status-dot ${completionClass(s)}"></i>${PROGRESS[s.progress]}</span>`:''}<h2>${esc(n.title)}</h2><p>${activity?esc(ACTIVITIES[activity].goal):'这个想法的动手内容还在准备。可以沿着连接看看它与哪些想法有关。'}</p>${button('bookmark',learning.bookmarks.includes(id)?'已收藏':'收藏',`data-id="${id}"`)}</div>${relationButtons(id)}<details class="source-details"><summary>原始定义与目标</summary><p>${esc(n.name)}</p><p>${esc(n.description)}</p><ul>${n.evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul><p class="quiet">原始节点 ${esc(n.id)} · 来源 os-taxonomy。空间分类为本地组织。</p></details>`;}
+function relationButtons(id){const links=relationsFor(space,objectKey('node',id));return ['before','after'].map(side=>{const list=links.filter(e=>side==='before'?e.to===objectKey('node',id):e.from===objectKey('node',id));return `<section class="panel-relations"><h3>${relationHeading(side)} <small>${list.length}</small></h3>${list.map(e=>{const other=space.byKey.get(side==='before'?e.from:e.to);return button('choose',`${esc(displayTitle(other))}<small>${space.packs.get(other.packId).title} · ${relationStrength(e.edges[0].strength)}</small>`,`data-key="${other.key}"`,'relation-button');}).join('')||'<p class="quiet">原图暂未列出这个方向的数学联系。</p>'}</section>`;}).join('');}
+function overviewContent(id){const n=space.nodes.get(id),activity=activityFor(id),s=nodeState(learning,id);return `<div class="panel-intro">${activity?`<span class="status-text"><i class="status-dot ${completionClass(s)}"></i>${PROGRESS[s.progress]}</span>`:''}<h2>${esc(displayTitle(n))}</h2><p>${activity?esc(ACTIVITIES[activity].goal):'这个知识点暂无独立学习活动，可以先查看相关基础和后续知识。'}</p>${button('bookmark',learning.bookmarks.includes(id)?'已收藏':'收藏',`data-id="${id}"`)}</div>${relationButtons(id)}<details class="source-details"><summary>原始定义与目标</summary><p>${esc(n.name)}</p><p>${esc(n.description)}</p><ul>${n.evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul><p class="quiet">原始节点 ${esc(n.id)} · 来源 os-taxonomy。空间分类为本地组织。</p></details>`;}
 function recordContent(id){const k=activityFor(id),a=k&&learning.activities[k],s=nodeState(learning,id);if(!a)return `<div class="panel-intro"><h2>留在这里的足迹</h2><p>${learning.visited[id]?`看过联系 · ${date(learning.visited[id])}`:'这里还没有探索记录。'}</p><p class="quiet">打开、浏览和收藏会保留；它们不代表已经理解。</p></div>`;
   const e=evidenceSummary(a);return `<div class="panel-intro"><h2>留在这里的足迹</h2><p>${PROGRESS[s.progress]} · ${e.demonstrated?'有独立操作与迁移证据':e.needsSupport?'还有需要支持的地方':'正在收集理解证据'}</p><p class="quiet">解释单独保存，内容待确认。</p></div>${e.kinds.map(k=>`<div class="record-item"><b>${k.kind==='construct'?'自己的构造':'换情境的尝试'}</b><p>${({none:'还没有提交作品',independent:'有本次独立操作证据',supported:'有支持的尝试'})[k.status]}${k.attempts?` · ${k.attempts} 次提交`:''}</p></div>`).join('')}<div class="record-item"><b>自由探索</b><p>保存了 ${a.observations.length} 次发现</p></div>${a.notes.map(n=>`<div class="record-item"><small>${date(n.at)} · 解释待确认</small><p>${esc(n.text)}</p></div>`).join('')}${button('journal','查看完整作品与备份','','soft-button')}`;
 }
@@ -556,15 +759,15 @@ function renderPanelSection(panel,tab,{activate=true}={}){panel.tab=tab;for(cons
 }
 function openPanel(id,{anchor=null,minimized=false,restore=false,tab=null,expanded=false}={}){if(!space.nodes.has(id))return;closePopovers();if(panels.has(id)){activePanel=id;panels.get(id).minimized=false;arrangePanels();return;}
   if(panels.size===2){toast('已经展开两个工作面。关闭其中一个后，可以再打开新的。');return;}
-  const n=space.nodes.get(id),activity=activityFor(id),el=document.createElement('section');el.className='work-panel';el.dataset.node=id;el.setAttribute('aria-label',n.title+'的工作面');el.style.setProperty('--object-color',n.color);
-  el.innerHTML=`<header class="work-header"><span class="work-title" title="${esc(n.title)}">${esc(n.title)}</span><div>${button('resize-panel','放大',`data-id="${id}" aria-label="调整${esc(n.title)}工作面大小"`,'plain-button')}${button('minimize-panel','收起',`data-id="${id}"`,'plain-button')}${button('close-panel','×',`data-id="${id}" aria-label="关闭${esc(n.title)}工作面"`,'plain-button')}</div></header><nav class="work-tabs" aria-label="工作面内容">${[['overview','联系'],...(activity?[['activity','动手']]:[]),['records','记录']].map(([key,title])=>`<button type="button" data-panel-tab="${key}" data-id="${id}">${title}</button>`).join('')}</nav><div class="work-content"><div class="work-section" data-section="overview"></div>${activity?'<div class="work-section iframe-section" data-section="activity" hidden></div>':''}<div class="work-section" data-section="records" hidden></div></div>`;
+  const n=space.nodes.get(id),activity=activityFor(id),el=document.createElement('section');el.className='work-panel';el.dataset.node=id;el.setAttribute('aria-label',displayTitle(n)+'的工作面');el.style.setProperty('--object-color',n.color);
+  el.innerHTML=`<header class="work-header"><span class="work-title" title="${esc(displayTitle(n))}">${esc(displayTitle(n))}</span><div>${button('resize-panel','放大',`data-id="${id}" aria-label="调整${esc(displayTitle(n))}工作面大小"`,'plain-button')}${button('minimize-panel','收起',`data-id="${id}"`,'plain-button')}${button('close-panel','×',`data-id="${id}" aria-label="关闭${esc(displayTitle(n))}工作面"`,'plain-button')}</div></header><nav class="work-tabs" aria-label="工作面内容">${[['overview','联系'],...(activity?[['activity','动手']]:[]),['records','记录']].map(([key,title])=>`<button type="button" data-panel-tab="${key}" data-id="${id}">${title}</button>`).join('')}</nav><div class="work-content"><div class="work-section" data-section="overview"></div>${activity?'<div class="work-section iframe-section" data-section="activity" hidden></div>':''}<div class="work-section" data-section="records" hidden></div></div>`;
   const sections=Object.fromEntries([...el.querySelectorAll('[data-section]')].map(s=>[s.dataset.section,s]));
   const p={id,el,sections,anchor:anchor||[...n.position],minimized,expanded,tab:'overview'};panels.set(id,p);activePanel=id;$('#workspaces').append(el);renderPanelSection(p,Object.hasOwn(sections,tab)?tab:activity?'activity':'overview');p.minimized=minimized;
   if(!restore){mutateLearning(s=>{s.visited[id]??=now();s.openedPacks[n.packId]??=now();});scene.select(n.key);setHash(n.key);arrangePanels();}
   renderWorkspaceButtons();renderFocus();scheduleSave();scene.dirty=true;
 }
 function closePanel(id){const p=panels.get(id);if(!p)return;p.el.remove();panels.delete(id);if(activePanel===id)activePanel=[...panels.keys()].at(-1)||null;renderWorkspaceButtons();renderFocus();scheduleSave();scene.dirty=true;}
-function renderWorkspaceButtons(){document.body.classList.toggle('has-workspaces',!!panels.size);const bar=$('#workspace-list');bar.hidden=!panels.size;bar.innerHTML=[...panels.values()].map(p=>button('locate-panel',esc(space.nodes.get(p.id).title),`data-id="${p.id}"`,p.id===activePanel?'workspace-chip active':'workspace-chip')).join('')+(panels.size===2?button('arrange','并排看','','workspace-chip'):'');}
+function renderWorkspaceButtons(){document.body.classList.toggle('has-workspaces',!!panels.size);const bar=$('#workspace-list');bar.hidden=!panels.size;bar.innerHTML=[...panels.values()].map(p=>button('locate-panel',esc(displayTitle(space.nodes.get(p.id))),`data-id="${p.id}"`,p.id===activePanel?'workspace-chip active':'workspace-chip')).join('')+(panels.size===2?button('arrange','并排看','','workspace-chip'):'');}
 function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene.basis(),list=[...panels.values()],center=[0,0,0];for(const p of list){const n=space.nodes.get(p.id);n.position.forEach((x,i)=>center[i]+=x/list.length);}
   const ratio=Math.max(1,.8/scene.camera.aspect),d=(list.length===1?600:890)*ratio;
   const target=center.map((x,i)=>x+(list.length===1?right.getComponent(i)*105:0));
@@ -706,7 +909,7 @@ $('#network-legend').addEventListener('pointerout',event=>{if(event.pointerType!
 $('#network-legend').addEventListener('pointercancel',()=>highlightThemeHeader(null));
 let pointerPreview=null,focusPreview=null;
 const previewFrom=target=>target?.closest?.('#focus-card [data-preview-key]')?.dataset.previewKey||null;
-const updatePreview=()=>{const key=focusPreview||pointerPreview;scene?.setPreview(key);for(const hint of document.querySelectorAll('#focus-card .preview-hint'))hint.textContent='';if(!key||!scene?.global)return;const o=space.byKey.get(key),row=[...document.querySelectorAll('#focus-card [data-preview-key]')].find(el=>el.dataset.previewKey===key);if(!o||!row)return;if(!scene.canLocate(o)){row.querySelector('.preview-hint').textContent='这个数学思维在学习中呈现，点名字查看。';return;}const p=scene.project(o.position),insets=scene.globalInsets();if(!p.visible||p.x<insets.left||p.x>scene.width-insets.right||p.y<insets.top||p.y>scene.height-insets.bottom)row.querySelector('.preview-hint').textContent='这个点在画面外，点名字查看。';};
+const updatePreview=()=>{const key=focusPreview||pointerPreview;scene?.setPreview(key);for(const hint of document.querySelectorAll('#focus-card .preview-hint'))hint.textContent='';if(!key||!scene?.global)return;const o=space.byKey.get(key),row=[...document.querySelectorAll('#focus-card [data-preview-key]')].find(el=>el.dataset.previewKey===key);if(!o||!row)return;if(!scene.canLocate(o)){row.querySelector('.preview-hint').textContent='这个数学思维内容不在地图上单独显示，点名称查看联系。';return;}const p=scene.project(o.position),insets=scene.globalInsets();if(!p.visible||p.x<insets.left||p.x>scene.width-insets.right||p.y<insets.top||p.y>scene.height-insets.bottom)row.querySelector('.preview-hint').textContent='这个点在画面外，点名字查看。';};
 $('#focus-card').addEventListener('pointerover',e=>{pointerPreview=previewFrom(e.target);updatePreview();});
 $('#focus-card').addEventListener('pointerout',e=>{pointerPreview=previewFrom(e.relatedTarget);updatePreview();});
 $('#focus-card').addEventListener('focusin',e=>{focusPreview=previewFrom(e.target);updatePreview();});
@@ -751,10 +954,10 @@ window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();}
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#utility-drawer').hidden){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}else cardHide();}});
 
 async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
-  const check=async()=>{const cache=await caches.open('math-explorer-20261103-grade-observation-a2-2-v1');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','grade-progression-model.js','data/grade-progression.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
+  const check=async()=>{const cache=await caches.open('math-explorer-20261104-grade-language-integration-v1');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','navigation-copy.js','concept-explanations.js','grade-progression-model.js','data/grade-progression.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
  }catch{$('#offline-status').textContent='本机保存';}}
 async function boot(){try {
-  const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=await response.json();
+  const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=applyNavigationCopy(await response.json());
   try{guideSteps=buildStructureGuide(atlas);}catch{guideSteps=[];warning('导览所用的来源联系有变化，暂时收起导览；其他知识仍可查看。');}
   let previous=null,preference=null;try{previous=JSON.parse(readStored(VIEW_KEY));preference=readStored(WORLD_MODE_KEY);}catch{}
   const params=new URL(location.href).searchParams,requested=params.get('world');

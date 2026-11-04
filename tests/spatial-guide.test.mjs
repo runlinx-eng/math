@@ -24,6 +24,9 @@ test('map-guided walk requires source-backed target clicks, then hands over to f
   assert.deepEqual(first,[{key:'theme:'+themeId,label:'从这里进入'}]);
   assert.equal(guideStepReady(steps,0,[],themeId),false);
   assert.equal(guideStepReady(steps,0,[first[0].key],themeId),true);
+  assert.deepEqual(guideNextTargets(steps,0,[first[0].key],themeId),[]);
+  assert.equal(guideStepReady(steps,0,[],null),false);
+  assert.equal(guideStepReady(steps,-1,[],themeId),false);
   const root='node:'+steps[1].anchor,count='node:'+steps[1].edges[0].topicId;
   assert.equal(guideNextTargets(steps,1,[],themeId)[0].key,root);
   assert.equal(guideNextTargets(steps,1,[root],themeId)[0].key,count);
