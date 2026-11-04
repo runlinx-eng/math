@@ -74,7 +74,11 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
       await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
       const originalLearning=await oldPage.evaluate(async()=>{
         const {KEY,fresh}=await import('./exploration-core.js');
+        const {createActivity}=await import('./exploration-core.js');
+        const {activityIds}=await import('./exploration-content.js');
         const state=fresh();state.bookmarks=['mt_s2mfRBoTal'];
+        state.visited['mt_b4lbTOJYwI']='2026-10-01T00:00:00.000Z';
+        state.activities[activityIds[0]]=createActivity(activityIds[0]);
         const raw=JSON.stringify(state);localStorage.setItem(KEY,raw);
         localStorage.setItem('math-explorer-world-mode-v1','classic');
         localStorage.setItem('math-explorer-network-layout-v1','49');
@@ -89,7 +93,16 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
         await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().networkVersion===53);
         check(await oldPage.evaluate(()=>document.body.dataset.world==='network'&&location.search.includes('world=network')&&location.search.includes('layout=53')),'legacy URL and saved mode resolve to the single relationship panorama');
         check(await oldPage.locator('#grade-map-filter').isVisible(),'legacy entry still exposes stage filtering');
-        check(await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2'))===originalLearning,'legacy entry preserves bookmarks and learning data');
+        const observedLearning=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+        // Visiting the deep link legitimately appends a visited timestamp.
+        // Verify no pre-existing learning facts are lost, rather than byte equality.
+        const beforeState=JSON.parse(originalLearning),afterState=JSON.parse(observedLearning||'null');
+        check(!!afterState&&beforeState.bookmarks.every(id=>afterState.bookmarks?.includes(id))&&
+          Object.entries(beforeState.visited).every(([id,at])=>afterState.visited?.[id]===at)&&
+          Object.keys(beforeState.activities).every(id=>afterState.activities?.[id]?.id===id)&&
+          Object.keys(beforeState.lessons).every(id=>afterState.lessons?.[id]?.id===id),
+          'legacy entry retains prior bookmarks, visits and learning activities');
+        if(oldUrl.includes('/node/'))check(!!afterState.visited['mt_s2mfRBoTal'],'deep link records the new visit without deleting prior data');
         check(await oldPage.locator('[data-action="switch-world"],[data-action="switch-layout"]').count()===0,'legacy map entry controls do not reappear');
         if(oldUrl.includes('/node/'))check((await oldPage.evaluate(()=>mathSpace.snapshot())).selected==='node:mt_s2mfRBoTal','legacy node link retains its selected knowledge point');
       }
