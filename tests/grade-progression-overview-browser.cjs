@@ -29,6 +29,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     check(await page.locator('#grade-observation-view').isHidden(),'stage filter does not open another grade space or matrix');
     check(await page.locator('#grade-map-filter-status').innerText().then(s=>s.includes(String(count))),'stage filter displays grounded coverage count');
   }
+  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-network-relationship-view-v1')||'null')?.selectedGradeStage==='stage-3');
   await page.reload();
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().gradeStageFilter==='stage-3'&&mathSpace.snapshot().gradeStageMatchedIds.length===255);
   check((await pose())===overlayStart,'reloading preserves the selected stage and original panorama pose');
