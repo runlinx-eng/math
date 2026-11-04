@@ -353,7 +353,7 @@ function setObservationMode(mode){
   document.body.dataset.observationMode=next;
   document.body.dataset.gradeSpatial=String(next==='grade'&&gradeSpatialEnabled);
   if(next==='grade')gradeSpatial?.applyGrade(selectedGrade);
-  if(scene)scene.dirty=true;
+  else gradeSpatial?.update({active:false});
   const guide=$('#network-guide'),grade=$('#grade-observation-view');
   if(guide)guide.querySelectorAll(':scope > :not(#observation-mode-switch):not(#grade-observation-view)').forEach(item=>{item.hidden=next!=='relationship';});
   if(grade)grade.hidden=next!=='grade';
