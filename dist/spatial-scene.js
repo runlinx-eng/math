@@ -366,7 +366,15 @@ export class SpatialScene {
     const id=['all','stage-1','stage-2','stage-3'].includes(stageId)?stageId:'all';
     const next=id==='all'?new Set():new Set(nodeIds);
     if(this.gradeStageId===id&&this.gradeStageIds.size===next.size&&[...next].every(key=>this.gradeStageIds.has(key)))return;
-    this.gradeStageId=id;this.gradeStageIds=next;this.rebuildRelations();this.dirty=true;
+    this.gradeStageId=id;this.gradeStageIds=next;
+    // Curriculum stage is a color/label overlay. Rebuilding the relationship
+    // geometry on every stage click is unnecessary and can interrupt previews.
+    if(this.relationshipMap&&this.networkEdges&&this.networkSoftEdges&&!this.selected&&!this.guideFocus){
+      const filtered=id!=='all';
+      this.networkEdges.material.opacity=filtered?.024:(this.global?(this.structuralOverview?.023:.085):.19);
+      this.networkSoftEdges.material.opacity=filtered?.006:(this.global?.055:.065);
+    }
+    this.dirty=true;
   }
   setRelations(mode){this.relationMode=['source','route'].includes(mode)?mode:'off';this.rebuildRelations();this.dirty=true;}
   setEdgeDisplay(mode){if(!this.relationshipMap||!['outline','critical','all'].includes(mode)||mode===this.edgeDisplay)return;this.edgeDisplay=mode;this.refreshNetworkEdges();this.rebuildRelations();this.dirty=true;}
