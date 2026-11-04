@@ -17,6 +17,21 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
   const originalPose=await pose();
   const source=await page.evaluate(async()=>await(await fetch('./data/grade-progression.json')).json());
+  // Read-only curriculum overlay in the ORIGINAL 3D panorama, without entering the grade matrix.
+  await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all');
+  check(await page.locator('#grade-map-filter').isVisible(),'the original panorama offers the inline curriculum node filter');
+  check(await page.locator('[data-action="grade-map-stage"]').count()===4,'three honest two-year stages plus all are offered');
+  const overlayStart=await pose();
+  for(const [stage,count] of [['stage-1',187],['stage-2',259],['stage-3',255]]){
+    await page.locator('[data-action="grade-map-stage"][data-stage="'+stage+'"]').click();
+    await page.waitForFunction(({stage,count})=>mathSpace.snapshot().gradeStageFilter===stage&&mathSpace.snapshot().gradeStageMatchedIds.length===count,{stage,count});
+    check((await pose())===overlayStart,'switching '+stage+' never changes camera pose or original node positions');
+    check(await page.locator('#grade-observation-view').isHidden(),'stage filter does not open another grade space or matrix');
+    check(await page.locator('#grade-map-filter-status').innerText().then(s=>s.includes(String(count))),'stage filter displays grounded coverage count');
+  }
+  await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all'&&mathSpace.snapshot().gradeStageMatchedIds.length===0);
+  check((await pose())===overlayStart,'all restores the original complete 3D map at same coordinates');
   await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
   await page.waitForFunction(()=>!document.querySelector('#grade-observation-view')?.hidden&&document.querySelectorAll('.grade-pack-row').length===23);
   check(await page.locator('#network-view-title').isHidden(),'grade mode hides the original guide content without wrapping its grid children');

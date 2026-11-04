@@ -48,6 +48,16 @@
       <button type="button" data-action="observation-mode" data-mode="relationship" aria-pressed="true">关系全景</button>
       <button type="button" data-action="observation-mode" data-mode="grade" aria-pressed="false">年级观察</button>
     </div>
+    <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
+      <strong>知识点 · 按学段观察</strong>
+      <div role="group" aria-label="小学学段筛选">
+        <button type="button" data-action="grade-map-stage" data-stage="all" aria-pressed="true">全部</button>
+        <button type="button" data-action="grade-map-stage" data-stage="stage-1" aria-pressed="false">1—2年级</button>
+        <button type="button" data-action="grade-map-stage" data-stage="stage-2" aria-pressed="false">3—4年级</button>
+        <button type="button" data-action="grade-map-stage" data-stage="stage-3" aria-pressed="false">5—6年级</button>
+      </div>
+      <p id="grade-map-filter-status" aria-live="polite">正在读取课程映射…</p>
+    </section>
       <strong id="network-view-title">立体总览 · 整张知识地图</strong>
       <p id="network-view-description">颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。</p>
       <div id="network-legend" class="network-legend"></div>
