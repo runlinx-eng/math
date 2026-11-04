@@ -53,7 +53,7 @@ export class GradeSpatialCards{
     this.layer.replaceChildren();this.stageButtons=[];
     this.metadata.stages.forEach((stage,index)=>{
       const b=document.createElement('button');b.type='button';b.className='grade-spatial-stage';
-      b.dataset.action='grade-select';b.dataset.grade=String(index*2+1);
+      b.dataset.action='grade-spatial-stage-select';b.dataset.grade=String(index*2+1);
       b.dataset.stageId=stage.id;
       const main=document.createElement('strong'),sub=document.createElement('small');
       main.textContent=stage.label;sub.textContent='相关知识点 '+stage.count+' · 两年学段';
