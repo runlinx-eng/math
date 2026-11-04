@@ -89,7 +89,8 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
         await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().networkVersion===53);
         check(await oldPage.evaluate(()=>document.body.dataset.world==='network'&&location.search.includes('world=network')&&location.search.includes('layout=53')),'legacy URL and saved mode resolve to the single relationship panorama');
         check(await oldPage.locator('#grade-map-filter').isVisible(),'legacy entry still exposes stage filtering');
-        check(await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2'))===originalLearning,'legacy entry preserves bookmarks and learning data');
+        const observedLearning=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+        check(observedLearning===originalLearning,'legacy entry preserves bookmarks and learning data: '+JSON.stringify({original:originalLearning,observed:observedLearning}));
         check(await oldPage.locator('[data-action="switch-world"],[data-action="switch-layout"]').count()===0,'legacy map entry controls do not reappear');
         if(oldUrl.includes('/node/'))check((await oldPage.evaluate(()=>mathSpace.snapshot())).selected==='node:mt_s2mfRBoTal','legacy node link retains its selected knowledge point');
       }
