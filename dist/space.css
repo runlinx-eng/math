@@ -846,3 +846,39 @@ body[data-world="network"] .concept-visual{
 body[data-world="network"] .concept-visual svg{display:block;max-width:100%;height:auto;}
 body[data-world="network"] .concept-visual svg text{fill:#394c42;font-size:14px;font-weight:650;}
 body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:11px;line-height:1.6;color:#526554;}
+
+/* Spatial grade-card sample: annotations follow the EXISTING 3D graph, never rearrange it. */
+.grade-spatial-tag{display:none!important}
+body[data-grade-spatial="true"] .space-label.pack .grade-spatial-tag,
+body[data-grade-spatial="true"] .space-label.node:is(.hovered,.selected,.preview-target) .grade-spatial-tag{
+  display:inline-flex!important;align-items:center;flex:none;margin-left:5px;padding:1px 5px;
+  border-radius:5px;background:#e8efe7;color:#315a4b;font-size:10px;font-weight:600;
+  line-height:17px;white-space:nowrap
+}
+body[data-grade-spatial="true"] .space-label.pack{max-width:300px}
+body[data-grade-spatial="true"] .space-label.node:is(.hovered,.selected,.preview-target){max-width:330px}
+.grade-spatial-switch{display:flex;align-items:center;gap:10px;justify-content:space-between;
+  margin:8px 0;padding:8px 10px;background:#f1f5ed;border-radius:9px}
+.grade-spatial-switch span{font-size:11px;line-height:1.55;color:#617566}
+.grade-spatial-switch button{flex:none;padding:8px 10px;border-radius:7px;
+  background:#e1eade;color:#365c48;font-size:11px}
+.grade-spatial-switch button[aria-pressed="true"]{background:#315c4e;color:#fffef9}
+.grade-spatial-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:12}
+.grade-spatial-stage{position:absolute;top:0;left:0;width:152px;height:49px;
+  padding:7px 10px;border:1px solid #b4c6b4;border-left:4px solid #678e73;border-radius:9px;
+  background:#fffef9f0;box-shadow:0 5px 16px #24463c15;text-align:left;
+  pointer-events:auto;white-space:nowrap;backdrop-filter:blur(6px)}
+.grade-spatial-stage strong{display:block;font-size:12px;line-height:17px;color:#315a49}
+.grade-spatial-stage small{display:block;font-size:9px;line-height:15px;color:#788b79}
+.grade-spatial-stage[aria-pressed="true"]{border-color:#346c55;background:#e9f2e8f5;
+  box-shadow:0 0 0 2px #44826325}
+body[data-grade-spatial="true"][data-observation-mode="grade"][data-world="network"] .network-guide{
+  width:min(395px,calc(100vw - 210px))
+}
+body[data-grade-spatial="true"] .grade-detail-grid{grid-template-columns:1fr}
+@media(max-width:900px){
+  .grade-spatial-layer{display:none}
+  body[data-grade-spatial="true"][data-observation-mode="grade"][data-world="network"] .network-guide{
+    width:min(680px,calc(100vw - 370px))
+  }
+}
