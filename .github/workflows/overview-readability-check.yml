@@ -6,6 +6,8 @@ on:
       - 'dist/spatial-*.js'
       - 'dist/space.js'
       - 'dist/grade-progression-model.js'
+      - 'dist/grade-node-filter.js'
+      - 'dist/data/grade-panorama-lite.json'
       - 'dist/data/grade-progression.json'
       - 'dist/space.css'
       - 'dist/index.html'
@@ -19,6 +21,7 @@ on:
       - 'tests/spatial-unified-map-browser.cjs'
       - 'tests/spatial-theme-overview-browser.cjs'
       - 'tests/grade-progression-overview.test.mjs'
+      - 'tests/grade-node-filter.test.mjs'
       - 'tests/grade-progression-overview-browser.cjs'
       - 'docs/grade-progression/DATA-ADAPTER.md'
       - 'tests/spatial-local-focus-browser.cjs'
@@ -52,8 +55,9 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
+          node --check dist/grade-node-filter.js
       - name: Check relationship and grade observation data
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/spatial-exploration.test.mjs
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/grade-node-filter.test.mjs tests/spatial-exploration.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
