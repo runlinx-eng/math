@@ -817,3 +817,32 @@ body[data-observation-mode="grade"] .focus-card{display:none!important}
 .grade-node-unresolved{padding:5px 7px;border-radius:6px;background:#f4eee2;color:#87683c!important}
 .grade-node-position .soft-button{margin-top:3px;padding:7px 9px;font-size:10px}
 @media(max-width:600px){.grade-node-position{padding:8px}.grade-node-position .grade-node-stage-tag{font-size:8px}}
+
+/* Integrated concept explanation styles. */
+
+/* Six-node language pilot: precise anchor remains visible, alternative explanations on demand. */
+body[data-world="network"] .focus-card[data-kind="node"] .concept-help{
+  border-top:1px solid #e2e8dc;margin:9px 0 6px;padding-top:7px;
+}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-term{
+  font-size:11px;color:#536a52;font-weight:650;margin:2px 0 3px;line-height:1.5;
+}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-definition{
+  font-size:12px;color:#354637;line-height:1.65;margin:3px 0 6px;
+}
+body[data-world="network"] .concept-alternatives>summary{
+  font-size:12px;color:#37636b;cursor:pointer;padding:6px 0;
+}
+body[data-world="network"] .concept-modes{padding:2px 0 5px 9px;border-left:2px solid #e0e8e4}
+body[data-world="network"] .concept-mode{padding:3px 0}
+body[data-world="network"] .concept-mode>summary{font-size:12px;color:#49635b;cursor:pointer}
+body[data-world="network"] .focus-card[data-kind="node"] .concept-mode p{
+  margin:5px 0 7px;font-size:12px;color:#536052;line-height:1.65;
+}
+
+body[data-world="network"] .concept-visual{
+  margin:7px 0;padding:8px;border:1px solid #e1e5da;border-radius:8px;background:#fcfbf6;
+}
+body[data-world="network"] .concept-visual svg{display:block;max-width:100%;height:auto;}
+body[data-world="network"] .concept-visual svg text{fill:#394c42;font-size:14px;font-weight:650;}
+body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:11px;line-height:1.6;color:#526554;}

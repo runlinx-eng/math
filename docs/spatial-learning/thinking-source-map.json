@@ -484,7 +484,7 @@
         },
         {
           "id": "mt_dXq9VWm31W",
-          "displayName": "理解分数 · 情境、图形与算式",
+          "displayName": "在情境、图形与算式间转换",
           "sourceName": "Understanding fractions",
           "standards": [
             "ccss-math:MP.2"
@@ -533,7 +533,7 @@
         },
         {
           "id": "mt_3VmBdlAeOZ",
-          "displayName": "数轴上的分数 · 数轴、情境与算式",
+          "displayName": "连接数轴、情境与算式",
           "sourceName": "Fractions on a number line",
           "standards": [
             "ccss-math:MP.2"
@@ -587,7 +587,7 @@
         },
         {
           "id": "mt_CUmjcE7W6c",
-          "displayName": "数轴上的分数 · 连接小数与百分数",
+          "displayName": "连接分数、小数与百分数的表示",
           "sourceName": "Fractions on a number line (age 9+)",
           "standards": [
             "ccss-math:MP.2"
@@ -641,7 +641,7 @@
         },
         {
           "id": "mt_9KmVWCuh5_",
-          "displayName": "理解分数 · 多种表示之间的联系",
+          "displayName": "连接情境、图表与代数表示",
           "sourceName": "Understanding fractions (age 10+)",
           "standards": [
             "ccss-math:MP.2"
@@ -935,7 +935,7 @@
         },
         {
           "id": "mt_2ESZh70NyS",
-          "displayName": "理解分数 · 多步论证与检错",
+          "displayName": "说明并检验多步数学推理",
           "sourceName": "Understanding fractions (age 9+)",
           "standards": [
             "ccss-math:MP.3"
@@ -1201,7 +1201,7 @@
         },
         {
           "id": "mt_iQYPw8bMfN",
-          "displayName": "用数学表示测量、钱和时间",
+          "displayName": "用数学模型表示测量、钱和时间",
           "sourceName": "Working with money",
           "standards": [
             "acara-v9:AC9M2N06",
@@ -1500,7 +1500,7 @@
         },
         {
           "id": "mt_zMEvtigoM3",
-          "displayName": "数轴上的数 · 选择数轴等工具",
+          "displayName": "根据问题选择数学表示与工具",
           "sourceName": "Numbers on a number line",
           "standards": [
             "ccss-math:MP.5"
@@ -1957,7 +1957,7 @@
         },
         {
           "id": "mt_HY8Yycu_rz",
-          "displayName": "理解分数 · 准确使用词语与符号",
+          "displayName": "准确使用数学词汇和符号",
           "sourceName": "Understanding fractions (age 7+)",
           "standards": [
             "ccss-math:MP.6"
@@ -2261,7 +2261,7 @@
         },
         {
           "id": "mt_DW2D1c0fKx",
-          "displayName": "图形规律 · 运算、数位与图形结构",
+          "displayName": "发现并利用数学结构",
           "sourceName": "Shape patterns",
           "standards": [
             "ccss-math:MP.7"
@@ -2310,7 +2310,7 @@
         },
         {
           "id": "mt_FAXjFkgG6X",
-          "displayName": "图形规律 · 三位数、乘除与图形",
+          "displayName": "数位、运算与图形中的结构",
           "sourceName": "Shape patterns (age 7+)",
           "standards": [
             "ccss-math:MP.7"
@@ -2482,7 +2482,7 @@
         },
         {
           "id": "mt_hImiKNiaNh",
-          "displayName": "运算顺序 · 发现运算与图形结构",
+          "displayName": "运算与几何结构的联系",
           "sourceName": "Order of operations (age 10+)",
           "standards": [
             "ccss-math:MP.7"
@@ -2727,7 +2727,7 @@
         },
         {
           "id": "mt_aivrWs6jrS",
-          "displayName": "乘法口诀与乘法表 · 从已知规律推出新事实",
+          "displayName": "乘法表与分数中的规律",
           "sourceName": "Times tables (age 8+)",
           "standards": [
             "ccss-math:MP.8"

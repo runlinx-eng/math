@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "branch": "feat/language-concept-audit-v1",
+  "batchId": "B01",
+  "scope": "对两个无解释样板的知识地图节点完成外部课程标准、专业框架和教学研究依据核查；后续获授权施工已完成对应解释初稿，本研究记录不修改源节点或关系。",
+  "method": {
+    "rules": [
+      "逐项核对源 description、evidence、assessmentPrompt、ageRange 和真实前后关系。",
+      "区分官方课程标准、专业框架、综合研究报告、课堂观察和小样本试点；不把课程目标写成效果证据。",
+      "记录每项来源具体支持什么，以及样本年龄、研究设计和外推限制。",
+      "外部来源核查完成不等于独立数学教研、解释内容验收或儿童理解验收。"
+    ]
+  },
+  "summary": {
+    "nodesReviewed": 2,
+    "externalSourcesCatalogued": 8,
+    "officialCurriculumWorkSamples": 2,
+    "professionalFrameworks": 1,
+    "nationalAcademiesReports": 1,
+    "empiricalStudiesOrResearchReports": 4,
+    "nodesWithExternalSourcesReviewed": 2,
+    "explanationDraftsCreated": 2,
+    "independentMathReviewsCompleted": 0,
+    "childUnderstandingTestsCompleted": 0,
+    "explanationDraftsPendingIndependentReview": 2
+  },
+  "sourceCatalog": [
+    {
+      "id": "SRC-01",
+      "title": "WS03 — The most popular use of the play space",
+      "year": "Australian Curriculum v9",
+      "type": "official_curriculum_work_sample",
+      "url": "https://www.australiancurriculum.edu.au/resources/work-samples/mathematics/year-2/ws03-the-most-popular-use-of-the-play-space",
+      "supports": "Year 2 AC9M2ST01/02. The work sample shows a question and purpose, survey categories, data-collection method, recording/display plan, tally sheet, tally groups of five, a picture graph with one dot per student's choice, and a digital survey/display.",
+      "limitation": "An official curriculum work sample and achievement illustration, not a controlled study of learning effects."
+    },
+    {
+      "id": "SRC-02",
+      "title": "WS02 — Clean our school",
+      "year": "Australian Curriculum v9",
+      "type": "official_curriculum_work_sample",
+      "url": "https://www.australiancurriculum.edu.au/resources/work-samples/mathematics/year-3/ws02-clean-our-school",
+      "supports": "Year 3 AC9M3ST01/02/03. The standard explicitly includes categorical and discrete numerical data, frequency tables and spreadsheets; the work sample annotates participant/context identification, tabular recording, totals, picture and column graphs, interpretation and communication in context.",
+      "limitation": "An official curriculum work sample, not a controlled study; its task is more extended than the narrow collection-and-recording node."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Pre-K–12 Guidelines for Assessment and Instruction in Statistics Education II (GAISE II)",
+      "year": 2020,
+      "type": "professional_framework",
+      "url": "https://ies.ed.gov/sites/default/files/ies/document/2024/10/GAISEIIPreK-12_Full.pdf",
+      "supports": "The ASA/NCTM-endorsed Level A framework connects question formulation, data collection/consideration, analysis and interpretation. It explicitly includes surveys, observations and simple experiments; categorical and quantitative variables; errors and missing values; tables, picture graphs, dotplots and bar graphs; and limiting conclusions to the group actually studied.",
+      "limitation": "A professional framework, not a controlled trial. Its Levels A/B/C are developmental progressions, not fixed grade or age bands."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Data and Computing in K–12 Education: Foundational Competencies",
+      "year": 2026,
+      "type": "national_academies_consensus_report",
+      "url": "https://www.nationalacademies.org/read/29303/chapter/7",
+      "supports": "The elementary-school discussion distinguishes cases from attributes, recommends consistent measurement procedures, asks learners to consider who/when/where/how data were collected, and describes case-level graphs, tally marks and using displays to compare groups.",
+      "limitation": "A broad consensus synthesis, not an intervention evaluating these two specific nodes."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Exploring Central Tendencies: The Teaching of Data and Statistics in Elementary Mathematics Classrooms",
+      "authors": "Erica Litke and Heather C. Hill",
+      "year": 2020,
+      "type": "peer_reviewed_classroom_observation_study",
+      "url": "https://eric.ed.gov/?id=EJ1377670",
+      "supports": "Analysis of 144 upper-elementary mathematics lessons found more emphasis on calculations and graph construction than on question formulation, data collection and interpretation; it also identified content-accuracy concerns. This supports keeping the whole question-to-data-to-interpretation purpose visible rather than reducing the task to making a chart.",
+      "limitation": "Upper-elementary lesson observations, older than the B01 age bands; describes instructional practice and gaps, not a causal effect on student achievement."
+    },
+    {
+      "id": "SRC-06",
+      "title": "Exploring Preschool Data Collection and Analysis: A Pilot Study",
+      "authors": "Ashley E. Lewis Presser et al.",
+      "year": 2022,
+      "type": "design_based_pilot_study",
+      "url": "https://doi.org/10.3390/educsci12020118",
+      "supports": "A pilot in four preschool classrooms with 28 children used nine investigations and a teacher-facing app to scaffold question, collection, recording, graphing and data-talk steps. Pre/post scores increased from 0.58 to 0.72 (paired t(27)=5.62, p<.001), offering an example of a structured data-collection-and-analysis sequence.",
+      "limitation": "Preschool sample (mean age 4.78), four classrooms, remote implementation during COVID-19, and no control group. It supports feasibility/design ideas only; it does not prove effectiveness for ages 7–9."
+    },
+    {
+      "id": "SRC-07",
+      "title": "A Learning Progression for Constructing and Interpreting Data Display",
+      "authors": "Eun Mi Kim, Leslie Nabors Olah and Stephanie Peters",
+      "year": 2020,
+      "type": "research_report_learning_progression",
+      "url": "https://doi.org/10.1002/ets2.12285",
+      "supports": "The report separates constructing data displays and interpreting data displays into two related progress variables, then designs tasks to elicit evidence for both. Its categorical-data task uses 45 survey responses, asks learners to organize and graph the same data, and then answer questions from the display.",
+      "limitation": "A hypothesized progression based on literature review and expert review, not a controlled teaching intervention or direct validation for this exact age band."
+    },
+    {
+      "id": "SRC-08",
+      "title": "The Role of Data Context and Task Context in Young Children's Reading of Data Representations",
+      "authors": "Virginia Kinnear",
+      "year": 2023,
+      "type": "design_based_descriptive_study",
+      "url": "https://iase-pub.org/ojs/SERJ/article/view/445",
+      "supports": "A design-based descriptive study with 14 five-year-olds found that a familiar story context and paired pictorial/numerical table representation supported children's reading and interpretation of data.",
+      "limitation": "Small descriptive study with younger children; it supports contextualized representation as a design clue, not a generalizable effect estimate for ages 7–9."
+    }
+  ],
+  "records": [
+    {
+      "id": "mt_ebQURBOsM5",
+      "title": "围绕问题收集数据",
+      "type": "PROCEDURAL",
+      "domainId": "data",
+      "ageRange": [
+        8,
+        9
+      ],
+      "phase": 2,
+      "sourceIds": [
+        "SRC-02",
+        "SRC-03",
+        "SRC-04",
+        "SRC-05",
+        "SRC-06"
+      ],
+      "alignment": "Source description and all three evidence prompts align directly with Year 3 AC9M3ST01: acquire categorical and discrete numerical data for a question and record it with frequency tables and spreadsheets. The travel-to-school example is categorical; number of siblings is a discrete numerical count.",
+      "research": "ACARA provides the direct Year 3 curriculum scope and a work sample showing collection, tabular recording, totals, picture/column graphs and contextual interpretation. GAISE II Level A supplies the statistical-process frame and explicitly covers surveys, observations, variable types, missing/error handling and limits on conclusions. The National Academies report adds case/attribute and data-provenance reasoning. Litke & Hill show why question formulation and collection must not be omitted in favour of graph construction alone. Presser et al. offer a structured, age-adjacent DCA sequence, but their preschool pilot cannot establish effectiveness for this age range.",
+      "coverageAudit": [
+        "Define the question, target group and time/context before collecting; for travel, clarify whether the question is about the usual main travel mode or travel today.",
+        "Distinguish categorical responses (walk, car, bus) from discrete numerical values (0, 1, 2, 3 siblings).",
+        "Keep raw person-level records distinct from a frequency summary. In a frequency table, the first column is a category or numerical value and the second is its count.",
+        "Treat zero siblings as a valid value; a missing or declined response is not zero. Count each valid response once and check that frequency totals equal the number of valid responses.",
+        "Make spreadsheet entries match the source records and the frequency table; do not treat spreadsheet use as the mathematical goal itself."
+      ],
+      "designImplications": [
+        "Use categories that are clear, mutually exclusive and sufficiently complete; include an 'other' option where appropriate.",
+        "For the school-travel question, specify the group and time window. Avoid collecting names, addresses or detailed routes; aggregate responses.",
+        "For sibling counts, list the actual count values and tally how many learners gave each value. Record nonresponses separately rather than folding them into zero.",
+        "Ask the learner to explain where the data came from, how each response was recorded, and why the chosen table/spreadsheet structure answers the question."
+      ],
+      "knownRisks": [
+        "An ambiguous question produces answers that cannot be compared.",
+        "Overlapping or incomplete categories cause double counting or forced answers.",
+        "Confusing a raw record table with a frequency table hides what each row represents.",
+        "Treating missing responses as zero changes the data.",
+        "A class result must not be generalized to the whole school without an appropriate sampling basis."
+      ],
+      "acceptanceEvidence": [
+        "The learner can state the question and who/what the data describe.",
+        "The learner can distinguish a category from a countable numerical value in the examples.",
+        "Each valid response is recorded once; tally marks, frequencies and totals agree.",
+        "The spreadsheet faithfully reproduces the data and can answer the original question.",
+        "In a changed context, the learner can choose a suitable collection/recording method and identify missing or duplicate records."
+      ],
+      "relationshipBoundary": "Preserve the existing hard prerequisite mt_c29FaCTNsx (frequency tables build on tally charts), soft prerequisite mt_X53txVXOcG (spreadsheet recording builds on early digital data tools), and hard successors mt_kxeuXm6EyC and mt_yrvYKSwSRZ. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    },
+    {
+      "id": "mt__yvsKKp3TS",
+      "title": "比较两幅统计图",
+      "type": "CONCEPTUAL",
+      "domainId": "data",
+      "ageRange": [
+        7,
+        8
+      ],
+      "phase": 2,
+      "sourceIds": [
+        "SRC-01",
+        "SRC-03",
+        "SRC-07",
+        "SRC-08"
+      ],
+      "alignment": "Source description and evidence align with Year 2 AC9M2ST02: create different graphical representations and compare common/distinctive features in response to questions. ACARA's Year 2 work sample specifically uses a tally sheet and a picture graph for the same survey.",
+      "research": "ACARA's Year 2 work sample directly demonstrates survey categories, tally recording and a picture graph where one dot represents one response. GAISE II shows how the same categorical data can move from raw responses to a frequency table, picture graph and bar graph. Kim et al. distinguish constructing a display from interpreting it and provide tasks that test both. Kinnear's small study supports using familiar context alongside numerical and pictorial data representations.",
+      "coverageAudit": [
+        "Both displays must encode exactly the same survey, categories, frequencies and total number of responses.",
+        "The child must answer the same concrete question from both displays, including the exact count for dogs, not only identify the most popular category.",
+        "The child must identify what remains invariant and what changes between a tally chart and a picture graph (marks/symbols, layout and any key).",
+        "The task asks which display is quicker for this question in this particular example; it must not imply that one representation is always superior."
+      ],
+      "designImplications": [
+        "The current Chinese title '比较两幅统计图' is narrower than the source's English 'Comparing two data displays': a tally chart is a table, not a graph. Recommended display title: '比较两种数据表示'. This is a naming finding only; the title is not changed in this research-only batch.",
+        "For the first child-facing example, use one picture symbol for one response or make the key unmistakable; avoid adding a scale-conversion challenge that is not in the source target.",
+        "Ask: which display helps you spot the most popular pet quickly, and what feature helps? Accept a reason tied to the actual layout and question rather than a memorized rule.",
+        "Ask the same exact-count question from both displays and check that the answers match."
+      ],
+      "knownRisks": [
+        "Calling a tally chart a graph blurs the difference between a table and a graphical display.",
+        "If the picture-graph key is missing or ambiguous, the count cannot be read reliably.",
+        "If one display omits a category or changes a count, the two no longer represent the same data.",
+        "Saying 'picture graphs are always easier' or 'tables are always better' overgeneralizes from one layout and purpose."
+      ],
+      "acceptanceEvidence": [
+        "The learner identifies the same categories, counts and total in both displays.",
+        "The learner reads the number of dog responses correctly from each display.",
+        "The learner identifies the most popular pet and points to the evidence.",
+        "The learner explains one common feature and one different feature of the two representations.",
+        "With a new small data set or a changed pictograph key, the learner can still compare the displays and justify which is easier for a stated question."
+      ],
+      "relationshipBoundary": "Preserve the existing hard prerequisites mt_c29FaCTNsx and mt_VhBH8wrFC6, and the hard successor mt_QpJydot2Kh. No new dependency is inferred.",
+      "explanationDraftCreated": true,
+      "explanationDraftStatus": "ai_draft_self_checked_pending_independent_review",
+      "independentMathReviewStatus": "not_completed",
+      "childUnderstandingStatus": "not_tested"
+    }
+  ]
+}

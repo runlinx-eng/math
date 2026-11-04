@@ -35,6 +35,22 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check(render.markerLegend==='none','ambiguous saved-scene square and question diamond are not map-node categories');
   check(render.selectedLabel.includes('一一对应地数'),'selected title remains visible');
   check(await page.locator('.space-label.node.selected .activity-glyph').evaluate(el=>getComputedStyle(el).display==='none'),'learning-form glyph is not mistaken for a different type of knowledge node');
+  const conceptHelp=page.locator('#focus-card .concept-help');
+  check(await conceptHelp.count()===1&&await conceptHelp.locator('.concept-term').innerText().then(v=>v.includes('一一对应计数')),
+    'reviewed node retains its formal mathematical term in the selected knowledge card');
+  check(await conceptHelp.locator('.concept-alternatives').evaluate(el=>!el.open),
+    'alternative explanations start collapsed rather than crowding the knowledge map');
+  const conceptBefore=JSON.stringify(await snap());
+  await conceptHelp.locator('.concept-alternatives > summary').click();
+  check(await conceptHelp.locator('.concept-mode').count()===4,
+    'four distinct on-demand explanation modes are available');
+  await conceptHelp.locator('.concept-mode').first().locator('summary').click();
+  check((await conceptHelp.innerText()).includes('把物品一个一个指出来'),
+    'child-friendly explanation opens only when requested');
+  check(JSON.stringify(await snap())===conceptBefore,
+    'reading an explanation does not change the map, learning completion or selected node');
+  await conceptHelp.locator('.concept-mode').first().locator('summary').click();
+  await conceptHelp.locator('.concept-alternatives > summary').click();
   await page.screenshot({path:path.join(out,'01-refined-focus.png')});
   // Map zoom is uniform across overview, selection and guided observation.
   check(await page.locator('.tool-rail [data-action="zoom"]').first().isVisible(),'map zoom stays visible when a node is selected');

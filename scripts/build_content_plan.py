@@ -420,12 +420,14 @@ def write_views(plan):
                 all_lines.append(f'| {n["title"]}<br>`{nid}` | {goals} | {source} | {n["implementation"]["state"]} |')
             all_lines += ['', '以上各目标制作时分别对应操作/作品与反馈。源记录、全部活动标题和指针、起查活动动作、表示及误解见 `catalog.json` 同一 ID。', '']
 
-    gaps = ['# 85 个教学研究缺口', '', '“缺研究”表示没有专门的 teaching-research 记录；每个节点仍有原库定义和学习表现标准。以下是补充安排，不表示研究已经完成。', '',
+    gaps = ['# 85 个教学研究缺口（阶段 1 计划基线）', '',
+            '本文件保留阶段 1 的计划、源目标和最初状态，不代表当前交付或审查进度。“缺研究”表示来源 taxonomy 没有专门的 teaching-research 记录，不等于外部不存在研究资料。', '',
+            '当前外部资料核查与解释状态以 [研究缺口分流台账](../language/CONCEPT-RESEARCH-TRIAGE.md) 和 [机器记录](../language/CONCEPT-RESEARCH-TRIAGE.json) 为准；此前人工补充的具体研究动作和阶段记录原样保存在 [2026-11-03 人工补充快照](RESEARCH-GAPS-20261103-manual.md)，该快照不是当前状态源。', '',
             '[返回总览](../CONTENT-INVENTORY.md) · [全部节点](ALL-NODES.md)', '',
-            '按制作批次和任务组逐项补齐，从 B01 开始。每项在所属批次开放前完成：核对全部源目标 → 查可核查的教学依据 → 设计操作、反馈与换条件运用 → 检查数学与运行。相邻研究只供比较，不能直接当本节点已有研究。', '']
+            '以下按原制作批次和任务组记录拟定的补充顺序；相邻研究只供比较，不能直接当本节点已有研究。计划中的“已排期，研究未补齐”是阶段 1 基线状态，不覆盖后续真实核查。', '']
     for gap in plan['researchGaps']:
         gaps += [f'## {gap["order"]:02} · {gap["title"]} · {gap["batchId"]}', '',
-                 f'源 ID：`{gap["topicId"]}`；阶段 {gap["phase"]}；状态：{gap["status"]}。', '',
+                 f'源 ID：`{gap["topicId"]}`；阶段 {gap["phase"]}；状态：阶段 1 计划状态（{gap["status"]}）。', '',
                  '**需要覆盖的源目标：**', '']
         gaps += [f'- {g}' for g in gap['learningGoals']]
         gaps += ['', '**可先比较的已有研究：** ' + ('；'.join(node_name(i, by_id) for i in gap['adjacentResourceTopicIds']) or '无同组或相邻完整研究；需另行查找依据。'),

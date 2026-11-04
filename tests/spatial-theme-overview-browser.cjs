@@ -13,7 +13,8 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
  try{
   await page.goto(url);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
-  const atlas=await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json());
+  const {applyNavigationCopy}=await import('../dist/navigation-copy.js');
+  const atlas=applyNavigationCopy(await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json()));
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
   const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});

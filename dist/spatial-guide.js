@@ -29,7 +29,7 @@ export function buildStructureGuide(atlas){
 export function guideNextTargets(steps,index,visited=[],themeId=null){
   const step=steps[index];if(!step)return [];
   const seen=new Set(visited);
-  if(index===0)return themeId?[{key:'theme:'+themeId,label:'从这里进入'}]:[];
+  if(index===0){const key='theme:'+themeId;return themeId&&!seen.has(key)?[{key,label:'从这里进入'}]:[];}
   if(index===1){const root='node:'+steps[1].anchor;
     return seen.has(root)?seen.has('node:'+COUNT)?[]:[{key:'node:'+COUNT,label:'沿连接到这里'}]:[{key:root,label:'从这个起点开始'}];}
   if(index===2)return step.edges.map((e,i)=>({key:'node:'+e.topicId,label:i===0?'看看加法':'再看看减法'})).filter(t=>!seen.has(t.key));
@@ -37,7 +37,9 @@ export function guideNextTargets(steps,index,visited=[],themeId=null){
   return step.edges.map((e,i)=>({key:'node:'+e.topicId,label:i===0?'沿这条路走':'也可以从这里走'}));
 }
 export function guideStepReady(steps,index,visited=[],themeId=null){
-  return index<4&&guideNextTargets(steps,index,visited,themeId).length===0;
+  if(!steps[index]||index<0||index>=4)return false;
+  if(index===0&&!themeId)return false;
+  return guideNextTargets(steps,index,visited,themeId).length===0;
 }
 
 // Every suggestion comes from an outgoing source edge and an available local

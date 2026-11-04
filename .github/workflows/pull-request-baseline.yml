@@ -79,6 +79,9 @@ jobs:
 
           for candidate in \
             tests/concept-explanations.test.mjs \
+            tests/concept-coverage-consistency.test.mjs \
+            tests/concept-review-inventory.test.mjs \
+            tests/concept-sample-deep-review.test.mjs \
             tests/language-terms.test.mjs \
             tests/navigation-copy.test.mjs \
             tests/node-name-audit.test.mjs \
@@ -160,4 +163,7 @@ jobs:
             verification/spatial-theme-overview/
             verification/grade-progression-overview/
             verification/learning-workspace/
+            verification/concept-language-pilot/
+            verification/node-name-review/
+            verification/language-direction/
           if-no-files-found: warn
