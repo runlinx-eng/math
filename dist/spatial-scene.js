@@ -558,7 +558,7 @@ export class SpatialScene {
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
-        if(matched)color.set(o.color).lerp(paper,inspecting?.06:.13);
+        if(matched){if(!selected&&!hoverObject)color.set(o.color).lerp(paper,.13);else color.lerp(paper,inspecting?.03:.12);}
         else if(!inspecting)color.lerp(paper,.91);
       }
       if(!this.relationshipMap){

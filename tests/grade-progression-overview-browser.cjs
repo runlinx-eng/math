@@ -28,6 +28,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     check((await pose())===overlayStart,'switching '+stage+' never changes camera pose or original node positions');
     check(await page.locator('#grade-observation-view').isHidden(),'stage filter does not open another grade space or matrix');
     check(await page.locator('#grade-map-filter-status').innerText().then(s=>s.includes(String(count))),'stage filter displays grounded coverage count');
+    if(stage==='stage-1')await page.screenshot({path:path.join(out,'desktop-grade-filter-stage-1.png'),fullPage:false});
   }
   await page.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-network-relationship-view-v1')||'null')?.selectedGradeStage==='stage-3');
   await page.reload();
@@ -36,6 +37,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all'&&mathSpace.snapshot().gradeStageMatchedIds.length===0);
   check((await pose())===overlayStart,'all restores the original complete 3D map at same coordinates');
+  await page.screenshot({path:path.join(out,'desktop-grade-filter-all.png'),fullPage:false});
   await page.locator('[data-action="observation-mode"][data-mode="grade"]').click();
   await page.waitForFunction(()=>!document.querySelector('#grade-observation-view')?.hidden&&document.querySelectorAll('.grade-pack-row').length===23);
   check(await page.locator('#network-view-title').isHidden(),'grade mode hides the original guide content without wrapping its grid children');
