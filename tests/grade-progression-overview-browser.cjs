@@ -22,6 +22,12 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     }
     throw Error('Camera did not settle before the stage comparison');
   };
+  const assertUnmoved=(before,after,label)=>{
+    const a=JSON.parse(before),b=JSON.parse(after);
+    check(JSON.stringify(a.positions)===JSON.stringify(b.positions),label+' preserves all source node coordinates');
+    const difference=Math.max(...a.position.map((v,i)=>Math.abs(v-b.position[i])),...a.target.map((v,i)=>Math.abs(v-b.target[i])),Math.abs((a.zoom??1)-(b.zoom??1)));
+    check(difference<=1e-6,label+' preserves the camera (max delta '+difference+'; before '+JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})+'; after '+JSON.stringify({position:b.position,target:b.target,zoom:b.zoom})+')');
+  };
   try{
     await page.goto(url);
     await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537&&!mathSpace.snapshot().selected);
@@ -33,7 +39,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     for(const [stage,count] of [['stage-1',187],['stage-2',259],['stage-3',255]]){
       await page.locator('[data-action="grade-map-stage"][data-stage="'+stage+'"]').click();
       await page.waitForFunction(({stage,count})=>mathSpace.snapshot().gradeStageFilter===stage&&mathSpace.snapshot().gradeStageMatchedIds.length===count,{stage,count});
-      check((await pose())===original,'stage '+stage+' keeps coordinates and camera untouched');
+      assertUnmoved(original,await stablePose(),'stage '+stage);
       check(await page.locator('#grade-map-filter-status').innerText().then(s=>s.includes(String(count))),'stage '+stage+' shows mapped coverage');
       check((await page.evaluate(()=>mathSpace.snapshot())).visibleNodes.length===537,'stage '+stage+' preserves the complete graph');
       if(stage==='stage-1')await page.screenshot({path:path.join(out,'desktop-grade-filter-stage-1.png')});
@@ -41,10 +47,10 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     await page.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-network-relationship-view-v1')||'null')?.selectedGradeStage==='stage-3');
     await page.reload();
     await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().gradeStageFilter==='stage-3'&&mathSpace.snapshot().gradeStageMatchedIds.length===255);
-    check((await stablePose())===original,'reload restores stage filter without moving the graph');
+    assertUnmoved(original,await stablePose(),'reload restores stage filter without moving the graph');
     await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
     await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all'&&mathSpace.snapshot().gradeStageMatchedIds.length===0);
-    check((await pose())===original,'all restores unfiltered source positions');
+    assertUnmoved(original,await stablePose(),'all restores unfiltered source positions');
     await page.screenshot({path:path.join(out,'desktop-grade-filter-all.png')});
     for(const [id,expect] of [
       ['mt_s2mfRBoTal',['1—2年级','3—4年级','证据：']],
