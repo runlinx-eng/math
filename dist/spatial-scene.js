@@ -355,7 +355,8 @@ export class SpatialScene {
   }
   setGradeSpatialFocus(focus){
     this.gradeSpatialFocus=focus?{kind:focus.kind,stageId:focus.stageId,
-      nodeIds:new Set(focus.nodeIds||[]),packIds:new Set(focus.packIds||[])}:null;
+      nodeIds:new Set(focus.nodeIds||[]),packIds:new Set(focus.packIds||[]),
+      pathNodeIds:new Set(focus.pathNodeIds||[]),links:focus.links||[],landmarks:focus.landmarks||[]}:null;
     this.dirty=true;
   }
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
@@ -375,7 +376,7 @@ export class SpatialScene {
     if(!this.relationshipMap||!['all',...OVERVIEW_ROLES,'off'].includes(mode)||this.structureMode===mode)return;
     this.structureMode=mode;this.rebuildRelations();this.dirty=true;
   }
-  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&!this.hoverThemeId&&!this.hoverMapKey&&this.structureMode!=='off';}
+  get structuralOverview(){return this.relationshipMap&&!this.selected&&!this.guideFocus&&!this.hoverThemeId&&!this.hoverMapKey&&this.structureMode!=='off'&&!this.gradeSpatialFocus;}
   transitionProgress(time=performance.now()){
     const t=this.viewTransition;if(!t)return 1;
     const p=clamp((time-t.start)/t.duration,0,1);
@@ -388,21 +389,24 @@ export class SpatialScene {
   }
   updateStructureLines(){
     if(!this.structureLayer)return;
-    const leaving=this.viewTransition?.kind==='to-focus'&&this.structureMode!=='off';
-    this.structureLayer.hidden=!this.structuralOverview&&!leaving;
-    this.structureLayer.style.opacity=String(leaving?1-this.transitionProgress():this.viewTransition?.kind==='to-overview'?this.transitionProgress():1);
+    const lens=this.relationshipMap&&this.gradeSpatialFocus?.kind==='stage'&&!this.selected&&!this.guideFocus;
+    const leaving=this.viewTransition?.kind==='to-focus'&&this.structureMode!=='off'&&!this.gradeSpatialFocus;
+    this.structureLayer.hidden=!lens&&!this.structuralOverview&&!leaving;
+    this.structureLayer.style.opacity=String(leaving?1-this.transitionProgress():this.viewTransition?.kind==='to-overview'&&!lens?this.transitionProgress():1);
     if(this.structureLayer.hidden){this.structureLayer.replaceChildren();return;}
-    this.structureLayer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
+    this.structureLayer.setAttribute('viewBox','0 0 '+this.width+' '+this.height);
+    const source=lens?this.gradeSpatialFocus.links:this.overviewStructure.links;
     const seen=new Set(),html=[];
-    for(const link of this.overviewStructure.links){
-      if(this.structureMode!=='all'&&this.structureMode!==link.role)continue;
+    for(const link of source){
+      if(!lens&&this.structureMode!=='all'&&this.structureMode!==link.role)continue;
       const key=link.from+'>'+link.to;
       if(seen.has(key))continue;seen.add(key);
       const from=this.space.nodes.get(link.from),to=this.space.nodes.get(link.to);
       if(!from||!to)continue;
       const a=this.project(from.position),b=this.project(to.position);
       if(!a.visible||!b.visible)continue;
-      html.push(`<path class="structure-path ${link.role}" d="M ${a.x.toFixed(1)} ${a.y.toFixed(1)} L ${b.x.toFixed(1)} ${b.y.toFixed(1)}" />`);
+      const role=lens?(link.role==='branch'?'grade-branch':'grade-trunk'):link.role;
+      html.push('<path class="structure-path '+role+'" d="M '+a.x.toFixed(1)+' '+a.y.toFixed(1)+' L '+b.x.toFixed(1)+' '+b.y.toFixed(1)+'" />');
     }
     this.structureLayer.innerHTML=html.join('');
   }
@@ -550,7 +554,7 @@ export class SpatialScene {
       // guide's real current/visited nodes are allowed to regain saturation.
       const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
       // Hierarchy-specific, temporary node emphasis; no coordinate changes.
-      const gradeTint=gradeFocus&&this.relationshipMap&&selected?.kind!=='node'?(gradeFocus.nodeIds.has(o.id)?.98:.12):null;
+      const gradeTint=gradeFocus&&this.relationshipMap&&selected?.kind!=='node'?(gradeFocus.kind==='stage'?(gradeFocus.pathNodeIds.has(o.id)?.99:gradeFocus.nodeIds.has(o.id)?.34:.10):(gradeFocus.nodeIds.has(o.id)?.98:.12)):null;
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
@@ -562,7 +566,7 @@ export class SpatialScene {
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):this.guideFocus.targetKeys?.has(o.key)?7.5:o.key===this.selected?6.5:this.guideFocus.visitedKeys?.has(o.key)?5.4:this.guideFocus.currentNodes.has(o.key)?5.2:this.guideFocus.seenNodes.has(o.key)?4.8:3.9):
-        hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+        hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):gradeFocus?.kind==='stage'&&!selected?(gradeFocus.pathNodeIds.has(o.id)?5.7:3.0):structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
       const size=this.relationshipMap?pixelRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -682,7 +686,8 @@ export class SpatialScene {
       if(!this.global&&this.networkView==='relations'&&o.kind!=='node')show=false;
       if(!this.global&&this.networkView==='relations'&&o.kind==='node'){show=this.nodeVisible(o);priority=isSelected?100:70;}
       if(this.global){
-        const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
+        const landmark=gradeFocus?.kind==='stage'&&!selected&&o.kind==='node'?gradeFocus.landmarks.find(a=>a.id===o.id):
+          this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
         if(landmark){show=true;priority=96;}
         if(o.kind==='theme'){show=selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<2.2;priority=this.relationshipMap?92:60;}
         else if(o.kind==='pack')show=selected?.kind==='theme'?o.themeId===selected.id:selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||isSelected);
@@ -725,8 +730,8 @@ export class SpatialScene {
           else show=false;
         }
         if(this.relationshipMap&&gradeFocus?.kind==='stage'&&!selected&&!hoverObject&&!this.guideFocus){
-           if(o.kind==='pack'){show=gradeFocus.packIds.has(o.id);priority=85;}
-           else if(o.kind==='node')show=o.key===this.hovered;
+           if(o.kind==='pack'){show=false;}
+           else if(o.kind==='node'){show=!!landmark||o.key===this.hovered;priority=landmark?98:95;}
            else show=false;
          }
          if(this.relationshipMap&&hoverObject?.kind==='pack'){
@@ -757,7 +762,8 @@ export class SpatialScene {
     }
     candidates.sort((a,b)=>b.priority-a.priority||a.p.distance-b.p.distance);const rects=[...(this.exclusions||[])],tethers=[];let nodes=0;
     for(const c of candidates){const {object:o,el,p}=c,limit=this.relationshipMap&&hoverObject?.kind==='node'?12:this.relationshipMap&&selected?.kind==='pack'?(scale>5.6?16:10):this.relationshipMap&&selected?.kind==='theme'?12:this.relationshipMap&&(this.localRelationshipFocus||this.traceResult)?12:this.global||this.networkView==='relations'?587:22;if(o.kind==='node'&&nodes>=limit&&!c.isSelected&&o.key!==this.hovered&&o.key!==this.previewKey)continue;
-      const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
+      const landmark=gradeFocus?.kind==='stage'&&!selected&&o.kind==='node'?gradeFocus.landmarks.find(a=>a.id===o.id):
+          this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
       const wantedTitle=landmark?`${landmark.text} · ${el.dataset.baseTitle}`:el.dataset.baseTitle;
       const titleSpan=el.querySelector('span');if(titleSpan&&titleSpan.textContent!==wantedTitle)titleSpan.textContent=wantedTitle;
       el.classList.toggle('structure-landmark',!!landmark);

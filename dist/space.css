@@ -966,3 +966,53 @@ body[data-world="network"][data-observation-mode="grade"][data-grade-spatial="tr
  background:#dfeee4;border-color:#397856;box-shadow:0 0 0 2px #4b88662b;
 }
 .grade-spatial-pack[hidden]{display:none!important}
+
+
+/* Grade hierarchy v1: a fixed three-stage lens over a quiet relationship map. */
+body[data-world="network"][data-observation-mode="grade"] .grade-spatial-layer{display:none!important}
+body[data-observation-mode="grade"] .network-guide .grade-space-other,
+body[data-observation-mode="grade"] .network-guide .grade-year-controls{display:block}
+.grade-stage-selector{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:9px 0 7px}
+.grade-stage-selector button{padding:9px 4px;min-width:0;border:1px solid #d9e3d9;border-radius:7px;
+ background:#eef2ea;color:#526e5e;font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer}
+.grade-stage-selector button[aria-pressed="true"]{background:#294f47;color:#fffef9;border-color:#294f47}
+.grade-stage-selector button:hover{border-color:#6d9c84}
+.grade-year-controls{font-size:10px;color:#738172;margin:3px 0 6px}
+.grade-year-controls summary{cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.grade-year-controls .grade-selector{margin:8px 0 4px}
+body[data-observation-mode="grade"] .grade-observation-head h2{font-size:15px;margin:0 0 3px}
+body[data-observation-mode="grade"] .grade-observation-head p{font-size:10px;margin:0 0 5px}
+body[data-observation-mode="grade"] .grade-precision-note{font-size:10px;margin:4px 0;padding:5px}
+body[data-observation-mode="grade"] .grade-current-stage{margin:4px 0 6px;font-size:10px}
+body[data-observation-mode="grade"] .grade-spatial-switch{margin:6px 0 8px;padding:5px 0;display:flex;align-items:center;justify-content:space-between;gap:6px}
+body[data-observation-mode="grade"] .grade-spatial-switch span{font-size:10px;color:#728171}
+body[data-observation-mode="grade"] .grade-spatial-switch button{font-size:10px;white-space:nowrap;padding:6px 9px}
+body[data-observation-mode="grade"] .grade-space-summary>header{flex-direction:row;align-items:baseline;justify-content:space-between;gap:6px}
+body[data-observation-mode="grade"] .grade-space-summary>header small{font-size:10px;text-align:right}
+.grade-structure-order{margin:7px 0 5px;padding:9px 10px;border-left:3px solid #5e8c74;
+ background:#f0f5ec;border-radius:6px}
+.grade-structure-order strong{display:block;color:#2c5848;font-size:12px;letter-spacing:.07em}
+.grade-structure-order span{display:block;margin-top:3px;color:#667d6c;font-size:10px}
+.grade-bone-paths{display:grid;gap:4px;margin:7px 0 9px}
+.grade-bone-path{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 8px;
+ width:100%;padding:6px 8px;border:1px solid #e1e7dd;border-radius:7px;
+ background:#fffefb;color:#365849;text-align:left;cursor:pointer}
+.grade-bone-path:hover{background:#edf5eb;border-color:#89ab95}
+.grade-bone-path strong{font-size:10px;color:#355e4c}
+.grade-bone-path span{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grade-bone-path small{grid-column:2;color:#819082;font-size:9px}
+.grade-priority-heading{display:flex;justify-content:space-between;align-items:baseline;
+ margin:10px 0 6px;padding-top:8px;border-top:1px solid #e3e9e0}
+.grade-priority-heading strong{font-size:11px;color:#305a46}
+.grade-priority-heading span{font-size:10px;color:#748577}
+body[data-observation-mode="grade"] .grade-space-group-list{max-height:none;overflow:visible;padding:0}
+body[data-observation-mode="grade"] .grade-space-pack-grid{gap:5px}
+body[data-observation-mode="grade"] .grade-space-pack{padding:6px 7px}
+body[data-observation-mode="grade"] .grade-space-pack small{font-size:9px}
+body[data-observation-mode="grade"] .grade-space-other{margin:3px 0 0;padding:4px 0}
+body[data-observation-mode="grade"] .grade-space-other summary{padding:5px 0;font-size:10px}
+body[data-observation-mode="grade"] .grade-space-info,
+body[data-observation-mode="grade"] .grade-space-foot{font-size:10px;margin:5px 0}
+.overview-structure-lines .structure-path.grade-trunk{stroke:#3f7965;stroke-width:2.9px;opacity:.78}
+.overview-structure-lines .structure-path.grade-branch{stroke:#ba8951;stroke-width:2px;stroke-dasharray:5 5;opacity:.7}
+body[data-observation-mode="grade"] .space-label.structure-landmark{max-width:200px}

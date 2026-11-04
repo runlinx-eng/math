@@ -1,3 +1,4 @@
+import {buildGradeRelationshipStructure} from './grade-relationship-structure.js';
 // Read-only grade labels anchored to existing 3D positions.
 // Grade mapping is three TWO-YEAR stages; these overlays never create yearly IDs,
 // prerequisite edges, coordinates, or learning evidence.
@@ -55,6 +56,7 @@ export class GradeSpatialCards{
   }
   setModel(model){
     this.metadata=buildGradeSpatialMetadata(this.space,model);
+    this.metadata.structure=buildGradeRelationshipStructure(this.space,model);
     this.layer.replaceChildren();this.stageButtons=[];this.packButtons=[];
     this.metadata.stages.forEach((stage,index)=>{
       const b=document.createElement('button');b.type='button';b.className='grade-spatial-stage';
@@ -107,53 +109,9 @@ export class GradeSpatialCards{
     this.scene.dirty=true;
   }
   update({active,guideVisible=false,exclusions=[]}={}){
-    this.layer.hidden=!active||guideVisible||!this.metadata;
-    if(this.layer.hidden)return;
-    const blocked=[...exclusions];
-    const viewport={width:this.scene.width,height:this.scene.height};
-    for(const [index,{element,stage}] of this.stageButtons.entries()){
-      const p=this.scene.project(stage.position);
-      let box=placeGradeStageCard(p,{w:152,h:49},viewport,blocked);
-      // Fallback is a clearly marked *screen-space control*, not a new graph
-      // coordinate or an invented mathematical trunk.
-      let docked=false;
-      if(!box){
-        const startX=Math.max(390,Math.round((viewport.width-482)/2));
-        for(const y of [136,200,264]){
-          const candidate={x:startX+index*165,y,w:152,h:49};
-          if(candidate.x+candidate.w>viewport.width-18||candidate.y+candidate.h>viewport.height-95)continue;
-          if(blocked.some(other=>overlap(candidate,other)))continue;
-          box=candidate;docked=true;break;
-        }
-      }
-      element.hidden=!box;
-      element.dataset.placement=docked?'dock':'anchor';
-      if(!box)continue;
-      element.style.transform='translate('+Math.round(box.x)+'px,'+Math.round(box.y)+'px)';
-      blocked.push(box);
-    }
-    // Dense overlaps cannot show 23 permanent labels legibly. Keep up to
-    // seven real, map-anchored groups visible; all 23 remain in the side index.
-    const focus=this.scene.gradeSpatialFocus;
-    const activeStage=this.metadata.stages.find(stage=>stage.id===(focus?.stageId||this.hoveredStageId||this.currentStageId));
-    const hoveredPack=this.scene.hoverMapKey?.startsWith('pack:')?this.scene.hoverMapKey.slice(5):null;
-    const selectedPack=this.scene.selected?.startsWith('pack:')?this.scene.selected.slice(5):null;
-    const ranked=activeStage?[...this.packButtons]
-      .filter(item=>activeStage.packIds.includes(item.pack.id))
-      .sort((a,b)=>(activeStage.countsByPack[b.pack.id]||0)-(activeStage.countsByPack[a.pack.id]||0)||a.pack.id.localeCompare(b.pack.id)):[];
-    const maxItems=viewport.width>=1200?7:4;
-    const chosen=new Set(ranked.slice(0,maxItems).map(item=>item.pack.id));
-    if(hoveredPack)chosen.add(hoveredPack);
-    if(selectedPack)chosen.add(selectedPack);
-    for(const {element,pack} of this.packButtons){
-      if(!chosen.has(pack.id)){element.hidden=true;continue;}
-      const projection=this.scene.project(pack.position);
-      const rect=placeGradeStageCard(projection,{w:146,h:40},viewport,blocked);
-      element.hidden=!rect;
-      if(!rect)continue;
-      element.style.transform='translate('+Math.round(rect.x)+'px,'+Math.round(rect.y)+'px)';
-      element.dataset.placement='source-centroid';
-      blocked.push(rect);
-    }
+    // Stage/year is a fixed sidebar lens; group membership is explored from
+    // the sidebar. Never put 3+23 floating cards over the relationship graph.
+    this.layer.hidden=true;
+    for(const {element} of [...this.stageButtons,...this.packButtons])element.hidden=true;
   }
 }
