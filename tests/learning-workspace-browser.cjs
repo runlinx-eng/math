@@ -89,6 +89,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   check(parentPinch,'parent overlay also blocks pinch zoom outside the learning iframe');
   const initialRatio=await page.evaluate(()=>devicePixelRatio);
   const initialScale=await page.evaluate(()=>visualViewport?.scale??1);
+  const beforePinch=await layout(); // Compare with the immediate 1440×900 state, not pre-resize measurements.
   const area=await page.locator('#journey-frame').boundingBox();
   await page.mouse.move(area.x+area.width/2,area.y+Math.min(area.height/2,200));
   await page.keyboard.down('Control');
@@ -98,7 +99,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   const actual=await layout();
   const afterRatio=await page.evaluate(()=>devicePixelRatio),afterScale=await page.evaluate(()=>visualViewport?.scale??1);
   check(near(afterRatio,initialRatio)&&near(afterScale,initialScale),'actual browser Ctrl+wheel does not enlarge the document');
-  check(near(surface.w,actual.w,2)&&near(surface.h,actual.h,2)&&near(surface.x,actual.x,2)&&near(surface.y,actual.y,2),'panel bounds stay unchanged after the real pinch event');
+  check(near(beforePinch.w,actual.w,2)&&near(beforePinch.h,actual.h,2)&&near(beforePinch.x,actual.x,2)&&near(beforePinch.y,actual.y,2),`panel bounds stay unchanged after the real pinch event (before ${JSON.stringify({x:beforePinch.x,y:beforePinch.y,w:beforePinch.w,h:beforePinch.h})}, after ${JSON.stringify({x:actual.x,y:actual.y,w:actual.w,h:actual.h})})`);
   await page.screenshot({path:path.join(out,'01b-after-pinch-attempt.png')});
   // Test scrolling on a shorter screen without resizing or shifting the lesson panel.
   await page.setViewportSize({width:1280,height:620});
