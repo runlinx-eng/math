@@ -203,7 +203,8 @@ test("grade mode, selected year and expanded pack are validated and saved with t
   assert.match(space, /selectedGrade,expandedGradePackId/);
   assert.match(space, /observationMode=worldLayout==='network'\?stored\.observationMode:'relationship'/);
   assert.match(space, /setObservationMode\(observationMode\)/);
-  assert.match(space, /selectedGrade=grade;renderGradeObservation\(\);scheduleSave\(\)/);
+  assert.match(space, /selectedGrade=grade;selectedGradeStageId=gradeStageForSelected\(\)/);
+  assert.match(space, /selectGradeStage\(grade\)/);
   assert.match(space, /renderGradeObservation\(\);scheduleSave\(\)/);
   assert.match(spatialModel, /observationMode:\['relationship','grade'\]\.includes\(raw\.observationMode\)\?raw\.observationMode:'relationship'/);
   assert.match(spatialModel, /Number\.isInteger\(raw\.selectedGrade\)/);
