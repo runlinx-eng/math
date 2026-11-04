@@ -251,7 +251,71 @@ function selectGradeStage(grade){
   renderFocus();renderLocation();gradeSpatial?.applyGrade(grade);
   updateGradeSpatialFocus();renderGradeObservation();scheduleSave();
 }
-function renderGradeSpatialSummary(){} // Replaced by batch-two overview.
+function renderGradeSpatialSummary(){
+  const host=$('#grade-spatial-overview');
+  if(!host)return;
+  const meta=gradeSpatial?.metadata;
+  if(!meta||!gradeProgressionData){host.textContent='正在读取课程映射…';return;}
+  const stage=meta.stages.find(item=>item.id===(hoveredGradeStageId||selectedGradeStageId))||meta.stages[Math.floor((selectedGrade-1)/2)];
+  if(!stage)return;
+  const relevant=[],other=[];
+  for(const pack of gradeProgressionData.packs){
+    const count=stage.countsByPack[pack.packId]||0;
+    const mark=gradeMarkPresentation(pack.stageJudgements?.[stage.id]);
+    const item={pack,count,mark};
+    if(count||(!['not-primary','incomplete'].includes(mark.mark)))relevant.push(item);
+    else other.push(item);
+  }
+  const renderGroup=({pack,count,mark})=>`<button type="button" class="grade-space-pack" data-action="grade-space-pack" data-pack-id="${esc(pack.packId)}" aria-pressed="${selectedGradePackId===pack.packId}">
+    <span>${esc(pack.name)}</span><small>群级：${esc(mark.label)} · 映射节点 ${count}</small></button>`;
+  const byTheme=new Map();
+  for(const item of relevant){
+    const id=item.pack.themeId;if(!byTheme.has(id))byTheme.set(id,[]);
+    byTheme.get(id).push(item);
+  }
+  host.innerHTML=`<section class="grade-space-summary" aria-label="学段、知识群、知识点空间观察">
+    <header><strong>${hoveredGradeStageId?'临时预览':'当前观察'} · ${esc(stage.label)}</strong>
+    <small>${stage.count}个实际映射节点 · ${stage.packIds.length}个有节点映射的知识群</small></header>
+    <p class="grade-space-role-counts">节点角色：主要 ${stage.roleCounts.main} · 延伸 ${stage.roleCounts.extension} · 过渡 ${stage.roleCounts.transition}</p>
+    <p class="grade-space-info">学段不是数学主干。群级阶段判断与节点级课程映射各有依据，不能直接互相替代。</p>
+    <nav class="grade-space-group-list" aria-label="本学段相关的真实知识群">
+      ${[...byTheme].map(([id,items])=>`<section class="grade-space-theme"><h4>${esc(GRADE_THEME_LABELS[id]||id)}</h4>
+      <div class="grade-space-pack-grid">${items.map(renderGroup).join('')}</div></section>`).join('')}
+    </nav>
+    ${other.length?`<details class="grade-space-other"><summary>查看其余知识群（${other.length}）</summary>
+      <div class="grade-space-pack-grid">${other.map(renderGroup).join('')}</div></details>`:''}
+    <p class="grade-space-foot">点击知识群可在原空间位置查看节点与真实联系；全部课程依据保留在下方完整矩阵。</p>
+  </section>`;
+}
+function renderGradeSpatialPackNodes(o){
+  if(!gradeProgressionData||!gradeSpatial?.metadata)return '';
+  const stageId=gradeStageForSelected()?.id;
+  const ids=o.nodeIds.filter(id=>gradeNodeMappingsById.has(id));
+  const sorted=[...ids].sort((x,y)=>Number(!!gradeNodeMappingsById.get(y)?.curriculum.roles?.[stageId])-Number(!!gradeNodeMappingsById.get(x)?.curriculum.roles?.[stageId]));
+  const uniqueLinks=new Map();
+  for(const id of ids)for(const link of relationsFor(space,'node:'+id)){
+    if(!link.from?.startsWith('node:')||!link.to?.startsWith('node:'))continue;
+    const key=link.from+'>'+link.to;if(!uniqueLinks.has(key))uniqueLinks.set(key,link);
+  }
+  const cross=[...uniqueLinks.values()].filter(link=>space.byKey.get(link.from)?.packId!==space.byKey.get(link.to)?.packId).length;
+  const rows=sorted.map(id=>{
+    const node=space.nodes.get(id),role=gradeNodeMappingsById.get(id)?.curriculum.roles?.[stageId];
+    return button('grade-space-node-select',`${esc(displayTitle(node))}<small>${role?esc(GRADE_ROLE_LABELS[role]||role):'本学段未映射'}</small>`,`data-node-id="${esc(id)}"`,'grade-space-node');
+  }).join('');
+  return `<nav class="grade-space-breadcrumb" aria-label="返回学段">${button('grade-space-return-stage','← '+esc(gradeStageForSelected()?.label||'学段'),'','plain-button')}</nav>
+    <section class="grade-space-pack-nodes" aria-label="知识群真实节点">
+      <p>${ids.length}个领域知识点 · ${uniqueLinks.size-cross}条群内真实联系 · ${cross}条跨群真实联系（含辅助，去重统计）</p>
+      <div class="grade-space-nodes">${rows}</div>
+    </section>`;
+}
+function renderGradeSpatialNodeBreadcrumb(o){
+  const pack=space.packs.get(o.packId);if(!pack)return '';
+  const role=gradeNodeMappingsById.get(o.id)?.curriculum.roles?.[gradeStageForSelected()?.id];
+  return `<nav class="grade-space-breadcrumb" aria-label="返回空间观察">
+    ${button('grade-space-return-stage','← '+esc(gradeStageForSelected()?.label||'学段'),'','plain-button')}
+    ${button('grade-space-return-pack','← '+esc(pack.title),`data-pack-id="${esc(pack.id)}"`,'plain-button')}
+  </nav><p class="grade-space-node-parent">知识群：${esc(pack.title)} · 本学段：${esc(role?GRADE_ROLE_LABELS[role]||role:'未映射')}</p>`;
+}
 function renderGradeNodeList(pack,selectedStageId){
   const sourcePack=space.packs.get(pack.packId);
   const entries=(sourcePack?.nodeIds||[]).map((id,index)=>({id,index,mapping:gradeNodeMappingsById.get(id)})).filter(item=>item.mapping);
@@ -356,8 +420,10 @@ function renderGradeObservation(){
     <div class="grade-selector" role="group" aria-label="选择年级">${GRADE_LABELS.map((label,index)=>`<button type="button" data-action="grade-select" data-grade="${index+1}" aria-pressed="${selectedGrade===index+1}">${label}</button>`).join('')}</div>
     <p class="grade-precision-note">课程映射精度为两年学段，并非精确到单独年级；相邻两个年级共用同一份学段数据。</p>
     <p class="grade-current-stage" data-selected-stage="${esc(selectedStageId||'')}" aria-live="polite">当前选择：<strong>${GRADE_LABELS[selectedGrade-1]}</strong> · ${esc(selectedStage?.standardStage||'学段待确认')}（${esc(selectedStage?.label||'') }）</p>
+    <div id="grade-spatial-overview" class="grade-spatial-overview" aria-live="off"></div>
     <div class="grade-matrix-scroll"><table class="grade-matrix" aria-label="23个知识群的小学学段发展矩阵"><thead><tr><th scope="col" class="grade-pack-heading">知识群</th>${stageHeaders}</tr></thead><tbody>${groupRows}</tbody></table></div>${expandedMarkup}
     <div class="grade-mark-legend" aria-label="阶段标记说明"><span><b data-mark="main">主</b>主要发展</span><span><b data-mark="extension">延</b>延伸发展</span><span><b data-mark="not-primary">—</b>非主要阶段</span><span><b data-mark="process">过程</b>贯穿过程</span><span><b data-mark="incomplete">待补充</b>记录不完整</span></div>`;
+  renderGradeSpatialSummary();
 }
 function loadGradeObservation(){
   renderGradeObservation();
