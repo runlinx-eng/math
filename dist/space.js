@@ -263,7 +263,7 @@ function hoverGradeStage(stageId){
 }
 function selectGradeStage(grade){
   if(!Number.isInteger(grade)||grade<1||grade>6)return;
-  selectedGrade=grade;selectedGradeStageId=gradeStageForSelected()?.id||null;selectedGradePackId=null;
+  selectedGrade=grade;selectedGradeStageId=gradeStageForSelected()?.id||null;selectedGradePackId=null;hoveredGradeStageId=null;
   if(scene?.selected)scene.select(null);
   renderFocus();renderLocation();gradeSpatial?.applyGrade(grade);
   updateGradeSpatialFocus();renderGradeObservation();scheduleSave();
