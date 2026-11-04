@@ -950,3 +950,19 @@ body[data-world="network"][data-observation-mode="grade"][data-grade-spatial="tr
   right:62px;width:min(300px,calc(100vw - 440px));
  }
 }
+
+/* Small map-anchored entrances for real knowledge groups, shown sparingly. */
+.grade-spatial-pack{
+ position:absolute;left:0;top:0;display:block;width:146px;height:40px;padding:5px 8px;
+ border:1px solid #abc9b7;border-left:3px solid #457a65;border-radius:7px;
+ background:#fffef9f4;box-shadow:0 3px 12px #244a3a1a;text-align:left;
+ pointer-events:auto;cursor:pointer;backdrop-filter:blur(5px);overflow:hidden;
+}
+.grade-spatial-pack strong{display:block;font-size:11px;font-weight:650;color:#315c4c;
+ line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.grade-spatial-pack small{display:block;font-size:9px;color:#657b6b;line-height:13px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.grade-spatial-pack:hover,.grade-spatial-pack:focus-visible{
+ background:#dfeee4;border-color:#397856;box-shadow:0 0 0 2px #4b88662b;
+}
+.grade-spatial-pack[hidden]{display:none!important}
