@@ -74,8 +74,8 @@ test("incomplete time stage-3 is rendered as 待补充 rather than a dash", () =
 });
 
 test("grade runtime files are precached and included in offline readiness", () => {
-  assert.match(sw, /'\.\/grade-progression-model\.js','\.\/data\/grade-progression\.json'/);
-  assert.match(space, /'grade-progression-model\.js','data\/grade-progression\.json'/);
+  assert.match(sw, /'\.\/grade-progression-model\.js','\.\/grade-node-filter\.js','\.\/data\/grade-progression\.json'/);
+  assert.match(space, /'grade-progression-model\.js','grade-node-filter\.js','data\/grade-progression\.json'/);
 });
 
 test("knowledge groups expand and collapse into three stage-specific evidence panels", () => {
@@ -200,7 +200,8 @@ test("the original node detail exposes its real grade position and routes back t
 
 test("grade mode, selected year and expanded pack are validated and saved with the original map view", () => {
   assert.match(space, /observationMode:worldLayout==='network'\?observationMode:'relationship'/);
-  assert.match(space, /selectedGrade,expandedGradePackId/);
+  assert.match(space, /selectedGrade,selectedGradeStage,expandedGradePackId/);
+  assert.match(spatialModel, /selectedGradeStage:\['all','stage-1','stage-2','stage-3'\]\.includes\(raw\.selectedGradeStage\)/);
   assert.match(space, /observationMode=worldLayout==='network'\?stored\.observationMode:'relationship'/);
   assert.match(space, /setObservationMode\(observationMode\)/);
   assert.match(space, /selectedGrade=grade;renderGradeObservation\(\);scheduleSave\(\)/);
