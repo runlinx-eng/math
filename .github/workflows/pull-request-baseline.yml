@@ -79,6 +79,9 @@ jobs:
 
           for candidate in \
             tests/concept-explanations.test.mjs \
+            tests/concept-review-regressions.test.mjs \
+            tests/content-plan.test.mjs \
+            tests/spatial-guide.test.mjs \
             tests/concept-coverage-consistency.test.mjs \
             tests/concept-review-inventory.test.mjs \
             tests/concept-sample-deep-review.test.mjs \
@@ -143,7 +146,11 @@ jobs:
           do
             if [[ -f "$test_file" ]]; then
               echo "::group::${test_file}"
-              node "$test_file"
+              if [[ "$test_file" == "tests/concept-visual-browser.cjs" ]]; then
+                MATH_CONCEPT_BROWSER_SCOPE=smoke node "$test_file"
+              else
+                node "$test_file"
+              fi
               echo "::endgroup::"
             fi
           done
