@@ -61,6 +61,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
+          node --check dist/grade-spatial-cards.js
           node --check scripts/build_grade_progression_data.mjs
 
       - name: Run active Node.js unit and invariant tests
@@ -75,6 +76,7 @@ jobs:
             tests/deployment-static.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
+            tests/grade-spatial-cards.test.mjs
           )
 
           for candidate in \
@@ -138,6 +140,7 @@ jobs:
             tests/spatial-unified-map-browser.cjs \
             tests/spatial-theme-overview-browser.cjs \
             tests/grade-progression-overview-browser.cjs \
+            tests/grade-spatial-cards-browser.cjs \
             tests/spatial-local-focus-browser.cjs \
             tests/learning-workspace-browser.cjs \
             tests/concept-visual-browser.cjs \
@@ -169,6 +172,7 @@ jobs:
             verification/spatial-unified-map/
             verification/spatial-theme-overview/
             verification/grade-progression-overview/
+            verification/grade-spatial-cards/
             verification/learning-workspace/
             verification/concept-language-pilot/
             verification/node-name-review/
