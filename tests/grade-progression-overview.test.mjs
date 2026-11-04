@@ -60,8 +60,6 @@ test('node details keep evidence, unmapped and junior-high-only status without t
 });
 test('grade curriculum is still cached for offline use',()=>{
   assert.match(sw,/grade-node-filter\.js/);
-  assert.match(sw,/grade-progression-model\.js/);
-  assert.match(sw,/data\/grade-progression\.json/);
-  assert.match(space,/grade-node-filter\.js/);
-  assert.match(space,/grade-progression-model\.js/);
+  assert.match(sw,/data\/grade-panorama-lite\.json/);
+  assert.match(space,/loadGradePanoramaData/);
 });
