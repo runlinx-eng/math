@@ -2,7 +2,17 @@
 
 更新日期：2026-11-04
 工作分支：`feat/language-concept-audit-v1`
-PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull/3)（Open / Draft，未合并）
+PR：[ #3 数学树文字质量优化 ](https://github.com/runlinx-eng/math/pull/3)（原施工与研究记录，Open / Draft，未整体合并）
+
+## 代码整合与发布收口（2026-11-04）
+
+- **正式整合**：[PR #11：文字优化与年级观察整合](https://github.com/runlinx-eng/math/pull/11) 已 Squash Merge 进入 `main`，合并提交为 `af87224890c432fa7a2c83516736622b1a1a81dc`。原 PR #3 继续保持 Draft，用于保留研究和施工历史，**不再整体合并**。
+- **整合文件**：原 PR #3 的 123 个非历史验证文件均已逐项处理；其中 116 个文件与主线完全一致，7 个共享文件经集成适配保留年级观察、概念解释、学习活动和相关测试。另有 1,021 个历史验证文件未带入主线；原始数学数据与年级映射未改变。
+- **工程验收**：整合版的 [required checks](https://github.com/runlinx-eng/math/actions/runs/41765210638) 与 [overview checks](https://github.com/runlinx-eng/math/actions/runs/41765210927) 均为 Success；浏览器 CI 对概念解释使用 30 个代表节点、两种桌面视口进行抽样（含 15 个有图示的节点），全量 537 节点的浏览器脚本仍保留但未在本轮 CI 全量执行。
+- **部署结果**：[VPS 发布记录](https://github.com/runlinx-eng/math/actions/runs/41765654110) 为 Success，日志确认发布 `af872248` 并通过 HTTPS `/health` 检查；**密码保护后的正式站点人工桌面体验尚未独立验收**，需要单独核对概念说明、年级双向跳转和学习活动连续使用。
+- **内容质量边界**：537/537 个知识点已配置解释样板或初稿，属于覆盖完成，不代表独立数学教研验收；15 个 SVG 正式人工审图、数学思维和关系实际使用复核，以及儿童理解/迁移测试仍需独立推进。
+
+> 以下各批次、原 Draft PR 和逐节点研究状态为原始施工期记录；其中“保持 Draft”“待合并”不再表示已经整合的代码尚未进入 `main`。
 
 > 当前状态源：`CONCEPT-REVIEW-INVENTORY.json` 同步537个解释样板/草稿及逐节点状态；45个既有样板的AI二轮审查记录以 `CONCEPT-SAMPLE-DEEP-REVIEW.json` 为准，85个研究缺口的当前分流以 `CONCEPT-RESEARCH-TRIAGE.json` 为准，7个既有样板的外部来源与限制以 `CONCEPT-RESEARCH-EVIDENCE.json` 为准；B01–B04的研究来源、解释草稿状态和限制分别以对应记录为准；B05见 `CONCEPT-RESEARCH-NEXT-2026-11-03.md`。
 
