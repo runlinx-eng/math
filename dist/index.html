@@ -6,7 +6,7 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="space.css">
   <link rel="stylesheet" href="learning/question.css"><script type="module" src="space.js"></script>
 </head>
-<body data-observation-mode="relationship">
+<body>
   <main id="space-app" class="space-app" aria-label="数学探索三维空间">
     <div id="space-canvas"></div>
     <svg id="work-tethers" class="work-tethers" aria-hidden="true"></svg>
@@ -43,11 +43,7 @@
     <span class="tool-divider"></span>
     <button type="button" data-action="help" aria-label="查看空间操作方法">操作</button>
   </aside>
-  <aside id="network-guide" class="network-guide network-only" aria-label="关系全景与年级观察">
-    <div id="observation-mode-switch" class="observation-mode-switch" role="group" aria-label="观察方式">
-      <button type="button" data-action="observation-mode" data-mode="relationship" aria-pressed="true">关系全景</button>
-      <button type="button" data-action="observation-mode" data-mode="grade" aria-pressed="false">年级观察</button>
-    </div>
+  <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景">
     <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
       <strong>知识点 · 按学段观察</strong>
       <div role="group" aria-label="小学学段筛选">
@@ -72,10 +68,6 @@
       <button type="button" data-action="guide-start" class="guide-entry">发现知识的联系</button>
       </div>
       <details><summary>图形与标记</summary><p>颜色对应五个主题；点主题可以聚焦，查找可以进入分组和知识。靠近后出现更多名称，选中或停在一个点上，会出现它的活动图形。</p><p>背景“轮廓”只显示部分真实关键联系，不代表唯一的主干；切换可看全部关键联系或加上辅助联系。选中节点时仍可查看所有直接联系。</p><p>选中节点可以查看直接联系、追溯关键基础或查看关键后续。橙线指向这里，蓝线指向后续；虚线表示辅助联系。追溯中的数字是隔了几条联系，不改变知识点的位置，也不规定学习路线。</p><p>圆环表示节点任务完成；金线表示共同任务完成。方形是未完现场，菱形是待续问题。</p></details>
-    <section id="grade-observation-view" class="grade-observation-view" aria-label="小学1至6年级观察矩阵" hidden>
-      <h2>小学1—6年级观察</h2>
-      <p>年级观察数据正在准备中。</p>
-    </section>
   </aside>
   <div id="overview-structure-controls" class="overview-structure-controls" role="group" aria-label="全貌的关系观察方式" hidden>
     <div class="structure-caption"><strong>看知识怎样相连</strong><small>真实关系示例，不是唯一主干</small></div>
