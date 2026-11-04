@@ -51,11 +51,11 @@ export class GradeSpatialCards{
   constructor(scene,space,callbacks={}){
     this.scene=scene;this.space=space;this.callbacks=callbacks;this.metadata=null;this.hoveredStageId=null;
     this.layer=document.createElement('div');this.layer.className='grade-spatial-layer';
-    this.layer.hidden=true;scene.host.append(this.layer);this.stageButtons=[];
+    this.layer.hidden=true;scene.host.append(this.layer);this.stageButtons=[];this.packButtons=[];this.currentStageId=null;
   }
   setModel(model){
     this.metadata=buildGradeSpatialMetadata(this.space,model);
-    this.layer.replaceChildren();this.stageButtons=[];
+    this.layer.replaceChildren();this.stageButtons=[];this.packButtons=[];
     this.metadata.stages.forEach((stage,index)=>{
       const b=document.createElement('button');b.type='button';b.className='grade-spatial-stage';
       b.dataset.action='grade-spatial-stage-select';b.dataset.grade=String(index*2+1);
@@ -69,6 +69,18 @@ export class GradeSpatialCards{
       b.addEventListener('blur',()=>{if(this.hoveredStageId===stage.id)this.setHover(null);});
       this.layer.append(b);this.stageButtons.push({element:b,stage});
     });
+    // Knowledge-group badges are UI anchors at real source-group centroids.
+    // They never move groups or add prerequisite edges to the graph.
+    for(const pack of this.metadata.packs.values()){
+      const b=document.createElement('button');b.type='button';b.className='grade-spatial-pack';
+      b.dataset.action='grade-space-pack';b.dataset.packId=pack.id;
+      b.title=pack.name;
+      const name=document.createElement('strong'),detail=document.createElement('small');
+      name.textContent=pack.name;b.append(name,detail);b.hidden=true;
+      b.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')this.scene.setMapHover('pack:'+pack.id);});
+      b.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch'&&this.scene.hoverMapKey==='pack:'+pack.id)this.scene.setMapHover(null);});
+      this.layer.append(b);this.packButtons.push({element:b,pack,detail});
+    }
   }
   setHover(stageId){
     if(this.hoveredStageId===stageId)return;
@@ -80,6 +92,7 @@ export class GradeSpatialCards{
   applyGrade(grade){
     if(!this.metadata)return;
     const stage=this.metadata.stages[Math.floor((grade-1)/2)];if(!stage)return;
+    this.currentStageId=stage.id;
     for(const {object,el} of this.scene.labels){
       if(object.kind!=='node'&&object.kind!=='pack')continue;
       const data=object.kind==='pack'?this.metadata.packs.get(object.id):this.metadata.nodes.get(object.id);
@@ -90,6 +103,7 @@ export class GradeSpatialCards{
       else tag.textContent=data.roles[stage.id]?stage.label+' · '+({main:'主要',extension:'延伸',transition:'过渡'}[data.roles[stage.id]]||data.roles[stage.id]):'本学段未映射';
     }
     this.stageButtons.forEach(({element,stage:item})=>element.setAttribute('aria-pressed',String(item.id===stage.id)));
+    for(const {detail,pack} of this.packButtons)detail.textContent=(stage.countsByPack[pack.id]||0)+'个映射节点 · '+(pack.marks[stage.id]||'待补充');
     this.scene.dirty=true;
   }
   update({active,guideVisible=false,exclusions=[]}={}){
@@ -117,6 +131,29 @@ export class GradeSpatialCards{
       if(!box)continue;
       element.style.transform='translate('+Math.round(box.x)+'px,'+Math.round(box.y)+'px)';
       blocked.push(box);
+    }
+    // Dense overlaps cannot show 23 permanent labels legibly. Keep up to
+    // seven real, map-anchored groups visible; all 23 remain in the side index.
+    const focus=this.scene.gradeSpatialFocus;
+    const activeStage=this.metadata.stages.find(stage=>stage.id===(focus?.stageId||this.hoveredStageId||this.currentStageId));
+    const hoveredPack=this.scene.hoverMapKey?.startsWith('pack:')?this.scene.hoverMapKey.slice(5):null;
+    const selectedPack=this.scene.selected?.startsWith('pack:')?this.scene.selected.slice(5):null;
+    const ranked=activeStage?[...this.packButtons]
+      .filter(item=>activeStage.packIds.includes(item.pack.id))
+      .sort((a,b)=>(activeStage.countsByPack[b.pack.id]||0)-(activeStage.countsByPack[a.pack.id]||0)||a.pack.id.localeCompare(b.pack.id)):[];
+    const maxItems=viewport.width>=1200?7:4;
+    const chosen=new Set(ranked.slice(0,maxItems).map(item=>item.pack.id));
+    if(hoveredPack)chosen.add(hoveredPack);
+    if(selectedPack)chosen.add(selectedPack);
+    for(const {element,pack} of this.packButtons){
+      if(!chosen.has(pack.id)){element.hidden=true;continue;}
+      const projection=this.scene.project(pack.position);
+      const rect=placeGradeStageCard(projection,{w:146,h:40},viewport,blocked);
+      element.hidden=!rect;
+      if(!rect)continue;
+      element.style.transform='translate('+Math.round(rect.x)+'px,'+Math.round(rect.y)+'px)';
+      element.dataset.placement='source-centroid';
+      blocked.push(rect);
     }
   }
 }
