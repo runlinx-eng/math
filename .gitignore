@@ -11,3 +11,12 @@ __pycache__/
 .env.*
 !.env.example
 !.env.sample
+
+# Generated dependency trees and browser/test evidence.
+/node_modules/
+/verification/**/*.png
+/verification/**/*.jpg
+/verification/**/*.aiff
+/verification/**/*.tap
+/verification/**/*.json
+/verification/**/*.txt
