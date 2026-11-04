@@ -97,10 +97,23 @@ export class GradeSpatialCards{
     if(this.layer.hidden)return;
     const blocked=[...exclusions];
     const viewport={width:this.scene.width,height:this.scene.height};
-    for(const {element,stage} of this.stageButtons){
+    for(const [index,{element,stage}] of this.stageButtons.entries()){
       const p=this.scene.project(stage.position);
-      const box=placeGradeStageCard(p,{w:152,h:49},viewport,blocked);
+      let box=placeGradeStageCard(p,{w:152,h:49},viewport,blocked);
+      // Fallback is a clearly marked *screen-space control*, not a new graph
+      // coordinate or an invented mathematical trunk.
+      let docked=false;
+      if(!box){
+        const startX=Math.max(390,Math.round((viewport.width-482)/2));
+        for(const y of [136,200,264]){
+          const candidate={x:startX+index*165,y,w:152,h:49};
+          if(candidate.x+candidate.w>viewport.width-18||candidate.y+candidate.h>viewport.height-95)continue;
+          if(blocked.some(other=>overlap(candidate,other)))continue;
+          box=candidate;docked=true;break;
+        }
+      }
       element.hidden=!box;
+      element.dataset.placement=docked?'dock':'anchor';
       if(!box)continue;
       element.style.transform='translate('+Math.round(box.x)+'px,'+Math.round(box.y)+'px)';
       blocked.push(box);
