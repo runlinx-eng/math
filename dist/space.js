@@ -1,7 +1,7 @@
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {SpatialScene} from './spatial-scene.js';
-import {buildSpace,relationsFor,VIEW_KEY,LAYOUT_VERSION,parseView,objectKey} from './spatial-model.js';
-import {buildRelationshipSpace,selectRelationshipVersion,RELATIONSHIP_VERSION} from './spatial-relationship.js';
+import {relationsFor,LAYOUT_VERSION,parseView,objectKey} from './spatial-model.js';
+import {buildRelationshipSpace,RELATIONSHIP_VERSION} from './spatial-relationship.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {makeKnowledgeNames} from './spatial-names.js';
 import {applyNavigationCopy,relationHeading,relationStrength} from './navigation-copy.js';
@@ -69,7 +69,7 @@ function refreshLearning(){renderedDay=dayKey();if(scene){const daily=dailySumma
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveView,250);}
 function captureView(){const v=scene.snapshot();if(scene.global){v.traceScroll=Math.max(0,Math.min(100000,$('#focus-card').scrollTop||0));const focused=document.activeElement?.closest?.('[data-preview-key]');if(focused)v.traceFocused=focused.dataset.previewKey;}return v;}
 function restoreFocus(view){const card=$('#focus-card');if(!card.hidden&&Number.isFinite(view?.traceScroll))card.scrollTop=view.traceScroll;if(view?.traceFocused){const target=[...card.querySelectorAll('[data-preview-key] [data-action="choose"]')].find(el=>el.closest('[data-preview-key]').dataset.previewKey===view.traceFocused);target?.focus({preventScroll:true});}}
-function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),selectedGradeStage,activePanel,journeyOpen,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(worldLayout==='network'?(scene.relationshipMap?RELATIONSHIP_VIEW_KEY:NETWORK_VIEW_KEY):VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
+function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),selectedGradeStage,activePanel,journeyOpen,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(RELATIONSHIP_VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
 function remember(){if(!scene)return;const view=captureView();if(visits.length&&JSON.stringify(visits.at(-1))===JSON.stringify(view))return;visits.push(view);if(visits.length>30)visits.shift();$('#back-button').disabled=false;}
 function recordGuide(step,active){return mutateLearning(s=>{s.daily.guide={id:GUIDE_ID,step,active,updatedAt:now()};});}
 function guideThemeId(){return space.nodes.get(guideSteps[1]?.anchor)?.themeId||null;}
