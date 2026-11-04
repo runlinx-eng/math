@@ -26,7 +26,12 @@ export function buildGradeSpatialMetadata(space,model){
   for(const stage of model.stages){
     const members=[...nodes.values()].filter(node=>node.primaryStages.includes(stage.id));
     const center=[0,1,2].map(axis=>members.length?members.reduce((sum,node)=>sum+node.position[axis],0)/members.length:0);
-    stages.push({id:stage.id,label:stage.label||stage.standardStage||stage.id,position:center,count:members.length});
+    const countsByPack={},roleCounts={main:0,extension:0,transition:0};
+    for(const item of members){countsByPack[item.packId]=(countsByPack[item.packId]||0)+1;
+      if(Object.hasOwn(roleCounts,item.roles[stage.id]))roleCounts[item.roles[stage.id]]++;
+    }
+    stages.push({id:stage.id,label:stage.label||stage.standardStage||stage.id,position:center,count:members.length,
+      nodeIds:members.map(item=>item.id),packIds:Object.keys(countsByPack),countsByPack,roleCounts});
   }
   return {stages,packs,nodes,counts:{stages:stages.length,packs:packs.size,nodes:nodes.size}};
 }
@@ -43,8 +48,8 @@ export function placeGradeStageCard(anchor,size,viewport,blocked=[]){
   return null;
 }
 export class GradeSpatialCards{
-  constructor(scene,space){
-    this.scene=scene;this.space=space;this.metadata=null;
+  constructor(scene,space,callbacks={}){
+    this.scene=scene;this.space=space;this.callbacks=callbacks;this.metadata=null;this.hoveredStageId=null;
     this.layer=document.createElement('div');this.layer.className='grade-spatial-layer';
     this.layer.hidden=true;scene.host.append(this.layer);this.stageButtons=[];
   }
@@ -57,9 +62,21 @@ export class GradeSpatialCards{
       b.dataset.stageId=stage.id;
       const main=document.createElement('strong'),sub=document.createElement('small');
       main.textContent=stage.label;sub.textContent='相关知识点 '+stage.count+' · 两年学段';
-      b.append(main,sub);b.hidden=true;this.layer.append(b);this.stageButtons.push({element:b,stage});
+      b.append(main,sub);b.hidden=true;
+      b.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')this.setHover(stage.id);});
+      b.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch'&&this.hoveredStageId===stage.id)this.setHover(null);});
+      b.addEventListener('focus',()=>this.setHover(stage.id));
+      b.addEventListener('blur',()=>{if(this.hoveredStageId===stage.id)this.setHover(null);});
+      this.layer.append(b);this.stageButtons.push({element:b,stage});
     });
   }
+  setHover(stageId){
+    if(this.hoveredStageId===stageId)return;
+    this.hoveredStageId=stageId;
+    this.callbacks.onStageHover?.(stageId);
+    this.stageButtons.forEach(({element,stage})=>element.dataset.hover=String(stage.id===stageId));
+  }
+  stageForGrade(grade){return this.metadata?.stages[Math.floor((grade-1)/2)]||null;}
   applyGrade(grade){
     if(!this.metadata)return;
     const stage=this.metadata.stages[Math.floor((grade-1)/2)];if(!stage)return;

@@ -36,7 +36,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.hoverMapKey=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.hoverMapKey=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.showAllNodes=this.network;this.explorationTrail=[];this.gradeSpatialFocus=null;
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -353,6 +353,11 @@ export class SpatialScene {
     }
     this.dirty=true;this.callbacks.onMapHover?.();
   }
+  setGradeSpatialFocus(focus){
+    this.gradeSpatialFocus=focus?{kind:focus.kind,stageId:focus.stageId,
+      nodeIds:new Set(focus.nodeIds||[]),packIds:new Set(focus.packIds||[])}:null;
+    this.dirty=true;
+  }
   setPreview(key){const next=key&&this.space.byKey.has(key)&&this.related?.has(key)?key:null;if(next===this.previewKey)return;this.previewKey=next;this.updateRelationPreview();this.dirty=true;}
   updateRelationPreview(){for(const child of this.edgesGroup.children){const m=child.material;if(!m||!child.userData.relation)continue;const incident=child.userData.relation.includes(this.previewKey);m.transparent=true;m.opacity=this.previewKey?(incident?1:.12):child.userData.baseOpacity;m.needsUpdate=true;}}
   setFocusFilter(direction=this.focusDirection,depth=this.focusDepth){
@@ -517,7 +522,7 @@ export class SpatialScene {
     this.dirty=true;
   }
   paintObjects(){
-    const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+    const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),gradeFocus=this.gradeSpatialFocus,transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
       // A temporary hover reads the full map just like the panorama. The
@@ -545,10 +550,11 @@ export class SpatialScene {
       // guide's real current/visited nodes are allowed to regain saturation.
       const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
       // Hierarchy-specific, temporary node emphasis; no coordinate changes.
+      const gradeTint=gradeFocus&&this.relationshipMap&&selected?.kind!=='node'?(gradeFocus.nodeIds.has(o.id)?.98:.12):null;
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??gradeTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       if(!this.relationshipMap){
         if(fadeOut&&!visible&&oldVisible)color.set(o.color).lerp(paper,1-(1-progress)*(this.overviewStructure.nodeRoles.has(o.id)&&this.structureMode!=='off'?.98:.14));
         if(fadeOut&&visible&&o.key!==this.selected)color.lerp(paper,1-progress);
@@ -665,7 +671,7 @@ export class SpatialScene {
   updateLabels(){
     // Hover temporarily reuses the clicked-theme label policy, but never
     // changes the persisted selection or camera.
-    const hoverObject=this.space.byKey.get(this.hoverMapKey),selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
+    const hoverObject=this.space.byKey.get(this.hoverMapKey),selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),gradeFocus=this.gradeSpatialFocus,candidates=[],scale=this.global?this.globalScale():0;
     for(const entry of this.labels){const {object:o,el}=entry,p=this.project(o.position),isSelected=o.key===this.selected,related=this.related?.has(o.key);let show=false,priority=0;
       if(o.kind==='theme'){show=p.distance>410;priority=50;}
       else if(o.kind==='pack'){show=p.distance<1200&&p.distance>115&&((!this.network&&this.showAllNodes)||selected?.kind==='theme'&&o.themeId===selected.id||o.key===this.selected);priority=o.id==='same-amount'?35:25;}
@@ -718,7 +724,12 @@ export class SpatialScene {
           }else if(o.kind==='pack'){show=o.key===selected.key;priority=110;}
           else show=false;
         }
-        if(this.relationshipMap&&hoverObject?.kind==='pack'){
+        if(this.relationshipMap&&gradeFocus?.kind==='stage'&&!selected&&!hoverObject&&!this.guideFocus){
+           if(o.kind==='pack'){show=gradeFocus.packIds.has(o.id);priority=85;}
+           else if(o.kind==='node')show=o.key===this.hovered;
+           else show=false;
+         }
+         if(this.relationshipMap&&hoverObject?.kind==='pack'){
           if(o.kind==='pack'){show=o.key===hoverObject.key;priority=110;}
           else if(o.kind==='node'){show=o.key===this.hovered&&o.packId===hoverObject.id;priority=95;}
           else show=false;

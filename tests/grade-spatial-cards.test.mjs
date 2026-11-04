@@ -49,3 +49,15 @@ test('stage annotations do not obscure visible panels or the viewport',()=>{
   assert.equal(placeGradeStageCard({...a,visible:false},{w:152,h:49},viewport),null);
   assert.equal(placeGradeStageCard({x:200,y:250,visible:true},{w:152,h:49},viewport,[{x:0,y:0,w:1440,h:900}]),null);
 });
+
+test('stage membership uses source roles and preserves all original edges',()=>{
+  const result=buildGradeSpatialMetadata(space,grade);
+  for(const stage of result.stages){
+    assert.equal(stage.nodeIds.length,stage.count);
+    assert.equal(new Set(stage.nodeIds).size,stage.count);
+    assert.equal(stage.roleCounts.main+stage.roleCounts.extension+stage.roleCounts.transition,stage.count);
+    assert.deepEqual([...stage.packIds].sort(),[...new Set(stage.nodeIds.map(id=>result.nodes.get(id).packId))].sort());
+    assert.equal(Object.values(stage.countsByPack).reduce((a,b)=>a+b,0),stage.count);
+  }
+  assert.equal(JSON.stringify(atlas.edges),originalEdges);
+});

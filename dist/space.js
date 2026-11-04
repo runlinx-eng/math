@@ -28,7 +28,7 @@ const routeSection=(r,packId)=>r.sectionByPack?.[packId]||r.section;
 const activityFor=id=>activityIds.find(key=>ACTIVITIES[key].topicId===id);
 let atlas,space,scene,learning=fresh(),readBlocked=false,activePanel=null,selectedFilter='all',searchPack=null,searchLimit=24,saveTimer,toastTimer;
 const NETWORK_VIEW_KEY='math-explorer-network-global-view-v1',RELATIONSHIP_VIEW_KEY='math-explorer-network-relationship-view-v1',NETWORK_LAYOUT_KEY='math-explorer-network-layout-v1',LEGACY_NETWORK_VIEW_KEY='math-explorer-network-view-v1',WORLD_MODE_KEY='math-explorer-world-mode-v1',PENDING_RESUME_KEY='math-explorer-pending-resume-v1';
-let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map(),gradePositionLoadTimer=null,gradeSpatial=null,gradeSpatialEnabled=false;
+let worldLayout='network',observationMode='relationship',selectedGrade=1,expandedGradePackId=null,gradeProgressionData=null,gradeProgressionPromise=null,gradeNodeMappingsById=new Map(),gradePositionLoadTimer=null,gradeSpatial=null,gradeSpatialEnabled=false,hoveredGradeStageId=null,selectedGradeStageId=null;
 const GRADE_LABELS=Object.freeze(['一年级','二年级','三年级','四年级','五年级','六年级']);
 const GRADE_ROLE_LABELS=Object.freeze({main:'主要',extension:'延伸',transition:'过渡'});
 const GRADE_THEME_LABELS=Object.freeze({numbers:'数与运算',space:'图形与空间',measure:'测量与变化',patterns:'规律与推理',data:'数据与可能性'});
@@ -228,11 +228,30 @@ function gradeMarkPresentation(judgement){
 function ensureGradeProgressionData(){
   if(gradeProgressionData)return Promise.resolve(gradeProgressionData);
   if(!gradeProgressionPromise){
-    gradeProgressionPromise=loadGradeProgressionData().then(data=>{gradeProgressionData=data;gradeNodeMappingsById=new Map(data.nodeMappings.map(item=>[item.nodeId,item]));gradeSpatial?.setModel(data);gradeSpatial?.applyGrade(selectedGrade);return data;}).catch(error=>{gradeProgressionPromise=null;throw error;});
+    gradeProgressionPromise=loadGradeProgressionData().then(data=>{gradeProgressionData=data;gradeNodeMappingsById=new Map(data.nodeMappings.map(item=>[item.nodeId,item]));gradeSpatial?.setModel(data);gradeSpatial?.applyGrade(selectedGrade);updateGradeSpatialFocus();return data;}).catch(error=>{gradeProgressionPromise=null;throw error;});
   }
   return gradeProgressionPromise;
 }
 
+function updateGradeSpatialFocus(){
+  if(!scene?.relationshipMap||observationMode!=='grade'||!gradeSpatialEnabled||!gradeSpatial?.metadata){
+    scene?.setGradeSpatialFocus(null);return;
+  }
+  const stage=gradeSpatial.metadata.stages.find(item=>item.id===(hoveredGradeStageId||selectedGradeStageId));
+  if(!stage){scene.setGradeSpatialFocus(null);return;}
+  scene.setGradeSpatialFocus({kind:'stage',stageId:stage.id,nodeIds:stage.nodeIds,packIds:stage.packIds});
+}
+function hoverGradeStage(stageId){
+  hoveredGradeStageId=stageId;updateGradeSpatialFocus();renderGradeSpatialSummary();
+}
+function selectGradeStage(grade){
+  if(!Number.isInteger(grade)||grade<1||grade>6)return;
+  selectedGrade=grade;selectedGradeStageId=gradeStageForSelected()?.id||null;
+  if(scene?.selected)scene.select(null);
+  renderFocus();renderLocation();gradeSpatial?.applyGrade(grade);
+  updateGradeSpatialFocus();renderGradeObservation();scheduleSave();
+}
+function renderGradeSpatialSummary(){} // Replaced by batch-two overview.
 function renderGradeNodeList(pack,selectedStageId){
   const sourcePack=space.packs.get(pack.packId);
   const entries=(sourcePack?.nodeIds||[]).map((id,index)=>({id,index,mapping:gradeNodeMappingsById.get(id)})).filter(item=>item.mapping);
@@ -353,7 +372,8 @@ function setObservationMode(mode){
   document.body.dataset.observationMode=next;
   document.body.dataset.gradeSpatial=String(next==='grade'&&gradeSpatialEnabled);
   if(next==='grade')gradeSpatial?.applyGrade(selectedGrade);
-  else gradeSpatial?.update({active:false});
+  else {hoveredGradeStageId=null;gradeSpatial?.update({active:false});}
+  updateGradeSpatialFocus();
   const guide=$('#network-guide'),grade=$('#grade-observation-view');
   if(guide)guide.querySelectorAll(':scope > :not(#observation-mode-switch):not(#grade-observation-view)').forEach(item=>{item.hidden=next!=='relationship';});
   if(grade)grade.hidden=next!=='grade';
@@ -840,14 +860,14 @@ document.addEventListener('click',event=>{
   else if(action==='observation-mode')setObservationMode(el.dataset.mode);
   else if(action==='grade-select'){
     const grade=Number(el.dataset.grade);
-    if(Number.isInteger(grade)&&grade>=1&&grade<=6){selectedGrade=grade;renderGradeObservation();scheduleSave();gradeSpatial?.applyGrade(grade);}
+    if(Number.isInteger(grade)&&grade>=1&&grade<=6)selectGradeStage(grade);
   }else if(action==='grade-spatial-stage-select'){
     const grade=Number(el.dataset.grade);
-    if(Number.isInteger(grade)&&[1,3,5].includes(grade)){selectedGrade=grade;renderGradeObservation();scheduleSave();gradeSpatial?.applyGrade(grade);}
+    if(Number.isInteger(grade)&&[1,3,5].includes(grade))selectGradeStage(grade);
   }else if(action==='grade-spatial-toggle'){
     gradeSpatialEnabled=!gradeSpatialEnabled;
     document.body.dataset.gradeSpatial=String(observationMode==='grade'&&gradeSpatialEnabled);
-    gradeSpatial?.applyGrade(selectedGrade);renderGradeObservation();scene.dirty=true;
+    gradeSpatial?.applyGrade(selectedGrade);updateGradeSpatialFocus();renderGradeObservation();scene.dirty=true;
   }else if(action==='grade-pack-toggle'){
     expandedGradePackId=expandedGradePackId===el.dataset.packId?null:el.dataset.packId;
     renderGradeObservation();scheduleSave();
@@ -983,7 +1003,7 @@ async function boot(){try {
   $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}" aria-pressed="false"`)).join(''):'';
   if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
   scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>{if(guideVisible)return;return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
-  gradeSpatial=worldLayout==='network'?new GradeSpatialCards(scene,space):null;
+  gradeSpatial=worldLayout==='network'?new GradeSpatialCards(scene,space,{onStageHover:hoverGradeStage}):null;
   const defaultMode=worldLayout==='network'?'rotate':'pan';scene.setMode(defaultMode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===defaultMode)));let stored=null;try{stored=parseView(JSON.parse(readStored(worldLayout==='network'?(chosenNetworkVersion===RELATIONSHIP_VERSION?RELATIONSHIP_VIEW_KEY:NETWORK_VIEW_KEY):VIEW_KEY)),space);if(!stored&&worldLayout==='network'&&chosenNetworkVersion===49){const old=parseView(JSON.parse(readStored(LEGACY_NETWORK_VIEW_KEY)),space);if(old&&(old.journeyOpen||old.panels.length))stored=old;}}catch{}
   if(stored){selectedGrade=stored.selectedGrade;expandedGradePackId=stored.expandedGradePackId||null;observationMode=worldLayout==='network'?stored.observationMode:'relationship';}
   const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null,explicitOverview=route[0]==='atlas'&&!route[1];
