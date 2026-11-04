@@ -61,6 +61,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
+          node --check dist/grade-node-filter.js
           node --check scripts/build_grade_progression_data.mjs
 
       - name: Run active Node.js unit and invariant tests
@@ -75,6 +76,7 @@ jobs:
             tests/deployment-static.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
+            tests/grade-node-filter.test.mjs
           )
 
           for candidate in \
