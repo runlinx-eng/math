@@ -891,7 +891,14 @@ function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene
 }
 function updateOverlays(){
   positionGuide();renderGuideCues();
-  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){
+  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'&&observationMode==='grade'&&gradeSpatialEnabled&&innerWidth>=1200){
+      // Three-tier curriculum inspection uses a fixed right-side reading area.
+      // The selected point's projection changes only map emphasis, never the card.
+      const guideRight=$('#network-guide').getBoundingClientRect().right;
+      card.style.maxWidth=`${Math.max(220,innerWidth-guideRight-150)}px`;
+      card.style.left=`${Math.min(innerWidth-width-18,Math.max(guideRight+28,innerWidth-width-90))}px`;
+      card.style.top='205px';
+    }else if(worldLayout==='network'){
       // Keep the knowledge card clear of the guide panel and inside the
       // viewport. When there is room, use the map area to the guide's right;
       // otherwise clamp its vertical position instead of pushing it offscreen.
