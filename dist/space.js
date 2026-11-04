@@ -441,6 +441,13 @@ function renderNetworkGuide(){
   renderGradeMapFilter();
   const structureControls=$('#overview-structure-controls');
   if(structureControls){structureControls.hidden=!scene.relationshipMap||!!scene.selected||guideVisible||journeyOpen;
+    // The curriculum row changes the guide's height. Anchor structure tools
+    // below the actual guide instead of letting a fixed y overlap edge controls.
+    if(!structureControls.hidden){
+      const top=$('#network-guide')?.getBoundingClientRect().bottom||0;
+      const baseline=innerWidth<=600?170:innerWidth<=900?183:210;
+      structureControls.style.top=Math.ceil(Math.max(baseline,top+9))+'px';
+    }
     for(const button of structureControls.querySelectorAll('[data-action="overview-structure"]'))button.setAttribute('aria-pressed',String(button.dataset.structure===scene.structureMode));}
    document.body.dataset.localFocus=scene.localRelationshipFocus?'true':'false';
    const localExit=$('#local-overview-exit');if(localExit)localExit.hidden=!scene.localRelationshipFocus||journeyOpen||guideVisible;

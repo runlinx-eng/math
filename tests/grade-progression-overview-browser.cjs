@@ -21,6 +21,11 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all');
   check(await page.locator('#grade-map-filter').isVisible(),'the original panorama offers the inline curriculum node filter');
   check(await page.locator('[data-action="grade-map-stage"]').count()===4,'three honest two-year stages plus all are offered');
+  check(await page.evaluate(()=>{
+    const guide=document.querySelector('#network-guide').getBoundingClientRect();
+    const structure=document.querySelector('#overview-structure-controls').getBoundingClientRect();
+    return structure.top>=guide.bottom+7;
+  }),'structure guide controls never block curriculum and edge controls');
   const overlayStart=await pose();
   for(const [stage,count] of [['stage-1',187],['stage-2',259],['stage-3',255]]){
     await page.locator('[data-action="grade-map-stage"][data-stage="'+stage+'"]').click();
