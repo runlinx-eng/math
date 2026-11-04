@@ -840,10 +840,10 @@ document.addEventListener('click',event=>{
   else if(action==='observation-mode')setObservationMode(el.dataset.mode);
   else if(action==='grade-select'){
     const grade=Number(el.dataset.grade);
-    if(Number.isInteger(grade)&&grade>=1&&grade<=6){selectedGrade=grade;gradeSpatial?.applyGrade(grade);renderGradeObservation();scheduleSave();}
+    if(Number.isInteger(grade)&&grade>=1&&grade<=6){selectedGrade=grade;renderGradeObservation();scheduleSave();gradeSpatial?.applyGrade(grade);}
   }else if(action==='grade-spatial-stage-select'){
     const grade=Number(el.dataset.grade);
-    if(Number.isInteger(grade)&&[1,3,5].includes(grade)){selectedGrade=grade;gradeSpatial?.applyGrade(grade);renderGradeObservation();scheduleSave();}
+    if(Number.isInteger(grade)&&[1,3,5].includes(grade)){selectedGrade=grade;renderGradeObservation();scheduleSave();gradeSpatial?.applyGrade(grade);}
   }else if(action==='grade-spatial-toggle'){
     gradeSpatialEnabled=!gradeSpatialEnabled;
     document.body.dataset.gradeSpatial=String(observationMode==='grade'&&gradeSpatialEnabled);
