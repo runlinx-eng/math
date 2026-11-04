@@ -549,6 +549,14 @@ const ids=[
   ['batch11r-10','mt_bO-njVOige'],
   ['batch11r-11','mt_b4lbTOJYwI']
 ];
+// CI uses a representative two-viewport visual smoke set; run without the scope flag for all 537 nodes.
+const smokeVisualLabels=new Set([
+ 'numberline-fractions','construct-fractions','linear-graphs','ratio-bar-model',
+ 'venn-two-sets','multiplication-array','area-distributive-model','dot-plot',
+ 'histogram','box-plot','cube-net','coordinates','transformations',
+ 'triangle-parallelogram-area','polygon-area-decomposition'
+]);
+const smokeCases=ids.filter(([label],index)=>index<12||index>=ids.length-6||smokeVisualLabels.has(label));
 const check=(ok,desc)=>{if(!ok)throw Error(desc);};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -561,7 +569,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
    await page.goto('http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
    const start=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
-   const cases=slug==='desktop'?ids:ids.slice(2);
+   const cases=process.env.MATH_CONCEPT_BROWSER_SCOPE==='smoke'?smokeCases:(slug==='desktop'?ids:ids.slice(2));
    for(const [label,id] of cases){
     const tag=slug+'-'+label;
     await page.locator('[data-action="search"]').click();
