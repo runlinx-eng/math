@@ -209,8 +209,11 @@ function returnFromLesson(){const resumeGuide=guideSuspended&&learning.daily.gui
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
 function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network',inPlace=false}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible){visitGuideTarget(key);return;}if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace)scene.select(key);else scene.focus(key,{animate});setHash(key);
-  if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
-  else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
+  // Curriculum observation is read-only; it must not mark a node as visited,
+  // complete an activity, or change any other learning record.
+  const gradeInspection=observationMode==='grade'&&gradeSpatialEnabled&&inPlace;
+  if(!gradeInspection&&object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
+  else if(!gradeInspection&&object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   if(object.kind==='node'&&openLesson){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}
   if(observationMode==='grade'&&gradeSpatialEnabled){
     if(object.kind==='pack')selectedGradePackId=object.id;
