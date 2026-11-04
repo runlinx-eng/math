@@ -5,6 +5,8 @@ on:
     paths:
       - 'dist/spatial-*.js'
       - 'dist/space.js'
+      - 'dist/grade-progression-model.js'
+      - 'dist/data/grade-progression.json'
       - 'dist/space.css'
       - 'dist/index.html'
       - 'tests/spatial-overview.test.mjs'
@@ -16,6 +18,9 @@ on:
       - 'tests/spatial-guide-inplace-browser.cjs'
       - 'tests/spatial-unified-map-browser.cjs'
       - 'tests/spatial-theme-overview-browser.cjs'
+      - 'tests/grade-progression-overview.test.mjs'
+      - 'tests/grade-progression-overview-browser.cjs'
+      - 'docs/grade-progression/DATA-ADAPTER.md'
       - 'tests/spatial-local-focus-browser.cjs'
       - 'tests/learning-workspace-browser.cjs'
       - 'dist/learning/learn.css'
@@ -26,6 +31,7 @@ on:
       - 'docs/language/**'
       - 'README.md'
       - 'tests/spatial-focus-filter.test.mjs'
+      - 'tests/spatial-exploration.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
 
@@ -45,8 +51,9 @@ jobs:
           node --check dist/space.js
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
-      - name: Check relationship data and honest grouping
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs
+          node --check dist/grade-progression-model.js
+      - name: Check relationship and grade observation data
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/spatial-exploration.test.mjs
 
   overview-browser-acceptance:
     needs: math-structure-and-ui-syntax
@@ -72,6 +79,7 @@ jobs:
           node tests/spatial-guide-inplace-browser.cjs
           node tests/spatial-unified-map-browser.cjs
           node tests/spatial-theme-overview-browser.cjs
+          node tests/grade-progression-overview-browser.cjs
           node tests/spatial-local-focus-browser.cjs
           node tests/learning-workspace-browser.cjs
       - name: Preserve panorama screenshots and checks
@@ -87,5 +95,6 @@ jobs:
             verification/spatial-guide-inplace/
             verification/spatial-unified-map/
             verification/spatial-theme-overview/
+            verification/grade-progression-overview/
             verification/learning-workspace/
           if-no-files-found: warn
