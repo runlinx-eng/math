@@ -11,6 +11,17 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
   const page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.stack||String(e)));
   const pose=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return JSON.stringify({position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions});});
+  const stablePose=async()=>{
+    await page.waitForFunction(()=>mathSpace.motion().tween===null&&mathSpace.motion().transition===null);
+    let previous=await pose();
+    for(let i=0;i<30;i++){
+      await page.waitForTimeout(80);
+      const current=await pose();
+      if(current===previous)return current;
+      previous=current;
+    }
+    throw Error('Camera did not settle before the stage comparison');
+  };
   try{
     await page.goto(url);
     await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537&&!mathSpace.snapshot().selected);
@@ -18,7 +29,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     check(await page.locator('#grade-map-filter').isVisible(),'single panorama has stage filter');
     check(await page.locator('[data-action="grade-map-stage"]').count()===4,'one all and three two-year stages');
     check(await page.locator('#observation-mode-switch,#grade-observation-view,[data-action="grade-view-node"]').count()===0,'old matrix and navigation no longer exist');
-    const original=await pose();
+    const original=await stablePose();
     for(const [stage,count] of [['stage-1',187],['stage-2',259],['stage-3',255]]){
       await page.locator('[data-action="grade-map-stage"][data-stage="'+stage+'"]').click();
       await page.waitForFunction(({stage,count})=>mathSpace.snapshot().gradeStageFilter===stage&&mathSpace.snapshot().gradeStageMatchedIds.length===count,{stage,count});
@@ -30,7 +41,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
     await page.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-network-relationship-view-v1')||'null')?.selectedGradeStage==='stage-3');
     await page.reload();
     await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().gradeStageFilter==='stage-3'&&mathSpace.snapshot().gradeStageMatchedIds.length===255);
-    check((await pose())===original,'reload restores stage filter without moving the graph');
+    check((await stablePose())===original,'reload restores stage filter without moving the graph');
     await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
     await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all'&&mathSpace.snapshot().gradeStageMatchedIds.length===0);
     check((await pose())===original,'all restores unfiltered source positions');
