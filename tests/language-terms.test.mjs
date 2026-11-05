@@ -33,8 +33,10 @@ test('thinking content is a category, not the learner progress state',()=>{
 
 test('completion counts describe tasks rather than mastery',()=>{
   assert.match(index,/<span>学习任务进度<\/span>/);
-  assert.match(exploration,/<span>学习任务进度<\/span>/);
+  assert.match(exploration,/function renderTrail\(/);
+  assert.match(exploration,/记录走过的路，也记录想法/);
   assert.doesNotMatch(index,/整体进度/);
   assert.doesNotMatch(exploration,/<span>整体进度<\/span>/);
+  assert.doesNotMatch(exploration,/function renderAtlas\(/);
   assert.match(space,/completionSummary\(learning\)/);
 });
