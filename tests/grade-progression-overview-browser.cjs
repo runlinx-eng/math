@@ -106,6 +106,36 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
         check(await oldPage.locator('[data-action="switch-world"],[data-action="switch-layout"]').count()===0,'legacy map entry controls do not reappear');
         if(oldUrl.includes('/node/'))check((await oldPage.evaluate(()=>mathSpace.snapshot())).selected==='node:mt_s2mfRBoTal','legacy node link retains its selected knowledge point');
       }
+      // Retired flat-map links must use the existing 3D geometry and preserve deep links.
+      for(const [fragment,selected] of [
+        ['atlas',null],['map',null],['atlas/reasoning','pack:reasoning'],
+        ['pack/reasoning','pack:reasoning'],['theme/space','theme:space'],
+        ['node/mt_s2mfRBoTal','node:mt_s2mfRBoTal']
+      ]){
+        await oldPage.goto('http://127.0.0.1:43827/v2.html#'+fragment);
+        await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().networkVersion===53);
+        check(new URL(oldPage.url()).pathname.endsWith('/index.html'),'retired v2 route '+fragment+' redirects to the unified 3D application');
+        check(await oldPage.locator('.atlas-svg,.theme-grid,.graph-shell').count()===0,'retired route does not recreate a 2D map');
+        if(selected)check((await oldPage.evaluate(()=>mathSpace.snapshot())).selected===selected,'retired deep link retains '+selected);
+      }
+      await oldPage.goto('http://127.0.0.1:43827/v2.html#trail');
+      await oldPage.locator('.journal-grid').waitFor();
+      check(await oldPage.locator('[data-do="export"],[data-do="import"]').count()===2,'historical trail keeps export and import controls');
+      const keptState=await oldPage.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+      check(keptState.bookmarks.includes('mt_s2mfRBoTal')&&!!keptState.activities[Object.keys(JSON.parse(originalLearning).activities)[0]],'retired 2D map cleanup preserves bookmarks and learning records');
+      const activityId=await oldPage.evaluate(async()=> (await import('./exploration-content.js')).activityIds[0]);
+      await oldPage.goto('http://127.0.0.1:43827/v2.html#activity/'+activityId);
+      await oldPage.locator('.activity-shell .activity-tabs').waitFor();
+      check(new URL(oldPage.url()).pathname.endsWith('/v2.html'),'historical activity remains available in v2');
+      await oldPage.goto('http://127.0.0.1:43827/v2.html#about');
+      await oldPage.locator('.about-copy').waitFor();
+      check(await oldPage.locator('.about-copy').isVisible(),'source and learning explanation remains available');
+      await oldPage.goto('http://127.0.0.1:43827/?world=network&layout=53#atlas');
+      await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
+      await oldPage.locator('#trail-count').click();
+      await oldPage.frameLocator('#utility-frame').locator('.journal-grid').waitFor();
+      check(await oldPage.frameLocator('#utility-frame').locator('[data-do="export"]').isVisible(),'3D journal drawer still embeds v2 record and backup tools');
+      await oldPage.screenshot({path:path.join(out,'desktop-3d-embedded-trail.png')});
     }finally{await legacyContext.close();}
     await page.setViewportSize({width:980,height:760});
     await page.goto(url);
