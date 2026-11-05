@@ -125,7 +125,10 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
       check(keptState.bookmarks.includes('mt_s2mfRBoTal')&&!!keptState.activities[Object.keys(JSON.parse(originalLearning).activities)[0]],'retired 2D map cleanup preserves bookmarks and learning records');
       const activityId=await oldPage.evaluate(async()=> (await import('./exploration-content.js')).activityIds[0]);
       await oldPage.goto('http://127.0.0.1:43827/v2.html#activity/'+activityId);
-      await oldPage.locator('.activity-shell .activity-tabs').waitFor();
+      await oldPage.locator('.activity-shell .activity-tabs').waitFor({timeout:8000}).catch(async()=>{
+        const diagnostic=await oldPage.evaluate(()=>({url:location.href,body:document.querySelector('#main')?.textContent?.slice(0,1000),hash:location.hash}));
+        throw Error('Historical activity failed to open: '+JSON.stringify({activityId,diagnostic}));
+      });
       check(new URL(oldPage.url()).pathname.endsWith('/v2.html'),'historical activity remains available in v2');
       await oldPage.goto('http://127.0.0.1:43827/v2.html#about');
       await oldPage.locator('.about-copy').waitFor();
