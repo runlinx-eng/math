@@ -1,11 +1,16 @@
 name: Math Tree overview checks
 
+# Browser regressions run once through the mandatory required-checks job.
+
 on:
   pull_request:
     paths:
       - 'dist/spatial-*.js'
       - 'dist/space.js'
       - 'dist/grade-progression-model.js'
+      - 'dist/grade-node-filter.js'
+      - 'dist/data/grade-panorama-lite.json'
+      - 'scripts/build_grade_panorama_lite.mjs'
       - 'dist/data/grade-progression.json'
       - 'dist/space.css'
       - 'dist/index.html'
@@ -19,6 +24,7 @@ on:
       - 'tests/spatial-unified-map-browser.cjs'
       - 'tests/spatial-theme-overview-browser.cjs'
       - 'tests/grade-progression-overview.test.mjs'
+      - 'tests/grade-node-filter.test.mjs'
       - 'tests/grade-progression-overview-browser.cjs'
       - 'docs/grade-progression/DATA-ADAPTER.md'
       - 'tests/spatial-local-focus-browser.cjs'
@@ -34,6 +40,11 @@ on:
       - 'tests/spatial-exploration.test.mjs'
       - '.github/workflows/overview-readability-check.yml'
   workflow_dispatch:
+
+# Cancel superseded runs for the same PR, without cancelling another PR or deployment.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   math-structure-and-ui-syntax:
@@ -52,49 +63,8 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
+          node --check scripts/build_grade_panorama_lite.mjs
+          node scripts/build_grade_panorama_lite.mjs --check
+          node --check dist/grade-node-filter.js
       - name: Check relationship and grade observation data
-        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/spatial-exploration.test.mjs
-
-  overview-browser-acceptance:
-    needs: math-structure-and-ui-syntax
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install isolated Chromium test runtime
-        run: |
-          npm install --no-save --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium
-      - name: Visit live UI in a fresh browser profile
-        run: |
-          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
-          sleep 2
-          node tests/spatial-overview-browser.cjs
-          node tests/spatial-focus-transition-browser.cjs
-          node tests/spatial-focus-semantics-browser.cjs
-          node tests/spatial-focus-filter-browser.cjs
-          node tests/spatial-guide-inplace-browser.cjs
-          node tests/spatial-unified-map-browser.cjs
-          node tests/spatial-theme-overview-browser.cjs
-          node tests/grade-progression-overview-browser.cjs
-          node tests/spatial-local-focus-browser.cjs
-          node tests/learning-workspace-browser.cjs
-      - name: Preserve panorama screenshots and checks
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: math-overview-browser-evidence
-          path: |
-            verification/overview-readability-v1/
-            verification/spatial-focus-transition/
-            verification/spatial-focus-semantics/
-            verification/spatial-focus-filter/
-            verification/spatial-guide-inplace/
-            verification/spatial-unified-map/
-            verification/spatial-theme-overview/
-            verification/grade-progression-overview/
-            verification/learning-workspace/
-          if-no-files-found: warn
+        run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/grade-node-filter.test.mjs tests/spatial-exploration.test.mjs

@@ -275,7 +275,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.locator('#network-legend [data-action="network-theme"][data-id="space"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='theme:space');
   const compact=await page.locator('#focus-card').evaluate(el=>{const b=el.getBoundingClientRect();return {left:b.left,right:b.right,top:b.top,bottom:b.bottom,w:innerWidth,h:innerHeight};});
-  check(compact.left>=0&&compact.right<=compact.w&&compact.top>=0&&compact.bottom<=compact.h,'compact desktop theme card stays in view');
+  check(compact.left>=0&&compact.right<=compact.w&&compact.top>=0&&compact.bottom<=compact.h,'compact desktop theme card stays in view: '+JSON.stringify(compact));
   check(errors.length===0,'no browser runtime errors');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors,childTrial:false}));

@@ -28,19 +28,21 @@ test('relationship headings distinguish direction from required/optional link st
   assert.equal(relationStrength('soft'),'辅助联系');
   assert.notEqual(RELATION_COPY.before,RELATION_COPY.hard);
 });
-test('both map views share exact revised source titles, preserve original searches and task semantics',()=>{
+test('the unified 3D map retains revised source titles and legacy activity semantics',()=>{
   const space=read('dist/space.js');
   const olderView=read('dist/exploration.js');
   const labels=makeKnowledgeNames({nodes:math.nodes});
   assert.equal(labels.get('mt_e8CZ7E5qW7'),'凑成10的数的分与合');
   assert.match(space,/relationHeading\(side\)/);
-  assert.match(olderView,/relationHeading\('before'\)/);
-  assert.match(olderView,/relationHeading\('after'\)/);
+  assert.doesNotMatch(olderView,/function renderAtlas\(|relationHeading\('before'\)|relationHeading\('after'\)/);
+  assert.match(olderView,/function renderTrail\(/);
+  assert.match(olderView,/function renderActivity\(/);
   assert.match(olderView,/knowledgeNames=makeKnowledgeNames\(atlas\)/);
-  assert.match(olderView,/n\.title\+' '\+n\.name\+' '\+displayNode\(n\)/);
+  assert.match(olderView,/function showNode\(id\)/);
+  assert.match(space,/searchPack/);
   assert.doesNotMatch(space,/这里会用到|还会连到哪里/);
   assert.doesNotMatch(olderView,/探索包/);
-  assert.match(olderView,/活动完成 \$\{s\.done\} \/ \$\{s\.total\}/);
+  assert.match(olderView,/任务 \$\{s\.done\} \/ \$\{s\.total\}/);
   assert.match(olderView,/不代表所有源目标都已完整评估/);
 });
 
