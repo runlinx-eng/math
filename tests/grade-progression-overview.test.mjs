@@ -66,3 +66,18 @@ test('grade curriculum is still cached for offline use',()=>{
   assert.match(sw,/data\/grade-panorama-lite\.json/);
   assert.match(space,/loadGradePanoramaData/);
 });
+
+test('retired 2D map routes preserve the historical learning surface without another map',()=>{
+  const legacy=read('../dist/exploration.js'),legacyHtml=read('../dist/v2.html');
+  assert.match(legacy,/function redirectRetiredMap\(/);
+  assert.doesNotMatch(legacy,/function renderAtlas\(|function renderHome\(|function renderTheme\(|function renderPack\(|function diagram\(/);
+  assert.doesNotMatch(legacyHtml,/href="#atlas"|href="#map"|node-dialog/);
+  assert.match(legacy,/function renderActivity\(/);
+  assert.match(legacy,/function renderTrail\(/);
+  assert.match(legacy,/function renderAbout\(/);
+  assert.match(legacy,/function showNode\(/);
+  assert.match(legacy,/parseBackup\(/);
+  assert.match(legacy,/backup\(state\)/);
+  assert.match(sw,/\.\/v2\.html/);
+  assert.match(sw,/\.\/exploration\.js/);
+});
