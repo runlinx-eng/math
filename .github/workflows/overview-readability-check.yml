@@ -68,4 +68,3 @@ jobs:
           node --check dist/grade-node-filter.js
       - name: Check relationship and grade observation data
         run: node --test tests/spatial-relationship.test.mjs tests/spatial-overview.test.mjs tests/spatial-overview-structure.test.mjs tests/spatial-focus-filter.test.mjs tests/grade-progression-model.test.mjs tests/grade-progression-overview.test.mjs tests/grade-node-filter.test.mjs tests/spatial-exploration.test.mjs
-
