@@ -123,6 +123,15 @@ document.addEventListener('input',event=>{const el=event.target;if(el.id==='expl
  el.parentElement.querySelector('output').textContent=rangeValue(key,Number(el.value));if(a.stage==='play')a.lab.changed=true;persist();refreshScene();
 });
 document.addEventListener('change',event=>{const el=event.target;if(el.tagName!=='SELECT'||!el.dataset.model)return;const a=current(),m=a.stage==='play'?a.lab:modelFor(a);const row=el.dataset.row,object=row!==undefined?m.rows[Number(row)]:m;object[el.dataset.model]=Number(el.value);object.n=Math.min(object.n,object.d);if(a.stage==='play')a.lab.changed=true;persist();restoreFocusAfter(()=>{$('#scene-controls').innerHTML=controls(a);refreshScene();});});
+document.addEventListener('click',event=>{
+ if(!embedded)return;
+ const anchor=event.target.closest('a[href^="index.html#"]');
+ if(!anchor)return;
+ const parts=new URL(anchor.href).hash.slice(1).split('/');
+ event.preventDefault();
+ if(parts[0]==='space'&&['node','pack','theme'].includes(parts[1])&&parts[2])spaceNavigate(parts[1],decodeURIComponent(parts[2]));
+ else spaceNavigate('atlas',null);
+});
 document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)&&event.target.matches('[role="button"][data-do]')){event.preventDefault();event.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 $('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{if(readBlocked)throw new Error('原有存储无法读取，先保留原始数据再导入。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB，尚未导入。');const incoming=parseBackup(await file.text(),atlas),combined=validate(merge(state,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(state)));writeStored(KEY,JSON.stringify(combined));state=combined;render();toast('备份已合并，已有作品和提示历史都保留了。');}catch(error){toast(error.message||'导入失败，原有记录没有改变。');}finally{event.target.value='';}});
 async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored)state=validate(JSON.parse(stored),atlas);if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
