@@ -7,6 +7,11 @@ on:
 permissions:
   contents: read
 
+# Cancel superseded CI runs for the same PR; keep main/manual runs independent.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   required-checks:
     name: required-checks
