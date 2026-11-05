@@ -58,6 +58,7 @@ jobs:
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
           node --check dist/space.js
+          node --check dist/exploration.js
           node --check dist/learning/learn.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
