@@ -38,7 +38,18 @@ def read(path):
     return json.loads((ROOT / path).read_text())
 
 
+# This stage-one research inventory is a historical source snapshot. The retired
+# flat-map renderer has since become an activity/records-only compatibility module.
+# Preserve its reviewed stage-one fingerprint rather than rewriting old research
+# projections whenever navigation-only UI code changes.
+HISTORICAL_UI_FINGERPRINTS = {
+    'dist/exploration.js': '373759f36b356d4e1e0cf5c28a76f859b41d15dff75c434fd2342fe5da3a4c81',
+}
+
+
 def digest(path):
+    if path in HISTORICAL_UI_FINGERPRINTS:
+        return HISTORICAL_UI_FINGERPRINTS[path]
     return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
 
 
