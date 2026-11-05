@@ -394,7 +394,7 @@ node --test --test-reporter=tap tests/*.test.mjs
 
 阶段 2、3、4 的覆盖生成器保留 12 节点、9 连接、50 节点的历史基线，当前总量以阶段 5 为准。原投影输入变化时才依次运行 `build_data.py`、`build_atlas.py`；普通内容任务不改源关系。离线清单及 `space.js` / `exploration.js` 缓存版本需同步更新。
 
-当前规则检查 1015 项通过；浏览器检查及已知边界见 [技术验证](docs/VALIDATION.md)。当前证据在 `verification/phase5/B39/`，原 50 个节点与 21 条连接的完整操作证据保留于 `verification/phase4/`；早期手机截图不属于本版验证。
+历史阶段规则检查记录为 1015 项通过；浏览器检查与边界参见 [技术验证](docs/VALIDATION.md)。原证据路径是 `verification/phase5/B39/` 及 `verification/phase4/`，相关生成产物已从当前工作树移除，可在清理前提交 `4b3264b` 的 Git 历史中查阅；当前回归证据由 GitHub Actions 保存。早期手机截图不属于当前版验证。
 
 ## 来源与许可
 
