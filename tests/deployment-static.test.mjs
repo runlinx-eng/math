@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
+import { once } from 'node:events';
+import os from 'node:os';
+import net from 'node:net';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -98,4 +101,49 @@ test('shared preview auth service tests and installer syntax pass', () => {
   assert.equal(python.status, 0, `Python auth tests failed:\n${python.stdout}\n${python.stderr}`);
   const shell = spawnSync('bash', ['-n', path.join(root, 'scripts/setup-preview-auth-vps.sh')], { encoding: 'utf8' });
   assert.equal(shell.status, 0, `VPS setup script syntax failed:\n${shell.stdout}\n${shell.stderr}`);
+});
+
+test('local launcher refuses to reuse an older checkout on the same port', async () => {
+  // Regression: a stale main server could look healthy to a PR14 launcher.
+  const probe = net.createServer();
+  await new Promise((resolve, reject) => {
+    probe.once('error', reject);
+    probe.listen(0, '127.0.0.1', resolve);
+  });
+  const port = probe.address().port;
+  await new Promise(resolve => probe.close(resolve));
+
+  const launcher = path.join(root, 'scripts/server.py');
+  const other = fs.mkdtempSync(path.join(os.tmpdir(), 'math-other-checkout-'));
+  fs.mkdirSync(path.join(other, 'scripts'));
+  const otherLauncher = path.join(other, 'scripts/server.py');
+  fs.copyFileSync(launcher, otherLauncher);
+  const first = spawn('python3', [launcher, '--port', String(port)], { stdio: 'ignore' });
+  try {
+    let health;
+    for (let i = 0; i < 60; i++) {
+      if (first.exitCode !== null) throw new Error('Math server exited early');
+      try {
+        const response = await fetch('http://127.0.0.1:' + port + '/health');
+        if (response.ok) { health = await response.json(); break; }
+      } catch {}
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    assert.equal(health?.project_root, root, 'health must identify the served checkout');
+    const same = spawnSync('python3', [launcher, '--port', String(port)], { encoding: 'utf8', timeout: 5000 });
+    assert.equal(same.status, 0, same.stderr);
+    assert.match(same.stdout, /当前项目目录/);
+
+    const stale = spawnSync('python3', [otherLauncher, '--port', String(port)], { encoding: 'utf8', timeout: 5000 });
+    assert.notEqual(stale.status, 0, 'a different checkout must not silently reuse the running server');
+    assert.match(stale.stderr, /另一份数学探索服务占用/);
+    assert.match(stale.stderr, /没有启动当前版本/);
+  } finally {
+    if (first.exitCode === null) {
+      const exited = once(first, 'exit');
+      first.kill('SIGTERM');
+      await exited;
+    }
+    fs.rmSync(other, { recursive: true, force: true });
+  }
 });
