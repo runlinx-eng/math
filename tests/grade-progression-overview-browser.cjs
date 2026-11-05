@@ -139,7 +139,7 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
       await oldPage.frameLocator('#utility-frame').locator('.journal-grid').waitFor();
       check(await oldPage.frameLocator('#utility-frame').locator('[data-do="export"]').isVisible(),'3D journal drawer still embeds v2 record and backup tools');
       await oldPage.screenshot({path:path.join(out,'desktop-3d-embedded-trail.png')});
-      await oldPage.frameLocator('#utility-frame').locator('a[href="index.html#atlas"]').click();
+      await oldPage.frameLocator('#utility-frame').locator('.journal-grid a[href="index.html#atlas"]').click();
       await oldPage.waitForFunction(()=>document.querySelector('#utility-drawer').hidden);
       check(await oldPage.locator('#grade-map-filter').isVisible(),'embedded trail returns to parent 3D panorama instead of nesting a second map');
     }finally{await legacyContext.close();}
