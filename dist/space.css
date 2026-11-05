@@ -664,127 +664,7 @@ body.guide-mode .space-label.guide-locked:focus-visible{
   outline-offset:2px;
 }
 
-/* A2-2: observation modes share the existing relationship guide panel. */
-.observation-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0 0 10px;padding:3px;border-radius:10px;background:#edf1e7}
-.observation-mode-switch button{min-height:34px;padding:7px 8px;border-radius:8px;background:transparent;color:#607365;font-size:11px;white-space:nowrap}
-.observation-mode-switch button[aria-pressed=true]{background:#294f47;color:#fffef7;box-shadow:0 2px 7px #203e3318}
-.grade-observation-view h2{margin:4px 0 7px;font-size:17px;line-height:1.45;color:#294f47}
-.grade-observation-view>p{margin:6px 0;color:#667a6c;font-size:12px;line-height:1.7}
-body[data-observation-mode="grade"] .network-guide{top:96px;width:min(760px,calc(100vw - 420px));max-height:calc(100vh - 150px);overflow:auto}
-body[data-observation-mode="grade"] .network-guide details{display:none}
-@media(max-width:900px){body[data-observation-mode="grade"] .network-guide{width:min(680px,calc(100vw - 370px));left:18px}}
-@media(max-width:600px){body[data-observation-mode="grade"] .network-guide{top:94px;left:12px;right:12px;width:auto;max-height:calc(100dvh - 190px);padding:12px 13px}.observation-mode-switch{margin-bottom:8px}.observation-mode-switch button{min-height:38px;font-size:12px}}
-
-/* A2-2: source-backed year-by-stage and pack matrix. */
-.grade-observation-head h2{margin:4px 0 5px;font-size:17px;line-height:1.45;color:#294f47}
-.grade-observation-head p{margin:0 0 8px;color:#667a6c;font-size:11px;line-height:1.6}
-.grade-selector{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:10px 0 8px}
-.grade-selector button{min-width:0;min-height:34px;padding:6px 3px;border-radius:8px;background:#f0f3eb;color:#637568;font-size:11px;white-space:nowrap}
-.grade-selector button[aria-pressed=true]{background:#294f47;color:#fffef7;font-weight:650}
-.grade-precision-note{margin:6px 0;padding:8px 10px;border-left:3px solid #c3a36e;border-radius:0 7px 7px 0;background:#f8f4e9;color:#725f3d;font-size:11px;line-height:1.6}
-.grade-current-stage{margin:7px 0 9px;color:#627568;font-size:11px;line-height:1.6}
-.grade-current-stage strong{color:#294f47}
-.grade-matrix-scroll{max-width:100%;overflow-x:auto;border:1px solid #e0e6dc;border-radius:10px;background:#fffefb}
-.grade-matrix{width:100%;min-width:560px;border-collapse:separate;border-spacing:0;font-size:11px}
-.grade-matrix th,.grade-matrix td{padding:8px 9px;border-bottom:1px solid #edf0e8;text-align:center;vertical-align:middle}
-.grade-matrix thead th{position:sticky;top:0;z-index:2;background:#f7f8f2;color:#617365;font-weight:600}
-.grade-matrix .grade-pack-heading{position:sticky;left:0;z-index:3;width:210px;min-width:190px;text-align:left}
-.grade-matrix .grade-stage-heading{min-width:100px}
-.grade-matrix .grade-stage-heading span,.grade-matrix .grade-stage-heading small{display:block}
-.grade-matrix .grade-stage-heading span{color:#294f47;font-size:11px}
-.grade-matrix .grade-stage-heading small{margin-top:3px;color:#758174;font-size:10px;font-weight:400}
-.grade-matrix .grade-stage-heading.is-current{background:#e7f0e5}
-.grade-theme-row th{padding:8px 10px;background:#edf2e9;color:#365a49;text-align:left;font-size:11px}
-.grade-theme-row th span{font-weight:700}
-.grade-theme-row th small{float:right;color:#718071;font-size:10px;font-weight:400}
-.grade-pack-row th{position:sticky;left:0;z-index:1;background:#fffefb;text-align:left;font-weight:500}
-.grade-pack-name{display:block;color:#344f43;font-size:11px;line-height:1.5}
-.grade-pack-count{display:block;margin-top:2px;color:#8a9588;font-size:9px;font-weight:400}
-.grade-matrix .grade-stage-cell.is-current{background:#f1f6ef}
-.grade-mark{display:inline-flex;min-width:38px;min-height:25px;align-items:center;justify-content:center;padding:3px 7px;border-radius:7px;background:#f0f3ec;color:#54695b;font-size:11px;font-weight:650}
-.grade-mark[data-mark=main]{background:#e4efe5;color:#315c45}
-.grade-mark[data-mark=extension]{background:#f3eee1;color:#82663b}
-.grade-mark[data-mark=not-primary]{background:#f1f1ed;color:#879087}
-.grade-mark[data-mark=process]{background:#e9edf2;color:#53677a}
-.grade-mark[data-mark=incomplete]{background:#f8e9df;color:#9a5735}
-.grade-mark-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin:9px 1px 2px;color:#748174;font-size:10px}
-.grade-mark-legend span{display:inline-flex;align-items:center;gap:5px}
-.grade-mark-legend b{display:inline-flex;min-width:29px;min-height:20px;align-items:center;justify-content:center;padding:2px 5px;border-radius:6px;background:#f0f3ec;font-size:10px}
-.grade-mark-legend b[data-mark=main]{background:#e4efe5;color:#315c45}
-.grade-mark-legend b[data-mark=extension]{background:#f3eee1;color:#82663b}
-.grade-mark-legend b[data-mark=not-primary]{background:#f1f1ed;color:#879087}
-.grade-mark-legend b[data-mark=process]{background:#e9edf2;color:#53677a}
-.grade-mark-legend b[data-mark=incomplete]{background:#f8e9df;color:#9a5735}
-.grade-load-error{padding:10px 2px}
-.grade-load-error h2{margin:3px 0 8px;font-size:16px;color:#294f47}
-.grade-load-error p{font-size:11px;color:#718071;line-height:1.6}
-@media(max-width:600px){.grade-selector{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.grade-selector button{min-height:40px;font-size:12px}.grade-matrix{min-width:540px}.grade-matrix .grade-pack-heading{min-width:175px;width:175px}.grade-matrix th,.grade-matrix td{padding:8px 7px}.grade-mark-legend{gap:7px 9px}}
-
-/* A2-2: expandable pack details use the same three source stage records. */
-.grade-pack-toggle{display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center;padding:2px 0;background:transparent;text-align:left}
-.grade-pack-toggle:hover .grade-pack-name{color:#1e6847;text-decoration:underline;text-underline-offset:3px}
-.grade-pack-toggle .grade-pack-name{grid-column:1;min-width:0}
-.grade-pack-toggle .grade-pack-count{grid-column:1}
-.grade-pack-toggle-label{grid-column:2;grid-row:1 / span 2;color:#6d816e;font-size:10px;white-space:nowrap}
-.grade-pack-toggle[aria-expanded=true] .grade-pack-toggle-label{color:#315c45;font-weight:650}
-.grade-detail-row>td{padding:10px;background:#f8faf5;text-align:left}
-.grade-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.grade-detail-stage{min-width:0;padding:11px;border:1px solid #e2e8dd;border-radius:9px;background:#fffefb}
-.grade-detail-stage.is-incomplete{border-color:#e7c8b4;background:#fffaf6}
-.grade-detail-stage>header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid #edf0e8}
-.grade-detail-stage>header strong,.grade-detail-stage>header small{display:block}
-.grade-detail-stage>header strong{color:#365a49;font-size:11px}
-.grade-detail-stage>header small{margin-top:3px;color:#829080;font-size:10px}
-.grade-detail-field{margin:9px 0}
-.grade-detail-field h5{margin:0 0 4px;color:#627466;font-size:10px;font-weight:700}
-.grade-detail-field p{margin:0;color:#44594c;font-size:11px;line-height:1.65;overflow-wrap:anywhere}
-.grade-detail-empty{color:#8b958a!important}
-.grade-evidence-list,.grade-unresolved-list{list-style:none;padding:0;margin:0}
-.grade-evidence-list li,.grade-unresolved-list li{margin:6px 0;padding:6px 7px;border-radius:6px;background:#f5f7f1}
-.grade-evidence-list strong{display:block;color:#496c56;font-size:10px;overflow-wrap:anywhere}
-.grade-evidence-list p{margin:4px 0;color:#4c5f51;font-size:10px;line-height:1.55}
-.grade-evidence-list small{display:block;margin-top:4px;color:#8a7755;font-size:9px;line-height:1.5}
-.grade-unresolved-list li{color:#7c6246;font-size:10px;line-height:1.55}
-.grade-review-status{margin:10px 0 0;padding-top:7px;border-top:1px solid #edf0e8;color:#6d7e6e;font-size:10px;line-height:1.5}
-.grade-incomplete-note{margin:7px 0;padding:7px;border-radius:6px;background:#f8e9df;color:#925735;font-size:10px;line-height:1.5}
-.grade-review-disclaimer{margin:9px 2px 0;color:#899388;font-size:9px;line-height:1.5}
-@media(max-width:900px){.grade-detail-grid{grid-template-columns:1fr}.grade-detail-stage{padding:10px}}
-
-/* Keep the new controls as direct grid children so the existing guide layout is preserved. */
-#observation-mode-switch,#grade-observation-view{grid-column:1/-1;min-width:0}
-#observation-mode-switch{width:100%}
-
-/* The added mode row sits above the original guide content; keep its existing
-   structure controls below it, and remove those controls while the matrix is open. */
-body[data-world="network"] .overview-structure-controls{top:230px}
-body[data-observation-mode="grade"] .overview-structure-controls{display:none!important}
-@media(max-width:600px){body[data-world="network"] .overview-structure-controls{top:250px}}
-
-/* Expanded details sit outside the horizontally scrolling matrix. */
-.grade-detail-panel{width:100%;min-width:0;max-width:100%;box-sizing:border-box;margin:11px 0 4px;padding:11px;border:1px solid #e0e7dc;border-radius:10px;background:#f8faf5;overflow:hidden}
-.grade-detail-panel>header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #e4e9df}
-.grade-detail-panel>header h3{margin:0;color:#294f47;font-size:13px;line-height:1.4}
-.grade-detail-panel>header p{margin:3px 0 0;color:#7b897a;font-size:10px;line-height:1.5}
-.grade-detail-close{flex:none;padding:6px 10px;border:1px solid #d5e0d3;border-radius:7px;background:#fffefb;color:#52705b;font-size:10px}
-
-/* A2-3 batch 1: source-ID-backed domain nodes and a separate thinking-node list. */
-.grade-node-list{margin-top:12px;padding-top:11px;border-top:1px solid #e2e8dd}
-.grade-node-list>header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
-.grade-node-list>header h4{margin:0;color:#365a49;font-size:12px}
-.grade-node-list>header p{margin:4px 0 0;color:#829080;font-size:9px;line-height:1.5}
-.grade-node-list>header>span{flex:none;color:#718071;font-size:9px}
-.grade-domain-node-list,.grade-thinking-list ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-.grade-domain-node,.grade-thinking-node{min-width:0;padding:8px;border:1px solid #e4e9df;border-radius:8px;background:#fffefb}
-.grade-domain-node.is-selected,.grade-thinking-node.is-selected{border-color:#789d80;background:#eef5ec}
-.grade-domain-node-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.grade-domain-node-link,.grade-thinking-node-link{display:block;min-width:0;padding:0;background:transparent;text-align:left}
-.grade-domain-node-title,.grade-thinking-node-link>span{display:block;color:#344f43;font-size:10px;font-weight:650;line-height:1.5;overflow-wrap:anywhere}
-.grade-domain-node-link>small,.grade-thinking-node-link>small{display:block;margin-top:2px;color:#819080;font-size:9px}
-.grade-node-evidence{flex:none;padding:3px 5px;border-radius:5px;background:#eef1ec;color:#657567;font-size:9px;white-space:nowrap}
-.grade-node-evidence[data-evidence=direct]{background:#e5efe6;color:#315c45}
-.grade-node-evidence[data-evidence=conceptual]{background:#edf0e8;color:#61715e}
-.grade-node-evidence[data-evidence=adjacent]{background:#f4eee2;color:#87683c}
-.grade-node-evidence[data-evidence=not-covered]{background:#f2e9e5;color:#8a5d4b}
+/* Node-level curriculum facts in the existing knowledge card. */
 .grade-node-stage-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .grade-node-stage-tag{display:inline-flex;max-width:100%;padding:3px 5px;border-radius:5px;background:#f0f3ed;color:#6d7a6b;font-size:9px;line-height:1.4;overflow-wrap:anywhere}
 .grade-node-stage-tag[data-role=main]{background:#e4efe5;color:#315c45}
@@ -792,17 +672,6 @@ body[data-observation-mode="grade"] .overview-structure-controls{display:none!im
 .grade-node-stage-tag[data-role=transition]{background:#e9edf2;color:#53677a}
 .grade-node-no-primary,.grade-node-beyond{margin:6px 0 0;color:#7b6c58;font-size:9px;line-height:1.5}
 .grade-node-beyond{color:#53677a}
-.grade-node-empty{padding:8px;color:#899388;font-size:10px}
-.grade-thinking-list{margin-top:12px;padding-top:10px;border-top:1px dashed #d9e1d6}
-.grade-thinking-list h5{margin:0;color:#526a5a;font-size:10px}
-.grade-thinking-list>p{margin:4px 0 7px;color:#879286;font-size:9px;line-height:1.5}
-.grade-thinking-node-link>span{font-weight:550}
-.grade-thinking-node>small{display:block;margin-top:4px;color:#879286;font-size:9px}
-@media(max-width:600px){.grade-node-list>header{gap:6px}.grade-domain-node,.grade-thinking-node{padding:7px}.grade-domain-node-head{align-items:flex-start}.grade-node-evidence{font-size:8px}.grade-node-stage-tag{font-size:8px}}
-
-/* A2-3 batch 2: selecting a node leaves the matrix and reveals the original detail card. */
-body[data-observation-mode="grade"] .focus-card{display:none!important}
-
 /* A2-3 batch 3: stage position is a compact supplement inside the original node detail. */
 .grade-node-position{margin:10px 0 7px;padding:9px;border:1px solid #e1e8dc;border-radius:9px;background:#f7faf4}
 .grade-node-position h3{margin:0 0 6px;color:#365a49;font-size:11px;font-weight:700}
@@ -846,3 +715,14 @@ body[data-world="network"] .concept-visual{
 body[data-world="network"] .concept-visual svg{display:block;max-width:100%;height:auto;}
 body[data-world="network"] .concept-visual svg text{fill:#394c42;font-size:14px;font-weight:650;}
 body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:11px;line-height:1.6;color:#526554;}
+
+/* Curriculum observation is an overlay of the one existing relationship map. */
+.grade-map-filter{margin:2px 0 2px;padding:3px 4px;background:#f5f7f0;border:1px solid #e0e6dc;border-radius:7px}
+.grade-map-filter strong{display:block;margin:0 0 2px;color:#315648;font-size:10px}
+.grade-map-filter>div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
+.grade-map-filter button{min-width:0;min-height:24px;padding:4px 1px;border-radius:5px;border:1px solid transparent;background:#e7ede5;color:#506759;font-size:9.5px;white-space:nowrap}
+.grade-map-filter button[aria-pressed=true]{background:#315b4b;color:#fffef9;font-weight:650}
+.grade-map-filter button:focus-visible{outline-offset:2px}
+.grade-map-filter p{margin:2px 0 0!important;font-size:9.5px!important;line-height:1.2!important;color:#6d8073!important}
+body.guide-mode .grade-map-filter{display:none!important}
+@media(max-width:600px){.grade-map-filter>div{grid-template-columns:repeat(2,minmax(0,1fr))}}
