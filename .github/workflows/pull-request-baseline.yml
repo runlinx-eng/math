@@ -64,6 +64,8 @@ jobs:
           node --check dist/spatial-model.js
           node --check dist/space.js
           node --check dist/exploration.js
+          node --check dist/learning/trail-priority.js
+          node --check tests/p6b-layout-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
           node --check dist/learning/p3-workflow.js
@@ -155,6 +157,7 @@ jobs:
             tests/p4-learning-reliability-browser.cjs \
             tests/p5-integration-browser.cjs \
             tests/continuous-space-browser.cjs \
+            tests/p6b-layout-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -204,4 +207,5 @@ jobs:
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/
+            verification/p6b-layout/
           if-no-files-found: warn
