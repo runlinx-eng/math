@@ -30,7 +30,7 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   await page.locator('#learning-hub [data-action="nav-trail"]').click();
   check(await current()==='trail'&&await page.locator('#utility-drawer').isVisible(),'footprint tab opens the old records and backup surface');
   await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');
-  check((await page.locator('#utility-frame').getAttribute('src')).includes('v2.html?embedded=1#trail'),'trail reuses old storage-compatible runner');
+  check((await page.locator('#utility-frame').getAttribute('data-embedded-src')).includes('v2.html?embedded=1#trail'),'trail reuses old storage-compatible runner');
   check(samePose(first,await snap()),'footprint navigation keeps the camera');
   await page.screenshot({path:path.join(out,'02-footprint.png')});
   await page.locator('.primary-nav [data-action="nav-explore"]').click();
