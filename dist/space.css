@@ -756,3 +756,53 @@ body.guide-mode .grade-map-filter{display:none!important}
 @media(max-width:1100px){.topbar{gap:8px}.primary-nav button{padding:9px 11px;font-size:12px}.top-tools .search-button{min-width:90px}.keycap{display:none}}
 @media(max-width:760px){.topbar{flex-wrap:wrap;justify-content:flex-end}.topbar .brand{margin-right:auto}.primary-nav{order:2;margin-left:auto}.top-tools{order:3}.primary-nav button{padding:8px 10px}.top-tools button{padding:8px 9px}.top-tools .search-button{min-width:45px}.learning-hub{top:112px;right:12px;bottom:72px;width:calc(100vw - 24px)}}
 @media(max-width:420px){.topbar{left:12px;right:12px}.top-tools #back-button{display:none}.primary-nav button{font-size:11px;padding:8px}.learning-hub-content{padding:13px}}
+
+/* P1-B: compact grouped controls over one unchanged 3D panorama. */
+body[data-world="network"] #network-guide{
+  top:92px;left:24px;width:278px;max-height:calc(100dvh - 190px);
+  display:flex;flex-direction:column;gap:8px;overflow-y:auto;
+  overscroll-behavior:contain;padding:12px 13px;border:1px solid #d8e0d1;
+  border-radius:13px;background:#fffef9f2;box-shadow:0 5px 24px #24463c0b;
+}
+#network-guide .observation-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#network-guide .observation-heading strong{font-size:12px;color:#234c45}
+#network-guide .observation-heading span{font-size:9px;color:#718079}
+#network-guide .observation-subheading{font-size:11px;font-weight:650;color:#315648;border-top:1px solid #e1e8db;padding-top:8px}
+body[data-world="network"] #network-guide #grade-map-filter{margin:0;padding:7px}
+body[data-world="network"] #grade-map-filter>div{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+body[data-world="network"] #grade-map-filter button{min-height:28px;font-size:10px}
+body[data-world="network"] #network-view-title{font-size:12px;line-height:1.45}
+body[data-world="network"] #network-guide>p{display:block;margin:0;font-size:11px;line-height:1.5;max-height:50px;overflow-y:auto}
+body[data-world="network"] #network-guide .network-legend{display:flex;flex-wrap:wrap;gap:2px 4px}
+body[data-world="network"] #network-guide .network-legend button{font-size:10px;padding:4px 5px}
+body[data-world="network"] #network-guide #network-edge-controls{display:flex;flex-wrap:wrap;gap:4px}
+body[data-world="network"] #network-edge-controls>span:first-child{display:none}
+body[data-world="network"] #network-edge-controls button{font-size:10px;padding:6px 7px}
+body[data-world="network"] #network-edge-controls small{flex:1 1 100%;margin:2px 0 0}
+body[data-world="network"] #network-edge-controls .guide-entry{flex:1 1 100%;margin:3px 0 0;padding:8px;font-size:11px}
+body[data-world="network"] #network-guide>details,
+body[data-world="network"] #network-guide>details[open]{position:static;max-width:none;margin:0;padding:5px 0;box-shadow:none;background:transparent;border:0}
+body[data-world="network"] .tool-rail{right:20px;width:76px;max-height:calc(100dvh - 175px);overflow-y:auto}
+body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 260px)}
+body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 430px);overflow-x:auto}
+.has-task-surface #focus-card,.has-task-surface #network-guide,
+.has-task-surface .tool-rail,.has-task-surface #overview-structure-controls,
+.has-task-surface #continue-card{visibility:hidden!important;pointer-events:none!important}
+.learning-hub{right:24px;width:min(465px,calc(100vw - 48px))}
+.learning-hub>header,.utility-drawer>header{flex-wrap:wrap;gap:8px}
+.learning-hub>header button,.utility-drawer>header button{min-height:34px}
+@media(max-width:1100px){
+  body[data-world="network"] #network-guide{top:86px;left:15px;width:240px;max-height:calc(100dvh - 168px);padding:9px}
+  body[data-world="network"] .tool-rail{right:13px;width:65px}
+  body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 365px)}
+  body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 230px)}
+}
+@media(max-width:800px){
+  body[data-world="network"] #network-guide{top:143px;left:12px;width:220px;max-height:calc(100dvh - 235px)}
+  body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 32px)}
+  .learning-hub{top:126px;right:12px;bottom:20px;width:calc(100vw - 24px)}
+}
+@media(max-height:780px) and (min-width:801px){
+  body[data-world="network"] #network-guide{max-height:calc(100dvh - 168px)}
+  body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 230px)}
+}
