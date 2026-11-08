@@ -33,7 +33,7 @@
   <button type="button" id="local-overview-exit" data-action="overview" hidden aria-label="退出局部探索，显示完整数学树">返回全貌</button>
   <div class="place-indicator"><span id="scale-label">全貌</span><span aria-hidden="true"> / </span><b id="current-place">整个数学空间</b></div>
   <nav id="workspace-list" class="workspace-list" aria-label="展开的工作面" hidden></nav>
-  <aside class="tool-rail" aria-label="移动视角">
+  <aside class="tool-rail" aria-label="镜头操作与标准视角">
     <button type="button" data-action="mode" data-mode="pan" aria-pressed="true" title="拖动空白处平移">平移</button>
     <button type="button" data-action="mode" data-mode="rotate" aria-pressed="false" title="围绕观察中心旋转">旋转</button>
     <span class="tool-divider"></span>
@@ -47,9 +47,10 @@
     <span class="tool-divider"></span>
     <button type="button" data-action="help" aria-label="查看空间操作方法">操作</button>
   </aside>
-  <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景">
+  <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景观察工具">
+    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span></div>
     <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
-      <strong>知识点 · 按学段观察</strong>
+      <strong>学段观察</strong>
       <div role="group" aria-label="小学学段筛选">
         <button type="button" data-action="grade-map-stage" data-stage="all" aria-pressed="true">全部</button>
         <button type="button" data-action="grade-map-stage" data-stage="stage-1" aria-pressed="false">1—2年级</button>
@@ -62,6 +63,7 @@
       <p id="network-view-description">颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。</p>
       <div id="network-legend" class="network-legend"></div>
       <div class="network-marker-key"><span><i class="scene-mark" aria-hidden="true"></i>未完现场</span><span><i class="question-mark" aria-hidden="true"></i>待续问题</span></div>
+      <div class="observation-subheading">关系显示与导览</div>
       <div id="network-edge-controls" class="network-edge-controls" role="group" aria-label="背景连线范围" hidden>
       <span>背景连线</span>
       <button type="button" data-action="edge-display" data-edge-display="outline" aria-pressed="true">轮廓</button>
@@ -107,7 +109,7 @@
     <header><strong>学习</strong><button type="button" class="plain-button" data-action="close-learning-hub">回到探索 ×</button></header>
     <div id="learning-hub-content" class="learning-hub-content"></div>
   </section>
-  <section id="utility-drawer" class="utility-drawer" aria-label="记录与依据" hidden><header><strong id="utility-title"></strong><button type="button" data-action="close-utility" class="plain-button">回到空间 ×</button></header><iframe id="utility-frame" title="学习记录与备份" src="about:blank"></iframe></section>
+  <section id="utility-drawer" class="utility-drawer" aria-label="记录与依据" hidden><header><strong id="utility-title"></strong><button type="button" data-action="close-utility" class="plain-button">返回探索 ×</button></header><iframe id="utility-frame" title="学习记录与备份" src="about:blank"></iframe></section>
   <div id="storage-warning" class="warning" role="alert" hidden></div><div id="toast" class="toast" role="status" hidden></div>
   <div id="loading" class="loading"><p>正在展开同一个数学空间…</p></div><input id="import-file" type="file" accept="application/json,.json" hidden>
   <noscript>需要启用 JavaScript 才能打开三维空间。</noscript>
