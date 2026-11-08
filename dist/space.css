@@ -1005,3 +1005,11 @@ body[data-world="network"] .utility-drawer iframe{min-height:0}
     right:0;
   }
 }
+
+
+/* A live lesson can be 60px wider than the learning hub; reserve its real width. */
+@media (min-width:1101px){
+  body[data-world="network"].has-journey #space-app{
+    right:calc(min(680px,48vw) + 34px);
+  }
+}
