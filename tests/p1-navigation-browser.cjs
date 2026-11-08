@@ -79,6 +79,57 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
     await page.screenshot({path:path.join(out,'04-'+width+'x'+height+'.png')});
     await page.locator('.primary-nav [data-action="nav-explore"]').click();
   }
+  // P1-B: browser history, refresh, Escape, grade/camera preservation.
+  await page.locator('.primary-nav [data-action="nav-learn"]').click();
+  check(new URL(page.url()).searchParams.get('surface')==='learn','learning tab creates a distinct URL');
+  await page.goBack();
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='explore');
+  check(await page.locator('#learning-hub').isHidden(),'Back restores exploration');
+  await page.goForward();
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
+  check(await page.locator('#learning-hub').isVisible(),'Forward reopens learning');
+  await page.waitForTimeout(450);
+  await page.reload();
+  await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
+  check(await page.locator('#learning-hub').isVisible(),'refresh retains learning task');
+  await page.locator('#learning-hub [data-action="nav-trail"]').click();
+  check(new URL(page.url()).searchParams.get('surface')==='trail','footprint uses a distinct task URL');
+  await page.goBack();
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
+  check(await page.locator('#utility-drawer').isHidden()&&await page.locator('#learning-hub').isVisible(),'Back from footprint reopens learning');
+  await page.locator('#learning-hub [data-action="close-learning-hub"]').click();
+  check(new URL(page.url()).searchParams.get('surface')===null&&await page.locator('#learning-hub').isHidden(),'explicit close clears task URL');
+  await page.locator('.primary-nav [data-action="nav-trail"]').click();
+  await page.locator('#utility-drawer [data-action="close-utility"]').click();
+  check(await page.locator('#utility-drawer').isHidden()&&new URL(page.url()).searchParams.get('surface')===null,'footprint close returns to exploration');
+  await page.locator('.primary-nav [data-action="nav-learn"]').click();
+  await page.keyboard.press('Escape');
+  check(await page.locator('#learning-hub').isHidden()&&new URL(page.url()).searchParams.get('surface')===null,'Escape closes active task');
+  await page.locator('.primary-nav [data-action="nav-learn"]').click();
+  await page.locator('.top-tools [data-action="search"]').click();
+  check(await page.locator('#search-popover').isVisible()&&await page.locator('#learning-hub').isHidden(),'search remains visible when invoked from learning');
+  await page.keyboard.press('Escape');
+  check(await page.locator('#search-popover').isHidden(),'Escape dismisses search first');
+  await page.locator('[data-action="grade-map-stage"][data-stage="stage-2"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='stage-2');
+  const stagePose=await snap();
+  await page.locator('.primary-nav [data-action="nav-learn"]').click();
+  await page.locator('.primary-nav [data-action="nav-explore"]').click();
+  check(samePose(stagePose,await snap())&&(await snap()).gradeStageFilter==='stage-2','task switching preserves grade and camera');
+  await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
+  for(const [width,height] of [[1440,900],[980,760],[1280,720]]){
+    await page.setViewportSize({width,height});
+    const bounds=await page.evaluate(()=>{
+      const r=s=>document.querySelector(s).getBoundingClientRect();
+      const g=r('#network-guide'),rail=r('.tool-rail'),nav=r('.topbar'),card=r('#focus-card');
+      return {g:{x:g.x,y:g.y,right:g.right,bottom:g.bottom},rail:{x:rail.x},nav:{bottom:nav.bottom},card:{x:card.x,y:card.y,bottom:card.bottom,visible:getComputedStyle(document.querySelector('#focus-card')).visibility!=='hidden'}};
+    });
+    check(bounds.g.x>=0&&bounds.g.bottom<=height&&bounds.g.right<bounds.rail.x,'observation and camera tools separate '+width+'x'+height);
+    check(bounds.g.y>=bounds.nav.bottom-4,'observation remains below top navigation '+width+'x'+height);
+    if(bounds.card.visible)check(bounds.card.x>=bounds.g.right-2&&bounds.card.bottom<=height,'knowledge detail avoids observation column '+width+'x'+height);
+    await page.screenshot({path:path.join(out,'05-p1b-map-'+width+'x'+height+'.png')});
+  }
   check(!errors.length,'no uncaught browser page errors: '+errors.join('; '));
   console.log(JSON.stringify({status:'pass',checks,screenshots:out},null,2));
  }catch(err){console.error(JSON.stringify({status:'fail',checks,error:String(err),pageErrors:errors},null,2));process.exitCode=1;}
