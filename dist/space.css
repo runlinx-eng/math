@@ -738,6 +738,7 @@ body.guide-mode .grade-map-filter{display:none!important}
 .focus-section-nav button:hover{background:#dce8d6}
 .focus-context-section{border-top:1px solid #e1e9db;padding-top:12px;margin-top:13px}
 .focus-context-section>h3{font-size:12px;font-weight:650;color:#315648;margin:0 0 8px}
+.focus-context-section[data-context-section="understand"]{margin:0;padding:0;border:0}
 .learning-hub{position:fixed;z-index:82;top:94px;right:30px;bottom:91px;width:min(500px,calc(100vw - 60px));display:flex;flex-direction:column;background:#fffef9;border:1px solid #cdd9c8;border-radius:16px;box-shadow:0 15px 80px #253e3029;overflow:hidden}
 .learning-hub[hidden]{display:none}
 .learning-hub>header{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid #dce5d5;font-size:14px}
