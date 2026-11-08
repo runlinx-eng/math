@@ -321,7 +321,7 @@ export class SpatialScene {
     // Guided observation is an in-place overlay on the panorama. Cancel an
     // unfinished camera animation; never refit, rotate or zoom for a guide step.
     this.tween=null;this.viewTransition=null;const current=steps[index],seen=steps.slice(0,index+1),byEdge=new Map();for(const step of seen)for(const edge of step.edges)byEdge.set(edge.prerequisiteId+'>'+edge.topicId,edge);this.guideFocus={step:index,edges:[...byEdge.values()],current:new Set(current.edges.map(e=>e.prerequisiteId+'>'+e.topicId)),currentNodes:new Set(current.nodes.map(id=>'node:'+id)),seenNodes:new Set(seen.flatMap(step=>step.nodes.map(id=>'node:'+id)))};this.traceMode='direct';this.traceResult=null;this.previewKey=null;this.hovered=null;this.hoverMapKey=null;this.hoverThemeId=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.labelHoverAnchor=null;this.select(current.overview?null:'node:'+current.anchor);this.setRelations('source');this.dirty=true;}
-  setGuideTargets(keys=[],visited=[]){if(!this.guideFocus)return;this.guideFocus.targetKeys=new Set(keys);this.guideFocus.visitedKeys=new Set(visited);for(const {object,el} of this.labels)el.setAttribute('aria-disabled',String(!this.guideFocus.targetKeys.has(object.key)));this.dirty=true;}
+  setGuideTargets(keys=[],visited=[]){if(!this.guideFocus)return;this.guideFocus.targetKeys=new Set(keys);this.guideFocus.visitedKeys=new Set(visited);for(const {object,el} of this.labels){const target=this.guideFocus.targetKeys.has(object.key);el.setAttribute('aria-disabled',String(!target));el.classList.toggle('guide-target',target);el.classList.toggle('guide-locked',!target);el.classList.toggle('guide-visited',this.guideFocus.visitedKeys.has(object.key));}this.dirty=true;}
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;for(const {el} of this.labels){el.removeAttribute('aria-disabled');el.classList.remove('guide-locked','guide-target','guide-current','guide-visited');}this.hovered=null;this.hoverMapKey=null;this.hoverThemeId=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
   setThemeHover(id){
     // The top-left legend keeps the existing multi-group theme preview.
@@ -761,7 +761,13 @@ export class SpatialScene {
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;
       el.hidden=!anchor;el.style.opacity='';
-      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target','guide-target','guide-locked','guide-visited','guide-current');
+      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target');
+      // Task permissions follow the source key even when decluttering hides
+      // its projected label; the clickable cue remains independently visible.
+      el.classList.toggle('guide-target',!!this.guideFocus?.targetKeys?.has(o.key));
+      el.classList.toggle('guide-locked',!!this.guideFocus&&!this.guideFocus.targetKeys?.has(o.key));
+      el.classList.toggle('guide-visited',!!this.guideFocus?.visitedKeys?.has(o.key));
+      el.classList.toggle('guide-current',!!this.guideFocus&&o.key===this.selected);
       el.classList.toggle('hovered',o.key===this.hovered||o.key===this.previewKey);
       el.setAttribute('aria-pressed','false');
       if(show||anchor)candidates.push({...entry,p,priority,isSelected,related,anchor});
