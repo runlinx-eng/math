@@ -150,6 +150,7 @@ jobs:
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
+            tests/p4-learning-reliability-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -196,4 +197,5 @@ jobs:
             verification/p1-navigation/
             verification/p2-grade-distribution/
             verification/p3-learning-flow/
+            verification/p4-learning-reliability/
           if-no-files-found: warn
