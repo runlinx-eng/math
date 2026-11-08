@@ -812,3 +812,28 @@ body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 4
   body[data-world="network"] #network-guide{max-height:calc(100dvh - 168px)}
   body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 230px)}
 }
+
+/* Issue #23 continuous-space workspace: do not replace the 3D panorama
+   with an opaque lesson page. Existing lesson runner and its scroll stay intact. */
+body.has-journey::before{display:none!important}
+body.has-journey .topbar{display:flex!important;z-index:100}
+body.has-journey .tool-rail,body.has-journey .place-indicator{display:flex!important}
+body.has-journey .network-guide,body.has-journey .bottom-bar{display:none!important}
+body.has-journey #journey-surface{
+  top:94px;right:24px;left:auto;bottom:24px;transform:none;
+  width:min(860px,calc(100vw - 340px));
+  height:min(var(--learning-desired-height, 620px),calc(100dvh - 118px));
+  max-height:calc(100dvh - 118px);
+  box-shadow:0 12px 45px #28483c25;
+}
+body.has-journey #journey-frame{min-height:0}
+body.has-journey .primary-nav{pointer-events:auto}
+/* Never allow a hidden learning frame to overlay or trap map interactions. */
+#journey-surface[hidden],#utility-drawer[hidden]{display:none!important}
+@media(max-width:1100px){
+  body.has-journey #journey-surface{right:12px;width:min(730px,calc(100vw - 110px));top:120px;height:min(var(--learning-desired-height,620px),calc(100dvh - 140px));max-height:calc(100dvh - 140px)}
+}
+@media(max-width:800px){
+  body.has-journey #journey-surface{top:137px;left:12px;right:12px;width:auto;height:min(var(--learning-desired-height,620px),calc(100dvh - 151px));max-height:calc(100dvh - 151px)}
+  body.has-journey .tool-rail{display:none!important}
+}
