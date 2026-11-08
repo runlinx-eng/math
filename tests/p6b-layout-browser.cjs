@@ -31,6 +31,10 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      await page.screenshot({path:path.join(output,'explore-'+w+'x'+h+'.png')});
    }
    await page.setViewportSize({width:1440,height:900});
+   await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="stage-1"]').click();
+   assert((await snap()).gradeStageFilter==='stage-1'&&equalCamera(initial,await snap()),'all-map grade stage filter preserves source camera');
+   await page.screenshot({path:path.join(output,'explore-stage-1-1440x900.png')});
+   await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="all"]').click();
    await page.evaluate(()=>location.hash='#space/node/mt_ndGqFPWyen');
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
    assert(equalCamera(initial,await snap()),'select knowledge does not move camera');
@@ -98,10 +102,6 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    }
    await page.setViewportSize({width:1440,height:900});
    assert(equalCamera(baseline,await snap()),'learn → trail preserves camera');
-   await page.locator('[data-action="grade-map-stage"][data-stage="stage-1"]').click();
-   assert((await snap()).gradeStageFilter==='stage-1'&&equalCamera(baseline,await snap()),'grade filter operates in the same visible 3D viewport, camera unchanged');
-   await page.screenshot({path:path.join(output,'trail-stage-1-1440x900.png')});
-   await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
    await page.locator('.primary-nav [data-action="nav-learn"]').click();
    await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen&&!mathSpace.snapshot().journeySuspended);
    assert(equalCamera(baseline,await snap()),'return to suspended lesson preserves camera');
