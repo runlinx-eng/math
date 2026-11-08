@@ -17,6 +17,11 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null&&mathSpace.motion().transition===null);
   const first=await snap();
   check(first.visibleNodes.length===537,'the original single 537-node panorama is retained');
+  const sidebarFit=await page.evaluate(keys=>{
+    const edge=document.querySelector('#network-guide').getBoundingClientRect().right;
+    return keys.map(key=>mathSpace.project(key)).filter(p=>p?.visible&&p.x>edge+20&&p.x<innerWidth-105&&p.y>145&&p.y<innerHeight-90).length;
+  },first.visibleNodes);
+  check(sidebarFit>15,'initial panorama fits visible atlas beside the observation column (nodes='+sidebarFit+')');
   const current=()=>page.locator('.primary-nav [aria-pressed="true"]').getAttribute('data-surface');
   check(await current()==='explore','exploration is the active default');
   const stored=await page.evaluate(k=>localStorage.getItem(k),key);
