@@ -65,6 +65,8 @@ jobs:
           node --check dist/space.js
           node --check dist/exploration.js
           node --check dist/learning/learn.js
+          node --check dist/learning/p3-workflow.js
+          node --check dist/learning/p3-view.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
@@ -88,6 +90,7 @@ jobs:
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
             tests/grade-distribution.test.mjs
+            tests/p3-learning-flow.test.mjs
           )
 
           for candidate in \
@@ -145,6 +148,7 @@ jobs:
           for test_file in \
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
+            tests/p3-learning-flow-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -190,4 +194,5 @@ jobs:
             verification/language-direction/
             verification/p1-navigation/
             verification/p2-grade-distribution/
+            verification/p3-learning-flow/
           if-no-files-found: warn
