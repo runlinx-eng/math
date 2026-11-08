@@ -371,7 +371,7 @@ export class SpatialScene {
     // geometry on every stage click is unnecessary and can interrupt previews.
     if(this.relationshipMap&&this.networkEdges&&this.networkSoftEdges&&!this.selected&&!this.guideFocus){
       const filtered=id!=='all';
-      this.networkEdges.material.opacity=filtered?.050:(this.global?(this.structuralOverview?.085:.16):.19);
+      this.networkEdges.material.opacity=filtered?.050:(this.global?(this.structuralOverview?.11:.16):.19);
       this.networkSoftEdges.material.opacity=filtered?.014:(this.global?.043:.055);
     }
     this.dirty=true;
@@ -537,6 +537,7 @@ export class SpatialScene {
   }
   paintObjects(){
     const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+      taskWorkspace=document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'),
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
       // A temporary hover reads the full map just like the panorama. The
@@ -548,7 +549,7 @@ export class SpatialScene {
       if(o.key===this.selected)return .95;
       if(this.guideFocus.visitedKeys?.has(o.key))return .65;
       return this.guideFocus.currentNodes.has(o.key)?.61:this.guideFocus.seenNodes.has(o.key)?.57:this.guideFocus.step===0?.70:.38;
-    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?.18:o.packId===selected.packId?.42:.18;};
+    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.40:.18):o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
@@ -567,7 +568,7 @@ export class SpatialScene {
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.48):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.60:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
@@ -606,7 +607,7 @@ export class SpatialScene {
     for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
     if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?true:this.showAllNodes)&&(this.global||this.networkView!=='relations');
-      this.networkEdges.material.opacity=this.guideFocus?.065:this.relationshipMap&&this.selected?.045:this.global?(this.selected?.05:this.structuralOverview?.085:this.relationshipMap?.16:.16):(this.selected?.06:.19);
+      this.networkEdges.material.opacity=this.guideFocus?.065:this.relationshipMap&&this.selected?.045:this.global?(this.selected?.05:this.structuralOverview?.11:this.relationshipMap?.16:.16):(this.selected?.06:.19);
       this.networkSoftEdges.visible=this.networkEdges.visible;
       this.networkSoftEdges.material.opacity=this.guideFocus?.022:this.relationshipMap&&this.selected?.016:this.global?(this.selected?.02:.043):(this.selected?.025:.055);
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.selected&&!this.guideFocus){this.networkEdges.material.opacity=.052;this.networkSoftEdges.material.opacity=.014;}}
@@ -821,7 +822,7 @@ export class SpatialScene {
       this.dirty=true;moving=true;
       if(this.networkEdges){
         this.networkEdges.visible=this.relationshipMap||t.kind==='to-focus'||!this.selected;
-        const base=this.structuralOverview?.085:this.relationshipMap?.16:.16;
+        const base=this.structuralOverview?.11:this.relationshipMap?.16:.16;
         this.networkEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?base*(1-p)+.045*p:.045*(1-p)+base*p):base*(t.kind==='to-focus'?1-p:p);
         this.networkSoftEdges.visible=this.networkEdges.visible;
         this.networkSoftEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?.043*(1-p)+.016*p:.016*(1-p)+.043*p):.055*(t.kind==='to-focus'?1-p:p);
