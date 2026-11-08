@@ -78,12 +78,20 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
 
   await visit();await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
   check((await target().count())===1,'guide points to the next source location');
-  const actionable=await page.locator('.space-label.node.guide-target').first();
-  check(await actionable.getAttribute('aria-disabled')==='false',
-    'current task knowledge is clickable');
-  const other=page.locator('.space-label.node.guide-locked').first();
+  const actionable=page.locator('.space-label.node.guide-target:visible').first();
+  if(await actionable.count()){
+    check(await actionable.getAttribute('aria-disabled')==='false',
+      'visible current-task knowledge label is clickable');
+  }else{
+    // A denser observation sidebar may leave the fixed-position source label
+    // offscreen; its projected task cue is still the on-map action.
+    const cue=target(),cueKey=await cue.getAttribute('data-key');
+    check(await cue.isVisible()&&cueKey?.startsWith('node:'),
+      'offscreen current-task knowledge remains actionable through its source-node cue');
+  }
+  const other=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
   check(await other.getAttribute('aria-disabled')==='true',
-    'non-task knowledge is explicitly locked');
+    'non-task source knowledge is explicitly locked even when its label is offscreen');
 
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'02-first-connection.png')});

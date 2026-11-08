@@ -140,6 +140,7 @@ jobs:
           fi
 
           for test_file in \
+            tests/p1-navigation-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -183,4 +184,5 @@ jobs:
             verification/concept-language-pilot/
             verification/node-name-review/
             verification/language-direction/
+            verification/p1-navigation/
           if-no-files-found: warn

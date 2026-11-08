@@ -70,10 +70,20 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    let guide=await snap();
    check(samePose(returned,guide)&&guide.visibleNodes.length===537,'guide reuses the last panorama camera and all background points');
    check(guide.zoomEnabled&&await page.locator('.tool-rail [data-action="zoom"]').first().isVisible(),'guide stays in the same zoomable 3D map');
-   await page.locator('#guide-cues [data-action="guide-visit"]').first().click();
-   await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
-   guide=await snap();
-   check(samePose(returned,guide)&&guide.visibleNodes.length===537,'guide advances without camera jump or removing surrounding nodes');
+   const visibleCue=page.locator('#guide-cues [data-action="guide-visit"]:visible').first();
+   if(await visibleCue.count()){
+     await visibleCue.click();
+     await page.waitForFunction(()=>mathSpace.snapshot().guide?.step===1);
+     guide=await snap();
+     check(samePose(returned,guide)&&guide.visibleNodes.length===537,'guide advances without camera jump or removing surrounding nodes');
+   }else{
+     // At the user's manually zoomed pose, the source target can be outside
+     // the viewport; show a direction hint instead of moving the camera.
+     check(await page.locator('#guide-cues .guide-cue-offscreen:visible').count()>0,
+       'offscreen guide target gives a map movement hint without refitting the view');
+     guide=await snap();
+     check(samePose(returned,guide)&&guide.visibleNodes.length===537,'offscreen guide target preserves camera and all source nodes');
+   }
    await page.screenshot({path:path.join(dir,'04-guide-same-panorama.png')});
    await page.locator('[data-action="guide-exit"]').click();
    await page.waitForFunction(()=>mathSpace.snapshot().guide===null);
