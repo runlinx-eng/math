@@ -91,6 +91,7 @@ jobs:
             tests/grade-node-filter.test.mjs
             tests/grade-distribution.test.mjs
             tests/p3-learning-flow.test.mjs
+            tests/p4-learning-reliability.test.mjs
           )
 
           for candidate in \
