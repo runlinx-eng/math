@@ -1,5 +1,5 @@
-// Learning activities are stable, independent work surfaces. The hidden map
-// must never zoom or fly while a lesson opens, scrolls, or closes.
+// Learning activities stay mounted over one visible 3D space.
+// They must not move the camera and must retain access to primary navigation.
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/learning-workspace'),base='http://127.0.0.1:43827/?v=56&world=network&layout=53#space/node/mt_6_O6THdEDK';
 const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);checks.push(label);},near=(a,b,eps=.0001)=>Math.abs(a-b)<eps;
@@ -15,7 +15,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
    const childContentHeight=lesson?Math.ceil(lesson.scrollHeight):null,panelHeaderHeight=header?header.getBoundingClientRect().height:null;
    return {x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom,viewportW:innerWidth,viewportH:innerHeight,
       frame:frame.getBoundingClientRect().height,topbar:c('.topbar'),rail:c('.tool-rail'),lessonVisible:!panel.hidden,
-      childContentHeight,panelHeaderHeight,expectedHeight:lesson&&header?Math.min(childContentHeight+panelHeaderHeight+2,innerHeight-32):null};
+      childContentHeight,panelHeaderHeight,expectedHeight:lesson&&header?Math.min(childContentHeight+panelHeaderHeight+2,innerHeight-(innerWidth<=1100?(innerWidth<=800?151:140):118)):null};
  });
  // Wait for the parent panel to reflect the iframe's latest measured content,
  // not merely for the first (possibly stale) ResizeObserver message to arrive.
@@ -27,7 +27,8 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
    const key=JSON.stringify(sample);
    if(window.__learningPanelHeightSample===key)window.__learningPanelHeightStableFrames=(window.__learningPanelHeightStableFrames||0)+1;
    else{window.__learningPanelHeightSample=key;window.__learningPanelHeightStableFrames=0;}
-   const expected=Math.min(sample.contentHeight+sample.headerHeight+2,sample.viewportHeight-32);
+   const reserved=innerWidth<=1100?(innerWidth<=800?151:140):118;
+   const expected=Math.min(sample.contentHeight+sample.headerHeight+2,sample.viewportHeight-reserved);
    return window.__learningPanelHeightStableFrames>=2&&Math.abs(sample.panelHeight-expected)<=3;
  });
  try{
@@ -47,10 +48,10 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   check(near(opened.cameraZoom,before.cameraZoom),'the lesson does not change the map camera zoom');
   check(opened.position.every((v,i)=>near(v,before.position[i]))&&opened.target.every((v,i)=>near(v,before.target[i])),'opening lesson preserves map camera pose');
   check(surface.lessonVisible&&surface.x>=0&&surface.y>=0&&surface.right<=surface.viewportW&&surface.bottom<=surface.viewportH,'learning surface fully fits the desktop viewport');
-  check(surface.h<=surface.viewportH-30&&surface.h>=250&&surface.frame>100,'lesson height follows content but never exceeds the usable viewport');
+  check(surface.h<=surface.viewportH-118&&surface.h>=250&&surface.frame>100,'lesson height follows content without hiding the 3D navigation');
   const expected=surface.expectedHeight;
   check(Math.abs(surface.h-expected)<=3,`panel height matches measured real lesson content, capped by the viewport (actual ${surface.h}px; expected ${expected}px; lesson ${surface.childContentHeight}px; header ${surface.panelHeaderHeight}px; viewport ${surface.viewportH}px)`);
-  check(surface.topbar==='none'&&surface.rail==='none','map navigation is absent in focused learning mode');
+  check(surface.topbar==='flex'&&surface.rail==='flex','global navigation and spatial camera controls remain available with learning open');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
   // More room must expose additional content rather than leaving the panel 820px tall.
