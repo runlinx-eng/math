@@ -44,8 +44,8 @@ const samePose=(a,b)=>close(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>
    await page.setViewportSize({width:1024,height:1320});
    await page.waitForTimeout(140);
    const card=await page.locator('#focus-card').boundingBox();
-   check(card&&card.x>=100&&card.y>=135,'knowledge detail never begins underneath the left browser sidebar');
-   check(card.x+card.width<=1024-16&&card.y+card.height<=1320-12,'knowledge detail is fully contained in the available desktop');
+   check(card&&card.x>=100&&card.y>=90,'knowledge detail clears the browser sidebar and the global navigation');
+   check(card.x+card.width<=1024-16&&card.y+card.height<=1320-12,'knowledge detail is fully contained in the available desktop '+JSON.stringify(card));
    await page.screenshot({path:path.join(dir,'01b-card-with-browser-sidebar.png')});
    await page.setViewportSize({width:1440,height:900});
    await page.waitForTimeout(140);

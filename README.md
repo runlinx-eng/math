@@ -403,3 +403,10 @@ node --test --test-reporter=tap tests/*.test.mjs
 上游：[withmarbleapp/os-taxonomy](https://github.com/withmarbleapp/os-taxonomy)，固定提交 `a8719737ff86ef7940ba5feca11940de1204103e`。数据库和投影遵循 ODbL 1.0，中文及教学内容改编遵循 CC BY-SA 4.0；许可、原始示例第三方声明均保留。
 
 上游提供目标、关系与部分教学研究。本地新增分类、空间布局、中文表达、交互和记录。502 个有研究的源节点已做本地适配，85 个缺研究的节点已补充本地依据。来源依据不证明本应用对孩子的学习效果。技术通过不替代孩子试用或用户验收。
+
+
+## Issue #23 P5｜集成验收与备份冲突保护（Draft，未合并）
+
+P1–P4 的功能整合仍在堆叠 Draft PR #24–#27 中；P5 [Draft PR #28](https://github.com/runlinx-eng/math/pull/28) 以 PR #27 HEAD 为基础。九项用户任务的自动化浏览器验收、三种分辨率截图、数据合并与离线回归的实际结论见 [P5 验收报告](docs/spatial-learning/ISSUE-23-P5-ACCEPTANCE.md)。**未经用户批准，不得合并、发布或关闭 Issue #23。**
+
+学习 JSON 备份兼容原 V1/V2，但**不包含**独立视图键 `math-explorer-network-relationship-view-v1` 的完整镜头、学段与 UI 状态。导入前会检查冲突；两份不同的非空草稿、重用 ID 的不同证据和问题现场等若无法安全合并，将取消导入且不覆盖原主键。用户应保留两个原始备份、另行人工核对，不能将拒绝导入理解为自动解决冲突。50 MB 大小上限按 UTF-8 字节计算。真实历史文件、跨版本 Service Worker 升级、手工操作和儿童数学理解仍需单独验收。

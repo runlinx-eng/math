@@ -1,0 +1,26 @@
+.grade-distribution{border-top:1px solid #dce6dc;margin-top:16px;padding-top:13px;min-width:0}
+.grade-distribution h3{font-size:13px;margin:0 0 6px;color:#285547}
+.grade-distribution-intro,.grade-distribution-footnote,.grade-distribution-note{font-size:11px!important;line-height:1.65!important;overflow-wrap:anywhere}
+.grade-distribution-note{background:#f1f5ec;border-radius:7px;padding:8px;margin:9px 0!important}
+.grade-distribution-warning{font-size:11px;color:#8b4a27!important}
+.grade-distribution-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:9px 0}
+.grade-stage-choice{padding:8px 3px;min-width:0;min-height:54px;border:1px solid #d6e2d6;background:#f7f9f4;color:#355b4d;border-radius:8px;font-size:10px;line-height:1.4;overflow-wrap:anywhere}
+.grade-stage-choice strong{display:block;font-size:19px;line-height:1.4;font-variant-numeric:tabular-nums}
+.grade-stage-choice[aria-pressed="true"]{background:#dcebe2;border-color:#7baf99;color:#1c4e3c}
+.grade-stage-choice:focus-visible,.grade-node-choice:focus-visible,.grade-group-choice:focus-visible,.grade-stage-list summary:focus-visible,.grade-group-list summary:focus-visible{outline:2px solid #2d6d58;outline-offset:2px}
+.grade-stage-list,.grade-group-list{border-top:1px solid #e1e9e0;padding:0;margin:0;min-width:0}
+.grade-stage-list summary,.grade-group-list summary{cursor:pointer;min-height:39px;padding:10px 4px;color:#305749;font-size:12px;font-weight:650;overflow-wrap:anywhere}
+.grade-node-list{list-style:none;padding:0 0 7px!important;margin:0!important;max-height:265px;overflow-y:auto;overscroll-behavior:contain;border-radius:8px}
+.grade-node-list li{margin:0}
+.grade-node-choice{width:100%;display:flex;justify-content:space-between;align-items:start;gap:7px;padding:8px 9px!important;text-align:left;border-bottom:1px solid #e8ede6;background:#fcfdf9;color:#305445;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.grade-node-choice span{min-width:0;overflow-wrap:anywhere}
+.grade-node-choice small{flex:0 0 auto;color:#637f6d;font-size:10px}
+.grade-node-choice:hover,.grade-group-choice:hover{background:#ebf2ea}
+.grade-empty{font-size:11px;line-height:1.65;color:#718174;padding:9px}
+.grade-group-rows{display:grid;gap:5px;padding-bottom:8px}
+.grade-group-choice{display:flex;justify-content:space-between;gap:8px;min-width:0;background:#f5f8f2;border-radius:7px;padding:9px!important;text-align:left;color:#315749;font-size:11px;line-height:1.45}
+.grade-group-choice strong{font-size:11px;overflow-wrap:anywhere}
+.grade-group-choice span{flex:0 0 auto;font-variant-numeric:tabular-nums;color:#5d7767}
+body[data-world="network"] .focus-card[data-kind="pack"]:has(.grade-distribution){width:340px;max-width:calc(100vw - 150px);max-height:calc(100dvh - 265px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+body[data-world="network"] .focus-card[data-kind="theme"]:has(.grade-distribution){max-height:calc(100dvh - 265px)}
+@media(max-width:1100px){body[data-world="network"] .focus-card[data-kind="pack"]:has(.grade-distribution),body[data-world="network"] .focus-card[data-kind="theme"]:has(.grade-distribution){width:min(310px,calc(100vw - 345px));max-height:calc(100dvh - 235px)}}
