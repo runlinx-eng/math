@@ -8,9 +8,19 @@
 | P2 | #25 | `a82fa5b41d31088bdadfa1917fe07cdcbcb06bee` | P1 | Open / Draft；历史 Required Checks 成功 |
 | P3 | #26 | `5c1c92938889ca5f4b4258ab859ce521c005315a` | P2 | Open / Draft；历史 Required Checks 成功 |
 | P4 | #27 | `27d97590329b682538037fc260ca596cae76bbde` | P3 | Open / Draft；[Required #42465305520](https://github.com/runlinx-eng/math/actions/runs/42465305520) 成功；182 Node、P4 新增 12 Chromium |
-| P5 | #28 | P4 HEAD 派生；以 #28 实际最新 HEAD 为准 | P4 | Open / Draft；验收进行中 |
+| P5 | #28 | `c38cb35393bd83ed84a22ecbf4eeda781fd5637e` | P4 | Open / Draft；该 HEAD 的 190 Node、P5 24 Chromium 和全套浏览器 CI 成功；人工验收待办 |
 
 `main` 基线 `659ea884bda8ebb30aed0bdebc8dd374a61637e7`。P1–P4 先前自动测试证据属于各阶段对应 HEAD，**不能替代 P5 最新 HEAD 的验收**。
+
+## P5 最新实际自动化验收结论（2026-11-08）
+
+**验收 HEAD：** `c38cb35393bd83ed84a22ecbf4eeda781fd5637e`（本节记录时的完整测试提交）。
+
+- [Required Checks #42466516416](https://github.com/runlinx-eng/math/actions/runs/42466516416)：**SUCCESS**，190/190 Node 单元与不变量，0 失败；新 P5 Chromium 24/24，通过真实浏览器执行的 P1–P4 既有回归及其余空间/学段/关系/学习/中文检查全部成功。
+- [Math Tree overview checks #42466516399](https://github.com/runlinx-eng/math/actions/runs/42466516399)：**SUCCESS**。
+- [真实 Chromium 截图与检查证据 Artifact #13611977447](https://github.com/runlinx-eng/math/actions/runs/42466516416/artifacts/13611977447)：44,312,970 bytes，包括 `verification/p5-integration/` 和各阶段回归产物；P5 检查日志明示 `syntheticBackup:true`、`realHistoricalBackupVerified:false`、`manualVisualReview:false`。
+- 本轮首次 CI 的 shell 测试列表续行符错误已在 `c38cb353` 修复，失败工作流 [#42466439194](https://github.com/runlinx-eng/math/actions/runs/42466439194) 不能当成浏览器通过证据，最终以本节成功运行替代。
+- 浏览器脚本检查 DOM、实际提交与持久化、相机保持及布局边界，并真实保存 PNG；**这些测试不替代人工逐图判断、学生实际理解或真实备份验收。**
 
 ## P4 高风险回归与本轮处置
 
