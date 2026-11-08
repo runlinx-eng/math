@@ -19,6 +19,8 @@ import {lessonSummary} from './learning/state.js';
 import {dayKey,dailySummary,continuation,pendingQuestions,addQuestion,resumeQuestion,questionAction,questionDone} from './learning/daily.js';
 import {askQuestion} from './learning/question-ui.js';
 import {gradeMapSelection,GRADE_MAP_STAGES,loadGradePanoramaData} from './grade-node-filter.js';
+import {gradeDistribution} from './grade-distribution.js';
+import {renderGradeDistributionHTML} from './grade-distribution-view.js';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=s=>new Date(s).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -342,6 +344,16 @@ function themeOverview(o){
   </div>`;
 }
 
+function renderGradeDistribution(o){
+  if(!scene?.relationshipMap||!['theme','pack'].includes(o.kind))return '';
+  if(!gradePanoramaData)return '<section class="grade-distribution"><h3>小学学段分布</h3><p>正在读取节点级课程映射…</p></section>';
+  const stats=gradeDistribution(atlas,gradePanoramaData,o.kind,o.id);
+  return stats?renderGradeDistributionHTML(stats,{
+    selectedStage:selectedGradeStage,
+    nodeTitle:id=>displayTitle(space.nodes.get(id)),
+    nodeRole:(id,stage)=>GRADE_ROLE_LABELS[gradeNodeMappingsById.get(id)?.curriculum.roles?.[stage]]||'已映射'
+  }):'';
+}
 function renderGradeNodePosition(o){
   if(worldLayout!=='network')return '';
   const packName=space.packs.get(o.packId)?.title||o.packId||'未记录';
@@ -586,7 +598,11 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   else if(o.kind==='pack'){const mapped=o.nodeIds.filter(id=>space.relationshipIds?.has(id)).length,extra=o.nodeIds.length-mapped;body=`<p>${esc(o.question)}</p><p class="quiet">${scene.relationshipMap?`${mapped} 个地图知识点${extra?` · ${extra} 个数学思维内容`:''}`:`${o.nodeIds.length} 个相关内容`}${o.activityIds.length?` · ${o.activityIds.length} 个活动可打开`:''}</p><div class="focus-actions">${button('list-pack','查看本群内容',`data-id="${o.id}"`)}</div>`;}
   else if(o.kind==='theme'&&scene.relationshipMap)body=themeOverview(o);
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
-  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
+  if(o.kind==='pack'||o.kind==='theme')body+=renderGradeDistribution(o);
+  const previouslyOpen=new Set([...card.querySelectorAll('.grade-stage-list[open],.grade-group-list[open]')].map(el=>el.classList.contains('grade-group-list')?'groups':el.dataset.stage));
+  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${button('deselect',scene.localRelationshipFocus?'回到全貌 ×':'×',scene.localRelationshipFocus?'aria-label="回到整张知识地图"':'aria-label="收起选中信息"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;
+  if(same)for(const details of card.querySelectorAll('.grade-stage-list,.grade-group-list'))if(previouslyOpen.has(details.classList.contains('grade-group-list')?'groups':details.dataset.stage))details.open=true;
+  card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
   // The card has just changed height. Position it now, not on the next WebGL frame;
   // a rapid selection at a compact desktop viewport must never show stale bounds.
   if(worldLayout==='network')updateOverlays();
@@ -792,13 +808,13 @@ document.addEventListener('click',event=>{
    else if(action==='learn-session'){hideLearningHub();openLearningLesson(id);}
    else if(action==='learn-legacy'){navigateTaskSurface('explore',{replace:true});openPanel(id);}
    else if(action==='focus-section'){const section=$('#focus-card [data-context-section="'+el.dataset.section+'"]');if(section){const card=$('#focus-card');card.scrollTop=Math.max(0,section.offsetTop-card.querySelector('.focus-sticky').offsetHeight-12);}}
-   else if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
+   else if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{inPlace:!!el.closest('.grade-distribution'),openLesson:!el.closest('.grade-distribution')&&(worldLayout!=='network'||!!el.closest('.route-choices'))});else if(action==='grade-open-pack')choose('pack:'+id,{inPlace:true,openLesson:false});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
   else if(action==='search')openSearch();else if(action==='list-pack')openSearch(id);else if(action==='search-more'){searchLimit+=24;renderSearch();}
   else if(action==='close-popover')closePopovers();
   else if(action==='grade-map-stage'){
     if(GRADE_MAP_STAGES.includes(el.dataset.stage)){
-      selectedGradeStage=el.dataset.stage;renderGradeMapFilter();scheduleSave();
-      if(!gradePanoramaData)ensureGradePanoramaData().then(renderGradeMapFilter).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});
+      selectedGradeStage=el.dataset.stage;renderGradeMapFilter();renderFocus();scheduleSave();
+      if(!gradePanoramaData)ensureGradePanoramaData().then(()=>{renderGradeMapFilter();renderFocus();}).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});
     }
   }
   else if(action==='deselect'&&scene.relationshipMap)overview();else if(action==='deselect'){if(worldLayout==='network'&&!scene.global&&scene.networkView==='relations')scene.overview();else if(scene.global){const full=scene.wholeMapVisible();scene.select(null);if(full)scene.fitGlobalView();}else scene.select(null);cardHide();setHash(null);renderLocation();scheduleSave();}
@@ -950,7 +966,7 @@ async function boot(){try {
   if(stored&&!journeyOpen&&scene.relationshipMap)scene.recoverUnreadableSavedCamera();
   const allButton=$('[data-action="all-nodes"]');allButton.setAttribute('aria-pressed',String(scene.showAllNodes));allButton.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';
   refreshLearning();renderLocation();if(stored)restoreFocus(stored);restoreTaskSurface();renderGradeMapFilter();$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();
-  if(worldLayout==='network'&&scene.relationshipMap)ensureGradePanoramaData().then(renderGradeMapFilter).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});
+  if(worldLayout==='network'&&scene.relationshipMap)ensureGradePanoramaData().then(()=>{renderGradeMapFilter();renderFocus();}).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});
   // Read-only diagnostics used by local browser checks; no learning-state setters.
   window.mathSpace={motion:()=>({zoom:scene.camera.zoom,transition:scene.viewTransition?.kind||null,progress:scene.viewTransition?scene.transitionProgress():null,tween:scene.tween?{fromZoom:scene.tween.fromZoom,toZoom:scene.tween.toZoom}:null}),snapshot:()=>({...scene.snapshot(),layout:worldLayout,relationBands:space.relationLayout?{before:space.relationLayout.before,after:space.relationLayout.after}:null,backgroundEdges:(scene.networkEdges?.geometry.attributes.position.count||0)/2+(scene.networkSoftEdges?.geometry.attributes.position.count||0)/2,backgroundEdgesVisible:!!scene.networkEdges?.visible,structureMode:scene.structureMode,focusDirection:scene.focusDirection,focusDepth:scene.focusDepth,focusFilterCounts:scene.focusView?.counts||null,focusFilterEdges:scene.focusView?.links?.map(e=>({from:e.prerequisiteId,to:e.topicId,strength:e.strength}))||[],structureExamples:scene.overviewStructure?.paths?.map(p=>({role:p.role,edges:p.links})),structureLandmarks:scene.overviewStructure?.landmarks||[],structureStats:scene.overviewStructure?.stats||{},focusTransition:scene.viewTransition?{kind:scene.viewTransition.kind,progress:scene.transitionProgress(),fromCount:scene.viewTransition.fromKeys.size}:null,zoomEnabled:scene.controls.enableZoom,cameraTween:scene.tween?{fromZoom:scene.tween.fromZoom,toZoom:scene.tween.toZoom}:null,overviewShellCount:scene.overviewShells?.length||0,overviewShellsEnabled:!!scene.overviewShellsEnabled,overviewShellsVisible:!!scene.overviewShellGroup?.visible,sourceLayers:scene.global?space.globalInfo.maxLayer+1:null,globalCoordinates:scene.global,guide:scene.guideFocus?{step:learning.daily.guide?.step,seenNodes:[...scene.guideFocus.seenNodes],currentNodes:[...scene.guideFocus.currentNodes],edges:scene.guideFocus.edges.map(e=>({from:e.prerequisiteId,to:e.topicId,strength:e.strength}))}:null,guideSuspended,gradeStageFilter:scene.gradeStageId,gradeStageMatchedIds:[...scene.gradeStageIds],progressBackground:scene.progressBackground||[],previewKey:scene.previewKey,previewEdges:scene.edgesGroup.children.filter(c=>c.userData.relation&&c.geometry.type!=='ConeGeometry').map(c=>({from:c.userData.relation[0],to:c.userData.relation[1],opacity:c.material.opacity,geometry:c.geometry.type})),traceArrows:scene.edgesGroup.children.filter(c=>c.userData.relation&&c.geometry.type==='ConeGeometry').length,traceNodes:scene.traceResult?.nodes.map(id=>({id,distance:scene.traceResult.distances.get(id)}))||[],traceEdgeCount:scene.traceResult?.edges.length||0,sceneMarkers:[...(scene.savedScenes||[])],questionMarkers:[...(scene.queuedQuestions||[])],counts:{themes:space.themes.size,packs:space.packs.size,nodes:space.nodes.size,edges:atlas.edges.length},journeyOpen,visibleNodes:[...(scene.visibleNodes||[])],relations:scene.relations.map(l=>({from:l.from,to:l.to,count:l.edges.length,strength:l.edges[0]?.strength,lit:!!l.lit})),panels:[...panels.values()].map(p=>({id:p.id,anchor:[...p.anchor],tab:p.tab})),positions:space.objects.map(o=>({key:o.key,position:[...o.position]})),rendered:true}),project:key=>{const o=space.byKey.get(key);return scene.canLocate(o)?scene.project(o.position):null;},nodeRadius:key=>scene.nodeScreenRadius(key),nodeTint:key=>{const i=scene.nodeList.findIndex(n=>n.key===key);return i<0?null:[...scene.nodeMesh.instanceColor.array.slice(i*3,i*3+3)];},completionMarker:key=>scene.completionMarkerVisible(key),hoverPreview:()=>({key:scene.hoverMapKey,themeId:scene.hoverThemeId,related:[...scene.hoverRelatedKeys],edges:scene.hoverVisualLinks.map(l=>({from:l.fromKey,to:l.toKey,soft:l.soft}))})};
  }catch(error){$('#loading').innerHTML=`<h1>空间暂时没有展开</h1><p>${esc(error.message)}</p><p>学习记录没有被清除。请刷新页面重试；已有记录不会因地图故障而清除。</p><a href="index.html#atlas" class="primary-button">重新打开三维关系全景</a>`;}}

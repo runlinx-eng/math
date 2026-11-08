@@ -68,6 +68,8 @@ jobs:
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
+          node --check dist/grade-distribution.js
+          node --check dist/grade-distribution-view.js
           node --check scripts/build_grade_progression_data.mjs
           node --check scripts/build_grade_panorama_lite.mjs
           node scripts/build_grade_panorama_lite.mjs --check
@@ -85,6 +87,7 @@ jobs:
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
+            tests/grade-distribution.test.mjs
           )
 
           for candidate in \
@@ -141,6 +144,7 @@ jobs:
 
           for test_file in \
             tests/p1-navigation-browser.cjs \
+            tests/p2-grade-distribution-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -185,4 +189,5 @@ jobs:
             verification/node-name-review/
             verification/language-direction/
             verification/p1-navigation/
+            verification/p2-grade-distribution/
           if-no-files-found: warn
