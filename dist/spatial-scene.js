@@ -472,8 +472,13 @@ export class SpatialScene {
   globalInsets(){
     const guide=document.querySelector('#network-guide')?.getBoundingClientRect(),footer=document.querySelector('.bottom-bar')?.getBoundingClientRect();
     const themeFocus=this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='theme';
-    const left=themeFocus?(this.width>1050?500:this.width>760?440:Math.min(320,this.width*.43)):this.selected?340:42;
-    return {left,right:120,top:Math.max(138,(guide?.bottom||116)+22),bottom:Math.max(88,this.height-(footer?.top||this.height-70)+18)};
+    // P1-B uses a vertical observation sidebar; its bottom edge is NOT a
+    // top inset for the 3D panorama. Reserve horizontal space instead.
+    const sidebar=!!guide&&guide.width>0&&guide.height>0&&guide.width<this.width*.45;
+    const overviewLeft=sidebar?Math.max(42,guide.right+16):42;
+    const left=themeFocus?(this.width>1050?500:this.width>760?440:Math.min(320,this.width*.43)):this.selected?340:overviewLeft;
+    const top=sidebar?Math.max(138,guide.top+24):Math.max(138,(guide?.bottom||116)+22);
+    return {left,right:120,top,bottom:Math.max(88,this.height-(footer?.top||this.height-70)+18)};
   }
   globalScale(){return this.height*this.camera.zoom/(2*this.camera.position.distanceTo(this.controls.target)*Math.tan(Math.PI/9));}
   nodeScreenRadius(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0||!this.global)return null;const matrix=new THREE.Matrix4();this.nodeMesh.getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x*this.globalScale();}
