@@ -89,9 +89,9 @@ const samePose=(a,b)=>same(a.cameraZoom,b.cameraZoom)&&a.position.every((n,i)=>s
     check(await cue.isVisible()&&cueKey?.startsWith('node:'),
       'offscreen current-task knowledge remains actionable through its source-node cue');
   }
-  const other=page.locator('.space-label.node.guide-locked').first();
+  const other=page.locator('.space-label.node[data-key="'+backgroundId+'"]');
   check(await other.getAttribute('aria-disabled')==='true',
-    'non-task knowledge is explicitly locked');
+    'non-task source knowledge is explicitly locked even when its label is offscreen');
 
   await page.waitForTimeout(180);
   await page.screenshot({path:path.join(out,'02-first-connection.png')});
