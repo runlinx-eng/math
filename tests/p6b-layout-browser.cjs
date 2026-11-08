@@ -14,7 +14,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
  const snap=()=>page.evaluate(()=>mathSpace.snapshot());
  const boxes=()=>page.evaluate(()=>{
    const rect=id=>{const el=document.querySelector(id);if(!el||el.hidden||getComputedStyle(el).visibility==='hidden')return null;const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
-   return {guide:rect('#network-guide'),card:rect('#focus-card'),hub:rect('#learning-hub'),learn:rect('#journey-surface'),trail:rect('#utility-drawer'),rail:rect('.tool-rail'),nav:rect('.topbar')};
+   return {canvas:rect('#space-canvas'),guide:rect('#network-guide'),card:rect('#focus-card'),hub:rect('#learning-hub'),learn:rect('#journey-surface'),trail:rect('#utility-drawer'),rail:rect('.tool-rail'),nav:rect('.topbar')};
  });
  try{
    await page.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
@@ -74,6 +74,8 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      assert(b.learn&&b.learn.x>=0&&b.learn.right<=w+2&&b.learn.bottom<=h+2,'learning stays inside viewport '+w+'x'+h);
      assert(b.learn.width<=w*.54,'learning leaves at least 46% for map '+w+'x'+h);
      assert(b.nav&&b.nav.bottom<b.learn.y,'learning clears top navigation '+w+'x'+h);
+     if(w>800)assert(b.canvas&&b.canvas.right<=b.learn.x-7,'real 3D viewport avoids lesson overlay '+w+'x'+h);
+     else assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});
    }
    await page.locator('.primary-nav [data-action="nav-trail"]').click();
@@ -84,16 +86,22 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert(await trail.locator('[data-trail-tier="draft"] [data-lesson-record]').count()===1,'draft session separated from submitted work');
    assert(await trail.locator('[data-trail-tier="available"] [data-lesson-record]').count()===1,'untouched session only in collapsed available list');
    assert(await trail.locator('.trail-available').getAttribute('open')===null,'untouched sessions collapsed by default');
+   assert((await trail.locator('.trail-evidence-preview .saved-note').first().innerText()).includes('实际保存的学习解释'),'saved explanation is visible without expanding its evidence record');
    for(const [w,h] of sizes){
      await page.setViewportSize({width:w,height:h});
      await page.waitForTimeout(110);
      const b=await boxes();
      assert(b.trail&&b.trail.x>=0&&b.trail.right<=w+2&&b.trail.bottom<=h+2,'trail stays inside viewport '+w+'x'+h);
      assert(b.trail.width<=w*.54,'trail leaves space visible '+w+'x'+h);
+     if(w>800)assert(b.canvas&&b.canvas.right<=b.trail.x-7,'real 3D viewport avoids trail overlay '+w+'x'+h);
      await page.screenshot({path:path.join(output,'trail-'+w+'x'+h+'.png')});
    }
    await page.setViewportSize({width:1440,height:900});
    assert(equalCamera(baseline,await snap()),'learn → trail preserves camera');
+   await page.locator('[data-action="grade-map-stage"][data-stage="stage-1"]').click();
+   assert((await snap()).gradeStageFilter==='stage-1'&&equalCamera(baseline,await snap()),'grade filter operates in the same visible 3D viewport, camera unchanged');
+   await page.screenshot({path:path.join(output,'trail-stage-1-1440x900.png')});
+   await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
    await page.locator('.primary-nav [data-action="nav-learn"]').click();
    await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen&&!mathSpace.snapshot().journeySuspended);
    assert(equalCamera(baseline,await snap()),'return to suspended lesson preserves camera');
