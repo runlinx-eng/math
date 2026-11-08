@@ -7,3 +7,16 @@
 .scene-controls output{display:block;font-size:11px;color:var(--ink);font-variant-numeric:tabular-nums}.family-controls label{font-size:11px;line-height:1.7;white-space:nowrap}.family-controls select{display:block;font-family:inherit;font-size:16px}.paper-piece:last-child{border-right:0}.family-row{grid-template-columns:138px 1fr}@media(max-width:480px){.family-row{display:block}}
 
 .simple-overall{display:flex;align-items:center;gap:14px;font-size:13px;margin:20px 0;color:#61745e}.simple-overall progress{appearance:none;width:140px;height:5px;border:0;background:#e1e7da;border-radius:4px;overflow:hidden}.simple-overall progress::-webkit-progress-bar{background:#e1e7da}.simple-overall progress::-webkit-progress-value{background:#527b5d}.simple-overall progress::-moz-progress-bar{background:#527b5d}.state-dot.incomplete{background:transparent;border:1px solid #a2aaa0}.badge.incomplete{background:#edf1e7;color:#65735d}.activity-records{margin-top:12px}.activity-records>summary{font-size:12px;color:#6b7962}
+
+
+/* Issue #30: saved evidence precedes drafts, questions, then untouched sessions. */
+[data-trail-tier="evidence"]{border-left:3px solid #6c9a80}
+[data-trail-tier="draft"]{border-left:3px solid #b9a071}
+[data-trail-tier="question"]{border-left:3px solid #8a91b2}
+.trail-available{padding:14px 18px}
+.trail-available>summary{cursor:pointer;font-size:14px;font-weight:650;color:#365c4e}
+.trail-available[open]>summary{margin-bottom:12px}
+[data-trail-tier] .record-section{padding:12px 0;overflow-wrap:anywhere}
+[data-trail-tier] .record-section h3{font-size:15px;line-height:1.5}
+[data-trail-tier] .record-section .text-link{margin-right:12px;display:inline-block;min-height:30px}
+[data-trail-tier] .saved-note{white-space:pre-wrap;overflow-wrap:anywhere}
