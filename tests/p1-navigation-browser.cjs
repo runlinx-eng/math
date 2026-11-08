@@ -128,7 +128,7 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
     });
     check(bounds.g.x>=0&&bounds.g.bottom<=height&&bounds.g.right<bounds.rail.x,'observation and camera tools separate '+width+'x'+height);
     check(bounds.g.y>=bounds.nav.bottom-4,'observation remains below top navigation '+width+'x'+height);
-    if(bounds.card.visible)check(bounds.card.x>=bounds.g.right-2&&bounds.card.bottom<=height,'knowledge detail avoids observation column '+width+'x'+height);
+    if(bounds.card.visible)check(bounds.card.x>=bounds.g.right-2&&bounds.card.bottom<=height,'knowledge detail avoids observation column '+width+'x'+height+' '+JSON.stringify(bounds));
     await page.screenshot({path:path.join(out,'05-p1b-map-'+width+'x'+height+'.png')});
   }
   check(!errors.length,'no uncaught browser page errors: '+errors.join('; '));
