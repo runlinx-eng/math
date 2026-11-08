@@ -9,6 +9,8 @@ import {mergeLiveActivity} from './live-state.js';
 import {LESSONS,lessonIds,lessonForTopic,topicIds,ROUTES} from './learning/catalog.js';
 import {bridgeIds} from './learning/bridges.js';
 import {lessonSummary} from './learning/state.js';
+import {sessionTaskFor} from './learning/bridges.js';
+import {inspect as inspectLesson} from './learning/tasks.js';
 import {lessonRecordTier,activityRecordTier,journeyRecordTier,tieredIds} from './learning/trail-priority.js';
 import {questionDone} from './learning/daily.js';
 const embedded=window.parent!==window&&new URLSearchParams(location.search).has('embedded');
@@ -100,17 +102,31 @@ function journeyRecord(tier='evidence'){
     ${j.notes.map(n=>`<p class="saved-note">我的发现（待确认）：${esc(n.text)}</p>`).join('')}
     ${btn('resume-journey','回到这次体验 →','','btn secondary')}</section>`;
 }
+function latestLessonEvidence(a){
+  const attempts=Object.entries(a.cases||{}).flatMap(([index,row])=>
+    (row.attempts||[]).map(attempt=>({index:Number(index),attempt})));
+  attempts.sort((x,y)=>x.attempt.at.localeCompare(y.attempt.at));
+  const latest=attempts.at(-1),note=a.notes?.at(-1);
+  if(!latest&&!note)return '';
+  const t=latest?sessionTaskFor(a.id,latest.index):null;
+  const checked=latest&&t?inspectLesson(t,latest.attempt.value).correct:null;
+  return `<div class="trail-evidence-preview" aria-label="真实学习记录摘要">
+    ${latest?`<p><strong>最近一次实际提交</strong> · 任务 ${latest.index+1} · ${date(latest.attempt.at)}</p>
+      <p>${checked?'该次操作通过检查':'该次操作需要调整'} · ${latest.attempt.supported?'使用过提示':'未记录使用提示'}。单次提交不等于任务完成。</p>`:''}
+    ${note?`<p><strong>最近保存的想法</strong> · ${date(note.at)}</p><p class="saved-note">${esc(note.text)}</p>`:''}
+  </div>`;
+}
 function lessonRecords(tier='evidence'){
   const groups=tieredIds(lessonIds,state.lessons,lessonRecordTier),ids=groups[tier];
   if(!ids.length)return '';
-  const title={evidence:'已有作品与提交',draft:'有草稿的学习现场',available:'可开始的学习任务'}[tier];
+  const title={evidence:'有记录的尝试与作品',draft:'有草稿的学习现场',available:'可开始的学习任务'}[tier];
   const articles=ids.map(id=>{
     const a=state.lessons[id],summary=lessonSummary(a);
     const attempts=Object.values(a.cases||{}).reduce((sum,row)=>sum+(row.attempts?.length||0),0),savedNotes=a.notes?.length||0;
     return `<article class="record-section" data-lesson-record="${id}" data-trail-tier="${tier}">
       <h3>${esc(LESSONS[id].title)}</h3>
       <p>${tier==='evidence'?`${attempts?attempts+' 次实际提交':'尚无正式提交'}${savedNotes?' · '+savedNotes+' 份保存解释':''} · 任务 ${summary.done} / ${summary.total}`:tier==='draft'?'未完成 · 已保留学习现场':'尚未开始 · 不属于已有作品'}</p>
-      ${tier==='evidence'?`<details><summary>看看尝试与发现</summary><p>${summary.independent?'有首次独立正确操作证据。':'操作记录、提示与重试分别保留。'}文字解释未自动判定。</p>
+      ${tier==='evidence'?`${latestLessonEvidence(a)}<details><summary>查看全部提交与解释</summary><p>${summary.independent?'有首次独立正确操作证据。':'操作记录、提示与重试分别保留。'}文字解释未自动判定。</p>
         ${Object.entries(a.cases||{}).map(([i,row])=>`<p>任务 ${Number(i)+1} · ${row.attempts.length} 次提交 · ${row.support?'使用过提示':'未主动看提示'}${row.attempts.some(e=>e.exposed)?' · 已保留重答记录':''}</p>`).join('')}
         ${a.notes.map(n=>`<p class="saved-note">${esc(n.text)}（待确认）</p>`).join('')}</details>`:tier==='draft'?'<p>可以返回原活动继续，草稿不计为已提交作品。</p>':''}
       ${embedded?btn('resume-lesson',tier==='available'?'开始活动 →':'继续原活动 →',`data-id="${id}"`,'text-link'):link('learn.html#'+id,tier==='available'?'开始活动 →':'继续原活动 →','text-link')}
