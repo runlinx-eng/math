@@ -99,7 +99,7 @@ export class SpatialScene {
       const makeEdges=(edges,soft)=>{
         const visible=edges.filter(e=>this.edgeCanLocate(e)&&this.edgeIsDisplayed(e)),a=new Float32Array(visible.length*6);visible.forEach((e,i)=>{a.set(space.nodes.get(e.prerequisiteId).position,i*6);a.set(space.nodes.get(e.topicId).position,i*6+3);});
         const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(a,3));
-        const material=soft?new THREE.LineDashedMaterial({color:0x82958b,transparent:true,opacity:.08,dashSize:7,gapSize:6,depthWrite:false}):new THREE.LineBasicMaterial({color:0x71837b,transparent:true,opacity:.18,depthWrite:false});
+        const material=soft?new THREE.LineDashedMaterial({color:0x82958b,transparent:true,opacity:.045,dashSize:7,gapSize:6,depthWrite:false}):new THREE.LineBasicMaterial({color:0x60776a,transparent:true,opacity:.20,depthWrite:false});
         const mesh=new THREE.LineSegments(g,material);mesh.userData.allEdges=edges;mesh.userData.edges=visible;if(soft)mesh.computeLineDistances();this.scene.add(mesh);return mesh;
       };
       this.networkEdges=makeEdges(space.atlas.edges.filter(e=>e.strength==='hard'),false);
@@ -371,8 +371,8 @@ export class SpatialScene {
     // geometry on every stage click is unnecessary and can interrupt previews.
     if(this.relationshipMap&&this.networkEdges&&this.networkSoftEdges&&!this.selected&&!this.guideFocus){
       const filtered=id!=='all';
-      this.networkEdges.material.opacity=filtered?.024:(this.global?(this.structuralOverview?.023:.085):.19);
-      this.networkSoftEdges.material.opacity=filtered?.006:(this.global?.055:.065);
+      this.networkEdges.material.opacity=filtered?.050:(this.global?(this.structuralOverview?.085:.16):.19);
+      this.networkSoftEdges.material.opacity=filtered?.014:(this.global?.043:.055);
     }
     this.dirty=true;
   }
@@ -476,9 +476,9 @@ export class SpatialScene {
     // top inset for the 3D panorama. Reserve horizontal space instead.
     const sidebar=!!guide&&guide.width>0&&guide.height>0&&guide.width<this.width*.45;
     const overviewLeft=sidebar?Math.max(42,guide.right+16):42;
-    const left=themeFocus?(this.width>1050?500:this.width>760?440:Math.min(320,this.width*.43)):this.selected?340:overviewLeft;
-    const top=sidebar?Math.max(138,guide.top+24):Math.max(138,(guide?.bottom||116)+22);
-    return {left,right:120,top,bottom:Math.max(88,this.height-(footer?.top||this.height-70)+18)};
+    const left=themeFocus?Math.min(overviewLeft+75,this.width*.38):this.selected?Math.min(overviewLeft+30,this.width*.36):overviewLeft;
+    const top=sidebar?Math.max(108,guide.top+18):Math.max(108,(guide?.bottom||85)+18);
+    return {left,right:this.width<1100?54:76,top,bottom:Math.max(76,this.height-(footer?.top||this.height-70)+10)};
   }
   globalScale(){return this.height*this.camera.zoom/(2*this.camera.position.distanceTo(this.controls.target)*Math.tan(Math.PI/9));}
   nodeScreenRadius(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0||!this.global)return null;const matrix=new THREE.Matrix4();this.nodeMesh.getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x*this.globalScale();}
@@ -502,7 +502,7 @@ export class SpatialScene {
   fitGlobalView(animated=true,objects=null){
     const points=(objects||this.nodeList).filter(o=>this.canLocate(o)).map(o=>V(o.position));if(!points.length)return;
     const center=new THREE.Box3().setFromPoints(points).getCenter(new THREE.Vector3());
-    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:[.65,.5,1]).normalize();
+    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
     const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),dir).normalize(),up=new THREE.Vector3().crossVectors(dir,right).normalize();
     const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
     const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
@@ -567,7 +567,7 @@ export class SpatialScene {
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.14):this.relationshipMap&&!selected?.kind?.68:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?.80:structureActive?(structuralNode?.98:.48):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
@@ -581,7 +581,7 @@ export class SpatialScene {
       }
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):this.guideFocus.targetKeys?.has(o.key)?7.5:o.key===this.selected?6.5:this.guideFocus.visitedKeys?.has(o.key)?5.4:this.guideFocus.currentNodes.has(o.key)?5.2:this.guideFocus.seenNodes.has(o.key)?4.8:3.9):
-        hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.4:3.4):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
+        hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.6:4.2):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
       const filteredRadius=this.gradeStageId!=='all'&&!selected&&!this.guideFocus?(this.gradeStageIds.has(o.id)?Math.max(pixelRadius,5.3):Math.min(pixelRadius,2.7)):pixelRadius;
        const size=this.relationshipMap?filteredRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
@@ -606,10 +606,10 @@ export class SpatialScene {
     for(const child of [...this.edgesGroup.children]){child.geometry?.dispose();child.material?.dispose();this.edgesGroup.remove(child);}
     this.progressBackground=[];
     if(this.networkEdges){this.networkEdges.visible=(this.relationshipMap?true:this.showAllNodes)&&(this.global||this.networkView!=='relations');
-      this.networkEdges.material.opacity=this.guideFocus?.045:this.relationshipMap&&this.selected?.025:this.global?(this.selected?.035:this.structuralOverview?.023:this.relationshipMap?.085:.16):(this.selected?.06:.19);
+      this.networkEdges.material.opacity=this.guideFocus?.065:this.relationshipMap&&this.selected?.045:this.global?(this.selected?.05:this.structuralOverview?.085:this.relationshipMap?.16:.16):(this.selected?.06:.19);
       this.networkSoftEdges.visible=this.networkEdges.visible;
-      this.networkSoftEdges.material.opacity=this.guideFocus?.022:this.relationshipMap&&this.selected?.010:this.global?(this.selected?.015:.055):(this.selected?.025:.065);
-      if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.selected&&!this.guideFocus){this.networkEdges.material.opacity=.024;this.networkSoftEdges.material.opacity=.006;}}
+      this.networkSoftEdges.material.opacity=this.guideFocus?.022:this.relationshipMap&&this.selected?.016:this.global?(this.selected?.02:.043):(this.selected?.025:.055);
+      if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.selected&&!this.guideFocus){this.networkEdges.material.opacity=.052;this.networkSoftEdges.material.opacity=.014;}}
     const pairs=new Map();for(const link of this.space.themeLinks){const key=[link.from,link.to].sort().join('|');if(!pairs.has(key))pairs.set(key,{...link,edges:[]});pairs.get(key).edges.push(...link.edges);}
     let links=this.guideFocus?this.guideFocus.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e],guideCurrent:this.guideFocus.current.has(e.prerequisiteId+'>'+e.topicId)})):this.relationMode==='off'?personalRelations(this.space.atlas,this.space.byKey.get(this.selected),this.litConnections||[],this.selectedRoute()):this.relationMode==='route'?routeLinks(this.space.atlas).map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.global&&this.traceResult?this.traceResult.edges.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]})):this.selected?relationsFor(this.space,this.selected):[...pairs.values()];
     if(this.focusView&&this.relationMode!=='off')links=this.focusView.links.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,edges:[e]}));
@@ -821,10 +821,10 @@ export class SpatialScene {
       this.dirty=true;moving=true;
       if(this.networkEdges){
         this.networkEdges.visible=this.relationshipMap||t.kind==='to-focus'||!this.selected;
-        const base=this.structuralOverview?.023:this.relationshipMap?.085:.16;
-        this.networkEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?base*(1-p)+.025*p:.025*(1-p)+base*p):base*(t.kind==='to-focus'?1-p:p);
+        const base=this.structuralOverview?.085:this.relationshipMap?.16:.16;
+        this.networkEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?base*(1-p)+.045*p:.045*(1-p)+base*p):base*(t.kind==='to-focus'?1-p:p);
         this.networkSoftEdges.visible=this.networkEdges.visible;
-        this.networkSoftEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?.012*(1-p)+.010*p:.010*(1-p)+.012*p):.055*(t.kind==='to-focus'?1-p:p);
+        this.networkSoftEdges.material.opacity=this.relationshipMap?(t.kind==='to-focus'?.043*(1-p)+.016*p:.016*(1-p)+.043*p):.055*(t.kind==='to-focus'?1-p:p);
       }
       for(const edge of this.edgesGroup.children)if(edge.userData.relation&&edge.material){
         const original=this.previewKey?(edge.userData.relation.includes(this.previewKey)?1:.12):edge.userData.baseOpacity??edge.material.opacity;
