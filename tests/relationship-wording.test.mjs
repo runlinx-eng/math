@@ -42,7 +42,8 @@ test('the unified 3D map retains revised source titles and legacy activity seman
   assert.match(space,/searchPack/);
   assert.doesNotMatch(space,/这里会用到|还会连到哪里/);
   assert.doesNotMatch(olderView,/探索包/);
-  assert.match(olderView,/任务 \$\{s\.done\} \/ \$\{s\.total\}/);
+  assert.match(olderView,/任务 \$\{summary\.done\} \/ \$\{summary\.total\}/);
+  assert.match(olderView,/lessonRecordTier/);
   assert.match(olderView,/不代表所有源目标都已完整评估/);
 });
 

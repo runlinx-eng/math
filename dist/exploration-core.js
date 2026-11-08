@@ -87,10 +87,10 @@ export function validate(raw,atlas){
  return out;
 }
 export const backup=state=>({app:'math-explorer',version:2,exportedAt:now(),state});
-export function parseBackup(text,atlas){if(text.length>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');let b;try{b=JSON.parse(text);}catch{throw new Error('不是有效的 JSON 备份，原有记录没有改变。');}if(b?.app!=='math-explorer')throw new Error('这不是数学探索的备份。');if(b.version===1)return migrateLegacy(b.state,atlas.nodes.map(n=>n.id));if(b.version!==2)throw new Error('备份版本暂不支持。');return validate(b.state,atlas);}
+export function parseBackup(text,atlas){if(new TextEncoder().encode(text).byteLength>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB。');let b;try{b=JSON.parse(text);}catch{throw new Error('不是有效的 JSON 备份，原有记录没有改变。');}if(b?.app!=='math-explorer')throw new Error('这不是数学探索的备份。');if(b.version===1)return migrateLegacy(b.state,atlas.nodes.map(n=>n.id));if(b.version!==2)throw new Error('备份版本暂不支持。');return validate(b.state,atlas);}
 function mergeEvents(a,b){const map=new Map(a.map(x=>[x.id,x]));for(const x of b)if(!map.has(x.id))map.set(x.id,x);return [...map.values()].sort((a,b)=>a.at.localeCompare(b.at));}
 export function merge(current,incoming){
- const out=structuredClone(current);out.daily=mergeDaily(current.daily,incoming.daily);Object.assign(out.visited,incoming.visited);Object.assign(out.openedPacks,incoming.openedPacks);out.bookmarks=[...new Set([...out.bookmarks,...incoming.bookmarks])];
+ const out=structuredClone(current);out.daily=mergeDaily(current.daily,incoming.daily);for(const [id,at] of Object.entries(incoming.visited))if(!out.visited[id]||at<out.visited[id])out.visited[id]=at;for(const [id,at] of Object.entries(incoming.openedPacks))if(!out.openedPacks[id]||at<out.openedPacks[id])out.openedPacks[id]=at;out.bookmarks=[...new Set([...out.bookmarks,...incoming.bookmarks])];
  out.lessons??={};for(const[id,a]of Object.entries(incoming.lessons||{}))out.lessons[id]=mergeLesson(out.lessons[id],a);
  out.lessonContinuation=current.lessonContinuation||incoming.lessonContinuation||null;
  out.journeys??={};for(const [id,j]of Object.entries(incoming.journeys||{}))out.journeys[id]=mergeJourney(out.journeys[id],j);

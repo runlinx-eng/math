@@ -726,3 +726,290 @@ body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:1
 .grade-map-filter p{margin:2px 0 0!important;font-size:9.5px!important;line-height:1.2!important;color:#6d8073!important}
 body.guide-mode .grade-map-filter{display:none!important}
 @media(max-width:600px){.grade-map-filter>div{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Issue #23 P1: task-based navigation; keep the existing scene and panel styling. */
+.primary-nav{display:flex;align-items:center;gap:3px;padding:4px;background:#fffef9ed;border:1px solid #d7ded4;border-radius:13px;box-shadow:0 4px 20px #24463c0a;pointer-events:auto}
+.primary-nav button{font:inherit;font-size:13px;padding:10px 16px;color:#60746a;background:transparent;border-radius:9px;white-space:nowrap}
+.primary-nav button[aria-pressed="true"]{background:#234c45;color:#fffef4;font-weight:600}
+.primary-nav button:hover:not([aria-pressed="true"]){background:#eaf0e6}
+.focus-section-nav{display:flex;align-items:center;gap:3px;margin-top:9px;padding:3px 0;overflow-x:auto}
+.focus-section-nav button{background:#edf1e7;border-radius:7px;font-size:11px;padding:6px 8px;color:#39584b;white-space:nowrap}
+.focus-section-nav button:hover{background:#dce8d6}
+.focus-context-section{border-top:1px solid #e1e9db;padding-top:12px;margin-top:13px}
+.focus-context-section>h3{font-size:12px;font-weight:650;color:#315648;margin:0 0 8px}
+.focus-context-section[data-context-section="understand"]{margin:0;padding:0;border:0}
+.learning-hub{position:fixed;z-index:82;top:94px;right:30px;bottom:91px;width:min(500px,calc(100vw - 60px));display:flex;flex-direction:column;background:#fffef9;border:1px solid #cdd9c8;border-radius:16px;box-shadow:0 15px 80px #253e3029;overflow:hidden}
+.learning-hub[hidden]{display:none}
+.learning-hub>header{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid #dce5d5;font-size:14px}
+.learning-hub-content{padding:16px 21px 23px;overflow-y:auto;overscroll-behavior:contain}
+.learning-hub-intro{font-size:12px;line-height:1.8;color:#64796a;margin:0 0 13px}
+.learning-hub-section{border-top:1px solid #e1e8db;padding:15px 0}
+.learning-hub-section h2{font-size:16px;line-height:1.5;margin:5px 0 7px;color:#244d41}
+.learning-hub-section p{font-size:12px;line-height:1.75}
+.learning-hub-routes{display:grid;gap:7px}
+.learning-hub-route{display:block;text-align:left;padding:11px 13px;background:#edf2e9;border-radius:10px;font-size:12px;color:#284c3e}
+.learning-hub-route:hover{background:#e0e9d9}
+.learning-hub-route small{display:block;color:#718475;font-size:10px;margin-top:5px}
+.learning-hub-footer{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0}
+.learning-hub-footer button{border-radius:8px;background:#e9efe4;padding:10px 12px;color:#305247;font-size:12px}
+@media(max-width:1100px){.topbar{gap:8px}.primary-nav button{padding:9px 11px;font-size:12px}.top-tools .search-button{min-width:90px}.keycap{display:none}}
+@media(max-width:760px){.topbar{flex-wrap:wrap;justify-content:flex-end}.topbar .brand{margin-right:auto}.primary-nav{order:2;margin-left:auto}.top-tools{order:3}.primary-nav button{padding:8px 10px}.top-tools button{padding:8px 9px}.top-tools .search-button{min-width:45px}.learning-hub{top:112px;right:12px;bottom:72px;width:calc(100vw - 24px)}}
+@media(max-width:420px){.topbar{left:12px;right:12px}.top-tools #back-button{display:none}.primary-nav button{font-size:11px;padding:8px}.learning-hub-content{padding:13px}}
+
+/* P1-B: compact grouped controls over one unchanged 3D panorama. */
+body.guide-mode[data-world="network"] #network-guide{display:none!important}
+body[data-world="network"] #network-guide{
+  top:92px;left:24px;width:278px;max-height:calc(100dvh - 190px);
+  display:flex;flex-direction:column;gap:8px;overflow-y:auto;
+  overscroll-behavior:contain;padding:12px 13px;border:1px solid #d8e0d1;
+  border-radius:13px;background:#fffef9f2;box-shadow:0 5px 24px #24463c0b;
+}
+body[data-world="network"] #network-guide>*{flex-shrink:0}
+body[data-world="network"] #network-guide{scroll-padding-block:12px}
+#network-guide .observation-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#network-guide .observation-heading strong{font-size:12px;color:#234c45}
+#network-guide .observation-heading span{font-size:9px;color:#718079}
+#network-guide .observation-subheading{font-size:11px;font-weight:650;color:#315648;border-top:1px solid #e1e8db;padding-top:8px}
+body[data-world="network"] #network-guide #grade-map-filter{margin:0;padding:7px}
+body[data-world="network"] #grade-map-filter>div{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+body[data-world="network"] #grade-map-filter button{min-height:28px;font-size:10px}
+body[data-world="network"] #network-view-title{font-size:12px;line-height:1.45}
+body[data-world="network"] #network-guide>p{display:block;margin:0;font-size:11px;line-height:1.5;max-height:50px;overflow-y:auto}
+body[data-world="network"] #network-guide .network-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 4px}
+body[data-world="network"] #network-guide .network-legend button{min-height:30px;min-width:0;white-space:nowrap;overflow:hidden;font-weight:700}
+body[data-world="network"] #network-guide #network-view-title{display:block;min-height:36px;max-height:36px;overflow:hidden}
+body[data-world="network"] #network-guide>p{height:48px;min-height:48px;max-height:48px;overflow-y:auto}
+body[data-world="network"] #network-guide .network-legend button{font-size:10px;padding:4px 5px}
+body[data-world="network"] #network-guide #network-edge-controls{display:flex;flex-wrap:wrap;gap:4px}
+body[data-world="network"] #network-edge-controls>span:first-child{display:none}
+body[data-world="network"] #network-edge-controls button{font-size:10px;padding:6px 7px}
+body[data-world="network"] #network-edge-controls small{flex:1 1 100%;margin:2px 0 0}
+body[data-world="network"] #network-edge-controls .guide-entry{flex:1 1 100%;margin:3px 0 0;padding:8px;font-size:11px}
+body[data-world="network"] #network-guide>details,
+body[data-world="network"] #network-guide>details[open]{position:static;max-width:none;margin:0;padding:5px 0;box-shadow:none;background:transparent;border:0}
+body[data-world="network"] .tool-rail{right:20px;width:76px;max-height:calc(100dvh - 175px);overflow-y:auto}
+body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 260px)}
+body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 430px);overflow-x:auto}
+.has-task-surface #focus-card,.has-task-surface #network-guide,
+.has-task-surface .tool-rail,.has-task-surface #overview-structure-controls,
+.has-task-surface #continue-card{visibility:hidden!important;pointer-events:none!important}
+.learning-hub{right:24px;width:min(465px,calc(100vw - 48px))}
+.learning-hub>header,.utility-drawer>header{flex-wrap:wrap;gap:8px}
+.learning-hub>header button,.utility-drawer>header button{min-height:34px}
+@media(max-width:1100px){
+  body[data-world="network"] #network-guide{top:86px;left:15px;width:240px;max-height:calc(100dvh - 168px);padding:9px}
+  body[data-world="network"] .tool-rail{right:13px;width:65px}
+  body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 365px)}
+  body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 230px)}
+}
+@media(max-width:800px){
+  body[data-world="network"] #network-guide{top:143px;left:12px;width:220px;max-height:calc(100dvh - 235px)}
+  body[data-world="network"] #overview-structure-controls{max-width:calc(100vw - 32px)}
+  .learning-hub{top:126px;right:12px;bottom:20px;width:calc(100vw - 24px)}
+}
+@media(max-height:780px) and (min-width:801px){
+  body[data-world="network"] #network-guide{max-height:calc(100dvh - 168px)}
+  body[data-world="network"] .focus-card[data-kind="node"]{max-height:calc(100dvh - 230px)}
+}
+
+/* Issue #23 continuous-space workspace: do not replace the 3D panorama
+   with an opaque lesson page. Existing lesson runner and its scroll stay intact. */
+body.has-journey::before{display:none!important}
+body.has-journey .topbar{display:flex!important;z-index:100}
+body.has-journey .tool-rail,body.has-journey .place-indicator{display:flex!important}
+body.has-journey .network-guide,body.has-journey .bottom-bar{display:none!important}
+body.has-journey #journey-surface{
+  top:94px;right:24px;left:auto;bottom:24px;transform:none;
+  width:min(860px,calc(100vw - 340px));
+  height:min(var(--learning-desired-height, 620px),calc(100dvh - 118px));
+  max-height:calc(100dvh - 118px);
+  box-shadow:0 12px 45px #28483c25;
+}
+body.has-journey #journey-frame{min-height:0}
+body.has-journey .primary-nav{pointer-events:auto}
+/* Never allow a hidden learning frame to overlay or trap map interactions. */
+#journey-surface[hidden],#utility-drawer[hidden]{display:none!important}
+@media(max-width:1100px){
+  body.has-journey #journey-surface{right:12px;width:min(730px,calc(100vw - 110px));top:120px;height:min(var(--learning-desired-height,620px),calc(100dvh - 140px));max-height:calc(100dvh - 140px)}
+}
+@media(max-width:800px){
+  body.has-journey #journey-surface{top:137px;left:12px;right:12px;width:auto;height:min(var(--learning-desired-height,620px),calc(100dvh - 151px));max-height:calc(100dvh - 151px)}
+  body.has-journey .tool-rail{display:none!important}
+}
+
+
+/* Issue #30 / P6-B: one spatial canvas, one right-hand context rail.
+   Structural corrections only; preserve theme colors and the original graph. */
+body[data-world="network"] #network-guide{
+  top:96px;left:20px;width:232px;
+  max-height:min(58dvh,550px);padding:10px 11px;gap:5px;
+  background:#fffef9ed;
+}
+body[data-world="network"] #network-guide #network-view-title{height:auto;min-height:0;max-height:none}
+body[data-world="network"] #network-guide>p{height:auto;min-height:0;max-height:38px}
+body[data-world="network"] #network-guide>details{display:none}
+body[data-world="network"] #network-guide .network-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+body[data-world="network"] .tool-rail,
+body[data-world="network"].has-journey .tool-rail{
+  top:auto;bottom:90px;right:auto;left:20px;width:auto;
+  max-width:min(560px,calc(100vw - 40px));max-height:70px;
+  transform:none;display:flex!important;flex-direction:row;flex-wrap:nowrap;
+  align-items:center;overflow-x:auto;overflow-y:hidden;
+}
+body[data-world="network"] .tool-rail .tool-divider{
+  height:24px;width:1px;flex:0 0 1px;margin:2px 4px;
+}
+body[data-world="network"] #focus-card{
+  overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-gutter:stable;min-height:100px;
+  background:#fffef9f5;border-radius:13px;
+  box-shadow:0 10px 32px #24463c1a;
+}
+body[data-world="network"] #focus-card .focus-sticky{
+  position:sticky;top:-14px;z-index:8;background:#fffef9;
+  border-bottom:1px solid #e0e8dd;padding-bottom:5px;
+}
+body[data-world="network"] #focus-card .focus-section-nav{
+  position:sticky;top:56px;z-index:7;background:#fffef9;
+}
+body[data-world="network"] #focus-card .focus-context-section[data-context-section="relations"] .network-relations{
+  max-height:240px;overflow-y:auto;overscroll-behavior:contain;
+}
+body[data-world="network"] #focus-card .focus-context-section[data-context-section="learn"] .grade-node-position{
+  font-size:11px;
+}
+body[data-world="network"] .space-label.node{
+  color:#365a4b;font-weight:550;text-shadow:0 1px 2px #fffefa;
+}
+body[data-world="network"] .space-label.pack{color:#345c4c;font-weight:600}
+body[data-world="network"] .space-label.theme{color:#234b40}
+body[data-world="network"] .label-tethers path{opacity:.26}
+body[data-world="network"] .work-tethers path{stroke-dasharray:3 7;opacity:.36}
+body[data-world="network"] .overview-structure-controls{top:86px;left:270px;max-width:calc(100vw - 680px)}
+body[data-world="network"] .overview-structure-controls .structure-caption{min-width:120px}
+body[data-world="network"] .learning-hub,
+body[data-world="network"] .utility-drawer{
+  top:96px;right:20px;left:auto;bottom:90px;
+  width:min(620px,48vw);max-height:calc(100dvh - 186px);
+  border-radius:13px;box-shadow:0 10px 35px #253e3020;
+}
+body[data-world="network"] .utility-drawer{width:min(620px,48vw)}
+body[data-world="network"].has-journey #journey-surface{
+  top:96px;right:20px;left:auto;bottom:auto;transform:none;
+  width:min(680px,48vw);
+  height:min(var(--learning-desired-height,620px),calc(100dvh - 188px));
+  max-height:calc(100dvh - 188px);
+  border-radius:13px;
+}
+body[data-world="network"].has-journey #journey-surface>header{
+  min-height:42px;padding:6px 13px;
+}
+body[data-world="network"].has-journey .bottom-bar{display:flex!important}
+body[data-world="network"].has-journey #network-guide{display:flex!important}
+body[data-world="network"].has-journey #focus-card{display:none!important}
+body.has-task-surface .tool-rail{visibility:visible!important;pointer-events:auto!important}
+body.has-task-surface #network-guide{visibility:visible!important;pointer-events:auto!important}
+body.has-task-surface #continue-card{visibility:hidden!important}
+body.has-task-surface #focus-card{visibility:hidden!important}
+body[data-world="network"] #network-edge-hint{font-size:11px;line-height:1.4}
+body[data-world="network"] #grade-map-filter button{font-size:11px;min-height:30px}
+body[data-world="network"] .utility-drawer iframe{min-height:0}
+@media(max-width:1100px){
+  body[data-world="network"] #network-guide{top:100px;left:12px;width:200px;max-height:min(49dvh,440px)}
+  body[data-world="network"] .tool-rail,
+  body[data-world="network"].has-journey .tool-rail{
+    left:12px;bottom:83px;max-width:calc(100vw - 24px);
+  }
+  body[data-world="network"] .overview-structure-controls{top:86px;left:224px;max-width:calc(100vw - 490px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer{top:108px;right:12px;bottom:78px;width:49vw;max-height:calc(100dvh - 186px)}
+  body[data-world="network"].has-journey #journey-surface{
+    top:108px;right:12px;width:49vw;
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 186px));
+    max-height:calc(100dvh - 186px);
+  }
+}
+@media(max-width:800px){
+  body[data-world="network"] #network-guide{top:143px;left:12px;width:190px;max-height:38dvh}
+  body[data-world="network"] .tool-rail,
+  body[data-world="network"].has-journey .tool-rail{
+    display:flex!important;left:12px;bottom:62px;max-width:calc(100vw - 24px);
+    height:42px;min-height:0;
+  }
+  body[data-world="network"] .tool-rail button{min-width:38px}
+  body[data-world="network"] .overview-structure-controls{top:143px;left:215px;max-width:calc(100vw - 230px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer{
+    top:143px;right:12px;bottom:67px;width:min(380px,calc(100vw - 24px));
+    max-height:calc(100dvh - 210px);
+  }
+  body[data-world="network"].has-journey #journey-surface{
+    top:143px;right:12px;left:auto;width:min(400px,calc(100vw - 24px));
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 210px));
+    max-height:calc(100dvh - 210px);
+  }
+  body[data-world="network"] #focus-card{width:min(360px,calc(100vw - 24px))}
+}
+@media(max-width:620px){
+  body[data-world="network"] #network-guide{top:135px;left:12px;width:min(190px,46vw);max-height:200px}
+  body[data-world="network"] .overview-structure-controls{top:135px;left:12px;max-width:calc(100vw - 24px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer,
+  body[data-world="network"].has-journey #journey-surface{
+    top:182px;right:12px;width:calc(100vw - 24px);max-height:calc(100dvh - 252px);
+  }
+  body[data-world="network"].has-journey #journey-surface{
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 252px));
+  }
+  body[data-world="network"].has-context-card #network-guide{display:none}
+}
+
+
+/* P6-B local acceptance (four Mac screenshots): reserve actual scene space
+   instead of placing the task workspace over the most important math nodes.
+   The camera pose/target/zoom stay intact; ResizeObserver only updates the
+   orthographic projection for the newly available render rectangle. */
+@media (min-width:801px){
+  body[data-world="network"]:is(.has-task-surface,.has-journey) #space-app{
+    right:calc(min(620px,48vw) + 34px);
+  }
+  body[data-world="network"]:is(.has-task-surface,.has-journey) #space-canvas{
+    position:absolute;inset:0;
+  }
+  body[data-world="network"] #network-guide{
+    width:246px;
+  }
+  body[data-world="network"] #network-guide button{
+    min-height:27px;
+  }
+  body[data-world="network"] #network-guide .network-legend button{
+    font-size:12px;
+  }
+  body[data-world="network"] .space-label.node{
+    font-size:12px;
+  }
+}
+@media (min-width:801px) and (max-width:1100px){
+  body[data-world="network"]:is(.has-task-surface,.has-journey) #space-app{
+    right:calc(49vw + 24px);
+  }
+  body[data-world="network"] #network-guide{
+    width:208px;
+  }
+}
+/* On compact screens a true split would make 3D interaction unusable, so the
+   dock overlays the scene and can be dismissed without a camera reset. */
+@media (max-width:800px){
+  body[data-world="network"]:is(.has-task-surface,.has-journey) #space-app{
+    right:0;
+  }
+}
+
+
+/* A live lesson can be 60px wider than the learning hub; reserve its real width. */
+@media (min-width:1101px){
+  body[data-world="network"].has-journey #space-app{
+    right:calc(min(680px,48vw) + 34px);
+  }
+}

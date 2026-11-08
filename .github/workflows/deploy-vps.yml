@@ -1,13 +1,7 @@
 name: Deploy Math Explorer preview
 
+# Deploying is an explicit release action. Merging code to main never publishes.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'dist/**'
-      - 'deploy/vps/**'
-      - 'scripts/deploy-vps.sh'
-      - '.github/workflows/deploy-vps.yml'
   workflow_dispatch:
     inputs:
       confirm_deploy:
@@ -21,7 +15,7 @@ permissions:
 
 jobs:
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' && (vars.VPS_DEPLOY_ENABLED == 'true' || (github.event_name == 'workflow_dispatch' && inputs.confirm_deploy == true)) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm_deploy == true }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

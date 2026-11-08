@@ -64,10 +64,17 @@ jobs:
           node --check dist/spatial-model.js
           node --check dist/space.js
           node --check dist/exploration.js
+          node --check dist/learning/trail-priority.js
+          node --check tests/p6b-layout-browser.cjs
+          node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
+          node --check dist/learning/p3-workflow.js
+          node --check dist/learning/p3-view.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
+          node --check dist/grade-distribution.js
+          node --check dist/grade-distribution-view.js
           node --check scripts/build_grade_progression_data.mjs
           node --check scripts/build_grade_panorama_lite.mjs
           node scripts/build_grade_panorama_lite.mjs --check
@@ -85,6 +92,11 @@ jobs:
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
+            tests/grade-distribution.test.mjs
+            tests/p3-learning-flow.test.mjs
+            tests/p4-learning-reliability.test.mjs
+            tests/p5-integration-safety.test.mjs
+            tests/p6b-trail-priority.test.mjs
           )
 
           for candidate in \
@@ -140,6 +152,13 @@ jobs:
           fi
 
           for test_file in \
+            tests/p1-navigation-browser.cjs \
+            tests/p2-grade-distribution-browser.cjs \
+            tests/p3-learning-flow-browser.cjs \
+            tests/p4-learning-reliability-browser.cjs \
+            tests/p5-integration-browser.cjs \
+            tests/continuous-space-browser.cjs \
+            tests/p6b-layout-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -183,4 +202,11 @@ jobs:
             verification/concept-language-pilot/
             verification/node-name-review/
             verification/language-direction/
+            verification/p1-navigation/
+            verification/p2-grade-distribution/
+            verification/p3-learning-flow/
+            verification/p4-learning-reliability/
+            verification/p5-integration/
+            verification/continuous-space/
+            verification/p6b-layout/
           if-no-files-found: warn

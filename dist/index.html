@@ -4,7 +4,7 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f5f4ef"><title>数学探索 · 在一个空间里</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="space.css">
-  <link rel="stylesheet" href="learning/question.css"><script type="module" src="space.js"></script>
+  <link rel="stylesheet" href="learning/question.css"><link rel="stylesheet" href="grade-distribution.css"><script type="module" src="space.js"></script>
 </head>
 <body>
   <main id="space-app" class="space-app" aria-label="数学探索三维空间">
@@ -18,7 +18,12 @@
   <section id="journey-surface" class="journey-surface" aria-label="学习操作现场" hidden><header><span>学习现场</span><button type="button" data-action="close-journey">回到空间 ×</button></header><iframe id="journey-frame" title="分一份，换个名字 · 操作现场" src="about:blank"></iframe></section>
   <header class="topbar">
     <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>数学探索</strong><small>在一个空间里，慢慢发现</small></span></div>
-    <nav class="top-tools" aria-label="空间工具">
+    <nav class="primary-nav" aria-label="主要功能">
+      <button type="button" data-action="nav-explore" data-surface="explore" aria-pressed="true">探索</button>
+      <button type="button" data-action="nav-learn" data-surface="learn" aria-pressed="false">学习</button>
+      <button type="button" data-action="nav-trail" data-surface="trail" aria-pressed="false">足迹</button>
+    </nav>
+    <nav class="top-tools" aria-label="空间与辅助工具">
       <button type="button" data-action="overview">全貌</button>
       <button type="button" id="back-button" data-action="back" disabled>上一处</button>
       <button type="button" class="search-button" data-action="search">查找<span class="keycap" aria-hidden="true">⌘ K</span></button>
@@ -28,7 +33,7 @@
   <button type="button" id="local-overview-exit" data-action="overview" hidden aria-label="退出局部探索，显示完整数学树">返回全貌</button>
   <div class="place-indicator"><span id="scale-label">全貌</span><span aria-hidden="true"> / </span><b id="current-place">整个数学空间</b></div>
   <nav id="workspace-list" class="workspace-list" aria-label="展开的工作面" hidden></nav>
-  <aside class="tool-rail" aria-label="移动视角">
+  <aside class="tool-rail" aria-label="镜头操作与标准视角">
     <button type="button" data-action="mode" data-mode="pan" aria-pressed="true" title="拖动空白处平移">平移</button>
     <button type="button" data-action="mode" data-mode="rotate" aria-pressed="false" title="围绕观察中心旋转">旋转</button>
     <span class="tool-divider"></span>
@@ -42,9 +47,10 @@
     <span class="tool-divider"></span>
     <button type="button" data-action="help" aria-label="查看空间操作方法">操作</button>
   </aside>
-  <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景">
+  <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景观察工具">
+    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span></div>
     <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
-      <strong>知识点 · 按学段观察</strong>
+      <strong>学段观察</strong>
       <div role="group" aria-label="小学学段筛选">
         <button type="button" data-action="grade-map-stage" data-stage="all" aria-pressed="true">全部</button>
         <button type="button" data-action="grade-map-stage" data-stage="stage-1" aria-pressed="false">1—2年级</button>
@@ -57,6 +63,7 @@
       <p id="network-view-description">颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。</p>
       <div id="network-legend" class="network-legend"></div>
       <div class="network-marker-key"><span><i class="scene-mark" aria-hidden="true"></i>未完现场</span><span><i class="question-mark" aria-hidden="true"></i>待续问题</span></div>
+      <div class="observation-subheading">关系显示与导览</div>
       <div id="network-edge-controls" class="network-edge-controls" role="group" aria-label="背景连线范围" hidden>
       <span>背景连线</span>
       <button type="button" data-action="edge-display" data-edge-display="outline" aria-pressed="true">轮廓</button>
@@ -98,7 +105,11 @@
     <p>触屏：单指拖动，双指缩放和旋转。<br>键盘：选中画布后，用方向键平移，<kbd>+</kbd> <kbd>−</kbd> 缩放。<kbd>Home</kbd> 回到全貌。</p>
     <p class="quiet network-only">全景先看主题；靠近后出现分组和知识名称。选中节点后，橙线从它用到的基础指向这里，蓝线指向后续；虚线保留辅助关联。每个点在三个视角的位置都相同。</p>
   </section>
-  <section id="utility-drawer" class="utility-drawer" aria-label="记录与依据" hidden><header><strong id="utility-title"></strong><button type="button" data-action="close-utility" class="plain-button">回到空间 ×</button></header><iframe id="utility-frame" title="学习记录与备份" src="about:blank"></iframe></section>
+  <section id="learning-hub" class="learning-hub" aria-label="学习入口" hidden>
+    <header><strong>学习</strong><button type="button" class="plain-button" data-action="close-learning-hub">回到探索 ×</button></header>
+    <div id="learning-hub-content" class="learning-hub-content"></div>
+  </section>
+  <section id="utility-drawer" class="utility-drawer" aria-label="记录与依据" hidden><header><strong id="utility-title"></strong><button type="button" data-action="close-utility" class="plain-button">返回探索 ×</button></header><iframe id="utility-frame" title="学习记录与备份" src="about:blank"></iframe></section>
   <div id="storage-warning" class="warning" role="alert" hidden></div><div id="toast" class="toast" role="status" hidden></div>
   <div id="loading" class="loading"><p>正在展开同一个数学空间…</p></div><input id="import-file" type="file" accept="application/json,.json" hidden>
   <noscript>需要启用 JavaScript 才能打开三维空间。</noscript>
