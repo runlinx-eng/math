@@ -153,6 +153,7 @@ jobs:
             tests/concept-visual-browser.cjs \
             tests/node-name-browser.cjs \
             tests/relationship-wording-browser.cjs
+            tests/p1-navigation-browser.cjs
           do
             if [[ -f "$test_file" ]]; then
               echo "::group::${test_file}"
@@ -183,4 +184,5 @@ jobs:
             verification/concept-language-pilot/
             verification/node-name-review/
             verification/language-direction/
+            verification/p1-navigation/
           if-no-files-found: warn
