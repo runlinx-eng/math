@@ -721,6 +721,8 @@ function updatePrimaryNavigation(){
     b.setAttribute('aria-pressed',String(b.dataset.surface===active));
   document.body.classList.toggle('has-task-surface',!hub.hidden||!drawer.hidden);
   document.body.classList.toggle('has-context-card',!$('#focus-card').hidden&&!journeyOpen&&hub.hidden&&drawer.hidden);
+  // A context surface changes background legibility, not the camera pose.
+  if(scene)scene.dirty=true;
 }
 function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
 function closeUtility(){
