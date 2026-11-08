@@ -240,7 +240,7 @@ function ensureGradePanoramaData(){
   return gradePanoramaPromise;
 }
 
-function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?objectLevelLabel(o):'全貌';}
+function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?objectLevelLabel(o):'全貌';updatePrimaryNavigation();}
 function renderNetworkGuide(){
   if(!scene||worldLayout!=='network')return;
   const mode=scene.networkView,current=scene.global,direction=scene.camera.position.clone().sub(scene.controls.target).normalize();
@@ -590,6 +590,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   if(worldLayout==='network')updateOverlays();
 }
 function openJourney(step,{restore=false}={}){
+  hideLearningHub();closeUtility();
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
   journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
@@ -599,16 +600,16 @@ function openJourney(step,{restore=false}={}){
   scheduleSave();
 }
 function openLearningLesson(id,{restore=false,questionId=null}={}){
- if(!sessionMeta(id))return;closePopovers();for(const key of [...panels.keys()])closePanel(key);
+ if(!sessionMeta(id))return;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations('off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';$('#journey-frame').src=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
- renderLocation();scheduleSave();
+ renderLocation();updatePrimaryNavigation();scheduleSave();
 }
 
-function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}scheduleSave();}
+function closeJourney(returnToPack=true){const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
 function openSearch(packId=null){searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'查找主题、知识群或知识点';renderSearch();$('#search-input').focus();}
 function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
   if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
@@ -688,7 +689,49 @@ function updateOverlays(){
   const d=scene.camera.position.distanceTo(scene.controls.target)/(scene.global?scene.camera.zoom:1);$('#distance-meter').style.width=`${Math.max(8,Math.min(100,Math.log(8000/d)/Math.log(8000/30)*100))}%`;
   return [...document.querySelectorAll('#focus-card,#guide-panel,#guide-cues .guide-cue,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
 }
-function showUtility(which){closePopovers();const drawer=$('#utility-drawer');drawer.hidden=false;$('#utility-title').textContent=which==='trail'?'记录与备份':'地图与学习的依据';const frame=$('#utility-frame');frame.src=`v2.html?embedded=1#${which}`;}
+// The main navigation is a surface switch over the single map and existing records.
+// It does not select knowledge, move a camera or write learning evidence.
+function updatePrimaryNavigation(){
+  const drawer=$('#utility-drawer');
+  const active=journeyOpen||!$('#learning-hub').hidden?'learn':!drawer.hidden&&drawer.dataset.surface==='trail'?'trail':'explore';
+  for(const b of document.querySelectorAll('.primary-nav [data-surface]'))
+    b.setAttribute('aria-pressed',String(b.dataset.surface===active));
+}
+function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
+function closeUtility(){
+  const drawer=$('#utility-drawer');drawer.hidden=true;delete drawer.dataset.surface;
+  $('#utility-frame').src='about:blank';updatePrimaryNavigation();
+}
+function renderLearningHub(){
+  if(!scene)return;
+  const selected=space.byKey.get(scene.selected),node=selected?.kind==='node'?selected:null;
+  const lesson=node?lessonForTopic(node.id):null,legacy=node?activityFor(node.id):null;
+  const record=lesson?learning.lessons[lesson]:null,summary=record?lessonSummary(record):null;
+  const packId=selected?.kind==='pack'?selected.id:node?.packId;
+  const routes=(packId?routesForPack(packId):ROUTES).filter(r=>r.ids.some(id=>LESSONS[id])).slice(0,3);
+  const next=continuation(learning);
+  const current=lesson?button('learn-session',record?'继续当前活动':'开始当前活动',`data-id="${esc(lesson)}"`,'primary-button')
+    :legacy?button('learn-legacy','打开早期活动',`data-id="${esc(node.id)}"`,'primary-button'):'<p class="quiet">当前知识没有单独的学习活动，可以继续查看联系或选择其他内容。</p>';
+  const evidence=summary?.total?`活动操作 ${summary.done}/${summary.total} 项${summary.independent?' · 有首次独立正确操作证据':''}。`:'活动操作与独立证据分别记录。';
+  $('#learning-hub-content').innerHTML=`
+    <p class="learning-hub-intro">从一个知识开始，动手操作，再查看结果与下一步。活动完成不等于数学掌握。</p>
+    ${node?`<section class="learning-hub-section"><span class="overline">当前知识点</span><h2>${esc(displayTitle(node))}</h2><p class="quiet">${esc(evidence)}</p>${current}</section>`:''}
+    <section class="learning-hub-section"><span class="overline">学习接续</span><h2>${esc(next.title)}</h2><p class="quiet">${next.kind==='question'?'返回保留原话的待续问题':next.kind==='session'?'从已有活动记录接着操作':'返回上次的知识群'}；草稿与作品仍在本机。</p>${button('continue','接着学习','','primary-button')}</section>
+    <section class="learning-hub-section"><span class="overline">${packId?'当前知识群':'可选示例'}</span><h2>选一条短路线</h2><p class="quiet">以下来自已配置的学习任务，不表示必须按此顺序掌握。</p><div class="learning-hub-routes">${routes.map(r=>{const first=r.ids.find(id=>LESSONS[id]);return button('learn-session',`${esc(r.title)}<small>${r.ids.length} 个学习环节 · 从「${esc(LESSONS[first].title)}」进入</small>`,`data-id="${esc(first)}"`,'learning-hub-route');}).join('')||'<p class="quiet">该知识群暂无已配置的短路线。</p>'}</div></section>
+    <div class="learning-hub-footer">${button('learn-find','查找知识或学习活动')}${button('nav-trail','查看学习足迹')}</div>`;
+}
+function showLearningHub(){
+  if(journeyOpen)return;
+  closePopovers();closeUtility();$('#learning-hub').hidden=false;
+  renderLearningHub();updatePrimaryNavigation();
+}
+function showUtility(which){
+  hideLearningHub();closePopovers();
+  const drawer=$('#utility-drawer');drawer.hidden=false;drawer.dataset.surface=which;
+  $('#utility-title').textContent=which==='trail'?'学习足迹 · 记录与备份':'地图与学习的依据';
+  $('#utility-frame').src=`v2.html?embedded=1#${which}`;
+  updatePrimaryNavigation();
+}
 function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
 function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split('/');if(bits[0]==='space'&&bits[1]&&bits[2]){choose(objectKey(bits[1],bits[2]),{animate:!initial,history:!initial});return true;}
   if(['theme','pack','node'].includes(bits[0])&&bits[1]){choose(objectKey(bits[0],bits[1]),{animate:!initial,history:!initial});return true;}
@@ -700,7 +743,15 @@ function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split(
 document.addEventListener('click',event=>{
   const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
   const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
-  if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
+  if(action==='nav-explore'){hideLearningHub();closeUtility();closePopovers();}
+   else if(action==='nav-learn')showLearningHub();
+   else if(action==='nav-trail')showUtility('trail');
+   else if(action==='close-learning-hub')hideLearningHub();
+   else if(action==='learn-find'){hideLearningHub();openSearch();}
+   else if(action==='learn-session'){hideLearningHub();openLearningLesson(id);}
+   else if(action==='learn-legacy'){hideLearningHub();openPanel(id);}
+   else if(action==='focus-section'){const section=$('#focus-card [data-context-section="'+el.dataset.section+'"]');if(section){const card=$('#focus-card');card.scrollTop=Math.max(0,section.offsetTop-card.querySelector('.focus-sticky').offsetHeight-12);}}
+   else if(action==='overview')overview();else if(action==='back')back();else if(action==='choose')choose(key,{openLesson:worldLayout!=='network'||!!el.closest('.route-choices')});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
   else if(action==='search')openSearch();else if(action==='list-pack')openSearch(id);else if(action==='search-more'){searchLimit+=24;renderSearch();}
   else if(action==='close-popover')closePopovers();
   else if(action==='grade-map-stage'){
@@ -741,10 +792,10 @@ document.addEventListener('click',event=>{
   else if(action==='minimize-panel'){const p=panels.get(id);if(p){if(p.el.classList.contains('minimized')){p.minimized=false;activePanel=id;arrangePanels();}else p.minimized=true;scheduleSave();scene.dirty=true;}}
   else if(action==='locate-panel'){const p=panels.get(id);if(p){activePanel=id;p.minimized=false;scene.select(objectKey('node',id));arrangePanels();renderFocus();renderLocation();}}
   else if(action==='arrange')arrangePanels();else if(action==='journal')showUtility('trail');else if(action==='about')showUtility('about');
-  else if(action==='close-utility'){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}
+  else if(action==='close-utility')closeUtility();
   else if(action==='export'){readLearning();download(backup(learning),`数学探索-${new Date().toISOString().slice(0,10)}.json`);}
   else if(action==='import')$('#import-file').click();
-  else if(action==='continue')continueLearning();
+  else if(action==='continue'){hideLearningHub();continueLearning();}
   else if(action==='choose-section'){activeRouteId=null;scene.setLearningSection(id||null);renderFocus();scheduleSave();}
   else if(action==='route-page'){scene.learningRoutePage=Math.max(0,Number(el.dataset.page)||0);renderFocus();scheduleSave();}
   else if(action==='choose-route'){activeRouteId=id||null;scene.setLearningRoute(activeRouteId);renderFocus();scheduleSave();}
@@ -803,7 +854,7 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
   }
   if(e.data.type!=='math-space:navigate')return;
   const sources=[...panels.values()].map(p=>p.iframe?.contentWindow).concat($('#utility-frame').contentWindow,$('#journey-frame').contentWindow);if(!sources.includes(e.source))return;
-  if(e.source===$('#utility-frame').contentWindow){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}
+  if(e.source===$('#utility-frame').contentWindow)closeUtility();
   const {kind,id}=e.data;if(['activity','legacy-activity'].includes(kind)&&activityIds.includes(id)){const node=ACTIVITIES[id].topicId;choose(objectKey('node',node),{openLesson:false});openPanel(node);}
   else if(['node','pack','theme'].includes(kind)&&space.byKey.has(objectKey(kind,id)))choose(objectKey(kind,id));else if(['map','atlas'].includes(kind))overview();
 });
@@ -816,7 +867,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();
 document.addEventListener('wheel',e=>{if(e.ctrlKey&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturestart',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
-document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#utility-drawer').hidden){$('#utility-drawer').hidden=true;$('#utility-frame').src='about:blank';}else cardHide();}});
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){closePopovers();if(!$('#learning-hub').hidden)hideLearningHub();else if(!$('#utility-drawer').hidden)closeUtility();else cardHide();}});
 
 async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
   const check=async()=>{const cache=await caches.open('math-explorer-20261105-panorama-unified-v2');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','navigation-copy.js','concept-explanations.js','grade-node-filter.js','data/grade-panorama-lite.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
