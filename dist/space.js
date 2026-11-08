@@ -677,7 +677,7 @@ function updateOverlays(){
       // A single stable context rail: no chasing projected nodes and no
       // shifting the knowledge card as the camera or selected node changes.
       const viewportBottom=innerHeight<=780?74:94;
-      const compact=innerWidth<=800,side=compact?12:innerWidth<=1100?15:24;
+      const compact=innerWidth<=800,side=compact?12:innerWidth<=1100?18:24;
       const top=compact?143:94;
       const panelWidth=compact?Math.min(360,innerWidth-24):Math.min(354,Math.max(285,innerWidth*.265));
       const availableHeight=Math.max(180,innerHeight-top-viewportBottom);
