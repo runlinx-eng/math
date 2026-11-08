@@ -96,6 +96,7 @@ jobs:
             tests/p3-learning-flow.test.mjs
             tests/p4-learning-reliability.test.mjs
             tests/p5-integration-safety.test.mjs
+            tests/p6b-trail-priority.test.mjs
           )
 
           for candidate in \
