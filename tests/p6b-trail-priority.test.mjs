@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {lessonRecordTier,activityRecordTier,journeyRecordTier,tieredIds} from '../dist/learning/trail-priority.js';
 
 test('opening a session alone never creates a work artifact',()=>{
@@ -31,4 +32,9 @@ test('early journey requires saved evidence, and its empty state is not a work',
   assert.equal(journeyRecordTier(null),'available');
   assert.equal(journeyRecordTier({attempts:[],notes:[],observations:[]}), 'draft');
   assert.equal(journeyRecordTier({attempts:[{}],notes:[],observations:[]}), 'evidence');
+});
+
+test('offline service worker includes the new trail classifier dependency',()=>{
+  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
+  assert.match(sw,/\.\/learning\/trail-priority\.js/);
 });
