@@ -121,6 +121,7 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   await page.locator('[data-action="grade-map-stage"][data-stage="all"]').click();
   for(const [width,height] of [[1440,900],[980,760],[1280,720]]){
     await page.setViewportSize({width,height});
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     const bounds=await page.evaluate(()=>{
       const r=s=>document.querySelector(s).getBoundingClientRect();
       const g=r('#network-guide'),rail=r('.tool-rail'),nav=r('.topbar'),card=r('#focus-card');
