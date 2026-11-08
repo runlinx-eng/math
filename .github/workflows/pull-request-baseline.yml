@@ -152,7 +152,7 @@ jobs:
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
-            tests/p4-learning-reliability-browser.cjs
+            tests/p4-learning-reliability-browser.cjs \
             tests/p5-integration-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
