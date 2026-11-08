@@ -590,7 +590,7 @@ function conceptExplanationHtml(id){
     '<details class="concept-alternatives"><summary>没看懂？换种方式理解</summary><div class="concept-modes">'+content+'</div></details>'+
   '</section>';
 }
-function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||(journeyOpen&&!journeySuspended)||guideVisible||panels.has(o.id)){card.hidden=true;return;}
+function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||(journeyOpen&&!journeySuspended)||guideVisible||panels.has(o.id)){card.hidden=true;document.body.classList.remove('has-context-card');return;}
   card.dataset.kind=o.kind;if(worldLayout==='network')card.style.visibility='visible';card.style.setProperty('--object-color',o.color);
   const same=card.dataset.currentKey===scene.selected,priorScroll=same?card.scrollTop:0,priorFocus=same?document.activeElement?.closest?.('[data-preview-key]')?.dataset.previewKey:null;const relations=relationsFor(space,o.key),before=relations.filter(e=>e.to===o.key).length,after=relations.filter(e=>e.from===o.key).length;
   let body='';
@@ -602,7 +602,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
   if(o.kind==='pack'||o.kind==='theme')body+=renderGradeDistribution(o);
   const previouslyOpen=new Set([...card.querySelectorAll('.grade-stage-list[open],.grade-group-list[open]')].map(el=>el.classList.contains('grade-group-list')?'groups':el.dataset.stage));
-  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${scene.canLocate(o)?button('focus-selected','聚焦所选','','plain-button'):''}${button('deselect','×','aria-label="取消选择，不移动镜头"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;
+  card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${scene.canLocate(o)?button('focus-selected','聚焦所选','','plain-button'):''}${button('deselect','×','aria-label="取消选择，不移动镜头"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;document.body.classList.add('has-context-card');
   if(same)for(const details of card.querySelectorAll('.grade-stage-list,.grade-group-list'))if(previouslyOpen.has(details.classList.contains('grade-group-list')?'groups':details.dataset.stage))details.open=true;
   card.scrollTop=priorScroll;if(priorFocus)restoreFocus({traceScroll:priorScroll,traceFocused:priorFocus});
   // The card has just changed height. Position it now, not on the next WebGL frame;
@@ -655,7 +655,7 @@ function renderPanelSection(panel,tab,{activate=true}={}){panel.tab=tab;for(cons
   if(tab==='activity'&&!panel.iframe){const key=activityFor(panel.id),frame=document.createElement('iframe');frame.title=ACTIVITIES[key].title;frame.className='activity-frame';frame.src=`v2.html?embedded=1#activity/${key}`;panel.sections.activity.append(frame);panel.iframe=frame;}
   if(activate){panel.minimized=false;panel.el.classList.remove('minimized');}scheduleSave();scene.dirty=true;
 }
-function openPanel(id,{anchor=null,minimized=false,restore=false,tab=null,expanded=false}={}){if(!space.nodes.has(id))return;closePopovers();if(panels.has(id)){activePanel=id;panels.get(id).minimized=false;arrangePanels();return;}
+function openPanel(id,{anchor=null,minimized=false,restore=false,tab=null,expanded=false}={}){if(!space.nodes.has(id))return;closePopovers();if(panels.has(id)){activePanel=id;panels.get(id).minimized=false;renderWorkspaceButtons();scene.dirty=true;return;}
   if(panels.size===2){toast('已经展开两个工作面。关闭其中一个后，可以再打开新的。');return;}
   const n=space.nodes.get(id),activity=activityFor(id),el=document.createElement('section');el.className='work-panel';el.dataset.node=id;el.setAttribute('aria-label',displayTitle(n)+'的工作面');el.style.setProperty('--object-color',n.color);
   el.innerHTML=`<header class="work-header"><span class="work-title" title="${esc(displayTitle(n))}">${esc(displayTitle(n))}</span><div>${button('resize-panel','放大',`data-id="${id}" aria-label="调整${esc(displayTitle(n))}工作面大小"`,'plain-button')}${button('minimize-panel','收起',`data-id="${id}"`,'plain-button')}${button('close-panel','×',`data-id="${id}" aria-label="关闭${esc(displayTitle(n))}工作面"`,'plain-button')}</div></header><nav class="work-tabs" aria-label="工作面内容">${[['overview','联系'],...(activity?[['activity','动手']]:[]),['records','记录']].map(([key,title])=>`<button type="button" data-panel-tab="${key}" data-id="${id}">${title}</button>`).join('')}</nav><div class="work-content"><div class="work-section" data-section="overview"></div>${activity?'<div class="work-section iframe-section" data-section="activity" hidden></div>':''}<div class="work-section" data-section="records" hidden></div></div>`;
@@ -666,51 +666,48 @@ function openPanel(id,{anchor=null,minimized=false,restore=false,tab=null,expand
 }
 function closePanel(id){const p=panels.get(id);if(!p)return;p.el.remove();panels.delete(id);if(activePanel===id)activePanel=[...panels.keys()].at(-1)||null;renderWorkspaceButtons();renderFocus();scheduleSave();scene.dirty=true;}
 function renderWorkspaceButtons(){document.body.classList.toggle('has-workspaces',!!panels.size);const bar=$('#workspace-list');bar.hidden=!panels.size;bar.innerHTML=[...panels.values()].map(p=>button('locate-panel',esc(displayTitle(space.nodes.get(p.id))),`data-id="${p.id}"`,p.id===activePanel?'workspace-chip active':'workspace-chip')).join('')+(panels.size===2?button('arrange','并排看','','workspace-chip'):'');}
-function arrangePanels(){if(!panels.size)return;const {right,up,direction}=scene.basis(),list=[...panels.values()],center=[0,0,0];for(const p of list){const n=space.nodes.get(p.id);n.position.forEach((x,i)=>center[i]+=x/list.length);}
-  const ratio=Math.max(1,.8/scene.camera.aspect),d=(list.length===1?600:890)*ratio;
-  const target=center.map((x,i)=>x+(list.length===1?right.getComponent(i)*105:0));
-  const width=d*Math.tan(20*Math.PI/180)*scene.camera.aspect;
-  list.forEach((p,i)=>{const offset=list.length===1?width*.41:(i===0?-1:1)*width*.52;p.anchor=target.map((x,j)=>x+right.getComponent(j)*offset+up.getComponent(j)*8);});
-  scene.fly(target.map((x,i)=>x+direction.getComponent(i)*d),target,850);renderWorkspaceButtons();scheduleSave();
+function arrangePanels(){if(!panels.size)return;
+  // Panel arrangement is a UI operation, not permission to move the camera.
+  renderWorkspaceButtons();scene.dirty=true;scheduleSave();
 }
 function updateOverlays(){
   positionGuide();renderGuideCues();
-  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const minCardTop=innerWidth>620?170:100;
-    if(worldLayout==='network')card.style.maxHeight=Math.max(160,innerHeight-minCardTop-24)+'px';
-    const width=card.offsetWidth,height=card.offsetHeight,docked=o.kind!=='node'&&innerWidth>760,routeOnMobile=o.key==='pack:same-amount'&&innerWidth<=760;let left=routeOnMobile?16:docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));if(worldLayout==='network'&&innerWidth>760){const maxLeft=Math.max(16,innerWidth-width-100),guideRight=$('#network-guide').getBoundingClientRect().right;left=Math.max(Math.min(guideRight+16,maxLeft),Math.min(left,maxLeft));}if(worldLayout==='network'){
-      // Keep the knowledge card clear of the guide panel and inside the
-      // viewport. When there is room, use the map area to the guide's right;
-      // otherwise clamp its vertical position instead of pushing it offscreen.
-      const inset=innerWidth>900?124:innerWidth>620?96:18;
-      const available=Math.max(180,innerWidth-inset-18);
-      card.style.maxWidth=`${available}px`;
-      const guide=$('#network-guide'),guideRect=guide&&!guide.hidden?guide.getBoundingClientRect():null;
-      const minTop=innerWidth>620?170:100,maxTop=Math.max(minTop,innerHeight-height-12);
-      const rightLeft=guideRect?Math.max(inset,Math.min(innerWidth-width-16,guideRect.right+16)):inset;
-      const canPlaceRight=innerWidth>760&&!!guideRect&&guideRect.right+16+width<=innerWidth-16;
-      if(canPlaceRight){
-        card.style.left=`${rightLeft}px`;
-        const projectedY=Number.isFinite(p.y)?p.y:innerHeight/2;
-        card.style.top=`${Math.max(minTop,Math.min(maxTop,projectedY-height*.25))}px`;
-      }else{
-        card.style.left=`${inset}px`;
-        const desiredTop=Math.max(minTop,(guideRect?.bottom||0)+14);
-        card.style.top=`${Math.min(desiredTop,maxTop)}px`;
-      }
-    }else{card.style.left=`${left}px`;card.style.top=`${docked?142:Math.max(110,Math.min(innerHeight-height-145,p.y-height*.25))}px`;}}}
+  const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const minCardTop=innerWidth>800?112:innerWidth>620?138:112;
+    if(worldLayout==='network'){
+      // A single stable context rail: no chasing projected nodes and no
+      // shifting the knowledge card as the camera or selected node changes.
+      const viewportBottom=innerHeight<=780?74:94;
+      const compact=innerWidth<=800,side=compact?12:innerWidth<=1100?15:24;
+      const top=compact?143:94;
+      const panelWidth=compact?Math.min(360,innerWidth-24):Math.min(354,Math.max(285,innerWidth*.265));
+      const availableHeight=Math.max(180,innerHeight-top-viewportBottom);
+      card.style.left=`${side}px`;
+      card.style.top=`${top}px`;
+      card.style.width=`${panelWidth}px`;
+      card.style.maxWidth=`calc(100vw - ${side*2}px)`;
+      card.style.maxHeight=`${availableHeight}px`;
+      card.style.visibility='visible';
+    }else{
+      const width=card.offsetWidth,height=card.offsetHeight;
+      const docked=o.kind!=='node'&&innerWidth>760;
+      const left=docked?30:Math.max(16,Math.min(innerWidth-width-22,p.x+120));
+      card.style.left=`${left}px`;
+      card.style.top=`${docked?142:Math.max(110,Math.min(innerHeight-height-145,p.y-height*.25))}px`;
+    }
+  }}
   const tethers=[];for(const p of panels.values()){
     const projected=scene.project(p.anchor),source=scene.project(space.nodes.get(p.id).position),far=projected.distance>1450,compact=innerWidth<760;
-    const visible=projected.visible&&(!compact||activePanel===p.id);p.el.hidden=!visible;if(!visible)continue;
-    const minimized=p.minimized||far;p.el.classList.toggle('minimized',minimized);p.el.classList.toggle('distant',far);
-    const width=minimized?230:Math.min(panels.size===2&&!compact?Math.min(innerWidth*.42,p.expanded?680:560):p.expanded?720:520,innerWidth-32),height=minimized?46:Math.min(innerHeight-265,p.expanded?740:590);
+    const visible=!p.minimized&&(!compact||activePanel===p.id);p.el.hidden=!visible;if(!visible)continue;
+    const minimized=p.minimized;p.el.classList.toggle('minimized',minimized);p.el.classList.toggle('distant',far);
+    const width=minimized?230:Math.min(panels.size===2&&!compact?innerWidth*.36:p.expanded?620:480,Math.max(250,innerWidth*.46)),height=minimized?46:Math.max(220,Math.min(innerHeight-205,p.expanded?740:590));
     p.el.style.width=`${width}px`;p.el.style.height=`${height}px`;
-    const x=Math.max(16,Math.min(innerWidth-width-16,projected.x-width/2)),y=Math.max(100,Math.min(innerHeight-height-165,projected.y-height/2));
+    const x=Math.max(16,innerWidth-width-24),y=Math.max(100,Math.min(innerHeight-height-96,118));
     p.el.style.transform=`translate(${x}px,${y}px)`;p.el.style.zIndex=p.id===activePanel?'5':'4';
     const toggle=p.el.querySelector('[data-action="minimize-panel"]');toggle.textContent=minimized?'展开':'收起';
     p.el.querySelector('[data-action="resize-panel"]').textContent=p.expanded?'缩小':'放大';
-    if(source.visible&&scene.canLocate(space.nodes.get(p.id))){const edgeX=source.x<x?x:source.x>x+width?x+width:source.x,edgeY=Math.max(y+24,Math.min(y+height-24,source.y));tethers.push(`<path d="M ${source.x.toFixed(1)} ${source.y.toFixed(1)} Q ${((source.x+edgeX)/2).toFixed(1)} ${(source.y-24).toFixed(1)} ${edgeX.toFixed(1)} ${edgeY.toFixed(1)}"/><circle cx="${source.x.toFixed(1)}" cy="${source.y.toFixed(1)}" r="4"/>`);}
+    if(source.visible&&scene.canLocate(space.nodes.get(p.id))&&Math.hypot(source.x-x,source.y-y)<230){const edgeX=source.x<x?x:source.x>x+width?x+width:source.x,edgeY=Math.max(y+24,Math.min(y+height-24,source.y));tethers.push(`<path d="M ${source.x.toFixed(1)} ${source.y.toFixed(1)} Q ${((source.x+edgeX)/2).toFixed(1)} ${(source.y-24).toFixed(1)} ${edgeX.toFixed(1)} ${edgeY.toFixed(1)}"/><circle cx="${source.x.toFixed(1)}" cy="${source.y.toFixed(1)}" r="4"/>`);}
   }
-  if(journeyOpen&&o?.kind==='node'&&scene.canLocate(o)){const source=scene.project(o.position),r=$('#journey-surface').getBoundingClientRect();if(source.visible)tethers.push(`<path d="M ${source.x} ${source.y} L ${Math.max(r.left,Math.min(r.right,source.x))} ${Math.max(r.top+25,Math.min(r.bottom-25,source.y))}"/>`);}
+  if(journeyOpen&&o?.kind==='node'&&scene.canLocate(o)){const source=scene.project(o.position),r=$('#journey-surface').getBoundingClientRect();if(source.visible&&Math.hypot(source.x-r.left,source.y-r.top)<180)tethers.push(`<path d="M ${source.x} ${source.y} L ${Math.max(r.left,Math.min(r.right,source.x))} ${Math.max(r.top+25,Math.min(r.bottom-25,source.y))}"/>`);}
   $('#work-tethers').innerHTML=tethers.join('');
   const d=scene.camera.position.distanceTo(scene.controls.target)/(scene.global?scene.camera.zoom:1);$('#distance-meter').style.width=`${Math.max(8,Math.min(100,Math.log(8000/d)/Math.log(8000/30)*100))}%`;
   return [...document.querySelectorAll('#focus-card,#guide-panel,#guide-cues .guide-cue,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
@@ -723,6 +720,7 @@ function updatePrimaryNavigation(){
   for(const b of document.querySelectorAll('.primary-nav [data-surface]'))
     b.setAttribute('aria-pressed',String(b.dataset.surface===active));
   document.body.classList.toggle('has-task-surface',!hub.hidden||!drawer.hidden);
+  document.body.classList.toggle('has-context-card',!$('#focus-card').hidden&&!journeyOpen&&hub.hidden&&drawer.hidden);
 }
 function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
 function closeUtility(){
@@ -873,7 +871,7 @@ document.addEventListener('click',event=>{
   else if(action==='question-later'||action==='question-finish'){if(mutateLearning(s=>questionAction(s,id,action==='question-later'?'later':'finish'))){if(!$('#questions-popover').hidden)questionList();if(action==='question-later')toast('先放着，仍在“问题”里。');}}
 
 });
-function cardHide(){$('#focus-card').hidden=true;}
+function cardHide(){$('#focus-card').hidden=true;document.body.classList.remove('has-context-card');}
 // The header identifies the parent theme; the map preview keeps its own level.
 const themeOfLegendTarget=target=>target?.closest?.('#network-legend [data-action="network-theme"]')?.dataset.id||null;
 function syncHoverHeader(){
