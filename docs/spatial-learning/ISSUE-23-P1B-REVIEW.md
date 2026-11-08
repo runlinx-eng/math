@@ -1,7 +1,7 @@
 # Issue #23 · P1-B implementation and acceptance record
 
-**Date:** 2026-11-08  
-**PR:** #24, branch `feat/issue-23-p0-p1-navigation-shell`  
+**Date:** 2026-11-08
+**PR:** #24, branch `feat/issue-23-p0-p1-navigation-shell`
 **Status:** engineering candidate; not an approved human visual/interaction review.
 
 ## P1-A baseline evidence
