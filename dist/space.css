@@ -837,3 +837,130 @@ body.has-journey .primary-nav{pointer-events:auto}
   body.has-journey #journey-surface{top:137px;left:12px;right:12px;width:auto;height:min(var(--learning-desired-height,620px),calc(100dvh - 151px));max-height:calc(100dvh - 151px)}
   body.has-journey .tool-rail{display:none!important}
 }
+
+
+/* Issue #30 / P6-B: one spatial canvas, one right-hand context rail.
+   Structural corrections only; preserve theme colors and the original graph. */
+body[data-world="network"] #network-guide{
+  top:96px;left:20px;width:232px;
+  max-height:min(58dvh,550px);padding:10px 11px;gap:5px;
+  background:#fffef9ed;
+}
+body[data-world="network"] #network-guide #network-view-title{height:auto;min-height:0;max-height:none}
+body[data-world="network"] #network-guide>p{height:auto;min-height:0;max-height:38px}
+body[data-world="network"] #network-guide>details{display:none}
+body[data-world="network"] #network-guide .network-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+body[data-world="network"] .tool-rail,
+body[data-world="network"].has-journey .tool-rail{
+  top:auto;bottom:90px;right:auto;left:20px;width:auto;
+  max-width:min(560px,calc(100vw - 40px));max-height:70px;
+  transform:none;display:flex!important;flex-direction:row;flex-wrap:nowrap;
+  align-items:center;overflow-x:auto;overflow-y:hidden;
+}
+body[data-world="network"] .tool-rail .tool-divider{
+  height:24px;width:1px;flex:0 0 1px;margin:2px 4px;
+}
+body[data-world="network"] #focus-card{
+  overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-gutter:stable;min-height:100px;
+  background:#fffef9f5;border-radius:13px;
+  box-shadow:0 10px 32px #24463c1a;
+}
+body[data-world="network"] #focus-card .focus-sticky{
+  position:sticky;top:-14px;z-index:8;background:#fffef9;
+  border-bottom:1px solid #e0e8dd;padding-bottom:5px;
+}
+body[data-world="network"] #focus-card .focus-section-nav{
+  position:sticky;top:56px;z-index:7;background:#fffef9;
+}
+body[data-world="network"] #focus-card .focus-context-section[data-context-section="relations"] .network-relations{
+  max-height:240px;overflow-y:auto;overscroll-behavior:contain;
+}
+body[data-world="network"] #focus-card .focus-context-section[data-context-section="learn"] .grade-node-position{
+  font-size:11px;
+}
+body[data-world="network"] .space-label.node{
+  color:#365a4b;font-weight:550;text-shadow:0 1px 2px #fffefa;
+}
+body[data-world="network"] .space-label.pack{color:#345c4c;font-weight:600}
+body[data-world="network"] .space-label.theme{color:#234b40}
+body[data-world="network"] .label-tethers path{opacity:.26}
+body[data-world="network"] .work-tethers path{stroke-dasharray:3 7;opacity:.36}
+body[data-world="network"] .overview-structure-controls{top:86px;left:270px;max-width:calc(100vw - 680px)}
+body[data-world="network"] .overview-structure-controls .structure-caption{min-width:120px}
+body[data-world="network"] .learning-hub,
+body[data-world="network"] .utility-drawer{
+  top:96px;right:20px;left:auto;bottom:90px;
+  width:min(620px,48vw);max-height:calc(100dvh - 186px);
+  border-radius:13px;box-shadow:0 10px 35px #253e3020;
+}
+body[data-world="network"] .utility-drawer{width:min(620px,48vw)}
+body[data-world="network"].has-journey #journey-surface{
+  top:96px;right:20px;left:auto;bottom:auto;transform:none;
+  width:min(680px,48vw);
+  height:min(var(--learning-desired-height,620px),calc(100dvh - 188px));
+  max-height:calc(100dvh - 188px);
+  border-radius:13px;
+}
+body[data-world="network"].has-journey #journey-surface>header{
+  min-height:42px;padding:6px 13px;
+}
+body[data-world="network"].has-journey .bottom-bar{display:flex!important}
+body[data-world="network"].has-journey #network-guide{display:flex!important}
+body[data-world="network"].has-journey #focus-card{display:none!important}
+body.has-task-surface .tool-rail{visibility:visible!important;pointer-events:auto!important}
+body.has-task-surface #network-guide{visibility:visible!important;pointer-events:auto!important}
+body.has-task-surface #continue-card{visibility:hidden!important}
+body.has-task-surface #focus-card{visibility:hidden!important}
+body[data-world="network"] #network-edge-hint{font-size:11px;line-height:1.4}
+body[data-world="network"] #grade-map-filter button{font-size:11px;min-height:30px}
+body[data-world="network"] .utility-drawer iframe{min-height:0}
+@media(max-width:1100px){
+  body[data-world="network"] #network-guide{top:100px;left:12px;width:200px;max-height:min(49dvh,440px)}
+  body[data-world="network"] .tool-rail,
+  body[data-world="network"].has-journey .tool-rail{
+    left:12px;bottom:83px;max-width:calc(100vw - 24px);
+  }
+  body[data-world="network"] .overview-structure-controls{top:86px;left:224px;max-width:calc(100vw - 490px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer{top:108px;right:12px;bottom:78px;width:49vw;max-height:calc(100dvh - 186px)}
+  body[data-world="network"].has-journey #journey-surface{
+    top:108px;right:12px;width:49vw;
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 186px));
+    max-height:calc(100dvh - 186px);
+  }
+}
+@media(max-width:800px){
+  body[data-world="network"] #network-guide{top:143px;left:12px;width:190px;max-height:38dvh}
+  body[data-world="network"] .tool-rail,
+  body[data-world="network"].has-journey .tool-rail{
+    display:flex!important;left:12px;bottom:62px;max-width:calc(100vw - 24px);
+    height:42px;min-height:0;
+  }
+  body[data-world="network"] .tool-rail button{min-width:38px}
+  body[data-world="network"] .overview-structure-controls{top:143px;left:215px;max-width:calc(100vw - 230px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer{
+    top:143px;right:12px;bottom:67px;width:min(380px,calc(100vw - 24px));
+    max-height:calc(100dvh - 210px);
+  }
+  body[data-world="network"].has-journey #journey-surface{
+    top:143px;right:12px;left:auto;width:min(400px,calc(100vw - 24px));
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 210px));
+    max-height:calc(100dvh - 210px);
+  }
+  body[data-world="network"] #focus-card{width:min(360px,calc(100vw - 24px))}
+}
+@media(max-width:620px){
+  body[data-world="network"] #network-guide{top:135px;left:12px;width:min(190px,46vw);max-height:200px}
+  body[data-world="network"] .overview-structure-controls{top:135px;left:12px;max-width:calc(100vw - 24px)}
+  body[data-world="network"] .learning-hub,
+  body[data-world="network"] .utility-drawer,
+  body[data-world="network"].has-journey #journey-surface{
+    top:182px;right:12px;width:calc(100vw - 24px);max-height:calc(100dvh - 252px);
+  }
+  body[data-world="network"].has-journey #journey-surface{
+    height:min(var(--learning-desired-height,620px),calc(100dvh - 252px));
+  }
+  body[data-world="network"].has-context-card #network-guide{display:none}
+}
