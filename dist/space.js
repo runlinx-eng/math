@@ -705,7 +705,7 @@ function updatePrimaryNavigation(){
 function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
 function closeUtility(){
   const drawer=$('#utility-drawer');drawer.hidden=true;delete drawer.dataset.surface;
-  $('#utility-frame').src='about:blank';updatePrimaryNavigation();
+  const frame=$('#utility-frame');frame.contentWindow.location.replace('about:blank');delete frame.dataset.embeddedSrc;updatePrimaryNavigation();
 }
 // Task URLs are independent of the knowledge hash, camera and learning data.
 function setTaskSurfaceUrl(surface,{replace=false}={}){
@@ -765,7 +765,10 @@ function showUtility(which){
   hideLearningHub();closePopovers();
   const drawer=$('#utility-drawer');drawer.hidden=false;drawer.dataset.surface=which;
   $('#utility-title').textContent=which==='trail'?'学习足迹 · 记录与备份':'地图与学习的依据';
-  $('#utility-frame').src=`v2.html?embedded=1#${which}`;
+  const frame=$('#utility-frame');frame.dataset.embeddedSrc=`v2.html?embedded=1#${which}`;
+  // Replacing the iframe's current entry prevents its load from consuming the
+  // parent's Back/Forward task-history step.
+  frame.contentWindow.location.replace(new URL(frame.dataset.embeddedSrc,location.href).href);
   updatePrimaryNavigation();
 }
 function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
