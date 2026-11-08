@@ -152,7 +152,7 @@ jobs:
             tests/learning-workspace-browser.cjs \
             tests/concept-visual-browser.cjs \
             tests/node-name-browser.cjs \
-            tests/relationship-wording-browser.cjs
+            tests/relationship-wording-browser.cjs \
             tests/p1-navigation-browser.cjs
           do
             if [[ -f "$test_file" ]]; then
