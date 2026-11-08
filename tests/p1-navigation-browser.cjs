@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/p1-navigation');
 const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.push(label);};
-const key='math-explorer-network-relationship-view-v1';
+const key='math-explorer-v2';
 const samePose=(a,b)=>JSON.stringify([a.position,a.target,a.cameraZoom])===JSON.stringify([b.position,b.target,b.cameraZoom]);
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -24,7 +24,7 @@ const samePose=(a,b)=>JSON.stringify([a.position,a.target,a.cameraZoom])===JSON.
   check(await page.locator('#learning-hub [data-action="continue"]').count()===1,'learning reuses existing continuation');
   check(await page.locator('#learning-hub [data-action="learn-session"]').count()>0,'learning has actual configured task entry points');
   check(samePose(first,await snap()),'learning navigation does not move the camera');
-  check(await page.evaluate(k=>localStorage.getItem(k),key)===stored,'navigation alone does not persist a changed map view');
+  check(await page.evaluate(k=>localStorage.getItem(k),key)===stored,'navigation alone does not change the existing learning record');
   await page.screenshot({path:path.join(out,'01-learning-overview.png')});
   await page.locator('#learning-hub [data-action="nav-trail"]').click();
   check(await current()==='trail'&&await page.locator('#utility-drawer').isVisible(),'footprint tab opens the old records and backup surface');
