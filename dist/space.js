@@ -901,7 +901,7 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
 });
 window.addEventListener('hashchange',()=>applyRoute());
 window.addEventListener('popstate',()=>restoreTaskSurface());
-window.addEventListener('resize',()=>{if(!scene)return;requestAnimationFrame(()=>{updateOverlays();renderNetworkGuide();});});
+window.addEventListener('resize',()=>{if(!scene)return;updateOverlays();renderNetworkGuide();});
 window.addEventListener('pagehide',saveView);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();else if(scene){readLearning();refreshLearning();scene.dirty=true;}});
 // Only the WebGL canvas owns spatial zoom through OrbitControls.
