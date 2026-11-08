@@ -64,6 +64,7 @@ jobs:
           node --check dist/spatial-model.js
           node --check dist/space.js
           node --check dist/exploration.js
+          node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
           node --check dist/learning/p3-workflow.js
           node --check dist/learning/p3-view.js
@@ -92,6 +93,7 @@ jobs:
             tests/grade-distribution.test.mjs
             tests/p3-learning-flow.test.mjs
             tests/p4-learning-reliability.test.mjs
+            tests/p5-integration-safety.test.mjs
           )
 
           for candidate in \
@@ -150,7 +152,8 @@ jobs:
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
-            tests/p4-learning-reliability-browser.cjs \
+            tests/p4-learning-reliability-browser.cjs
+            tests/p5-integration-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -198,4 +201,5 @@ jobs:
             verification/p2-grade-distribution/
             verification/p3-learning-flow/
             verification/p4-learning-reliability/
+            verification/p5-integration/
           if-no-files-found: warn
