@@ -9,6 +9,8 @@ import {mergeLiveActivity} from './live-state.js';
 import {LESSONS,lessonIds,lessonForTopic,topicIds,ROUTES} from './learning/catalog.js';
 import {bridgeIds} from './learning/bridges.js';
 import {lessonSummary} from './learning/state.js';
+import {lessonRecordTier,activityRecordTier,journeyRecordTier,tieredIds} from './learning/trail-priority.js';
+import {questionDone} from './learning/daily.js';
 const embedded=window.parent!==window&&new URLSearchParams(location.search).has('embedded');
 if(embedded)document.documentElement.classList.add('embedded');
 function spaceNavigate(kind,id){window.parent.postMessage({type:'math-space:navigate',kind,id},location.origin);}
@@ -88,10 +90,56 @@ function activityContent(){const a=current(),info=ACTIVITIES[a.id];if(a.stage===
 function renderActivity(){const a=current(),info=ACTIVITIES[a.id],e=evidenceSummary(a),done=nodeState(state,info.topicId).progress==='completed';main.innerHTML=`<section class="activity-shell">${breadcrumbs([['index.html#atlas','知识全景'],['index.html#space/pack/same-amount',packById.get('same-amount')?.title||'分数的认识与等值'],[null,info.title]])}<div class="activity-head"><div><div class="eyebrow">一个想法，多种走法</div><h1>${info.title}</h1><p>${info.goal}</p></div>${badge(done?'完成':'未完成',done?'completed':'incomplete')}</div><nav class="activity-tabs" aria-label="自由选择探索方式">${Object.entries(STAGES).map(([key,label])=>btn('stage',(KINDS.includes(key)?(e.kinds.find(k=>k.kind===key).status!=='none'?'✓ ':'○ '):'')+label,`data-stage="${key}" aria-pressed="${a.stage===key}"`,a.stage===key?'active':'')).join('')}</nav><div id="activity-content">${activityContent()}</div></section>`;}
 function restoreFocusAfter(update){const el=document.activeElement,attrs=['id','data-do','data-value','data-model','data-row','data-cut','data-stage','data-filter','data-id'],selector=el&&attrs.filter(k=>el.hasAttribute(k)).map(k=>`[${k}="${CSS.escape(el.getAttribute(k))}"]`).join('');update();if(selector&&!el.isConnected)document.querySelector(selector)?.focus({preventScroll:true});}
 function refreshScene(){const a=current();restoreFocusAfter(()=>{$('#scene-visual').innerHTML=sceneVisual(a);$('#scene-result').innerHTML=feedback(a);});}
-function journeyRecord(){const j=state.journeys?.[ROUTE_ID];if(!j)return '';return `<section class="panel"><h2>分一份，换个名字 · 路线 A</h2><p>${j.finishedAt?'这次体验已走完':'体验进行中'}。这些操作不自动计为独立理解证据。</p><p>重新分过 ${j.observations.length} 次；果汁杯尝试 ${j.attempts.length} 次。</p>${j.attempts.map((e,i)=>`<p>第 ${i+1} 次：倒到第 ${e.cup} 格 / 满杯 8 格 · ${e.cup===4?'这次是半杯':'还需调整'} · ${e.exposed?'已看过反馈':'首次提交'}</p>`).join('')}${j.notes.map(n=>`<p class="saved-note">我的发现（待确认）：${esc(n.text)}</p>`).join('')}${btn('resume-journey','回到这次体验 →','','btn secondary')}</section>`;}
-function lessonRecords(){const ids=lessonIds.filter(id=>state.lessons[id]);return ids.length?`<section class="panel"><h2>三条路线的作品</h2>${ids.map(id=>{const a=state.lessons[id],s=lessonSummary(a);return `<article class="record-section" data-lesson-record="${id}"><h3>${LESSONS[id].title}</h3><p>${s.completed?'完成':'未完成'} · 任务 ${s.done} / ${s.total}</p><details><summary>看看尝试与发现</summary><p>${s.independent?'本次任务有未借助提示的操作证据。':'提示、首次尝试和后来的修正都保留。'}文字解释未自动判定。</p>${Object.entries(a.cases).map(([i,r])=>`<p>任务 ${Number(i)+1} · ${r.attempts.length} 次提交 · ${r.support?'使用过提示':'未主动看提示'}${r.attempts.some(e=>e.exposed)?' · 已保留重答记录':''}</p>`).join('')}${a.notes.map(n=>`<p class="saved-note">${esc(n.text)}（待确认）</p>`).join('')}</details>${embedded?btn('resume-lesson','继续这次活动 →',`data-id="${id}"`,'text-link'):link('learn.html#'+id,'回到这次活动 →','text-link')}</article>`;}).join('')}</section>`:'';}
+function journeyRecord(tier='evidence'){
+  const j=state.journeys?.[ROUTE_ID];
+  if(!j||journeyRecordTier(j)!==tier)return '';
+  return `<section class="panel" data-trail-tier="${tier}"><h2>${tier==='evidence'?'早期路线 · 真实尝试':'早期路线 · 继续活动'}</h2>
+    <p>${j.finishedAt?'这次体验已走完':'体验进行中'}。这些操作不自动计为独立理解证据。</p>
+    <p>重新分过 ${j.observations.length} 次；果汁杯尝试 ${j.attempts.length} 次。</p>
+    ${j.attempts.map((e,i)=>`<p>第 ${i+1} 次：倒到第 ${e.cup} 格 / 满杯 8 格 · ${e.cup===4?'这次是半杯':'还需调整'} · ${e.exposed?'已看过反馈':'首次提交'}</p>`).join('')}
+    ${j.notes.map(n=>`<p class="saved-note">我的发现（待确认）：${esc(n.text)}</p>`).join('')}
+    ${btn('resume-journey','回到这次体验 →','','btn secondary')}</section>`;
+}
+function lessonRecords(tier='evidence'){
+  const groups=tieredIds(lessonIds,state.lessons,lessonRecordTier),ids=groups[tier];
+  if(!ids.length)return '';
+  const title={evidence:'已有作品与提交',draft:'有草稿的学习现场',available:'可开始的学习任务'}[tier];
+  const articles=ids.map(id=>{
+    const a=state.lessons[id],summary=lessonSummary(a);
+    const attempts=Object.values(a.cases||{}).reduce((sum,row)=>sum+(row.attempts?.length||0),0);
+    return `<article class="record-section" data-lesson-record="${id}" data-trail-tier="${tier}">
+      <h3>${esc(LESSONS[id].title)}</h3>
+      <p>${tier==='evidence'?`${attempts} 次实际提交 · 任务 ${summary.done} / ${summary.total}`:tier==='draft'?'未完成 · 已保留学习现场':'尚未开始 · 不属于已有作品'}</p>
+      ${tier==='evidence'?`<details><summary>看看尝试与发现</summary><p>${summary.independent?'有首次独立正确操作证据。':'操作记录、提示与重试分别保留。'}文字解释未自动判定。</p>
+        ${Object.entries(a.cases||{}).map(([i,row])=>`<p>任务 ${Number(i)+1} · ${row.attempts.length} 次提交 · ${row.support?'使用过提示':'未主动看提示'}${row.attempts.some(e=>e.exposed)?' · 已保留重答记录':''}</p>`).join('')}
+        ${a.notes.map(n=>`<p class="saved-note">${esc(n.text)}（待确认）</p>`).join('')}</details>`:tier==='draft'?'<p>可以返回原活动继续，草稿不计为已提交作品。</p>':''}
+      ${embedded?btn('resume-lesson',tier==='available'?'开始活动 →':'继续原活动 →',`data-id="${id}"`,'text-link'):link('learn.html#'+id,tier==='available'?'开始活动 →':'继续原活动 →','text-link')}
+      ${embedded?btn('node','定位原知识',`data-id="${LESSONS[id].topicId}"`,'text-link'):link('index.html#space/node/'+LESSONS[id].topicId,'定位原知识','text-link')}
+    </article>`;
+  }).join('');
+  return tier==='available'
+    ?`<details class="panel trail-available" data-trail-tier="available"><summary>${title} · ${ids.length}</summary><p>这些是已打开但没有真实学习证据的任务，不是作品。</p>${articles}</details>`
+    :`<section class="panel" data-trail-tier="${tier}"><h2>${title} · ${ids.length}</h2>${articles}</section>`;
+}
+function draftActivityRecords(ids){
+  if(!ids.length)return '';
+  return `<section class="panel" data-trail-tier="draft"><h2>待继续的自由探索</h2>${ids.map(id=>`<article class="record-section">
+    <h3>${esc(ACTIVITIES[id].title)}</h3><p>已经保留探索现场，尚没有实际提交或保存的作品。</p>
+    ${link('#activity/'+id,'继续探索 →','text-link')}
+    ${embedded?btn('node','定位原知识',`data-id="${ACTIVITIES[id].topicId}"`,'text-link'):link('index.html#space/node/'+ACTIVITIES[id].topicId,'定位原知识','text-link')}
+  </article>`).join('')}</section>`;
+}
+function pendingQuestionRecords(){
+  const questions=(state.daily?.questions||[]).filter(q=>!questionDone(q));
+  if(!questions.length)return '';
+  return `<section class="panel" data-trail-tier="question"><h2>待续问题 · ${questions.length}</h2>${questions.map(q=>`<article class="record-section">
+     <p class="saved-note">${esc(q.text)}</p>
+     ${q.nodeId?(embedded?btn('node','回到问题所在知识 →',`data-id="${q.nodeId}"`,'text-link'):link('index.html#space/node/'+q.nodeId,'回到问题所在知识 →','text-link')):'<p>问题已保存，可在主空间的「问题」入口继续。</p>'}
+   </article>`).join('')}</section>`;
+}
 function renderTrail(){persist();
- const list=activityIds.filter(id=>state.activities[id]);main.innerHTML=`<section class="subhero"><div class="eyebrow">我的学习记录</div><h1>记录走过的路，也记录想法。</h1><p>完成活动、独立操作和解释清楚，各自留下不同的证据。</p></section><div class="journal-grid"><div>${lessonRecords()}${journeyRecord()}<section class="panel"><h2>我的探索</h2>${list.length?list.map(id=>{const a=state.activities[id],e=evidenceSummary(a);return `<article class="record-section"><h3>${ACTIVITIES[id].title}</h3><div class="status-strip">${badge(e.completed?'活动已完成':'探索中',e.completed?'completed':'exploring')}${badge(e.demonstrated?'有操作与迁移证据':e.needsSupport?'有需要支持的地方':'正在收集证据',e.demonstrated?'evidence':e.needsSupport?'supported':'')}${badge(a.notes.length?'解释已记录 · 待确认':'解释待补充','pending')}</div><p class="summary">${a.observations.length} 份自由探索快照 · ${a.notes.length} 份解释${e.reviewAt?` · 建议 ${date(e.reviewAt)} 再来试试`:''}</p><div class="actions">${link(`#activity/${id}`,'回到这次探索 →','btn secondary')}</div><details class="disclosure"><summary>看看作品、提示和解释记录</summary>${Object.entries(a.evidence).map(([key,r])=>{const[k,v]=key.split(':'),t=task(id,k,Number(v));return `<div class="record-event"><strong>${STAGES[k]} · 案例 ${Number(v)+1}</strong><p>${t.title}</p>${r.attempts.map((event,i)=>`<p>第 ${i+1} 次 · ${date(event.at)} · ${inspect(t,event.value).correct?'作品成立':'需要再看'} · ${event.supported?'使用过提示':'未使用提示'} · ${event.exposed?'已看过本案例反馈':'首次提交'}<br>${esc(modelText(t,event.value))}</p>`).join('')||'<p>已看支持，尚未提交。</p>'}</div>`;}).join('')}${a.observations.map(o=>`<div class="record-event">${date(o.at)} · 自由探索快照（不计独立证据）<br>${esc(labText(id,o.value))}</div>`).join('')}${a.notes.map(n=>`<div class="record-event"><strong>${date(n.at)} · 我的解释，内容待确认</strong><p class="saved-note">${esc(n.text)}</p></div>`).join('')}</details></article>`;}).join(''):'<p>先去一个动手活动里试试。你做的作品、用过的提示和解释都会留在这里。</p>'}</section><section class="panel"><h2>我想探索</h2>${state.bookmarks.length?leaves(state.bookmarks.map(id=>nodeById.get(id)),1000):'<p>打开一个知识点，点“我想探索”就能收在这里。</p>'}</section>${legacyHTML()}</div><aside><section class="panel"><h2>把足迹装进口袋</h2><p>记录在当前浏览器中保存。导出备份后，可以在别的浏览器里接着用。</p><div class="actions">${btn('export','导出学习备份')}${btn('import','导入备份','','btn secondary')}</div><p class="source-note">兼容旧版备份。导入会合并可安全合并的记录，遇到草稿、同 ID 证据或现场冲突会停止导入，原记录不覆盖。导入前保存本机快照；请保留原备份文件。</p>${btn('pre-import','导出导入前的快照','','text-link')}</section><section class="panel"><h2>足迹怎样读</h2><p>新活动每个任务的作品成立后计完成。旧活动和早期路线的记录保持原来的含义。完成不等于独立掌握；提示、重试和自由文字分别保留，文字不自动判定。</p></section>${link('index.html#atlas','把足迹放回全景图 →','btn secondary')}</aside></div>`;
+ const list=activityIds.filter(id=>activityRecordTier(state.activities[id])==='evidence');
+  const draftActivities=activityIds.filter(id=>activityRecordTier(state.activities[id])==='draft');main.innerHTML=`<section class="subhero"><div class="eyebrow">我的学习记录</div><h1>记录走过的路，也记录想法。</h1><p>完成活动、独立操作和解释清楚，各自留下不同的证据。</p></section><div class="journal-grid"><div>${lessonRecords('evidence')}${journeyRecord('evidence')}<section class="panel" data-trail-tier="evidence"><h2>我的探索</h2>${list.length?list.map(id=>{const a=state.activities[id],e=evidenceSummary(a);return `<article class="record-section"><h3>${ACTIVITIES[id].title}</h3><div class="status-strip">${badge(e.completed?'活动已完成':'探索中',e.completed?'completed':'exploring')}${badge(e.demonstrated?'有操作与迁移证据':e.needsSupport?'有需要支持的地方':'正在收集证据',e.demonstrated?'evidence':e.needsSupport?'supported':'')}${badge(a.notes.length?'解释已记录 · 待确认':'解释待补充','pending')}</div><p class="summary">${a.observations.length} 份自由探索快照 · ${a.notes.length} 份解释${e.reviewAt?` · 建议 ${date(e.reviewAt)} 再来试试`:''}</p><div class="actions">${link(`#activity/${id}`,'回到这次探索 →','btn secondary')}</div><details class="disclosure"><summary>看看作品、提示和解释记录</summary>${Object.entries(a.evidence).map(([key,r])=>{const[k,v]=key.split(':'),t=task(id,k,Number(v));return `<div class="record-event"><strong>${STAGES[k]} · 案例 ${Number(v)+1}</strong><p>${t.title}</p>${r.attempts.map((event,i)=>`<p>第 ${i+1} 次 · ${date(event.at)} · ${inspect(t,event.value).correct?'作品成立':'需要再看'} · ${event.supported?'使用过提示':'未使用提示'} · ${event.exposed?'已看过本案例反馈':'首次提交'}<br>${esc(modelText(t,event.value))}</p>`).join('')||'<p>已看支持，尚未提交。</p>'}</div>`;}).join('')}${a.observations.map(o=>`<div class="record-event">${date(o.at)} · 自由探索快照（不计独立证据）<br>${esc(labText(id,o.value))}</div>`).join('')}${a.notes.map(n=>`<div class="record-event"><strong>${date(n.at)} · 我的解释，内容待确认</strong><p class="saved-note">${esc(n.text)}</p></div>`).join('')}</details></article>`;}).join(''):'<p>先去一个动手活动里试试。你做的作品、用过的提示和解释都会留在这里。</p>'}</section>${lessonRecords('draft')}${journeyRecord('draft')}${draftActivityRecords(draftActivities)}${pendingQuestionRecords()}${lessonRecords('available')}<section class="panel"><h2>我想探索</h2>${state.bookmarks.length?leaves(state.bookmarks.map(id=>nodeById.get(id)),1000):'<p>打开一个知识点，点“我想探索”就能收在这里。</p>'}</section>${legacyHTML()}</div><aside><section class="panel"><h2>把足迹装进口袋</h2><p>记录在当前浏览器中保存。导出备份后，可以在别的浏览器里接着用。</p><div class="actions">${btn('export','导出学习备份')}${btn('import','导入备份','','btn secondary')}</div><p class="source-note">兼容旧版备份。导入会合并可安全合并的记录，遇到草稿、同 ID 证据或现场冲突会停止导入，原记录不覆盖。导入前保存本机快照；请保留原备份文件。</p>${btn('pre-import','导出导入前的快照','','text-link')}</section><section class="panel"><h2>足迹怎样读</h2><p>新活动每个任务的作品成立后计完成。旧活动和早期路线的记录保持原来的含义。完成不等于独立掌握；提示、重试和自由文字分别保留，文字不自动判定。</p></section>${link('index.html#atlas','把足迹放回全景图 →','btn secondary')}</aside></div>`;
 }
 function modelText(t,m){if(t.type==='partition')return `切口：${m.cuts.join('、')}；取第 ${m.selected.map(i=>i+1).join('、')||'无'} 份`;if(t.type==='family')return m.rows.map(r=>`${r.n}/${r.d}`).join('，');if(t.type==='line')return `数轴第 ${m.mark}/${t.divisions} 个刻度`;if(t.type==='dual-line')return `${t.k}/100 标记在 ${m.hundredths}/100；${t.k}/10 标记在 ${m.tenths}/100`;return `选择 ${m.selected.length} 个：${m.selected.map(i=>i+1).join('、')}`;}
 function labText(id,l){return id==='fair'?`切口：${l.cuts.join('、')}；选择的块：${l.selected.map(n=>n+1).join('、')||'无'}`:id==='rename'?`参考 2/3；自己的分法 ${l.n}/${l.d}`:`100 格中涂了 ${l.selected.length} 格，表示 ${(l.selected.length/100).toFixed(2)}`;}
