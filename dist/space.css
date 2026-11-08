@@ -726,3 +726,32 @@ body[data-world="network"] .concept-visual figcaption{margin-top:4px;font-size:1
 .grade-map-filter p{margin:2px 0 0!important;font-size:9.5px!important;line-height:1.2!important;color:#6d8073!important}
 body.guide-mode .grade-map-filter{display:none!important}
 @media(max-width:600px){.grade-map-filter>div{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Issue #23 P1: task-based navigation; keep the existing scene and panel styling. */
+.primary-nav{display:flex;align-items:center;gap:3px;padding:4px;background:#fffef9ed;border:1px solid #d7ded4;border-radius:13px;box-shadow:0 4px 20px #24463c0a;pointer-events:auto}
+.primary-nav button{font:inherit;font-size:13px;padding:10px 16px;color:#60746a;background:transparent;border-radius:9px;white-space:nowrap}
+.primary-nav button[aria-pressed="true"]{background:#234c45;color:#fffef4;font-weight:600}
+.primary-nav button:hover:not([aria-pressed="true"]){background:#eaf0e6}
+.focus-section-nav{display:flex;align-items:center;gap:3px;margin-top:9px;padding:3px 0;overflow-x:auto}
+.focus-section-nav button{background:#edf1e7;border-radius:7px;font-size:11px;padding:6px 8px;color:#39584b;white-space:nowrap}
+.focus-section-nav button:hover{background:#dce8d6}
+.focus-context-section{border-top:1px solid #e1e9db;padding-top:12px;margin-top:13px}
+.focus-context-section>h3{font-size:12px;font-weight:650;color:#315648;margin:0 0 8px}
+.learning-hub{position:fixed;z-index:82;top:94px;right:30px;bottom:91px;width:min(500px,calc(100vw - 60px));display:flex;flex-direction:column;background:#fffef9;border:1px solid #cdd9c8;border-radius:16px;box-shadow:0 15px 80px #253e3029;overflow:hidden}
+.learning-hub[hidden]{display:none}
+.learning-hub>header{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid #dce5d5;font-size:14px}
+.learning-hub-content{padding:16px 21px 23px;overflow-y:auto;overscroll-behavior:contain}
+.learning-hub-intro{font-size:12px;line-height:1.8;color:#64796a;margin:0 0 13px}
+.learning-hub-section{border-top:1px solid #e1e8db;padding:15px 0}
+.learning-hub-section h2{font-size:16px;line-height:1.5;margin:5px 0 7px;color:#244d41}
+.learning-hub-section p{font-size:12px;line-height:1.75}
+.learning-hub-routes{display:grid;gap:7px}
+.learning-hub-route{display:block;text-align:left;padding:11px 13px;background:#edf2e9;border-radius:10px;font-size:12px;color:#284c3e}
+.learning-hub-route:hover{background:#e0e9d9}
+.learning-hub-route small{display:block;color:#718475;font-size:10px;margin-top:5px}
+.learning-hub-footer{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0}
+.learning-hub-footer button{border-radius:8px;background:#e9efe4;padding:10px 12px;color:#305247;font-size:12px}
+@media(max-width:1100px){.topbar{gap:8px}.primary-nav button{padding:9px 11px;font-size:12px}.top-tools .search-button{min-width:90px}.keycap{display:none}}
+@media(max-width:760px){.topbar{flex-wrap:wrap;justify-content:flex-end}.topbar .brand{margin-right:auto}.primary-nav{order:2;margin-left:auto}.top-tools{order:3}.primary-nav button{padding:8px 10px}.top-tools button{padding:8px 9px}.top-tools .search-button{min-width:45px}.learning-hub{top:112px;right:12px;bottom:72px;width:calc(100vw - 24px)}}
+@media(max-width:420px){.topbar{left:12px;right:12px}.top-tools #back-button{display:none}.primary-nav button{font-size:11px;padding:8px}.learning-hub-content{padding:13px}}
