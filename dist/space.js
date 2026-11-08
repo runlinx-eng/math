@@ -90,7 +90,7 @@ function guideStepMessage(index){
 function positionGuide(){
   const panel=$('#guide-panel');
   if(!guideVisible||panel.hidden)return;
-  const top=$('#network-guide').getBoundingClientRect().bottom+12;
+  const top=Math.max(112,$('#network-guide').getBoundingClientRect().bottom+12);
   panel.style.top=`${top}px`;
   panel.style.maxHeight=`${Math.max(170,innerHeight-top-100)}px`;
 }
