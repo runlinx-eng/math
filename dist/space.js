@@ -905,7 +905,8 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
     if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];scene.select('node:'+n.topicId);setHash('node:'+n.topicId);readLearning();refreshLearning();renderLocation();scheduleSave();return;}
     if(e.data.type==='math-space:question-request'){questionComposer({nodeId:e.data.nodeId,scene:e.data.scene});return;}
     if(e.data.type==='math-space:lesson-close'){returnFromLesson();return;}
-    if(e.data.type==='math-space:lesson-relations'){scene.setRelations(scene.relationMode==='off'?'source':'off');scheduleSave();return;}
+    if(e.data.type==='math-space:lesson-show-node'){const target='node:'+e.data.nodeId;if(space.byKey.has(target)){closeJourney(false);choose(target,{animate:false,inPlace:true,openLesson:false});restoreTaskSurface();}return;}
+     if(e.data.type==='math-space:lesson-relations'){scene.setRelations(scene.relationMode==='off'?'source':'off');scheduleSave();return;}
     if(e.data.type==='math-space:journey-change'){const step=ROUTE_STEPS.find(s=>s.step===e.data.step);if(step){scene.select('node:'+step.id);setHash('node:'+step.id);readLearning();refreshLearning();renderLocation();scheduleSave();}return;}
     if(e.data.type==='math-space:journey-relations'){scene.setRelations(e.data.open?'route':'off');scheduleSave();return;}
   }
