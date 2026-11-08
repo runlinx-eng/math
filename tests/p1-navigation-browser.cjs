@@ -14,6 +14,7 @@ const samePose=(a,b)=>JSON.stringify([a.position,a.target,a.cameraZoom])===JSON.
  try{
   await page.goto('http://127.0.0.1:43827/?world=network&layout=53#atlas');
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
+  await page.waitForFunction(()=>mathSpace.snapshot().cameraTween===null&&mathSpace.motion().transition===null);
   const first=await snap();
   check(first.visibleNodes.length===537,'the original single 537-node panorama is retained');
   const current=()=>page.locator('.primary-nav [aria-pressed="true"]').getAttribute('data-surface');
