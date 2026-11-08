@@ -88,11 +88,15 @@ test('the preview server keeps the app under a protected root and a public healt
   const deploy = fs.readFileSync(path.join(root, '.github/workflows/deploy-vps.yml'), 'utf8');
   const rollback = fs.readFileSync(path.join(root, '.github/workflows/rollback-vps.yml'), 'utf8');
   assert.ok(deploy.includes("github.ref == 'refs/heads/main'"));
-  assert.ok(deploy.includes("vars.VPS_DEPLOY_ENABLED == 'true'"));
+  assert.match(deploy, /workflow_dispatch:/);
+  assert.doesNotMatch(deploy, /^\s+push:/m, 'merging main must not deploy');
   assert.ok(deploy.includes("confirm_deploy"));
   assert.ok(deploy.includes("inputs.confirm_deploy == true"));
+  assert.ok(deploy.includes("github.event_name == 'workflow_dispatch'"));
   assert.ok(rollback.includes("github.ref == 'refs/heads/main'"));
-  assert.ok(rollback.includes("vars.VPS_DEPLOY_ENABLED == 'true'"));
+  assert.match(rollback, /workflow_dispatch:/);
+  assert.doesNotMatch(rollback, /^\s+push:/m, 'rollback must be explicitly requested');
+  assert.ok(rollback.includes("github.event_name == 'workflow_dispatch'"));
 });
 
 

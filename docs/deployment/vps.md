@@ -95,7 +95,7 @@ sudo systemctl enable --now certbot.timer
 
 | Variable | 值 | 说明 |
 | --- | --- | --- |
-| `VPS_DEPLOY_ENABLED` | 当前保持 `false` | 关闭 main 推送后的自动部署；首次发布通过手动确认单独授权 |
+| `VPS_DEPLOY_ENABLED` | 不再控制发布工作流 | 现行发布只接受手动 `workflow_dispatch` + `confirm_deploy=true`；历史变量可保留但不会触发推送部署 |
 | `VPS_HOST` | `173.242.119.233` | 当前 VPS |
 | `VPS_USER` | `math-deploy` | 专用低权限部署用户 |
 | `VPS_PORT` | `22` | SSH 端口 |
@@ -111,7 +111,7 @@ sudo systemctl enable --now certbot.timer
 
 SSH host key 应通过 VPS 控制台指纹或已有可信连接核验后再保存；不要把未经核验的 `ssh-keyscan` 输出直接当作可信密钥。
 
-配置完变量和 secrets 后，先保持 `VPS_DEPLOY_ENABLED=false`。首次发布从 GitHub Actions 手动运行 **Deploy Math Explorer preview**，选择 `main`，并明确勾选 `confirm_deploy=true`。该次手动确认只授权本次发布，不会打开后续自动部署。首次发布和产品验收通过后，如果希望 main 的相关变更自动发布，再单独将 `VPS_DEPLOY_ENABLED` 改为 `true`。所有发布只允许从 `main` 执行。
+**合并 main 只更新集成基线，不自动发布线上预览。** 有发布需要时，从 GitHub Actions 手动运行 **Deploy Math Explorer preview**，选择 `main` 并勾选 `confirm_deploy=true`。该次确认只授权本次预览发布；仓库后续 push 不会自动部署。回滚亦需要在 Actions 中手动执行。所有部署只允许从 `main` 执行；不以产品人工视觉验收作为代码合并的硬门槛。
 
 ## 发布、回滚与验收
 
