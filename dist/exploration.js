@@ -106,10 +106,10 @@ function lessonRecords(tier='evidence'){
   const title={evidence:'已有作品与提交',draft:'有草稿的学习现场',available:'可开始的学习任务'}[tier];
   const articles=ids.map(id=>{
     const a=state.lessons[id],summary=lessonSummary(a);
-    const attempts=Object.values(a.cases||{}).reduce((sum,row)=>sum+(row.attempts?.length||0),0);
+    const attempts=Object.values(a.cases||{}).reduce((sum,row)=>sum+(row.attempts?.length||0),0),savedNotes=a.notes?.length||0;
     return `<article class="record-section" data-lesson-record="${id}" data-trail-tier="${tier}">
       <h3>${esc(LESSONS[id].title)}</h3>
-      <p>${tier==='evidence'?`${attempts} 次实际提交 · 任务 ${summary.done} / ${summary.total}`:tier==='draft'?'未完成 · 已保留学习现场':'尚未开始 · 不属于已有作品'}</p>
+      <p>${tier==='evidence'?`${attempts?attempts+' 次实际提交':'尚无正式提交'}${savedNotes?' · '+savedNotes+' 份保存解释':''} · 任务 ${summary.done} / ${summary.total}`:tier==='draft'?'未完成 · 已保留学习现场':'尚未开始 · 不属于已有作品'}</p>
       ${tier==='evidence'?`<details><summary>看看尝试与发现</summary><p>${summary.independent?'有首次独立正确操作证据。':'操作记录、提示与重试分别保留。'}文字解释未自动判定。</p>
         ${Object.entries(a.cases||{}).map(([i,row])=>`<p>任务 ${Number(i)+1} · ${row.attempts.length} 次提交 · ${row.support?'使用过提示':'未主动看提示'}${row.attempts.some(e=>e.exposed)?' · 已保留重答记录':''}</p>`).join('')}
         ${a.notes.map(n=>`<p class="saved-note">${esc(n.text)}（待确认）</p>`).join('')}</details>`:tier==='draft'?'<p>可以返回原活动继续，草稿不计为已提交作品。</p>':''}
