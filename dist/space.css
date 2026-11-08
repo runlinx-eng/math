@@ -765,6 +765,8 @@ body[data-world="network"] #network-guide{
   overscroll-behavior:contain;padding:12px 13px;border:1px solid #d8e0d1;
   border-radius:13px;background:#fffef9f2;box-shadow:0 5px 24px #24463c0b;
 }
+body[data-world="network"] #network-guide>*{flex-shrink:0}
+body[data-world="network"] #network-guide{scroll-padding-block:12px}
 #network-guide .observation-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
 #network-guide .observation-heading strong{font-size:12px;color:#234c45}
 #network-guide .observation-heading span{font-size:9px;color:#718079}
