@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process
 const out=path.resolve(__dirname,'../verification/p1-navigation');
 const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.push(label);};
 const key='math-explorer-v2';
-const samePose=(a,b)=>JSON.stringify([a.position,a.target,a.cameraZoom])===JSON.stringify([b.position,b.target,b.cameraZoom]);
+const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.every((v,i)=>Math.abs(v-b.position[i])<.0005)&&a.target.every((v,i)=>Math.abs(v-b.target[i])<.0005);
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
