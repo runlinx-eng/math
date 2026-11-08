@@ -758,6 +758,7 @@ body.guide-mode .grade-map-filter{display:none!important}
 @media(max-width:420px){.topbar{left:12px;right:12px}.top-tools #back-button{display:none}.primary-nav button{font-size:11px;padding:8px}.learning-hub-content{padding:13px}}
 
 /* P1-B: compact grouped controls over one unchanged 3D panorama. */
+body.guide-mode[data-world="network"] #network-guide{display:none!important}
 body[data-world="network"] #network-guide{
   top:92px;left:24px;width:278px;max-height:calc(100dvh - 190px);
   display:flex;flex-direction:column;gap:8px;overflow-y:auto;
