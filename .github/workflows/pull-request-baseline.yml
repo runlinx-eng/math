@@ -140,6 +140,7 @@ jobs:
           fi
 
           for test_file in \
+            tests/p1-navigation-browser.cjs \
             tests/spatial-overview-browser.cjs \
             tests/spatial-focus-transition-browser.cjs \
             tests/spatial-focus-semantics-browser.cjs \
@@ -152,8 +153,7 @@ jobs:
             tests/learning-workspace-browser.cjs \
             tests/concept-visual-browser.cjs \
             tests/node-name-browser.cjs \
-            tests/relationship-wording-browser.cjs \
-            tests/p1-navigation-browser.cjs
+            tests/relationship-wording-browser.cjs
           do
             if [[ -f "$test_file" ]]; then
               echo "::group::${test_file}"
