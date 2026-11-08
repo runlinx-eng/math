@@ -67,7 +67,7 @@ export function workflowFor(atlas,id,record){
     sessionIndependent:!!summary.independent,
     explanation:summary.explanation,
     noteCount:record?.notes?.length||0,hasDraft:!!record?.draft?.trim(),
-    alternateIndex,next,related,bridges,applications,currentApplication,
+    alternateIndex,next,related,bridges:bridgeIds,applications,currentApplication,
     // No real-world practice status exists in schema 2. Never synthesize one.
     realPracticeVerified:false
   };
