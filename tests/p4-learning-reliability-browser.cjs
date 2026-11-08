@@ -16,7 +16,7 @@ const host='http://127.0.0.1:43827';
   await page.locator('#main .subhero h1').waitFor();
   const status=await page.evaluate(async()=>{
     await navigator.serviceWorker.ready;
-    const c=await caches.open('math-explorer-20261108-learning-reliability-p4');
+    const c=await caches.open('math-explorer-20261108-integration-p5');
     const entries=['./v2.html','./exploration.js','./exploration-core.js','./learn.html','./learning/state.js','./data/atlas.json'];
     return Promise.all(entries.map(p=>c.match(new URL(p,location.href)).then(Boolean)));
   });
