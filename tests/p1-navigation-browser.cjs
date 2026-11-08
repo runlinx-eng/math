@@ -95,7 +95,8 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   check(await page.locator('#learning-hub').isVisible(),'refresh retains learning task');
   await page.locator('#learning-hub [data-action="nav-trail"]').click();
   check(new URL(page.url()).searchParams.get('surface')==='trail','footprint uses a distinct task URL');
-  await page.goBack();
+  // A same-document history step can update the surface before SW navigation 'load'.
+  await page.evaluate(()=>history.back());
   await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
   check(await page.locator('#utility-drawer').isHidden()&&await page.locator('#learning-hub').isVisible(),'Back from footprint reopens learning');
   await page.locator('#learning-hub [data-action="close-learning-hub"]').click();
