@@ -143,7 +143,7 @@ function syncSubmissionUI(){
  const state=currentSubmission(a),canContinue=lessonSummary(a).cases[a.index]?.complete&&state.status==='correct';
  const next=$('#actions [data-do="next"]'),check=$('#actions [data-do="check"]');
  if(next)next.hidden=!canContinue;
- if(check&&!isP03()){check.classList.toggle('primary',!canContinue);check.textContent=canContinue?'再检查一次':'检查我的作品';}
+ if(check){check.classList.toggle('primary',!canContinue);check.textContent=isP03()?canContinue?'再检查一次':'检查本题':canContinue?'再检查一次':'检查我的作品';}
  if(state.status==='modified'){
   const box=$('#check-feedback');
   if(box){box.hidden=false;box.dataset.state='guidance';box.textContent='已修改，尚未重新检查。上次结果保留在历史记录中。';}
@@ -161,7 +161,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='p3-variant'){const index=Number(b.dataset.index);if(!Number.isInteger(index)||index<0||index>=sessionTasks(id).length)return;feedback='';spread=0;view=null;if(update(r=>{r.index=index;r.view='task';modelForLesson(r);}))render();return;}
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
  if(act==='check'){let result;update(r=>result=submitLesson(r));feedback=result?.feedback||'';if(task().dims)spread=1;render();return;}
- if(act==='next'){if(!lessonSummary(a).cases[a.index].complete)return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
+ if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
  if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){update(r=>addLessonNote(r,$('#note').value));render();return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}
  if(act==='turn'){cube?.turn();update(()=>{});return;}if(act==='spread'){if(!spread&&a.view==='task')update(r=>supportLesson(r));spread=spread?0:1;update(()=>{});render();return;}
