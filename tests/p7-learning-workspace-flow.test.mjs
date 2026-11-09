@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary} from '../dist/learning/state.js';
-import {TASKS} from '../dist/learning/tasks.js';
+import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
 import {learningStage,stageGuidance,checkedMathExplanation} from '../dist/learning/workspace-flow.js';
 
 const detailFor=a=>checkedMathExplanation({
@@ -70,4 +70,40 @@ test('P7-D1: other configured math activities share stage but not invented proof
  submitLesson(a);
  assert.equal(learningStage(a,currentSubmission(a)),'revise');
  assert.equal(detailFor(a),null);
+});
+
+
+test('P7 Mac screenshot: twenty-six filled cells, decimal 0.26, percent count 26 is correct',()=>{
+ const task=TASKS.decimal[2];
+ assert.equal(task.reverse,true);
+ assert.match(task.prompt,/百分之几/);
+ const model=exampleModel(task);
+ assert.equal(model.selected.length,26);
+ assert.equal(model.decimal,'0.26');
+ for(const notation of ['26','26%','26％','26/100',' 26 / 100 ']){
+   const checked=inspect(task,{...model,fraction:notation});
+   assert.equal(checked.correct,true,notation+' should represent 26 percent');
+   assert.match(checked.feedback,/26\/100 = 0\.26 = 26%/);
+ }
+ for(const wrong of ['0.26','25','26/10','']){
+   const checked=inspect(task,{...model,fraction:wrong});
+   assert.equal(checked.correct,false,'invalid percentage entry: '+wrong);
+   assert.match(checked.feedback,/百分之几/);
+ }
+ assert.match(inspect(task,{...model,decimal:'0.25',fraction:'26'}).feedback,/核对小数/);
+ assert.match(inspect(task,{...model,selected:model.selected.slice(1),fraction:'26'}).feedback,/百格/);
+});
+
+test('P7 erroneous percent check remains in history after correction',()=>{
+ const a=freshLesson('decimal');a.index=2;
+ a.models[2]={...exampleModel(TASKS.decimal[2]),fraction:'0.26'};
+ assert.equal(submitLesson(a).correct,false);
+ assert.equal(currentSubmission(a).status,'revise');
+ a.models[2].fraction='26';
+ assert.equal(currentSubmission(a).status,'modified','old check no longer applies to revised response');
+ assert.equal(submitLesson(a).correct,true);
+ assert.equal(currentSubmission(a).status,'correct');
+ assert.equal(a.cases[2].attempts.length,2);
+ assert.equal(a.cases[2].attempts[0].value.fraction,'0.26');
+ assert.equal(a.cases[2].attempts[1].value.fraction,'26');
 });
