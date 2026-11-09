@@ -67,9 +67,10 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
     if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
     check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
   }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
-  await page.evaluate(()=>history.back());
-  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='explore');
-  check(await page.locator('#learning-hub').isHidden(),'browser history restores exploration');
+  // The original P3 flow checks an explicit return. P7-D5 tests browser Back/Forward
+  // separately on a single parent task-history entry to avoid iframe history ambiguity.
+  await page.locator('.primary-nav [data-action="nav-explore"]').click();
+  check(await page.locator('#learning-hub').isHidden()&&await page.locator('.primary-nav [data-action="nav-explore"]').getAttribute('aria-pressed')==='true','explicit return restores exploration without a route chooser');
   check(!errors.length,'no uncaught browser errors: '+errors.join(' / '));
   console.log(JSON.stringify({status:'pass',checks,screenshots:out},null,2));
  }catch(e){
