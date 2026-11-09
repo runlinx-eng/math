@@ -27,6 +27,32 @@ export function stageGuidance(stage,{hasNext=true,hasFollowingLesson=false}={}){
   }
 }
 
+// P7: next-step help describes the current checked construction, rather
+// than sending a learner through more navigation. It is not a second grader.
+export function correctionGuidance({task,model,checked}={}){
+ if(checked?.status!=='revise'||task?.type!=='grid'||!Array.isArray(model?.selected))return null;
+ const whole=100,selected=model.selected.length,target=task.n+'/'+task.d,
+       expected=task.n*whole/task.d;
+ if(selected!==expected){
+  return {title:'接下来先改涂色',
+    observation:`你现在涂了 ${selected} 格（${selected}/100），题目要求表示 ${target}。`,
+    action:`先把 100 格平均分成 ${task.d} 份，想一想取 ${task.n} 份该涂多少格；调整涂色，核对小数，再点击「检查我的作品」。`,
+    method:'可以试试「连接不同表示方式」：用百格、分数和小数相互核对。这里只是在建议方法，不是在评价你是否掌握。'};
+ }
+ const actual=String(model.decimal??'').trim();
+ const actualNumber=actual?Number(actual):NaN;
+ if(!Number.isFinite(actualNumber)||Math.abs(actualNumber-task.n/task.d)>1e-9)
+  return {title:'接下来核对小数',
+    observation:`涂色格数已经与 ${target} 对应，但填写的小数「${actual||'空白'}」还没有表示相同的量。`,
+    action:'每格表示 0.01，十格表示 0.1。根据涂色数修改小数，再点击「检查我的作品」。',
+    method:'可以试试「连接不同表示方式」：数一数格子，再核对小数名字。'};
+ if(task.reverse)return {title:'接下来核对百分数',
+    observation:'百格和小数已经对应；还需要核对「百分之几」的写法。',
+    action:'想想涂色占一百格中的几格，在百分数一栏填写百分号前面的数量，再点击「检查我的作品」。',
+    method:'可以试试把同一个量的图形、分数、小数与百分数放在一起比较。'};
+ return null;
+}
+
 // Checked examples can explain a mathematical relationship without inferring
 // that the child independently understood, proved or mastered the method.
 // The model is the submitted snapshot, never unsaved live edits.
