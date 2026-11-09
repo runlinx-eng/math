@@ -26,6 +26,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      const rect=e=>e?{top:Math.round(e.getBoundingClientRect().top),bottom:Math.round(e.getBoundingClientRect().bottom)}:null;
      return {
        title:doc.querySelector('#title')?.textContent,
+       goal:doc.querySelector('#learning-goal')?.textContent,
        instruction:instruction?.textContent,
        status:doc.querySelector('#status')?.textContent,
        headerVisible:!!doc.querySelector('#back')&&getComputedStyle(doc.querySelector('#back')).display!=='none',
@@ -51,7 +52,8 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await page.locator('#focus-card [data-action="open"]').first().click();
    const frame=page.frameLocator('#journey-frame');
    await frame.locator('#actions button').first().waitFor();
-   await shot('01-space-open',true);
+   const opening=await shot('01-space-open',true);
+   requireState(!!opening.goal,'current math knowledge is visible before operation');
    await frame.locator('#actions [data-do="start"]').click();
    await shot('02-normal-operate',true);
    await frame.locator('#actions [data-do="check"]').click();
