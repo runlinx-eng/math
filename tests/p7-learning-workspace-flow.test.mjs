@@ -245,6 +245,7 @@ test('P7-D3-B: summary separates validated task results from an optional system 
  assert.match(runtime,/data-primary-destination/,'the single next action still follows a real route or relation');
  assert.doesNotMatch(runtime,/\+btn\('restart',BRIDGES\[id\]/,'restart no longer competes with the main destination');
  assert.match(auxiliary,/button\('p3-retry','再试当前条件'\)/,'retrial remains accessible in contextual tools');
+ assert.match(auxiliary,/button\('restart','重新做这组任务'\)/,'full-group restart is retained instead of being silently removed');
  assert.match(auxiliary,/stage==='reflect'\?'':passed/,'complete attempt history is not duplicated in two surface panels');
 });
 
