@@ -162,6 +162,7 @@ jobs:
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
             tests/p7-learning-panel-browser.cjs \
+            tests/p7-d4-multi-type-browser.cjs \
             tests/p4-learning-reliability-browser.cjs \
             tests/p5-integration-browser.cjs \
             tests/continuous-space-browser.cjs \
@@ -214,6 +215,7 @@ jobs:
             verification/p3-learning-flow/
             verification/p7-learning-panel/
             verification/p7-d3/
+            verification/p7-d4/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/

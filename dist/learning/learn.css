@@ -362,3 +362,60 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
  #steps li[data-study-step]{padding:4px 5px;font-size:10px}
  #scene[data-stage="reflect"] #actions button{max-width:100%}
 }
+
+/* P7-D4: the same stable, compact execution frame for every configured task.
+   Math widgets, results and optional tools keep their own original behavior. */
+#scene .stage-top{
+ position:sticky;top:46px;z-index:15;display:grid;
+ grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px 12px;
+ padding:8px 10px 10px;border:1px solid #d8e3d9;border-radius:10px;
+ background:#fcfbf6f7;backdrop-filter:blur(8px);box-shadow:0 3px 9px #213d3110;
+}
+#scene .stage-top .lesson-heading{flex:none;min-width:0}
+#scene .stage-top h1{font-size:16px;line-height:1.4;margin:0}
+#scene .stage-top #learning-goal{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:12px;line-height:1.4;margin-top:3px}
+#scene .stage-top #steps{justify-content:flex-end;min-width:0;max-width:100%;margin:0}
+#scene .stage-top .execution-command{
+ grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) auto;
+ align-items:center;gap:8px;border-top:1px solid #e4eae2;padding-top:7px;
+}
+#scene .stage-top #action-cue{font-size:12px;line-height:1.45;color:#355e50;margin:0;min-width:0;overflow-wrap:anywhere}
+#scene .stage-top #actions,
+#scene[data-stage="reflect"] .stage-top #actions,
+body.p03-focus #scene .stage-top #actions{
+ display:flex;gap:6px;margin:0;padding:0;border:0;
+ align-items:center;justify-content:flex-end;flex-wrap:wrap;
+}
+#scene .stage-top #actions button.primary{min-height:40px;font-size:14px;padding:7px 12px}
+#scene .stage-top #actions button:not(.primary){min-height:32px;font-size:12px;padding:5px 9px}
+#scene .stage-top #actions button[hidden]{display:none!important}
+#scene .stage-top #actions [data-primary-destination]{max-width:265px;white-space:normal;text-align:center}
+#scene[data-stage="reflect"] #learning-check{margin-top:8px}
+#scene #learning-check #check-feedback:not([hidden]){margin-top:4px}
+#scene #learning-interaction #work{min-width:0}
+@media(max-width:720px){
+ #scene .stage-top{grid-template-columns:minmax(0,1fr);gap:5px;top:43px}
+ #scene .stage-top #steps{justify-content:flex-start}
+ #scene .stage-top .execution-command{grid-template-columns:minmax(0,1fr);gap:5px}
+ #scene .stage-top #actions{justify-content:flex-start}
+ #scene .stage-top #actions button.primary{flex:0 1 auto;max-width:100%}
+}
+@media(max-height:580px){
+ #scene .stage-top{padding:5px 9px 7px;gap:3px}
+ #scene .stage-top #learning-goal{-webkit-line-clamp:1}
+ #scene .stage-top #steps li{font-size:10px;padding:3px 5px}
+ #scene .stage-top .execution-command{padding-top:5px}
+}
+
+/* Mac P7-D4 screenshot: secondary route navigation follows the real task;
+   never leave a redundant empty check/next step in the reading flow. */
+#learning-check[hidden]{display:none!important}
+#learning-next #route-collapsible{margin:10px 0 0;border-top:1px solid #e4e9e2;padding-top:7px}
+#learning-next #route-collapsible>summary{font-size:13px;font-weight:600;padding:7px 0}
+@media(max-width:700px){
+ #scene .stage-top #steps{display:none}
+ #scene .stage-top h1{font-size:18px}
+ #scene .stage-top #action-cue{font-size:14px;line-height:1.5}
+ #scene .stage-top #actions button.primary{font-size:15px;min-height:44px}
+ #scene .learning-region-title{font-size:13px}
+}
