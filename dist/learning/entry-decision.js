@@ -3,13 +3,25 @@
 import {lessonForTopic,lessonIds} from './catalog.js';
 import {bridgeIds,sessionMeta} from './bridges.js';
 import {lessonSummary} from './state.js';
+import {defaultModel} from './tasks.js';
+import {sessionTaskFor} from './bridges.js';
 import {pendingQuestions,sessionRecord} from './daily.js';
 import {ACTIVITIES,activityIds} from '../exploration-content.js';
 import {routeStep} from '../journey-model.js';
 
+// A freshly opened empty session is not a restored workpiece. Preserve a
+// modified widget model even before the learner makes their first submission.
+function hasWork(record){
+  if(record.draft?.trim()||record.notes?.length)return true;
+  if(Object.values(record.cases||{}).some(c=>c.support||c.attempts?.length))return true;
+  return Object.entries(record.models||{}).some(([key,value])=>{
+    const task=sessionTaskFor(record.id,Number(key));
+    return task&&JSON.stringify(value)!==JSON.stringify(defaultModel(task));
+  });
+}
 const incomplete = (state,id) => {
   const record=id&&sessionMeta(id)?sessionRecord(state,id):null;
-  return record?.id===id&&!lessonSummary(record).completed?record:null;
+  return record?.id===id&&!lessonSummary(record).completed&&hasWork(record)?record:null;
 };
 
 export function recoverableLearning(state,{at=new Date(),timeZone}={}){
@@ -33,7 +45,7 @@ export function decideLearningEntry({selected=null,state,at=new Date(),timeZone}
   if(selected?.kind==='node'){
     const lessonId=lessonForTopic(selected.id);
     if(lessonId&&sessionMeta(lessonId))
-      return {kind:'lesson',lessonId,nodeId:selected.id,restore:!!incomplete(state,lessonId)};
+      return {kind:'lesson',lessonId,nodeId:selected.id,restore:!!sessionRecord(state,lessonId)};
     const legacyId=activityIds.find(id=>ACTIVITIES[id].topicId===selected.id);
     if(legacyId)return {kind:'legacy',nodeId:selected.id,legacyId};
     const journey=routeStep(selected.id);
