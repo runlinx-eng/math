@@ -17,7 +17,7 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
     flow.next&&flow.next.id!==primarySessionId?button('lesson','后续路线 · '+flow.next.title,'data-id="'+esc(flow.next.id)+'"'):'',
     ...flow.related.map(n=>button('p3-related',n.direction+' · '+n.title,'data-node="'+esc(n.nodeId)+'"')),
     ...flow.bridges.filter(b=>b.id!==primarySessionId).map(b=>button('lesson','联合任务 · '+b.title,'data-id="'+esc(b.id)+'"')),
-    embedded?button('relations','观察地图联系'):button('back','返回知识空间')
+    embedded?button('relations','观察地图联系'):''
   ].filter(Boolean).join('');
   const application=flow.currentApplication;
   const applications=flow.applications.map(p=>button('lesson',p.label+' · '+p.title,'data-id="'+esc(p.sessionId)+'"')).join('');
@@ -40,7 +40,9 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
   // Correct answers and reflection should lead to the single main action above,
   // not a second wall of "next" buttons. The full history stays available.
   const passed=stage==='passed'||stage==='reflect';
-  const compact=passed?'<details class="p3-review"><summary>查看这次的检查记录</summary>'+evidence+'</details>':evidence;
+  // Reflection already keeps the complete attempt history in #record; do not
+  // show a second summary of the same evidence beside the child's next action.
+  const compact=stage==='reflect'?'':passed?'<details class="p3-review"><summary>查看这次的检查记录</summary>'+evidence+'</details>':evidence;
   const retry=!passed?'<div class="p3-retry">'+button('p3-retry','重新尝试本题')+'</div>':'';
   host.innerHTML=compact+retry+other;
 }
