@@ -206,7 +206,7 @@ test('P7 Mac screenshot: three checked cups explain each real fraction-decimal e
  assert.equal(explanation.method.nodeId,'mt_EBYGhd8X3x','use a real MP2 thinking source node');
  assert.equal(explanation.method.code,'ccss-math:MP.2');
  assert.equal(thinkingFeedback(t,a.models[1],a.cases[1]),null,'do not create a redundant thinking card in the work area');
- assert.match(REFLECTIONS.quarters,/百格里的 1\/4.*杯子里的 1\/4/);
+ assert.match(REFLECTIONS.quarters,/百格涂了 1\/4.*杯子装了 1\/4.*相同.*不同/);
  assert.equal(a.cases[1].attempts.length,2,'earlier failed check remains in the original record');
  a.models[1].names[2]='0.20';
  assert.equal(currentSubmission(a).status,'modified');
