@@ -14,9 +14,9 @@ test('P7 initial study shows one task before secondary follow-ups',()=>{
   assert.doesNotMatch(host.innerHTML,/首次独立证据/);
   assert.doesNotMatch(host.innerHTML,/p3-flow-heading/);
   assert.doesNotMatch(host.innerHTML,/data-do="p3-retry"/);
-  assert.match(host.innerHTML,/拓展与实践应用/);
-  assert.match(host.innerHTML,/模拟现实情境不等于真实生活实践/);
-  assert.match(host.innerHTML,/更多知识联系与探索方式/);
+  assert.match(host.innerHTML,/换个地方用一用/);
+  assert.match(host.innerHTML,/模拟情境中试试数学方法/);
+  assert.match(host.innerHTML,/换个办法或看看联系/);
 });
 
 test('P7 shows retry and saves first invalid submission without erasing earlier attempts',()=>{
