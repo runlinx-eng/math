@@ -11,7 +11,7 @@
 - `capability-map.csv`：逐行、可在表格中筛选的完整来源映射。
 - `capability-map.json`：含原始映射、任务类型分布、清单汇总与自检诊断。
 - `audit-counts.json`：汇总、任务类型及诊断。
-  
+
 **字段**：`group | source | id | originEntry | userTask | dataJudging | currentUI | recommendation | status | evidence | preservation`。按照用户提出的「来源/ID → 原入口 → 用户任务 → 数据和判题依赖 → 当前 UI → 建议去向 → 保留或合并状态 → 验收证据」建立，没有把任务类型混同为任务实例。
 
 源资料此前宣称的**预期基数**（须由本分支 CI 重新验证，不能以本文代替运行结果）：
