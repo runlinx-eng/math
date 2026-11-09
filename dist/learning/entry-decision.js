@@ -21,7 +21,7 @@ function hasWork(record){
 }
 const incomplete = (state,id) => {
   const record=id&&sessionMeta(id)?sessionRecord(state,id):null;
-  return record?.id===id&&!lessonSummary(record).completed&&hasWork(record)?record:null;
+  return record&&record.id===id&&!lessonSummary(record).completed&&hasWork(record)?record:null;
 };
 
 export function recoverableLearning(state,{at=new Date(),timeZone}={}){
