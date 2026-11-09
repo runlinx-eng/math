@@ -4,8 +4,22 @@ import {defaultModel,validModel,inspect} from './tasks.js';
 import {BRIDGES,sessionTasks,sessionTaskFor as taskFor} from './bridges.js';
 const stamp=()=>new Date().toISOString();
 const event=v=>({id:globalThis.crypto.randomUUID(),at:stamp(),...v});
-export function freshLesson(id){if(!LESSONS[id]&&!BRIDGES[id])throw new Error('未知学习活动');return {id,view:BRIDGES[id]?'task':'play',index:0,models:{},cases:{},notes:[],draft:'',updatedAt:stamp(),ui:{spread:0,view:null,camera:null}};}
+export function freshLesson(id){if(!LESSONS[id]&&!BRIDGES[id])throw new Error('未知学习活动');return {id,view:'task',index:0,models:{},cases:{},notes:[],draft:'',updatedAt:stamp(),ui:{spread:0,view:null,camera:null}};}
 export function modelForLesson(a,index=a.view==='play'?-1:a.index){return a.models[index]??=defaultModel(taskFor(a.id,index));}
+// Previous releases stored a separate ungraded 'play' view and models[-1].
+ // There is now only one visible learning workspace. Keep the original practice
+ // model for old backups and reuse it as an unsubmitted task draft only when
+ // its structure is valid for the selected configured task.
+export function enterUnifiedTask(a){
+ if(a.view!=='play')return a;
+ const pending=lessonSummary(a).cases.findIndex(c=>!c.complete);
+ const index=pending<0?0:pending,former=a.models[-1],target=taskFor(a.id,index);
+ if(!a.models[index]&&former&&validModel(target,former))a.models[index]=structuredClone(former);
+ a.index=index;
+ a.view='task';
+ modelForLesson(a);
+ return a;
+}
 export function supportLesson(a){if(a.view!=='task')return;const r=a.cases[a.index]??={support:false,attempts:[]};r.support=true;a.updatedAt=stamp();}
 export function submitLesson(a){if(a.view!=='task')throw new Error('请先进入实际任务');const t=taskFor(a.id,a.index),m=modelForLesson(a),r=a.cases[a.index]??={support:false,attempts:[]};if(!validModel(t,m))throw new Error('作品格式无效');const result=inspect(t,m);r.attempts.push(event({value:structuredClone(m),supported:r.support,exposed:r.attempts.length>0}));a.updatedAt=stamp();return result;}
 export function lessonSummary(a){if(!a)return {completed:false,independent:false,done:0,total:0};const cases=sessionTasks(a.id).map((t,i)=>{const r=a.cases[i],attempts=r?.attempts||[],last=attempts.at(-1),first=attempts[0],complete=attempts.some(e=>inspect(t,e.value).correct&&completionApplies(t,a.models[i],e.value));return {complete,independent:complete&&!!first&&inspect(t,first.value).correct&&!first.supported&&!first.exposed&&!r.support&&inspect(t,last.value).correct&&(!/^x-(?:r3[78]|s39)-/.test(t.type)||inspect(t,a.models[i]).correct),attempts:attempts.length};});return {completed:cases.every(c=>c.complete),independent:cases.every(c=>c.independent),done:cases.filter(c=>c.complete).length,total:cases.length,cases,explanation:a.notes.length?'pending':'missing'};}
