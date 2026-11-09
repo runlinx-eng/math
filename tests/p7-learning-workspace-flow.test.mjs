@@ -234,6 +234,20 @@ test('P7 end of route A offers a real, uncompleted source-linked practice rather
  assert.match(stageGuidance('reflect',{hasRelatedPractice:true}),/不写文字也能继续/);
 });
 
+test('P7-D3-B: summary separates validated task results from an optional system proof and keeps one foreground next action',()=>{
+ const runtime=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+ const auxiliary=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
+ assert.match(runtime,/id="system-explanation" class="system-explanation"/,'system explanation remains opt-in');
+ assert.match(runtime,/\$\{esc\(lesson\.summary\)\}/,'original math content is retained rather than deleted');
+ assert.doesNotMatch(runtime,/<h2>\$\{lesson\.formal\}<\/h2><p>\$\{lesson\.summary\}/,'summary must not automatically show the solution above the child's explanation');
+ assert.match(runtime,/这组操作已通过检查/,'screen distinguishes checked operation from ungraded prose');
+ assert.match(runtime,/\$\{summary\.done\} \/ \$\{summary\.total\}/,'summary uses actual checked task evidence');
+ assert.match(runtime,/data-primary-destination/,'the single next action still follows a real route or relation');
+ assert.doesNotMatch(runtime,/\+btn\('restart',BRIDGES\[id\]/,'restart no longer competes with the main destination');
+ assert.match(auxiliary,/button\('p3-retry','再试当前条件'\)/,'retrial remains accessible in contextual tools');
+ assert.match(auxiliary,/stage==='reflect'\?'':passed/,'complete attempt history is not duplicated in two surface panels');
+});
+
 test('P7 route completion summary names optional writing and does not duplicate the primary source bridge',()=>{
  const html=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
  const flow=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
