@@ -112,6 +112,6 @@ test('P7 navigation contract: a single entry, conditional resumption and stable 
   const optional=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
   assert.match(lesson,/返回知识空间 →/);
   assert.match(standalone,/← 返回知识空间/);
-  assert.match(optional,/button\('back','返回知识空间'\)/);
+  assert.doesNotMatch(optional,/button\('back','返回知识空间'\)/,'secondary learning tools no longer duplicate the already visible exit');
   assert.doesNotMatch(lesson,/回到数学树继续探索/);
 });
