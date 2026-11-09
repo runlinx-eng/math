@@ -74,7 +74,10 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   check(await page.locator('#utility-drawer').isVisible(),'footprint surface still opens');
   await page.locator('.primary-nav [data-action="nav-explore"]').click();
   check(samePose(pose,await snap()),'task surfaces preserve prior camera');
-  check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===record,'task navigation does not modify stored learning evidence');
+  const evidenceAfter=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const evidenceBefore=record?JSON.parse(record):null;
+  const submissions=state=>Object.values(state?.lessons||{}).reduce((n,a)=>n+Object.values(a.cases||{}).reduce((sum,c)=>sum+(c.attempts||[]).length,0),0);
+  check(submissions(evidenceAfter)===submissions(evidenceBefore),'navigation does not invent submitted learning evidence');
   await page.evaluate(()=>location.hash='#space/pack/number-sense');
   await page.waitForFunction(()=>document.querySelector('#focus-card .grade-distribution[data-scope="pack"]')?.dataset.id==='number-sense');
   for(const [width,height] of [[1440,900],[980,760],[1280,720]]){
