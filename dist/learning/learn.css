@@ -138,3 +138,20 @@ body.embedded-learning #lesson>header{justify-content:flex-end;gap:9px}
   #actions .primary{flex:1 1 100%}
   #route-collapsible[open] #route{grid-template-columns:1fr}
 }
+
+
+/* P7 Mac first-screen review: no historical-evidence wall before a submission. */
+.p3-before-check{
+  margin:0 0 4px;
+  padding:7px 0;
+  font-size:12px;
+  color:#63786c;
+  border:0;
+  background:transparent;
+}
+.p3-evidence-details{margin-top:8px;border-top:1px solid #dee7dd;padding-top:7px}
+.p3-evidence-details>summary{font-size:12px;color:#546f62;cursor:pointer}
+.p3-evidence-details[open]>p{margin-top:8px}
+#actions:has([data-do="start"]){gap:14px}
+#actions:has([data-do="start"])>.muted{max-width:265px;line-height:1.55}
+#record[hidden]{display:none}

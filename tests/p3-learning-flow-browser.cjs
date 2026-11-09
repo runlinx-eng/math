@@ -23,7 +23,8 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   await frame.locator('#actions [data-do="check"]').click();
   check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('需要修改')),'first incorrect attempt is labeled');
   await frame.locator('[data-do="hint"]').first().click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('提示或支持')),'hint evidence is visible');
+  await frame.locator('.p3-evidence-details summary').click();
+  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('提示或支持')),'hint evidence remains available in expanded history');
   await frame.locator('[data-do="p3-retry"]').click();
   check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('1 次提交')),'retry does not erase attempt history');
   await frame.locator('#actions [data-do="check"]').click();
