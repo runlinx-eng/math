@@ -65,6 +65,24 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
    requireState(stored.lessons.share.cases[0].attempts.length===2,'normal retry kept both attempts');
    await shot('05-normal-retry',true);
+   // Complete all three real partition tasks through the existing widgets and inspector.
+   for(const [idx,take] of [[0,1],[1,3],[2,2]]){
+     if(idx>0)await frame.locator('#actions [data-do="next"]').click();
+     await frame.locator('#actions [data-do="hint"]').click();
+     for(let part=0;part<take;part++)await frame.locator('#work [data-do="part"][data-index="'+part+'"]').click();
+     await frame.locator('#actions [data-do="check"]').click();
+     const result=await frame.locator('#check-feedback').innerText();
+     requireState(!!result,'successful task displays a concrete result');
+     requireState(await frame.locator('#actions [data-do="next"]').count()===1,'success offers a next task');
+     await shot('05-'+idx+'-correct',true);
+   }
+   await frame.locator('#actions [data-do="next"]').click();
+   await frame.locator('#note').fill('分成一样大的小份，取几份就是几个这样的单位份。');
+   await frame.locator('[data-do="save-note"]').click();
+   await shot('05-summary-saved',true);
+   const finished=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+   requireState(finished.lessons.share.notes.length===1,'saved explanation persists');
+   requireState(finished.lessons.share.cases[0].attempts.length===3,'first two incorrect checks survive a successful third');
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen);
    const after=await page.evaluate(()=>mathSpace.snapshot());
