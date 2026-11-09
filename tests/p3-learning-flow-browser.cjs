@@ -67,7 +67,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
     if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
     check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
   }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
-  await page.goBack();
+  await page.evaluate(()=>history.back());
   await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='explore');
   check(await page.locator('#learning-hub').isHidden(),'browser history restores exploration');
   check(!errors.length,'no uncaught browser errors: '+errors.join(' / '));
