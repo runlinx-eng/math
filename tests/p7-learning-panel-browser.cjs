@@ -208,7 +208,9 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      saved.lessons.decimal=record;
      localStorage.setItem('math-explorer-v2',JSON.stringify(saved));
    });
-   await page.goto(base+'learn.html#decimal');
+   // The preceding step already opened this URL. Navigating to an identical
+   // URL may reuse the live document and skip the legacy-normalization boot.
+   await page.reload();
    await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='decimal');
    const migrated=await shot('16-legacy-play-recovered');
    requireState(migrated.status.startsWith('任务'),'legacy play reopens as the unified task');
