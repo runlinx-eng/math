@@ -383,6 +383,49 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState((await embedded.locator('#work').innerText()).includes('百格涂了 1/4'),'reflection connects both the grid and cups rather than introducing a new page');
    requireState(await embedded.locator('#math-explanation').isHidden(),'reflection does not misrepresent old checked math as a new submission');
    await shot('28d-three-cups-reflection',true);
+   // The route has ended (A 4/4). This must not become a dead end or force
+   // a written answer. The next optional activity comes from a real source edge.
+   const linkedId='link-decimal-quarters';
+   const primaryLinked=embedded.locator('#actions [data-do="lesson"][data-id="'+linkedId+'"]');
+   requireState(await embedded.locator('#note').inputValue()==='','the optional reflection starts empty');
+   requireState(await embedded.locator('#work [data-do="save-note"]').isDisabled(),'saving is disabled until the learner writes something');
+   requireState((await embedded.locator('.reflection-optional').innerText()).includes('不写'),'the learner is explicitly told writing is optional');
+   requireState((await embedded.locator('.summary-thinking').innerText()).includes('连接不同表示方式'),'summary connects actual checked evidence to an MP2 method without a new screen');
+   requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
+   const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
+   requireState(summaryRegions.join(',')==='learning-problem,learning-check,learning-interaction,learning-next','completed route visually and semantically puts the next choice before optional writing');
+   const actionVisibility=await primaryLinked.evaluate(el=>{
+     const r=el.getBoundingClientRect();
+     return {top:r.top,bottom:r.bottom,viewport:el.ownerDocument.defaultView.innerHeight};
+   });
+   requireState(actionVisibility.top>=0&&actionVisibility.bottom<actionVisibility.viewport,'next learning action must be above the fold in a real 664px-high embedded panel, not merely display:visible');
+   requireState(await embedded.locator('#note-save-status').evaluate(el=>el.previousElementSibling?.dataset.do==='save-note'),'save confirmation stays beside the optional writing action');
+
+   requireState((await primaryLinked.innerText()).includes('百格里的量，怎样装进杯子'),'the suggestion names the actual configured source-backed bridge');
+   requireState(await primaryLinked.evaluate(el=>el.classList.contains('primary')),'the source-backed related activity is the main continuation instead of return to space');
+   requireState(await embedded.locator('#p3-learning-flow [data-do="lesson"][data-id="'+linkedId+'"]').count()===0,'the same linked activity is not repeated in an optional menu');
+   requireState(await embedded.locator('#actions [data-do="back"]').isVisible(),'returning to the original knowledge space stays available');
+   await shot('28e-route-end-visible-next-with-optional-reflection',true);
+   await embedded.locator('#note').fill('分数和小数表示同一个比例，但百格和杯子的整体不一样。');
+   requireState(await embedded.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'save becomes primary only while an unsaved explanation is present');
+   requireState(!await primaryLinked.evaluate(el=>el.classList.contains('primary')),'the unsaved draft has only one primary action');
+   await embedded.locator('#work [data-do="save-note"]').click();
+   requireState((await embedded.locator('#note-save-status').innerText()).includes('已保存这次发现'),'saved text produces confirmation before continuing');
+   requireState(await primaryLinked.evaluate(el=>el.classList.contains('primary')),'after saving, the source-backed continuation becomes primary again');
+   const previous=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
+   requireState(previous.notes.length===1&&previous.notes[0].text.includes('整体不一样'),'the original v2 record keeps the reflection exactly once');
+   requireState(previous.cases[1].attempts.length===2,'wrong and correct cups stay in the attempt history');
+   await shot('28f-route-end-saved-and-continue',true);
+   const bridgePose=await page.evaluate(()=>mathSpace.snapshot());
+   await primaryLinked.click();
+   requireState((await embedded.locator('#title').innerText()).includes('百格里的量'),'the optional source-backed bridge opens directly in the same learning workspace');
+   requireState((await embedded.locator('#status').innerText()).startsWith('任务 1 /'),'the bridge begins at its original first activity');
+   const following=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+   requireState(following.lessons.quarters.notes.length===1,'the source lesson reflection survives the transition');
+   requireState(!following.daily.bridges[linkedId]?.cases?.[0]?.attempts?.length,'opening a linked activity does not manufacture a correct attempt');
+   const afterBridgePose=await page.evaluate(()=>mathSpace.snapshot());
+   requireState(bridgePose.position.every((v,i)=>Math.abs(v-afterBridgePose.position[i])<.002),'the 3D camera pose is preserved when continuing from the final task');
+   await shot('28g-source-bridge-opens-directly',true);
    // A failed localStorage write must never look like a successful save,
    // including the case where an input autosave fails before the button click.
    await page.goto(base+'learn.html#decimal');
