@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {freshLesson,submitLesson} from '../dist/learning/state.js';
+import {freshLesson,modelForLesson,enterUnifiedTask,currentSubmission,submitLesson} from '../dist/learning/state.js';
 import {renderP3Flow} from '../dist/learning/p3-view.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES} from '../dist/learning/bridges.js';
@@ -41,4 +41,49 @@ test('P7 source data and storage model stay outside the UI-only diff',()=>{
   assert.match(js,/t\.prompt/);
   assert.ok(Object.keys(LESSONS).length>200);
   assert.ok(Object.keys(BRIDGES).length>100);
+});
+
+
+test('P7 a new lesson is one directly checkable workspace',()=>{
+  const a=freshLesson('equivalent');
+  assert.equal(a.view,'task');
+  assert.equal(a.index,0);
+  assert.equal(currentSubmission(a).status,'unsubmitted');
+  assert.deepEqual(modelForLesson(a).rows.map(r=>r.d),[4,6,8]);
+  assert.equal(a.cases[0],undefined,'opening and manipulating is not a submission');
+});
+
+test('P7 old free-exploration records are preserved and mapped only when compatible',()=>{
+  const old=freshLesson('decimal');
+  old.view='play';
+  const practice=modelForLesson(old);
+  practice.selected=[1,2,3];
+  const original=structuredClone(practice);
+  enterUnifiedTask(old);
+  assert.equal(old.view,'task');
+  assert.deepEqual(old.models[-1],original,'original free exploration persists in old record');
+  assert.deepEqual(old.models[0],original,'compatible unsubmitted practice can be resumed');
+
+  const other=freshLesson('equivalent');
+  other.view='play';
+  modelForLesson(other).rows[0].n=1;
+  const originalOther=structuredClone(other.models[-1]);
+  enterUnifiedTask(other);
+  assert.equal(other.view,'task');
+  assert.deepEqual(other.models[-1],originalOther);
+  assert.deepEqual(other.models[0].rows.map(r=>r.d),[4,6,8],'incompatible fractions are not misreported as task answers');
+  assert.equal(other.cases[0],undefined);
+});
+
+test('P7 changing a submitted workpiece requires a fresh check, without discarding history',()=>{
+  const a=freshLesson('share');
+  a.models[0]={cuts:[20,40,60,80],selected:[0]};
+  const result=submitLesson(a);
+  assert.equal(result.correct,true);
+  assert.equal(currentSubmission(a).status,'correct');
+  a.models[0].selected=[1];
+  assert.equal(currentSubmission(a).status,'modified');
+  assert.equal(a.cases[0].attempts.length,1);
+  a.models[0].selected=[0];
+  assert.equal(currentSubmission(a).status,'correct');
 });
