@@ -120,6 +120,14 @@ function nextLearningLesson(){
  const route=sessionRoute(id),current=BRIDGES[id]?.to||id;
  return nextRouteLessonId(route,current,lid=>lessonSummary(sessionRecord(all,lid)).completed);
 }
+function showNoteSaveFailure(){
+ const notice=$('#note-save-status');
+ if(!notice)return;
+ notice.hidden=false;
+ notice.dataset.state='error';
+ notice.textContent='尚未保存成功。输入的文字还在，请查看存储提示，解决后再试。';
+ notice.scrollIntoView({block:'nearest'});
+}
 function syncReflectionPrimary(){
  const notice=$('#note-save-status');
  if(a.view!=='summary'){if(notice)notice.hidden=true;return;}
@@ -189,7 +197,7 @@ function revealSupport(){if(a.view==='task')update(r=>supportLesson(r));const t=
 function placeCube(i){if(task().estimate&&model().estimate===null){feedback='先留下你的估计，再开始填。估计不用猜得刚好。';render();return;}edit(m=>{m.filled??=[];if(!m.filled.includes(i))m.filled.push(i);});}
 async function openLesson(next,{keepQuestion=false}={}){if(!sessionMeta(next))next='share';if(cube){cube.destroy();cube=null;cubeKey='';}if(!keepQuestion)questionId=null;if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}id=next;feedback='';savedNoteFeedback='';all=read();a=sessionRecord(all,id)||freshLesson(id);view=a.ui?.view||null;spread=a.ui?.spread||0;const savedUI=structuredClone(a.ui);update(r=>{r.ui=savedUI;enterUnifiedTask(r);modelForLesson(r);});const routePanel=$('#route-collapsible');if(routePanel)routePanel.open=false;history.replaceState(null,'',location.pathname+(questionId?'?question='+encodeURIComponent(questionId):'')+'#'+id);$('#back').href='index.html#space/pack/'+sessionRoute(id).packIds[0];render();window.scrollTo(0,0);}
 
-$('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');if(!b||blocked)return;const act=b.dataset.do;
+$('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');if(!b)return;if(blocked){if(b.dataset.do==='save-note')showNoteSaveFailure();return;}const act=b.dataset.do;
  if(act==='question'){leaveQuestion();return;}if(act==='question-finish'||act==='question-later'){try{all=read();questionAction(all,questionId,act==='question-finish'?'finish':'later');writeStored(KEY,JSON.stringify(validate(all,atlas)));questionId=null;history.replaceState(null,'',location.pathname+'#'+id);notify('math-space:lesson-change',{id:BRIDGES[id]?.to||id,sessionId:id,questionId:null});renderQuestion();if(act==='question-later')back();}catch(error){$('#storage-warning').hidden=false;$('#storage-warning').textContent=error.message;}return;}
  if(act==='p3-related'){if(parent!==window)notify('math-space:lesson-show-node',{nodeId:b.dataset.node});else location.href='index.html#space/node/'+encodeURIComponent(b.dataset.node);return;}
   if(act==='p3-retry'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
@@ -197,7 +205,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
  if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();if(!$('#check-feedback').hidden)$('#check-feedback').scrollIntoView({block:'nearest'});return;}
  if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
- if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}return;}
+ if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}else showNoteSaveFailure();return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}
  if(act==='turn'){cube?.turn();update(()=>{});return;}if(act==='spread'){if(!spread&&a.view==='task')update(r=>supportLesson(r));spread=spread?0:1;update(()=>{});render();return;}
  if(act==='view'){view=b.dataset.value;update(()=>{});render();return;}
@@ -208,7 +216,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
  if(act==='count')m.counts[row]=Math.max(0,Math.min(12,m.counts[row]+Number(b.dataset.delta)));if(act==='observe')m.seen=Math.min(task().order.length,m.seen+1);
  },{renderNow:!['cell','row-fill','grid-clear','fill-next'].includes(act)});
 });
-$('#lesson').addEventListener('input',e=>{const el=e.target;if(el.id==='note'){savedNoteFeedback='';if(update(r=>r.draft=el.value.slice(0,2000)))syncReflectionPrimary();return;}if(!el.matches('input,select')||el.dataset.xfield)return;
+$('#lesson').addEventListener('input',e=>{const el=e.target;if(el.id==='note'){savedNoteFeedback='';if(update(r=>r.draft=el.value.slice(0,2000)))syncReflectionPrimary();else showNoteSaveFailure();return;}if(!el.matches('input,select')||el.dataset.xfield)return;
  if(el.hasAttribute('data-dimension')){const dims=[...task().dims];dims[+el.dataset.dimension]=+el.value;if(update(r=>modelForLesson(r).shape=dims)){cube?.destroy();cube=new CubeView($('#cube-world'),task(),placeCube);cubeKey=id+':-1:'+dims.join(',');cube.update(model(),{spread});el.nextElementSibling.textContent=el.value;$('.cube-form .equation').textContent=`一层 ${dims[0]*dims[1]} 块 × ${dims[2]} 层 = ${voxels(task()).length} 块`;feedback='';sync();}return;}
  edit(m=>{if(el.hasAttribute('data-height'))m.heights[+el.dataset.height]=+el.value;else if(el.hasAttribute('data-name'))m.names[+el.dataset.name]=el.value;else if(el.hasAttribute('data-count-input'))m.counts[+el.dataset.countInput]=Math.max(0,Math.min(20,Math.trunc(+el.value)));else if(el.dataset.field){const key=el.dataset.field;const numeric=el.type==='number'||el.type==='range'||key==='choice';m[key]=numeric?(el.value===''?null:Math.max(0,Math.min(999,Math.trunc(Number(el.value))))):el.value;}});
 });
