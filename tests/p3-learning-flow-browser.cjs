@@ -18,7 +18,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   await page.locator('#focus-card [data-action="open"]').first().click();
   await frame.locator('#p3-learning-flow').waitFor();
   check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('尚未提交检查')),'initial record is not completion evidence');
-  check(await frame.locator('.p3-application').innerText().then(s=>s.includes('模拟现实情境')&&s.includes('真实生活')),'simulation and real practice explicitly distinct');
+  check(await frame.locator('.p3-application').innerText().then(s=>s.includes('模拟情境')&&s.includes('现实生活')),'simulation and real practice explicitly distinct');
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'first screen already offers checking without a separate start mode');
   await frame.locator('#actions [data-do="check"]').click();
   check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('需要修改')),'first incorrect attempt is labeled');
