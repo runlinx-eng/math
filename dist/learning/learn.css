@@ -274,3 +274,27 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 }
 #math-explanation .math-method strong{font-size:12px}
 #math-explanation .math-method small{display:block;margin-top:4px}
+
+
+/* P7: route-end reflection is optional; keep the source-linked next action
+   visible without adding another panel or a duplicated route button. */
+.summary-thinking{
+  margin:11px 0 12px;
+  padding:10px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  line-height:1.65;
+  color:#496d60;
+}
+.summary-thinking strong{display:block;font-size:13px;color:#315d50}
+.summary-thinking p{margin:5px 0}
+.summary-thinking small{display:block;color:#6d8073}
+.reflection-optional,.route-end-hint{
+  margin:5px 0 9px;
+  font-size:12px;
+  line-height:1.6;
+  color:#64796b;
+}
+.route-end-hint{margin-top:14px}
+#actions [data-primary-destination]{max-width:100%;text-align:left;white-space:normal}
