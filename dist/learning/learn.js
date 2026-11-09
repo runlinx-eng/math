@@ -260,10 +260,16 @@ $('#lesson').addEventListener('keydown',e=>{const el=e.target.closest('circle[da
 $('#lesson').addEventListener('input',e=>{const el=e.target;if(!el.dataset.xfield||blocked||a.view==='summary'||!isExtra(task()))return;const key=el.dataset.xfield;let value=el.value;if(['number','range'].includes(el.type)||key.startsWith('pair.'))value=value===''?null:Number(value);edit(m=>{setField(m,key,value);fieldExtra(task(),m,key);if(task().type==='x-floor'&&['w','h','cols','rows'].includes(key)){m.tiles=[];if(task().draw){m.cols=m.w;m.rows=m.h;}}});});
 $('#lesson').addEventListener('change',e=>{if(e.target.matches('[data-xfield="method"]')&&task().type==='x-s39-choose')render();if(e.target.matches('[data-xfield="position"]')&&task().type==='x-g27-cut'||e.target.matches('[data-xfield="foldPosition"]')&&task().type==='x-g27-net')render();});
 
+// Native <details> toggles after a user click. Close competing optional
+// sections synchronously before the requested disclosure opens, including
+// keyboard activation of the native summary element.
+$('#lesson').addEventListener('click',e=>{
+ const summary=e.target.closest('summary'),section=summary?.parentElement;
+ if(a?.view!=='summary'||!section||section.open||!section.matches('#system-explanation,.p3-more,.p3-application,#record'))return;
+ for(const other of document.querySelectorAll('#system-explanation,.p3-more,.p3-application,#record'))if(other!==section)other.open=false;
+},true);
 $('#lesson').addEventListener('toggle',e=>{
  if(e.target.matches('.x-access')&&e.target.open&&a?.view==='task')update(r=>supportLesson(r));
- if(a?.view!=='summary'||!e.target.open||!e.target.matches('#system-explanation,.p3-more,.p3-application,#record'))return;
- for(const other of document.querySelectorAll('#system-explanation,.p3-more,.p3-application,#record'))if(other!==e.target)other.open=false;
 },true);
 
 // The same conserved tokens can be moved by drag or by keyboard-accessible buttons.
