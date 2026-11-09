@@ -33,7 +33,7 @@ import {captureSession,sessionRecord,rememberSession,addQuestion,questionAction,
 import {askQuestion} from './question-ui.js';
 import {thinkingFeedback} from './thinking-feedback.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from './workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from './workspace-flow.js';
 import {CubeView} from './cubes.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
@@ -166,6 +166,7 @@ function syncReflectionPrimary(){
  const save=$('#actions [data-do="save-note"]'),destination=$('#actions [data-primary-destination]');
  if(save){save.disabled=!hasText;save.hidden=!hasText;save.classList.toggle('primary',hasText);}
  if(destination)destination.classList.toggle('primary',!hasText);
+ const cue=$('#action-cue');if(cue)cue.textContent=executionCue({stage:'reflect',hasDraft:hasText});
  if(notice){
   notice.hidden=!hasText&&!a.notes.length&&!savedNoteFeedback;
   notice.textContent=hasText?'文字草稿已保留；点击「保存我的发现」才会加入学习记录。':
@@ -182,7 +183,10 @@ function syncLearningRegions(){
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':'发现与继续';
  $('#check-title').textContent=stage==='reflect'?'下一步':'检查与反馈';
- const repair=a.view==='task'?correctionGuidance({task:task(),model:model(),checked:status}):null;
+ const activeTask=a.view==='summary'?null:task();
+ const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
+ $('#action-cue').textContent=executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,repair});
+ $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
   $('#next-guidance').hidden=stage==='reflect';
   $('#next-guidance').textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。':stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
  const box=$('#math-explanation');

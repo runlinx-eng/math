@@ -155,3 +155,35 @@ export function checkedMathExplanation({id,task,model,checked}){
   }
   return null;
 }
+
+ 
+// P7-D4: task-type adapters only describe the already-configured widget.
+// No new task, proof, assessment, persistence field or progression step.
+export function executionCue({stage='explore',task=null,bridge=false,hasDraft=false,readyToCheck=true,repair=null}={}){
+ if(stage==='reflect')return hasDraft?'文字草稿已保留。可以先保存发现，也可以直接继续。':'本组操作已通过检查。可以写下自己的发现，也可以直接继续。';
+ if(stage==='passed')return '这件作品已通过检查。可以进入下一题，或整理这次发现。';
+ if(stage==='recheck')return '作品已经修改。原检查结果不再适用，请重新检查。';
+ if(stage==='revise')return repair?.action||'对照下方反馈修改作品，再重新检查；原尝试会保留。';
+ if(!readyToCheck)return '先完成下方需要的选择、操作或填写，准备好后再检查。';
+ switch(task?.type){
+  case 'partition':return '拖动分界并选出需要的部分，再检查自己的构造。';
+  case 'equivalent':return '调整纸带上涂色的部分，比较各条纸带，再检查。';
+  case 'line':return '移动数轴上的标记，比较它们的位置，再检查。';
+  case 'grid':return '在百格中涂色并填写相应的表示，再检查。';
+  case 'match':return '调整每个杯子的水位和写法，再检查它们是否对应。';
+  case 'x-r38-counterexample':return '在下方尝试能否找到反例，再检查你构造的证据。';
+  case 'x-r38-chain':return '在下方连接你的推理步骤，再检查证据。';
+  default:return bridge?'用下方实际配置的教具完成这条知识联系中的任务，再检查。':'按当前问题在下方直接操作、观察或填写，完成后检查。';
+ }
+}
+export function activityTitle({stage='explore',task=null,bridge=false}={}){
+ if(stage==='reflect')return '我的发现（可选）';
+ if(bridge)return '关联知识的数学操作';
+ if(task?.type==='x-r38-counterexample')return '寻找反例与证据';
+ if(task?.type==='x-r38-chain')return '连接推理';
+ if(task?.type==='line')return '在数轴上操作';
+ if(task?.type==='grid')return '在百格上操作';
+ if(task?.type==='match')return '比较与匹配';
+ if(task?.type==='equivalent'||task?.type==='partition')return '构造与比较';
+ return '数学操作与作品';
+}

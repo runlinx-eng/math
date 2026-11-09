@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary,addLessonNote,validateLesson} from '../dist/learning/state.js';
 import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from '../dist/learning/workspace-flow.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ROUTES,REFLECTIONS} from '../dist/learning/catalog.js';
 import {nextRelatedPractice,sourceBridge} from '../dist/learning/bridges.js';
@@ -285,4 +285,23 @@ test('P7 route completion summary names optional writing and does not duplicate 
  assert.match(html,/nextLinkedPractice/);
  assert.match(flow,/primarySessionId=null/);
  assert.match(flow,/flow\.bridges\.filter\(b=>b\.id!==primarySessionId\)/);
+});
+
+test('P7-D4 fixed adaptive command covers four actual activity types without new judging',()=>{
+ assert.match(executionCue({task:TASKS.equivalent[0]}),/纸带/);
+ const argument=TASKS.argument38.find(t=>t.type==='x-r38-counterexample');
+ assert.ok(argument,'actual source-backed counterexample task');
+ assert.match(executionCue({task:argument}),/反例/);
+ assert.equal(activityTitle({task:argument}),'寻找反例与证据');
+ assert.match(executionCue({task:TASKS.quarters[1]}),/杯子/);
+ assert.match(executionCue({task:TASKS.counttwenty[0],readyToCheck:false}),/先完成/);
+ assert.match(executionCue({stage:'recheck'}),/原检查结果不再适用/);
+ assert.match(executionCue({stage:'reflect',hasDraft:true}),/草稿/);
+ assert.equal(activityTitle({stage:'explore',bridge:true}),'关联知识的数学操作');
+ assert.match(executionCue({stage:'revise',repair:{action:'调整纸带再检查'}}),/调整纸带/);
+ const html=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
+ assert.ok(html.indexOf('id="actions"')<html.indexOf('id="learning-interaction"'),'one real command bar precedes every specialized widget');
+ assert.match(html,/id="action-cue"/);
+ assert.equal((html.match(/id="actions"/g)||[]).length,1);
+ assert.equal((html.match(/id="work"/g)||[]).length,1);
 });
