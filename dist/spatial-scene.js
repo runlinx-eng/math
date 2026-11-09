@@ -539,6 +539,7 @@ export class SpatialScene {
     const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       taskWorkspace=document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'),
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
+    // Keep the real graph legible beside a task without stealing focus from selected or source-related knowledge.
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
       // A temporary hover reads the full map just like the panorama. The
       // underlying guide selection and the allowed click targets do not move.
@@ -549,7 +550,7 @@ export class SpatialScene {
       if(o.key===this.selected)return .95;
       if(this.guideFocus.visitedKeys?.has(o.key))return .65;
       return this.guideFocus.currentNodes.has(o.key)?.61:this.guideFocus.seenNodes.has(o.key)?.57:this.guideFocus.step===0?.70:.38;
-    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.40:.18):o.packId===selected.packId?.42:.18;};
+    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.65:.18):o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
@@ -568,7 +569,7 @@ export class SpatialScene {
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.60:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.35:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
@@ -658,6 +659,8 @@ export class SpatialScene {
     if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
     layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     layer.style.opacity=String(opacity);
+    const contextLinks=this.localRelationshipFocus&&!this.guideFocus&&
+      (document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'));
     const paths=[],guideEndpoints=new Map();
     for(const l of links){
       const curve=new THREE.QuadraticBezierCurve3(l.from,l.control,l.to);
@@ -666,8 +669,8 @@ export class SpatialScene {
       const isPreview=this.previewKey&&(l.fromKey===this.previewKey||l.toKey===this.previewKey);
       const fading=this.previewKey&&!isPreview;
       const stroke='#'+l.color.toString(16).padStart(6,'0');
-      const lineOpacity=fading?.12:l.muted?.33:l.soft?.66:this.guideFocus?.97:.84;
-      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?(l.muted?1.65:3.15):2;
+      const lineOpacity=fading?.12:l.muted?.33:l.soft?.66:this.guideFocus?.97:contextLinks?.94:.84;
+      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?(l.muted?1.65:3.15):contextLinks?2.45:2;
       if(this.guideFocus&&!l.muted&&!fading){
         // Highlight the exact projected endpoints of existing source edges,
         // not new waypoints or spatial coordinates.
