@@ -1,11 +1,28 @@
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
+import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
 
 export function thinkingFeedback(task,model,record){
   const attempts=record?.attempts||[],lastAttempt=attempts.at(-1);
   if(!lastAttempt||JSON.stringify(lastAttempt.value)!==JSON.stringify(model))return null;
+  // A checked representation can be described without claiming the child has
+  // independently explained the equivalence or mastered a thinking ability.
+  if(task?.type==='grid'){
+    if(!validTask(task,model)||!inspectTask(task,model).correct)return null;
+    const method=task.reverse?
+      {nodeId:'mt_CUmjcE7W6c',label:'连接分数、小数与百分数的表示',code:'ccss-math:MP.2'}:
+      {nodeId:'mt_EBYGhd8X3x',label:'连接不同表示方式',code:'ccss-math:MP.2'};
+    const count=model.selected.length;
+    return {
+      title:'这次作品中的思考线索',
+      observation:`你提交的百格涂了 ${count} 格，并写出小数 ${model.decimal}；检查显示它们表示同一个量。`,
+      connection:'试着用自己的话说明：为什么换了表示方法，量没有变？你可以再用另一个分数试一试。',
+      detail:['这里只确认当前作品的对应关系；没有自动判断你的自由解释，也不代表已经掌握这种思考方法。'],
+      method
+    };
+  }
   const handler=task.type==='x-fracrename'?fractions:task.type==='x-r38-counterexample'?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];

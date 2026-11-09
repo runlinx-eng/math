@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary,addLessonNote,validateLesson} from '../dist/learning/state.js';
 import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
-import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId} from '../dist/learning/workspace-flow.js';
+import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
+import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ROUTES} from '../dist/learning/catalog.js';
 
 const detailFor=a=>checkedMathExplanation({
@@ -139,4 +140,45 @@ test('P7 saved reflection preserves verbatim notes and checked work through vali
  assert.deepEqual(valid.notes.map(n=>n.text),[original]);
  assert.equal(valid.cases[2].attempts.length,1,'submitted evidence survives saving a note');
  assert.equal(lessonSummary(valid).completed,true,'saving is not a new judgment or completion rule');
+});
+
+
+test('P7 real 1/4 hundred-grid error shows a concrete repair action, then recheck',()=>{
+ const a=freshLesson('quarters'),t=TASKS.quarters[0],m=modelForLesson(a);
+ m.selected=Array.from({length:20},(_,i)=>i);m.decimal='0.2';
+ assert.equal(submitLesson(a).correct,false);
+ const wrong=currentSubmission(a);
+ assert.equal(wrong.status,'revise');
+ const guidance=correctionGuidance({task:t,model:m,checked:wrong});
+ assert.match(guidance.observation,/20 格.*20\/100.*1\/4/);
+ assert.match(guidance.action,/100 格平均分成 4 份/);
+ assert.match(guidance.action,/调整涂色.*核对小数.*检查我的作品/);
+ assert.match(guidance.method,/连接不同表示方式/);
+ assert.equal(thinkingFeedback(t,m,a.cases[0]),null,'wrong answer is not credited with a thinking method');
+ m.selected=Array.from({length:25},(_,i)=>i);m.decimal='0.25';
+ assert.equal(currentSubmission(a).status,'modified');
+ assert.equal(correctionGuidance({task:t,model:m,checked:currentSubmission(a)}),null,'outdated wrong feedback clears after edits');
+ assert.equal(thinkingFeedback(t,m,a.cases[0]),null,'unsubmitted changes do not receive thinking evidence');
+ assert.equal(submitLesson(a).correct,true);
+ assert.equal(currentSubmission(a).status,'correct');
+ const cue=thinkingFeedback(t,m,a.cases[0]);
+ assert.equal(cue.method.nodeId,'mt_EBYGhd8X3x','actual source MP2 node, not an invented ID');
+ assert.match(cue.observation,/25 格.*0\.25/);
+ assert.match(cue.detail.join(' '),/不代表已经掌握/);
+ assert.equal(a.cases[0].attempts.length,2);
+ assert.equal(a.cases[0].attempts[0].value.selected.length,20);
+});
+
+test('P9 source thinking pilot uses only submitted representation and not an ungraded explanation',()=>{
+ const t=TASKS.decimal[2],a=freshLesson('decimal');a.index=2;
+ const m=modelForLesson(a);m.selected=Array.from({length:26},(_,i)=>i);m.decimal='0.26';m.fraction='26';
+ assert.equal(thinkingFeedback(t,m,a.cases[2]),null);
+ assert.equal(submitLesson(a).correct,true);
+ const cue=thinkingFeedback(t,m,a.cases[2]);
+ assert.equal(cue.method.nodeId,'mt_CUmjcE7W6c');
+ assert.equal(cue.method.code,'ccss-math:MP.2');
+ assert.match(cue.observation,/26 格.*0\.26/);
+ assert.doesNotMatch(JSON.stringify(cue),/已掌握|能力评分|自由解释正确/);
+ const changed=modelForLesson(a);changed.decimal='0.25';
+ assert.equal(thinkingFeedback(t,changed,a.cases[2]),null);
 });

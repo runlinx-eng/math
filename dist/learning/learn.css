@@ -245,3 +245,22 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
   background:#fff6e7;
   color:#865c26;
 }
+
+
+/* The next mathematical action is shown at the failed check, not in a new page. */
+#check-feedback .feedback-next{
+  margin:11px 0 0;
+  padding:11px 12px;
+  border-top:1px solid #e2c89e;
+  background:rgba(255,255,255,.46);
+  border-radius:6px;
+  white-space:normal;
+}
+#check-feedback .feedback-next strong{display:block;font-size:14px;color:#6d542f}
+#check-feedback .feedback-next p{margin:6px 0;line-height:1.6}
+#check-feedback .feedback-next small{display:block;margin-top:8px;color:#685f51}
+#thinking-feedback .source-thinking{
+  margin-top:11px;padding-top:9px;border-top:1px solid #c9ddd0;
+  font-weight:600;color:#356951;
+}
+#thinking-feedback .source-thinking small{display:block;font-weight:400;margin-top:5px}
