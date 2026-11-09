@@ -49,7 +49,7 @@ const base='http://127.0.0.1:43827/';
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    // No work: no random lesson, only a knowledge selection action.
    await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('math-explorer-v2'));s.lessons={};s.daily.bridges={};s.daily.questions=[];s.daily.continuation=null;localStorage.setItem('math-explorer-v2',JSON.stringify(s));});
-   await page.goto(base+'?world=network&layout=53#space');
+   await page.goto(base+'?world=network&layout=53#atlas');
    await page.waitForFunction(()=>window.mathSpace?.snapshot().selected===null);
    await nav().click();
    check(await page.locator('#learning-hub [data-action="learn-find"].primary-button').count()===1,'no state offers one choose-knowledge CTA');
