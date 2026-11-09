@@ -78,6 +78,14 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      requireState(!!result,'successful task displays a concrete result');
      requireState(await frame.locator('#actions [data-do="next"]').count()===1,'success offers a next task');
      requireState(await frame.locator('#actions [data-do="next"]').evaluate(el=>el.classList.contains('primary')),'successful task emphasizes the next action');
+     if(idx===0){
+       await frame.locator('#work [data-do="part"][data-index="0"]').click();
+       requireState((await frame.locator('#check-feedback').innerText()).includes('已修改，尚未重新检查'),'edited work reports recheck needed');
+       requireState(await frame.locator('#actions [data-do="next"]').count()===0,'old correct result does not authorize advancing modified work');
+       await shot('05-0-modified-recheck-needed',true);
+       await frame.locator('#work [data-do="part"][data-index="0"]').click();
+       requireState(await frame.locator('#actions [data-do="next"]').count()===1,'restoring the submitted workpiece restores its checked state');
+     }
      await shot('05-'+idx+'-correct',true);
    }
    await frame.locator('#actions [data-do="next"]').click();
@@ -138,6 +146,27 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='equivalent');
    const resumed=await shot('15-equivalent-resumed');
    requireState(resumed.checkCount.includes('1 次提交'),'refresh retains attempt and no fake mastery');
+   // An older installed version stored ungraded play models under key -1.
+   // The new single workspace must keep that old material and display the task.
+   await page.evaluate(async()=>{
+     const {freshLesson,modelForLesson}=await import('./learning/state.js');
+     const saved=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     const record=freshLesson('decimal');
+     record.view='play';
+     modelForLesson(record).selected=[1,2,3];
+     saved.lessons.decimal=record;
+     localStorage.setItem('math-explorer-v2',JSON.stringify(saved));
+   });
+   await page.goto(base+'learn.html#decimal');
+   await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='decimal');
+   const migrated=await shot('16-legacy-play-recovered');
+   requireState(migrated.status.startsWith('任务'),'legacy play reopens as the unified task');
+   requireState(migrated.actionLabels.some(s=>s.includes('检查我的作品')),'legacy play needs no second start');
+   const preserved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
+   requireState(preserved.view==='task','legacy record normalized');
+   requireState(preserved.models['-1'].selected.length===3,'original play work preserved for recovery');
+   requireState(preserved.models[0].selected.length===3,'compatible unsubmitted work continues in the task');
+   requireState(!preserved.cases[0],'unsubmitted play work does not count as checked');
    fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify(evidence,null,2));
    console.log('P7_AUDIT_COMPLETE '+JSON.stringify({scenarioCount:evidence.scenarios.length,errors:evidence.errors}));
    requireState(!evidence.errors.length,'no uncaught Chromium errors');
