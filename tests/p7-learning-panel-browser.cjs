@@ -122,7 +122,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(first.actionLabels.some(s=>s.includes('开始第 1 题')),'primary action explicitly starts a checkable task');
    requireState(!first.checkCount.includes('历史完成'),'unsubmitted work has no empty evidence wall');
    requireState(await page.locator('#record').isHidden(),'empty history is hidden before any attempt');
-   requireState(await page.locator('#p3-flow-heading').count()===0,'no phantom evidence heading');
+   requireState(await page.locator('.p3-flow-heading').count()===0,'no phantom evidence heading');
    await page.locator('#actions [data-do="start"]').click();
    const active=await shot('13-equivalent-task-started');
    requireState(active.actionLabels.some(s=>s.includes('检查我的作品')),'task has an explicit checking action');
