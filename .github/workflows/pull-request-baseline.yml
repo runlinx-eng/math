@@ -98,6 +98,7 @@ jobs:
             tests/p3-learning-flow.test.mjs
             tests/p7-learning-panel.test.mjs
             tests/p7-learning-workspace-flow.test.mjs
+            tests/p7-d3-capability-inventory.test.mjs
             tests/p4-learning-reliability.test.mjs
             tests/p5-integration-safety.test.mjs
             tests/p6b-trail-priority.test.mjs
@@ -122,6 +123,7 @@ jobs:
           done
 
           node --test "${test_files[@]}"
+          node scripts/build_p7_d3_inventory.mjs
 
       - name: Check deployment script syntax
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
@@ -211,6 +213,7 @@ jobs:
             verification/p2-grade-distribution/
             verification/p3-learning-flow/
             verification/p7-learning-panel/
+            verification/p7-d3/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/
