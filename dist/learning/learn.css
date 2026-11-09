@@ -276,6 +276,53 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 #math-explanation .math-method small{display:block;margin-top:4px}
 
 
+/* P7-D3-B: the child first forms an explanation. System mathematics is an opt-in
+   reference, not an answer exposed above the learner's own writing. */
+#scene[data-stage="reflect"] #learning-problem{padding:10px 12px}
+#scene[data-stage="reflect"] #learning-problem #instruction{font-size:16px;line-height:1.45}
+#scene[data-stage="reflect"] #learning-check{padding-top:5px;border-top:0}
+#scene[data-stage="reflect"] #learning-check #actions{margin:4px 0 6px}
+#scene[data-stage="reflect"] #work .summary-art{margin:4px 0 12px;padding:10px 12px}
+#scene[data-stage="reflect"] #work .summary-art h2{font-size:14px}
+#scene[data-stage="reflect"] #work .summary-art p{font-size:12px;margin-top:4px;line-height:1.45}
+#scene[data-stage="reflect"] #work label[for="note"]{display:block;font-size:15px;font-weight:650;line-height:1.5;margin:12px 0 5px}
+#scene[data-stage="reflect"] #work #note{font-size:15px;line-height:1.6;min-height:72px;width:100%}
+#scene[data-stage="reflect"] #learning-next{margin-top:14px}
+#scene[data-stage="reflect"] #learning-interaction{margin-top:10px}
+#scene[data-stage="reflect"] #work .summary-art{margin:0 0 8px}
+#scene[data-stage="reflect"] #work label[for="note"]{margin:8px 0 4px;font-size:14px;line-height:1.5}
+#scene[data-stage="reflect"] #work .reflection-optional{margin:2px 0 6px;font-size:12px}
+#scene[data-stage="reflect"] #work #note{min-height:64px;padding:9px 10px}
+#scene[data-stage="reflect"] #work [data-do="save-note"]{margin-top:5px;min-height:40px}
+#scene[data-stage="reflect"] #learning-check{margin-top:9px}
+#scene[data-stage="reflect"] #learning-next>#system-explanation{margin:3px 0 8px}
+#scene[data-stage="reflect"] #record{margin-top:14px}
+#source-goals-details{margin-top:10px}
+#source-goals-details summary{font-size:12px;color:#607569}
+#scene[data-stage="reflect"] #learning-next .learning-region-title{font-size:12px;font-weight:550;color:#667b70}
+#scene[data-stage="reflect"] #next-guidance[hidden]{display:none}
+#learning-next #system-explanation{margin-top:16px;padding:9px 12px;border:1px solid #e0e9dd;border-radius:8px;background:#f6f8f3}
+#learning-next #system-explanation>summary{font-size:13px;font-weight:600;color:#446a59;cursor:pointer;line-height:1.6}
+#learning-next #system-explanation[open]{background:#f2f7ef}
+#learning-next #system-explanation-body{padding-top:9px;font-size:13px;line-height:1.7;overflow-wrap:anywhere;color:#3e6052}
+#learning-next #system-explanation-body p{margin:5px 0 10px}
+#learning-next #system-explanation-body>small{display:block;font-size:12px;color:#627d6c}
+
+/* Short-height windows preserve the child's reflection before navigation.
+   The validated result already remains in #status and #steps; don't repeat
+   its bulky confirmation card or helper sentence at this breakpoint. */
+@media(max-height:580px){
+ #scene[data-stage="reflect"] #work .summary-art{display:none}
+ #scene[data-stage="reflect"] #interaction-title{display:none}
+ #scene[data-stage="reflect"] #work .reflection-optional{display:none}
+ #scene[data-stage="reflect"] #work label[for="note"]{margin:3px 0 5px}
+ #scene[data-stage="reflect"] #work #note{min-height:48px}
+ #scene[data-stage="reflect"] #work [data-do="save-note"]{margin-top:2px;min-height:38px}
+ #scene[data-stage="reflect"] #learning-check{margin-top:3px;padding-top:0}
+ #scene[data-stage="reflect"] #learning-check #actions{margin-top:2px}
+ #scene[data-stage="reflect"] #learning-problem{padding-top:8px;padding-bottom:8px}
+}
+
 /* P7: route-end reflection is optional; keep the source-linked next action
    visible without adding another panel or a duplicated route button. */
 .summary-thinking{
@@ -298,3 +345,20 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 }
 .route-end-hint{margin-top:14px}
 #actions [data-primary-destination]{max-width:100%;text-align:left;white-space:normal}
+
+/* P7-D3: the step names are fixed across tasks. The current verified state,
+   not a click on a tab, determines which phase is highlighted. */
+#steps{align-items:center;gap:5px;flex-wrap:nowrap}
+#steps li[data-study-step]{white-space:nowrap;font-size:11px;line-height:1.35;padding:5px 7px;border:1px solid transparent;color:#6e8176;background:#f2f3ee}
+#steps li[data-study-step][aria-current="step"]{border-color:#a8c2b3;background:#e1efe5;color:#28594e;font-weight:700}
+#actions{margin-top:12px}
+#actions button[hidden]{display:none!important}
+#actions button.primary{min-height:42px;line-height:1.45}
+#scene[data-stage="reflect"] #work #note-save-status{display:block;margin:7px 0 0;font-size:12px;line-height:1.55;color:#527463}
+#scene[data-stage="reflect"] #work #note-save-status[hidden]{display:none}
+#scene[data-stage="reflect"] #actions{margin:9px 0 7px}
+@media(max-width:540px){
+ #steps{gap:3px}
+ #steps li[data-study-step]{padding:4px 5px;font-size:10px}
+ #scene[data-stage="reflect"] #actions button{max-width:100%}
+}

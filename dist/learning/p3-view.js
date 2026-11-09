@@ -17,17 +17,18 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
     flow.next&&flow.next.id!==primarySessionId?button('lesson','后续路线 · '+flow.next.title,'data-id="'+esc(flow.next.id)+'"'):'',
     ...flow.related.map(n=>button('p3-related',n.direction+' · '+n.title,'data-node="'+esc(n.nodeId)+'"')),
     ...flow.bridges.filter(b=>b.id!==primarySessionId).map(b=>button('lesson','联合任务 · '+b.title,'data-id="'+esc(b.id)+'"')),
-    embedded?button('relations','观察地图联系'):button('back','返回知识空间')
+    embedded?button('relations','观察地图联系'):''
   ].filter(Boolean).join('');
   const application=flow.currentApplication;
   const applications=flow.applications.map(p=>button('lesson',p.label+' · '+p.title,'data-id="'+esc(p.sessionId)+'"')).join('');
-  const applicationHTML='<details class="p3-application"><summary>拓展与实践应用（模拟现实情境不等于真实生活实践）</summary>'+
-    '<p>数学操作、模拟现实情境与真实生活实践是三类不同的活动。模拟检查通过不会自动记为真实实践。</p>'+
-    (application?'<p><strong>当前关联：</strong>'+esc(application.label)+' · '+esc(application.kind)+'</p><p>现实尝试建议（未核验）：'+esc(application.real)+'</p>':'')+
+  const applicationHTML='<details class="p3-application"><summary>换个地方用一用（可选）</summary>'+
+    '<p>可以在这些模拟情境中试试数学方法。现实生活中是否做过，需要自己动手才能知道。</p>'+
+    (application?'<p><strong>与这次学习有关：</strong>'+esc(application.label)+' · '+esc(application.kind)+'</p><p>你还可以试试（建议）：'+esc(application.real)+'</p>':'')+
     (applications?'<div class="p3-action-list">'+applications+'</div>':'')+
-    '<details><summary>查看已配置的应用活动</summary><div class="p3-app-list">'+configuredApplications().map(p=>'<div><strong>'+esc(p.label)+'</strong><span>'+esc(p.kind)+'</span>'+button('lesson',p.title,'data-id="'+esc(p.sessionId)+'"')+'</div>').join('')+'</div><p>现实活动需本人实际操作并提供记录；当前版本不新增未经旧备份兼容验证的现实实践存储。</p></details></details>';
-  const other='<details class="p3-followups p3-more"><summary>更多知识联系与探索方式（可选）</summary>'+
-    '<div class="p3-action-list">'+((stage==='passed'||stage==='reflect')&&flow.attempts>0?button('p3-retry','再试当前条件'):'')+routes+'</div></details>'+applicationHTML;
+    '<details><summary>看看其他应用活动</summary><div class="p3-app-list">'+configuredApplications().map(p=>'<div><strong>'+esc(p.label)+'</strong><span>'+esc(p.kind)+'</span>'+button('lesson',p.title,'data-id="'+esc(p.sessionId)+'"')+'</div>').join('')+'</div><p>这里的模拟活动不等于已经完成现实实践。</p></details></details>';
+  const other='<details class="p3-followups p3-more"><summary>换个办法或看看联系（可选）</summary>'+
+    '<div class="p3-action-list">'+((stage==='passed'||stage==='reflect')&&flow.attempts>0?button('p3-retry','再试当前条件'):'')+
+    (stage==='reflect'?button('restart','重新做这组任务'):'')+routes+'</div></details>'+applicationHTML;
 
   if(flow.attempts===0){
     host.innerHTML='<p class="p3-evidence p3-before-check" role="status">尚未提交检查，检查记录会在提交作品后出现。</p>'+other;
@@ -40,7 +41,9 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
   // Correct answers and reflection should lead to the single main action above,
   // not a second wall of "next" buttons. The full history stays available.
   const passed=stage==='passed'||stage==='reflect';
-  const compact=passed?'<details class="p3-review"><summary>查看这次的检查记录</summary>'+evidence+'</details>':evidence;
+  // Reflection already keeps the complete attempt history in #record; do not
+  // show a second summary of the same evidence beside the child's next action.
+  const compact=stage==='reflect'?'':passed?'<details class="p3-review"><summary>查看这次的检查记录</summary>'+evidence+'</details>':evidence;
   const retry=!passed?'<div class="p3-retry">'+button('p3-retry','重新尝试本题')+'</div>':'';
   host.innerHTML=compact+retry+other;
 }

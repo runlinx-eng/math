@@ -9,6 +9,51 @@ export function learningStage(record,checked){
   return 'explore';
 }
 
+
+// One presentational learning sequence; mathematical activities retain their
+// individual operations and original judging rules. These are not mode gates.
+export const LEARNING_STEPS=Object.freeze([
+  {id:'explore',label:'① 探索与操作'},
+  {id:'check',label:'② 检查与修改'},
+  {id:'reflect',label:'③ 发现与继续'}
+]);
+
+// Primary actions are derived from the current verified workpiece, not from
+// which panel was last opened. A destination must be supplied by the caller
+// from a configured route, source-backed bridge or the existing back path.
+export function learningActionPlan({
+  stage='explore',hasNextTask=false,p03=false,readyToCheck=true,
+  hasDraft=false,destination=null
+}={}){
+  if(stage==='reflect'){
+    const next=destination||{action:'back',label:'返回知识空间 →'};
+    return {
+      step:'reflect',
+      primary:hasDraft?{action:'save-note',label:'保存我的发现'}:next,
+      destination:next,
+      hasDraft,
+      secondary:hasDraft?[next]:[]
+    };
+  }
+  if(stage==='passed'){
+    return {
+      step:'check',
+      primary:{action:'next',label:hasNextTask?'进入下一题 →':p03?'完成三题，看看发现 →':'整理这次发现 →'},
+      secondary:[{action:'check',label:'再检查一次'},...(p03?[]:[{action:'hint',label:'给一点帮助'}])]
+    };
+  }
+  const isCorrection=stage==='revise'||stage==='recheck';
+  return {
+    step:isCorrection?'check':'explore',
+    primary:{
+      action:'check',
+      label:stage==='recheck'?'重新检查':stage==='revise'?'修改后重新检查':p03?'检查本题':'检查我的作品',
+      disabled:!readyToCheck
+    },
+    secondary:[{action:'hint',label:p03?'需要提示':'给一点帮助'}]
+  };
+}
+
 // Follow only configured, ordered route lessons; a completed lesson is not
 // presented as a new next step. This does not invent a knowledge relationship.
 export function nextRouteLessonId(route,currentId,isCompleted=()=>false){
