@@ -1,11 +1,20 @@
 // Read-only display priorities. Never infer mathematical mastery from an opened session.
+import {sessionTaskFor} from './bridges.js';
+import {defaultModel} from './tasks.js';
 const countAttempts=cases=>Object.values(cases||{}).reduce((sum,row)=>sum+(Array.isArray(row?.attempts)?row.attempts.length:0),0);
 const hasText=value=>typeof value==='string'&&value.trim().length>0;
+// New learning sessions begin in task mode. A view value alone does not prove
+// that the child actually changed an object or left a work-in-progress.
+const hasEditedModel=record=>Object.entries(record.models||{}).some(([key,model])=>{
+  const task=sessionTaskFor(record.id,Number(key));
+  if(!task)return false;
+  return JSON.stringify(model)!==JSON.stringify(defaultModel(task));
+});
 export function lessonRecordTier(record){
   if(!record||typeof record!=='object')return 'available';
   if(countAttempts(record.cases)>0||(record.notes?.length||0)>0)return 'evidence';
   if(hasText(record.draft)||Object.values(record.cases||{}).some(row=>row?.support)
-    ||record.view==='task'||record.view==='summary'||record.index>0)return 'draft';
+    ||record.view==='summary'||record.index>0||hasEditedModel(record))return 'draft';
   return 'available';
 }
 export function activityRecordTier(record){
