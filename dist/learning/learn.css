@@ -308,6 +308,21 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 #learning-next #system-explanation-body p{margin:5px 0 10px}
 #learning-next #system-explanation-body>small{display:block;font-size:12px;color:#627d6c}
 
+/* Short-height windows preserve the child's reflection before navigation.
+   The validated result already remains in #status and #steps; don't repeat
+   its bulky confirmation card or helper sentence at this breakpoint. */
+@media(max-height:780px){
+ #scene[data-stage="reflect"] #work .summary-art{display:none}
+ #scene[data-stage="reflect"] #interaction-title{display:none}
+ #scene[data-stage="reflect"] #work .reflection-optional{display:none}
+ #scene[data-stage="reflect"] #work label[for="note"]{margin:3px 0 5px}
+ #scene[data-stage="reflect"] #work #note{min-height:48px}
+ #scene[data-stage="reflect"] #work [data-do="save-note"]{margin-top:2px;min-height:38px}
+ #scene[data-stage="reflect"] #learning-check{margin-top:3px;padding-top:0}
+ #scene[data-stage="reflect"] #learning-check #actions{margin-top:2px}
+ #scene[data-stage="reflect"] #learning-problem{padding-top:8px;padding-bottom:8px}
+}
+
 /* P7: route-end reflection is optional; keep the source-linked next action
    visible without adding another panel or a duplicated route button. */
 .summary-thinking{
