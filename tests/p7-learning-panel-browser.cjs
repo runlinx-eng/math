@@ -451,6 +451,18 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await embedded.locator('#record>summary').click();
    await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    await shot('28e-route-end-visible-next-with-optional-reflection',true);
+   // Short desktop height: the child can reflect before continuing without
+   // scrolling a hidden primary button out of the embedded learning viewport.
+   await page.setViewportSize({width:1280,height:720});
+   await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
+   const compactNext=await primaryLinked.evaluate(el=>{
+     const r=el.getBoundingClientRect();
+     return {top:r.top,bottom:r.bottom,height:el.ownerDocument.defaultView.innerHeight};
+   });
+   requireState(compactNext.top>=0&&compactNext.bottom<compactNext.height,'1280x720 embedded reflection must keep its one next action in the first-screen viewport');
+   await shot('28e-compact-reflection-first-screen',true);
+   await page.setViewportSize({width:1440,height:900});
+   await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    await embedded.locator('#note').fill('分数和小数表示同一个比例，但百格和杯子的整体不一样。');
    requireState(await embedded.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'save becomes primary only while an unsaved explanation is present');
    requireState(!await primaryLinked.evaluate(el=>el.classList.contains('primary')),'the unsaved draft has only one primary action');
