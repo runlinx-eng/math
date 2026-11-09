@@ -156,7 +156,7 @@ export function checkedMathExplanation({id,task,model,checked}){
   return null;
 }
 
- 
+
 // P7-D4: task-type adapters only describe the already-configured widget.
 // No new task, proof, assessment, persistence field or progression step.
 export function executionCue({stage='explore',task=null,bridge=false,hasDraft=false,readyToCheck=true,repair=null}={}){
