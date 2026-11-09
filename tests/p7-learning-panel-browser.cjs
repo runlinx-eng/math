@@ -416,7 +416,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
    requireState(summaryRegions.join(',')==='learning-problem,learning-interaction,learning-check,learning-next','completed route puts learner reflection before the one actual next destination');
    requireState(await embedded.locator('#system-explanation').evaluate(el=>el.parentElement?.id==='learning-next'),'system explanation remains below the main action');
-   requireState(await embedded.locator('#source-goals-details').evaluate(el=>el.parentElement?.id==='record-body'),'original source goals remain accessible within records rather than the child's active work');
+   requireState(await embedded.locator('#source-goals-details').evaluate(el=>el.parentElement?.id==='record-body'),'original source goals remain accessible within records rather than the learner-facing work');
    requireState(!await embedded.locator('#source-goals-details').evaluate(el=>el.open),'raw source goals do not appear by default');
    const reflectionOrder=await embedded.locator('#note').evaluate(el=>{
       const next=el.ownerDocument.querySelector('#actions [data-primary-destination]');
