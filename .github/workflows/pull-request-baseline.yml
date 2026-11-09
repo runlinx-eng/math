@@ -71,6 +71,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/learning/p3-workflow.js
           node --check dist/learning/p3-view.js
+          node --check dist/learning/workspace-flow.js
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
@@ -96,6 +97,7 @@ jobs:
             tests/grade-distribution.test.mjs
             tests/p3-learning-flow.test.mjs
             tests/p7-learning-panel.test.mjs
+            tests/p7-learning-workspace-flow.test.mjs
             tests/p4-learning-reliability.test.mjs
             tests/p5-integration-safety.test.mjs
             tests/p6b-trail-priority.test.mjs

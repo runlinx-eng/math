@@ -5,6 +5,8 @@ const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/p4-learning-reliability');
 const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);checks.push(label);};
 const host='http://127.0.0.1:43827';
+const cacheName=fs.readFileSync(path.resolve(__dirname,'../dist/sw.js'),'utf8').match(/const CACHE\s*=\s*'([^']+)'/)?.[1];
+if(!cacheName)throw Error('Service Worker cache version missing');
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
@@ -14,12 +16,12 @@ const host='http://127.0.0.1:43827';
  try{
   await page.goto(host+'/v2.html#trail');
   await page.locator('#main .subhero h1').waitFor();
-  const status=await page.evaluate(async()=>{
+  const status=await page.evaluate(async cacheKey=>{
     await navigator.serviceWorker.ready;
-    const c=await caches.open('math-explorer-20261108-integration-p5');
+    const c=await caches.open(cacheKey);
     const entries=['./v2.html','./exploration.js','./exploration-core.js','./learn.html','./learning/state.js','./data/atlas.json'];
     return Promise.all(entries.map(p=>c.match(new URL(p,location.href)).then(Boolean)));
-  });
+  },cacheName);
   check(status.every(Boolean),'real SW cache contains trail, learning runner, data and backup modules');
   check((await page.locator('#offline-status').innerText()).includes('就绪'),'trail reports current cache readiness');
   await page.evaluate(async()=>{

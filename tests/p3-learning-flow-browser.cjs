@@ -49,6 +49,8 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen===true);
   await frame.locator('#p3-learning-flow').waitFor();
   check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('2 次提交')),'refresh restores history and learning activity');
+  const optionalRelations=frame.locator('.p3-followups');
+  if(await optionalRelations.count()&&!(await optionalRelations.evaluate(el=>el.open)))await optionalRelations.locator('summary').click();
   await frame.locator('[data-do="p3-related"]').first().click();
   await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen&&mathSpace.snapshot().selected?.startsWith('node:'));
   const after=await snap();

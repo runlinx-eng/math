@@ -146,6 +146,49 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='equivalent');
    const resumed=await shot('15-equivalent-resumed');
    requireState(resumed.checkCount.includes('1 次提交'),'refresh retains attempt and no fake mastery');
+
+   const order=await page.locator('#scene>.learning-region').evaluateAll(els=>els.map(el=>el.id));
+   requireState(JSON.stringify(order)===JSON.stringify(['learning-problem','learning-interaction','learning-check','learning-next']),'all learning types share four fixed UI regions');
+   requireState((await page.locator('#math-explanation').innerText()).includes('第 1、2、3 条纸带'),'wrong fraction work receives evidence-bound mathematical guidance');
+   // Complete one standard learning journey through the existing mathematical widgets:
+   // first wrong -> edit -> check -> explain -> change conditions -> summarize -> save.
+   for(const [row,index] of [[0,1],[1,2],[2,3]])
+     await page.locator('#work [data-do="row-part"][data-row="'+row+'"][data-index="'+index+'"]').click();
+   requireState(await page.locator('#scene').getAttribute('data-stage')==='recheck','edited incorrect work must be rechecked');
+   requireState(await page.locator('#math-explanation').isHidden(),'old checked explanation is not reused for edited work');
+   await page.locator('#actions [data-do="check"]').click();
+   requireState(await page.locator('#scene').getAttribute('data-stage')==='passed','first equal-fraction task passes on correct work');
+   const firstProof=await page.locator('#math-explanation').innerText();
+   requireState(firstProof.includes('2/4 = 3/6 = 4/8 = 1/2'),'first equal-fraction explanation uses submitted mathematical relation');
+   requireState((await page.locator('#actions .primary').count())===1,'one main next action after task passes');
+   requireState(!(await page.locator('.p3-followups').evaluate(el=>el.open)),'auxiliary learning paths are collapsed after success');
+   await shot('17-equivalent-strips-explained');
+   await page.locator('#actions [data-do="next"]').click();
+   await page.locator('input[data-field="mark"]').evaluate(el=>{el.value='4';el.dispatchEvent(new Event('input',{bubbles:true}));});
+   await page.locator('#actions [data-do="check"]').click();
+   requireState((await page.locator('#math-explanation').innerText()).includes('2/3 = 4/6'),'second task explains the matching number line');
+   await shot('18-equivalent-first-numberline');
+   await page.locator('#actions [data-do="next"]').click();
+   await page.locator('input[data-field="mark"]').evaluate(el=>{el.value='6';el.dispatchEvent(new Event('input',{bubbles:true}));});
+   await page.locator('#actions [data-do="check"]').click();
+   const finalProof=await page.locator('#math-explanation').innerText();
+   requireState(finalProof.includes('2/3 = 6/9'),'third task explicitly explains the submitted 6/9 equivalence');
+   requireState((await page.locator('#actions [data-do="next"]').innerText()).includes('整理'),'last successful task has one main consolidation action');
+   await shot('19-equivalent-final-check-explained');
+   await page.locator('#actions [data-do="next"]').click();
+   requireState(await page.locator('#scene').getAttribute('data-stage')==='reflect','the same shell enters reflection');
+   requireState(await page.locator('#actions .primary [data-do="back"]').count()===0 || await page.locator('#actions [data-do="back"].primary').count()===1,'return to original 3D is the initial reflection main action');
+   requireState(await page.locator('#work [data-do="save-note"]').isDisabled(),'an empty explanation is not submitted as learning evidence');
+   await page.locator('#note').fill('同一个整体，三分之二与九分之六都走到数轴的同一个位置，因为每份缩小、份数同时增加。');
+   requireState(await page.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'writing a discovery makes save the main action');
+   requireState(!await page.locator('#actions [data-do="back"]').evaluate(el=>el.classList.contains('primary')),'return does not compete with unsaved work');
+   await page.locator('#work [data-do="save-note"]').click();
+   const recorded=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.equivalent);
+   requireState(recorded.notes.some(n=>n.text.includes('三分之二与九分之六')),'submitted explanation is really saved');
+   requireState(recorded.cases[0].attempts.length===2,'first incorrect attempt remains with successful task');
+   requireState(await page.locator('#actions [data-do="back"]').evaluate(el=>el.classList.contains('primary')),'after saving, the main action is to return to the knowledge space');
+   await shot('20-equivalent-reflection-saved');
+
    // An older installed version stored ungraded play models under key -1.
    // The new single workspace must keep that old material and display the task.
    await page.evaluate(async()=>{

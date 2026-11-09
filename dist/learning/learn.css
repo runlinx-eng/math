@@ -155,3 +155,52 @@ body.embedded-learning #lesson>header{justify-content:flex-end;gap:9px}
 #actions:has([data-do="start"]){gap:14px}
 #actions:has([data-do="start"])>.muted{max-width:265px;line-height:1.55}
 #record[hidden]{display:none}
+
+
+/* P7-D1: the same learning shell surrounds each existing math widget.
+   These are regions in one continuous workplace, not separate pages/modes. */
+#scene>.learning-region{margin-top:14px;min-width:0}
+.learning-region-title{font-size:12px;line-height:1.4;font-weight:700;color:#3a6b5c;margin:0 0 6px}
+#learning-problem{background:#f2f5ef;border-radius:10px;padding:12px 14px}
+#learning-problem #instruction,
+body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);line-height:1.52;margin:4px 0 0;min-height:0;font-weight:650;color:#254f43}
+#learning-interaction{padding:0 1px}
+#learning-interaction #work,body.p03-focus #learning-interaction #work{min-height:0}
+#learning-check{border-top:1px solid var(--line);padding-top:12px}
+#learning-check #actions,body.p03-focus #learning-check #actions{border:0;padding:0;margin:8px 0 8px;gap:8px}
+#learning-check #actions .primary{font-size:15px;min-height:44px}
+#learning-check #check-feedback:not([hidden]){margin:10px 0 8px;font-size:14px}
+#learning-next{border-top:1px solid var(--line);padding-top:12px}
+#next-guidance{color:#577267;font-size:12px;line-height:1.6;margin:6px 0 8px}
+#learning-next .p3-learning-flow{border:0;padding:0;margin:0;line-height:1.5}
+#learning-next .p3-evidence{background:#f5f7f1;padding:9px 11px}
+#learning-next .p3-before-check{background:transparent;border:0;padding:0;margin:4px 0;color:#75877b}
+#learning-next .p3-review{margin:5px 0}
+#learning-next .p3-review>summary,
+#learning-next .p3-more>summary,
+#learning-next .p3-application>summary{font-size:12px;font-weight:600;color:#4d6d5d;line-height:1.5;padding:5px 0}
+#learning-next .p3-review .p3-evidence{margin-top:7px}
+#learning-next .p3-retry{margin:9px 0}
+#learning-next .p3-retry button{font-size:12px;min-height:35px}
+#learning-next .p3-followups .p3-action-list{margin-top:8px}
+#learning-next .p3-application{padding-top:0;border:0;margin-top:8px}
+#math-explanation:not([hidden]){background:#f1f7f2;border-left:3px solid #478873;border-radius:7px;padding:12px 15px;margin-top:10px;font-size:13px;line-height:1.65}
+#math-explanation h3{margin:0 0 6px;font-size:14px;color:#285f50}
+#math-explanation p{margin:6px 0}
+#math-explanation .math-equation{font-weight:700;font-size:17px;font-variant-numeric:tabular-nums;color:#245f50;overflow-wrap:anywhere}
+#math-explanation .math-question{font-weight:650;color:#3b6958}
+#math-explanation small{display:block;font-size:11px;color:#687d70}
+#scene[data-stage="reflect"] #learning-check #check-feedback{display:none}
+#scene[data-stage="reflect"] #learning-check #actions{margin-top:10px}
+#scene[data-stage="reflect"] #work .summary-art{margin:8px 0 13px;padding:16px;border-radius:10px}
+#scene[data-stage="reflect"] #work .summary-art h2{font-size:16px}
+#scene[data-stage="reflect"] #work .summary-art p{font-size:14px;line-height:1.6}
+#scene[data-stage="reflect"] #work [data-do="save-note"]{margin-top:7px}
+#scene[data-stage="reflect"] #work .bridge-invite{margin-top:12px}
+@media(max-width:650px){
+  #learning-problem{padding:10px 12px}
+  #learning-check #actions .primary{flex:1 1 100%}
+  #learning-interaction .equiv-row{grid-template-columns:63px minmax(0,1fr) 44px;gap:7px}
+  #learning-interaction .eq-label{font-size:14px}
+  #learning-interaction .eq-bar{height:48px}
+}
