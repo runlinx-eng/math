@@ -43,12 +43,13 @@ test('D3-C manipulation: three-cup matching checks actual submitted work and inv
  assert.equal(currentSubmission(a).status,'modified');
  assert.equal(submitLesson(a).correct,true);
  assert.equal(currentSubmission(a).status,'correct');
+ const submittedName=a.cases[1].attempts.at(-1).value.names[0];
  a.models[1].names[0]='0.99';
  assert.equal(learningStage(a,currentSubmission(a)),'recheck');
  assert.equal(inspect(task,a.models[1]).correct,false);
- assert.equal(a.cases[1].attempts.at(-1).value.names[0],valid.names[0]);
+ assert.equal(a.cases[1].attempts.at(-1).value.names[0],submittedName);
  assert.equal(lessonSummary(a).completed,false);
- a.models[1].names[0]=valid.names[0];
+ a.models[1].names[0]=submittedName;
  assert.equal(currentSubmission(a).status,'correct');
 });
 
