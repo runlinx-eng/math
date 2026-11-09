@@ -139,7 +139,7 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
     const bounds=await page.evaluate(()=>{
       const r=s=>document.querySelector(s).getBoundingClientRect();
       const g=r('#network-guide'),rail=r('.tool-rail'),nav=r('.topbar'),card=r('#focus-card');
-      return {g:{x:g.x,y:g.y,right:g.right,bottom:g.bottom},rail:{x:rail.x,y:rail.y},nav:{bottom:nav.bottom},card:{x:card.x,y:card.y,bottom:card.bottom,visible:getComputedStyle(document.querySelector('#focus-card')).visibility!=='hidden'}};
+      return {g:{x:g.x,y:g.y,right:g.right,bottom:g.bottom},rail:{x:rail.x,y:rail.y},nav:{bottom:nav.bottom},card:{x:card.x,y:card.y,bottom:card.bottom,visible:!document.querySelector('#focus-card').hidden&&getComputedStyle(document.querySelector('#focus-card')).visibility!=='hidden'&&!!document.querySelector('#focus-card').getClientRects().length}};
     });
     check(bounds.g.x>=0&&bounds.g.bottom<=height&&(bounds.g.right<bounds.rail.x||bounds.g.bottom<=bounds.rail.y+4),'observation and camera tools separate '+width+'x'+height);
     check(bounds.g.y>=bounds.nav.bottom-4,'observation remains below top navigation '+width+'x'+height);
