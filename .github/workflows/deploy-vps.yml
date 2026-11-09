@@ -46,7 +46,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.RELEASE_SHA }}
-          persist-credentials: false
 
       - name: Only publish a fully checked, current main commit
         id: release_gate
