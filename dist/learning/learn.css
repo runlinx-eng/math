@@ -345,3 +345,20 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 }
 .route-end-hint{margin-top:14px}
 #actions [data-primary-destination]{max-width:100%;text-align:left;white-space:normal}
+
+/* P7-D3: the step names are fixed across tasks. The current verified state,
+   not a click on a tab, determines which phase is highlighted. */
+#steps{align-items:center;gap:5px;flex-wrap:nowrap}
+#steps li[data-study-step]{white-space:nowrap;font-size:11px;line-height:1.35;padding:5px 7px;border:1px solid transparent;color:#6e8176;background:#f2f3ee}
+#steps li[data-study-step][aria-current="step"]{border-color:#a8c2b3;background:#e1efe5;color:#28594e;font-weight:700}
+#actions{margin-top:12px}
+#actions button[hidden]{display:none!important}
+#actions button.primary{min-height:42px;line-height:1.45}
+#scene[data-stage="reflect"] #work #note-save-status{display:block;margin:7px 0 0;font-size:12px;line-height:1.55;color:#527463}
+#scene[data-stage="reflect"] #work #note-save-status[hidden]{display:none}
+#scene[data-stage="reflect"] #actions{margin:9px 0 7px}
+@media(max-width:540px){
+ #steps{gap:3px}
+ #steps li[data-study-step]{padding:4px 5px;font-size:10px}
+ #scene[data-stage="reflect"] #actions button{max-width:100%}
+}
