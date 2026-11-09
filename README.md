@@ -13,7 +13,7 @@ VPS 在线预览部署说明见 [云端预览部署](docs/deployment/vps.md)。�
 **当前固定来源的 587 个数学节点均已接入有限学习任务，组成 231 条短路线；1,223 条原关系中有 776 条设有联合操作。** 这不是全部数学知识，也不代表每个源目标的完整能力已评估。孩子尚未试用，活动完成不等于掌握。
 
 
-> Issue #23 的 P0/P1-A/P1-B 代码位于 [Draft PR #24](https://github.com/runlinx-eng/math/pull/24)。此段仅描述待验收的分支界面，不代表 `main` 已启用。自动化与 Chromium 结果应以 PR 最新提交为准；人工视觉验收单独记录。
+> **当前开发状态（2026-11-09）**：P1–P6-B 的工程实现已通过 PR #24–#29、#31 合并至 `main`；产品目标与手动发布规则也已合并。**当前优先执行 P7 学习面板/真实学习过程、P8 统一 3D 工作区、P9 数学思维证据反馈，随后 P10 完整闭环验收和 P11 视觉风格。** 详见[现行执行计划 P7–P11](docs/EXECUTION-PLAN.md)。工程合并不表示人工体验、独立教研或儿童试用已通过。
 ## 打开
 
 双击 **启动数学探索.command**，或在本目录运行：
@@ -347,7 +347,7 @@ python3 scripts/server.py --open
 
 ## 维护与依据
 
-- [执行计划](docs/EXECUTION-PLAN.md)：六阶段状态、全量核对及孩子试用待办。
+- [执行计划](docs/EXECUTION-PLAN.md)：当前 P7–P11 开发顺序、验收标准与历史六阶段记录。
 - [当前覆盖](docs/phase5/COVERAGE.md)、[B39 依据](docs/phase5/B39/RESEARCH.md)、[制作记录](docs/phase5/B39/PRODUCTION.md)：587 个节点、1772 个源目标的有限任务对应；口述、笔迹、英文及全范围熟练度的未评估项逐项列明。
 - [学习设计](docs/LEARNING-DESIGN.md)、[技术验证](docs/VALIDATION.md)：完成规则与技术、实际试用的边界。
 - [全量清单](docs/CONTENT-INVENTORY.md)：587 个节点的制作安排，文中的 3 个活动是阶段 1 基线。
