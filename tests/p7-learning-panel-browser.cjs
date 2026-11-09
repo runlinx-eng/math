@@ -380,7 +380,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await shot('28c-three-cups-math-and-thinking-explanation',true);
    await embedded.locator('#actions [data-do="next"]').click();
    requireState(await embedded.locator('#note').isVisible(),'the existing reflection screen remains available');
-   requireState((await embedded.locator('#work').innerText()).includes('百格里的 1/4'),'reflection connects both the grid and cups rather than introducing a new page');
+   requireState((await embedded.locator('#work').innerText()).includes('百格涂了 1/4'),'reflection connects both the grid and cups rather than introducing a new page');
    requireState(await embedded.locator('#math-explanation').isHidden(),'reflection does not misrepresent old checked math as a new submission');
    await shot('28d-three-cups-reflection',true);
    // A failed localStorage write must never look like a successful save,
