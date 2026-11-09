@@ -21,7 +21,7 @@
 | 复杂的多步问题 | 理解和解决问题 (ccss-math:MP.1) | `mt_GpltXPoaoc` | `complex38` | 来源/活动入口已映射；跨知识实际行为与反馈待逐项核查 |
 | 进阶多步问题 | 理解和解决问题 (ccss-math:MP.1) | `mt_FieL-vVTI_` | `advancedPlan38` | 来源/活动入口已映射；跨知识实际行为与反馈待逐项核查 |
 | 从生活走向数学 | 抽象与数量推理 (ccss-math:MP.2) | `mt_IM1G_7QzTa` | `story38` | 来源/活动入口已映射；跨知识实际行为与反馈待逐项核查 |
-| 连接不同表示方式 | 抽象与数量推理 (ccss-math:MP.2) | `mt_EBYGhd8X3x` | `represent` | 百格/小数正确作品 MP.2 试点；尚待教研 |
+| 连接不同表示方式 | 抽象与数量推理 (ccss-math:MP.2) | `mt_EBYGhd8X3x` | `represent` | 百格/小数及三杯水分数—水位—小数正确作品 MP.2 试点；需要真实提交与检查，未自动核验解释，尚待独立教研 |
 | 在情境、图形与算式间转换 | 抽象与数量推理 (ccss-math:MP.2) | `mt_dXq9VWm31W` | `storyfraction` | 来源/活动入口已映射；跨知识实际行为与反馈待逐项核查 |
 | 连接数轴、情境与算式 | 抽象与数量推理 (ccss-math:MP.2) | `mt_3VmBdlAeOZ` | `translateamount` | 来源/活动入口已映射；跨知识实际行为与反馈待逐项核查 |
 | 连接分数、小数与百分数的表示 | 抽象与数量推理 (ccss-math:MP.2) | `mt_CUmjcE7W6c` | `viewlinks` | 百格/小数/百分数正确作品 MP.2 试点；尚待教研 |
