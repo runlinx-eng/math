@@ -287,15 +287,26 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 #scene[data-stage="reflect"] #work .summary-art p{font-size:12px;margin-top:4px;line-height:1.45}
 #scene[data-stage="reflect"] #work label[for="note"]{display:block;font-size:15px;font-weight:650;line-height:1.5;margin:12px 0 5px}
 #scene[data-stage="reflect"] #work #note{font-size:15px;line-height:1.6;min-height:72px;width:100%}
-#scene[data-stage="reflect"] #learning-next{margin-top:15px}
+#scene[data-stage="reflect"] #learning-next{margin-top:14px}
+#scene[data-stage="reflect"] #learning-interaction{margin-top:10px}
+#scene[data-stage="reflect"] #work .summary-art{margin:0 0 8px}
+#scene[data-stage="reflect"] #work label[for="note"]{margin:8px 0 4px;font-size:14px;line-height:1.5}
+#scene[data-stage="reflect"] #work .reflection-optional{margin:2px 0 6px;font-size:12px}
+#scene[data-stage="reflect"] #work #note{min-height:64px;padding:9px 10px}
+#scene[data-stage="reflect"] #work [data-do="save-note"]{margin-top:5px;min-height:40px}
+#scene[data-stage="reflect"] #learning-check{margin-top:9px}
+#scene[data-stage="reflect"] #learning-next>#system-explanation{margin:3px 0 8px}
+#scene[data-stage="reflect"] #record{margin-top:14px}
+#source-goals-details{margin-top:10px}
+#source-goals-details summary{font-size:12px;color:#607569}
 #scene[data-stage="reflect"] #learning-next .learning-region-title{font-size:12px;font-weight:550;color:#667b70}
 #scene[data-stage="reflect"] #next-guidance[hidden]{display:none}
-#work .system-explanation{margin-top:16px;padding:9px 12px;border:1px solid #e0e9dd;border-radius:8px;background:#f6f8f3}
-#work .system-explanation>summary{font-size:13px;font-weight:600;color:#446a59;cursor:pointer;line-height:1.6}
-#work .system-explanation[open]{background:#f2f7ef}
-#work .system-explanation-body{padding-top:9px;font-size:13px;line-height:1.7;overflow-wrap:anywhere;color:#3e6052}
-#work .system-explanation-body p{margin:5px 0 10px}
-#work .system-explanation-body>small{display:block;font-size:12px;color:#627d6c}
+#learning-next #system-explanation{margin-top:16px;padding:9px 12px;border:1px solid #e0e9dd;border-radius:8px;background:#f6f8f3}
+#learning-next #system-explanation>summary{font-size:13px;font-weight:600;color:#446a59;cursor:pointer;line-height:1.6}
+#learning-next #system-explanation[open]{background:#f2f7ef}
+#learning-next #system-explanation-body{padding-top:9px;font-size:13px;line-height:1.7;overflow-wrap:anywhere;color:#3e6052}
+#learning-next #system-explanation-body p{margin:5px 0 10px}
+#learning-next #system-explanation-body>small{display:block;font-size:12px;color:#627d6c}
 
 /* P7: route-end reflection is optional; keep the source-linked next action
    visible without adding another panel or a duplicated route button. */
