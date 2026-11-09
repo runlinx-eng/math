@@ -59,8 +59,14 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   check(after.selected!==pose.selected,'related knowledge is genuine other node');
   check(after.position.every((v,i)=>Math.abs(v-pose.position[i])<.001),'related knowledge keeps map camera');
   await page.locator('.primary-nav [data-action="nav-learn"]').click();
-  check(await page.locator('#learning-hub').isVisible(),'learning hub reopens');
+  const entry=await page.evaluate(()=>({hub:!document.querySelector('#learning-hub').hidden,journey:!document.querySelector('#journey-surface').hidden}));
+  check(entry.hub||entry.journey,'related knowledge offers a real lesson or explains unavailable activity');
+  if(entry.journey){
+    check(await frame.locator('#instruction').count()===1,'configured related node skips route selection');
+    check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
+  }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
   await page.goBack();
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='explore');
   check(await page.locator('#learning-hub').isHidden(),'browser history restores exploration');
   check(!errors.length,'no uncaught browser errors: '+errors.join(' / '));
   console.log(JSON.stringify({status:'pass',checks,screenshots:out},null,2));
