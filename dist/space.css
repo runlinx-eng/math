@@ -1013,3 +1013,16 @@ body[data-world="network"] .utility-drawer iframe{min-height:0}
     right:calc(min(680px,48vw) + 34px);
   }
 }
+
+/* P8 / Issue #30: while a task occupies the right dock, retain the left
+   observation controls but stop them consuming most of the remaining map.
+   Overflow scrolls inside the controls; compact viewports keep the existing
+   overlay/dismissal behavior. No camera or math coordinates are adjusted. */
+@media (min-width:801px){
+  body[data-world="network"]:is(.has-task-surface,.has-journey) #network-guide{
+    width:190px;
+    max-height:min(55dvh,490px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
