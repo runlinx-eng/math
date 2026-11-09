@@ -323,6 +323,8 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    // including the case where an input autosave fails before the button click.
    await page.goto(base+'learn.html#decimal');
    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.view==='summary');
+   await page.locator('#note').fill('存储失败时不能丢掉的文字。');
+   requireState(await page.locator('#work [data-do="save-note"]').isEnabled(),'the unsaved note can be submitted before storage fails');
    await page.evaluate(()=>{
      const original=Storage.prototype.setItem;
      Storage.prototype.setItem=function(key,value){
@@ -330,10 +332,9 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
        return original.call(this,key,value);
      };
    });
-   await page.locator('#note').fill('存储失败时不能丢掉的文字。');
-   requireState((await page.locator('#note-save-status').innerText()).includes('尚未保存成功'),'failed autosave gives visible warning next to the field');
-   requireState(await page.locator('#note-save-status').getAttribute('data-state')==='error','failed autosave is never marked as a success');
    await page.locator('#work [data-do="save-note"]').click();
+   requireState((await page.locator('#note-save-status').innerText()).includes('尚未保存成功'),'failed save gives visible warning next to the field');
+   requireState(await page.locator('#note-save-status').getAttribute('data-state')==='error','failed save is never marked as a success');
    requireState((await page.locator('#note').inputValue()).includes('不能丢掉'),'storage failure never clears the unsaved text');
    requireState(await page.locator('#storage-warning').isVisible(),'original non-destructive storage failure warning remains available');
    const failed=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
