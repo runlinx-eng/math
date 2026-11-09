@@ -27,7 +27,8 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
     (applications?'<div class="p3-action-list">'+applications+'</div>':'')+
     '<details><summary>查看已配置的应用活动</summary><div class="p3-app-list">'+configuredApplications().map(p=>'<div><strong>'+esc(p.label)+'</strong><span>'+esc(p.kind)+'</span>'+button('lesson',p.title,'data-id="'+esc(p.sessionId)+'"')+'</div>').join('')+'</div><p>现实活动需本人实际操作并提供记录；当前版本不新增未经旧备份兼容验证的现实实践存储。</p></details></details>';
   const other='<details class="p3-followups p3-more"><summary>更多知识联系与探索方式（可选）</summary>'+
-    '<div class="p3-action-list">'+((stage==='passed'||stage==='reflect')&&flow.attempts>0?button('p3-retry','再试当前条件'):'')+routes+'</div></details>'+applicationHTML;
+    '<div class="p3-action-list">'+((stage==='passed'||stage==='reflect')&&flow.attempts>0?button('p3-retry','再试当前条件'):'')+
+    (stage==='reflect'?button('restart','重新做这组任务'):'')+routes+'</div></details>'+applicationHTML;
 
   if(flow.attempts===0){
     host.innerHTML='<p class="p3-evidence p3-before-check" role="status">尚未提交检查，检查记录会在提交作品后出现。</p>'+other;
