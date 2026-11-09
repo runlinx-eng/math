@@ -6,7 +6,7 @@ import {learningStage} from './workspace-flow.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const button=(act,label,attrs='')=>'<button type="button" data-do="'+act+'" '+attrs+'>'+esc(label)+'</button>';
-export function renderP3Flow(host,{atlas,id,record,embedded=false}){
+export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySessionId=null}){
   if(!host||!record)return;
   const flow=workflowFor(atlas,id,record),stage=learningStage(record,currentSubmission(record));
   const latest=flow.latestCheck==='none'?'尚未提交检查':flow.latestCheck==='correct'?'最近一次操作通过检查':'最近一次操作需要修改';
@@ -14,9 +14,9 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false}){
   const writing=flow.noteCount?'解释已保存，待确认':flow.hasDraft?'文字草稿已保存，尚未提交':'尚未提交文字解释';
   const routes=[
     flow.alternateIndex!==null?button('p3-variant','换一组已配置条件','data-index="'+flow.alternateIndex+'"'):'',
-    flow.next?button('lesson','后续路线 · '+flow.next.title,'data-id="'+esc(flow.next.id)+'"'):'',
+    flow.next&&flow.next.id!==primarySessionId?button('lesson','后续路线 · '+flow.next.title,'data-id="'+esc(flow.next.id)+'"'):'',
     ...flow.related.map(n=>button('p3-related',n.direction+' · '+n.title,'data-node="'+esc(n.nodeId)+'"')),
-    ...flow.bridges.map(b=>button('lesson','联合任务 · '+b.title,'data-id="'+esc(b.id)+'"')),
+    ...flow.bridges.filter(b=>b.id!==primarySessionId).map(b=>button('lesson','联合任务 · '+b.title,'data-id="'+esc(b.id)+'"')),
     embedded?button('relations','观察地图联系'):button('back','返回知识空间')
   ].filter(Boolean).join('');
   const application=flow.currentApplication;

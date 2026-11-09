@@ -24,6 +24,21 @@ export const sessionTasks=id=>TASKS[id]||BRIDGES[id]?.tasks;
 export const sessionTaskFor=(id,index)=>index===-1?(PRACTICE[id]||BRIDGES[id]?.tasks[0]):sessionTasks(id)?.[index];
 export const sessionRoute=id=>routeFor(BRIDGES[id]?.to||id);
 export const bridgeForLesson=id=>entries.filter(b=>b.to===id);
+// When a source route ends, offer one already configured, source-backed
+// related practice. Prioritize its nearest prerequisite in the same route.
+// A candidate is an option to explore, not an invented next grade/required task.
+export function nextRelatedPractice(id,atlas,isCompleted=()=>false){
+  if(BRIDGES[id])return null; // A bridge does not recursively lead to another bridge.
+  const route=sessionRoute(id),index=route?.ids?.indexOf(id)??-1;
+  const candidates=bridgeForLesson(id)
+    .filter(b=>sessionTasks(b.id)?.length&&sourceBridge(b.id,atlas)&&!isCompleted(b.id))
+    .sort((a,b)=>{
+      const i=x=>route?.ids?.indexOf(x.from)??-1;
+      const ai=i(a),bi=i(b);
+      return (bi>=0?bi:-1)-(ai>=0?ai:-1);
+    });
+  return index>=0?candidates[0]||null:null;
+}
 export function sourceBridge(id,atlas){const b=BRIDGES[id];return b&&atlas.edges.find(e=>e.prerequisiteId===b.fromTopicId&&e.topicId===b.topicId);}
 // Only actual source edges appear. Route numbers never manufacture dependencies.
 export function personalRelations(atlas,selected,litKeys=[],routeOverride=undefined){const lit=new Set(litKeys),route=routeOverride!==undefined?routeOverride:selected?.kind==='node'?sessionRoute(Object.keys(LESSONS).find(id=>LESSONS[id].topicId===selected.id)):selected?.kind==='pack'?Object.values(LESSONS).map(l=>sessionRoute(l.id)).find(r=>r.packIds.includes(selected.id)):null;
