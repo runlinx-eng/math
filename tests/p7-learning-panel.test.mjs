@@ -12,15 +12,13 @@ test('P7 initial study shows one task before secondary follow-ups',()=>{
   assert.match(host.innerHTML,/尚未提交检查/);
   assert.doesNotMatch(host.innerHTML,/data-do="p3-retry"/);
   assert.match(host.innerHTML,/拓展与实践应用/);
-  assert.match(host.innerHTML,/模拟情境不等于真实生活实践/);
+  assert.match(host.innerHTML,/模拟现实情境不等于真实生活实践/);
   assert.match(host.innerHTML,/更多知识联系与探索方式/);
 });
 
 test('P7 shows retry and saves first invalid submission without erasing earlier attempts',()=>{
   const record=freshLesson('share');
   record.view='task';
-  const {modelForLesson}=requireState();
-  modelForLesson(record);
   const result=submitLesson(record);
   assert.equal(result.correct,false);
   const host={innerHTML:''};
@@ -30,10 +28,6 @@ test('P7 shows retry and saves first invalid submission without erasing earlier 
   assert.match(host.innerHTML,/data-do="p3-retry"/);
   assert.equal(record.cases[0].attempts.length,1);
 });
-
-function requireState(){
-  return {modelForLesson:(_record)=>{}};
-}
 
 test('P7 source data and storage model stay outside the UI-only diff',()=>{
   const html=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
