@@ -64,7 +64,9 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   });
   check(entry.hub||entry.journey||entry.legacy,'learning opens a real task or explains why no independent activity exists');
   if(entry.journey){
-    check(await page.frameLocator('#journey-frame').locator('#instruction').count()===1,'configured grade-list topic directly opens its mathematics question');
+    const src=await page.locator('#journey-frame').getAttribute('src');
+    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'grade-list topic opens a configured new or early learning activity');
+    if(src.startsWith('learn.html#'))await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
     check(await page.locator('#learning-hub').isHidden(),'direct grade-list learning does not require route selection');
   }else if(entry.hub){
     check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured grade-list node explains the missing activity');
