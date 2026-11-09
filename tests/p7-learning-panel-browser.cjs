@@ -349,6 +349,40 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    const prior=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
    requireState(prior.cases[0].attempts.length===2&&prior.cases[0].attempts[0].value.selected.length===20,'both attempts retained without creating a new thinking score');
    await shot('28b-quarter-correct-thinking-method-and-next',true);
+   // User's next Mac screenshot: three correct cup levels and decimals, 2/2.
+   // Check that passing is explained mathematically and connected to MP2,
+   // without adding another navigation or an invented mastery result.
+   await embedded.locator('#actions [data-do="next"]').click();
+   requireState((await embedded.locator('#instruction').innerText()).includes('三个直筒杯'),'the next configured question is the three-cup model');
+   for(const [i,level] of [50,75,25].entries()){
+     await embedded.locator('#work [data-height="'+i+'"]').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},level);
+   }
+   for(const [i,name] of ['0.5','0.75','0.2'].entries()){
+     await embedded.locator('#work [data-name="'+i+'"]').fill(name);
+   }
+   await embedded.locator('#actions [data-do="check"]').click();
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='revise','wrong cup decimal does not receive checked thinking credit');
+   requireState(await embedded.locator('#math-explanation').isHidden(),'unmatched cup names cannot display a false mathematical equivalence');
+   requireState(await embedded.locator('#math-explanation [data-thinking-node-id]').count()===0,'no MP2 source link before valid check');
+   await embedded.locator('#work [data-name="2"]').fill('0.25');
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='recheck','edited cup name requires another explicit check');
+   await embedded.locator('#actions [data-do="check"]').click();
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='passed','correct fractions, cup levels and decimals pass the existing grader');
+   const mathExplanation=await embedded.locator('#math-explanation').innerText();
+   requireState(mathExplanation.includes('1/2 = 50/100 = 0.5')&&mathExplanation.includes('3/4 = 75/100 = 0.75')&&mathExplanation.includes('1/4 = 25/100 = 0.25'),'all three checked cup relationships are explained from the submitted work');
+   requireState(mathExplanation.includes('并不是三杯水都一样多'),'math feedback does not conflate equal representation and equal water volume');
+   requireState(await embedded.locator('#math-explanation [data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'one source-grounded MP2 thinking method appears in the existing feedback region');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'math and thinking feedback are not duplicated in the interactive workspace');
+   requireState((await embedded.locator('#next-guidance').innerText()).includes('任选一杯'),'passed state prompts an explanation before reflection');
+   requireState((await embedded.locator('#actions [data-do="next"]').innerText()).includes('整理这次发现'),'the same primary action advances to reflection');
+   const checkedCupRecord=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
+   requireState(checkedCupRecord.cases[1].attempts.length===2,'wrong and correct cup submissions remain in the original history');
+   await shot('28c-three-cups-math-and-thinking-explanation',true);
+   await embedded.locator('#actions [data-do="next"]').click();
+   requireState(await embedded.locator('#note').isVisible(),'the existing reflection screen remains available');
+   requireState((await embedded.locator('#work').innerText()).includes('百格涂了 1/4'),'reflection connects both the grid and cups rather than introducing a new page');
+   requireState(await embedded.locator('#math-explanation').isHidden(),'reflection does not misrepresent old checked math as a new submission');
+   await shot('28d-three-cups-reflection',true);
    // A failed localStorage write must never look like a successful save,
    // including the case where an input autosave fails before the button click.
    await page.goto(base+'learn.html#decimal');

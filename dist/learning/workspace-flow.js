@@ -57,7 +57,27 @@ export function correctionGuidance({task,model,checked}={}){
 // that the child independently understood, proved or mastered the method.
 // The model is the submitted snapshot, never unsaved live edits.
 export function checkedMathExplanation({id,task,model,checked}){
-  if(id!=='equivalent'||!task||!model)return null;
+  if(!task||!model)return null;
+  // Match activities join a concrete picture, a named fraction and a decimal.
+  // Describe only the submitted work after the original grader accepts it.
+  if(id==='quarters'&&task.type==='match'&&checked?.status==='correct'){
+    const fractions=task.fractions;
+    if(!Array.isArray(fractions)||!Array.isArray(model.names)||model.names.length!==fractions.length)return null;
+    const pairs=fractions.map(([n,d],i)=>{
+      if(!Number.isFinite(n)||!Number.isFinite(d)||d===0)return null;
+      const count=n*100/d,parts=Number.isInteger(count)?' = '+count+'/100':'';
+      return n+'/'+d+parts+' = '+String(model.names[i]).trim();
+    });
+    if(pairs.some(x=>x===null))return null;
+    return {
+      kind:'correct',title:'分数与小数为什么对得上',
+      equation:pairs.join('；'),
+      explanation:'把同样大小的一满杯看作 1，分数说的是把一杯平均分成几份、取其中几份；小数说的是占一杯的多少。每杯的水位、分数和小数表示的是同一杯中的同一个量，并不是三杯水都一样多。',
+      question:'任选一杯，用自己的话说说它为什么可以换一种名字；如果杯子变大，分数与小数的关系会改变吗？',
+      method:{nodeId:'mt_EBYGhd8X3x',label:'连接不同表示方式',code:'ccss-math:MP.2'}
+    };
+  }
+  if(id!=='equivalent')return null;
   if(checked?.status==='correct'){
     if(task.type==='equivalent'){
       const names=model.rows.map(r=>r.n+'/'+r.d).join(' = ');

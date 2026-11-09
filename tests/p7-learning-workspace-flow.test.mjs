@@ -5,7 +5,7 @@ import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary,
 import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
 import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
-import {ROUTES} from '../dist/learning/catalog.js';
+import {ROUTES,REFLECTIONS} from '../dist/learning/catalog.js';
 
 const detailFor=a=>checkedMathExplanation({
  id:a.id,task:TASKS[a.id][a.index],
@@ -181,4 +181,36 @@ test('P9 source thinking pilot uses only submitted representation and not an ung
  assert.doesNotMatch(JSON.stringify(cue),/已掌握|能力评分|自由解释正确/);
  const changed=modelForLesson(a);changed.decimal='0.25';
  assert.equal(thinkingFeedback(t,changed,a.cases[2]),null);
+});
+
+
+test('P7 Mac screenshot: three checked cups explain each real fraction-decimal equivalence and MP2 link',()=>{
+ const a=freshLesson('quarters');a.index=1;
+ const t=TASKS.quarters[1],m=modelForLesson(a);
+ assert.equal(t.type,'match');
+ assert.equal(detailFor(a),null,'no explanation before checking any model');
+ assert.equal(submitLesson(a).correct,false);
+ assert.equal(detailFor(a),null,'a wrong cup model never gets confirmed as an equal relationship');
+ a.models[1]=exampleModel(t);
+ assert.equal(currentSubmission(a).status,'modified','replacing the error does not silently create a new check');
+ assert.equal(detailFor(a),null,'unsent correct work is not checked evidence');
+ assert.equal(submitLesson(a).correct,true);
+ const explanation=detailFor(a);
+ assert.equal(explanation.kind,'correct');
+ assert.match(explanation.equation,/1\/2 = 50\/100 = 0\.5/);
+ assert.match(explanation.equation,/3\/4 = 75\/100 = 0\.75/);
+ assert.match(explanation.equation,/1\/4 = 25\/100 = 0\.25/);
+ assert.match(explanation.explanation,/同样大小的一满杯.*分数.*小数/);
+ assert.match(explanation.explanation,/并不是三杯水都一样多/);
+ assert.match(explanation.question,/任选一杯/);
+ assert.equal(explanation.method.nodeId,'mt_EBYGhd8X3x','use a real MP2 thinking source node');
+ assert.equal(explanation.method.code,'ccss-math:MP.2');
+ assert.equal(thinkingFeedback(t,a.models[1],a.cases[1]),null,'do not create a redundant thinking card in the work area');
+ assert.match(REFLECTIONS.quarters,/百格涂了 1\/4.*杯子装了 1\/4.*相同.*不同/);
+ assert.equal(a.cases[1].attempts.length,2,'earlier failed check remains in the original record');
+ a.models[1].names[2]='0.20';
+ assert.equal(currentSubmission(a).status,'modified');
+ assert.equal(detailFor(a),null,'edits revoke a previous checked explanation and source method');
+ assert.equal(submitLesson(a).correct,false);
+ assert.equal(detailFor(a),null,'false math inference cannot be recovered from old success');
 });
