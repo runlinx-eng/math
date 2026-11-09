@@ -321,6 +321,31 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
    requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
    await shot('28-embedded-quarters-next',true);
+   // User screenshot: 1/4 shown as 20 colored squares and 0.2. The next
+   // mathematical operation must be explicit without adding a new navigation.
+   await embedded.locator('#work [data-do="row-fill"]').click();
+   await embedded.locator('#work [data-do="row-fill"]').click();
+   await embedded.locator('#work [data-field="decimal"]').fill('0.2');
+   await embedded.locator('#actions [data-do="check"]').click();
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='revise','wrong 1/4 construction remains a checked error, not next-topic progress');
+   const nextAction=await embedded.locator('#check-feedback .feedback-next').innerText();
+   requireState(nextAction.includes('20 格')&&nextAction.includes('20/100'),'visible next action describes the 20 colored squares actually submitted');
+   requireState(nextAction.includes('100 格平均分成 4 份')&&nextAction.includes('核对小数'),'visible next action guides the child to repair the grid and decimal');
+   requireState(nextAction.includes('连接不同表示方式'),'thinking method is offered as a strategy, not claimed as learned');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'failed attempt never implies thinking-method mastery');
+   await shot('28a-quarter-20-of-100-needs-next-step',true);
+   for(const cell of [20,21,22,23,24])await embedded.locator('#work [data-do="cell"][data-index="'+cell+'"]').click();
+   await embedded.locator('#work [data-field="decimal"]').fill('0.25');
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='recheck','edited work needs a new check before advancing');
+   requireState(await embedded.locator('#check-feedback .feedback-next').count()===0,'old wrong-construction advice clears after editing');
+   await embedded.locator('#actions [data-do="check"]').click();
+   requireState(await embedded.locator('#scene').getAttribute('data-stage')==='passed','correct 1/4 representation passes with existing grader');
+   requireState((await embedded.locator('#thinking-feedback').innerText()).includes('25 格'),'thinking observation uses the current submitted 25-square evidence');
+   requireState(await embedded.locator('[data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'source map MP2 thinking node appears only after checked work');
+   requireState(await embedded.locator('#actions [data-do="next"]').isVisible(),'a checked correct workpiece now offers the existing next question');
+   const prior=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
+   requireState(prior.cases[0].attempts.length===2&&prior.cases[0].attempts[0].value.selected.length===20,'both attempts retained without creating a new thinking score');
+   await shot('28b-quarter-correct-thinking-method-and-next',true);
    // A failed localStorage write must never look like a successful save,
    // including the case where an input autosave fails before the button click.
    await page.goto(base+'learn.html#decimal');
