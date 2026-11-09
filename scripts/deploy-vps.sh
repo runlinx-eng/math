@@ -7,7 +7,10 @@ set -euo pipefail
 : "${VPS_URL:?Set VPS_URL}"
 : "${VPS_SSH_KEY_FILE:?Set VPS_SSH_KEY_FILE}"
 : "${VPS_KNOWN_HOSTS_FILE:?Set VPS_KNOWN_HOSTS_FILE}"
-: "${GITHUB_SHA:?Set GITHUB_SHA}"
+# For workflow_run, GITHUB_SHA identifies the dispatcher, not necessarily the tested commit.
+# Preserve existing manual callers that only provide GITHUB_SHA.
+RELEASE_SHA="${RELEASE_SHA:-${GITHUB_SHA:-}}"
+: "${RELEASE_SHA:?Set RELEASE_SHA or GITHUB_SHA}"
 
 VPS_PORT="${VPS_PORT:-22}"
 VPS_WEB_ROOT="${VPS_WEB_ROOT%/}"
@@ -18,7 +21,7 @@ VPS_WEB_ROOT="${VPS_WEB_ROOT%/}"
 }
 [[ "$VPS_PORT" =~ ^[0-9]{1,5}$ ]] || { echo "VPS_PORT must be numeric." >&2; exit 1; }
 [[ "$VPS_URL" =~ ^https://[^/]+/?$ ]] || { echo "VPS_URL must be an HTTPS origin without a path." >&2; exit 1; }
-[[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "GITHUB_SHA must be a full commit SHA." >&2; exit 1; }
+[[ "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "RELEASE_SHA must be a full commit SHA." >&2; exit 1; }
 [[ -s "$VPS_SSH_KEY_FILE" && -s "$VPS_KNOWN_HOSTS_FILE" ]] || {
   echo "SSH key and pinned known_hosts file are required." >&2
   exit 1
@@ -28,7 +31,7 @@ command -v ssh >/dev/null
 command -v curl >/dev/null
 
 target="$VPS_USER@$VPS_HOST"
-release_dir="$VPS_WEB_ROOT/releases/$GITHUB_SHA"
+release_dir="$VPS_WEB_ROOT/releases/$RELEASE_SHA"
 ssh_opts=(
   -p "$VPS_PORT"
   -i "$VPS_SSH_KEY_FILE"
@@ -39,11 +42,11 @@ ssh_opts=(
 )
 rsync_ssh="ssh -p $VPS_PORT -i $VPS_SSH_KEY_FILE -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$VPS_KNOWN_HOSTS_FILE"
 
-echo "Preparing release $GITHUB_SHA"
+echo "Preparing release $RELEASE_SHA"
 ssh "${ssh_opts[@]}" "$target" "mkdir -p -- '$release_dir'"
 rsync -a --delete -e "$rsync_ssh" dist/ "$target:$release_dir/"
 
-ssh "${ssh_opts[@]}" "$target" "VPS_WEB_ROOT='$VPS_WEB_ROOT' RELEASE_ID='$GITHUB_SHA' bash -s" <<'REMOTE'
+ssh "${ssh_opts[@]}" "$target" "VPS_WEB_ROOT='$VPS_WEB_ROOT' RELEASE_ID='$RELEASE_SHA' bash -s" <<'REMOTE'
 set -euo pipefail
 root="$VPS_WEB_ROOT"
 release="$root/releases/$RELEASE_ID"
@@ -102,4 +105,4 @@ for index in "${!releases[@]}"; do
 done
 REMOTE
 
-echo "Deployed $GITHUB_SHA to $VPS_URL"
+echo "Deployed $RELEASE_SHA to $VPS_URL"
