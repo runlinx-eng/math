@@ -319,6 +319,26 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(startingPose.selected===endingPose.selected,'next lesson does not silently change the map selection');
    requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
    await shot('28-embedded-quarters-next',true);
+   // A failed localStorage write must never look like a successful save,
+   // including the case where an input autosave fails before the button click.
+   await page.goto(base+'learn.html#decimal');
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.view==='summary');
+   await page.evaluate(()=>{
+     const original=Storage.prototype.setItem;
+     Storage.prototype.setItem=function(key,value){
+       if(key==='math-explorer-v2')throw new DOMException('Simulated quota full','QuotaExceededError');
+       return original.call(this,key,value);
+     };
+   });
+   await page.locator('#note').fill('存储失败时不能丢掉的文字。');
+   requireState((await page.locator('#note-save-status').innerText()).includes('尚未保存成功'),'failed autosave gives visible warning next to the field');
+   requireState(await page.locator('#note-save-status').getAttribute('data-state')==='error','failed autosave is never marked as a success');
+   await page.locator('#work [data-do="save-note"]').click();
+   requireState((await page.locator('#note').inputValue()).includes('不能丢掉'),'storage failure never clears the unsaved text');
+   requireState(await page.locator('#storage-warning').isVisible(),'original non-destructive storage failure warning remains available');
+   const failed=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
+   requireState(failed.notes.length===2,'failed write cannot fake an extra saved reflection');
+   await shot('29-storage-failure-preserves-draft');
    fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify(evidence,null,2));
    console.log('P7_AUDIT_COMPLETE '+JSON.stringify({scenarioCount:evidence.scenarios.length,errors:evidence.errors}));
    requireState(!evidence.errors.length,'no uncaught Chromium errors');
