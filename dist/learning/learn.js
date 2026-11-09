@@ -122,6 +122,7 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  if(a.view!=='summary'&&B06_TYPES.has(task().type)){cleanupB06=mountB06($('#work'),task(),model,{mutate:(act,data={},renderNow=true)=>edit(m=>actExtra(task(),m,act,data),{renderNow}),saveInk:stroke=>edit(m=>m.ink.push(stroke)),help:()=>{if(a.view==='task')update(r=>supportLesson(r));}});if(writingOpen&&$('.b6-writing'))$('.b6-writing').open=true;}
  $('#record-body').innerHTML=`<p>任务 ${summary.done} / ${summary.total} 完成。${summary.independent?'这次有未借助提示的操作证据。':'尝试、提示和修正会保留。'}文字解释保留待确认。</p>${Object.entries(a.cases).map(([i,r])=>`<p>任务 ${Number(i)+1}：${r.attempts.length} 次提交；${r.support?'看过支持':'未主动看支持'}。${r.attempts.map((e,j)=>`第 ${j+1} 次${inspect(sessionTasks(id)[i],e.value).correct?'成立':'需修改'}${e.exposed?'（看过本题反馈）':''}`).join('；')}</p>`).join('')}${a.notes.map(n=>`<p>我的发现（待确认）：${esc(n.text)}</p>`).join('')}`;
  renderP3Flow($('#p3-learning-flow'),{atlas,id,record:a,embedded:parent!==window});
+  $('#record').hidden=!Object.values(a.cases).some(r=>r.support||r.attempts?.length)&&!a.notes.length&&!a.draft.trim();
   if(parent!==window)$('#record-body').insertAdjacentHTML('beforeend',btn('relations','看看空间里的联系'));
  if(a.view!=='summary')syncB13Controls(task(),model(),$('#work'));
  document.querySelectorAll('button[aria-pressed]').forEach(b=>b.classList.toggle('selected',b.getAttribute('aria-pressed')==='true'));
