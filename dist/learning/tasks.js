@@ -83,12 +83,15 @@ export function validModel(t,m){if(!m||typeof m!=='object'||Array.isArray(m))ret
  default:return false;}}
 function countsValid(t,m){return Array.isArray(m.counts)&&m.counts.length===t.labels.length&&m.counts.every(v=>integer(v,0,20));}
 function decimalValue(s){return /^\s*(?:0?(?:\.\d{1,3})|\d+(?:\.\d{1,3})?)\s*$/.test(s)?Number(s):NaN;}
+// A prompt asking "百分之几" expects the number after 百分之 (26), not 26/100.
+// Continue accepting the fraction form used by older saved attempts and examples.
+function percentCount(s){const v=String(s).trim();const plain=v.match(/^(\d+(?:\.\d+)?)\s*(?:%|％)?$/);if(plain)return Number(plain[1]);const legacy=v.match(/^(\d+(?:\.\d+)?)\s*\/\s*100$/);return legacy?Number(legacy[1]):NaN;}
 const equal=(a,b)=>Math.abs(a-b)<1e-9;
 export function inspect(t,m){if(!validModel(t,m))return {correct:false,code:'invalid',feedback:'这个记录不完整，先把当前操作补好。'};if(isExtra(t))return inspectExtra(t,m);let correct=false,feedback='',code=t.type;
  switch(t.type){
  case 'partition':{const result=inspectLegacy(t,m);return {...result,feedback:result.correct?'每一份一样大，取的份数也对应上了。':result.feedback};}
  case 'equivalent':correct=m.rows.every(r=>r.n*t.d===t.n*r.d);feedback='同一个整体上，把涂色的末端对齐。切得更细时，涂色的小份数也要一起改变。';break;
- case 'grid':correct=m.selected.length*t.d===t.n*100&&equal(decimalValue(m.decimal),t.n/t.d)&&(!t.reverse||/^\s*26\s*\/\s*100\s*$/.test(m.fraction));feedback=m.selected.length*t.d!==t.n*100?'先看整个百格有多少格，再看要取它的多少。':'格子对应上了。小数点后第一位是十分之几，第二位是百分之几；需要时用 0 占位。';break;
+ case 'grid':{const gridOk=m.selected.length*t.d===t.n*100,decimalOk=equal(decimalValue(m.decimal),t.n/t.d),percentOk=!t.reverse||equal(percentCount(m.fraction),t.n*100/t.d);correct=gridOk&&decimalOk&&percentOk;feedback=!gridOk?'先看整个百格有多少格，再看要取它的多少。':!decimalOk?'百格涂色已经对应上了。请核对小数：一格表示百分之一，十格表示十分之一。':!percentOk?'百格和小数都对上了。“百分之几”填写百分号前面的数字，不是把小数直接抄过来。':t.reverse?`同一个整体是 100 格，涂了 ${m.selected.length} 格，表示 ${m.selected.length}/100 = ${t.n/t.d} = ${m.selected.length}%。这是本次作品的对应关系。`:'格子对应上了。小数点后第一位是十分之几，第二位是百分之几；需要时用 0 占位。';break;}
  case 'line':correct=m.mark*t.d===t.n*t.den;feedback='上下两条线是同一个整体，找涂色末端正下方的那一点。';break;
  case 'match':correct=t.fractions.every(([n,d],i)=>m.heights[i]*d===n*100&&equal(decimalValue(m.names[i]),n/d));feedback='满杯都表示 1。先找到一半，再看四分之一和四分之三的位置，小数名字也要一起对应。';break;
  case 'fill':correct=m.filled.length===voxels(t).length&&m.total===voxels(t).length;feedback=m.filled.length!==voxels(t).length?'盒子里还有空位。把空间填满，背后也不要漏。':'用装进去的小方块来数，别把外面的面也重复算进去。';break;
@@ -100,7 +103,7 @@ export function inspect(t,m){if(!validModel(t,m))return {correct:false,code:'inv
  case 'survey':correct=m.seen===t.order.length&&m.counts.every((n,i)=>n===t.counts[i])&&m.choice===t.counts.indexOf(Math.max(...t.counts));feedback=m.seen<t.order.length?'还没有观察完。继续看下一条，每条只记录一次。':'逐条复查：有没有漏记或重复？最后根据记录选择出现最多的一类。';break;
  case 'compare':correct=m.counts.every((n,i)=>n===t.counts[i])&&m.left===t.counts[t.target]&&m.right===t.counts[t.target]&&!!m.preferred;feedback='同一类在两张图里应有相同数量。先修好图，再分别读出对应的数。喜欢哪种画法没有唯一答案。';break;
  }
- return {correct,code:correct?'correct':code,feedback:correct?(t.estimate?`你估计 ${m.estimate} 块，实际 ${voxels(t).length} 块，相差 ${Math.abs(m.estimate-voxels(t).length)} 块。估计可以不同，最后用填充的数量核对。`:'对应上了。换个条件，再看看这个方法是否还管用。'):feedback};}
+ return {correct,code:correct?'correct':code,feedback:correct?(t.type==='grid'&&t.reverse?feedback:t.estimate?`你估计 ${m.estimate} 块，实际 ${voxels(t).length} 块，相差 ${Math.abs(m.estimate-voxels(t).length)} 块。估计可以不同，最后用填充的数量核对。`:'对应上了。换个条件，再看看这个方法是否还管用。'):feedback};}
 export const taskFor=(id,index)=>index===-1?PRACTICE[id]:TASKS[id]?.[index];
 export function exampleModel(t){if(isExtra(t))return exampleExtra(t);const m=defaultModel(t);switch(t.type){
  case 'partition':m.cuts=Array.from({length:t.d-1},(_,i)=>(i+1)*100/t.d);m.selected=Array.from({length:t.n},(_,i)=>i);break;
