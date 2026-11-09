@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary} from '../dist/learning/state.js';
+import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary,addLessonNote,validateLesson} from '../dist/learning/state.js';
 import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
-import {learningStage,stageGuidance,checkedMathExplanation} from '../dist/learning/workspace-flow.js';
+import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId} from '../dist/learning/workspace-flow.js';
+import {ROUTES} from '../dist/learning/catalog.js';
 
 const detailFor=a=>checkedMathExplanation({
  id:a.id,task:TASKS[a.id][a.index],
@@ -106,4 +107,36 @@ test('P7 erroneous percent check remains in history after correction',()=>{
  assert.equal(a.cases[2].attempts.length,2);
  assert.equal(a.cases[2].attempts[0].value.fraction,'0.26');
  assert.equal(a.cases[2].attempts[1].value.fraction,'26');
+});
+
+
+test('P7 completed reflections lead to the next real, uncompleted route activity',()=>{
+ const route=ROUTES.find(r=>r.id==='A');
+ assert.deepEqual(route.ids,['share','equivalent','decimal','quarters']);
+ assert.equal(nextRouteLessonId(route,'decimal'),'quarters');
+ assert.equal(nextRouteLessonId(route,'equivalent'),'decimal');
+ assert.equal(nextRouteLessonId(route,'equivalent',id=>id==='decimal'),'quarters','skip already-completed activities');
+ assert.equal(nextRouteLessonId(route,'quarters'),null,'no fabricated fifth activity');
+ assert.equal(nextRouteLessonId(route,'not-in-route'),null,'unknown activities never make up a next step');
+ assert.match(stageGuidance('reflect',{hasFollowingLesson:true}),/直接学习下一处/);
+ assert.match(stageGuidance('reflect',{hasFollowingLesson:false}),/返回原知识空间/);
+});
+
+test('P7 saved reflection preserves verbatim notes and checked work through validation',()=>{
+ const record=freshLesson('decimal');
+ for(let i=0;i<TASKS.decimal.length;i++){
+   record.index=i;
+   record.models[i]=exampleModel(TASKS.decimal[i]);
+   assert.equal(submitLesson(record).correct,true,'task '+(i+1)+' can finish');
+ }
+ record.view='summary';
+ const original='一个是十分位，一个是百分位。';
+ record.draft=original;
+ addLessonNote(record,original);
+ assert.equal(record.draft,'','saving clears only the transient text draft');
+ const valid=validateLesson(record,'decimal');
+ assert.equal(valid.view,'summary');
+ assert.deepEqual(valid.notes.map(n=>n.text),[original]);
+ assert.equal(valid.cases[2].attempts.length,1,'submitted evidence survives saving a note');
+ assert.equal(lessonSummary(valid).completed,true,'saving is not a new judgment or completion rule');
 });

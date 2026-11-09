@@ -9,12 +9,20 @@ export function learningStage(record,checked){
   return 'explore';
 }
 
-export function stageGuidance(stage,{hasNext=true}={}){
+// Follow only configured, ordered route lessons; a completed lesson is not
+// presented as a new next step. This does not invent a knowledge relationship.
+export function nextRouteLessonId(route,currentId,isCompleted=()=>false){
+  const ids=route?.ids||[],index=ids.indexOf(currentId);
+  if(index<0)return null;
+  return ids.slice(index+1).find(id=>!isCompleted(id))||null;
+}
+
+export function stageGuidance(stage,{hasNext=true,hasFollowingLesson=false}={}){
   switch(stage){
     case 'revise':return '这次检查还没有通过。对照提示修改作品，再检查一次；以前的尝试会保留。';
     case 'recheck':return '作品已经改动，之前的检查结果不代表现在的作品。请重新检查。';
     case 'passed':return hasNext?'本题通过检查。想想为什么成立，再进入下一题。':'本题通过检查。想想为什么成立，再整理这次发现。';
-    case 'reflect':return '用自己的话留下发现（可选），再回到原来的数学树继续探索。';
+    case 'reflect':return hasFollowingLesson?'发现可以保存（可选）；保存后直接学习下一处，或返回原知识空间。':'发现可以保存（可选）；保存后返回原知识空间继续探索。';
     default:return '可以直接动手尝试；只有点击检查才会产生一条提交记录。';
   }
 }

@@ -204,3 +204,44 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
   #learning-interaction .eq-label{font-size:14px}
   #learning-interaction .eq-bar{height:48px}
 }
+
+
+/* P7: keep reflection save feedback in the same visual/action region. */
+#note-save-status:not([hidden]){
+  margin:10px 0 9px;
+  padding:10px 12px;
+  border:1px solid #b5d7c4;
+  border-left:3px solid #3c8770;
+  border-radius:8px;
+  background:#eef7ef;
+  color:#285f4e;
+  font-size:13px;
+  line-height:1.6;
+}
+#note-save-status[data-state="draft"]:not([hidden]){
+  border-color:#d8e2db;
+  border-left-color:#7d9789;
+  background:#f5f7f3;
+  color:#536d60;
+}
+.saved-note-preview{
+  margin:12px 0;
+  padding:9px 12px;
+  border-radius:8px;
+  border:1px solid #dee9df;
+  background:#f5f8f3;
+  font-size:12px;
+  line-height:1.6;
+}
+.saved-note-preview p{
+  margin:6px 0 0;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+#note-save-status[data-state="error"]:not([hidden]){
+  border-color:#e5c49c;
+  border-left-color:#bc8941;
+  background:#fff6e7;
+  color:#865c26;
+}

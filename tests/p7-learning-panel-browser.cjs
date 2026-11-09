@@ -177,17 +177,25 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await shot('19-equivalent-final-check-explained');
    await page.locator('#actions [data-do="next"]').click();
    requireState(await page.locator('#scene').getAttribute('data-stage')==='reflect','the same shell enters reflection');
-   requireState(await page.locator('#actions .primary [data-do="back"]').count()===0 || await page.locator('#actions [data-do="back"].primary').count()===1,'return to original 3D is the initial reflection main action');
+   requireState(await page.locator('#actions [data-do="lesson"][data-id="decimal"].primary').count()===1,'reflection offers the actual next route lesson as its main action');
    requireState(await page.locator('#work [data-do="save-note"]').isDisabled(),'an empty explanation is not submitted as learning evidence');
    await page.locator('#note').fill('同一个整体，三分之二与九分之六都走到数轴的同一个位置，因为每份缩小、份数同时增加。');
    requireState(await page.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'writing a discovery makes save the main action');
-   requireState(!await page.locator('#actions [data-do="back"]').evaluate(el=>el.classList.contains('primary')),'return does not compete with unsaved work');
+   requireState(!await page.locator('#actions [data-do="lesson"][data-id="decimal"]').evaluate(el=>el.classList.contains('primary')),'saving written thoughts takes precedence over continuing');
    await page.locator('#work [data-do="save-note"]').click();
    const recorded=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.equivalent);
    requireState(recorded.notes.some(n=>n.text.includes('三分之二与九分之六')),'submitted explanation is really saved');
    requireState(recorded.cases[0].attempts.length===2,'first incorrect attempt remains with successful task');
-   requireState(await page.locator('#actions [data-do="back"]').evaluate(el=>el.classList.contains('primary')),'after saving, the main action is to return to the knowledge space');
+   requireState((await page.locator('#note-save-status').innerText()).includes('已保存这次发现'),'save gets a visible and accessible success confirmation');
+   requireState((await page.locator('.saved-note-preview').innerText()).includes('三分之二与九分之六'),'saved words stay visible in the summary');
+   requireState(await page.locator('#actions [data-do="lesson"][data-id="decimal"]').evaluate(el=>el.classList.contains('primary')),'after saving, the next real learning activity is primary');
    await shot('20-equivalent-reflection-saved');
+   await page.locator('#actions [data-do="lesson"][data-id="decimal"]').click();
+   await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='decimal');
+   requireState(await page.locator('#status').innerText()==='任务 1 / 4','continuing after a saved reflection directly opens the next task');
+   requireState((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.equivalent.notes)).length===1,'changing lessons retains the previous verified reflection record');
+   await shot('20a-next-lesson-opens');
+
 
    // An older installed version stored ungraded play models under key -1.
    // The new single workspace must keep that old material and display the task.
@@ -200,7 +208,9 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      saved.lessons.decimal=record;
      localStorage.setItem('math-explorer-v2',JSON.stringify(saved));
    });
-   await page.goto(base+'learn.html#decimal');
+   // The preceding step already opened this URL. Navigating to an identical
+   // URL may reuse the live document and skip the legacy-normalization boot.
+   await page.reload();
    await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='decimal');
    const migrated=await shot('16-legacy-play-recovered');
    requireState(migrated.status.startsWith('任务'),'legacy play reopens as the unified task');
@@ -246,6 +256,92 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(percentRecord.cases[2].attempts.length===3,'wrong, corrected and legacy-format checks retain three distinct attempts');
    requireState(percentRecord.cases[2].attempts[0].value.fraction==='0.26','original mistaken work stays in history');
    await shot('23-decimal-percent-old-notation');
+   // Mac regression: completed 4/4 summary, saving a thought must show
+   // visible confirmation and a direct, source-configured following lesson.
+   await page.evaluate(async()=>{
+     const {freshLesson,submitLesson}=await import('./learning/state.js');
+     const {TASKS,exampleModel}=await import('./learning/tasks.js');
+     const store=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     const finished=freshLesson('decimal');
+     for(let i=0;i<TASKS.decimal.length;i++){
+       finished.index=i;finished.models[i]=exampleModel(TASKS.decimal[i]);
+       if(!submitLesson(finished).correct)throw Error('cannot stage decimal task '+i);
+     }
+     finished.view='summary';
+     store.lessons.decimal=finished;
+     localStorage.setItem('math-explorer-v2',JSON.stringify(store));
+   });
+   await page.reload();
+   await page.waitForFunction(()=>window.mathLesson?.snapshot().view==='summary');
+   requireState((await page.locator('#actions [data-do="lesson"][data-id="quarters"]').innerText()).includes('继续学习'),'4/4 summary points to the actual next configured activity');
+   requireState(await page.locator('#note-save-status').isHidden(),'unsaved reflection has no false success confirmation');
+   await page.locator('#note').fill('一个是十分位，一个是百分位。');
+   requireState(await page.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'save becomes the sole main action when there is a draft');
+   requireState(!await page.locator('#actions [data-do="lesson"][data-id="quarters"]').evaluate(el=>el.classList.contains('primary')),'unsaved text does not compete with next lesson');
+   await shot('24-decimal-reflection-before-save');
+   await page.locator('#work [data-do="save-note"]').click();
+   const confirmed=await page.locator('#note-save-status').innerText();
+   requireState(confirmed.includes('已保存这次发现'),'save gives visible success feedback, not a silent rerender');
+   requireState((await page.locator('.saved-note-preview').innerText()).includes('一个是十分位，一个是百分位。'),'saved note can be read without expanding history');
+   requireState(await page.locator('#note').inputValue()==='','confirmed submission is no longer an unsaved draft');
+   requireState(await page.locator('#work [data-do="save-note"]').isDisabled(),'saved note cannot accidentally be submitted twice');
+   requireState(await page.locator('#actions [data-do="lesson"][data-id="quarters"]').evaluate(el=>el.classList.contains('primary')),'next lesson is the main action after saving');
+   let saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
+   requireState(saved.notes.length===1&&saved.notes[0].text==='一个是十分位，一个是百分位。','recorded words are preserved exactly once');
+   requireState(Object.values(saved.cases).every(c=>c.attempts.length===1),'saving does not erase or create task attempts');
+   await shot('25-decimal-reflection-saved-with-next');
+   await page.reload();
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.view==='summary');
+   requireState((await page.locator('.saved-note-preview').innerText()).includes('一个是十分位，一个是百分位。'),'saved reflection remains discoverable after refresh');
+   requireState(await page.locator('#actions [data-do="lesson"][data-id="quarters"]').isVisible(),'next learning action survives refresh');
+   await page.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='quarters');
+   requireState((await page.locator('#status').innerText()).startsWith('任务 1 /'),'next lesson opens directly without returning to the map or a second menu');
+   saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
+   requireState(saved.notes.length===1&&saved.view==='summary','previous lesson stays completed and recorded when continuing');
+   requireState(!(await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters?.cases?.[0]?.attempts?.length)),'opening the next activity does not fabricate a checked attempt');
+   await shot('26-quarters-continuation');
+   // Verify the same save->next behavior inside the user's actual 3D workspace,
+   // not only in a standalone runner.
+   await page.goto(base+'?world=network&layout=53#space/node/mt_TqDq6jyOmL');
+   await page.waitForFunction(()=>window.mathSpace?.snapshot().selected==='node:mt_TqDq6jyOmL');
+   const startingPose=await page.evaluate(()=>mathSpace.snapshot());
+   await page.locator('#focus-card [data-action="open"]').first().click();
+   const embedded=page.frameLocator('#journey-frame');
+   await embedded.locator('#note').waitFor();
+   requireState((await embedded.locator('.saved-note-preview').innerText()).includes('一个是十分位，一个是百分位。'),'embedded summary restores the prior saved note');
+   await embedded.locator('#note').fill('从同一张数学树继续研究分数和小数。');
+   await embedded.locator('#work [data-do="save-note"]').click();
+   requireState((await embedded.locator('#note-save-status').innerText()).includes('已保存这次发现'),'embedded save produces visible confirmation');
+   requireState((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal.notes)).length===2,'embedded save retains both original and new notes');
+   await shot('27-embedded-summary-saved',true);
+   await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
+   requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
+   const endingPose=await page.evaluate(()=>mathSpace.snapshot());
+   requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
+   requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
+   await shot('28-embedded-quarters-next',true);
+   // A failed localStorage write must never look like a successful save,
+   // including the case where an input autosave fails before the button click.
+   await page.goto(base+'learn.html#decimal');
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.view==='summary');
+   await page.locator('#note').fill('存储失败时不能丢掉的文字。');
+   requireState(await page.locator('#work [data-do="save-note"]').isEnabled(),'the unsaved note can be submitted before storage fails');
+   await page.evaluate(()=>{
+     const original=Storage.prototype.setItem;
+     Storage.prototype.setItem=function(key,value){
+       if(key==='math-explorer-v2')throw new DOMException('Simulated quota full','QuotaExceededError');
+       return original.call(this,key,value);
+     };
+   });
+   await page.locator('#work [data-do="save-note"]').click();
+   requireState((await page.locator('#note-save-status').innerText()).includes('尚未保存成功'),'failed save gives visible warning next to the field');
+   requireState(await page.locator('#note-save-status').getAttribute('data-state')==='error','failed save is never marked as a success');
+   requireState((await page.locator('#note').inputValue()).includes('不能丢掉'),'storage failure never clears the unsaved text');
+   requireState(await page.locator('#storage-warning').isVisible(),'original non-destructive storage failure warning remains available');
+   const failed=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal);
+   requireState(failed.notes.length===2,'failed write cannot fake an extra saved reflection');
+   await shot('29-storage-failure-preserves-draft');
    fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify(evidence,null,2));
    console.log('P7_AUDIT_COMPLETE '+JSON.stringify({scenarioCount:evidence.scenarios.length,errors:evidence.errors}));
    requireState(!evidence.errors.length,'no uncaught Chromium errors');
