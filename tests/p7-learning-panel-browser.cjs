@@ -180,7 +180,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(await page.locator('#status').innerText()==='操作检查已通过','operation checked does not certify a freely written explanation');
    requireState(await page.locator('#system-explanation').count()===1,'system mathematical explanation remains available as a voluntary aid');
    requireState(!await page.locator('#system-explanation').evaluate(el=>el.open),'mathematical solution does not appear before the learner chooses to read it');
-   requireState(!(await page.locator('#learning-problem').innerText()).includes('分子分母同时乘'),'the child's reflection question must not be answered in the initial prompt');
+   requireState(!(await page.locator('#learning-problem').innerText()).includes('分子分母同时乘'),'the learner reflection question must not be answered in the initial prompt');
    requireState(await page.locator('#actions button').count()===1,'summary has one next action, not parallel retry/exit decisions');
    requireState(await page.locator('#work [data-do="save-note"]').count()===1,'optional writing is still directly reachable');
    await page.locator('#system-explanation>summary').click();
