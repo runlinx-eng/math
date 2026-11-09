@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,lessonSummary,addLessonNote,validateLesson} from '../dist/learning/state.js';
 import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
-import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ROUTES,REFLECTIONS} from '../dist/learning/catalog.js';
 import {nextRelatedPractice,sourceBridge} from '../dist/learning/bridges.js';
@@ -25,6 +25,32 @@ test('P7-D1: a new lesson has the one fixed sequence of UI regions',()=>{
  assert.ok(html.includes('id="math-explanation"'));
  const sw=readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
  assert.match(sw,/\.\/learning\/workspace-flow\.js/,'offline cache includes new module');
+});
+
+test('P7-D3: fixed learning sequence maps real work states to exactly one primary action',()=>{
+ assert.deepEqual(LEARNING_STEPS.map(s=>s.id),['explore','check','reflect']);
+ const newTask=learningActionPlan({stage:'explore'});
+ assert.equal(newTask.step,'explore');
+ assert.deepEqual(newTask.primary,{action:'check',label:'检查我的作品',disabled:false});
+ assert.equal(newTask.secondary[0].action,'hint','hint remains available but is not the primary action');
+ const incompleteCount=learningActionPlan({stage:'explore',p03:true,readyToCheck:false});
+ assert.equal(incompleteCount.primary.action,'check');
+ assert.equal(incompleteCount.primary.disabled,true,'counting task still requires actual work, not a fake start mode');
+ assert.equal(learningActionPlan({stage:'revise'}).primary.label,'修改后重新检查');
+ assert.equal(learningActionPlan({stage:'recheck'}).primary.label,'重新检查');
+ const passed=learningActionPlan({stage:'passed',hasNextTask:true});
+ assert.equal(passed.step,'check');
+ assert.deepEqual(passed.primary,{action:'next',label:'进入下一题 →'});
+ assert.deepEqual(passed.secondary.map(s=>s.action),['check','hint']);
+ assert.equal(learningActionPlan({stage:'passed',hasNextTask:false}).primary.label,'整理这次发现 →');
+ const destination={action:'lesson',label:'继续学习：真实下一课 →',attrs:'data-id="quarters"'};
+ const noDraft=learningActionPlan({stage:'reflect',destination});
+ assert.deepEqual(noDraft.primary,destination);
+ assert.equal(noDraft.secondary.length,0);
+ const draft=learningActionPlan({stage:'reflect',destination,hasDraft:true});
+ assert.equal(draft.primary.action,'save-note');
+ assert.equal(draft.secondary[0],destination,'the existing next destination must not be deleted by typing');
+ assert.equal(learningActionPlan({stage:'reflect'}).primary.action,'back','no imaginary next task without a configured destination');
 });
 
 test('P7-D1: stage is derived from real attempts and unchanged work, not navigation',()=>{
