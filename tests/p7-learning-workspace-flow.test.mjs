@@ -305,3 +305,16 @@ test('P7-D4 fixed adaptive command covers four actual activity types without new
  assert.equal((html.match(/id="actions"/g)||[]).length,1);
  assert.equal((html.match(/id="work"/g)||[]).length,1);
 });
+
+test('P7-D4 Mac summary: current task precedes optional routes; empty check section is not a second next step',()=>{
+ const html=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
+ assert.ok(html.indexOf('id="route-collapsible"')>html.indexOf('id="learning-interaction"'),
+  'old route chooser must not interrupt the top execution frame');
+ assert.ok(html.indexOf('id="route-collapsible"')>html.indexOf('id="p3-learning-flow"'),
+  'related lesson navigation stays available in the secondary area');
+ const js=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+ assert.match(js,/\$\('#learning-check'\)\.hidden=stage==='reflect'/,
+  'completion should not display a second empty next-step title');
+ assert.doesNotMatch(js,/\$\('#check-title'\)\.textContent=stage==='reflect'\?'下一步'/,
+  'the old bottom step must not compete with the fixed header action');
+});

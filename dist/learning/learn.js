@@ -182,7 +182,7 @@ function syncLearningRegions(){
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':'发现与继续';
- $('#check-title').textContent=stage==='reflect'?'下一步':'检查与反馈';
+ $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
  $('#action-cue').textContent=executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,repair});
@@ -193,6 +193,7 @@ function syncLearningRegions(){
  const last=a.cases?.[a.index]?.attempts?.at(-1)?.value;
  const detail=a.view==='summary'?null:checkedMathExplanation({id,task:task(),model:last,checked:status});
  box.hidden=!detail;
+ $('#learning-check').hidden=stage==='reflect'||(!detail&&$('#check-feedback').hidden&&stage!=='recheck');
  box.innerHTML=detail?'<h3>'+esc(detail.title)+'</h3><p class="math-equation">'+esc(detail.equation)+'</p><p>'+esc(detail.explanation)+'</p><p class="math-question">'+esc(detail.question)+'</p>'+(detail.method?'<p class="math-method" data-thinking-node-id="'+esc(detail.method.nodeId)+'"><strong>相关数学思维 · '+esc(detail.method.label)+'</strong><small>对应来源 '+esc(detail.method.code)+'；只描述本次作品，不能据此判断你已掌握。</small></p>':'')+'<small>'+(detail.kind==='correct'?'这次检查验证了作品中的数学对应关系，你的自由解释仍待确认。':'请按提示修改并重新检查；旧结果不代表修改后的作品。')+'</small>':'';
  syncReflectionPrimary();
 }

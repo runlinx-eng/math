@@ -406,3 +406,16 @@ body.p03-focus #scene .stage-top #actions{
  #scene .stage-top #steps li{font-size:10px;padding:3px 5px}
  #scene .stage-top .execution-command{padding-top:5px}
 }
+
+/* Mac P7-D4 screenshot: secondary route navigation follows the real task;
+   never leave a redundant empty check/next step in the reading flow. */
+#learning-check[hidden]{display:none!important}
+#learning-next #route-collapsible{margin:10px 0 0;border-top:1px solid #e4e9e2;padding-top:7px}
+#learning-next #route-collapsible>summary{font-size:13px;font-weight:600;padding:7px 0}
+@media(max-width:700px){
+ #scene .stage-top #steps{display:none}
+ #scene .stage-top h1{font-size:18px}
+ #scene .stage-top #action-cue{font-size:14px;line-height:1.5}
+ #scene .stage-top #actions button.primary{font-size:15px;min-height:44px}
+ #scene .learning-region-title{font-size:13px}
+}
