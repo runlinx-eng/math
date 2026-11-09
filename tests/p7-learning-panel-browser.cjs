@@ -409,6 +409,9 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState((await embedded.locator('#system-explanation').innerText()).includes('1/4 = 25/100 = 0.25'),'opening the explanation reveals the original mathematical summary');
    requireState((await embedded.locator('#system-explanation .summary-thinking').innerText()).includes('连接不同表示方式'),'opt-in thinking cue becomes readable on demand');
    await embedded.locator('#system-explanation>summary').click();
+   // Disclosure interaction scrolls the iframe. Re-check first-screen reachability
+   // from a fresh top-of-panel position, not from the scrolled help content.
+   await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
    const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
    requireState(summaryRegions.join(',')==='learning-problem,learning-check,learning-interaction,learning-next','completed route visually and semantically puts the next choice before optional writing');
