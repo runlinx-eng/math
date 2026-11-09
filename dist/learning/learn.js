@@ -138,7 +138,7 @@ function syncLearningRegions(){
  const status=currentSubmission(a),stage=learningStage(a,status);
  const scene=$('#scene');scene.dataset.stage=stage;
  $('#interaction-title').textContent=stage==='reflect'?'整理我的发现':'动手探索';
- $('#check-title').textContent=stage==='reflect'?'保存与返回':'检查与反馈';
+ $('#check-title').textContent=stage==='reflect'?'保存与继续':'检查与反馈';
  $('#next-guidance').textContent=stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson()});
  const box=$('#math-explanation');
  const last=a.cases?.[a.index]?.attempts?.at(-1)?.value;
@@ -197,7 +197,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
  if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();if(!$('#check-feedback').hidden)$('#check-feedback').scrollIntoView({block:'nearest'});return;}
  if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
- if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback='已保存这次发现（文字解释待确认），可继续学习下一处。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}return;}
+ if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}
  if(act==='turn'){cube?.turn();update(()=>{});return;}if(act==='spread'){if(!spread&&a.view==='task')update(r=>supportLesson(r));spread=spread?0:1;update(()=>{});render();return;}
  if(act==='view'){view=b.dataset.value;update(()=>{});render();return;}
