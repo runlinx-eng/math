@@ -37,7 +37,9 @@ test('P7 source data and storage model stay outside the UI-only diff',()=>{
   const html=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
   const js=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
   assert.match(html,/id="check-feedback"/);
-  assert.match(js,/checkFeedback\.textContent=feedback/);
+  assert.match(js,/checkFeedback\.textContent=message/);
+  assert.match(js,/checked\.status==='modified'/);
+  assert.match(js,/enterUnifiedTask\(r\)/);
   assert.match(js,/t\.prompt/);
   assert.ok(Object.keys(LESSONS).length>200);
   assert.ok(Object.keys(BRIDGES).length>100);
