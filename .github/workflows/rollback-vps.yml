@@ -6,6 +6,11 @@ on:
 permissions:
   contents: read
 
+# Serialize manual rollback with automatic/manual deployment.
+concurrency:
+  group: math-preview-release
+  cancel-in-progress: false
+
 jobs:
   rollback:
     if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}
