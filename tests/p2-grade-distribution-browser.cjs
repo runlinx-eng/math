@@ -57,14 +57,29 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   check(await page.locator('#search-results [data-action="choose"]').count()>0,'existing search survives grade-list navigation');
   await page.keyboard.press('Escape');
   check(await page.locator('#search-popover').isHidden(),'Escape closes search');
-  const record=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   await page.locator('.primary-nav [data-action="nav-learn"]').click();
-  check(await page.locator('#learning-hub').isVisible(),'learning surface still opens');
+  const entry=await page.evaluate(()=>{
+    const hub=document.querySelector('#learning-hub'),journey=document.querySelector('#journey-surface');
+    return {hub:!hub.hidden,journey:!journey.hidden,legacy:[...document.querySelectorAll('.work-panel')].some(e=>!e.hidden)};
+  });
+  check(entry.hub||entry.journey||entry.legacy,'learning opens a real task or explains why no independent activity exists');
+  if(entry.journey){
+    const src=await page.locator('#journey-frame').getAttribute('src');
+    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'grade-list topic opens a configured new or early learning activity');
+    if(src.startsWith('learn.html#'))await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
+    check(await page.locator('#learning-hub').isHidden(),'direct grade-list learning does not require route selection');
+  }else if(entry.hub){
+    check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured grade-list node explains the missing activity');
+  }
+  const record=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   await page.locator('.primary-nav [data-action="nav-trail"]').click();
   check(await page.locator('#utility-drawer').isVisible(),'footprint surface still opens');
   await page.locator('.primary-nav [data-action="nav-explore"]').click();
   check(samePose(pose,await snap()),'task surfaces preserve prior camera');
-  check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===record,'task navigation does not modify stored learning evidence');
+  const evidenceAfter=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const evidenceBefore=record?JSON.parse(record):null;
+  const submissions=state=>Object.values(state?.lessons||{}).reduce((n,a)=>n+Object.values(a.cases||{}).reduce((sum,c)=>sum+(c.attempts||[]).length,0),0);
+  check(submissions(evidenceAfter)===submissions(evidenceBefore),'navigation does not invent submitted learning evidence');
   await page.evaluate(()=>location.hash='#space/pack/number-sense');
   await page.waitForFunction(()=>document.querySelector('#focus-card .grade-distribution[data-scope="pack"]')?.dataset.id==='number-sense');
   for(const [width,height] of [[1440,900],[980,760],[1280,720]]){

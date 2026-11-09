@@ -98,6 +98,7 @@ jobs:
             tests/p3-learning-flow.test.mjs
             tests/p7-learning-panel.test.mjs
             tests/p7-learning-workspace-flow.test.mjs
+            tests/p7-d5-entry-decision.test.mjs
             tests/p7-d3-capability-inventory.test.mjs
             tests/p4-learning-reliability.test.mjs
             tests/p5-integration-safety.test.mjs
@@ -158,6 +159,7 @@ jobs:
           fi
 
           for test_file in \
+            tests/p7-d5-entry-browser.cjs \
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
@@ -216,6 +218,7 @@ jobs:
             verification/p7-learning-panel/
             verification/p7-d3/
             verification/p7-d4/
+            verification/p7-d5/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/

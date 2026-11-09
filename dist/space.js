@@ -16,6 +16,7 @@ import {ROUTE_ID,ROUTE_TITLE,ROUTE_STEPS,routeStep} from './journey-model.js';
 import {LESSONS,ROUTES,ROUTE_SECTIONS,lessonForTopic,routeFor,routeForPack,routesForPack} from './learning/catalog.js';
 import {BRIDGES,sessionMeta,sessionRoute} from './learning/bridges.js';
 import {lessonSummary} from './learning/state.js';
+import {decideLearningEntry} from './learning/entry-decision.js';
 import {dayKey,dailySummary,continuation,pendingQuestions,addQuestion,resumeQuestion,questionAction,questionDone} from './learning/daily.js';
 import {askQuestion} from './learning/question-ui.js';
 import {gradeMapSelection,GRADE_MAP_STAGES,loadGradePanoramaData} from './grade-node-filter.js';
@@ -750,10 +751,30 @@ function setTaskSurfaceUrl(surface,{replace=false}={}){
     url.hash=scene?.selected?'#space/'+scene.selected.replace(':','/'):'#space';
   if(url.href!==location.href)history[replace?'replaceState':'pushState'](history.state,'',url.href);
 }
+function startLearningFromSelection(){
+  // Only an explicit node selection chooses a new lesson. Saved history never
+  // replaces a different node the child has deliberately selected.
+  readLearning();
+  const decision=decideLearningEntry({selected:space.byKey.get(scene.selected),state:learning});
+  if(decision.kind==='lesson'){openLearningLesson(decision.lessonId);return true;}
+  if(decision.kind==='legacy'){hideLearningHub();closeUtility();openPanel(decision.nodeId);return true;}
+  if(decision.kind==='journey'){openJourney(decision.step);return true;}
+  showLearningHub();
+  return false;
+}
 function navigateTaskSurface(surface,{replace=false}={}){
   if(journeyOpen){if(surface==='learn'){closeUtility();hideLearningHub();resumeJourney();}else{suspendJourney();if(surface==='trail'||surface==='about')showUtility(surface);else{hideLearningHub();closeUtility();closePopovers();}}setTaskSurfaceUrl(surface,{replace});updatePrimaryNavigation();return;}
-  if(surface==='learn')showLearningHub();
-  else if(surface==='trail'||surface==='about')showUtility(surface);
+  if(surface==='learn'){
+    const opened=startLearningFromSelection();
+    // The early activity panel is still a map panel, not a second lesson iframe.
+    if(space.byKey.get(scene.selected)?.kind==='node'&&decideLearningEntry({selected:space.byKey.get(scene.selected),state:learning}).kind==='legacy'){
+      setTaskSurfaceUrl('explore',{replace:true});return;
+    }
+    setTaskSurfaceUrl('learn',{replace});
+    if(opened)updatePrimaryNavigation();
+    return;
+  }
+  if(surface==='trail'||surface==='about')showUtility(surface);
   else{hideLearningHub();closeUtility();closePopovers();}
   setTaskSurfaceUrl(surface,{replace});
 }
@@ -763,7 +784,7 @@ function restoreTaskSurface({initial=false}={}){
   const legacy=url.hash==='#trail'||url.hash==='#about'?url.hash.slice(1):null;
   const surface=url.searchParams.get('surface')||legacy||'explore';
   if(surface==='learn'){
-    if(journeyOpen){closeUtility();hideLearningHub();resumeJourney();}else if($('#learning-hub').hidden)showLearningHub();
+    if(journeyOpen){closeUtility();hideLearningHub();resumeJourney();}else if($('#learning-hub').hidden)startLearningFromSelection();
   }else if(surface==='trail'||surface==='about'){
     if(journeyOpen)suspendJourney();
     if(drawer.hidden||drawer.dataset.surface!==surface)showUtility(surface);
@@ -778,21 +799,25 @@ function restoreTaskSurface({initial=false}={}){
 }
 function renderLearningHub(){
   if(!scene)return;
-  const selected=space.byKey.get(scene.selected),node=selected?.kind==='node'?selected:null;
-  const lesson=node?lessonForTopic(node.id):null,legacy=node?activityFor(node.id):null;
-  const record=lesson?learning.lessons[lesson]:null,summary=record?lessonSummary(record):null;
+  const selected=space.byKey.get(scene.selected),decision=decideLearningEntry({selected,state:learning});
+  const node=selected?.kind==='node'?selected:null;
   const packId=selected?.kind==='pack'?selected.id:node?.packId;
   const routes=(packId?routesForPack(packId):ROUTES).filter(r=>r.ids.some(id=>LESSONS[id])).slice(0,3);
-  const next=continuation(learning),nav=continuationNav(next),sameTask=!!lesson&&next.kind==='session'&&next.sessionId===lesson;
-  const current=lesson?button('learn-session','打开学习',`data-id="${esc(lesson)}"`,'primary-button')
-    :legacy?button('learn-legacy','打开早期活动',`data-id="${esc(node.id)}"`,'primary-button'):'<p class="quiet">当前知识没有单独的学习活动，可以继续查看联系或选择其他内容。</p>';
-  const evidence=summary?.total?`活动操作 ${summary.done}/${summary.total} 项${summary.independent?' · 有首次独立正确操作证据':''}。`:'活动操作与独立证据分别记录。';
+  let primary;
+  if(decision.kind==='unavailable'){
+    primary=`<section class="learning-hub-section"><span class="overline">当前知识点</span><h2>${esc(displayTitle(node))}</h2><p>这里目前没有独立的数学操作活动。可以回到知识空间观察概念和真实联系，或查找其他已配置的活动。</p>${button('close-learning-hub','返回当前知识空间','','primary-button')}</section>`;
+  }else if(decision.kind==='resume'){
+    primary=`<section class="learning-hub-section"><span class="overline">上次学习</span><h2>${esc(decision.title)}</h2><p class="quiet">已有未完成的学习现场，可以接着操作。没有把推荐路线当作学习记录。</p>${button('resume-entry','继续上次学习','','primary-button')}</section>`;
+  }else{
+    primary=`<section class="learning-hub-section"><span class="overline">从知识空间开始</span><h2>选择一个知识点</h2><p class="quiet">先在数学空间中选择想研究的知识；没有依据时，不自动指定课程。</p>${button('learn-find','选择一个知识点','','primary-button')}</section>`;
+  }
   $('#learning-hub-content').innerHTML=`
-    <p class="learning-hub-intro">从一个知识开始，动手操作，再查看结果与下一步。活动完成不等于数学掌握。</p>
-    ${node?`<section class="learning-hub-section"><span class="overline">当前知识点</span><h2>${esc(displayTitle(node))}</h2><p class="quiet">${esc(evidence)}</p>${current}</section>`:''}
-    ${sameTask?'':`<section class="learning-hub-section"><span class="overline">${nav.heading}</span><h2>${esc(next.title)}</h2><p class="quiet">${nav.hint}</p>${button('continue',nav.label,'','primary-button')}</section>`}
-    <section class="learning-hub-section"><span class="overline">${packId?'当前知识群':'可选示例'}</span><h2>选一条短路线</h2><p class="quiet">以下来自已配置的学习任务，不表示必须按此顺序掌握。</p><div class="learning-hub-routes">${routes.map(r=>{const first=r.ids.find(id=>LESSONS[id]);return button('learn-session',`${esc(r.title)}<small>${r.ids.length} 个学习环节 · 从「${esc(LESSONS[first].title)}」进入</small>`,`data-id="${esc(first)}"`,'learning-hub-route');}).join('')||'<p class="quiet">该知识群暂无已配置的短路线。</p>'}</div></section>
-    <div class="learning-hub-footer">${button('learn-find','查找知识或学习活动')}${button('nav-trail','查看学习足迹')}</div>`;
+    ${primary}
+    <details class="learning-hub-more"><summary>其他学习路线与入口</summary>
+      <p class="quiet">以下路线来自已配置的活动，不是强制顺序。</p>
+      <div class="learning-hub-routes">${routes.map(r=>{const first=r.ids.find(id=>LESSONS[id]);return button('learn-session',`${esc(r.title)}<small>${r.ids.length} 个学习环节 · 从「${esc(LESSONS[first].title)}」进入</small>`,`data-id="${esc(first)}"`,'learning-hub-route');}).join('')||'<p class="quiet">该知识群暂无已配置的短路线。</p>'}</div>
+      <div class="learning-hub-footer">${button('learn-find','查找知识或学习活动')}${button('nav-trail','学习足迹和历史记录')}</div>
+    </details>`;
 }
 function showLearningHub(){
   if(journeyOpen)return;
@@ -826,7 +851,8 @@ document.addEventListener('click',event=>{
    else if(action==='nav-trail')navigateTaskSurface('trail');
    else if(action==='close-learning-hub')navigateTaskSurface('explore',{replace:true});
    else if(action==='learn-find'){navigateTaskSurface('explore',{replace:true});openSearch();}
-   else if(action==='learn-session'){hideLearningHub();openLearningLesson(id);}
+   else if(action==='learn-session'){hideLearningHub();openLearningLesson(id);setTaskSurfaceUrl('learn',{replace:true});}
+   else if(action==='resume-entry'){readLearning();const decision=decideLearningEntry({selected:space.byKey.get(scene.selected),state:learning});if(decision.kind==='resume'){hideLearningHub();if(decision.resumeKind==='question')resume(decision.questionId);else{const topicId=sessionMeta(decision.sessionId)?.topicId;if(topicId&&space.byKey.has('node:'+topicId))scene.select('node:'+topicId);openLearningLesson(decision.sessionId);}setTaskSurfaceUrl('learn',{replace:true});}else renderLearningHub();}
    else if(action==='learn-legacy'){navigateTaskSurface('explore',{replace:true});openPanel(id);}
    else if(action==='focus-section'){const section=$('#focus-card [data-context-section="'+el.dataset.section+'"]');if(section){const card=$('#focus-card');card.scrollTop=Math.max(0,section.offsetTop-card.querySelector('.focus-sticky').offsetHeight-12);}}
    else if(action==='overview')overview();else if(action==='back')back();else if(action==='focus-selected')focusSelected();else if(action==='choose')choose(key,{inPlace:true,openLesson:!el.closest('.grade-distribution')&&(worldLayout!=='network'||!!el.closest('.route-choices'))});else if(action==='grade-open-pack')choose('pack:'+id,{inPlace:true,openLesson:false});else if(action==='open'){if(guideVisible)return;const lesson=lessonForTopic(id);if(lesson)openLearningLesson(lesson);else openPanel(id);}else if(action==='open-legacy')openPanel(id);
@@ -952,7 +978,7 @@ window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();}
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
 
 async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
-  const check=async()=>{const cache=await caches.open('math-explorer-20261109-p7d1-d2-learning-shell');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/p3-workflow.js','learning/p3-view.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','navigation-copy.js','concept-explanations.js','grade-node-filter.js','data/grade-panorama-lite.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
+  const check=async()=>{const cache=await caches.open('math-explorer-20261109-p7d5-direct-entry');const ready=(await Promise.all(['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/p3-workflow.js','learning/p3-view.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','learning/entry-decision.js','navigation-copy.js','concept-explanations.js','grade-node-filter.js','data/grade-panorama-lite.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
  }catch{$('#offline-status').textContent='本机保存';}}
 async function boot(){try {
   const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=applyNavigationCopy(await response.json());

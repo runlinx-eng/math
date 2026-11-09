@@ -59,9 +59,18 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   check(after.selected!==pose.selected,'related knowledge is genuine other node');
   check(after.position.every((v,i)=>Math.abs(v-pose.position[i])<.001),'related knowledge keeps map camera');
   await page.locator('.primary-nav [data-action="nav-learn"]').click();
-  check(await page.locator('#learning-hub').isVisible(),'learning hub reopens');
-  await page.goBack();
-  check(await page.locator('#learning-hub').isHidden(),'browser history restores exploration');
+  const entry=await page.evaluate(()=>({hub:!document.querySelector('#learning-hub').hidden,journey:!document.querySelector('#journey-surface').hidden}));
+  check(entry.hub||entry.journey,'related knowledge offers a real lesson or explains unavailable activity');
+  if(entry.journey){
+    const src=await page.locator('#journey-frame').getAttribute('src');
+    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'related node opens a configured source activity');
+    if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
+    check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
+  }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
+  // The original P3 flow checks an explicit return. P7-D5 tests browser Back/Forward
+  // separately on a single parent task-history entry to avoid iframe history ambiguity.
+  await page.locator('.primary-nav [data-action="nav-explore"]').click();
+  check(await page.locator('#learning-hub').isHidden()&&await page.locator('.primary-nav [data-action="nav-explore"]').getAttribute('aria-pressed')==='true','explicit return restores exploration without a route chooser');
   check(!errors.length,'no uncaught browser errors: '+errors.join(' / '));
   console.log(JSON.stringify({status:'pass',checks,screenshots:out},null,2));
  }catch(e){

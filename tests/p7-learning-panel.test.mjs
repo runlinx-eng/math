@@ -103,7 +103,7 @@ test('P7 navigation contract: a single entry, conditional resumption and stable 
   assert.match(js,/label:'回到待续问题'/);
   assert.match(js,/label:'继续上次学习'/);
   assert.match(js,/label:'开始学习'/);
-  assert.match(js,/sameTask\?''/,'current node does not repeat the same recommended session');
+  assert.match(js,/startLearningFromSelection\(\)/,'current selected node is resolved before showing the learning hub');
   assert.match(js,/setTaskSurfaceUrl\('explore',\{replace:true\}\);restoreTaskSurface\(\)/,'explicit close always returns to exploration');
   assert.match(js,/function suspendJourney\(\)/,'switching to other surfaces keeps the live iframe');
   assert.match(js,/function resumeJourney\(\)/,'learning tab reopens the same live iframe');
