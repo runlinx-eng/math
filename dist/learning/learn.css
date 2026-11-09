@@ -311,7 +311,7 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 /* Short-height windows preserve the child's reflection before navigation.
    The validated result already remains in #status and #steps; don't repeat
    its bulky confirmation card or helper sentence at this breakpoint. */
-@media(max-height:780px){
+@media(max-height:580px){
  #scene[data-stage="reflect"] #work .summary-art{display:none}
  #scene[data-stage="reflect"] #interaction-title{display:none}
  #scene[data-stage="reflect"] #work .reflection-optional{display:none}
