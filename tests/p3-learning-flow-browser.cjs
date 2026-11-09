@@ -62,7 +62,9 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   const entry=await page.evaluate(()=>({hub:!document.querySelector('#learning-hub').hidden,journey:!document.querySelector('#journey-surface').hidden}));
   check(entry.hub||entry.journey,'related knowledge offers a real lesson or explains unavailable activity');
   if(entry.journey){
-    check(await frame.locator('#instruction').count()===1,'configured related node skips route selection');
+    const src=await page.locator('#journey-frame').getAttribute('src');
+    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'related node opens a configured source activity');
+    if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
     check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
   }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
   await page.goBack();
