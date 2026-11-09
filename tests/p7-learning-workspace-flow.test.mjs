@@ -6,6 +6,7 @@ import {TASKS,inspect,exampleModel} from '../dist/learning/tasks.js';
 import {learningStage,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance} from '../dist/learning/workspace-flow.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ROUTES,REFLECTIONS} from '../dist/learning/catalog.js';
+import {nextRelatedPractice,sourceBridge} from '../dist/learning/bridges.js';
 
 const detailFor=a=>checkedMathExplanation({
  id:a.id,task:TASKS[a.id][a.index],
@@ -213,4 +214,34 @@ test('P7 Mac screenshot: three checked cups explain each real fraction-decimal e
  assert.equal(detailFor(a),null,'edits revoke a previous checked explanation and source method');
  assert.equal(submitLesson(a).correct,false);
  assert.equal(detailFor(a),null,'false math inference cannot be recovered from old success');
+});
+
+
+test('P7 end of route A offers a real, uncompleted source-linked practice rather than a dead-end',()=>{
+ const atlas=JSON.parse(readFileSync(new URL('../dist/data/atlas.json',import.meta.url),'utf8'));
+ const route=ROUTES.find(r=>r.id==='A');
+ assert.equal(route.ids.at(-1),'quarters');
+ assert.equal(nextRouteLessonId(route,'quarters'),null,'the configured route has no fabricated fifth lesson');
+ const first=nextRelatedPractice('quarters',atlas);
+ assert.ok(first,'a real source-linked practice can be offered after this route');
+ assert.equal(first.id,'link-decimal-quarters','prefer the nearest verified prerequisite, decimal → quarters');
+ assert.ok(sourceBridge(first.id,atlas),'the promoted action must follow an actual source relationship');
+ const other=nextRelatedPractice('quarters',atlas,id=>id==='link-decimal-quarters');
+ assert.equal(other?.id,'link-equivalent-quarters','a completed bridge is skipped in favor of another real source task');
+ assert.equal(nextRelatedPractice('quarters',atlas,id=>id==='link-decimal-quarters'||id==='link-equivalent-quarters'),null,'all related practices completed: return to knowledge space');
+ assert.equal(nextRelatedPractice('quarters',{edges:[]}),null,'never invent a next task without source evidence');
+ assert.equal(nextRelatedPractice('link-decimal-quarters',atlas),null,'avoid recursive bridge recommendations');
+ assert.match(stageGuidance('reflect',{hasRelatedPractice:true}),/不写文字也能继续/);
+});
+
+test('P7 route completion summary names optional writing and does not duplicate the primary source bridge',()=>{
+ const html=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+ const flow=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
+ assert.match(html,/class="reflection-optional"/);
+ assert.match(html,/class="summary-thinking"/);
+ assert.match(html,/继续探索：/);
+ assert.match(html,/data-primary-destination/);
+ assert.match(html,/nextLinkedPractice/);
+ assert.match(flow,/primarySessionId=null/);
+ assert.match(flow,/flow\.bridges\.filter\(b=>b\.id!==primarySessionId\)/);
 });
