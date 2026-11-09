@@ -406,7 +406,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(!(await embedded.locator('#learning-problem').innerText()).includes('1/2 ='),'child is not shown mathematical conclusions before independent summary');
    requireState(await embedded.locator('#actions button').count()===1,'route-end summary exposes exactly one next destination button');
    await embedded.locator('#system-explanation>summary').click();
-   requireState((await embedded.locator('#system-explanation').innerText()).includes('对应的比例'),'opening the explanation reveals the original mathematical summary');
+   requireState((await embedded.locator('#system-explanation').innerText()).includes('1/4 = 25/100 = 0.25'),'opening the explanation reveals the original mathematical summary');
    requireState((await embedded.locator('#system-explanation .summary-thinking').innerText()).includes('连接不同表示方式'),'opt-in thinking cue becomes readable on demand');
    await embedded.locator('#system-explanation>summary').click();
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
