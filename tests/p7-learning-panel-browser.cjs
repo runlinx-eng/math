@@ -414,7 +414,15 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
    const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
-   requireState(summaryRegions.join(',')==='learning-problem,learning-check,learning-interaction,learning-next','completed route visually and semantically puts the next choice before optional writing');
+   requireState(summaryRegions.join(',')==='learning-problem,learning-interaction,learning-check,learning-next','completed route puts learner reflection before the one actual next destination');
+   requireState(await embedded.locator('#system-explanation').evaluate(el=>el.parentElement?.id==='learning-next'),'system explanation remains below the main action');
+   requireState(await embedded.locator('#source-goals-details').evaluate(el=>el.parentElement?.id==='record-body'),'original source goals remain accessible within records rather than the child's active work');
+   requireState(!await embedded.locator('#source-goals-details').evaluate(el=>el.open),'raw source goals do not appear by default');
+   const reflectionOrder=await embedded.locator('#note').evaluate(el=>{
+      const next=el.ownerDocument.querySelector('#actions [data-primary-destination]');
+      return {noteBottom:el.getBoundingClientRect().bottom,nextTop:next.getBoundingClientRect().top};
+   });
+   requireState(reflectionOrder.noteBottom<reflectionOrder.nextTop,'optional expression must precede continue/return in the actual screen');
    const actionVisibility=await primaryLinked.evaluate(el=>{
      const r=el.getBoundingClientRect();
      return {top:r.top,bottom:r.bottom,viewport:el.ownerDocument.defaultView.innerHeight};
@@ -430,6 +438,18 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(await embedded.locator('#actions [data-do="back"]').count()===0,'no second return button competes with the real linked continuation');
    requireState(await embedded.locator('#p3-learning-flow [data-do="p3-retry"]').count()===1,'retrial remains available in the secondary tools without a foreground duplicate');
    requireState(await embedded.locator('#p3-learning-flow [data-do="restart"]').count()===1,'original full-group restart remains available separately from one-question retry');
+   // An intentionally opened secondary section cannot leave a stack of other
+   // large disclosures competing with the one mathematical next action.
+   await embedded.locator('#system-explanation>summary').click();
+   await embedded.locator('.p3-more>summary').click();
+   requireState(!await embedded.locator('#system-explanation').evaluate(el=>el.open),'opening alternate study links closes the optional math explanation');
+   await embedded.locator('.p3-application>summary').click();
+   requireState(!await embedded.locator('.p3-more').evaluate(el=>el.open),'opening simulated applications closes alternate links');
+   await embedded.locator('#record>summary').click();
+   requireState(!await embedded.locator('.p3-application').evaluate(el=>el.open),'opening personal records closes the application catalog');
+   requireState(await embedded.locator('#source-goals-details').count()===1,'original course references remain inspectable in personal records');
+   await embedded.locator('#record>summary').click();
+   await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    await shot('28e-route-end-visible-next-with-optional-reflection',true);
    await embedded.locator('#note').fill('分数和小数表示同一个比例，但百格和杯子的整体不一样。');
    requireState(await embedded.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'save becomes primary only while an unsaved explanation is present');
