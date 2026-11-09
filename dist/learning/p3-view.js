@@ -28,7 +28,7 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false}){
     '<p><strong>首次独立证据：</strong>'+esc(proof)+'</p>'+
     '<p><strong>解释状态：</strong>'+esc(writing)+'</p></div>'+
     '<div class="p3-followups"><h3>'+(flow.attempts?'接下来可以':'完成当前操作后，再来检查和探索')+'</h3><div class="p3-action-list">'+(flow.attempts?actions:'')+'</div>'+(extras?'<details class="p3-more"><summary>更多知识联系与探索方式</summary><div class="p3-action-list">'+extras+'</div></details>':'')+'</div>'+
-    '<details class="p3-application"><summary>拓展与实践应用（模拟情境不等于真实生活实践）</summary><p>数学操作、模拟现实情境与真实生活实践是三类不同的活动。模拟检查通过不会自动记为真实实践。</p>'+
+    '<details class="p3-application"><summary>拓展与实践应用（模拟现实情境不等于真实生活实践）</summary><p>数学操作、模拟现实情境与真实生活实践是三类不同的活动。模拟检查通过不会自动记为真实实践。</p>'+
     (application?'<p><strong>当前关联：</strong>'+esc(application.label)+' · '+esc(application.kind)+'</p><p>现实尝试建议（未核验）：'+esc(application.real)+'</p>':'')+
     (applications?'<div class="p3-action-list">'+applications+'</div>':'')+
     '<details><summary>查看已配置的应用活动</summary><div class="p3-app-list">'+configuredApplications().map(p=>'<div><strong>'+esc(p.label)+'</strong><span>'+esc(p.kind)+'</span>'+button('lesson',p.title,'data-id="'+esc(p.sessionId)+'"')+'</div>').join('')+'</div><p>现实活动需本人实际操作并提供记录；当前版本不新增未经旧备份兼容验证的现实实践存储。</p></details></details>';
