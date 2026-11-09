@@ -10,7 +10,7 @@ import {ACTIVITIES,KINDS,task as oldTask,defaultModel as oldModel,modelIsValid a
 
 const here=dirname(fileURLToPath(import.meta.url));
 const atlas=JSON.parse(readFileSync(resolve(here,'../dist/data/atlas.json'),'utf8'));
-const fields=['group','source','id','originEntry','userTask','dataJudging','currentUI','recommendation','status','evidence','preservation'];
+const fields=['group','source','id','originEntry','userTask','dataJudging','currentUI','uiRole','showWhen','accessGuarantee','recommendation','status','evidence','preservation'];
 const sourceFile=meta=>meta?.batch
  ? 'dist/learning/'+(/^B0[2-5]$/.test(meta.batch)?'phase4/':'phase5/')+meta.batch.toLowerCase()+'.js'
  : 'dist/learning/catalog.js + dist/learning/tasks.js';
@@ -19,7 +19,32 @@ const supports=t=>{try{const m=defaultModel(t);return m!==undefined&&validModel(
 const edgeKey=e=>e.prerequisiteId+'>'+e.topicId;
 const linkTo=id=>'index.html#space/node/'+encodeURIComponent(id);
 const assessment=(sourceFound,modelFound)=>sourceFound&&modelFound?'1 · 源码技术链路已接入（尚未儿童/视觉验收）':'4 · 未归类或模型链路待核查（保留入口与来源）';
-const row=(data)=>Object.fromEntries(fields.map(k=>[k,String(data[k]??'')]));
+// Placement describes user-facing exposure, not which mathematics or data may be deleted.
+// A capability can exist without a permanent button; unverified legacy entry points remain
+// separately recorded until a real reachable and equivalent replacement is proved.
+export const UI_ROLES=Object.freeze({
+ current:'当前操作',
+ contextual:'按需辅助',
+ background:'后台能力',
+ retained:'待归类保留'
+});
+const placement={
+ 'node-task':{uiRole:UI_ROLES.current,showWhen:'仅当前节点的当前题目激活时，显示题目、专属教具、与实际状态对应的唯一主操作；其余任务不常驻。',accessGuarantee:'当前知识的「打开学习」直达运行器；旧提交、草稿和记录不可丢。'},
+ 'bridge-task':{uiRole:UI_ROLES.current,showWhen:'仅当从实际源关系/联合任务入口激活时显示双任务操作，完成后继续路径必须有已配置来源。',accessGuarantee:'3D 源关系与对应联合任务入口可追溯；不能为 UI 拼接虚构边。'},
+ 'source-edge':{uiRole:UI_ROLES.contextual,showWhen:'在 3D 选择节点或关系、主动查看联系时显示；不将 1,223 条关系常驻学习面板。',accessGuarantee:'真实 3D 源关系仍可选可查，已有联合任务保持可进入。'},
+ 'route':{uiRole:UI_ROLES.contextual,showWhen:'仅在选择学习路线或真实接续时提供适当路线信息；当前教具为主。',accessGuarantee:'任意节点与建议路线仍可从空间找到，不被强制按顺序学习。'},
+ 'legacy-practice':{uiRole:UI_ROLES.retained,showWhen:'不以新工作区已统一为理由判定旧自由操作重复；原可见 play 入口的现状须另行实测。',accessGuarantee:'保留 PRACTICE 与 models[-1]；若已无法可视访问，记为待修复，不标已合并。'},
+ 'legacy-activity':{uiRole:UI_ROLES.retained,showWhen:'不进入当前主操作的常驻菜单；旧工作面按其已有入口独立可达。',accessGuarantee:'保留 v2.html 原入口、原模型/变式与活动历史，等效替代前不删。'},
+ 'legacy-journey':{uiRole:UI_ROLES.retained,showWhen:'仅在原早期路线/恢复场景中显示，不能作为新学习的额外必经层。',accessGuarantee:'保留 journey.html 与 journeys 独立记录和恢复路径。'},
+ experiment:{uiRole:UI_ROLES.retained,showWhen:'在原版实验室入口供主动探索，不在日常学题区堆两个固定入口。',accessGuarantee:'保留两个原版实验的真实 URL 与独立交互。'},
+ 'old-quiz':{uiRole:UI_ROLES.retained,showWhen:'不可冒充当前学习运行器；原独立入口尚未验证。',accessGuarantee:'保留源码及旧记录迁移；若原入口不可达应显式登记风险。'},
+ persistence:{uiRole:UI_ROLES.background,showWhen:'判题、作品快照、自动保存、压缩、备份与数据兼容不常驻题面；只显示必要成功/异常状态。',accessGuarantee:'导入导出需经足迹/工具入口可达；保存失败明确提示并保留草稿。'},
+ continuation:{uiRole:UI_ROLES.contextual,showWhen:'有真实待续任务或待续问题时才显示「继续」；恢复机制不生成第二套学习入口。',accessGuarantee:'恢复从同一知识/同一作品进入；本机记录、场景和相机不重置。'},
+ feedback:{uiRole:UI_ROLES.contextual,showWhen:'检查对应当前提交作品且有实际证据时才出现；数学解释不应抢先替孩子回答。',accessGuarantee:'已经核验的思维证据可查；未经评估的自由解释仍按原文保留。'},
+ application:{uiRole:UI_ROLES.contextual,showWhen:'完成当下任务或用户主动请求拓展时显示；不同时向孩子铺开全部五类入口。',accessGuarantee:'全部已配置应用入口仍在次级区可找到；模拟不等于现实已实践。'}
+};
+const placeFor=group=>placement[group]||{uiRole:UI_ROLES.retained,showWhen:'尚无可证实的前台展示规则，暂不增加主界面按钮。',accessGuarantee:'原入口及历史功能先保留，另行核对迁移与等效路径。'};
+const row=data=>{const role=placeFor(data.group);return Object.fromEntries(fields.map(k=>[k,String(data[k]??role[k]??'')]));};
 
 export function buildInventory(){
  const entries=[],errors=[],routeIndex=new Map(),bridgeIndex=new Map(),typeCount=new Map();
@@ -141,7 +166,8 @@ export function buildInventory(){
    bridgeSourceEdges:bridgeIndex.size,unbridgedSourceEdges:atlas.edges.filter(e=>!bridgeIndex.has(edgeKey(e))).length,
    legacyActivities:Object.keys(ACTIVITIES).length,legacyVariants:entries.filter(x=>x.group==='legacy-activity').length,
    oldPracticeCount:entries.filter(x=>x.group==='legacy-practice').length,
-   taskTypeCount:typeCount.size,rows:entries.length};
+   taskTypeCount:typeCount.size,rows:entries.length,
+   uiRoleCounts:Object.fromEntries(Object.values(UI_ROLES).map(role=>[role,entries.filter(e=>e.uiRole===role).length]))};
  return {basis:'main 097dd53bc09a673a97d6be8f229d446f0f2eeca3 / P7-D3-A',
    limitation:'Static source/validator coverage only. No child study or claim of full visual usability. Open PR #49 is not included.',
    counts,taskTypes:Object.fromEntries([...typeCount].sort((a,b)=>a[0].localeCompare(b[0]))),
