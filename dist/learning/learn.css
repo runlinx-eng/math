@@ -264,3 +264,13 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
   font-weight:600;color:#356951;
 }
 #thinking-feedback .source-thinking small{display:block;font-weight:400;margin-top:5px}
+
+/* Keep evidence-backed MP.2 beside its checked mathematical explanation. */
+#math-explanation .math-method{
+  margin:11px 0 7px;
+  padding:9px 0 7px;
+  border-top:1px solid #cfdfd3;
+  color:#376752;
+}
+#math-explanation .math-method strong{font-size:12px}
+#math-explanation .math-method small{display:block;margin-top:4px}
