@@ -107,4 +107,11 @@ test('P7 navigation contract: a single entry, conditional resumption and stable 
   assert.match(js,/setTaskSurfaceUrl\('explore',\{replace:true\}\);restoreTaskSurface\(\)/,'explicit close always returns to exploration');
   assert.match(js,/function suspendJourney\(\)/,'switching to other surfaces keeps the live iframe');
   assert.match(js,/function resumeJourney\(\)/,'learning tab reopens the same live iframe');
+  const lesson=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+  const standalone=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
+  const optional=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
+  assert.match(lesson,/返回知识空间 →/);
+  assert.match(standalone,/← 返回知识空间/);
+  assert.match(optional,/button\('back','返回知识空间'\)/);
+  assert.doesNotMatch(lesson,/回到数学树继续探索/);
 });
