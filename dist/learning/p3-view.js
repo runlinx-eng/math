@@ -22,14 +22,29 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false}){
   ].join('');
   const application=flow.currentApplication;
   const applications=flow.applications.map(p=>button('lesson',p.label+' · '+p.title,'data-id="'+esc(p.sessionId)+'"')).join('');
-  host.innerHTML='<div class="p3-flow-heading"><h2>检查记录与接下来</h2><small>这次操作不等于已经掌握</small></div>'+
-    '<div class="p3-evidence" role="status"><p><strong>最近一次检查：</strong>'+esc(latest)+'</p>'+
-    '<p><strong>历史完成：</strong>'+flow.done+'/'+flow.total+' 项通过；当前任务累计 '+flow.attempts+' 次提交。</p>'+
-    '<p><strong>首次独立证据：</strong>'+esc(proof)+'</p>'+
-    '<p><strong>解释状态：</strong>'+esc(writing)+'</p></div>'+
-    '<div class="p3-followups"><h3>'+(flow.attempts?'接下来可以':'完成当前操作后，再来检查和探索')+'</h3><div class="p3-action-list">'+(flow.attempts?actions:'')+'</div>'+(extras?'<details class="p3-more"><summary>更多知识联系与探索方式</summary><div class="p3-action-list">'+extras+'</div></details>':'')+'</div>'+
-    '<details class="p3-application"><summary>拓展与实践应用（模拟现实情境不等于真实生活实践）</summary><p>数学操作、模拟现实情境与真实生活实践是三类不同的活动。模拟检查通过不会自动记为真实实践。</p>'+
+  const applicationHTML='<details class="p3-application"><summary>拓展与实践应用（模拟现实情境不等于真实生活实践）</summary>'+
+    '<p>数学操作、模拟现实情境与真实生活实践是三类不同的活动。模拟检查通过不会自动记为真实实践。</p>'+
     (application?'<p><strong>当前关联：</strong>'+esc(application.label)+' · '+esc(application.kind)+'</p><p>现实尝试建议（未核验）：'+esc(application.real)+'</p>':'')+
     (applications?'<div class="p3-action-list">'+applications+'</div>':'')+
     '<details><summary>查看已配置的应用活动</summary><div class="p3-app-list">'+configuredApplications().map(p=>'<div><strong>'+esc(p.label)+'</strong><span>'+esc(p.kind)+'</span>'+button('lesson',p.title,'data-id="'+esc(p.sessionId)+'"')+'</div>').join('')+'</div><p>现实活动需本人实际操作并提供记录；当前版本不新增未经旧备份兼容验证的现实实践存储。</p></details></details>';
+
+  // Before the first submission, don't show four empty evidence categories.
+  // Optional knowledge links remain available but no longer compete with a task.
+  if(flow.attempts===0){
+    const optional=actions+extras;
+    host.innerHTML='<p class="p3-evidence p3-before-check" role="status">尚未提交检查，检查记录会在提交作品后出现。</p>'+
+      (optional?'<details class="p3-more"><summary>更多知识联系与探索方式（可选）</summary><div class="p3-action-list">'+optional+'</div></details>':'')+
+      applicationHTML;
+    return;
+  }
+
+  host.innerHTML='<div class="p3-flow-heading"><h2>检查记录与接下来</h2><small>这次操作不等于已经掌握</small></div>'+
+    '<div class="p3-evidence" role="status"><p><strong>最近一次检查：</strong>'+esc(latest)+'</p>'+
+    '<p><strong>历史完成：</strong>'+flow.done+'/'+flow.total+' 项通过；当前任务累计 '+flow.attempts+' 次提交。</p>'+
+    '<details class="p3-evidence-details"><summary>查看尝试依据与解释状态</summary>'+
+    '<p><strong>首次独立证据：</strong>'+esc(proof)+'</p>'+
+    '<p><strong>解释状态：</strong>'+esc(writing)+'</p></details></div>'+
+    '<div class="p3-followups"><h3>接下来可以</h3><div class="p3-action-list">'+actions+'</div>'+
+    (extras?'<details class="p3-more"><summary>更多知识联系与探索方式</summary><div class="p3-action-list">'+extras+'</div></details>':'')+'</div>'+
+    applicationHTML;
 }
