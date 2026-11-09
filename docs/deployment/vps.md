@@ -95,7 +95,7 @@ sudo systemctl enable --now certbot.timer
 
 | Variable | 值 | 说明 |
 | --- | --- | --- |
-| `VPS_DEPLOY_ENABLED` | 不再控制发布工作流 | 现行发布只接受手动 `workflow_dispatch` + `confirm_deploy=true`；历史变量可保留但不会触发推送部署 |
+| `VPS_DEPLOY_ENABLED` | 历史兼容变量，不参与现行发布 | 自动发布由成功的 `main` 集成 CI 控制，不以这个历史变量作为发布开关 |
 | `VPS_HOST` | `173.242.119.233` | 当前 VPS |
 | `VPS_USER` | `math-deploy` | 专用低权限部署用户 |
 | `VPS_PORT` | `22` | SSH 端口 |
@@ -111,7 +111,18 @@ sudo systemctl enable --now certbot.timer
 
 SSH host key 应通过 VPS 控制台指纹或已有可信连接核验后再保存；不要把未经核验的 `ssh-keyscan` 输出直接当作可信密钥。
 
-**合并 main 只更新集成基线，不自动发布线上预览。** 有发布需要时，从 GitHub Actions 手动运行 **Deploy Math Explorer preview**，选择 `main` 并勾选 `confirm_deploy=true`。该次确认只授权本次预览发布；仓库后续 push 不会自动部署。回滚亦需要在 Actions 中手动执行。所有部署只允许从 `main` 执行；不以产品人工视觉验收作为代码合并的硬门槛。
+**现行发布策略：main 集成 CI 成功后，自动更新现有 VPS 预览站。** GitHub Actions `Pull request required checks` 在每次 `push main` 后重新执行 Node 与完整 Chromium；只有该次 `push` 检查成功，`Deploy Math Explorer preview` 才通过 `workflow_run` 自动发布。PR 分支、失败/取消的 CI、手动触发的测试均不会自动部署。部署只允许仓库本身的 `main`；会核实通过 CI 的确切 SHA 仍是当前 `main`，过时发布跳过。所有部署串行化，以免与手动回滚同时写入服务器。
+
+**手动发布仍可用**：在 GitHub Actions 运行 `Deploy Math Explorer preview`，选择 `main` 并勾选 `confirm_deploy=true`；其发布 SHA 仍必须是当前 `main`。手动回滚通过 `Roll back Math Explorer preview`。此机制只自动更新受密码保护的预览站，不等于人工视觉验收或儿童学习效果认证；PR 依旧必须由开发者决定是否合并。
+
+## 自动发布的安全边界
+
+- 自动发布以经过集成测试的 `main` SHA 为准：`.github/workflows/pull-request-baseline.yml` 监听 `push main`，`.github/workflows/deploy-vps.yml` 只监听其成功完成事件（或明确确认的手动操作）。**不会把 PR 审查成功误当成已集成成功。**
+- 只有检查事件是仓库自己的 `push`，且分支是 `main`、结论为 success，才可能接触 VPS 凭据。运行前和复制文件前再次核对当前远程 `main` SHA，防止较慢的旧 CI 覆盖新版本。SHA 不相同则跳过，不修改 VPS。
+- `workflow_run.head_sha` 是代码实际通过检查的 SHA，发布脚本从 `RELEASE_SHA` 接收该值；不能默认使用发布调度工作流自己的 `GITHUB_SHA`。
+- 自动部署使用原来的低权限 `math-deploy`、已固定指纹的 SSH、`dist/` 静态目录、原子 `current` 切换和失败时恢复 `previous`。不操作 Nginx/认证服务、防火墙、443/Xray 或其他站点。
+- 自动部署健康检查只验证既有 HTTPS `/health` 端点与本地 release 文件完整性；**不能取代使用密码登录后的人眼验证或儿童试用**。若检查失败则脚本尝试恢复上一版，且 Actions 返回失败。
+- 发布和手动回滚共用一个并发锁，保留手动发布与手动回滚。后续合并 `main` 会触发预览部署，合并前应接受该版本可能被体验者看到的事实。
 
 ## 发布、回滚与验收
 
@@ -123,6 +134,6 @@ SSH host key 应通过 VPS 控制台指纹或已有可信连接核验后再保�
 
 ## 尚未完成
 
-- 从 GitHub Actions 手动触发首次发布（`confirm_deploy=true`，全局自动部署开关仍为 false）。
-- 使用预览密码进入网站，完成真实公网浏览器验收。
-- 决定是否启用后续 main 推送自动部署。
+- 合并该发布机制后，核对第一次 `push main` 的 required checks 和紧随的自动发布运行记录；只有成功记录才能宣称 VPS 更新。
+- 使用现有预览登录方式在真实 HTTPS 页面检查首页、知识图、学习任务、刷新与旧记录恢复。Service Worker 缓存可能需要刷新，不代表服务器没有更新。
+- 若自动发布失败，检查 GitHub Actions 部署日志及当前 `current/previous` 状态；不自动重试失败版本，必要时手动回滚。
