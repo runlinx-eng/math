@@ -42,7 +42,9 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   await frame.locator('.p3-evidence-details summary').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('2 次提交')&&x.includes('提示或支持')),'6 verification: history and support retained in detail');
   check(await frame.locator('.p3-followups [data-do="p3-related"]').count()>0,'7 extension: actual source relationship leads onward');
-  check(await frame.locator('.p3-application').innerText().then(x=>x.includes('模拟现实情境')&&x.includes('真实生活')),'8 application: simulation and real-life distinction explicit');
+  await frame.locator('.p3-application>summary').click();
+  check(await frame.locator('.p3-application').innerText().then(x=>x.includes('模拟情境')&&x.includes('现实生活')),'8 application: simulation and real-life distinction explicit when voluntarily opened');
+  await frame.locator('.p3-application>summary').click();
   const saved=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   check(JSON.parse(saved).lessons.share.cases[0].attempts.length===2,'9 footprint: two genuine browser submissions persisted');
   const before=await snap();
