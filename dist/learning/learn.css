@@ -276,6 +276,27 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 #math-explanation .math-method small{display:block;margin-top:4px}
 
 
+/* P7-D3-B: the child first forms an explanation. System mathematics is an opt-in
+   reference, not an answer exposed above the learner's own writing. */
+#scene[data-stage="reflect"] #learning-problem{padding:10px 12px}
+#scene[data-stage="reflect"] #learning-problem #instruction{font-size:16px;line-height:1.45}
+#scene[data-stage="reflect"] #learning-check{padding-top:5px;border-top:0}
+#scene[data-stage="reflect"] #learning-check #actions{margin:4px 0 6px}
+#scene[data-stage="reflect"] #work .summary-art{margin:4px 0 12px;padding:10px 12px}
+#scene[data-stage="reflect"] #work .summary-art h2{font-size:14px}
+#scene[data-stage="reflect"] #work .summary-art p{font-size:12px;margin-top:4px;line-height:1.45}
+#scene[data-stage="reflect"] #work label[for="note"]{display:block;font-size:15px;font-weight:650;line-height:1.5;margin:12px 0 5px}
+#scene[data-stage="reflect"] #work #note{font-size:15px;line-height:1.6;min-height:72px;width:100%}
+#scene[data-stage="reflect"] #learning-next{margin-top:15px}
+#scene[data-stage="reflect"] #learning-next .learning-region-title{font-size:12px;font-weight:550;color:#667b70}
+#scene[data-stage="reflect"] #next-guidance[hidden]{display:none}
+#work .system-explanation{margin-top:16px;padding:9px 12px;border:1px solid #e0e9dd;border-radius:8px;background:#f6f8f3}
+#work .system-explanation>summary{font-size:13px;font-weight:600;color:#446a59;cursor:pointer;line-height:1.6}
+#work .system-explanation[open]{background:#f2f7ef}
+#work .system-explanation-body{padding-top:9px;font-size:13px;line-height:1.7;overflow-wrap:anywhere;color:#3e6052}
+#work .system-explanation-body p{margin:5px 0 10px}
+#work .system-explanation-body>small{display:block;font-size:12px;color:#627d6c}
+
 /* P7: route-end reflection is optional; keep the source-linked next action
    visible without adding another panel or a duplicated route button. */
 .summary-thinking{
