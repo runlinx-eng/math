@@ -425,6 +425,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(await embedded.locator('#back').isVisible(),'the single header exit still returns to the original knowledge space');
    requireState(await embedded.locator('#actions [data-do="back"]').count()===0,'no second return button competes with the real linked continuation');
    requireState(await embedded.locator('#p3-learning-flow [data-do="p3-retry"]').count()===1,'retrial remains available in the secondary tools without a foreground duplicate');
+   requireState(await embedded.locator('#p3-learning-flow [data-do="restart"]').count()===1,'original full-group restart remains available separately from one-question retry');
    await shot('28e-route-end-visible-next-with-optional-reflection',true);
    await embedded.locator('#note').fill('分数和小数表示同一个比例，但百格和杯子的整体不一样。');
    requireState(await embedded.locator('#work [data-do="save-note"]').evaluate(el=>el.classList.contains('primary')),'save becomes primary only while an unsaved explanation is present');
