@@ -61,6 +61,8 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert((await snapshot()).journeyOpen&&!(await snapshot()).journeySuspended,'learning remains resumable after Esc');
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    assert(!(await snapshot()).journeyOpen,'explicit close completes the workspace lifecycle');
+    assert(new URL(page.url()).searchParams.get('surface')===null,'close always returns to the knowledge-space surface');
+    assert(await page.locator('.primary-nav [data-action="nav-explore"]').getAttribute('aria-pressed')==='true','close has one destination, independent of how learning was opened');
    assert(!errors.length,'no uncaught browser errors');
    fs.writeFileSync(path.join(output,'checks.json'),JSON.stringify({checks,errors,manualReview:false},null,2));
    console.log('Continuous 3D checks: '+checks.length+' passed');

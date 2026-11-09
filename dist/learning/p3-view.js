@@ -17,7 +17,7 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false}){
     flow.next?button('lesson','后续路线 · '+flow.next.title,'data-id="'+esc(flow.next.id)+'"'):'',
     ...flow.related.map(n=>button('p3-related',n.direction+' · '+n.title,'data-node="'+esc(n.nodeId)+'"')),
     ...flow.bridges.map(b=>button('lesson','联合任务 · '+b.title,'data-id="'+esc(b.id)+'"')),
-    embedded?button('relations','观察地图联系'):button('back','返回数学树')
+    embedded?button('relations','观察地图联系'):button('back','返回知识空间')
   ].filter(Boolean).join('');
   const application=flow.currentApplication;
   const applications=flow.applications.map(p=>button('lesson',p.label+' · '+p.title,'data-id="'+esc(p.sessionId)+'"')).join('');

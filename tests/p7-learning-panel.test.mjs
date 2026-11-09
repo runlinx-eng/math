@@ -89,3 +89,29 @@ test('P7 changing a submitted workpiece requires a fresh check, without discardi
   a.models[0].selected=[0];
   assert.equal(currentSubmission(a).status,'correct');
 });
+
+
+test('P7 navigation contract: a single entry, conditional resumption and stable 3D return',()=>{
+  const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+  const js=readFileSync(new URL('../dist/space.js',import.meta.url),'utf8');
+  assert.match(html,/data-action="close-journey">返回知识空间 ×/);
+  assert.match(html,/data-action="close-learning-hub">返回知识空间 ×/);
+  assert.match(html,/data-action="close-utility"[^>]*>返回知识空间 ×/);
+  assert.doesNotMatch(html,/返回学习 ×|回到探索 ×|接着学习/);
+  assert.doesNotMatch(js,/返回学习 ×|回到探索 ×|继续活动|接着学习/);
+  assert.match(js,/function continuationNav\(next\)/);
+  assert.match(js,/label:'回到待续问题'/);
+  assert.match(js,/label:'继续上次学习'/);
+  assert.match(js,/label:'开始学习'/);
+  assert.match(js,/sameTask\?''/,'current node does not repeat the same recommended session');
+  assert.match(js,/setTaskSurfaceUrl\('explore',\{replace:true\}\);restoreTaskSurface\(\)/,'explicit close always returns to exploration');
+  assert.match(js,/function suspendJourney\(\)/,'switching to other surfaces keeps the live iframe');
+  assert.match(js,/function resumeJourney\(\)/,'learning tab reopens the same live iframe');
+  const lesson=readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+  const standalone=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
+  const optional=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
+  assert.match(lesson,/返回知识空间 →/);
+  assert.match(standalone,/← 返回知识空间/);
+  assert.match(optional,/button\('back','返回知识空间'\)/);
+  assert.doesNotMatch(lesson,/回到数学树继续探索/);
+});
