@@ -86,17 +86,46 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.doesNotMatch(httpOnly, /listen 443|listen 8443/);
 
   const deploy = fs.readFileSync(path.join(root, '.github/workflows/deploy-vps.yml'), 'utf8');
+  const checks = fs.readFileSync(path.join(root, '.github/workflows/pull-request-baseline.yml'), 'utf8');
   const rollback = fs.readFileSync(path.join(root, '.github/workflows/rollback-vps.yml'), 'utf8');
+  const script = fs.readFileSync(path.join(root, 'scripts/deploy-vps.sh'), 'utf8');
+
+  // Integrated main must run the same required checks before any automatic release.
+  assert.match(checks, /^  pull_request:/m);
+  assert.match(checks, /^  push:\n    branches: \[main\]/m);
+  assert.match(checks, /name: Pull request required checks/);
+  assert.match(checks, /run_browser=true/, 'main push requires complete browser coverage');
+
+  // Publishing does not listen to direct pushes or PRs; it listens to successful main checks.
+  assert.match(deploy, /^  workflow_run:\n    workflows:\n      - Pull request required checks\n    types: \[completed\]\n    branches: \[main\]/m);
+  assert.doesNotMatch(deploy, /^  push:/m, 'do not publish merely because main was pushed');
+  assert.ok(deploy.includes("github.event.workflow_run.event == 'push'"));
+  assert.ok(deploy.includes("github.event.workflow_run.head_branch == 'main'"));
+  assert.ok(deploy.includes("github.event.workflow_run.head_repository.full_name == github.repository"));
+  assert.ok(deploy.includes("github.event.workflow_run.conclusion == 'success'"));
+  assert.match(deploy, /github\.event\.workflow_run\.head_sha/, 'release the tested SHA, not the dispatcher SHA');
+  assert.match(deploy, /git ls-remote origin refs\/heads\/main/, 'superseded releases must not overwrite main');
+  assert.match(deploy, /steps\.release_gate\.outputs\.eligible == 'true'/);
+
+  // Manual one-time deploy and rollback remain available; neither triggers on a PR.
   assert.ok(deploy.includes("github.ref == 'refs/heads/main'"));
   assert.match(deploy, /workflow_dispatch:/);
-  assert.doesNotMatch(deploy, /^\s+push:/m, 'merging main must not deploy');
   assert.ok(deploy.includes("confirm_deploy"));
   assert.ok(deploy.includes("inputs.confirm_deploy == true"));
-  assert.ok(deploy.includes("github.event_name == 'workflow_dispatch'"));
-  assert.ok(rollback.includes("github.ref == 'refs/heads/main'"));
   assert.match(rollback, /workflow_dispatch:/);
-  assert.doesNotMatch(rollback, /^\s+push:/m, 'rollback must be explicitly requested');
+  assert.ok(rollback.includes("github.ref == 'refs/heads/main'"));
   assert.ok(rollback.includes("github.event_name == 'workflow_dispatch'"));
+  assert.doesNotMatch(rollback, /^  push:/m, 'rollback must be explicitly requested');
+
+  // Both controls share one serialized release lock and the current atomic release script.
+  assert.match(deploy, /group: math-preview-release/);
+  assert.match(rollback, /group: math-preview-release/);
+  assert.match(deploy, /cancel-in-progress: false/);
+  assert.match(rollback, /cancel-in-progress: false/);
+  assert.match(deploy, /bash scripts\/deploy-vps\.sh/);
+  assert.match(script, /RELEASE_SHA="\$\{RELEASE_SHA:-\$\{GITHUB_SHA:-\}\}"/);
+  assert.match(script, /release_dir="\$VPS_WEB_ROOT\/releases\/\$RELEASE_SHA"/);
+  assert.match(script, /Health check failed; attempting to restore the previous release/);
 });
 
 
