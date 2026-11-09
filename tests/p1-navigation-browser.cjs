@@ -27,12 +27,13 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   const stored=await page.evaluate(k=>localStorage.getItem(k),key);
   await page.locator('[data-action="nav-learn"]').first().click();
   check(await current()==='learn'&&await page.locator('#learning-hub').isVisible(),'learning tab opens the contextual learning entry');
-  check(await page.locator('#learning-hub [data-action="continue"]').count()===1,'learning offers the next configured task');
-   check((await page.locator('#learning-hub [data-action="continue"]').innerText()).includes('开始学习'),'a never-started recommendation is not called resume');
-  check(await page.locator('#learning-hub [data-action="learn-session"]').count()>0,'learning has actual configured task entry points');
+  check(await page.locator('#learning-hub [data-action="learn-find"].primary-button').count()===1,'no selected topic presents one primary choose action');
+  check(await page.locator('#learning-hub [data-action="resume-entry"]').count()===0,'new users are not given a false resume action');
+  check(await page.locator('#learning-hub .learning-hub-more [data-action="learn-session"]').count()>0,'old routes remain available as secondary options');
   check(samePose(first,await snap()),'learning navigation does not move the camera');
   check(await page.evaluate(k=>localStorage.getItem(k),key)===stored,'navigation alone does not change the existing learning record');
   await page.screenshot({path:path.join(out,'01-learning-overview.png')});
+  await page.locator('#learning-hub .learning-hub-more summary').click();
   await page.locator('#learning-hub [data-action="nav-trail"]').click();
   check(await current()==='trail'&&await page.locator('#utility-drawer').isVisible(),'footprint tab opens the old records and backup surface');
   await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');
@@ -59,12 +60,11 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   check(await card.locator('[data-context-section="learn"]').count()===1,'learning section remains accessible without losing content');
   const viewBefore=await snap();
   await page.locator('.primary-nav [data-action="nav-learn"]').click();
-  check(await page.locator('#learning-hub [data-action="learn-session"][data-id="share"]').count()>0,'selected node enters the existing lesson by source topic');
-   check((await page.locator('#learning-hub [data-action="learn-session"][data-id="share"]').first().innerText()).includes('打开学习'),'the selected node has a single stable learning-entry label');
-   check(!(await page.locator('#learning-hub').innerText()).includes('接着学习'),'old ambiguous learning-resume copy is absent');
+  await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen);
+  check(await page.locator('#learning-hub').isHidden(),'selected configured node bypasses the route chooser');
+  check((await page.locator('#journey-frame').getAttribute('src')).includes('learn.html#share'),'selected node opens its real source lesson');
   check(samePose(viewBefore,await snap()),'learning tab from a node leaves camera unchanged');
   await page.screenshot({path:path.join(out,'03-selected-node-learning.png')});
-  await page.locator('#learning-hub [data-action="learn-session"][data-id="share"]').first().click();
   await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
   check(await page.locator('#journey-surface').isVisible(),'existing learning iframe opens unchanged');
    check((await page.locator('#journey-surface [data-action="close-journey"]').innerText()).includes('返回知识空间'),'lesson close always names the same destination');
@@ -74,6 +74,8 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   check(samePose(viewBefore,await snap()),'closing lesson returns to saved map pose');
    check(await current()==='explore'&&await page.locator('#learning-hub').isHidden(),'closing a lesson from the learning entry returns to the same map, not a second learning panel');
    check(new URL(page.url()).searchParams.get('surface')===null,'lesson close clears the work-surface URL without changing knowledge selection');
+  await page.locator('#focus-card [data-action="deselect"]').click();
+  check((await snap()).selected===null,'clearing the selection restores the neutral learning start');
   // Three target viewport sizes. The nav must stay reachable without horizontal overflow.
   for(const [width,height] of [[1440,900],[980,760],[1280,720]]){
     await page.setViewportSize({width,height});
@@ -104,6 +106,7 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
   await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
   check(await page.locator('#learning-hub').isVisible(),'refresh retains learning task');
+  await page.locator('#learning-hub .learning-hub-more summary').click();
   await page.locator('#learning-hub [data-action="nav-trail"]').click();
   check(new URL(page.url()).searchParams.get('surface')==='trail','footprint uses a distinct task URL');
   // A same-document history step can update the surface before SW navigation 'load'.
