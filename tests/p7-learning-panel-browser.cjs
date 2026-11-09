@@ -317,6 +317,9 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await shot('27-embedded-summary-saved',true);
    await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
    requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
+   // The iframe renders synchronously, while its parent updates the selected
+   // knowledge asynchronously after the lesson-change postMessage.
+   await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_DRlbMok2lT');
    const endingPose=await page.evaluate(()=>mathSpace.snapshot());
    requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
    requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
