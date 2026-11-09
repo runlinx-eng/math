@@ -118,7 +118,7 @@ test('P7 completed reflections lead to the next real, uncompleted route activity
  assert.equal(nextRouteLessonId(route,'equivalent',id=>id==='decimal'),'quarters','skip already-completed activities');
  assert.equal(nextRouteLessonId(route,'quarters'),null,'no fabricated fifth activity');
  assert.equal(nextRouteLessonId(route,'not-in-route'),null,'unknown activities never make up a next step');
- assert.match(stageGuidance('reflect',{hasFollowingLesson:true}),/继续学习下一处/);
+ assert.match(stageGuidance('reflect',{hasFollowingLesson:true}),/直接学习下一处/);
  assert.match(stageGuidance('reflect',{hasFollowingLesson:false}),/返回原知识空间/);
 });
 
