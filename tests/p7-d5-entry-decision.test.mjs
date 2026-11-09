@@ -48,12 +48,15 @@ test('unsupported knowledge never acquires a fabricated lesson',()=>{
  assert.equal(decision.lessonId,undefined);
 });
 
-test('legacy recorded activity remains a supported direct destination',()=>{
- const original=activityIds.find(id=>!lessonForTopic(ACTIVITIES[id].topicId));
- assert.ok(original,'legacy-only activity exists');
- const decision=decideLearningEntry({selected:node(ACTIVITIES[original].topicId),state:empty()});
- assert.equal(decision.kind,'legacy');
- assert.equal(decision.legacyId,original);
+test('overlapping early activity remains configured without hiding its source lesson',()=>{
+ const original=activityIds.find(id=>lessonForTopic(ACTIVITIES[id].topicId));
+ assert.ok(original,'the earlier activity catalog remains available');
+ const topic=ACTIVITIES[original].topicId;
+ const decision=decideLearningEntry({selected:node(topic),state:empty()});
+ assert.equal(decision.kind,'lesson');
+ assert.equal(decision.lessonId,lessonForTopic(topic));
+ // Its legacy activity can still be explicitly reached via the focus card.
+ assert.ok(ACTIVITIES[original]);
 });
 
 test('pack context does not assume a child was explicitly selected',()=>{
