@@ -299,6 +299,26 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(saved.notes.length===1&&saved.view==='summary','previous lesson stays completed and recorded when continuing');
    requireState(!(await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters?.cases?.[0]?.attempts?.length)),'opening the next activity does not fabricate a checked attempt');
    await shot('26-quarters-continuation');
+   // Verify the same save->next behavior inside the user's actual 3D workspace,
+   // not only in a standalone runner.
+   await page.goto(base+'?world=network&layout=53#space/node/mt_TqDq6jyOmL');
+   await page.waitForFunction(()=>window.mathSpace?.snapshot().selected==='node:mt_TqDq6jyOmL');
+   const startingPose=await page.evaluate(()=>mathSpace.snapshot());
+   await page.locator('#focus-card [data-action="open"]').first().click();
+   const embedded=page.frameLocator('#journey-frame');
+   await embedded.locator('#note').waitFor();
+   requireState((await embedded.locator('.saved-note-preview').innerText()).includes('一个是十分位，一个是百分位。'),'embedded summary restores the prior saved note');
+   await embedded.locator('#note').fill('从同一张数学树继续研究分数和小数。');
+   await embedded.locator('#work [data-do="save-note"]').click();
+   requireState((await embedded.locator('#note-save-status').innerText()).includes('已保存这次发现'),'embedded save produces visible confirmation');
+   requireState((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal.notes)).length===2,'embedded save retains both original and new notes');
+   await shot('27-embedded-summary-saved',true);
+   await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
+   requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
+   const endingPose=await page.evaluate(()=>mathSpace.snapshot());
+   requireState(startingPose.selected===endingPose.selected,'next lesson does not silently change the map selection');
+   requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
+   await shot('28-embedded-quarters-next',true);
    fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify(evidence,null,2));
    console.log('P7_AUDIT_COMPLETE '+JSON.stringify({scenarioCount:evidence.scenarios.length,errors:evidence.errors}));
    requireState(!evidence.errors.length,'no uncaught Chromium errors');
