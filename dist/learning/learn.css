@@ -97,3 +97,42 @@ html{scroll-behavior:auto}
 .p3-app-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
 .p3-app-list>div{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:10px;border:1px solid var(--line);border-radius:8px}
 @media(max-width:650px){.p3-flow-heading{display:block}.p3-action-list button{flex:1 1 auto}#lesson{padding-left:14px;padding-right:14px}}
+
+
+/* P7: one visible task, one primary check and a separate result. Existing
+   mathematical widgets, saved attempts, and source relationships are unchanged. */
+body.embedded-learning #lesson{padding-top:8px}
+body.embedded-learning #lesson>header #back,
+body.embedded-learning #lesson>header #route-title{display:none}
+body.embedded-learning #lesson>header{justify-content:flex-end;gap:9px}
+#route-collapsible:not([open]){margin:0}
+#route-collapsible>summary{display:list-item;color:#657b71;font-size:12px;cursor:pointer;padding:7px 0}
+#route-collapsible[open] #route{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));margin:8px 0 15px}
+.stage-top{align-items:flex-start;flex-wrap:wrap;gap:9px;padding-top:12px}
+.stage-top h1{font-size:18px;font-weight:700;line-height:1.4;color:#24483e}
+#steps{max-width:100%;flex-wrap:wrap}
+#instruction{font-size:clamp(17px,2vw,21px);font-weight:600;line-height:1.55;margin:11px 0 14px;min-height:0}
+#work{min-height:0}
+#actions{margin:16px 0 10px;padding-top:13px;border-top:1px solid var(--line)}
+#actions .primary{font-size:15px;font-weight:650;min-height:44px}
+#check-feedback:not([hidden]){border:1px solid #b4cec0;border-left:4px solid #3c8770;border-radius:9px;background:#edf7ef;padding:13px 16px;margin:12px 0 16px;line-height:1.6;font-size:14px;white-space:pre-wrap}
+#check-feedback[data-state="revise"]{border-color:#e0c89f;border-left-color:#bc8941;background:#fff6e7}
+#check-feedback[data-state="guidance"]{border-color:#c9d8e2;border-left-color:#6284a3;background:#f0f5f8}
+.p3-learning-flow{margin-top:14px;padding-top:14px}
+.p3-flow-heading h2{font-size:15px}
+.p3-learning-flow h3{margin:10px 0 7px}
+.p3-evidence{padding:10px 13px}
+.p3-evidence p{margin:3px 0}
+.p3-followups{margin-top:12px}
+.p3-more,.p3-application{margin-top:12px}
+.p3-more summary,.p3-application>summary{cursor:pointer;font-size:13px;font-weight:600;color:#315f55;padding:6px 2px}
+.p3-more .p3-action-list{padding-top:9px}
+.p3-application{border-top:1px solid var(--line);padding-top:8px}
+.p3-application[open]{padding-bottom:6px}
+.p3-application>details{margin-top:12px}
+@media(max-width:650px){
+  #lesson{padding-left:14px;padding-right:14px}
+  .stage-top h1{font-size:17px}
+  #actions .primary{flex:1 1 100%}
+  #route-collapsible[open] #route{grid-template-columns:1fr}
+}
