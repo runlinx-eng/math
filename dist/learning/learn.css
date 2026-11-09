@@ -238,3 +238,10 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
   white-space:pre-wrap;
   overflow-wrap:anywhere;
 }
+
+#note-save-status[data-state="error"]:not([hidden]){
+  border-color:#e5c49c;
+  border-left-color:#bc8941;
+  background:#fff6e7;
+  color:#865c26;
+}
