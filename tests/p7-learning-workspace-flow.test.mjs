@@ -239,7 +239,7 @@ test('P7-D3-B: summary separates validated task results from an optional system 
  const auxiliary=readFileSync(new URL('../dist/learning/p3-view.js',import.meta.url),'utf8');
  assert.match(runtime,/id="system-explanation" class="system-explanation"/,'system explanation remains opt-in');
  assert.match(runtime,/\$\{esc\(lesson\.summary\)\}/,'original math content is retained rather than deleted');
- assert.doesNotMatch(runtime,/<h2>\$\{lesson\.formal\}<\/h2><p>\$\{lesson\.summary\}/,'summary must not automatically show the solution above the child's explanation');
+ assert.doesNotMatch(runtime,/<h2>\$\{lesson\.formal\}<\/h2><p>\$\{lesson\.summary\}/,'summary must not automatically show the solution above the learner explanation');
  assert.match(runtime,/这组操作已通过检查/,'screen distinguishes checked operation from ungraded prose');
  assert.match(runtime,/\$\{summary\.done\} \/ \$\{summary\.total\}/,'summary uses actual checked task evidence');
  assert.match(runtime,/data-primary-destination/,'the single next action still follows a real route or relation');
