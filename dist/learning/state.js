@@ -20,6 +20,17 @@ export function enterUnifiedTask(a){
  modelForLesson(a);
  return a;
 }
+// A historical successful attempt remains in the record, but its result is
+// not automatically the result of a subsequently modified current workpiece.
+export function currentSubmission(a){
+ if(a.view!=='task')return {status:'unsubmitted'};
+ const last=a.cases[a.index]?.attempts?.at(-1);
+ if(!last)return {status:'unsubmitted'};
+ const current=modelForLesson(a);
+ if(JSON.stringify(current)!==JSON.stringify(last.value))return {status:'modified'};
+ const result=inspect(taskFor(a.id,a.index),last.value);
+ return {status:result.correct?'correct':'revise',result};
+}
 export function supportLesson(a){if(a.view!=='task')return;const r=a.cases[a.index]??={support:false,attempts:[]};r.support=true;a.updatedAt=stamp();}
 export function submitLesson(a){if(a.view!=='task')throw new Error('请先进入实际任务');const t=taskFor(a.id,a.index),m=modelForLesson(a),r=a.cases[a.index]??={support:false,attempts:[]};if(!validModel(t,m))throw new Error('作品格式无效');const result=inspect(t,m);r.attempts.push(event({value:structuredClone(m),supported:r.support,exposed:r.attempts.length>0}));a.updatedAt=stamp();return result;}
 export function lessonSummary(a){if(!a)return {completed:false,independent:false,done:0,total:0};const cases=sessionTasks(a.id).map((t,i)=>{const r=a.cases[i],attempts=r?.attempts||[],last=attempts.at(-1),first=attempts[0],complete=attempts.some(e=>inspect(t,e.value).correct&&completionApplies(t,a.models[i],e.value));return {complete,independent:complete&&!!first&&inspect(t,first.value).correct&&!first.supported&&!first.exposed&&!r.support&&inspect(t,last.value).correct&&(!/^x-(?:r3[78]|s39)-/.test(t.type)||inspect(t,a.models[i]).correct),attempts:attempts.length};});return {completed:cases.every(c=>c.complete),independent:cases.every(c=>c.independent),done:cases.filter(c=>c.complete).length,total:cases.length,cases,explanation:a.notes.length?'pending':'missing'};}
