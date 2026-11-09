@@ -271,7 +271,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      store.lessons.decimal=finished;
      localStorage.setItem('math-explorer-v2',JSON.stringify(store));
    });
-   await page.goto(base+'learn.html#decimal');
+   await page.reload();
    await page.waitForFunction(()=>window.mathLesson?.snapshot().view==='summary');
    requireState((await page.locator('#actions [data-do="lesson"][data-id="quarters"]').innerText()).includes('继续学习'),'4/4 summary points to the actual next configured activity');
    requireState(await page.locator('#note-save-status').isHidden(),'unsaved reflection has no false success confirmation');
