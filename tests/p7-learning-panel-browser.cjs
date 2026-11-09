@@ -76,6 +76,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
      const result=await frame.locator('#check-feedback').innerText();
      requireState(!!result,'successful task displays a concrete result');
      requireState(await frame.locator('#actions [data-do="next"]').count()===1,'success offers a next task');
+     requireState(await frame.locator('#actions [data-do="next"]').evaluate(el=>el.classList.contains('primary')),'successful task emphasizes the next action');
      await shot('05-'+idx+'-correct',true);
    }
    await frame.locator('#actions [data-do="next"]').click();
@@ -111,6 +112,31 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    }
    await page.setViewportSize({width:980,height:760});
    await shot('11-compact-learning');
+   // Mac first-screen review: the equal-fractions exercise initially opened in
+   // ungraded play mode with a misleading "change condition" primary action.
+   await page.setViewportSize({width:1440,height:900});
+   await page.goto(base+'learn.html#equivalent');
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='equivalent');
+   const first=await shot('12-equivalent-first-screen');
+   requireState(first.status==='自由探索','first screen identifies free exploration');
+   requireState(first.actionLabels.some(s=>s.includes('开始第 1 题')),'primary action explicitly starts a checkable task');
+   requireState(!first.checkCount.includes('历史完成'),'unsubmitted work has no empty evidence wall');
+   requireState(await page.locator('#record').isHidden(),'empty history is hidden before any attempt');
+   requireState(await page.locator('#p3-flow-heading').count()===0,'no phantom evidence heading');
+   await page.locator('#actions [data-do="start"]').click();
+   const active=await shot('13-equivalent-task-started');
+   requireState(active.actionLabels.some(s=>s.includes('检查我的作品')),'task has an explicit checking action');
+   requireState(await page.locator('#actions [data-do="check"]').evaluate(el=>el.classList.contains('primary')),'check is the single primary task action');
+   await page.locator('#actions [data-do="check"]').click();
+   const checked=await shot('14-equivalent-first-check');
+   requireState(checked.checkCount.includes('当前任务累计 1 次提交'),'first check is still saved and countable');
+   requireState(await page.locator('#record').isVisible(),'real attempt reveals the history');
+   await page.locator('.p3-evidence-details summary').click();
+   requireState((await page.locator('.p3-evidence').innerText()).includes('首次独立证据'),'detailed evidence still exists but is optional');
+   await page.reload();
+   await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='equivalent');
+   const resumed=await shot('15-equivalent-resumed');
+   requireState(resumed.checkCount.includes('1 次提交'),'refresh retains attempt and no fake mastery');
    fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify(evidence,null,2));
    console.log('P7_AUDIT_COMPLETE '+JSON.stringify({scenarioCount:evidence.scenarios.length,errors:evidence.errors}));
    requireState(!evidence.errors.length,'no uncaught Chromium errors');
