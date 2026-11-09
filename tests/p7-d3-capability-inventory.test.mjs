@@ -33,6 +33,22 @@ test('D3-A every configured node task, bridge task, route, practice model and le
    assert.ok(r[key],r.group+' '+r.id+' missing '+key);
 });
 
+test('D3-B exposure contract: every capability has one defined UI role without silently dropping legacy access',()=>{
+ const map=buildInventory();
+ const roles=['当前操作','按需辅助','后台能力','待归类保留'];
+ assert.equal(Object.values(map.counts.uiRoleCounts).reduce((a,n)=>a+n,0),map.entries.length);
+ for(const r of map.entries){
+   assert.ok(roles.includes(r.uiRole),r.id+' has an invalid role');
+   assert.ok(r.showWhen?.length>0,r.id+' lacks its reveal condition');
+   assert.ok(r.accessGuarantee?.length>0,r.id+' lacks an access or retention rule');
+ }
+ for(const group of ['node-task','bridge-task'])assert.ok(map.entries.filter(r=>r.group===group).every(r=>r.uiRole==='当前操作'));
+ for(const group of ['feedback','application','source-edge','route','continuation'])assert.ok(map.entries.filter(r=>r.group===group).every(r=>r.uiRole==='按需辅助'));
+ assert.ok(map.entries.filter(r=>r.group==='persistence').every(r=>r.uiRole==='后台能力'));
+ for(const group of ['legacy-activity','legacy-practice','legacy-journey','experiment','old-quiz'])assert.ok(map.entries.filter(r=>r.group===group).every(r=>r.uiRole==='待归类保留'));
+ assert.ok(map.entries.filter(r=>r.group==='legacy-practice').every(r=>r.accessGuarantee.includes('models[-1]')),'old practice models must be retained even if the original UI is not yet verified');
+});
+
 test('D3-C manipulation: three-cup matching checks actual submitted work and invalidates stale success',()=>{
  const a=freshLesson('quarters');a.index=1;
  const task=TASKS.quarters[1];
