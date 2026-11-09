@@ -316,7 +316,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
    requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
    const endingPose=await page.evaluate(()=>mathSpace.snapshot());
-   requireState(startingPose.selected===endingPose.selected,'next lesson does not silently change the map selection');
+   requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
    requireState(startingPose.position.every((v,i)=>Math.abs(v-endingPose.position[i])<.002),'next lesson does not move the 3D camera');
    await shot('28-embedded-quarters-next',true);
    // A failed localStorage write must never look like a successful save,
