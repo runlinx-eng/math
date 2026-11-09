@@ -392,6 +392,15 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState((await embedded.locator('.reflection-optional').innerText()).includes('不写'),'the learner is explicitly told writing is optional');
    requireState((await embedded.locator('.summary-thinking').innerText()).includes('连接不同表示方式'),'summary connects actual checked evidence to an MP2 method without a new screen');
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
+   const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
+   requireState(summaryRegions.join(',')==='learning-problem,learning-check,learning-interaction,learning-next','completed route visually and semantically puts the next choice before optional writing');
+   const actionVisibility=await primaryLinked.evaluate(el=>{
+     const r=el.getBoundingClientRect();
+     return {top:r.top,bottom:r.bottom,viewport:el.ownerDocument.defaultView.innerHeight};
+   });
+   requireState(actionVisibility.top>=0&&actionVisibility.bottom<actionVisibility.viewport,'next learning action must be above the fold in a real 664px-high embedded panel, not merely display:visible');
+   requireState(await embedded.locator('#note-save-status').evaluate(el=>el.previousElementSibling?.dataset.do==='save-note'),'save confirmation stays beside the optional writing action');
+
    requireState((await primaryLinked.innerText()).includes('百格里的量，怎样装进杯子'),'the suggestion names the actual configured source-backed bridge');
    requireState(await primaryLinked.evaluate(el=>el.classList.contains('primary')),'the source-backed related activity is the main continuation instead of return to space');
    requireState(await embedded.locator('#p3-learning-flow [data-do="lesson"][data-id="'+linkedId+'"]').count()===0,'the same linked activity is not repeated in an optional menu');
