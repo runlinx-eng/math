@@ -188,7 +188,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(recorded.cases[0].attempts.length===2,'first incorrect attempt remains with successful task');
    requireState((await page.locator('#note-save-status').innerText()).includes('已保存这次发现'),'save gets a visible and accessible success confirmation');
    requireState((await page.locator('.saved-note-preview').innerText()).includes('三分之二与九分之六'),'saved words stay visible in the summary');
-   requireState(await page.locator('#actions [data-do="lesson"][data-id="decimal"].evaluate(el=>el.classList.contains('primary')),'after saving, the next real learning activity is primary');
+   requireState(await page.locator('#actions [data-do="lesson"][data-id="decimal"]').evaluate(el=>el.classList.contains('primary')),'after saving, the next real learning activity is primary');
    await shot('20-equivalent-reflection-saved');
    await page.locator('#actions [data-do="lesson"][data-id="decimal"]').click();
    await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='decimal');
