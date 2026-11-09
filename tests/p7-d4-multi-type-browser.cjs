@@ -21,6 +21,10 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
     {id:'counttwenty',name:'counting',cue:'先完成'}
    ]){
     await page.goto(base+sample.id);
+    // The preceding browser suites may initialize a reusable application record.
+    // Each source-family sample starts on its own explicit clean learning state.
+    await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
+    await page.reload();
     await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,sample.id);
     const state=await page.evaluate(()=>{
      const scene=document.querySelector('#scene'),action=document.querySelector('#actions');
@@ -39,6 +43,7 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
       uniqueWork:document.querySelectorAll('#work').length,
       uniqueActions:document.querySelectorAll('#actions').length};
     });
+    console.log('P7_D4_OPEN '+JSON.stringify({sample:sample.name,size,state}));
     assert(state.id===sample.id,'incorrect source session '+sample.name);
     assert(state.stage==='explore','initial work not ready to explore '+sample.name);
     assert(state.task.length>0&&state.work,'source math prompt/widget missing '+sample.name);
