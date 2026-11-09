@@ -10,6 +10,9 @@ test('P7 initial study shows one task before secondary follow-ups',()=>{
   const record=freshLesson('share'),host={innerHTML:''};
   renderP3Flow(host,{atlas:{nodes:[],edges:[]},id:'share',record,embedded:true});
   assert.match(host.innerHTML,/尚未提交检查/);
+  assert.doesNotMatch(host.innerHTML,/历史完成/);
+  assert.doesNotMatch(host.innerHTML,/首次独立证据/);
+  assert.doesNotMatch(host.innerHTML,/p3-flow-heading/);
   assert.doesNotMatch(host.innerHTML,/data-do="p3-retry"/);
   assert.match(host.innerHTML,/拓展与实践应用/);
   assert.match(host.innerHTML,/模拟现实情境不等于真实生活实践/);
@@ -25,6 +28,7 @@ test('P7 shows retry and saves first invalid submission without erasing earlier 
   renderP3Flow(host,{atlas:{nodes:[],edges:[]},id:'share',record,embedded:true});
   assert.match(host.innerHTML,/需要修改/);
   assert.match(host.innerHTML,/当前任务累计 1 次提交/);
+  assert.match(host.innerHTML,/p3-evidence-details/);
   assert.match(host.innerHTML,/data-do="p3-retry"/);
   assert.equal(record.cases[0].attempts.length,1);
 });
