@@ -66,6 +66,7 @@ jobs:
           node --check dist/exploration.js
           node --check dist/learning/trail-priority.js
           node --check tests/p6b-layout-browser.cjs
+          node --check tests/p7-learning-panel-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
           node --check dist/learning/p3-workflow.js
@@ -155,6 +156,7 @@ jobs:
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
+            tests/p7-learning-panel-browser.cjs \
             tests/p4-learning-reliability-browser.cjs \
             tests/p5-integration-browser.cjs \
             tests/continuous-space-browser.cjs \
@@ -205,6 +207,7 @@ jobs:
             verification/p1-navigation/
             verification/p2-grade-distribution/
             verification/p3-learning-flow/
+            verification/p7-learning-panel/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/
