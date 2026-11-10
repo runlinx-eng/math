@@ -18,7 +18,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   await page.locator('#focus-card [data-action="open"]').first().click();
   await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
   await frame.locator('#learning-support > summary').click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('尚未提交检查')),'initial record is not completion evidence');
+  check(await frame.locator('.p3-before-check').isHidden(),'unsubmitted work keeps optional empty evidence out of the reading path');
   await frame.locator('.p3-application>summary').click();
   check(await frame.locator('.p3-application').innerText().then(s=>s.includes('模拟情境')&&s.includes('现实生活')),'simulation and real practice explicitly distinct when the child opens optional applications');
   await frame.locator('.p3-application>summary').click();
