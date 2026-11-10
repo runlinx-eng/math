@@ -1171,3 +1171,7 @@ body[data-world="network"].has-learning-map-context.observation-expanded #learni
 @media(max-width:800px){
   body[data-world="network"] #learning-map-context{display:none!important}
 }
+
+/* The compact lesson context already names the selected concept. Hide the
+   old absolute-position breadcrumb so it never collides with observer tools. */
+body[data-world="network"].has-learning-map-context .place-indicator{display:none!important}
