@@ -72,6 +72,9 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const baseline=await snap();
    await page.evaluate(()=>location.hash='#space/node/mt_ndGqFPWyen');
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+   // Selecting from the full panorama animates an 850ms emphasis transition.
+   // Sample the settled exploration colors, not a temporary full-map tint.
+   await page.waitForFunction(()=>mathSpace.snapshot().focusTransition===null);
    const selectedGraph=await snap();
    const connected=new Set([selectedGraph.selected,...selectedGraph.relations.flatMap(r=>[r.from,r.to])]);
    const unrelatedKey=selectedGraph.positions.find(p=>p.key.startsWith('node:')&&!connected.has(p.key))?.key;
@@ -86,6 +89,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
    await page.waitForTimeout(130);
    const taskContrast=await nodeContrast(unrelatedKey);
+   console.log('P8_NODE_CONTRAST '+JSON.stringify({unrelatedKey,beforeContrast,taskContrast,ratio:taskContrast/beforeContrast}));
    assert(taskContrast>beforeContrast*2.4,'task preserves visible non-related math context instead of fading it into the background');
    assert(Math.abs((await nodeContrast(selectedGraph.selected))-selectedBeforeContrast)<.002,'selected knowledge retains its original visual emphasis');
    assert((await page.locator('#space-canvas canvas').evaluate(el=>getComputedStyle(el).pointerEvents))!=='none','3D canvas remains interactive during learning');
