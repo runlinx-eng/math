@@ -187,9 +187,9 @@ function syncLearningRegions(){
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
  const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready});
- $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary');el.removeAttribute('data-study-primary');});
+ $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary','primary');el.removeAttribute('data-study-primary');});
  const widgetAction=focus.selector?$('#work').querySelector(focus.selector):null;
- if(widgetAction){widgetAction.classList.add('study-primary');widgetAction.setAttribute('data-study-primary','true');}
+ if(widgetAction){widgetAction.classList.add('study-primary','primary');widgetAction.setAttribute('data-study-primary','true');}
  $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
  $('#action-cue').textContent=focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
