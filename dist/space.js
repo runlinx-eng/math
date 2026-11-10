@@ -811,12 +811,13 @@ function navigateTaskSurface(surface,{replace=false}={}){
       setTaskSurfaceUrl('explore',{replace:true});return;
     }
     setTaskSurfaceUrl('learn',{replace});
-    if(opened)updatePrimaryNavigation();
+    updatePrimaryNavigation();
     return;
   }
   if(surface==='trail'||surface==='about')showUtility(surface);
   else{hideLearningHub();closeUtility();closePopovers();}
   setTaskSurfaceUrl(surface,{replace});
+  updatePrimaryNavigation();
 }
 function restoreTaskSurface({initial=false}={}){
   if(!scene){updatePrimaryNavigation();return;}
