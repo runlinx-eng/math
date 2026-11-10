@@ -28,14 +28,14 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
     await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,sample.id);
     const state=await page.evaluate(()=>{
      const scene=document.querySelector('#scene'),action=document.querySelector('#actions');
-     const command=document.querySelector('.stage-top'),work=document.querySelector('#work');
+     const command=document.querySelector('.stage-top'),work=document.querySelector('#work'),question=document.querySelector('#learning-problem'),dock=action?.closest('.execution-command');
      const b=action?.querySelector('.primary'),r=b?.getBoundingClientRect();
      const root=command?.getBoundingClientRect();
      return {id:window.mathLesson.snapshot().id,stage:scene?.dataset.stage,
       task:document.querySelector('#instruction')?.textContent||'',
       cue:document.querySelector('#action-cue')?.textContent||'',
       work:!!work&&work.children.length>0,progress:document.querySelector('#status')?.textContent,
-      topPrimary:!!b&&!!b.closest('.stage-top'),primaryText:b?.textContent,
+      taskDock:!!b&&!!dock,questionBeforeWork:!!question&&!!work&&!!(question.compareDocumentPosition(work)&Node.DOCUMENT_POSITION_FOLLOWING),actionAfterWork:!!work&&!!dock&&!!(work.compareDocumentPosition(dock)&Node.DOCUMENT_POSITION_FOLLOWING),primaryText:b?.textContent,
       primaryEnabled:!b?.disabled,primaryCount:action?.querySelectorAll('.primary:not([hidden])').length||0,
       topRect:root?{top:root.top,bottom:root.bottom}:null,
       mainRect:r?{top:r.top,bottom:r.bottom}:null,viewport:innerHeight,
@@ -49,9 +49,9 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
     assert(state.task.length>0&&state.work,'source math prompt/widget missing '+sample.name);
     assert(state.cue.length>0,'current instruction not available '+sample.name);
     assert(state.progress?.startsWith('任务'),'actual task progress missing '+sample.name);
-    assert(state.primaryCount===1&&state.topPrimary,'one fixed main action '+sample.name);
+    assert(state.primaryCount===1&&state.taskDock&&state.questionBeforeWork&&state.actionAfterWork,'one reachable action follows the actual source problem and widget '+sample.name);
     assert(state.track===3&&state.uniqueWork===1&&state.uniqueActions===1,'same execution frame '+sample.name);
-    assert(state.mainRect?.top>=0&&state.mainRect.bottom<state.viewport,'top command offscreen '+sample.name);
+    assert(state.mainRect?.top>=0&&state.mainRect.bottom<state.viewport,'sticky bottom action offscreen '+sample.name);
     if(sample.name==='construction')assert(state.cue.includes('纸带'),'paper-strip instruction missing');
     if(sample.name==='source-bridge')assert((await page.locator('#interaction-title').innerText()).includes('关联知识'),'the actual source bridge must be identified');
     if(sample.name==='counting')assert(!state.primaryEnabled,'counting task must not be judged before building its required work');
