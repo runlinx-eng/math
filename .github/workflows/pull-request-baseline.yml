@@ -199,6 +199,9 @@ jobs:
               if [[ "$test_file" == "tests/concept-visual-browser.cjs" ]]; then
                 MATH_CONCEPT_BROWSER_SCOPE=smoke node "$test_file"
               else
+                if [[ "$test_file" == "tests/p8-trail-performance-browser.cjs" ]]; then
+                  MATH_P8_BASELINE=1 node "$test_file"
+                fi
                 node "$test_file"
               fi
               echo "::endgroup::"
