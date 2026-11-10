@@ -419,3 +419,95 @@ body.p03-focus #scene .stage-top #actions{
  #scene .stage-top #actions button.primary{font-size:15px;min-height:44px}
  #scene .learning-region-title{font-size:13px}
 }
+
+/* P8: the question and physical work precede submission in reading and focus
+   order. The sole existing action bar follows the widget, then stays reachable
+   at the bottom while scrolling long tasks. No duplicate controls or graders. */
+#scene .stage-top{
+  padding:8px 10px;
+  row-gap:3px;
+}
+#scene #learning-problem{
+  margin-top:10px;
+}
+#scene #learning-problem #action-cue{
+  margin:8px 0 0;
+  padding-top:7px;
+  border-top:1px solid #dce7dc;
+  color:#4c685b;
+  font-size:12px;
+  line-height:1.5;
+}
+#scene .execution-command{
+  position:sticky;
+  bottom:0;
+  z-index:16;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  margin:10px 0;
+  padding:9px 12px;
+  border:1px solid #d2dfd4;
+  border-radius:10px;
+  background:#fcfbf6fa;
+  box-shadow:0 -4px 20px #25483c13;
+  backdrop-filter:blur(10px);
+}
+#scene .execution-command #actions,
+#scene[data-stage="reflect"] .execution-command #actions,
+body.p03-focus #scene .execution-command #actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+  padding:0;
+  margin:0;
+  border:0;
+}
+#scene .execution-command #actions button.primary{
+  font-size:14px;
+  min-height:44px;
+  padding:9px 14px;
+}
+#scene .execution-command #actions button:not(.primary){
+  font-size:12px;
+  min-height:36px;
+  padding:7px 11px;
+}
+#scene .execution-command #actions [data-primary-destination]{
+  max-width:100%;
+  white-space:normal;
+  text-align:center;
+}
+@media(max-width:720px){
+  #scene .execution-command{padding:7px 9px;margin:8px 0}
+  #scene .execution-command #actions{justify-content:flex-start;width:100%}
+  #scene .execution-command #actions button.primary{min-height:44px}
+}
+@media(max-height:580px){
+  #scene .stage-top{padding:5px 9px}
+  #scene #learning-problem #action-cue{font-size:11px;margin-top:5px;padding-top:5px}
+  #scene .execution-command{padding:5px 8px}
+}
+
+/* P8 screenshot QA: a wide fixed-looking footer hid the bottom of real math
+   manipulatives in embedded 600px workspaces. Keep the same button, but dock
+   only its own compact width so the rest of the widget remains touchable. */
+#scene .execution-command{
+  width:max-content;
+  max-width:100%;
+  margin-left:auto;
+  padding:7px 9px;
+}
+@media(max-width:720px){
+  #scene .execution-command #actions{
+    width:auto;
+    justify-content:flex-end;
+  }
+  #scene .execution-command #actions button.primary{
+    flex:0 1 auto;
+    width:auto;
+    min-width:128px;
+  }
+}

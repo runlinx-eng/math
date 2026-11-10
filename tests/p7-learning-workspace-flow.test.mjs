@@ -300,7 +300,7 @@ test('P7-D4 fixed adaptive command covers four actual activity types without new
  assert.equal(activityTitle({stage:'explore',bridge:true}),'关联知识的数学操作');
  assert.match(executionCue({stage:'revise',repair:{action:'调整纸带再检查'}}),/调整纸带/);
  const html=readFileSync(new URL('../dist/learn.html',import.meta.url),'utf8');
- assert.ok(html.indexOf('id="actions"')<html.indexOf('id="learning-interaction"'),'one real command bar precedes every specialized widget');
+ assert.ok(html.indexOf('id="learning-problem"')<html.indexOf('id="work"')&&html.indexOf('id="work"')<html.indexOf('id="actions"')&&html.indexOf('id="actions"')<html.indexOf('id="learning-check"'),'one real action follows the question and specialized work but precedes checked feedback');
  assert.match(html,/id="action-cue"/);
  assert.equal((html.match(/id="actions"/g)||[]).length,1);
  assert.equal((html.match(/id="work"/g)||[]).length,1);

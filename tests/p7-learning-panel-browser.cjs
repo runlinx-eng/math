@@ -133,8 +133,8 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(first.actionLabels.some(s=>s.includes('检查我的作品')),'check is available without an extra start');
    requireState(await page.locator('#steps li').count()===3,'the same three learning stages frame every task');
    requireState((await page.locator('#steps [aria-current="step"]').innerText()).includes('探索'),'initial state highlights active exploration');
-   requireState(await page.locator('#actions').evaluate(el=>!!el.closest('.stage-top')),'the action bar belongs to the shared fixed execution frame');
-   requireState(await page.locator('.stage-top').evaluate(el=>getComputedStyle(el).position)==='sticky','long activity keeps the stable execution frame reachable');
+   requireState(await page.locator('#actions').evaluate(el=>!!el.closest('.execution-command')&&!!(document.querySelector('#work').compareDocumentPosition(el)&Node.DOCUMENT_POSITION_FOLLOWING)),'the single action follows the real math work in reading order');
+   requireState(await page.locator('.execution-command').evaluate(el=>getComputedStyle(el).position)==='sticky','long activity keeps the existing primary action reachable in a bottom dock');
    requireState((await page.locator('#action-cue').innerText()).includes('纸带'),'the current math task supplies a concise action cue');
    requireState(!first.actionLabels.some(s=>s.includes('开始第')||s.includes('试玩')),'no practice/formal mode selection');
    requireState(!first.checkCount.includes('历史完成'),'unsubmitted work has no empty evidence wall');
@@ -434,10 +434,10 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(!await embedded.locator('#source-goals-details').evaluate(el=>el.open),'raw source goals do not appear by default');
    const reflectionOrder=await embedded.locator('#note').evaluate(el=>{
       const next=el.ownerDocument.querySelector('#actions [data-primary-destination]');
-      return {noteBottom:el.getBoundingClientRect().bottom,nextTop:next.getBoundingClientRect().top};
+      return {noteBeforeAction:!!(el.compareDocumentPosition(next)&Node.DOCUMENT_POSITION_FOLLOWING)};
    });
-   requireState(reflectionOrder.nextTop<reflectionOrder.noteBottom,'the single next action keeps its predictable top position, while optional writing remains below');
-   requireState(await embedded.locator('#actions').evaluate(el=>!!el.closest('.stage-top')),'reflection keeps the same command location');
+   requireState(reflectionOrder.noteBeforeAction,'optional reflection comes before the single next action in the actual reading order');
+   requireState(await embedded.locator('#actions').evaluate(el=>!!el.closest('.execution-command')),'reflection keeps the same single sticky bottom action dock');
    const actionVisibility=await primaryLinked.evaluate(el=>{
      const r=el.getBoundingClientRect();
      return {top:r.top,bottom:r.bottom,viewport:el.ownerDocument.defaultView.innerHeight};

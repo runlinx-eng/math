@@ -539,6 +539,7 @@ export class SpatialScene {
     const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
       taskWorkspace=document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'),
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
+    // Keep the real graph legible beside a task without stealing focus from selected or source-related knowledge.
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
       // A temporary hover reads the full map just like the panorama. The
       // underlying guide selection and the allowed click targets do not move.
@@ -549,7 +550,7 @@ export class SpatialScene {
       if(o.key===this.selected)return .95;
       if(this.guideFocus.visitedKeys?.has(o.key))return .65;
       return this.guideFocus.currentNodes.has(o.key)?.61:this.guideFocus.seenNodes.has(o.key)?.57:this.guideFocus.step===0?.70:.38;
-    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.40:.18):o.packId===selected.packId?.42:.18;};
+    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.72:.18):o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
@@ -568,7 +569,7 @@ export class SpatialScene {
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.60:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.74:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
@@ -583,7 +584,9 @@ export class SpatialScene {
       const pixelRadius=this.relationshipMap&&this.guideFocus?
         (hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):this.guideFocus.targetKeys?.has(o.key)?7.5:o.key===this.selected?6.5:this.guideFocus.visitedKeys?.has(o.key)?5.4:this.guideFocus.currentNodes.has(o.key)?5.2:this.guideFocus.seenNodes.has(o.key)?4.8:3.9):
         hoverObject?.kind==='pack'?(o.packId===hoverObject.id?6.1:3.4):hoverObject?.kind==='node'?(o.key===hoverObject.key?7.1:this.hoverRelatedKeys.has(o.key)?5.5:3.4):this.hoverThemeId?(o.themeId===this.hoverThemeId?6.2:3.5):structureActive?(structuralNode?5.6:4.2):o.key===this.selected?6.5:this.related?.has(o.key)?4.8:4.3;
-      const filteredRadius=this.gradeStageId!=='all'&&!selected&&!this.guideFocus?(this.gradeStageIds.has(o.id)?Math.max(pixelRadius,5.3):Math.min(pixelRadius,2.7)):pixelRadius;
+      const contextRadius=this.relationshipMap&&taskWorkspace&&selected?.kind==='node'&&!this.guideFocus?
+         (o.key===this.selected?Math.max(pixelRadius,9.2):this.related?.has(o.key)?Math.max(pixelRadius,6):pixelRadius):pixelRadius;
+       const filteredRadius=this.gradeStageId!=='all'&&!selected&&!this.guideFocus?(this.gradeStageIds.has(o.id)?Math.max(contextRadius,5.3):Math.min(contextRadius,2.7)):contextRadius;
        const size=this.relationshipMap?filteredRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
       transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -658,6 +661,8 @@ export class SpatialScene {
     if(!this.relationshipMap||!links?.length||opacity<=.001){layer.replaceChildren();layer.hidden=true;return;}
     layer.hidden=false;layer.setAttribute('viewBox',`0 0 ${this.width} ${this.height}`);
     layer.style.opacity=String(opacity);
+    const contextLinks=this.localRelationshipFocus&&!this.guideFocus&&
+      (document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'));
     const paths=[],guideEndpoints=new Map();
     for(const l of links){
       const curve=new THREE.QuadraticBezierCurve3(l.from,l.control,l.to);
@@ -666,8 +671,8 @@ export class SpatialScene {
       const isPreview=this.previewKey&&(l.fromKey===this.previewKey||l.toKey===this.previewKey);
       const fading=this.previewKey&&!isPreview;
       const stroke='#'+l.color.toString(16).padStart(6,'0');
-      const lineOpacity=fading?.12:l.muted?.33:l.soft?.66:this.guideFocus?.97:.84;
-      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?(l.muted?1.65:3.15):2;
+      const lineOpacity=fading?.12:l.muted?.33:l.soft?.66:this.guideFocus?.97:contextLinks?.94:.84;
+      const width=l.lit?2.6:isPreview?2.8:l.soft?1.3:this.guideFocus?(l.muted?1.65:3.15):contextLinks?2.8:2;
       if(this.guideFocus&&!l.muted&&!fading){
         // Highlight the exact projected endpoints of existing source edges,
         // not new waypoints or spatial coordinates.
@@ -835,7 +840,7 @@ export class SpatialScene {
     }
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving)return;if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
-    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?9.8/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
+    const o=this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?(document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey')?14:9.8)/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}
     this.updateProjection();this.camera.updateMatrixWorld();this.paintObjects();this.renderer.render(this.scene,this.camera);this.updateFocusLinkLayer();
     // Pointer-independent overlays need not trigger a full DOM layout on every camera frame.
     // Keep WebGL movement and 3D relationship projections frequent; refresh labels/panels at

@@ -12,6 +12,11 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
  const page=await context.newPage();
  page.on('pageerror',error=>errors.push(String(error)));
  const snap=()=>page.evaluate(()=>mathSpace.snapshot());
+ const nodeContrast=key=>page.evaluate(async id=>{
+   const {Color}=await import('./vendor/three/three.module.min.js');
+   const paper=new Color(0xf5f4ef),tint=mathSpace.nodeTint(id);
+   return tint&&Math.hypot(tint[0]-paper.r,tint[1]-paper.g,tint[2]-paper.b);
+ },key);
  const boxes=()=>page.evaluate(()=>{
    const rect=id=>{const el=document.querySelector(id);if(!el||el.hidden||getComputedStyle(el).visibility==='hidden')return null;const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
    return {canvas:rect('#space-canvas'),guide:rect('#network-guide'),card:rect('#focus-card'),hub:rect('#learning-hub'),learn:rect('#journey-surface'),trail:rect('#utility-drawer'),rail:rect('.tool-rail'),nav:rect('.topbar')};
@@ -67,10 +72,27 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const baseline=await snap();
    await page.evaluate(()=>location.hash='#space/node/mt_ndGqFPWyen');
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+   // Selecting from the full panorama animates an 850ms emphasis transition.
+   // Sample the settled exploration colors, not a temporary full-map tint.
+   await page.waitForFunction(()=>mathSpace.snapshot().focusTransition===null);
+   const selectedGraph=await snap();
+   const connected=new Set([selectedGraph.selected,...selectedGraph.relations.flatMap(r=>[r.from,r.to])]);
+   const unrelatedKey=selectedGraph.positions.find(p=>p.key.startsWith('node:')&&!connected.has(p.key))?.key;
+   assert(!!unrelatedKey,'a real unrelated domain node is available for contrast comparison');
+   await page.waitForTimeout(130);
+   const beforeContrast=await nodeContrast(unrelatedKey);
+   const selectedBeforeContrast=await nodeContrast(selectedGraph.selected);
+   assert(beforeContrast>0&&selectedBeforeContrast>0,'real WebGL node colors can be sampled before learning');
    await page.locator('#focus-card [data-action="open"]').first().click();
    await page.frameLocator('#journey-frame').locator('#p3-learning-flow').waitFor();
    const beforeLearn=await snap();
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
+   await page.waitForTimeout(130);
+   const taskContrast=await nodeContrast(unrelatedKey);
+   console.log('P8_NODE_CONTRAST '+JSON.stringify({unrelatedKey,beforeContrast,taskContrast,ratio:taskContrast/beforeContrast}));
+   assert(taskContrast>beforeContrast*2.4,'task preserves visible non-related math context instead of fading it into the background');
+   assert(Math.abs((await nodeContrast(selectedGraph.selected))-selectedBeforeContrast)<.002,'selected knowledge retains its original visual emphasis');
+   assert((await page.locator('#space-canvas canvas').evaluate(el=>getComputedStyle(el).pointerEvents))!=='none','3D canvas remains interactive during learning');
    for(const [w,h] of sizes){
      await page.setViewportSize({width:w,height:h});
      await page.waitForTimeout(100);
@@ -78,6 +100,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      assert(b.learn&&b.learn.x>=0&&b.learn.right<=w+2&&b.learn.bottom<=h+2,'learning stays inside viewport '+w+'x'+h);
      assert(b.learn.width<=w*.54,'learning leaves at least 46% for map '+w+'x'+h);
      assert(b.nav&&b.nav.bottom<b.learn.y,'learning clears top navigation '+w+'x'+h);
+    if(w>800)assert(b.guide&&b.guide.width<=200,'observation rail leaves map space '+w+'x'+h);
      if(w>800)assert(b.canvas&&b.canvas.right<=b.learn.x-7,'real 3D viewport avoids lesson overlay '+w+'x'+h);
      else assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});
@@ -107,6 +130,8 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert(equalCamera(baseline,await snap()),'return to suspended lesson preserves camera');
    await page.keyboard.press('Escape');
    assert((await snap()).journeySuspended,'Esc suspends current activity without unloading');
+   await page.waitForTimeout(130);
+   assert(Math.abs((await nodeContrast(unrelatedKey))-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
    await page.goBack();
    await page.waitForTimeout(100);
    assert((await snap()).counts.edges===1223,'browser history retains source graph');
