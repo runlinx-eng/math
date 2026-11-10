@@ -670,7 +670,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   if(worldLayout==='network')updateOverlays();
 }
 function openJourney(step,{restore=false}={}){
-  setTaskSurfaceUrl('learn',{replace:true});
+  setTaskSurfaceUrl('learn',{replace:restore||taskSurfaceFromUrl()==='learn'});
   journeySuspended=false;hideLearningHub();closeUtility();
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
@@ -682,7 +682,7 @@ function openJourney(step,{restore=false}={}){
   updatePrimaryNavigation();scheduleSave();
 }
 function openLearningLesson(id,{restore=false,questionId=null}={}){
- if(!sessionMeta(id))return;setTaskSurfaceUrl('learn',{replace:true});journeySuspended=false;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
+ if(!sessionMeta(id))return;setTaskSurfaceUrl('learn',{replace:restore||taskSurfaceFromUrl()==='learn'});journeySuspended=false;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations(scene.relationshipMap?'source':'off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
