@@ -167,6 +167,22 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const exitState=await page.evaluate(()=>({className:document.body.className,relationMode:mathSpace.snapshot().relationMode,selected:mathSpace.snapshot().selected,journeySuspended:mathSpace.snapshot().journeySuspended,contextHidden:document.querySelector('#learning-map-context').hidden}));
    console.log('P8_EXIT_CONTRAST '+JSON.stringify({beforeContrast,taskContrast,afterContrast,exitState}));
    assert(Math.abs(afterContrast-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
+   // Esc suspends an activity; the explicit close button destroys it. Verify
+   // both exits restore the real source edges, selected knowledge and WebGL tint.
+   await page.locator('.primary-nav [data-action="nav-learn"]').click();
+   await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen&&!mathSpace.snapshot().journeySuspended);
+   assert(equalCamera(baseline,await snap()),'resuming suspended lesson before explicit close does not move camera');
+   await page.locator('#journey-surface [data-action="close-journey"]').click();
+   await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen);
+   await page.waitForTimeout(130);
+   const explicitlyClosed=await snap();
+   assert(explicitlyClosed.selected===selectedGraph.selected&&explicitlyClosed.relationMode==='source',
+     'explicit lesson close restores selected knowledge and its source edges');
+   assert(equalCamera(baseline,explicitlyClosed),'explicit lesson close preserves original 3D camera');
+   assert(Math.abs((await nodeContrast(unrelatedKey))-beforeContrast)<.01,
+     'explicit lesson close restores original exploration colors');
+   assert(await page.locator('#learning-map-context').isHidden()&&await page.locator('#observation-task-toggle').isHidden(),
+     'explicit lesson close clears task-only overlays and restores normal observation controls');
    await page.goBack();
    await page.waitForTimeout(100);
    assert((await snap()).counts.edges===1223,'browser history retains source graph');
