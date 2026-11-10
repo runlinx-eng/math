@@ -1131,7 +1131,7 @@ body[data-world="network"] #learning-map-context [data-action="focus-selected"]{
   font-weight:650;
   white-space:nowrap;
 }
-body[data-world="network"].has-journey #observation-task-toggle{
+body[data-world="network"].has-learning-map-context #observation-task-toggle{
   display:inline-flex;
   align-items:center;
   background:#edf3eb;
@@ -1143,7 +1143,7 @@ body[data-world="network"].has-journey #observation-task-toggle{
   color:#315c4d;
   white-space:nowrap;
 }
-body[data-world="network"].has-journey:not(.observation-expanded) #network-guide{
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide{
   display:flex!important;
   align-items:center;
   padding:6px 9px;
@@ -1154,8 +1154,8 @@ body[data-world="network"].has-journey:not(.observation-expanded) #network-guide
   border:1px solid #d5e0d5;
   border-radius:9px;
 }
-body[data-world="network"].has-journey:not(.observation-expanded) #network-guide > :not(.observation-heading){display:none!important}
-body[data-world="network"].has-journey:not(.observation-expanded) #network-guide .observation-heading{
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide > :not(.observation-heading){display:none!important}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide .observation-heading{
   width:100%;
   display:flex;
   align-items:center;
@@ -1163,8 +1163,8 @@ body[data-world="network"].has-journey:not(.observation-expanded) #network-guide
   gap:4px;
   min-width:0;
 }
-body[data-world="network"].has-journey:not(.observation-expanded) #network-guide .observation-heading>span{display:none}
-body[data-world="network"].has-journey.observation-expanded #learning-map-context{display:none!important}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide .observation-heading>span{display:none}
+body[data-world="network"].has-learning-map-context.observation-expanded #learning-map-context{display:none!important}
 @media(max-width:1100px) and (min-width:801px){
   body[data-world="network"] #learning-map-context{left:12px;width:min(310px,calc(100% - 24px))}
 }
