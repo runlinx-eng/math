@@ -102,7 +102,11 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
    const key=keys[i%keys.length];
    const before=await page.evaluate(()=>({work:window.__p8work.length,storage:window.__p8storage.length,events:window.__p8events.length}));
    await page.locator('.space-label.node[data-key="'+key+'"]').click({timeout:5000});
-   await page.waitForFunction(x=>window.__p8events.some(e=>e.key===x&&e.paint!==null),key);
+   // Revisited nodes may already have a painted event from an earlier click.
+   // Wait for the present click, never for a matching historical record.
+   await page.waitForFunction(({key,before})=>
+     window.__p8events.slice(before.events).some(e=>e.key===key&&e.paint!==null),
+   {key,before});
    const sample=await page.evaluate(({key,before})=>{
     const event=window.__p8events.slice(before.events).find(e=>e.key===key);
     const work=window.__p8work.slice(before.work),storage=window.__p8storage.slice(before.storage);
