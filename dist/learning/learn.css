@@ -490,3 +490,24 @@ body.p03-focus #scene .execution-command #actions{
   #scene #learning-problem #action-cue{font-size:11px;margin-top:5px;padding-top:5px}
   #scene .execution-command{padding:5px 8px}
 }
+
+/* P8 screenshot QA: a wide fixed-looking footer hid the bottom of real math
+   manipulatives in embedded 600px workspaces. Keep the same button, but dock
+   only its own compact width so the rest of the widget remains touchable. */
+#scene .execution-command{
+  width:max-content;
+  max-width:100%;
+  margin-left:auto;
+  padding:7px 9px;
+}
+@media(max-width:720px){
+  #scene .execution-command #actions{
+    width:auto;
+    justify-content:flex-end;
+  }
+  #scene .execution-command #actions button.primary{
+    flex:0 1 auto;
+    width:auto;
+    min-width:128px;
+  }
+}
