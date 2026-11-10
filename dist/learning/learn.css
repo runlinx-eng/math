@@ -511,3 +511,27 @@ body.p03-focus #scene .execution-command #actions{
     min-width:128px;
   }
 }
+
+/* P7-D6: one stable learner-facing order across configured mathematical tasks.
+   Keep P8's compact dock geometry; neither 3D layout nor grader is touched. */
+#learning-interaction{min-width:0}
+#learning-interaction #work{min-width:0}
+#learning-next .learning-support{margin:6px 0 0;border:1px solid var(--line);border-radius:9px;padding:7px 11px;background:#fbfcf9}
+#learning-next .learning-support>summary{cursor:pointer;font-weight:650;font-size:13px;color:#406f5c}
+#learning-next .learning-support[open]>summary{margin-bottom:10px}
+#learning-next .learning-support #route-collapsible{margin:9px 0 0}
+#scene[data-stage="explore"] #learning-next .p3-before-check{display:none}
+#scene[data-stage="explore"] #learning-next #next-guidance{display:none}
+#scene[data-action-focus="widget"] #actions [data-do="check"]{opacity:.65}
+#learning-interaction #work .study-primary{background:#2d8067;color:#fff;border-color:#2d8067;box-shadow:0 0 0 3px #2d806726;font-weight:700}
+#learning-interaction #work .study-primary:focus-visible{outline:3px solid #b98c4c;outline-offset:2px}
+#learning-interaction #work .study-primary:disabled{opacity:.6}
+#scene .execution-command{max-width:calc(100% - 6px)}
+#scene .execution-command #actions{min-width:0}
+#scene .execution-command #actions button{max-width:100%;white-space:normal}
+#scene #learning-interaction{scroll-margin-bottom:92px}
+@media(max-width:650px){
+ #scene .execution-command{bottom:env(safe-area-inset-bottom,0px)}
+ #learning-interaction #work{overflow-wrap:anywhere}
+ #learning-next .learning-support{padding:8px}
+}
