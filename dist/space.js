@@ -1042,8 +1042,11 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
   }
   if(e.data.type!=='math-space:navigate')return;
   const sources=[...panels.values()].map(p=>p.iframe?.contentWindow).concat($('#utility-frame').contentWindow,$('#journey-frame').contentWindow);if(!sources.includes(e.source))return;
-  if(e.source===$('#utility-frame').contentWindow){closeUtility();setTaskSurfaceUrl('explore',{replace:true});}
   const {kind,id}=e.data;
+  const fromUtility=e.source===$('#utility-frame').contentWindow;
+  const trailSelection=fromUtility&&$('#utility-drawer').dataset.surface==='trail'&&kind==='node'&&space.byKey.has('node:'+id);
+  if(trailSelection){choose('node:'+id,{openLesson:false,inPlace:true});return;}
+  if(fromUtility){closeUtility();setTaskSurfaceUrl('explore',{replace:true});}
   if(kind==='lesson'&&sessionMeta(id)){openLearningLesson(id);setTaskSurfaceUrl('learn',{replace:true});return;}if(['activity','legacy-activity'].includes(kind)&&activityIds.includes(id)){const node=ACTIVITIES[id].topicId;choose(objectKey('node',node),{openLesson:false});openPanel(node);}
   else if(['node','pack','theme'].includes(kind)&&space.byKey.has(objectKey(kind,id)))choose(objectKey(kind,id));else if(['map','atlas'].includes(kind))overview();
 });
