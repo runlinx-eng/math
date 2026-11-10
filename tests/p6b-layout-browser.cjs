@@ -163,7 +163,10 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    await page.keyboard.press('Escape');
    assert((await snap()).journeySuspended,'Esc suspends current activity without unloading');
    await page.waitForTimeout(130);
-   assert(Math.abs((await nodeContrast(unrelatedKey))-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
+   const afterContrast=await nodeContrast(unrelatedKey);
+   const exitState=await page.evaluate(()=>({className:document.body.className,relationMode:mathSpace.snapshot().relationMode,selected:mathSpace.snapshot().selected,journeySuspended:mathSpace.snapshot().journeySuspended,contextHidden:document.querySelector('#learning-map-context').hidden}));
+   console.log('P8_EXIT_CONTRAST '+JSON.stringify({beforeContrast,taskContrast,afterContrast,exitState}));
+   assert(Math.abs(afterContrast-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
    await page.goBack();
    await page.waitForTimeout(100);
    assert((await snap()).counts.edges===1223,'browser history retains source graph');
