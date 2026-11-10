@@ -69,6 +69,11 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
   await page.waitForFunction(()=>!document.querySelector('#utility-drawer').hidden);
   await page.locator('#utility-frame').waitFor();
+  // Enter a source node through the actual search UI; no synthetic choose/hash.
+  await page.locator('[data-action="search"]').first().click();
+  await page.locator('#search-input').fill('mt_ndGqFPWyen');
+  await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
   const samples=[];
   for(let i=0;i<8;i++){
    await page.waitForFunction(()=>[...document.querySelectorAll('.space-label.node:not([hidden])')].some(el=>{
