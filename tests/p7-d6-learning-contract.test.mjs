@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {TASKS} from '../dist/learning/catalog.js';
 import {initial as initialWide,act as actWide} from '../dist/learning/phase5/b08-model.js';
 import {studyActionFocus,learningActionPlan} from '../dist/learning/workspace-flow.js';
 
