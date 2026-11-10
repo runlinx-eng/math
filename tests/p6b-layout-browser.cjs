@@ -167,6 +167,12 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const exitState=await page.evaluate(()=>({className:document.body.className,relationMode:mathSpace.snapshot().relationMode,selected:mathSpace.snapshot().selected,journeySuspended:mathSpace.snapshot().journeySuspended,contextHidden:document.querySelector('#learning-map-context').hidden}));
    console.log('P8_EXIT_CONTRAST '+JSON.stringify({beforeContrast,taskContrast,afterContrast,exitState}));
    assert(Math.abs(afterContrast-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
+   // Check browser Back while the lesson is still suspended. Explicitly ending
+   // the activity replaces its route URL and should not be used as this Back
+   // history fixture.
+   await page.goBack();
+   await page.waitForTimeout(100);
+   assert((await snap()).counts.edges===1223,'browser history retains source graph');
    // Esc suspends an activity; the explicit close button destroys it. Verify
    // both exits restore the real source edges, selected knowledge and WebGL tint.
    await page.locator('.primary-nav [data-action="nav-learn"]').click();
@@ -183,9 +189,6 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      'explicit lesson close restores original exploration colors');
    assert(await page.locator('#learning-map-context').isHidden()&&await page.locator('#observation-task-toggle').isHidden(),
      'explicit lesson close clears task-only overlays and restores normal observation controls');
-   await page.goBack();
-   await page.waitForTimeout(100);
-   assert((await snap()).counts.edges===1223,'browser history retains source graph');
    assert(!errors.length,'no uncaught errors');
    fs.writeFileSync(path.join(output,'checks.json'),JSON.stringify({checks,errors,screenshots:sizes.flatMap(([w,h])=>['explore','learn','trail'].map(mode=>mode+'-'+w+'x'+h+'.png')),manualVisualApproval:false},null,2));
    console.log('P6-B Chromium layout checks: '+checks.length+' passed');
