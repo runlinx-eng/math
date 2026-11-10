@@ -127,8 +127,10 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
        const contextRect=await page.locator('#learning-map-context').boundingBox();
        assert(contextRect&&contextRect.x>=b.canvas.x&&contextRect.x+contextRect.width<=b.canvas.right+2&&contextRect.y>=b.nav.bottom-4,
          'real math relationship summary fits in the left 3D viewport '+w+'x'+h);
-     }else assert(await page.locator('#learning-map-context').isHidden(),'compact viewport keeps the existing single overlay workspace '+w+'x'+h);
-     else assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
+     }else{
+       assert(await page.locator('#learning-map-context').isHidden(),'compact viewport keeps the existing single overlay workspace '+w+'x'+h);
+       assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
+     }
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});
    }
    await page.locator('.primary-nav [data-action="nav-trail"]').click();
