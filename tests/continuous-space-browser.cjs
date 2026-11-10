@@ -30,7 +30,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
    const before=await snapshot();
    await page.locator('#focus-card [data-action="open"]').first().click();
-   await lesson.locator('#p3-learning-flow').waitFor();
+   await lesson.locator('#p3-learning-flow').waitFor({state:'attached'});
    const originalDocument=await page.evaluate(()=>{const f=document.querySelector('#journey-frame');f.contentWindow.__continuousProbe={created:Date.now()};return f.contentWindow.__continuousProbe;});
    assert(await page.locator('.primary-nav [data-action="nav-trail"]').isVisible(),'trail navigation remains visible over current learning workspace');
    await page.locator('.primary-nav [data-action="nav-trail"]').click();
