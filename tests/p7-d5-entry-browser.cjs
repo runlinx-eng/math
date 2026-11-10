@@ -23,7 +23,7 @@ const base='http://127.0.0.1:43827/';
    await open();const before=await snap();
    await nav().click();await frame.locator('#instruction').waitFor();
    check(await page.locator('#learning-hub').isHidden(),'selected node goes straight to a task');
-   check((await page.locator('#journey-frame').getAttribute('src')).includes('#share'),'current source node decides source lesson');
+   check((await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.location.href)).includes('#share'),'current source node decides source lesson');
    check((await frame.locator('#instruction').innerText()).length>0,'real mathematics question is displayed');
    check(await frame.locator('#work').isVisible(),'real mathematics widget is displayed');
    check(await frame.locator('#actions button.primary').count()===1,'only one main lesson action');
@@ -46,7 +46,7 @@ const base='http://127.0.0.1:43827/';
    check((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.share.draft))==='之前写下的草稿','same-node unfinished draft survives direct reentry');
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    await open('mt_Ep7TDFuYUa');await nav().click();await frame.locator('#instruction').waitFor();
-   check((await page.locator('#journey-frame').getAttribute('src')).includes('#equivalent'),'selected equivalent fractions beats unrelated unfinished share');
+   check((await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.location.href)).includes('#equivalent'),'selected equivalent fractions beats unrelated unfinished share');
    await page.screenshot({path:path.join(out,'02-selection-beats-history.png')});
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    // No selection with a real draft: exactly one resume CTA.
@@ -56,7 +56,7 @@ const base='http://127.0.0.1:43827/';
    check(await page.locator('#learning-hub .learning-hub-more').count()===1,'routes remain secondary');
    await page.screenshot({path:path.join(out,'03-real-resume.png')});
    await page.locator('#learning-hub [data-action="resume-entry"]').click();await frame.locator('#instruction').waitFor();
-   check((await page.locator('#journey-frame').getAttribute('src')).includes('#share'),'resume opens the saved original lesson');
+   check((await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.location.href)).includes('#share'),'resume opens the saved original lesson');
    check((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.share.draft))==='之前写下的草稿','saved draft survives entering');
    await page.locator('#journey-surface [data-action="close-journey"]').click();
    // No work: no random lesson, only a knowledge selection action.
