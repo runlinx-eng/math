@@ -95,10 +95,11 @@ const base='http://127.0.0.1:43827/';
      await page.setViewportSize({width:w,height:h});await open();await nav().click();
      await frame.locator('#actions button.primary').waitFor();
      const bounds=await page.evaluate(()=>{
-       const frame=document.querySelector('#journey-frame'),d=frame.contentDocument,primary=d.querySelector('#actions button.primary'),r=primary?.getBoundingClientRect();
-       return {bottom:r?.bottom||Infinity,viewport:frame.contentWindow.innerHeight};
+       const frame=document.querySelector('#journey-frame'),d=frame.contentDocument,primary=d.querySelector('#actions button.primary'),r=primary?.getBoundingClientRect(),dock=d.querySelector('.execution-command')?.getBoundingClientRect();
+       return {bottom:r?.bottom||Infinity,viewport:frame.contentWindow.innerHeight,dockWidth:dock?.width||Infinity,viewportWidth:frame.contentWindow.innerWidth};
      });
      check(bounds.bottom<=bounds.viewport+2,'primary mathematics action visible in '+w+'x'+h+' frame: '+JSON.stringify(bounds));
+     check(bounds.dockWidth<bounds.viewportWidth*.85,'action dock stays compact and leaves manipulatives touchable '+w+'x'+h+': '+JSON.stringify(bounds));
      await page.screenshot({path:path.join(out,'06-direct-'+w+'x'+h+'.png')});
      await page.locator('#journey-surface [data-action="close-journey"]').click();
    }
