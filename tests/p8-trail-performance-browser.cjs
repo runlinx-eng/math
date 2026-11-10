@@ -72,15 +72,17 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
   await route.fulfill({response,body});
  });
  try{
-  await page.goto('http://127.0.0.1:43827/?surface=trail&world=network&layout=53#space');
+  await page.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
-  await page.waitForFunction(()=>!document.querySelector('#utility-drawer').hidden);
-  await page.locator('#utility-frame').waitFor();
+  // Select the initial real node in Explore, where search is not covered by
+  // the full-history iframe. Trail measurements begin only after switching.
   // Enter a source node through the actual search UI; no synthetic choose/hash.
   await page.locator('[data-action="search"]').first().click();
   await page.locator('#search-input').fill('mt_ndGqFPWyen');
   await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+  await page.locator('.primary-nav [data-action="nav-trail"]').click();
+  await page.waitForFunction(()=>!document.querySelector('#utility-drawer').hidden);
   const samples=[];
   for(let i=0;i<8;i++){
    await page.waitForFunction(()=>[...document.querySelectorAll('.space-label.node:not([hidden])')].some(el=>{
