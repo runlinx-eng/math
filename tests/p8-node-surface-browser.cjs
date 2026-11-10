@@ -72,9 +72,14 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
   check(!s.journeyOpen&&await page.locator('#focus-card').isVisible(),'Explore follows chosen source node and shows explanation');
   await page.locator('#focus-card [data-action="deselect"]').click();
   await nav('learn').click();
-  check(await page.locator('#learning-hub [data-action="learn-find"]').isVisible(),'Learn without a selected node prompts selection');
+  check(await page.locator('#learning-hub').isVisible(),'Learn without a selected node retains the native entry hub');
   s=await expect('learn',null,'learn-no-selected');
-  await page.locator('#learning-hub [data-action="learn-find"]').click();
+  // A prior failed submission creates a genuine unfinished session, so D5
+  // correctly prioritizes Resume and keeps "find another topic" in details.
+  const find=page.locator('#learning-hub [data-action="learn-find"]').first();
+  if(!(await find.isVisible()))await page.locator('#learning-hub .learning-hub-more > summary').click();
+  check(await find.isVisible(),'choosing a different knowledge node stays available beside Resume');
+  await find.click();
   check(await page.locator('#search-popover').isVisible(),'Learn selection uses existing search UI');
   s=await expect('learn',null,'learn-search-open');
   check(!s.hub,'search opens over map without returning to Explore');
