@@ -142,9 +142,10 @@ function continuationDestination(){
 }
 function renderTaskActions(checked=currentSubmission(a)){
  const stage=learningStage(a,checked),p03=isP03();
+  const focus=studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready});
  const plan=learningActionPlan({
    stage,hasNextTask:a.index<sessionTasks(id).length-1,p03,
-   readyToCheck:studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready}).readyToCheck
+   readyToCheck:focus.readyToCheck
  });
  const buttonFor=(spec,primary=false)=>btn(spec.action,esc(spec.label),
    (spec.disabled?'disabled ':'')+(spec.attrs||''),primary);
@@ -193,7 +194,7 @@ function syncLearningRegions(){
  $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
  const cue=$('#action-cue');
- const currentHelp=focus.cue||(stage==='explore'?'':executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair}));
+ const currentHelp=focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
  cue.textContent=currentHelp;cue.hidden=!currentHelp;
  $('#work').dataset.taskType=activeTask?.type||'reflection';
  $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
