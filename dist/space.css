@@ -1175,3 +1175,28 @@ body[data-world="network"].has-learning-map-context.observation-expanded #learni
 /* The compact lesson context already names the selected concept. Hide the
    old absolute-position breadcrumb so it never collides with observer tools. */
 body[data-world="network"].has-learning-map-context .place-indicator{display:none!important}
+
+
+/* P8: same selected node, three surface meanings; trail is scoped before full archive. */
+.utility-drawer .trail-node-context{
+  flex:0 0 auto;padding:12px 17px 11px;border-bottom:1px solid #dce5d5;
+  background:#f7faf5;color:#345447;max-height:min(34vh,255px);overflow-y:auto;
+  overscroll-behavior:contain;font-size:12px;line-height:1.6;
+}
+.utility-drawer .trail-node-heading{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.utility-drawer .trail-node-heading>span{font-size:11px;color:#678475}
+.utility-drawer .trail-node-heading strong{font-size:15px;color:#234e3e}
+.utility-drawer .trail-node-hint,.utility-drawer .trail-node-status,.utility-drawer .trail-node-empty{margin:5px 0}
+.utility-drawer .trail-node-status{font-weight:600}
+.utility-drawer .trail-node-details{margin:7px 0;color:#3a6150}
+.utility-drawer .trail-node-details>summary{cursor:pointer}
+.utility-drawer .trail-node-details ul{margin:6px 0;padding-left:18px}
+.utility-drawer .trail-node-details p{margin:5px 0;overflow-wrap:anywhere}
+.utility-drawer .trail-node-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:7px}
+.utility-drawer .trail-node-actions button{padding:7px 10px;border-radius:7px;background:#e5f0e5;color:#245943;font-weight:650}
+.utility-drawer .trail-node-actions>span{font-size:11px;color:#6c8175}
+.utility-drawer iframe{min-height:0}
+@media(max-width:760px){
+ .utility-drawer .trail-node-context{padding:10px 12px;max-height:min(33vh,210px)}
+ .utility-drawer .trail-node-heading strong{font-size:14px}
+}
