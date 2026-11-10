@@ -256,7 +256,39 @@ function ensureGradePanoramaData(){
   return gradePanoramaPromise;
 }
 
-function renderLocation(){renderNetworkGuide();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?objectLevelLabel(o):'全貌';updatePrimaryNavigation();}
+function renderLearningMapContext(){
+  const host=$('#learning-map-context'),toggle=$('#observation-task-toggle');
+  if(!host||!scene)return;
+  const current=space.byKey.get(scene.selected);
+  const active=worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId&&current?.kind==='node'&&scene.canLocate(current);
+  host.hidden=!active;
+  if(toggle)toggle.hidden=!active;
+  if(!active){
+    host.replaceChildren();
+    document.body.classList.remove('observation-expanded');
+    if(toggle){toggle.textContent='展开工具';toggle.setAttribute('aria-expanded','false');}
+    return;
+  }
+  // Display only existing source relations. No lesson or camera state is created.
+  const edges=relationsFor(space,current.key).filter(link=>{
+    const from=space.byKey.get(link.from),to=space.byKey.get(link.to);
+    return from&&to&&scene.canLocate(from)&&scene.canLocate(to);
+  });
+  const neighbor=side=>{
+    const group=edges.filter(link=>side==='before'?link.to===current.key:link.from===current.key);
+    const first=group.find(link=>link.edges[0]?.strength==='hard')||group[0];
+    const other=first&&space.byKey.get(side==='before'?first.from:first.to);
+    return `<div class="learning-map-neighbor" data-direction="${side}" data-count="${group.length}">
+      <span>${side==='before'?'相关基础':'相关后续'} · ${group.length}</span>
+      ${other?`<strong data-source-key="${esc(other.key)}">${esc(displayTitle(other))}</strong><small>${esc(relationStrength(first.edges[0]?.strength))}</small>`:'<em>来源中没有地图内直接联系</em>'}
+    </div>`;
+  };
+  host.innerHTML=`<p class="learning-map-eyebrow">正在学习 · 知识树中的位置</p>
+    <strong class="learning-map-title">${esc(displayTitle(current))}</strong>
+    <div class="learning-map-neighbors">${neighbor('before')}${neighbor('after')}</div>
+    <div class="learning-map-footer"><span>只显示真实来源联系</span>${button('focus-selected','聚焦这处知识','','plain-button')}</div>`;
+}
+function renderLocation(){renderNetworkGuide();renderLearningMapContext();renderContinue();const o=space.byKey.get(scene.selected);$('#current-place').textContent=o?displayTitle(o):'整个数学空间';$('#scale-label').textContent=scene.localRelationshipFocus?'局部探索':o?objectLevelLabel(o):'全貌';updatePrimaryNavigation();}
 function renderNetworkGuide(){
   if(!scene||worldLayout!=='network')return;
   const mode=scene.networkView,current=scene.global,direction=scene.camera.position.clone().sub(scene.controls.target).normalize();
@@ -644,8 +676,8 @@ function openLearningLesson(id,{restore=false,questionId=null}={}){
 }
 
 function suspendJourney(){if(!journeyOpen||journeySuspended)return;journeySuspended=true;document.body.classList.remove('has-journey');$('#journey-surface').hidden=true;renderFocus();renderLocation();updatePrimaryNavigation();scheduleSave();}
-function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;updatePrimaryNavigation();scheduleSave();}
-function closeJourney(returnToPack=false){journeySuspended=false;const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
+function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
+function closeJourney(returnToPack=false){journeySuspended=false;const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-frame').src='about:blank';document.body.classList.remove('has-journey');scene.setRelations('off');renderLearningMapContext();if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
 function openSearch(packId=null){if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden)navigateTaskSurface('explore');searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'查找主题、知识群或知识点';renderSearch();$('#search-input').focus();}
 function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
   if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
@@ -722,7 +754,7 @@ function updateOverlays(){
   if(journeyOpen&&o?.kind==='node'&&scene.canLocate(o)){const source=scene.project(o.position),r=$('#journey-surface').getBoundingClientRect();if(source.visible&&Math.hypot(source.x-r.left,source.y-r.top)<180)tethers.push(`<path d="M ${source.x} ${source.y} L ${Math.max(r.left,Math.min(r.right,source.x))} ${Math.max(r.top+25,Math.min(r.bottom-25,source.y))}"/>`);}
   $('#work-tethers').innerHTML=tethers.join('');
   const d=scene.camera.position.distanceTo(scene.controls.target)/(scene.global?scene.camera.zoom:1);$('#distance-meter').style.width=`${Math.max(8,Math.min(100,Math.log(8000/d)/Math.log(8000/30)*100))}%`;
-  return [...document.querySelectorAll('#focus-card,#guide-panel,#guide-cues .guide-cue,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
+  return [...document.querySelectorAll('#focus-card,#guide-panel,#guide-cues .guide-cue,.work-panel,#journey-surface,.tool-rail,#workspace-list,#continue-card,#network-guide,#learning-map-context')].filter(el=>!el.hidden&&el.style.visibility!=='hidden'&&el.getClientRects().length).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};});
 }
 // The main navigation is a surface switch over the single map and existing records.
 // It does not select knowledge, move a camera or write learning evidence.
@@ -849,6 +881,10 @@ document.addEventListener('click',event=>{
   if(action==='nav-explore')navigateTaskSurface('explore');
    else if(action==='nav-learn')navigateTaskSurface('learn');
    else if(action==='nav-trail')navigateTaskSurface('trail');
+   else if(action==='toggle-observation'){
+     const expanded=document.body.classList.toggle('observation-expanded');
+     el.setAttribute('aria-expanded',String(expanded));el.textContent=expanded?'收起工具':'展开工具';scene.dirty=true;
+   }
    else if(action==='close-learning-hub')navigateTaskSurface('explore',{replace:true});
    else if(action==='learn-find'){navigateTaskSurface('explore',{replace:true});openSearch();}
    else if(action==='learn-session'){hideLearningHub();openLearningLesson(id);setTaskSurfaceUrl('learn',{replace:true});}
