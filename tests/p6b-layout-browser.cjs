@@ -99,6 +99,8 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      return {rows,shown:document.querySelector('#learning-map-context').textContent};
    });
    assert(sourceProof.rows.length>0&&sourceProof.rows.every(row=>row.hasSource),'every displayed neighboring concept has a real directional source edge');
+   const visibleSourcePairs=new Set(beforeLearn.relations.map(link=>link.from+'>'+link.to));
+   assert(sourceProof.rows.some(row=>visibleSourcePairs.has(row.direction==='before'?'node:'+row.other+'>'+beforeLearn.selected:beforeLearn.selected+'>node:'+row.other)),'learning shows an actual direct source connection in the same 3D graph');
    assert(sourceProof.shown.includes('相关基础')&&sourceProof.shown.includes('相关后续'),'both directions are identified without new mathematical edges');
    assert(await page.locator('#observation-task-toggle').getAttribute('aria-expanded')==='false','long observer tools collapse by default during real learning');
    assert(await page.locator('#network-legend').isHidden(),'collapsed observation tools do not compete with live math context');
