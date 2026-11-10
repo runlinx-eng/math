@@ -170,6 +170,7 @@ jobs:
             tests/p7-d7-multi-type-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
+            tests/p8-mode-real-click-browser.cjs \
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
@@ -233,6 +234,7 @@ jobs:
             verification/p7-d7/
             verification/p8-node-surfaces/
             verification/p8-trail-performance/
+            verification/p8-mode-clicks/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/
