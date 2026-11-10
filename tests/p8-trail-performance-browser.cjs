@@ -3,6 +3,8 @@
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/p8-trail-performance');
+const baseline=process.env.MATH_P8_BASELINE==='1';
+const oldChoose="function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'||taskSurfaceFromUrl()==='learn',inPlace=true}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible){visitGuideTarget(key);return;}if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace){if(scene.relationshipMap&&!scene.selected&&object.kind==='node'&&animate)scene.beginViewTransition('to-focus',850);else scene.viewTransition=null;scene.select(key);}else scene.focus(key,{animate});setHash(key);\n  if(object.kind==='node')mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});\n  else if(object.kind==='pack')mutateLearning(s=>{s.openedPacks[object.id]??=now();});\n  if(object.kind==='node'&&openLesson){if(worldLayout==='network'&&taskSurfaceFromUrl()==='learn')startLearningFromSelection();else{const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}}\n  renderFocus();renderLocation();scheduleSave();\n}";
 const check=(v,m)=>{if(!v)throw Error(m);};
 const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Math.floor(a.length/2)]):null,p95:a.length?([...a].sort((x,y)=>x-y)[Math.min(a.length-1,Math.ceil(a.length*.95)-1)]):null,max:a.length?Math.max(...a):null});
 (async()=>{
@@ -45,6 +47,11 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
  await page.route('**/space.js',async route=>{
   const response=await route.fetch();
   let body=await response.text();
+  if(baseline){
+   const begin=body.indexOf('function choose(key,'),end=body.indexOf('\nfunction overview(',begin);
+   check(begin>=0&&end>begin,'baseline chooser splice unavailable');
+   body=body.slice(0,begin)+oldChoose+body.slice(end);
+  }
   const instrument=(opening,closing,label)=>{
    check(body.includes(opening)&&body.includes(closing),'instrument anchor missing '+label);
    body=body.replace(opening,opening+'const __p8start=performance.now();try{');
@@ -104,13 +111,13 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
    check(sample.selected===key,'3D click did not select '+key);
    check(sample.clickToTitle!==null&&sample.clickToPaint!==null,'trail response missing '+key);
    samples.push(sample);
-   if(i===3)await page.screenshot({path:path.join(out,'trail-node-1440x900.png')});
+   if(i===3)await page.screenshot({path:path.join(out,baseline?'baseline-trail-1440x900.png':'trail-node-1440x900.png')});
   }
   const nameStats={};for(const name of ['mutateLearning','refreshLearning','renderTrailNodeContext']){
    const entries=samples.flatMap(s=>s.work.filter(w=>w.name===name).map(w=>w.ms));
    nameStats[name]=summarize(entries);
   }
-  const report={version:'actual-node-label-clicks',samples,metrics:{
+  const report={version:baseline?'pr59-unoptimized-choose':'optimized-choose',samples,metrics:{
    clickToTitle:summarize(samples.map(s=>s.clickToTitle)),
    clickToSummary:summarize(samples.map(s=>s.clickToSummary)),
    clickToPaint:summarize(samples.map(s=>s.clickToPaint)),
@@ -119,13 +126,13 @@ const summarize=a=>({count:a.length,median:a.length?([...a].sort((x,y)=>x-y)[Mat
    learningReadWriteMs:summarize(samples.flatMap(s=>s.storage.map(e=>e.ms))),
    functions:nameStats
   },errors};
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2));
-  console.log('P8_TRAIL_PERF_RESULT '+JSON.stringify(report.metrics));
+  fs.writeFileSync(path.join(out,baseline?'baseline.json':'results.json'),JSON.stringify(report,null,2));
+  console.log('P8_TRAIL_PERF_RESULT '+JSON.stringify({baseline,metrics:report.metrics}));
   check(errors.length===0,'runtime errors '+errors.join('; '));
  }catch(e){
-  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({error:String(e.stack||e),errors},null,2));
+  fs.writeFileSync(path.join(out,baseline?'baseline-failure.json':'failure.json'),JSON.stringify({error:String(e.stack||e),errors},null,2));
   console.error('P8_TRAIL_PERF_FAILURE '+(e.stack||e));
-  await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
+  await page.screenshot({path:path.join(out,baseline?'baseline-failure.png':'failure.png')}).catch(()=>{});
   process.exitCode=1;
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack||e);process.exitCode=1});
