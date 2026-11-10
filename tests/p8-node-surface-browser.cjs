@@ -55,6 +55,9 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
   await page.screenshot({path:path.join(out,'01-node-trail-1440x900.png')});
   await page.waitForFunction(()=>document.querySelector('#utility-frame').contentWindow.location.hash==='#trail');
   await trailFrame.locator('[data-do="node"][data-id="'+sourceNode+'"]').first().click();
+  // postMessage from the historical iframe is asynchronous: observe the parent
+  // processing the navigation before asserting the destination surface.
+  await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen&&document.querySelector('#utility-drawer')?.dataset.surface==='trail');
   s=await expect('trail',sourceNode,'trail-original-node-link');
   check(!s.journeyOpen&&!s.hub,'Trail record -> node preserves Trail context');
   // Directly changing selected knowledge while Trail is active scopes the summary;
