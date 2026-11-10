@@ -31,7 +31,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   check(await page.locator('#focus-card [data-context-section="relations"] .network-relations').count()===1,'4 relationship tracing: original relation detail accessible');
   check(sameCamera(initial,await snap()),'concept and relationship selection preserve camera');
   await page.locator('#focus-card [data-action="open"]').first().click();
-  await frame.locator('#p3-learning-flow').waitFor();
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
   await frame.locator('#learning-support > summary').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('尚未提交检查')),'5 hands-on learning: configured activity opens without fake completion');
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'a task is checkable without a separate start');
@@ -57,7 +57,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
     check(sameCamera(before,await snap()),'viewport resize does not move 3D camera '+w+'x'+h);
   }
   await page.reload();await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen);
-  await frame.locator('#p3-learning-flow').waitFor();
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
   await frame.locator('#learning-support > summary').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('2 次提交')),'9 resume: actual attempts survive refresh');
   await page.locator('#journey-surface [data-action="close-journey"]').click();
