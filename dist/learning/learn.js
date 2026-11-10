@@ -181,13 +181,13 @@ function syncLearningRegions(){
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
- $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':'发现与继续';
+ $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
  $('#action-cue').textContent=executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,repair});
  $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
-  $('#next-guidance').hidden=stage==='reflect';
+  $('#next-guidance').hidden=stage==='reflect'||stage==='explore';
   $('#next-guidance').textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。':stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
  const box=$('#math-explanation');
  const last=a.cases?.[a.index]?.attempts?.at(-1)?.value;

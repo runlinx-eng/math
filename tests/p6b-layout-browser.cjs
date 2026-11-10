@@ -87,6 +87,30 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    await page.frameLocator('#journey-frame').locator('#p3-learning-flow').waitFor();
    const beforeLearn=await snap();
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
+   assert(await page.locator('#learning-map-context').isVisible(),'learning maps the selected concept into the original 3D space');
+   assert(await page.locator('.place-indicator').isHidden(),'old location breadcrumb does not overlap the collapsed observer toolbar');
+   const sourceProof=await page.evaluate(async()=>{
+     const {edges}=await (await fetch('./data/atlas.json')).json();
+     const selected=mathSpace.snapshot().selected.slice(5);
+     const rows=[...document.querySelectorAll('#learning-map-context [data-source-key]')].map(el=>{
+       const other=el.dataset.sourceKey.slice(5),direction=el.closest('[data-direction]').dataset.direction;
+       const hasSource=edges.some(e=>direction==='before'?e.prerequisiteId===other&&e.topicId===selected:e.prerequisiteId===selected&&e.topicId===other);
+       return {other,direction,hasSource};
+     });
+     return {rows,shown:document.querySelector('#learning-map-context').textContent};
+   });
+   assert(sourceProof.rows.length>0&&sourceProof.rows.every(row=>row.hasSource),'every displayed neighboring concept has a real directional source edge');
+   const visibleSourcePairs=new Set(beforeLearn.relations.map(link=>link.from+'>'+link.to));
+   assert(sourceProof.rows.some(row=>visibleSourcePairs.has(row.direction==='before'?'node:'+row.other+'>'+beforeLearn.selected:beforeLearn.selected+'>node:'+row.other)),'learning shows an actual direct source connection in the same 3D graph');
+   assert(sourceProof.shown.includes('相关基础')&&sourceProof.shown.includes('相关后续'),'both directions are identified without new mathematical edges');
+   assert(await page.locator('#observation-task-toggle').getAttribute('aria-expanded')==='false','long observer tools collapse by default during real learning');
+   assert(await page.locator('#network-legend').isHidden(),'collapsed observation tools do not compete with live math context');
+   await page.locator('#observation-task-toggle').click();
+   assert(await page.locator('#observation-task-toggle').getAttribute('aria-expanded')==='true','all original map tools can be expanded');
+   assert(await page.locator('#network-legend').isVisible(),'expanded observation tools retain their existing legend');
+   assert(await page.locator('#learning-map-context').isHidden(),'tool overlay and learning context never fight for the same map position');
+   await page.locator('#observation-task-toggle').click();
+   assert(await page.locator('#learning-map-context').isVisible()&&equalCamera(beforeLearn,await snap()),'returning to math context preserves the source camera and lesson');
    await page.waitForTimeout(130);
    const taskContrast=await nodeContrast(unrelatedKey);
    console.log('P8_NODE_CONTRAST '+JSON.stringify({unrelatedKey,beforeContrast,taskContrast,ratio:taskContrast/beforeContrast}));
@@ -102,11 +126,19 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      assert(b.nav&&b.nav.bottom<b.learn.y,'learning clears top navigation '+w+'x'+h);
     if(w>800)assert(b.guide&&b.guide.width<=200,'observation rail leaves map space '+w+'x'+h);
      if(w>800)assert(b.canvas&&b.canvas.right<=b.learn.x-7,'real 3D viewport avoids lesson overlay '+w+'x'+h);
-     else assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
+     if(w>800){
+       const contextRect=await page.locator('#learning-map-context').boundingBox();
+       assert(contextRect&&contextRect.x>=b.canvas.x&&contextRect.x+contextRect.width<=b.canvas.right+2&&contextRect.y>=b.nav.bottom-4,
+         'real math relationship summary fits in the left 3D viewport '+w+'x'+h);
+     }else{
+       assert(await page.locator('#learning-map-context').isHidden(),'compact viewport keeps the existing single overlay workspace '+w+'x'+h);
+       assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
+     }
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});
    }
    await page.locator('.primary-nav [data-action="nav-trail"]').click();
    await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');
+   assert(await page.locator('#learning-map-context').isHidden(),'learning-only map context hides when switching to real trail');
    const trail=page.frameLocator('#utility-frame');
    await trail.locator('[data-trail-tier="evidence"] [data-lesson-record]').first().waitFor();
    assert(await trail.locator('[data-trail-tier="evidence"] [data-lesson-record]').count()===1,'actual saved explanation appears in evidence');
@@ -131,10 +163,37 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    await page.keyboard.press('Escape');
    assert((await snap()).journeySuspended,'Esc suspends current activity without unloading');
    await page.waitForTimeout(130);
-   assert(Math.abs((await nodeContrast(unrelatedKey))-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
+   const afterContrast=await nodeContrast(unrelatedKey);
+   const exitState=await page.evaluate(()=>({className:document.body.className,relationMode:mathSpace.snapshot().relationMode,selected:mathSpace.snapshot().selected,journeySuspended:mathSpace.snapshot().journeySuspended,contextHidden:document.querySelector('#learning-map-context').hidden}));
+   console.log('P8_EXIT_CONTRAST '+JSON.stringify({beforeContrast,taskContrast,afterContrast,exitState}));
+   assert(Math.abs(afterContrast-beforeContrast)<.01,'task close restores the original exploration graph hierarchy');
+   // Check browser Back while the lesson is still suspended. Explicitly ending
+   // the activity replaces its route URL and should not be used as this Back
+   // history fixture.
    await page.goBack();
    await page.waitForTimeout(100);
    assert((await snap()).counts.edges===1223,'browser history retains source graph');
+   // Esc suspends an activity; the explicit close button destroys it. Verify
+   // both exits restore the real source edges, selected knowledge and WebGL tint.
+   await page.locator('.primary-nav [data-action="nav-learn"]').click();
+   await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen&&!mathSpace.snapshot().journeySuspended);
+   assert(equalCamera(baseline,await snap()),'resuming suspended lesson before explicit close does not move camera');
+   await page.locator('#journey-surface [data-action="close-journey"]').click();
+   await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen);
+   await page.waitForTimeout(130);
+   const explicitlyClosed=await snap();
+   assert(explicitlyClosed.selected===selectedGraph.selected&&explicitlyClosed.relationMode==='source',
+     'explicit lesson close restores selected knowledge and its source edges');
+   assert(equalCamera(baseline,explicitlyClosed),'explicit lesson close preserves original 3D camera');
+   assert(Math.abs((await nodeContrast(unrelatedKey))-beforeContrast)<.01,
+     'explicit lesson close restores original exploration colors');
+   assert(await page.locator('#learning-map-context').isHidden()&&await page.locator('#observation-task-toggle').isHidden(),
+     'explicit lesson close clears task-only overlays and restores normal observation controls');
+   // The retired lesson iframe must not consume browser Back. Our previous
+   // top-level navigation was Trail, so Back should restore that surface.
+   await page.evaluate(()=>history.back());
+   await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')==='trail',null,{timeout:8000});
+   assert(!(await snap()).journeyOpen,'browser Back after explicit close does not revive a destroyed lesson');
    assert(!errors.length,'no uncaught errors');
    fs.writeFileSync(path.join(output,'checks.json'),JSON.stringify({checks,errors,screenshots:sizes.flatMap(([w,h])=>['explore','learn','trail'].map(mode=>mode+'-'+w+'x'+h+'.png')),manualVisualApproval:false},null,2));
    console.log('P6-B Chromium layout checks: '+checks.length+' passed');

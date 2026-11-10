@@ -1055,3 +1055,123 @@ body[data-world="network"].has-journey #network-guide{
   background:#fffef9f2;
   box-shadow:0 5px 18px #23483b12;
 }
+
+/* P8-D2: a source-grounded learning context lives inside the same live 3D
+   canvas. It is a short reading aid, not a second graph or a camera reset. */
+body[data-world="network"] #learning-map-context{
+  position:absolute;
+  z-index:31;
+  top:158px;
+  left:20px;
+  width:min(350px,calc(100% - 40px));
+  max-height:min(250px,calc(100dvh - 350px));
+  overflow:auto;
+  overscroll-behavior:contain;
+  background:#fffef9f5;
+  border:1px solid #cbdccf;
+  border-left:3px solid #4d866f;
+  border-radius:11px;
+  padding:11px 12px;
+  box-shadow:0 8px 28px #253c3020;
+  font-size:12px;
+  line-height:1.45;
+  color:#244c3f;
+}
+body[data-world="network"] #learning-map-context .learning-map-eyebrow{
+  margin:0 0 4px;
+  color:#587c69;
+  font-size:11px;
+  font-weight:650;
+}
+body[data-world="network"] #learning-map-context .learning-map-title{
+  display:block;
+  font-size:15px;
+  line-height:1.4;
+  font-weight:700;
+  overflow-wrap:anywhere;
+  margin-bottom:9px;
+}
+body[data-world="network"] #learning-map-context .learning-map-neighbors{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+body[data-world="network"] #learning-map-context .learning-map-neighbor{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  gap:3px;
+  padding:8px 9px;
+  background:#f2f5ef;
+  border-radius:7px;
+  border-top:2px solid #b3cabb;
+}
+body[data-world="network"] #learning-map-context .learning-map-neighbor[data-direction="before"]{border-top-color:#be986f}
+body[data-world="network"] #learning-map-context .learning-map-neighbor[data-direction="after"]{border-top-color:#6999ab}
+body[data-world="network"] #learning-map-context .learning-map-neighbor span{font-size:10px;color:#667b6c}
+body[data-world="network"] #learning-map-context .learning-map-neighbor strong{font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+body[data-world="network"] #learning-map-context .learning-map-neighbor small,
+body[data-world="network"] #learning-map-context .learning-map-neighbor em{font-size:10px;color:#728477;font-weight:400;font-style:normal}
+body[data-world="network"] #learning-map-context .learning-map-footer{
+  border-top:1px solid #dce7dc;
+  padding-top:7px;
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  justify-content:space-between;
+}
+body[data-world="network"] #learning-map-context .learning-map-footer>span{font-size:10px;color:#697d70}
+body[data-world="network"] #learning-map-context [data-action="focus-selected"]{
+  color:#236453;
+  border:1px solid #bdcebf;
+  background:#f2f7f0;
+  padding:7px 9px;
+  font-size:11px;
+  font-weight:650;
+  white-space:nowrap;
+}
+body[data-world="network"].has-learning-map-context #observation-task-toggle{
+  display:inline-flex;
+  align-items:center;
+  background:#edf3eb;
+  border:1px solid #cedfce;
+  border-radius:7px;
+  padding:7px 9px;
+  min-height:32px;
+  font-size:11px;
+  color:#315c4d;
+  white-space:nowrap;
+}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide{
+  display:flex!important;
+  align-items:center;
+  padding:6px 9px;
+  width:190px;
+  height:auto;
+  max-height:52px;
+  overflow:visible;
+  border:1px solid #d5e0d5;
+  border-radius:9px;
+}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide > :not(.observation-heading){display:none!important}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide .observation-heading{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:4px;
+  min-width:0;
+}
+body[data-world="network"].has-learning-map-context:not(.observation-expanded) #network-guide .observation-heading>span{display:none}
+body[data-world="network"].has-learning-map-context.observation-expanded #learning-map-context{display:none!important}
+@media(max-width:1100px) and (min-width:801px){
+  body[data-world="network"] #learning-map-context{left:12px;width:min(310px,calc(100% - 24px))}
+}
+@media(max-width:800px){
+  body[data-world="network"] #learning-map-context{display:none!important}
+}
+
+/* The compact lesson context already names the selected concept. Hide the
+   old absolute-position breadcrumb so it never collides with observer tools. */
+body[data-world="network"].has-learning-map-context .place-indicator{display:none!important}
