@@ -71,9 +71,13 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   const entry=await page.evaluate(()=>({hub:!document.querySelector('#learning-hub').hidden,journey:!document.querySelector('#journey-surface').hidden}));
   check(entry.hub||entry.journey,'related knowledge offers a real lesson or explains unavailable activity');
   if(entry.journey){
-    const src=await page.locator('#journey-frame').getAttribute('src');
-    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'related node opens a configured source activity');
-    if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
+    await page.waitForFunction(()=>{
+      const f=document.querySelector('#journey-frame'),url=f?.contentWindow?.location.href||'';
+      return /\/(?:learn|journey)\.html#/.test(url)&&!!f.contentDocument?.body?.textContent.trim();
+    });
+    const loadedUrl=await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.location.href);
+    check(/\/(?:learn|journey)\.html#/.test(loadedUrl),'related node opens a configured source activity');
+    if(loadedUrl.includes('/learn.html#'))await frame.locator('#instruction').waitFor();
     check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
   }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
   // The original P3 flow checks an explicit return. P7-D5 tests browser Back/Forward

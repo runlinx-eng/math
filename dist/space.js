@@ -669,13 +669,21 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   // a rapid selection at a compact desktop viewport must never show stale bounds.
   if(worldLayout==='network')updateOverlays();
 }
+// Embedded task documents are independent of the parent mode-history stack.
+// Replace their current entries, including their initial about:blank entry,
+// rather than assigning iframe.src and creating a Back/Forward detour.
+// Do not reload an already-open workpiece when its destination is unchanged.
+function replaceEmbeddedFrame(frame,target){
+  const url=new URL(target,location.href).href;
+  if(frame.contentWindow.location.href!==url)frame.contentWindow.location.replace(url);
+}
 function openJourney(step,{restore=false,preserveSurface=false}={}){
   if(!preserveSurface)setTaskSurfaceUrl('learn',{replace:taskSurfaceFromUrl()==='learn'});
   journeySuspended=false;hideLearningHub();closeUtility();
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
   journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
-  $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');frame.src=`journey.html#${step}`;
+  $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');replaceEmbeddedFrame(frame,`journey.html#${step}`);
   // The task workspace is independent of the 3D camera: never fly a map behind a lesson.
   scene.tween=null;scene.viewTransition=null;
   $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
@@ -691,7 +699,7 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  // Back/Forward mode-history after several direct 3D lesson changes.
  // Replacement navigation (including first load from about:blank) keeps
  // child documents out of parent mode Back/Forward history.
- frame.contentWindow.location.replace(new URL(nextLessonUrl,location.href).href);
+ replaceEmbeddedFrame(frame,nextLessonUrl);
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
  renderLocation();updatePrimaryNavigation();scheduleSave();
@@ -701,7 +709,7 @@ function suspendJourney(){if(!journeyOpen||journeySuspended)return;journeySuspen
 function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');$('#focus-card').hidden=true;renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
 function closeJourney(returnToPack=false,{clearFrame=true}={}){journeySuspended=false;const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');// Replace the retired lesson document without adding a child-frame history
  // entry that would intercept the parent Back action after explicit close.
- if(clearFrame)$('#journey-frame').contentWindow.location.replace('about:blank');document.body.classList.remove('has-journey');scene.setRelations('off');renderLearningMapContext();if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
+ if(clearFrame)replaceEmbeddedFrame($('#journey-frame'),'about:blank');document.body.classList.remove('has-journey');scene.setRelations('off');renderLearningMapContext();if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
 function openSearch(packId=null){if(!$('#learning-hub').hidden)hideLearningHub();searchPack=packId;searchLimit=24;closePopovers();$('#search-popover').hidden=false;$('#search-input').value='';$('#search-label').textContent=packId?space.packs.get(packId).title:'查找主题、知识群或知识点';renderSearch();$('#search-input').focus();}
 function renderSearch(){const q=$('#search-input').value.trim().toLowerCase();let matches;
   if(searchPack)matches=space.packs.get(searchPack).nodeIds.map(id=>space.nodes.get(id));
@@ -934,8 +942,7 @@ function showUtility(which){
   const frame=$('#utility-frame');frame.dataset.embeddedSrc=`v2.html?embedded=1#${which}`;
   // Replacing the iframe's current entry prevents its load from consuming the
   // parent's Back/Forward task-history step.
-  if(frame.contentWindow.location.href!==new URL(frame.dataset.embeddedSrc,location.href).href)
-    frame.contentWindow.location.replace(new URL(frame.dataset.embeddedSrc,location.href).href);
+  replaceEmbeddedFrame(frame,frame.dataset.embeddedSrc);
   updatePrimaryNavigation();
 }
 function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}

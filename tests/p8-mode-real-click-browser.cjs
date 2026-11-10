@@ -15,7 +15,7 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   selected:mathSpace.snapshot().selected,
   journey:!document.querySelector('#journey-surface').hidden,
   trail:!document.querySelector('#utility-drawer').hidden&&document.querySelector('#utility-drawer').dataset.surface==='trail',
-  iframe:document.querySelector('#journey-frame').getAttribute('src'),
+  iframe:document.querySelector('#journey-frame').contentWindow.location.href,
   title:document.querySelector('#trail-node-context .trail-node-heading strong')?.textContent,
   summary:document.querySelector('#trail-node-context')?.textContent,
   camera:mathSpace.snapshot().position
@@ -24,6 +24,20 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   let s=await state();check(s.mode===mode&&s.urlMode===mode&&(!node||s.selected===node),'mode/node mismatch '+label+': '+JSON.stringify(s));
   checks.push({label,mode,node:s.selected,task:s.iframe,trail:s.trail});
   return s;
+ };
+ const waitNativeTask=async key=>{
+  const id=await page.evaluate(async key=>(await import('./learning/catalog.js')).lessonForTopic(key.slice(5)),key);
+  check(!!id,'clicked node has an actual configured native lesson '+key);
+  await page.waitForFunction(id=>{
+   const f=document.querySelector('#journey-frame');
+   return !document.querySelector('#journey-surface').hidden&&
+     f.contentWindow.location.pathname.endsWith('/learn.html')&&
+     f.contentWindow.location.hash==='#'+id&&
+     !!f.contentDocument?.querySelector('#instruction')?.textContent.trim()&&
+     !!f.contentDocument?.querySelector('#work');
+  },id);
+  check(await page.frameLocator('#journey-frame').locator('#work').isVisible(),'clicked node opened visible native workpiece '+key);
+  return id;
  };
  const search=async id=>{
   await page.locator('[data-action="search"]').first().click();
@@ -60,12 +74,24 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
   await verify('explore-details-open-learning','learn','node:mt_ndGqFPWyen');
   const nodeB=await clickVisible({playable:true});
+  const lessonB=await waitNativeTask(nodeB);
   s=await verify('learning-click-real-label-B','learn',nodeB);
-  check(s.journey&&s.iframe.includes('#'),'visible 3D click must open native learning task');
-  await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
+  check(s.journey&&s.iframe.endsWith('#'+lessonB),'visible 3D click must open its own native learning task');
   const next=await clickVisible({playable:true});
+  const lessonC=await waitNativeTask(next);
   s=await verify('learning-click-real-label-C','learn',next);
-  check(s.journey,'second real 3D node must keep learning');
+  check(s.journey&&s.iframe.endsWith('#'+lessonC),'second real 3D node must open the newly selected task');
+  // Consecutive iframe replacements must not steal the parent's Back/Forward.
+  // The suspended lesson remains mounted, including unsaved in-memory work.
+  await page.evaluate(()=>{document.querySelector('#journey-frame').contentWindow.__p8HistoryProbe='same-workpiece';});
+  await page.goBack();
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null);
+  await verify('learning-multiple-clicks-back','explore',next);
+  await page.goForward();
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')==='learn');
+  await waitNativeTask(next);
+  check(await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.__p8HistoryProbe==='same-workpiece'),'mode Forward restores the same unsaved workpiece');
+  await verify('learning-multiple-clicks-forward','learn',next);
   await page.screenshot({path:path.join(out,'01-learn-label-click-1440x900.png')});
   await nav('trail').click();s=await verify('learn-to-trail','trail',next);
   check(s.trail&&s.title,'trail must show this selected node');
@@ -77,13 +103,10 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await verify('trail-to-explore','explore',trailNode);
   await nav('learn').click();
   await verify('explore-to-learn','learn',trailNode);
-  const beforeHistory=await page.evaluate(()=>({parent:location.href,parentCount:history.length,child:document.querySelector('#journey-frame').contentWindow.location.href}));
-  await page.evaluate(()=>window.history.back());
-  await page.waitForTimeout(1200);
-  console.log('P8_HISTORY_DEBUG '+JSON.stringify({before:beforeHistory,after:await page.evaluate(()=>({parent:location.href,parentCount:history.length,child:document.querySelector('#journey-frame').contentWindow.location.href,pressed:document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface}))}));
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null,null,{timeout:4000});
+  await page.goBack();
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null);
   await verify('history-back','explore',trailNode);
-  await page.evaluate(()=>window.history.forward());
+  await page.goForward();
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')==='learn');
   await verify('history-forward','learn',trailNode);
   await page.reload();

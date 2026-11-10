@@ -13,6 +13,16 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
  page.on('pageerror',err=>errors.push(String(err)));
  const nav=key=>page.locator('.primary-nav [data-action="nav-'+key+'"]');
  const frame=page.frameLocator('#journey-frame'),trailFrame=page.frameLocator('#utility-frame');
+ const waitNativeTask=async id=>{
+  await page.waitForFunction(id=>{
+   const f=document.querySelector('#journey-frame');
+   return f?.contentWindow?.location.pathname.endsWith('/learn.html')&&
+     f.contentWindow.location.hash==='#'+id&&
+     !!f.contentDocument?.querySelector('#instruction')?.textContent.trim()&&
+     !!f.contentDocument?.querySelector('#work');
+  },id);
+  check(await frame.locator('#work').isVisible(),'native math workpiece must be visible for '+id);
+ };
  const inspect=()=>page.evaluate(()=>({
   selected:mathSpace.snapshot().selected,
   journeyOpen:mathSpace.snapshot().journeyOpen,
@@ -41,9 +51,9 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
   let s=await expect('explore',sourceNode,'explore-selected');
   check(!s.journeyOpen&&await page.locator('#focus-card').isVisible(),'Explore must show knowledge card, not a math activity');
   const original=s;
-  await nav('learn').click();await frame.locator('#instruction').waitFor();
+  await nav('learn').click();await waitNativeTask('share');
   s=await expect('learn',sourceNode,'selected-learn');
-  check(s.journeyOpen&&!s.suspended&&await page.locator('#journey-frame').getAttribute('src').then(v=>v.includes('#share')),'Learn must open source node native task');
+  check(s.journeyOpen&&!s.suspended,'Learn must open source node native task');
   check(cameraStable(original,s),'mode selection must not move the 3D camera');
   await frame.locator('#actions [data-do="check"]').click();
   check(await frame.locator('#scene').getAttribute('data-stage')==='revise','first native incorrect submission is preserved');
@@ -85,9 +95,9 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
   check(!s.hub,'search opens over map without returning to Explore');
   await page.locator('#search-input').fill(fractionNode);
   await page.locator('#search-results [data-key="node:'+fractionNode+'"]').click();
-  await frame.locator('#instruction').waitFor();
+  await waitNativeTask('equivalent');
   s=await expect('learn',fractionNode,'search-selected-learn');
-  check(s.journeyOpen&&await page.locator('#journey-frame').getAttribute('src').then(v=>v.includes('#equivalent')),'search selection must start that node, not return to Explore');
+  check(s.journeyOpen,'search selection must start that node, not return to Explore');
   await page.screenshot({path:path.join(out,'03-search-to-learning-1440x900.png')});
   await nav('trail').click();
   s=await expect('trail',fractionNode,'learning-to-trail');
@@ -104,7 +114,7 @@ const sourceNode='mt_ndGqFPWyen',fractionNode='mt_Ep7TDFuYUa';
    await page.screenshot({path:path.join(out,'04-trail-'+size.width+'x'+size.height+'.png')});
   }
   await page.locator('#trail-node-context [data-action="trail-to-learn"]').click();
-  await frame.locator('#instruction').waitFor();
+  await waitNativeTask('equivalent');
   s=await expect('learn',fractionNode,'trail-to-learn-same-node');
   check(s.journeyOpen,'Trail -> Learn opens same node, no unrelated task');
   check(errors.length===0,'page errors: '+errors.join('; '));

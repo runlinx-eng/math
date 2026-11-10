@@ -38,7 +38,10 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   const before=await snap(),coords=JSON.stringify(before.positions);
   check(before.zoomEnabled===true,'knowledge selection shares panorama zoom; only the actual learning workspace hides map tools');
   await page.locator('#focus-card [data-action="open"]').first().click();
-  await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
+  await page.waitForFunction(()=>{
+    const f=document.querySelector('#journey-frame');
+    return document.body.classList.contains('has-journey')&&f.contentWindow.location.pathname.endsWith('/learn.html')&&!!f.contentDocument?.querySelector('#lesson');
+  });
   const frame=page.frameLocator('#journey-frame');
   await frame.locator('#lesson').waitFor();
   const opened=await snap();
