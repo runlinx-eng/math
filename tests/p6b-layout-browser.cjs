@@ -189,6 +189,11 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      'explicit lesson close restores original exploration colors');
    assert(await page.locator('#learning-map-context').isHidden()&&await page.locator('#observation-task-toggle').isHidden(),
      'explicit lesson close clears task-only overlays and restores normal observation controls');
+   // The retired lesson iframe must not consume browser Back. Our previous
+   // top-level navigation was Trail, so Back should restore that surface.
+   await page.evaluate(()=>history.back());
+   await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')==='trail',null,{timeout:8000});
+   assert(!(await snap()).journeyOpen,'browser Back after explicit close does not revive a destroyed lesson');
    assert(!errors.length,'no uncaught errors');
    fs.writeFileSync(path.join(output,'checks.json'),JSON.stringify({checks,errors,screenshots:sizes.flatMap(([w,h])=>['explore','learn','trail'].map(mode=>mode+'-'+w+'x'+h+'.png')),manualVisualApproval:false},null,2));
    console.log('P6-B Chromium layout checks: '+checks.length+' passed');
