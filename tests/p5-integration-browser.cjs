@@ -32,6 +32,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   check(sameCamera(initial,await snap()),'concept and relationship selection preserve camera');
   await page.locator('#focus-card [data-action="open"]').first().click();
   await frame.locator('#p3-learning-flow').waitFor();
+  await frame.locator('#learning-support > summary').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('尚未提交检查')),'5 hands-on learning: configured activity opens without fake completion');
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'a task is checkable without a separate start');
   await frame.locator('#actions [data-do="check"]').click();
@@ -57,6 +58,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   }
   await page.reload();await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen);
   await frame.locator('#p3-learning-flow').waitFor();
+  await frame.locator('#learning-support > summary').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('2 次提交')),'9 resume: actual attempts survive refresh');
   await page.locator('#journey-surface [data-action="close-journey"]').click();
   await page.locator('.primary-nav [data-action="nav-trail"]').click();
