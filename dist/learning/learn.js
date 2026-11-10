@@ -33,7 +33,7 @@ import {captureSession,sessionRecord,rememberSession,addQuestion,questionAction,
 import {askQuestion} from './question-ui.js';
 import {thinkingFeedback} from './thinking-feedback.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from './workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
 import {CubeView} from './cubes.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
@@ -144,11 +144,11 @@ function renderTaskActions(checked=currentSubmission(a)){
  const stage=learningStage(a,checked),p03=isP03();
  const plan=learningActionPlan({
    stage,hasNextTask:a.index<sessionTasks(id).length-1,p03,
-   readyToCheck:!p03||p03Stage(task(),model()).ready
+   readyToCheck:studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready}).readyToCheck
  });
  const buttonFor=(spec,primary=false)=>btn(spec.action,esc(spec.label),
    (spec.disabled?'disabled ':'')+(spec.attrs||''),primary);
- $('#actions').innerHTML=buttonFor(plan.primary,true)+plan.secondary.map(spec=>buttonFor(spec)).join('');
+ $('#actions').innerHTML=buttonFor(plan.primary,studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready}).kind!=='widget')+plan.secondary.map(spec=>buttonFor(spec)).join('');
  $('#actions').dataset.actionStage=stage;
  return plan;
 }
@@ -177,6 +177,8 @@ function syncReflectionPrimary(){
 function syncLearningRegions(){
  const status=currentSubmission(a),stage=learningStage(a,status);
  const scene=$('#scene');scene.dataset.stage=stage;
+ const support=$('#learning-support');
+ if(support&&support.dataset.session!==id){support.open=false;support.dataset.session=id;}
  const phase=learningActionPlan({stage}).step;
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
@@ -184,8 +186,13 @@ function syncLearningRegions(){
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
+ const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready});
+ $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary');el.removeAttribute('data-study-primary');});
+ const widgetAction=focus.selector?$('#work').querySelector(focus.selector):null;
+ if(widgetAction){widgetAction.classList.add('study-primary');widgetAction.setAttribute('data-study-primary','true');}
+ $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
- $('#action-cue').textContent=executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,repair});
+ $('#action-cue').textContent=focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
  $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
   $('#next-guidance').hidden=stage==='reflect'||stage==='explore';
   $('#next-guidance').textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。':stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
@@ -237,11 +244,11 @@ function syncSubmissionUI(){
  if(a.view!=='task')return;
  const state=currentSubmission(a);
  renderTaskActions(state);
- syncLearningRegions();
  if(state.status==='modified'){
   const box=$('#check-feedback');
   if(box){box.hidden=false;box.dataset.state='guidance';box.textContent='已修改，尚未重新检查。上次结果保留在历史记录中。';}
  }
+ syncLearningRegions();
 }
 
 function sync(){const t=task(),m=model();if(isExtra(t)){if($('.m28-success')&&!inspect(t,m).correct)$('.m28-success').remove();syncB13Controls(t,m,$('#work'));syncB20Controls(t,m,$('#work'));if($('#extra-visual')&&t.type!=='x-countboard')$('#extra-visual').innerHTML=visualExtra(t,m);if(t.type==='x-s23-frame'&&extraLab)extraLab.attach($('#extra-world'));extraLab?.update(m);document.querySelectorAll('[data-xvalue]').forEach(el=>el.textContent=el.dataset.xvalue.split('.').reduce((v,k)=>v?.[k],m));const estimate=$('[data-x="estimate"]');if(estimate)estimate.disabled=m.guess===null||m.prediction!==null;document.querySelectorAll('[data-xfield^="pair."]').forEach(el=>el.disabled=m.fold>0);if(task().type==='x-grow'&&task().towers){document.querySelectorAll('[data-xfield^="heights."]').forEach(el=>el.disabled=m.prediction===null);const prediction=$('[data-xfield="prediction"]');if(prediction)prediction.disabled=m.committed!==null;}$('#instruction').textContent=isP03()?P03_NAMES[a.index]:t.prompt;syncP03(t,m);syncSubmissionUI();return;}if($('#grid-count'))$('#grid-count').textContent=m.selected.length;document.querySelectorAll('.hundred button').forEach((el,i)=>{el.classList.toggle('on',m.selected.includes(i));el.setAttribute('aria-pressed',String(m.selected.includes(i)));});if(t.type==='partition'){const xs=[0,...m.cuts,100];document.querySelectorAll('.bar .part').forEach((el,i)=>el.style.width=(xs[i+1]-xs[i])+'%');document.querySelectorAll('[data-cut]').forEach((el,i)=>{el.style.left=m.cuts[i]+'%';el.setAttribute('aria-valuenow',m.cuts[i]);});}if(t.type==='line'){$('#line-point').setAttribute('cx',30+540*m.mark/t.den);$('#line-label').textContent=`${m.mark}/${t.den}`+(t.den===100?' = '+m.mark/100:'');}if(t.type==='match')document.querySelectorAll('[data-liquid]').forEach((el,i)=>el.style.height=m.heights[i]+'%');if(t.type==='decompose'&&$('#cut-label'))$('#cut-label').textContent=`第 ${m.cut} 层边界`;if($('#filled-count'))$('#filled-count').textContent=` 已放 ${m.filled?.length||0} 块`;if(t.build&&t.estimate&&$('[data-field="estimate"]'))$('[data-field="estimate"]').disabled=!!m.filled?.length;if(cube)cube.update(m,{spread});if($('#editable-chart')){$('#editable-chart').innerHTML=chartHTML(t,m,view||t.view);document.querySelectorAll('[data-count]').forEach(el=>el.textContent=m.counts[el.dataset.count]);}document.querySelectorAll('[data-survey-tally]').forEach(el=>el.innerHTML=tally(m.counts[el.dataset.surveyTally]));$('#instruction').textContent=t.prompt;syncSubmissionUI();}
