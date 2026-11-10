@@ -81,7 +81,7 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await page.evaluate(()=>window.history.back());
   await page.waitForTimeout(1200);
   console.log('P8_HISTORY_DEBUG '+JSON.stringify({before:beforeHistory,after:await page.evaluate(()=>({parent:location.href,parentCount:history.length,child:document.querySelector('#journey-frame').contentWindow.location.href,pressed:document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface}))}));
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null,{timeout:4000});
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null,null,{timeout:4000});
   await verify('history-back','explore',trailNode);
   await page.evaluate(()=>window.history.forward());
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')==='learn');
