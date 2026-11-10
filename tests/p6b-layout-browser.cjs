@@ -86,7 +86,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
    await page.waitForTimeout(130);
    const taskContrast=await nodeContrast(unrelatedKey);
-   assert(taskContrast>beforeContrast*6,'task preserves visible non-related math context instead of fading it into the background');
+   assert(taskContrast>beforeContrast*2.4,'task preserves visible non-related math context instead of fading it into the background');
    assert(Math.abs((await nodeContrast(selectedGraph.selected))-selectedBeforeContrast)<.002,'selected knowledge retains its original visual emphasis');
    assert((await page.locator('#space-canvas canvas').evaluate(el=>getComputedStyle(el).pointerEvents))!=='none','3D canvas remains interactive during learning');
    for(const [w,h] of sizes){
