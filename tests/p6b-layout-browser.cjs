@@ -88,6 +88,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const beforeLearn=await snap();
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
    assert(await page.locator('#learning-map-context').isVisible(),'learning maps the selected concept into the original 3D space');
+   assert(await page.locator('.place-indicator').isHidden(),'old location breadcrumb does not overlap the collapsed observer toolbar');
    const sourceProof=await page.evaluate(async()=>{
      const {edges}=await (await fetch('./data/atlas.json')).json();
      const selected=mathSpace.snapshot().selected.slice(5);
