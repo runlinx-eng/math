@@ -434,10 +434,10 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(!await embedded.locator('#source-goals-details').evaluate(el=>el.open),'raw source goals do not appear by default');
    const reflectionOrder=await embedded.locator('#note').evaluate(el=>{
       const next=el.ownerDocument.querySelector('#actions [data-primary-destination]');
-      return {noteBottom:el.getBoundingClientRect().bottom,nextTop:next.getBoundingClientRect().top};
+      return {noteBeforeAction:!!(el.compareDocumentPosition(next)&Node.DOCUMENT_POSITION_FOLLOWING)};
    });
-   requireState(reflectionOrder.nextTop<reflectionOrder.noteBottom,'the single next action keeps its predictable top position, while optional writing remains below');
-   requireState(await embedded.locator('#actions').evaluate(el=>!!el.closest('.stage-top')),'reflection keeps the same command location');
+   requireState(reflectionOrder.noteBeforeAction,'optional reflection comes before the single next action in the actual reading order');
+   requireState(await embedded.locator('#actions').evaluate(el=>!!el.closest('.execution-command')),'reflection keeps the same single sticky bottom action dock');
    const actionVisibility=await primaryLinked.evaluate(el=>{
      const r=el.getBoundingClientRect();
      return {top:r.top,bottom:r.bottom,viewport:el.ownerDocument.defaultView.innerHeight};
