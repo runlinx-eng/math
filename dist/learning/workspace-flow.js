@@ -157,6 +157,35 @@ export function checkedMathExplanation({id,task,model,checked}){
 }
 
 
+// P7-D6: the visible action belongs to the *existing* mathematical widget
+// when that widget requires a prediction or first manipulation. This is a
+// presentation adapter: it never manufactures an exercise or grades a guess.
+// Other types safely keep their existing check action until D7 classification.
+export function studyActionFocus({stage='explore',task=null,model=null,p03Ready=true}={}){
+ if(stage==='passed'||stage==='reflect')return {kind:'continue',readyToCheck:true,cue:null};
+ if(stage==='revise'||stage==='recheck')return {kind:'check',readyToCheck:p03Ready,cue:null};
+ if(!p03Ready)return {kind:'check',readyToCheck:false,cue:null};
+ if(task?.type==='x-wideshift'){
+  if(model?.committed===null)return {
+   kind:'widget',selector:'[data-x="wide-predict"]',readyToCheck:false,
+   cue:'先写下自己的猜想，再用数学教具里的原操作留下猜想。'};
+  const moves=task.mode==='add'?model?.moves:model?.trace;
+  if(Array.isArray(moves)&&moves.length===0)return {
+   kind:'work',readyToCheck:false,cue:'猜想已留下。先在数位教具中动手操作，然后检查当前作品。'};
+ }
+ if(task?.type==='x-pvshift'){
+  if(model?.committed===null)return {
+   kind:'widget',selector:'[data-x="pv-predict"]',readyToCheck:false,
+   cue:'先写下猜想，再使用原有的猜想确认操作。'};
+  if(Array.isArray(model?.moves)&&model.moves.length===0)return {
+   kind:'work',readyToCheck:false,cue:'猜想已留下。先在教具中添取、交换，再检查当前作品。'};
+ }
+ if(task?.type==='x-parityjoin'&&!model?.board?.first)return {
+  kind:'widget',selector:'[data-x="b14-predict"]',readyToCheck:false,
+  cue:'先选择你的猜想，再使用原有操作展开实际配对。'};
+ return {kind:'check',readyToCheck:true,cue:null};
+}
+
 // P7-D4: task-type adapters only describe the already-configured widget.
 // No new task, proof, assessment, persistence field or progression step.
 export function executionCue({stage='explore',task=null,bridge=false,hasDraft=false,readyToCheck=true,repair=null}={}){
