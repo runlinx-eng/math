@@ -157,32 +157,77 @@ export function checkedMathExplanation({id,task,model,checked}){
 }
 
 
-// P7-D6: the visible action belongs to the *existing* mathematical widget
-// when that widget requires a prediction or first manipulation. This is a
-// presentation adapter: it never manufactures an exercise or grades a guess.
-// Other types safely keep their existing check action until D7 classification.
+// P7-D7: task-aware presentation, not a second grader or persisted progress.
+// A gate is added only for original, replayable model fields and native controls.
+// The all-types inventory distinguishes verified gates from safe fallback.
+export const VERIFIED_STUDY_GATES=Object.freeze([
+ 'x-wideshift','x-pvshift','x-parityjoin','x-r38-chain',
+ 'x-r38-counterexample','x-g27-build','x-g27-net','x-g27-sort',
+ 'x-g27-face','x-g27-cut','x-r37-pair','x-r37-shape'
+]);
+export function taskInteractionContract(task,{bridge=false}={}){
+ const type=task?.type||'';
+ const gated=VERIFIED_STUDY_GATES.includes(type);
+ let family='原生操作与检查';
+ if(bridge)family='真实知识联合任务';
+ else if(['equivalent','partition','grid','fill','cube-plan','unit','decompose','irregular','x-g27-build'].includes(type))family='构造与直接操作';
+ else if(['x-wideshift','x-pvshift','x-parityjoin'].includes(type))family='猜想后操作';
+ else if(['x-r38-counterexample','x-g27-cut','x-g27-net'].includes(type))family='数学实验与反例';
+ else if(['x-r38-chain','x-r37-steps'].includes(type))family='推理与论证';
+ else if(['line','match','chart','compare','survey'].includes(type)||/measure|ruler|scale|unit|decimal|convert|capacity|length/.test(type))family='测量、计算与记录';
+ else if(/solid|shape|geom|g27|net|cube|angle|polygon|coordinate/.test(type))family='几何与空间';
+ else if(/pattern|grow|ratio|sequence|factor|r37|counter|rule/.test(type))family='规律、模型与反例';
+ else if(/words|explain|story|reason|writing|sentence|r38/.test(type))family='文字解释与推理';
+ return {type,family,checkReadiness:gated?'基于原生模型状态':'沿用原检查路径',nativeGrader:true,bridge:!!bridge};
+}
+const waiting=(cue,selector=null)=>selector
+ ?{kind:'widget',selector,readyToCheck:false,cue}
+ :{kind:'work',readyToCheck:false,cue};
+// Only the task's own model can establish that a prediction, experiment,
+// construction or argument was attempted. Empty text is never an accepted proof.
 export function studyActionFocus({stage='explore',task=null,model=null,p03Ready=true}={}){
  if(stage==='passed'||stage==='reflect')return {kind:'continue',readyToCheck:true,cue:null};
- if(stage==='revise'||stage==='recheck')return {kind:'check',readyToCheck:p03Ready,cue:null};
  if(!p03Ready)return {kind:'check',readyToCheck:false,cue:null};
- if(task?.type==='x-wideshift'){
-  if(model?.committed===null)return {
-   kind:'widget',selector:'[data-x="wide-predict"]',readyToCheck:false,
-   cue:'先写下自己的猜想，再用数学教具里的原操作留下猜想。'};
+ const type=task?.type,board=model?.board;
+ if(type==='x-wideshift'){
+  if(model?.committed===null)return waiting('先写下猜想，用教具内的按钮确认。','[data-x="wide-predict"]');
   const moves=task.mode==='add'?model?.moves:model?.trace;
-  if(Array.isArray(moves)&&moves.length===0)return {
-   kind:'work',readyToCheck:false,cue:'猜想已留下。先在数位教具中动手操作，然后检查当前作品。'};
+  if(Array.isArray(moves)&&moves.length===0)return waiting('猜想已经留下；用数位教具移动数字，再检查。');
  }
- if(task?.type==='x-pvshift'){
-  if(model?.committed===null)return {
-   kind:'widget',selector:'[data-x="pv-predict"]',readyToCheck:false,
-   cue:'先写下猜想，再使用原有的猜想确认操作。'};
-  if(Array.isArray(model?.moves)&&model.moves.length===0)return {
-   kind:'work',readyToCheck:false,cue:'猜想已留下。先在教具中添取、交换，再检查当前作品。'};
+ if(type==='x-pvshift'){
+  if(model?.committed===null)return waiting('先留下猜想，再进行数位添取或交换。','[data-x="pv-predict"]');
+  if(Array.isArray(model?.moves)&&model.moves.length===0)return waiting('先在教具中添取或交换，形成可检查的作品。');
  }
- if(task?.type==='x-parityjoin'&&!model?.board?.first)return {
-  kind:'widget',selector:'[data-x="b14-predict"]',readyToCheck:false,
-  cue:'先选择你的猜想，再使用原有操作展开实际配对。'};
+ if(type==='x-parityjoin'&&board&&Object.hasOwn(board,'first')){
+  if(!board.first)return waiting('选出猜想后，使用教具中的按钮展开配对。','[data-x="b14-predict"]');
+  if(!board.joined)return waiting('猜想已留下；亲手把物品配成一对一对。','[data-x="b14-join"]');
+ }
+ if(type==='x-r38-counterexample'&&Array.isArray(board?.records)){
+  const last=board.records.at(-1);
+  if(!last||last.value!==model.value||last.factor!==model.second||last.prediction!==model.choice)
+   return waiting('写出例子与猜测，按「试一试」观察比较结果；之后检查反例。','[data-x="r38-test"]');
+ }
+ if(type==='x-r38-chain'&&Array.isArray(board?.selected)&&board.selected.length===0)
+  return waiting('在教具中选取能支持结论的推理卡，排好顺序，再检查。');
+ if(type==='x-g27-build'&&Array.isArray(board?.parts)&&Array.isArray(task?.target)&&board.parts.length<task.target.length)
+  return waiting('先从下往上搭出要求数量的立体块；可以转动观察。');
+ if(type==='x-g27-net'&&Array.isArray(board?.parts)){
+  if(board.parts.length<4)return waiting('先接上展开图需要的纸片。');
+  if(board.prediction===null)return waiting('纸片已接好。选择是否能够折成盒子的猜想。');
+  if(board.fold<100)return waiting('慢慢折合，或使用教具内的「直接折合」按钮。','[data-x="g27-fold"]');
+ }
+ if(['x-g27-sort','x-g27-face'].includes(type)&&Array.isArray(board?.choices)&&board.choices.every(v=>v===null))
+  return waiting('先观察模型，选择它的性质；有需要时转动或点亮表面。');
+ if(type==='x-g27-cut'&&Array.isArray(board?.predictions)&&board.predictions.every(v=>v===null))
+  return waiting('先猜截面的形状或大小，再移动切面观察。');
+ if(['x-r37-pair','x-r37-shape'].includes(type)&&Array.isArray(board?.records)){
+  const last=board.records.at(-1);
+  if(!last)return waiting('先在教具里摆出关系，并用原有的保存操作留下比较记录。');
+  const stale=type==='x-r37-pair'
+   ?(!board.preview||JSON.stringify(last.pair)!==JSON.stringify(board.preview)||last.guess!==model.choice)
+   :(last.factor!==board.factor||last.width!==model.value||last.height!==model.second);
+  if(stale)return waiting('当前数值或关系已改变。先用教具重新留下实验记录，再检查。');
+ }
  return {kind:'check',readyToCheck:true,cue:null};
 }
 
