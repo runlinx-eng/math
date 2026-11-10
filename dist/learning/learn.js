@@ -220,7 +220,7 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  renderP3Flow($('#p3-learning-flow'),{atlas,id,record:a,embedded:parent!==window,primarySessionId:a.view==='summary'?(nextLearningLesson()||nextLinkedPractice()?.id):null});
  if(a.view==='summary'){
   const explanation=$('#system-explanation'),source=$('#source-goals-details');
-  if(explanation)$('#p3-learning-flow').before(explanation);
+  if(explanation)$('#learning-support').before(explanation);
   if(source)$('#record-body').append(source);
  }
   syncLearningRegions();
