@@ -19,7 +19,6 @@ const check=(condition,message)=>{if(!condition)throw Error(message)};
    const tag=String(size.width);
    const read=()=>page.evaluate(()=>{
     const scene=document.querySelector('#scene'),action=document.querySelector('#actions'),work=document.querySelector('#work'),focus=work?.querySelector('[data-study-primary]');
-    const all=[...document.querySelectorAll('#actions button.primary:visible,#work .study-primary')];
     return {stage:scene.dataset.stage,focus:scene.dataset.actionFocus,primaryCount:document.querySelectorAll('#actions .primary,#work .study-primary').length,
       primary:focus?.textContent||action.querySelector('.primary')?.textContent||'',checkDisabled:action.querySelector('[data-do="check"]')?.disabled,
       workVisible:!!work?.getBoundingClientRect().height,routeOpen:document.querySelector('#learning-support')?.open,
