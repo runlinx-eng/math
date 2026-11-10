@@ -262,6 +262,7 @@ function renderLearningMapContext(){
   const current=space.byKey.get(scene.selected);
   const active=worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId&&current?.kind==='node'&&scene.canLocate(current);
   host.hidden=!active;
+  document.body.classList.toggle('has-learning-map-context',!!active);
   if(toggle)toggle.hidden=!active;
   if(!active){
     host.replaceChildren();
