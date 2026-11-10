@@ -87,6 +87,27 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    await page.frameLocator('#journey-frame').locator('#p3-learning-flow').waitFor();
    const beforeLearn=await snap();
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
+   assert(await page.locator('#learning-map-context').isVisible(),'learning maps the selected concept into the original 3D space');
+   const sourceProof=await page.evaluate(async()=>{
+     const {edges}=await (await fetch('./data/atlas.json')).json();
+     const selected=mathSpace.snapshot().selected.slice(5);
+     const rows=[...document.querySelectorAll('#learning-map-context [data-source-key]')].map(el=>{
+       const other=el.dataset.sourceKey.slice(5),direction=el.closest('[data-direction]').dataset.direction;
+       const hasSource=edges.some(e=>direction==='before'?e.prerequisiteId===other&&e.topicId===selected:e.prerequisiteId===selected&&e.topicId===other);
+       return {other,direction,hasSource};
+     });
+     return {rows,shown:document.querySelector('#learning-map-context').textContent};
+   });
+   assert(sourceProof.rows.length>0&&sourceProof.rows.every(row=>row.hasSource),'every displayed neighboring concept has a real directional source edge');
+   assert(sourceProof.shown.includes('相关基础')&&sourceProof.shown.includes('相关后续'),'both directions are identified without new mathematical edges');
+   assert(await page.locator('#observation-task-toggle').getAttribute('aria-expanded')==='false','long observer tools collapse by default during real learning');
+   assert(await page.locator('#network-legend').isHidden(),'collapsed observation tools do not compete with live math context');
+   await page.locator('#observation-task-toggle').click();
+   assert(await page.locator('#observation-task-toggle').getAttribute('aria-expanded')==='true','all original map tools can be expanded');
+   assert(await page.locator('#network-legend').isVisible(),'expanded observation tools retain their existing legend');
+   assert(await page.locator('#learning-map-context').isHidden(),'tool overlay and learning context never fight for the same map position');
+   await page.locator('#observation-task-toggle').click();
+   assert(await page.locator('#learning-map-context').isVisible()&&equalCamera(beforeLearn,await snap()),'returning to math context preserves the source camera and lesson');
    await page.waitForTimeout(130);
    const taskContrast=await nodeContrast(unrelatedKey);
    console.log('P8_NODE_CONTRAST '+JSON.stringify({unrelatedKey,beforeContrast,taskContrast,ratio:taskContrast/beforeContrast}));
@@ -102,11 +123,17 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      assert(b.nav&&b.nav.bottom<b.learn.y,'learning clears top navigation '+w+'x'+h);
     if(w>800)assert(b.guide&&b.guide.width<=200,'observation rail leaves map space '+w+'x'+h);
      if(w>800)assert(b.canvas&&b.canvas.right<=b.learn.x-7,'real 3D viewport avoids lesson overlay '+w+'x'+h);
+     if(w>800){
+       const contextRect=await page.locator('#learning-map-context').boundingBox();
+       assert(contextRect&&contextRect.x>=b.canvas.x&&contextRect.x+contextRect.width<=b.canvas.right+2&&contextRect.y>=b.nav.bottom-4,
+         'real math relationship summary fits in the left 3D viewport '+w+'x'+h);
+     }else assert(await page.locator('#learning-map-context').isHidden(),'compact viewport keeps the existing single overlay workspace '+w+'x'+h);
      else assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});
    }
    await page.locator('.primary-nav [data-action="nav-trail"]').click();
    await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');
+   assert(await page.locator('#learning-map-context').isHidden(),'learning-only map context hides when switching to real trail');
    const trail=page.frameLocator('#utility-frame');
    await trail.locator('[data-trail-tier="evidence"] [data-lesson-record]').first().waitFor();
    assert(await trail.locator('[data-trail-tier="evidence"] [data-lesson-record]').count()===1,'actual saved explanation appears in evidence');
