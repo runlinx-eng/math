@@ -767,7 +767,9 @@ function updatePrimaryNavigation(){
   document.body.classList.toggle('has-task-surface',!hub.hidden||!drawer.hidden);
   document.body.classList.toggle('has-context-card',!$('#focus-card').hidden&&!journeyOpen&&hub.hidden&&drawer.hidden);
   // A context surface changes background legibility, not the camera pose.
-  if(scene)scene.dirty=true;
+  // Notify the WebGL scene explicitly: instance colors are not CSS and must
+  // be repainted when the lesson, trail, or exploration surface changes.
+  scene?.setTaskWorkspaceActive(document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'));
 }
 function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
 function closeUtility(){
