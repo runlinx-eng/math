@@ -33,7 +33,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   await page.locator('#focus-card [data-action="open"]').first().click();
   await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
   await frame.locator('#learning-support > summary').click();
-  check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('尚未提交检查')),'5 hands-on learning: configured activity opens without fake completion');
+  check(await frame.locator('.p3-before-check').isHidden(),'5 hands-on learning: no empty evidence wall before any check');
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'a task is checkable without a separate start');
   await frame.locator('#actions [data-do="check"]').click();
   check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('需要修改')),'6 result verification: incorrect first attempt surfaced');
