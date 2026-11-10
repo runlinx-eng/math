@@ -85,8 +85,9 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
     const doc=f?.contentDocument;
     if(expected.lessonId)return journeyVisible&&url?.pathname.endsWith('/learn.html')&&
       url.hash==='#'+expected.lessonId&&
+      f.contentWindow.mathLesson?.snapshot()?.id===expected.lessonId&&
       !!doc?.querySelector('#instruction')?.textContent.trim()&&
-      !!doc?.querySelector('#work');
+      !!doc?.querySelector('#work')?.textContent.trim();
     if(expected.legacy)return [...document.querySelectorAll('.work-panel')].some(el=>!el.hidden);
     if(expected.journeyStep!==null)return journeyVisible&&url?.pathname.endsWith('/journey.html')&&
       url.hash==='#'+expected.journeyStep&&!!doc?.querySelector('#m-current')?.textContent.trim();
@@ -102,10 +103,13 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   }));
   check(entry.hub||entry.journey||entry.legacy,'related knowledge opens its real task or an explicit unavailable explanation');
   if(entry.journey){
-    if(expected.lessonId)
+    if(expected.lessonId){
+      await frame.locator('#work').waitFor({state:'visible'});
       check(await frame.locator('#work').isVisible(),'related native lesson has a visible mathematical workpiece');
-    else
+    }else{
+      await frame.locator('#m-current').waitFor({state:'visible'});
       check(await frame.locator('#m-current').isVisible(),'related early route has its visible mathematical task');
+    }
     check(await page.locator('#learning-hub').isHidden(),'related node directly enters the mapped task');
     await page.evaluate(()=>{document.querySelector('#journey-frame').contentWindow.__p3RelatedProbe='retained';});
   }else if(entry.hub)
