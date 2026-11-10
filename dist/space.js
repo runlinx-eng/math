@@ -868,7 +868,8 @@ function showLearningHub(){
 // retains full history, legacy records, downloads, import and backup recovery.
 function renderTrailNodeContext(){
  const host=$('#trail-node-context'),drawer=$('#utility-drawer');
- if(!host||!drawer||drawer.hidden||drawer.dataset.surface!=='trail')return;
+ if(!host||!drawer)return;
+ if(drawer.hidden||drawer.dataset.surface!=='trail'){host.hidden=true;return;}
  const selected=space.byKey.get(scene?.selected);
  if(selected?.kind!=='node'){
   host.hidden=false;
