@@ -689,8 +689,9 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';const frame=$('#journey-frame'),nextLessonUrl=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
  // Replacing an existing child-document entry avoids intercepting the parent's
  // Back/Forward mode-history after several direct 3D lesson changes.
- if(frame.contentWindow.location.href==='about:blank')frame.src=nextLessonUrl;
- else frame.contentWindow.location.replace(new URL(nextLessonUrl,location.href).href);
+ // Replacement navigation (including first load from about:blank) keeps
+ // child documents out of parent mode Back/Forward history.
+ frame.contentWindow.location.replace(new URL(nextLessonUrl,location.href).href);
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
  renderLocation();updatePrimaryNavigation();scheduleSave();
