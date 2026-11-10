@@ -686,7 +686,11 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations(scene.relationshipMap?'source':'off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
- $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';$('#journey-frame').src=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
+ $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';const frame=$('#journey-frame'),nextLessonUrl=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
+ // Replacing an existing child-document entry avoids intercepting the parent's
+ // Back/Forward mode-history after several direct 3D lesson changes.
+ if(frame.contentWindow.location.href==='about:blank')frame.src=nextLessonUrl;
+ else frame.contentWindow.location.replace(new URL(nextLessonUrl,location.href).href);
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
  renderLocation();updatePrimaryNavigation();scheduleSave();
