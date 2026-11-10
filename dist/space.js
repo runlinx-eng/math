@@ -669,8 +669,8 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   // a rapid selection at a compact desktop viewport must never show stale bounds.
   if(worldLayout==='network')updateOverlays();
 }
-function openJourney(step,{restore=false}={}){
-  setTaskSurfaceUrl('learn',{replace:restore||taskSurfaceFromUrl()==='learn'});
+function openJourney(step,{restore=false,preserveSurface=false}={}){
+  if(!preserveSurface)setTaskSurfaceUrl('learn',{replace:taskSurfaceFromUrl()==='learn'});
   journeySuspended=false;hideLearningHub();closeUtility();
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
@@ -681,8 +681,8 @@ function openJourney(step,{restore=false}={}){
   $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
   updatePrimaryNavigation();scheduleSave();
 }
-function openLearningLesson(id,{restore=false,questionId=null}={}){
- if(!sessionMeta(id))return;setTaskSurfaceUrl('learn',{replace:restore||taskSurfaceFromUrl()==='learn'});journeySuspended=false;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
+function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=false}={}){
+ if(!sessionMeta(id))return;if(!preserveSurface)setTaskSurfaceUrl('learn',{replace:taskSurfaceFromUrl()==='learn'});journeySuspended=false;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations(scene.relationshipMap?'source':'off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
@@ -1108,7 +1108,7 @@ async function boot(){try {
   const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null,explicitOverview=route[0]==='atlas'&&!route[1];
   const due=pendingQuestions(learning)[0],last=learning.daily.continuation,sameDayActive=due&&stored?.journeyOpen&&stored.questionId===due.id&&last?.questionId===due.id&&dayKey(last.at)===dayKey();
   const showQuestionEntry=!explicitOverview&&!!due&&!sameDayActive&&(!routeKey||routeKey===stored?.selected);
-  if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&!explicitOverview&&(!routeKey||routeKey===stored.selected)){const selectedId=space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true});if(journeyOpen&&stored.journeySuspended)suspendJourney();}}else scene.overview(false);
+  if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&!explicitOverview&&(!routeKey||routeKey===stored.selected)){const selectedId=space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,preserveSurface:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true,preserveSurface:true});if(journeyOpen&&stored.journeySuspended)suspendJourney();}}else scene.overview(false);
   const showUnfinishedEntry=!explicitOverview&&!showQuestionEntry&&!journeyOpen&&learning.daily.guide?.active&&!!unfinishedContinuation()&&(!routeKey||routeKey===stored?.selected);
   if(showQuestionEntry||showUnfinishedEntry){scene.select(null);setHash(null);}
   // Restoring an open lesson updates the hash itself. Do not treat that new hash
