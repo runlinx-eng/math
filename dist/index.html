@@ -12,6 +12,7 @@
     <svg id="work-tethers" class="work-tethers" aria-hidden="true"></svg>
     <div id="workspaces" class="workspaces"></div>
     <aside id="focus-card" class="focus-card" aria-label="选中对象" hidden></aside>
+    <aside id="learning-map-context" class="learning-map-context" aria-label="当前学习的真实数学关系" hidden></aside>
     <aside id="guide-panel" class="guide-panel" aria-label="发现数学知识之间的联系" hidden></aside>
     <div id="guide-cues" class="guide-cues" aria-label="地图上的下一处" hidden></div>
   </main>
@@ -48,7 +49,7 @@
     <button type="button" data-action="help" aria-label="查看空间操作方法">操作</button>
   </aside>
   <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景观察工具">
-    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span></div>
+    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span><button type="button" id="observation-task-toggle" data-action="toggle-observation" aria-controls="network-guide" aria-expanded="false" hidden>展开工具</button></div>
     <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
       <strong>学段观察</strong>
       <div role="group" aria-label="小学学段筛选">
