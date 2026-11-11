@@ -64,9 +64,34 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   });
   check(entry.hub||entry.journey||entry.legacy,'learning opens a real task or explains why no independent activity exists');
   if(entry.journey){
-    const src=await page.locator('#journey-frame').getAttribute('src');
-    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'grade-list topic opens a configured new or early learning activity');
-    if(src.startsWith('learn.html#'))await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
+    // Replacement iframe navigation updates the child document, not the
+    // element's original src attribute. Verify the selected source node
+    // resolves to the actual native task and its interactive workpiece.
+    const expected=await page.evaluate(async()=>{
+      const selected=mathSpace.snapshot().selected;
+      const nodeId=selected?.startsWith('node:')?selected.slice(5):null;
+      const [{lessonForTopic},{routeStep}]=await Promise.all([
+        import('./learning/catalog.js'),import('./journey-model.js')
+      ]);
+      return {lessonId:nodeId?lessonForTopic(nodeId):null,step:nodeId?routeStep(nodeId)?.step??null:null};
+    });
+    check(!!expected.lessonId||expected.step!==null,'selected grade-list source node has a configured learning destination');
+    await page.waitForFunction(expected=>{
+      const frame=document.querySelector('#journey-frame');
+      const url=frame?.contentWindow?.location,doc=frame?.contentDocument;
+      if(!frame||document.querySelector('#journey-surface').hidden||!url||!doc)return false;
+      if(expected.lessonId)return url.pathname.endsWith('/learn.html')&&
+        url.hash==='#'+expected.lessonId&&
+        !!doc.querySelector('#instruction')?.textContent.trim()&&
+        !!doc.querySelector('#work');
+      return expected.step!==null&&url.pathname.endsWith('/journey.html')&&
+        url.hash==='#'+expected.step&&
+        !!doc.querySelector('#m-current')?.textContent.trim();
+    },expected);
+    if(expected.lessonId)
+      check(await page.frameLocator('#journey-frame').locator('#work').isVisible(),'grade-list topic loads its mapped native math workpiece');
+    else
+      check(await page.frameLocator('#journey-frame').locator('#m-current').isVisible(),'grade-list topic loads its mapped early-route task');
     check(await page.locator('#learning-hub').isHidden(),'direct grade-list learning does not require route selection');
   }else if(entry.hub){
     check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured grade-list node explains the missing activity');

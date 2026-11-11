@@ -62,10 +62,15 @@ const samePose=(a,b)=>Math.abs(a.cameraZoom-b.cameraZoom)<.0005&&a.position.ever
   await page.locator('.primary-nav [data-action="nav-learn"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().journeyOpen);
   check(await page.locator('#learning-hub').isHidden(),'selected configured node bypasses the route chooser');
-  check((await page.locator('#journey-frame').getAttribute('src')).includes('learn.html#share'),'selected node opens its real source lesson');
+  await page.waitForFunction(()=>{
+    const f=document.querySelector('#journey-frame');
+    return f.contentWindow.location.pathname.endsWith('/learn.html')&&f.contentWindow.location.hash==='#share'&&
+      !!f.contentDocument?.querySelector('#instruction')?.textContent.trim();
+  });
+  check(await page.frameLocator('#journey-frame').locator('#work').isVisible(),'selected node opens its real source lesson and interactive workpiece');
   check(samePose(viewBefore,await snap()),'learning tab from a node leaves camera unchanged');
   await page.screenshot({path:path.join(out,'03-selected-node-learning.png')});
-  await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').getAttribute('src').includes('learn.html'));
+  await page.waitForFunction(()=>document.body.classList.contains('has-journey')&&document.querySelector('#journey-frame').contentWindow.location.pathname.endsWith('/learn.html'));
   check(await page.locator('#journey-surface').isVisible(),'existing learning iframe opens unchanged');
    check((await page.locator('#journey-surface [data-action="close-journey"]').innerText()).includes('返回知识空间'),'lesson close always names the same destination');
   check(samePose(viewBefore,await snap()),'starting learning does not refit the map');

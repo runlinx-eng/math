@@ -62,20 +62,63 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   await revealEvidence();
   const optionalRelations=frame.locator('.p3-followups');
   if(await optionalRelations.count()&&!(await optionalRelations.evaluate(el=>el.open)))await optionalRelations.locator('summary').click();
+  const relatedId=await frame.locator('[data-do="p3-related"]').first().getAttribute('data-node');
+  check(!!relatedId,'related knowledge link names a real source node');
+  const expected=await page.evaluate(async nodeId=>{
+    const [catalog,journey,legacy]=await Promise.all([
+      import('./learning/catalog.js'),import('./journey-model.js'),import('./exploration-content.js')
+    ]);
+    return {
+      nodeId,lessonId:catalog.lessonForTopic(nodeId)||null,
+      journeyStep:journey.routeStep(nodeId)?.step??null,
+      legacy:legacy.activityIds.some(id=>legacy.ACTIVITIES[id].topicId===nodeId)
+    };
+  },relatedId);
   await frame.locator('[data-do="p3-related"]').first().click();
-  await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen&&mathSpace.snapshot().selected?.startsWith('node:'));
+  // Following a knowledge link in Learn must stay in Learn. P3's original
+  // expectation that every related click closes the lesson is obsolete.
+  await page.waitForFunction(expected=>{
+    if(mathSpace.snapshot().selected!=='node:'+expected.nodeId||
+       new URL(location.href).searchParams.get('surface')!=='learn')return false;
+    const journeyVisible=!document.querySelector('#journey-surface').hidden;
+    const f=document.querySelector('#journey-frame'),url=f?.contentWindow?.location;
+    const doc=f?.contentDocument;
+    if(expected.lessonId)return journeyVisible&&url?.pathname.endsWith('/learn.html')&&
+      url.hash==='#'+expected.lessonId&&
+      f.contentWindow.mathLesson?.snapshot()?.id===expected.lessonId&&
+      !!doc?.querySelector('#instruction')?.textContent.trim()&&
+      !!doc?.querySelector('#work')?.textContent.trim();
+    if(expected.legacy)return [...document.querySelectorAll('.work-panel')].some(el=>!el.hidden);
+    if(expected.journeyStep!==null)return journeyVisible&&url?.pathname.endsWith('/journey.html')&&
+      url.hash==='#'+expected.journeyStep&&!!doc?.querySelector('#m-current')?.textContent.trim();
+    return !journeyVisible&&!document.querySelector('#learning-hub').hidden;
+  },expected);
   const after=await snap();
-  check(after.selected!==pose.selected,'related knowledge is genuine other node');
+  check(after.selected==='node:'+relatedId&&after.selected!==pose.selected,'related knowledge selects the actual other source node');
   check(after.position.every((v,i)=>Math.abs(v-pose.position[i])<.001),'related knowledge keeps map camera');
-  await page.locator('.primary-nav [data-action="nav-learn"]').click();
-  const entry=await page.evaluate(()=>({hub:!document.querySelector('#learning-hub').hidden,journey:!document.querySelector('#journey-surface').hidden}));
-  check(entry.hub||entry.journey,'related knowledge offers a real lesson or explains unavailable activity');
+  const entry=await page.evaluate(()=>({
+    hub:!document.querySelector('#learning-hub').hidden,
+    journey:!document.querySelector('#journey-surface').hidden,
+    legacy:[...document.querySelectorAll('.work-panel')].some(el=>!el.hidden)
+  }));
+  check(entry.hub||entry.journey||entry.legacy,'related knowledge opens its real task or an explicit unavailable explanation');
   if(entry.journey){
-    const src=await page.locator('#journey-frame').getAttribute('src');
-    check(src?.startsWith('learn.html#')||src?.startsWith('journey.html#'),'related node opens a configured source activity');
-    if(src.startsWith('learn.html#'))await frame.locator('#instruction').waitFor();
-    check(await page.locator('#learning-hub').isHidden(),'related node directly enters the source task');
-  }else check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
+    if(expected.lessonId){
+      await frame.locator('#work').waitFor({state:'visible'});
+      check(await frame.locator('#work').isVisible(),'related native lesson has a visible mathematical workpiece');
+    }else{
+      await frame.locator('#m-current').waitFor({state:'visible'});
+      check(await frame.locator('#m-current').isVisible(),'related early route has its visible mathematical task');
+    }
+    check(await page.locator('#learning-hub').isHidden(),'related node directly enters the mapped task');
+    await page.evaluate(()=>{document.querySelector('#journey-frame').contentWindow.__p3RelatedProbe='retained';});
+  }else if(entry.hub)
+    check((await page.locator('#learning-hub').innerText()).includes('没有独立的数学操作活动'),'unconfigured related node reports absence rather than fictitious task');
+  else check(expected.legacy,'related legacy math activity is source-configured');
+  await page.locator('.primary-nav [data-action="nav-learn"]').click();
+  check((await snap()).selected==='node:'+relatedId,'reselecting Learn retains related source node');
+  if(entry.journey)
+    check(await page.evaluate(()=>document.querySelector('#journey-frame').contentWindow.__p3RelatedProbe==='retained'),'reselecting Learn does not reload an active unsaved workpiece');
   // The original P3 flow checks an explicit return. P7-D5 tests browser Back/Forward
   // separately on a single parent task-history entry to avoid iframe history ambiguity.
   await page.locator('.primary-nav [data-action="nav-explore"]').click();
