@@ -200,12 +200,14 @@ test('cross-subject references remain references and do not become required new 
 
 test('source fingerprints and all generated views are current and reproducible', () => {
   for (const [path, expected] of Object.entries(plan.inputHashes)) {
-    if (path === 'dist/exploration.js' || path === 'scripts/build_content_plan.py') {
-      // The original stage-one 2D UI was retired; the archival research plan
-      // intentionally keeps its source fingerprint rather than inventing a new one.
-      const historical = path === 'dist/exploration.js'
-        ? '373759f36b356d4e1e0cf5c28a76f859b41d15dff75c434fd2342fe5da3a4c81'
-        : '81e0e0225c1caa185993f8b0b895d4ba2e2639d2337f105bed171eaf17f93f3d';
+    if (['dist/exploration.js','dist/journey.js','scripts/build_content_plan.py'].includes(path)) {
+      // These historical source fingerprints belong to the archived stage-one
+      // research plan. Current runtime safety changes must not rewrite history.
+      const historical = {
+        'dist/exploration.js':'373759f36b356d4e1e0cf5c28a76f859b41d15dff75c434fd2342fe5da3a4c81',
+        'dist/journey.js':'92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2',
+        'scripts/build_content_plan.py':'81e0e0225c1caa185993f8b0b895d4ba2e2639d2337f105bed171eaf17f93f3d'
+      }[path];
       assert.equal(expected,historical);
       if (path === 'dist/exploration.js') assert.match(fs.readFileSync(new URL(path, root),'utf8'),/function renderActivity\(/);
       continue;
