@@ -1,5 +1,6 @@
-import {registerClientRelease} from './sw-client.js';
-registerClientRelease('math-explorer-20261112-p10-release-r3-v2');
+import {registerClientRelease,isCurrentReleaseReady} from './sw-client.js';
+const RELEASE='math-explorer-20261112-p10-release-r3-v2';
+registerClientRelease(RELEASE);
 import {readStored,writeStored,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {applyNavigationCopy} from './navigation-copy.js';
@@ -228,7 +229,7 @@ async function boot(){try{if(redirectRetiredMap())return;const response=await fe
    const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
    await navigator.serviceWorker.ready;
    const offlineReady=async()=>{
-    const active=navigator.serviceWorker.controller||registration.active;
+    const active=navigator.serviceWorker.controller;
     if(!active){$('#offline-status').textContent=' · 正在准备离线资源';return;}
     const reply=await new Promise(resolve=>{
      const channel=new MessageChannel();
@@ -237,10 +238,12 @@ async function boot(){try{if(redirectRetiredMap())return;const response=await fe
      try{active.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}
      catch{clearTimeout(timer);channel.port1.close();resolve(null);}
     });
-    $('#offline-status').textContent=reply?.type==='math-explorer:cache-status'&&reply.complete?' · 本机离线资源就绪':' · 离线资源不完整';
+    if(navigator.serviceWorker.controller!==active)return;
+    $('#offline-status').textContent=isCurrentReleaseReady({release:RELEASE,registration,
+      controller:navigator.serviceWorker.controller,worker:active,report:reply})?' · 本机离线资源就绪':' · 离线资源不完整';
    };
-   await offlineReady();
    navigator.serviceWorker.addEventListener('controllerchange',()=>offlineReady().catch(()=>{$('#offline-status').textContent=' · 离线状态未知';}));
+   await offlineReady();
   }catch{$('#offline-status').textContent=' · 离线状态未知';}
  }
  }catch(error){main.innerHTML=`<div class="empty"><h2>地图暂时没打开</h2><p>${esc(error.message)}。请通过“启动数学探索.command”打开应用。</p></div>`;}}

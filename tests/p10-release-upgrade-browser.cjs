@@ -5,7 +5,9 @@ const http=require('node:http'),assert=require('node:assert/strict');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const OLD='96844424ceb534e7ca5f864a006b72a52efd0d60';
-const root=path.resolve(__dirname,'..'),out=process.env.P10_UPGRADE_OUTPUT||path.join(root,'verification/p10-release-upgrade');
+const phase=process.env.P10_UPGRADE_PHASE||'full';
+assert.ok(phase==='full'||phase==='retry','P10_UPGRADE_PHASE must be full or retry');
+const root=path.resolve(__dirname,'..'),out=process.env.P10_UPGRADE_OUTPUT||path.join(root,'verification/p10-release-upgrade',phase==='retry'?'retry-independent':'');
 const port=Number(process.env.P10_UPGRADE_PORT||43829),base='http://127.0.0.1:'+port+'/';
 const checks=[],scenarios=[],errors=[];
 const check=(condition,label,detail={})=>{assert.ok(condition,label);checks.push(label);scenarios.push({label,result:'A',...detail});};
@@ -35,13 +37,14 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
  const profileRoot=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-release-profile-'));
  let server,browser,ctx,diagnosticPage,browserVersion;
  let primaryLaunches=0;
+ let fullUpgradeCompleted=false,retryCompleted=false;
  const diagnosticWorkers=[];
  const gitValue=args=>execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim();
  const current=gitValue(['rev-parse','HEAD']);
  const githubEvent=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
  const provenance={checkoutSha:current,checkoutTree:gitValue(['rev-parse','HEAD^{tree}']),prHeadSha:githubEvent.pull_request?.head?.sha||null,
   nodeVersion:process.version,playwrightVersion:require((process.env.MATH_PLAYWRIGHT_MODULE||'playwright')+'/package.json').version,
-  profileId:path.basename(profileRoot),historicalWorkerModified:false};
+  phase,profileId:path.basename(profileRoot),profiles:[],historicalWorkerModified:false};
  const trace=[];let requestSeq=0;
  const record=(event,details={})=>{trace.push({time:new Date().toISOString(),monotonicMs:Number(process.hrtime.bigint()/1000000n),event,...details});};
  try{
@@ -103,13 +106,11 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    const context=await chromium.launchPersistentContext(path.join(profileRoot,'upgrade'),{
     ...launchOptions,viewport:{width:1440,height:900},acceptDownloads:true,serviceWorkers:'allow',reducedMotion:'reduce',offline});
    primaryLaunches++;browserVersion=context.browser().version();
+   if(primaryLaunches===1)provenance.profiles.push({id:provenance.profileId+':upgrade',role:'complete-upgrade',storage:'persistent',directory:path.join(profileRoot,'upgrade')});
    observeContext(context,'upgrade');
    await context.addInitScript(()=>{try{window.__p10BeforeApp=localStorage.getItem('math-explorer-v2');}catch{}});
    record('persistent-browser-opened',{profile:'upgrade',launch:primaryLaunches,offline});return context;
   };
-  ctx=await openPrimary();
-  let page=ctx.pages()[0]||await ctx.newPage();
-  page.on('pageerror',e=>errors.push(String(e)));
   const lesson=async(p,id)=>{
    const response=await p.goto(base+'learn.html#'+id,{waitUntil:'commit',timeout:45000});
    await p.waitForFunction(s=>window.mathLesson?.snapshot()?.id===s,id,{timeout:30000});
@@ -185,6 +186,12 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    }
    throw Error('cache cleanup stayed deferred within its 12 second budget: '+JSON.stringify(last));
   };
+  // The independent retry run uses these same server and readiness helpers,
+  // but cannot be stopped by an earlier full-migration navigation failure.
+  if(phase==='full'){
+  ctx=await openPrimary();
+  let page=ctx.pages()[0]||await ctx.newPage();
+  page.on('pageerror',e=>errors.push(String(e)));
   await page.goto(base+'v2.html#trail');
   await oldActive(page);
   check((await page.evaluate(()=>caches.keys())).includes(oldCache),'old release installed real Cache Storage');
@@ -358,11 +365,19 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   // persistent-browser recovery are mandatory in p10-backup-safety-browser.cjs.
   // This suite does not claim the old 1 MB padding/immediate-read false positive.
   await legacy.close();await remote.close();
+  fullUpgradeCompleted=true;
+  }
   // A failed new release install must retain old active SW and learner data.
   release='old';
+  if(!browser)browser=await chromium.launch(launchOptions);
+  browserVersion=browser.version();
   const failCtx=await browser.newContext({serviceWorkers:'allow'});
+  const retryProfileId=crypto.randomUUID();
+  provenance.profiles.push({id:retryProfileId,role:'failed-install-retry',storage:'isolated-browser-context'});
+  record('retry-profile-opened',{profile:'failed-install-retry',profileId:retryProfileId,phase});
   observeContext(failCtx,'failed-install-retry');
   const failPage=await failCtx.newPage();
+  failPage.on('pageerror',e=>errors.push(String(e)));
   diagnosticPage=failPage;
   await failPage.goto(base+'v2.html#trail');await oldActive(failPage);
   await lesson(failPage,'equivalent');
@@ -452,6 +467,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   // a fresh page. Do not make early deletion part of upgrade readiness.
   await failPage.close();
   const recoveredPage=await failCtx.newPage();
+  recoveredPage.on('pageerror',e=>errors.push(String(e)));
   diagnosticPage=recoveredPage;
   await recoveredPage.goto(base+'v2.html#trail',{waitUntil:'commit'});
   await newReady(recoveredPage);
@@ -467,12 +483,14 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    'successful retry serves cached learning document without network transport');
   check(JSON.parse(await read(recoveredPage)).lessons.equivalent.cases[0].attempts.length===3,'recovered new release launches and retains history offline');
   await failCtx.close();offlineServing=false;
+  retryCompleted=true;
+  record('retry-profile-completed',{profile:'failed-install-retry',profileId:retryProfileId,phase});
   check(errors.length===0,'no uncaught browser page errors',{errors});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,scenarios,errors,oldCommit:OLD,newCommit:current,oldCache,newCache,
-   provenance:{...provenance,browserVersion,primaryBrowserLaunches:primaryLaunches,primaryBrowserRestarts:primaryLaunches-1},
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({phase,fullUpgradeCompleted,retryCompleted,checks,scenarios,errors,oldCommit:OLD,newCommit:current,oldCache,newCache,
+   provenance:{...provenance,browserVersion,primaryBrowserLaunches:primaryLaunches,primaryBrowserRestarts:Math.max(0,primaryLaunches-1)},
    workerDiagnostic:process.env.P10_SW_DIAGNOSTIC==='1',quotaCoverage:'required separate p10-backup-safety-browser.cjs',
    realHistoricalChildBackup:false,macManual:false,childTrial:false,independentTeaching:false},null,2));
-  console.log('P10_RELEASE_UPGRADE_OK '+checks.length+' real browser checks');
+  console.log('P10_RELEASE_UPGRADE_OK '+JSON.stringify({phase,checks:checks.length,fullUpgradeCompleted,retryCompleted}));
  }catch(e){
   let browserState=null;
   if(diagnosticPage&&!diagnosticPage.isClosed()){
@@ -482,7 +500,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    if(typeof raw==='string')fs.writeFileSync(path.join(out,'failure-learning-record.json'),raw);
   }
   fs.writeFileSync(path.join(out,'diagnostics.json'),JSON.stringify({browserState,trace},null,2));
-  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({checks,scenarios,errors,error:String(e),stack:e.stack,browserState,traceCount:trace.length,
+  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({phase,fullUpgradeCompleted,retryCompleted,checks,scenarios,errors,error:String(e),stack:e.stack,browserState,traceCount:trace.length,
    oldCommit:OLD,newCommit:current,provenance:{...provenance,browserVersion,primaryBrowserLaunches:primaryLaunches,primaryBrowserRestarts:Math.max(0,primaryLaunches-1)}},null,2));
   console.error('P10_RELEASE_UPGRADE_FAILED '+(e.stack||e));
   process.exitCode=1;
@@ -495,7 +513,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
     workerEvents.push({profile,url:worker.url(),events});
    }catch(error){workerEvents.push({profile,error:String(error)});}finally{clearTimeout(timer);}
   }
-  fs.writeFileSync(path.join(out,'http-events.json'),JSON.stringify({oldCommit:OLD,newCommit:current,trace,workerEvents},null,2));
+  fs.writeFileSync(path.join(out,'http-events.json'),JSON.stringify({phase,oldCommit:OLD,newCommit:current,provenance,trace,workerEvents},null,2));
   if(ctx)await ctx.close().catch(()=>{});
   if(browser)await browser.close().catch(()=>{});
   if(server)await new Promise(resolve=>server.close(resolve));

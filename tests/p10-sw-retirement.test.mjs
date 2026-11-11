@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {MessageChannel} from 'node:worker_threads';
+import {isCurrentReleaseReady} from '../dist/sw-client.js';
 
 const source=fs.readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
 const release=source.match(/const CACHE = '([^']+)'/)[1];
@@ -63,7 +64,8 @@ test('loaded page release certificate matches the worker and is precached',()=>{
  const page=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.url),'utf8');
  for(const file of ['space.js','exploration.js','learning/learn.js']){
   const entry=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
-  assert.equal(entry.match(/registerClientRelease\('([^']+)'\)/)[1],release);
+  const fixedRelease=entry.match(/const RELEASE='([^']+)'/)?.[1]||entry.match(/registerClientRelease\('([^']+)'\)/)?.[1];
+  assert.equal(fixedRelease,release);
  }
  assert.ok(source.includes("'./sw-client.js'"));
  assert.ok(!page.includes('localStorage'),'cleanup coordination cannot touch learner storage');
@@ -73,8 +75,21 @@ test('new page never invokes an older controller cleanup implementation',async()
  const sent=[],listeners={};
  const oldWorker={state:'activated',postMessage(message,ports){sent.push(message.type);
   ports[0].postMessage({type:'math-explorer:cache-status',cache:'older-release',complete:true});ports[0].close();}};
- vm.runInNewContext(pageSource.replace('export function','function')+'\nregisterClientRelease('+JSON.stringify(release)+');',{navigator:{serviceWorker:{controller:oldWorker,addEventListener:(name,fn)=>listeners[name]=fn}},
+ vm.runInNewContext(pageSource.replaceAll('export function','function')+'\nregisterClientRelease('+JSON.stringify(release)+');',{navigator:{serviceWorker:{controller:oldWorker,addEventListener:(name,fn)=>listeners[name]=fn}},
   document:{readyState:'loading'},window:{addEventListener:(name,fn)=>listeners[name]=fn},MessageChannel,setTimeout,clearTimeout});
  await listeners.load();
  assert.deepEqual(sent,['math-explorer:cache-status']);
+});
+test('offline readiness requires this loaded release and its current activated controller',()=>{
+ const worker={state:'activated'},replacement={state:'activated'};
+ const current={release,registration:{active:worker},controller:worker,worker,
+  report:{type:'math-explorer:cache-status',cache:release,complete:true}};
+ assert.equal(isCurrentReleaseReady(current),true);
+ assert.equal(isCurrentReleaseReady({...current,report:{...current.report,cache:'older-release'}}),false,'a complete older cache cannot certify a failed new installation');
+ assert.equal(isCurrentReleaseReady({...current,report:{...current.report,complete:false}}),false,'missing resources never count as ready');
+ assert.equal(isCurrentReleaseReady({...current,controller:null}),false,'a complete active cache without actual page control is not ready');
+ assert.equal(isCurrentReleaseReady({...current,controller:replacement}),false,'a stale reply from a previous controller is not ready');
+ assert.equal(isCurrentReleaseReady({...current,registration:{active:replacement}}),false,'registration active and page controller must agree');
+ worker.state='activating';
+ assert.equal(isCurrentReleaseReady(current),false,'activation must finish');
 });

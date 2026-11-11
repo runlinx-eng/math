@@ -1,5 +1,6 @@
-import {registerClientRelease} from './sw-client.js';
-registerClientRelease('math-explorer-20261112-p10-release-r3-v2');
+import {registerClientRelease,isCurrentReleaseReady} from './sw-client.js';
+const RELEASE='math-explorer-20261112-p10-release-r3-v2';
+registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';
@@ -1162,7 +1163,7 @@ async function offline(){
     const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
     await navigator.serviceWorker.ready;
     const check=async()=>{
-      const active=navigator.serviceWorker.controller||registration.active;
+      const active=navigator.serviceWorker.controller;
       if(!active){status.textContent='本机保存 · 正在准备离线资源';return;}
       const response=await new Promise(resolve=>{
         const channel=new MessageChannel();
@@ -1173,12 +1174,15 @@ async function offline(){
         try{active.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}
         catch{clearTimeout(timer);channel.port1.close();resolve(null);}
       });
-      // Only the active worker knows whether its entire versioned manifest was cached.
-      status.textContent=response?.type==='math-explorer:cache-status'&&response.complete?
+      // An old controller's complete cache cannot certify this document's release.
+      // A late reply from a replaced controller must not overwrite its successor.
+      if(navigator.serviceWorker.controller!==active)return;
+      status.textContent=isCurrentReleaseReady({release:RELEASE,registration,
+        controller:navigator.serviceWorker.controller,worker:active,report:response})?
         '本机保存 · 离线就绪':'本机保存 · 离线资源不完整';
     };
-    await check();
     navigator.serviceWorker.addEventListener('controllerchange',()=>{check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});});
+    await check();
   }catch{status.textContent='本机保存 · 离线状态未知';}
 }
 async function boot(){try {

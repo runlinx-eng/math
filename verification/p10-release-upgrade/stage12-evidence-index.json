@@ -9,9 +9,9 @@
     "Each result applies only to its recorded PR head and actual Required checkout SHA. GitHub pull_request checks use a merge checkout; head and tested checkout must not be conflated.",
     "Source paths are relative to the associated GitHub Actions artifact ZIP root. File SHA-256 values bind this compact index to raw evidence without copying the artifact.",
     "full-lessons/results.json headSha records the actual merge checkout, whereas backup-safety/results.json distinguishes headSha and testedCheckoutSha.",
-    "A labels a directly passed automated check within its stated scope; B is partial or restricted evidence; C is blocked or unproven. Passing a subset does not make P10 A.",
+    "A labels a directly passed automated check within its stated scope; B is partial or restricted evidence; C is a directly failed blocking gate. Passing a subset does not make P10 A.",
     "Diagnostic variants that modify the historical SW are never counted as formal untouched-release upgrade acceptance.",
-    "No result from these three heads is transferred to a later commit; canceled runs are not classified as real failures."
+    "No result from the listed heads is transferred to a later commit; canceled runs are not classified as real failures."
   ],
   "environment": {
     "runner": "GitHub-hosted Ubuntu 24.04",
@@ -307,6 +307,571 @@
         "complete": false,
         "level": "C"
       }
+    },
+    {
+      "headSha": "e133b6940ff1d5240e2cbf4b934b42211abe32c3",
+      "requiredCheckoutSha": "5dc5eb3c19cd8afa8eedb51eac23bdc4537554d9",
+      "tree": "7741f7b5d0eb1c66ddea7e6ac1217cafc81ac175",
+      "headTreeEqualsCheckoutTree": true,
+      "required": {
+        "id": 43076196399,
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43076196399"
+      },
+      "p8": {
+        "id": 43076196375,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43076196375"
+      },
+      "overview": {
+        "id": 43076196401,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43076196401",
+        "applicable": true,
+        "checks": 42,
+        "reason": "Product entry module changes match Overview path filters."
+      },
+      "artifact": {
+        "id": 13883610625,
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43076196399/artifacts/13883610625",
+        "archiveSha256": "d9dc3de344edafe40ec58687a17f2f4b40bd5ace79b708f4dfe43b724e6451fd",
+        "files": [
+          {
+            "path": "p10-release-upgrade/backup-safety/browser-export-v2.json",
+            "bytes": 3829,
+            "sha256": "4916250e4bb6d87adf80f3153ccf5cd854d65c656df4b66181508eb9e9a681bf"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/import-rejection.png",
+            "bytes": 26946,
+            "sha256": "200da17ccf6791e0f309f45836317a811571f5e2e1daad31213e2c3b76197542"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-after-reopen.json",
+            "bytes": 795,
+            "sha256": "759a30e27ddb17830c8125c5a130fad878e36fed6a2bdec36b0a1172d1fffb96"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-before.json",
+            "bytes": 795,
+            "sha256": "759a30e27ddb17830c8125c5a130fad878e36fed6a2bdec36b0a1172d1fffb96"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-confirmed-failure.png",
+            "bytes": 31710,
+            "sha256": "e291b88f45608dc63430924da882b7335373ee87bcd45c7eef394677f99535f9"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/results.json",
+            "bytes": 6073,
+            "sha256": "b30a5b346188999278fccf346d1ddea0e0d97c393de890de644cb3de209f18a7"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/source-backup.png",
+            "bytes": 27121,
+            "sha256": "19c0c9e44ae0f8fdf57fbd8d84b074e8254fdf3dc449ad56d6a9b375f602a574"
+          },
+          {
+            "path": "p10-release-upgrade/failure.json",
+            "bytes": 3575,
+            "sha256": "f03255bc844d3ec6504888e61a1e40c9a23c5737f8c10fa73d77638bf743df0a"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-after-offline-recheck.json",
+            "bytes": 24662,
+            "sha256": "a3f05203cb5db498526b0041a99e985ce79fd67a32867fc5df54f9d6fee2c48a"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-all-questions-offline.png",
+            "bytes": 30683,
+            "sha256": "01dfbb7b53c5c63521b76d50b59a74e7316626f54fdad438fa405f31889a2682"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-before-browser-close.json",
+            "bytes": 23880,
+            "sha256": "4866508e87c52f06a958cb6013a7d503a4880502c445fe0bbe10d093e4cab09e"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-offline-summary-restored.png",
+            "bytes": 22643,
+            "sha256": "ee2317a7ce2516d1868bf9d499c674265415934c301d98f73ed31a3fefc02375"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-after-offline-recheck.json",
+            "bytes": 1969,
+            "sha256": "5fe4e7357e442cc4255c677d6689757d4c4a87f1a5e7c6d585d7d2193887f42c"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-all-questions-offline.png",
+            "bytes": 26761,
+            "sha256": "e415c9ff001bc3c7b572bfab341f8986cea22d692c87c5366bdc428010dd0014"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-before-browser-close.json",
+            "bytes": 1635,
+            "sha256": "ffc0cd324dd97049b13d53c54fc997748c9065aec50805ab4740fcd81fc0b013"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-offline-summary-restored.png",
+            "bytes": 23276,
+            "sha256": "200a20fb33ad2caecfe42fafe57835e503b7070a57860420e2e2702d53ad93c0"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/http-events.json",
+            "bytes": 160026,
+            "sha256": "bde2f4cc631e7f88c12006cde77a1e2e92a30c1ce38ab842b5b75bf5530114ea"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/results.json",
+            "bytes": 15503,
+            "sha256": "af7901091958b4b63d8a77586532765d60dd065a1225a8bf287b0ea369af33b3"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-after-offline-recheck.json",
+            "bytes": 3508,
+            "sha256": "378eaa81003b248ea57836838822ee378a84a063bc9b76edd8a26b9cdafc697d"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-all-questions-offline.png",
+            "bytes": 40370,
+            "sha256": "59c091409d3ed8f57984ddff111b43838fff9d55f835a67b2769188a7109cec0"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-before-browser-close.json",
+            "bytes": 2999,
+            "sha256": "8e9085e7a861c3dfb4efe1a83923fcf0c13ab70ab4e2127eb938e123cccfad8f"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-offline-summary-restored.png",
+            "bytes": 22111,
+            "sha256": "415a1f11f8bc2e41fc78b70ea7c8b4fc98424e341b647a4de1527f4afaf05fcd"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-after-offline-recheck.json",
+            "bytes": 6178,
+            "sha256": "1e633fc7f1664b83593403b4830086af25cf88a2e737aa4eceac618a12db0fde"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-all-questions-offline.png",
+            "bytes": 125159,
+            "sha256": "d5957fa9d84ced90326332255dcf58fa7360a6db44c8e6642b83363dd6500fdf"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-before-browser-close.json",
+            "bytes": 5369,
+            "sha256": "6d3c1f651ef8871e4e3a40b5e1ae5d73e426d3f5e71ba8e5cfc485c34ea1c25a"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-offline-summary-restored.png",
+            "bytes": 22214,
+            "sha256": "91b000e4973ee5fc5f273ccb104bda2d200a3ed5838d66adc071557663b9e1f4"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-failure.json",
+            "bytes": 26251,
+            "sha256": "d5fc6bc6f4b96ba7546c2cbe3252daa2edcc26cd60f4da0c8b372b14014962af"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-http-events.json",
+            "bytes": 823930,
+            "sha256": "2e2694d2fa08911ee3553218ae0352e2ef8d84c9a6112be00790d4970e9302d6"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-results.json",
+            "bytes": 6309,
+            "sha256": "686691b1ca614bb07c4ff00a5a3c09fa44c8faae385f63090263f84dd6569eef"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "13da8f5c71a0ce9377eedf2f7318873aebb17ce37dff1935f8ea47b2d9634c5c"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "95630c79b5d72bc7f3c4ea09131e85688ac165bde106a9ee02f8c18fdedd2a69"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "80990002362227c3d671c226921a0917e9896d6de0a52ab5daa4a9e72a92a0b9"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "13da8f5c71a0ce9377eedf2f7318873aebb17ce37dff1935f8ea47b2d9634c5c"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure.json",
+            "bytes": 3867,
+            "sha256": "241a98b1632d1c1b6aca1e6082c2828e414e2c96496e8290698651e71acfa738"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/http-events.json",
+            "bytes": 1190228,
+            "sha256": "d30ef3da0eec046eaed4a9b5d22f36dd987bc37fab4b14c1cbd9df360a2df1f9"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "8f4d078ff3ca4f14a3581608af2abd7b3387909dbf156c32c138cbbf76b81aaf"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "95630c79b5d72bc7f3c4ea09131e85688ac165bde106a9ee02f8c18fdedd2a69"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "cce13d0820d711299d8e0515cc3883544ce0e2176663ea267bb6c1771144867d"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "8f4d078ff3ca4f14a3581608af2abd7b3387909dbf156c32c138cbbf76b81aaf"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure.json",
+            "bytes": 3867,
+            "sha256": "2ac8668db5fbfb2d40d0a17382caac21fe8ac3020b9ab1ae5b43c8c4bb96a5f0"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/http-events.json",
+            "bytes": 1190228,
+            "sha256": "1cc3e3890a4ce61d3f752e14ec160c031085bd751d310e48c91a7059c0426630"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "374f15e1ede3a3b5fe053bd7b32e4de8283e5dbf3ba248e24371ae989a99a457"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "95630c79b5d72bc7f3c4ea09131e85688ac165bde106a9ee02f8c18fdedd2a69"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "e914163e8ba669e2a01760365a8e9ff54c18fa70b0e4479f86a37ec6c75cf8b4"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "374f15e1ede3a3b5fe053bd7b32e4de8283e5dbf3ba248e24371ae989a99a457"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure.json",
+            "bytes": 3867,
+            "sha256": "787cfc264cd540075c82ea1e3701e50eddffd021773687d331b3e8c563abcfb1"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/http-events.json",
+            "bytes": 1190228,
+            "sha256": "e80e0cfe1f29802af9cf5b10981cd792707076ccc931bc55f995d1b3b360129c"
+          }
+        ]
+      },
+      "nodeTests": {
+        "passed": 272,
+        "failed": 0
+      },
+      "completeUpgrade": {
+        "source": "p10-release-upgrade/failure.json",
+        "independentRuns": 3,
+        "successfulRuns": 0,
+        "complete": false,
+        "level": "C",
+        "runs": [
+          {
+            "repetition": 1,
+            "complete": false,
+            "level": "C",
+            "checksPassed": 11,
+            "failure": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "profileId": "math-p10-release-profile-UBkjDw",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "historicalWorkerModified": false,
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "13da8f5c71a0ce9377eedf2f7318873aebb17ce37dff1935f8ea47b2d9634c5c",
+            "completedPrimaryBrowserRestarts": 1,
+            "cleanupReached": false,
+            "installFailureRetryReached": false
+          },
+          {
+            "repetition": 2,
+            "complete": false,
+            "level": "C",
+            "checksPassed": 11,
+            "failure": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "profileId": "math-p10-release-profile-272tWa",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "historicalWorkerModified": false,
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "8f4d078ff3ca4f14a3581608af2abd7b3387909dbf156c32c138cbbf76b81aaf",
+            "completedPrimaryBrowserRestarts": 1,
+            "cleanupReached": false,
+            "installFailureRetryReached": false
+          },
+          {
+            "repetition": 3,
+            "complete": false,
+            "level": "C",
+            "checksPassed": 11,
+            "failure": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "profileId": "math-p10-release-profile-NbEzLm",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "historicalWorkerModified": false,
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "374f15e1ede3a3b5fe053bd7b32e4de8283e5dbf3ba248e24371ae989a99a457",
+            "completedPrimaryBrowserRestarts": 1,
+            "cleanupReached": false,
+            "installFailureRetryReached": false
+          }
+        ]
+      },
+      "backupSafety": {
+        "source": "p10-release-upgrade/backup-safety/results.json",
+        "checksPassed": 41,
+        "level": "A",
+        "scope": "Synthetic browser backups, empty V1 compatibility fixture, conflicts and native quota failures only; not real historical child backups.",
+        "independentPersistentProfiles": 4,
+        "quotaFullBrowserReopens": 1,
+        "quotaBeforeAfterBytes": 795,
+        "quotaBeforeAfterSha256": "759a30e27ddb17830c8125c5a130fad878e36fed6a2bdec36b0a1172d1fffb96"
+      },
+      "fullLessons": {
+        "source": "p10-release-upgrade/full-lessons/results.json",
+        "checksPassed": 141,
+        "level": "A",
+        "completed": {
+          "equivalent": 3,
+          "shiftfine": 3,
+          "solidstack": 3,
+          "argument38": 5
+        },
+        "independentProfiles": 4,
+        "fullBrowserLaunches": 12,
+        "fullBrowserReopens": 8,
+        "scope": "Fresh-release complete lessons and stopped-origin offline persistence, not cross-version upgrade."
+      },
+      "browserRegressionGroups": [
+        {
+          "test": "tests/p7-d5-entry-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p7-d6-fixed-ui-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p7-d7-multi-type-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p9-thinking-feedback-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p10-learning-continuity-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p10-longterm-offline-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p10-sw-nav-isolation-browser.cjs",
+          "result": "failure",
+          "errors": [
+            "P10_ISOLATION_FATAL Error: unmodified historical SW navigation regression failed: C-original-transition-timing, C-verified-new-controller"
+          ]
+        },
+        {
+          "test": "tests/p10-release-upgrade-repeat.cjs",
+          "result": "failure",
+          "errors": [
+            "P10_RELEASE_UPGRADE_FAILED Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "P10_RELEASE_UPGRADE_FAILED Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "P10_RELEASE_UPGRADE_FAILED Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "AssertionError [ERR_ASSERTION]: all three complete, unmodified historical-release upgrades must pass"
+          ]
+        },
+        {
+          "test": "tests/p8-node-surface-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p8-trail-performance-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p8-mode-real-click-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p8-b39-lazy-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p1-navigation-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p2-grade-distribution-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p3-learning-flow-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p7-learning-panel-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p7-d4-multi-type-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p4-learning-reliability-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p5-integration-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/continuous-space-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/p6b-layout-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-overview-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-focus-transition-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-focus-semantics-browser.cjs",
+          "result": "failure",
+          "errors": [
+            "Error: reading an explanation does not change the map, learning completion or selected node"
+          ]
+        },
+        {
+          "test": "tests/spatial-focus-filter-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-guide-inplace-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-unified-map-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-theme-overview-browser.cjs",
+          "result": "failure",
+          "errors": [
+            "Error: hover leaves graph snapshot, camera and selected state untouched"
+          ]
+        },
+        {
+          "test": "tests/grade-progression-overview-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/spatial-local-focus-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/learning-workspace-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/concept-visual-browser.cjs",
+          "result": "failure",
+          "errors": [
+            "Error: desktop-count: reading explanations does not change camera, nodes, selection, or relation data"
+          ]
+        },
+        {
+          "test": "tests/node-name-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        },
+        {
+          "test": "tests/relationship-wording-browser.cjs",
+          "result": "completed-without-reported-error",
+          "errors": []
+        }
+      ],
+      "remainingBlockers": [
+        "Original C navigation still fails and strict C stays waiting.",
+        "All three untouched historical-release upgrade attempts fail at actual activation/control gate.",
+        "Retry and final cleanup were not reached; additional independent retry execution is required.",
+        "Three later graphical snapshot-invariance assertions also fail; artifacts omit before/after snapshots, so the cause is not established.",
+        "Historical child backup, Mac manual, child use and independent teaching review remain unverified."
+      ]
     }
   ],
   "findings": [
@@ -618,19 +1183,16 @@
     }
   ],
   "releaseGate": {
-    "p10": "not complete",
-    "completeUntouchedCrossVersionAcceptances": 0,
-    "requiredCompleteAcceptances": 3,
-    "blockingItems": [
-      "The remaining navigation timeout has no established internal root cause; corrected O shows its deletion and activation promises completed.",
-      "Full current-head upgrade still must establish activated current active/controller and complete navigation before counting an acceptance.",
-      "Retry cleanup timeout cause and retry safety need valid failed-context evidence.",
-      "Three independent complete untouched-release upgrades and latest-head full Required/P8 evidence remain required."
-    ],
-    "realHistoricalChildBackupValidated": false,
-    "macWindowsAcceptance": false,
-    "realChildAcceptance": false,
-    "pedagogyAcceptance": false
+    "status": "P10 incomplete",
+    "level": "C",
+    "formalUntouchedUpgradeSuccesses": 0,
+    "formalUntouchedUpgradeRuns": 3,
+    "noMerge": true,
+    "noDeployment": true,
+    "noChildDataDeletion": true,
+    "navigationRootCauseResolved": false,
+    "retryCleanupRootCauseResolved": false,
+    "scope": "Results are bound to the explicitly listed head; subsequent changes require their own completed CI."
   },
   "finalDiagnosticReview": {
     "headSha": "08938127fc06a3255638206e215876c89ae155eb",
@@ -641,5 +1203,6 @@
     "requiredCheckoutSha": "a783509c487c3f1b3851ab391d5f632302669b54",
     "artifactId": 13880323113,
     "acceptanceTransferredFromOlderHeads": false
-  }
+  },
+  "latestCompletedReviewedHead": "e133b6940ff1d5240e2cbf4b934b42211abe32c3"
 }

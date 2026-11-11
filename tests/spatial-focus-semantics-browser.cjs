@@ -10,6 +10,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
  const snap=()=>page.evaluate(()=>mathSpace.snapshot());
+ let snapshotDiff;
  try{
   await page.goto(base+'?v=56&world=network&layout=53#atlas');
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
@@ -47,7 +48,16 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   await conceptHelp.locator('.concept-mode').first().locator('summary').click();
   check((await conceptHelp.innerText()).includes('把物品一个一个指出来'),
     'child-friendly explanation opens only when requested');
-  check(JSON.stringify(await snap())===conceptBefore,
+  const conceptAfter=JSON.stringify(await snap());
+  if(conceptAfter!==conceptBefore){
+   const expected=JSON.parse(conceptBefore),actual=JSON.parse(conceptAfter);
+   const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
+    .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
+   snapshotDiff={changedKeys,fields:Object.fromEntries(changedKeys.map(key=>[key,{
+    expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
+   if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
+  }
+  check(conceptAfter===conceptBefore,
     'reading an explanation does not change the map, learning completion or selected node');
   await conceptHelp.locator('.concept-mode').first().locator('summary').click();
   await conceptHelp.locator('.concept-alternatives > summary').click();
@@ -78,7 +88,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   console.log(JSON.stringify({passed:checks.length,errors,rootPixelRadius:render.rootPx,neighborPixelRadius:render.neighborPx,strokeWidths:[...new Set(render.lineWidths)]}));
  }catch(error){
   await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(error)},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(error),snapshotDiff},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{await context.close();await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

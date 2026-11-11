@@ -1,5 +1,9 @@
 // The entry module supplies its own fixed source version. A shared helper or a
 // new controller must not relabel a document that loaded an older entry module.
+export function isCurrentReleaseReady({release,registration,controller,worker,report}){
+ return !!worker&&worker.state==='activated'&&registration?.active===worker&&controller===worker&&
+  report?.type==='math-explorer:cache-status'&&report.cache===release&&report.complete===true;
+}
 export function registerClientRelease(RELEASE){
 if('serviceWorker'in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{

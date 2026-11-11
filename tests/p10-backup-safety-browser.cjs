@@ -136,17 +136,54 @@ let activePage,profiles;
   await remote.page.screenshot({path:path.join(out,'import-rejection.png')});
   await close(remote.context);
 
-  const legacy=await open('constructed-v1');
+  let legacy=await open('constructed-v1');
   await trail(legacy.page);
+  // Constructed compatibility data using the original V1 APIs, never a child backup.
   const v1=await legacy.page.evaluate(async()=>{
-   const {freshState}=await import('./core.js');
-   return JSON.stringify({app:'math-explorer',version:1,state:freshState()});
+   const {freshState,createSession,recordAnswer,hint,finishSession,makeBackup}=await import('./core.js');
+   const {LESSONS,questions}=await import('./lessons.js');
+   const state=freshState(),completed=createSession('meaning');
+   completed.stage='check';
+   questions(completed.lesson,'check',completed.variant).forEach((q,index)=>{
+    completed.index=index;
+    if(index===0){recordAnswer(completed,'0');hint(completed);}
+    recordAnswer(completed,q.type==='shade'?Array.from({length:q.n},(_,i)=>i):q.answer);
+   });
+   finishSession(state,completed);
+   state.active=createSession('decimal');
+   recordAnswer(state.active,'0');hint(state.active);
+   recordAnswer(state.active,questions('decimal','placement')[0].answer);
+   state.active.index=1;
+   state.paused.equivalent=createSession('equivalent');
+   recordAnswer(state.paused.equivalent,1);hint(state.paused.equivalent);
+   state.visited[LESSONS.meaning.topicId]=completed.startedAt;
+   state.visited[LESSONS.decimal.topicId]=state.active.startedAt;
+   state.bookmarks=[LESSONS.meaning.topicId];
+   return JSON.stringify(makeBackup(state));
   });
+  const expectedV1=JSON.parse(v1).state;
+  fs.writeFileSync(path.join(out,'constructed-v1.json'),v1);
+  const completedAnswer=expectedV1.history[0].answers.check[0];
+  check(expectedV1.history.length===1&&completedAnswer.hintUsed&&
+   completedAnswer.attempts.length===2&&!completedAnswer.attempts[0].correct&&completedAnswer.attempts[1].correct&&
+   expectedV1.active.index===1&&expectedV1.paused.equivalent.answers.placement.length===1&&
+   expectedV1.bookmarks.length===1&&Object.keys(expectedV1.visited).length===2,
+   'constructed nonempty V1 fixture contains completed history, error, hint, correction and unfinished sessions',
+   {fixture:'constructed-v1.json',fixtureSha256:digest(v1),realHistoricalChildBackup:false});
   check((await importFile(legacy.page,v1,'automatically-constructed-v1.json')).includes('备份已合并'),
    'constructed V1 file passes the native browser compatibility path');
   const legacyState=JSON.parse(await read(legacy.page));
   check(legacyState.schema===2&&legacyState.legacy!==null&&Object.keys(legacyState.lessons).length===0,
    'constructed V1 compatibility preserves legacy semantics without invented lesson evidence');
+  assert.deepEqual(legacyState.legacy,expectedV1);
+  check(true,'native import preserves every field of the constructed nonempty V1 legacy object');
+  await close(legacy.context);
+  legacy=await open('constructed-v1');
+  await trail(legacy.page);
+  const reopenedLegacy=JSON.parse(await read(legacy.page));
+  assert.deepEqual(reopenedLegacy.legacy,expectedV1);
+  assert.deepEqual(reopenedLegacy.lessons,{});
+  check(true,'full Chromium close and reopen preserves the constructed nonempty V1 legacy object field for field');
   await close(legacy.context);
 
   let quota=await open('quota-reopen');
@@ -224,7 +261,8 @@ let activePage,profiles;
   await close(quota.context);
   check(errors.length===0,'no uncaught application page errors',{errors});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({provenance,checks,errors,
-   independentPersistentProfiles:4,quotaFullBrowserReopens:1,constructedV1:true,constructedConflictVariants:true},null,2));
+   independentPersistentProfiles:4,v1FullBrowserReopens:1,quotaFullBrowserReopens:1,
+   constructedV1:true,constructedConflictVariants:true},null,2));
   console.log('P10_BACKUP_SAFETY_OK '+checks.length+' real Chromium checks');
  }catch(error){
   fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({provenance,checks,errors,error:String(error),stack:error.stack},null,2));

@@ -35,9 +35,29 @@
 - 正式流程包括旧版完整三题/说明/关浏览器重开/离线学习、新版真实接管和导航、逐字节保留、旧页写入冲突、旧页存在时延期清理、关闭后安全重试、B39 首次离线、新版整浏览器离线重开与再判题保存、503/安装中途断网/旧版离线继续学习/联网重试。
 - 独立的备份/配额与四类整课门禁在升级门禁失败时也继续执行，不能再把“后段未运行”写成已通过。四类真实题数为 equivalent 3、shiftfine 3、solidstack 3、argument38 5；每题原生错误→提示→修改→原判题→保存，每类两次完整浏览器关闭和离线重开。
 
+### 应用保护提交的三次正式结果
+
+`e133b6940ff1d5240e2cbf4b934b42211abe32c3` 已完整运行：[Required 43076196399](https://github.com/runlinx-eng/math/actions/runs/43076196399) **failure**，[P8 43076196375](https://github.com/runlinx-eng/math/actions/runs/43076196375) **success**，[Overview 43076196401](https://github.com/runlinx-eng/math/actions/runs/43076196401) **success（42 项）**。Overview 因本轮入口模块修改实际适用并触发。实际 checkout `5dc5eb3c19cd8afa8eedb51eac23bdc4537554d9` 与 head tree 均为 `7741f7b5d0eb1c66ddea7e6ac1217cafc81ac175`；[Artifact 13883610625](https://github.com/runlinx-eng/math/actions/runs/43076196399/artifacts/13883610625) 已实际下载。
+
+- 三次独立旧版升级均实际执行，成功 **0/3**。每次前 11 项通过，随后新 worker 持续 `waiting: installed`，90 秒真实接管门槛失败；旧版源码摘要三次相同且未经修改。新版学习导航、旧标签页跨版本冲突、最终清理与失败重试分支均未到达，不能记作通过。
+- 三次原记录与失败现场原文均为 1992 字节，各次前后完全相等；旧三题尝试 `[2,1,1]`、自由解释和旧版 share 离线作答仍在。每次 HTTP 1330 请求 = 1127 完整结束 + 203 受控断网断连，未结为 0；发布切换后的 368 请求均结束。该数据证明到阻塞点未丢失，不证明完成跨版本迁移。
+- 原始 C 仍为 9 秒导航超时；严格 C 显示新版 waiting 缓存完整 251/251、旧 active/controller 未交接。这直接证明“缓存完整”不能替代“新版已激活”。
+- 272 Node 项通过；独立备份 41 项与四类整课 141 项在本提交重新通过。Quota 重启前后各 795 字节，SHA-256 `759a30e27ddb17830c8125c5a130fad878e36fed6a2bdec36b0a1172d1fffb96`。本提交尚是空 V1 样本；后续非空 V1 增强不能倒算在这里。
+- 后续工程回归没有被升级失败截断：P4/P5/P7/P8/P9 等继续运行。另有三个真实失败：`spatial-focus-semantics` 阅读说明前后快照不等、`spatial-theme-overview` 悬停前后快照不等、`concept-visual` 阅读说明前后快照不等。既有产物未保存两侧快照，不能把原因猜成时间戳、摄像机浮点误差或本轮 SW 修复；保持失败，不降低断言，也不混入 P11 改造。
+
+上述结果仅属于所列 SHA；后续版本必须以各自产物为准。三个正式升级仍失败，应用缓存保护尚未取得跨版本浏览器全流程通过，P10 尚未完成。
+
+### 后续验收补强与离线状态修正
+
+入口页的离线状态原先只看旧 worker 回复的 `complete`，可能把旧版本完整缓存误报为当前页面已经离线就绪。现在主入口与足迹入口共用严格判定：回复必须属于入口固定 release，响应者仍是当前 `activated` controller 且等于 `registration.active`；旧 controller 的迟到回复不能覆盖新版状态。监听在首次异步查询前注册，避免遗漏控制器切换。此处是独立的应用级提示修复，不是导航卡死根因的证明。
+
+正式三次流程之外，repeat runner 还必须执行一个独立 `retry` 子进程，使用新的 Chromium context 和存储。即使前三次升级在接管门禁提前失败，关键资源 503、安装中断网、旧版离线继续判题保存、恢复网络重试和 12 秒清理门槛也不能被跳过；该次运行不计入三次完整升级。每个子进程仍保留原单项 90 秒接管／12 秒清理约束，不用延长等待换取通过。
+
+独立备份门禁的 V1 样本进一步补成非空：由原 V1 API 生成四题完成历史、错误／提示／改正、当前与暂停会话、访问记录和收藏。原生文件导入及整浏览器重开后，对整个 legacy 对象逐字段深度比较，并要求不伪造新版 lessons 证据。完整预期由 41 项增至 44 项，真实 Quota 两个失败写入点及重启保全检查原样保留。非空构造样本仍不是实际儿童旧备份；这些新增路径只有对应提交的 Chromium Artifact 才能证明通过。
+
 ### 证据与收尾纪律
 
-完整证据位于 Required artifact 的 `p10-release-upgrade/`：根目录隔离时序与汇总，`run-1`～`run-3` 的 JSON/HTTP/日志/截图，`backup-safety/` 与 `full-lessons/`。每份结果同时绑定 PR head 和实际 checkout；GitHub 默认 PR 合并 checkout 不能被混写为原始 head。
+完整证据位于 Required artifact 的 `p10-release-upgrade/`：根目录隔离时序与汇总，`run-1`～`run-3` 及 `retry-independent` 的 JSON/HTTP/日志/截图，`backup-safety/` 与 `full-lessons/`。每份结果同时绑定 PR head 和实际 checkout；GitHub 默认 PR 合并 checkout 不能被混写为原始 head。
 
 当前未获得应用修复最终 HEAD 的三次升级与完整 CI 成功前，P10 保持未完成。A 仅指绑定实际 SHA 的具体技术检查；失败为 C，尚未执行或证据不足为 B。合成 V1、浏览器测试作品和冲突样本不是历史儿童备份；真实历史儿童数据、Mac 人工、儿童独立使用和独立教研仍不冒充完成。#63 安装包开发不准入，P11 的单一最强操作标记和简化悬停控件可在独立分支推进。本 PR 不合并、不部署、不清理真实儿童记录，不改数学源数据、判题、记录语义或思维反馈。
 

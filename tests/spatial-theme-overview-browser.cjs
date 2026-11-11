@@ -10,6 +10,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  const page=await context.newPage();
  page.on('pageerror',e=>errors.push(String(e)));
+ let snapshotDiff;
  try{
   await page.goto(url);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
@@ -63,7 +64,16 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.screenshot({path:path.join(out,'theme-hover-title-visible.png')});
   await page.waitForTimeout(200);
   check(await page.locator('#network-legend [data-hover="true"]').count()===1,'visible floating theme title keeps its hover and the group preview without flicker');
-  check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
+  const hoverSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
+  if(hoverSnapshot!==rawSnapshot){
+   const expected=JSON.parse(rawSnapshot),actual=JSON.parse(hoverSnapshot);
+   const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
+    .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
+   snapshotDiff={changedKeys,fields:Object.fromEntries(changedKeys.map(key=>[key,{
+    expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
+   if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
+  }
+  check(hoverSnapshot===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.every((v,i)=>Math.abs(v-before[i])<.0001);},{id:themeNode.id,before:beforeTints[0]});
@@ -281,7 +291,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   console.log(JSON.stringify({passed:checks.length,errors,childTrial:false}));
  }catch(err){
   await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(err),childTrial:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(err),childTrial:false,snapshotDiff},null,2));
   console.error(err.stack);process.exitCode=1;
  }finally{await context.close();await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
