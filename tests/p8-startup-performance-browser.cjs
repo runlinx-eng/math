@@ -96,6 +96,13 @@ async function measure(browser, version, scenario, round, mode, url, context) {
     }, null, { timeout: 45000 });
     await page.evaluate(() => new Promise(resolve =>
       requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    // A ready 3D graph is not the same as a ready task iframe.
+    let firstTaskReadyMs = null;
+    if (scenario === 'learn-deep') {
+      await page.frameLocator('#journey-frame').locator('#work')
+        .waitFor({ state: 'visible', timeout: 15000 });
+      firstTaskReadyMs = await page.evaluate(() => performance.now());
+    }
     const ended = metricsMap((await cdp.send('Performance.getMetrics')).metrics);
     result = await page.evaluate(() => {
       const marks = Object.fromEntries(performance.getEntriesByType('mark')
@@ -134,6 +141,7 @@ async function measure(browser, version, scenario, round, mode, url, context) {
           surface: new URL(location.href).searchParams.get('surface') || 'explore' }
       };
     });
+    result.firstTaskReadyMs = firstTaskReadyMs;
     result.taskDurationMs = value(ended, 'TaskDuration') === null || value(initial, 'TaskDuration') === null ?
       null : (ended.TaskDuration - initial.TaskDuration) * 1000;
     result.scriptDurationMs = value(ended, 'ScriptDuration') === null || value(initial, 'ScriptDuration') === null ?
@@ -192,7 +200,7 @@ async function main() {
         }
       }
     }
-    const metrics = ['interactiveMs', 'first3dFrameMs', 'loadingGoneMs', 'criticalModulesMs',
+    const metrics = ['interactiveMs', 'first3dFrameMs', 'firstTaskReadyMs', 'loadingGoneMs', 'criticalModulesMs',
       'atlasAndNavigationMs', 'relationshipBuildMs', 'webglConstructionMs',
       'scriptDurationMs', 'taskDurationMs', 'requestCount', 'transferBytes', 'decodedBytes',
       'longTaskMs'];
