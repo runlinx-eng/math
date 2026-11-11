@@ -93,7 +93,16 @@ let activePage,profiles;
 
   const remote=await open('import-target');
   await trail(remote.page);
-  check((await read(remote.page))===null,'independent target profile begins without source learning storage');
+  // renderTrail legitimately persists the application's fresh empty state.
+  // Independence means no inherited records, not absence of the storage key.
+  const initialTarget=await remote.page.evaluate(async key=>{
+   const {fresh}=await import('./exploration-core.js');
+   const raw=localStorage.getItem(key);
+   return {stored:raw===null?null:JSON.parse(raw),empty:fresh()};
+  },KEY);
+  assert.deepEqual(initialTarget.stored===null?initialTarget.empty:initialTarget.stored,initialTarget.empty);
+  check(true,'independent target profile has native fresh state without inherited learning evidence',
+   {freshRecordInitialized:initialTarget.stored!==null});
   check((await importFile(remote.page,payload,'real-browser-v2.json')).includes('备份已合并'),
    'actual V2 file import completes in an independent Chromium profile');
   const restored=await read(remote.page);

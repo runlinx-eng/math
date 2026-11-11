@@ -160,6 +160,7 @@ jobs:
       - name: Run browser regression suite
         env:
           P10_SW_DIAGNOSTIC: '1'
+          P10_SW_CACHE_PROBE: '1'
         if: steps.scope.outputs.run_browser == 'true'
         shell: bash
         run: |

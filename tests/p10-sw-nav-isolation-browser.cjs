@@ -51,7 +51,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
  const oldDir=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-isolate-'));
  const events=[],reports=[],errors=[];
  let release='new',explicitLength=false,seq=0,server,browser;
- let currentCase='';
+ let currentCase='',lifecycleProbe=false;
  const trace=(event,data={})=>events.push({time:new Date().toISOString(),event,...data});
  try{
   execFileSync('git',['worktree','add','--detach',oldDir,OLD],{cwd:root,stdio:'pipe'});
@@ -59,6 +59,12 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
   const oldCache=cacheAt(path.join(oldDir,'dist/sw.js')),newCache=cacheAt(path.join(root,'dist/sw.js'));
   server=http.createServer((req,res)=>{
    const id=++seq,version=release,pathname=new URL(req.url,base).pathname;
+   if(pathname==='/__p10_probe'&&req.method==='POST'){
+    let body='';req.on('data',chunk=>body+=chunk);req.on('end',()=>{
+     try{trace('worker-stage',{case:currentCase,...JSON.parse(body)});}catch(error){trace('probe-error',{error:String(error)});}
+     res.writeHead(204);res.end();
+    });return;
+   }
    const rel=decodeURIComponent(pathname).replace(/^\/+/,'')||'index.html';
    if(rel.startsWith('..')||rel.includes('/../')){res.writeHead(400);res.end('bad path');return;}
    trace('http-request',{id,version,path:pathname,method:req.method});
@@ -67,6 +73,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    res.on('close',()=>{if(!res.writableFinished)trace('http-connection-incomplete',{id,path:pathname,status:res.statusCode,headersSent:res.headersSent});});
    fs.readFile(path.join(version==='old'?oldDir:root,'dist',rel),(err,data)=>{
     if(err){res.writeHead(404);res.end('missing');return;}
+    if(rel==='sw.js'&&version==='new'&&lifecycleProbe)data=Buffer.from(lifecycleTrace('new')+data.toString());
     const headers={'Content-Type':mime[path.extname(rel)]||'application/octet-stream','Cache-Control':'no-store','Service-Worker-Allowed':'/'};
     if(explicitLength)headers['Content-Length']=data.length;
     trace('http-respond',{id,version,path:pathname,bytes:data.length,digest:pathname==='/learn.html'?hash(data):null,lengthHeader:!!explicitLength});
@@ -92,31 +99,16 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
     expectedBytes:expected.length,matchingDigest:hash(data)===hash(expected)});
   }
   reports.push(httpCheck);
-  // Diagnostic-only A/B experiment: modify the TEMPORARY old worktree's SW
-  // fetch-time cache write, not the real historical commit or its precache.
-  // Such modified-worker runs cannot count as genuine historical upgrades.
   const oldSwFile=path.join(oldDir,'dist/sw.js');
   const historicalSw=fs.readFileSync(oldSwFile,'utf8');
-  const oldRuntimeWrite='if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,copy)));}return response;';
-  if(historicalSw.split(oldRuntimeWrite).length!==2)throw Error('historical SW fetch pattern changed');
-  const noRuntimeWriteSw=historicalSw.replace(oldRuntimeWrite,'return response;');
-  // Diagnostic only: isolate navigation fetch interception while retaining original
-  // historical install, precache and cache name in the TEMPORARY old worktree.
   const oldFetchGuard="if(event.request.method!=='GET'||url.origin!==self.location.origin||url.pathname==='/health')return;";
   if(historicalSw.split(oldFetchGuard).length!==2)throw Error('historical SW fetch guard changed');
-  const passThroughLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard.replace("url.pathname==='/health'","url.pathname==='/health'||url.pathname==='/learn.html'"));
-  const cacheOnlyLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(caches.open(CACHE).then(c=>c.match(event.request,{ignoreSearch:true})).then(r=>r||new Response('missing old cache',{status:503})));return;}");
-  // L/M: same in-memory navigation bytes, only synchronous versus settled Promise.
-  // A successful L/M excludes Cache Storage and network response bodies as necessary.
-  // Both variants are only installed in the temporary historical worktree.
-  const diagnosticHtml='<!doctype html><html><head><meta charset="utf-8"><title>P10 diagnostic response</title></head><body>diagnostic navigation response</body></html>';
-  const diagnosticResponse="new Response("+JSON.stringify(diagnosticHtml)+",{status:200,headers:{'Content-Type':'text/html; charset=utf-8'}})";
-  const syncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith("+diagnosticResponse+");return;}");
-  const asyncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(Promise.resolve("+diagnosticResponse+"));return;}");
-  // N only: locate open/match/body/response settlement. No H/J/K/L/M reruns.
+  // N: locate Cache API/body completion. O: correlate only lifecycle/extended
+  // event completion when N cannot explain the blocked transition. Persist
+  // diagnostic events outside the worker so termination cannot erase them.
   const nTrace = `
 self.__p10Trace=[];
-const p10Trace=(op,detail={})=>{const entry={time:Date.now(),op,...detail};self.__p10Trace.push(entry);console.log('P10_SW_N '+JSON.stringify(entry));};
+const p10Trace=(op,detail={})=>{const entry={workerTime:Date.now(),op,...detail};self.__p10Trace.push(entry);fetch(new URL('/__p10_probe',self.location.origin),{method:'POST',body:JSON.stringify(entry)}).catch(()=>{});};
 self.addEventListener('install',()=>p10Trace('install:event'));
 self.addEventListener('activate',()=>p10Trace('activate:event'));
 self.addEventListener('message',e=>p10Trace('message:event',{type:e.data?.type,ports:e.ports.length}));
@@ -138,33 +130,50 @@ self.addEventListener('message',e=>p10Trace('message:event',{type:e.data?.type,p
   event.respondWith(responsePromise);p10Trace('respondWith:registered');return;
  }
 `);
-  const originalCases=[
-   {name:'A-new-without-SW',blocked:true},
-   {name:'B-fresh-new-SW'},
-   {name:'C-upgrade-untouched-old',upgrade:true},
-   {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
-   {name:'J-old-learn-pass-through',upgrade:true,diagnosticMode:'passThrough'},
-   {name:'K-old-learn-cache-only',upgrade:true,diagnosticMode:'cacheOnly'},
-   {name:'L-old-learn-sync-memory-response',upgrade:true,diagnosticMode:'syncMemory'},
-   {name:'M-old-learn-async-memory-response',upgrade:true,diagnosticMode:'asyncMemory'}
-  ];
-  const cases=[
-   {name:'C-original-transition-timing',upgrade:true},
+  const lifecycleTrace=version=>nTrace+`
+const p10Version=${JSON.stringify(version)};
+for(const [object,key]of [[self,'skipWaiting'],[self.clients,'claim']]){
+ const original=object[key].bind(object);object[key]=(...args)=>{
+  p10Trace(key+':start',{version:p10Version});
+  return original(...args).then(value=>{p10Trace(key+':done',{version:p10Version});return value;},error=>{p10Trace(key+':error',{version:p10Version,error:String(error)});throw error;});
+ };
+}
+for(const key of ['keys','delete']){
+ const original=caches[key].bind(caches);caches[key]=(...args)=>{
+  p10Trace('caches.'+key+':start',{version:p10Version,args});
+  return original(...args).then(value=>{p10Trace('caches.'+key+':done',{version:p10Version,value});return value;});
+ };
+}
+for(const key of ['addAll','match','put']){
+ const original=Cache.prototype[key];Cache.prototype[key]=function(...args){
+  const url=String(args[0]?.url||args[0]),watch=key==='addAll'||/\\/(learn|v2)\\.html/.test(url);
+  if(watch)p10Trace('cache.'+key+':start',{version:p10Version,url});
+  return original.apply(this,args).then(value=>{if(watch)p10Trace('cache.'+key+':done',{version:p10Version,url});return value;},error=>{if(watch)p10Trace('cache.'+key+':error',{version:p10Version,error:String(error)});throw error;});
+ };
+}
+const p10Wait=ExtendableEvent.prototype.waitUntil;
+ExtendableEvent.prototype.waitUntil=function(promise){
+ const url=this.request?.url||'',type=this.type,watch=type!=='fetch'||/\\/(learn|v2)\\.html/.test(url);
+ if(watch){p10Trace('waitUntil:start',{version:p10Version,type,url});Promise.resolve(promise).then(()=>p10Trace('waitUntil:done',{version:p10Version,type,url}),error=>p10Trace('waitUntil:error',{version:p10Version,type,url,error:String(error)}));}
+ return p10Wait.call(this,promise);
+};
+self.addEventListener('fetch',event=>{if(/\\/(learn|v2)\\.html/.test(event.request.url))p10Trace('fetch:dispatch',{version:p10Version,url:event.request.url});});
+`;
+  const cases=process.env.P10_SW_CACHE_PROBE==='1'?[
    {name:'N1-old-cache-original-response',upgrade:true,diagnosticMode:'cacheOriginal'},
    {name:'N2-old-cache-copied-response',upgrade:true,diagnosticMode:'cacheCopy'},
+   {name:'O-lifecycle-and-cache',upgrade:true,diagnosticMode:'lifecycle'}
+  ]:[
+   {name:'C-original-transition-timing',upgrade:true},
    {name:'C-verified-new-controller',upgrade:true,strictReady:true}
   ];
   for(const cfg of cases){
-   currentCase=cfg.name;
+   currentCase=cfg.name;lifecycleProbe=cfg.diagnosticMode==='lifecycle';
    const rec={name:cfg.name,conditions:cfg,oldCommit:OLD,newCommit:current,oldCache,newCache};
    const eventStart=events.length;
-   const oldSwVariant=cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:
-    cfg.diagnosticMode==='passThrough'?passThroughLearnSw:
-    cfg.diagnosticMode==='cacheOnly'?cacheOnlyLearnSw:
-    cfg.diagnosticMode==='syncMemory'?syncLearnSw:
-    cfg.diagnosticMode==='asyncMemory'?asyncLearnSw:
-    cfg.diagnosticMode==='cacheOriginal'?nVariant(false):
-    cfg.diagnosticMode==='cacheCopy'?nVariant(true):historicalSw;
+   const oldSwVariant=cfg.diagnosticMode==='cacheOriginal'?nVariant(false):
+    cfg.diagnosticMode==='cacheCopy'?nVariant(true):
+    cfg.diagnosticMode==='lifecycle'?lifecycleTrace('old'):historicalSw;
    fs.writeFileSync(oldSwFile,oldSwVariant);
    rec.historicalSwModifiedForDiagnosis=oldSwVariant!==historicalSw;
    rec.oldSwVariant=cfg.diagnosticNoRuntimeWrite?'no-runtime-write':cfg.diagnosticMode||'untouched';

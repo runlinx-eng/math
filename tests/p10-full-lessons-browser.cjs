@@ -111,14 +111,13 @@ async function waitReady(p,cache){
  const meta={startedAt:new Date().toISOString(),headSha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   workingDiffSha256:digest(execFileSync('git',['diff','HEAD'],{cwd:root})),testSha256:digest(fs.readFileSync(__filename)),
   swSha256:digest(fs.readFileSync(path.join(root,'dist/sw.js'))),cache,
-  environment:'real Chromium; independent persistent profile per lesson; entire lesson offline after complete SW install',
+  environment:'real Chromium; independent persistent profile per lesson; entire lesson offline with HTTP origin stopped after complete SW install',
   mac:false,child:false,pedagogy:false};
  const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav'};
  let network=true,ctx,page,profile,current;
  const server=http.createServer((req,res)=>{
   const rel=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/+/,'')||'index.html';
   requests.push({time:new Date().toISOString(),path:rel,network});
-  if(!network){res.writeHead(503);res.end('test origin unavailable while offline');return;}
   if(rel.split('/').includes('..')){res.writeHead(400);res.end();return;}
   fs.readFile(path.join(root,'dist',rel),(err,buf)=>{
    if(err){res.writeHead(404);res.end();return;}
@@ -126,7 +125,25 @@ async function waitReady(p,cache){
   });
  });
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
- const base='http://127.0.0.1:'+server.address().port+'/';
+ const port=server.address().port,base='http://127.0.0.1:'+port+'/';
+ const stopOrigin=async()=>{
+  network=false;
+  if(!server.listening)return;
+  // Context offline emulation does not reliably disable a worker's own network.
+  // An HTTP 503 is still a received response, not a disconnected/stopped origin.
+  // Stop the actual test listener so a live server cannot supply any lesson bytes.
+  await new Promise((resolve,reject)=>{
+   server.close(error=>error?reject(error):resolve());
+   server.closeAllConnections();
+  });
+  requests.push({time:new Date().toISOString(),event:'origin-stopped',network:false});
+ };
+ const startOrigin=async()=>{
+  if(!server.listening)await new Promise((resolve,reject)=>{
+   server.once('error',reject);server.listen(port,'127.0.0.1',()=>{server.removeListener('error',reject);resolve();});
+  });
+  network=true;requests.push({time:new Date().toISOString(),event:'origin-started',network:true});
+ };
  const launch=async offline=>{
   ctx=await chromium.launchPersistentContext(profile,{headless:true,offline,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -138,19 +155,20 @@ async function waitReady(p,cache){
   page.setDefaultTimeout(15000);
  };
  const open=async id=>{
-  await page.goto(base+'learn.html#'+id,{waitUntil:'domcontentloaded',timeout:30000});
+  const response=await page.goto(base+'learn.html#'+id,{waitUntil:'domcontentloaded',timeout:30000});
+  check(!server.listening&&response?.status()===200&&response.fromServiceWorker(),id+' launch '+current.browserLaunches+' receives cached lesson from SW with origin stopped');
   await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,id);
  };
  try{
   for(const [id,total]of Object.entries(expected)){
    current={id,total:TASKS[id].length,completed:0,types:TASKS[id].map(t=>t.type),questions:[],browserLaunches:0,result:'B'};lessons.push(current);
    check(TASKS[id].length===total,id+' actual task count matches complete test coverage');
-   profile=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-full-'+id+'-'));network=true;
+   profile=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-full-'+id+'-'));await startOrigin();
    await launch(false);current.browserLaunches++;
    await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor({state:'attached'});
    current.cacheReport=await waitReady(page,cache);
    check(current.cacheReport.complete,id+' current SW is activated, controlling and fully cached');
-   await ctx.setOffline(true);network=false;
+   await ctx.setOffline(true);await stopOrigin();
    await open(id);
    for(let i=0;i<total;i++){
     check((await inspect(page)).index===i,id+' question '+(i+1)+' reached through native navigation');
@@ -203,7 +221,7 @@ async function waitReady(p,cache){
   console.error(error.stack||error);process.exitCode=1;
  }finally{
   await ctx?.close();if(profile)fs.rmSync(profile,{recursive:true,force:true});
+  await stopOrigin();
   fs.writeFileSync(path.join(out,'http-events.json'),JSON.stringify(requests,null,2));
-  await new Promise(resolve=>server.close(resolve));
  }
 })().catch(error=>{console.error(error.stack||error);process.exitCode=1;});
