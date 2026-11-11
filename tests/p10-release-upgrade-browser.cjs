@@ -57,16 +57,22 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
    const keys=await caches.keys();
    return reg.active&&keys.includes(name);
   },oldCache,{timeout:90000});
+  // Do not mistake a complete waiting worker cache for an activated release.
+  // scriptURL is identical across generations; the new message protocol and
+  // cache identity establish the generation only on active AND controller.
   const newReady=async(p)=>p.waitForFunction(async name=>{
-   const reg=await navigator.serviceWorker.ready;
-   const keys=await caches.keys();
-   if(!reg.active||!keys.includes(name))return false;
-   const worker=navigator.serviceWorker.controller||reg.active;
-   return new Promise(resolve=>{
-    const c=new MessageChannel(),timer=setTimeout(()=>resolve(false),1500);
-    c.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data?.cache===name&&e.data?.complete===true);};
-    worker.postMessage({type:'math-explorer:cache-status'},[c.port2]);
+   const reg=await navigator.serviceWorker.getRegistration();
+   if(!reg?.active||reg.active.state!=='activated'||!navigator.serviceWorker.controller)return false;
+   if(reg.waiting||reg.installing)return false;
+   if(!(await caches.keys()).includes(name))return false;
+   const ask=worker=>new Promise(resolve=>{
+    const c=new MessageChannel(),timer=setTimeout(()=>resolve(null),1200);
+    c.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
+    try{worker.postMessage({type:'math-explorer:cache-status'},[c.port2]);}catch{clearTimeout(timer);resolve(null);}
    });
+   const [active,controller]=await Promise.all([ask(reg.active),ask(navigator.serviceWorker.controller)]);
+   return active?.cache===name&&active.complete===true&&
+     controller?.cache===name&&controller.complete===true;
   },newCache,{timeout:90000});
   await page.goto(base+'v2.html#trail');
   await oldActive(page);
