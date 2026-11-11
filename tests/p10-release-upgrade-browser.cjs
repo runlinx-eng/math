@@ -15,7 +15,9 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const oldPath=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-old-'));
- let server,browser;
+ let server,browser,diagnosticPage;
+ const trace=[];
+ const record=(event,details={})=>{trace.push({time:new Date().toISOString(),event,...details});if(trace.length>1000)trace.shift();};
  try{
   execFileSync('git',['worktree','add','--detach',oldPath,OLD],{cwd:root,stdio:'pipe'});
   const oldCache=cacheFrom(path.join(oldPath,'dist/sw.js'));
@@ -27,6 +29,9 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
    const rel=decodeURIComponent(pathname).replace(/^\/+/,'')||'index.html';
    if(rel.startsWith('..')||rel.includes('/../')){res.writeHead(400);return res.end('invalid path');}
    if(rel===deny){res.writeHead(503,{'Content-Type':'text/plain','Cache-Control':'no-store'});return res.end('P10 controlled missing resource');}
+   record('server-request',{path:pathname,release,denied:rel===deny});
+   res.once('finish',()=>record('server-response',{path:pathname,release,status:res.statusCode}));
+   res.once('close',()=>{if(!res.writableFinished)record('server-aborted',{path:pathname,release,status:res.statusCode});});
    const src=path.join(release==='old'?oldPath:root,'dist',rel);
    fs.readFile(src,(err,data)=>{
     if(err){res.writeHead(404);return res.end('not found');}
@@ -37,6 +42,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   await new Promise(resolve=>server.listen(port,'127.0.0.1',resolve));
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   const ctx=await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true,serviceWorkers:'allow',reducedMotion:'reduce'});
+  ctx.on('serviceworker',worker=>record('worker-created',{url:worker.url()}));
   let page=await ctx.newPage();
   page.on('pageerror',e=>errors.push(String(e)));
   const lesson=async(p,id)=>{
@@ -97,6 +103,10 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   // This page keeps the old release JS loaded while another tab upgrades SW.
   release='new';
   const newTab=await ctx.newPage();newTab.on('pageerror',e=>errors.push(String(e)));
+  diagnosticPage=newTab;
+  newTab.on('request',req=>record('new-tab-request',{url:req.url(),kind:req.resourceType()}));
+  newTab.on('response',res=>record('new-tab-response',{url:res.url(),status:res.status()}));
+  newTab.on('requestfailed',req=>record('new-tab-request-failed',{url:req.url(),reason:req.failure()}));
   await newTab.goto(base+'v2.html#trail');
   await newTab.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
   await newReady(newTab);
@@ -108,6 +118,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   check(newKeysBefore.includes(newCache),'new release installs complete real Cache Storage',{cacheKeys:newKeysBefore});
   // Retain the old JS tab THROUGH the new release and prove the persisted model
   // cannot be silently overwritten by stale code.
+  record('before-new-lesson',{worker:await newTab.evaluate(async()=>{const reg=await navigator.serviceWorker.getRegistration();return {controller:navigator.serviceWorker.controller?.scriptURL,active:reg?.active?.scriptURL,activeState:reg?.active?.state,waiting:reg?.waiting?.scriptURL,keys:await caches.keys()};})});
   await lesson(newTab,'share');
   await newTab.locator('#actions [data-do="check"]').click();
   const savedNew=await read(newTab);
@@ -221,7 +232,12 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,scenarios,errors,oldCommit:OLD,newCommit:process.env.GITHUB_SHA||'PR checkout',oldCache,newCache,realHistoricalChildBackup:false,macManual:false,childTrial:false,independentTeaching:false},null,2));
   console.log('P10_RELEASE_UPGRADE_OK '+checks.length+' real browser checks');
  }catch(e){
-  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({checks,scenarios,errors,error:String(e),stack:e.stack},null,2));
+  let browserState=null;
+  if(diagnosticPage&&!diagnosticPage.isClosed()){
+   browserState=await Promise.race([diagnosticPage.evaluate(async()=>{const reg=await navigator.serviceWorker.getRegistration();return {url:location.href,readyState:document.readyState,controller:navigator.serviceWorker.controller?.scriptURL,active:reg?.active?.scriptURL,activeState:reg?.active?.state,keys:await caches.keys()};}).catch(err=>({error:String(err)})),new Promise(resolve=>setTimeout(()=>resolve({error:'browser state probe timed out'}),3500))]);
+  }
+  fs.writeFileSync(path.join(out,'diagnostics.json'),JSON.stringify({browserState,trace},null,2));
+  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({checks,scenarios,errors,error:String(e),stack:e.stack,browserState,traceCount:trace.length},null,2));
   console.error('P10_RELEASE_UPGRADE_FAILED '+(e.stack||e));
   process.exitCode=1;
  }finally{
