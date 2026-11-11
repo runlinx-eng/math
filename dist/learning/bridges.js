@@ -1,4 +1,4 @@
-import {EXTRA_BRIDGES} from './phase4/catalog.js';
+import {EXTRA_BRIDGES} from './phase4/task-catalog.js';
 import {LESSONS,routeFor} from './catalog.js';
 import {TASKS,PRACTICE} from './tasks.js';
 const copy=t=>structuredClone(t);
