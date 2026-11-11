@@ -56,7 +56,11 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
     if(sample.name==='source-bridge')assert((await page.locator('#interaction-title').innerText()).includes('关联知识'),'the actual source bridge must be identified');
     if(sample.name==='counting')assert(!state.primaryEnabled,'counting task must not be judged before building its required work');
     await page.screenshot({path:path.join(root,sample.name+'-'+size.width+'x'+size.height+'.jpg'),type:'jpeg',quality:58});
-    if(sample.name!=='counting'){
+    if(!state.primaryEnabled){
+     assert(await page.locator('#actions [data-do="check"]').isDisabled(),'unready native work keeps checking disabled '+sample.name);
+     assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2'))?.lessons?.[window.mathLesson.snapshot().id]?.cases?.[0]?.attempts?.length||0))===0,'unready work has no submission '+sample.name);
+    }
+    if(state.primaryEnabled){
      await page.locator('#actions [data-do="check"]').click();
      const after=await page.evaluate(()=>({stage:document.querySelector('#scene').dataset.stage,
       attempts:JSON.parse(localStorage.getItem('math-explorer-v2'))?.lessons||{},

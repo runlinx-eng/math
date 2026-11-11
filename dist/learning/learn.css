@@ -535,3 +535,42 @@ body.p03-focus #scene .execution-command #actions{
  #learning-interaction #work{overflow-wrap:anywhere}
  #learning-next .learning-support{padding:8px}
 }
+
+
+/* P7-D8: the current mathematical object is the work surface, not a static illustration. */
+#scene .stage-top h1{font-size:clamp(17px,1.65vw,21px);font-weight:700;color:#244c3f}
+#scene .stage-top #steps{display:none}
+#scene #learning-problem #action-cue[hidden]{display:none}
+#scene #learning-problem{margin-top:10px;padding:10px 4px 9px;background:transparent;border-radius:0}
+#scene #learning-problem #instruction{font-size:clamp(18px,1.75vw,23px);font-weight:680;line-height:1.46}
+#scene #learning-problem #action-cue{font-size:13px;line-height:1.5;color:#426f5d;margin-top:7px;padding-top:0;border:0}
+#scene #learning-interaction{margin-top:10px;padding:14px clamp(12px,2vw,24px) 15px;border:1px solid #d6e1d7;border-radius:14px;background:#fffefa;box-shadow:0 5px 20px #3557470c}
+#scene #interaction-title{font-size:14px;font-weight:700;color:#315d4b;margin-bottom:8px}
+#scene[data-action-focus="work"] #learning-interaction{border-color:#94b9a1;box-shadow:0 0 0 2px #86af9525}
+#scene[data-action-focus="widget"] #learning-interaction{border-color:#9cc4a8}
+#scene[data-stage="explore"] #learning-next>.learning-region-title{display:none}
+#scene #learning-next{padding-top:7px;margin-top:8px}
+#scene #learning-check #check-feedback:not([hidden]){padding:9px 12px;border-radius:9px;background:#fff8ed;border:1px solid #e1cda8;line-height:1.6}
+#scene #learning-check #check-feedback[data-state="correct"]:not([hidden]){background:#eff7ef;border-color:#b5d3bd}
+#learning-interaction .equiv-row{grid-template-columns:minmax(74px,96px) minmax(0,1fr) minmax(56px,70px);gap:12px;align-items:center;margin:11px 0;padding:6px 0}
+#learning-interaction .equiv-row>span:first-child{font-size:13px;font-weight:650;color:#496956}
+#learning-interaction .eq-bar{height:clamp(59px,6vw,76px);border:2px solid #647d65;border-radius:8px;overflow:hidden;box-shadow:0 2px 7px #486c4420}
+#learning-interaction .eq-bar button{position:relative;min-height:48px;border-right:1px solid #67816d;transition:background-color .13s ease,box-shadow .13s ease;cursor:pointer;touch-action:manipulation}
+#learning-interaction .eq-bar button:last-child{border-right:0}
+#learning-interaction .eq-bar button.on{background:#8ebaa0}
+#learning-interaction .eq-bar button:not(.on):hover{background:#e5d2a5}
+#learning-interaction .eq-bar button.on:hover{background:#69a382}
+#learning-interaction .eq-bar button:focus-visible{outline:3px solid #345f51;outline-offset:-4px;z-index:1}
+#learning-interaction .eq-bar button:active{box-shadow:inset 0 0 0 3px #345f5160}
+#learning-interaction .eq-label{font-size:19px;font-weight:700;color:#315a48;text-align:right}
+#learning-interaction .unit-label{font-size:13px;line-height:1.55;margin:5px 0 9px}
+#learning-interaction .cube-world{max-height:min(43vh,400px)}
+@media(max-width:700px){
+ #scene #learning-interaction{padding:11px 10px}
+ #scene #learning-problem #instruction{font-size:18px}
+ #learning-interaction .equiv-row{grid-template-columns:62px minmax(0,1fr) 43px;gap:7px}
+ #learning-interaction .eq-bar{height:54px}
+ #learning-interaction .eq-label{font-size:15px}
+ #scene #interaction-title{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){#learning-interaction .eq-bar button{transition:none}}
