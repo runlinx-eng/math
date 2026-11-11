@@ -1066,8 +1066,13 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
     }
     if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];scene.select('node:'+n.topicId);setHash('node:'+n.topicId);readLearning();refreshLearning();renderLocation();scheduleSave();return;}
     if(e.data.type==='math-space:question-request'){questionComposer({nodeId:e.data.nodeId,scene:e.data.scene});return;}
-    if(e.data.type==='math-space:lesson-close'){returnFromLesson();return;}
-    if(e.data.type==='math-space:lesson-show-node'){const target='node:'+e.data.nodeId;if(space.byKey.has(target)){
+    if(e.data.type==='math-space:lesson-close'){
+      // Ignore close signals from a retired iframe document or a suspended
+      // lesson. A late close must not switch a newer Learn/Trail selection to Explore.
+      if(journeySuspended||taskSurfaceFromUrl()!=='learn'||!e.data.sessionId||e.data.sessionId!==activeSessionId)return;
+      returnFromLesson();return;
+    }
+    if(e.data.type==='math-space:lesson-show-node'){if(journeySuspended||taskSurfaceFromUrl()!=='learn')return;const target='node:'+e.data.nodeId;if(space.byKey.has(target)){
       // Use the same node-selection pipeline as a real 3D click. In Learn
       // mode choose() retains the mounted child document before replacing its
       // task; navigating to about:blank first could strand the new iframe.
@@ -1081,6 +1086,9 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
   const sources=[...panels.values()].map(p=>p.iframe?.contentWindow).concat($('#utility-frame').contentWindow,$('#journey-frame').contentWindow);if(!sources.includes(e.source))return;
   const {kind,id}=e.data;
   const fromUtility=e.source===$('#utility-frame').contentWindow;
+  // The Trail/About iframe is kept mounted across mode switches. Its old
+  // queued navigation events cannot change the currently active mode.
+  if(fromUtility&&($('#utility-drawer').hidden||$('#utility-drawer').dataset.surface!==taskSurfaceFromUrl()))return;
   const trailSelection=fromUtility&&$('#utility-drawer').dataset.surface==='trail'&&kind==='node'&&space.byKey.has('node:'+id);
   if(trailSelection){choose('node:'+id,{openLesson:false,inPlace:true});return;}
   if(fromUtility){closeUtility();setTaskSurfaceUrl('explore',{replace:true});}
