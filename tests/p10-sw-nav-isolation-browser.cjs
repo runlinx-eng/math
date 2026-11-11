@@ -92,6 +92,12 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
   const oldRuntimeWrite='if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,copy)));}return response;';
   if(historicalSw.split(oldRuntimeWrite).length!==2)throw Error('historical SW fetch pattern changed');
   const noRuntimeWriteSw=historicalSw.replace(oldRuntimeWrite,'return response;');
+  // Diagnostic only: isolate navigation fetch interception while retaining original
+  // historical install, precache and cache name in the TEMPORARY old worktree.
+  const oldFetchGuard="if(event.request.method!=='GET'||url.origin!==self.location.origin||url.pathname==='/health')return;";
+  if(historicalSw.split(oldFetchGuard).length!==2)throw Error('historical SW fetch guard changed');
+  const passThroughLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard.replace("url.pathname==='/health'","url.pathname==='/health'||url.pathname==='/learn.html'"));
+  const cacheOnlyLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(caches.open(CACHE).then(c=>c.match(event.request,{ignoreSearch:true})).then(r=>r||new Response('missing old cache',{status:503})));return;}");
   const cases=[
    {name:'A-new-without-SW',blocked:true},
    {name:'B-fresh-new-SW'},
@@ -107,13 +113,22 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    // Repeat the one-variable test three times; C cases retain the untouched worker.
    {name:'H-old-fetch-write-disabled-1',upgrade:true,diagnosticNoRuntimeWrite:true},
    {name:'H-old-fetch-write-disabled-2',upgrade:true,diagnosticNoRuntimeWrite:true},
-   {name:'H-old-fetch-write-disabled-3',upgrade:true,diagnosticNoRuntimeWrite:true}
+   {name:'H-old-fetch-write-disabled-3',upgrade:true,diagnosticNoRuntimeWrite:true},
+   // J: do not intercept navigation at all; K: respond from old precache only.
+   // Both retain historical install and other fetch behavior; diagnostic, not acceptance.
+   {name:'J-old-learn-pass-through',upgrade:true,diagnosticMode:'passThrough'},
+   {name:'K-old-learn-cache-only',upgrade:true,diagnosticMode:'cacheOnly'}
   ];
   for(const cfg of cases){
    const rec={name:cfg.name,conditions:cfg,oldCommit:OLD,newCommit:current,oldCache,newCache};
    const eventStart=events.length;
-   fs.writeFileSync(oldSwFile,cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:historicalSw);
-   rec.historicalSwModifiedForDiagnosis=!!cfg.diagnosticNoRuntimeWrite;
+   const oldSwVariant=cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:
+    cfg.diagnosticMode==='passThrough'?passThroughLearnSw:
+    cfg.diagnosticMode==='cacheOnly'?cacheOnlyLearnSw:historicalSw;
+   fs.writeFileSync(oldSwFile,oldSwVariant);
+   rec.historicalSwModifiedForDiagnosis=oldSwVariant!==historicalSw;
+   rec.oldSwVariant=cfg.diagnosticNoRuntimeWrite?'no-runtime-write':cfg.diagnosticMode||'untouched';
+   rec.actualOldSwDigest=hash(oldSwVariant);
    release=cfg.upgrade?'old':'new';explicitLength=!!cfg.length;
    const ctx=await browser.newContext({serviceWorkers:cfg.blocked?'block':'allow',viewport:{width:1280,height:800},reducedMotion:'reduce'});
    let oldPage,tab;
