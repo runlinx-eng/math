@@ -120,3 +120,13 @@
 - `diagnostics.json` 记录 CDP Document request 和服务端 `/learn.html` 请求：服务器在 headers 发送前记录 aborted/incomplete，随后 readFile 回调仍试图 writeHead；没有 CDP response/finished/failed 和导航 commit。CDP 与 HTTP requestId 不相同且尚未建立唯一相关标识，不能把相邻时间当成完备的跨端因果证明。
 - 仅新增诊断性 A/B：`1483b38` 在**临时旧 worktree** 中保留原 install/precache，仅关闭旧 SW fetch 期间 `cache.put` / `waitUntil` 写入，独立重复 3 次，并保留原旧 SW 对照。这些修改过的旧 SW 运行不是历史版本迁移的 A 级证据。需要实际 CI 验证再确定缓存写入是否为必要因素；此时**不更改正式 `dist/sw.js`**，不增加 timeout、不减弱数据断言。
 - C：实际跨版本导航仍失败；B：旧标签页安全、V1/V2 真实迁移、Quota、断网升级失败恢复、首次离线 B39、四类整课离线均因后段未运行而未验收。真实儿童历史备份、Mac 人工、儿童操作和独立数学教研仍待验收。P10 不收尾、不合并、不部署，#63 暂不准入。
+
+
+## P10 R3 第十一阶段：历史 SW 响应路径缩小、真实升级后段与未关闭风险（2026-11-12）
+- 固定历史旧版 `96844424ceb534e7ca5f864a006b72a52efd0d60`，main `9f8afd5`，#66～#69 均 Draft 未合并。基线 `81abdad`：Required [43062521248](https://github.com/runlinx-eng/math/actions/runs/43062521248) **failure**、P8 [43062521306](https://github.com/runlinx-eng/math/actions/runs/43062521306) **success**；Required Artifact [13874611707](https://github.com/runlinx-eng/math/actions/runs/43062521248/artifacts/13874611707)。原完整导航 45 秒超时，旧 SW active、新 SW waiting；CDP Document 请求发出，HTTP 服务端收到请求后记录 aborted/incomplete、未完成头和 body，不能推断 SW Response Promise 已结算。
+- 新增临时历史 SW 的 L（同步最小内存 Response）与 M（Promise.resolve 同一 Response）对照：在真实旧控制器、缓存齐全、新 SW waiting 的前提下，均可在 5–8ms 导航并最终触发新 SW 接管；K（旧 Cache Storage 取预缓存 Response）仍稳定 9 秒超时。C（真实原始旧 SW）同样超时、J（不由旧 SW 拦截）成功。这排除了「任何 respondWith 或任意异步 Response 都会卡死」；尚不能区分旧 Cache API 访问、缓存 Response body 和新旧生命周期互锁。L/M/J/K 均修改临时旧 worker，不算真实旧版修复证据。
+- 修复 `tests/p10-release-upgrade-browser.cjs` 的 `newReady()` 假阳性：必须是新版本 active/activated、waiting/installing 为空、当前 controller 与 active 分别回应新版完整缓存状态。后续修复 Playwright 隐藏 `#import-file` 不应等待可见，而应等待 attached；旧缓存重试清理只允许在旧页面关闭后触发，不以立即删除旧缓存作为成功条件。
+- `0101a6a` 的 Required [43067062312](https://github.com/runlinx-eng/math/actions/runs/43067062312) failure、P8 [43067062415](https://github.com/runlinx-eng/math/actions/runs/43067062415) success；完整旧版升级首次越过原导航卡点，新 SW 实际 activated 并控制页面、清理旧缓存、B39 首次离线和推理修改及旧标签冲突保护通过，后因隐藏文件控件等待方式失败（18 项前段通过）。这只是**单次进展，不代表升级稳定**。
+- `a584612` Required [43067851778](https://github.com/runlinx-eng/math/actions/runs/43067851778) failure、P8 [43067851932](https://github.com/runlinx-eng/math/actions/runs/43067851932) success。前段 28 项通过，包括浏览器 V2 导出、跨 profile 导入、重复幂等、自动构造 V1、坏 JSON/不支持版本拒绝、真实 QuotaExceededError 保留旧存储、升级失败保留旧数据；失败于重试时旧页面尚在却要求立即删除旧缓存。
+- `35303ea` Required [43068578796](https://github.com/runlinx-eng/math/actions/runs/43068578796) **failure**；前段 29 项通过，包括新版重试激活和缓存完整；旧标签页关闭后的显式旧缓存清理消息超时 12 秒。不可将此解释为通过，也不得强行清空缓存。该阶段仍未形成可执行的稳定应用修复，未更改正式 `dist/sw.js`。
+- 结论：C 为原始旧 SW 升级导航在隔离对照中的重复失败、升级重试的清理消息超时；B 为部分单次通过的真实升级、V1/V2 合成数据、Quota、断网与冲突保护。三次真正完整升级、安装失败后安全重试、四种数学整课离线、真实历史儿童备份迁移仍未通过。P10 不收尾、#63 不准入，不合并、不部署。
