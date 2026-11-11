@@ -83,6 +83,20 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
   check((await read(importedPage)).lessons.equivalent.cases[0].attempts.length===2,'real backup import restores correction history in separate storage');
   await imported.close();
 
+  const damaged=await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true});
+  const damagedPage=await damaged.newPage();
+  await damagedPage.goto(base+'v2.html#trail');await damagedPage.locator('#import-file').waitFor();
+  const corrupt='{"schema":2,"lessons":{"unfinished":';
+  await damagedPage.evaluate(raw=>localStorage.setItem('math-explorer-v2',raw),corrupt);
+  await damagedPage.reload();await damagedPage.locator('#import-file').waitFor();
+  const rescue=damagedPage.waitForEvent('download');
+  await damagedPage.locator('[data-do="export"]').first().click();
+  const rescueFile=await rescue;
+  check(rescueFile.suggestedFilename().includes('原始存储'),'damaged learning data does not produce a misleading v2 backup');
+  check(fs.readFileSync(await rescueFile.path(),'utf8')===corrupt,'damaged original storage exported byte-for-byte and preserved');
+  check(await damagedPage.evaluate(()=>localStorage.getItem('math-explorer-v2'))===corrupt,'corrupt bytes not overwritten by fresh state');
+  await damaged.close();
+
   // First-load cache is not an installer. Offline is a real network-disconnected context.
   await page.goto(base+'index.html?world=network&layout=53#space');
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
