@@ -191,8 +191,8 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='general34');
   check((await view()).includes('0和5交替'),'MP.8 current saved work survives reload');
   const p9state=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
-  check(p9state.lessons.general34.cases[2].attempts.length===3&&!('thinkingScore' in p9state.lessons.general34),
-    'MP.8 historical wrong/rechecked submissions retained without new mastery score');
+  check(p9state.lessons.general34.cases[2].attempts.length===4&&!('thinkingScore' in p9state.lessons.general34),
+    'MP.8 initial incomplete, correct, wrong and corrected recheck all retained without a mastery score');
   check(errors.length===0&&remote.length===0,'no page errors or remote calls during local learning flow');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,childTrial:false,independentMathReview:false},null,2));
   console.log('P9_THINKING_FEEDBACK_BROWSER_OK '+JSON.stringify({checks:checks.length,errors,remote}));
