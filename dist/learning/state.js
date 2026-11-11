@@ -61,6 +61,11 @@ export function assertNoConcurrentLessonOverwrite(local,persisted){
  for(const [key,model] of Object.entries(local.models||{}))
   if(Object.hasOwn(persisted.models||{},key)&&JSON.stringify(model)!==JSON.stringify(persisted.models[key]))
    conflict('任务 '+key+' 的作品');
+ const localActive=local.cases?.[local.index]?.attempts||[];
+ const persistedActive=persisted.cases?.[local.index]?.attempts||[];
+ if(localActive.length!==persistedActive.length||
+    localActive.some((attempt,i)=>attempt.id!==persistedActive[i]?.id))
+  conflict('当前任务出现新的提交');
  if(local.draft&&persisted.draft&&local.draft!==persisted.draft)conflict('自由解释草稿');
  for(const [key,entry] of Object.entries(local.cases||{})){
   const other=persisted.cases?.[key];if(!other)continue;
