@@ -156,23 +156,24 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='tools39');
   check((await view()).includes('25*4'),'MP.5 saved calculator evidence survives reload');
   await openFresh('general34');
-  // The first two tasks are not the MP.8 pilot. Complete them using the real
-  // task-specific handlers, then reach the existing add-five sequence.
-  for(let i=0;i<2;i++){
-   const steps=await page.evaluate(async()=>{
-    const {id,index}=mathLesson.snapshot();
-    const {sessionTaskFor}=await import('./learning/bridges.js');
-    const {exampleModel}=await import('./learning/tasks.js');
-    const task=sessionTaskFor(id,index);
-    const b10=await import('./learning/phase5/b10-model.js');
-    const b11=await import('./learning/phase5/b11-model.js');
-    const handler=[b10,b11].find(m=>m.TYPES.has(task.type));
-    return {type:task.type,steps:handler?.solveSteps?.(task)||null,example:exampleModel(task)};
-   });
-   if(!steps.steps)throw Error('MP.8 prerequisite browser solver missing for '+steps.type);
-   for(const step of steps.steps){if(step.field)await field(step.field,step.value);else await action(step.action,step.data);}
-   await submit();await next();
+  // Complete the two real prerequisites through their own task controls.
+  check((await page.evaluate(()=>mathLesson.snapshot())).index===0,'MP.8 prerequisite is three-group addition');
+  for(const [first,second,subtotal]of [[0,1,12],[1,2,7]]){
+   await action('triple-pick',{index:first});await action('triple-pick',{index:second});
+   await page.locator('[data-x="triple-merge"]').click();
+   await field('sub',String(subtotal));await field('total','13');
+   await action('triple-save');
   }
+  await submit();await next();
+  check((await page.evaluate(()=>mathLesson.snapshot())).index===1,'MP.8 second prerequisite is place-value subtraction');
+  const placeSteps=await page.evaluate(async()=>{
+   const {id,index}=mathLesson.snapshot();
+   const {sessionTaskFor}=await import('./learning/bridges.js');
+   const b11=await import('./learning/phase5/b11-model.js');
+   return b11.solveSteps(sessionTaskFor(id,index));
+  });
+  for(const step of placeSteps){if(step.field)await field(step.field,step.value);else await action(step.action,step.data);}
+  await submit();await next();
   check((await page.evaluate(()=>mathLesson.snapshot())).index===2,'MP.8 reached original repeated add-five activity');
   check(await page.locator('#thinking-feedback').count()===0,'MP.8 no feedback before repeated actions');
   await field('value','5');await action('p34-next');await submit();
