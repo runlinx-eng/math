@@ -172,6 +172,7 @@ jobs:
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
+            tests/p8-b39-lazy-browser.cjs \
             tests/p1-navigation-browser.cjs \
             tests/p2-grade-distribution-browser.cjs \
             tests/p3-learning-flow-browser.cjs \
