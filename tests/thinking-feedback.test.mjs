@@ -197,8 +197,8 @@ test('P9 MP.8 requires successive recorded increments and a checked fixed-rule c
 });
 
 test('P9 original lesson record schema and modified current check survive second-round feedback',()=>{
-  const t=S.tools39[0],id='tools39',a=freshLesson(id),m=modelForLesson(a);
-  m.method='calculator';m.entry='25*4';tools39.act(t,m,'s39-run');m.answer='100';
+  const t=A.sense38[0],id='sense38',a=freshLesson(id),m=modelForLesson(a);
+  for(const step of arguments38.solveSteps(t))arguments38.act(t,m,step.action,step.data);
   const first=submitLesson(a);
   assert.equal(first.correct,true);
   const record=validateLesson(a,id);
@@ -206,11 +206,11 @@ test('P9 original lesson record schema and modified current check survive second
   const note=thinkingFeedback(t,record.models[0],record.cases[0],{sessionId:id,index:0});
   assert.ok(note);
   assert.deepEqual(Object.keys(record.cases[0]).sort(),['attempts','support']);
-  assert.equal(record.models[0].history.length,1);
-  record.models[0].answer='99';
+  assert.equal(record.models[0].history.length,3);
+  arguments38.act(t,record.models[0],'r38-undo');
   assert.equal(currentSubmission(record).status,'modified');
   assert.equal(thinkingFeedback(t,record.models[0],record.cases[0],{sessionId:id,index:0}),null);
-  record.models[0].answer='100';
+  arguments38.act(t,record.models[0],'r38-card',{index:'ask'});
   submitLesson(record);
   assert.equal(record.cases[0].attempts.length,2);
   assert.equal(currentSubmission(record).status,'correct');
