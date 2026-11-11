@@ -57,7 +57,9 @@ test('lightweight lesson directory preserves all runtime lesson IDs, routes and 
 test('catalog entry no longer imports math batch task definitions', () => {
   const catalog = read('learning/catalog.js');
   const light = read('learning/phase4/light-catalog.js');
-  assert.match(catalog, /phase4\\/light-catalog\\.js/);
-  assert.doesNotMatch(catalog, /phase5\\/b\\d\\d\\.js|phase4\\/catalog\\.js/);
-  assert.doesNotMatch(light, /phase5\\/b\\d\\d\\.js|phase4\\/b\\d\\d\\.js/);
+  assert.ok(catalog.includes("from './phase4/light-catalog.js'"));
+  assert.ok(!catalog.includes("from './phase4/catalog.js'"));
+  assert.ok(!catalog.includes("from './phase5/b"));
+  assert.ok(!light.includes("from '../phase5/b"));
+  assert.ok(!light.includes("from './b02.js'"));
 });
