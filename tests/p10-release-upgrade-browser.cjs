@@ -104,29 +104,10 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   fs.writeFileSync(path.join(out,'after-upgrade.json'),afterUpgrade);
   assert.deepEqual(JSON.parse(afterUpgrade),JSON.parse(beforeUpgrade),'upgrade must not rewrite saved learner records');
   check(true,'real old-to-new SW update leaves full records byte-equivalent');
-  // Activation and final cache eviction are asynchronous; do not infer completion
-  // merely from seeing a populated new cache. Require old key to disappear.
-  let newKeys=await newTab.evaluate(()=>caches.keys());
-  if(newKeys.includes(oldCache)){
-   const state=await newTab.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {active:r?.active?.state,controller:navigator.serviceWorker.controller?.state,keys:await caches.keys()};});
-   console.error('P10_CACHE_DIAGNOSTIC '+JSON.stringify(state));
-  }
-  try{
-   await newTab.waitForFunction(async old=>!(await caches.keys()).includes(old),oldCache,{timeout:12000});
-  }catch{}
-  // The old worker can finish an in-flight cache.put after activation.
-  // Re-request readiness from the NEW worker and require it to evict stale keys.
-  const finalReport=await newTab.evaluate(async()=>{
-   const reg=await navigator.serviceWorker.ready,worker=navigator.serviceWorker.controller||reg.active;
-   return await new Promise((resolve,reject)=>{
-    const ch=new MessageChannel(),timer=setTimeout(()=>reject(Error('final cache cleanup response timed out')),12000);
-    ch.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
-    worker.postMessage({type:'math-explorer:cache-status'},[ch.port2]);
-   });
-  });
-  newKeys=await newTab.evaluate(()=>caches.keys());
-  console.log('P10_CACHE_FINAL '+JSON.stringify({finalReport,newKeys}));
-  check(finalReport.cache===newCache&&newKeys.includes(newCache)&&!newKeys.includes(oldCache),'new SW activated and retired old cache cleaned',{cacheKeys:newKeys});
+  const newKeysBefore=await newTab.evaluate(()=>caches.keys());
+  check(newKeysBefore.includes(newCache),'new release installs complete real Cache Storage',{cacheKeys:newKeysBefore});
+  // Retain the old JS tab THROUGH the new release and prove the persisted model
+  // cannot be silently overwritten by stale code.
   await lesson(newTab,'share');
   await newTab.locator('#actions [data-do="check"]').click();
   const savedNew=await read(newTab);
@@ -135,6 +116,23 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   check(await read(oldTab)===savedNew,'old tab cannot erase newer release submission');
   await oldTab.screenshot({path:path.join(out,'old-tab-conflict.png')});
   await oldTab.close();
+  // An old worker's in-flight fetch may repopulate its cache during activation.
+  // After its tab has closed, request current-worker cleanup and require eviction.
+  const finalReport=await newTab.evaluate(async()=>{
+   const reg=await navigator.serviceWorker.ready,worker=navigator.serviceWorker.controller||reg.active;
+   return await new Promise((resolve,reject)=>{
+    const ch=new MessageChannel(),timer=setTimeout(()=>reject(Error('final cache cleanup response timed out')),12000);
+    ch.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
+    worker.postMessage({type:'math-explorer:cache-status'},[ch.port2]);
+   });
+  });
+  let newKeys=await newTab.evaluate(()=>caches.keys());
+  if(newKeys.includes(oldCache)){
+   try{await newTab.waitForFunction(async old=>!(await caches.keys()).includes(old),oldCache,{timeout:12000});}catch{}
+   newKeys=await newTab.evaluate(()=>caches.keys());
+  }
+  console.log('P10_CACHE_FINAL '+JSON.stringify({finalReport,newKeys}));
+  check(finalReport.cache===newCache&&newKeys.includes(newCache)&&!newKeys.includes(oldCache),'new SW activated and retired old cache cleaned',{cacheKeys:newKeys});
   // B39 was NEVER opened online on this profile. Its dynamic module must load offline.
   await ctx.setOffline(true);
   await lesson(newTab,'calculator39');
