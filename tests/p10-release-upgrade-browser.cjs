@@ -104,7 +104,17 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   fs.writeFileSync(path.join(out,'after-upgrade.json'),afterUpgrade);
   assert.deepEqual(JSON.parse(afterUpgrade),JSON.parse(beforeUpgrade),'upgrade must not rewrite saved learner records');
   check(true,'real old-to-new SW update leaves full records byte-equivalent');
-  const newKeys=await newTab.evaluate(()=>caches.keys());
+  // Activation and final cache eviction are asynchronous; do not infer completion
+  // merely from seeing a populated new cache. Require old key to disappear.
+  let newKeys=await newTab.evaluate(()=>caches.keys());
+  if(newKeys.includes(oldCache)){
+   const state=await newTab.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {active:r?.active?.state,controller:navigator.serviceWorker.controller?.state,keys:await caches.keys()};});
+   console.error('P10_CACHE_DIAGNOSTIC '+JSON.stringify(state));
+  }
+  try{
+   await newTab.waitForFunction(async old=>!(await caches.keys()).includes(old),oldCache,{timeout:12000});
+  }catch{}
+  newKeys=await newTab.evaluate(()=>caches.keys());
   check(newKeys.includes(newCache)&&!newKeys.includes(oldCache),'new SW activated and retired old cache cleaned',{cacheKeys:newKeys});
   await lesson(newTab,'share');
   await newTab.locator('#actions [data-do="check"]').click();
