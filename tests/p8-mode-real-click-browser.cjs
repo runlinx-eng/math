@@ -119,6 +119,9 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   // Reproduce the reported VPS entry, including a retained historical iframe
   // and locally saved view state from preceding activities.
   const vpsEntry='mt_WcfaSfVT33';
+  // Prior scenario ends at 620px, where the task drawer occupies the map.
+  // Restore desktop geometry before testing genuine unobscured 3D labels.
+  await page.setViewportSize({width:1440,height:900});
   await page.goto('http://127.0.0.1:43827/?world=network&layout=53&surface=trail#space/node/'+vpsEntry);
   await page.waitForFunction(id=>window.mathSpace?.snapshot()?.counts?.nodes===587&&
     window.mathSpace.snapshot().selected==='node:'+id&&
