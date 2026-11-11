@@ -330,3 +330,9 @@
 - 最新启动阶段：旧 `2bcb3b6` Required `43036967556` 和 P8 `43036967682` 因 GitHub Ubuntu 软件源 DNS 失败导致 Playwright `--with-deps` 安装中断，未执行 Chromium 升级测试；不得称此前升级修复通过。
 - PR #69 原分支调整两项 CI 安装步骤，移除冗余 apt 依赖安装（不删浏览器、不改断言），等待修复后 HEAD 的新 CI 与 Artifact。
 - P10 仍被真实跨版本导航、失败恢复、旧标签页、V1/V2 兼容及配额安全、四类整套离线和最新 Required/Overview/P8 阻断。达不到八项安全门槛不得正式工程收尾。P11 单独处理唯一最强选中标记及收敛悬停操作；Issue #63 本地发行版待 P10 安全准入通过后再正式推进。
+
+### 第五阶段最新 HEAD 实际复验结果（`239c2c9d403eebbd3888626771bec39d4c450a88`）
+- Required [43042940403](https://github.com/runlinx-eng/math/actions/runs/43042940403)：**failure**，不是通过。Chromium 成功安装，Node 263 项全通过；P9 浏览器 23 项、P10 第一轮 24 项、P10 第二轮 43 项成功；R3 在 `learn.html#share` 的 `goto(waitUntil=commit)` **再次超时 45 秒**。浏览器导航安全门槛依旧失败。
+- 最新 Chromium Artifact [13865143932](https://github.com/runlinx-eng/math/actions/runs/43042940403/artifacts/13865143932)：`failure.json`/`diagnostics.json` 均确认 11 项前置检查通过，`before-upgrade.json` 与 `after-upgrade.json` **字节完全相同（各 1992 字节）**。事件末端：已激活 SW、旧新缓存并存，`learn.html` 服务器收到请求但记录 `server-aborted`，浏览器现场探针超时。该结果说明上阶段 `2bcb3b6` 并未解除卡死；但仍未精确归因到 SW、缓存竞争、fetch 生命周期或 Chromium/测试服务器交互。
+- P8 [43042940326](https://github.com/runlinx-eng/math/actions/runs/43042940326)：**success**，对应相同 HEAD。Overview 未见同 SHA 的独立运行，不能记 success。
+- 本阶段未修改应用 SW/存储代码；仅修正 CI 环境并重现原障碍。**P10 保持未完成，关键升级后测试均未进入，绝不宣布儿童记录全量安全。** 下一步应针对最新 `learn.html` server-aborted 做真实隔离对照实验并修对应根因，不靠增加超时。
