@@ -20,6 +20,38 @@ function inject(body, anchor, addition) {
   check(body.includes(anchor), 'Instrumentation anchor missing: ' + anchor.slice(0, 60));
   return body.replace(anchor, addition);
 }
+// Patch temporary served files rather than intercepting requests in Playwright.
+// page.route() disables Chromium HTTP caching and would invalidate warm tests.
+function instrumentFiles(directory) {
+  const entry = path.join(directory, 'space.js');
+  let body = fs.readFileSync(entry, 'utf8');
+  body = inject(body, 'async function boot(){try {',
+    "async function boot(){try {performance.mark('math:boot-start');");
+  body = inject(body, "atlas=applyNavigationCopy(await response.json());",
+    "atlas=applyNavigationCopy(await response.json());performance.mark('math:atlas-ready');");
+  body = inject(body, 'space=buildRelationshipSpace(atlas);',
+    "performance.mark('math:space-build-start');space=buildRelationshipSpace(atlas);performance.mark('math:space-built');");
+  body = inject(body, "scene=new SpatialScene($('#space-canvas')",
+    "performance.mark('math:webgl-start');scene=new SpatialScene($('#space-canvas')");
+  body = inject(body, "const defaultMode=worldLayout==='network'",
+    "performance.mark('math:webgl-created');const defaultMode=worldLayout==='network'");
+  body = inject(body, "$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();",
+    "performance.mark('math:boot-ready');$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();");
+  fs.writeFileSync(entry, body);
+  const sceneFile = path.join(directory, 'spatial-scene.js');
+  let scene = fs.readFileSync(sceneFile, 'utf8');
+  const render = 'this.renderer.render(this.scene,this.camera);';
+  check(scene.includes(render), 'WebGL render anchor missing');
+  scene = scene.replaceAll(render, render +
+    "if(this.nodeMesh?.count>0&&!performance.getEntriesByName('math:first-webgl-frame').length)performance.mark('math:first-webgl-frame');");
+  fs.writeFileSync(sceneFile, scene);
+  console.log('P8_STARTUP_INSTRUMENTED ' + directory);
+}
+if (process.argv[2] === '--instrument') {
+  check(process.argv.length === 4, 'Usage: --instrument DIRECTORY');
+  instrumentFiles(path.resolve(process.argv[3]));
+  process.exit(0);
+}
 async function instrument(page) {
   await page.addInitScript(() => {
     window.__startupLongTasks = [];
@@ -30,32 +62,6 @@ async function instrument(page) {
         }
       }).observe({ type: 'longtask', buffered: true });
     } catch {}
-  });
-  await page.route('**/space.js', async route => {
-    const response = await route.fetch();
-    let body = await response.text();
-    body = inject(body, 'async function boot(){try {',
-      "async function boot(){try {performance.mark('math:boot-start');");
-    body = inject(body, "atlas=applyNavigationCopy(await response.json());",
-      "atlas=applyNavigationCopy(await response.json());performance.mark('math:atlas-ready');");
-    body = inject(body, 'space=buildRelationshipSpace(atlas);',
-      "performance.mark('math:space-build-start');space=buildRelationshipSpace(atlas);performance.mark('math:space-built');");
-    body = inject(body, "scene=new SpatialScene($('#space-canvas')",
-      "performance.mark('math:webgl-start');scene=new SpatialScene($('#space-canvas')");
-    body = inject(body, "const defaultMode=worldLayout==='network'",
-      "performance.mark('math:webgl-created');const defaultMode=worldLayout==='network'");
-    body = inject(body, "$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();",
-      "performance.mark('math:boot-ready');$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();");
-    await route.fulfill({ response, body });
-  });
-  await page.route('**/spatial-scene.js', async route => {
-    const response = await route.fetch();
-    let body = await response.text();
-    const render = 'this.renderer.render(this.scene,this.camera);';
-    check(body.includes(render), 'WebGL render anchor missing');
-    body = body.replaceAll(render, render +
-      "if(this.nodeMesh?.count>0&&!performance.getEntriesByName('math:first-webgl-frame').length)performance.mark('math:first-webgl-frame');");
-    await route.fulfill({ response, body });
   });
 }
 function metricsMap(list) {
