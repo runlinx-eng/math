@@ -1,5 +1,46 @@
 # P10 第一轮｜完整学习闭环、保存冲突和离线分层验收
 
+## P10 R3 第十二阶段：真实生命周期门禁与保守缓存清理（2026-11-12）
+
+本节是本轮状态入口；下方各阶段保留历史结论，不能把历史绿色结果算作当前 HEAD 的验收。main 仍为 `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`，#66～#69 都是未合并 Draft；#69 依赖 #68，#68 依赖 #67，#66 独立。
+
+### 已纠正的证据错误
+
+- 固定的 Playwright 1.56.1 在 `waitForFunction` 中判断 predicate 的直接 truthiness。异步 predicate 返回 Promise，随后即使解析成 `false` 也不会继续轮询。`1718439` 的真实 Chromium 控制实验已经返回 false handle；因此第十一阶段扩大 `newReady` 条件仍没有真正执行等待。现在以 Node 侧逐次 `await page.evaluate` 并要求 `ready === true`，同时核对 active/controller 身份、activated、无 waiting/installing 和双方当前完整 manifest 回执。
+- [Required 43071591660](https://github.com/runlinx-eng/math/actions/runs/43071591660) / [Artifact 13878912558](https://github.com/runlinx-eng/math/actions/runs/43071591660/artifacts/13878912558)，PR head `1718439d1e93e2e9c8e070558727343c9780103e`，实际 checkout `7ca8185eb012ef5f2bfce24726822aff9b6d00c0`：旧版控制下 C 与 N 两条缓存路径仍超时；正确等待后完整测试停在新 worker waiting，而不是假报已经接管。N 的旧 worker 进程内日志不可读取，不能据此断言 `cache.open`、`match` 或 body 已完成；后续只补用户允许的 N/O 持久化时序记录。
+- 历史旧 worker `9684442` 没有 message handler；其不回复新版 cache-status 本身是协议不支持，不能据此判断卡死。上一轮 retry 失败的 `browserState` 指向另一个已成功升级的 profile，现修正为实际失败页。
+- 原失败安装分支没有等待 installing→redundant；现必须观察真实失败，同时记录实际 503 请求、旧 active/controller 身份及原记录。重试只有真实接管且完整缓存后才能进入清理。
+- 原 Quota 测试按 1 MB 增量填充可能留有大量余量，且导入后立即读取，不能证明实际导入保存失败。新的独立门禁先保存非空原生学习记录，填到单字符容量边界，分别验证快照写入失败和合并记录写入失败，等待异步导入结束和失败提示，再关闭整个浏览器重开比较原记录字节。
+- `setOffline(true)` 不足以证明 worker 自身网络已经断开。整课测试现在真正关闭测试 HTTP listener；升级测试真正切断测试连接。HTTP 503 安装失败与真实断网分开记录，不用错误页面冒充离线恢复。
+
+### 第二轮有效取证与独立验收（并非后续修复 HEAD 的验收）
+
+- PR head `3ec4ce5178a9b05191a0e11e400fc2fdbf594818`，实际 checkout `ae2273c2b90ed19d18740c36514162ba96dccd99`，相同 tree `308cbd69bb67ae9e03319ce320f88268e221f151`。[Required 43073390818](https://github.com/runlinx-eng/math/actions/runs/43073390818) failure，[P8 43073390620](https://github.com/runlinx-eng/math/actions/runs/43073390620) success；[Artifact 13881685302](https://github.com/runlinx-eng/math/actions/runs/43073390818/artifacts/13881685302) 已下载核查。
+- N1 持久化记录在 18:00:52.563 UTC 显示 `fetch:event` → `cache.open:start` → `respondWith:registered`，没有 `cache.open:done`；9 秒导航未提交。未到 `cache.match`，不能声称已得到 Response 或 body 消费卡住。旧调试 target 到事后采集时已关闭，不能据此确定它何时停止；新 waiting 已在这次导航之前出现，不能倒推这次读取导致最初 waiting。
+- N2 导航前新版已激活，根本未进入旧复制响应处理器，不能算“复制 body 修复成功”。O 首次构造漏接原历史处理器、未满足旧版接管前提，已明确排除，仅修正 O 取证一次，不增加实验类别。
+- 完整升级在发起新版学习导航前已经正确阻塞于 waiting；1126 次服务器请求都有完整响应，不能归因于 HTTP 服务尚未交付。Cache API、旧扩展事件与生命周期交接的最终因果仍待有效 O。
+- 独立备份安全 41 项通过：真实浏览器 V2 导出、跨 profile 导入/重复幂等、构造 V1、草稿/作品/同 ID 冲突、坏 JSON/版本拒绝。真实 Quota 分别触发恢复快照 key 和主记录 key 的原生异常；整个浏览器重启前后原记录均 795 字节，SHA-256 `a95f2fd7c1a6c605012b349f249c6947ffe4d0a9043b0c04332b2670d7a3b345`。
+- 四类整课 141 项通过：equivalent 3/3、shiftfine 3/3、solidstack 3/3、argument38 5/5。4 个独立 profile，每类两次完整关闭重开；HTTP listener 停止期间收到请求为 0，离线文档均 200 且来自 SW。14 题逐一错误、提示、修改、原判题和保存；4 次离线再判题保留所有旧提交。CI 中文字体缺失，截图不作为中文可读性或人工视觉通过。
+
+### 最后一组有效生命周期记录
+
+[Required 43074585347](https://github.com/runlinx-eng/math/actions/runs/43074585347) failure，[P8 43074585168](https://github.com/runlinx-eng/math/actions/runs/43074585168) success；head `08938127fc06a3255638206e215876c89ae155eb`，实际 checkout `a783509c487c3f1b3851ab391d5f632302669b54`，[Artifact 13880323113](https://github.com/runlinx-eng/math/actions/runs/43074585347/artifacts/13880323113)。有效 O 中，旧 v2 的缓存写入及扩展事件于 18:08:43.405 UTC 完成；新 addAll/skipWaiting/install 扩展事件于 44.094 完成；旧 learn fetch 在 47.551 进入；新 activate 在 48.556 开始，keys/delete（true）/claim/activate 扩展事件在 48.559 全部完成，但导航仍在 9003 ms 后超时。因此本次没有挂在 activate 的 delete，不能断言 Cache Storage 全局锁。Chromium 141 的交接代码会先退役旧 worker，再延迟 1 秒派发 activate；这与时序相符，但缺少退役瞬间的直接记录，仍不能声称内部竞态已经唯一定位。完整未修改旧版流程仍在新版真实接管门禁失败。N/O 到此停止，不继续扩大诊断；当前应用修复只针对已确认的安全清理边界，正式三次结果必须如实决定发布阻塞。
+
+### 应用保护与正式验收范围
+
+- 新版 SW 激活只接管，不提前删除旧版本资源。单独的清理请求由 worker 核对所有当前作用域页面的固定源码版本；旧页面、未知页面、未回应页面、新客户端、当前资源不完整或下一版正在安装/等待时，保留旧缓存并返回可重试的 `deferred`。
+- 各入口源码把自身固定 release 传入 `sw-client.js`，应答实际已加载入口版本；共享 helper 更新不能替旧入口重新标记版本；不能用新 controller 身份证明旧页面 JavaScript 已更新。页面自动清理前先确认被请求的 controller 正是自己的版本，防止调用旧清理实现误删正在安装的缓存。每次清理重新确认，不依赖会随 worker 重启丢失的“旧页面已关闭”内存标志。
+- 此保护修复针对已确认的提前删除边界；不能在 Chromium 对照完成前将其称为导航超时的最终根因修复。
+- `p10-release-upgrade-repeat.cjs` 要求三个独立 Chromium 进程/profile 全流程成功。每次固定未经修改的 `96844424ceb534e7ca5f864a006b72a52efd0d60`，记录实际 checkout/head/tree、旧新 SW 摘要、每次浏览器完整重启及前后原始学习存储。正式运行关闭诊断注入；N/O 修改临时 worker 的结果不计入。
+- 正式流程包括旧版完整三题/说明/关浏览器重开/离线学习、新版真实接管和导航、逐字节保留、旧页写入冲突、旧页存在时延期清理、关闭后安全重试、B39 首次离线、新版整浏览器离线重开与再判题保存、503/安装中途断网/旧版离线继续学习/联网重试。
+- 独立的备份/配额与四类整课门禁在升级门禁失败时也继续执行，不能再把“后段未运行”写成已通过。四类真实题数为 equivalent 3、shiftfine 3、solidstack 3、argument38 5；每题原生错误→提示→修改→原判题→保存，每类两次完整浏览器关闭和离线重开。
+
+### 证据与收尾纪律
+
+完整证据位于 Required artifact 的 `p10-release-upgrade/`：根目录隔离时序与汇总，`run-1`～`run-3` 的 JSON/HTTP/日志/截图，`backup-safety/` 与 `full-lessons/`。每份结果同时绑定 PR head 和实际 checkout；GitHub 默认 PR 合并 checkout 不能被混写为原始 head。
+
+当前未获得应用修复最终 HEAD 的三次升级与完整 CI 成功前，P10 保持未完成。A 仅指绑定实际 SHA 的具体技术检查；失败为 C，尚未执行或证据不足为 B。合成 V1、浏览器测试作品和冲突样本不是历史儿童备份；真实历史儿童数据、Mac 人工、儿童独立使用和独立教研仍不冒充完成。#63 安装包开发不准入，P11 的单一最强操作标记和简化悬停控件可在独立分支推进。本 PR 不合并、不部署、不清理真实儿童记录，不改数学源数据、判题、记录语义或思维反馈。
+
 ## 第十阶段追加：J/K 导航接管单变量结论（2026-11-12）
 - `6a233427e30228633df5659f40b8dcdc2e55fac2` 的 [Required 43061158681](https://github.com/runlinx-eng/math/actions/runs/43061158681) **failure**；[P8 43061158660](https://github.com/runlinx-eng/math/actions/runs/43061158660) **success**。原始 [Artifact 13872689128](https://github.com/runlinx-eng/math/actions/runs/43061158681/artifacts/13872689128) 已下载解压核查。
 - 在独立 Chromium context 且旧 SW `activated`、控制页面、旧 `learn.html` precache 确实存在、安装/预缓存/缓存名未改的前提下，J 临时旧 SW **仅不拦截** `/learn.html` 导航，22 ms 成功（HTTP 200、`fromServiceWorker=false`、实际应用已载入）；K 临时旧 SW **仅以缓存响应**该导航，9 秒超时；C 原始旧 SW 网络优先同样超时。H1/H2/H3 关闭运行时缓存写入后亦全部失败。这说明旧 SW 对 `learn.html` 调用 `respondWith` 参与失败条件，而**不能**仅归因旧缓存写入或测试 HTTP Content-Length；但尚缺 SW fetch Promise 结束与浏览器导航生命周期的直接因果证据。

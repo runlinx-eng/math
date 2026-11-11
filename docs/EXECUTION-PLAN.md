@@ -1,5 +1,13 @@
 # 数学探索｜现行执行计划 P7–P11（附历史阶段记录）
 
+## P10 R3 第十二阶段当前入口（2026-11-12，PR #69 Draft）
+
+- 保持 `main@9f8afd53c7e477c25e0f419e165bcf1f0e304c51` 与 #67→#68→#69 堆叠关系，#66 独立。以下旧阶段条目只用于追溯，验收以本节及 [P10 台账](P10-LEARNING-CONTINUITY.md) 的本轮最新证据为准。
+- 已实际识别并修正验证方法缺陷：异步 `waitForFunction` 假通过、失败安装未等待真实 redundant、错误 profile 诊断、Quota 导入尚未完成就比较、把 HTTP 503 当成断网。`1718439` 正确等待后暴露新 worker 持续 waiting；不能借旧 29 项前段结果宣布升级通过。
+- 最小应用保护：激活不提前删除旧资源，worker 确认页面实际源码版本和当前完整缓存，旧/未知客户端或下一版本正在安装时延期清理并允许重试。该保护与导航最终归因分别记录，不提前宣称两个超时共享根因。
+- 本轮硬门禁：仅 N/O 必要时序取证；未经修改旧版的三个独立 profile 全流程升级；真实完整浏览器重启与离线判题；安装 503/中途断网/旧版继续学习/恢复重试；严格 V1/V2/草稿作品同 ID 冲突/真实 Quota；四类整课 3/3/3/5；最终 HEAD Required、P8、适用 Overview 与完整 artifacts。
+- 最新完整 CI 未全部实测成功前，P10 尚未完成。真实历史儿童备份、Mac 人工、儿童独立学习、独立数学教研继续列为未验收；不提前启动 Mac/Windows 安装包。P11 两项视觉问题可独立开发，但不混入 #69。未经授权不合并任何 PR，不部署 VPS，不删除真实学习记录。
+
 ## P10 R3 第十阶段 J/K 后续决策（2026-11-12）
 - [Required 43061158681](https://github.com/runlinx-eng/math/actions/runs/43061158681) 真实失败，[P8 43061158660](https://github.com/runlinx-eng/math/actions/runs/43061158660) 成功，证据 [Artifact 13872689128](https://github.com/runlinx-eng/math/actions/runs/43061158681/artifacts/13872689128)。旧 SW 已接管时，J 放行 `learn.html` 导航成功 22 ms；K 使用缓存响应同一导航超时 9 秒；原旧 SW 与 H1/H2/H3 均失败。故下一步必须优先定位旧 SW `respondWith` / Worker 激活等待与导航取消链路，不能继续猜 `cache.put`。
 - 任何修改正式 SW 之前，应取得能区分旧 Worker fetch Promise 是否结束、浏览器响应是否提交、当前页面 controller 与新 Worker waiting/activating/activated 的证据；再做最小修复，真实未修改历史版本独立 profile 三次通过及全套数据安全回归。现无生产修复，P10 不可收尾，不启动 Mac/Windows 安装包；P11 交互视觉优先项目可在独立分支准备设计/验收清单，不混入本 PR。

@@ -1,3 +1,5 @@
+import {registerClientRelease} from './sw-client.js';
+registerClientRelease('math-explorer-20261112-p10-release-r3-v2');
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';
