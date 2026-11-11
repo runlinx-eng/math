@@ -10,6 +10,7 @@ if(window!==window.top){
   window.addEventListener('gesturechange',stopGesture,{capture:true,passive:false});
 }
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from '../storage.js';
+import {prepareStateForValidation,prepareSessionRuntime} from './phase4/async-batches.js';
 import {syncControls as syncB20Controls} from './phase5/b20-view.js';
 import {csv as dataCsv} from './phase5/b19-view.js';
 import {syncControls as syncB13Controls} from './phase5/b13-view.js';
@@ -43,6 +44,7 @@ const entry=(key,label,value)=>`<label class="field">${label}<input type="text" 
 let extraLab=null,extraKey='',cleanupB06=null;
 let questionId=new URLSearchParams(location.search).get('question'),atlas,all,id,a,blocked=false,feedback='',spread=0,view=null,cube=null,cubeKey='',dirty=false;
 let savedNoteFeedback='';
+let lessonOpenSerial=0;
 
 const P03_ID='counttwenty';
 const P03_NAMES=['数清整齐的一排','数清散开的珠子','按要求取出珠子'];
@@ -259,7 +261,38 @@ function syncSubmissionUI(){
 function sync(){const t=task(),m=model();if(isExtra(t)){if($('.m28-success')&&!inspect(t,m).correct)$('.m28-success').remove();syncB13Controls(t,m,$('#work'));syncB20Controls(t,m,$('#work'));if($('#extra-visual')&&t.type!=='x-countboard')$('#extra-visual').innerHTML=visualExtra(t,m);if(t.type==='x-s23-frame'&&extraLab)extraLab.attach($('#extra-world'));extraLab?.update(m);document.querySelectorAll('[data-xvalue]').forEach(el=>el.textContent=el.dataset.xvalue.split('.').reduce((v,k)=>v?.[k],m));const estimate=$('[data-x="estimate"]');if(estimate)estimate.disabled=m.guess===null||m.prediction!==null;document.querySelectorAll('[data-xfield^="pair."]').forEach(el=>el.disabled=m.fold>0);if(task().type==='x-grow'&&task().towers){document.querySelectorAll('[data-xfield^="heights."]').forEach(el=>el.disabled=m.prediction===null);const prediction=$('[data-xfield="prediction"]');if(prediction)prediction.disabled=m.committed!==null;}$('#instruction').textContent=isP03()?P03_NAMES[a.index]:t.prompt;syncP03(t,m);syncSubmissionUI();return;}if(t.type==='equivalent')document.querySelectorAll('.eq-bar button').forEach(el=>el.setAttribute('aria-pressed',String(+el.dataset.index<m.rows[+el.dataset.row].n)));if($('#grid-count'))$('#grid-count').textContent=m.selected.length;document.querySelectorAll('.hundred button').forEach((el,i)=>{el.classList.toggle('on',m.selected.includes(i));el.setAttribute('aria-pressed',String(m.selected.includes(i)));});if(t.type==='partition'){const xs=[0,...m.cuts,100];document.querySelectorAll('.bar .part').forEach((el,i)=>el.style.width=(xs[i+1]-xs[i])+'%');document.querySelectorAll('[data-cut]').forEach((el,i)=>{el.style.left=m.cuts[i]+'%';el.setAttribute('aria-valuenow',m.cuts[i]);});}if(t.type==='line'){$('#line-point').setAttribute('cx',30+540*m.mark/t.den);$('#line-label').textContent=`${m.mark}/${t.den}`+(t.den===100?' = '+m.mark/100:'');}if(t.type==='match')document.querySelectorAll('[data-liquid]').forEach((el,i)=>el.style.height=m.heights[i]+'%');if(t.type==='decompose'&&$('#cut-label'))$('#cut-label').textContent=`第 ${m.cut} 层边界`;if($('#filled-count'))$('#filled-count').textContent=` 已放 ${m.filled?.length||0} 块`;if(t.build&&t.estimate&&$('[data-field="estimate"]'))$('[data-field="estimate"]').disabled=!!m.filled?.length;if(cube)cube.update(m,{spread});if($('#editable-chart')){$('#editable-chart').innerHTML=chartHTML(t,m,view||t.view);document.querySelectorAll('[data-count]').forEach(el=>el.textContent=m.counts[el.dataset.count]);}document.querySelectorAll('[data-survey-tally]').forEach(el=>el.innerHTML=tally(m.counts[el.dataset.surveyTally]));$('#instruction').textContent=t.prompt;syncSubmissionUI();}
 function revealSupport(){if(a.view==='task')update(r=>supportLesson(r));const t=task();if(t.dims){spread=1;cube?.update(model(),{spread});feedback='看看每个完整的层或部分。包含挡住的积木，再回到自己的计划。';}else if(t.type==='partition'){edit(m=>m.cuts=Array.from({length:t.d-1},(_,i)=>(i+1)*100/t.d));feedback='现在每一份一样大了。再按需要的份数选择。';}else feedback=inspect(t,model()).feedback;if(inspect(t,model()).correct)feedback='试着用另一种画法或自己的话说明，为什么这个结果成立。';render();}
 function placeCube(i){if(task().estimate&&model().estimate===null){feedback='先留下你的估计，再开始填。估计不用猜得刚好。';render();return;}edit(m=>{m.filled??=[];if(!m.filled.includes(i))m.filled.push(i);});}
-async function openLesson(next,{keepQuestion=false}={}){if(!sessionMeta(next))next='share';if(cube){cube.destroy();cube=null;cubeKey='';}if(!keepQuestion)questionId=null;if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}id=next;feedback='';savedNoteFeedback='';all=read();a=sessionRecord(all,id)||freshLesson(id);view=a.ui?.view||null;spread=a.ui?.spread||0;const savedUI=structuredClone(a.ui);update(r=>{r.ui=savedUI;enterUnifiedTask(r);modelForLesson(r);});const routePanel=$('#route-collapsible');if(routePanel)routePanel.open=false;history.replaceState(null,'',location.pathname+(questionId?'?question='+encodeURIComponent(questionId):'')+'#'+id);$('#back').href='index.html#space/pack/'+sessionRoute(id).packIds[0];render();window.scrollTo(0,0);}
+async function openLesson(next,{keepQuestion=false}={}){
+  if(!sessionMeta(next))next='share';
+  const serial=++lessonOpenSerial,notice=$('#storage-warning');
+  notice.hidden=false;notice.textContent='正在加载并验证学习任务…';
+  try{
+    const stored=readStored(KEY);
+    if(stored)await prepareStateForValidation(JSON.parse(stored));
+    await prepareSessionRuntime(next,{view:true});
+  }catch(error){
+    if(serial!==lessonOpenSerial)return;
+    notice.textContent='任务加载失败，原记录未修改：'+error.message+' ';
+    const retry=document.createElement('button');retry.type='button';retry.textContent='重新加载';
+    retry.addEventListener('click',()=>openLesson(next,{keepQuestion}),{once:true});notice.append(retry);
+    return;
+  }
+  if(serial!==lessonOpenSerial)return;
+  notice.hidden=true;
+  try{
+    if(cube){cube.destroy();cube=null;cubeKey='';}
+    if(!keepQuestion)questionId=null;
+    if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}
+    id=next;feedback='';savedNoteFeedback='';
+    all=read();a=sessionRecord(all,id)||freshLesson(id);
+    view=a.ui?.view||null;spread=a.ui?.spread||0;
+    const savedUI=structuredClone(a.ui);
+    update(r=>{r.ui=savedUI;enterUnifiedTask(r);modelForLesson(r);});
+    const routePanel=$('#route-collapsible');if(routePanel)routePanel.open=false;
+    history.replaceState(null,'',location.pathname+(questionId?'?question='+encodeURIComponent(questionId):'')+'#'+id);
+    $('#back').href='index.html#space/pack/'+sessionRoute(id).packIds[0];
+    render();window.scrollTo(0,0);
+  }catch(error){blocked=true;notice.hidden=false;notice.textContent='学习记录未通过完整验证，禁止覆盖：'+error.message;}
+}
 
 $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');if(!b)return;if(blocked){if(b.dataset.do==='save-note')showNoteSaveFailure();return;}const act=b.dataset.do;
  if(act==='question'){leaveQuestion();return;}if(act==='question-finish'||act==='question-later'){try{all=read();questionAction(all,questionId,act==='question-finish'?'finish':'later');writeStored(KEY,JSON.stringify(validate(all,atlas)));questionId=null;history.replaceState(null,'',location.pathname+'#'+id);notify('math-space:lesson-change',{id:BRIDGES[id]?.to||id,sessionId:id,questionId:null});renderQuestion();if(act==='question-later')back();}catch(error){$('#storage-warning').hidden=false;$('#storage-warning').textContent=error.message;}return;}

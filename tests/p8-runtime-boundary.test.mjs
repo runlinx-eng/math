@@ -62,3 +62,43 @@ test('metadata is separated but not activated before a safe async validator spli
   assert.ok(!light.includes("from './b02.js'"));
   assert.ok(!light.includes("from './task-catalog.js'"));
 });
+
+test('B39 is absent from the startup static dependency graph', () => {
+  const home=reachable('space.js'),lesson=reachable('learning/learn.js');
+  for(const file of ['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js']){
+    assert.ok(!home.has(file), 'First-screen graph includes B39: '+file);
+    assert.ok(!lesson.has(file), 'Learning shell must load B39 only when selected: '+file);
+  }
+  assert.ok(home.has('learning/phase4/b39-meta.js'));
+  assert.ok(home.has('learning/phase4/async-batches.js'));
+  assert.match(read('learning/phase4/async-batches.js'), /import\('\.\.\/phase5\/b39\.js'\+suffix\)/);
+});
+
+test('B39 lightweight metadata, bridge identity, and on-demand validation remain exact', async () => {
+  const meta=await import('../dist/learning/phase4/b39-meta.js');
+  const full=await import('../dist/learning/phase5/b39.js');
+  assert.deepEqual(meta.LESSONS,full.LESSONS);
+  assert.deepEqual(meta.ROUTES,full.ROUTES);
+  assert.deepEqual(meta.BRIDGES.map(({tasks,...b})=>b),full.BRIDGES.map(({tasks,...b})=>b));
+  const lazy=await import('../dist/learning/phase4/async-batches.js');
+  const {freshLesson,validateLesson}=await import('../dist/learning/state.js');
+  const {sessionTaskFor,sessionTasks}=await import('../dist/learning/bridges.js');
+  const {defaultModel}=await import('../dist/learning/tasks.js');
+  assert.ok(!lazy.isB39Ready());
+  const id='calculator39',bridge='link-checkrough-calculator39';
+  const a=freshLesson(id);
+  assert.equal(lazy.needsB39Runtime({lessons:{[id]:a}}),true);
+  assert.equal(lazy.needsB39Runtime({daily:{bridges:{[bridge]:a}}}),true);
+  assert.equal(lazy.needsB39Runtime({daily:{questions:[{scene:{record:{id}}}]}}),true);
+  assert.equal(lazy.needsB39Runtime({lessons:{share:a}}),false);
+  await lazy.prepareSessionRuntime(id,{view:true});
+  assert.ok(lazy.isB39Ready());
+  assert.deepEqual(sessionTasks(id),full.TASKS[id]);
+  assert.deepEqual(sessionTasks(bridge),full.BRIDGES.find(b=>'link-'+b.from+'-'+b.to===bridge).tasks);
+  a.models[0]=defaultModel(sessionTaskFor(id,0));
+  assert.deepEqual(validateLesson(a,id).models[0],a.models[0]);
+  await lazy.prepareStateForValidation({lessons:{[id]:a}});
+  await lazy.prepareSessionRuntime(id,{view:true});
+  const {renderExtra}=await import('../dist/learning/phase4/view-engine.js');
+  assert.match(renderExtra(sessionTaskFor(id,0),a.models[0]), /extra-visual/);
+});
