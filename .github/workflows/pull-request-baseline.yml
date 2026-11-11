@@ -74,6 +74,7 @@ jobs:
           node --check dist/learning/learn.js
           node --check dist/learning/state.js
           node --check tests/p10-learning-continuity-browser.cjs
+          node --check tests/p10-longterm-offline-browser.cjs
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check dist/learning/p3-workflow.js
@@ -178,6 +179,7 @@ jobs:
             tests/p7-d7-multi-type-browser.cjs \
             tests/p9-thinking-feedback-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
+            tests/p10-longterm-offline-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
@@ -248,6 +250,7 @@ jobs:
             verification/p7-d7/
             verification/p9-thinking-feedback/
             verification/p10-learning-continuity/
+            verification/p10-longterm-round2/
             verification/p8-node-surfaces/
             verification/p8-trail-performance/
             verification/p8-mode-clicks/
