@@ -38,3 +38,26 @@ test('task-specific rendering is absent from the static 3D startup graph', () =>
   console.log(JSON.stringify({startupStaticModules: entry.size, startupStaticJsBytes: bytes,
     lessonStaticModules: lesson.size, excludedLessonViews: [...lesson].filter(viewModules).length}));
 });
+
+test('lightweight lesson directory preserves all runtime lesson IDs, routes and reflections', async () => {
+  const heavy = await import('../dist/learning/phase4/catalog.js');
+  const light = await import('../dist/learning/phase4/light-catalog.js');
+  assert.deepEqual(light.EXTRA_LESSONS, heavy.EXTRA_LESSONS,
+    'The first-screen catalog must not change lesson identity or content');
+  assert.deepEqual(light.EXTRA_ROUTES, heavy.EXTRA_ROUTES,
+    'The first-screen catalog must not change route order or IDs');
+  assert.deepEqual(light.EXTRA_REFLECTIONS, heavy.EXTRA_REFLECTIONS,
+    'The first-screen catalog must preserve reflection prompts');
+  const sections = [6,10,13,16,18,19,20,21,22,23,24,25,27,28,30,31,32,33,34,35,37,38];
+  const original = await Promise.all(sections.map(i =>
+    import('../dist/learning/phase5/b' + String(i).padStart(2, '0') + '.js')));
+  assert.deepEqual(light.EXTRA_SECTIONS, original.flatMap(batch => batch.SECTIONS ?? []));
+});
+
+test('catalog entry no longer imports math batch task definitions', () => {
+  const catalog = read('learning/catalog.js');
+  const light = read('learning/phase4/light-catalog.js');
+  assert.match(catalog, /phase4\\/light-catalog\\.js/);
+  assert.doesNotMatch(catalog, /phase5\\/b\\d\\d\\.js|phase4\\/catalog\\.js/);
+  assert.doesNotMatch(light, /phase5\\/b\\d\\d\\.js|phase4\\/b\\d\\d\\.js/);
+});
