@@ -1,5 +1,11 @@
 # 数学探索｜现行执行计划 P7–P11（附历史阶段记录）
 
+## P10 第三轮第十阶段优先级（2026-11-12，PR #69 Draft）
+- 最新已完成 A/B：Required [43058826516](https://github.com/runlinx-eng/math/actions/runs/43058826516) failure、P8 [43058826548](https://github.com/runlinx-eng/math/actions/runs/43058826548) success；原历史 SW 与 H1/H2/H3 禁用运行时缓存写入均不能完成升级后 `learn.html#share` 导航（9 秒超时）。完整旧版三题数据跨升级前后字节相等，但后续 45 秒导航仍失败。不得将新缓存存在当作新 SW 已接管。
+- 下一硬门槛：等待 J/K 单变量导航 fetch 隔离实验的最新真实 Chromium 证据；按结果定位 SW 导航、生命周期或测试环境问题，再做**有证据的最小修复**和三次独立 profile 复验；之后才执行原完整升级、旧标签页、V1/V2、Quota、离线恢复及四类整课验证。
+- P10 未结束；Mac/Windows 本地版开发及 P11 UI 改动不并入本 PR。未经授权不合并 PR #66～#69，不部署 VPS，不清理真实学习记录。详见 [P10 台账](P10-LEARNING-CONTINUITY.md)。
+
+
 > **更新于 2026-11-11；当前权威阶段入口。**
 >
 > 产品目标以 [PRODUCT-VISION.md](PRODUCT-VISION.md) 为准；开发/合并/发布纪律以 [DEVELOPMENT-WORKFLOW.md](DEVELOPMENT-WORKFLOW.md) 为准。本文管理**下一步做什么、先后关系和验收状态**，不替代领域规范、单项 Issue 或实际教学证据。下方 2026-10-24 至 2026-11-01 的六阶段记录保留为历史，不再是当前优先级。
