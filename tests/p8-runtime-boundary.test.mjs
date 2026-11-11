@@ -54,13 +54,11 @@ test('lightweight lesson directory preserves all runtime lesson IDs, routes and 
   assert.deepEqual(light.EXTRA_SECTIONS, original.flatMap(batch => batch.SECTIONS ?? []));
 });
 
-test('catalog entry no longer imports math batch task definitions', () => {
-  const catalog = read('learning/catalog.js');
+test('metadata is separated but not activated before a safe async validator split', () => {
+  const startupCatalog = read('learning/catalog.js');
   const light = read('learning/phase4/light-catalog.js');
-  assert.ok(catalog.includes("from './phase4/light-catalog.js'"));
-  assert.ok(!catalog.includes("from './phase4/task-catalog.js'"));
-  assert.ok(!read('learning/phase4/catalog.js').includes("from './task-catalog.js'"));
-  assert.ok(!catalog.includes("from './phase5/b"));
+  assert.ok(startupCatalog.includes("from './phase4/catalog.js'"));
   assert.ok(!light.includes("from '../phase5/b"));
   assert.ok(!light.includes("from './b02.js'"));
+  assert.ok(!light.includes("from './task-catalog.js'"));
 });
