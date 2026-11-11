@@ -336,3 +336,7 @@
 - 最新 Chromium Artifact [13865143932](https://github.com/runlinx-eng/math/actions/runs/43042940403/artifacts/13865143932)：`failure.json`/`diagnostics.json` 均确认 11 项前置检查通过，`before-upgrade.json` 与 `after-upgrade.json` **字节完全相同（各 1992 字节）**。事件末端：已激活 SW、旧新缓存并存，`learn.html` 服务器收到请求但记录 `server-aborted`，浏览器现场探针超时。该结果说明上阶段 `2bcb3b6` 并未解除卡死；但仍未精确归因到 SW、缓存竞争、fetch 生命周期或 Chromium/测试服务器交互。
 - P8 [43042940326](https://github.com/runlinx-eng/math/actions/runs/43042940326)：**success**，对应相同 HEAD。Overview 未见同 SHA 的独立运行，不能记 success。
 - 本阶段未修改应用 SW/存储代码；仅修正 CI 环境并重现原障碍。**P10 保持未完成，关键升级后测试均未进入，绝不宣布儿童记录全量安全。** 下一步应针对最新 `learn.html` server-aborted 做真实隔离对照实验并修对应根因，不靠增加超时。
+
+### P10 第三轮第六阶段（进行中，不得收尾）
+
+新增 `tests/p10-sw-nav-isolation-browser.cjs` 并在 Required 的原完整 P10 升级测试之前运行，记录同 origin 新旧版本切换、SW 与不使用 SW、旧标签页、缓存清理和 HTTP 服务器响应的可复核诊断。HEAD `472cc54` 的隔离七组均成功，但完整跨版本学习场景仍超时；新增 `f8bcdcd` 的离线切换对照未完成最新 CI 验收。不能据此声明修复成功；旧数据安全、备份导入、四门整课离线和 #63 安装准入均保持待完成。证据及细则见 `docs/P10-LEARNING-CONTINUITY.md` 和 PR #69。
