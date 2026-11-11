@@ -66,7 +66,7 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
 
   // This is a fresh page (simulating a closed browser view), not a mocked state.
   await page.goto(base+'v2.html#trail');
-  await page.locator('#import-file').waitFor();
+  await page.locator('#import-file').waitFor({state:'attached'});
   check((await page.locator('#main').innerText()).includes('等值分数'),'completed actual lesson appears in trail');
   const download=page.waitForEvent('download');
   await page.locator('[data-do="export"]').first().click();
@@ -77,7 +77,7 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
   // Import into another isolated browser profile via actual file input.
   const imported=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'allow'});
   const importedPage=await imported.newPage();
-  await importedPage.goto(base+'v2.html#trail');await importedPage.locator('#import-file').waitFor();
+  await importedPage.goto(base+'v2.html#trail');await importedPage.locator('#import-file').waitFor({state:'attached'});
   await importedPage.locator('#import-file').setInputFiles({name:'p10-learning-backup.json',mimeType:'application/json',buffer:Buffer.from(payload)});
   await importedPage.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')||'{}').lessons?.equivalent?.notes?.length===1);
   check((await read(importedPage)).lessons.equivalent.cases[0].attempts.length===2,'real backup import restores correction history in separate storage');
@@ -85,10 +85,10 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
 
   const damaged=await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true});
   const damagedPage=await damaged.newPage();
-  await damagedPage.goto(base+'v2.html#trail');await damagedPage.locator('#import-file').waitFor();
+  await damagedPage.goto(base+'v2.html#trail');await damagedPage.locator('#import-file').waitFor({state:'attached'});
   const corrupt='{"schema":2,"lessons":{"unfinished":';
   await damagedPage.evaluate(raw=>localStorage.setItem('math-explorer-v2',raw),corrupt);
-  await damagedPage.reload();await damagedPage.locator('#import-file').waitFor();
+  await damagedPage.reload();await damagedPage.locator('#import-file').waitFor({state:'attached'});
   const rescue=damagedPage.waitForEvent('download');
   await damagedPage.locator('[data-do="export"]').first().click();
   const rescueFile=await rescue;
@@ -112,7 +112,7 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
   check(!!(await page.evaluate(()=>window.mathSpace?.snapshot()?.counts?.nodes===587)),'cached 3D map reopens offline');
   await ctx.setOffline(false);
-  await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor();
+  await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor({state:'attached'});
   check((await read(page)).lessons.equivalent.notes.length===1,'network restoration does not lose written discovery');
   check(errors.length===0,'no uncaught browser page errors');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,offlineMode:'real Chromium context offline',tests:'equivalent actual task sequence, import/export and concurrent tabs',mac:false,child:false,pedagogy:false},null,2));
