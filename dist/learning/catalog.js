@@ -1,5 +1,27 @@
-import {EXTRA_LESSONS, EXTRA_ROUTES, EXTRA_REFLECTIONS, EXTRA_SECTIONS} from './phase4/light-catalog.js';
-export const ROUTE_SECTIONS = EXTRA_SECTIONS;
+import {SECTIONS as NUMBER_SECTIONS} from './phase5/b06.js';
+import {SECTIONS as ADD_SECTIONS} from './phase5/b10.js';
+import {SECTIONS as GROUP_SECTIONS} from './phase5/b13.js';
+import {SECTIONS as PORTION_SECTIONS} from './phase5/b16.js';
+import {SECTIONS as FRACTION_SECTIONS} from './phase5/b18.js';
+import {SECTIONS as DATA_SECTIONS} from './phase5/b19.js';
+import {SECTIONS as DISPLAY_SECTIONS} from './phase5/b20.js';
+import {SECTIONS as STATS_SECTIONS} from './phase5/b21.js';
+import {SECTIONS as CHANCE_SECTIONS} from './phase5/b22.js';
+import {SECTIONS as SHAPE_SECTIONS} from './phase5/b23.js';
+import {SECTIONS as POSITION_SECTIONS} from './phase5/b24.js';
+import {SECTIONS as ANGLE_SECTIONS} from './phase5/b25.js';
+import {SECTIONS as SOLID_SECTIONS} from './phase5/b27.js';
+import {SECTIONS as UNIT_SECTIONS} from './phase5/b28.js';
+import {SECTIONS as AREA_SECTIONS} from './phase5/b30.js';
+import {SECTIONS as VOLUME_SECTIONS} from './phase5/b31.js';
+import {SECTIONS as TIME_SECTIONS} from './phase5/b32.js';
+import {SECTIONS as MONEY_SECTIONS} from './phase5/b33.js';
+import {SECTIONS as PATTERN_SECTIONS} from './phase5/b34.js';
+import {SECTIONS as UNKNOWN_SECTIONS} from './phase5/b35.js';
+import {SECTIONS as SCALING_SECTIONS} from './phase5/b37.js';
+import {SECTIONS as REASONING_SECTIONS} from './phase5/b38.js';
+export const ROUTE_SECTIONS=[...NUMBER_SECTIONS,...ADD_SECTIONS,...GROUP_SECTIONS,...PORTION_SECTIONS,...FRACTION_SECTIONS,...DATA_SECTIONS,...DISPLAY_SECTIONS,...STATS_SECTIONS,...CHANCE_SECTIONS,...SHAPE_SECTIONS,...POSITION_SECTIONS,...ANGLE_SECTIONS,...SOLID_SECTIONS,...UNIT_SECTIONS,...AREA_SECTIONS,...VOLUME_SECTIONS,...TIME_SECTIONS,...MONEY_SECTIONS,...PATTERN_SECTIONS,...UNKNOWN_SECTIONS,...SCALING_SECTIONS,...REASONING_SECTIONS];
+import {EXTRA_LESSONS,EXTRA_ROUTES,EXTRA_REFLECTIONS} from './phase4/catalog.js';
 // Local learning routes. Source IDs and their original relationships stay intact.
 export const ROUTES=[
  {id:'A',section:'portion-connect',title:'同一个量，几种写法',packIds:['same-amount'],themeId:'numbers',color:'#bd6b38',ids:['share','equivalent','decimal','quarters']},
