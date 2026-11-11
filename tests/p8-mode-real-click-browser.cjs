@@ -47,17 +47,18 @@ const check=(v,m)=>{if(!v)throw Error(m);};
  };
  // Choose an actual unobscured on-screen source label. Only configured tasks
  // count as successful learn switching targets.
- const clickVisible=async({playable=false}={})=>{
-  const keys=await page.evaluate(async playable=>{
+ const clickVisible=async({playable=false,excludeLesson=null}={})=>{
+  const keys=await page.evaluate(async ({playable,excludeLesson})=>{
    const {lessonForTopic}=await import('./learning/catalog.js');
    return [...document.querySelectorAll('.space-label.node:not([hidden])')].filter(el=>{
     if(el.getAttribute('aria-pressed')==='true')return false;
     const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
     if(r.width<5||r.height<5||x<4||y<4||x>innerWidth-4||y>innerHeight-4)return false;
     const top=document.elementFromPoint(x,y);
-    return (top===el||el.contains(top))&&(!playable||!!lessonForTopic(el.dataset.key.slice(5)));
+    const lesson=lessonForTopic(el.dataset.key.slice(5));
+     return (top===el||el.contains(top))&&(!playable||!!lesson)&&(!excludeLesson||lesson!==excludeLesson);
    }).map(el=>el.dataset.key);
-  },playable);
+  },{playable,excludeLesson});
   check(keys.length>0,'no real visible clickable '+(playable?'configured':'source')+' node');
   const key=keys[0];await page.locator('.space-label.node[data-key="'+key+'"]').click();
   await page.waitForFunction(k=>mathSpace.snapshot().selected===k,key);
@@ -77,7 +78,7 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   const lessonB=await waitNativeTask(nodeB);
   s=await verify('learning-click-real-label-B','learn',nodeB);
   check(s.journey&&s.iframe.endsWith('#'+lessonB),'visible 3D click must open its own native learning task');
-  const next=await clickVisible({playable:true});
+  const next=await clickVisible({playable:true,excludeLesson:lessonB});
   const lessonC=await waitNativeTask(next);
   s=await verify('learning-click-real-label-C','learn',next);
   check(s.journey&&s.iframe.endsWith('#'+lessonC),'second real 3D node must open the newly selected task');
@@ -151,7 +152,7 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   const liveFirst=await clickVisible({playable:true});
   const liveFirstId=await waitNativeTask(liveFirst);
   await verify('vps-learn-first-3d-click','learn',liveFirst);
-  const liveSecond=await clickVisible({playable:true});
+  const liveSecond=await clickVisible({playable:true,excludeLesson:liveFirstId});
   const liveSecondId=await waitNativeTask(liveSecond);
   check(liveSecondId!==liveFirstId,'live second 3D click must select a distinct lesson');
   await verify('vps-learn-second-3d-click','learn',liveSecond);

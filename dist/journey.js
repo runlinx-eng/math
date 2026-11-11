@@ -1,5 +1,6 @@
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {KEY,fresh,validate,now,nodeState} from './exploration-core.js';
+import {prepareStateForValidation} from './learning/phase4/async-batches.js';
 import {ROUTE_ID,ROUTE_STEPS,freshJourney,actOnJourney} from './journey-model.js';
 const root=document.getElementById('math-learning-example'),current=root.querySelector('#m-current');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -80,4 +81,4 @@ root.addEventListener('input',event=>{
   }
 });
 window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='math-space:journey-step'&&[1,2,3].includes(e.data.step))go(e.data.step);});
-try{const r=await fetch('./data/atlas.json');if(!r.ok)throw new Error('地图暂时无法读取');atlas=await r.json();const step=Number(location.hash.slice(1));if(commit('visit',[1,2,3].includes(step)?step:2))render();}catch(error){document.getElementById('m-storage-warning').hidden=false;document.getElementById('m-storage-warning').textContent=error.message;}
+try{const r=await fetch('./data/atlas.json');if(!r.ok)throw new Error('地图暂时无法读取');atlas=await r.json();const saved=readStored(KEY);if(saved)await prepareStateForValidation(JSON.parse(saved));const step=Number(location.hash.slice(1));if(commit('visit',[1,2,3].includes(step)?step:2))render();}catch(error){document.getElementById('m-storage-warning').hidden=false;document.getElementById('m-storage-warning').textContent=error.message;}

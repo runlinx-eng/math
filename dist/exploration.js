@@ -4,6 +4,7 @@ import {applyNavigationCopy} from './navigation-copy.js';
 import {makeKnowledgeNames} from './spatial-names.js';
 import {ACTIVITIES,activityIds,STAGES,KINDS,task,inspect} from './exploration-content.js';
 import {KEY,OLD_KEY,fresh,now,ensureActivity,modelFor,caseKey,addSupport,submit,saveObservation,saveNote,evidenceSummary,nodeState,PROGRESS,completionClass,migrateLegacy,validate,backup,parseBackup,merge} from './exploration-core.js';
+import {prepareStateForValidation} from './learning/phase4/async-batches.js';
 import {ROUTE_ID,ROUTE_STEPS} from './journey-model.js';
 import {mergeLiveActivity} from './live-state.js';
 import {LESSONS,lessonIds,lessonForTopic,topicIds,ROUTES} from './learning/catalog.js';
@@ -200,9 +201,27 @@ document.addEventListener('click',event=>{
 });
 document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)&&event.target.matches('[role="button"][data-do]')){event.preventDefault();event.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0);});
-$('#import-file').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{if(readBlocked)throw new Error('原有存储无法读取，先保留原始数据再导入。');if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB，尚未导入。');const incoming=parseBackup(await file.text(),atlas);const latest=readStored(KEY),current=latest?validate(JSON.parse(latest),atlas):state;assertNoImportConflicts(current,incoming);const combined=validate(merge(current,incoming),atlas);writeStored(KEY+'-before-import',JSON.stringify(backup(current)));writeStored(KEY,JSON.stringify(combined));state=combined;render();toast('备份已合并，已有作品和提示历史都保留了。');}catch(error){toast(error.message||'导入失败，原有记录没有改变。');}finally{event.target.value='';}});
-async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored)state=validate(JSON.parse(stored),atlas);if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
- if('serviceWorker'in navigator){try{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;const offlineReady=async()=>{const cache=await caches.open('math-explorer-20261109-p7d5-direct-entry');const ready=(await Promise.all(['./index.html','./exploration.js','./exploration-core.js','./exploration-content.js','./exploration.css','./data/atlas.json'].map(path=>cache.match(new URL(path,location.href))))).every(Boolean);$('#offline-status').textContent=ready?' · 本机离线资源就绪':' · 正在准备离线资源';};await offlineReady();navigator.serviceWorker.addEventListener('controllerchange',offlineReady);}catch{$('#offline-status').textContent=' · 本地服务可离线使用';}}
+$('#import-file').addEventListener('change',async event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  try{
+    if(readBlocked)throw new Error('原有存储无法读取，先保留原始数据再导入。');
+    if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB，尚未导入。');
+    const text=await file.text(),wrapper=JSON.parse(text);
+    if(wrapper?.version===2)await prepareStateForValidation(wrapper.state);
+    const currentRaw=readStored(KEY);
+    if(currentRaw)await prepareStateForValidation(JSON.parse(currentRaw));
+    const before=localStorage.getItem(KEY),current=currentRaw?validate(JSON.parse(currentRaw),atlas):state;
+    const incoming=parseBackup(text,atlas);
+    assertNoImportConflicts(current,incoming);
+    const combined=validate(merge(current,incoming),atlas);
+    if(localStorage.getItem(KEY)!==before)throw new Error('导入期间学习记录发生变化，请重试。');
+    writeStored(KEY+'-before-import',JSON.stringify(backup(current)));
+    writeStored(KEY,JSON.stringify(combined));state=combined;render();toast('备份已合并，已有作品和提示历史都保留了。');
+  }catch(error){toast(error.message||'导入失败，原有记录没有改变。');}
+  finally{event.target.value='';}
+});
+async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
+ if('serviceWorker'in navigator){try{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;const offlineReady=async()=>{const cache=await caches.open('math-explorer-20261111-p8-b39-lazy-v1');const ready=(await Promise.all(['./index.html','./exploration.js','./exploration-core.js','./exploration-content.js','./exploration.css','./data/atlas.json'].map(path=>cache.match(new URL(path,location.href))))).every(Boolean);$('#offline-status').textContent=ready?' · 本机离线资源就绪':' · 正在准备离线资源';};await offlineReady();navigator.serviceWorker.addEventListener('controllerchange',offlineReady);}catch{$('#offline-status').textContent=' · 本地服务可离线使用';}}
  }catch(error){main.innerHTML=`<div class="empty"><h2>地图暂时没打开</h2><p>${esc(error.message)}。请通过“启动数学探索.command”打开应用。</p></div>`;}}
 if(embedded){
  document.addEventListener('click',event=>{const a=event.target.closest('a[href^="#"]');if(!a)return;const [kind,id]=a.getAttribute('href').slice(1).split('/');if(['map','theme','pack','node','atlas','activity'].includes(kind)){event.preventDefault();event.stopImmediatePropagation();spaceNavigate(kind,id);}},true);
