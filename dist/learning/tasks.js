@@ -1,4 +1,4 @@
-import {EXTRA_TASKS,EXTRA_PRACTICE} from './phase4/catalog.js';
+import {EXTRA_TASKS,EXTRA_PRACTICE} from './phase4/task-catalog.js';
 import {isExtra,initialExtra,validExtra,inspectExtra,exampleExtra} from './phase4/engine.js';
 import {scorePlan} from './cube-tasks.js';
 import {LESSONS} from './catalog.js';
