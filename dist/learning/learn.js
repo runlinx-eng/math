@@ -13,7 +13,8 @@ import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from '../storage.js'
 import {syncControls as syncB20Controls} from './phase5/b20-view.js';
 import {csv as dataCsv} from './phase5/b19-view.js';
 import {syncControls as syncB13Controls} from './phase5/b13-view.js';
-import {isExtra,renderExtra,visualExtra,controlsExtra,actExtra,fieldExtra} from './phase4/engine.js';
+import {isExtra,actExtra,fieldExtra} from './phase4/engine.js';
+import {renderExtra,visualExtra,controlsExtra} from './phase4/view-engine.js';
 import {setField} from './phase4/ui.js';
 import {mountB06} from './phase5/b06-runtime.js';
 import {TYPES as B06_TYPES} from './phase5/b06-model.js';

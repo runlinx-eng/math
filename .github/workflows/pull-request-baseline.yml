@@ -103,6 +103,7 @@ jobs:
             tests/p7-learning-workspace-flow.test.mjs
             tests/p7-d6-learning-contract.test.mjs
             tests/p7-d7-task-adapters.test.mjs
+            tests/p8-runtime-boundary.test.mjs
             tests/p7-d5-entry-decision.test.mjs
             tests/p7-d3-capability-inventory.test.mjs
             tests/p4-learning-reliability.test.mjs
