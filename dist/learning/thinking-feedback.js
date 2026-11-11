@@ -4,7 +4,6 @@ import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
 import * as patterns34 from './phase5/b34-model.js';
-import * as tools39 from './phase5/b39-model.js';
 
 // A shared card widget appears in several thinking domains. Link MP.3 only
 // for these inspected B38 lesson positions, never solely from task.type.
@@ -42,7 +41,7 @@ function secondRoundFeedback(task,model,record,context,attempts){
   if(task?.type==='x-s39-choose'&&context.sessionId==='tools39'&&
     [0,1].includes(context.index)&&task.operator==='*'&&
     (context.index===0?JSON.stringify(task.operands)==='[25,4]':JSON.stringify(task.operands)==='[167,3]')){
-    if(!tools39.valid(task,model)||!tools39.inspect(task,model).correct||model.method!=='calculator')return null;
+    if(!validTask(task,model)||!inspectTask(task,model).correct||model.method!=='calculator')return null;
     const action=[...model.history].reverse().find(e=>e.a==='run');
     const run=model.board.runs.at(-1);
     if(!action||action.c!=='calculator'||action.w!==model.entry||!run?.matched||run.entry!==model.entry)return null;
@@ -50,7 +49,7 @@ function secondRoundFeedback(task,model,record,context,attempts){
       title:'你刚才的办法',
       observation:`这次做 ${task.display}，你选择了计算器，实际输入“${model.entry}”并运行，得到 ${run.value}；检查核对了输入的数字与运算。`,
       connection:'计算器可以帮你核对运算，但要先确认输入的式子对应题目。下次可以先估一个范围，再决定是否需要工具。',
-      detail:[...attemptDetails(task,record,attempts,tools39),'这里只验证这次选用并运行计算器；没有验证心算、笔算过程或以后会不会选最合适的工具。'],
+      detail:[...attemptDetails(task,record,attempts,{valid:validTask,inspect:inspectTask}),'这里只验证这次选用并运行计算器；没有验证心算、笔算过程或以后会不会选最合适的工具。'],
       method:{nodeId:'mt_d-WZC2OyMB',label:'选择合适的数学工具',code:'ccss-math:MP.5'}
     };
   }
