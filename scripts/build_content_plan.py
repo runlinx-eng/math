@@ -44,6 +44,7 @@ def read(path):
 # projections whenever navigation-only UI code changes.
 HISTORICAL_UI_FINGERPRINTS = {
     'dist/exploration.js': '373759f36b356d4e1e0cf5c28a76f859b41d15dff75c434fd2342fe5da3a4c81',
+    'dist/journey.js': '92dc80c146e8ba38fd1180a673fa763761b5e7af52a78b434dea311d832253f2',
     'scripts/build_content_plan.py': '81e0e0225c1caa185993f8b0b895d4ba2e2639d2337f105bed171eaf17f93f3d',
 }
 
