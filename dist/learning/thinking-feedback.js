@@ -4,7 +4,11 @@ import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
 
-export function thinkingFeedback(task,model,record){
+// A shared card widget appears in several thinking domains. Link MP.3 only
+// for these inspected B38 lesson positions, never solely from task.type.
+const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
+
+export function thinkingFeedback(task,model,record,context={}){
   const attempts=record?.attempts||[],lastAttempt=attempts.at(-1);
   if(!lastAttempt||JSON.stringify(lastAttempt.value)!==JSON.stringify(model))return null;
   // A checked representation can be described without claiming the child has
@@ -23,7 +27,9 @@ export function thinkingFeedback(task,model,record){
       method
     };
   }
-  const handler=task.type==='x-fracrename'?fractions:['x-r38-chain','x-r38-counterexample'].includes(task.type)?arguments38:null;
+  const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
+  const handler=task.type==='x-fracrename'?fractions:
+    (verifiedChain||task.type==='x-r38-counterexample')?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];
   if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))detail.push('你修改后又试了一次。');
