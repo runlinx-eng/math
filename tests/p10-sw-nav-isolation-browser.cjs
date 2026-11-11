@@ -65,6 +65,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    {name:'B-fresh-new-SW'},
    {name:'C-upgrade-old-tab-open',upgrade:true},
    {name:'C-upgrade-old-tab-closed',upgrade:true,closeOld:true},
+   {name:'C-upgrade-old-learning-online',upgrade:true,study:true},
    {name:'C-upgrade-offline-toggle',upgrade:true,offline:true},
    {name:'C-upgrade-offline-toggle-closed',upgrade:true,offline:true,closeOld:true},
    {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
@@ -82,8 +83,23 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
     if(cfg.upgrade){
      oldPage=await ctx.newPage();
      await oldPage.goto(base+'v2.html#trail',{waitUntil:'commit',timeout:14000});
-     await oldPage.waitForFunction(async name=>(await caches.keys()).includes(name),oldCache,{timeout:30000});
+     // Cache existence alone is not proof that the old worker can serve an offline navigation.
+     // Wait for the actual controller, activated worker and precached learn document.
+     await oldPage.waitForFunction(async name=>{
+      const reg=await navigator.serviceWorker.getRegistration();
+      if(reg?.active?.state!=='activated'||!navigator.serviceWorker.controller)return false;
+      if(!(await caches.keys()).includes(name))return false;
+      const cache=await caches.open(name);
+      return !!(await cache.match(new URL('./learn.html',location.href)));
+     },oldCache,{timeout:45000});
      rec.oldState=await timed(workerStatus(oldPage),4500,'old state');
+     if(cfg.study){
+      const online=await oldPage.goto(base+'learn.html#share',{waitUntil:'commit',timeout:12000});
+      await oldPage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='share',null,{timeout:12000});
+      await oldPage.locator('#actions [data-do="check"]').click();
+      rec.onlineNavigation={status:online?.status(),fromSW:online?.fromServiceWorker()};
+      rec.onlineStored=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2')?.length||0);
+     }
      if(cfg.offline){
       await ctx.setOffline(true);
       const offlineResponse=await oldPage.goto(base+'learn.html#share',{waitUntil:'commit',timeout:12000});
@@ -92,6 +108,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
       await oldPage.locator('#actions [data-do="check"]').click();
       rec.offlineStored=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2')?.length||0);
       await ctx.setOffline(false);
+      rec.afterOfflineRecovery=await timed(workerStatus(oldPage),4500,'recovered old worker');
      }
      release='new';
     }
