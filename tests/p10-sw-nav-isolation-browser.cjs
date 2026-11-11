@@ -65,6 +65,8 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    {name:'B-fresh-new-SW'},
    {name:'C-upgrade-old-tab-open',upgrade:true},
    {name:'C-upgrade-old-tab-closed',upgrade:true,closeOld:true},
+   {name:'C-upgrade-offline-toggle',upgrade:true,offline:true},
+   {name:'C-upgrade-offline-toggle-closed',upgrade:true,offline:true,closeOld:true},
    {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
    {name:'E-upgrade-cleanup-after-old-close',upgrade:true,closeOld:true,cleanup:true},
    {name:'G-upgrade-content-length',upgrade:true,length:true}
@@ -82,6 +84,15 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
      await oldPage.goto(base+'v2.html#trail',{waitUntil:'commit',timeout:14000});
      await oldPage.waitForFunction(async name=>(await caches.keys()).includes(name),oldCache,{timeout:30000});
      rec.oldState=await timed(workerStatus(oldPage),4500,'old state');
+     if(cfg.offline){
+      await ctx.setOffline(true);
+      const offlineResponse=await oldPage.goto(base+'learn.html#share',{waitUntil:'commit',timeout:12000});
+      rec.offlineNavigation={status:offlineResponse?.status(),fromSW:offlineResponse?.fromServiceWorker()};
+      await oldPage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='share',null,{timeout:12000});
+      await oldPage.locator('#actions [data-do="check"]').click();
+      rec.offlineStored=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2')?.length||0);
+      await ctx.setOffline(false);
+     }
      release='new';
     }
     tab=await ctx.newPage();
