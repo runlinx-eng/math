@@ -23,13 +23,14 @@ self.addEventListener('message',event=>{
  event.waitUntil((async()=>{
   const result={type:'math-explorer:cache-status',cache:CACHE,complete:false,cached:0,total:FILES.length};
   try{
-   await cleanRetiredCaches();
    const cache=await caches.open(CACHE);
    const resources=await Promise.all(FILES.map(file=>cache.match(new URL(file,self.registration.scope))));
    result.cached=resources.filter(Boolean).length;
    result.complete=result.cached===result.total;
   }catch{}
   event.ports[0].postMessage(result);
+  // Report readiness promptly; retired-worker cleanup must not block the UI.
+  await cleanRetiredCaches().catch(()=>{});
  })());
 });
 
