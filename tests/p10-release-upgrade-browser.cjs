@@ -155,11 +155,12 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   const legacy=await browser.newContext({serviceWorkers:'allow'});
   const legacyPage=await legacy.newPage();await legacyPage.goto(base+'v2.html#trail');await legacyPage.locator('#import-file').waitFor();
   await importFile(legacyPage,v1,'automatically-constructed-v1.json');
-  await legacyPage.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')||'{}').legacy!==undefined);
+  await legacyPage.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')||'{}').legacy!=null);
   check(JSON.parse(await read(legacyPage)).legacy!==null,'synthetic V1 backup imported via real Chromium file input',{sample:'constructed compatibility data, not child backup'});
   const unchanged=await read(legacyPage);
   for(const bad of ['{','{"app":"math-explorer","version":99,"state":{}}','{"app":"math-explorer","version":2,"state":{"schema":2}}']){
    await importFile(legacyPage,bad,'invalid-backup.json');
+   await legacyPage.waitForFunction(()=>document.querySelector('#import-file')?.value==='');
    check(await read(legacyPage)===unchanged,'invalid or unsupported backup rejected without mutation',{sample:bad.slice(0,40)});
   }
   // Storage quota failure: use the browser's actual localStorage quota, not a mocked setter.
