@@ -1,5 +1,13 @@
 # P10 第一轮｜完整学习闭环、保存冲突和离线分层验收
 
+## P10 第三轮第十阶段：真实 A/B 结论（2026-11-12）
+- PR #69 的 `64e411049ad6caaea8c585fdda862d86de28a45c` 对应 Required [43058826516](https://github.com/runlinx-eng/math/actions/runs/43058826516) **failure**，P8 [43058826548](https://github.com/runlinx-eng/math/actions/runs/43058826548) **success**。Chromium Artifact [13872343462](https://github.com/runlinx-eng/math/actions/runs/43058826516/artifacts/13872343462) 已实读；Overview 同 SHA 未触发，不能算通过。
+- 原始旧 SW 控制页面、`activated`、旧 Cache Storage 命中 `learn.html` 后，C 原始对照及 H1/H2/H3（临时旧 worktree 移除 fetch 运行时 `cache.put` 和关联 `waitUntil`）**均在 9 秒内导航未提交**；三次 H 的新 Worker 均为 `waiting: installed`，旧 Worker 仍 `active: activated`，新旧缓存均在。无 SW、新装新版 SW、临时绕过 SW 导航成功。故单纯关闭旧 Worker 运行时缓存写入**不能修复**；不能归因于单一 `cache.put` 或 `waitUntil`。
+- 完整跨版本旧版三题、离线答题、重开恢复、升级前后存储 JSON 逐字段/字节相等（各 1992 字节）等 11 项前置检查已通过；但之后 `learn.html#share` 仍 **45 秒 commit 超时**。HTTP 服务端收到了 `/learn.html`，在响应头发送前记 aborted/incomplete；CDP Document 未见响应提交。尚不能唯一归因于 SW、浏览器或测试服务器。当前 `newReady` 成功只能说明其实际检查的缓存状态符合要求，不能代替当前 controller/new worker 身份的独立断言。
+- 为进一步验证失败是否源自旧 Worker 对导航的 `fetch` 拦截，追加 J（仅放行 `/learn.html` 导航）与 K（仅对该导航返回旧预缓存）**诊断实验**，仍只修改临时旧 SW，C/H 对照不变。这些实验不属于未经修改历史 SW 的正式升级验收；必须等对应最新 HEAD 的真实 CI/Artifact 后再归因和选择最小修复。
+- 旧标签页跨版本防覆盖、新版成功接管、旧缓存清理、升级失败恢复、首次离线 B39、V1/V2/Quota、四类整课离线仍由失败门禁阻断，维持 **B/C**；不存在稳定的修复后三次通过，P10 **不得收尾**，PR #69 保持 Draft，不合并、不部署。
+
+
 基线：`main@9f8afd53c7e477c25e0f419e165bcf1f0e304c51`。PR #66 仍为独立 Draft，不视作本分支已有。对应 Issue #34，关联 #30 和 #22。
 
 ## 实际审计结论与修复
