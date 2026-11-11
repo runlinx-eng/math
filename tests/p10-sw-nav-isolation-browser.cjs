@@ -10,6 +10,31 @@ const cacheAt=p=>fs.readFileSync(p,'utf8').match(/const CACHE\s*=\s*'([^']+)'/)?
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav','.woff2':'font/woff2'};
 const delay=t=>new Promise(r=>setTimeout(r,t));
 const timed=(promise,t,label)=>Promise.race([promise,new Promise(r=>setTimeout(()=>r({probeTimeout:label}),t))]);
+// Explicit Node-side polling is required here. An async predicate passed to
+// waitForFunction did not gate the previous CI run: its oldState was entirely
+// empty and the first /sw.js request was served after release='new'.
+// Keep all readiness evidence in the actual page execution context.
+const waitForOldControl=async(p,name)=>{
+ const started=Date.now();let last;
+ while(Date.now()-started<75000){
+  last=await p.evaluate(async cacheName=>{
+   const reg=await navigator.serviceWorker.getRegistration();
+   const keys=await caches.keys();
+   let learnCached=false;
+   if(keys.includes(cacheName)){
+    const cache=await caches.open(cacheName);
+    learnCached=!!(await cache.match(new URL('./learn.html',location.href)));
+   }
+   return {url:location.href,controllerURL:navigator.serviceWorker.controller?.scriptURL||null,
+    activeURL:reg?.active?.scriptURL||null,activeState:reg?.active?.state||null,
+    waitingState:reg?.waiting?.state||null,installingState:reg?.installing?.state||null,
+    keys,learnCached};
+  },name);
+  if(last.controllerURL&&last.activeState==='activated'&&last.keys.includes(name)&&last.learnCached)return last;
+  await delay(150);
+ }
+ throw Error('old worker never controlled a page with cached learn.html: '+JSON.stringify(last));
+};
 const workerStatus=async(p)=>p.evaluate(async()=>{
  const reg=await navigator.serviceWorker.getRegistration();
  const ask=w=>!w?Promise.resolve(null):new Promise(resolve=>{
@@ -67,6 +92,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    {name:'C-upgrade-old-tab-closed',upgrade:true,closeOld:true},
    {name:'C-upgrade-old-learning-online',upgrade:true,study:true},
    {name:'C-upgrade-offline-toggle',upgrade:true,offline:true},
+   {name:'C-upgrade-offline-after-online',upgrade:true,study:true,offline:true},
    {name:'C-upgrade-offline-toggle-closed',upgrade:true,offline:true,closeOld:true},
    {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
    {name:'E-upgrade-cleanup-after-old-close',upgrade:true,closeOld:true,cleanup:true},
@@ -83,16 +109,14 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
     if(cfg.upgrade){
      oldPage=await ctx.newPage();
      await oldPage.goto(base+'v2.html#trail',{waitUntil:'commit',timeout:14000});
-     // Cache existence alone is not proof that the old worker can serve an offline navigation.
-     // Wait for the actual controller, activated worker and precached learn document.
-     await oldPage.waitForFunction(async name=>{
-      const reg=await navigator.serviceWorker.getRegistration();
-      if(reg?.active?.state!=='activated'||!navigator.serviceWorker.controller)return false;
-      if(!(await caches.keys()).includes(name))return false;
-      const cache=await caches.open(name);
-      return !!(await cache.match(new URL('./learn.html',location.href)));
-     },oldCache,{timeout:45000});
-     rec.oldState=await timed(workerStatus(oldPage),4500,'old state');
+     // Old worker must actually install while the server is still serving OLD.
+     // A Promise-returning waitForFunction predicate previously returned before
+     // registration, making the 'successful upgrade' comparisons invalid.
+     rec.oldState=await waitForOldControl(oldPage,oldCache);
+     const oldSwRequests=events.slice(eventStart).filter(e=>e.event==='http-request'&&e.version==='old'&&e.path==='/sw.js');
+     if(oldSwRequests.length===0)throw Error('old /sw.js was never served by the old release');
+     rec.oldSwRequestIds=oldSwRequests.map(e=>e.id);
+     trace('old-worker-controlled',{case:cfg.name,state:rec.oldState,oldSwRequestIds:rec.oldSwRequestIds});
      if(cfg.study){
       const online=await oldPage.goto(base+'learn.html#share',{waitUntil:'commit',timeout:12000});
       await oldPage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='share',null,{timeout:12000});
@@ -101,6 +125,12 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
       rec.onlineStored=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2')?.length||0);
      }
      if(cfg.offline){
+      rec.beforeOffline=await oldPage.evaluate(async()=>({
+       controllerURL:navigator.serviceWorker.controller?.scriptURL||null,
+       activeState:(await navigator.serviceWorker.getRegistration())?.active?.state||null,
+       cacheKeys:await caches.keys()
+      }));
+      if(!rec.beforeOffline.controllerURL)throw Error('old worker lost control before offline toggle');
       await ctx.setOffline(true);
       const offlineResponse=await oldPage.goto(base+'learn.html#share',{waitUntil:'commit',timeout:12000});
       rec.offlineNavigation={status:offlineResponse?.status(),fromSW:offlineResponse?.fromServiceWorker()};
