@@ -289,7 +289,7 @@ $('#work').addEventListener('pointerdown',e=>{const cut=e.target.closest('[data-
 $('#work').addEventListener('pointermove',e=>{if(!drag)return;if(drag.kind==='cut')setCut(drag.i,(e.clientX-drag.rect.left)/drag.rect.width*100);else{const i=drag.i,n=Math.max(0,Math.min(12,Math.round((drag.rect.bottom-e.clientY)/18)));edit(m=>m.counts[i]=n);}});
 $('#work').addEventListener('pointerup',()=>drag=null);$('#work').addEventListener('pointercancel',()=>drag=null);
 $('#work').addEventListener('keydown',e=>{const cut=e.target.closest('[data-cut]'),bar=e.target.closest('[data-bar]');if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key)||(!cut&&!bar))return;e.preventDefault();const delta=['ArrowRight','ArrowUp'].includes(e.key)?1:-1;if(cut){const i=+cut.dataset.cut;setCut(i,e.key==='Home'?1:e.key==='End'?99:model().cuts[i]+delta);}else{const i=+bar.dataset.bar;edit(m=>m.counts[i]=e.key==='Home'?0:e.key==='End'?12:Math.max(0,Math.min(12,m.counts[i]+delta)));}});
-function back(){if(parent!==window)notify('math-space:lesson-close');else location.href=$('#back').href;}
+function back(){if(parent!==window)notify('math-space:lesson-close',{sessionId:id});else location.href=$('#back').href;}
 $('#back').addEventListener('click',e=>{if(parent!==window){e.preventDefault();back();}});
 window.addEventListener('hashchange',()=>openLesson(location.hash.slice(1)));
 window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='math-space:request-question')leaveQuestion();});
