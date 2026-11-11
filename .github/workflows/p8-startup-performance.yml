@@ -1,0 +1,62 @@
+name: P8 startup performance comparison
+
+on:
+  pull_request:
+    paths:
+      - 'dist/**'
+      - 'tests/p8-startup-performance-browser.cjs'
+      - '.github/workflows/p8-startup-performance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  startup-comparison:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check out the unmodified main baseline
+        env:
+          BASE_SHA: a3b23506e4e6e3aac67c55a408a2dd2f9ec82cb3
+        run: |
+          git cat-file -e "$BASE_SHA^{commit}" || git fetch --no-tags origin "$BASE_SHA"
+          git worktree add --detach /tmp/math-startup-before "$BASE_SHA"
+          test "$(git -C /tmp/math-startup-before rev-parse HEAD)" = "$BASE_SHA"
+      - name: Run matched cold / refresh / deep-link benchmarks
+        env:
+          MATH_STARTUP_BASE_SHA: a3b23506e4e6e3aac67c55a408a2dd2f9ec82cb3
+          MATH_STARTUP_ROUNDS: '5'
+        run: |
+          python3 -m http.server 43828 --bind 127.0.0.1 --directory /tmp/math-startup-before/dist > /tmp/math-startup-before.log 2>&1 &
+          pid_before=$!
+          python3 -m http.server 43827 --bind 127.0.0.1 --directory dist > /tmp/math-startup-after.log 2>&1 &
+          pid_after=$!
+          trap 'kill "$pid_before" "$pid_after" 2>/dev/null || true' EXIT
+          for port in 43827 43828; do
+            ready=false
+            for i in $(seq 1 30); do
+              if curl -fsS "http://127.0.0.1:$port/" >/dev/null; then ready=true; break; fi
+              sleep 1
+            done
+            if [ "$ready" != true ]; then cat "/tmp/math-startup-$([ "$port" = 43827 ] && echo after || echo before).log"; exit 1; fi
+          done
+          node --check tests/p8-startup-performance-browser.cjs
+          node tests/p8-startup-performance-browser.cjs
+      - name: Upload raw timings and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-startup-performance-comparison
+          path: verification/p8-startup/
+          if-no-files-found: warn
