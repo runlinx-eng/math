@@ -164,10 +164,21 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await page.waitForFunction(()=>window.__p8VpsProbe?.lesson===true);
   await verify('vps-retired-lesson-close-does-not-explore','learn',liveSecond);
   check((await state()).journey,'stale lesson-close cannot hide current workpiece');
-  // Explicit back from the active task remains functional and changes mode.
-  await page.frameLocator('#journey-frame').locator('#back').click();
+  // The fixed learning UI owns a visible parent return button; the legacy
+  // child #back link is intentionally hidden in embedded mode.
+  await page.locator('#journey-surface [data-action="close-journey"]').click();
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null);
   await verify('vps-explicit-lesson-exit','explore',liveSecond);
+  // A close message from the *active* embedded lesson must still be accepted.
+  await nav('learn').click();
+  await waitNativeTask(liveSecond);
+  await verify('vps-reopened-active-lesson','learn',liveSecond);
+  const currentLessonFrame=await (await page.locator('#journey-frame').elementHandle()).contentFrame();
+  await currentLessonFrame.evaluate(id=>parent.postMessage({
+    type:'math-space:lesson-close',sessionId:id
+  },location.origin),liveSecondId);
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null);
+  await verify('vps-current-lesson-close-succeeds','explore',liveSecond);
   check(errors.length===0,'runtime errors '+errors.join('; '));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,macVerified:false},null,2));
   console.log('P8_REAL_NODE_CLICKS_COMPLETE '+checks.length);
