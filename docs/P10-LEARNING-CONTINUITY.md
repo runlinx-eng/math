@@ -87,3 +87,12 @@
 - 原完整场景仍在旧版完成三题、关闭重开、离线提交后升级时出现导航 commit 超时。仅从旧缓存残留、SW 激活或测试 HTTP 收到请求不能推断根因。
 - 已继续追加“旧版离线答题→恢复联网→升级”的隔离场景，提交 `f8bcdcd59252040d7eaf2e4bcec4d96311406821`；需要对应新 SHA 的 Chromium/JSON 结果验证。未定位根因前不实施应用级修复，不将诊断测试当作验收替代。
 - V1/V2 浏览器导入、Quota、升级失败重试、四类整课离线仍由原阻塞门禁限制，维持 B/C；真实历史儿童备份、Mac/Windows 安装与实机、儿童试用和独立教研未完成。保持 Draft，禁止合并和部署。
+
+
+## P10 R3 第八阶段：诊断前提修正与请求事件关联（2026-11-12）
+
+- 重新读取失败 Required `43052135066` 的 Artifact `13868889992`。旧版完整三题、离线提交、关页重开、新版缓存检查和升级前后字节一致共 11 项前置检查成功；`learn.html#share` 的 `page.goto(waitUntil:'commit')` 仍超时。此前成功不代表跨版本安全门槛通过。
+- 差分审计发现：隔离实验多组 `oldState` 为 `controller=null, active=null, keys=[]`；同一组 HTTP 事件表明部分旧版页面仍在加载模块时测试服务器已切到新版，旧 `sw.js` 请求由新版目录提供。故这些实验不能证明“真实旧 Worker 控制后升级成功”。这是一项**诊断方法缺陷**，尚不能确定卡死属于 SW、HTTP 测试服务器还是 Chromium。
+- 原完整失败的近端事件链：导航请求开始；服务器收到 `/learn.html`；服务端记录未完成响应；未记录页面响应或 commit。之前只保留末尾 1,000 事件，且缺 CDP requestId、loaderId 等，无法证明服务端中止原因。
+- 本阶段仅调整两项真实 Chromium 诊断：隔离实验通过 Node 侧轮询并保存旧版 `controller`、`active.state`、旧缓存 `learn.html` 命中及旧 `sw.js` HTTP 请求证据，新增在线先学习再离线切换的对照；原完整测试保留完整 HTTP 事件和 CDP `requestWillBeSent/responseReceived/loadingFinished/loadingFailed/frameNavigated`，记录可关联字段。保留全部旧版数学操作及 45 秒原导航断言。
+- 这些是**诊断改动而非应用修复**。最新 HEAD 的 CI/Artifact 未获得真实通过前不得标 A；升级导航、旧标签页保护、断网升级失败、Quota、V1/V2 兼容、四类整课离线仍处 B/C。缺真实历史儿童备份、Mac 人工、儿童独立学习和独立教研。禁止合并/部署或清理真实数据。
