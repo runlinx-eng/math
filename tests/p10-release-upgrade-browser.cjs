@@ -16,8 +16,8 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
  fs.mkdirSync(out,{recursive:true});
  const oldPath=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-old-'));
  let server,browser,diagnosticPage;
- const trace=[];
- const record=(event,details={})=>{trace.push({time:new Date().toISOString(),event,...details});if(trace.length>1000)trace.shift();};
+ const trace=[];let requestSeq=0;
+ const record=(event,details={})=>{trace.push({time:new Date().toISOString(),monotonicMs:Number(process.hrtime.bigint()/1000000n),event,...details});};
  try{
   execFileSync('git',['worktree','add','--detach',oldPath,OLD],{cwd:root,stdio:'pipe'});
   const oldCache=cacheFrom(path.join(oldPath,'dist/sw.js'));
@@ -25,16 +25,19 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   check(!!oldCache&&!!newCache&&oldCache!==newCache,'distinct genuine release Service Worker manifests',{oldCommit:OLD,oldCache,newCache});
   let release='old',deny='';
   server=http.createServer((req,res)=>{
+   const requestId=++requestSeq;
    const pathname=new URL(req.url,base).pathname;
    const rel=decodeURIComponent(pathname).replace(/^\/+/,'')||'index.html';
    if(rel.startsWith('..')||rel.includes('/../')){res.writeHead(400);return res.end('invalid path');}
    if(rel===deny){res.writeHead(503,{'Content-Type':'text/plain','Cache-Control':'no-store'});return res.end('P10 controlled missing resource');}
-   record('server-request',{path:pathname,release,denied:rel===deny});
-   res.once('finish',()=>record('server-response',{path:pathname,release,status:res.statusCode}));
-   res.once('close',()=>{if(!res.writableFinished)record('server-aborted',{path:pathname,release,status:res.statusCode});});
+   record('server-request',{requestId,path:pathname,release,denied:rel===deny,method:req.method});
+   req.once('aborted',()=>record('server-request-aborted',{requestId,path:pathname,release}));
+   res.once('finish',()=>record('server-response-finished',{requestId,path:pathname,release,status:res.statusCode,headersSent:res.headersSent}));
+   res.once('close',()=>{if(!res.writableFinished)record('server-response-incomplete',{requestId,path:pathname,release,status:res.statusCode,headersSent:res.headersSent});});
    const src=path.join(release==='old'?oldPath:root,'dist',rel);
    fs.readFile(src,(err,data)=>{
     if(err){res.writeHead(404);return res.end('not found');}
+    record('server-response-start',{requestId,path:pathname,release,bytes:data.length});
     res.writeHead(200,{'Content-Type':mime[path.extname(src)]||'application/octet-stream','Cache-Control':'no-store','Service-Worker-Allowed':'/'});
     res.end(data);
    });
@@ -104,6 +107,16 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   release='new';
   const newTab=await ctx.newPage();newTab.on('pageerror',e=>errors.push(String(e)));
   diagnosticPage=newTab;
+  // CDP events retain requestId/loaderId/frameId, which Playwright request
+  // events and server timestamps cannot reliably correlate on their own.
+  const cdp=await ctx.newCDPSession(newTab);
+  await cdp.send('Network.enable');
+  cdp.on('Network.requestWillBeSent',e=>record('cdp-request',{requestId:e.requestId,loaderId:e.loaderId,frameId:e.frameId,url:e.request?.url,type:e.type,initiator:e.initiator?.type}));
+  cdp.on('Network.responseReceived',e=>record('cdp-response',{requestId:e.requestId,loaderId:e.loaderId,frameId:e.frameId,url:e.response?.url,status:e.response?.status,fromServiceWorker:e.response?.fromServiceWorker}));
+  cdp.on('Network.loadingFinished',e=>record('cdp-finished',{requestId:e.requestId,encodedDataLength:e.encodedDataLength}));
+  cdp.on('Network.loadingFailed',e=>record('cdp-failed',{requestId:e.requestId,errorText:e.errorText,canceled:e.canceled,blockedReason:e.blockedReason}));
+  cdp.on('Page.frameNavigated',e=>record('cdp-navigation-committed',{frameId:e.frame?.id,url:e.frame?.url,loaderId:e.frame?.loaderId}));
+  await cdp.send('Page.enable');
   newTab.on('request',req=>record('new-tab-request',{url:req.url(),kind:req.resourceType()}));
   newTab.on('response',res=>record('new-tab-response',{url:res.url(),status:res.status()}));
   newTab.on('requestfailed',req=>record('new-tab-request-failed',{url:req.url(),reason:req.failure()}));
@@ -118,8 +131,14 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   check(newKeysBefore.includes(newCache),'new release installs complete real Cache Storage',{cacheKeys:newKeysBefore});
   // Retain the old JS tab THROUGH the new release and prove the persisted model
   // cannot be silently overwritten by stale code.
-  record('before-new-lesson',{worker:await newTab.evaluate(async()=>{const reg=await navigator.serviceWorker.getRegistration();return {controller:navigator.serviceWorker.controller?.scriptURL,active:reg?.active?.scriptURL,activeState:reg?.active?.state,waiting:reg?.waiting?.scriptURL,keys:await caches.keys()};})});
+  record('before-new-lesson',{worker:await newTab.evaluate(async()=>{const reg=await navigator.serviceWorker.getRegistration();return {
+   controller:navigator.serviceWorker.controller?.scriptURL,active:reg?.active?.scriptURL,
+   activeState:reg?.active?.state,waiting:reg?.waiting?.scriptURL,waitingState:reg?.waiting?.state,
+   installingState:reg?.installing?.state,keys:await caches.keys()
+  };})});
+  record('navigation-begin',{target:base+'learn.html#share'});
   await lesson(newTab,'share');
+  record('navigation-success',{target:base+'learn.html#share'});
   await newTab.locator('#actions [data-do="check"]').click();
   const savedNew=await read(newTab);
   await oldTab.locator('#actions [data-do="check"]').click();
