@@ -5,17 +5,35 @@ const http=require('node:http'),assert=require('node:assert/strict');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const OLD='96844424ceb534e7ca5f864a006b72a52efd0d60';
-const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p10-release-upgrade');
-const port=43829,base='http://127.0.0.1:'+port+'/';
+const root=path.resolve(__dirname,'..'),out=process.env.P10_UPGRADE_OUTPUT||path.join(root,'verification/p10-release-upgrade');
+const port=Number(process.env.P10_UPGRADE_PORT||43829),base='http://127.0.0.1:'+port+'/';
 const checks=[],scenarios=[],errors=[];
 const check=(condition,label,detail={})=>{assert.ok(condition,label);checks.push(label);scenarios.push({label,result:'A',...detail});};
 const read=page=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
 const cacheFrom=file=>fs.readFileSync(file,'utf8').match(/const CACHE\s*=\s*'([^']+)'/)?.[1];
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav','.woff2':'font/woff2'};
+// Playwright 1.56.1 tests the predicate's immediate truthiness: an async
+// predicate is a truthy Promise even when it later resolves false. Await the
+// page result in Node and explicitly require true before leaving this gate.
+const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
+ const end=Date.now()+timeout;let last;
+ while(Date.now()<end){
+  let timer;
+  try{last=await Promise.race([page.evaluate(predicate,arg),new Promise((_,reject)=>{
+   timer=setTimeout(()=>reject(Error(label+' page probe did not settle')),Math.min(6000,end-Date.now()));
+  })]);}finally{clearTimeout(timer);}
+  onSample(last);
+  if(last===true||last?.ready===true)return last;
+  await new Promise(resolve=>setTimeout(resolve,100));
+ }
+ throw Error(label+' did not become ready: '+JSON.stringify(last));
+};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const oldPath=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-old-'));
  let server,browser,diagnosticPage;
+ const diagnosticWorkers=[];
+ const current=process.env.P10_TEST_SHA||process.env.GITHUB_SHA||execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
  const trace=[];let requestSeq=0;
  const record=(event,details={})=>{trace.push({time:new Date().toISOString(),monotonicMs:Number(process.hrtime.bigint()/1000000n),event,...details});};
  try{
@@ -29,11 +47,12 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
    const pathname=new URL(req.url,base).pathname;
    const rel=decodeURIComponent(pathname).replace(/^\/+/,'')||'index.html';
    if(rel.startsWith('..')||rel.includes('/../')){res.writeHead(400);return res.end('invalid path');}
+   const version=release;
+   record('server-request',{requestId,path:pathname,release:version,denied:rel===deny,method:req.method});
+   req.once('aborted',()=>record('server-request-aborted',{requestId,path:pathname,release:version}));
+   res.once('finish',()=>record('server-response-finished',{requestId,path:pathname,release:version,status:res.statusCode,headersSent:res.headersSent}));
+   res.once('close',()=>{if(!res.writableFinished)record('server-response-incomplete',{requestId,path:pathname,release:version,status:res.statusCode,headersSent:res.headersSent});});
    if(rel===deny){res.writeHead(503,{'Content-Type':'text/plain','Cache-Control':'no-store'});return res.end('P10 controlled missing resource');}
-   record('server-request',{requestId,path:pathname,release,denied:rel===deny,method:req.method});
-   req.once('aborted',()=>record('server-request-aborted',{requestId,path:pathname,release}));
-   res.once('finish',()=>record('server-response-finished',{requestId,path:pathname,release,status:res.statusCode,headersSent:res.headersSent}));
-   res.once('close',()=>{if(!res.writableFinished)record('server-response-incomplete',{requestId,path:pathname,release,status:res.statusCode,headersSent:res.headersSent});});
    const src=path.join(release==='old'?oldPath:root,'dist',rel);
    fs.readFile(src,(err,data)=>{
     if(err){res.writeHead(404);return res.end('not found');}
@@ -45,35 +64,74 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   await new Promise(resolve=>server.listen(port,'127.0.0.1',resolve));
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   const ctx=await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true,serviceWorkers:'allow',reducedMotion:'reduce'});
-  ctx.on('serviceworker',worker=>record('worker-created',{url:worker.url()}));
+  const observeContext=(context,label)=>context.on('serviceworker',worker=>{
+   record('worker-created',{profile:label,url:worker.url()});
+   if(process.env.P10_SW_DIAGNOSTIC!=='1')return;
+   diagnosticWorkers.push({worker,profile:label});
+   // Opt-in diagnostic instrumentation touches only the new worker's runtime;
+   // no historical file or historical worker is changed for acceptance runs.
+   worker.evaluate(expected=>{
+    if(typeof CACHE==='undefined'||CACHE!==expected)return;
+    globalThis.__p10SWEvents=[];
+    const log=(step,details={})=>__p10SWEvents.push({time:Date.now(),step,...details});
+    for(const method of ['open','keys','delete']){
+     const original=caches[method].bind(caches);
+     caches[method]=(...args)=>{
+      log('caches.'+method+':enter',{args});
+      return original(...args).then(value=>{log('caches.'+method+':complete',{args,result:method==='open'?'Cache':value});return value;},error=>{log('caches.'+method+':error',{error:String(error)});throw error;});
+     };
+    }
+    const post=MessagePort.prototype.postMessage;
+    MessagePort.prototype.postMessage=function(...args){log('port:postMessage',{data:args[0]});return post.apply(this,args);};
+    self.addEventListener('message',event=>log('message:received',{data:event.data,ports:event.ports.length,client:event.source?.id}));
+    self.addEventListener('activate',()=>log('activate'));
+   },newCache).catch(error=>record('worker-probe-error',{profile:label,error:String(error)}));
+  });
+  observeContext(ctx,'upgrade');
   let page=await ctx.newPage();
   page.on('pageerror',e=>errors.push(String(e)));
   const lesson=async(p,id)=>{
    await p.goto(base+'learn.html#'+id,{waitUntil:'commit',timeout:45000});
    await p.waitForFunction(s=>window.mathLesson?.snapshot()?.id===s,id,{timeout:30000});
   };
-  const oldActive=async(p)=>p.waitForFunction(async name=>{
-   const reg=await navigator.serviceWorker.ready;
+  const oldActive=async(p)=>poll(p,async name=>{
+   const reg=await navigator.serviceWorker.getRegistration();
    const keys=await caches.keys();
-   return reg.active&&keys.includes(name);
-  },oldCache,{timeout:90000});
+   const cached=keys.includes(name)&&!!await (await caches.open(name)).match(new URL('./learn.html',location.href));
+   return {ready:reg?.active?.state==='activated'&&navigator.serviceWorker.controller===reg.active&&cached,
+    activeState:reg?.active?.state,controllerState:navigator.serviceWorker.controller?.state,keys,cached};
+  },oldCache,'historical worker active and controlling');
   // Do not mistake a complete waiting worker cache for an activated release.
   // scriptURL is identical across generations; the new message protocol and
   // cache identity establish the generation only on active AND controller.
-  const newReady=async(p)=>p.waitForFunction(async name=>{
+  const newReady=async(p)=>{
+   let previous='';
+   const status=await poll(p,async name=>{
    const reg=await navigator.serviceWorker.getRegistration();
-   if(!reg?.active||reg.active.state!=='activated'||!navigator.serviceWorker.controller)return false;
-   if(reg.waiting||reg.installing)return false;
-   if(!(await caches.keys()).includes(name))return false;
+   const state={ready:false,activeState:reg?.active?.state||null,controllerState:navigator.serviceWorker.controller?.state||null,
+    waitingState:reg?.waiting?.state||null,installingState:reg?.installing?.state||null};
+   if(!reg?.active||reg.active.state!=='activated'||!navigator.serviceWorker.controller)return state;
+   if(reg.waiting||reg.installing)return state;
+   state.keys=await caches.keys();
+   if(!state.keys.includes(name))return state;
    const ask=worker=>new Promise(resolve=>{
-    const c=new MessageChannel(),timer=setTimeout(()=>resolve(null),1200);
-    c.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
-    try{worker.postMessage({type:'math-explorer:cache-status'},[c.port2]);}catch{clearTimeout(timer);resolve(null);}
+    const c=new MessageChannel();
+    const done=value=>{clearTimeout(timer);c.port1.close();resolve(value);};
+    const timer=setTimeout(()=>done(null),1200);
+    c.port1.onmessage=e=>done(e.data);
+    try{worker.postMessage({type:'math-explorer:cache-status'},[c.port2]);}catch{done(null);}
    });
-   const [active,controller]=await Promise.all([ask(reg.active),ask(navigator.serviceWorker.controller)]);
-   return active?.cache===name&&active.complete===true&&
-     controller?.cache===name&&controller.complete===true;
-  },newCache,{timeout:90000});
+   const activeWorker=reg.active,controllerWorker=navigator.serviceWorker.controller;
+   const [active,controller]=await Promise.all([ask(activeWorker),ask(controllerWorker)]);
+   return {...state,ready:active?.cache===name&&active.complete===true&&controller?.cache===name&&controller.complete===true&&
+    activeWorker===reg.active&&controllerWorker===navigator.serviceWorker.controller&&activeWorker===controllerWorker&&
+    reg.active.state==='activated'&&!reg.waiting&&!reg.installing,active,controller,activeState:reg.active?.state};
+   },newCache,'new worker active, controlling and complete',90000,sample=>{
+    const serialized=JSON.stringify(sample);
+    if(serialized!==previous){record('new-worker-readiness',{url:p.url(),status:sample});previous=serialized;}
+   });
+   record('new-worker-ready',{url:p.url(),status});return status;
+  };
   await page.goto(base+'v2.html#trail');
   await oldActive(page);
   check((await page.evaluate(()=>caches.keys())).includes(oldCache),'old release installed real Cache Storage');
@@ -132,6 +190,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   const afterUpgrade=await read(newTab);
   fs.writeFileSync(path.join(out,'after-upgrade.json'),afterUpgrade);
   assert.deepEqual(JSON.parse(afterUpgrade),JSON.parse(beforeUpgrade),'upgrade must not rewrite saved learner records');
+  assert.equal(afterUpgrade,beforeUpgrade,'upgrade must preserve the exact stored JSON bytes');
   check(true,'real old-to-new SW update leaves full records byte-equivalent');
   const newKeysBefore=await newTab.evaluate(()=>caches.keys());
   check(newKeysBefore.includes(newCache),'new release installs complete real Cache Storage',{cacheKeys:newKeysBefore});
@@ -154,17 +213,20 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   await oldTab.close();
   // An old worker's in-flight fetch may repopulate its cache during activation.
   // After its tab has closed, request current-worker cleanup and require eviction.
+  await newReady(newTab);
+  record('cleanup-send',{profile:'upgrade',url:newTab.url()});
   const finalReport=await newTab.evaluate(async()=>{
    const reg=await navigator.serviceWorker.ready,worker=navigator.serviceWorker.controller||reg.active;
    return await new Promise((resolve,reject)=>{
     const ch=new MessageChannel(),timer=setTimeout(()=>reject(Error('final cache cleanup response timed out')),12000);
-    ch.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
+    ch.port1.onmessage=e=>{clearTimeout(timer);ch.port1.close();resolve(e.data);};
     worker.postMessage({type:'math-explorer:cleanup-retired-caches'},[ch.port2]);
    });
   });
+  record('cleanup-reply',{profile:'upgrade',report:finalReport});
   let newKeys=await newTab.evaluate(()=>caches.keys());
   if(newKeys.includes(oldCache)){
-   try{await newTab.waitForFunction(async old=>!(await caches.keys()).includes(old),oldCache,{timeout:12000});}catch{}
+   await poll(newTab,async old=>!(await caches.keys()).includes(old),oldCache,'retired cache removal',12000);
    newKeys=await newTab.evaluate(()=>caches.keys());
   }
   console.log('P10_CACHE_FINAL '+JSON.stringify({finalReport,newKeys}));
@@ -233,18 +295,50 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   // A failed new release install must retain old active SW and learner data.
   release='old';
   const failCtx=await browser.newContext({serviceWorkers:'allow'});
+  observeContext(failCtx,'failed-install-retry');
   const failPage=await failCtx.newPage();
+  diagnosticPage=failPage;
   await failPage.goto(base+'v2.html#trail');await oldActive(failPage);
   await lesson(failPage,'equivalent');
   await failPage.locator('#actions [data-do="check"]').click();
   const failBefore=await read(failPage);
   release='new';deny='learning/phase5/b39-model.js';
-  await failPage.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
-  // Wait for the attempted install, then inspect old registration and old cache.
-  await failPage.waitForFunction(async name=>(await caches.keys()).some(k=>k===name),oldCache);
+  const deniedStart=trace.length;
+  await failPage.evaluate(async()=>{
+   const r=await navigator.serviceWorker.ready;
+   window.__p10FailedInstall={states:[],originalActive:r.active};
+   const observe=worker=>{
+    if(!worker)return;
+    const state=()=>window.__p10FailedInstall.states.push({time:Date.now(),state:worker.state});
+    state();worker.addEventListener('statechange',state);
+   };
+   r.addEventListener('updatefound',()=>observe(r.installing));
+   await r.update();observe(r.installing);
+  });
+  // Require a real install rejection while the failed resource is still denied.
+  // Merely seeing the old cache is true before the attempted update even starts.
+  await failPage.waitForFunction(()=>window.__p10FailedInstall?.states.some(s=>s.state==='redundant'),null,{timeout:30000});
+  const failedInstall=await failPage.evaluate(async()=>{
+   const r=await navigator.serviceWorker.getRegistration();
+   return {states:window.__p10FailedInstall.states,originalStillActive:r.active===window.__p10FailedInstall.originalActive,
+    originalStillControls:navigator.serviceWorker.controller===window.__p10FailedInstall.originalActive,
+    activeState:r.active?.state,waitingState:r.waiting?.state,installingState:r.installing?.state};
+  });
+  record('new-install-failed',{profile:'failed-install-retry',...failedInstall});
+  check(trace.slice(deniedStart).some(e=>e.event==='server-request'&&e.denied&&e.path==='/learning/phase5/b39-model.js'),
+   'failed install actually requested the denied critical resource');
+  check(failedInstall.originalStillActive&&failedInstall.originalStillControls&&failedInstall.activeState==='activated',
+   'new install becomes redundant while historical worker remains active and controlling',{failedInstall});
   const failureKeys=await failPage.evaluate(()=>caches.keys());
   check(failureKeys.includes(oldCache),'failed new SW install retains old complete cache',{cacheKeys:failureKeys});
   check(await read(failPage)===failBefore,'failed upgrade does not mutate original learning history');
+  await failCtx.setOffline(true);
+  await lesson(failPage,'equivalent');
+  check(await read(failPage)===failBefore,'failed install still opens original lesson offline without rewriting records');
+  await failPage.locator('#actions [data-do="check"]').click();
+  const failAfterOffline=await read(failPage);
+  check(JSON.parse(failAfterOffline).lessons.equivalent.cases[0].attempts.length===2,'historical release still grades and saves after failed install offline');
+  await failCtx.setOffline(false);
   deny='';
   await failPage.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
   await newReady(failPage);
@@ -254,26 +348,30 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   // a fresh page. Do not make early deletion part of upgrade readiness.
   await failPage.close();
   const recoveredPage=await failCtx.newPage();
+  diagnosticPage=recoveredPage;
   await recoveredPage.goto(base+'v2.html#trail',{waitUntil:'commit'});
   await newReady(recoveredPage);
+  check(await read(recoveredPage)===failAfterOffline,'retry preserves every byte of original and fallback learning records');
+  record('cleanup-send',{profile:'failed-install-retry',url:recoveredPage.url()});
   const retryCleanup=await recoveredPage.evaluate(async()=>{
    const worker=navigator.serviceWorker.controller;
    return await new Promise((resolve,reject)=>{
     const channel=new MessageChannel(),timer=setTimeout(()=>reject(Error('retry cleanup timed out')),12000);
-    channel.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
+    channel.port1.onmessage=e=>{clearTimeout(timer);channel.port1.close();resolve(e.data);};
     worker.postMessage({type:'math-explorer:cleanup-retired-caches'},[channel.port2]);
    });
   });
+  record('cleanup-reply',{profile:'failed-install-retry',report:retryCleanup});
   const retryKeys=await recoveredPage.evaluate(()=>caches.keys());
   check(retryCleanup?.cache===newCache&&retryCleanup.complete===true&&
    retryKeys.includes(newCache)&&!retryKeys.includes(oldCache),
    'retry retires old cache safely after closing old client',{retryKeys});
   await failCtx.setOffline(true);
   await lesson(recoveredPage,'equivalent');
-  check(JSON.parse(await read(recoveredPage)).lessons.equivalent.cases[0].attempts.length===1,'recovered new release launches and retains history offline');
+  check(JSON.parse(await read(recoveredPage)).lessons.equivalent.cases[0].attempts.length===2,'recovered new release launches and retains history offline');
   await failCtx.close();
   check(errors.length===0,'no uncaught browser page errors',{errors});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,scenarios,errors,oldCommit:OLD,newCommit:process.env.GITHUB_SHA||'PR checkout',oldCache,newCache,realHistoricalChildBackup:false,macManual:false,childTrial:false,independentTeaching:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,scenarios,errors,oldCommit:OLD,newCommit:current,oldCache,newCache,browserVersion:browser.version(),workerDiagnostic:process.env.P10_SW_DIAGNOSTIC==='1',realHistoricalChildBackup:false,macManual:false,childTrial:false,independentTeaching:false},null,2));
   console.log('P10_RELEASE_UPGRADE_OK '+checks.length+' real browser checks');
  }catch(e){
   let browserState=null;
@@ -285,6 +383,15 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   console.error('P10_RELEASE_UPGRADE_FAILED '+(e.stack||e));
   process.exitCode=1;
  }finally{
+  const workerEvents=[];
+  for(const {worker,profile} of diagnosticWorkers){
+   let timer;
+   try{
+    const events=await Promise.race([worker.evaluate(()=>globalThis.__p10SWEvents||[]),new Promise(resolve=>{timer=setTimeout(()=>resolve({error:'worker trace unavailable'}),1500);})]);
+    workerEvents.push({profile,url:worker.url(),events});
+   }catch(error){workerEvents.push({profile,error:String(error)});}finally{clearTimeout(timer);}
+  }
+  fs.writeFileSync(path.join(out,'http-events.json'),JSON.stringify({oldCommit:OLD,newCommit:current,trace,workerEvents},null,2));
   if(browser)await browser.close().catch(()=>{});
   if(server)await new Promise(resolve=>server.close(resolve));
   try{execFileSync('git',['worktree','remove','--force',oldPath],{cwd:root,stdio:'pipe'});}catch{}

@@ -4,7 +4,7 @@ const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const OLD='96844424ceb534e7ca5f864a006b72a52efd0d60';
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p10-release-upgrade');
-const port=43831,base='http://127.0.0.1:'+port+'/';
+const port=Number(process.env.P10_ISOLATION_PORT||43831),base='http://127.0.0.1:'+port+'/';
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
 const cacheAt=p=>fs.readFileSync(p,'utf8').match(/const CACHE\s*=\s*'([^']+)'/)?.[1];
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav','.woff2':'font/woff2'};
@@ -51,6 +51,7 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
  const oldDir=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-isolate-'));
  const events=[],reports=[],errors=[];
  let release='new',explicitLength=false,seq=0,server,browser;
+ let currentCase='';
  const trace=(event,data={})=>events.push({time:new Date().toISOString(),event,...data});
  try{
   execFileSync('git',['worktree','add','--detach',oldDir,OLD],{cwd:root,stdio:'pipe'});
@@ -74,6 +75,13 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
   });
   await new Promise(r=>server.listen(port,'127.0.0.1',r));
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+  // Verify the pinned runner's async-predicate semantics without a service worker.
+  // A false Promise must never be used as proof of real readiness.
+  const controlContext=await browser.newContext(),controlPage=await controlContext.newPage();
+  const controlStart=Date.now();
+  const asyncFalse=await controlPage.waitForFunction(async()=>false,null,{timeout:1000});
+  reports.push({name:'async-predicate-control',value:await asyncFalse.jsonValue(),elapsedMs:Date.now()-controlStart});
+  await controlContext.close();
   // A direct response and server version mapping baseline, not a browser assertion.
   const httpCheck={name:'G-direct-HTTP-old-vs-new',versions:[]};
   for(const version of ['old','new']){
@@ -105,7 +113,32 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
   const diagnosticResponse="new Response("+JSON.stringify(diagnosticHtml)+",{status:200,headers:{'Content-Type':'text/html; charset=utf-8'}})";
   const syncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith("+diagnosticResponse+");return;}");
   const asyncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(Promise.resolve("+diagnosticResponse+"));return;}");
-  const cases=[
+  // N only: locate open/match/body/response settlement. No H/J/K/L/M reruns.
+  const nTrace = `
+self.__p10Trace=[];
+const p10Trace=(op,detail={})=>{const entry={time:Date.now(),op,...detail};self.__p10Trace.push(entry);console.log('P10_SW_N '+JSON.stringify(entry));};
+self.addEventListener('install',()=>p10Trace('install:event'));
+self.addEventListener('activate',()=>p10Trace('activate:event'));
+self.addEventListener('message',e=>p10Trace('message:event',{type:e.data?.type,ports:e.ports.length}));
+`;
+  const nVariant=copy=>nTrace+historicalSw.replace(oldFetchGuard,oldFetchGuard+`
+ if(url.pathname==='/learn.html'){
+  p10Trace('fetch:event',{url:event.request.url,copy:${copy}});
+  const responsePromise=(async()=>{
+   p10Trace('cache.open:start');const cache=await caches.open(CACHE);p10Trace('cache.open:done');
+   p10Trace('cache.match:start');const response=await cache.match(event.request,{ignoreSearch:true});
+   p10Trace('cache.match:done',{found:!!response,status:response?.status,headers:response?[...response.headers]:null,bodyUsed:response?.bodyUsed});
+   if(!response)throw Error('old learn.html cache missing');
+   p10Trace('body.arrayBuffer:start');const bytes=await response.clone().arrayBuffer();
+   p10Trace('body.arrayBuffer:done',{bytes:bytes.byteLength,bodyUsed:response.bodyUsed});
+   const result=${copy}?new Response(bytes,{status:response.status,statusText:response.statusText,headers:response.headers}):response;
+   p10Trace('response.promise:return',{copy:${copy}});return result;
+  })();
+  responsePromise.then(()=>p10Trace('response.promise:fulfilled'),error=>p10Trace('response.promise:rejected',{error:String(error)}));
+  event.respondWith(responsePromise);p10Trace('respondWith:registered');return;
+ }
+`);
+  const originalCases=[
    {name:'A-new-without-SW',blocked:true},
    {name:'B-fresh-new-SW'},
    {name:'C-upgrade-untouched-old',upgrade:true},
@@ -115,21 +148,37 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    {name:'L-old-learn-sync-memory-response',upgrade:true,diagnosticMode:'syncMemory'},
    {name:'M-old-learn-async-memory-response',upgrade:true,diagnosticMode:'asyncMemory'}
   ];
+  const cases=[
+   {name:'C-original-transition-timing',upgrade:true},
+   {name:'N1-old-cache-original-response',upgrade:true,diagnosticMode:'cacheOriginal'},
+   {name:'N2-old-cache-copied-response',upgrade:true,diagnosticMode:'cacheCopy'},
+   {name:'C-verified-new-controller',upgrade:true,strictReady:true}
+  ];
   for(const cfg of cases){
+   currentCase=cfg.name;
    const rec={name:cfg.name,conditions:cfg,oldCommit:OLD,newCommit:current,oldCache,newCache};
    const eventStart=events.length;
    const oldSwVariant=cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:
     cfg.diagnosticMode==='passThrough'?passThroughLearnSw:
     cfg.diagnosticMode==='cacheOnly'?cacheOnlyLearnSw:
     cfg.diagnosticMode==='syncMemory'?syncLearnSw:
-    cfg.diagnosticMode==='asyncMemory'?asyncLearnSw:historicalSw;
+    cfg.diagnosticMode==='asyncMemory'?asyncLearnSw:
+    cfg.diagnosticMode==='cacheOriginal'?nVariant(false):
+    cfg.diagnosticMode==='cacheCopy'?nVariant(true):historicalSw;
    fs.writeFileSync(oldSwFile,oldSwVariant);
    rec.historicalSwModifiedForDiagnosis=oldSwVariant!==historicalSw;
    rec.oldSwVariant=cfg.diagnosticNoRuntimeWrite?'no-runtime-write':cfg.diagnosticMode||'untouched';
    rec.actualOldSwDigest=hash(oldSwVariant);
    release=cfg.upgrade?'old':'new';explicitLength=!!cfg.length;
    const ctx=await browser.newContext({serviceWorkers:cfg.blocked?'block':'allow',viewport:{width:1280,height:800},reducedMotion:'reduce'});
-   let oldPage,tab;
+   let oldPage,tab;const workers=[];
+   ctx.on('console',m=>{if(m.text().startsWith('P10_SW_N '))trace('worker-stage',{case:cfg.name,text:m.text()});});
+   ctx.on('serviceworker',w=>workers.push(w));
+   await ctx.addInitScript(()=>{
+    window.__p10Lifecycle=[];const log=(event,detail={})=>window.__p10Lifecycle.push({time:Date.now(),event,...detail});
+    navigator.serviceWorker?.addEventListener('controllerchange',()=>log('controllerchange',{state:navigator.serviceWorker.controller?.state}));
+    navigator.serviceWorker?.getRegistration().then(reg=>{if(!reg)return;reg.addEventListener('updatefound',()=>{const worker=reg.installing;log('updatefound',{state:worker?.state});worker?.addEventListener('statechange',()=>log('statechange',{state:worker.state}));});});
+   });
    ctx.on('serviceworker',w=>trace('worker-start',{case:cfg.name,url:w.url()}));
    try{
     if(cfg.upgrade){
@@ -182,6 +231,16 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
       return reg?.active?.state==='activated'&&(await caches.keys()).includes(name);
      },newCache,{timeout:30000});
     }
+    if(cfg.strictReady){
+     const readyStart=Date.now();let ready;
+     do{
+      ready=await workerStatus(tab);
+      if(ready.activeState==='activated'&&!ready.waitingState&&!ready.installingState&&ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete)break;
+      await delay(150);
+     }while(Date.now()-readyStart<45000);
+     rec.verifiedReady=ready;
+     if(!(ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete&&!ready.waitingState&&!ready.installingState))throw Error('real active/controller generation not ready: '+JSON.stringify(ready));
+    }
     rec.before=await timed(workerStatus(tab),4500,'before navigation');
     if(cfg.closeOld){await oldPage.close();oldPage=null;}
     if(cfg.cleanup){
@@ -209,6 +268,9 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
      await tab.screenshot({path:path.join(out,'isolation-'+cfg.name+'.png'),timeout:3500}).catch(()=>{});
     }catch(e){rec.navigation={committed:false,error:String(e),elapsedMs:Date.now()-start};}
    }catch(e){rec.setupError=String(e);}
+   rec.workerTraces=[];
+   for(const worker of workers)rec.workerTraces.push(await timed(worker.evaluate(()=>({trace:self.__p10Trace||[],url:self.location.href})).catch(e=>({error:String(e)})),1500,'worker trace'));
+   if(tab&&!tab.isClosed())rec.lifecycle=await timed(tab.evaluate(()=>window.__p10Lifecycle||[]).catch(e=>({error:String(e)})),1500,'page lifecycle');
    rec.events={from:eventStart,to:events.length};
    reports.push(rec);
    console.log('P10_ISOLATION_CASE '+JSON.stringify({name:rec.name,navigation:rec.navigation,setupError:rec.setupError,

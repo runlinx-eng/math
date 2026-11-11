@@ -77,6 +77,8 @@ jobs:
           node --check tests/p10-longterm-offline-browser.cjs
           node --check tests/p10-release-upgrade-browser.cjs
           node --check tests/p10-sw-nav-isolation-browser.cjs
+          node --check tests/p10-full-lessons-browser.cjs
+          node --check tests/p10-backup-safety-browser.cjs
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check dist/learning/p3-workflow.js
@@ -147,6 +149,7 @@ jobs:
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
       - name: Install isolated Chromium test runtime
+        id: browser_runtime
         if: steps.scope.outputs.run_browser == 'true'
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
@@ -155,6 +158,8 @@ jobs:
           npx playwright install chromium
 
       - name: Run browser regression suite
+        env:
+          P10_SW_DIAGNOSTIC: '1'
         if: steps.scope.outputs.run_browser == 'true'
         shell: bash
         run: |
@@ -226,6 +231,22 @@ jobs:
               echo "::endgroup::"
             fi
           done
+
+      - name: Run complete P10 lessons and storage safety independently
+        if: ${{ !cancelled() && steps.browser_runtime.outcome == 'success' }}
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-p10-safety-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          status=0
+          node tests/p10-backup-safety-browser.cjs || status=1
+          node tests/p10-full-lessons-browser.cjs || status=1
+          exit "$status"
 
       - name: Preserve browser screenshots and verification evidence
         if: always() && steps.scope.outputs.run_browser == 'true'
