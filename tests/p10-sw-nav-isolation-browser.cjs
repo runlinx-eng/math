@@ -98,33 +98,31 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
   if(historicalSw.split(oldFetchGuard).length!==2)throw Error('historical SW fetch guard changed');
   const passThroughLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard.replace("url.pathname==='/health'","url.pathname==='/health'||url.pathname==='/learn.html'"));
   const cacheOnlyLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(caches.open(CACHE).then(c=>c.match(event.request,{ignoreSearch:true})).then(r=>r||new Response('missing old cache',{status:503})));return;}");
+  // L/M: same in-memory navigation bytes, only synchronous versus settled Promise.
+  // A successful L/M excludes Cache Storage and network response bodies as necessary.
+  // Both variants are only installed in the temporary historical worktree.
+  const diagnosticHtml='<!doctype html><html><head><meta charset="utf-8"><title>P10 diagnostic response</title></head><body>diagnostic navigation response</body></html>';
+  const diagnosticResponse="new Response("+JSON.stringify(diagnosticHtml)+",{status:200,headers:{'Content-Type':'text/html; charset=utf-8'}})";
+  const syncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith("+diagnosticResponse+");return;}");
+  const asyncLearnSw=historicalSw.replace(oldFetchGuard,oldFetchGuard+"\n if(url.pathname==='/learn.html'){event.respondWith(Promise.resolve("+diagnosticResponse+"));return;}");
   const cases=[
    {name:'A-new-without-SW',blocked:true},
    {name:'B-fresh-new-SW'},
-   {name:'C-upgrade-old-tab-open',upgrade:true},
-   {name:'C-upgrade-old-tab-closed',upgrade:true,closeOld:true},
-   {name:'C-upgrade-old-learning-online',upgrade:true,study:true},
-   {name:'C-upgrade-offline-toggle',upgrade:true,offline:true},
-   {name:'C-upgrade-offline-after-online',upgrade:true,study:true,offline:true},
-   {name:'C-upgrade-offline-toggle-closed',upgrade:true,offline:true,closeOld:true},
+   {name:'C-upgrade-untouched-old',upgrade:true},
    {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
-   {name:'E-upgrade-cleanup-after-old-close',upgrade:true,closeOld:true,cleanup:true},
-   {name:'G-upgrade-content-length',upgrade:true,length:true},
-   // Repeat the one-variable test three times; C cases retain the untouched worker.
-   {name:'H-old-fetch-write-disabled-1',upgrade:true,diagnosticNoRuntimeWrite:true},
-   {name:'H-old-fetch-write-disabled-2',upgrade:true,diagnosticNoRuntimeWrite:true},
-   {name:'H-old-fetch-write-disabled-3',upgrade:true,diagnosticNoRuntimeWrite:true},
-   // J: do not intercept navigation at all; K: respond from old precache only.
-   // Both retain historical install and other fetch behavior; diagnostic, not acceptance.
    {name:'J-old-learn-pass-through',upgrade:true,diagnosticMode:'passThrough'},
-   {name:'K-old-learn-cache-only',upgrade:true,diagnosticMode:'cacheOnly'}
+   {name:'K-old-learn-cache-only',upgrade:true,diagnosticMode:'cacheOnly'},
+   {name:'L-old-learn-sync-memory-response',upgrade:true,diagnosticMode:'syncMemory'},
+   {name:'M-old-learn-async-memory-response',upgrade:true,diagnosticMode:'asyncMemory'}
   ];
   for(const cfg of cases){
    const rec={name:cfg.name,conditions:cfg,oldCommit:OLD,newCommit:current,oldCache,newCache};
    const eventStart=events.length;
    const oldSwVariant=cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:
     cfg.diagnosticMode==='passThrough'?passThroughLearnSw:
-    cfg.diagnosticMode==='cacheOnly'?cacheOnlyLearnSw:historicalSw;
+    cfg.diagnosticMode==='cacheOnly'?cacheOnlyLearnSw:
+    cfg.diagnosticMode==='syncMemory'?syncLearnSw:
+    cfg.diagnosticMode==='asyncMemory'?asyncLearnSw:historicalSw;
    fs.writeFileSync(oldSwFile,oldSwVariant);
    rec.historicalSwModifiedForDiagnosis=oldSwVariant!==historicalSw;
    rec.oldSwVariant=cfg.diagnosticNoRuntimeWrite?'no-runtime-write':cfg.diagnosticMode||'untouched';
@@ -214,7 +212,8 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    rec.events={from:eventStart,to:events.length};
    reports.push(rec);
    console.log('P10_ISOLATION_CASE '+JSON.stringify({name:rec.name,navigation:rec.navigation,setupError:rec.setupError,
-    controllerCache:rec.before?.controller?.cache,activeCache:rec.before?.active?.cache,waitingCache:rec.before?.waiting?.cache}));
+    controllerCache:rec.before?.controller?.cache,activeCache:rec.before?.active?.cache,waitingCache:rec.before?.waiting?.cache,
+    activeState:rec.before?.activeState,waitingState:rec.before?.waitingState,oldControlled:!!rec.oldState?.controllerURL,oldLearnCached:rec.oldState?.learnCached}));
    await timed(ctx.close().catch(()=>{}),5000,'context close');
   }
   fs.writeFileSync(path.join(out,'isolation-results.json'),JSON.stringify({oldCommit:OLD,newCommit:current,oldCache,newCache,reports,errors},null,2));
