@@ -88,7 +88,7 @@
 3. **从结构组织步骤（B38 `because38[2]`、`argument38[0]`，MP.3）**：验证 `r38-card` 的实际顺序以及点阵 `r38-column` 的真实移除；反馈只述检查过的步骤排列，提示学习者自己解释各步为何成立。
 4. **反例检验（B38 `argument38[3:5]`，MP.3）**：回放 `r38-test`，用当前记录的原数、乘数、预测和实际比较区别“总会变大”与“总不会变小”；`1` 对前一句是反例、对后一句不是。原自由解释 `prose` 保留但不评懂。
 
-**显示门槛与失败路径：** `thinkingFeedback(task, model, record)` 首先核对真实最新 `attempt.value` 与当前模型完全一致；再由原任务 `valid/inspect`（B38 为事件回放）检查，只有通过才显示相应方法线索。未提交、做错、模型被改、未重新检查、记录篡改均不产生新的积极方法提示。失败/修正指导仍由原检查反馈负责，不改数学判题；历史尝试、提示、自由文字和旧记录继续保存。反馈不增加能力级别、次数推断或新数据字段。
+**显示门槛与失败路径：** `thinkingFeedback(task, model, record, context)` 对推理步骤链还要求当前已验证学习现场为 `show38[2]`、`because38[1/2]` 或 `argument38[0/2]`；相同 `x-r38-chain` 控件也用于其他 MP 来源任务，**不能仅凭任务类型贴 MP.3 标签**。随后核对真实最新 `attempt.value` 与当前模型完全一致；再由原任务 `valid/inspect`（B38 为事件回放）检查，只有通过才显示相应方法线索。未提交、做错、模型被改、未重新检查、记录篡改均不产生新的积极方法提示。失败/修正指导仍由原检查反馈负责，不改数学判题；历史尝试、提示、自由文字和旧记录继续保存。反馈不增加能力级别、次数推断或新数据字段。
 
 **技术验收（本轮目标，结果以对应最新 GitHub CI 为准）：** Required Node 新纳入 `tests/thinking-feedback.test.mjs` 和 `tests/thinking-source-map.test.mjs`；独立 Chromium `tests/p9-thinking-feedback-browser.cjs` 在真实学习 UI 验证错误→修改→复检→提示→刷新/再改撤销线索、反例及原存储格式，并将截图/JSON 留在 Actions artifact 的 `verification/p9-thinking-feedback/`。自动化**仅证明这些选中的技术行为**；50/50 节点的独立数学审阅、两项原研究风险判断、Mac 100% 缩放、儿童自主学习、迁移效果、完整离线/旧备份恢复仍待进行，Issue #22 继续 Open。
 
