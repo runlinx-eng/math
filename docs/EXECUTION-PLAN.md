@@ -1,5 +1,10 @@
 # 数学探索｜现行执行计划 P7–P11（附历史阶段记录）
 
+## P10 R3 第十阶段 J/K 后续决策（2026-11-12）
+- [Required 43061158681](https://github.com/runlinx-eng/math/actions/runs/43061158681) 真实失败，[P8 43061158660](https://github.com/runlinx-eng/math/actions/runs/43061158660) 成功，证据 [Artifact 13872689128](https://github.com/runlinx-eng/math/actions/runs/43061158681/artifacts/13872689128)。旧 SW 已接管时，J 放行 `learn.html` 导航成功 22 ms；K 使用缓存响应同一导航超时 9 秒；原旧 SW 与 H1/H2/H3 均失败。故下一步必须优先定位旧 SW `respondWith` / Worker 激活等待与导航取消链路，不能继续猜 `cache.put`。
+- 任何修改正式 SW 之前，应取得能区分旧 Worker fetch Promise 是否结束、浏览器响应是否提交、当前页面 controller 与新 Worker waiting/activating/activated 的证据；再做最小修复，真实未修改历史版本独立 profile 三次通过及全套数据安全回归。现无生产修复，P10 不可收尾，不启动 Mac/Windows 安装包；P11 交互视觉优先项目可在独立分支准备设计/验收清单，不混入本 PR。
+
+
 ## P10 第三轮第十阶段优先级（2026-11-12，PR #69 Draft）
 - 最新已完成 A/B：Required [43058826516](https://github.com/runlinx-eng/math/actions/runs/43058826516) failure、P8 [43058826548](https://github.com/runlinx-eng/math/actions/runs/43058826548) success；原历史 SW 与 H1/H2/H3 禁用运行时缓存写入均不能完成升级后 `learn.html#share` 导航（9 秒超时）。完整旧版三题数据跨升级前后字节相等，但后续 45 秒导航仍失败。不得将新缓存存在当作新 SW 已接管。
 - 下一硬门槛：等待 J/K 单变量导航 fetch 隔离实验的最新真实 Chromium 证据；按结果定位 SW 导航、生命周期或测试环境问题，再做**有证据的最小修复**和三次独立 profile 复验；之后才执行原完整升级、旧标签页、V1/V2、Quota、离线恢复及四类整课验证。
