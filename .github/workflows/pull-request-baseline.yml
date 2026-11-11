@@ -76,6 +76,7 @@ jobs:
           node --check tests/p10-learning-continuity-browser.cjs
           node --check tests/p10-longterm-offline-browser.cjs
           node --check tests/p10-release-upgrade-browser.cjs
+          node --check tests/p10-sw-nav-isolation-browser.cjs
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check dist/learning/p3-workflow.js
@@ -183,6 +184,7 @@ jobs:
             tests/p9-thinking-feedback-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
             tests/p10-longterm-offline-browser.cjs \
+            tests/p10-sw-nav-isolation-browser.cjs \
             tests/p10-release-upgrade-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
