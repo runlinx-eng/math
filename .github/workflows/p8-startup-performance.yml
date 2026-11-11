@@ -26,16 +26,16 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Check out the same-stack previous PR62 head baseline
+      - name: Check out the same-stack second-round baseline (3c62216)
         env:
-          BASE_SHA: a675cfd2b65acfa30010ab94bcd790d3f91f29f7
+          BASE_SHA: 3c62216aa5e38a3a57b0f25415aa0596fd12f8b4
         run: |
           git cat-file -e "$BASE_SHA^{commit}" || git fetch --no-tags origin "$BASE_SHA"
           git worktree add --detach /tmp/math-startup-before "$BASE_SHA"
           test "$(git -C /tmp/math-startup-before rev-parse HEAD)" = "$BASE_SHA"
       - name: Run matched cold / refresh / deep-link benchmarks
         env:
-          MATH_STARTUP_BASE_SHA: a675cfd2b65acfa30010ab94bcd790d3f91f29f7
+          MATH_STARTUP_BASE_SHA: 3c62216aa5e38a3a57b0f25415aa0596fd12f8b4
           MATH_STARTUP_ROUNDS: '5'
         run: |
           cp -a /tmp/math-startup-before/dist /tmp/math-startup-before-dist
