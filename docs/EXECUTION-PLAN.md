@@ -363,3 +363,9 @@
 - 最新已完成 CI：`6dc6f27` Required [43055524219](https://github.com/runlinx-eng/math/actions/runs/43055524219) failure、P8 [43055524265](https://github.com/runlinx-eng/math/actions/runs/43055524265) success、Overview 未触发。Artifact `13870314043` 确证真实旧 SW 已接管且旧缓存有 `learn.html`；所有受旧 SW 控制的升级导航对照超时，新 SW 初装及绕过 SW 的网络导航成功。新 Worker waiting / 旧 Worker active，两套缓存共存；完整测试照旧 45 秒超时。尚无足够因果证据区分 SW 运行时缓存写入与浏览器生命周期或测试服务器交互。
 - 已在 PR #69 同分支新增临时旧 SW 缓存写入 A/B 三次诊断（`1483b38`），**不是应用修复或安全验收**；核查其最新 CI 后再决定最小修复层。不得用旧 SHA 的绿色结果代替最新 HEAD。持续保留数学内容、V1/V2 语义及学习成果安全断言，不合并、不部署。
 - P10 安全门槛仍 C/B，#63 安装包正式工作不启动；P11 只在独立视觉专项收敛选中高亮和悬停按钮。
+
+
+### P10 R3 第十一阶段：仍不满足发布与本地安装准入（2026-11-12）
+- 最新有结论的代码 `35303ea`：Required [43068578796](https://github.com/runlinx-eng/math/actions/runs/43068578796) **failure**；关联 P8 结果须按该 SHA 另行核查，不可借用旧 SHA。真实旧版更新在完整场景中曾越过导航卡点，并完成数据备份导入、冲突、配额等前段；隔离对照仍稳定复现旧 SW 缓存响应导航超时，重试清理消息亦超时。
+- 关键诊断：同步内存 Response、异步内存 Response 均成功；旧 Cache Storage Response 失败。因此不能把所有 `respondWith()` 都当成根因，亦未证明具体 Cache API / body / 生命周期环节。已修正 `newReady()` 假阳性与 Playwright 隐藏输入等待，但**没有应用级 SW 修复**。
+- 持续强制门槛：固定未经修改旧版、至少三次独立 profile 完整跨版数据安全验收、升级失败与重试、V1/V2 和真实 Quota、四类整课离线、最新 HEAD Required/P8/适用 Overview 与 Artifact。现为 B/C、P10 未完成，#63 Mac/Windows 正式开发禁止启动；P11 的唯一选中高亮及悬停控件收敛仅可独立专项进行。禁止合并和部署。
