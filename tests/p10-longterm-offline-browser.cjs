@@ -71,6 +71,25 @@ const snapshot=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-exp
    page=await ctx.newPage();
    await resumed.close();
   }
+  // Actual JSON backup file exported through UI; conflicting native workpiece
+  // must be rejected by the 3D import path without changing real localStorage.
+  await page.goto(base+'v2.html#trail');
+  await page.locator('#import-file').waitFor({state:'attached'});
+  const exported=page.waitForEvent('download');
+  await page.locator('[data-do="export"]').first().click();
+  const backupFile=await exported;
+  const incoming=JSON.parse(fs.readFileSync(await backupFile.path(),'utf8'));
+  const localEquivalent=incoming.state.lessons.equivalent;
+  localEquivalent.models[0]=structuredClone(localEquivalent.cases[0].attempts[0].value);
+  const conflictBuffer=Buffer.from(JSON.stringify(incoming));
+  await page.goto(base+'index.html?world=network&layout=53#space');
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
+  const beforeImport=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+  await page.locator('#import-file').setInputFiles({name:'conflicting-real-backup.json',mimeType:'application/json',buffer:conflictBuffer});
+  await page.waitForFunction(()=>document.querySelector('#toast')?.textContent?.includes('冲突'));
+  check((await page.locator('#toast').innerText()).includes('冲突'),'3D entry reports conflicting imported workpiece');
+  check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===beforeImport,'3D conflict rejection leaves original browser record unchanged');
+  await page.screenshot({path:path.join(out,'3d-import-conflict.png')});
   // Corrupt data on the real 3D entry: raw rescue, never empty v2.
   const broken=await browser.newContext({acceptDownloads:true,viewport:{width:1280,height:720}});
   const damaged=await broken.newPage();
