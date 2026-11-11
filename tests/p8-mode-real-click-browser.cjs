@@ -116,6 +116,55 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await page.setViewportSize({width:620,height:800});
   await page.screenshot({path:path.join(out,'03-trail-620x800.png')});
   await verify('narrow-trail','trail',trailNode);
+  // Reproduce the reported VPS entry, including a retained historical iframe
+  // and locally saved view state from preceding activities.
+  const vpsEntry='mt_WcfaSfVT33';
+  await page.goto('http://127.0.0.1:43827/?world=network&layout=53&surface=trail#space/node/'+vpsEntry);
+  await page.waitForFunction(id=>window.mathSpace?.snapshot()?.counts?.nodes===587&&
+    window.mathSpace.snapshot().selected==='node:'+id&&
+    document.querySelector('#utility-drawer')?.dataset.surface==='trail',vpsEntry);
+  await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');
+  await verify('vps-deep-link-trail','trail','node:'+vpsEntry);
+  const historicalFrame=await (await page.locator('#utility-frame').elementHandle()).contentFrame();
+  await page.evaluate(()=>{
+    window.__p8VpsProbe={};
+    window.addEventListener('message',e=>{
+      if(e.origin!==location.origin)return;
+      if(e.data?.probe==='p8-hidden-utility')queueMicrotask(()=>window.__p8VpsProbe.utility=true);
+      if(e.data?.probe==='p8-retired-lesson')queueMicrotask(()=>window.__p8VpsProbe.lesson=true);
+    });
+  });
+  await nav('learn').click();
+  await page.waitForFunction(()=>document.querySelector('.primary-nav [aria-pressed="true"]')?.dataset.surface==='learn');
+  await verify('vps-trail-to-learn','learn','node:'+vpsEntry);
+  // A queued click from the previously visible Trail iframe must not undo
+  // the user's explicit Learn selection after that iframe was hidden.
+  await historicalFrame.evaluate(id=>parent.postMessage({
+    type:'math-space:navigate',kind:'node',id,probe:'p8-hidden-utility'
+  },location.origin),vpsEntry);
+  await page.waitForFunction(()=>window.__p8VpsProbe?.utility===true);
+  await verify('vps-hidden-trail-message-does-not-explore','learn','node:'+vpsEntry);
+  // The actual 3D label click must enter the selected node's task in Learn.
+  const liveFirst=await clickVisible({playable:true});
+  const liveFirstId=await waitNativeTask(liveFirst);
+  await verify('vps-learn-first-3d-click','learn',liveFirst);
+  const liveSecond=await clickVisible({playable:true});
+  const liveSecondId=await waitNativeTask(liveSecond);
+  check(liveSecondId!==liveFirstId,'live second 3D click must select a distinct lesson');
+  await verify('vps-learn-second-3d-click','learn',liveSecond);
+  // Retired embedded documents share the iframe WindowProxy. Their late
+  // close messages must not terminate a newer selected lesson.
+  const currentFrame=await (await page.locator('#journey-frame').elementHandle()).contentFrame();
+  await currentFrame.evaluate(retired=>parent.postMessage({
+    type:'math-space:lesson-close',sessionId:retired,probe:'p8-retired-lesson'
+  },location.origin),liveFirstId);
+  await page.waitForFunction(()=>window.__p8VpsProbe?.lesson===true);
+  await verify('vps-retired-lesson-close-does-not-explore','learn',liveSecond);
+  check((await state()).journey,'stale lesson-close cannot hide current workpiece');
+  // Explicit back from the active task remains functional and changes mode.
+  await page.frameLocator('#journey-frame').locator('#back').click();
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('surface')===null);
+  await verify('vps-explicit-lesson-exit','explore',liveSecond);
   check(errors.length===0,'runtime errors '+errors.join('; '));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,macVerified:false},null,2));
   console.log('P8_REAL_NODE_CLICKS_COMPLETE '+checks.length);
