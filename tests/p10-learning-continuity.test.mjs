@@ -12,7 +12,7 @@ test('P10: unchanged stored record is safe to continue editing',()=>{
 test('P10: a different model from another tab blocks a silent overwrite',()=>{
  const local=freshLesson('equivalent');modelForLesson(local);
  const stored=structuredClone(local);
- stored.models[0].rows[0].n=1;
+ stored.models[0].rows[0].n=stored.models[0].rows[0].n===1?2:1;
  const saved=JSON.stringify(stored);
  assert.throws(()=>assertNoConcurrentLessonOverwrite(local,stored),/已停止保存/);
  assert.equal(JSON.stringify(stored),saved,'checking never changes the saved record');
