@@ -40,7 +40,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   let page=await ctx.newPage();
   page.on('pageerror',e=>errors.push(String(e)));
   const lesson=async(p,id)=>{
-   await p.goto(base+'learn.html#'+id,{waitUntil:'domcontentloaded'});
+   await p.goto(base+'learn.html#'+id,{waitUntil:'commit',timeout:45000});
    await p.waitForFunction(s=>window.mathLesson?.snapshot()?.id===s,id,{timeout:30000});
   };
   const oldActive=async(p)=>p.waitForFunction(async name=>{
