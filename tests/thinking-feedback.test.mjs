@@ -51,18 +51,20 @@ test('unsupported activity types never receive a guessed thinking label',()=>{
 
 test('P9 reasoning-chain feedback requires current replay-valid submitted work, not a correct answer alone',()=>{
   const samples=[
-    [A.show38[2],'mt_pyMD_SIiYO'],
-    [A.because38[1],'mt_pyMD_SIiYO'],
-    [A.because38[2],'mt_nyK25mNOeR'],
-    [A.argument38[0],'mt_nyK25mNOeR'],
-    [A.argument38[2],'mt_pyMD_SIiYO']
+    [A.show38[2],'mt_pyMD_SIiYO','show38',2],
+    [A.because38[1],'mt_pyMD_SIiYO','because38',1],
+    [A.because38[2],'mt_nyK25mNOeR','because38',2],
+    [A.argument38[0],'mt_nyK25mNOeR','argument38',0],
+    [A.argument38[2],'mt_pyMD_SIiYO','argument38',2]
   ];
-  for(const [t,nodeId] of samples){
+  for(const [t,nodeId,sessionId,index] of samples){
+    const context={sessionId,index};
     const before=arguments38.initial(t),done=arguments38.example(t);
-    assert.equal(thinkingFeedback(t,before,{attempts:[attempt(before)]}),null,'empty reasoning cannot qualify');
-    assert.equal(thinkingFeedback(t,done,{attempts:[]}),null,'constructed but unsubmitted reasoning cannot qualify');
-    assert.equal(thinkingFeedback(t,done,{attempts:[attempt(before)]}),null,'historical incomplete submission cannot qualify');
-    const result=thinkingFeedback(t,done,{attempts:[attempt(before),attempt(done)],support:true});
+    assert.equal(thinkingFeedback(t,before,{attempts:[attempt(before)]},context),null,'empty reasoning cannot qualify');
+    assert.equal(thinkingFeedback(t,done,{attempts:[]},context),null,'constructed but unsubmitted reasoning cannot qualify');
+    assert.equal(thinkingFeedback(t,done,{attempts:[attempt(before)]},context),null,'historical incomplete submission cannot qualify');
+    assert.equal(thinkingFeedback(t,done,{attempts:[attempt(done)]}),null,'unreviewed context must not infer MP.3');
+    const result=thinkingFeedback(t,done,{attempts:[attempt(before),attempt(done)],support:true},context);
     assert.equal(result.method.nodeId,nodeId);
     assert.equal(result.method.code,'ccss-math:MP.3');
     assert.match(result.observation,/按顺序摆出了 \d+ 个推理步骤/);
@@ -74,11 +76,15 @@ test('P9 reasoning-chain feedback requires current replay-valid submitted work, 
     if(t.scene==='array')assert.match(result.observation,/十列中移走了两列/);
     const changed=structuredClone(done);
     arguments38.act(t,changed,'r38-undo');
-    assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)]}),null,'changed work needs a new check');
+    assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)]},context),null,'changed work needs a new check');
     const tampered=structuredClone(done);
     tampered.board.selected.push('invented');
-    assert.equal(thinkingFeedback(t,tampered,{attempts:[attempt(tampered)]}),null,'unreplayable history cannot create evidence');
+    assert.equal(thinkingFeedback(t,tampered,{attempts:[attempt(tampered)]},context),null,'unreplayable history cannot create evidence');
   }
+  const unrelated=A.story38[2],m=arguments38.example(unrelated);
+  assert.equal(unrelated.type,'x-r38-chain');
+  assert.equal(thinkingFeedback(unrelated,m,{attempts:[attempt(m)]},{sessionId:'story38',index:2}),null,
+    'another MP category using the same card widget must not be mislabeled as MP.3');
 });
 
 test('P9 emitted thinking source IDs and practice codes belong to the pinned 50-node map',async()=>{
@@ -88,12 +94,17 @@ test('P9 emitted thinking source IDs and practice codes belong to the pinned 50-
   assert.equal(source.groups.reduce((sum,g)=>sum+g.nodes.length,0)+source.untagged.length,50);
   const byId=new Map(source.groups.flatMap(g=>g.nodes.map(n=>[n.id,{n,code:g.code}])));
   const cases=[
-    [F.recutnames[0],fractions.example(F.recutnames[0])],
-    ...[A.show38[2],A.because38[1],A.because38[2],A.argument38[0],A.argument38[2],...A.argument38.slice(3)]
-      .map(t=>[t,arguments38.example(t)])
+    [F.recutnames[0],fractions.example(F.recutnames[0]),{}],
+    ...[
+      ['show38',2],['because38',1],['because38',2],['argument38',0],['argument38',2],
+      ['argument38',3],['argument38',4]
+    ].map(([id,index])=>{
+      const t=A[id][index];
+      return [t,arguments38.example(t),{sessionId:id,index}];
+    })
   ];
-  for(const [t,m] of cases){
-    const note=thinkingFeedback(t,m,{attempts:[attempt(m)],support:false});
+  for(const [t,m,context] of cases){
+    const note=thinkingFeedback(t,m,{attempts:[attempt(m)],support:false},context);
     assert.ok(note?.method,'this validated pilot behavior gets a bounded method label');
     const sourceNode=byId.get(note.method.nodeId);
     assert.ok(sourceNode,'linked ID is in the fixed source map');
