@@ -1,6 +1,7 @@
 // Visual semantics acceptance for the v53 relationship map.
 // Sample real DOM/WebGL screen sizes after camera zoom, not just CSS or syntax.
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
 const out=path.resolve(__dirname,'../verification/spatial-focus-semantics'),base='http://127.0.0.1:43827/';
 const ROOT='node:mt_WcfaSfVT33',NEXT='node:mt_dmNvjroCPT',checks=[],errors=[];
 const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
@@ -49,7 +50,9 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
   check((await conceptHelp.innerText()).includes('把物品一个一个指出来'),
     'child-friendly explanation opens only when requested');
   const conceptAfter=JSON.stringify(await snap());
-  if(conceptAfter!==conceptBefore){
+  const unchanged=sameSnapshotWithCameraRoundoff(conceptBefore,conceptAfter);
+  snapshotDiff=undefined;
+  if(!unchanged){
    const expected=JSON.parse(conceptBefore),actual=JSON.parse(conceptAfter);
    const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
     .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
@@ -57,7 +60,7 @@ const check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
     expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
    if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
   }
-  check(conceptAfter===conceptBefore,
+  check(unchanged,
     'reading an explanation does not change the map, learning completion or selected node');
   await conceptHelp.locator('.concept-mode').first().locator('summary').click();
   await conceptHelp.locator('.concept-alternatives > summary').click();

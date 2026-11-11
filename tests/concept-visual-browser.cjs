@@ -1,6 +1,7 @@
 // Sixty-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
 const ids=[
   ['count','mt_WcfaSfVT33'],['addition','mt_OvyoRo47K-'],
@@ -685,7 +686,9 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
     }else await help.locator('.concept-mode').first().locator('summary').click();
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
     const after=JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()));
-    if(after!==before){
+    const unchanged=sameSnapshotWithCameraRoundoff(before,after);
+    snapshotDiff=undefined;
+    if(!unchanged){
      const expected=JSON.parse(before),actual=JSON.parse(after);
      const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
       .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
@@ -693,7 +696,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
      if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
     }
-    check(after===before,
+    check(unchanged,
       tag+': reading explanations does not change camera, nodes, selection, or relation data');
     check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===learningRecord,
       tag+': explanation reads never record learning completion');

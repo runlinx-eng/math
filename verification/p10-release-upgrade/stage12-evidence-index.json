@@ -872,6 +872,511 @@
         "Three later graphical snapshot-invariance assertions also fail; artifacts omit before/after snapshots, so the cause is not established.",
         "Historical child backup, Mac manual, child use and independent teaching review remain unverified."
       ]
+    },
+    {
+      "headSha": "38b7a64f49652cf532b8d435ec0b38c8042ec87a",
+      "requiredCheckoutSha": "1cb07cea4094d6c99eaac8133642823e65462e32",
+      "tree": "3c47412e3ba44f297b4964990f73271b4596ba43",
+      "headTreeEqualsCheckoutTree": true,
+      "required": {
+        "id": 43079175006,
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43079175006"
+      },
+      "p8": {
+        "id": 43079175077,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43079175077",
+        "artifactId": 13882729287,
+        "serviceWorkers": "blocked",
+        "rounds": 5
+      },
+      "overview": {
+        "id": 43079174778,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43079174778",
+        "applicable": true,
+        "checksPassed": 42
+      },
+      "artifact": {
+        "id": 13885276068,
+        "url": "https://github.com/runlinx-eng/math/actions/runs/43079175006/artifacts/13885276068",
+        "archiveSha256": "0836e41c5572b6a208112af2df28f4666a0339712a31a0b1fee8e39a3627212e",
+        "files": [
+          {
+            "path": "concept-language-pilot/results.json",
+            "bytes": 2109,
+            "sha256": "a0c239e691e47967c2ed18938dc2e233f8fbac0de8585f25fd64d29c84039337"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/browser-export-v2.json",
+            "bytes": 3829,
+            "sha256": "65bb86ba1fb413f50cbfb44f9319e4d5c7925b577777ee329501c2a5cfd37ae5"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/constructed-v1.json",
+            "bytes": 1780,
+            "sha256": "d66c92624b04595d38771b8cfb95dd676e679ecbb51e860b2df009cd02962f6e"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/import-rejection.png",
+            "bytes": 26946,
+            "sha256": "200da17ccf6791e0f309f45836317a811571f5e2e1daad31213e2c3b76197542"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-after-reopen.json",
+            "bytes": 795,
+            "sha256": "d0f0f7ef2afbbecae203598477f627d1c0a31eae74100cb5158d52fb9f00716f"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-before.json",
+            "bytes": 795,
+            "sha256": "d0f0f7ef2afbbecae203598477f627d1c0a31eae74100cb5158d52fb9f00716f"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/quota-confirmed-failure.png",
+            "bytes": 31710,
+            "sha256": "e291b88f45608dc63430924da882b7335373ee87bcd45c7eef394677f99535f9"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/results.json",
+            "bytes": 6716,
+            "sha256": "9f9b65cf853ee64bb1d1402a3756e1d44947edf8fbee8c7dcb451a3f69b1ebbb"
+          },
+          {
+            "path": "p10-release-upgrade/backup-safety/source-backup.png",
+            "bytes": 27121,
+            "sha256": "19c0c9e44ae0f8fdf57fbd8d84b074e8254fdf3dc449ad56d6a9b375f602a574"
+          },
+          {
+            "path": "p10-release-upgrade/failure.json",
+            "bytes": 6252,
+            "sha256": "d2b0f9e08530f5fa0525aeb97f6761a60a2070f8941b04c8b1f1fe26dca57184"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-after-offline-recheck.json",
+            "bytes": 24662,
+            "sha256": "fb031020ca8698caf53845fc4efa8b211233033872ca8a1df6d6c00dbcba7a5c"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-all-questions-offline.png",
+            "bytes": 30683,
+            "sha256": "01dfbb7b53c5c63521b76d50b59a74e7316626f54fdad438fa405f31889a2682"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-before-browser-close.json",
+            "bytes": 23880,
+            "sha256": "16a7dd7c5689c1842bfe2f014c8a3a70be5e892f57f44f3e85a881e49f41191a"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/argument38-offline-summary-restored.png",
+            "bytes": 22643,
+            "sha256": "ee2317a7ce2516d1868bf9d499c674265415934c301d98f73ed31a3fefc02375"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-after-offline-recheck.json",
+            "bytes": 1969,
+            "sha256": "d7b16197d68a227bb604a421c834b13d25b5a741024a1ac0dbcbaa8ddccef9b8"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-all-questions-offline.png",
+            "bytes": 26761,
+            "sha256": "e415c9ff001bc3c7b572bfab341f8986cea22d692c87c5366bdc428010dd0014"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-before-browser-close.json",
+            "bytes": 1635,
+            "sha256": "f726fa27ffac93f1185085c4eb8e0f220adc06f0fdf79e0dea49c9d2a8921a97"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/equivalent-offline-summary-restored.png",
+            "bytes": 23276,
+            "sha256": "200a20fb33ad2caecfe42fafe57835e503b7070a57860420e2e2702d53ad93c0"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/http-events.json",
+            "bytes": 160026,
+            "sha256": "9b33b179e5885c3e55fc5d09739a1f85078c5467897c92b7c83d2bbe01fab0ac"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/results.json",
+            "bytes": 15503,
+            "sha256": "3a73e3b9727961b652691d2da0d5db1f6a70b59ad6f83245b0a716b79c43bf01"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-after-offline-recheck.json",
+            "bytes": 3508,
+            "sha256": "f6abbdf19c0f4bcef1cf00c6d7bb77282f122e2b521b5d2a704d451aed8462e3"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-all-questions-offline.png",
+            "bytes": 40370,
+            "sha256": "59c091409d3ed8f57984ddff111b43838fff9d55f835a67b2769188a7109cec0"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-before-browser-close.json",
+            "bytes": 2999,
+            "sha256": "8a63f485086072697f4a0ec5b6a4a43e95ce65199b2a7205567cf80aaf510129"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/shiftfine-offline-summary-restored.png",
+            "bytes": 22111,
+            "sha256": "415a1f11f8bc2e41fc78b70ea7c8b4fc98424e341b647a4de1527f4afaf05fcd"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-after-offline-recheck.json",
+            "bytes": 6175,
+            "sha256": "18804a776d8ebe783e02d20fb65b9697bfd81e7098c32061693cc4f80f11fec6"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-all-questions-offline.png",
+            "bytes": 125159,
+            "sha256": "d5957fa9d84ced90326332255dcf58fa7360a6db44c8e6642b83363dd6500fdf"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-before-browser-close.json",
+            "bytes": 5366,
+            "sha256": "a0ad6c51a26a8cee7cffb7de1297bbc485568d8a36a61994a23d24166f86d7c1"
+          },
+          {
+            "path": "p10-release-upgrade/full-lessons/solidstack-offline-summary-restored.png",
+            "bytes": 22214,
+            "sha256": "91b000e4973ee5fc5f273ccb104bda2d200a3ed5838d66adc071557663b9e1f4"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-failure.json",
+            "bytes": 26207,
+            "sha256": "8e0aa055cdc980b1e6535c2149772c2d824fb837a319cb29681020d8722a605d"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-http-events.json",
+            "bytes": 823930,
+            "sha256": "c3a5b61342864c4341da1598e20a83f3c31c897d8a82893c261b87f49058da62"
+          },
+          {
+            "path": "p10-release-upgrade/isolation-results.json",
+            "bytes": 6309,
+            "sha256": "6aed84c61ea65da2ecc6edbf5395e4021bda9250c142d7b449412ff54b1abdf4"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/chromium-log.txt",
+            "bytes": 302,
+            "sha256": "36504b9225e2e4aaa39634ca7a0133b990df4bdb6c8b25d976ef7e2bcb2dbbad"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/diagnostics.json",
+            "bytes": 621490,
+            "sha256": "ec5a617192d15ba404c67350a3aeee8b2bec4d211464caf902a4e83f02af1968"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/failure-learning-record.json",
+            "bytes": 847,
+            "sha256": "143c187c64da72265d6dad5612e804cb67482441eeae5a019794079958a24fba"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/failure.json",
+            "bytes": 3887,
+            "sha256": "745ddd1d7f560e208b59d0728703a7a4f374d6871e6b534cd8ae40d73c8b9da6"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/failure.png",
+            "bytes": 22045,
+            "sha256": "86e90d9ce92b4659bede29711030c204ca737d2b93812cd5c0b9640da7c9ef9c"
+          },
+          {
+            "path": "p10-release-upgrade/retry-independent/http-events.json",
+            "bytes": 622044,
+            "sha256": "4f365d321fa95754f729d9ecadb27cde8c26bcadce341f26d69fb71f2df6d0bd"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "8e96d23f213ec784ec4013e1859b0a88e21914e393328a79614d0b8bbd4c392c"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "273c2050b8db13c91c15e5c74e6e0e445bf412d8d5708fe3fd7ec901ab068d3d"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "17b9887ba193c71d5a67ef191dd19b8af9689e3d27bbdbfca86e19d2ca998eeb"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "8e96d23f213ec784ec4013e1859b0a88e21914e393328a79614d0b8bbd4c392c"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure.json",
+            "bytes": 4202,
+            "sha256": "287cd27b8db4f3cc598baedc51cf0f0ee500a240da6f6a139bc339b01ef2b25b"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-1/http-events.json",
+            "bytes": 1191052,
+            "sha256": "427b4850a080e76b8876ee22b8d4175ab09841104853d7e1fbb3a460e187fea0"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "e85f995630512619ed9855dd9edb815871cf25f4456a28a66ff3d3f93457332f"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "273c2050b8db13c91c15e5c74e6e0e445bf412d8d5708fe3fd7ec901ab068d3d"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "bac7c1a6122af0cfe2712f72c062389c5d48d04b771dbc3f0e4bf314095180c7"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "e85f995630512619ed9855dd9edb815871cf25f4456a28a66ff3d3f93457332f"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure.json",
+            "bytes": 4202,
+            "sha256": "4c38c50400175b303c4c8a93ea1e2fbbdfe0b0dcd2b17f83fe282dcfbddc9025"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-2/http-events.json",
+            "bytes": 1191052,
+            "sha256": "c06d67e22a6d2d51a66aa0f37b00f9c5e17e74738a76c2d8014694b7fdf9f73e"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/before-upgrade.json",
+            "bytes": 1992,
+            "sha256": "769610bd78a9299725033c2b4eed16950e45dc4f08ddc45f43a867bc2121f249"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/chromium-log.txt",
+            "bytes": 489,
+            "sha256": "273c2050b8db13c91c15e5c74e6e0e445bf412d8d5708fe3fd7ec901ab068d3d"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/diagnostics.json",
+            "bytes": 1190438,
+            "sha256": "ce690252d445cbda1e492bcedc59c5cb60a1e092cf82842ac8482fe6d258546f"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure-learning-record.json",
+            "bytes": 1992,
+            "sha256": "769610bd78a9299725033c2b4eed16950e45dc4f08ddc45f43a867bc2121f249"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure.json",
+            "bytes": 4202,
+            "sha256": "1781a16e61ff9e4227729d5002907ad2ab26f9422819273074e55a8a9bdfda70"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/failure.png",
+            "bytes": 25046,
+            "sha256": "87e9aa1ba7de82972e1394387e18e28719a664f427d299aa39f179b2ae01f9b6"
+          },
+          {
+            "path": "p10-release-upgrade/run-3/http-events.json",
+            "bytes": 1191052,
+            "sha256": "da2b72d43cc12f1ee082c466ebb106f72fe77b6880fd927eb8bf73e63b596033"
+          },
+          {
+            "path": "spatial-focus-semantics/results.json",
+            "bytes": 1289,
+            "sha256": "1dc0aae53a3708d5b1151fe6bf9ba22617fb3651ac9959e2c58feb6f2eea2fc9"
+          },
+          {
+            "path": "spatial-theme-overview/results.json",
+            "bytes": 2224,
+            "sha256": "934241e1f99184fddcfd947e921e2ab5ac18811c466528242ffe61bb47d166cd"
+          }
+        ]
+      },
+      "nodeTests": {
+        "passed": 273,
+        "failed": 0
+      },
+      "completeUpgrade": {
+        "independentRuns": 3,
+        "successfulRuns": 0,
+        "complete": false,
+        "level": "C",
+        "runs": [
+          {
+            "repetition": 1,
+            "profileId": "math-p10-release-profile-2E20yr",
+            "historicalWorkerModified": false,
+            "checksPassed": 11,
+            "error": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "8e96d23f213ec784ec4013e1859b0a88e21914e393328a79614d0b8bbd4c392c",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "level": "C"
+          },
+          {
+            "repetition": 2,
+            "profileId": "math-p10-release-profile-rmvTvM",
+            "historicalWorkerModified": false,
+            "checksPassed": 11,
+            "error": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "e85f995630512619ed9855dd9edb815871cf25f4456a28a66ff3d3f93457332f",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "level": "C"
+          },
+          {
+            "repetition": 3,
+            "profileId": "math-p10-release-profile-2Tu7CR",
+            "historicalWorkerModified": false,
+            "checksPassed": 11,
+            "error": "Error: new worker active, controlling and complete did not become ready: {\"ready\":false,\"activeState\":\"activated\",\"controllerState\":\"activated\",\"waitingState\":\"installed\",\"installingState\":null}",
+            "rawRecordBytes": 1992,
+            "failureRecordExactlyEqual": true,
+            "recordSha256": "769610bd78a9299725033c2b4eed16950e45dc4f08ddc45f43a867bc2121f249",
+            "oldWorkerSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+            "newWorkerSha256": "5d03917c7d5e65fe979b837f3052e0f5383eb0b0f80a9b1d0fabe4ab4573f6a3",
+            "level": "C"
+          }
+        ]
+      },
+      "independentRetry": {
+        "source": "p10-release-upgrade/retry-independent/failure.json",
+        "checksPassed": 6,
+        "checks": [
+          "distinct genuine release Service Worker manifests",
+          "failed install actually requested the denied critical resource",
+          "new install becomes redundant while historical worker remains active and controlling",
+          "failed new SW install retains old complete cache",
+          "failed upgrade does not mutate original learning history",
+          "failed install leaves historical cached page available without network transport"
+        ],
+        "error": "AssertionError [ERR_ASSERTION]: failed install still opens original lesson offline without rewriting records",
+        "profileId": "math-p10-release-profile-KZmmDq",
+        "installFailureObserved": true,
+        "oldActiveAndControllerRetained": true,
+        "oldOfflineCachedDocumentObserved": true,
+        "networkInterruptionReached": false,
+        "successfulRetryReached": false,
+        "cleanupReached": false,
+        "level": "C",
+        "failureClassification": "Verification timing: immutable historical openLesson refreshes lesson.updatedAt and daily.continuation.at. This head compared the entire raw string after application startup. Original pre-reload raw file was not retained, so no claim of a measured two-field-only difference is made."
+      },
+      "backupSafety": {
+        "checksPassed": 44,
+        "errors": 0,
+        "independentPersistentProfiles": 4,
+        "v1FullBrowserReopens": 1,
+        "quotaFullBrowserReopens": 1,
+        "v1FixtureBytes": 1780,
+        "v1FixtureSha256": "d66c92624b04595d38771b8cfb95dd676e679ecbb51e860b2df009cd02962f6e",
+        "quotaBeforeAfterBytes": 795,
+        "quotaBeforeAfterSha256": "d0f0f7ef2afbbecae203598477f627d1c0a31eae74100cb5158d52fb9f00716f",
+        "realHistoricalChildBackup": false,
+        "level": "A"
+      },
+      "fullLessons": {
+        "checksPassed": 141,
+        "completed": {
+          "equivalent": 3,
+          "shiftfine": 3,
+          "solidstack": 3,
+          "argument38": 5
+        },
+        "independentProfiles": 4,
+        "fullBrowserLaunches": 12,
+        "fullBrowserReopens": 8,
+        "httpRequestsWhileOffline": 0,
+        "firstOfflineB39Tested": false,
+        "level": "A"
+      },
+      "otherBrowserFailures": [
+        {
+          "source": "spatial-focus-semantics/results.json",
+          "failure": "Error: reading an explanation does not change the map, learning completion or selected node",
+          "snapshotDiff": {
+            "changedKeys": [
+              "target"
+            ],
+            "fields": {
+              "target": {
+                "expectedPresent": true,
+                "actualPresent": true,
+                "expected": [
+                  -29.45583138277872,
+                  4.344559089059843,
+                  51.67851085427624
+                ],
+                "actual": [
+                  -29.45583138277872,
+                  4.344559089059843,
+                  51.67851085427625
+                ]
+              }
+            }
+          },
+          "checksPassedBeforeFailure": 11
+        },
+        {
+          "source": "spatial-theme-overview/results.json",
+          "failure": "TimeoutError: locator.hover: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#network-legend [data-action=\"network-theme\"][data-id=\"data\"]')\n    - locator resolved to <button type=\"button\" data-id=\"data\" data-hover=\"false\" class=\"soft-button\" aria-pressed=\"false\" data-action=\"network-theme\">…</button>\n  - attempting hover action\n    - waiting for element to be visible and stable\n    - element is visible and stable\n    - scrolling into view if needed\n    - done scrolling\n    - performing hover action\n    - <aside id=\"network-guide\" aria-label=\"3D知识关系全景观察工具\" class=\"network-guide network-only\">…</aside> intercepts pointer events\n  - retrying hover action\n    - waiting for element to be visible and stable\n    - element is not stable\n  - retrying hover action\n    - waiting 20ms\n    2 × waiting for element to be visible and stable\n      - element is not stable\n    - retrying hover action\n      - waiting 100ms\n    34 × waiting for element to be visible and stable\n       - element is not stable\n     - retrying hover action\n       - waiting 500ms\n",
+          "snapshotDiff": null,
+          "checksPassedBeforeFailure": 13
+        },
+        {
+          "source": "concept-language-pilot/results.json",
+          "failure": "Error: desktop-numberline-fractions: reading explanations does not change camera, nodes, selection, or relation data",
+          "snapshotDiff": {
+            "case": "desktop-numberline-fractions",
+            "changedKeys": [
+              "target"
+            ],
+            "fields": {
+              "target": {
+                "expectedPresent": true,
+                "actualPresent": true,
+                "expected": [
+                  -29.45583138277872,
+                  4.344559089059843,
+                  51.67851085427625
+                ],
+                "actual": [
+                  -29.45583138277872,
+                  4.344559089059843,
+                  51.67851085427624
+                ]
+              }
+            }
+          },
+          "checksPassedBeforeFailure": 2
+        }
+      ],
+      "cameraComparisonReview": {
+        "maxAbsoluteDelta": 7.105427357601002e-15,
+        "field": "target[2]",
+        "otherSnapshotFieldsEqual": true,
+        "reproducedWithRepositoryVector3ClampLength": true,
+        "proposedComparisonScope": "Only camera position/target finite 3-vectors; 4 * Number.EPSILON * max(1,abs(a),abs(b)); every other snapshot field stays exact. No hover force or product/UI change."
+      }
     }
   ],
   "findings": [
@@ -1192,7 +1697,11 @@
     "noChildDataDeletion": true,
     "navigationRootCauseResolved": false,
     "retryCleanupRootCauseResolved": false,
-    "scope": "Results are bound to the explicitly listed head; subsequent changes require their own completed CI."
+    "scope": "Results are bound to the explicitly listed head; subsequent changes require their own completed CI.",
+    "latestCompletedReviewedHead": "38b7a64f49652cf532b8d435ec0b38c8042ec87a",
+    "independentRetryComplete": false,
+    "currentReleaseBackupChecks": 44,
+    "currentReleaseFullLessonChecks": 141
   },
   "finalDiagnosticReview": {
     "headSha": "08938127fc06a3255638206e215876c89ae155eb",
@@ -1204,5 +1713,5 @@
     "artifactId": 13880323113,
     "acceptanceTransferredFromOlderHeads": false
   },
-  "latestCompletedReviewedHead": "e133b6940ff1d5240e2cbf4b934b42211abe32c3"
+  "latestCompletedReviewedHead": "38b7a64f49652cf532b8d435ec0b38c8042ec87a"
 }

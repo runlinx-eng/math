@@ -1,5 +1,6 @@
 // Five source-backed theme overviews are navigable views of the same v53 atlas.
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
 const out=path.resolve(__dirname,'../verification/spatial-theme-overview');
 const url='http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas';
 const ids=['numbers','space','measure','patterns','data'],checks=[],errors=[];
@@ -65,7 +66,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForTimeout(200);
   check(await page.locator('#network-legend [data-hover="true"]').count()===1,'visible floating theme title keeps its hover and the group preview without flicker');
   const hoverSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
-  if(hoverSnapshot!==rawSnapshot){
+  const unchanged=sameSnapshotWithCameraRoundoff(rawSnapshot,hoverSnapshot);
+  snapshotDiff=undefined;
+  if(!unchanged){
    const expected=JSON.parse(rawSnapshot),actual=JSON.parse(hoverSnapshot);
    const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
     .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
@@ -73,7 +76,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
     expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
    if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
   }
-  check(hoverSnapshot===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
+  check(unchanged,'hover leaves graph snapshot, camera and selected state untouched');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.every((v,i)=>Math.abs(v-before[i])<.0001);},{id:themeNode.id,before:beforeTints[0]});

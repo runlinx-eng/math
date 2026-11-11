@@ -114,7 +114,7 @@ async function waitReady(p,cache){
   environment:'real Chromium; independent persistent profile per lesson; entire lesson offline with HTTP origin stopped after complete SW install',
   mac:false,child:false,pedagogy:false};
  const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav'};
- let network=true,ctx,page,profile,current;
+ let network=true,ctx,page,profile,current,firstOfflineB39=null;
  const server=http.createServer((req,res)=>{
   const rel=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/+/,'')||'index.html';
   requests.push({time:new Date().toISOString(),path:rel,network});
@@ -169,6 +169,42 @@ async function waitReady(p,cache){
    current.cacheReport=await waitReady(page,cache);
    check(current.cacheReport.complete,id+' current SW is activated, controlling and fully cached');
    await ctx.setOffline(true);await stopOrigin();
+   if(id==='equivalent'){
+    // This is a fresh-install acceptance, separate from historical upgrades and
+    // the fourteen graded questions. B39 has never been visited on this profile.
+    firstOfflineB39={id:'calculator39',scope:'fresh current-release install',profileLesson:id,cache,completedQuestions:0,checks:[],runtimeResponses:[]};
+    const b39check=(ok,label)=>{check(ok,label);firstOfflineB39.checks.push(label);};
+    b39check(page.url()===base+'v2.html#trail'&&!(await state(page))?.lessons?.calculator39,
+     'fresh-install B39 has no prior lesson visit before the origin is stopped');
+    const runtimePaths=['learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js'];
+    const onResponse=response=>{
+     const relative=new URL(response.url()).pathname.slice(1);
+     if(runtimePaths.includes(relative))firstOfflineB39.runtimeResponses.push({path:relative,status:response.status(),fromServiceWorker:response.fromServiceWorker()});
+    };
+    page.on('response',onResponse);
+    const response=await page.goto(base+'learn.html#calculator39',{waitUntil:'domcontentloaded',timeout:30000});
+    firstOfflineB39.firstOpen={status:response?.status(),fromServiceWorker:response?.fromServiceWorker(),originStopped:!server.listening};
+    b39check(!server.listening&&response?.status()===200&&response.fromServiceWorker(),
+     'never-visited B39 first offline document comes from SW cache with origin stopped');
+    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='calculator39');
+    await page.locator('#work [data-x="s39-estimate"]').waitFor({state:'visible'});
+    firstOfflineB39.snapshot=await inspect(page);page.removeListener('response',onResponse);
+    b39check(firstOfflineB39.snapshot.view==='task'&&firstOfflineB39.snapshot.index===0&&firstOfflineB39.snapshot.summary.done===0&&
+     await page.locator('#work .s39-world').isVisible()&&runtimePaths.every(p=>firstOfflineB39.runtimeResponses.some(r=>r.path===p&&r.status===200&&r.fromServiceWorker)),
+     'never-visited B39 native work and all three lazy runtime modules load offline without completing a question');
+    await page.screenshot({path:path.join(out,'b39-first-offline-open.png')});
+    const reload=await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='calculator39');
+    await page.locator('#work [data-x="s39-estimate"]').waitFor({state:'visible'});
+    firstOfflineB39.reload={status:reload?.status(),fromServiceWorker:reload?.fromServiceWorker(),originStopped:!server.listening};
+    b39check(!server.listening&&reload?.status()===200&&reload.fromServiceWorker()&&
+     (await inspect(page)).summary.done===0&&Object.values((await state(page)).lessons.calculator39.cases).every(c=>c.attempts.length===0),
+     'B39 real offline document reload remains cached and records no graded submission');
+    firstOfflineB39.result='A';
+    // Preserve the existing equivalent assertion as a full document navigation,
+    // rather than a same-document hash change from the B39 lesson.
+    await page.goto('about:blank');
+   }
    await open(id);
    for(let i=0;i<total;i++){
     check((await inspect(page)).index===i,id+' question '+(i+1)+' reached through native navigation');
@@ -212,11 +248,11 @@ async function waitReady(p,cache){
    console.log('P10 full lesson '+id+': '+current.completed+'/'+total+' passed with '+current.browserLaunches+' full browser launches');
   }
   check(errors.length===0,'no uncaught page errors across complete lessons and browser restarts');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...meta,checks,lessons,errors},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...meta,checks,firstOfflineB39,lessons,errors},null,2));
   console.log('P10 full lessons '+checks.length+' real Chromium checks passed');
  }catch(error){
   if(current){current.result='B';current.unresolved=[String(error)];}
-  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({...meta,checks,lessons,errors,error:String(error),stack:error.stack},null,2));
+  fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({...meta,checks,firstOfflineB39,lessons,errors,error:String(error),stack:error.stack},null,2));
   await page?.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
   console.error(error.stack||error);process.exitCode=1;
  }finally{

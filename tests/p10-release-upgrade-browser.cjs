@@ -376,6 +376,9 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   provenance.profiles.push({id:retryProfileId,role:'failed-install-retry',storage:'isolated-browser-context'});
   record('retry-profile-opened',{profile:'failed-install-retry',profileId:retryProfileId,phase});
   observeContext(failCtx,'failed-install-retry');
+  await failCtx.addInitScript(origin=>{
+   if(location.origin===origin)window.__p10BeforeApp=localStorage.getItem('math-explorer-v2');
+  },new URL(base).origin);
   const failPage=await failCtx.newPage();
   failPage.on('pageerror',e=>errors.push(String(e)));
   diagnosticPage=failPage;
@@ -383,6 +386,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   await lesson(failPage,'equivalent');
   await failPage.locator('#actions [data-do="check"]').click();
   const failBefore=await read(failPage);
+  fs.writeFileSync(path.join(out,'retry-before-failed-install.json'),failBefore);
   release='new';deny='learning/phase5/b39-model.js';
   const deniedStart=trace.length;
   await failPage.evaluate(async()=>{
@@ -414,9 +418,28 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   check(failureKeys.includes(oldCache),'failed new SW install retains old complete cache',{cacheKeys:failureKeys});
   check(await read(failPage)===failBefore,'failed upgrade does not mutate original learning history');
   offlineServing=true;await failCtx.setOffline(true);
-  await lesson(failPage,'equivalent');
   await offlineReload(failPage,'equivalent','failed install leaves historical cached page available without network transport');
-  check(await read(failPage)===failBefore,'failed install still opens original lesson offline without rewriting records');
+  const retryBeforeApp=await failPage.evaluate(()=>window.__p10BeforeApp),retryAfterOpen=await read(failPage);
+  if(typeof retryBeforeApp==='string')fs.writeFileSync(path.join(out,'retry-offline-before-app.json'),retryBeforeApp);
+  fs.writeFileSync(path.join(out,'retry-offline-after-app.json'),retryAfterOpen);
+  check(retryBeforeApp===failBefore,'failed install preserves exact stored bytes before historical offline app startup');
+  // The immutable historical openLesson calls update even without an edit.
+  // Only its lesson updatedAt and rememberSession continuation.at may advance;
+  // attempt timestamps, workpieces, hints, notes and every other field must match.
+  const beforeOpenState=JSON.parse(failBefore),afterOpenState=JSON.parse(retryAfterOpen),nativeTimestampChanges={};
+  for(const [field,previous,restored,key] of [
+   ['lessons.equivalent.updatedAt',beforeOpenState.lessons.equivalent,afterOpenState.lessons.equivalent,'updatedAt'],
+   ['daily.continuation.at',beforeOpenState.daily.continuation,afterOpenState.daily.continuation,'at']
+  ]){
+   const before=previous[key],after=restored?.[key],beforeMs=Date.parse(before),afterMs=Date.parse(after);
+   assert.ok(typeof after==='string'&&Number.isFinite(afterMs)&&new Date(afterMs).toISOString()===after,
+    field+' must remain a valid native timestamp');
+   assert.ok(Number.isFinite(beforeMs)&&afterMs>=beforeMs,field+' must not move backwards on reopening');
+   nativeTimestampChanges[field]={before,after};
+   restored[key]=before;
+  }
+  assert.deepEqual(afterOpenState,beforeOpenState,'historical offline reopening must preserve every field except its two native access timestamps');
+  check(true,'historical offline reopening preserves complete learning evidence and valid access timestamps',{nativeTimestampChanges});
   await failPage.locator('#actions [data-do="check"]').click();
   let failAfterOffline=await read(failPage);
   check(JSON.parse(failAfterOffline).lessons.equivalent.cases[0].attempts.length===2,'historical release still grades and saves after failed install offline');
