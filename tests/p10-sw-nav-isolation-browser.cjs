@@ -84,6 +84,14 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
     expectedBytes:expected.length,matchingDigest:hash(data)===hash(expected)});
   }
   reports.push(httpCheck);
+  // Diagnostic-only A/B experiment: modify the TEMPORARY old worktree's SW
+  // fetch-time cache write, not the real historical commit or its precache.
+  // Such modified-worker runs cannot count as genuine historical upgrades.
+  const oldSwFile=path.join(oldDir,'dist/sw.js');
+  const historicalSw=fs.readFileSync(oldSwFile,'utf8');
+  const oldRuntimeWrite='if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,copy)));}return response;';
+  if(historicalSw.split(oldRuntimeWrite).length!==2)throw Error('historical SW fetch pattern changed');
+  const noRuntimeWriteSw=historicalSw.replace(oldRuntimeWrite,'return response;');
   const cases=[
    {name:'A-new-without-SW',blocked:true},
    {name:'B-fresh-new-SW'},
@@ -95,11 +103,17 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
    {name:'C-upgrade-offline-toggle-closed',upgrade:true,offline:true,closeOld:true},
    {name:'D-upgrade-bypass-SW',upgrade:true,bypass:true},
    {name:'E-upgrade-cleanup-after-old-close',upgrade:true,closeOld:true,cleanup:true},
-   {name:'G-upgrade-content-length',upgrade:true,length:true}
+   {name:'G-upgrade-content-length',upgrade:true,length:true},
+   // Repeat the one-variable test three times; C cases retain the untouched worker.
+   {name:'H-old-fetch-write-disabled-1',upgrade:true,diagnosticNoRuntimeWrite:true},
+   {name:'H-old-fetch-write-disabled-2',upgrade:true,diagnosticNoRuntimeWrite:true},
+   {name:'H-old-fetch-write-disabled-3',upgrade:true,diagnosticNoRuntimeWrite:true}
   ];
   for(const cfg of cases){
    const rec={name:cfg.name,conditions:cfg,oldCommit:OLD,newCommit:current,oldCache,newCache};
    const eventStart=events.length;
+   fs.writeFileSync(oldSwFile,cfg.diagnosticNoRuntimeWrite?noRuntimeWriteSw:historicalSw);
+   rec.historicalSwModifiedForDiagnosis=!!cfg.diagnosticNoRuntimeWrite;
    release=cfg.upgrade?'old':'new';explicitLength=!!cfg.length;
    const ctx=await browser.newContext({serviceWorkers:cfg.blocked?'block':'allow',viewport:{width:1280,height:800},reducedMotion:'reduce'});
    let oldPage,tab;
