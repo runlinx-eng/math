@@ -159,11 +159,13 @@ ExtendableEvent.prototype.waitUntil=function(promise){
 };
 self.addEventListener('fetch',event=>{if(/\\/(learn|v2)\\.html/.test(event.request.url))p10Trace('fetch:dispatch',{version:p10Version,url:event.request.url});});
 `;
-  const cases=process.env.P10_SW_CACHE_PROBE==='1'?[
+  const probes=[
    {name:'N1-old-cache-original-response',upgrade:true,diagnosticMode:'cacheOriginal'},
    {name:'N2-old-cache-copied-response',upgrade:true,diagnosticMode:'cacheCopy'},
    {name:'O-lifecycle-and-cache',upgrade:true,diagnosticMode:'lifecycle'}
-  ]:[
+  ];
+  const diagnostic=!!process.env.P10_SW_CACHE_PROBE;
+  const cases=diagnostic?(process.env.P10_SW_CACHE_PROBE==='O'?probes.slice(2):probes):[
    {name:'C-original-transition-timing',upgrade:true},
    {name:'C-verified-new-controller',upgrade:true,strictReady:true}
   ];
@@ -173,7 +175,7 @@ self.addEventListener('fetch',event=>{if(/\\/(learn|v2)\\.html/.test(event.reque
    const eventStart=events.length;
    const oldSwVariant=cfg.diagnosticMode==='cacheOriginal'?nVariant(false):
     cfg.diagnosticMode==='cacheCopy'?nVariant(true):
-    cfg.diagnosticMode==='lifecycle'?lifecycleTrace('old'):historicalSw;
+    cfg.diagnosticMode==='lifecycle'?lifecycleTrace('old')+historicalSw:historicalSw;
    fs.writeFileSync(oldSwFile,oldSwVariant);
    rec.historicalSwModifiedForDiagnosis=oldSwVariant!==historicalSw;
    rec.oldSwVariant=cfg.diagnosticNoRuntimeWrite?'no-runtime-write':cfg.diagnosticMode||'untouched';
@@ -289,7 +291,12 @@ self.addEventListener('fetch',event=>{if(/\\/(learn|v2)\\.html/.test(event.reque
   }
   fs.writeFileSync(path.join(out,'isolation-results.json'),JSON.stringify({oldCommit:OLD,newCommit:current,oldCache,newCache,reports,errors},null,2));
   fs.writeFileSync(path.join(out,'isolation-http-events.json'),JSON.stringify(events,null,2));
-  console.log('P10_ISOLATION_DONE; diagnostic only, not P10 acceptance');
+  if(!diagnostic){
+   const failures=reports.filter(report=>report.conditions&&!report.historicalSwModifiedForDiagnosis&&
+    (report.setupError||!report.navigation?.committed||!report.appLoaded));
+   if(failures.length)throw Error('unmodified historical SW navigation regression failed: '+failures.map(report=>report.name).join(', '));
+   console.log('P10_SW_NAVIGATION_REGRESSION_OK');
+  }else console.log('P10_ISOLATION_DONE; N/O diagnostic only, not P10 acceptance');
  }catch(e){
   fs.writeFileSync(path.join(out,'isolation-failure.json'),JSON.stringify({message:String(e),stack:e.stack,reports,events:events.slice(-100)},null,2));
   console.error('P10_ISOLATION_FATAL '+String(e));process.exitCode=1;
