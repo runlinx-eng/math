@@ -64,3 +64,12 @@
 - 故障前 Cache Storage 同时存在 `math-explorer-20261111-p8-b39-lazy-v1` 和 `math-explorer-20261111-p10-continuity-r2-v1`；是否属于旧 Worker 并发写入、清理竞态或测试 HTTP 服务器响应阻塞，尚无证据定论，不能把缓存共存直接写成根因。
 - 提交 `50862fb` 为真实 Chromium 测试新增 HTTP 请求/完成/中止、页面请求/响应/失败、Service Worker 创建与状态、失败时浏览器状态诊断，保存 `diagnostics.json`；不放宽导航、版本升级、记录完整性或离线判题断言。
 - **工程门槛仍未通过（C）**：不得把调试日志改动称为根因修复；旧标签页防覆盖、升级中断恢复、V1/V2 文件迁移及四种全课离线闭环仍待本轮实际跑完并按场景 A/B/C 核验。真实历史儿童备份、Mac 人工、儿童使用和独立数学教研依然未完成。
+
+## P10 R3 第五阶段：复验环境中断与证据边界（2026-11-11）
+
+- 重新核查 main `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`；#66/#67/#68/#69 仍为 Draft。PR #69 依赖 #68，#68 依赖 #67；#66 独立。
+- `2bcb3b663da23096674b4f27186c96fb4eb71687` 上的 Required run `43036967556` 与 P8 run `43036967682` 均失败于 Chromium 安装前置步骤，而非浏览器断言：Ubuntu apt 镜像 DNS `Temporary failure resolving 'azure.archive.ubuntu.com'`，`playwright install --with-deps chromium` 返回 100。Required 的 Node/语法步骤成功，浏览器回归跳过。该次不能作为上轮 SW 修复通过或失败的证明。
+- 历史失败 run `43031402992` Artifact `13860279890` 的 `diagnostics.json`/`failure.json`：旧、新学习存储 `before-upgrade.json` 与 `after-upgrade.json` 字节一致；新 SW 缓存完整，但新的 `learn.html#share` 导航等候 commit 45 秒超时。服务器记录 `learn.html` 请求后 `server-aborted`，浏览器最终状态探针超时。该证据不能独立确定缓存清理竞态、fetch 生命周期还是旧标签页干扰为根因。
+- 将 Required 和 P8 的安装步骤改为 `npx playwright install chromium`，仅跳过 runner 已具备的系统依赖的二次 apt 安装，不降低任何 Chromium 测试、断言或验收标准。复验须以**本次最终 HEAD** 的 Required、Overview（若触发）及 P8 结果、Artifact 为准。
+- **等级 A**：仅保留有对应旧 SHA 真实浏览器原始证据的旧版三题、离线错误尝试与升级瞬间记录一致性；这不是本轮最新 HEAD 的安全通过证明。**等级 B**：升级后导航、旧标签页覆盖防护、V1/V2 浏览器导入、quota、断网升级、B39 和四类整课离线均仍待最终 HEAD 实测。**等级 C**：历史浏览器导航出现超时；未完成工程闭环，P10 不得收尾。
+- 真实历史儿童备份、Mac 人工使用、儿童独立学习和独立数学教研保持独立未完成。没有合并、部署或变更数学题/源关系/坐标/记录语义。
