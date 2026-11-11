@@ -28,7 +28,7 @@ function reachable(entry) {
 test('task-specific rendering is absent from the static 3D startup graph', () => {
   const entry = reachable('space.js');
   const lesson = reachable('learning/learn.js');
-  const viewModules = file => /^learning\\/phase[45]\\/.*-view\\.js$/.test(file);
+  const viewModules = file => (file.startsWith('learning/phase4/') || file.startsWith('learning/phase5/')) && file.endsWith('-view.js');
   const accidental = [...entry].filter(viewModules);
   assert.deepEqual(accidental, [], 'Unexpected lesson views on first-screen graph');
   assert.ok([...lesson].some(viewModules), 'Lesson workspace must retain task renderers');
