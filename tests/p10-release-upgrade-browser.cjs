@@ -248,10 +248,29 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   deny='';
   await failPage.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
   await newReady(failPage);
-  check(!(await failPage.evaluate(()=>caches.keys())).includes(oldCache),'retry upgrades successfully and retires old cache');
+  check((await failPage.evaluate(()=>caches.keys())).includes(newCache),'retry activates real new worker with complete cache');
+  // The old page may still have the old release JS running. Its cache is
+  // disposable only AFTER that client closes and the new worker controls
+  // a fresh page. Do not make early deletion part of upgrade readiness.
+  await failPage.close();
+  const recoveredPage=await failCtx.newPage();
+  await recoveredPage.goto(base+'v2.html#trail',{waitUntil:'commit'});
+  await newReady(recoveredPage);
+  const retryCleanup=await recoveredPage.evaluate(async()=>{
+   const worker=navigator.serviceWorker.controller;
+   return await new Promise((resolve,reject)=>{
+    const channel=new MessageChannel(),timer=setTimeout(()=>reject(Error('retry cleanup timed out')),12000);
+    channel.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
+    worker.postMessage({type:'math-explorer:cleanup-retired-caches'},[channel.port2]);
+   });
+  });
+  const retryKeys=await recoveredPage.evaluate(()=>caches.keys());
+  check(retryCleanup?.cache===newCache&&retryCleanup.complete===true&&
+   retryKeys.includes(newCache)&&!retryKeys.includes(oldCache),
+   'retry retires old cache safely after closing old client',{retryKeys});
   await failCtx.setOffline(true);
-  await lesson(failPage,'equivalent');
-  check(JSON.parse(await read(failPage)).lessons.equivalent.cases[0].attempts.length===1,'recovered new release launches and retains history offline');
+  await lesson(recoveredPage,'equivalent');
+  check(JSON.parse(await read(recoveredPage)).lessons.equivalent.cases[0].attempts.length===1,'recovered new release launches and retains history offline');
   await failCtx.close();
   check(errors.length===0,'no uncaught browser page errors',{errors});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,scenarios,errors,oldCommit:OLD,newCommit:process.env.GITHUB_SHA||'PR checkout',oldCache,newCache,realHistoricalChildBackup:false,macManual:false,childTrial:false,independentTeaching:false},null,2));
