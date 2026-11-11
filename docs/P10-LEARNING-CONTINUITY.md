@@ -1,5 +1,12 @@
 # P10 第一轮｜完整学习闭环、保存冲突和离线分层验收
 
+## 第十阶段追加：J/K 导航接管单变量结论（2026-11-12）
+- `6a233427e30228633df5659f40b8dcdc2e55fac2` 的 [Required 43061158681](https://github.com/runlinx-eng/math/actions/runs/43061158681) **failure**；[P8 43061158660](https://github.com/runlinx-eng/math/actions/runs/43061158660) **success**。原始 [Artifact 13872689128](https://github.com/runlinx-eng/math/actions/runs/43061158681/artifacts/13872689128) 已下载解压核查。
+- 在独立 Chromium context 且旧 SW `activated`、控制页面、旧 `learn.html` precache 确实存在、安装/预缓存/缓存名未改的前提下，J 临时旧 SW **仅不拦截** `/learn.html` 导航，22 ms 成功（HTTP 200、`fromServiceWorker=false`、实际应用已载入）；K 临时旧 SW **仅以缓存响应**该导航，9 秒超时；C 原始旧 SW 网络优先同样超时。H1/H2/H3 关闭运行时缓存写入后亦全部失败。这说明旧 SW 对 `learn.html` 调用 `respondWith` 参与失败条件，而**不能**仅归因旧缓存写入或测试 HTTP Content-Length；但尚缺 SW fetch Promise 结束与浏览器导航生命周期的直接因果证据。
+- J/K 都改过**临时历史旧 SW**，并非原始历史版本升级成功；新 Worker 在 J/K 导航前均处 `waiting: installed`、旧 SW 仍 `active`。J 导航成功**不证明新 Worker 已激活接管**。
+- 本次原完整真实历史升级仍在 11 项前置检查之后 `learn.html#share` 45 秒超时；未实现正式生产修复，无法给出三次修复复验或跨版本旧记录最终安全结论。仅下一步优先区分 `respondWith` 事件/响应链与 `waiting`→`activated` 的因果关系，不降低任何数据保护和完整升级断言。P10 保持 B/C，PR #69 Draft、不合并、不部署。
+
+
 ## P10 第三轮第十阶段：真实 A/B 结论（2026-11-12）
 - PR #69 的 `64e411049ad6caaea8c585fdda862d86de28a45c` 对应 Required [43058826516](https://github.com/runlinx-eng/math/actions/runs/43058826516) **failure**，P8 [43058826548](https://github.com/runlinx-eng/math/actions/runs/43058826548) **success**。Chromium Artifact [13872343462](https://github.com/runlinx-eng/math/actions/runs/43058826516/artifacts/13872343462) 已实读；Overview 同 SHA 未触发，不能算通过。
 - 原始旧 SW 控制页面、`activated`、旧 Cache Storage 命中 `learn.html` 后，C 原始对照及 H1/H2/H3（临时旧 worktree 移除 fetch 运行时 `cache.put` 和关联 `waitUntil`）**均在 9 秒内导航未提交**；三次 H 的新 Worker 均为 `waiting: installed`，旧 Worker 仍 `active: activated`，新旧缓存均在。无 SW、新装新版 SW、临时绕过 SW 导航成功。故单纯关闭旧 Worker 运行时缓存写入**不能修复**；不能归因于单一 `cache.put` 或 `waitUntil`。
