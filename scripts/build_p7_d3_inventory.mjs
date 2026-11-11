@@ -6,6 +6,9 @@ import {dirname,resolve} from 'node:path';
 import {LESSONS,ROUTES,lessonIds} from '../dist/learning/catalog.js';
 import {TASKS,PRACTICE,defaultModel,validModel} from '../dist/learning/tasks.js';
 import {BRIDGES,sourceBridge} from '../dist/learning/bridges.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+// The developer inventory enumerates all real tasks, unlike the browser's lazy shell.
+await ensureB39Ready();
 import {ACTIVITIES,KINDS,task as oldTask,defaultModel as oldModel,modelIsValid as oldValid} from '../dist/exploration-content.js';
 
 const here=dirname(fileURLToPath(import.meta.url));
