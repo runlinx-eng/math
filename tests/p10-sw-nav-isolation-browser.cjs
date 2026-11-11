@@ -10,9 +10,8 @@ const cacheAt=p=>fs.readFileSync(p,'utf8').match(/const CACHE\s*=\s*'([^']+)'/)?
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav','.woff2':'font/woff2'};
 const delay=t=>new Promise(r=>setTimeout(r,t));
 const timed=(promise,t,label)=>Promise.race([promise,new Promise(r=>setTimeout(()=>r({probeTimeout:label}),t))]);
-// Explicit Node-side polling is required here. An async predicate passed to
-// waitForFunction did not gate the previous CI run: its oldState was entirely
-// empty and the first /sw.js request was served after release='new'.
+// Explicit Node-side polling is required here. The previous CI's waitForFunction was followed by an entirely empty
+// oldState and its first /sw.js request was served after release='new'.
 // Keep all readiness evidence in the actual page execution context.
 const waitForOldControl=async(p,name)=>{
  const started=Date.now();let last;
@@ -110,8 +109,8 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
      oldPage=await ctx.newPage();
      await oldPage.goto(base+'v2.html#trail',{waitUntil:'commit',timeout:14000});
      // Old worker must actually install while the server is still serving OLD.
-     // A Promise-returning waitForFunction predicate previously returned before
-     // registration, making the 'successful upgrade' comparisons invalid.
+     // Previous comparisons observed an empty oldState, so their old-worker
+     // precondition was not demonstrated even though the wait appeared to pass.
      rec.oldState=await waitForOldControl(oldPage,oldCache);
      const oldSwRequests=events.slice(eventStart).filter(e=>e.event==='http-request'&&e.version==='old'&&e.path==='/sw.js');
      if(oldSwRequests.length===0)throw Error('old /sw.js was never served by the old release');
