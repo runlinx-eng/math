@@ -5,6 +5,11 @@ import {TASKS as F} from '../dist/learning/phase5/b17.js';
 import * as fractions from '../dist/learning/phase5/b17-model.js';
 import {TASKS as A} from '../dist/learning/phase5/b38.js';
 import * as arguments38 from '../dist/learning/phase5/b38-model.js';
+import {TASKS as P} from '../dist/learning/phase5/b34.js';
+import * as patterns34 from '../dist/learning/phase5/b34-model.js';
+import {TASKS as S} from '../dist/learning/phase5/b39.js';
+import * as tools39 from '../dist/learning/phase5/b39-model.js';
+import {freshLesson,modelForLesson,submitLesson,validateLesson,currentSubmission} from '../dist/learning/state.js';
 
 const attempt=value=>({value:structuredClone(value)});
 
@@ -111,4 +116,103 @@ test('P9 emitted thinking source IDs and practice codes belong to the pinned 50-
     assert.equal(note.method.code,sourceNode.code,'method code comes from the correct source chain');
     assert.equal(note.method.label,sourceNode.n.displayName,'no invented thinking title');
   }
+});
+
+test('P9 second round three anchored methods use the fixed source map',async()=>{
+  const fs=await import('node:fs');
+  const source=JSON.parse(fs.readFileSync(new URL('../docs/spatial-learning/thinking-source-map.json',import.meta.url)));
+  const byId=new Map(source.groups.flatMap(g=>g.nodes.map(n=>[n.id,{n,code:g.code}])));
+  const samples=[
+    [A.sense38[0],arguments38.example(A.sense38[0]),'sense38',0,'mt_WkKkb7W9Qd'],
+    [S.tools39[0],(()=>{const t=S.tools39[0],m=tools39.initial(t);m.method='calculator';m.entry='25*4';tools39.act(t,m,'s39-run');m.answer='100';return m;})(),'tools39',0,'mt_d-WZC2OyMB'],
+    [P.general34[2],patterns34.example(P.general34[2]),'general34',2,'mt_fZTn0W_iZR'],
+    [P.general34[3],patterns34.example(P.general34[3]),'general34',3,'mt_fZTn0W_iZR']
+  ];
+  for(const[t,m,id,index,nodeId]of samples){
+    const note=thinkingFeedback(t,m,{attempts:[attempt(m)]},{sessionId:id,index});
+    assert.equal(note?.method.nodeId,nodeId,id+':'+index);
+    assert.equal(note.method.code,byId.get(nodeId).code);
+    assert.equal(note.method.label,byId.get(nodeId).n.displayName);
+    assert.match(note.connection,/下次/);
+    assert.doesNotMatch(JSON.stringify(note),/已经掌握|能力评分/);
+    assert.equal(thinkingFeedback(t,m,{attempts:[]},{sessionId:id,index}),null);
+    assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]}),null);
+    assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},{sessionId:id,index:99}),null);
+    const changed=structuredClone(m);changed.prose='尚未提交的自由文字';
+    assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(m)]},{sessionId:id,index}),null);
+    const forged=structuredClone(m);forged.board.bad=!forged.board.bad;
+    assert.equal(thinkingFeedback(t,forged,{attempts:[attempt(forged)]},{sessionId:id,index}),null);
+  }
+});
+
+test('P9 MP.1 reading requires selected known and asked cards, not an arbitrary chain',()=>{
+  const t=A.sense38[0],context={sessionId:'sense38',index:0},m=arguments38.initial(t);
+  assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},context),null);
+  arguments38.act(t,m,'r38-card',{index:'wrong'});
+  assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},context),null);
+  const done=arguments38.example(t);
+  const note=thinkingFeedback(t,done,{attempts:[attempt(m),attempt(done)],support:true},context);
+  assert.match(note.observation,/原来3颗/);
+  assert.match(note.observation,/想找现在一共几颗/);
+  assert.match(note.detail.join(' '),/修改后又提交|提示/);
+  const copied={...t,prompt:'别的故事'};
+  assert.equal(thinkingFeedback(copied,done,{attempts:[attempt(done)]},context),null);
+  assert.equal(thinkingFeedback(A.story38[2],arguments38.example(A.story38[2]),
+    {attempts:[attempt(arguments38.example(A.story38[2]))]},{sessionId:'story38',index:2}),null);
+});
+
+test('P9 MP.5 requires actual calculator choice and replayed execution, not just correct answer',()=>{
+  const t=S.tools39[0],c={sessionId:'tools39',index:0},m=tools39.example(t);
+  assert.equal(m.method,'mental');
+  assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},c),null);
+  m.method='calculator';
+  assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},c),null);
+  m.entry='25*4';tools39.act(t,m,'s39-run');m.answer='100';
+  assert.match(thinkingFeedback(t,m,{attempts:[attempt(m)]},c).observation,/实际输入.*25\*4/);
+  const changed=structuredClone(m);changed.entry='25*5';
+  assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(m)]},c),null);
+  const bad=tools39.initial(t);bad.method='calculator';bad.entry='20*5';tools39.act(t,bad,'s39-run');bad.answer='100';
+  assert.equal(thinkingFeedback(t,bad,{attempts:[attempt(bad)]},c),null);
+  const notChosen=structuredClone(m);notChosen.method='mental';
+  assert.equal(thinkingFeedback(t,notChosen,{attempts:[attempt(notChosen)]},c),null);
+  const second=S.tools39[1],valid=tools39.initial(second);
+  valid.method='calculator';valid.entry='167*3';tools39.act(second,valid,'s39-run');valid.answer='501';
+  assert.equal(thinkingFeedback(second,valid,{attempts:[attempt(valid)]},{sessionId:'tools39',index:1})?.method.nodeId,'mt_d-WZC2OyMB');
+  assert.equal(thinkingFeedback(S.strategy39[0],tools39.example(S.strategy39[0]),
+    {attempts:[attempt(tools39.example(S.strategy39[0]))]},{sessionId:'strategy39',index:0}),null);
+});
+
+test('P9 MP.8 requires successive recorded increments and a checked fixed-rule choice',()=>{
+  for(const [index,expected]of [[2,'0和5交替'],[3,'2和7交替']]){
+    const t=P.general34[index],c={sessionId:'general34',index},m=patterns34.example(t);
+    assert.match(thinkingFeedback(t,m,{attempts:[attempt(m)]},c).observation,new RegExp(expected));
+    const noJudgment=structuredClone(m);noJudgment.answers[0]='';
+    assert.equal(thinkingFeedback(t,noJudgment,{attempts:[attempt(noJudgment)]},c),null);
+    const lost=structuredClone(m);lost.history=[];
+    assert.equal(thinkingFeedback(t,lost,{attempts:[attempt(lost)]},c),null);
+    const incomplete=patterns34.initial(t);
+    assert.equal(thinkingFeedback(t,incomplete,{attempts:[attempt(incomplete)]},c),null);
+    assert.equal(thinkingFeedback(t,m,{attempts:[attempt(m)]},{sessionId:'tables34',index}),null);
+  }
+});
+
+test('P9 original lesson record schema and modified current check survive second-round feedback',()=>{
+  const t=S.tools39[0],id='tools39',a=freshLesson(id),m=modelForLesson(a);
+  m.method='calculator';m.entry='25*4';tools39.act(t,m,'s39-run');m.answer='100';
+  const first=submitLesson(a);
+  assert.equal(first.correct,true);
+  const record=validateLesson(a,id);
+  assert.equal(currentSubmission(record).status,'correct');
+  const note=thinkingFeedback(t,record.models[0],record.cases[0],{sessionId:id,index:0});
+  assert.ok(note);
+  assert.deepEqual(Object.keys(record.cases[0]).sort(),['attempts','support']);
+  assert.equal(record.models[0].history.length,1);
+  record.models[0].answer='99';
+  assert.equal(currentSubmission(record).status,'modified');
+  assert.equal(thinkingFeedback(t,record.models[0],record.cases[0],{sessionId:id,index:0}),null);
+  record.models[0].answer='100';
+  submitLesson(record);
+  assert.equal(record.cases[0].attempts.length,2);
+  assert.equal(currentSubmission(record).status,'correct');
+  assert.ok(thinkingFeedback(t,record.models[0],record.cases[0],{sessionId:id,index:0}));
 });
