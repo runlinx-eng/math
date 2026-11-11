@@ -80,7 +80,8 @@ const snapshot=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-exp
   await damaged.evaluate(text=>localStorage.setItem('math-explorer-v2',text),raw);
   await damaged.reload();await damaged.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
   const exportEvent=damaged.waitForEvent('download');
-  await damaged.locator('#menu-popover [data-action="export"]').click({force:true});
+  await damaged.locator('[data-action="menu"]').click();
+  await damaged.locator('#menu-popover [data-action="export"]').click();
   const rescue=await exportEvent;
   check(rescue.suggestedFilename().includes('原始存储'),'3D damaged record exports rescue text, not v2 backup');
   check(fs.readFileSync(await rescue.path(),'utf8')===raw,'3D rescue preserves exact damaged data');
