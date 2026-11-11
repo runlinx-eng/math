@@ -32,12 +32,12 @@ test('P10: different authored drafts cannot silently replace each other',()=>{
  assert.throws(()=>assertNoConcurrentLessonOverwrite(local,stored),/自由解释草稿/);
 });
 
-test('P10: unchanged attempt IDs can union newly recorded attempts',()=>{
+test('P10: a newly submitted active task requires reloading the stale tab',()=>{
  const local=freshLesson('equivalent');modelForLesson(local);
  submitLesson(local);
  const stored=structuredClone(local);
  submitLesson(stored);
- assert.doesNotThrow(()=>assertNoConcurrentLessonOverwrite(local,stored));
+ assert.throws(()=>assertNoConcurrentLessonOverwrite(local,stored),/新的提交/);
  assert.equal(stored.cases[0].attempts.length,2);
 });
 
