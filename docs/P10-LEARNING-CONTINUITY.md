@@ -73,3 +73,9 @@
 - 将 Required 和 P8 的安装步骤改为 `npx playwright install chromium`，仅跳过 runner 已具备的系统依赖的二次 apt 安装，不降低任何 Chromium 测试、断言或验收标准。复验须以**本次最终 HEAD** 的 Required、Overview（若触发）及 P8 结果、Artifact 为准。
 - **等级 A**：仅保留有对应旧 SHA 真实浏览器原始证据的旧版三题、离线错误尝试与升级瞬间记录一致性；这不是本轮最新 HEAD 的安全通过证明。**等级 B**：升级后导航、旧标签页覆盖防护、V1/V2 浏览器导入、quota、断网升级、B39 和四类整课离线均仍待最终 HEAD 实测。**等级 C**：历史浏览器导航出现超时；未完成工程闭环，P10 不得收尾。
 - 真实历史儿童备份、Mac 人工使用、儿童独立学习和独立数学教研保持独立未完成。没有合并、部署或变更数学题/源关系/坐标/记录语义。
+
+### 第五阶段最新 HEAD 实际复验结果（`239c2c9d403eebbd3888626771bec39d4c450a88`）
+- Required [43042940403](https://github.com/runlinx-eng/math/actions/runs/43042940403)：**failure**，不是通过。Chromium 成功安装，Node 263 项全通过；P9 浏览器 23 项、P10 第一轮 24 项、P10 第二轮 43 项成功；R3 在 `learn.html#share` 的 `goto(waitUntil=commit)` **再次超时 45 秒**。浏览器导航安全门槛依旧失败。
+- 最新 Chromium Artifact [13865143932](https://github.com/runlinx-eng/math/actions/runs/43042940403/artifacts/13865143932)：`failure.json`/`diagnostics.json` 均确认 11 项前置检查通过，`before-upgrade.json` 与 `after-upgrade.json` **字节完全相同（各 1992 字节）**。事件末端：已激活 SW、旧新缓存并存，`learn.html` 服务器收到请求但记录 `server-aborted`，浏览器现场探针超时。该结果说明上阶段 `2bcb3b6` 并未解除卡死；但仍未精确归因到 SW、缓存竞争、fetch 生命周期或 Chromium/测试服务器交互。
+- P8 [43042940326](https://github.com/runlinx-eng/math/actions/runs/43042940326)：**success**，对应相同 HEAD。Overview 未见同 SHA 的独立运行，不能记 success。
+- 本阶段未修改应用 SW/存储代码；仅修正 CI 环境并重现原障碍。**P10 保持未完成，关键升级后测试均未进入，绝不宣布儿童记录全量安全。** 下一步应针对最新 `learn.html` server-aborted 做真实隔离对照实验并修对应根因，不靠增加超时。
