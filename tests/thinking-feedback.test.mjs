@@ -9,6 +9,10 @@ import {TASKS as P} from '../dist/learning/phase5/b34.js';
 import * as patterns34 from '../dist/learning/phase5/b34-model.js';
 import {TASKS as S} from '../dist/learning/phase5/b39.js';
 import * as tools39 from '../dist/learning/phase5/b39-model.js';
+import {registerB39Model} from '../dist/learning/phase4/engine.js';
+// In production the selected B39 task registers its model on demand; make that
+// same registration explicit in this isolated Node test without eager runtime imports.
+registerB39Model(tools39);
 import {freshLesson,modelForLesson,submitLesson,validateLesson,currentSubmission} from '../dist/learning/state.js';
 
 const attempt=value=>({value:structuredClone(value)});
