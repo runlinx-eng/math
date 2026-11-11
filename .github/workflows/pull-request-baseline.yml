@@ -72,6 +72,8 @@ jobs:
           node --check tests/p7-learning-panel-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
+          node --check dist/learning/thinking-feedback.js
+          node --check tests/p9-thinking-feedback-browser.cjs
           node --check dist/learning/p3-workflow.js
           node --check dist/learning/p3-view.js
           node --check dist/learning/workspace-flow.js
@@ -103,6 +105,8 @@ jobs:
             tests/p7-learning-workspace-flow.test.mjs
             tests/p7-d6-learning-contract.test.mjs
             tests/p7-d7-task-adapters.test.mjs
+            tests/thinking-feedback.test.mjs
+            tests/thinking-source-map.test.mjs
             tests/p8-runtime-boundary.test.mjs
             tests/p7-d5-entry-decision.test.mjs
             tests/p7-d3-capability-inventory.test.mjs
@@ -169,6 +173,7 @@ jobs:
             tests/p7-d5-entry-browser.cjs \
             tests/p7-d6-fixed-ui-browser.cjs \
             tests/p7-d7-multi-type-browser.cjs \
+            tests/p9-thinking-feedback-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
@@ -237,6 +242,7 @@ jobs:
             verification/p7-d5/
             verification/p7-d6/
             verification/p7-d7/
+            verification/p9-thinking-feedback/
             verification/p8-node-surfaces/
             verification/p8-trail-performance/
             verification/p8-mode-clicks/
