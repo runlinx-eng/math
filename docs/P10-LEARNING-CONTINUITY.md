@@ -79,3 +79,11 @@
 - 最新 Chromium Artifact [13865143932](https://github.com/runlinx-eng/math/actions/runs/43042940403/artifacts/13865143932)：`failure.json`/`diagnostics.json` 均确认 11 项前置检查通过，`before-upgrade.json` 与 `after-upgrade.json` **字节完全相同（各 1992 字节）**。事件末端：已激活 SW、旧新缓存并存，`learn.html` 服务器收到请求但记录 `server-aborted`，浏览器现场探针超时。该结果说明上阶段 `2bcb3b6` 并未解除卡死；但仍未精确归因到 SW、缓存竞争、fetch 生命周期或 Chromium/测试服务器交互。
 - P8 [43042940326](https://github.com/runlinx-eng/math/actions/runs/43042940326)：**success**，对应相同 HEAD。Overview 未见同 SHA 的独立运行，不能记 success。
 - 本阶段未修改应用 SW/存储代码；仅修正 CI 环境并重现原障碍。**P10 保持未完成，关键升级后测试均未进入，绝不宣布儿童记录全量安全。** 下一步应针对最新 `learn.html` server-aborted 做真实隔离对照实验并修对应根因，不靠增加超时。
+
+## P10 R3 第六阶段：隔离导航对照初步证据（尚未收尾）
+
+- `472cc544ea88967cb6d68a7f64b27038781c0fe8` 的 [Required 43047313108](https://github.com/runlinx-eng/math/actions/runs/43047313108) 失败；[P8 43047312703](https://github.com/runlinx-eng/math/actions/runs/43047312703) 成功。Required Artifact [13867757144](https://github.com/runlinx-eng/math/actions/runs/43047313108/artifacts/13867757144) 包含七组真实 Chromium 隔离实验的 JSON、HTTP 事件和截图。
+- 无 SW、新版全新 SW、保留旧标签页、关闭旧标签页、绕过 SW、关闭旧标签页后执行旧缓存清理、显式 HTTP Content-Length 七组测试中，`learn.html#share` 均实际提交导航并加载数学学习任务；旧、新 HTTP 资源校验一致。**这不等于完整跨版本安全门禁通过。**
+- 原完整场景仍在旧版完成三题、关闭重开、离线提交后升级时出现导航 commit 超时。仅从旧缓存残留、SW 激活或测试 HTTP 收到请求不能推断根因。
+- 已继续追加“旧版离线答题→恢复联网→升级”的隔离场景，提交 `f8bcdcd59252040d7eaf2e4bcec4d96311406821`；需要对应新 SHA 的 Chromium/JSON 结果验证。未定位根因前不实施应用级修复，不将诊断测试当作验收替代。
+- V1/V2 浏览器导入、Quota、升级失败重试、四类整课离线仍由原阻塞门禁限制，维持 B/C；真实历史儿童备份、Mac/Windows 安装与实机、儿童试用和独立教研未完成。保持 Draft，禁止合并和部署。
