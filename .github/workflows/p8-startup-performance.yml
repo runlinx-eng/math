@@ -38,9 +38,13 @@ jobs:
           MATH_STARTUP_BASE_SHA: a3b23506e4e6e3aac67c55a408a2dd2f9ec82cb3
           MATH_STARTUP_ROUNDS: '5'
         run: |
-          python3 -m http.server 43828 --bind 127.0.0.1 --directory /tmp/math-startup-before/dist > /tmp/math-startup-before.log 2>&1 &
+          cp -a /tmp/math-startup-before/dist /tmp/math-startup-before-dist
+          cp -a dist /tmp/math-startup-after-dist
+          node tests/p8-startup-performance-browser.cjs --instrument /tmp/math-startup-before-dist
+          node tests/p8-startup-performance-browser.cjs --instrument /tmp/math-startup-after-dist
+          python3 -m http.server 43828 --bind 127.0.0.1 --directory /tmp/math-startup-before-dist > /tmp/math-startup-before.log 2>&1 &
           pid_before=$!
-          python3 -m http.server 43827 --bind 127.0.0.1 --directory dist > /tmp/math-startup-after.log 2>&1 &
+          python3 -m http.server 43827 --bind 127.0.0.1 --directory /tmp/math-startup-after-dist > /tmp/math-startup-after.log 2>&1 &
           pid_after=$!
           trap 'kill "$pid_before" "$pid_after" 2>/dev/null || true' EXIT
           for port in 43827 43828; do
