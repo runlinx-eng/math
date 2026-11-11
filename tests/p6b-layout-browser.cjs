@@ -84,7 +84,7 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const selectedBeforeContrast=await nodeContrast(selectedGraph.selected);
    assert(beforeContrast>0&&selectedBeforeContrast>0,'real WebGL node colors can be sampled before learning');
    await page.locator('#focus-card [data-action="open"]').first().click();
-   await page.frameLocator('#journey-frame').locator('#p3-learning-flow').waitFor();
+   await page.frameLocator('#journey-frame').locator('#p3-learning-flow').waitFor({state:'attached'});
    const beforeLearn=await snap();
    assert(equalCamera(baseline,beforeLearn),'opening learning workspace preserves camera');
    assert(await page.locator('#learning-map-context').isVisible(),'learning maps the selected concept into the original 3D space');

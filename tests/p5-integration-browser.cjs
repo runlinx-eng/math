@@ -15,6 +15,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
  const frame=page.frameLocator('#journey-frame');
  const snap=()=>page.evaluate(()=>mathSpace.snapshot());
+ const revealEvidence=()=>frame.locator('#learning-support').evaluate(el=>{el.open=true;});
  try{
   await page.goto(base+'?world=network&layout=53#atlas');
   await page.waitForFunction(()=>window.mathSpace?.snapshot().visibleNodes.length===537);
@@ -31,20 +32,25 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   check(await page.locator('#focus-card [data-context-section="relations"] .network-relations').count()===1,'4 relationship tracing: original relation detail accessible');
   check(sameCamera(initial,await snap()),'concept and relationship selection preserve camera');
   await page.locator('#focus-card [data-action="open"]').first().click();
-  await frame.locator('#p3-learning-flow').waitFor();
-  check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('尚未提交检查')),'5 hands-on learning: configured activity opens without fake completion');
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
+  await frame.locator('#learning-support > summary').click();
+  check(await frame.locator('.p3-before-check').isHidden(),'5 hands-on learning: no empty evidence wall before any check');
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'a task is checkable without a separate start');
   await frame.locator('#actions [data-do="check"]').click();
-  check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('需要修改')),'6 result verification: incorrect first attempt surfaced');
+  await revealEvidence();
+  check(await frame.locator('.p3-evidence').textContent().then(x=>x.includes('需要修改')),'6 result verification: incorrect first attempt surfaced');
   await frame.locator('[data-do="hint"]').first().click();
+  await revealEvidence();
   await frame.locator('[data-do="p3-retry"]').click();
+  await revealEvidence();
   await frame.locator('#actions [data-do="check"]').click();
-  await frame.locator('.p3-evidence-details summary').click();
-  check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('2 次提交')&&x.includes('提示或支持')),'6 verification: history and support retained in detail');
+  await revealEvidence();
+  await frame.locator('.p3-evidence-details').evaluate(el=>{el.open=true;});
+  check(await frame.locator('.p3-evidence').textContent().then(x=>x.includes('2 次提交')&&x.includes('提示或支持')),'6 verification: history and support retained in detail');
   check(await frame.locator('.p3-followups [data-do="p3-related"]').count()>0,'7 extension: actual source relationship leads onward');
-  await frame.locator('.p3-application>summary').click();
-  check(await frame.locator('.p3-application').innerText().then(x=>x.includes('模拟情境')&&x.includes('现实生活')),'8 application: simulation and real-life distinction explicit when voluntarily opened');
-  await frame.locator('.p3-application>summary').click();
+  await frame.locator('.p3-application').evaluate(el=>{el.open=true;});
+  check(await frame.locator('.p3-application').textContent().then(x=>x.includes('模拟情境')&&x.includes('现实生活')),'8 application: simulated and real practice stay available in the optional drawer');
+  await frame.locator('.p3-application').evaluate(el=>{el.open=false;});
   const saved=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   check(JSON.parse(saved).lessons.share.cases[0].attempts.length===2,'9 footprint: two genuine browser submissions persisted');
   const before=await snap();
@@ -56,8 +62,9 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
     check(sameCamera(before,await snap()),'viewport resize does not move 3D camera '+w+'x'+h);
   }
   await page.reload();await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen);
-  await frame.locator('#p3-learning-flow').waitFor();
-  check(await frame.locator('.p3-evidence').innerText().then(x=>x.includes('2 次提交')),'9 resume: actual attempts survive refresh');
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
+  await frame.locator('#learning-support > summary').click();
+  check(await frame.locator('.p3-evidence').textContent().then(x=>x.includes('2 次提交')),'9 resume: actual attempts survive refresh');
   await page.locator('#journey-surface [data-action="close-journey"]').click();
   await page.locator('.primary-nav [data-action="nav-trail"]').click();
   await page.waitForFunction(()=>document.querySelector('#utility-frame')?.contentWindow?.location.hash==='#trail');

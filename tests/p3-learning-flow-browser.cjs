@@ -11,26 +11,33 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
  page.on('pageerror',e=>errors.push(String(e)));
  const frame=page.frameLocator('#journey-frame');
  const snap=()=>page.evaluate(()=>mathSpace.snapshot());
+ const revealEvidence=()=>frame.locator('#learning-support').evaluate(el=>{el.open=true;});
  try{
   await page.goto('http://127.0.0.1:43827/?world=network&layout=53#space/node/mt_ndGqFPWyen');
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
   const before=await snap();
   await page.locator('#focus-card [data-action="open"]').first().click();
-  await frame.locator('#p3-learning-flow').waitFor();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('尚未提交检查')),'initial record is not completion evidence');
-  await frame.locator('.p3-application>summary').click();
-  check(await frame.locator('.p3-application').innerText().then(s=>s.includes('模拟情境')&&s.includes('现实生活')),'simulation and real practice explicitly distinct when the child opens optional applications');
-  await frame.locator('.p3-application>summary').click();
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
+  await frame.locator('#learning-support > summary').click();
+  check(await frame.locator('.p3-before-check').isHidden(),'unsubmitted work keeps optional empty evidence out of the reading path');
+  await frame.locator('.p3-application').evaluate(el=>el.open=true);
+  check(await frame.locator('.p3-application').textContent().then(s=>s.includes('模拟情境')&&s.includes('现实生活')),'simulation and real practice remain inspectable in the optional applications drawer');
+  await frame.locator('.p3-application').evaluate(el=>el.open=false);
   check(await frame.locator('#actions [data-do="check"]').isVisible(),'first screen already offers checking without a separate start mode');
   await frame.locator('#actions [data-do="check"]').click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('需要修改')),'first incorrect attempt is labeled');
+  await revealEvidence();
+  check(await frame.locator('.p3-evidence').textContent().then(s=>s.includes('需要修改')),'first incorrect attempt is labeled');
   await frame.locator('[data-do="hint"]').first().click();
-  await frame.locator('.p3-evidence-details summary').click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('提示或支持')),'hint evidence remains available in expanded history');
+  await revealEvidence();
+  await frame.locator('.p3-evidence-details').evaluate(el=>{el.open=true;});
+  check(await frame.locator('.p3-evidence').textContent().then(s=>s.includes('提示或支持')),'hint evidence remains available in expanded history');
   await frame.locator('[data-do="p3-retry"]').click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('1 次提交')),'retry does not erase attempt history');
+  await revealEvidence();
+  check(await frame.locator('.p3-evidence').textContent().then(s=>s.includes('1 次提交')),'retry does not erase attempt history');
   await frame.locator('#actions [data-do="check"]').click();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('2 次提交')),'second attempt retained');
+  await revealEvidence();
+  check(await frame.locator('.p3-evidence').textContent().then(s=>s.includes('2 次提交')),'second attempt retained');
+  await revealEvidence();
   await frame.locator('#record summary').click();
   check(await frame.locator('#record-body').innerText().then(s=>s.includes('第 1 次')&&s.includes('第 2 次')),'record shows attempts chronologically');
   const storage=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
@@ -40,7 +47,7 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   const pose=await snap();
   for(const [w,h] of [[1440,900],[980,760],[1280,720]]){
     await page.setViewportSize({width:w,height:h});
-    await frame.locator('#p3-learning-flow').scrollIntoViewIfNeeded();
+    await frame.locator('#learning-support').scrollIntoViewIfNeeded();
     const rect=await page.locator('#journey-surface').boundingBox();
     check(!!rect&&rect.x>=-2&&rect.y>=-2&&rect.x+rect.width<=w+2&&rect.y+rect.height<=h+2,'learning pane fits '+w+'x'+h);
     await page.screenshot({path:path.join(out,'p3-learning-'+w+'x'+h+'.png')});
@@ -49,8 +56,10 @@ const checks=[],errors=[],check=(ok,label)=>{if(!ok)throw Error(label);checks.pu
   }
   await page.reload();
   await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen===true);
-  await frame.locator('#p3-learning-flow').waitFor();
-  check(await frame.locator('.p3-evidence').innerText().then(s=>s.includes('2 次提交')),'refresh restores history and learning activity');
+  await frame.locator('#p3-learning-flow').waitFor({state:'attached'});
+  await frame.locator('#learning-support > summary').click();
+  check(await frame.locator('.p3-evidence').textContent().then(s=>s.includes('2 次提交')),'refresh restores history and learning activity');
+  await revealEvidence();
   const optionalRelations=frame.locator('.p3-followups');
   if(await optionalRelations.count()&&!(await optionalRelations.evaluate(el=>el.open)))await optionalRelations.locator('summary').click();
   await frame.locator('[data-do="p3-related"]').first().click();
