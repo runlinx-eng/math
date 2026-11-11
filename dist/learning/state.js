@@ -46,5 +46,35 @@ export function validateLesson(raw,id,{allowBridge=false}={}){const fail=()=>{th
  if(out.view==='summary'&&!lessonSummary(out).completed)out.view='task';
  return out;
 }
+// P10: two open learning surfaces may hold different versions of one workpiece.
+// Check the persisted copy BEFORE merging it into the in-memory copy. Merging
+// attempts is safe; silently replacing another tab's draft or workpiece is not.
+export function assertNoConcurrentLessonOverwrite(local,persisted){
+ const conflict=detail=>{throw new Error('此学习任务已在另一个页面发生变化（'+detail+'）。已停止保存，原记录未覆盖。请保留当前页面并另存备份，然后刷新以查看最新作品。');};
+ if(!persisted){
+  if(Object.keys(local.models||{}).length||Object.keys(local.cases||{}).length||local.notes?.length||local.draft)
+   conflict('已保存的现场已被移走');
+  return;
+ }
+ if(persisted.id!==local.id)conflict('任务 ID');
+ if(persisted.view!==local.view||persisted.index!==local.index)conflict('当前任务位置');
+ for(const [key,model] of Object.entries(local.models||{}))
+  if(Object.hasOwn(persisted.models||{},key)&&JSON.stringify(model)!==JSON.stringify(persisted.models[key]))
+   conflict('任务 '+key+' 的作品');
+ if(local.draft&&persisted.draft&&local.draft!==persisted.draft)conflict('自由解释草稿');
+ for(const [key,entry] of Object.entries(local.cases||{})){
+  const other=persisted.cases?.[key];if(!other)continue;
+  const byId=new Map((other.attempts||[]).map(item=>[item.id,item]));
+  for(const attempt of entry.attempts||[]){
+   const saved=byId.get(attempt.id);
+   if(saved&&JSON.stringify(saved)!==JSON.stringify(attempt))conflict('任务 '+key+' 的历史提交');
+  }
+ }
+ const notes=new Map((persisted.notes||[]).map(item=>[item.id,item]));
+ for(const note of local.notes||[]){
+  const saved=notes.get(note.id);
+  if(saved&&JSON.stringify(saved)!==JSON.stringify(note))conflict('文字记录');
+ }
+}
 const mergeEvents=(a,b)=>{const map=new Map(a.map(e=>[e.id,e]));for(const e of b)if(!map.has(e.id))map.set(e.id,e);return [...map.values()].sort((a,b)=>a.at.localeCompare(b.at));};
 export function mergeLesson(a,b){if(!a)return structuredClone(b);const out=structuredClone(a);if(!out.draft&&b.draft){out.draft=b.draft;out.updatedAt=b.updatedAt>out.updatedAt?b.updatedAt:out.updatedAt;}for(const[k,r]of Object.entries(b.cases)){if(!out.cases[k])out.cases[k]=structuredClone(r);else{out.cases[k].support ||= r.support;out.cases[k].attempts=mergeEvents(out.cases[k].attempts,r.attempts).map((e,i)=>({...e,exposed:e.exposed||i>0}));}}out.notes=mergeEvents(a.notes,b.notes);for(const[k,m]of Object.entries(b.models))out.models[k]??=structuredClone(m);return out;}
