@@ -96,3 +96,12 @@
 - 原完整失败的近端事件链：导航请求开始；服务器收到 `/learn.html`；服务端记录未完成响应；未记录页面响应或 commit。之前只保留末尾 1,000 事件，且缺 CDP requestId、loaderId 等，无法证明服务端中止原因。
 - 本阶段仅调整两项真实 Chromium 诊断：隔离实验通过 Node 侧轮询并保存旧版 `controller`、`active.state`、旧缓存 `learn.html` 命中及旧 `sw.js` HTTP 请求证据，新增在线先学习再离线切换的对照；原完整测试保留完整 HTTP 事件和 CDP `requestWillBeSent/responseReceived/loadingFinished/loadingFailed/frameNavigated`，记录可关联字段。保留全部旧版数学操作及 45 秒原导航断言。
 - 这些是**诊断改动而非应用修复**。最新 HEAD 的 CI/Artifact 未获得真实通过前不得标 A；升级导航、旧标签页保护、断网升级失败、Quota、V1/V2 兼容、四类整课离线仍处 B/C。缺真实历史儿童备份、Mac 人工、儿童独立学习和独立教研。禁止合并/部署或清理真实数据。
+
+
+## P10 R3 第九阶段：真实旧 SW 故障隔离（2026-11-12）
+- 核对 main `9f8afd5`、Draft #66/#67/#68/#69 和堆叠 base；HEAD `6dc6f27` 的 Required [43055524219](https://github.com/runlinx-eng/math/actions/runs/43055524219) **failure**，P8 [43055524265](https://github.com/runlinx-eng/math/actions/runs/43055524265) **success**，同 SHA 没有触发 Overview（按 workflow paths 判断不适用）。Required Chromium Artifact [13870314043](https://github.com/runlinx-eng/math/actions/runs/43055524219/artifacts/13870314043)。
+- 实读隔离的 `isolation-results.json` / `isolation-http-events.json`：新装新版 SW 导航成功（9 ms），无 SW 成功（55 ms），旧版 SW 实际激活、控制页面、持有 `learn.html` 缓存且 `/sw.js` 来自旧版目录之后，所有正常升级变体导航均超时（9 秒）；绕过 SW 成功（6 ms）。这修正了此前旧 Worker 未接管而产生的假阳性，证明真正故障与升级后的 SW 参与有关，尚不能判定具体执行机制。
+- 升级变体的旧 `controller` / `active` 消息探针超时；新 SW 为 `waiting: installed`，两个版本 Cache Storage 并存。不要把新缓存已经完整误认为新 SW 已激活/接管；原完整测试的 `newReady` 通过时没有验证 worker 的 `cache-status` 实际来自新 controller。原完整测试 11 项前置检查通过，`learn.html#share` commit 等候 45 秒超时；升级前后 JSON 都是 1992 字节且内容相等，但只覆盖故障之前。
+- `diagnostics.json` 记录 CDP Document request 和服务端 `/learn.html` 请求：服务器在 headers 发送前记录 aborted/incomplete，随后 readFile 回调仍试图 writeHead；没有 CDP response/finished/failed 和导航 commit。CDP 与 HTTP requestId 不相同且尚未建立唯一相关标识，不能把相邻时间当成完备的跨端因果证明。
+- 仅新增诊断性 A/B：`1483b38` 在**临时旧 worktree** 中保留原 install/precache，仅关闭旧 SW fetch 期间 `cache.put` / `waitUntil` 写入，独立重复 3 次，并保留原旧 SW 对照。这些修改过的旧 SW 运行不是历史版本迁移的 A 级证据。需要实际 CI 验证再确定缓存写入是否为必要因素；此时**不更改正式 `dist/sw.js`**，不增加 timeout、不减弱数据断言。
+- C：实际跨版本导航仍失败；B：旧标签页安全、V1/V2 真实迁移、Quota、断网升级失败恢复、首次离线 B39、四类整课离线均因后段未运行而未验收。真实儿童历史备份、Mac 人工、儿童操作和独立数学教研仍待验收。P10 不收尾、不合并、不部署，#63 暂不准入。
