@@ -134,7 +134,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
    return await new Promise((resolve,reject)=>{
     const ch=new MessageChannel(),timer=setTimeout(()=>reject(Error('final cache cleanup response timed out')),12000);
     ch.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
-    worker.postMessage({type:'math-explorer:cache-status'},[ch.port2]);
+    worker.postMessage({type:'math-explorer:cleanup-retired-caches'},[ch.port2]);
    });
   });
   let newKeys=await newTab.evaluate(()=>caches.keys());
@@ -143,7 +143,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
    newKeys=await newTab.evaluate(()=>caches.keys());
   }
   console.log('P10_CACHE_FINAL '+JSON.stringify({finalReport,newKeys}));
-  check(finalReport.cache===newCache&&newKeys.includes(newCache)&&!newKeys.includes(oldCache),'new SW activated and retired old cache cleaned',{cacheKeys:newKeys});
+  check(finalReport.cache===newCache&&finalReport.complete===true&&newKeys.includes(newCache)&&!newKeys.includes(oldCache),'new SW activated and retired old cache cleaned',{cacheKeys:newKeys});
   // B39 was NEVER opened online on this profile. Its dynamic module must load offline.
   await ctx.setOffline(true);
   await lesson(newTab,'calculator39');

@@ -17,9 +17,25 @@ self.addEventListener('fetch',event=>{
  }).catch(()=>caches.open(CACHE).then(c=>c.match(event.request,{ignoreSearch:true})).then(r=>r||new Response('此资源尚未缓存。请重新启动本地数学探索。',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}}))));
 });
 
-// Verify the actual active version, not a page-side hardcoded subset of the manifest.
+// Status is read-only. Cleaning Cache Storage while another release is still
+// writing is unsafe and can stall a subsequent controlled navigation.
+// The caller requests a retryable, explicit sweep only after old clients close.
 self.addEventListener('message',event=>{
- if(event.data?.type!=='math-explorer:cache-status'||!event.ports?.[0])return;
+ if(!event.ports?.[0])return;
+ if(event.data?.type==='math-explorer:cleanup-retired-caches'){
+  event.waitUntil((async()=>{
+   const result={type:'math-explorer:cleanup-retired-caches',cache:CACHE,complete:false};
+   try{
+    await cleanRetiredCaches();
+    const keys=await caches.keys();
+    result.complete=!keys.some(key=>key.startsWith('math-explorer-')&&key!==CACHE);
+    result.keys=keys;
+   }catch(error){result.error=String(error);}
+   event.ports[0].postMessage(result);
+  })());
+  return;
+ }
+ if(event.data?.type!=='math-explorer:cache-status')return;
  event.waitUntil((async()=>{
   const result={type:'math-explorer:cache-status',cache:CACHE,complete:false,cached:0,total:FILES.length};
   try{
@@ -29,8 +45,6 @@ self.addEventListener('message',event=>{
    result.complete=result.cached===result.total;
   }catch{}
   event.ports[0].postMessage(result);
-  // Report readiness promptly; retired-worker cleanup must not block the UI.
-  await cleanRetiredCaches().catch(()=>{});
  })());
 });
 
