@@ -184,7 +184,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   await newTab.reload();
   check(JSON.parse(await read(newTab)).lessons.argument38.cases[0].attempts.length===2,'offline revision persists across reload');
   await ctx.setOffline(false);
-  await newTab.goto(base+'v2.html#trail');await newTab.locator('#import-file').waitFor();
+  await newTab.goto(base+'v2.html#trail');await newTab.locator('#import-file').waitFor({state:'attached'});
   await newTab.locator('[data-lesson-record="equivalent"]').waitFor();
   await newTab.screenshot({path:path.join(out,'new-release-trail.png')});
   const download=newTab.waitForEvent('download');
@@ -196,7 +196,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   // A second browser profile must receive the real V2 backup with no shared storage.
   const remote=await browser.newContext({acceptDownloads:true,serviceWorkers:'allow'});
   const remotePage=await remote.newPage();
-  await remotePage.goto(base+'v2.html#trail');await remotePage.locator('#import-file').waitFor();
+  await remotePage.goto(base+'v2.html#trail');await remotePage.locator('#import-file').waitFor({state:'attached'});
   const importFile=async(p,contents,name)=>p.locator('#import-file').setInputFiles({name:name||'backup.json',mimeType:'application/json',buffer:Buffer.from(contents)});
   await importFile(remotePage,actualBackup,'real-browser-backup.json');
   await remotePage.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')||'{}').lessons?.equivalent?.notes?.length===1);
@@ -208,7 +208,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   // Browser-generated compatible V1 sample is synthetic, not historical child data.
   const v1=await remotePage.evaluate(async()=>{const {freshState}=await import('./core.js');return JSON.stringify({app:'math-explorer',version:1,state:freshState()});});
   const legacy=await browser.newContext({serviceWorkers:'allow'});
-  const legacyPage=await legacy.newPage();await legacyPage.goto(base+'v2.html#trail');await legacyPage.locator('#import-file').waitFor();
+  const legacyPage=await legacy.newPage();await legacyPage.goto(base+'v2.html#trail');await legacyPage.locator('#import-file').waitFor({state:'attached'});
   await importFile(legacyPage,v1,'automatically-constructed-v1.json');
   await legacyPage.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')||'{}').legacy!=null);
   check(JSON.parse(await read(legacyPage)).legacy!==null,'synthetic V1 backup imported via real Chromium file input',{sample:'constructed compatibility data, not child backup'});
@@ -220,7 +220,7 @@ const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=u
   }
   // Storage quota failure: use the browser's actual localStorage quota, not a mocked setter.
   const quota=await browser.newContext({serviceWorkers:'allow'});
-  const quotaPage=await quota.newPage();await quotaPage.goto(base+'v2.html#trail');await quotaPage.locator('#import-file').waitFor();
+  const quotaPage=await quota.newPage();await quotaPage.goto(base+'v2.html#trail');await quotaPage.locator('#import-file').waitFor({state:'attached'});
   await quotaPage.evaluate(()=>{
    let n=0;
    while(true){try{localStorage.setItem('p10-quota-padding','q'.repeat(1024*1024*(++n)));}catch(e){if(e.name!=='QuotaExceededError')throw e;break;}}
