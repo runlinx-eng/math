@@ -40,7 +40,7 @@ test('task-specific rendering is absent from the static 3D startup graph', () =>
 });
 
 test('lightweight lesson directory preserves all runtime lesson IDs, routes and reflections', async () => {
-  const heavy = await import('../dist/learning/phase4/catalog.js');
+  const heavy = await import('../dist/learning/phase4/task-catalog.js');
   const light = await import('../dist/learning/phase4/light-catalog.js');
   assert.deepEqual(light.EXTRA_LESSONS, heavy.EXTRA_LESSONS,
     'The first-screen catalog must not change lesson identity or content');
@@ -58,7 +58,8 @@ test('catalog entry no longer imports math batch task definitions', () => {
   const catalog = read('learning/catalog.js');
   const light = read('learning/phase4/light-catalog.js');
   assert.ok(catalog.includes("from './phase4/light-catalog.js'"));
-  assert.ok(!catalog.includes("from './phase4/catalog.js'"));
+  assert.ok(!catalog.includes("from './phase4/task-catalog.js'"));
+  assert.ok(!read('learning/phase4/catalog.js').includes("from './task-catalog.js'"));
   assert.ok(!catalog.includes("from './phase5/b"));
   assert.ok(!light.includes("from '../phase5/b"));
   assert.ok(!light.includes("from './b02.js'"));
