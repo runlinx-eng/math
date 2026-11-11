@@ -62,7 +62,7 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   check(hint.includes('推理步骤')&&hint.includes('展示解题过程'),'ordered correct submitted steps get bounded MP.3 observation');
   check(hint.includes('mt_nyK25mNOeR')===false,'source ID is a metadata attribute rather than child-facing clutter');
   check(await page.locator('#thinking-feedback [data-thinking-node-id="mt_nyK25mNOeR"]').count()===1,'MP.3 source ID links to pinned math thinking source');
-  check(!hint.includes('已掌握')&&!hint.includes('你的解释正确'),'feedback neither grants mastery nor grades explanation');
+  check(hint.includes('不代表已掌握')&&!hint.includes('你已掌握')&&!hint.includes('你的解释正确'),'feedback explicitly limits mastery claims and does not grade explanation');
   await shot('01-reasoning-checked');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');
   check((await view()).includes('推理步骤'),'matching saved reasoning submission survives reload');
