@@ -67,7 +67,8 @@ const read=page=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explore
   // This is a fresh page (simulating a closed browser view), not a mocked state.
   await page.goto(base+'v2.html#trail');
   await page.locator('#import-file').waitFor({state:'attached'});
-  check((await page.locator('#main').innerText()).includes('等值分数'),'completed actual lesson appears in trail');
+  await page.locator('[data-lesson-record="equivalent"]').waitFor();
+  check((await page.locator('[data-lesson-record="equivalent"]').innerText()).includes('任务 3 / 3'),'completed actual lesson appears in trail with three checked tasks');
   const download=page.waitForEvent('download');
   await page.locator('[data-do="export"]').first().click();
   const dl=await download;const file=await dl.path();
