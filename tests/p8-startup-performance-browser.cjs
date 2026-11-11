@@ -54,7 +54,7 @@ async function instrument(page) {
     const render = 'this.renderer.render(this.scene,this.camera);';
     check(body.includes(render), 'WebGL render anchor missing');
     body = body.replaceAll(render, render +
-      "if(!performance.getEntriesByName('math:first-webgl-frame').length)performance.mark('math:first-webgl-frame');");
+      "if(this.nodeMesh?.count>0&&!performance.getEntriesByName('math:first-webgl-frame').length)performance.mark('math:first-webgl-frame');");
     await route.fulfill({ response, body });
   });
 }
@@ -76,7 +76,11 @@ async function measure(browser, version, scenario, round, mode, url, context) {
   const initial = metricsMap((await cdp.send('Performance.getMetrics')).metrics);
   let result;
   try {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    if (scenario === 'explore-refresh') {
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+    } else {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    }
     await page.waitForFunction(() => {
       const app = document.querySelector('#space-app');
       const loading = document.querySelector('#loading');
