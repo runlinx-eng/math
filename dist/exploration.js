@@ -221,7 +221,26 @@ $('#import-file').addEventListener('change',async event=>{
   finally{event.target.value='';}
 });
 async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
- if('serviceWorker'in navigator){try{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;const offlineReady=async()=>{const cache=await caches.open('math-explorer-20261111-p8-b39-lazy-v1');const ready=(await Promise.all(['./index.html','./exploration.js','./exploration-core.js','./exploration-content.js','./exploration.css','./data/atlas.json'].map(path=>cache.match(new URL(path,location.href))))).every(Boolean);$('#offline-status').textContent=ready?' · 本机离线资源就绪':' · 正在准备离线资源';};await offlineReady();navigator.serviceWorker.addEventListener('controllerchange',offlineReady);}catch{$('#offline-status').textContent=' · 本地服务可离线使用';}}
+ if('serviceWorker'in navigator){
+  try{
+   const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+   await navigator.serviceWorker.ready;
+   const offlineReady=async()=>{
+    const active=navigator.serviceWorker.controller||registration.active;
+    if(!active){$('#offline-status').textContent=' · 正在准备离线资源';return;}
+    const reply=await new Promise(resolve=>{
+     const channel=new MessageChannel();
+     const timer=setTimeout(()=>{channel.port1.close();resolve(null);},5000);
+     channel.port1.onmessage=event=>{clearTimeout(timer);channel.port1.close();resolve(event.data);};
+     try{active.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}
+     catch{clearTimeout(timer);channel.port1.close();resolve(null);}
+    });
+    $('#offline-status').textContent=reply?.type==='math-explorer:cache-status'&&reply.complete?' · 本机离线资源就绪':' · 离线资源不完整';
+   };
+   await offlineReady();
+   navigator.serviceWorker.addEventListener('controllerchange',()=>offlineReady().catch(()=>{$('#offline-status').textContent=' · 离线状态未知';}));
+  }catch{$('#offline-status').textContent=' · 离线状态未知';}
+ }
  }catch(error){main.innerHTML=`<div class="empty"><h2>地图暂时没打开</h2><p>${esc(error.message)}。请通过“启动数学探索.command”打开应用。</p></div>`;}}
 if(embedded){
  document.addEventListener('click',event=>{const a=event.target.closest('a[href^="#"]');if(!a)return;const [kind,id]=a.getAttribute('href').slice(1).split('/');if(['map','theme','pack','node','atlas','activity'].includes(kind)){event.preventDefault();event.stopImmediatePropagation();spaceNavigate(kind,id);}},true);
