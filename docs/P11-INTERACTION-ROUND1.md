@@ -1,6 +1,6 @@
 # P11 R1: interaction states and protected boundaries
 
-Current merge base: `main@8f93265925a084b18582a9829622d05769093269` (P10 #67 → #68 → #69 merged; VPS deploy is manually gated). P11 R1 #71 is still an unmerged Draft against `main`. P9 #66 and roadmap #73 remain separate Drafts. **Do not merge or deploy without explicit authorization.**
+Current integration baseline: `main@68281c0e80e201a27bbecc6057d73dbb060a65e8` includes workflow PR #74 and P10 #67 → #68 → #69. P11 R1 #71 absorbs that baseline with no overlapping changed files; P9 #66 and roadmap #73 remain separate Drafts. **The user accepted P11 R1's node-selection experience. Under the merged standing workflow, routine engineering merge is allowed after checks pass on the latest integrated HEAD; VPS deployment or rollback still requires separate explicit authorization.**
 
 ## Evidence-based diagnosis
 
@@ -38,3 +38,7 @@ Protected: 537 domain nodes, 50 thinking nodes, 1,223 relationships, all fixed 3
 The `6ab288d` Required CI evidence showed the 620×800 Explore map toolbar intersecting the selected-node detail surface; the lesson-sheet toolbar had already moved into the exposed map band. R1 updated this last compact Explore rule and added a direct bounding-box overlap assertion to `tests/p11-focus-hover-browser.cjs`. Recheck these against the new head's Required/Overview/P8 workflow runs and their screenshots. This is a scoped R1 overlap correction, not an R2 button removal.
 
 For next-round entry inventory and protected follow-up checks, see [P11-ROUND2-ENTRY-PLAN.md](P11-ROUND2-ENTRY-PLAN.md). Manual keyboard/touch usability and independent repeatability of historical P8 node-hit flakiness remain explicitly open.
+
+## Integrated main workflow (2026-11-12)
+
+The PR #74 rules in `AGENTS.md` and `docs/DEVELOPMENT-WORKFLOW.md` are preserved in P11 R1's merge commit. Both branches changed disjoint files. The pre-integration success at `4ea3a34` is historical only; the final integrated HEAD must pass its own Required, Overview and P8 checks before marking #71 Ready and merging. The user's local first-round selection acceptance covers routine engineering closure, **not** future visual polish, artificial proof of manual browser/touch testing, or deployment.
