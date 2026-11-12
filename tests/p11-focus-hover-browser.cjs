@@ -93,6 +93,11 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
    assert(state.contextParent==='journey-surface','learning context must not cover 3D map '+w+'x'+h);
    assert(state.map.width>(w>800?210:w-5),'usable 3D map width '+w+'x'+h);
    assert(state.task&&state.task.x>=-2&&state.task.y>=-2&&state.task.right<=w+2&&state.task.bottom<=h+2,'lesson panel within viewport '+w+'x'+h);
+   if(w<=800){
+    const rail=await page.locator('.tool-rail').boundingBox();
+    assert(!rail||rail.y+rail.height<=state.task.y-6,
+      'compact camera tools must stay above, not over, the learning sheet '+w+'x'+h);
+   }
    assert(state.active.length<=1,'Learn duplicate strong focus '+w+'x'+h);
    await image('learn',w,h);
   }
