@@ -15,7 +15,8 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
  try{
   await page.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
-  const before=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+  // Selecting a node can legitimately update the visit ledger; capture the
+  // storage baseline only after that user action, before navigation-only changes.
   assert(await page.locator('#continue-card [data-action="continue"]').isVisible(),'overview continuation card missing');
   await more.click();
   assert(await menu.isVisible(),'more menu missing');
@@ -34,6 +35,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await more.click();
   assert(await menuContinue.isVisible(),'selected node must retain global resume as secondary');
   checks.push('selected: global resume stays reachable');
+  const before=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   await page.screenshot({path:path.join(out,'selected-1440x900.png')});
   await nav('trail').click();
   await page.waitForFunction(()=>document.querySelector('#utility-drawer').dataset.surface==='trail');
