@@ -1256,3 +1256,6 @@ body[data-world="network"].has-journey #journey-surface #learning-map-context .l
     height:40px;max-width:calc(100vw - 24px);
   }
 }
+
+/* P11 R2: a hidden duplicate menu entry must not be revived by button display rules. */
+#menu-popover [hidden]{display:none!important}

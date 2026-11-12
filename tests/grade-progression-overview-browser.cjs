@@ -135,7 +135,8 @@ const checks=[],errors=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(m
       check(await oldPage.locator('.about-copy').isVisible(),'source and learning explanation remains available');
       await oldPage.goto('http://127.0.0.1:43827/?world=network&layout=53#atlas');
       await oldPage.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
-      await oldPage.locator('#trail-count').click();
+      // The permanent Trail tab replaces the redundant footer journal button.
+       await oldPage.locator('.primary-nav [data-surface="trail"]').click();
       await oldPage.frameLocator('#utility-frame').locator('.journal-grid').waitFor();
       check(await oldPage.frameLocator('#utility-frame').locator('[data-do="export"]').isVisible(),'3D journal drawer still embeds v2 record and backup tools');
       await oldPage.screenshot({path:path.join(out,'desktop-3d-embedded-trail.png')});

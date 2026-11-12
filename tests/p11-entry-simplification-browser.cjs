@@ -1,0 +1,66 @@
+// P11 R2: prove entry consolidation keeps resume, trail history and backup paths.
+const fs=require('node:fs'),path=require('node:path');
+const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const out=path.resolve(__dirname,'../verification/p11-entry-simplification');
+const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
+(async()=>{
+ fs.mkdirSync(out,{recursive:true});
+ const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+ const checks=[],errors=[];
+ page.on('pageerror',error=>errors.push(String(error)));
+ const nav=surface=>page.locator('.primary-nav [data-surface="'+surface+'"]');
+ const more=page.locator('.top-tools [data-action="menu"]');
+ const menu=page.locator('#menu-popover'),menuContinue=menu.locator('[data-action="continue"]');
+ try{
+  await page.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
+  // Selecting a node can legitimately update the visit ledger; capture the
+  // storage baseline only after that user action, before navigation-only changes.
+  assert(await page.locator('#continue-card [data-action="continue"]').isVisible(),'overview continuation card missing');
+  await more.click();
+  assert(await menu.isVisible(),'more menu missing');
+  assert(!(await menuContinue.isVisible()),'duplicate visible overview continuation');
+  assert(await menu.locator('[data-action="journal"]').count()===0,'duplicate menu journal');
+  assert(await page.locator('#trail-count').count()===0,'duplicate footer journal');
+  assert(await menu.locator('[data-action="export"]').isVisible(),'backup export missing');
+  assert(await menu.locator('[data-action="import"]').isVisible(),'backup import missing');
+  checks.push('overview: sole resume, history tab and backup commands');
+  await page.screenshot({path:path.join(out,'overview-1440x900.png')});
+  await page.locator('.top-tools [data-action="search"]').click();
+  await page.locator('#search-input').fill('mt_ndGqFPWyen');
+  await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+  assert(await page.locator('#continue-card').isHidden(),'selected context should hide overview continuation');
+  await more.click();
+  assert(await menuContinue.isVisible(),'selected node must retain global resume as secondary');
+  checks.push('selected: global resume stays reachable');
+  const before=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+  await page.screenshot({path:path.join(out,'selected-1440x900.png')});
+  await nav('trail').click();
+  await page.waitForFunction(()=>document.querySelector('#utility-drawer').dataset.surface==='trail');
+  assert(await page.locator('#utility-frame').count()===1,'trail iframe missing');
+  assert(await nav('trail').getAttribute('aria-pressed')==='true','trail tab inactive');
+  await nav('explore').click();
+  assert(await page.locator('#utility-drawer').isHidden(),'trail drawer not closed');
+  checks.push('Trail tab: history and return');
+  await page.setViewportSize({width:620,height:800});
+  await nav('trail').click();
+  assert(await page.locator('#utility-drawer').isVisible(),'compact Trail not reachable');
+  await nav('explore').click();
+  await more.click();
+  assert(await menu.locator('[data-action="export"]').isVisible(),'compact backup export missing');
+  assert(await menu.locator('[data-action="import"]').isVisible(),'compact backup import missing');
+  checks.push('620x800: Trail and both backups reachable');
+  await page.screenshot({path:path.join(out,'compact-620x800.png')});
+  const after=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+  assert(before===after,'navigation-only changes modified v2 learning record');
+  assert(errors.length===0,'browser page errors: '+errors.join('; '));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:true,checks,errors,manualVerified:false,learningBytesUnchanged:true},null,2));
+  console.log('P11_R2_ENTRY_SIMPLIFICATION_COMPLETE '+JSON.stringify({checks,learningBytesUnchanged:true}));
+ }catch(error){
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:false,checks,errors:[...errors,String(error)],manualVerified:false},null,2));
+  await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
+  console.error('P11_R2_ENTRY_SIMPLIFICATION_FAILURE '+(error.stack||error));process.exitCode=1;
+ }finally{await browser.close();}
+})().catch(error=>{console.error(error.stack||error);process.exitCode=1});
