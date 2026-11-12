@@ -846,8 +846,15 @@ body[data-world="network"] #network-guide{
   max-height:min(58dvh,550px);padding:10px 11px;gap:5px;
   background:#fffef9ed;
 }
-body[data-world="network"] #network-guide #network-view-title{height:auto;min-height:0;max-height:none}
-body[data-world="network"] #network-guide>p{height:auto;min-height:0;max-height:38px}
+/* Hover changes the guide's breadcrumb and description. Reserve their
+   height so theme buttons do not move out from under the pointer mid-hover.
+   Long descriptions retain their own scroll instead of shifting the legend. */
+body[data-world="network"] #network-guide #network-view-title{
+  height:36px;min-height:36px;max-height:36px;overflow:hidden;
+}
+body[data-world="network"] #network-guide>p{
+  height:38px;min-height:38px;max-height:38px;overflow-y:auto;
+}
 body[data-world="network"] #network-guide>details{display:none}
 body[data-world="network"] #network-guide .network-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
 body[data-world="network"] .tool-rail,
