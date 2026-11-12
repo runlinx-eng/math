@@ -16,6 +16,8 @@ const bounded=async(promise,ms,label)=>{let timer;try{return await Promise.race(
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.wav':'audio/wav'};
 const cacheOf=data=>data.toString().match(/const CACHE\s*=\s*'([^']+)'/)[1];
 const nativeCategories='ServiceWorker,CacheStorage,blink.user_timing';
+const modes=(process.env.P10_LIFECYCLE_CASES||'A-retain-clients,B-close-clients').split(',');
+assert.ok(modes.length&&modes.every(mode=>['A-retain-clients','B-close-clients','C-suppress-legacy-probes'].includes(mode)));
 const newProbe=identity=>`
 // Diagnostic-only new worker wrapper. No changes to historical worker.
 const stage13Identity=${JSON.stringify(identity)};
@@ -42,11 +44,11 @@ self.addEventListener('activate',()=>stage13Log('activate-event'));
   const provenance={checkoutSha:git(['rev-parse','HEAD']),checkoutTree:git(['rev-parse','HEAD^{tree}']),
    historicalCommit:OLD,historicalSW:OLD_HASH,historicalWorkerModified:false,newProductSW:hash(newSW),
    diagnosticNewWorker:true,countsTowardAcceptance:false,playwrightVersion:require((process.env.MATH_PLAYWRIGHT_MODULE||'playwright')+'/package.json').version};
-  for(const mode of ['A-retain-clients','B-close-clients']){
+  for(const mode of modes){
    const profile=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-stage13-'+mode+'-'));
    const caseOut=path.join(out,mode);fs.mkdirSync(caseOut,{recursive:true});
    const events=[],record=(event,detail={})=>events.push({time:new Date().toISOString(),monotonicMs:Number(process.hrtime.bigint()/1000000n),profileId:path.basename(profile),event,...detail});
-   const report={mode,profileId:path.basename(profile),...provenance};
+   const report={mode,profileId:path.basename(profile),...provenance,legacyPageProbeSuppression:mode==='C-suppress-legacy-probes'};
    let ctx,server,browserCDP,traceStarted=false,release='old',offline=false,seq=0;
    const versions=new Map(),pendingHTTP=new Map();
    const servedNewSW=Buffer.from(newProbe({profileId:report.profileId,mode,productHash:hash(newSW)})+newSW);
@@ -140,6 +142,22 @@ self.addEventListener('activate',()=>stage13Log('activate-event'));
       ready:!!candidate&&candidate===reg.active&&candidate===navigator.serviceWorker.controller&&candidate.state==='activated'&&status?.cache===newCache&&status.complete===true&&!reg.waiting&&!reg.installing};
     },{oldCache,newCache}),6000,'same-profile worker inspection');
     release='new';record('release-switched');
+    if(mode==='C-suppress-legacy-probes'){
+     // C changes one cause found in A's native trace: application status
+     // messages waking the historical worker after it has begun retiring.
+     // No historical worker file/runtime, registration or cache is changed.
+     await ctx.addInitScript(()=>{
+      if(location.pathname!=='/v2.html'||!('serviceWorker'in navigator)||typeof ServiceWorker==='undefined')return;
+      const legacy=navigator.serviceWorker.controller,post=ServiceWorker.prototype.postMessage;
+      window.__stage13SuppressedProbes=[];
+      ServiceWorker.prototype.postMessage=function(message,...rest){
+       if(this===legacy&&['math-explorer:cache-status','math-explorer:cleanup-retired-caches'].includes(message?.type)){
+        window.__stage13SuppressedProbes.push({time:Date.now(),type:message.type,scriptURL:this.scriptURL,state:this.state});return;
+       }
+       return post.call(this,message,...rest);
+      };
+     });
+    }
     let newPage=await ctx.newPage();
     const pageCDP=await ctx.newCDPSession(newPage);
     const pendingPage=new Map();
@@ -174,6 +192,19 @@ self.addEventListener('activate',()=>stage13Log('activate-event'));
     }
     const after=await newPage.evaluate(()=>localStorage.getItem('math-explorer-v2'));fs.writeFileSync(path.join(caseOut,'after-client-action.json'),after);
     report.bytesPreserved=after===saved;assert.equal(after,saved,'client close/reopen must preserve learner data');
+    if(mode==='C-suppress-legacy-probes'){
+     report.suppressedProbes=await newPage.evaluate(()=>window.__stage13SuppressedProbes);
+     assert.equal(report.readyWithClients,true,'suppressing only legacy probes must permit real activation with old clients retained');
+     await lesson(newPage,'share');
+     assert.equal(await newPage.evaluate(()=>window.__stage13BeforeApp),saved,'new lesson startup must preserve exact prior bytes');
+     await newPage.locator('#actions [data-do="check"]').click();
+     const latest=await newPage.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+     await oldPage.locator('#actions [data-do="check"]').click();
+     assert.ok((await oldPage.locator('#storage-warning').innerText()).includes('已停止覆盖'));
+     assert.equal(await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2')),latest);
+     report.newNavigationWithLegacyOpen=true;report.legacyOverwriteBlocked=true;
+     fs.writeFileSync(path.join(caseOut,'after-native-new-and-stale-old-check.json'),latest);
+    }
     await observer.evaluate(()=>performance.mark('stage13-final-cutoff'));
     report.final={state:await inspect(newPage),nativeVersions:[...versions.values()],pendingHTTP:[...pendingHTTP.values()]};
     await newPage.screenshot({path:path.join(caseOut,'final.png')});
@@ -198,7 +229,7 @@ self.addEventListener('activate',()=>stage13Log('activate-event'));
     fs.rmSync(profile,{recursive:true,force:true});
    }
   }
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({provenance,reports,independentProfiles:new Set(reports.map(r=>r.profileId)).size===2},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({provenance,reports,independentProfiles:new Set(reports.map(r=>r.profileId)).size===reports.length},null,2));
  }finally{
   try{execFileSync('git',['worktree','remove','--force',oldDir],{cwd:root,stdio:'pipe'});}catch{}
   fs.rmSync(oldDir,{recursive:true,force:true});

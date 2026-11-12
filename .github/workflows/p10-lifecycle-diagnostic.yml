@@ -30,6 +30,8 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install chromium
       - name: Run historical client lifecycle comparison
+        env:
+          P10_LIFECYCLE_CASES: C-suppress-legacy-probes
         shell: bash
         run: |
           node --check tests/p10-sw-client-lifecycle-browser.cjs
