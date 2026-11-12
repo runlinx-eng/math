@@ -64,7 +64,9 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   const startAction=page.locator('#focus-card [data-action="open"]');
   assert(await startAction.isVisible(),'selected lesson primary action missing');
   assert((await startAction.textContent()).includes('开始学习'),'new lesson must say start');
-  await startAction.click();
+  await startAction.focus();
+  assert(await startAction.evaluate(el=>document.activeElement===el),'keyboard focus cannot reach primary lesson action');
+  await page.keyboard.press('Enter');
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
   const native=page.frameLocator('#journey-frame');
   await native.locator('#actions [data-do="check"]').click();
@@ -129,6 +131,19 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.share.cases[0].attempts.length===savedChecks,
     'five-viewport switching overwrote original course attempt');
   checks.push('five viewports: Explore/Learn/Trail screenshots, embedded return and draft-safe restore');
+  // A real touch-capable context checks that navigation is not hover-only.
+  const touchContext=await browser.newContext({viewport:{width:620,height:800},hasTouch:true,reducedMotion:'reduce'});
+  try{
+    const touch=await touchContext.newPage();
+    await touch.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
+    await touch.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
+    await touch.locator('.primary-nav [data-surface="trail"]').tap();
+    assert(await touch.locator('#utility-drawer').isVisible(),'touch cannot open Trail');
+    await touch.locator('.primary-nav [data-surface="explore"]').tap();
+    assert(await touch.locator('#utility-drawer').isHidden(),'touch cannot return Explore');
+    await touch.screenshot({path:path.join(out,'touch-620x800.png')});
+    checks.push('620x800 touch: Explore/Trail navigation and screenshot');
+  }finally{await touchContext.close();}
   assert(errors.length===0,'browser page errors: '+errors.join('; '));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:true,checks,errors,manualVerified:false,learningBytesUnchanged:true},null,2));
   console.log('P11_R2_ENTRY_SIMPLIFICATION_COMPLETE '+JSON.stringify({checks,learningBytesUnchanged:true}));
