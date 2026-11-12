@@ -185,7 +185,9 @@ jobs:
           fi
 
           status=0
+          # Diagnose the pointer-hover target early; still run every browser suite.
           for test_file in \
+            tests/spatial-theme-overview-browser.cjs \
             tests/p7-d5-entry-browser.cjs \
             tests/p7-d6-fixed-ui-browser.cjs \
             tests/p7-d7-multi-type-browser.cjs \
@@ -213,7 +215,6 @@ jobs:
             tests/spatial-focus-filter-browser.cjs \
             tests/spatial-guide-inplace-browser.cjs \
             tests/spatial-unified-map-browser.cjs \
-            tests/spatial-theme-overview-browser.cjs \
             tests/grade-progression-overview-browser.cjs \
             tests/spatial-local-focus-browser.cjs \
             tests/learning-workspace-browser.cjs \
