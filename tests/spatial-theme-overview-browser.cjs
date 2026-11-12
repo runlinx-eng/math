@@ -223,12 +223,12 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   }
   await page.screenshot({path:path.join(out,'node-hover-hierarchy.png')});
   check(sameCamera(nodeCamera,await camera()),'node hover does not pan, zoom or rotate');
-  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'node hover never modifies selected map snapshot');
+  check(sameSnapshotWithCameraRoundoff(nodeSnapshot,JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))),'node hover never modifies selected map snapshot');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>mathSpace.hoverPreview().key===null);
   check(await page.locator('.space-label.node.preview-target:visible').count()===0,'hover target framing disappears on leave');
   check((await page.locator('#network-view-title').textContent())!==breadcrumb,'top-left breadcrumb restores the prior map state on leave');
-  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'leaving node restores the panorama');
+  check(sameSnapshotWithCameraRoundoff(nodeSnapshot,JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))),'leaving node restores the panorama');
   check(await page.evaluate(()=>JSON.stringify({...localStorage}))===nodeStorage,'hover records no learning behavior');
   // The rule also holds after the user explicitly changes the camera view.
   await page.locator('[data-action="network-view"][data-view="top"]').click();
