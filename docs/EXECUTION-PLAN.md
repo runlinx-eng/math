@@ -4,6 +4,13 @@
 >
 > 产品目标以 [PRODUCT-VISION.md](PRODUCT-VISION.md) 为准；开发/合并/发布纪律以 [DEVELOPMENT-WORKFLOW.md](DEVELOPMENT-WORKFLOW.md) 为准。本文管理**下一步做什么、先后关系和验收状态**，不替代领域规范、单项 Issue 或实际教学证据。下方 2026-10-24 至 2026-11-01 的六阶段记录保留为历史，不再是当前优先级。
 
+## P10 第二轮正在验收（2026-11-11，Draft，未集成）
+
+- 以 PR #67 的 P10 第一轮分支为堆叠基线，第二轮分支 `fix/issue-34-p10-longterm-offline-round2`；PR #66 仍是独立的 P9 Draft。
+- 重点审计及最小修复：3D 主入口损坏记录导出假备份、导入漏检草稿及同 ID 证据冲突、离线状态依赖固定旧缓存名。新增四类数学首题真实恢复及缓存完整性 Chromium 门禁，继续运行 P7/P8/P9/P10、Required/Overview。
+- 最新 CI 未确认成功前不得声称通过；四类首题恢复不等于全部学习任务完成。多版实际升级、历史儿童旧备份、Mac/儿童/独立教研和本地安装交付仍待验证。完整证据及限制在 [P10 台账](P10-LEARNING-CONTINUITY.md)。
+- 未经授权不得合并 PR #66/#67 或本轮 PR，不部署 VPS、不删历史分支。
+
 ## P10 第一轮状态（2026-11-11，独立 Draft 待验收）
 
 - **最新核查 main：** `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`（P9 第一轮 #65 已合并）；P9 第二轮 [PR #66](https://github.com/runlinx-eng/math/pull/66) 仍为未合并 Draft，不能作为 P10 主线能力。

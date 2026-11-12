@@ -1,4 +1,5 @@
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
+import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';
 import {relationsFor,LAYOUT_VERSION,parseView,objectKey} from './spatial-model.js';
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from './spatial-relationship.js';
@@ -960,7 +961,7 @@ function showUtility(which){
   replaceEmbeddedFrame(frame,frame.dataset.embeddedSrc);
   updatePrimaryNavigation();
 }
-function download(value,name){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
+function download(value,name){const raw=typeof value==='string';const url=URL.createObjectURL(new Blob([raw?value:JSON.stringify(value,null,2)],{type:raw?'text/plain':'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
 function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split('/');if(bits[0]==='space'&&bits[1]&&bits[2]){choose(objectKey(bits[1],bits[2]),{animate:!initial,history:!initial});return true;}
   if(['theme','pack','node'].includes(bits[0])&&bits[1]){choose(objectKey(bits[0],bits[1]),{animate:!initial,history:!initial});return true;}
   if(bits[0]==='activity'&&activityIds.includes(bits[1])){const id=ACTIVITIES[bits[1]].topicId;choose(objectKey('node',id),{animate:false,history:!initial,openLesson:false});openPanel(id);return true;}
@@ -1027,7 +1028,18 @@ document.addEventListener('click',event=>{
   else if(action==='locate-panel'){const p=panels.get(id);if(p){activePanel=id;p.minimized=false;scene.select(objectKey('node',id));arrangePanels();renderFocus();renderLocation();}}
   else if(action==='arrange')arrangePanels();else if(action==='journal')navigateTaskSurface('trail');else if(action==='about')navigateTaskSurface('about');
   else if(action==='close-utility')navigateTaskSurface('explore',{replace:true});
-  else if(action==='export'){readLearning();download(backup(learning),`数学探索-${new Date().toISOString().slice(0,10)}.json`);}
+  else if(action==='export'){
+    readLearning();
+    if(readBlocked){
+      // Never turn a damaged or unvalidated browser record into an empty v2 backup.
+      try{const raw=localStorage.getItem(KEY);
+        if(raw!==null){download(raw,'数学探索-原始存储-需人工恢复.txt');toast('记录不能安全读取；已导出原始存储文本，不能直接作为学习备份导入。');}
+        else toast('无法安全读取学习记录，未生成空白备份。');
+      }catch{toast('浏览器拒绝访问原始存储，未生成备份；请勿清理站点数据。');}
+      return;
+    }
+    download(backup(learning),`数学探索-${new Date().toISOString().slice(0,10)}.json`);
+  }
   else if(action==='import')$('#import-file').click();
   else if(action==='continue'){hideLearningHub();continueLearning();}
   else if(action==='choose-section'){activeRouteId=null;scene.setLearningSection(id||null);renderFocus();scheduleSave();}
@@ -1077,7 +1089,9 @@ $('#import-file').addEventListener('change',async event=>{
     const raw=readStored(KEY);if(raw)await prepareStateForValidation(JSON.parse(raw));
     const before=localStorage.getItem(KEY);
     const current=before?validate(JSON.parse(unpackText(before)),atlas):fresh();
-    const incoming=parseBackup(text,atlas),combined=validate(merge(current,incoming),atlas);
+    const incoming=parseBackup(text,atlas);
+    assertNoImportConflicts(current,incoming);
+    const combined=validate(merge(current,incoming),atlas);
     if(localStorage.getItem(KEY)!==before)throw new Error('导入期间其他标签页修改了记录，请重试。');
     writeStored(KEY+'-before-import',JSON.stringify(backup(current)));
     writeStored(KEY,JSON.stringify(combined));
@@ -1139,9 +1153,32 @@ window.addEventListener('gesturestart',e=>{if(e.cancelable)e.preventDefault();},
 window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
 
-async function offline(){if(!('serviceWorker'in navigator))return;try {await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await navigator.serviceWorker.ready;
-  const check=async()=>{const cache=await caches.open('math-explorer-20261111-p8-b39-lazy-v1');const ready=(await Promise.all(['learning/phase4/b39-meta.js','learning/phase4/async-batches.js','learning/phase4/view-engine.js','learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js','learning/phase5/b39.css','learning/phase5/b38-more.js','learning/phase5/b38.js','learning/phase5/b38-model.js','learning/phase5/b38-view.js','learning/phase5/b38.css','learning/phase5/b36.js','learning/phase5/b36-model.js','learning/phase5/b36-view.js','learning/phase5/b36.css','learning/phase5/b35.js','learning/phase5/b35-model.js','learning/phase5/b35-view.js','learning/phase5/b35.css','learning/phase5/b34.js','learning/phase5/b34-model.js','learning/phase5/b34-view.js','learning/phase5/b34-space-view.js','learning/phase5/b34.css','learning/phase5/b33.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.css','learning/phase5/b32.js','learning/phase5/b32-model.js','learning/phase5/b32-view.js','learning/phase5/b32.css','learning/phase5/b31.js','learning/phase5/b31-model.js','learning/phase5/b31-view.js','learning/phase5/b31-cube-view.js','learning/phase5/b31.css','learning/phase5/b30.js','learning/phase5/b30-model.js','learning/phase5/b30-geometry.js','learning/phase5/b30-view.js','learning/phase5/b30-solid-view.js','learning/phase5/b30.css','learning/phase5/b29.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b29.css','learning/phase5/b28.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b28.css','learning/phase5/b27.js','learning/phase5/b27-model.js','learning/phase5/b27-view.js','learning/phase5/b27-geometry.js','learning/phase5/b27-solid-view.js','learning/phase5/b27.css','learning/phase5/b26.js','learning/phase5/b26-model.js','learning/phase5/b26-view.js','learning/phase5/b26-geometry.js','learning/phase5/b26.css','learning/phase5/b25.js','learning/phase5/b25-model.js','learning/phase5/b25-view.js','learning/phase5/b25-geometry.js','learning/phase5/b25.css','learning/phase5/b24.js','learning/phase5/b24-model.js','learning/phase5/b24-view.js','learning/phase5/b24-geometry.js','learning/phase5/b24.css','learning/phase5/b23.js','learning/phase5/b23-model.js','learning/phase5/b23-view.js','learning/phase5/b23-geometry.js','learning/phase5/b23-solid-view.js','learning/phase5/b23.css','learning/phase4/b02-model.js','learning/phase4/b02-view.js','learning/phase4/b02.js','learning/phase4/b03-model.js','learning/phase4/b03-view.js','learning/phase4/b03.js','learning/phase4/b04-model.js','learning/phase4/b04-view.js','learning/phase4/b04.js','learning/phase4/b05-model.js','learning/phase4/b05-view.js','learning/phase4/b05.js','learning/phase4/catalog.js','learning/phase4/common.js','learning/phase4/engine.js','learning/phase4/geometry.js','learning/phase4/solid-view.js','learning/phase4/ui.js','learning/bridges.js','learning/daily.js','learning/question-ui.js','learning/question.css','learn.html','learning/learn.js','learning/p3-workflow.js','learning/p3-view.js','learning/state.js','learning/tasks.js','learning/catalog.js','learning/cubes.js','learning/cube-tasks.js','learning/learn.css','learning/thinking-feedback.js','index.html','space.js','learning/entry-decision.js','navigation-copy.js','concept-explanations.js','grade-node-filter.js','data/grade-panorama-lite.json','spatial-scene.js','spatial-model.js','spatial-network.js','spatial-global.js','spatial-relationship.js','spatial-relationship-data.js','spatial-guide.js','spatial-names.js','spatial-trace.js','spatial-reasons.js','spatial-activities.js','spatial-labels.js','journey.html','journey.js','journey.css','journey-model.js','space.css','vendor/three/three.module.min.js','vendor/three/three.core.min.js','vendor/three/OrbitControls.js','v2.html?embedded=1','data/atlas.json'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);$('#offline-status').textContent=ready?'本机保存 · 离线就绪':'本机保存 · 正在准备离线资源';};await check();navigator.serviceWorker.addEventListener('controllerchange',check);
- }catch{$('#offline-status').textContent='本机保存';}}
+async function offline(){
+  const status=$('#offline-status');
+  if(!('serviceWorker'in navigator)){status.textContent='本机保存 · 此环境无法使用离线缓存';return;}
+  try{
+    const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+    await navigator.serviceWorker.ready;
+    const check=async()=>{
+      const active=navigator.serviceWorker.controller||registration.active;
+      if(!active){status.textContent='本机保存 · 正在准备离线资源';return;}
+      const response=await new Promise(resolve=>{
+        const channel=new MessageChannel();
+        const timer=setTimeout(()=>{channel.port1.close();resolve(null);},5000);
+        channel.port1.onmessage=event=>{
+          clearTimeout(timer);channel.port1.close();resolve(event.data);
+        };
+        try{active.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}
+        catch{clearTimeout(timer);channel.port1.close();resolve(null);}
+      });
+      // Only the active worker knows whether its entire versioned manifest was cached.
+      status.textContent=response?.type==='math-explorer:cache-status'&&response.complete?
+        '本机保存 · 离线就绪':'本机保存 · 离线资源不完整';
+    };
+    await check();
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});});
+  }catch{status.textContent='本机保存 · 离线状态未知';}
+}
 async function boot(){try {
   const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('知识地图暂时无法读取');atlas=applyNavigationCopy(await response.json());
   try{guideSteps=buildStructureGuide(atlas);}catch{guideSteps=[];warning('导览所用的来源联系有变化，暂时收起导览；其他知识仍可查看。');}

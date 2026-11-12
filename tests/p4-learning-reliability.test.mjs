@@ -114,8 +114,16 @@ test('P4: offline readiness checks must reference the current Service Worker cac
   const space=fs.readFileSync(new URL('../dist/space.js',import.meta.url),'utf8');
   const version=sw.match(/const CACHE\s*=\s*'([^']+)'/)?.[1];
   assert.ok(version);
-  assert.ok(trail.includes(version),'trail still checks a retired cache key');
-  assert.ok(space.includes(version),'space cache readiness uses a different key');
+  // Readiness must query the active worker's FULL manifest, not copy a cache
+  // version string into two separate pages. A version bump cannot leave a
+  // falsely green offline label on a retired cache.
+  assert.ok(sw.includes("event.data?.type!=='math-explorer:cache-status'"),'worker must answer cache completeness queries');
+  assert.ok(sw.includes('result.cached===result.total'),'worker must verify the entire manifest');
+  for(const [name,source] of [['trail',trail],['space',space]]){
+    assert.ok(source.includes("type:'math-explorer:cache-status'"),name+' does not query the current worker');
+    assert.ok(source.includes('reply.complete')||source.includes('response.complete'),name+' reports readiness without a full cache');
+    assert.ok(!source.includes("caches.open('math-explorer-"),name+' still checks a hardcoded old cache key');
+  }
   const files=sw.match(/const FILES\s*=\s*(\[[\s\S]*?\]);/)?.[1];
   assert.ok(files);
   const paths=JSON.parse(files.replace(/'/g,'"'));

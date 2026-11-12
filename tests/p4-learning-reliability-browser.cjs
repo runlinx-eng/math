@@ -23,6 +23,9 @@ if(!cacheName)throw Error('Service Worker cache version missing');
     return Promise.all(entries.map(p=>c.match(new URL(p,location.href)).then(Boolean)));
   },cacheName);
   check(status.every(Boolean),'real SW cache contains trail, learning runner, data and backup modules');
+  // The new cache-status protocol is asynchronous. Wait for the worker's
+  // complete-manifest response, not just six cached files or a rendered page.
+  await page.waitForFunction(()=>document.querySelector('#offline-status')?.textContent?.includes('就绪'),null,{timeout:20000});
   check((await page.locator('#offline-status').innerText()).includes('就绪'),'trail reports current cache readiness');
   await page.evaluate(async()=>{
    const {fresh,KEY}=await import('./exploration-core.js');
