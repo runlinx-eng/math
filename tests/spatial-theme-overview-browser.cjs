@@ -1,8 +1,9 @@
 // Five source-backed theme overviews are navigable views of the same v53 atlas.
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
-const out=path.resolve(__dirname,'../verification/spatial-theme-overview');
-const url='http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas';
+const out=process.env.MATH_THEME_OUTPUT||path.resolve(__dirname,'../verification/spatial-theme-overview');
+const url=new URL('?v=56&world=network&layout=53#atlas',process.env.MATH_THEME_BASE_URL||'http://127.0.0.1:43827/').href;
+const sourceRoot=process.env.MATH_THEME_SOURCE_ROOT||path.resolve(__dirname,'../dist');
 const ids=['numbers','space','measure','patterns','data'],checks=[],errors=[];
 const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
 (async()=>{
@@ -15,7 +16,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
  try{
   await page.goto(url);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
-  const {applyNavigationCopy}=await import('../dist/navigation-copy.js');
+  const {applyNavigationCopy}=await import(require('node:url').pathToFileURL(path.join(sourceRoot,'navigation-copy.js')).href);
   const atlas=applyNavigationCopy(await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json()));
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});

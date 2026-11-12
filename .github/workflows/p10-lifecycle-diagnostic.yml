@@ -1,0 +1,49 @@
+name: P10 lifecycle diagnostic
+
+on:
+  pull_request:
+    paths:
+      - 'tests/p10-sw-client-lifecycle-browser.cjs'
+      - 'tests/p10-theme-baseline-browser.cjs'
+      - '.github/workflows/p10-lifecycle-diagnostic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lifecycle-diagnostic:
+    if: >-
+      (github.event_name == 'pull_request' && github.head_ref == 'test/issue-34-p10-release-migration-round3') ||
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'test/issue-34-p10-release-migration-round3')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Run historical client lifecycle comparison
+        shell: bash
+        run: |
+          node --check tests/p10-sw-client-lifecycle-browser.cjs
+          mkdir -p verification/p10-release-upgrade/stage13-lifecycle
+          node tests/p10-sw-client-lifecycle-browser.cjs 2>&1 | tee verification/p10-release-upgrade/stage13-lifecycle/console.log
+      - name: Reproduce theme obstruction against current main
+        if: ${{ !cancelled() }}
+        run: node tests/p10-theme-baseline-browser.cjs
+      - name: Preserve lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p10-stage13-lifecycle-evidence
+          path: |
+            verification/p10-release-upgrade/stage13-lifecycle/
+            verification/p10-release-upgrade/theme-baseline/
+          if-no-files-found: warn
