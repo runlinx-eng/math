@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261112-p10-release-r3-v3';
+const RELEASE='math-explorer-20261112-p10-release-r3-v4';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -231,6 +231,7 @@ async function boot(){try{if(redirectRetiredMap())return;const response=await fe
    const offlineReady=async()=>{
     const active=navigator.serviceWorker.controller;
     if(!active){$('#offline-status').textContent=' · 正在准备离线资源';return;}
+    if(isReleaseWorker(active,RELEASE)&&active.state==='activating')active.addEventListener('statechange',refresh,{once:true});
     if(!isReleaseWorker(active,RELEASE)||active.state!=='activated'||registration.active!==active){$('#offline-status').textContent=' · 正在升级离线资源';return;}
     const reply=await new Promise(resolve=>{
      const channel=new MessageChannel();
@@ -243,7 +244,8 @@ async function boot(){try{if(redirectRetiredMap())return;const response=await fe
     $('#offline-status').textContent=isCurrentReleaseReady({release:RELEASE,registration,
       controller:navigator.serviceWorker.controller,worker:active,report:reply})?' · 本机离线资源就绪':' · 离线资源不完整';
    };
-   navigator.serviceWorker.addEventListener('controllerchange',()=>offlineReady().catch(()=>{$('#offline-status').textContent=' · 离线状态未知';}));
+   const refresh=()=>offlineReady().catch(()=>{$('#offline-status').textContent=' · 离线状态未知';});
+   navigator.serviceWorker.addEventListener('controllerchange',refresh);
    await offlineReady();
   }catch{$('#offline-status').textContent=' · 离线状态未知';}
  }

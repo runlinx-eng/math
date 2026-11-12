@@ -17,9 +17,31 @@
 
 新版注册根目录 `sw.js?release=<固定入口版本>`，仍使用原作用域。统一 helper 以自身 `import.meta.url` 构造 URL，学习子目录不改变注册位置。主入口、足迹入口与清理 helper 在任何消息发出前被动检查 scriptURL、activated、registration.active 与当前 controller；未知历史 Worker 不再被状态探测唤醒，只显示正在升级。离线就绪仍须当前入口版本、真正控制页面及完整非空 manifest 回执，不以 URL 或下载完成代替激活。
 
-本轮 release 为 `math-explorer-20261112-p10-release-r3-v3`。SW 安装、fetch、激活与保守缓存清理算法不变；旧记录、旧 SW、数学判题、课程、固定坐标、P9 与 V1/V2 语义不变。历史旧页 `registration.update()` 仍可先从原无 query URL 安装新实现；首次打开新版入口时再完成带版本 URL 的同作用域接管，失败恢复测试必须覆盖这一步。
+首次消息身份修复 release 为 `math-explorer-20261112-p10-release-r3-v3`；激活事件补修更新为 v4。SW 安装、fetch、激活与保守缓存清理算法不变；旧记录、旧 SW、数学判题、课程、固定坐标、P9 与 V1/V2 语义不变。历史旧页 `registration.update()` 仍可先从原无 query URL 安装新实现；首次打开新版入口时再完成带版本 URL 的同作用域接管，失败恢复测试必须覆盖这一步。
 
 正式 `p10-release-upgrade-repeat.cjs` 的三个全新持久 profile 保留原旧页直到新页真实保存并验证过期写保护；不靠关页制造升级通过。正式入口还要求对应 release scriptURL；旧页原生 retry 仍通过实际新协议、active/controller、完整 manifest 验证。失败恢复新增保留中断后、恢复后和新版离线学习的完整原文，便于重算。原导航隔离测试也改为被动识别未知 Worker，保留 9 秒真实导航与严格接管断言，不让观测本身触发旧 Worker 重启。
+
+### 首次修复后的真实正式结果与激活提示补修
+
+[Required 43144837937](https://github.com/runlinx-eng/math/actions/runs/43144837937) / [Artifact 13911273770](https://github.com/runlinx-eng/math/actions/runs/43144837937/artifacts/13911273770) 对应修复 head `e1122457a1ae0688590e9670e2318f882d7b30b5`、实际 checkout `3f44739bcae8258b819b86af26b44a39672dd528`，同 tree `e8aeeec451757cfe0cda690fbb511851f092770e`。ZIP SHA-256 `d00578366e97acf37fa44a521f09990a55fc50ea71d18961c824068f24ec34b0`。这是首个通过完整正常升级的产品修复；后续补修的验收仍必须使用后续同树的最新 Artifact，不能继承本表。
+
+| 门槛 | 此代码树实际结果 |
+|---|---|
+| 未注入诊断、原历史 SW 的完整升级 | **3/3**，三个全新持久 profile，每次 53 项；profile 后缀 RmtOfv / le2uLs / kA0WH2 |
+| 失败恢复 | **4/4**：每次 full 的独立 BrowserContext 加独立 retry-only（19 项）；不计上阶段成功，不冒称 retry 使用持久 profile |
+| 原始时序／严格接管导航 | 两项均通过，原生导航分别 34 ms / 7 ms |
+| V1/V2、冲突、真实 Quota | 44 项通过；Quota 关闭重开原文均 795 字节、SHA-256 `6335314c843aef194d180a02d89bf3aa92847ed0623dfcff549626f4a2efa6e1` |
+| 四类整课与首次离线 B39 | 145 项通过，14/14 题，4 个持久 profile、8 次整浏览器重开；B39 三项延迟模块来自 SW |
+| Node／P8／Overview | 276/276；[P8 43144837817](https://github.com/runlinx-eng/math/actions/runs/43144837817) Success；[Overview 43144837916](https://github.com/runlinx-eng/math/actions/runs/43144837916) Success，42/42 |
+| Required | **Failure**；34 个浏览器子套件中 32 通过、2 失败：P4 首装就绪等待及既存主题 hover 遮挡 |
+
+独立读取原文复核 308 项全部通过：三次升级前后均为 1992 字节、各自 SHA-256 完全一致；四次 retry 安装失败前与离线应用启动前原文相同，联网恢复前后原文相同，启动后的完整对象只允许两项经证明的访问时间前进。三次旧页存在时清理均约 1 秒返回 `legacy-or-unknown-client` 并保留旧缓存；关闭后分别 743/748/733 ms 完成清理。旧页实际回写被拒绝，已保存新版记录原文不变；新版完全离线重启和继续判题均通过。
+
+[修复后 A 诊断 43144837934](https://github.com/runlinx-eng/math/actions/runs/43144837934) / [Artifact 13909964975](https://github.com/runlinx-eng/math/actions/runs/43144837934/artifacts/13909964975) 也是上述同树：无页面 prototype 消息抑制，旧 v0 退役 `Restart:false`，全 trace 无 Message 引起的 StartWorker。新 unversioned v1 只到 activating，最终 query v2 才真正 activated；不要混淆两个新版 Worker。历史页面保留时最终 active/controller/251 项就绪，旧缓存保留，三份学习原文 1977 字节相同。新版 Worker 仍有诊断包装，因此该项不计正式 3/3。
+
+P4 此次只完成第一项“六类基础资源已缓存”，随后等待页面“就绪”20 秒超时；其后离线、恢复和三尺寸断言未执行，不能写为 P4 通过。该 Artifact 未保存当时 Worker 最终状态，不能仅凭它断言只是提示错误。源码检查发现可明确复现的漏事件路径：`clients.claim()` 可能在 activating 阶段触发 controllerchange，严格身份检查返回后，真正 activated 只触发 Worker statechange；三处原检查没有重试。补修只对本版本且正在 activating 的 Worker 监听一次状态变化，再运行原完整门槛；激活前仍不发送探测消息，未知旧 Worker 仍零探测。P4 增加只读原生事件与最终状态证据，保留原 20 秒超时与全部断言，不增加模拟等待或放宽就绪标准。
+
+最终补修 release 为 `math-explorer-20261112-p10-release-r3-v4`。正式最新运行需重新达到完整升级 3/3、四次失败恢复、P4/P5/P7/P9/P10 与独立整课／备份门禁；精确 head/checkout/tree 和最终数字由当前 Required 运行时结果及 PR #69 绑定。
 
 ### 独立后续阻塞：主题悬停遮挡
 

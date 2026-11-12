@@ -11,6 +11,30 @@ const clientSource=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.ur
 const browserClientSource=clientSource.replaceAll('export function','function')
  .replaceAll('import.meta.url',JSON.stringify('https://math.test/app/sw-client.js'));
 const browserWorkerURL='https://math.test/app/sw.js?release='+encodeURIComponent(release);
+function entryOfflineProgram(file){
+ const entry=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
+ const start=entry.indexOf(file==='space.js'?'async function offline(){':" if('serviceWorker'in navigator){");
+ const end=entry.indexOf(file==='space.js'?'\nasync function boot(){':'\n }catch(error){main.innerHTML',start);
+ assert.ok(start>=0&&end>start);
+ return file==='space.js'?entry.slice(start,end)+'\noffline();':'(async()=>{'+entry.slice(start,end)+'})();';
+}
+function lifecycleEvents(){
+ const handlers=new Map();
+ return {
+  addEventListener(type,callback,options={}){
+   const rows=handlers.get(type)||[];
+   if(!rows.some(row=>row.callback===callback))rows.push({callback,once:options.once===true});
+   handlers.set(type,rows);
+  },
+  listenerCount:type=>(handlers.get(type)||[]).length,
+  async emit(type){
+   for(const row of [...(handlers.get(type)||[])]){
+    if(row.once)handlers.set(type,handlers.get(type).filter(item=>item!==row));
+    await row.callback({type});
+   }
+  }
+ };
+}
 const old='math-explorer-historical-release',other='unrelated-origin-cache';
 const client=(id,version=release)=>({id,url:'https://math.test/learn.html',postMessage(message,ports){
  if(version===null)return;
@@ -88,33 +112,55 @@ test('release worker identity comes from the helper location, never a learning d
  assert.equal(isReleaseWorker(null,release),false);
 });
 test('client cleanup sends zero messages to historical or wrong-release controllers',async()=>{
- for(const scriptURL of ['https://math.test/app/sw.js','https://math.test/app/sw.js?release=older-release']){
-  const sent=[],listeners={};
-  const oldWorker={state:'activated',scriptURL,postMessage:message=>sent.push(message.type)};
+ for(const scriptURL of ['https://math.test/app/sw.js','https://math.test/app/sw.js?release=older-release'])for(const state of ['activating','activated']){
+  const sent=[],listeners={},observed=[];
+  const oldWorker={state,scriptURL,postMessage:message=>sent.push(message.type),addEventListener:type=>observed.push(type)};
   vm.runInNewContext(browserClientSource+'\nregisterClientRelease('+JSON.stringify(release)+');',{
    navigator:{serviceWorker:{controller:oldWorker,getRegistration:async()=>({active:oldWorker}),addEventListener:(name,fn)=>listeners[name]=fn}},
    document:{readyState:'loading'},window:{addEventListener:(name,fn)=>listeners[name]=fn},URL,MessageChannel,setTimeout,clearTimeout});
   await listeners.load();
   assert.deepEqual(sent,[],'even a read-only status probe must not restart the retiring controller');
+  assert.deepEqual(observed,[],'unknown historical workers must not be monitored for protocol retries');
  }
 });
 test('both entry status checks register the fixed release and never probe a legacy controller',async()=>{
- for(const file of ['space.js','exploration.js']){
-  const entry=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
-  const start=entry.indexOf(file==='space.js'?'async function offline(){':" if('serviceWorker'in navigator){");
-  const end=entry.indexOf(file==='space.js'?'\nasync function boot(){':'\n }catch(error){main.innerHTML',start);
-  assert.ok(start>=0&&end>start);
-  const program=file==='space.js'?entry.slice(start,end)+'\noffline();':'(async()=>{'+entry.slice(start,end)+'})();';
-  const sent=[],registrations=[],status={textContent:''},legacy={state:'activated',scriptURL:'https://math.test/app/sw.js',postMessage:message=>sent.push(message.type)};
+ for(const file of ['space.js','exploration.js'])for(const state of ['activating','activated']){
+  const program=entryOfflineProgram(file);
+  const sent=[],registrations=[],observed=[],status={textContent:''},legacy={state,scriptURL:'https://math.test/app/sw.js',postMessage:message=>sent.push(message.type),addEventListener:type=>observed.push(type)};
   const serviceWorker={controller:legacy,ready:Promise.resolve(),addEventListener(){},
    async register(url,options){registrations.push({url,options});return {active:legacy};}};
   await vm.runInNewContext(browserClientSource+'\nconst RELEASE='+JSON.stringify(release)+';\n'+program,
    {navigator:{serviceWorker},$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
   assert.deepEqual(sent,[],file+' must identify the controller before requesting cache status');
+  assert.deepEqual(observed,[],file+' must not monitor an unknown historical worker');
   assert.equal(registrations.length,1);assert.equal(registrations[0].url,browserWorkerURL);
   assert.equal(registrations[0].options.updateViaCache,'none');
   assert.match(status.textContent,/正在升级离线资源/);
  }
+});
+for(const file of ['helper','space.js','exploration.js'])test(file+' resumes readiness after the current controller finishes activating',async()=>{
+ const sent=[],status={textContent:''},document={readyState:'loading'},window=lifecycleEvents();
+ const current={...lifecycleEvents(),state:'activating',scriptURL:browserWorkerURL,postMessage(message,ports){
+  assert.equal(this.state,'activated','activating controllers receive no protocol messages');
+  sent.push(message.type);ports[0].postMessage({type:message.type,cache:release,complete:true,cached:2,total:2});ports[0].close();
+ }};
+ const registration={active:current};
+ const serviceWorker={...lifecycleEvents(),controller:current,ready:Promise.resolve(registration),
+  register:async()=>registration,getRegistration:async()=>registration};
+ const program=file==='helper'?'registerClientRelease(RELEASE);':entryOfflineProgram(file);
+ await vm.runInNewContext(browserClientSource+'\nconst RELEASE='+JSON.stringify(release)+';\n'+program,
+  {navigator:{serviceWorker},document,window,$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
+ document.readyState='complete';
+ await serviceWorker.emit('controllerchange');
+ await serviceWorker.emit('controllerchange');
+ assert.deepEqual(sent,[],'controllerchange during activating does not start a premature status request');
+ assert.equal(current.listenerCount('statechange'),1,'the activating current controller needs one completion listener');
+ current.state='activated';
+ await current.emit('statechange');
+ assert.deepEqual(sent,file==='helper'?['math-explorer:cache-status','math-explorer:cleanup-retired-caches']:['math-explorer:cache-status'],
+  'activation statechange resumes the original strict checks without another controllerchange');
+ assert.equal(current.listenerCount('statechange'),0,'the activation completion listener runs once');
+ if(file!=='helper')assert.match(status.textContent,/就绪/);
 });
 test('current controller cleanup requires matching active identity and a complete resource report',async()=>{
  for(const [activeMatches,complete,expected] of [[false,true,[]],[true,false,['math-explorer:cache-status']],

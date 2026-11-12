@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261112-p10-release-r3-v3';
+const RELEASE='math-explorer-20261112-p10-release-r3-v4';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -1165,6 +1165,7 @@ async function offline(){
     const check=async()=>{
       const active=navigator.serviceWorker.controller;
       if(!active){status.textContent='本机保存 · 正在准备离线资源';return;}
+      if(isReleaseWorker(active,RELEASE)&&active.state==='activating')active.addEventListener('statechange',refresh,{once:true});
       if(!isReleaseWorker(active,RELEASE)||active.state!=='activated'||registration.active!==active){status.textContent='本机保存 · 正在升级离线资源';return;}
       const response=await new Promise(resolve=>{
         const channel=new MessageChannel();
@@ -1182,7 +1183,8 @@ async function offline(){
         controller:navigator.serviceWorker.controller,worker:active,report:response})?
         '本机保存 · 离线就绪':'本机保存 · 离线资源不完整';
     };
-    navigator.serviceWorker.addEventListener('controllerchange',()=>{check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});});
+    const refresh=()=>check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});
+    navigator.serviceWorker.addEventListener('controllerchange',refresh);
     await check();
   }catch{status.textContent='本机保存 · 离线状态未知';}
 }

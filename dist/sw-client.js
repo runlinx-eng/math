@@ -30,9 +30,14 @@ if('serviceWorker'in navigator){
   const worker=navigator.serviceWorker.controller;
   // Identify this protocol before sending anything. Even a status probe can
   // restart a retiring historical controller and delay the new activation.
-  if(!isReleaseWorker(worker,RELEASE)||worker.state!=='activated')return;
+  if(!isReleaseWorker(worker,RELEASE))return;
+  if(worker.state==='activating'){
+   worker.addEventListener('statechange',sweep,{once:true});
+   return;
+  }
+  if(worker.state!=='activated')return;
   const registration=await navigator.serviceWorker.getRegistration().catch(()=>null);
-  if(registration?.active!==worker||navigator.serviceWorker.controller!==worker)return;
+  if(registration?.active!==worker||navigator.serviceWorker.controller!==worker||worker.state!=='activated')return;
   const status=await ask(worker,'math-explorer:cache-status');
   if(!isCurrentReleaseReady({release:RELEASE,registration,
    controller:navigator.serviceWorker.controller,worker,report:status}))return;

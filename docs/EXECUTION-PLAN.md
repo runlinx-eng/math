@@ -5,6 +5,8 @@
 - 最新诊断把阻塞定位到旧 Worker 退役窗口被 Message 唤醒并重启；两独立 profile 的旧 fetch/open/put 均 312/312 正常完成。A 保留页面 waiting，B 关页后正常激活，C 仅抑制旧 Worker 状态探测即能保留旧页完成激活、导航与冲突保护。详见 [P10 台账](P10-LEARNING-CONTINUITY.md) 及 `verification/p10-release-upgrade/stage13-evidence-index.json`。诊断不计正式 3/3，不能声称唯一锁定某一行消息调用。
 - 最小修复：固定 release query 的 SW 注册 URL 与发消息前被动身份检查；未知旧 controller 不接收新版状态/清理消息。保持原作用域、严格 active/controller/完整资源门槛、保守旧缓存清理、儿童记录和数学行为。
 - 正式验收继续用未经修改的 `9684442` 历史 SW、三个全新持久 Chromium profile，保留原旧页跨过激活并真实验证过期回写保护；每次另执行独立失败恢复，最后另加一个 retry-only。全部数字须对应最新同代码树 Artifact，不能继承第十二阶段结果。
+- 首次产品修复 `e1122457` / tree `e8aeeec4` 已经真实完整升级 **3/3（各53项）**、独立失败恢复 **4/4**、备份安全44与整课145通过；原始／严格导航34/7 ms。Required [43144837937](https://github.com/runlinx-eng/math/actions/runs/43144837937) 仍失败（32/34浏览器子套件通过）：P4首装就绪等待20秒与主题遮挡。独立原文／生命周期308项复核通过；以上结果只属于该树。
+- 首装补修 release v4：本版本 controller 在 activating 时先监听一次 statechange，activated 后重新执行原身份／完整缓存门槛。保持激活前不发探测、历史 worker 零探测；P4加被动原生事件与状态证据，保留全部断言和原超时。最后代码树须重跑真实3/3和全部必要门禁，不能把上一条直接算到后续HEAD。
 - **Required 独立阻塞已实证**：原样 main `9f8afd5` 同样出现主题 data 入口 hover 被 `aside#network-guide` 拦截，前 13 项通过。记录独立后续任务“修复知识地图主题标题悬停时被观察面板拦截并持续移动”；保留真实失败与全部断言，不并入 P11 完整视觉重构。该问题仍阻塞 Required 时，P10 不得收尾。
 - PR #69 保持 Draft，#67→#68→#69 堆叠关系与 #66 独立关系不变。不合并、不部署、不清用户数据。正式最新结果在 PR #69 与当前 Required Artifact 的运行时 head/checkout/tree 索引核对；Mac/儿童/独立教研不由 CI 替代。
 
