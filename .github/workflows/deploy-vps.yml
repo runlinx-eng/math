@@ -1,13 +1,8 @@
 name: Deploy Math Explorer preview
 
-# Publish only after required checks pass on the integrated main commit.
-# Keep one-time manual deployment on main as a fallback.
+# Manual-only preview releases: merging to main or a successful CI never publishes.
+# A separate, explicit workflow_dispatch with confirm_deploy=true is required.
 on:
-  workflow_run:
-    workflows:
-      - Pull request required checks
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       confirm_deploy:
@@ -26,22 +21,12 @@ concurrency:
 
 jobs:
   deploy:
-    if: >-
-      ${{
-        (github.event_name == 'workflow_dispatch' &&
-          github.ref == 'refs/heads/main' &&
-          inputs.confirm_deploy == true) ||
-        (github.event_name == 'workflow_run' &&
-          github.event.workflow_run.event == 'push' &&
-          github.event.workflow_run.head_branch == 'main' &&
-          github.event.workflow_run.head_repository.full_name == github.repository &&
-          github.event.workflow_run.conclusion == 'success')
-      }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm_deploy == true }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      # A workflow_run has a different GITHUB_SHA; deploy the commit that CI tested.
-      RELEASE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+      # This workflow runs only on explicitly confirmed, manual main dispatches.
+      RELEASE_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
         with:
