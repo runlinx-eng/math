@@ -95,7 +95,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
-  check(JSON.stringify(await camera())===JSON.stringify(hoverCamera),'all hover operations leave the camera untouched');
+  const cameraAfterHover=await camera();
+  check(JSON.stringify(cameraAfterHover)===JSON.stringify(hoverCamera),
+    'all hover operations leave the camera untouched: '+JSON.stringify({before:hoverCamera,after:cameraAfterHover}));
 
   // Manual zoom changes the camera; subsequent theme selection must not.
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
