@@ -45,9 +45,9 @@ const runPhase=({phase,folder,port,repetition=null})=>{
 };
 const runs=[];
 for(let repetition=1;repetition<=3;repetition++){
- runs.push(runPhase({phase:'full',repetition,folder:'run-'+repetition,port:43828+repetition}));
+ runs.push(runPhase({phase:'full',repetition,folder:'run-'+repetition,port:43928+repetition}));
 }
-const retryIndependent=runPhase({phase:'retry',folder:'retry-independent',port:43832});
+const retryIndependent=runPhase({phase:'retry',folder:'retry-independent',port:43932});
 const allRuns=[...runs,retryIndependent];
 const independentProfiles=allRuns.every(run=>!!run.profileId)&&new Set(allRuns.map(run=>run.profileId)).size===allRuns.length;
 const complete=runs.every(run=>run.success)&&retryIndependent.success&&independentProfiles;

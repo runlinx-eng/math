@@ -823,6 +823,10 @@ function updatePrimaryNavigation(){
   // A context surface changes background legibility, not the camera pose.
   // Notify the WebGL scene explicitly: instance colors are not CSS and must
   // be repainted when the lesson, trail, or exploration surface changes.
+  // Synchronize the task-docked 3D projection before the label hit targets render.
+  // Only resize the projection: do not move position, target or zoom.
+  if(scene){const r=scene.host.getBoundingClientRect();
+    if(Math.abs(scene.width-r.width)>1||Math.abs(scene.height-r.height)>1)scene.resize();}
   scene?.setTaskWorkspaceActive(document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'));
   // The operational object is explicit, unique, and never derived from hover.
   const operationalKey=active==='learn'&&journeyOpen&&!journeySuspended

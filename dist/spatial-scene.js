@@ -711,6 +711,10 @@ export class SpatialScene {
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
+    // ResizeObserver can lag a dock transition: never use stale full-width
+    // coordinates in the narrow map beside a learning panel.
+    const bounds=this.host.getBoundingClientRect();
+    if(Math.abs(this.width-bounds.width)>1||Math.abs(this.height-bounds.height)>1)this.resize();
     // Hover temporarily reuses the clicked-theme label policy, but never
     // changes the persisted selection or camera.
     const hoverObject=this.space.byKey.get(this.hoverMapKey),selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;

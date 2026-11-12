@@ -66,7 +66,7 @@ const check=(v,m)=>{if(!v)throw Error(m);};
     const rect=el=>{if(!el)return null;const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};};
     const hit=el=>el?{tag:el.tagName,id:el.id,classes:String(el.className||'').slice(0,100),key:el.dataset?.key}:null;
     return {viewport:[innerWidth,innerHeight],selected:mathSpace.snapshot().selected,playable,excludeLesson,
-     map:rect(document.querySelector('#space-app')),task:rect(document.querySelector('#journey-surface')),
+     map:rect(document.querySelector('#space-app')),canvas:rect(document.querySelector('#space-canvas')),task:rect(document.querySelector('#journey-surface')),
      source:rect(document.querySelector('#learning-map-context')),
      labels:[...document.querySelectorAll('.space-label.node:not([hidden])')].map(el=>{
       const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,top=x>=0&&y>=0&&x<innerWidth&&y<innerHeight?document.elementFromPoint(x,y):null;
