@@ -81,6 +81,37 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   const restored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   assert(restored.lessons.share.cases[0].attempts.length===savedChecks,'Trail resume lost or duplicated saved attempts');
   checks.push('named Trail resume restores original native course and attempts');
+  // The second course is entered by clicking its actual projected 3D label.
+  // A search URL or synthetic hash cannot substitute for this hit test.
+  await nav('explore').click();
+  await page.locator('.space-label.node[data-key="node:mt_09sySPqM9Z"]').click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
+  await native.locator('#actions [data-do="check"]').click();
+  const two=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const secondChecks=two.lessons.unitcopies.cases[0].attempts.length;
+  assert(secondChecks>0,'second actual native course did not save its work');
+  assert(two.lessons.share.cases[0].attempts.length===savedChecks,'opening second course overwrote first');
+  await nav('trail').click();
+  assert(await trailResume.getAttribute('data-id')==='unitcopies','Trail selected second course ID wrong');
+  await trailResume.click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
+  assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.unitcopies.cases[0].attempts.length===secondChecks,
+    'second course attempts changed when resumed');
+  // Revisit the first source through the normal search selector only after
+  // proving an actual second 3D click, then resume the exact first record.
+  await nav('explore').click();
+  await page.locator('.top-tools [data-action="search"]').click();
+  await page.locator('#search-input').fill('mt_ndGqFPWyen');
+  await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+  await nav('trail').click();
+  assert(await trailResume.getAttribute('data-id')==='share','Trail selected original course ID wrong');
+  await trailResume.click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
+  const twoRestored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  assert(twoRestored.lessons.share.cases[0].attempts.length===savedChecks,'original course attempts lost');
+  assert(twoRestored.lessons.unitcopies.cases[0].attempts.length===secondChecks,'other course attempts lost');
+  checks.push('two independently saved native courses, second real 3D click and non-overwriting Trail restore');
   for(const [w,h] of [[1440,900],[1280,720],[980,760],[620,800],[1000,1350]]){
     await page.setViewportSize({width:w,height:h});
     await nav('learn').click();
