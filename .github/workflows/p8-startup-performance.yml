@@ -25,7 +25,9 @@ jobs:
       - name: Install isolated Chromium
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium
+          # GitHub Ubuntu runner already has Chromium system libraries; apt mirrors can have DNS outages.
+          # Keep the same real Chromium test and assertions, only avoid apt downloads.
+          npx playwright install chromium
       - name: Check out the same-stack second-round baseline (3c62216)
         env:
           BASE_SHA: 3c62216aa5e38a3a57b0f25415aa0596fd12f8b4

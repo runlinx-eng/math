@@ -1,3 +1,6 @@
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+const RELEASE='math-explorer-20261112-p10-release-r3-v4';
+registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';
@@ -1157,11 +1160,13 @@ async function offline(){
   const status=$('#offline-status');
   if(!('serviceWorker'in navigator)){status.textContent='本机保存 · 此环境无法使用离线缓存';return;}
   try{
-    const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+    const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});
     await navigator.serviceWorker.ready;
     const check=async()=>{
-      const active=navigator.serviceWorker.controller||registration.active;
+      const active=navigator.serviceWorker.controller;
       if(!active){status.textContent='本机保存 · 正在准备离线资源';return;}
+      if(isReleaseWorker(active,RELEASE)&&active.state==='activating')active.addEventListener('statechange',refresh,{once:true});
+      if(!isReleaseWorker(active,RELEASE)||active.state!=='activated'||registration.active!==active){status.textContent='本机保存 · 正在升级离线资源';return;}
       const response=await new Promise(resolve=>{
         const channel=new MessageChannel();
         const timer=setTimeout(()=>{channel.port1.close();resolve(null);},5000);
@@ -1171,12 +1176,16 @@ async function offline(){
         try{active.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}
         catch{clearTimeout(timer);channel.port1.close();resolve(null);}
       });
-      // Only the active worker knows whether its entire versioned manifest was cached.
-      status.textContent=response?.type==='math-explorer:cache-status'&&response.complete?
+      // An old controller's complete cache cannot certify this document's release.
+      // A late reply from a replaced controller must not overwrite its successor.
+      if(navigator.serviceWorker.controller!==active)return;
+      status.textContent=isCurrentReleaseReady({release:RELEASE,registration,
+        controller:navigator.serviceWorker.controller,worker:active,report:response})?
         '本机保存 · 离线就绪':'本机保存 · 离线资源不完整';
     };
+    const refresh=()=>check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});
+    navigator.serviceWorker.addEventListener('controllerchange',refresh);
     await check();
-    navigator.serviceWorker.addEventListener('controllerchange',()=>{check().catch(()=>{status.textContent='本机保存 · 离线状态未知';});});
   }catch{status.textContent='本机保存 · 离线状态未知';}
 }
 async function boot(){try {

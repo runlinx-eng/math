@@ -75,6 +75,13 @@ jobs:
           node --check dist/learning/state.js
           node --check tests/p10-learning-continuity-browser.cjs
           node --check tests/p10-longterm-offline-browser.cjs
+          node --check tests/p10-release-upgrade-browser.cjs
+          node --check tests/p10-release-upgrade-repeat.cjs
+          node --check dist/sw.js
+          node --check dist/sw-client.js
+          node --check tests/p10-sw-nav-isolation-browser.cjs
+          node --check tests/p10-full-lessons-browser.cjs
+          node --check tests/p10-backup-safety-browser.cjs
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check dist/learning/p3-workflow.js
@@ -116,6 +123,7 @@ jobs:
             tests/p4-learning-reliability.test.mjs
             tests/p5-integration-safety.test.mjs
             tests/p10-learning-continuity.test.mjs
+            tests/p10-sw-retirement.test.mjs
             tests/p6b-trail-priority.test.mjs
           )
 
@@ -145,10 +153,13 @@ jobs:
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
       - name: Install isolated Chromium test runtime
+        id: browser_runtime
         if: steps.scope.outputs.run_browser == 'true'
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium
+          # GitHub Ubuntu runner already has Chromium system libraries; apt mirrors can have DNS outages.
+          # Keep the same real Chromium test and assertions, only avoid apt downloads.
+          npx playwright install chromium
 
       - name: Run browser regression suite
         if: steps.scope.outputs.run_browser == 'true'
@@ -173,13 +184,18 @@ jobs:
             exit 1
           fi
 
+          status=0
+          # Diagnose the pointer-hover target early; still run every browser suite.
           for test_file in \
+            tests/spatial-theme-overview-browser.cjs \
             tests/p7-d5-entry-browser.cjs \
             tests/p7-d6-fixed-ui-browser.cjs \
             tests/p7-d7-multi-type-browser.cjs \
             tests/p9-thinking-feedback-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
             tests/p10-longterm-offline-browser.cjs \
+            tests/p10-sw-nav-isolation-browser.cjs \
+            tests/p10-release-upgrade-repeat.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
@@ -199,7 +215,6 @@ jobs:
             tests/spatial-focus-filter-browser.cjs \
             tests/spatial-guide-inplace-browser.cjs \
             tests/spatial-unified-map-browser.cjs \
-            tests/spatial-theme-overview-browser.cjs \
             tests/grade-progression-overview-browser.cjs \
             tests/spatial-local-focus-browser.cjs \
             tests/learning-workspace-browser.cjs \
@@ -210,16 +225,33 @@ jobs:
             if [[ -f "$test_file" ]]; then
               echo "::group::${test_file}"
               if [[ "$test_file" == "tests/concept-visual-browser.cjs" ]]; then
-                MATH_CONCEPT_BROWSER_SCOPE=smoke node "$test_file"
+                MATH_CONCEPT_BROWSER_SCOPE=smoke node "$test_file" || status=1
               else
                 if [[ "$test_file" == "tests/p8-trail-performance-browser.cjs" ]]; then
-                  MATH_P8_BASELINE=1 node "$test_file"
+                  MATH_P8_BASELINE=1 node "$test_file" || status=1
                 fi
-                node "$test_file"
+                node "$test_file" || status=1
               fi
               echo "::endgroup::"
             fi
           done
+          exit "$status"
+
+      - name: Run complete P10 lessons and storage safety independently
+        if: ${{ !cancelled() && steps.browser_runtime.outcome == 'success' }}
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-p10-safety-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          status=0
+          node tests/p10-backup-safety-browser.cjs || status=1
+          node tests/p10-full-lessons-browser.cjs || status=1
+          exit "$status"
 
       - name: Preserve browser screenshots and verification evidence
         if: always() && steps.scope.outputs.run_browser == 'true'
@@ -251,6 +283,7 @@ jobs:
             verification/p9-thinking-feedback/
             verification/p10-learning-continuity/
             verification/p10-longterm-round2/
+            verification/p10-release-upgrade/
             verification/p8-node-surfaces/
             verification/p8-trail-performance/
             verification/p8-mode-clicks/

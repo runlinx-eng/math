@@ -1,5 +1,38 @@
 # 数学探索｜现行执行计划 P7–P11（附历史阶段记录）
 
+## P10 R3 第十三阶段当前入口（2026-11-12，PR #69 Draft）
+
+- 最新诊断把阻塞定位到旧 Worker 退役窗口被 Message 唤醒并重启；两独立 profile 的旧 fetch/open/put 均 312/312 正常完成。A 保留页面 waiting，B 关页后正常激活，C 仅抑制旧 Worker 状态探测即能保留旧页完成激活、导航与冲突保护。详见 [P10 台账](P10-LEARNING-CONTINUITY.md) 及 `verification/p10-release-upgrade/stage13-evidence-index.json`。诊断不计正式 3/3，不能声称唯一锁定某一行消息调用。
+- 最小修复：固定 release query 的 SW 注册 URL 与发消息前被动身份检查；未知旧 controller 不接收新版状态/清理消息。保持原作用域、严格 active/controller/完整资源门槛、保守旧缓存清理、儿童记录和数学行为。
+- 正式验收继续用未经修改的 `9684442` 历史 SW、三个全新持久 Chromium profile，保留原旧页跨过激活并真实验证过期回写保护；每次另执行独立失败恢复，最后另加一个 retry-only。全部数字须对应最新同代码树 Artifact，不能继承第十二阶段结果。
+- 首次产品修复 `e1122457` / tree `e8aeeec4` 已经真实完整升级 **3/3（各53项）**、独立失败恢复 **4/4**、备份安全44与整课145通过；原始／严格导航34/7 ms。Required [43144837937](https://github.com/runlinx-eng/math/actions/runs/43144837937) 仍失败（32/34浏览器子套件通过）：P4首装就绪等待20秒与主题遮挡。独立原文／生命周期308项复核通过；以上结果只属于该树。
+- 首装补修 release v4：本版本 controller 在 activating 时先监听一次 statechange，activated 后重新执行原身份／完整缓存门槛。保持激活前不发探测、历史 worker 零探测；P4加被动原生事件与状态证据，保留全部断言和原超时。最后代码树须重跑真实3/3和全部必要门禁，不能把上一条直接算到后续HEAD。
+- **Required 独立阻塞已实证**：原样 main `9f8afd5` 同样出现主题 data 入口 hover 被 `aside#network-guide` 拦截，前 13 项通过。记录独立后续任务“修复知识地图主题标题悬停时被观察面板拦截并持续移动”；保留真实失败与全部断言，不并入 P11 完整视觉重构。该问题仍阻塞 Required 时，P10 不得收尾。
+- PR #69 保持 Draft，#67→#68→#69 堆叠关系与 #66 独立关系不变。不合并、不部署、不清用户数据。正式最新结果在 PR #69 与当前 Required Artifact 的运行时 head/checkout/tree 索引核对；Mac/儿童/独立教研不由 CI 替代。
+
+## P10 R3 第十二阶段当前入口（2026-11-12，PR #69 Draft）
+
+- 保持 `main@9f8afd53c7e477c25e0f419e165bcf1f0e304c51` 与 #67→#68→#69 堆叠关系，#66 独立。以下旧阶段条目只用于追溯，验收以本节及 [P10 台账](P10-LEARNING-CONTINUITY.md) 的本轮最新证据为准。
+- 已实际识别并修正验证方法缺陷：异步 `waitForFunction` 假通过、失败安装未等待真实 redundant、错误 profile 诊断、Quota 导入尚未完成就比较、把 HTTP 503 当成断网。`1718439` 正确等待后暴露新 worker 持续 waiting；不能借旧 29 项前段结果宣布升级通过。
+- 最小应用保护：激活不提前删除旧资源，worker 确认页面实际源码版本和当前完整缓存，旧/未知客户端或下一版本正在安装时延期清理并允许重试。该保护与导航最终归因分别记录，不提前宣称两个超时共享根因。
+- 入口离线提示同时校验页面固定版本、activated、controller 与 registration.active；旧版本的 complete 不能替当前版本报就绪。独立 retry 进程确保首个升级失败不跳过失败恢复分支；构造非空 V1 的完整对象在原生导入与整浏览器重开后逐字段保持，仍不冒充真实儿童备份。
+- 本轮硬门禁：仅 N/O 必要时序取证；未经修改旧版的三个独立 profile 全流程升级；真实完整浏览器重启与离线判题；安装 503/中途断网/旧版继续学习/恢复重试；严格 V1/V2/草稿作品同 ID 冲突/真实 Quota；四类整课 3/3/3/5；最终 HEAD Required、P8、适用 Overview 与完整 artifacts。
+- 已完成的应用保护提交 `e133b69`：Required 43076196399 failure，P8 43076196375 与适用 Overview 43076196401 success，Artifact 13883610625。未经修改旧版三次升级 **0/3**，均停在新版 waiting；每次原记录 1992 字节保持。独立备份 41、整课 141 项在该 SHA 通过；后段另暴露三个图形快照不变性失败。后续非空 V1／独立 retry／离线提示修正必须另以对应提交实测，不能继承这些通过项。
+- B39 首次真正离线打开并入独立整课套件：实际停服后验证原生任务及三项延迟模块均来自 SW，并验证文档 reload。它只证明新装版本的离线能力，不替代历史升级后的 B39 验收；整课原14题/4profile/8重开保持。
+- 后续 `38b7a64` 的 Required 43079175006 failure、P8 43079175077 / Overview 43079174778 success，Artifact 13885276068：历史升级仍0/3；独立retry已证明安装失败时旧SW/缓存/原记录保留及缓存离线打开，但正常课程打开更新时间触发错误比较，现按“启动前原文字节 + 启动后全字段证据”修正。该SHA非空V1/Quota44与整课141通过。地图1ULP相机比较按原向量运算证据修正；真实hover遮挡继续开放。所有后续修改需新SHA实测。
+- 最新完整 CI 未全部实测成功前，P10 尚未完成。真实历史儿童备份、Mac 人工、儿童独立学习、独立数学教研继续列为未验收；不提前启动 Mac/Windows 安装包。P11 两项视觉问题可独立开发，但不混入 #69。未经授权不合并任何 PR，不部署 VPS，不删除真实学习记录。
+
+## P10 R3 第十阶段 J/K 后续决策（2026-11-12）
+- [Required 43061158681](https://github.com/runlinx-eng/math/actions/runs/43061158681) 真实失败，[P8 43061158660](https://github.com/runlinx-eng/math/actions/runs/43061158660) 成功，证据 [Artifact 13872689128](https://github.com/runlinx-eng/math/actions/runs/43061158681/artifacts/13872689128)。旧 SW 已接管时，J 放行 `learn.html` 导航成功 22 ms；K 使用缓存响应同一导航超时 9 秒；原旧 SW 与 H1/H2/H3 均失败。故下一步必须优先定位旧 SW `respondWith` / Worker 激活等待与导航取消链路，不能继续猜 `cache.put`。
+- 任何修改正式 SW 之前，应取得能区分旧 Worker fetch Promise 是否结束、浏览器响应是否提交、当前页面 controller 与新 Worker waiting/activating/activated 的证据；再做最小修复，真实未修改历史版本独立 profile 三次通过及全套数据安全回归。现无生产修复，P10 不可收尾，不启动 Mac/Windows 安装包；P11 交互视觉优先项目可在独立分支准备设计/验收清单，不混入本 PR。
+
+
+## P10 第三轮第十阶段优先级（2026-11-12，PR #69 Draft）
+- 最新已完成 A/B：Required [43058826516](https://github.com/runlinx-eng/math/actions/runs/43058826516) failure、P8 [43058826548](https://github.com/runlinx-eng/math/actions/runs/43058826548) success；原历史 SW 与 H1/H2/H3 禁用运行时缓存写入均不能完成升级后 `learn.html#share` 导航（9 秒超时）。完整旧版三题数据跨升级前后字节相等，但后续 45 秒导航仍失败。不得将新缓存存在当作新 SW 已接管。
+- 下一硬门槛：等待 J/K 单变量导航 fetch 隔离实验的最新真实 Chromium 证据；按结果定位 SW 导航、生命周期或测试环境问题，再做**有证据的最小修复**和三次独立 profile 复验；之后才执行原完整升级、旧标签页、V1/V2、Quota、离线恢复及四类整课验证。
+- P10 未结束；Mac/Windows 本地版开发及 P11 UI 改动不并入本 PR。未经授权不合并 PR #66～#69，不部署 VPS，不清理真实学习记录。详见 [P10 台账](P10-LEARNING-CONTINUITY.md)。
+
+
 > **更新于 2026-11-11；当前权威阶段入口。**
 >
 > 产品目标以 [PRODUCT-VISION.md](PRODUCT-VISION.md) 为准；开发/合并/发布纪律以 [DEVELOPMENT-WORKFLOW.md](DEVELOPMENT-WORKFLOW.md) 为准。本文管理**下一步做什么、先后关系和验收状态**，不替代领域规范、单项 Issue 或实际教学证据。下方 2026-10-24 至 2026-11-01 的六阶段记录保留为历史，不再是当前优先级。
@@ -310,3 +343,51 @@
 ## 2026-10-29 补充：拖动旋转 v52
 
 关系全图默认拖动旋转，并提供 Shift 拖动、右键拖动及“平移”按钮。原有空间保持原手势。顶视和侧视后的拖动、惯性与刷新恢复已有隔离浏览器检查；触控板等真实使用体验仍需单独验收。
+
+
+## P10 第三轮验收门槛（2026-11-11，堆叠 Draft）
+- 基于 #68 的 P10 长周期存储/离线成果，新增真实旧版→新版 Service Worker 更新矩阵和浏览器迁移自动化；以 GitHub Actions 最新 commit 的 Required/Overview 为最终结果，不将以前的 CI success 复制到本轮。
+- 必须验证升级中断时旧版可用、旧缓存不会被错误清除、新版未访问过的 B39 动态模块离线加载、旧新标签页并发保存安全、V1/V2 文件完整性及配额失败不覆盖、同源升级与不同 origin 的手动备份迁移。证据路径和分级见 [P10 台账](P10-LEARNING-CONTINUITY.md)。
+- P10 未验证的完整四种整课离线、历史儿童备份、Mac 人工/儿童独立学习和数学教研继续开放。没取得关键 CI 通过前不能工程收尾，不能将静态网页缓存称为桌面可下载安装包。
+- 推荐顺序：先 P10 数据安全收口及必要修复 → P11 单一选中重点和悬停按钮减法 → #63 本地发行技术选型及数据迁移试点 → Mac/Windows 安装升级验收；独立教研/儿童测试并行持续，不以 UI 自动化替代。
+
+
+### P10 R3 故障阻塞与工程收尾（2026-11-11）
+- PR #69 保持堆叠在 #68 上并继续 Draft；main 与 #66/#67/#68 均未合并本轮成果。
+- Required `43027731839` 在真实旧版→新版 Chromium 导航 `learn.html#share` 超时失败；旧版学习、离线、升级前后 JSON 一致及新版完整缓存检查成功，但旧缓存仍存在。
+- `50862fb` 仅增加 server/Chromium/SW 证据收集，后续按 `diagnostics.json` 实际定位，再最小修复并在最新 SHA 上重跑全部 Required、Overview、P4/P5/P7/P8/P9/P10；不可只调大超时或删断言。
+- 在故障修复、升级中断与数据保护及四类完整离线学习闭环实际验收前，P10 不收尾；#63 本地安装执行工作仍是 Backlog，P11 可独立设计但不应代替修复。P11 优先唯一强选中标记、悬停不弹多按钮。
+
+
+### P10 第三轮第五阶段复核（2026-11-11）
+- 最新启动阶段：旧 `2bcb3b6` Required `43036967556` 和 P8 `43036967682` 因 GitHub Ubuntu 软件源 DNS 失败导致 Playwright `--with-deps` 安装中断，未执行 Chromium 升级测试；不得称此前升级修复通过。
+- PR #69 原分支调整两项 CI 安装步骤，移除冗余 apt 依赖安装（不删浏览器、不改断言），等待修复后 HEAD 的新 CI 与 Artifact。
+- P10 仍被真实跨版本导航、失败恢复、旧标签页、V1/V2 兼容及配额安全、四类整套离线和最新 Required/Overview/P8 阻断。达不到八项安全门槛不得正式工程收尾。P11 单独处理唯一最强选中标记及收敛悬停操作；Issue #63 本地发行版待 P10 安全准入通过后再正式推进。
+
+### 第五阶段最新 HEAD 实际复验结果（`239c2c9d403eebbd3888626771bec39d4c450a88`）
+- Required [43042940403](https://github.com/runlinx-eng/math/actions/runs/43042940403)：**failure**，不是通过。Chromium 成功安装，Node 263 项全通过；P9 浏览器 23 项、P10 第一轮 24 项、P10 第二轮 43 项成功；R3 在 `learn.html#share` 的 `goto(waitUntil=commit)` **再次超时 45 秒**。浏览器导航安全门槛依旧失败。
+- 最新 Chromium Artifact [13865143932](https://github.com/runlinx-eng/math/actions/runs/43042940403/artifacts/13865143932)：`failure.json`/`diagnostics.json` 均确认 11 项前置检查通过，`before-upgrade.json` 与 `after-upgrade.json` **字节完全相同（各 1992 字节）**。事件末端：已激活 SW、旧新缓存并存，`learn.html` 服务器收到请求但记录 `server-aborted`，浏览器现场探针超时。该结果说明上阶段 `2bcb3b6` 并未解除卡死；但仍未精确归因到 SW、缓存竞争、fetch 生命周期或 Chromium/测试服务器交互。
+- P8 [43042940326](https://github.com/runlinx-eng/math/actions/runs/43042940326)：**success**，对应相同 HEAD。Overview 未见同 SHA 的独立运行，不能记 success。
+- 本阶段未修改应用 SW/存储代码；仅修正 CI 环境并重现原障碍。**P10 保持未完成，关键升级后测试均未进入，绝不宣布儿童记录全量安全。** 下一步应针对最新 `learn.html` server-aborted 做真实隔离对照实验并修对应根因，不靠增加超时。
+
+### P10 第三轮第六阶段（进行中，不得收尾）
+
+新增 `tests/p10-sw-nav-isolation-browser.cjs` 并在 Required 的原完整 P10 升级测试之前运行，记录同 origin 新旧版本切换、SW 与不使用 SW、旧标签页、缓存清理和 HTTP 服务器响应的可复核诊断。HEAD `472cc54` 的隔离七组均成功，但完整跨版本学习场景仍超时；新增 `f8bcdcd` 的离线切换对照未完成最新 CI 验收。不能据此声明修复成功；旧数据安全、备份导入、四门整课离线和 #63 安装准入均保持待完成。证据及细则见 `docs/P10-LEARNING-CONTINUITY.md` 和 PR #69。
+
+
+### P10 R3 第八阶段诊断与准入状态（2026-11-12）
+- 旧版简化隔离测试的 `oldState` 多次为空，且旧版 HTTP 加载期间已切换服务器目录；历史简化成功尚不足以排除 SW 生命周期问题。已强化旧 Worker 控制、旧缓存和实际旧版 `sw.js` 请求证据门槛，并为原完整故障增加 CDP/服务器请求标识及完整事件记录。
+- 尚无因果证据证明根因；本阶段暂不改 `dist/sw.js` 或数学内容、存储格式和判题。以前的 Required `43052135066` 失败、P8 `43052135075` 成功只能用于对应旧 HEAD `b08217d`；本阶段新 SHA 必须等待各自 CI 产物。
+- P10 仍未工程收尾；Issue #63 Mac/Windows 安装正式开发继续阻断。P11 只可在独立分支处理唯一强选中标记与悬停操作收敛，不并入 PR #69。
+
+
+### P10 第三轮第九阶段：SW 升级导航阻断继续（2026-11-12）
+- 最新已完成 CI：`6dc6f27` Required [43055524219](https://github.com/runlinx-eng/math/actions/runs/43055524219) failure、P8 [43055524265](https://github.com/runlinx-eng/math/actions/runs/43055524265) success、Overview 未触发。Artifact `13870314043` 确证真实旧 SW 已接管且旧缓存有 `learn.html`；所有受旧 SW 控制的升级导航对照超时，新 SW 初装及绕过 SW 的网络导航成功。新 Worker waiting / 旧 Worker active，两套缓存共存；完整测试照旧 45 秒超时。尚无足够因果证据区分 SW 运行时缓存写入与浏览器生命周期或测试服务器交互。
+- 已在 PR #69 同分支新增临时旧 SW 缓存写入 A/B 三次诊断（`1483b38`），**不是应用修复或安全验收**；核查其最新 CI 后再决定最小修复层。不得用旧 SHA 的绿色结果代替最新 HEAD。持续保留数学内容、V1/V2 语义及学习成果安全断言，不合并、不部署。
+- P10 安全门槛仍 C/B，#63 安装包正式工作不启动；P11 只在独立视觉专项收敛选中高亮和悬停按钮。
+
+
+### P10 R3 第十一阶段：仍不满足发布与本地安装准入（2026-11-12）
+- 最新有结论的代码 `35303ea`：Required [43068578796](https://github.com/runlinx-eng/math/actions/runs/43068578796) **failure**；关联 P8 结果须按该 SHA 另行核查，不可借用旧 SHA。真实旧版更新在完整场景中曾越过导航卡点，并完成数据备份导入、冲突、配额等前段；隔离对照仍稳定复现旧 SW 缓存响应导航超时，重试清理消息亦超时。
+- 关键诊断：同步内存 Response、异步内存 Response 均成功；旧 Cache Storage Response 失败。因此不能把所有 `respondWith()` 都当成根因，亦未证明具体 Cache API / body / 生命周期环节。已修正 `newReady()` 假阳性与 Playwright 隐藏输入等待，但**没有应用级 SW 修复**。
+- 持续强制门槛：固定未经修改旧版、至少三次独立 profile 完整跨版数据安全验收、升级失败与重试、V1/V2 和真实 Quota、四类整课离线、最新 HEAD Required/P8/适用 Overview 与 Artifact。现为 B/C、P10 未完成，#63 Mac/Windows 正式开发禁止启动；P11 的唯一选中高亮及悬停控件收敛仅可独立专项进行。禁止合并和部署。

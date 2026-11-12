@@ -1,7 +1,9 @@
 // Five source-backed theme overviews are navigable views of the same v53 atlas.
 const fs=require('node:fs'),path=require('node:path'),{chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
-const out=path.resolve(__dirname,'../verification/spatial-theme-overview');
-const url='http://127.0.0.1:43827/?v=56&world=network&layout=53#atlas';
+const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
+const out=process.env.MATH_THEME_OUTPUT||path.resolve(__dirname,'../verification/spatial-theme-overview');
+const url=new URL('?v=56&world=network&layout=53#atlas',process.env.MATH_THEME_BASE_URL||'http://127.0.0.1:43827/').href;
+const sourceRoot=process.env.MATH_THEME_SOURCE_ROOT||path.resolve(__dirname,'../dist');
 const ids=['numbers','space','measure','patterns','data'],checks=[],errors=[];
 const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
 (async()=>{
@@ -10,14 +12,17 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
  const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  const page=await context.newPage();
  page.on('pageerror',e=>errors.push(String(e)));
+ let snapshotDiff;
  try{
   await page.goto(url);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().visibleNodes.length===537);
-  const {applyNavigationCopy}=await import('../dist/navigation-copy.js');
+  const {applyNavigationCopy}=await import(require('node:url').pathToFileURL(path.join(sourceRoot,'navigation-copy.js')).href);
   const atlas=applyNavigationCopy(await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json()));
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
-  const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
+  // Match the repository's existing IEEE-754 camera-roundoff rule; zoom,
+  // tween, transition and all other fields remain exactly compared.
+  const sameCamera=(a,b)=>sameSnapshotWithCameraRoundoff(JSON.stringify(a),JSON.stringify(b));
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
   await page.waitForTimeout(450);
   // Hover previews REAL node colors while its theme title reflects hierarchy.
@@ -63,7 +68,18 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.screenshot({path:path.join(out,'theme-hover-title-visible.png')});
   await page.waitForTimeout(200);
   check(await page.locator('#network-legend [data-hover="true"]').count()===1,'visible floating theme title keeps its hover and the group preview without flicker');
-  check((await page.evaluate(()=>JSON.stringify(mathSpace.snapshot())))===rawSnapshot,'hover leaves graph snapshot, camera and selected state untouched');
+  const hoverSnapshot=await page.evaluate(()=>JSON.stringify(mathSpace.snapshot()));
+  const unchanged=sameSnapshotWithCameraRoundoff(rawSnapshot,hoverSnapshot);
+  snapshotDiff=undefined;
+  if(!unchanged){
+   const expected=JSON.parse(rawSnapshot),actual=JSON.parse(hoverSnapshot);
+   const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
+    .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
+   snapshotDiff={changedKeys,fields:Object.fromEntries(changedKeys.map(key=>[key,{
+    expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
+   if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
+  }
+  check(unchanged,'hover leaves graph snapshot, camera and selected state untouched');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   await page.waitForFunction(({id,before})=>{const el=mathSpace.nodeTint('node:'+id);return el&&el.every((v,i)=>Math.abs(v-before[i])<.0001);},{id:themeNode.id,before:beforeTints[0]});
@@ -81,7 +97,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
-  check(JSON.stringify(await camera())===JSON.stringify(hoverCamera),'all hover operations leave the camera untouched');
+  const cameraAfterHover=await camera();
+  check(sameCamera(hoverCamera,cameraAfterHover),
+    'all hover operations leave the camera untouched: '+JSON.stringify({before:hoverCamera,after:cameraAfterHover}));
 
   // Manual zoom changes the camera; subsequent theme selection must not.
   await page.locator('.tool-rail [data-action="zoom"][data-factor="0.75"]').click();
@@ -97,7 +115,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    await page.waitForFunction(id=>mathSpace.snapshot().selected==='theme:'+id,id);
    await page.waitForTimeout(150);
    const after=await camera();
-   check(sameCamera(before,after),theme.title+' leaves camera position, target and zoom unchanged');
+   check(sameCamera(before,after),theme.title+' leaves camera position, target and zoom unchanged: '+JSON.stringify({before,after}));
    check(after.tween===null&&after.transition===null,theme.title+' never schedules a camera tween or view transition');
    const s=await page.evaluate(()=>mathSpace.snapshot());
    const card=page.locator('#focus-card[data-kind="theme"]'),overview=card.locator('.theme-overview');
@@ -153,7 +171,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      const groupPreviewLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
      check(groupPreviewLabels.every(key=>key==='pack:'+packId),theme.title+' group hover is group-specific, not a duplicate theme preview');
      check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover keeps clicked theme detail');
-     check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover never moves the camera');
+     check(sameCamera(oldCamera,await camera()),theme.title+' group hover never moves the camera');
      check((await page.locator('#network-view-title').textContent()).includes(pack.title),theme.title+' group breadcrumb names the inspected group');
      await page.mouse.move(4,4);
      await page.waitForFunction(()=>mathSpace.hoverPreview().key===null&&document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
@@ -204,13 +222,13 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
     check(nearby.border<focusStyle.border&&nearby.weight<focusStyle.weight,'real direct neighbors are framed more lightly than the hover target');
   }
   await page.screenshot({path:path.join(out,'node-hover-hierarchy.png')});
-  check(JSON.stringify(await camera())===JSON.stringify(nodeCamera),'node hover does not pan, zoom or rotate');
-  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'node hover never modifies selected map snapshot');
+  check(sameCamera(nodeCamera,await camera()),'node hover does not pan, zoom or rotate');
+  check(sameSnapshotWithCameraRoundoff(nodeSnapshot,JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))),'node hover never modifies selected map snapshot');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>mathSpace.hoverPreview().key===null);
   check(await page.locator('.space-label.node.preview-target:visible').count()===0,'hover target framing disappears on leave');
   check((await page.locator('#network-view-title').textContent())!==breadcrumb,'top-left breadcrumb restores the prior map state on leave');
-  check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'leaving node restores the panorama');
+  check(sameSnapshotWithCameraRoundoff(nodeSnapshot,JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))),'leaving node restores the panorama');
   check(await page.evaluate(()=>JSON.stringify({...localStorage}))===nodeStorage,'hover records no learning behavior');
   // The rule also holds after the user explicitly changes the camera view.
   await page.locator('[data-action="network-view"][data-view="top"]').click();
@@ -281,7 +299,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   console.log(JSON.stringify({passed:checks.length,errors,childTrial:false}));
  }catch(err){
   await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(err),childTrial:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(err),childTrial:false,snapshotDiff},null,2));
   console.error(err.stack);process.exitCode=1;
  }finally{await context.close();await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

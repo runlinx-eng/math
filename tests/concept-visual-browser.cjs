@@ -1,6 +1,7 @@
 // Sixty-node UI review: five source types, eleven domains, procedural patterns, and fifteen exact visuals; progressive explanation and map invariants.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const sameSnapshotWithCameraRoundoff=require('./camera-snapshot.cjs');
 const out=path.resolve(__dirname,'../verification/concept-language-pilot');
 const ids=[
   ['count','mt_WcfaSfVT33'],['addition','mt_OvyoRo47K-'],
@@ -562,6 +563,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const checks=[],measurements=[],errors=[];
+ let snapshotDiff;
  try{
   for(const [width,height,slug] of [[1440,900,'desktop'],[1280,720,'compact']]){
    const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
@@ -683,7 +685,18 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
       }
     }else await help.locator('.concept-mode').first().locator('summary').click();
     await page.screenshot({path:path.join(out,tag+'-expanded.png')});
-    check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===before,
+    const after=JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()));
+    const unchanged=sameSnapshotWithCameraRoundoff(before,after);
+    snapshotDiff=undefined;
+    if(!unchanged){
+     const expected=JSON.parse(before),actual=JSON.parse(after);
+     const changedKeys=[...new Set([...Object.keys(expected),...Object.keys(actual)])]
+      .filter(key=>JSON.stringify(expected[key])!==JSON.stringify(actual[key]));
+     snapshotDiff={case:tag,changedKeys,fields:Object.fromEntries(changedKeys.map(key=>[key,{
+      expectedPresent:Object.hasOwn(expected,key),actualPresent:Object.hasOwn(actual,key),expected:expected[key],actual:actual[key]}]))};
+     if(!changedKeys.length)snapshotDiff.keyOrder={expected:Object.keys(expected),actual:Object.keys(actual)};
+    }
+    check(unchanged,
       tag+': reading explanations does not change camera, nodes, selection, or relation data');
     check(await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))===learningRecord,
       tag+': explanation reads never record learning completion');
@@ -698,7 +711,7 @@ const check=(ok,desc)=>{if(!ok)throw Error(desc);};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:checks.length,checks,measurements,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,viewportCases:checks,errors,childTrial:false}));
  }catch(err){
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,measurements,errors,failed:String(err)},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,measurements,errors,failed:String(err),snapshotDiff},null,2));
   console.error(err.stack);process.exitCode=1;
  }finally{await browser.close();}
 })().catch(err=>{console.error(err.stack);process.exitCode=1;});
