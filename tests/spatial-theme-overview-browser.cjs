@@ -20,7 +20,9 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   const atlas=applyNavigationCopy(await page.evaluate(async()=>await(await fetch('./data/atlas.json')).json()));
   const original=JSON.stringify((await page.evaluate(()=>mathSpace.snapshot())).positions);
   const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot(),m=mathSpace.motion();return {position:s.position,target:s.target,zoom:s.cameraZoom,tween:m.tween,transition:m.transition};});
-  const sameCamera=(a,b)=>JSON.stringify({position:a.position,target:a.target,zoom:a.zoom})===JSON.stringify({position:b.position,target:b.target,zoom:b.zoom});
+  // Match the repository's existing IEEE-754 camera-roundoff rule; zoom,
+  // tween, transition and all other fields remain exactly compared.
+  const sameCamera=(a,b)=>sameSnapshotWithCameraRoundoff(JSON.stringify(a),JSON.stringify(b));
   await page.waitForFunction(()=>mathSpace.motion().tween===null);
   await page.waitForTimeout(450);
   // Hover previews REAL node colors while its theme title reflects hierarchy.
@@ -96,7 +98,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
   await page.waitForFunction(()=>document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
   check(page.url()===urlBeforeHover&&await page.evaluate(()=>JSON.stringify({...localStorage}))===storageBeforeHover,'hover never writes navigation or learning storage');
   const cameraAfterHover=await camera();
-  check(JSON.stringify(cameraAfterHover)===JSON.stringify(hoverCamera),
+  check(sameCamera(hoverCamera,cameraAfterHover),
     'all hover operations leave the camera untouched: '+JSON.stringify({before:hoverCamera,after:cameraAfterHover}));
 
   // Manual zoom changes the camera; subsequent theme selection must not.
@@ -169,7 +171,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      const groupPreviewLabels=await page.locator('.space-label.pack:visible').evaluateAll(els=>els.map(e=>e.dataset.key));
      check(groupPreviewLabels.every(key=>key==='pack:'+packId),theme.title+' group hover is group-specific, not a duplicate theme preview');
      check((await page.evaluate(()=>mathSpace.snapshot())).selected===originalSelected,theme.title+' group hover keeps clicked theme detail');
-     check(JSON.stringify(await camera())===JSON.stringify(oldCamera),theme.title+' group hover never moves the camera');
+     check(sameCamera(oldCamera,await camera()),theme.title+' group hover never moves the camera');
      check((await page.locator('#network-view-title').textContent()).includes(pack.title),theme.title+' group breadcrumb names the inspected group');
      await page.mouse.move(4,4);
      await page.waitForFunction(()=>mathSpace.hoverPreview().key===null&&document.querySelectorAll('#network-legend [data-hover="true"]').length===0);
@@ -220,7 +222,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
     check(nearby.border<focusStyle.border&&nearby.weight<focusStyle.weight,'real direct neighbors are framed more lightly than the hover target');
   }
   await page.screenshot({path:path.join(out,'node-hover-hierarchy.png')});
-  check(JSON.stringify(await camera())===JSON.stringify(nodeCamera),'node hover does not pan, zoom or rotate');
+  check(sameCamera(nodeCamera,await camera()),'node hover does not pan, zoom or rotate');
   check(JSON.stringify(await page.evaluate(()=>mathSpace.snapshot()))===nodeSnapshot,'node hover never modifies selected map snapshot');
   await page.mouse.move(4,4);
   await page.waitForFunction(()=>mathSpace.hoverPreview().key===null);
