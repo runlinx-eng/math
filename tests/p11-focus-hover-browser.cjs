@@ -55,6 +55,12 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   await page.locator('#search-input').fill('mt_ndGqFPWyen');
   await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+  // Selection state can precede the next animation-frame label layout. Wait for
+  // the visible DOM operating target; never weaken its one-target assertion.
+  await page.waitForFunction(key=>{
+   const active=[...document.querySelectorAll('.space-label.node.active-target:not([hidden])')];
+   return active.length===1&&active[0].dataset.key===key&&active[0].getAttribute('aria-current')==='true';
+  },'node:mt_ndGqFPWyen');
   let s=await record('explore-selected');
   assert(s.active.length===1&&s.active[0].key===s.selected&&s.active[0].current==='true','Explore has one accessible active node');
   const hoverNodes=s.labels.filter(label=>label.clickable&&label.key!==s.selected).slice(0,3);

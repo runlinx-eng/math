@@ -161,6 +161,14 @@ jobs:
           # GitHub Ubuntu runner already has Chromium system libraries; apt mirrors can have DNS outages.
           # Keep the same real Chromium test and assertions, only avoid apt downloads.
           npx playwright install chromium
+          # Real CJK glyphs are required to measure 3D label collisions and
+          # review readable screenshots, not tofu placeholders.
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
 
       - name: Run browser regression suite
         if: steps.scope.outputs.run_browser == 'true'
