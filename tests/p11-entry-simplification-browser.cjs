@@ -55,6 +55,19 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await page.screenshot({path:path.join(out,'compact-620x800.png')});
   const after=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   assert(before===after,'navigation-only changes modified v2 learning record');
+  // An action on the same selected knowledge re-renders the detail card.
+  // Keyboard focus must survive both the change and its reversal.
+  await page.setViewportSize({width:1440,height:900});
+  if(await menu.isVisible())await more.click();
+  const bookmark=page.locator('#focus-card [data-action="bookmark"]');
+  await bookmark.focus();
+  await page.keyboard.press('Enter');
+  assert(await bookmark.evaluate(el=>document.activeElement===el),'bookmark refresh lost keyboard focus');
+  assert((await bookmark.textContent()).includes('已收藏'),'keyboard bookmark action did not complete');
+  await page.keyboard.press('Enter');
+  assert(await bookmark.evaluate(el=>document.activeElement===el),'second bookmark refresh lost keyboard focus');
+  assert((await bookmark.textContent()).trim()==='收藏','keyboard bookmark could not be undone');
+  checks.push('same-node detail refresh retains keyboard focus after Enter');
   // R2 batch 2: a named Trail session restores the saved native lesson rather
   // than resuming a different suspended iframe. Existing P11 focus coverage
   // separately exercises two actual 3D node-label clicks.
@@ -78,6 +91,8 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   assert(await trailResume.isVisible(),'Trail current-course resume missing');
   assert(await trailResume.getAttribute('data-id')==='share','Trail resume must name selected session ID');
   assert((await trailResume.textContent()).includes('继续'),'unfinished native course should show continue');
+  assert(await trailResume.evaluate(el=>getComputedStyle(el).backgroundColor==='rgb(35, 91, 73)'&&el.getBoundingClientRect().height>=40),
+    'Trail continuation must look like a reachable primary action');
   await trailResume.click();
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
   const restored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
@@ -119,14 +134,21 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   checks.push('two independently saved native courses, second real 3D click and non-overwriting Trail restore');
   for(const [w,h] of [[1440,900],[1280,720],[980,760],[620,800],[1000,1350]]){
     await page.setViewportSize({width:w,height:h});
+    const unchanged=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
     await nav('learn').click();
     assert(await native.locator('#work').isVisible(),'native lesson missing at '+w+'x'+h);
     assert(await native.locator('#back').isHidden(),'embedded return duplicates outer return at '+w+'x'+h);
     await page.screenshot({path:path.join(out,'learning-'+w+'x'+h+'.png')});
     await nav('trail').click();
     assert(await trailResume.isVisible(),'Trail resume missing at '+w+'x'+h);
+    await trailResume.scrollIntoViewIfNeeded();
+    assert(await trailResume.evaluate(el=>{const r=el.getBoundingClientRect();return r.width>70&&r.height>=40&&r.left>=-1&&r.right<=innerWidth+1&&r.top>=-1&&r.bottom<=innerHeight+1}),
+      'Trail current-course action clipped or outside viewport at '+w+'x'+h);
     await page.screenshot({path:path.join(out,'trail-'+w+'x'+h+'.png')});
     await nav('explore').click();
+    assert(await page.locator('#focus-card [data-action="open"]').isVisible(),'Explore primary knowledge action hidden at '+w+'x'+h);
+    assert(await page.evaluate(value=>localStorage.getItem('math-explorer-v2')===value,unchanged),
+      'workspace navigation changed learning records at '+w+'x'+h);
     await page.screenshot({path:path.join(out,'explore-'+w+'x'+h+'.png')});
   }
   await nav('trail').click();
@@ -140,6 +162,8 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
     const touch=await touchContext.newPage();
     await touch.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
     await touch.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
+    assert(await touch.locator('.primary-nav [data-surface="trail"]').evaluate(el=>el.getBoundingClientRect().height>=44),
+      'touch navigation must have a 44px target');
     await touch.locator('.primary-nav [data-surface="trail"]').tap();
     assert(await touch.locator('#utility-drawer').isVisible(),'touch cannot open Trail');
     await touch.locator('.primary-nav [data-surface="explore"]').tap();
