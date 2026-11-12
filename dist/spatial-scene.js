@@ -36,7 +36,7 @@ function regionGeometry(theme,space){
 }
 export class SpatialScene {
   constructor(host,space,callbacks={}) {
-    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.hoverMapKey=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.gradeStageId='all';this.gradeStageIds=new Set();this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.taskWorkspaceActive=false;this.showAllNodes=this.network;this.explorationTrail=[];
+    this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.hoverMapKey=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.gradeStageId='all';this.gradeStageIds=new Set();this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.taskWorkspaceActive=false;this.activeTargetKey=null;this.showAllNodes=this.network;this.explorationTrail=[];
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -386,6 +386,11 @@ export class SpatialScene {
     this.renderer.render(this.scene,this.camera);
     this.dirty=true;
   }
+  setActiveTarget(key){
+    const next=key&&this.space.byKey.has(key)?key:null;
+    if(next===this.activeTargetKey)return;
+    this.activeTargetKey=next;this.dirty=true;
+  }
   setRelations(mode){this.relationMode=['source','route'].includes(mode)?mode:'off';this.rebuildRelations();this.dirty=true;}
   setEdgeDisplay(mode){if(!this.relationshipMap||!['outline','critical','all'].includes(mode)||mode===this.edgeDisplay)return;this.edgeDisplay=mode;this.refreshNetworkEdges();this.rebuildRelations();this.dirty=true;}
   setAllNodes(show){this.showAllNodes=!!show;this.rebuildRelations();this.dirty=true;}
@@ -706,6 +711,10 @@ export class SpatialScene {
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
+    // ResizeObserver can lag a dock transition: never use stale full-width
+    // coordinates in the narrow map beside a learning panel.
+    const bounds=this.host.getBoundingClientRect();
+    if(Math.abs(this.width-bounds.width)>1||Math.abs(this.height-bounds.height)>1)this.resize();
     // Hover temporarily reuses the clicked-theme label policy, but never
     // changes the persisted selection or camera.
     const hoverObject=this.space.byKey.get(this.hoverMapKey),selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
@@ -767,7 +776,9 @@ export class SpatialScene {
           else show=false;
         }
         if(this.relationshipMap&&hoverObject?.kind==='node'){
-          if(o.kind==='node'){show=o.key===hoverObject.key||this.hoverRelatedKeys.has(o.key);priority=o.key===hoverObject.key?115:85;}
+          // P11: preview real edges and WebGL points, but do not open a
+          // cloud of additional clickable labels just by moving the pointer.
+          if(o.kind==='node'){show=show||o.key===hoverObject.key;priority=o.key===hoverObject.key?Math.max(priority,95):priority;}
           else show=false;
         }
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
@@ -782,7 +793,7 @@ export class SpatialScene {
       show=show&&p.visible&&p.x>16&&p.x<this.width-16&&p.y>94&&p.y<this.height-88;
       if(o.key===this.previewKey)priority=95;
       el.hidden=!anchor;el.style.opacity='';
-      el.classList.remove('selected','related','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target');
+      el.classList.remove('selected','related','active-target','preview-target','preview-neighbor','preview-before','preview-after','preview-theme-target');el.removeAttribute('aria-current');
       // Task permissions follow the source key even when decluttering hides
       // its projected label; the clickable cue remains independently visible.
       el.classList.toggle('guide-target',!!this.guideFocus?.targetKeys?.has(o.key));
@@ -808,7 +819,10 @@ export class SpatialScene {
       const rect=c.anchor||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;
-      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);el.classList.toggle('guide-target',!!this.guideFocus?.targetKeys?.has(o.key));
+      el.hidden=false;el.style.width=`${width}px`;el.style.transform=`translate(${rect.x}px,${rect.y}px)`;el.style.zIndex=String(c.priority);el.classList.toggle('selected',c.isSelected);el.classList.toggle('related',!!c.related&&!!this.selected);
+      const operational=o.key===this.activeTargetKey;
+      el.classList.toggle('active-target',operational);
+      if(operational)el.setAttribute('aria-current','true');el.classList.toggle('guide-target',!!this.guideFocus?.targetKeys?.has(o.key));
       el.classList.toggle('guide-locked',!!this.guideFocus&&!this.guideFocus.targetKeys?.has(o.key));
       el.classList.toggle('guide-visited',!!this.guideFocus?.visitedKeys?.has(o.key));
       el.classList.toggle('guide-current',!!this.guideFocus&&o.key===this.selected);

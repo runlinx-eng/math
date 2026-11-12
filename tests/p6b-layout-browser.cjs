@@ -135,10 +135,10 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
      if(w>800)assert(b.canvas&&b.canvas.right<=b.learn.x-7,'real 3D viewport avoids lesson overlay '+w+'x'+h);
      if(w>800){
        const contextRect=await page.locator('#learning-map-context').boundingBox();
-       assert(contextRect&&contextRect.x>=b.canvas.x&&contextRect.x+contextRect.width<=b.canvas.right+2&&contextRect.y>=b.nav.bottom-4,
-         'real math relationship summary fits in the left 3D viewport '+w+'x'+h);
+       assert(contextRect&&contextRect.x>=b.learn.x-2&&contextRect.x+contextRect.width<=b.learn.right+2&&contextRect.y>=b.learn.y&&contextRect.y+contextRect.height<=b.learn.bottom+2,
+         'real math relationship summary fits inside the lesson rail instead of obscuring the map '+w+'x'+h);
      }else{
-       assert(await page.locator('#learning-map-context').isHidden(),'compact viewport keeps the existing single overlay workspace '+w+'x'+h);
+       assert(await page.locator('#learning-map-context').isVisible()&&b.learn.y>b.nav.bottom+24,'compact lesson sheet retains source context and a map area above '+w+'x'+h);
        assert(b.canvas&&b.canvas.width>0,'compact viewport remains a single interactive scene '+w+'x'+h);
      }
      await page.screenshot({path:path.join(output,'learn-'+w+'x'+h+'.png')});

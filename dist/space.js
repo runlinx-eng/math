@@ -295,6 +295,10 @@ function renderLearningMapContext(){
   if(!host||!scene)return;
   const current=space.byKey.get(scene.selected);
   const active=worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId&&current?.kind==='node'&&scene.canLocate(current);
+  // Keep the original source links, but dock them with the learning task.
+  // This frees the left map from an intercepting, absolutely positioned card.
+  const destination=active?$('#journey-surface'):$('#space-app');
+  if(host.parentElement!==destination)destination.insertBefore(host,active?$('#journey-frame'):$('#guide-panel'));
   host.hidden=!active;
   document.body.classList.toggle('has-learning-map-context',!!active);
   if(toggle)toggle.hidden=!active;
@@ -774,7 +778,7 @@ function updateOverlays(){
       const viewportBottom=innerHeight<=780?74:94;
       const compact=innerWidth<=800,side=compact?12:innerWidth<=1100?18:24;
       const top=compact?143:94;
-      const panelWidth=compact?Math.min(360,innerWidth-24):Math.min(354,Math.max(285,innerWidth*.265));
+      const panelWidth=compact?Math.min(360,innerWidth-24,Math.max(260,Math.round(innerWidth*.45))):Math.min(354,Math.max(285,innerWidth*.265));
       const availableHeight=Math.max(180,innerHeight-top-viewportBottom);
       card.style.left=`${Math.max(side,innerWidth-panelWidth-side)}px`;
       card.style.top=`${top}px`;
@@ -819,7 +823,17 @@ function updatePrimaryNavigation(){
   // A context surface changes background legibility, not the camera pose.
   // Notify the WebGL scene explicitly: instance colors are not CSS and must
   // be repainted when the lesson, trail, or exploration surface changes.
+  // Synchronize the task-docked 3D projection before the label hit targets render.
+  // Only resize the projection: do not move position, target or zoom.
+  if(scene){const r=scene.host.getBoundingClientRect();
+    if(Math.abs(scene.width-r.width)>1||Math.abs(scene.height-r.height)>1)scene.resize();}
   scene?.setTaskWorkspaceActive(document.body.classList.contains('has-task-surface')||document.body.classList.contains('has-journey'));
+  // The operational object is explicit, unique, and never derived from hover.
+  const operationalKey=active==='learn'&&journeyOpen&&!journeySuspended
+    ? (activeSessionId&&sessionMeta(activeSessionId)?.topicId?'node:'+sessionMeta(activeSessionId).topicId:scene?.selected)
+    : active==='trail'&&!drawer.hidden?scene?.selected
+    : active==='explore'&&(!$('#focus-card').hidden||panels.size>0)?scene?.selected:null;
+  scene?.setActiveTarget(operationalKey);
 }
 function hideLearningHub(){$('#learning-hub').hidden=true;updatePrimaryNavigation();}
 function closeUtility(){

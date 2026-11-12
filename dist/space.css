@@ -1207,3 +1207,52 @@ body[data-world="network"].has-learning-map-context .place-indicator{display:non
  .utility-drawer .trail-node-context{padding:10px 12px;max-height:min(33vh,210px)}
  .utility-drawer .trail-node-heading strong{font-size:14px}
 }
+
+
+/* P11 R1: one strongest operational marker, secondary selection and visible keyboard focus. */
+body[data-world="network"] .space-label.node.selected:not(.active-target) {
+  border-color:#779887;box-shadow:0 0 0 1px #c8dbce;font-weight:650;
+}
+body[data-world="network"] .space-label.node.active-target {
+  border:2px solid #286c53!important;outline:3px solid #286c53!important;
+  outline-offset:2px;background:#fffef9!important;color:#194b38!important;
+  box-shadow:0 0 0 5px #e0efe6,0 4px 15px #23533f24!important;
+  font-weight:750!important;text-shadow:none;
+}
+body[data-world="network"] .space-label:focus-visible,
+body[data-world="network"] #focus-card button:focus-visible,
+body[data-world="network"] #journey-surface button:focus-visible {
+  outline:3px solid #22648a!important;outline-offset:4px;
+}
+/* Source relationship context belongs inside the stable lesson surface,
+   not as a 350px overlay on top of the real 3D map. */
+body[data-world="network"].has-journey #journey-surface #learning-map-context {
+  position:static;inset:auto;z-index:auto;width:auto;min-width:0;
+  flex:0 1 auto;max-height:118px;margin:6px 10px 0;padding:6px 10px;
+  overflow:auto;box-shadow:none;border:1px solid #d0dfd3;border-left:3px solid #4d866f;
+}
+body[data-world="network"].has-journey #journey-surface #learning-map-context .learning-map-neighbors{gap:5px}
+body[data-world="network"].has-journey #journey-surface #learning-map-context .learning-map-title{font-size:13px;margin-bottom:5px}
+body[data-world="network"].has-journey #journey-surface #learning-map-context .learning-map-neighbor{padding:4px 7px}
+@media(max-width:800px){
+  /* A bottom lesson sheet exposes the map above it at compact sizes. */
+  body[data-world="network"].has-journey #journey-surface{
+    top:auto;bottom:68px;left:12px;right:12px;width:calc(100vw - 24px);
+    height:min(var(--learning-desired-height,440px),50dvh);max-height:50dvh;
+  }
+  body[data-world="network"].has-journey #journey-surface #learning-map-context:not([hidden]){
+    display:block!important;max-height:92px;
+  }
+  body[data-world="network"].has-journey #journey-surface #learning-map-context .learning-map-footer{display:none}
+}
+
+/* P11 small-screen screenshot QA: keep camera tools in the exposed map band.
+   The task sheet must never sit underneath the floating camera toolbar. */
+@media(max-width:800px){
+  /* Keep selected-node details and learning sheets clear of camera controls. */
+  body[data-world="network"].has-journey .tool-rail,
+  body[data-world="network"].has-context-card:not(.has-journey) .tool-rail{
+    top:82px;bottom:auto;left:12px;right:auto;
+    height:40px;max-width:calc(100vw - 24px);
+  }
+}

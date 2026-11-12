@@ -59,6 +59,23 @@ const check=(v,m)=>{if(!v)throw Error(m);};
      return (top===el||el.contains(top))&&(!playable||!!lesson)&&(!excludeLesson||lesson!==excludeLesson);
    }).map(el=>el.dataset.key);
   },{playable,excludeLesson});
+  if(!keys.length){
+   // Diagnose real candidate hit testing; do not skip, force-click or modify the hash.
+   const diagnostic=await page.evaluate(async ({playable,excludeLesson})=>{
+    const {lessonForTopic}=await import('./learning/catalog.js');
+    const rect=el=>{if(!el)return null;const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};};
+    const hit=el=>el?{tag:el.tagName,id:el.id,classes:String(el.className||'').slice(0,100),key:el.dataset?.key}:null;
+    return {viewport:[innerWidth,innerHeight],selected:mathSpace.snapshot().selected,playable,excludeLesson,
+     map:rect(document.querySelector('#space-app')),canvas:rect(document.querySelector('#space-canvas')),task:rect(document.querySelector('#journey-surface')),
+     source:rect(document.querySelector('#learning-map-context')),
+     labels:[...document.querySelectorAll('.space-label.node:not([hidden])')].map(el=>{
+      const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,top=x>=0&&y>=0&&x<innerWidth&&y<innerHeight?document.elementFromPoint(x,y):null;
+      return {key:el.dataset.key,rect:rect(el),lesson:lessonForTopic(el.dataset.key.slice(5)),hit:top===el||el.contains(top),blocking:hit(top)};
+     })};
+   },{playable,excludeLesson});
+   fs.writeFileSync(path.join(out,'candidate-diagnostics.json'),JSON.stringify(diagnostic,null,2));
+   console.error('P8_NODE_HIT_DIAGNOSTICS '+JSON.stringify({viewport:diagnostic.viewport,selected:diagnostic.selected,labelCount:diagnostic.labels.length}));
+  }
   check(keys.length>0,'no real visible clickable '+(playable?'configured':'source')+' node');
   const key=keys[0];await page.locator('.space-label.node[data-key="'+key+'"]').click();
   await page.waitForFunction(k=>mathSpace.snapshot().selected===k,key);
