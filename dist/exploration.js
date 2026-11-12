@@ -181,7 +181,7 @@ document.addEventListener('click',event=>{const el=event.target.closest('[data-d
  else if(action==='hint'){addSupport(a);persist();restoreFocusAfter(renderActivity);}
  else if(action==='submit'){submit(a);persist();restoreFocusAfter(renderActivity);$('#scene-result').scrollIntoView({block:'nearest'});}
  else if(action==='save-note'){if(saveNote(a,a.draft)){a.draft='';const ok=persist();renderActivity();toast(ok?'已保存':'解释暂留当前页面，请导出备份。');}else toast('可以先写下你的发现，也可以稍后再来。');}
- else if(action==='export'){persist();download(backup(state),`数学探索-备份-v2-${new Date().toISOString().slice(0,10)}.json`);toast('已生成学习备份，请保留下载的文件。');}
+ else if(action==='export'){if(!persist()){const raw=localStorage.getItem(KEY);if(raw){download(raw,'数学探索-原始存储-需人工恢复.txt');toast('当前记录不能安全读取或写入，已导出原始存储文本（不能直接作为学习备份导入），原记录未覆盖。');}else toast('保存失败且没有可用的原始记录，未生成空白备份。');return;}download(backup(state),`数学探索-备份-v2-${new Date().toISOString().slice(0,10)}.json`);toast('已生成学习备份，请保留下载的文件。');}
  else if(action==='import')$('#import-file').click();
  else if(action==='pre-import'){try{const snapshot=readStored(KEY+'-before-import');if(snapshot)download(snapshot,'数学探索-导入前快照.json');else toast('还没有导入前的快照。');}catch{toast('当前浏览器无法读取快照。');}}
 });

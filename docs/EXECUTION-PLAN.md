@@ -4,6 +4,13 @@
 >
 > 产品目标以 [PRODUCT-VISION.md](PRODUCT-VISION.md) 为准；开发/合并/发布纪律以 [DEVELOPMENT-WORKFLOW.md](DEVELOPMENT-WORKFLOW.md) 为准。本文管理**下一步做什么、先后关系和验收状态**，不替代领域规范、单项 Issue 或实际教学证据。下方 2026-10-24 至 2026-11-01 的六阶段记录保留为历史，不再是当前优先级。
 
+## P10 第一轮状态（2026-11-11，独立 Draft 待验收）
+
+- **最新核查 main：** `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`（P9 第一轮 #65 已合并）；P9 第二轮 [PR #66](https://github.com/runlinx-eng/math/pull/66) 仍为未合并 Draft，不能作为 P10 主线能力。
+- **本轮 P10：** [Draft PR #67](https://github.com/runlinx-eng/math/pull/67) 从该 `main` 独立开发，聚焦真实学习记录的并发覆盖保护、损坏存储的原始文本救援、实际备份和离线闭环自动化。详见 [P10 连续学习验收台账](P10-LEARNING-CONTINUITY.md)。
+- **完成定义：** 必须以 PR 最新 head 的 Required/Overview/适用回归为准，保留截图和失败记录。即便通过，仍不代表 1,996 项任务/所有旧备份/跨版本缓存升级已全部验收；Mac 实际操作、儿童独立试用、独立教研未完成。下一轮先补这些关键恢复/离线矩阵，之后才决策可下载本地版本打包。
+- **发布纪律：** 本轮不合并 PR #66/#67、不更新 VPS、不删除历史分支。
+
 ## 当前主线状态（2026-11-11 核查）
 
 - **当前已集成基准：** `main@2db1c5b7b880f638bae17f65c43c01ba302cae91`。P7 学习交互与 P8 工作区改进的历史过程仍可追溯到 [Issue #34](https://github.com/runlinx-eng/math/issues/34) 和 [Issue #30](https://github.com/runlinx-eng/math/issues/30)；历史阶段记录不再代表最新 PR/部署状态。

@@ -79,7 +79,12 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    const connected=new Set([selectedGraph.selected,...selectedGraph.relations.flatMap(r=>[r.from,r.to])]);
    const unrelatedKey=selectedGraph.positions.find(p=>p.key.startsWith('node:')&&!connected.has(p.key))?.key;
    assert(!!unrelatedKey,'a real unrelated domain node is available for contrast comparison');
+   // Clear hover previews left by pointer movement before measuring colors.
+   // Preserve the original strict contrast ratio requirement.
+   await page.mouse.move(2,2);
+   await page.waitForFunction(()=>!mathSpace.hoverPreview().key&&!mathSpace.hoverPreview().themeId);
    await page.waitForTimeout(130);
+   console.log('P6B_PRECONDITION '+JSON.stringify(await page.evaluate(()=>({stage:mathSpace.snapshot().gradeStageFilter,selected:mathSpace.snapshot().selected,hover:mathSpace.hoverPreview()}))));
    const beforeContrast=await nodeContrast(unrelatedKey);
    const selectedBeforeContrast=await nodeContrast(selectedGraph.selected);
    assert(beforeContrast>0&&selectedBeforeContrast>0,'real WebGL node colors can be sampled before learning');
@@ -111,6 +116,8 @@ const equalCamera=(a,b)=>a.cameraZoom===b.cameraZoom&&a.position.every((x,i)=>Ma
    assert(await page.locator('#learning-map-context').isHidden(),'tool overlay and learning context never fight for the same map position');
    await page.locator('#observation-task-toggle').click();
    assert(await page.locator('#learning-map-context').isVisible()&&equalCamera(beforeLearn,await snap()),'returning to math context preserves the source camera and lesson');
+   await page.mouse.move(2,2);
+   await page.waitForFunction(()=>!mathSpace.hoverPreview().key&&!mathSpace.hoverPreview().themeId);
    await page.waitForTimeout(130);
    const taskContrast=await nodeContrast(unrelatedKey);
    console.log('P8_NODE_CONTRAST '+JSON.stringify({unrelatedKey,beforeContrast,taskContrast,ratio:taskContrast/beforeContrast}));
