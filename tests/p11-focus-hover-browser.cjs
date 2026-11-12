@@ -135,7 +135,12 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   s=await record('refresh');
   assert(s.selected===second.key,'refresh preserves knowledge context');
   await page.setViewportSize({width:620,height:800});
+  // Resizing the real map asynchronously recomputes projection and label
+  // collision positions. A stale pre-layout hit rect is not a valid click.
+  await page.waitForTimeout(220);
   const compactBefore=await record('compact-explore-before-real-click');
+  assert(compactBefore.labels.filter(label=>label.clickable&&label.lesson).length>=2,
+    'resized compact Explore must retain two unobscured configured labels: '+JSON.stringify(compactBefore));
   const compactTarget=compactBefore.labels.find(label=>label.clickable&&label.lesson&&label.key!==compactBefore.selected);
   assert(!!compactTarget,'compact Explore requires another genuine 3D click target');
   await page.locator('.space-label.node[data-key="'+compactTarget.key+'"]').click();
