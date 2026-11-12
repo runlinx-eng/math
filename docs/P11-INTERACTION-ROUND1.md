@@ -1,6 +1,6 @@
 # P11 R1: interaction states and protected boundaries
 
-Baseline: P10 R3 commit `7505e94763470dd64ffd432ec766732977bdfffa` (open Draft #69). P9 #66 remains separate. P10 #67 → #68 → #69 are stacked and unmerged. This P11 branch must not merge or deploy until upstream dependencies are handled.
+Current merge base: `main@8f93265925a084b18582a9829622d05769093269` (P10 #67 → #68 → #69 merged; VPS deploy is manually gated). P11 R1 #71 is still an unmerged Draft against `main`. P9 #66 and roadmap #73 remain separate Drafts. **Do not merge or deploy without explicit authorization.**
 
 ## Evidence-based diagnosis
 
@@ -32,3 +32,9 @@ Baseline: P10 R3 commit `7505e94763470dd64ffd432ec766732977bdfffa` (open Draft #
 CI automation is not manual UX acceptance. Inspect screenshots, verify compact and tall desktop canvases, active workpiece readability, touch-device operation, keyboard-only operation, and long-term flakiness separately. A second Required success alone cannot close the P8 nondeterministic hit issue.
 
 Protected: 537 domain nodes, 50 thinking nodes, 1,223 relationships, all fixed 3D coordinates, math correctness, P7/P9/P10 storage and learning mechanisms. No production changes.
+
+## Compact Explore final screenshot finding and follow-up
+
+The `6ab288d` Required CI evidence showed the 620×800 Explore map toolbar intersecting the selected-node detail surface; the lesson-sheet toolbar had already moved into the exposed map band. R1 updated this last compact Explore rule and added a direct bounding-box overlap assertion to `tests/p11-focus-hover-browser.cjs`. Recheck these against the new head's Required/Overview/P8 workflow runs and their screenshots. This is a scoped R1 overlap correction, not an R2 button removal.
+
+For next-round entry inventory and protected follow-up checks, see [P11-ROUND2-ENTRY-PLAN.md](P11-ROUND2-ENTRY-PLAN.md). Manual keyboard/touch usability and independent repeatability of historical P8 node-hit flakiness remain explicitly open.
