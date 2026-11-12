@@ -145,6 +145,12 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   assert(!!compactTarget,'compact Explore requires another genuine 3D click target');
   await page.locator('.space-label.node[data-key="'+compactTarget.key+'"]').click();
   await page.waitForFunction(key=>mathSpace.snapshot().selected===key,compactTarget.key);
+  // A real click updates selection before the next scene label render. Verify
+  // the painted sole operational target, not only the in-memory selection.
+  await page.waitForFunction(key=>{
+   const active=[...document.querySelectorAll('.space-label.node.active-target:not([hidden])')];
+   return active.length===1&&active[0].dataset.key===key&&active[0].getAttribute('aria-current')==='true';
+  },compactTarget.key);
   const compactAfter=await record('compact-explore-after-real-click');
   assert(compactAfter.active.length===1&&compactAfter.active[0].key===compactTarget.key,
     'compact real label click must become the sole visible operating target');
