@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const read=name=>JSON.parse(readFileSync(new URL('../verification/learning-node-audit/'+name,import.meta.url),'utf8'));
+test('source-derived 587-node audit is complete, reproducible and conservative',()=>{
+  execFileSync(process.execPath,['scripts/audit-learning-nodes.mjs'],{cwd:root,stdio:'pipe',timeout:120000});
+  const {rows}=read('nodes.json'),summary=read('summary.json'),issues=read('issues.json');
+  assert.equal(rows.length,587);
+  assert.equal(new Set(rows.map(r=>r.id)).size,587);
+  assert.equal(summary.sourceEdges,1223);
+  assert.equal(summary.inspected,587);
+  assert.equal(summary.domainNodes+summary.thinkingNodes,587);
+  assert.equal(summary.browserConfirmedReachable+summary.browserConfirmedBroken+summary.browserUnverified,587);
+  assert.equal(summary.coreOptionalFullyProven+summary.coreOptionalPending,587);
+  assert.equal(rows.filter(r=>r.taskPresent).length,summary.staticallyConfiguredTaskNodes);
+  assert.equal(rows.filter(r=>r.staticStatus==='static_entry_mapped').length,summary.staticallyMappedDirectEntryNodes);
+  assert.equal(rows.filter(r=>!r.position&&r.domain==='thinking').length,50);
+  assert.ok(rows.every(r=>r.browserVerified===false&&r.finalStatus==='pending_browser_verification'));
+  assert.ok(issues.every(x=>rows.some(r=>r.id===x.nodeId)&&['P0','P1','P2','待核查'].includes(x.priority)));
+  assert.ok(rows.every(r=>r.evidence.length>=4&&r.entryPath&&r.name));
+  const first=readFileSync(new URL('../verification/learning-node-audit/nodes.json',import.meta.url));
+  execFileSync(process.execPath,['scripts/audit-learning-nodes.mjs'],{cwd:root,stdio:'pipe',timeout:120000});
+  assert.deepEqual(readFileSync(new URL('../verification/learning-node-audit/nodes.json',import.meta.url)),first);
+});
