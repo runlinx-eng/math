@@ -138,7 +138,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   assert(twoRestored.lessons.share.cases[0].attempts.length===savedChecks,'original course attempts lost');
   assert(twoRestored.lessons.unitcopies.cases[0].attempts.length===secondChecks,'other course attempts lost');
   checks.push('two independently saved native courses, second real 3D click and non-overwriting Trail restore');
-  for(const [w,h] of [[1440,900],[1280,720],[980,760],[620,800],[1000,1350]]){
+  for(const [w,h] of [[1920,1080],[1440,900],[1280,720],[980,760],[1000,1350],[620,800]]){
     await page.setViewportSize({width:w,height:h});
     const unchanged=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
     await nav('learn').click();
@@ -167,7 +167,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await readyNative('share');
   assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.share.cases[0].attempts.length===savedChecks,
     'five-viewport switching overwrote original course attempt');
-  checks.push('five viewports: Explore/Learn/Trail screenshots, embedded return and draft-safe restore');
+  checks.push('five desktop viewports plus legacy 620x800: Explore/Learn/Trail screenshots, embedded return and draft-safe restore');
   // A real touch-capable context checks that navigation is not hover-only.
   const touchContext=await browser.newContext({viewport:{width:620,height:800},hasTouch:true,reducedMotion:'reduce'});
   try{
