@@ -69,6 +69,7 @@ jobs:
           node --check dist/exploration.js
           node --check dist/learning/trail-priority.js
           node --check tests/p6b-layout-browser.cjs
+          node --check tests/p11-focus-hover-browser.cjs
           node --check tests/p7-learning-panel-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
@@ -188,6 +189,7 @@ jobs:
           # Diagnose the pointer-hover target early; still run every browser suite.
           for test_file in \
             tests/spatial-theme-overview-browser.cjs \
+            tests/p11-focus-hover-browser.cjs \
             tests/p7-d5-entry-browser.cjs \
             tests/p7-d6-fixed-ui-browser.cjs \
             tests/p7-d7-multi-type-browser.cjs \
@@ -287,6 +289,7 @@ jobs:
             verification/p8-node-surfaces/
             verification/p8-trail-performance/
             verification/p8-mode-clicks/
+            verification/p11-focus-hover/
             verification/p4-learning-reliability/
             verification/p5-integration/
             verification/continuous-space/
