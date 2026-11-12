@@ -87,6 +87,9 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   // A search URL or synthetic hash cannot substitute for this hit test.
   await nav('explore').click();
   await page.locator('.space-label.node[data-key="node:mt_09sySPqM9Z"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_09sySPqM9Z');
+  // Explore clicks select context, never auto-launch a different lesson.
+  await page.locator('#focus-card [data-action="open"]').click();
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
   await native.locator('#actions [data-do="check"]').click();
   const two=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
