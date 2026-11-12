@@ -1249,7 +1249,9 @@ body[data-world="network"].has-journey #journey-surface #learning-map-context .l
 /* P11 small-screen screenshot QA: keep camera tools in the exposed map band.
    The task sheet must never sit underneath the floating camera toolbar. */
 @media(max-width:800px){
-  body[data-world="network"].has-journey .tool-rail{
+  /* Keep selected-node details and learning sheets clear of camera controls. */
+  body[data-world="network"].has-journey .tool-rail,
+  body[data-world="network"].has-context-card:not(.has-journey) .tool-rail{
     top:82px;bottom:auto;left:12px;right:auto;
     height:40px;max-width:calc(100vw - 24px);
   }
