@@ -1263,7 +1263,7 @@ body[data-world="network"].has-journey #journey-surface #learning-map-context .l
 /* P11 R3: preview remains quieter than the persistent operational marker. */
 body[data-world="network"] .space-label.node.hovered:not(.selected):not(.active-target){
   border-color:#92ab9d!important;border-style:dashed;
-  background:#f4f8f2!important;box-shadow:0 1px 7px #2d523d16;font-weight:600;
+  background:#f4f8f2!important;box-shadow:0 1px 7px #2d523d16;font-weight:700;
 }
 /* Trail's named course action is primary, not a muted archive utility. */
 .utility-drawer .trail-node-actions button.primary-button{

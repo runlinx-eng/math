@@ -8,6 +8,9 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
  const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
  const checks=[],errors=[];
+ // Resume navigation can change the iframe URL before async lesson validation and its initial save complete.
+ // Establish the byte-for-byte learning baseline only after the native session is fully ready.
+ const readyNative=id=>page.waitForFunction(expected=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot?.()?.id===expected,id);
  page.on('pageerror',error=>errors.push(String(error)));
  const nav=surface=>page.locator('.primary-nav [data-surface="'+surface+'"]');
  const more=page.locator('.top-tools [data-action="menu"]');
@@ -94,6 +97,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   assert(await trailResume.evaluate(el=>getComputedStyle(el).backgroundColor==='rgb(35, 91, 73)'&&el.getBoundingClientRect().height>=40),
     'Trail continuation must look like a reachable primary action');
   await trailResume.click();
+  await readyNative('share');
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
   const restored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   assert(restored.lessons.share.cases[0].attempts.length===savedChecks,'Trail resume lost or duplicated saved attempts');
@@ -114,6 +118,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await nav('trail').click();
   assert(await trailResume.getAttribute('data-id')==='unitcopies','Trail selected second course ID wrong');
   await trailResume.click();
+  await readyNative('unitcopies');
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
   assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.unitcopies.cases[0].attempts.length===secondChecks,
     'second course attempts changed when resumed');
@@ -127,6 +132,7 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await nav('trail').click();
   assert(await trailResume.getAttribute('data-id')==='share','Trail selected original course ID wrong');
   await trailResume.click();
+  await readyNative('share');
   await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
   const twoRestored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   assert(twoRestored.lessons.share.cases[0].attempts.length===savedChecks,'original course attempts lost');
@@ -147,12 +153,18 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
     await page.screenshot({path:path.join(out,'trail-'+w+'x'+h+'.png')});
     await nav('explore').click();
     assert(await page.locator('#focus-card [data-action="open"]').isVisible(),'Explore primary knowledge action hidden at '+w+'x'+h);
-    assert(await page.evaluate(value=>localStorage.getItem('math-explorer-v2')===value,unchanged),
-      'workspace navigation changed learning records at '+w+'x'+h);
+    const navStorage=await page.evaluate(value=>{
+      const current=localStorage.getItem('math-explorer-v2');
+      if(current===value)return {same:true,keys:[]};
+      const was=JSON.parse(value||'{}'),is=JSON.parse(current||'{}');
+      return {same:false,keys:[...new Set([...Object.keys(was),...Object.keys(is)])].filter(key=>JSON.stringify(was[key])!==JSON.stringify(is[key]))};
+    },unchanged);
+    assert(navStorage.same,'workspace navigation changed learning records at '+w+'x'+h+' (fields: '+navStorage.keys.join(', ')+')');
     await page.screenshot({path:path.join(out,'explore-'+w+'x'+h+'.png')});
   }
   await nav('trail').click();
   await trailResume.click();
+  await readyNative('share');
   assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.share.cases[0].attempts.length===savedChecks,
     'five-viewport switching overwrote original course attempt');
   checks.push('five viewports: Explore/Learn/Trail screenshots, embedded return and draft-safe restore');
