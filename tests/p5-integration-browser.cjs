@@ -78,6 +78,9 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
   trail.on('pageerror',e=>errors.push(String(e)));
   await trail.goto(base+'v2.html#trail');
   await trail.locator('#import-file').waitFor({state:'attached'});
+  // Static file input presence does not mean the import listener or async
+  // atlas load is finished. Wait for the actual Trail UI to mount.
+  await trail.locator('#main .loading').waitFor({state:'detached'});
   const sample=await trail.evaluate(async()=>{
     const {fresh,KEY}=await import('./exploration-core.js');
     const {freshLesson}=await import('./learning/state.js');
@@ -88,6 +91,7 @@ const sameCamera=(a,b)=>a.position.every((v,i)=>Math.abs(v-b.position[i])<.002)&
     return {before:localStorage.getItem(KEY),incoming:JSON.stringify({app:'math-explorer',version:2,state:other})};
   });
   await trail.reload();await trail.locator('#import-file').waitFor({state:'attached'});
+  await trail.locator('#main .loading').waitFor({state:'detached'});
   await trail.locator('#import-file').setInputFiles({name:'synthetic-conflict-v2.json',mimeType:'application/json',buffer:Buffer.from(sample.incoming)});
   await trail.waitForFunction(()=>document.querySelector('#toast')?.textContent.includes('冲突'));
   check((await trail.locator('#toast').innerText()).includes('已取消导入'),'synthetic conflict receives explicit failure notice');

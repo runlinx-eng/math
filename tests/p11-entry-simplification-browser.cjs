@@ -55,6 +55,98 @@ const assert=(ok,msg)=>{if(!ok)throw Error(msg);};
   await page.screenshot({path:path.join(out,'compact-620x800.png')});
   const after=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
   assert(before===after,'navigation-only changes modified v2 learning record');
+  // R2 batch 2: a named Trail session restores the saved native lesson rather
+  // than resuming a different suspended iframe. Existing P11 focus coverage
+  // separately exercises two actual 3D node-label clicks.
+  await page.setViewportSize({width:1440,height:900});
+  if(await menu.isVisible())await more.click();
+  await nav('explore').click();
+  const startAction=page.locator('#focus-card [data-action="open"]');
+  assert(await startAction.isVisible(),'selected lesson primary action missing');
+  assert((await startAction.textContent()).includes('开始学习'),'new lesson must say start');
+  await startAction.focus();
+  assert(await startAction.evaluate(el=>document.activeElement===el),'keyboard focus cannot reach primary lesson action');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
+  const native=page.frameLocator('#journey-frame');
+  await native.locator('#actions [data-do="check"]').click();
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const savedChecks=saved.lessons.share.cases[0].attempts.length;
+  assert(savedChecks>0,'original native course must save a real attempt');
+  await nav('trail').click();
+  const trailResume=page.locator('#trail-node-context [data-action="trail-to-learn"]');
+  assert(await trailResume.isVisible(),'Trail current-course resume missing');
+  assert(await trailResume.getAttribute('data-id')==='share','Trail resume must name selected session ID');
+  assert((await trailResume.textContent()).includes('继续'),'unfinished native course should show continue');
+  await trailResume.click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
+  const restored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  assert(restored.lessons.share.cases[0].attempts.length===savedChecks,'Trail resume lost or duplicated saved attempts');
+  checks.push('named Trail resume restores original native course and attempts');
+  // The second course is entered by clicking its actual projected 3D label.
+  // A search URL or synthetic hash cannot substitute for this hit test.
+  await nav('explore').click();
+  await page.locator('.space-label.node[data-key="node:mt_09sySPqM9Z"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_09sySPqM9Z');
+  // Explore clicks select context, never auto-launch a different lesson.
+  await page.locator('#focus-card [data-action="open"]').click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
+  await native.locator('#actions [data-do="check"]').click();
+  const two=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const secondChecks=two.lessons.unitcopies.cases[0].attempts.length;
+  assert(secondChecks>0,'second actual native course did not save its work');
+  assert(two.lessons.share.cases[0].attempts.length===savedChecks,'opening second course overwrote first');
+  await nav('trail').click();
+  assert(await trailResume.getAttribute('data-id')==='unitcopies','Trail selected second course ID wrong');
+  await trailResume.click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#unitcopies');
+  assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.unitcopies.cases[0].attempts.length===secondChecks,
+    'second course attempts changed when resumed');
+  // Revisit the first source through the normal search selector only after
+  // proving an actual second 3D click, then resume the exact first record.
+  await nav('explore').click();
+  await page.locator('.top-tools [data-action="search"]').click();
+  await page.locator('#search-input').fill('mt_ndGqFPWyen');
+  await page.locator('#search-results [data-key="node:mt_ndGqFPWyen"]').click();
+  await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_ndGqFPWyen');
+  await nav('trail').click();
+  assert(await trailResume.getAttribute('data-id')==='share','Trail selected original course ID wrong');
+  await trailResume.click();
+  await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.location.hash==='#share');
+  const twoRestored=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  assert(twoRestored.lessons.share.cases[0].attempts.length===savedChecks,'original course attempts lost');
+  assert(twoRestored.lessons.unitcopies.cases[0].attempts.length===secondChecks,'other course attempts lost');
+  checks.push('two independently saved native courses, second real 3D click and non-overwriting Trail restore');
+  for(const [w,h] of [[1440,900],[1280,720],[980,760],[620,800],[1000,1350]]){
+    await page.setViewportSize({width:w,height:h});
+    await nav('learn').click();
+    assert(await native.locator('#work').isVisible(),'native lesson missing at '+w+'x'+h);
+    assert(await native.locator('#back').isHidden(),'embedded return duplicates outer return at '+w+'x'+h);
+    await page.screenshot({path:path.join(out,'learning-'+w+'x'+h+'.png')});
+    await nav('trail').click();
+    assert(await trailResume.isVisible(),'Trail resume missing at '+w+'x'+h);
+    await page.screenshot({path:path.join(out,'trail-'+w+'x'+h+'.png')});
+    await nav('explore').click();
+    await page.screenshot({path:path.join(out,'explore-'+w+'x'+h+'.png')});
+  }
+  await nav('trail').click();
+  await trailResume.click();
+  assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')))).lessons.share.cases[0].attempts.length===savedChecks,
+    'five-viewport switching overwrote original course attempt');
+  checks.push('five viewports: Explore/Learn/Trail screenshots, embedded return and draft-safe restore');
+  // A real touch-capable context checks that navigation is not hover-only.
+  const touchContext=await browser.newContext({viewport:{width:620,height:800},hasTouch:true,reducedMotion:'reduce'});
+  try{
+    const touch=await touchContext.newPage();
+    await touch.goto('http://127.0.0.1:43827/?world=network&layout=53#space');
+    await touch.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
+    await touch.locator('.primary-nav [data-surface="trail"]').tap();
+    assert(await touch.locator('#utility-drawer').isVisible(),'touch cannot open Trail');
+    await touch.locator('.primary-nav [data-surface="explore"]').tap();
+    assert(await touch.locator('#utility-drawer').isHidden(),'touch cannot return Explore');
+    await touch.screenshot({path:path.join(out,'touch-620x800.png')});
+    checks.push('620x800 touch: Explore/Trail navigation and screenshot');
+  }finally{await touchContext.close();}
   assert(errors.length===0,'browser page errors: '+errors.join('; '));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:true,checks,errors,manualVerified:false,learningBytesUnchanged:true},null,2));
   console.log('P11_R2_ENTRY_SIMPLIFICATION_COMPLETE '+JSON.stringify({checks,learningBytesUnchanged:true}));
