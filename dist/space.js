@@ -778,7 +778,7 @@ function updateOverlays(){
       const viewportBottom=innerHeight<=780?74:94;
       const compact=innerWidth<=800,side=compact?12:innerWidth<=1100?18:24;
       const top=compact?143:94;
-      const panelWidth=compact?Math.min(360,innerWidth-24):Math.min(354,Math.max(285,innerWidth*.265));
+      const panelWidth=compact?Math.min(360,innerWidth-24,Math.max(260,Math.round(innerWidth*.45))):Math.min(354,Math.max(285,innerWidth*.265));
       const availableHeight=Math.max(180,innerHeight-top-viewportBottom);
       card.style.left=`${Math.max(side,innerWidth-panelWidth-side)}px`;
       card.style.top=`${top}px`;

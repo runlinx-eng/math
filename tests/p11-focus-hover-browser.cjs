@@ -81,6 +81,12 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
      assert(!overlap,'compact explore controls overlap selected-node detail '+w+'x'+h);
     }
    }
+   if(w===620&&h===800){
+    const realHits=state.labels.filter(label=>label.clickable&&label.lesson);
+    assert(realHits.length>=2,'compact Explore must expose two real configured 3D labels: '+JSON.stringify(state));
+    assert(state.active.length===1&&state.active[0].key===state.selected,
+      'compact Explore must retain its one visible operating node: '+JSON.stringify(state));
+   }
    await image('explore',w,h);
   }
   await page.setViewportSize({width:1440,height:900});
@@ -122,6 +128,16 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   await page.reload();await page.waitForFunction(()=>window.mathSpace?.snapshot()?.counts?.nodes===587);
   s=await record('refresh');
   assert(s.selected===second.key,'refresh preserves knowledge context');
+  await page.setViewportSize({width:620,height:800});
+  const compactBefore=await record('compact-explore-before-real-click');
+  const compactTarget=compactBefore.labels.find(label=>label.clickable&&label.lesson&&label.key!==compactBefore.selected);
+  assert(!!compactTarget,'compact Explore requires another genuine 3D click target');
+  await page.locator('.space-label.node[data-key="'+compactTarget.key+'"]').click();
+  await page.waitForFunction(key=>mathSpace.snapshot().selected===key,compactTarget.key);
+  const compactAfter=await record('compact-explore-after-real-click');
+  assert(compactAfter.active.length===1&&compactAfter.active[0].key===compactTarget.key,
+    'compact real label click must become the sole visible operating target');
+  await image('explore-real-click',620,800);
   assert(!errors.length,'page errors: '+errors.join('; '));
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({passed:true,checks,errors,manualVerified:false},null,2));
   console.log('P11_FOCUS_HOVER_COMPLETE '+JSON.stringify({states:checks.length,viewportCount:sizes.length,realLessons:[first.lesson,second.lesson],errors}));
