@@ -111,7 +111,7 @@ const check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
    await page.waitForFunction(id=>mathSpace.snapshot().selected==='theme:'+id,id);
    await page.waitForTimeout(150);
    const after=await camera();
-   check(sameCamera(before,after),theme.title+' leaves camera position, target and zoom unchanged');
+   check(sameCamera(before,after),theme.title+' leaves camera position, target and zoom unchanged: '+JSON.stringify({before,after}));
    check(after.tween===null&&after.transition===null,theme.title+' never schedules a camera tween or view transition');
    const s=await page.evaluate(()=>mathSpace.snapshot());
    const card=page.locator('#focus-card[data-kind="theme"]'),overview=card.locator('.theme-overview');
