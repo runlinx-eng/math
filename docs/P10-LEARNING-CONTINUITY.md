@@ -1,5 +1,34 @@
 # P10 第一轮｜完整学习闭环、保存冲突和离线分层验收
 
+## P10 R3 第十三阶段：退役 Worker 消息竞争与版本身份保护（2026-11-12）
+
+本节为当前入口。P10 收尾仍要求**同一最新代码树**上的真实完整升级 3/3、独立失败恢复、数据安全与 Required 全部门槛。诊断不能代替正式验收；最终数字和 checkout/head/tree 以 PR #69 及其最新 Required Artifact 的运行时结果为准。main 保持 `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`，#66～#69 均未合并 Draft。
+
+### 新增的有区分能力的证据
+
+- [A/B 诊断 43143024771](https://github.com/runlinx-eng/math/actions/runs/43143024771) / [Artifact 13910092762](https://github.com/runlinx-eng/math/actions/runs/43143024771/artifacts/13910092762)：head `1729ec9354df76a82612c4a08dd335c44f662a4e`，checkout `716b421fd95086f5d3c429bf62c7bb550709e3f2`，同 tree `0285f5c76562dbee2d01f06a7ca9be46942358c7`。两个独立持久 profile 的历史 SW 均为原始 `9684442`、SHA-256 `773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00`；旧文件与旧 Worker 运行时都未改动。仅新版 Worker 增加诊断日志，不计正式验收。
+- A 保留页面时一直旧 active / 新 waiting。B 保存后关闭全部作用域页面，旧版正常退出，新版约 1 秒后 activated；同 profile 重新打开后 active/controller/251 项资源验证通过，完整学习记录原文相同。
+- Chromium 141.0.7390.37 的原生 `ServiceWorker,CacheStorage` trace 在两例中均配对出旧 Worker **312/312 fetch 完成、312/312 cache open callback、312/312 cache put 最终成功 callback**。关闭前 browser pending 为 0。没有证据支持该次卡在旧缓存 API；不能再把 N 的日志缺失当成缓存死锁定论。
+- 新 `skipWaiting` 实际进入并完成。随后旧 Worker 已开始停止，但在停止窗口收到 `StartWorker Purpose=Message`，`StopWorker` 记录 `Restart:true`，旧 version 0 再次运行而新版等待。B 关闭页面后的第二次停止为 `Restart:false`，随后旧 redundant、新 activated。
+- [单因素消息抑制 43143610144](https://github.com/runlinx-eng/math/actions/runs/43143610144) / [Artifact 13910433028](https://github.com/runlinx-eng/math/actions/runs/43143610144/artifacts/13910433028)：head `f187ab536a3b19cf50d6b5d085fa576ac2474838`，checkout `5165ad33304bf589b5af3568f21e6a2c35a0b45a`，同 tree `aa73ddf6ce4549ae541bdfa45d82fdfdaf9853bc`。仅抑制初始新版页面发给历史 Worker 的 3 条 cache-status 后，旧页面保持打开也能正常交接；native 停止窗口无 Message 重启、Restart:false，真实新课程导航和原旧页冲突保护通过，切换时学习记录字节相同。
+- **归因边界**：原生 trace 没有 JS 调用栈，A/B 早期诊断查询自身也可能发给旧 active。可以确认消息唤醒退役 Worker 的机制及抑制效果，不能仅凭这些日志唯一指定某一行产品调用。产品修复必须通过没有 prototype 抑制、没有诊断注入的原正式三次流程。后续原生观察先用 native 版本身份识别新 active，不再向旧 Worker 发观测消息。
+
+### 最小产品修复与验收方式
+
+新版注册根目录 `sw.js?release=<固定入口版本>`，仍使用原作用域。统一 helper 以自身 `import.meta.url` 构造 URL，学习子目录不改变注册位置。主入口、足迹入口与清理 helper 在任何消息发出前被动检查 scriptURL、activated、registration.active 与当前 controller；未知历史 Worker 不再被状态探测唤醒，只显示正在升级。离线就绪仍须当前入口版本、真正控制页面及完整非空 manifest 回执，不以 URL 或下载完成代替激活。
+
+本轮 release 为 `math-explorer-20261112-p10-release-r3-v3`。SW 安装、fetch、激活与保守缓存清理算法不变；旧记录、旧 SW、数学判题、课程、固定坐标、P9 与 V1/V2 语义不变。历史旧页 `registration.update()` 仍可先从原无 query URL 安装新实现；首次打开新版入口时再完成带版本 URL 的同作用域接管，失败恢复测试必须覆盖这一步。
+
+正式 `p10-release-upgrade-repeat.cjs` 的三个全新持久 profile 保留原旧页直到新页真实保存并验证过期写保护；不靠关页制造升级通过。正式入口还要求对应 release scriptURL；旧页原生 retry 仍通过实际新协议、active/controller、完整 manifest 验证。失败恢复新增保留中断后、恢复后和新版离线学习的完整原文，便于重算。原导航隔离测试也改为被动识别未知 Worker，保留 9 秒真实导航与严格接管断言，不让观测本身触发旧 Worker 重启。
+
+### 独立后续阻塞：主题悬停遮挡
+
+同一 A/B Artifact 的 `theme-baseline/` 已在**原样 main** `9f8afd5` / tree `70ee0b986bbc197b7bf9c202270e8df983d4ed68` 复现：前 13 项断言成功，`#network-legend` 的 data 主题普通 hover 被 `aside#network-guide` 拦截，随后持续不稳定；baseline worktree 干净。两次诊断 workflow 的 failure 来自该独立基线步骤，A/B/C 取证步骤本身成功。
+
+独立后续任务：修复知识地图主题标题悬停时被观察面板拦截并持续移动；以 `P10_THEME_BASELINE_REF=9f8afd53c7e477c25e0f419e165bcf1f0e304c51 node tests/p10-theme-baseline-browser.cjs` 复现，保留五主题正常 hover/click、不移动相机/选择/坐标和原有效断言。本 PR 不强制点击、不隐藏面板、不跳过该门禁、不混入 P11 视觉重构。只要它仍使 Required 失败，P10 仍不得宣布完成。
+
+完整证据映射见 `verification/p10-release-upgrade/stage13-evidence-index.json`。历史绿色 CI 不计入当前正式验收。Mac 人工、儿童实际使用、独立数学教研和真实儿童备份来源仍单列；不合并、不部署 VPS、不启动桌面安装包。
+
 ## P10 R3 第十二阶段：真实生命周期门禁与保守缓存清理（2026-11-12）
 
 本节是本轮状态入口；下方各阶段保留历史结论，不能把历史绿色结果算作当前 HEAD 的验收。main 仍为 `9f8afd53c7e477c25e0f419e165bcf1f0e304c51`，#66～#69 都是未合并 Draft；#69 依赖 #68，#68 依赖 #67，#66 独立。

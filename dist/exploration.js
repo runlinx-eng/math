@@ -1,5 +1,5 @@
-import {registerClientRelease,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261112-p10-release-r3-v2';
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+const RELEASE='math-explorer-20261112-p10-release-r3-v3';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -226,11 +226,12 @@ $('#import-file').addEventListener('change',async event=>{
 async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
  if('serviceWorker'in navigator){
   try{
-   const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+   const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});
    await navigator.serviceWorker.ready;
    const offlineReady=async()=>{
     const active=navigator.serviceWorker.controller;
     if(!active){$('#offline-status').textContent=' · 正在准备离线资源';return;}
+    if(!isReleaseWorker(active,RELEASE)||active.state!=='activated'||registration.active!==active){$('#offline-status').textContent=' · 正在升级离线资源';return;}
     const reply=await new Promise(resolve=>{
      const channel=new MessageChannel();
      const timer=setTimeout(()=>{channel.port1.close();resolve(null);},5000);

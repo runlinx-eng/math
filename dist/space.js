@@ -1,5 +1,5 @@
-import {registerClientRelease,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261112-p10-release-r3-v2';
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+const RELEASE='math-explorer-20261112-p10-release-r3-v3';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -1160,11 +1160,12 @@ async function offline(){
   const status=$('#offline-status');
   if(!('serviceWorker'in navigator)){status.textContent='本机保存 · 此环境无法使用离线缓存';return;}
   try{
-    const registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+    const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});
     await navigator.serviceWorker.ready;
     const check=async()=>{
       const active=navigator.serviceWorker.controller;
       if(!active){status.textContent='本机保存 · 正在准备离线资源';return;}
+      if(!isReleaseWorker(active,RELEASE)||active.state!=='activated'||registration.active!==active){status.textContent='本机保存 · 正在升级离线资源';return;}
       const response=await new Promise(resolve=>{
         const channel=new MessageChannel();
         const timer=setTimeout(()=>{channel.port1.close();resolve(null);},5000);

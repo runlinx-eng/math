@@ -132,15 +132,17 @@ self.addEventListener('activate',()=>stage13Log('activate-event'));
     const saved=await oldPage.evaluate(()=>localStorage.getItem('math-explorer-v2'));fs.writeFileSync(path.join(caseOut,'before-update.json'),saved);
     report.historicalLearningVerified=true;record('historical-learning-saved',{bytes:Buffer.byteLength(saved),sha256:hash(saved)});
     report.oldNativeVersions=[...versions.values()];
-    const inspect=async page=>bounded(page.evaluate(async({oldCache,newCache})=>{
+    const inspect=async page=>bounded(page.evaluate(async({oldCache,newCache,knownNewActive})=>{
      const reg=await navigator.serviceWorker.getRegistration();
      const worker=w=>w?{state:w.state,scriptURL:w.scriptURL,isController:w===navigator.serviceWorker.controller}:null;
      const ask=w=>!w?Promise.resolve(null):new Promise(resolve=>{const c=new MessageChannel();const done=data=>{clearTimeout(t);c.port1.close();resolve(data);};const t=setTimeout(()=>done(null),1000);c.port1.onmessage=e=>done(e.data);w.postMessage({type:'math-explorer:cache-status'},[c.port2]);});
-     const candidate=reg?.waiting||reg?.active;
+     // Observation must never wake a historical controller. Native version
+     // identity tells us when active is the new worker, without messaging it.
+     const candidate=reg?.waiting||(knownNewActive?reg?.active:null);
      const status=await ask(candidate);
      return {url:location.href,controller:worker(navigator.serviceWorker.controller),active:worker(reg?.active),waiting:worker(reg?.waiting),installing:worker(reg?.installing),keys:await caches.keys(),status,
       ready:!!candidate&&candidate===reg.active&&candidate===navigator.serviceWorker.controller&&candidate.state==='activated'&&status?.cache===newCache&&status.complete===true&&!reg.waiting&&!reg.installing};
-    },{oldCache,newCache}),6000,'same-profile worker inspection');
+    },{oldCache,newCache,knownNewActive:[...versions.values()].some(v=>v.status==='activated'&&!report.oldNativeVersions.some(old=>old.versionId===v.versionId))}),6000,'same-profile worker inspection');
     release='new';record('release-switched');
     if(mode==='C-suppress-legacy-probes'){
      // C changes one cause found in A's native trace: application status

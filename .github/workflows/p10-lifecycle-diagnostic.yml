@@ -31,15 +31,12 @@ jobs:
           npx playwright install chromium
       - name: Run historical client lifecycle comparison
         env:
-          P10_LIFECYCLE_CASES: C-suppress-legacy-probes
+          P10_LIFECYCLE_CASES: A-retain-clients
         shell: bash
         run: |
           node --check tests/p10-sw-client-lifecycle-browser.cjs
           mkdir -p verification/p10-release-upgrade/stage13-lifecycle
           node tests/p10-sw-client-lifecycle-browser.cjs 2>&1 | tee verification/p10-release-upgrade/stage13-lifecycle/console.log
-      - name: Reproduce theme obstruction against current main
-        if: ${{ !cancelled() }}
-        run: node tests/p10-theme-baseline-browser.cjs
       - name: Preserve lifecycle evidence
         if: always()
         uses: actions/upload-artifact@v4

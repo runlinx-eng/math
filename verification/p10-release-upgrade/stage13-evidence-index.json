@@ -1,0 +1,134 @@
+{
+  "stage": 13,
+  "status": "not-completed",
+  "historical": {
+    "commit": "96844424ceb534e7ca5f864a006b72a52efd0d60",
+    "swSha256": "773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00",
+    "fileModified": false,
+    "runtimeModified": false
+  },
+  "diagnostics": [
+    {
+      "cases": [
+        "A-retain-clients",
+        "B-close-clients"
+      ],
+      "head": "1729ec9354df76a82612c4a08dd335c44f662a4e",
+      "checkout": "716b421fd95086f5d3c429bf62c7bb550709e3f2",
+      "tree": "0285f5c76562dbee2d01f06a7ca9be46942358c7",
+      "run": "https://github.com/runlinx-eng/math/actions/runs/43143024771",
+      "artifact": 13910092762,
+      "artifactSha256": "7ec6c0213baf80bcff6644d1d02d435084361723e59fdf7afde11914d0181cd0",
+      "newWorkerDiagnostic": true,
+      "countsTowardFormalAcceptance": false,
+      "results": {
+        "A": "old active, new waiting; all saved learning bytes preserved",
+        "B": "all scoped pages closed; old redundant; new activated; same-profile reopen controlled with 251/251; learning bytes preserved"
+      },
+      "nativeOldWorker": {
+        "fetchCompleted": 312,
+        "fetchStarted": 312,
+        "cacheOpenCompleted": 312,
+        "cacheOpenStarted": 312,
+        "cachePutCompleted": 312,
+        "cachePutStarted": 312,
+        "pendingAtClientAction": 0,
+        "firstStopRestart": true
+      },
+      "traceSha256": {
+        "A": "dfe2f0f9ae7b8f005276d77eb92a79a98dca5ea7e0b7663964d2ecb66cbcf143",
+        "B": "82e00d8da9e6cc030a88ce4bf81c4c8474287c27de9c44804762ae1dd9485f6c"
+      }
+    },
+    {
+      "cases": [
+        "C-suppress-legacy-probes"
+      ],
+      "head": "f187ab536a3b19cf50d6b5d085fa576ac2474838",
+      "checkout": "5165ad33304bf589b5af3568f21e6a2c35a0b45a",
+      "tree": "aa73ddf6ce4549ae541bdfa45d82fdfdaf9853bc",
+      "run": "https://github.com/runlinx-eng/math/actions/runs/43143610144",
+      "artifact": 13910433028,
+      "artifactSha256": "0caf35b403a4598b3f33ce952af92f61955e200177229156a23470d31699429a",
+      "newWorkerDiagnostic": true,
+      "pagePrototypeProbeSuppression": true,
+      "countsTowardFormalAcceptance": false,
+      "suppressedCacheStatusMessages": 3,
+      "legacyPagesRetained": true,
+      "newActiveAndController": true,
+      "manifest": [
+        251,
+        251
+      ],
+      "nativeOldStopRestart": false,
+      "nativeNewActivationAfterOldRetirementMs": 1003,
+      "bytesPreserved": true,
+      "nativeNewLessonNavigation": true,
+      "staleOldTabOverwriteBlocked": true,
+      "traceSha256": "eca77fed7fea9d9600835cdc8cc092b02f5f7e65d882f64093803cb4de18bc81"
+    }
+  ],
+  "causalityBoundary": "Native trace identifies Message wakeup during retirement and the counterfactual removes it. It does not include JS call stacks; early diagnostic inspect may also query old active. Exact application repair must pass uninjected original full runs. Final observation uses native version identity before querying active.",
+  "repair": {
+    "release": "math-explorer-20261112-p10-release-r3-v3",
+    "registration": "same-scope sw.js?release=<fixed entry release>",
+    "guard": "identify scriptURL before any cache-status or cleanup message; require active/controller/activated and complete nonempty manifest for ready",
+    "historicalWorkerUntouched": true,
+    "learnerSchemaUntouched": true,
+    "mathGradingUntouched": true,
+    "cacheRetirementAlgorithmUntouched": true,
+    "productSha256": {
+      "dist/sw.js": "d3a674d2c2059a46fff4f876165fbdebe899d6a0adb267bbdf750f64f7b398fe",
+      "dist/sw-client.js": "fc94786b06b82ea7b8b1a5f4327083aec92e53d9dd74db02a2b5487fb682b7d7",
+      "dist/space.js": "d8917c485916e97c66c725c7437e01c9543985dbfca626092c3e0a5d1cb38882",
+      "dist/exploration.js": "cff2cc2a8adaa9a4a09c84a477e802bcc341142c543a54eddb575ff7872c892b",
+      "dist/learning/learn.js": "0e951e523be827fb2c9a38165fb26aabb136578b670cde99db69635fc90113f0"
+    }
+  },
+  "formalCurrentTree": {
+    "authoritativeRun": "latest Required CI for PR #69; PR description links the exact run",
+    "provenanceFile": "p10-release-upgrade/results.json or failure.json: provenance.headSha/testedCheckoutSha/testedTree",
+    "upgradeRuns": [
+      "run-1/results.json",
+      "run-2/results.json",
+      "run-3/results.json"
+    ],
+    "additionalRetry": "retry-independent/results.json",
+    "safetyResults": [
+      "backup-safety/results.json",
+      "full-lessons/results.json",
+      "isolation-results.json"
+    ],
+    "requiredFullPasses": 3,
+    "minimumIndependentRecoveries": 3,
+    "historicalResultsDoNotCount": true,
+    "noDiagnosticRuntimeOrPrototypeInjection": true,
+    "versionedControllerRequiredForNewEntries": true,
+    "retryHistoricalIdentityGuard": true,
+    "retryStorage": "four independently created isolated browser contexts if all full and retry-only runs pass; not persistent retry profiles"
+  },
+  "independentBlocker": {
+    "title": "修复知识地图主题标题悬停时被观察面板拦截并持续移动",
+    "baselineMain": "9f8afd53c7e477c25e0f419e165bcf1f0e304c51",
+    "baselineTree": "70ee0b986bbc197b7bf9c202270e8df983d4ed68",
+    "baselineModified": false,
+    "artifact": 13910092762,
+    "evidence": "theme-baseline/baseline-provenance.json, results.json, failure.png, chromium-log.txt",
+    "passedBeforeFailure": 13,
+    "selector": "#network-legend [data-action=\"network-theme\"][data-id=\"data\"]",
+    "failure": "native hover intercepted by aside#network-guide, then element not stable",
+    "testAssertionsPreserved": true,
+    "noForceClickOrHiddenOverlay": true,
+    "separateFollowUpRecorded": true
+  },
+  "boundaries": {
+    "pr69Draft": true,
+    "merged": false,
+    "deployed": false,
+    "productionLearnerDataTouched": false,
+    "macManual": false,
+    "childTrial": false,
+    "independentTeachingReview": false,
+    "realHistoricalChildBackup": false
+  }
+}

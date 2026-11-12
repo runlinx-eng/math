@@ -34,9 +34,11 @@ const waitForOldControl=async(p,name)=>{
  }
  throw Error('old worker never controlled a page with cached learn.html: '+JSON.stringify(last));
 };
-const workerStatus=async(p)=>p.evaluate(async()=>{
+const workerStatus=async(p)=>p.evaluate(async expectedURL=>{
  const reg=await navigator.serviceWorker.getRegistration();
- const ask=w=>!w?Promise.resolve(null):new Promise(resolve=>{
+ // A status observer must not wake an unsupported historical worker while
+ // Chromium is retiring it. URL identity is passive; only query this release.
+ const ask=w=>!w?Promise.resolve(null):w.scriptURL!==expectedURL?Promise.resolve({unqueried:true,scriptURL:w.scriptURL,state:w.state}):new Promise(resolve=>{
   const channel=new MessageChannel(),timer=setTimeout(()=>resolve({error:'status timeout'}),2000);
   channel.port1.onmessage=e=>{clearTimeout(timer);resolve(e.data);};
   w.postMessage({type:'math-explorer:cache-status'},[channel.port2]);
@@ -44,8 +46,9 @@ const workerStatus=async(p)=>p.evaluate(async()=>{
  return {url:location.href,controller:await ask(navigator.serviceWorker.controller),active:await ask(reg?.active),
   waiting:await ask(reg?.waiting),activeState:reg?.active?.state,waitingState:reg?.waiting?.state,
   installingState:reg?.installing?.state,controllerURL:navigator.serviceWorker.controller?.scriptURL,
+  controllerIsActive:navigator.serviceWorker.controller===reg?.active,
   keys:await caches.keys()};
-});
+},new URL('sw.js?release='+encodeURIComponent(cacheAt(path.join(root,'dist/sw.js'))),base).href);
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const oldDir=fs.mkdtempSync(path.join(os.tmpdir(),'math-p10-isolate-'));
@@ -246,11 +249,11 @@ self.addEventListener('fetch',event=>{if(/\\/(learn|v2)\\.html/.test(event.reque
      const readyStart=Date.now();let ready;
      do{
       ready=await workerStatus(tab);
-      if(ready.activeState==='activated'&&!ready.waitingState&&!ready.installingState&&ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete)break;
+      if(ready.controllerIsActive&&ready.activeState==='activated'&&!ready.waitingState&&!ready.installingState&&ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete)break;
       await delay(150);
      }while(Date.now()-readyStart<45000);
      rec.verifiedReady=ready;
-     if(!(ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete&&!ready.waitingState&&!ready.installingState))throw Error('real active/controller generation not ready: '+JSON.stringify(ready));
+     if(!(ready.controllerIsActive&&ready.activeState==='activated'&&ready.active?.cache===newCache&&ready.active.complete&&ready.controller?.cache===newCache&&ready.controller.complete&&!ready.waitingState&&!ready.installingState))throw Error('real active/controller generation not ready: '+JSON.stringify(ready));
     }
     rec.before=await timed(workerStatus(tab),4500,'before navigation');
     if(cfg.closeOld){await oldPage.close();oldPage=null;}

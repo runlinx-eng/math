@@ -52,6 +52,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   const oldCache=cacheFrom(path.join(oldPath,'dist/sw.js'));
   const newCache=cacheFrom(path.join(root,'dist/sw.js'));
   provenance.oldWorkerSha256=crypto.createHash('sha256').update(fs.readFileSync(path.join(oldPath,'dist/sw.js'))).digest('hex');
+  assert.equal(provenance.oldWorkerSha256,'773bac0d2ae4383ffb071e7f1046f96d4855d165c2bf751da6d04b820fe7cf00','historical worker must retain exact original bytes');
   provenance.newWorkerSha256=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'dist/sw.js'))).digest('hex');
   check(!!oldCache&&!!newCache&&oldCache!==newCache,'distinct genuine release Service Worker manifests',{oldCommit:OLD,oldCache,newCache});
   let release='old',deny='',offlineServing=false,holdPath='',heldResponse=null;
@@ -129,16 +130,20 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
     activeState:reg?.active?.state,controllerState:navigator.serviceWorker.controller?.state,keys,cached};
   },oldCache,'historical worker active and controlling');
   // Do not mistake a complete waiting worker cache for an activated release.
-  // scriptURL is identical across generations; the new message protocol and
-  // cache identity establish the generation only on active AND controller.
-  const newReady=async(p)=>{
+  // New entries register a release-specific script URL. Historical r.update()
+  // can first install the new implementation at its original unversioned URL;
+  // that retry path still requires the actual new protocol and complete cache.
+  const newReady=async(p,{requireReleaseURL=false}={})=>{
    let previous='';
-   const status=await poll(p,async name=>{
+   const status=await poll(p,async({name,expectedURL,requireReleaseURL})=>{
    const reg=await navigator.serviceWorker.getRegistration();
    const state={ready:false,activeState:reg?.active?.state||null,controllerState:navigator.serviceWorker.controller?.state||null,
-    waitingState:reg?.waiting?.state||null,installingState:reg?.installing?.state||null};
+    waitingState:reg?.waiting?.state||null,installingState:reg?.installing?.state||null,
+    activeURL:reg?.active?.scriptURL||null,controllerURL:navigator.serviceWorker.controller?.scriptURL||null};
    if(!reg?.active||reg.active.state!=='activated'||!navigator.serviceWorker.controller)return state;
    if(reg.waiting||reg.installing)return state;
+   if(!requireReleaseURL&&reg.active===window.__p10RetryHistoricalWorker)return {...state,historicalActiveStillPresent:true};
+   if(requireReleaseURL&&(reg.active.scriptURL!==expectedURL||navigator.serviceWorker.controller.scriptURL!==expectedURL))return state;
    state.keys=await caches.keys();
    if(!state.keys.includes(name))return state;
    const ask=worker=>new Promise(resolve=>{
@@ -153,7 +158,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    return {...state,ready:active?.cache===name&&active.complete===true&&controller?.cache===name&&controller.complete===true&&
     activeWorker===reg.active&&controllerWorker===navigator.serviceWorker.controller&&activeWorker===controllerWorker&&
     reg.active.state==='activated'&&!reg.waiting&&!reg.installing,active,controller,activeState:reg.active?.state};
-   },newCache,'new worker active, controlling and complete',90000,sample=>{
+   },{name:newCache,expectedURL:new URL('sw.js?release='+encodeURIComponent(newCache),base).href,requireReleaseURL},'new worker active, controlling and complete',90000,sample=>{
     const serialized=JSON.stringify(sample);
     if(serialized!==previous){record('new-worker-readiness',{url:p.url(),status:sample});previous=serialized;}
    });
@@ -250,7 +255,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   newTab.on('requestfailed',req=>record('new-tab-request-failed',{url:req.url(),reason:req.failure()}));
   await newTab.goto(base+'v2.html#trail');
   await newTab.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
-  await newReady(newTab);
+  await newReady(newTab,{requireReleaseURL:true});
   const afterUpgrade=await read(newTab);
   fs.writeFileSync(path.join(out,'after-upgrade.json'),afterUpgrade);
   assert.deepEqual(JSON.parse(afterUpgrade),JSON.parse(beforeUpgrade),'upgrade must not rewrite saved learner records');
@@ -282,7 +287,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   await oldTab.close();
   // A controller change does not replace the historical document's loaded JS.
   // After its tab has closed, request current-worker cleanup and require eviction.
-  await newReady(newTab);
+  await newReady(newTab,{requireReleaseURL:true});
   const finalReport=await cleanup(newTab,'upgrade');
   const newKeys=await newTab.evaluate(()=>caches.keys());
   console.log('P10_CACHE_FINAL '+JSON.stringify({finalReport,newKeys}));
@@ -314,7 +319,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
    'full browser offline reopen receives a cached 200 document from Service Worker');
   check(await newTab.evaluate(()=>window.__p10BeforeApp)===beforeNewRestart,
    'full new browser offline restart preserves original and newly saved records byte-for-byte');
-  await newReady(newTab);
+  await newReady(newTab,{requireReleaseURL:true});
   await newTab.locator('#actions [data-do="check"]').click();
   check(await newTab.locator('#scene').getAttribute('data-stage')==='passed','original grader still passes recovered reasoning after full offline browser restart');
   const restartedRecord=JSON.parse(await read(newTab));
@@ -479,10 +484,15 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   await lesson(failPage,'equivalent');
   await failPage.locator('#actions [data-do="check"]').click();
   failAfterOffline=await read(failPage);
+  fs.writeFileSync(path.join(out,'retry-after-failures-and-offline-learning.json'),failAfterOffline);
   check(JSON.parse(failAfterOffline).lessons.equivalent.cases[0].attempts.length===3,
    'historical math grading and saving remain available offline after interrupted update');
   offlineServing=false;await failCtx.setOffline(false);
-  await failPage.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();});
+  await failPage.evaluate(async()=>{
+   const r=await navigator.serviceWorker.ready;
+   window.__p10RetryHistoricalWorker=r.active;
+   await r.update();
+  });
   await newReady(failPage);
   check((await failPage.evaluate(()=>caches.keys())).includes(newCache),'retry activates real new worker with complete cache');
   // The old page may still have the old release JS running. Its cache is
@@ -493,8 +503,9 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   recoveredPage.on('pageerror',e=>errors.push(String(e)));
   diagnosticPage=recoveredPage;
   await recoveredPage.goto(base+'v2.html#trail',{waitUntil:'commit'});
-  await newReady(recoveredPage);
+  await newReady(recoveredPage,{requireReleaseURL:true});
   check(await read(recoveredPage)===failAfterOffline,'retry preserves every byte of original and fallback learning records');
+  fs.writeFileSync(path.join(out,'retry-after-successful-upgrade.json'),await read(recoveredPage));
   const retryCleanup=await cleanup(recoveredPage,'failed-install-retry');
   const retryKeys=await recoveredPage.evaluate(()=>caches.keys());
   check(retryCleanup?.cache===newCache&&retryCleanup.complete===true&&
@@ -505,6 +516,7 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
   check(retryOfflineResponse?.status()===200&&retryOfflineResponse.fromServiceWorker(),
    'successful retry serves cached learning document without network transport');
   check(JSON.parse(await read(recoveredPage)).lessons.equivalent.cases[0].attempts.length===3,'recovered new release launches and retains history offline');
+  fs.writeFileSync(path.join(out,'retry-new-release-offline-learning.json'),await read(recoveredPage));
   await failCtx.close();offlineServing=false;
   retryCompleted=true;
   record('retry-profile-completed',{profile:'failed-install-retry',profileId:retryProfileId,phase});

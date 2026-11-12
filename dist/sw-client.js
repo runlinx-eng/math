@@ -1,8 +1,17 @@
 // The entry module supplies its own fixed source version. A shared helper or a
 // new controller must not relabel a document that loaded an older entry module.
+export function releaseWorkerURL(release){
+ const url=new URL('./sw.js',import.meta.url);
+ url.searchParams.set('release',release);
+ return url.href;
+}
+export function isReleaseWorker(worker,release){
+ return !!worker&&worker.scriptURL===releaseWorkerURL(release);
+}
 export function isCurrentReleaseReady({release,registration,controller,worker,report}){
- return !!worker&&worker.state==='activated'&&registration?.active===worker&&controller===worker&&
-  report?.type==='math-explorer:cache-status'&&report.cache===release&&report.complete===true;
+ return isReleaseWorker(worker,release)&&worker.state==='activated'&&registration?.active===worker&&controller===worker&&
+  report?.type==='math-explorer:cache-status'&&report.cache===release&&report.complete===true&&
+  Number.isInteger(report.total)&&report.total>0&&report.cached===report.total;
 }
 export function registerClientRelease(RELEASE){
 if('serviceWorker'in navigator){
@@ -19,12 +28,14 @@ if('serviceWorker'in navigator){
  });
  const sweep=async()=>{
   const worker=navigator.serviceWorker.controller;
-  if(!worker)return;
-  // A new document can still be controlled by an older worker. Never invoke
-  // that worker's legacy cleanup implementation against the installing cache.
+  // Identify this protocol before sending anything. Even a status probe can
+  // restart a retiring historical controller and delay the new activation.
+  if(!isReleaseWorker(worker,RELEASE)||worker.state!=='activated')return;
+  const registration=await navigator.serviceWorker.getRegistration().catch(()=>null);
+  if(registration?.active!==worker||navigator.serviceWorker.controller!==worker)return;
   const status=await ask(worker,'math-explorer:cache-status');
-  if(status?.type!=='math-explorer:cache-status'||status.cache!==RELEASE||!status.complete||
-   navigator.serviceWorker.controller!==worker||worker.state!=='activated')return;
+  if(!isCurrentReleaseReady({release:RELEASE,registration,
+   controller:navigator.serviceWorker.controller,worker,report:status}))return;
   await ask(worker,'math-explorer:cleanup-retired-caches');
  };
  // Deferred cleanup is retried on a later page load/controller change. It is

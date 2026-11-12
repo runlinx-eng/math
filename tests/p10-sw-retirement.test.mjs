@@ -3,10 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {MessageChannel} from 'node:worker_threads';
-import {isCurrentReleaseReady} from '../dist/sw-client.js';
+import {releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from '../dist/sw-client.js';
 
 const source=fs.readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8');
 const release=source.match(/const CACHE = '([^']+)'/)[1];
+const clientSource=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.url),'utf8');
+const browserClientSource=clientSource.replaceAll('export function','function')
+ .replaceAll('import.meta.url',JSON.stringify('https://math.test/app/sw-client.js'));
+const browserWorkerURL='https://math.test/app/sw.js?release='+encodeURIComponent(release);
 const old='math-explorer-historical-release',other='unrelated-origin-cache';
 const client=(id,version=release)=>({id,url:'https://math.test/learn.html',postMessage(message,ports){
  if(version===null)return;
@@ -70,26 +74,76 @@ test('loaded page release certificate matches the worker and is precached',()=>{
  assert.ok(source.includes("'./sw-client.js'"));
  assert.ok(!page.includes('localStorage'),'cleanup coordination cannot touch learner storage');
 });
-test('new page never invokes an older controller cleanup implementation',async()=>{
- const pageSource=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.url),'utf8');
- const sent=[],listeners={};
- const oldWorker={state:'activated',postMessage(message,ports){sent.push(message.type);
-  ports[0].postMessage({type:'math-explorer:cache-status',cache:'older-release',complete:true});ports[0].close();}};
- vm.runInNewContext(pageSource.replaceAll('export function','function')+'\nregisterClientRelease('+JSON.stringify(release)+');',{navigator:{serviceWorker:{controller:oldWorker,addEventListener:(name,fn)=>listeners[name]=fn}},
-  document:{readyState:'loading'},window:{addEventListener:(name,fn)=>listeners[name]=fn},MessageChannel,setTimeout,clearTimeout});
- await listeners.load();
- assert.deepEqual(sent,['math-explorer:cache-status']);
+test('release worker identity comes from the helper location, never a learning document subdirectory',()=>{
+ const expected=new URL('../dist/sw.js',import.meta.url);expected.searchParams.set('release',release);
+ assert.equal(releaseWorkerURL(release),expected.href);
+ for(const href of ['https://math.test/app/index.html','https://math.test/app/learning/learn.html']){
+  const actual=vm.runInNewContext(browserClientSource+'\nreleaseWorkerURL('+JSON.stringify(release)+');',
+   {URL,location:{href},document:{baseURI:href}});
+  assert.equal(actual,browserWorkerURL);
+ }
+ assert.equal(isReleaseWorker({scriptURL:expected.href},release),true);
+ for(const scriptURL of [new URL('../dist/sw.js',import.meta.url).href,expected.href+'&old=1',releaseWorkerURL('older-release')])
+  assert.equal(isReleaseWorker({scriptURL},release),false);
+ assert.equal(isReleaseWorker(null,release),false);
+});
+test('client cleanup sends zero messages to historical or wrong-release controllers',async()=>{
+ for(const scriptURL of ['https://math.test/app/sw.js','https://math.test/app/sw.js?release=older-release']){
+  const sent=[],listeners={};
+  const oldWorker={state:'activated',scriptURL,postMessage:message=>sent.push(message.type)};
+  vm.runInNewContext(browserClientSource+'\nregisterClientRelease('+JSON.stringify(release)+');',{
+   navigator:{serviceWorker:{controller:oldWorker,getRegistration:async()=>({active:oldWorker}),addEventListener:(name,fn)=>listeners[name]=fn}},
+   document:{readyState:'loading'},window:{addEventListener:(name,fn)=>listeners[name]=fn},URL,MessageChannel,setTimeout,clearTimeout});
+  await listeners.load();
+  assert.deepEqual(sent,[],'even a read-only status probe must not restart the retiring controller');
+ }
+});
+test('both entry status checks register the fixed release and never probe a legacy controller',async()=>{
+ for(const file of ['space.js','exploration.js']){
+  const entry=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
+  const start=entry.indexOf(file==='space.js'?'async function offline(){':" if('serviceWorker'in navigator){");
+  const end=entry.indexOf(file==='space.js'?'\nasync function boot(){':'\n }catch(error){main.innerHTML',start);
+  assert.ok(start>=0&&end>start);
+  const program=file==='space.js'?entry.slice(start,end)+'\noffline();':'(async()=>{'+entry.slice(start,end)+'})();';
+  const sent=[],registrations=[],status={textContent:''},legacy={state:'activated',scriptURL:'https://math.test/app/sw.js',postMessage:message=>sent.push(message.type)};
+  const serviceWorker={controller:legacy,ready:Promise.resolve(),addEventListener(){},
+   async register(url,options){registrations.push({url,options});return {active:legacy};}};
+  await vm.runInNewContext(browserClientSource+'\nconst RELEASE='+JSON.stringify(release)+';\n'+program,
+   {navigator:{serviceWorker},$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
+  assert.deepEqual(sent,[],file+' must identify the controller before requesting cache status');
+  assert.equal(registrations.length,1);assert.equal(registrations[0].url,browserWorkerURL);
+  assert.equal(registrations[0].options.updateViaCache,'none');
+  assert.match(status.textContent,/正在升级离线资源/);
+ }
+});
+test('current controller cleanup requires matching active identity and a complete resource report',async()=>{
+ for(const [activeMatches,complete,expected] of [[false,true,[]],[true,false,['math-explorer:cache-status']],
+  [true,true,['math-explorer:cache-status','math-explorer:cleanup-retired-caches']]]){
+  const sent=[],listeners={};
+  const current={state:'activated',scriptURL:browserWorkerURL,postMessage(message,ports){
+   sent.push(message.type);ports[0].postMessage({type:message.type,cache:release,complete,cached:complete?2:1,total:2});ports[0].close();
+  }};
+  vm.runInNewContext(browserClientSource+'\nregisterClientRelease('+JSON.stringify(release)+');',{
+   navigator:{serviceWorker:{controller:current,getRegistration:async()=>({active:activeMatches?current:{}}),addEventListener:(name,fn)=>listeners[name]=fn}},
+   document:{readyState:'loading'},window:{addEventListener:(name,fn)=>listeners[name]=fn},URL,MessageChannel,setTimeout,clearTimeout});
+  await listeners.load();assert.deepEqual(sent,expected);
+ }
 });
 test('offline readiness requires this loaded release and its current activated controller',()=>{
- const worker={state:'activated'},replacement={state:'activated'};
+ const worker={state:'activated',scriptURL:releaseWorkerURL(release)},replacement={state:'activated',scriptURL:releaseWorkerURL(release)};
  const current={release,registration:{active:worker},controller:worker,worker,
-  report:{type:'math-explorer:cache-status',cache:release,complete:true}};
+  report:{type:'math-explorer:cache-status',cache:release,complete:true,cached:2,total:2}};
  assert.equal(isCurrentReleaseReady(current),true);
  assert.equal(isCurrentReleaseReady({...current,report:{...current.report,cache:'older-release'}}),false,'a complete older cache cannot certify a failed new installation');
  assert.equal(isCurrentReleaseReady({...current,report:{...current.report,complete:false}}),false,'missing resources never count as ready');
+ assert.equal(isCurrentReleaseReady({...current,report:{...current.report,cached:1}}),false,'a complete flag without the entire manifest is not ready');
+ assert.equal(isCurrentReleaseReady({...current,report:{...current.report,cached:0,total:0}}),false,'an empty manifest does not certify offline learning');
  assert.equal(isCurrentReleaseReady({...current,controller:null}),false,'a complete active cache without actual page control is not ready');
  assert.equal(isCurrentReleaseReady({...current,controller:replacement}),false,'a stale reply from a previous controller is not ready');
  assert.equal(isCurrentReleaseReady({...current,registration:{active:replacement}}),false,'registration active and page controller must agree');
+ const originalURL=worker.scriptURL;worker.scriptURL=releaseWorkerURL('older-release');
+ assert.equal(isCurrentReleaseReady(current),false,'a plausible cache reply from the wrong worker URL is not ready');
+ worker.scriptURL=originalURL;
  worker.state='activating';
  assert.equal(isCurrentReleaseReady(current),false,'activation must finish');
 });
