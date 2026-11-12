@@ -72,6 +72,15 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
    await page.setViewportSize({width:w,height:h});await page.waitForTimeout(160);
    const state=await record('explore-'+w+'x'+h);
    assert(state.active.length<=1,'Explore multiple strong labels '+w+'x'+h);
+   if(w<=800){
+    const rail=await page.locator('.tool-rail').boundingBox();
+    const detail=await page.locator('#focus-card').boundingBox();
+    if(rail&&detail){
+     const overlap=Math.min(rail.x+rail.width,detail.x+detail.width)-Math.max(rail.x,detail.x)>0
+      &&Math.min(rail.y+rail.height,detail.y+detail.height)-Math.max(rail.y,detail.y)>0;
+     assert(!overlap,'compact explore controls overlap selected-node detail '+w+'x'+h);
+    }
+   }
    await image('explore',w,h);
   }
   await page.setViewportSize({width:1440,height:900});
