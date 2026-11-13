@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
-import {TASKS,defaultModel,inspect,example} from '../dist/learning/tasks.js';
+import {TASKS,defaultModel,inspect,exampleModel} from '../dist/learning/tasks.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {freshLesson,modelForLesson,submitLesson,lessonSummary,currentSubmission,addLessonNote} from '../dist/learning/state.js';
@@ -56,7 +56,7 @@ test('unopened, draft, incorrect and correct submissions retain different eviden
   assert.equal(a.cases[0].attempts.length,1);
   assert.equal(lessonSummary(a).completed,false);
   assert.equal(currentSubmission(a).status,'revise');
-  const passed=example(TASKS.share[0]);
+  const passed=exampleModel(TASKS.share[0]);
   assert.equal(inspect(TASKS.share[0],passed).correct,true);
   a.models[0]=passed;
   assert.equal(currentSubmission(a).status,'modified');
@@ -77,7 +77,7 @@ test('all native required checks pass with current workpieces; optional reflecti
   const a=freshLesson('share');
   TASKS.share.forEach((t,i)=>{
     a.index=i;
-    a.models[i]=example(t);
+    a.models[i]=exampleModel(t);
     assert.equal(inspect(t,a.models[i]).correct,true);
     assert.equal(submitLesson(a).correct,true);
   });
