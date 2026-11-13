@@ -22,8 +22,8 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
    const record=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.structure34);
    const note=page.locator('#thinking-feedback');
    const pick=async(a,b)=>{
-    await page.locator('[data-xfield="first"]').fill(String(a));
-    await page.locator('[data-xfield="second"]').fill(String(b));
+    await page.locator('[data-xfield="first"]').selectOption(String(a));
+    await page.locator('[data-xfield="second"]').selectOption(String(b));
     await page.locator('[data-x="g23-lineTest"]').click();
    };
    const answer=async v=>page.locator('[data-xfield="answers.0"]').selectOption(v);
