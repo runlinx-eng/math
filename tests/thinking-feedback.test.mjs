@@ -112,3 +112,37 @@ test('P9 emitted thinking source IDs and practice codes belong to the pinned 50-
     assert.equal(note.method.label,sourceNode.n.displayName,'no invented thinking title');
   }
 });
+
+test('MP.7 geometry needs genuine replayable two-relation work in the pinned source task',async()=>{
+  const {TASKS:B34}=await import('../dist/learning/phase5/b34.js');
+  const geometry=await import('../dist/learning/phase5/b23-model.js');
+  const t=B34.structure34[3],done=geometry.example(t),context={sessionId:'structure34',index:3};
+  const record={support:false,attempts:[attempt(done)]};
+  assert.equal(t.type,'x-s23-lines');
+  assert.ok(geometry.valid(t,done));
+  assert.equal(geometry.inspect(t,done).correct,true);
+  const note=thinkingFeedback(t,done,record,context);
+  assert.match(note.observation,/平行.*垂直/);
+  assert.match(note.connection,/哪些关系没有变/);
+  assert.equal(note.method.nodeId,'mt_FAXjFkgG6X');
+  assert.equal(note.method.code,'ccss-math:MP.7');
+  assert.equal(note.method.label,'数位、运算与图形中的结构');
+  assert.doesNotMatch(note.observation,/你已掌握|你的解释正确|你独立证明/);
+  assert.equal(thinkingFeedback(t,done,record,{sessionId:'lineproperties',index:2}),null,
+    'the original lineproperties lesson has its own source mapping');
+  assert.equal(thinkingFeedback(t,done,record,{sessionId:'structure34',index:2}),null);
+  assert.equal(thinkingFeedback(t,done,{support:false,attempts:[]},context),null);
+  const wrong=structuredClone(done);wrong.answers[0]='one';
+  assert.equal(geometry.inspect(t,wrong).correct,false);
+  assert.equal(thinkingFeedback(t,wrong,{attempts:[attempt(wrong)]},context),null);
+  assert.equal(thinkingFeedback(t,wrong,record,context),null,'edited work cannot reuse a passed submission');
+  const missing=structuredClone(done);missing.board.tests=missing.board.tests.filter(x=>x.parallel);
+  assert.equal(thinkingFeedback(t,missing,{attempts:[attempt(missing)]},context),null,
+    'tampered board cannot pass replay validation');
+  assert.equal(thinkingFeedback(t,done,{support:true,attempts:[attempt(wrong),attempt(done)]},context).detail.some(x=>x.includes('提示')),true);
+  const source=JSON.parse((await import('node:fs')).readFileSync(new URL('../docs/spatial-learning/thinking-source-map.json',import.meta.url)));
+  const node=source.groups.find(g=>g.code==='ccss-math:MP.7').nodes.find(n=>n.id==='mt_FAXjFkgG6X');
+  assert.equal(node.displayName,note.method.label);
+  assert.equal(node.lessonId,'structure34');
+  assert.equal(node.goals.some(g=>g.tasks.some(q=>q.index===3&&q.type===t.type)),true);
+});
