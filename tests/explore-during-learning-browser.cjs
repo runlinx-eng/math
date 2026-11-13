@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const base=process.env.MATH_BROWSER_BASE||'http://127.0.0.1:43827';
 const dir=path.resolve(__dirname,'../verification/explore-during-learning');
-const ids={a:'mt_Ep7TDFuYUa',b:'mt_ndGqFPWyen',c:'mt_fZTn0W_iZR',d:'mt_WkKkb7W9Qd'};
+const ids={a:'mt_Ep7TDFuYUa',b:'mt_ndGqFPWyen',c:'mt_WcfaSfVT33',d:'mt_dmNvjroCPT'};
 const checks=[],errors=[];
 (async()=>{
  fs.mkdirSync(dir,{recursive:true});
@@ -90,6 +90,7 @@ const checks=[],errors=[];
    await native('equivalent');
    restored=await snap();
    check(restored.map.selected==='node:'+ids.b&&restored.lesson.id==='equivalent','reload restores A lesson and B exploration separately');
+   check(await page.locator('#focus-card').isVisible(),'refresh restores B exploration details alongside A');
    check(restored.course.lessons.equivalent.cases[0].attempts.length===1,'reload retains A submission');
    check(errors.length===0,'no page errors: '+errors.join(' ; '));
    await picture('08-refreshed-a-and-b');
