@@ -92,6 +92,7 @@ jobs:
           node --check scripts/audit-learning-task-rules.mjs
           node --check tests/learning-node-runtime-browser.cjs
           node --check tests/three-level-node-progress-browser.cjs
+          node --check tests/explore-during-learning-browser.cjs
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
@@ -206,6 +207,7 @@ jobs:
           for test_file in \
             tests/learning-node-runtime-browser.cjs \
             tests/three-level-node-progress-browser.cjs \
+            tests/explore-during-learning-browser.cjs \
             tests/spatial-theme-overview-browser.cjs \
             tests/p11-focus-hover-browser.cjs \
             tests/p11-entry-simplification-browser.cjs \
@@ -298,6 +300,7 @@ jobs:
             verification/p7-learning-panel/
             verification/learning-node-audit/
             verification/three-level-node-progress/
+            verification/explore-during-learning/
             verification/p7-d3/
             verification/p7-d4/
             verification/p7-d5/

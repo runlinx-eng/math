@@ -1283,3 +1283,25 @@ body[data-world="network"] .space-label.node.hovered:not(.selected):not(.active-
 .status-dot.tier-1{border-color:#a3aaa0;background:transparent}
 .status-dot.tier-2{border-color:#ae975e;background:linear-gradient(90deg,#b99b60 50%,transparent 50%)}
 .status-dot.tier-3{border-color:#4ca37e;background:#4ca37e;box-shadow:0 0 0 2px #9dd6b755,0 0 8px #58b88d80}
+
+/* Issue #90: inspect another concept on the left without replacing the lesson.
+   The learning dock and iframe are unchanged; reuse the existing detail card. */
+body[data-world="network"].has-journey.has-explore-selection #focus-card:not([hidden]){
+  display:block!important;
+  visibility:visible!important;
+  z-index:38;
+}
+body[data-world="network"].has-task-surface.has-explore-selection #focus-card:not([hidden]){
+  visibility:visible!important;
+}
+body[data-world="network"].has-journey.has-explore-selection #network-guide{
+  display:none!important;
+}
+body[data-world="network"].has-journey.has-explore-selection .space-label.node.active-target:not(.selected){
+  border:1px solid #457762;
+  border-radius:8px;
+  background:#f0f7ee;
+  color:#245442;
+  font-weight:700;
+  box-shadow:0 0 0 2px #4c8b7525;
+}

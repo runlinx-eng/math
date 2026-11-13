@@ -244,16 +244,23 @@ function leaveGuide({record=true}={}){if(!guideVisible&&!guideSuspended)return;c
 function returnFromLesson(){if(journeySuspended)resumeJourney();const resumeGuide=guideSuspended&&learning.daily.guide?.active&&scene.relationshipMap&&guideSteps[learning.daily.guide.step];if(!resumeGuide)guideSuspended=false;const stableKnowledge=scene.relationshipMap&&!resumeGuide&&space.byKey.get(scene.selected)?.kind==='node';const selected=scene.selected;closeJourney(!resumeGuide&&!stableKnowledge);if(resumeGuide)activateGuide(learning.daily.guide.step,{record:false});else if(stableKnowledge){scene.select(selected);scene.setRelations('source');setHash(selected);renderFocus();renderLocation();scheduleSave();}setTaskSurfaceUrl('explore',{replace:true});restoreTaskSurface();}
 function closePopovers(){document.querySelectorAll('.popover').forEach(p=>p.hidden=true);}
 function setHash(key){history.replaceState(null,'',key?'#space/'+key.replace(':','/'):'#space');}
-function deselectKnowledge(){if(!scene)return;remember();scene.select(null);activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);setHash(null);renderFocus();renderLocation();scheduleSave();}
+function deselectKnowledge(){if(!scene)return;remember();
+  // Closing B returns map selection to A; never unload A's live workpiece.
+  const learningKey=journeyOpen&&!journeySuspended&&activeSessionId?'node:'+sessionMeta(activeSessionId)?.topicId:null;
+  scene.select(learningKey||null);
+  if(!learningKey){activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);}
+  setHash(learningKey);renderFocus();renderLocation();scheduleSave();
+}
 function focusSelected(){const o=space.byKey.get(scene.selected);if(o&&scene.canLocate(o)){scene.panIntoViewWithoutZoom(o,true);scheduleSave();}}
-function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'||taskSurfaceFromUrl()==='learn',inPlace=true}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible){visitGuideTarget(key);return;}const surface=taskSurfaceFromUrl();if(journeyOpen)closeJourney(false,{clearFrame:surface!=='learn'});if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);if(inPlace){if(scene.relationshipMap&&!scene.selected&&object.kind==='node'&&animate)scene.beginViewTransition('to-focus',850);else scene.viewTransition=null;scene.select(key);}else scene.focus(key,{animate});setHash(key);
+function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network'||taskSurfaceFromUrl()==='learn',inPlace=true}={}){const object=space.byKey.get(key);if(!object)return;if(guideVisible){visitGuideTarget(key);return;}const surface=taskSurfaceFromUrl();const keepLearning=journeyOpen&&!journeySuspended&&!!activeSessionId&&surface==='learn';
+  if(journeyOpen&&!keepLearning)closeJourney(false,{clearFrame:surface!=='learn'});if(guideVisible||guideSuspended)leaveGuide();else if(learning.daily.guide?.active&&scene.relationshipMap)recordGuide(learning.daily.guide.step,false);if(history)remember();pointerPreview=null;focusPreview=null;scene.setPreview(null);closePopovers();if(!keepLearning){activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);}if(inPlace){if(scene.relationshipMap&&!scene.selected&&object.kind==='node'&&animate)scene.beginViewTransition('to-focus',850);else scene.viewTransition=null;scene.select(key);}else scene.focus(key,{animate});setHash(key);
   // Reviewing historical evidence is read-only. Selection must not validate,
   // clone, persist or refresh every learning record just to show another node.
   if(surface!=='trail'){
     if(object.kind==='node'&&!learning.visited[object.id])mutateLearning(s=>{s.visited[object.id]??=now();s.openedPacks[object.packId]??=now();});
     else if(object.kind==='pack'&&!learning.openedPacks[object.id])mutateLearning(s=>{s.openedPacks[object.id]??=now();});
   }
-  if(object.kind==='node'&&openLesson){if(surface==='learn')startLearningFromSelection();else if(worldLayout!=='network'){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}}
+  if(object.kind==='node'&&openLesson&&!keepLearning){if(surface==='learn')startLearningFromSelection();else if(worldLayout!=='network'){const lesson=lessonForTopic(object.id);if(lesson)openLearningLesson(lesson);else if(routeStep(object.id))openJourney(routeStep(object.id).step);}}
   if(surface==='trail'){
     // Update the selected node's summary and header immediately; skip the
     // unrelated global progress, focus card, and iframe re-render pipeline.
@@ -264,8 +271,8 @@ function choose(key,{animate=true,history=true,openLesson=worldLayout!=='network
   }else{renderFocus();renderLocation();}
   scheduleSave();
 }
-function overview({animate=true,saveHistory=true}={}){if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();if(saveHistory)remember();closePopovers();activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);scene.overview(animate);setHash(null);renderFocus();renderLocation();scheduleSave();}
-function back(){if(journeyOpen)closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();const previous=visits.pop();if(!previous)return;pointerPreview=null;focusPreview=null;scene.select(previous.selected);activeRouteId=previous.learningRouteId||null;setHash(previous.selected);$('#back-button').disabled=!visits.length;renderFocus();renderLocation();restoreFocus(previous);scheduleSave();}
+function overview({animate=true,saveHistory=true}={}){if(journeyOpen&&!(taskSurfaceFromUrl()==='learn'&&!journeySuspended))closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();if(saveHistory)remember();closePopovers();if(!journeyOpen){activeRouteId=null;scene.setLearningRoute(null);scene.setLearningSection(null);}scene.overview(animate);setHash(null);renderFocus();renderLocation();scheduleSave();}
+function back(){if(journeyOpen&&!(taskSurfaceFromUrl()==='learn'&&!journeySuspended))closeJourney(false);if(guideVisible||guideSuspended)leaveGuide();const previous=visits.pop();if(!previous)return;pointerPreview=null;focusPreview=null;scene.select(previous.selected);activeRouteId=previous.learningRouteId||null;setHash(previous.selected);$('#back-button').disabled=!visits.length;renderFocus();renderLocation();restoreFocus(previous);scheduleSave();}
 // A single relationship panorama. Stage selection changes emphasis only; no nodes or positions move.
 function renderGradeMapFilter(){
   const host=$('#grade-map-filter');if(!scene||!host)return;
@@ -295,7 +302,9 @@ function ensureGradePanoramaData(){
 function renderLearningMapContext(){
   const host=$('#learning-map-context'),toggle=$('#observation-task-toggle');
   if(!host||!scene)return;
-  const current=space.byKey.get(scene.selected);
+  // The docked relationship summary describes A, regardless of B exploration.
+  const learningTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
+  const current=space.byKey.get(learningTopic?'node:'+learningTopic:scene.selected);
   const active=worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId&&current?.kind==='node'&&scene.canLocate(current);
   // Keep the original source links, but dock them with the learning task.
   // This frees the left map from an intercepting, absolutely positioned card.
@@ -675,7 +684,12 @@ function conceptExplanationHtml(id){
     '<details class="concept-alternatives"><summary>没看懂？换种方式理解</summary><div class="concept-modes">'+content+'</div></details>'+
   '</section>';
 }
-function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);if(!o||(journeyOpen&&!journeySuspended)||guideVisible||panels.has(o.id)){card.hidden=true;document.body.classList.remove('has-context-card');return;}
+function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKey.get(scene.selected);
+  const learningTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
+  const learningKey=journeyOpen&&!journeySuspended&&learningTopic?'node:'+learningTopic:null;
+  const exploringDuringLesson=!!learningKey&&!!o&&o.key!==learningKey;
+  document.body.classList.toggle('has-explore-selection',exploringDuringLesson);
+  if(!o||(journeyOpen&&!journeySuspended&&!exploringDuringLesson)||guideVisible||panels.has(o.id)){card.hidden=true;document.body.classList.remove('has-context-card');return;}
   card.dataset.kind=o.kind;if(worldLayout==='network')card.style.visibility='visible';card.style.setProperty('--object-color',o.color);
   const same=card.dataset.currentKey===scene.selected,priorScroll=same?card.scrollTop:0;
   // A bookmark or progress refresh replaces the card's DOM. Keep keyboard focus
@@ -741,7 +755,7 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
 }
 
 function suspendJourney(){if(!journeyOpen||journeySuspended)return;journeySuspended=true;document.body.classList.remove('has-journey');$('#journey-surface').hidden=true;scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');renderFocus();renderLocation();updatePrimaryNavigation();scheduleSave();}
-function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');$('#focus-card').hidden=true;renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
+function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');renderFocus();renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
 function closeJourney(returnToPack=false,{clearFrame=true}={}){journeySuspended=false;const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');// Replace the retired lesson document without adding a child-frame history
  // entry that would intercept the parent Back action after explicit close.
  if(clearFrame)replaceEmbeddedFrame($('#journey-frame'),'about:blank');document.body.classList.remove('has-journey');scene.setRelations('off');renderLearningMapContext();if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
@@ -781,6 +795,12 @@ function arrangePanels(){if(!panels.size)return;
   // Panel arrangement is a UI operation, not permission to move the camera.
   renderWorkspaceButtons();scene.dirty=true;scheduleSave();
 }
+function exploringMapLeft(side,panelWidth){
+  if(!journeyOpen||journeySuspended||!document.body.classList.contains('has-explore-selection'))
+    return Math.max(side,innerWidth-panelWidth-side);
+  // A's right-hand fixed workspace keeps its width; B's card stays on the map.
+  return Math.max(side,Math.floor(scene.host.getBoundingClientRect().right)-panelWidth-side);
+}
 function updateOverlays(){
   positionGuide();renderGuideCues();
   const o=space.byKey.get(scene.selected),card=$('#focus-card');if(o&&!card.hidden){const p=scene.project(o.position);if(worldLayout!=='network'&&!p.visible)card.style.visibility='hidden';else {card.style.visibility='visible';const minCardTop=innerWidth>800?112:innerWidth>620?138:112;
@@ -792,7 +812,7 @@ function updateOverlays(){
       const top=compact?143:94;
       const panelWidth=compact?Math.min(360,innerWidth-24,Math.max(260,Math.round(innerWidth*.45))):Math.min(354,Math.max(285,innerWidth*.265));
       const availableHeight=Math.max(180,innerHeight-top-viewportBottom);
-      card.style.left=`${Math.max(side,innerWidth-panelWidth-side)}px`;
+      card.style.left=`${exploringMapLeft(side,panelWidth)}px`;
       card.style.top=`${top}px`;
       card.style.width=`${panelWidth}px`;
       card.style.maxWidth=`calc(100vw - ${side*2}px)`;
@@ -1139,7 +1159,16 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
       }
       return;
     }
-    if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];scene.select('node:'+n.topicId);setHash('node:'+n.topicId);readLearning();refreshLearning();renderLocation();scheduleSave();return;}
+    if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){
+      const oldTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
+      activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;
+      activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];
+      // A's ordinary progress/ready signal must not override map selection B.
+      if(oldTopic!==n.topicId||scene.selected==='node:'+oldTopic){
+        scene.select('node:'+n.topicId);setHash('node:'+n.topicId);
+      }
+      readLearning();refreshLearning();renderLocation();scheduleSave();return;
+    }
     if(e.data.type==='math-space:question-request'){questionComposer({nodeId:e.data.nodeId,scene:e.data.scene});return;}
     if(e.data.type==='math-space:lesson-close'){
       // Ignore close signals from a retired iframe document or a suspended
@@ -1151,7 +1180,7 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
       // Use the same node-selection pipeline as a real 3D click. In Learn
       // mode choose() retains the mounted child document before replacing its
       // task; navigating to about:blank first could strand the new iframe.
-      choose(target,{animate:false,inPlace:true,openLesson:taskSurfaceFromUrl()==='learn'});
+      choose(target,{animate:false,inPlace:true,openLesson:false});
     }return;}
      if(e.data.type==='math-space:lesson-relations'){scene.setRelations(scene.relationMode==='off'?'source':'off');scheduleSave();return;}
     if(e.data.type==='math-space:journey-change'){const step=ROUTE_STEPS.find(s=>s.step===e.data.step);if(step){scene.select('node:'+step.id);setHash('node:'+step.id);readLearning();refreshLearning();renderLocation();scheduleSave();}return;}
@@ -1181,7 +1210,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();
 document.addEventListener('wheel',e=>{if(e.ctrlKey&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturestart',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
-document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(document.body.classList.contains('has-explore-selection')){deselectKnowledge();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
 
 async function offline(){
   const status=$('#offline-status');
@@ -1234,13 +1263,18 @@ async function boot(){try {
   if(!readBlocked)readLearning();
   $('#network-legend').innerHTML=worldLayout==='network'?[...space.themes.values()].map(t=>button('network-theme',`<i style="--object-color:${esc(t.color)}" aria-hidden="true"></i>${esc(t.title)}`,`data-id="${t.id}" aria-pressed="false"`)).join(''):'';
   if(!readBlocked){try {const old=readStored(OLD_KEY);if(old){learning=validate(merge(learning,migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id))),atlas);writeStored(KEY,JSON.stringify(learning));}}catch{readBlocked=true;warning('旧版记录暂时无法读取，已停止覆盖原数据。');}}
-  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>{if(guideVisible)return;if(taskSurfaceFromUrl()==='trail'){choose('node:'+id,{openLesson:false});return;}if(taskSurfaceFromUrl()==='learn'){choose('node:'+id,{openLesson:true});return;}return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
+  scene=new SpatialScene($('#space-canvas'),space,{onSelect:choose,onOpen:id=>{if(guideVisible)return;if(taskSurfaceFromUrl()==='trail'){choose('node:'+id,{openLesson:false});return;}if(taskSurfaceFromUrl()==='learn'){choose('node:'+id,{openLesson:!journeyOpen});return;}return lessonForTopic(id)?openLearningLesson(lessonForTopic(id)):openPanel(id);},onOverview:overview,onMapHover:syncHoverHeader,onMove:updateOverlays,onCameraChange:()=>{if(scene){renderNetworkGuide();scheduleSave();}},onSettled:scheduleSave,onError:warning});
   const defaultMode=worldLayout==='network'?'rotate':'pan';scene.setMode(defaultMode);document.querySelectorAll('[data-action="mode"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===defaultMode)));let stored=null;try{stored=parseView(JSON.parse(readStored(RELATIONSHIP_VIEW_KEY)),space);}catch{}
   if(stored)selectedGradeStage=GRADE_MAP_STAGES.includes(stored.selectedGradeStage)?stored.selectedGradeStage:'all';
   const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null,explicitOverview=route[0]==='atlas'&&!route[1];
   const due=pendingQuestions(learning)[0],last=learning.daily.continuation,sameDayActive=due&&stored?.journeyOpen&&stored.questionId===due.id&&last?.questionId===due.id&&dayKey(last.at)===dayKey();
   const showQuestionEntry=!explicitOverview&&!!due&&!sameDayActive&&(!routeKey||routeKey===stored?.selected);
-  if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&!explicitOverview&&(!routeKey||routeKey===stored.selected)){const selectedId=space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,preserveSurface:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true,preserveSurface:true});if(journeyOpen&&stored.journeySuspended)suspendJourney();}}else scene.overview(false);
+  if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&!explicitOverview&&(!routeKey||routeKey===stored.selected)){const selectedId=sessionMeta(stored.sessionId)?.topicId||space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,preserveSurface:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true,preserveSurface:true});if(journeyOpen&&stored.journeySuspended)suspendJourney();
+      // Restore both independent identities without restarting the child iframe.
+      if(journeyOpen&&stored.selected!==scene.selected){
+        scene.select(stored.selected||null);setHash(stored.selected||null);
+      }
+    }}else scene.overview(false);
   const showUnfinishedEntry=!explicitOverview&&!showQuestionEntry&&!journeyOpen&&learning.daily.guide?.active&&!!unfinishedContinuation()&&(!routeKey||routeKey===stored?.selected);
   if(showQuestionEntry||showUnfinishedEntry){scene.select(null);setHash(null);}
   // Restoring an open lesson updates the hash itself. Do not treat that new hash

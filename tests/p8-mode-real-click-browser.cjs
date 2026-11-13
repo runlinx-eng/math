@@ -1,4 +1,4 @@
-// P8: actual visible 3D labels are the node selection events, not hash mutations.
+// P8/Issue #90: 3D selections explore while a lesson is mounted; explicit CTA switches.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const out=path.resolve(__dirname,'../verification/p8-mode-clicks');
@@ -92,13 +92,20 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await page.frameLocator('#journey-frame').locator('#instruction').waitFor();
   await verify('explore-details-open-learning','learn','node:mt_ndGqFPWyen');
   const nodeB=await clickVisible({playable:true});
+  s=await verify('learning-click-real-label-B-explores','learn',nodeB);
+  check(s.journey&&s.iframe.endsWith('#share'),'3D selection must preserve A while inspecting B');
+  check(await page.locator('#focus-card').isVisible(),'B exploration shows existing knowledge details');
+  await page.locator('#focus-card [data-action="open"]').click();
   const lessonB=await waitNativeTask(nodeB);
-  s=await verify('learning-click-real-label-B','learn',nodeB);
-  check(s.journey&&s.iframe.endsWith('#'+lessonB),'visible 3D click must open its own native learning task');
+  s=await verify('explicit-B-course-entry','learn',nodeB);
+  check(s.iframe.endsWith('#'+lessonB),'explicit B learning action switches the native task');
   const next=await clickVisible({playable:true,excludeLesson:lessonB});
+  s=await verify('learning-click-real-label-C-explores','learn',next);
+  check(s.iframe.endsWith('#'+lessonB),'second 3D click keeps B lesson while inspecting C');
+  await page.locator('#focus-card [data-action="open"]').click();
   const lessonC=await waitNativeTask(next);
-  s=await verify('learning-click-real-label-C','learn',next);
-  check(s.journey&&s.iframe.endsWith('#'+lessonC),'second real 3D node must open the newly selected task');
+  s=await verify('explicit-C-course-entry','learn',next);
+  check(s.journey&&s.iframe.endsWith('#'+lessonC),'explicit C learning action switches the task');
   // Consecutive iframe replacements must not steal the parent's Back/Forward.
   // The suspended lesson remains mounted, including unsaved in-memory work.
   await page.evaluate(()=>{document.querySelector('#journey-frame').contentWindow.__p8HistoryProbe='same-workpiece';});
@@ -165,14 +172,26 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   },location.origin),vpsEntry);
   await page.waitForFunction(()=>window.__p8VpsProbe?.utility===true);
   await verify('vps-hidden-trail-message-does-not-explore','learn','node:'+vpsEntry);
-  // The actual 3D label click must enter the selected node's task in Learn.
+  // An initial node can open a lesson if no workpiece is active.
+  // While the iframe is live, further 3D selections only explore.
+  const beforeFirstClick=await state();
   const liveFirst=await clickVisible({playable:true});
+  if(beforeFirstClick.journey){
+    const afterFirstClick=await state();
+    check(afterFirstClick.iframe===beforeFirstClick.iframe,'first 3D click preserves a lesson already restored from Trail');
+    check(await page.locator('#focus-card').isVisible(),'a restored lesson still allows inspecting another node');
+    await page.locator('#focus-card [data-action="open"]').click();
+  }
   const liveFirstId=await waitNativeTask(liveFirst);
-  await verify('vps-learn-first-3d-click','learn',liveFirst);
+  await verify('vps-learn-first-explicit-course','learn',liveFirst);
   const liveSecond=await clickVisible({playable:true,excludeLesson:liveFirstId});
+  const secondState=await verify('vps-learn-second-3d-click-explores','learn',liveSecond);
+  check(secondState.iframe.endsWith('#'+liveFirstId),'second 3D click cannot replace current lesson');
+  check(await page.locator('#focus-card').isVisible(),'second node detail visible alongside active workpiece');
+  await page.locator('#focus-card [data-action="open"]').click();
   const liveSecondId=await waitNativeTask(liveSecond);
-  check(liveSecondId!==liveFirstId,'live second 3D click must select a distinct lesson');
-  await verify('vps-learn-second-3d-click','learn',liveSecond);
+  check(liveSecondId!==liveFirstId,'explicit switch must select a distinct lesson');
+  await verify('vps-explicit-lesson-change','learn',liveSecond);
   // Retired embedded documents share the iframe WindowProxy. Their late
   // close messages must not terminate a newer selected lesson.
   const currentFrame=await (await page.locator('#journey-frame').elementHandle()).contentFrame();
