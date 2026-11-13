@@ -82,7 +82,20 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
    const preview=await record('hover-'+item.key);
    assert(preview.selected===s.selected&&preview.active.length===1&&preview.active[0].key===s.selected,'hover cannot change operational focus');
    const newNeighbors=preview.labels.filter(label=>label.key!==item.key&&!s.labels.some(a=>a.key===label.key));
-   assert(newNeighbors.length===0,'hover must not spawn new clickable neighbors: '+JSON.stringify(newNeighbors));
+   const direct=await page.evaluate(()=>mathSpace.hoverPreview().edges.flatMap(edge=>[edge.from,edge.to]));
+   assert(newNeighbors.length<=4,'hover cannot spawn an unlimited label cloud: '+JSON.stringify(newNeighbors));
+   assert(newNeighbors.every(label=>direct.includes(label.key)),
+     'new hover labels must be real direct source relations: '+JSON.stringify(newNeighbors));
+   const overlapsTarget=await page.evaluate(key=>{
+     const target=document.querySelector('.space-label.node[data-key="'+key+'"]');
+     if(!target||target.hidden)return false;
+     const a=target.getBoundingClientRect();
+     return [...document.querySelectorAll('.space-label.node.preview-neighbor:not([hidden])')].some(el=>{
+       const b=el.getBoundingClientRect();
+       return a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+     });
+   },item.key);
+   assert(!overlapsTarget,'hover direct-neighbor labels cannot cover the primary pointer target');
   }
   await page.mouse.move(2,2);
   s=await record('hover-left');
