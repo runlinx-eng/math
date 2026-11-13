@@ -7,7 +7,7 @@ import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks,sourceBridge} from '../dist/learning/bridges.js';
 import {validModel,inspect} from '../dist/learning/tasks.js';
 import {lessonSummary} from '../dist/learning/state.js';
-import {ACTIVITIES} from '../dist/exploration-content.js';
+import {ACTIVITIES,KINDS,task as earlyTask,modelIsValid as earlyValid} from '../dist/exploration-content.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -52,12 +52,26 @@ export function readOnlyNodeEvidence(state,nodeId,attribution='unassigned'){
   const candidateOptionalComplete=optional?.length?
     optional.every(id=>!!state?.daily?.bridges?.[id]&&lessonSummary(state.daily.bridges[id]).completed):null;
   const legacy=Object.entries(ACTIVITIES).filter(([,a])=>a.topicId===nodeId)
-    .map(([id])=>({id,recorded:!!state?.activities?.[id]}));
+    .map(([id])=>{
+      const activity=state?.activities?.[id];
+      const validAttemptCount=KINDS.reduce((total,kind)=>total+[0,1].reduce((n,variant)=>{
+        const task=earlyTask(id,kind,variant);
+        return n+(activity?.evidence?.[kind+':'+variant]?.attempts||[]).filter(event=>{
+          try{return hasValue(event)&&earlyValid(task,event.value)}catch{return false}
+        }).length;
+      },0),0);
+      return {id,recorded:!!activity,validAttemptCount};
+    });
+  const legacyAttempts=legacy.reduce((n,row)=>n+row.validAttemptCount,0);
+  const effectiveAttemptCount=nativeAttempts+legacyAttempts;
+  const approvedTier=historicalCorePass&&currentWorksChecked?3:effectiveAttemptCount>0?2:1;
   return {
     nodeId,sessionId,attribution,coreTaskCount:tasks.length,nativeAttempts,
     // History and the current edited workpiece are intentionally separate facts.
     historicalCorePass,currentWorksChecked,
     nativeStage:nativeAttempts===0?'no_native_attempt':historicalCorePass?'core_pass_in_history':'learning',
+    legacyAttempts,validNodeAttempts:effectiveAttemptCount,
+    approvedTier,activeFourthTier:false,
     candidateBridgeIds:optional,candidateAttemptCount,candidateOptionalComplete,
     // Empty optional set is NOT promoted to a fourth tier without a product decision.
     candidateLevel4:optional?.length?historicalCorePass&&currentWorksChecked&&candidateOptionalComplete:null,
@@ -123,7 +137,8 @@ function makeReport(output){
   const lines=[
     '# Issue #85｜联合评分练习归属与四级进度只读试点','',
     '执行：node scripts/issue-85-attribution-pilot.mjs；node --test tests/learning-task-rules.test.mjs。',
-    '这不是正式规则、浏览器点击记录、个人数据扫描或四级 UI；当前没有批准的 B→节点归属。',
+    '已批准产品边界（2026-11-13）：未答题=一级；至少一次真实有效作答（含错误）=二级；原生全部必做题通过=三级并允许单独实现第三级光；第四级光暂时关闭，不能被任何候选归属自动点亮。',
+    '本脚本只计算已批准前三层的只读候选状态及尚待核查的第四层假设，不开发进度 UI、不读取真实个人学习记录。',
     '',
     '## 源码事实与 A/B/C/D 分类','',
     '| 类别 | 真实来源 | 评分与状态 |',
@@ -164,9 +179,9 @@ function makeReport(output){
     '**试点推荐（不是已批准的产品规则）：**优先采用 edge 独立归属作为关系证据；若今后希望联合题也计入某节点第四级，需要逐项经过数学目的审查和明确的归属/去重规则，而非批量自动认领。',
     '',
     '## 进度证据与限制','',
-    '- 第 1/2 级可用现代原生课程 cases[].attempts 中有效保存记录区分；打开或只有 draft 不算，错误提交算开始。',
-    '- 第 3 级可单独计算原生核心题历史通过（lessonSummary）；模型被修改后，应另核验当前作品的最新提交是否仍有效，不用历史通过冒充当前通过。',
-    '- 第 4 级缺少获准的节点归属和空可选集规则，587 节点不能直接给出最终显示层级；假定归属后的联合 session 完成可只读计算。',
+    '- 已确认产品决策：第一级=无已保存有效作答；第二级=至少一次有效作答（包含错误），早期活动的有效提交也可证明开始；不凭访问或草稿升级。',
+    '- 已确认产品决策：第三级=原生全部必做题通过并显示第三级光；先保守核查当前作品是否仍为已提交检查的正确版本。历史已通过与当前作品修改状态分别展示为证据。',
+    '- 已确认产品决策：第四级光全局暂不启用，直到未来明确可选评分练习的节点归属；试点内的 from/to/both/edge 均为研究假设，绝非已启用规则。',
     '- 两端原生核心都通过，不构成 A—B 联合 session 完成；联合任务独立通过也不会改写两端原生核心。',
     '- 若后来新增可选题，历史旧任务的通过记录保留，当前集合的全部完成候选可重新计算；历史徽标是否保留需用户决定。',
     '',
@@ -185,7 +200,7 @@ function makeReport(output){
     '- 已从源码确认：目录、来源边、任务分类和记录归属；已通过隔离测试：以最新 HEAD CI 输出为准；本脚本执行的真实 Chromium 点击：0。',
     '- main/PR 现有 Chromium 回归另有报告与截图，不得自动当作本试点真实点击。',
     '',
-    '## 需要用户决定（必须在四级 UI 前）','',
+    '## 仍待未来决定（不阻塞前三层光）','',
     '1. 关系题归属边、A、B 还是双端；是否允许人工指定少数节点的可选题。',
     '2. 双端进度分母和总体总量去重方法；一个节点多个联合任务时如何定义全部完成。',
     '3. 经确认没有可选评分练习的节点：核心完成是否直接显示最高级。',
@@ -193,7 +208,7 @@ function makeReport(output){
     '5. 新增可选评分题后：显示「历史完成过」和「当前任务集合未全部完成」的方式。',
     '',
     '## 下一最小实施与回归','',
-    '先对用户确认的归属/空集决策补充纯函数与代表性状态测试，再单独开发四级进度标记。若决策暂缓，可先独立实现「学习 A 时探索 B，右侧 A 学习现场不变」与关系名称悬停可读性。',
+    '本轮仅归属研究与只读隔离测试。下一独立最小 UI PR 可以先实现第 1/2/3 级标记与第三级光，并确保第四级光始终关闭；联合任务归属、四级 UI 与关系线完成效果保留后续。另可独立开发「学习 A 时探索 B，右侧 A 学习现场不变」及名称可读性。',
     '回归清单：Node 审计/隔离测试、source edge 映射唯一性、P7/P9/P10 历史与备份安全、P8/P11 地图与学习入口、Chromium 真实点击/错误提交/刷新恢复、最新 HEAD Required 与合并后 main。',
     ''
   ];
