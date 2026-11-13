@@ -26,8 +26,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    context.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base))remote.push(r.url());});
    const page=await context.newPage();page.setDefaultTimeout(20000);
    page.on('pageerror',e=>errors.push(String(e)));
-   await page.goto(base+'learn.html#lineproperties');
-   await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='lineproperties');
+   await page.goto(base+'v2.html#trail');
+   await page.locator('#import-file').waitFor({state:'attached'});
    let ready=false;
    for(let n=0;n<300;n++){
     ready=await page.evaluate(async cache=>{
@@ -50,7 +50,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     try{
      // Fixture only selects the existing native position. Target work and submissions use UI.
      await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
-     await page.goto(base+'learn.html#'+spec.id);
+     await page.goto(base+'learn.html?line-case='+spec.index+'#'+spec.id);
      await page.waitForFunction(id=>window.mathLesson?.snapshot().id===id,spec.id);
      await page.evaluate(({id,index})=>{
       const s=JSON.parse(localStorage.getItem('math-explorer-v2'));s.lessons[id].index=index;s.lessons[id].view='task';
