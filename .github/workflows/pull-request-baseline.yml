@@ -89,6 +89,8 @@ jobs:
           node --check dist/learning/p3-workflow.js
           node --check dist/learning/p3-view.js
           node --check dist/learning/workspace-flow.js
+          node --check scripts/audit-learning-task-rules.mjs
+          node --check tests/learning-node-runtime-browser.cjs
           node --check dist/spatial-focus-filter.js
           node --check dist/grade-progression-model.js
           node --check dist/grade-node-filter.js
@@ -150,6 +152,8 @@ jobs:
           node --test "${test_files[@]}"
           node scripts/audit-learning-nodes.mjs
           node --test tests/learning-node-audit.test.mjs
+          node scripts/audit-learning-task-rules.mjs
+          node --test tests/learning-task-rules.test.mjs
           node scripts/build_p7_d3_inventory.mjs
           node scripts/build_p7_d7_coverage.mjs
 
@@ -210,6 +214,7 @@ jobs:
             tests/p10-longterm-offline-browser.cjs \
             tests/p10-sw-nav-isolation-browser.cjs \
             tests/p10-release-upgrade-repeat.cjs \
+            tests/learning-node-runtime-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
