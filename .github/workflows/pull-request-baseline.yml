@@ -87,6 +87,7 @@ jobs:
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check tests/p9-geometry-thinking-browser.cjs
+          node --check tests/p9-sequence-thinking-browser.cjs
           node --check dist/learning/p3-workflow.js
           node --check dist/learning/p3-view.js
           node --check dist/learning/workspace-flow.js
@@ -217,6 +218,7 @@ jobs:
             tests/p7-d7-multi-type-browser.cjs \
             tests/p9-thinking-feedback-browser.cjs \
             tests/p9-geometry-thinking-browser.cjs \
+            tests/p9-sequence-thinking-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
             tests/p10-longterm-offline-browser.cjs \
             tests/p10-sw-nav-isolation-browser.cjs \
@@ -310,6 +312,7 @@ jobs:
             verification/p7-d7/
             verification/p9-thinking-feedback/
             verification/p9-geometry-thinking/
+            verification/p9-sequence-thinking/
             verification/p10-learning-continuity/
             verification/p10-longterm-round2/
             verification/p10-release-upgrade/
