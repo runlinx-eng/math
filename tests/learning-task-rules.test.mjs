@@ -31,6 +31,13 @@ test('all 587 source nodes have traceable core indexes and no invented native op
   assert.equal(bridges.reduce((n,r)=>n+r.taskCount,0),1552);
   assert.equal(four.length,587);
   assert.equal(summary.fullyDistinguishableThirdAndFourthLevels,0);
+  const compatibilityIssues=read('task-rules-issues.json');
+  assert.equal(compatibilityIssues.length,3);
+  assert.deepEqual(new Set(compatibilityIssues.flatMap(issue=>issue.legacyIds)),
+    new Set(['fair','rename','decimal']));
+  assert.ok(compatibilityIssues.every(issue=>issue.priority==='待核查'),
+    'a confirmed legacy rule difference is not proof of a current P1 user-path blocker');
+  assert.equal(summary.confirmedLegacyCoreBlockingFailures,0);
   for(const r of classified){
     assert.equal(LESSONS[r.primarySessionId].topicId,r.nodeId);
     assert.deepEqual(r.coreTaskIndexes,Array.from({length:sessionTasks(r.primarySessionId).length},(_,i)=>i));
