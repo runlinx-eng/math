@@ -76,12 +76,24 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   },'node:mt_ndGqFPWyen');
   let s=await record('explore-selected');
   assert(s.active.length===1&&s.active[0].key===s.selected&&s.active[0].current==='true','Explore has one accessible active node');
-  const hoverNodes=s.labels.filter(label=>label.clickable&&label.key!==s.selected).slice(0,3);
-  for(const item of hoverNodes){
+  // A hover preview intentionally reflows which labels are visible. Select
+  // each next pointer target from the *current* painted hit map after leaving
+  // the previous hover; the initial snapshot is not a valid later hit list.
+  const visitedHoverKeys=new Set();
+  for(let index=0;index<3;index++){
+   await page.mouse.move(2,2);
+   await page.waitForFunction(()=>mathSpace.hoverPreview().key===null&&
+     !document.querySelector('.space-label.node.preview-target:not([hidden])'));
+   const before=await record('hover-ready-'+index);
+   const item=before.labels.find(label=>label.clickable&&label.key!==before.selected&&!visitedHoverKeys.has(label.key));
+   assert(!!item,'three real hover targets must be available after preview clears: '+JSON.stringify(before));
+   visitedHoverKeys.add(item.key);
    await page.locator('.space-label.node[data-key="'+item.key+'"]').hover();
+   await page.waitForFunction(key=>mathSpace.hoverPreview().key===key&&
+     !!document.querySelector('.space-label.node.preview-target:not([hidden])[data-key="'+key+'"]'),item.key);
    const preview=await record('hover-'+item.key);
    assert(preview.selected===s.selected&&preview.active.length===1&&preview.active[0].key===s.selected,'hover cannot change operational focus');
-   const newNeighbors=preview.labels.filter(label=>label.key!==item.key&&!s.labels.some(a=>a.key===label.key));
+   const newNeighbors=preview.labels.filter(label=>label.key!==item.key&&!before.labels.some(a=>a.key===label.key));
    const direct=await page.evaluate(()=>mathSpace.hoverPreview().edges.flatMap(edge=>[edge.from,edge.to]));
    assert(newNeighbors.length<=4,'hover cannot spawn an unlimited label cloud: '+JSON.stringify(newNeighbors));
    assert(newNeighbors.every(label=>direct.includes(label.key)),
