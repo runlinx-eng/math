@@ -38,5 +38,7 @@ test('completion counts describe tasks rather than mastery',()=>{
   assert.doesNotMatch(index,/整体进度/);
   assert.doesNotMatch(exploration,/<span>整体进度<\/span>/);
   assert.doesNotMatch(exploration,/function renderAtlas\(/);
-  assert.match(space,/completionSummary\(learning\)/);
+  assert.match(space,/visibleTier\(l\.topicId\)===3/);
+  assert.match(space,/NODE_TIERS\[visibleTier\(id\)\]/);
+  assert.doesNotMatch(space,/整体掌握|已经掌握所有知识/);
 });
