@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {TASKS as F} from '../dist/learning/phase5/b17.js';
 import * as fractions from '../dist/learning/phase5/b17-model.js';
 import {TASKS as A} from '../dist/learning/phase5/b38.js';
@@ -145,4 +145,52 @@ test('MP.7 geometry needs genuine replayable two-relation work in the pinned sou
   assert.equal(node.displayName,note.method.label);
   assert.equal(node.lessonId,'structure34');
   assert.equal(node.goals.some(g=>g.tasks.some(q=>q.index===3&&q.type===t.type)),true);
+});
+
+test('MP.8 tables34 sequence uses only replay-checked native events and never labels a shared widget',async()=>{
+  const {TASKS:B34}=await import('../dist/learning/phase5/b34.js');
+  const p34=await import('../dist/learning/phase5/b34-model.js');
+  const task=B34.tables34[2],context={sessionId:'tables34',index:2};
+  const empty=p34.initial(task),done=p34.example(task);
+  assert.equal(task.type,'x-p34-sequence');
+  assert.equal(thinkingGuide(task,context)?.type,task.type);
+  assert.match(thinkingGuide(task,context).question,/加几次50/);
+  assert.equal(thinkingGuide(task,{sessionId:'linear34',index:2}),null);
+  assert.equal(thinkingGuide(B34.tables34[0],{sessionId:'tables34',index:0}),null);
+  assert.equal(thinkingFeedback(task,empty,null,context),null);
+  assert.equal(thinkingFeedback(task,done,{attempts:[]},context),null);
+  assert.equal(thinkingFeedback(task,done,{attempts:[attempt(empty)]},context),null);
+  assert.equal(p34.valid(task,done),true);
+  assert.equal(p34.inspect(task,done).correct,true);
+  const result=thinkingFeedback(task,done,{attempts:[attempt(done)],support:false},context);
+  assert.equal(result?.method?.nodeId,'mt_2jbUekyTu4');
+  assert.equal(result.method.label,'延续表格中的规律');
+  assert.equal(result.method.code,'ccss-math:MP.8');
+  assert.match(result.observation,/50、100、150、200.*3 次加50.*250/);
+  assert.match(result.detail.join(' '),/不能据此判断独立归纳/);
+  assert.equal(thinkingFeedback(task,done,{attempts:[attempt(done)]},{sessionId:'general34',index:2}),null);
+  assert.equal(thinkingFeedback(task,done,{attempts:[attempt(done)]},{sessionId:'tables34',index:0}),null);
+  const wrong=structuredClone(done);wrong.answers[0]='240';
+  assert.equal(p34.inspect(task,wrong).correct,false);
+  assert.equal(thinkingFeedback(task,wrong,{attempts:[attempt(wrong)]},context),null);
+  assert.equal(thinkingFeedback(task,wrong,{attempts:[attempt(done)]},context),null,'editing invalidates prior success');
+  const extra=structuredClone(done);extra.value='350';
+  assert.equal(thinkingFeedback(task,extra,{attempts:[attempt(done)]},context),null,'draft edits invalidate feedback');
+  const forged=structuredClone(done);forged.board.values[2]=155;
+  assert.equal(p34.valid(task,forged),false);
+  assert.equal(thinkingFeedback(task,forged,{attempts:[attempt(forged)]},context),null);
+  const noSteps=structuredClone(done);noSteps.history=[];
+  assert.equal(p34.valid(task,noSteps),false);
+  assert.equal(thinkingFeedback(task,noSteps,{attempts:[attempt(noSteps)]},context),null);
+  const other=B34.linear34[2],otherDone=p34.example(other);
+  assert.equal(thinkingFeedback(other,otherDone,{attempts:[attempt(otherDone)]},context),null,
+    'a different actual task definition cannot claim MP.8 tables34');
+  assert.equal(thinkingFeedback(other,otherDone,{attempts:[attempt(otherDone)]},{sessionId:'linear34',index:2}),null);
+  const src=JSON.parse((await import('node:fs')).readFileSync(new URL('../docs/spatial-learning/thinking-source-map.json',import.meta.url)));
+  const node=src.groups.find(g=>g.code==='ccss-math:MP.8').nodes.find(n=>n.id===result.method.nodeId);
+  assert.equal(node.lessonId,'tables34');
+  assert.equal(node.displayName,result.method.label);
+  assert.ok(node.goals.some(g=>g.tasks.some(q=>q.index===2&&q.type===task.type)));
+  assert.equal(thinkingGuide(B34.structure34[3],{sessionId:'structure34',index:3})?.type,'x-s23-lines',
+    'prior MP.7 guide remains bound to the original geometry position');
 });
