@@ -574,3 +574,9 @@ body.p03-focus #scene .execution-command #actions{
  #scene #interaction-title{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){#learning-interaction .eq-bar button{transition:none}}
+
+/* P9: one optional, task-local thinking question; no modal or new learning step. */
+#thinking-guide{max-width:720px;margin:10px 0 16px;padding:10px 14px;border:1px solid #d1dfd4;border-radius:9px;background:#f7faf4;color:#456557;font-size:13px;line-height:1.6}
+#thinking-guide summary{font-weight:600;color:#315f55;padding:3px 0}
+#thinking-guide p{margin:10px 0 6px}
+#thinking-guide small{display:block;color:#647d70}
