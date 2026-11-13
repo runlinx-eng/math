@@ -107,9 +107,9 @@ const hasLegacy=rows.filter(r=>r.earlyActivities.length>0);
 const issues=hasLegacy.map(row=>({
   nodeId:row.nodeId,nodeName:row.nodeName,sessionId:row.primarySessionId,
   legacyIds:row.earlyActivities.map(e=>e.id),
-  priority:'P1',code:'legacy_attempt_completion_not_core_pass',
+  priority:'待核查',code:'legacy_attempt_completion_not_core_pass',
   actual:'Old activity completion requires an attempt in each kind, not a passing score. Current nodeState can display completed when the native lesson is not complete.',
-  scope:'existing historical compatibility; four-level core mapping gap, not proof of newly introduced regression',
+  scope:'confirmed historical rule difference; present-day user-path severity and actual native core blocking remain unverified',
   evidence:['dist/exploration-core.js#evidenceSummary','dist/exploration-core.js#nodeState'],
   reproduction:'node --test tests/learning-task-rules.test.mjs',
   minimumFix:'In a separately authorized product task, specify how legacy evidence maps to four levels; preserve existing records and graders.'
@@ -127,6 +127,7 @@ const summary={
   fourLevelUnresolvedThirdFourth:rows.length,
   realClickConfirmedByThisScript:0,
   knownLegacyFourLevelConflicts:issues.length,
+  confirmedLegacyCoreBlockingFailures:0,
   caveat:'All listed native tasks gate next; PRACTICE is historical ungraded play. Bridge tasks use their own completion record. Static classification is not Chromium click evidence.'
 };
 invariant(summary.nativeSessions===587,'Native session count changed: '+summary.nativeSessions);
@@ -177,7 +178,7 @@ const report=[
   '- 第一层和第二层可通过保存的有效作答尝试区别；打开、浏览、未提交草稿不算学习。',
   '- 第三层可基于原生核心判题计算，但历史通过与当前作品的修改要分开，不能把旧通过冒充“当前作品已通过”。',
   '- 所有原生课程目前没有独立评分可选题，第三层和第四层无法得出有意义的区别；不得伪造第四层。',
-  '- 旧活动有自己的提交即完成模型。当前 nodeState 可由旧活动的错误提交得到已完成标记；本审计只记录，不修改旧数据和通关规则。',
+  '- 旧活动有自己的提交即完成模型。当前 nodeState 可由旧活动的错误提交得到已完成标记；3 个节点的历史兼容差异已确认，但现行真实用户路径是否发生核心学习阻塞未验证，暂列待核查而非已实测 P1。本审计不修改旧数据和通关规则。',
   '',
   '## 浏览器证据不能混为一谈',
   '此脚本只读源码，不运行浏览器。动态运行映射、真实 UI 点击、答题与刷新证据由 tests/learning-node-runtime-browser.cjs 单独产生 browser-results.json。该文件未由此脚本生成，不能据静态报告填入点击成功数。',
