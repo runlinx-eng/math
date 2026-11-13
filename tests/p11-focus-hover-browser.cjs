@@ -37,8 +37,21 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   const options=snapshot.labels.filter(label=>label.clickable&&label.lesson&&label.key!==snapshot.selected&&label.lesson!==exclude);
   assert(options.length>0,'no unobscured configured native node; geometry '+JSON.stringify(snapshot));
   const candidate=options[0];
+  const before=await page.evaluate(()=>({
+   active:!document.querySelector('#journey-surface').hidden,
+   current:document.querySelector('#journey-frame').contentWindow.location.href
+  }));
   await page.locator('.space-label.node[data-key="'+candidate.key+'"]').click();
   await page.waitForFunction(key=>mathSpace.snapshot().selected===key,candidate.key);
+  if(before.active){
+   const exploring=await page.evaluate(()=>({
+    current:document.querySelector('#journey-frame').contentWindow.location.href,
+    details:!document.querySelector('#focus-card').hidden
+   }));
+   assert(exploring.current===before.current,'real 3D click must retain active lesson during exploration');
+   assert(exploring.details,'explored B must expose existing source detail card');
+   await page.locator('#focus-card [data-action="open"]').click();
+  }
   await page.waitForFunction(id=>{
    const frame=document.querySelector('#journey-frame');
    return !document.querySelector('#journey-surface').hidden&&
