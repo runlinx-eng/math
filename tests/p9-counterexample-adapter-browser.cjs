@@ -73,11 +73,12 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      ok(await hint.count()===0,label+' wrong prediction gives no feedback');
      // Start a fresh native task for a clean history, rather than claiming a
      // repaired invalid history is strict proof (the original grader still allows it).
-     await page.evaluate(index=>{
+     await page.evaluate(async index=>{
+      const {sessionTasks}=await import('./learning/bridges.js');
+      const {defaultModel}=await import('./learning/tasks.js');
       const s=JSON.parse(localStorage.getItem('math-explorer-v2'));
       s.lessons.argument38.index=index;
-      s.lessons.argument38.models[index]=null;
-      s.lessons.argument38.cases[index]={attempts:[],support:false};
+      s.lessons.argument38.models[index]=defaultModel(sessionTasks('argument38')[index]);
       localStorage.setItem('math-explorer-v2',JSON.stringify(s));
      },index);
      await page.reload();await page.waitForFunction(index=>window.mathLesson?.snapshot().index===index,index);
