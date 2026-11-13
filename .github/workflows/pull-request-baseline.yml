@@ -85,6 +85,8 @@ jobs:
           node --check tests/p10-full-lessons-browser.cjs
           node --check tests/p10-backup-safety-browser.cjs
           node --check dist/learning/sequence-evidence.js
+          node --check dist/learning/counterexample-evidence.js
+          node --check tests/p9-counterexample-adapter-browser.cjs
           node --check dist/learning/line-evidence.js
           node --check tests/p9-line-adapter-browser.cjs
           node --check dist/learning/array-evidence.js
@@ -131,6 +133,7 @@ jobs:
             tests/p7-d7-task-adapters.test.mjs
             tests/thinking-feedback.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
+            tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-line-evidence-adapter.test.mjs
             tests/p9-array-evidence-adapter.test.mjs
             tests/thinking-source-map.test.mjs
@@ -343,6 +346,7 @@ jobs:
             verification/p9-geometry-thinking/
             verification/p9-sequence-thinking/
             verification/p9-sequence-adapter/
+            verification/p9-counterexample-adapter/
             verification/p9-line-adapter/
             verification/p9-array-adapter/
             verification/p10-learning-continuity/
