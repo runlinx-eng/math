@@ -30,3 +30,22 @@ node --test tests/learning-node-audit.test.mjs
 ## 最小修复规划
 
 先复验证据可靠的 P0/P1，定位到具体节点、任务 ID 和入口；然后处理已证实的 P2 旧活动/非核心入口；其余全部列入待核查。任何数学内容、核心/可选门槛、源关系、节点坐标或存储格式变更均另立任务，不属于此 PR。
+
+## 第二轮：任务门槛与真实页面验证
+
+在原只读统计基础上，运行：
+
+```sh
+node scripts/audit-learning-task-rules.mjs
+node --test tests/learning-task-rules.test.mjs
+# 需启动本地 dist 静态服务并安装 Playwright Chromium：
+node tests/learning-node-runtime-browser.cjs
+```
+
+任务规则脚本重新生成源节点清单，不读取或迁移学习记录，输出 `task-classification.json`（逐节点、逐题索引与来源）、`bridge-task-classification.json`（独立联合任务）、`four-level-feasibility.json`、`task-rules-summary.json`、`task-rules-issues.json` 和 `TASK-RULES.md`。Chromium 真实点击记录和截图独立存放在 `verification/learning-node-audit/browser/`，并由 Required CI Artifact 保留；静态任务脚本不会虚构点击记录。
+
+**规则调查：** 原生课程的每个顺序题均是当前的下一题关卡，共 1,996 项，没有独立登记的评分可选题。历史 `PRACTICE` 属于旧自由试玩模型，不是一个新的可选评分任务；776 组联合任务单独记录，不进入单个节点的原生核心完成条件。早期三个活动按 construct 和 transfer 两类各至少一次有效提交计算历史完成，即使提交不正确；这与现代课程的「核心题检查通过」不是同一含义，不能混淆。保存个人发现、反思文字不影响原生课程完成。
+
+**四级进度界限：** 已保存的有效答题尝试可以区分「未学」与「学习中」，答错也算开始；单纯打开、浏览和未提交草稿不算。原生课程的核心任务通过信息可用于第三级，但应分开判断历史成功与修改过的当前作品。当前没有独立评分可选题，第三级和第四级暂时无法作有意义的区分。旧活动兼容性和独立联合任务不能靠更改现存记录结构来强行消除。
+
+**浏览器计数：** 运行时映射数、可见搜索/3D 点击数、打开实际课程数、完成提交恢复数分别报告，不把前者冒充后者。测试含 share、graph39、pattern39、早期 fair 入口条件和 link-equivalent-quarters 来源关系；条件未满足时记录真实证据并列为待核查，不虚报可达。自动检查不代替孩子试用、数学教研或 587 次逐节点操作。

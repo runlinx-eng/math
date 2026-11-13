@@ -135,9 +135,29 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
   s=await record('refresh');
   assert(s.selected===second.key,'refresh preserves knowledge context');
   await page.setViewportSize({width:620,height:800});
-  // Resizing the real map asynchronously recomputes projection and label
-  // collision positions. A stale pre-layout hit rect is not a valid click.
-  await page.waitForTimeout(220);
+  // The map recomputes projection after resize on animation frames.
+  // A fixed delay can sample desktop hit rects before compact coordinates settle.
+  // Preserve the two-real-label gate; wait for stable DOM hit targets instead.
+  await page.evaluate(()=>{delete window.__p11CompactStable;});
+  await page.waitForFunction(()=>{
+    const labels=[...document.querySelectorAll('.space-label.node:not([hidden])')];
+    const hits=labels.filter(el=>{
+      const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+      const hit=x>=0&&y>=0&&x<innerWidth&&y<innerHeight
+        ?document.elementFromPoint(x,y):null;
+      return r.width>6&&r.height>6&&(hit===el||el.contains(hit));
+    });
+    const signature=hits.map(el=>{
+      const r=el.getBoundingClientRect();
+      return el.dataset.key+':'+Math.round(r.left)+':'+Math.round(r.top);
+    }).join('|');
+    const prior=window.__p11CompactStable;
+    window.__p11CompactStable={
+      signature,frames:prior?.signature===signature?prior.frames+1:1
+    };
+    return hits.length>=2&&hits.some(el=>el.dataset.key!==mathSpace.snapshot().selected)
+      &&window.__p11CompactStable.frames>=3;
+  },null,{polling:'raf',timeout:15000});
   const compactBefore=await record('compact-explore-before-real-click');
   assert(compactBefore.labels.filter(label=>label.clickable&&label.lesson).length>=2,
     'resized compact Explore must retain two unobscured configured labels: '+JSON.stringify(compactBefore));
