@@ -33,10 +33,18 @@ test('full native and bridge coverage, mutually exclusive stable task IDs',()=>{
 test('same type never implies replay evidence or cross-course thinking attribution',()=>{
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
- assert.deepEqual(a.map(r=>r.id),['native:tables34:2']);
- assert.ok(rows.filter(r=>r.replayVerified).every(r=>r.id==='native:tables34:2'));
- assert.ok(rows.filter(r=>r.optionalThinkingGuide).every(r=>
-   ['native:structure34:3','native:tables34:2'].includes(r.id)));
+ const exact=[
+   'native:general34:2','native:general34:3',
+   'native:reason34:1','native:tables34:0','native:tables34:2'
+ ].sort((x,y)=>x.localeCompare(y,'en'));
+ const guided=[...exact,'native:structure34:3'].sort((x,y)=>x.localeCompare(y,'en'));
+ assert.deepEqual(a.map(r=>r.id),exact,'only the five reviewed strict sequence tasks reach A');
+ assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
+   'a shared type or mere history must not become strict process evidence');
+ assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,
+   'optional guidance is bounded to reviewed native lesson positions');
+ assert.deepEqual(rows.filter(r=>r.thinkingFeedbackBinding).map(r=>r.id),guided,
+   'explicit source binding must stay course-specific');
  assert.ok(rows.filter(r=>r.kind==='bridge').every(r=>!r.optionalThinkingGuide&&!r.thinkingFeedbackBinding&&!r.replayVerified));
  const sequence=rows.find(r=>r.id==='native:tables34:2');
  assert.ok(sequence.hasHistory&&sequence.sourceMapped&&sequence.thinkingFeedbackBinding);
