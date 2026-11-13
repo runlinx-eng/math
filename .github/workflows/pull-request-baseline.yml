@@ -161,6 +161,20 @@ jobs:
           node scripts/build_p7_d3_inventory.mjs
           node scripts/build_p7_d7_coverage.mjs
 
+      - name: Audit native interaction types and mathematics evidence (read-only)
+        run: |
+          node --check scripts/audit-learning-evidence.mjs
+          node --test tests/learning-evidence-audit.test.mjs
+          node scripts/audit-learning-evidence.mjs
+
+      - name: Archive evidence audit source-derived report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: learning-evidence-audit
+          path: verification/learning-evidence-audit/
+          if-no-files-found: warn
+
       - name: Check deployment script syntax
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
