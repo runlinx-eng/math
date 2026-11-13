@@ -1,0 +1,61 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const file=n=>new URL('../verification/learning-evidence-audit/'+n,import.meta.url);
+const read=n=>JSON.parse(readFileSync(file(n),'utf8'));
+const run=()=>execFileSync(process.execPath,['scripts/audit-interaction-semantics.mjs'],{cwd:root,encoding:'utf8',timeout:180000});
+const initial=run();
+test('every native and bridge interaction is assigned exactly one technical profile',()=>{
+ assert.match(initial,/SEMANTIC_AUDIT /);
+ const s=read('semantic-summary.json');
+ const types=read('interaction-semantic-matrix.json').rows;
+ const families=read('adapter-family-candidates.json').rows;
+ const gaps=read('replay-contract-gaps.json').rows;
+ const overlap=read('evidence-capability-overlap.json');
+ assert.equal(overlap.totalNative,1996);
+ assert.equal(['A','B','C','D','E'].reduce((n,k)=>n+overlap['static'+k+'Evidence'],0),1996);
+ assert.ok(overlap.DWithIntermediateModel>0);
+ assert.ok(overlap.withHistory>=overlap.exactPilotReplay);
+ assert.equal(s.interactionTypes,323);
+ assert.equal(s.nativeCoreTasks,1996);
+ assert.equal(s.bridgeTasks,1552);
+ assert.equal(types.length,323);
+ assert.equal(new Set(types.map(r=>r.type)).size,323);
+ assert.equal(new Set(families.map(r=>r.id)).size,families.length);
+ assert.deepEqual(types.map(r=>r.type),[...types.map(r=>r.type)].sort((a,b)=>a.localeCompare(b,'en')));
+ assert.equal(types.reduce((n,r)=>n+r.nativeCoreTasks,0),1996);
+ assert.equal(types.reduce((n,r)=>n+r.bridgeTasks,0),1552);
+ assert.equal(families.reduce((n,r)=>n+r.nativeCoreTasks,0),1996);
+ assert.equal(families.reduce((n,r)=>n+r.bridgeTasks,0),1552);
+ assert.equal(families.reduce((n,r)=>n+r.typeCount,0),323);
+ assert.equal(gaps.length,323);
+ assert.ok(types.every(r=>families.some(p=>p.id===r.technicalProfileId&&p.types.includes(r.type))));
+ assert.ok(gaps.every(g=>g.manualReviewRequired&&g.replayOfAllEventsVerified===false));
+ assert.equal(s.confirmedPedagogicalAdapterFamilies,null);
+});
+test('tamper probes and teaching attribution never become automatic blanket positive feedback',()=>{
+ const types=read('interaction-semantic-matrix.json').rows;
+ assert.ok(types.some(r=>r.probe.historyField));
+ assert.ok(types.some(r=>r.probe.boardField));
+ assert.ok(types.every(r=>r.automaticReasoningInference===false&&r.mathematicalSemanticFamily==='unresolved'));
+ assert.ok(types.every(r=>r.probe.forgedEventRejected===null||typeof r.probe.forgedEventRejected==='boolean'));
+ assert.ok(types.every(r=>r.probe.boardTamperRejected===null||typeof r.probe.boardTamperRejected==='boolean'));
+ assert.ok(types.every(r=>r.currentExplicitGuideBindings.length<=r.nativeCoreTasks));
+ const risks=read('cross-course-attribution-risks.json').rows;
+ assert.ok(risks.every(r=>r.sessions.length===r.nativeSessionCount));
+ assert.ok(risks.every(r=>r.risk.includes('explicit session/index/type/source')));
+ const pilot=types.find(r=>r.type==='x-p34-sequence');
+ assert.ok(pilot.currentExactPilotReplayBindings.includes('native:tables34:2'));
+ assert.ok(types.some(r=>r.currentExplicitGuideBindings.includes('native:structure34:3')));
+});
+test('semantic output is byte stable across identical runtime audits',()=>{
+ const files=['interaction-semantic-matrix.json','replay-contract-gaps.json',
+  'adapter-family-candidates.json','adapter-family-coverage.json',
+  'cross-course-attribution-risks.json','semantic-summary.json','evidence-capability-overlap.json','SEMANTIC-REPORT.md'];
+ const initialBytes=files.map(n=>readFileSync(file(n)));
+ run();
+ files.forEach((n,i)=>assert.deepEqual(readFileSync(file(n)),initialBytes[i],n));
+});
