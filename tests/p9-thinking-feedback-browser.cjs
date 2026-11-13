@@ -80,6 +80,18 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   await submit();
   check(await page.locator('#thinking-feedback').count()===0,'an incorrect comparison is not a verified counterexample');
   await field('second','1/2');await action('r38-test');await submit();
+  check(await page.locator('#thinking-feedback').count()===0,'correct last test cannot erase earlier invalid history in strict replay');
+  // Isolated browser fixture resets the current model, retaining historical
+  // attempts. All subsequent student actions still use real controls.
+  await page.evaluate(async()=>{
+   const {sessionTasks}=await import('./learning/bridges.js');
+   const {defaultModel}=await import('./learning/tasks.js');
+   const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+   state.lessons.argument38.models[3]=defaultModel(sessionTasks('argument38')[3]);
+   localStorage.setItem('math-explorer-v2',JSON.stringify(state));
+  });
+  await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===3);
+  await field('value','6');await field('second','1/2');await field('choice','less');await action('r38-test');await submit();
   hint=await view();
   check(hint.includes('6 × 1/2')&&hint.includes('更小')&&hint.includes('反例'),'feedback describes the real tested contradiction');
   check(await page.locator('#thinking-feedback [data-thinking-node-id="mt_j5YqQnN6xe"]').count()===1,'counterexample is linked to actual MP.3 source');
@@ -89,7 +101,7 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   check((await view()).includes('反例'),'submitted checked work still shows bounded hint with ungraded prose');
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   const lesson=saved.lessons.argument38;
-  check(lesson.cases[3].attempts.length===3&&lesson.models[3].board.records.length===2,'original incorrect and correct attempts / both comparisons remain in original schema');
+  check(lesson.cases[3].attempts.length===4&&lesson.models[3].board.records.length===1,'original incorrect and correct attempts / both comparisons remain in original schema');
   check(lesson.models[3].prose==='我想再检查其他乘数。'&&!('thinkingScore'in lesson),'original free prose saved; no thinking score field added');
   await shot('02-counterexample-checked');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');
