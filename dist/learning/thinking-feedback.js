@@ -3,14 +3,79 @@
 import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
+import * as patterns34 from './phase5/b34-model.js';
 
 // A shared card widget appears in several thinking domains. Link MP.3 only
 // for these inspected B38 lesson positions, never solely from task.type.
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
+// An explicit lesson position and task signature prevent generic widgets shared
+// across source domains from inventing a method label.
+const VERIFIED_READING={sessionId:'sense38',index:0,ids:'a,b,ask,wrong'};
+const VERIFIED_RULES={
+  2:{start:0,answer:'zero-five'},
+  3:{start:2,answer:'two-seven'}
+};
+function attemptDetails(task,record,attempts,handler){
+  const detail=[];
+  if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))
+    detail.push('你修改后又提交检查了一次。');
+  if(record?.support)detail.push('你看过提示或比较反馈。');
+  return detail;
+}
+function secondRoundFeedback(task,model,record,context,attempts){
+  if(task?.type==='x-r38-chain'&&context.sessionId===VERIFIED_READING.sessionId&&
+    context.index===VERIFIED_READING.index&&task.cards?.map(c=>c.id).join(',')===VERIFIED_READING.ids&&
+    task.prompt==='原有3颗，又来4颗。先别算：知道什么，想找什么？'){
+    if(!arguments38.valid(task,model)||!arguments38.inspect(task,model).correct)return null;
+    const selected=model.board.selected.map(id=>task.cards.find(c=>c.id===id)?.text);
+    if(selected.length!==3||selected.some(x=>!x))return null;
+    return {
+      title:'你刚才的办法',
+      observation:`你在卡片里先选出“${selected.slice(0,2).join('”和“')}”，再放入“${selected[2]}”；检查核对了这次排列。`,
+      connection:'先分开题目已知的数量和要找的问题，可以避免拿错条件。下次遇到多余的信息，试着指出哪条用不上。',
+      detail:[...attemptDetails(task,record,attempts,arguments38),'这里核对的是已提供卡片的选择与顺序，还没有验证你能独立读懂其他文字题。'],
+      method:{nodeId:'mt_WkKkb7W9Qd',label:'读懂问题',code:'ccss-math:MP.1'}
+    };
+  }
+  if(task?.type==='x-s39-choose'&&context.sessionId==='tools39'&&
+    [0,1].includes(context.index)&&task.operator==='*'&&
+    (context.index===0?JSON.stringify(task.operands)==='[25,4]':JSON.stringify(task.operands)==='[167,3]')){
+    if(!validTask(task,model)||!inspectTask(task,model).correct||model.method!=='calculator')return null;
+    const action=[...model.history].reverse().find(e=>e.a==='run');
+    const run=model.board.runs.at(-1);
+    if(!action||action.c!=='calculator'||action.w!==model.entry||!run?.matched||run.entry!==model.entry)return null;
+    return {
+      title:'你刚才的办法',
+      observation:`这次做 ${task.display}，你选择了计算器，实际输入“${model.entry}”并运行，得到 ${run.value}；检查核对了输入的数字与运算。`,
+      connection:'计算器可以帮你核对运算，但要先确认输入的式子对应题目。下次可以先估一个范围，再决定是否需要工具。',
+      detail:[...attemptDetails(task,record,attempts,{valid:validTask,inspect:inspectTask}),'这里只验证这次选用并运行计算器；没有验证心算、笔算过程或以后会不会选最合适的工具。'],
+      method:{nodeId:'mt_d-WZC2OyMB',label:'选择合适的数学工具',code:'ccss-math:MP.5'}
+    };
+  }
+  const rule=context.sessionId==='general34'?VERIFIED_RULES[context.index]:null;
+  if(task?.type==='x-p34-sequence'&&rule&&task.start===rule.start&&task.step===5&&
+    task.op==='add'&&task.questions?.length===1&&task.questions[0].value===rule.answer){
+    if(!patterns34.valid(task,model)||!patterns34.inspect(task,model).correct)return null;
+    const values=model.board.values;
+    if(values.length!==task.length||values.length<3||model.history.filter(e=>e.a==='next').length<values.length-1)return null;
+    const digits=rule.answer==='zero-five'?'0和5交替':'2和7交替';
+    return {
+      title:'你刚才的办法',
+      observation:`你从 ${values[0]} 开始，连续 ${values.length-1} 次每次加 5，留下 ${values.join('、')}；然后在给出的选项中选择了“个位${digits}”。`,
+      connection:'把每次变化记录下来，再比较个位，可以看见重复。下次换一个起点，看看重复的数字会不会变化。',
+      detail:[...attemptDetails(task,record,attempts,patterns34),'这里只核对连续操作与固定选项，不等于已经独立概括或证明所有数列规律。'],
+      method:{nodeId:'mt_fZTn0W_iZR',label:'从规律中概括结论',code:'ccss-math:MP.8'}
+    };
+  }
+  return null;
+}
+
 export function thinkingFeedback(task,model,record,context={}){
   const attempts=record?.attempts||[],lastAttempt=attempts.at(-1);
   if(!lastAttempt||JSON.stringify(lastAttempt.value)!==JSON.stringify(model))return null;
+  const second=secondRoundFeedback(task,model,record,context,attempts);
+  if(second)return second;
   // A checked representation can be described without claiming the child has
   // independently explained the equivalence or mastered a thinking ability.
   if(task?.type==='grid'){
