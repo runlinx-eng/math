@@ -7,9 +7,14 @@ import * as patterns34 from './phase5/b34-model.js';
 import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
 import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
 import {lineBinding,replayLineEvidence} from './line-evidence.js';
+import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-r38-counterexample'){
+    const source=counterexampleBinding(task,context);
+    return source?{type:task.type,summary:'想一想：怎样检验“总是”？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-s23-lines'){
     const source=lineBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样检查两条边？（可选）',question:source.question}:null;
@@ -74,11 +79,24 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:'转动整个图形后，哪些关系没有变？试着说明你会怎样检查。',
       detail,method:lineSource.method||null};
   }
+  const counterexampleSource=counterexampleBinding(task,context);
+  if(counterexampleSource){
+    const proof=replayCounterexampleEvidence(task,model);
+    if(!proof)return null;
+    const comparison={less:'比原来的数更小',equal:'与原来的数一样大',greater:'比原来的数更大'}[proof.actual];
+    return {
+      title:'这次作品中的思考线索',
+      observation:`你实际检验了 ${proof.comparisons} 次乘法比较；最后一次 ${proof.value} × ${proof.factor} 的结果${comparison}，与题目中的“${proof.rule==='strict'?'总会变大':'总不会变小'}”说法矛盾。`,
+      connection:'一个符合条件的反例可以推翻“总是”的说法。改变乘数或者命题，再试一次，结果还矛盾吗？',
+      detail:['这里只核查本次确实执行且经检查的有理数比较；不评价独立论证、一般证明或学习迁移。'],
+      method:{nodeId:counterexampleSource.nodeId,label:'构建数学论证',code:'ccss-math:MP.3'}
+    };
+  }
   const sequenceSource=sequenceBinding(task,context);
   const verifiedSequence=!!sequenceSource;
   const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
   const handler=verifiedSequence?patterns34:task.type==='x-fracrename'?fractions:
-    (verifiedChain||task.type==='x-r38-counterexample')?arguments38:null;
+    verifiedChain?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];
   if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))detail.push('你修改后又试了一次。');
