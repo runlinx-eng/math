@@ -156,7 +156,7 @@ test('MP.8 tables34 sequence uses only replay-checked native events and never la
   assert.equal(thinkingGuide(task,context)?.type,task.type);
   assert.match(thinkingGuide(task,context).question,/加几次50/);
   assert.equal(thinkingGuide(task,{sessionId:'linear34',index:2}),null);
-  assert.equal(thinkingGuide(B34.tables34[0],{sessionId:'tables34',index:0}),null);
+  assert.equal(thinkingGuide(B34.tables34[0],{sessionId:'tables34',index:0})?.type,'x-p34-sequence');
   assert.equal(thinkingFeedback(task,empty,null,context),null);
   assert.equal(thinkingFeedback(task,done,{attempts:[]},context),null);
   assert.equal(thinkingFeedback(task,done,{attempts:[attempt(empty)]},context),null);
