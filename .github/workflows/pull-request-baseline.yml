@@ -249,6 +249,7 @@ jobs:
             tests/p9-geometry-thinking-browser.cjs \
             tests/p9-sequence-thinking-browser.cjs \
             tests/p9-sequence-adapter-browser.cjs \
+            tests/p9-counterexample-adapter-browser.cjs \
             tests/p9-line-adapter-browser.cjs \
             tests/p9-array-adapter-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
