@@ -3,22 +3,17 @@
 import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
-import * as geometry23 from './phase5/b23-model.js';
 import * as patterns34 from './phase5/b34-model.js';
 import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
 import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
+import {lineBinding,replayLineEvidence} from './line-evidence.js';
 
-// A course is eligible only at an explicitly reviewed native lesson position.
-// These prompts never infer a method from task.type alone.
-const THINKING_GUIDES={
-  'structure34:3':{
-    type:'x-s23-lines',
-    summary:'想一想：怎样检查两条边？（可选）',
-    question:'先选一对边，想想把它们延长后会怎样。再换一对：它们相交会形成直角吗？同一个图形能同时出现这两种关系吗？'
-  },
-
-};
+// Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-s23-lines'){
+    const source=lineBinding(task,context);
+    return source?{type:task.type,summary:'想一想：怎样检查两条边？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-mularray'){
     const source=arrayBinding(task,context);
     return source?{type:task.type,summary:'想一想：这幅阵列怎样变化？（可选）',question:source.question}:null;
@@ -27,8 +22,7 @@ export function thinkingGuide(task,context={}){
     const source=sequenceBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样找出这一步的规律？（可选）',question:source.question}:null;
   }
-  const guide=THINKING_GUIDES[context.sessionId+':'+context.index];
-  return guide?.type===task?.type?guide:null;
+  return null;
 }
 // A shared card widget appears in several thinking domains. Link MP.3 only
 // for these inspected B38 lesson positions, never solely from task.type.
@@ -66,31 +60,29 @@ export function thinkingFeedback(task,model,record,context={}){
       detail:['这里只检查本次阵列、实际操作和当前提交；不能据此判断独立解释、一般证明、归纳能力或长期掌握。'],
       method:{nodeId:arraySource.nodeId,label:arraySource.label,code:arraySource.code}};
   }
-  // Only the MP.7 source lesson's fourth task is attributed to this source
-  // node. The shared line-testing widget also belongs to other curricula.
-  const guide=thinkingGuide(task,context);
-  const verifiedGeometry=guide?.type==='x-s23-lines';
+  const lineSource=lineBinding(task,context);
+  if(lineSource){
+    const proof=replayLineEvidence(task,model);
+    if(!proof)return null;
+    const pair=x=>`边${x.first+1}与边${x.second+1}`;
+    const relations=proof.tests.map(x=>pair(x)+(x.parallel?'的所在直线平行':x.perpendicular?'的所在直线垂直':'的所在直线既不平行也不垂直'));
+    const detail=['这里只核对本题屏幕上实际选出的边与当前提交；不能推断独立解释、一般证明或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>a.value&&replayLineEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',
+      observation:`你实际检查了 ${proof.tests.length} 次边之间的关系：${relations.join('；')}。`,
+      connection:'转动整个图形后，哪些关系没有变？试着说明你会怎样检查。',
+      detail,method:lineSource.method||null};
+  }
   const sequenceSource=sequenceBinding(task,context);
   const verifiedSequence=!!sequenceSource;
   const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
-  const handler=verifiedGeometry?geometry23:verifiedSequence?patterns34:task.type==='x-fracrename'?fractions:
+  const handler=verifiedSequence?patterns34:task.type==='x-fracrename'?fractions:
     (verifiedChain||task.type==='x-r38-counterexample')?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];
   if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))detail.push('你修改后又试了一次。');
   if(record.support)detail.push('你看过提示或比较反馈。');
-  if(verifiedGeometry){
-    const tests=model.board.tests;
-    const parallel=tests.find(x=>x.parallel===true);
-    const perpendicular=tests.find(x=>x.perpendicular===true);
-    if(!parallel||!perpendicular||!tests.every(x=>Number.isInteger(x.first)&&Number.isInteger(x.second)))return null;
-    const pair=x=>`边${x.first+1}与边${x.second+1}`;
-    detail.push('这里只核对屏幕上选出的两组边与当前图形性质；不能推断独立解释、一般证明或长期掌握。');
-    return {title:'这次作品中的思考线索',
-      observation:`你检查了 ${tests.length} 次边之间的关系：${pair(parallel)}的所在直线平行，${pair(perpendicular)}的所在直线垂直。当前作品中的关系选择与原题检查对应。`,
-      connection:'两条边转了方向以后，哪些关系没有变？试着说明为什么它们可以同时出现在一个长方形中。',
-      detail,method:{nodeId:'mt_FAXjFkgG6X',label:'数位、运算与图形中的结构',code:'ccss-math:MP.7'}};
-  }
   if(verifiedSequence){
     const proof=replaySequenceEvidence(task,model);
     if(!proof)return null;

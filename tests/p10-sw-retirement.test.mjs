@@ -100,6 +100,21 @@ test('all direct thinking feedback modules are in the offline manifest',()=>{
  }
 });
 
+test('lesson startup transitive module dependencies are all precached',()=>{
+ const root=new URL('../dist/',import.meta.url),seen=new Set();
+ const precached=new Set([...source.matchAll(/['"](\.\/[^'"]+)['"]/g)].map(m=>new URL(m[1],root).href));
+ function visit(url){
+  if(seen.has(url.href))return;seen.add(url.href);
+  assert.ok(precached.has(url.href),url.pathname+' is missing from offline manifest');
+  const code=fs.readFileSync(url,'utf8');
+  const imports=[...code.matchAll(/(?:from\s*|import\s*\(\s*|import\s*)['"](\.[^'"]+\.js)['"]/g)];
+  for(const m of imports)visit(new URL(m[1],url));
+ }
+ visit(new URL('learning/learn.js',root));
+ assert.ok(seen.has(new URL('learning/line-evidence.js',root).href));
+ assert.ok(seen.size>100,'check a real transitive graph, not a hand-picked adapter list');
+});
+
 test('loaded page release certificate matches the worker and is precached',()=>{
  const page=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.url),'utf8');
  for(const file of ['space.js','exploration.js','learning/learn.js']){
