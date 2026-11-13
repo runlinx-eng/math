@@ -46,6 +46,13 @@ const checks=[],errors=[];
    check(!b.course.lessons.share?.cases?.some(c=>c.attempts?.length),'exploring B creates no scored attempt');
    check(b.tier[0]==='tier-1','exploring B does not increase tier');
    await picture('02-learning-a-exploring-b');
+   await page.setViewportSize({width:1280,height:720});
+   await page.waitForFunction(()=>innerWidth===1280&&innerHeight===720);
+   await picture('02b-learning-a-exploring-b-1280x720');
+   const compact=await snap();
+   check(compact.map.selected==='node:'+ids.b&&compact.lesson.id==='equivalent'&&compact.token==='live-a',
+     '1280x720 A/B desktop view retains the same iframe and B map selection');
+   await page.setViewportSize({width:1440,height:900});
    await page.locator('#focus-card [data-action="focus-section"][data-section="relations"]').click();
    await picture('03-b-expanded-details');
    await select(ids.c);
