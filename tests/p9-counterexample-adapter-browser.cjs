@@ -54,6 +54,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
      await page.goto(base+'learn.html#argument38');
      await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='argument38');
+     // Opening a pristine lesson does not write v2 storage. Make one real
+     // non-grading operation on the first task to persist a valid record,
+     // then select the target native task using the isolated test fixture.
+     await page.locator('[data-x="r38-card"]').first().click();
+     ok(await page.evaluate(()=>!!JSON.parse(localStorage.getItem('math-explorer-v2'))),label+' initial native storage persisted');
      await page.evaluate(index=>{
       const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
       state.lessons.argument38.index=index;state.lessons.argument38.view='task';
