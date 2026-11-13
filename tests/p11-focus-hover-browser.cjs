@@ -96,6 +96,7 @@ const assert=(ok,message)=>{if(!ok)throw Error(message);};
      });
    },item.key);
    assert(!overlapsTarget,'hover direct-neighbor labels cannot cover the primary pointer target');
+   await image('source-neighbor-hover-'+item.key.replace(':','-'),1440,900);
   }
   await page.mouse.move(2,2);
   s=await record('hover-left');
