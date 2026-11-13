@@ -128,7 +128,7 @@ test('MP.7 geometry needs genuine replayable two-relation work in the pinned sou
   assert.equal(note.method.code,'ccss-math:MP.7');
   assert.equal(note.method.label,'数位、运算与图形中的结构');
   assert.doesNotMatch(note.observation,/你已掌握|你的解释正确|你独立证明/);
-  assert.equal(thinkingFeedback(t,done,record,{sessionId:'lineproperties',index:2}),null,
+  assert.equal(thinkingFeedback(t,done,record,{sessionId:'lineproperties',index:2})?.method,null,
     'the original lineproperties lesson has its own source mapping');
   assert.equal(thinkingFeedback(t,done,record,{sessionId:'structure34',index:2}),null);
   assert.equal(thinkingFeedback(t,done,{support:false,attempts:[]},context),null);
