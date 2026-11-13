@@ -88,6 +88,18 @@ test('worker restart rechecks old documents; closing them permits a later safe s
  assert.equal(result.complete,true);assert.equal(result.deferred,false);assert.deepEqual(current.deleted,[old]);
  assert.deepEqual([...store],[release,other]);
 });
+test('all direct thinking feedback modules are in the offline manifest',()=>{
+ const feedback=fs.readFileSync(new URL('../dist/learning/thinking-feedback.js',import.meta.url),'utf8');
+ const imported=[...feedback.matchAll(/from\s+['\"](\.[^'\"]+)['\"]/g)].map(m=>m[1]);
+ assert.ok(imported.includes('./sequence-evidence.js'),'the new mathematics evidence adapter remains part of lesson startup');
+ const precached=new Set([...source.matchAll(/['\"](\.\/[^'\"]+)['\"]/g)].map(m=>m[1]));
+ for(const relative of imported){
+  const resolved=new URL(relative,new URL('../dist/learning/thinking-feedback.js',import.meta.url));
+  const expected='./'+resolved.pathname.split('/dist/').at(-1);
+  assert.ok(precached.has(expected),expected+' must be precached before going offline');
+ }
+});
+
 test('loaded page release certificate matches the worker and is precached',()=>{
  const page=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.url),'utf8');
  for(const file of ['space.js','exploration.js','learning/learn.js']){
