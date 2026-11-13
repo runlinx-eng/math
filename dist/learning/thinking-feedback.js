@@ -6,6 +6,7 @@ import * as arguments38 from './phase5/b38-model.js';
 import * as geometry23 from './phase5/b23-model.js';
 import * as patterns34 from './phase5/b34-model.js';
 import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
+import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
 
 // A course is eligible only at an explicitly reviewed native lesson position.
 // These prompts never infer a method from task.type alone.
@@ -18,6 +19,10 @@ const THINKING_GUIDES={
 
 };
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-mularray'){
+    const source=arrayBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这幅阵列怎样变化？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-p34-sequence'){
     const source=sequenceBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样找出这一步的规律？（可选）',question:source.question}:null;
@@ -47,6 +52,19 @@ export function thinkingFeedback(task,model,record,context={}){
       detail:['这里只确认当前作品的对应关系；没有自动判断你的自由解释，也不代表已经掌握这种思考方法。'],
       method
     };
+  }
+  const arraySource=arrayBinding(task,context);
+  if(arraySource){
+    const proof=replayArrayEvidence(task,model);
+    if(!proof)return null;
+    let observation=`你实际摆出了 ${proof.rows} 行、每行 ${proof.cols} 格；每格代表 ${proof.unit}，这幅阵列共表示 ${proof.total}。`;
+    if(proof.turned)observation+=`你实际转向后看到了 ${proof.cols} 行、每行 ${proof.rows} 格，总量仍是 ${proof.total}。`;
+    if(proof.cut!==null)observation+=`你实际在第 ${proof.cut} 列后切开，核对得到左边 ${proof.left}、右边 ${proof.right}，合起来仍是 ${proof.total}。`;
+    return {title:'这次作品中的思考线索',observation,
+      connection:proof.cut!==null?'为什么左右两边都保留了同样的行数？试着把等式说给别人听。':
+        proof.turned?'转向只换了行和列，为什么格子总数没有变化？':'如果每格代表的数量再变化，这幅阵列又会表示多少？',
+      detail:['这里只检查本次阵列、实际操作和当前提交；不能据此判断独立解释、一般证明、归纳能力或长期掌握。'],
+      method:{nodeId:arraySource.nodeId,label:arraySource.label,code:arraySource.code}};
   }
   // Only the MP.7 source lesson's fourth task is attributed to this source
   // node. The shared line-testing widget also belongs to other curricula.
