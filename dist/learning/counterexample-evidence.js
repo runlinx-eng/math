@@ -12,7 +12,7 @@ const SOURCES=Object.freeze({
 });
 export function counterexampleBinding(task,context={}){
  const source=Object.hasOwn(SOURCES,context.index)?SOURCES[context.index]:null;
- if(context.sessionId!=='argument38'||!source||task?.type!=='x-r38-counterexample'||
+ if(context.sessionId!=='argument38'||!Number.isInteger(context.index)||!source||task?.type!=='x-r38-counterexample'||
     task.rule!==source.rule||sessionMeta(context.sessionId)?.topicId!==source.nodeId||
     !same(sessionTasks(context.sessionId)?.[context.index],task))return null;
  return source;
