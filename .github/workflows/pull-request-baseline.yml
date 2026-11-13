@@ -39,7 +39,7 @@ jobs:
           fi
 
           changed_files="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")"
-          if grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/|scripts/audit-learning-nodes\.mjs$|tests/learning-node-audit\.test\.mjs$|\.github/workflows/(pull-request-baseline|overview-readability-check)\.yml$)' <<< "$changed_files"; then
+          if grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/|scripts/(audit-learning-nodes|audit-learning-task-rules)\.mjs$|tests/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs)$|\.github/workflows/(pull-request-baseline|overview-readability-check)\.yml$)' <<< "$changed_files"; then
             echo "run_browser=true" >> "$GITHUB_OUTPUT"
             echo "Browser regression is required for this change."
           else
@@ -203,6 +203,7 @@ jobs:
           status=0
           # Diagnose the pointer-hover target early; still run every browser suite.
           for test_file in \
+            tests/learning-node-runtime-browser.cjs \
             tests/spatial-theme-overview-browser.cjs \
             tests/p11-focus-hover-browser.cjs \
             tests/p11-entry-simplification-browser.cjs \
@@ -214,7 +215,6 @@ jobs:
             tests/p10-longterm-offline-browser.cjs \
             tests/p10-sw-nav-isolation-browser.cjs \
             tests/p10-release-upgrade-repeat.cjs \
-            tests/learning-node-runtime-browser.cjs \
             tests/p8-node-surface-browser.cjs \
             tests/p8-trail-performance-browser.cjs \
             tests/p8-mode-real-click-browser.cjs \
