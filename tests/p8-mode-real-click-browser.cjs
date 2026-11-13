@@ -174,9 +174,16 @@ const check=(v,m)=>{if(!v)throw Error(m);};
   await verify('vps-hidden-trail-message-does-not-explore','learn','node:'+vpsEntry);
   // An initial node can open a lesson if no workpiece is active.
   // While the iframe is live, further 3D selections only explore.
+  const beforeFirstClick=await state();
   const liveFirst=await clickVisible({playable:true});
+  if(beforeFirstClick.journey){
+    const afterFirstClick=await state();
+    check(afterFirstClick.iframe===beforeFirstClick.iframe,'first 3D click preserves a lesson already restored from Trail');
+    check(await page.locator('#focus-card').isVisible(),'a restored lesson still allows inspecting another node');
+    await page.locator('#focus-card [data-action="open"]').click();
+  }
   const liveFirstId=await waitNativeTask(liveFirst);
-  await verify('vps-learn-first-3d-click','learn',liveFirst);
+  await verify('vps-learn-first-explicit-course','learn',liveFirst);
   const liveSecond=await clickVisible({playable:true,excludeLesson:liveFirstId});
   const secondState=await verify('vps-learn-second-3d-click-explores','learn',liveSecond);
   check(secondState.iframe.endsWith('#'+liveFirstId),'second 3D click cannot replace current lesson');
