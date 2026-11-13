@@ -727,6 +727,19 @@ export class SpatialScene {
     // Hover temporarily reuses the clicked-theme label policy, but never
     // changes the persisted selection or camera.
     const hoverObject=this.space.byKey.get(this.hoverMapKey),selected=this.hoverThemeId?this.space.themes.get(this.hoverThemeId):this.space.byKey.get(this.selected),candidates=[],scale=this.global?this.globalScale():0;
+    // Preview at most four real direct neighbors, prioritizing hard source
+    // relations and nearby projected points. The saved map focus is unchanged.
+    const hoverNeighbors=new Set();
+    if(this.relationshipMap&&hoverObject?.kind==='node'){
+      const center=this.project(hoverObject.position);
+      const direct=this.hoverVisualLinks.map(link=>{
+        const key=link.fromKey===hoverObject.key?link.toKey:link.fromKey;
+        const object=this.space.byKey.get(key),p=object&&this.project(object.position);
+        return {key,soft:link.soft,distance:p?.visible?Math.hypot(p.x-center.x,p.y-center.y):Infinity};
+      }).filter(link=>Number.isFinite(link.distance));
+      direct.sort((a,b)=>Number(a.soft)-Number(b.soft)||a.distance-b.distance||a.key.localeCompare(b.key));
+      for(const link of direct){if(hoverNeighbors.size>=4)break;hoverNeighbors.add(link.key);}
+    }
     for(const entry of this.labels){const {object:o,el}=entry,p=this.project(o.position),isSelected=o.key===this.selected,related=this.related?.has(o.key);let show=false,priority=0;
       if(o.kind==='theme'){show=p.distance>410;priority=50;}
       else if(o.kind==='pack'){show=p.distance<1200&&p.distance>115&&((!this.network&&this.showAllNodes)||selected?.kind==='theme'&&o.themeId===selected.id||o.key===this.selected);priority=o.id==='same-amount'?35:25;}
@@ -787,13 +800,23 @@ export class SpatialScene {
         if(this.relationshipMap&&hoverObject?.kind==='node'){
           // P11: preview real edges and WebGL points, but do not open a
           // cloud of additional clickable labels just by moving the pointer.
-          if(o.kind==='node'){show=show||o.key===hoverObject.key;priority=o.key===hoverObject.key?Math.max(priority,95):priority;}
+          if(o.kind==='node'){
+            const neighbor=hoverNeighbors.has(o.key);
+            show=show||neighbor||o.key===hoverObject.key;
+            priority=o.key===hoverObject.key?Math.max(priority,110):neighbor?Math.max(priority,78):priority;
+          }
           else show=false;
         }
       }else if(this.network&&this.networkView!=='relations'&&o.kind==='node'&&!related&&!isSelected&&o.key!==this.hovered)show=false;
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node'&&!this.guideFocus)show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
+      // Persistent selection stays above secondary hover labels. No change to
+      // WebGL hit targets, learning state, source relations, or camera.
+      if(o.kind==='node'){
+        if(isSelected)priority=Math.max(priority,115);
+        else if(o.key===this.hoverMapKey||o.key===this.hovered)priority=Math.max(priority,110);
+      }
       // Keep the exact hovered map label under the pointer when the preview
       // changes sibling visibility; other labels use ordinary collision placement.
       // This is screen-space-only and never changes the source node coordinates.
