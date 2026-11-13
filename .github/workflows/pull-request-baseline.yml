@@ -85,8 +85,10 @@ jobs:
           node --check tests/p10-full-lessons-browser.cjs
           node --check tests/p10-backup-safety-browser.cjs
           node --check dist/learning/sequence-evidence.js
+          node --check dist/learning/array-evidence.js
           node --check dist/learning/thinking-feedback.js
           node --check tests/p9-sequence-adapter-browser.cjs
+          node --check tests/p9-array-adapter-browser.cjs
           node --check tests/p9-thinking-feedback-browser.cjs
           node --check tests/p9-geometry-thinking-browser.cjs
           node --check tests/p9-sequence-thinking-browser.cjs
@@ -127,6 +129,7 @@ jobs:
             tests/p7-d7-task-adapters.test.mjs
             tests/thinking-feedback.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
+            tests/p9-array-evidence-adapter.test.mjs
             tests/thinking-source-map.test.mjs
             tests/p8-runtime-boundary.test.mjs
             tests/p7-d5-entry-decision.test.mjs
@@ -240,6 +243,7 @@ jobs:
             tests/p9-geometry-thinking-browser.cjs \
             tests/p9-sequence-thinking-browser.cjs \
             tests/p9-sequence-adapter-browser.cjs \
+            tests/p9-array-adapter-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
             tests/p10-longterm-offline-browser.cjs \
             tests/p10-sw-nav-isolation-browser.cjs \
@@ -335,6 +339,7 @@ jobs:
             verification/p9-geometry-thinking/
             verification/p9-sequence-thinking/
             verification/p9-sequence-adapter/
+            verification/p9-array-adapter/
             verification/p10-learning-continuity/
             verification/p10-longterm-round2/
             verification/p10-release-upgrade/
