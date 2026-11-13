@@ -3,6 +3,7 @@
 import {inspect as inspectTask,validModel as validTask} from './tasks.js';
 import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
+import * as geometry23 from './phase5/b23-model.js';
 
 // A shared card widget appears in several thinking domains. Link MP.3 only
 // for these inspected B38 lesson positions, never solely from task.type.
@@ -27,13 +28,28 @@ export function thinkingFeedback(task,model,record,context={}){
       method
     };
   }
+  // Only the MP.7 source lesson's fourth task is attributed to this source
+  // node. The shared line-testing widget also belongs to other curricula.
+  const verifiedGeometry=task.type==='x-s23-lines'&&context.sessionId==='structure34'&&context.index===3;
   const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
-  const handler=task.type==='x-fracrename'?fractions:
+  const handler=verifiedGeometry?geometry23:task.type==='x-fracrename'?fractions:
     (verifiedChain||task.type==='x-r38-counterexample')?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];
   if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))detail.push('你修改后又试了一次。');
   if(record.support)detail.push('你看过提示或比较反馈。');
+  if(verifiedGeometry){
+    const tests=model.board.tests;
+    const parallel=tests.find(x=>x.parallel===true);
+    const perpendicular=tests.find(x=>x.perpendicular===true);
+    if(!parallel||!perpendicular||!tests.every(x=>Number.isInteger(x.first)&&Number.isInteger(x.second)))return null;
+    const pair=x=>`边${x.first+1}与边${x.second+1}`;
+    detail.push('这里只核对屏幕上选出的两组边与当前图形性质；不能推断独立解释、一般证明或长期掌握。');
+    return {title:'这次作品中的思考线索',
+      observation:`你检查了 ${tests.length} 次边之间的关系：${pair(parallel)}的所在直线平行，${pair(perpendicular)}的所在直线垂直。当前作品中的关系选择与原题检查对应。`,
+      connection:'两条边转了方向以后，哪些关系没有变？试着说明为什么它们可以同时出现在一个长方形中。',
+      detail,method:{nodeId:'mt_FAXjFkgG6X',label:'数位、运算与图形中的结构',code:'ccss-math:MP.7'}};
+  }
   if(task.type==='x-fracrename'){
     const names=model.board.saved.map(([n,d])=>`${n}/${d}`).join('、');
     return {title:'你刚才的办法',observation:`你把 ${task.n}/${task.d} 换成了 ${names}，并选择了“整体和选中的量都没变”。`,connection:'保持同一个量、换一种分法，也可以帮助比较分数或理解百分数。',detail,

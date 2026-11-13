@@ -92,6 +92,14 @@
 
 **技术验收（本轮目标，结果以对应最新 GitHub CI 为准）：** Required Node 新纳入 `tests/thinking-feedback.test.mjs` 和 `tests/thinking-source-map.test.mjs`；独立 Chromium `tests/p9-thinking-feedback-browser.cjs` 在真实学习 UI 验证错误→修改→复检→提示→刷新/再改撤销线索、反例及原存储格式，并将截图/JSON 留在 Actions artifact 的 `verification/p9-thinking-feedback/`。自动化**仅证明这些选中的技术行为**；50/50 节点的独立数学审阅、两项原研究风险判断、Mac 100% 缩放、儿童自主学习、迁移效果、完整离线/旧备份恢复仍待进行，Issue #22 继续 Open。
 
+## P9 跨课程最小试点｜MP.7 几何边关系（Issue #95，待 CI / 浏览器验收）
+
+- **当前实现对象**：`structure34[3]`「看见没有变的部分」，复用 `lineproperties[2]` 的旋转长方形中「找一对平行边，也找一对垂直边」任务。只对 `sessionId=structure34,index=3` 使用 MP.7 来源 `mt_FAXjFkgG6X`（数位、运算与图形中的结构）；`lineproperties` 原课程保留自己的 `mt_r8c43QB6wx` 来源，不能靠同一任务类型贴 MP.7。
+- **自主思考引导**：在当前任务图形与检查之前显示默认收起的「想一想」；只问「延长两条边会怎样」「是否相交成直角」「两种关系能否同时出现」，不泄露第几条边正确。展开使用已有 `cases[index].support`，不新增记录字段；不打开无需任何额外步骤。
+- **可核对证据**：由既有 `b23-model.js` 对 `history` 重放核对 `board.tests`；至少出现实际选边检查得到的 `parallel=true` 和 `perpendicular=true`，当前作品严格等于最后一次保存的 `attempt.value`，原 `inspect` 判题正确，才描述本次的边编号和关系。错误、草稿、篡改、修改后未重检不显示成功方法。重复尝试、支持与自由解释仍保存在原记录中。
+- **严格限制**：只是屏幕上选边检查和当前图形结构的有限行为线索，不等于儿童真正解释、一般几何证明或数学思维能力已经掌握。没有新评分、进度、节点/连线点亮，不调整原题、判题、通关和 P10 schema。
+- **验收分层**：新增 Node 的来源/错误/修改/篡改断言与 Chromium 的 1440×900、1280×720 两条真实界面路径、截图和存储恢复；最新 HEAD CI/Artifact 未确认前不写作通过。此工程试点也不是独立数学教研或儿童效果验证。
+
 ## P9 持续逐项验收门槛
 
 1. 核对本节点的原始学习目标、活动、年级语境及对应的数学方法，不能仅凭名称认为某个知识题体现它。
