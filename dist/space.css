@@ -1305,3 +1305,22 @@ body[data-world="network"].has-journey.has-explore-selection .space-label.node.a
   font-weight:700;
   box-shadow:0 0 0 2px #4c8b7525;
 }
+
+/* Issue #92: name hierarchy inside the existing 3D map; do not encode
+   hover or selection using mathematical theme/progress colors. */
+body[data-world="network"][data-network-version="53"] .space-label.node.preview-target:not(.active-target){
+  font-size:14px;font-weight:750;color:#204d40;line-height:1.4;
+  background:#fffef9;border:2px solid #276958;border-radius:8px;
+  box-shadow:0 0 0 3px #68a58a24,0 4px 14px #24483a25;
+}
+body[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor:not(.selected):not(.active-target){
+  font-size:12px;line-height:1.4;font-weight:500;color:#375a50;
+  background:#fffef9ee;border:1px solid #9bb5aa;border-radius:6px;
+  box-shadow:0 1px 6px #2a473612;
+}
+body[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor.preview-before:not(.selected):not(.active-target){border-left:3px solid #985b2f}
+body[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor.preview-after:not(.selected):not(.active-target){border-left:3px solid #286f7c}
+body[data-world="network"][data-network-version="53"] .space-label.node.selected:not(.active-target):not(.preview-target){
+  font-weight:700;color:#204c3c;background:#fffef9f7;border:1px solid #57816a;
+  box-shadow:0 2px 10px #29453b18;
+}
