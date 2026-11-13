@@ -66,6 +66,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      },index);
      ok(await page.evaluate(()=>!!JSON.parse(localStorage.getItem('math-explorer-v2'))?.lessons?.argument38),label+' exact native fixture initialized');
      await page.goto(base+'learn.html#argument38');
+     // Navigating to the same URL may not reload the existing document.
+     // Force a real new lesson runtime after switching fixture index 3 -> 4.
+     await page.reload();
      await page.waitForFunction(index=>{
       const s=window.mathLesson?.snapshot();
       return s?.id==='argument38'&&s.view==='task'&&s.index===index;
