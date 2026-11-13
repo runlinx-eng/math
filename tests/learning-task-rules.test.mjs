@@ -7,7 +7,7 @@ import {TASKS,defaultModel,inspect,exampleModel} from '../dist/learning/tasks.js
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {freshLesson,modelForLesson,submitLesson,lessonSummary,currentSubmission,addLessonNote} from '../dist/learning/state.js';
-import {createActivity,evidenceSummary,nodeState} from '../dist/exploration-core.js';
+import {createActivity,evidenceSummary,nodeState,nodeProgress,NODE_TIERS,fresh,backup,parseBackup} from '../dist/exploration-core.js';
 import {ACTIVITIES,KINDS,task as earlyTask,defaultModel as earlyDefault} from '../dist/exploration-content.js';
 import {learningActionPlan} from '../dist/learning/workspace-flow.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
@@ -248,4 +248,72 @@ test('Issue #85 adding optional scored task changes the hypothetical current set
   assert.equal(optionalSetCompleted(previous,passed),true);
   assert.equal(optionalSetCompleted(next,passed),false);
   assert.equal(JSON.stringify({previous,next,passed}),before,'hypothesis must not mutate input or historical evidence');
+});
+
+
+test('Issue #88: live visible tiers are derived from valid answers, not old completion shortcuts',()=>{
+  const nodeId=LESSONS.share.topicId,state=fresh();
+  assert.deepEqual(Object.keys(NODE_TIERS),['1','2','3'],'fourth tier must not exist');
+  assert.equal(nodeProgress(state,nodeId).tier,1);
+  state.visited[nodeId]='2026-11-13T00:00:00.000Z';
+  state.lessons.share=freshLesson('share');
+  state.lessons.share.draft='opened, but did not check';
+  modelForLesson(state.lessons.share);
+  assert.equal(nodeProgress(state,nodeId).tier,1);
+  assert.equal(submitLesson(state.lessons.share).correct,false);
+  assert.equal(nodeProgress(state,nodeId).tier,2,'wrong saved check must count as learning');
+  state.lessons.share.index=0;
+  state.lessons.share.models[0]=exampleModel(TASKS.share[0]);
+  assert.equal(submitLesson(state.lessons.share).correct,true);
+  assert.equal(nodeProgress(state,nodeId).tier,2,'partial completion must not glow');
+  for(let i=1;i<TASKS.share.length;i++){
+    state.lessons.share.index=i;
+    state.lessons.share.models[i]=exampleModel(TASKS.share[i]);
+    assert.equal(submitLesson(state.lessons.share).correct,true);
+  }
+  assert.equal(nodeProgress(state,nodeId).tier,3);
+  const passed=state.lessons.share.cases[0].attempts.at(-1);
+  state.lessons.share.models[0]=defaultModel(TASKS.share[0]);
+  const edited=nodeProgress(state,nodeId);
+  assert.equal(edited.historicalCorePass,true,'old correct submission must remain valid history');
+  assert.equal(edited.currentWorksChecked,false);
+  assert.equal(edited.tier,2);
+  assert.deepEqual(state.lessons.share.cases[0].attempts.at(-1),passed,'derived progress must never erase attempts');
+  state.lessons.share.models[0]=exampleModel(TASKS.share[0]);
+  assert.equal(nodeProgress(state,nodeId).tier,3,'returning to the checked snapshot can be verified directly');
+});
+
+test('Issue #88: bridge-only and legacy error attempts never issue core completion light',()=>{
+  const state=fresh(),b=BRIDGES['link-equivalent-quarters'];
+  state.daily.bridges[b.id]=freshLesson(b.id);
+  for(const [index,t] of sessionTasks(b.id).entries()){
+    state.daily.bridges[b.id].index=index;
+    state.daily.bridges[b.id].models[index]=exampleModel(t);
+    assert.equal(submitLesson(state.daily.bridges[b.id]).correct,true);
+  }
+  for(const id of [b.fromTopicId,b.topicId])assert.equal(nodeProgress(state,id).tier,1);
+  for(const id of ['fair','rename','decimal']){
+    const a=createActivity(id),t=earlyTask(id,'construct',0);
+    a.evidence['construct:0']={support:false,attempts:[{id:'old-'+id,at:'2026-11-13T00:00:00.000Z',
+      value:earlyDefault(t),supported:false,exposed:false}]};
+    state.activities[id]=a;
+    assert.equal(nodeProgress(state,ACTIVITIES[id].topicId).tier,2);
+  }
+  assert.equal(nodeProgress(state,b.topicId).tier,1,'bridge cannot become a native node attempt');
+});
+
+test('Issue #88: pre-existing schema-2 backup roundtrip retains verified and unverified attempts',()=>{
+  const atlas=JSON.parse(readFileSync(new URL('../dist/data/atlas.json',import.meta.url),'utf8'));
+  const state=fresh(),a=freshLesson('share');
+  state.lessons.share=a;
+  assert.equal(submitLesson(a).correct,false);
+  a.models[0]=exampleModel(TASKS.share[0]);
+  assert.equal(submitLesson(a).correct,true);
+  const original=nodeProgress(state,LESSONS.share.topicId);
+  const restored=parseBackup(JSON.stringify(backup(state)),atlas);
+  assert.equal(nodeProgress(restored,LESSONS.share.topicId).tier,2);
+  assert.equal(original.tier,2);
+  assert.equal(restored.lessons.share.cases[0].attempts.length,2);
+  assert.equal(restored.schema,2);
+  assert.equal(Object.hasOwn(restored,'nodeProgress'),false,'visual tiers have no saved cache');
 });

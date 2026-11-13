@@ -4,6 +4,8 @@ import {validateState as validateLegacy,KEY as OLD_KEY} from './core.js';
 import {ROUTE_ID,routeStep,validateJourney,mergeJourney} from './journey-model.js';
 import {LESSONS,lessonIds,lessonForTopic,topicIds} from './learning/catalog.js';
 import {validateLesson,mergeLesson,lessonSummary} from './learning/state.js';
+import {sessionTasks} from './learning/bridges.js';
+import {validModel as validNativeModel,inspect as inspectNative} from './learning/tasks.js';
 import {freshDaily,validateDaily,mergeDaily} from './learning/daily.js';
 export {OLD_KEY};
 export const KEY='math-explorer-v2';
@@ -43,6 +45,43 @@ export function nodeState(state,id){
  if(a){const e=evidenceSummary(a);return {progress:e.completed||finished?'completed':'exploring',evidence:e.demonstrated?'demonstrated':e.needsSupport?'supported':'none',explanation:e.explanation};}
  if(step&&j?.started.includes(step.step))return {progress:finished?'completed':'exploring',evidence:'none',explanation:j.notes.length?'pending':'missing'};
  return {progress:modern?'exploring':state.visited[id]?'visited':'unseen',evidence:'none',explanation:ms?.explanation||'missing'};
+}
+// Issue #88: visual progress is derived from valid saved attempts, never from visits,
+// unfinished drafts, bridge sessions, or the older two-state completion shortcut.
+// Keep historical completion and the currently checked workpiece as separate facts.
+export const NODE_TIERS=Object.freeze({1:'未学习',2:'学习中',3:'核心完成'});
+const nativeByTopic=new Map(Object.entries(LESSONS).map(([id,meta])=>[meta.topicId,id]));
+const earlyByTopic=new Map(Object.entries(ACTIVITIES).map(([id,meta])=>[meta.topicId,id]));
+const hasAttemptValue=record=>!!record&&typeof record==='object'&&Object.hasOwn(record,'value');
+const validNativeAttempt=(t,record)=>{try{return hasAttemptValue(record)&&validNativeModel(t,record.value);}catch{return false;}};
+const validEarlyAttempt=(t,record)=>{try{return hasAttemptValue(record)&&modelIsValid(t,record.value);}catch{return false;}};
+const checkedNativePass=(t,value)=>{try{return validNativeModel(t,value)&&inspectNative(t,value).correct;}catch{return false;}};
+export function nodeProgress(state,nodeId){
+  const sessionId=nativeByTopic.get(nodeId),record=sessionId&&state?.lessons?.[sessionId];
+  let nativeAttempts=0,historicalCorePass=false,currentWorksChecked=false;
+  if(record&&Object.values(record.cases||{}).some(row=>row?.attempts?.length)){
+    // B39 task bodies are lazy: a saved B39 record is validated only after its
+    // original grader is loaded. An unopened node needs no grader at all.
+    const tasks=sessionTasks(sessionId)||[];
+    for(const [index,t] of tasks.entries())nativeAttempts+=(record.cases?.[index]?.attempts||[]).filter(e=>validNativeAttempt(t,e)).length;
+    if(tasks.length){
+      try{historicalCorePass=lessonSummary(record).completed;}catch{historicalCorePass=false;}
+      currentWorksChecked=historicalCorePass&&tasks.every((t,index)=>{
+        const last=record.cases?.[index]?.attempts?.at(-1),model=record.models?.[index];
+        return model!==undefined&&validNativeAttempt(t,last)&&
+          JSON.stringify(model)===JSON.stringify(last.value)&&checkedNativePass(t,model);
+      });
+    }
+  }
+  const earlyId=earlyByTopic.get(nodeId),early=earlyId&&state?.activities?.[earlyId];
+  let legacyAttempts=0;
+  if(early)for(const kind of KINDS)for(const variant of [0,1]){
+    const t=task(earlyId,kind,variant);
+    legacyAttempts+=(early.evidence?.[caseKey(kind,variant)]?.attempts||[]).filter(e=>validEarlyAttempt(t,e)).length;
+  }
+  const tier=historicalCorePass&&currentWorksChecked?3:nativeAttempts+legacyAttempts>0?2:1;
+  // There is deliberately no fourth tier: bridge ownership is not approved.
+  return {tier,nativeAttempts,legacyAttempts,historicalCorePass,currentWorksChecked};
 }
 // The learner sees two states. Browsing and evidence remain in the saved record.
 export const PROGRESS={unseen:'未完成',visited:'未完成',exploring:'未完成',completed:'完成'};

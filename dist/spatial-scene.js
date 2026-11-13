@@ -66,8 +66,11 @@ export class SpatialScene {
     const nodeGeometry=new THREE.CircleGeometry(1,24);
     this.nodeMesh=new THREE.InstancedMesh(nodeGeometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),this.nodeList.length);
     this.nodeMesh.userData.kind='nodes';this.scene.add(this.nodeMesh);this.pickables.push(this.nodeMesh);
-    this.progressMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.10,6,24),new THREE.MeshBasicMaterial({color:0x698377,transparent:true,opacity:.8,depthWrite:false}),this.nodeList.length);
-    this.evidenceMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.07,6,24),new THREE.MeshBasicMaterial({color:0x5b899b,transparent:true,opacity:.85,depthWrite:false}),this.nodeList.length);
+    // Tier 3: a clear double-ring light. Tier 2: only a quiet thin ring.
+    // Neither ring changes coordinates, name labels or pointer hit targets.
+    this.progressMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.14,6,32),new THREE.MeshBasicMaterial({color:0x58c49b,transparent:true,opacity:.98,depthTest:false,depthWrite:false}),this.nodeList.length);
+    this.evidenceMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.22,6,32),new THREE.MeshBasicMaterial({color:0x87b7a5,transparent:true,opacity:.43,depthTest:false,depthWrite:false}),this.nodeList.length);
+    this.progressMesh.renderOrder=3;this.evidenceMesh.renderOrder=2;
     this.scene.add(this.progressMesh,this.evidenceMesh);
     if(this.network){
       this.sceneMarkers=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0x557969}),this.nodeList.length);
@@ -538,11 +541,11 @@ export class SpatialScene {
   }
 
   basis(){const right=new THREE.Vector3(1,0,0).applyQuaternion(this.camera.quaternion),up=new THREE.Vector3(0,1,0).applyQuaternion(this.camera.quaternion);return {right,up,direction:this.camera.position.clone().sub(this.controls.target).normalize()};}
-  refresh(stateFor,filter=this.filter){this.stateFor=stateFor;this.filter=filter;this.states=this.nodeList.map(o=>stateFor(o.id));this.completedNodes=new Set(this.nodeList.filter((o,i)=>this.states[i].progress==='completed').map(o=>o.id));
+  refresh(stateFor,filter=this.filter){this.stateFor=stateFor;this.filter=filter;this.states=this.nodeList.map(o=>stateFor(o.id));this.completedNodes=new Set(this.nodeList.filter((o,i)=>this.states[i].tier===3).map(o=>o.id));
     const available=new Set(topicIds);
     for(const {object,el}of this.labels){
-      if(object.kind==='node'){const done=stateFor(object.id).progress==='completed',name=this.network?(this.space.knowledgeNames?.get(object.id)||object.title):(routeStep(object.id)?.title||object.title);el.dataset.progress=done?'completed':'incomplete';el.classList.remove('has-evidence');el.setAttribute('aria-label',`${name}${available.has(object.id)?'，'+(done?'完成':'未完成'):''}`);}
-      else {const ids=(object.kind==='pack'?object.nodeIds:this.nodeList.filter(n=>n.themeId===object.id).map(n=>n.id)).filter(id=>available.has(id)),completed=ids.filter(id=>stateFor(id).progress==='completed').length;
+      if(object.kind==='node'){const tier=stateFor(object.id).tier||1,name=this.network?(this.space.knowledgeNames?.get(object.id)||object.title):(routeStep(object.id)?.title||object.title);el.dataset.progress='tier-'+tier;el.classList.remove('has-evidence');el.setAttribute('aria-label',`${name}${available.has(object.id)?'，'+(['未学习','学习中','核心完成'][tier-1]):''}`);}
+      else {const ids=(object.kind==='pack'?object.nodeIds:this.nodeList.filter(n=>n.themeId===object.id).map(n=>n.id)).filter(id=>available.has(id)),completed=ids.filter(id=>stateFor(id).tier===3).length;
         el.classList.remove('has-trail');el.classList.toggle('has-completion',completed>0);el.dataset.completed=String(completed);
         if(object.kind==='theme')el.querySelector('small').innerHTML=ids.length?`<span>完成 ${completed} / ${ids.length}</span><progress max="${ids.length}" value="${completed}" aria-label="完成 ${completed} / ${ids.length}"></progress>`:`${object.children.length} 个分组`;
         el.setAttribute('aria-label',`${object.title}${ids.length?'，完成 '+completed+' / '+ids.length:''}`);
@@ -573,7 +576,7 @@ export class SpatialScene {
       const visible=this.nodeVisible(o);if(visible)this.visibleNodes.add(o.key);
       const oldVisible=fadeOut&&transition.fromKeys.has(o.key);
       const visualAmount=fadeOut?(visible?1:oldVisible?1-progress:0):fadeIn?(transition.fromKeys.has(o.key)?1:progress):(visible?1:0);
-      const level=visualAmount*(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)),match=this.filter==='all'||this.filter==='visited'&&s.progress!=='unseen'||this.filter==='completed'&&s.progress==='completed';
+      const level=visualAmount*(this.global?1:this.network?clamp((1800-d)/1050,.65,1):clamp((900-d)/580,.42,1)),match=this.filter==='all'||this.filter==='visited'&&(s.tier||1)>1||this.filter==='completed'&&s.tier===3;
       const structuralRole=this.overviewStructure.nodeRoles.get(o.id);
       const structuralNode=structureActive&&(this.structureMode==='all'?!!structuralRole:!!this.overviewStructure.roleNodeSets?.get(this.structureMode)?.has(o.id));
       const guideUnrelated=this.relationshipMap&&this.guideFocus&&!this.guideFocus.currentNodes.has(o.key)&&!this.guideFocus.seenNodes.has(o.key)&&!this.guideFocus.targetKeys?.has('theme:'+o.themeId);
@@ -584,7 +587,7 @@ export class SpatialScene {
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
-      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.74:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.progress==='completed'?.92:.68)*focus)*(match?1:.16));
+      color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.74:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.tier===3?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
         const matched=this.gradeStageIds.has(o.id),inspecting=o.key===this.selected||o.key===this.hovered||o.key===this.hoverMapKey||this.hoverRelatedKeys.has(o.key)||!!selected&&this.related?.has(o.key);
@@ -604,8 +607,14 @@ export class SpatialScene {
        const filteredRadius=this.gradeStageId!=='all'&&!selected&&!this.guideFocus?(this.gradeStageIds.has(o.id)?Math.max(contextRadius,5.3):Math.min(contextRadius,2.7)):contextRadius;
        const size=this.relationshipMap?filteredRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
-      transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar(s.progress==='completed'&&match?(size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap))*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
-      transform.scale.setScalar(0);transform.updateMatrix();this.evidenceMesh.setMatrixAt(i,transform.matrix);
+      transform.quaternion.copy(this.camera.quaternion);
+      const tier=s.tier||1,ringSize=size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap),lit=tier===3&&match&&visible,working=tier===2&&match&&visible;
+      transform.scale.setScalar(lit?ringSize*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
+      // Reuse the second instanced torus as a soft outer glow (tier 3) or a
+      // muted progress ring (tier 2); no new particles or scene traversal.
+      transform.scale.setScalar(lit?ringSize*1.14*level:working?(size+(this.relationshipMap?1.5/pixelsPerUnit:.8*cap))*level:0);
+      transform.updateMatrix();this.evidenceMesh.setMatrixAt(i,transform.matrix);
+      this.evidenceMesh.setColorAt(i,lit?new THREE.Color(0x61ad86):new THREE.Color(0x9aab9d));
       if(this.network){
         transform.position.copy(V(o.position)).add(new THREE.Vector3(8*cap,8*cap,0).applyQuaternion(this.camera.quaternion));transform.quaternion.copy(this.camera.quaternion);
         // A saved activity is a record, not a different kind of knowledge node.
@@ -615,7 +624,7 @@ export class SpatialScene {
     }
     for(const [id,core]of this.packMeshes){const o=this.space.packs.get(id);core.visible=this.network?!this.relationshipMap&&(this.global||this.networkView!=='relations')&&!!selected&&(selected.kind==='theme'?o.themeId===selected.id:o.id===selected.packId||o.id===selected.id):this.showAllNodes||!!selected&&(selected.kind==='theme'?o.themeId===selected.id:o.id===selected.packId||o.id===selected.id);core.material.color.set(o.color).lerp(paper,1-emphasis(o)*.9);}
     for(const field of this.fields){const o=field.userData.object;field.visible=!this.network&&(o.kind==='theme'||this.showAllNodes);field.material.opacity=(o.kind==='theme'?.035:.025)*emphasis(o);}
-    this.nodeMesh.instanceMatrix.needsUpdate=true;this.nodeMesh.instanceColor.needsUpdate=true;this.progressMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceMatrix.needsUpdate=true;
+    this.nodeMesh.instanceMatrix.needsUpdate=true;this.nodeMesh.instanceColor.needsUpdate=true;this.progressMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceMatrix.needsUpdate=true;this.evidenceMesh.instanceColor.needsUpdate=true;
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
     this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
