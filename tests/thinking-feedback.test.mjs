@@ -23,22 +23,23 @@ test('fraction feedback requires a submitted, valid construction and describes t
 });
 
 test('counterexample feedback reports only a tested contradiction and does not assess free text',()=>{
-  for(const t of A.argument38.slice(3)){
-    const done=arguments38.example(t),result=thinkingFeedback(t,done,{attempts:[attempt(done)],support:true});
+  for(const [offset,t] of A.argument38.slice(3).entries()){
+    const context={sessionId:'argument38',index:offset+3};
+    const done=arguments38.example(t),result=thinkingFeedback(t,done,{attempts:[attempt(done)],support:true},context);
     assert.match(result.observation,/6 × 1\/2.*更小/);
     assert.match(result.connection,/反例/);
     assert.doesNotMatch(JSON.stringify(result),/掌握|能力评分|已经证明|自由解释/);
     const untested=arguments38.initial(t);
-    assert.equal(thinkingFeedback(t,untested,{attempts:[attempt(untested)],support:false}),null);
+    assert.equal(thinkingFeedback(t,untested,{attempts:[attempt(untested)],support:false},context),null);
     const changed=structuredClone(done);changed.prose='这是我的解释';
-    assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)],support:true}),null);
+    assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)],support:true},context),null);
   }
 });
 
 test('an equal result refutes the strict claim but not the nonstrict claim',()=>{
   for(const [index,expected] of [[3,true],[4,false]]){
     const t=A.argument38[index],m=arguments38.initial(t);m.value='6';m.second='1';m.choice='equal';arguments38.act(t,m,'r38-test');
-    const result=thinkingFeedback(t,m,{attempts:[attempt(m)],support:false});
+    const result=thinkingFeedback(t,m,{attempts:[attempt(m)],support:false},{sessionId:'argument38',index});
     assert.equal(!!result,expected);
     if(result)assert.match(result.observation,/与原来的数一样大/);
   }
