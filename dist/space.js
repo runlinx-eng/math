@@ -1210,7 +1210,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)saveView();
 document.addEventListener('wheel',e=>{if(e.ctrlKey&&e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturestart',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
 window.addEventListener('gesturechange',e=>{if(e.cancelable)e.preventDefault();},{capture:true,passive:false});
-document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape'){if(document.querySelector('.popover:not([hidden])')){closePopovers();return;}if(document.body.classList.contains('has-explore-selection')){deselectKnowledge();return;}if(journeyOpen&&!journeySuspended){navigateTaskSurface('explore',{replace:true});return;}if(!$('#learning-hub').hidden||!$('#utility-drawer').hidden){navigateTaskSurface('explore',{replace:true});return;}if(scene.selected)deselectKnowledge();}});
 
 async function offline(){
   const status=$('#offline-status');
