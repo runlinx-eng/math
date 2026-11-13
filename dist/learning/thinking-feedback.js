@@ -5,6 +5,7 @@ import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
 import * as geometry23 from './phase5/b23-model.js';
 import * as patterns34 from './phase5/b34-model.js';
+import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
 
 // A course is eligible only at an explicitly reviewed native lesson position.
 // These prompts never infer a method from task.type alone.
@@ -14,17 +15,16 @@ const THINKING_GUIDES={
     summary:'想一想：怎样检查两条边？（可选）',
     question:'先选一对边，想想把它们延长后会怎样。再换一对：它们相交会形成直角吗？同一个图形能同时出现这两种关系吗？'
   },
-  'tables34:2':{
-    type:'x-p34-sequence',
-    summary:'想一想：怎样找出下一步的规律？（可选）',
-    question:'比较相邻两个数，每次增加的量一样吗？从50出发走到第四项，需要加几次50？你能先猜出下一项，再用已留下的步骤检查吗？'
-  }
+
 };
 export function thinkingGuide(task,context={}){
-  const guide=THINKING_GUIDES[`${context.sessionId}:${context.index}`];
+  if(task?.type==='x-p34-sequence'){
+    const source=sequenceBinding(task,context);
+    return source?{type:task.type,summary:'想一想：怎样找出这一步的规律？（可选）',question:source.question}:null;
+  }
+  const guide=THINKING_GUIDES[context.sessionId+':'+context.index];
   return guide?.type===task?.type?guide:null;
 }
-
 // A shared card widget appears in several thinking domains. Link MP.3 only
 // for these inspected B38 lesson positions, never solely from task.type.
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
@@ -52,7 +52,8 @@ export function thinkingFeedback(task,model,record,context={}){
   // node. The shared line-testing widget also belongs to other curricula.
   const guide=thinkingGuide(task,context);
   const verifiedGeometry=guide?.type==='x-s23-lines';
-  const verifiedSequence=guide?.type==='x-p34-sequence';
+  const sequenceSource=sequenceBinding(task,context);
+  const verifiedSequence=!!sequenceSource;
   const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
   const handler=verifiedGeometry?geometry23:verifiedSequence?patterns34:task.type==='x-fracrename'?fractions:
     (verifiedChain||task.type==='x-r38-counterexample')?arguments38:null;
@@ -73,18 +74,24 @@ export function thinkingFeedback(task,model,record,context={}){
       detail,method:{nodeId:'mt_FAXjFkgG6X',label:'数位、运算与图形中的结构',code:'ccss-math:MP.7'}};
   }
   if(verifiedSequence){
-    // The original B34 model replays p34-next events and checks each generated
-    // value. A correct final answer without those steps is not method evidence.
-    const values=model.board.values, steps=model.history.filter(e=>e.a==='next');
-    if(!Array.isArray(values)||values.length!==task.length||steps.length<task.length-1||
-      task.start!==50||task.step!==50||task.op!=='add'||task.length!==4||
-      !values.every((n,i)=>n===50+i*50))return null;
-    detail.push('只描述这次实际留下的数列及原题检查过的预测；不能据此判断独立归纳、一般证明或长期掌握。');
+    const proof=replaySequenceEvidence(task,model);
+    if(!proof)return null;
+    const increment=task.step/proof.scale;
+    const move=task.op==='add'?(increment>=0?'加'+increment:'减'+Math.abs(increment)):
+      task.op==='multiply'?'按乘'+task.step+'的规则':task.op==='affine'?'按乘'+task.a+'再加'+task.b+'的规则':'按位置规则';
+    const steps=proof.advances+' 次'+move;
+    const undo=proof.undos?'，其中还实际撤回了 '+proof.undos+' 次':'';
+    const numericPrediction=task.questions?.length===1&&task.questions[0].kind==='number';
+    const checked=numericPrediction?'预测下一项是 '+model.answers[0]:'填写的回答与题目条件相符';
+    detail.push('这里只核对可重放的逐项操作与当前答案；不能据此判断独立归纳、一般证明、自由解释或长期掌握。');
     return {title:'这次作品中的思考线索',
-      observation:`你从50出发，实际留下了 ${values.join('、')}，逐步做了 ${task.length-1} 次加50，并在本次检查中预测下一项是 ${model.answers[0]}。`,
-      connection:'每次加50为什么个位和十位的变化会这样重复？换个起点后，你会先检查什么？',
+      observation:'你从'+proof.displayValues[0]+'出发，实际留下了 '+proof.displayValues.join('、')+
+        '，逐步做了 '+steps+undo+'，并在本次检查中'+checked+'。',
+      connection:task.op==='add'?'换个起点后，相邻两项仍怎样变化？你能说明为什么吗？':
+        '换一个起点或运算规则，这些步骤还能照搬吗？你会先检查哪一步？',
       detail,
-      method:{nodeId:'mt_2jbUekyTu4',label:'延续表格中的规律',code:'ccss-math:MP.8'}};
+      method:{nodeId:sequenceSource.nodeId,label:sequenceSource.label,code:'ccss-math:MP.8'}
+    };
   }
   if(task.type==='x-fracrename'){
     const names=model.board.saved.map(([n,d])=>`${n}/${d}`).join('、');
