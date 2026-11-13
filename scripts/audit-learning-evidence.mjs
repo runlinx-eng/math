@@ -9,6 +9,7 @@ import {BRIDGES,sessionTasks,sourceBridge} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {sequenceBinding,replaySequenceEvidence} from '../dist/learning/sequence-evidence.js';
+import {arrayBinding,replayArrayEvidence} from '../dist/learning/array-evidence.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const out=resolve(root,'verification/learning-evidence-audit');
@@ -61,11 +62,12 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const freeText=fields.filter(k=>/^(prose|explanation|reflection|reason|justification|argument|why|note|notes)$/i.test(k) && typeof model[k]==='string');
  const guide=kind==='native'?thinkingGuide(task,{sessionId,index}):null;
  // Current exact replay feedback pilot; all other history fields are unverified as replay evidence.
- const verifiedReplay=kind==='native'&&history&&!!board&&!!sequenceBinding(task,{sessionId,index})&&
-   !!replaySequenceEvidence(task,exampleModel(task));
+ const verifiedReplay=kind==='native'&&history&&!!board&&(
+   (!!sequenceBinding(task,{sessionId,index})&&!!replaySequenceEvidence(task,exampleModel(task)))||
+   (!!arrayBinding(task,{sessionId,index})&&!!replayArrayEvidence(task,exampleModel(task))));
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}
- else if(verifiedReplay){level='A';reason='Explicit MP.8 native task with source-bound strict sequence replay and current-submission regression';}
+ else if(verifiedReplay){level='A';reason='Explicit native task with source-bound strict mathematics replay and current-submission regression';}
  else if(freeText.length){level='D';reason='Model includes ungraded free explanation; automatic reasoning mastery unsupported';}
  else if(board||fields.some(k=>['selected','filled','rows','counts','heights','cuts','mark','points','shapes','tiles','pieces'].includes(k))){
   level='B';reason='Inspectable workpiece/model state, no full event replay proven by this audit';
@@ -153,7 +155,7 @@ const summary={schema:'math-learning-interaction-evidence/1',basis:'Live source 
  historyTasksNative:native.filter(r=>r.hasHistory).length,
  replayVerifiedTasksNative:native.filter(r=>r.replayVerified).length,
  guideBindingsNative:native.filter(r=>r.optionalThinkingGuide).length,
- caution:'A is a source-bound strict sequence replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
+ caution:'A is a source-bound strict sequence or array replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});
 write('types.json',{rows:byType});
