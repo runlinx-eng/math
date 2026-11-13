@@ -51,21 +51,25 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      else await input.fill(v);
     };
     try{
-     await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
-     await page.goto(base+'learn.html#argument38');
-     await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='argument38');
-     // Opening a pristine lesson does not write v2 storage. Make one real
-     // non-grading operation on the first task to persist a valid record,
-     // then select the target native task using the isolated test fixture.
-     await page.locator('[data-x="r38-card"]').first().click();
-     ok(await page.evaluate(()=>!!JSON.parse(localStorage.getItem('math-explorer-v2'))),label+' initial native storage persisted');
-     await page.evaluate(index=>{
-      const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
-      state.lessons.argument38.index=index;state.lessons.argument38.view='task';
-      localStorage.setItem('math-explorer-v2',JSON.stringify(state));
+     // A pristine native lesson has no persistent v2 record until its first
+     // mutation. Set up only the isolated test fixture, with the repository's
+     // genuine schema constructors, BEFORE navigating to the offline lesson.
+     // All mathematical actions, checks and edits below still use real UI.
+     await page.evaluate(async index=>{
+      const [{KEY,fresh},{freshLesson}]=await Promise.all([
+       import('./exploration-core.js'),import('./learning/state.js')
+      ]);
+      const state=fresh(),lesson=freshLesson('argument38');
+      lesson.index=index;lesson.view='task';
+      state.lessons.argument38=lesson;
+      localStorage.setItem(KEY,JSON.stringify(state));
      },index);
-     await page.reload();
-     await page.waitForFunction(index=>window.mathLesson?.snapshot().index===index,index);
+     ok(await page.evaluate(()=>!!JSON.parse(localStorage.getItem('math-explorer-v2'))?.lessons?.argument38),label+' exact native fixture initialized');
+     await page.goto(base+'learn.html#argument38');
+     await page.waitForFunction(index=>{
+      const s=window.mathLesson?.snapshot();
+      return s?.id==='argument38'&&s.view==='task'&&s.index===index;
+     },index);
      const guide=page.locator('#thinking-guide'),hint=page.locator('#thinking-feedback');
      ok(await guide.isVisible(),label+' native optional prompt offline');
      ok(!(await guide.evaluate(e=>e.open)),label+' prompt initially collapsed');
