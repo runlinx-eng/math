@@ -5,7 +5,7 @@ const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFi
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {cases,associatedCases}=require('./fixtures/p9-estimate-cases.cjs');
 const root=nodePath.resolve(__dirname,'..'),out=nodePath.join(root,'verification/p9-estimate-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],corrections=[],isolated=[],offline=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const cache=fs.readFileSync(nodePath.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -94,10 +94,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const before=await model(spec);await page.locator('[data-x="b11-estimate"]').click();
     const after=await model(spec),selection={unit:before.unit,roundedA:before.roundedA,roundedB:before.roundedB,estimate:before.estimate};
     ok(after.history.length===before.history.length+1,label+' actual estimate button appends exactly one event');
+    assert.deepEqual(after.history.slice(0,-1),before.history);
     assert.deepEqual(after.history.at(-1),{action:'b11-estimate',...selection});
     assert.deepEqual(after.first,before.first??selection);
-    if(valid){assert.deepEqual(after.locked,selection);ok(after.issue==='',label+' the real estimate locks only after valid rounding');}
-    else ok(after.locked===null&&!!after.issue,label+' invalid rounding stays in history and does not lock the estimate');
+    if(valid){
+     assert.deepEqual(after.locked,selection);ok(after.issue==='',label+' the real estimate locks only after valid rounding');
+     ok(await page.locator('[data-x="b11-estimate"]').count()===0,label+' the estimate button is absent after a successful lock');
+     for(const key of ['unit','roundedA','roundedB','estimate'])ok(await page.locator(`[data-xfield="${key}"]`).count()===0,label+' the locked '+key+' control is absent');
+    }else{
+     ok(after.locked===null&&!!after.issue,label+' invalid rounding stays in history and does not lock the estimate');
+     ok(await page.locator('[data-x="b11-estimate"]').isVisible(),label+' a failed estimate keeps the real correction control available');
+    }
     return after;
    };
    const setFinal=async(spec,path,swap=false)=>{
@@ -117,6 +124,12 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')===(expected?'correct':'revise'),label+' '+labelSuffix+' original result is observed');
     return {name:labelSuffix,model:beforeModel,attempt,record:after};
    };
+   const captureStorage=async suffix=>{
+    const stored=await read(),stem=label+'-'+suffix;
+    fs.writeFileSync(nodePath.join(out,stem+'-storage.txt'),stored.raw);
+    fs.writeFileSync(nodePath.join(out,stem+'-state.json'),stored.text);
+    return {raw:stem+'-storage.txt',state:stem+'-state.json'};
+   };
    const wordsFor=async proof=>{
     ok(await hint.isVisible(),label+' strict feedback appears after the current successful check');
     const words=await hint.innerText();
@@ -129,7 +142,33 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      if(proof.claim.plausible&&!proof.claim.exactCorrect)ok(words.includes(proof.display.answer)&&/不等于|≠|不能.*正确|不保证|不能保证/.test(words),label+' plausible estimate is explicitly distinct from the exact result');
     }
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),label+' no source practice label is invented');
+    ok(words.includes('最后成功锁定')&&words.includes(`保留的 ${proof.estimateEventCount} 次估计提交`),label+' feedback names the final lock and all retained submissions');
+    if(proof.failedEstimateCount)ok(words.includes(`${proof.failedEstimateCount} 次尚未锁定`)&&words.includes('首尝试仍然保留'),label+' correction feedback keeps the unsuccessful first attempt visible as retained evidence');
     ok(/长期掌握/.test(words)&&/自由解释|自由文字/.test(words),label+' interpretation remains bounded');return words;
+   };
+   const failedCheck=async(spec,suffix)=>{
+    const snapshot=await check(spec,false,suffix);
+    ok(snapshot.model.locked===null&&!replayEstimateEvidence(taskFor(spec),snapshot.model)&&await hint.count()===0,
+     label+' '+suffix+' remains unfinished without strict feedback');
+    snapshot.storage=await captureStorage(suffix);return snapshot;
+   };
+   const finishCorrection=async(spec,path,variant,failedSnapshots)=>{
+    const before=await model(spec),first=structuredClone(before.first);
+    await setEstimate(spec,path);await estimate(spec);await setFinal(spec,path);
+    ok(await hint.count()===0,label+' corrected final work still needs its own current check');
+    const snapshot=await check(spec,true,'corrected-final-work'),corrected=await model(spec),proof=replayEstimateEvidence(taskFor(spec),corrected);
+    ok(M.valid(taskFor(spec),corrected)&&M.inspect(taskFor(spec),corrected).correct,label+' original correction and completion remain available');
+    ok(!!proof&&proof.failedEstimateCount===before.history.length&&proof.lockedEstimateIndex===before.history.length,
+     label+' all earlier failed submissions precede the only successful final lock');
+    assert.deepEqual(corrected.history.slice(0,-1),before.history);assert.deepEqual(corrected.first,first);
+    assert.deepEqual(proof.firstEstimate,first);assert.deepEqual(proof.estimateEvents.map(e=>e.raw),corrected.history.map(({action,...raw})=>raw));
+    ok(proof.estimateEvents.slice(0,-1).every(e=>!e.accepted&&!e.lockedBefore&&!e.lockedAfter&&e.failures.length>0)&&
+     proof.estimateEvents.at(-1).accepted&&proof.estimateEvents.at(-1).lockedAfter,label+' replay retains the exact failed and successful state transitions');
+    const words=await wordsFor(proof);snapshot.storage=await captureStorage('corrected-final-work');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,snapshot.record.models);assert.deepEqual((await saved(spec.id)).cases,snapshot.record.cases);
+    await wordsFor(replayEstimateEvidence(taskFor(spec),await model(spec)));
+    corrections.push({width,height,id:spec.id,index:spec.index,variant,model:corrected,proof,observation:words,
+     snapshots:[...failedSnapshots,snapshot],originalCorrect:true,strictFeedback:true});
    };
 
    await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor({state:'attached'});
@@ -211,35 +250,42 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,path,
      observation:words,finalObservation:finalWords,model:finalModel,attempts:end.cases[spec.index].attempts,snapshots,proof:finalProof});
 
-    // Reopen an empty attempt and really make a rounding error first. The
-    // original exercise can be corrected, while strict history stays rejected.
-    label=prefix+'-invalid-round-'+spec.id+'-'+spec.index;await open(spec);
+    // Reopen an empty attempt and make the same real rounding error first.
+    // Failed submissions remain in the replay and do not prevent correction.
+    label=prefix+'-correction-round-'+spec.id+'-'+spec.index;await open(spec);
     await setEstimate(spec,path);await field('roundedA',format(spec,path.rounded[0]+1));await estimate(spec,false);
-    const badFirst=structuredClone((await model(spec)).first);
-    await setEstimate(spec,path);await estimate(spec);await setFinal(spec,path);
-    const negativeSnapshot=await check(spec,true,'corrected-final-work'),badModel=await model(spec);
-    ok(M.valid(task,badModel)&&M.inspect(task,badModel).correct,label+' original correction and completion remain available');
-    ok(badModel.history.length===2&&same(badModel.first,badFirst)&&!replayEstimateEvidence(task,badModel)&&await hint.count()===0,
-     label+' later correct rounding cannot erase the real invalid first event');
-    await reload(spec);assert.deepEqual(await model(spec),badModel);ok(await hint.count()===0,label+' invalid-history exclusion survives offline reload');
-    negatives.push({width,height,id:spec.id,index:spec.index,variant:'wrong-round-then-correct',model:badModel,snapshot:negativeSnapshot,originalCorrect:true,strictFeedback:false});
-    if(spec===cases[0]||spec.id==='fractionfour')await shot('rejected');
+    const failed=await failedCheck(spec,'01-unlocked-estimate');
+    await finishCorrection(spec,path,'wrong-round-then-correct',[failed]);
+    if(spec===cases[0]||spec.id==='fractionfour')await shot('corrected-offline');
    }
 
    const accuracy=cases.find(c=>c.id==='checkpurpose'&&c.index===1),fine=accuracy.paths[0];
-   label=prefix+'-invalid-accuracy';await open(accuracy);
+   label=prefix+'-correction-accuracy';await open(accuracy);
    await setEstimate(accuracy,{unit:1000,rounded:[48000,23000],estimate:71000});await estimate(accuracy,false);
-   await setEstimate(accuracy,fine);await estimate(accuracy);await setFinal(accuracy,fine);
-   const accuracySnapshot=await check(accuracy,true,'corrected-finer-unit'),accuracyModel=await model(accuracy);
-   ok(!replayEstimateEvidence(taskFor(accuracy),accuracyModel)&&await hint.count()===0,label+' an over-coarse earlier selection stays outside strict evidence');
-   negatives.push({width,height,variant:'coarse-then-fine',model:accuracyModel,snapshot:accuracySnapshot});await shot('rejected');
+   const coarse=await failedCheck(accuracy,'01-over-coarse-unit');
+   await finishCorrection(accuracy,fine,'coarse-then-fine',[coarse]);await shot('corrected-offline');
+
+   const representative=cases[0],path=representative.paths[0];
+   for(const variant of ['blank-unit','text-number','repeated-failure']){
+    label=prefix+'-correction-'+variant;await open(representative);await setEstimate(representative,path);
+    if(variant==='blank-unit')await field('unit','');
+    else await field('roundedA',variant==='text-number'?'还没想好':format(representative,path.rounded[0]+1));
+    await estimate(representative,false);const snapshots=[await failedCheck(representative,'01-unlocked-estimate')];
+    if(variant==='repeated-failure'){await estimate(representative,false);snapshots.push(await failedCheck(representative,'02-still-unlocked'));}
+    await finishCorrection(representative,path,variant,snapshots);await shot('corrected-offline');
+   }
 
    for(const spec of associatedCases){
     label=prefix+'-associated-'+spec.id+'-'+spec.index;await open(spec);
     ok(await guide.count()===0&&await hint.count()===0,label+' associated task does not inherit a native guide');
+    // The visible default selection can fail here too. A later mathematical
+    // correction must never confer a native source binding on this task.
+    await estimate(spec,false);const first=structuredClone((await model(spec)).first);
     for(const step of M.solveSteps(taskFor(spec))){if(step.field)await field(step.field,step.value);else{assert.equal(step.action,'b11-estimate');await estimate(spec);}}
     const snapshot=await check(spec,true,'associated-original-check');
-    ok(await hint.count()===0&&estimateBinding(taskFor(spec),spec)===null,label+' original associated grading remains isolated from native feedback');
+    assert.deepEqual(snapshot.model.first,first);const proof=replayEstimateEvidence(taskFor(spec),snapshot.model);
+    ok(proof?.failedEstimateCount===1&&await hint.count()===0&&estimateBinding(taskFor(spec),spec)===null,label+' corrected associated grading remains isolated from native feedback');
+    snapshot.storage=await captureStorage('associated-original-check');
     await reload(spec);assert.deepEqual(await model(spec),snapshot.model);ok(await hint.count()===0,label+' associated isolation survives offline restoration');
     isolated.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,snapshot});
    }
@@ -247,15 +293,16 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
   ok(observations.length===24*2&&isolated.length===6*2,'every reviewed native and associated position completes at both viewports');
-  ok(negatives.filter(x=>x.variant==='wrong-round-then-correct').length===24*2,'every native task rejects a real invalid first rounding history at both viewports');
-  const result={checks,errors,remote,observations,negatives,isolated,offline,provenance,viewports,
+  ok(corrections.filter(x=>x.variant==='wrong-round-then-correct').length===24*2,'every native task retains its real failed first rounding while accepting the later correction at both viewports');
+  ok(corrections.length===56,'all original correction cases plus blank, textual and repeated failures run at both viewports');
+  const result={checks,errors,remote,observations,corrections,isolated,offline,provenance,viewports,
    nativeTasks:cases.length,nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,
    associatedTasks:associatedCases.length,originStopped:offline.every(x=>x.originStopped)};
   fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify(result,null,2));
   console.log('P9_ESTIMATE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes:result.nativeNodes,taskViewportPairs:observations.length,associatedTasks:associatedCases.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:nodePath.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,corrections,isolated,offline,provenance,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

@@ -40,8 +40,8 @@ const visible=(t,b,total)=>!b.method?['method']:b.steps.length<total?
  (b.ready?['q','used','rest']:[]):['check','answer',...(t.choosePrecision?['precision']:[]),...(t.interpret==='keep'?['base']:[])];
 
 // Match the original number field's finite decimal syntax before exact math.
-// In particular, a rejected seventh decimal place cannot become a successful
-// historical step merely because a later reset clears the tool's issue text.
+// In particular, a rejected seventh decimal place stays a failed historical
+// request even when a later correction or reset completes the construction.
 function enteredInteger(raw,lo,hi){
  if(!text(raw))return null;
  const m=/^(\d{1,9})(?:\.(\d{1,6}))?$/.exec(raw.trim());if(!m)return null;
@@ -95,12 +95,12 @@ export function replayDivisionEvidence(task,model){
      (task.interpret==='round'?(!integer(task.dp,0,5)||task.places<=task.dp):task.dp!==undefined)||
      task.choosePrecision&&(task.interpret!=='round'||task.dp>2)||
      !['round','decimal'].includes(task.interpret)&&task.places!==0||
-     !keys(model,[...fieldKeys,'history','board','issue'])||!fieldKeys.every(k=>text(model[k]))||model.issue!==''||
+     !keys(model,[...fieldKeys,'history','board','issue'])||!fieldKeys.every(k=>text(model[k]))||!text(model.issue)||
      !Array.isArray(model.history)||!model.history.length||model.history.length>3000||
      !division.valid(task,model)||!division.inspect(task,model).correct)return null;
   const N=BigInt(task.n),D=BigInt(task.d),Q=N/D,R=N%D,ds=digits(task),width=String(task.n).length;
   let b=fresh(task),previous={...fieldDefaults},epoch=0,prefix=0n,quotientPrefix=0n,bringIndex=null,choiceIndex=null;
-  let currentSteps=[],currentContainers=[];
+  let currentSteps=[],currentContainers=[],issue='';
   const events=[],choices=[],resets=[],epochs=[{epoch:0,startIndex:0,endExclusive:null}];
   for(let index=0;index<model.history.length;index++){
    const e=model.history[index];
@@ -111,14 +111,19 @@ export function replayDivisionEvidence(task,model){
       !['','short','long'].includes(f.method)||!['','0','1','2'].includes(f.precision))return null;
    previous={...f};
    if(action==='b14-container'?![1,-1].includes(data.value):data.value!==null)return null;
-   const event={index,epoch,action,effect:true};
+   const event={index,epoch,action,effect:true,accepted:true};issue='';
+   const failed=(reason,message='')=>{
+    issue=message;Object.assign(event,{accepted:false,effect:false,failure:reason,fields:{...f},
+     before:structuredClone(b),after:structuredClone(b),issue});events.push(event);
+   };
    if(action==='b14-reset'){
     event.effect=!!(b.steps.length||b.ready||b.containers||choiceIndex!==null);event.nextEpoch=epoch+1;
     resets.push({index,fromEpoch:epoch,toEpoch:epoch+1});epochs[epoch].endExclusive=index;epochs[epoch].resetAfterIndex=index;
     epoch++;epochs.push({epoch,startIndex:index+1,endExclusive:null});b=fresh(task);prefix=0n;quotientPrefix=0n;
     bringIndex=null;choiceIndex=null;currentSteps=[];currentContainers=[];
    }else if(action==='b14-method'){
-    if(b.method!==null||!task.choose||!['short','long'].includes(f.method))return null;
+    if(b.method!==null||!task.choose)return null;
+    if(f.method===''){failed('empty-method');continue;}
     b.method=f.method;choiceIndex=index;event.method=f.method;choices.push({index,epoch,method:f.method});
    }else if(action==='b14-bring'){
     if(!b.method||b.ready||b.steps.length>=ds.length)return null;
@@ -128,6 +133,11 @@ export function replayDivisionEvidence(task,model){
      conversion:position?{quantity:previousRemainder,fromUnit:place(power+1),toUnit:place(power),converted:previousRemainder*10}:null,toolDisplaysConversion:true});
    }else if(action==='b14-div-step'){
     if(!b.method||!b.ready||b.steps.length>=ds.length)return null;
+    const originalQ=division.number(f.q),originalUsed=division.number(f.used),originalR=division.number(f.rest);
+    if(!integer(originalQ,0,9)||originalUsed!==originalQ*task.d||!integer(originalR,0,task.d-1)||originalUsed+originalR!==b.current){
+     Object.assign(event,{position:b.steps.length,power:width-1-b.steps.length,bringIndex,current:b.current});
+     failed('digit-not-accepted','乘回去的部分加剩下的，要回到这一段；剩下的还不能再分一份。分不到也记0。');continue;
+    }
     const q=enteredInteger(f.q,0,9),used=enteredInteger(f.used,0,999),r=enteredInteger(f.rest,0,task.d-1);
     if(q===null||used===null||r===null||BigInt(used)!==BigInt(q)*D||BigInt(used)+BigInt(r)!==BigInt(b.current))return null;
     const position=b.steps.length,power=width-1-position;prefix=prefix*10n+BigInt(ds[position]);quotientPrefix=quotientPrefix*10n+BigInt(q);
@@ -138,15 +148,19 @@ export function replayDivisionEvidence(task,model){
    }else if(action==='b14-container'){
     if(b.steps.length!==ds.length||!['up','down'].includes(task.interpret)||data.value===-1&&b.containers===0)return null;
     const from=b.containers,to=from+data.value;
-    if(!integer(to,0,200)||task.interpret==='down'&&BigInt(to)>Q)return null;
+    if(to>200){Object.assign(event,{from,to:from,requestedCount:to});failed('container-limit');continue;}
+    if(!integer(to,0,200))return null;
     b.containers=to;const capacity=to*task.d;
     Object.assign(event,{from,to,capacity,shownAllocated:Math.min(capacity,task.n),unallocated:Math.max(0,task.n-capacity),
-     unusedCapacity:Math.max(0,capacity-task.n),toolFillsDiagram:true});currentContainers.push({...event});
+     unusedCapacity:Math.max(0,capacity-task.n),allSelectedCanBeFull:capacity<=task.n,
+     // Histories contain no renderer version. Capacity is derived from the
+     // recorded count; it cannot establish the wording seen in an old preview.
+     historicalCaptionKnown:false,toolFillsDiagram:true});currentContainers.push({...event});
    }else return null;
    events.push(event);
   }
   epochs[epoch].endExclusive=model.history.length;
-  if(!same(b,model.board)||b.steps.length!==ds.length||b.ready||b.current!==null)return null;
+  if(!same(b,model.board)||model.issue!==issue||b.steps.length!==ds.length||b.ready||b.current!==null)return null;
   const allowed=visible(task,b,ds.length);
   if(fieldKeys.some(k=>!allowed.includes(k)&&model[k]!==previous[k])||
      !['','short','long'].includes(model.method)||!['','0','1','2'].includes(model.precision))return null;
@@ -177,7 +191,8 @@ export function replayDivisionEvidence(task,model){
   const scale=10n**BigInt(task.places),lastR=BigInt(b.steps.at(-1).r),written=b.steps.map(s=>s.q).join('');
   if(N*scale!==quotientPrefix*D+lastR)return null;
   return {dividend:task.n,divisor:task.d,integerQuotient:Number(Q),remainingOriginal:Number(R),
-   method:{value:b.method,origin:choiceIndex===null?'task-default':'recorded-choice',choiceIndex},choices,events,epochs,resets,currentEpoch:epoch,steps:currentSteps,
+   method:{value:b.method,origin:choiceIndex===null?'task-default':'recorded-choice',choiceIndex},choices,events,
+   failedRequests:events.filter(e=>!e.accepted),issue,epochs,resets,currentEpoch:epoch,steps:currentSteps,
    calculated:{places:task.places,quotientDigits:b.steps.map(s=>s.q),written:task.places?written.slice(0,width)+'.'+written.slice(width):written,
     quotientPrefix:Number(quotientPrefix),scale:Number(scale),value:reduce(quotientPrefix,scale),remainder:Number(lastR),remainderUnit:[1,Number(scale)],
     unresolvedOriginal:reduce(lastR,scale),exactAfterSteps:lastR===0n},

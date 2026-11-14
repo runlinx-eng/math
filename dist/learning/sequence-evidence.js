@@ -65,8 +65,9 @@ const eventShape=e=>e&&typeof e==='object'&&!Array.isArray(e)&&
   typeof e.v==='string'&&typeof e.w==='string';
 
 // This stricter, observational replay does not change b34-model.valid/inspect.
-// Undo is accepted only when it actually reverses an existing step;
-// unknown/no-op events, invalid steps and a previously broken attempt disqualify feedback.
+// Failed entries keep the first attempt and the original bad marker. They do
+// not advance the sequence. The visible empty undo is a recorded no-op; neither
+// next nor undo remains visible after the sequence reaches its requested length.
 export function replaySequenceEvidence(task,model){
   try{
   if(task?.type!=='x-p34-sequence'||!hasExactKeys(model,['board','history','value','second','prose','answers','issue'])||
@@ -78,35 +79,40 @@ export function replaySequenceEvidence(task,model){
      !['add','multiply','affine','position'].includes(task.op))return null;
   if(['add','multiply'].includes(task.op)?!Number.isSafeInteger(task.step):
      !Number.isSafeInteger(task.a)||!Number.isSafeInteger(task.b))return null;
-  if(!validSequence(task,model)||!inspectSequence(task,model).correct||
-     model.board?.bad!==false)return null;
+  if(!validSequence(task,model)||!inspectSequence(task,model).correct)return null;
   const values=[task.start];
-  let advances=0,undos=0,first=null,lastEntry=null;
-  for(const e of model.history){
-    if(!eventShape(e)||e.i!==''||e.w!=='')return null;
+  const events=[];
+  let advances=0,undos=0,noOpUndos=0,failedSteps=0,first=null,lastEntry=null,bad=false,issue='';
+  for(const [historyIndex,e] of model.history.entries()){
+    if(!eventShape(e)||e.i!==''||e.w!==''||values.length>=task.length)return null;
+    const before=[...values];issue='';
     if(e.a==='undo'){
-      if(e.v!==''||values.length<=1)return null;
-      values.pop();undos++;
+      if(e.v!=='')return null;
+      const changed=values.length>1;
+      if(changed){values.pop();undos++;}else noOpUndos++;
+      events.push({historyIndex,action:'undo',changed,before,after:[...values]});
       continue;
     }
-    if(e.a!=='next'||values.length>=task.length||!e.v.trim())return null;
+    if(e.a!=='next')return null;
     const fraction=rational(e.v);
-    if(!fraction)return null;
-    const numerator=fraction[0]*scale;
-    if(!Number.isSafeInteger(numerator)||numerator%fraction[1]!==0)return null;
-    const entered=numerator/fraction[1],last=values.at(-1);
+    const numerator=fraction?fraction[0]*scale:null;
+    const entered=fraction&&Number.isSafeInteger(numerator)&&numerator%fraction[1]===0?numerator/fraction[1]:null;
+    const last=BigInt(values.at(-1));
     // Independently calculate each operation in source integer units. The
     // original grader remains a separate requirement, not the replay oracle.
-    const expected=task.op==='add'?last+task.step:task.op==='multiply'?last*task.step:
-      task.op==='affine'?last*task.a+task.b:task.a*(values.length+1)+task.b;
-    if(!Number.isSafeInteger(expected)||entered!==expected)return null;
+    const exact=task.op==='add'?last+BigInt(task.step):task.op==='multiply'?last*BigInt(task.step):
+      task.op==='affine'?last*BigInt(task.a)+BigInt(task.b):BigInt(task.a)*BigInt(values.length+1)+BigInt(task.b);
+    const expected=Number(exact);if(!Number.isSafeInteger(expected))return null;
+    const accepted=entered!==null&&BigInt(entered)===exact;
     first??=e.v;
     lastEntry=e.v;
-    values.push(entered);advances++;
+    if(accepted){values.push(entered);advances++;}
+    else{bad=true;failedSteps++;issue='再看起点和这一次的变化；可以改后重试。';}
+    events.push({historyIndex,action:'next',raw:e.v,entered,expected,accepted,before,after:[...values],issue});
   }
   if(values.length!==task.length||advances<task.length-1||
      model.value!==lastEntry||model.second!==''||
-     !same({first:{next:first},bad:false,values},model.board))return null;
+     model.issue!==issue||!same({first:{next:first},bad,values},model.board))return null;
   if(!(task.questions||[]).every((q,index)=>{
     const answer=model.answers[index];
     if(q.kind!=='number')return q.accepted?q.accepted.includes(answer.trim()):answer.trim()===String(q.value);
@@ -114,6 +120,7 @@ export function replaySequenceEvidence(task,model){
     return !!a&&!!b&&a.every(Number.isSafeInteger)&&b.every(Number.isSafeInteger)&&
       BigInt(a[0])*BigInt(b[1])===BigInt(b[0])*BigInt(a[1]);
   }))return null;
-  return {values,displayValues:values.map(v=>String(v/scale)),advances,undos,scale};
+  return {values,displayValues:values.map(v=>String(v/scale)),advances,undos,scale,
+    first,failedSteps,noOpUndos,events};
   }catch{return null;}
 }

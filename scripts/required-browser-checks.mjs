@@ -126,13 +126,19 @@ const groups={
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
+ ]},
+ // Main run 43601980060 measured 1593793 ms for the four expansion commands.
+ // Keep groups/transform/angle together; quantity families get a full runner.
+ // The approved capacity split preserves every command, artifact and limit.
+ "evidence-quantity":{commands:[
+  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-estimate-adapter/",
   "verification/p9-portiongroups-adapter/",

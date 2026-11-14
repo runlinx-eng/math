@@ -3,7 +3,7 @@
 // ranges, never invented timestamps or additional child-authored actions.
 import * as cases from './phase5/b18-model.js';
 import * as fractions from './phase5/b17-model.js';
-import {rational as originalRational} from './phase5/b16-model.js';
+import {rational as originalRational,equal as originalEqual} from './phase5/b16-model.js';
 import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 import {replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 
@@ -71,9 +71,18 @@ const recordFields=t=>[...(t.estimate?['inside']:[]),...(t.simple?['simple']:[])
  ...(t.reciprocal?['inverse','scaledA','scaledB']:[]),...(t.story?['story']:[])];
 const fresh=first=>({started:false,first,estimate:null,normalized:null});
 const projected=t=>({type:'x-fracoperations',a:t.a,b:t.b,op:t.op,prompt:t.prompt});
+const choices=f=>['','+','-','*','/'].includes(f.choice)&&
+ ['','negative','zero','part','one','more'].includes(f.guess)&&['','yes','no'].includes(f.inside);
+const messages={choice:'先区分是在接起来、拿走、取几倍，还是看能装几组。',
+ estimate:'先留下一个从小到大的估计范围，之后再用实际结果回看。',
+ guess:'先留下你对结果大小的猜想。',
+ normalize:'两边都乘同一个数，让“每组多少”变成1；不能只翻转前面的数。'};
 function readyPrefixes(t,events){
  let forms=null,combined=false,rest=false,columns=new Set(),rows=new Set();const ready=[false];
  for(const e of events){
+  // Rejected visible requests retain the construction, including readiness.
+  // Their action names alone must not replace forms or invalidate a result.
+  if(!e.accepted){ready.push(ready.at(-1));continue;}
   if(e.action==='reset'){forms=null;combined=rest=false;columns.clear();rows.clear();}
   if(e.action==='forms')forms=e.forms;
   if(e.action==='common'||e.action==='shade')combined=rest=false;
@@ -92,6 +101,28 @@ function ranges(ready,start,end){
   if(result.length&&result.at(-1)[1]===i-1)result.at(-1)[1]=i;else result.push([i,i]);
  }
  return result;
+}
+// B18 writes its outer issue for every outer action and each forwarded B17
+// action. The two histories have no shared clock. Preserve every possible
+// terminal writer consistent with the recorded issue and exhibit one legal
+// interleaving for each; identical messages do not establish a unique writer.
+function issueWitnesses(model,events,core){
+ const last=events.at(-1),inner=core.events.at(-1),n=core.events.length,
+  base=events.map(e=>e.innerIndex??e.compatibleInnerPrefix),possibleLastWriters=[],compatibleOrders=[];
+ const add=(stream,e,issue,prefixes)=>{
+  if(model.issue!==issue)return;
+  const writer={stream,index:e.index,action:e.action,issue};possibleLastWriters.push(writer);
+  compatibleOrders.push({lastWriter:writer,outerPrefixes:prefixes,exactTimingKnown:false});
+ };
+ if(last.action==='normalize'){
+  if(last.compatibleReadyPrefixes.some(([lo,hi])=>lo<=n&&n<=hi)){
+   const prefixes=[...base];prefixes[prefixes.length-1]=n;add('outer',last,last.issue,prefixes);
+  }
+  if(base.at(-1)<n)add('inner',inner,model.work.issue,base);
+ }else add('inner',inner,model.work.issue,base);
+ if(!possibleLastWriters.length)return null;
+ return{current:model.issue,possibleLastWriters,compatibleOrders,
+  exactLastWriterKnown:possibleLastWriters.length===1,exactCrossStreamTimingKnown:false};
 }
 function inverseEquation(raw,result,b,a){
  if(!text(raw))return false;
@@ -112,8 +143,8 @@ export function replayFractionCaseEvidence(task,model){
      Object.hasOwn(task,'exampleStory')&&(!task.story||!text(task.exampleStory))||
      Object.hasOwn(task,'estimate')&&(!Array.isArray(task.estimate)||task.estimate.length!==2||
       task.estimate.some(v=>!(typeof v==='string'||typeof v==='number'&&Number.isFinite(v))||!amount(String(v))))||
-     !keys(model,[...fieldKeys,'board','history','issue','work'])||!fieldKeys.every(k=>text(model[k]))||
-     model.issue!==''||!Array.isArray(model.history)||!model.history.length||model.history.length>1200||
+     !keys(model,[...fieldKeys,'board','history','issue','work'])||!fieldKeys.every(k=>text(model[k]))||!choices(model)||
+     !text(model.issue)||!Array.isArray(model.history)||!model.history.length||model.history.length>1200||
      !cases.valid(task,model)||!cases.inspect(task,model).correct)return null;
   const core=replayFractionOperationsEvidence(projected(task),model.work);if(!core)return null;
   const a=big(core.quantities.a),b=big(core.quantities.b),result=big(core.quantities.result),
@@ -123,7 +154,7 @@ export function replayFractionCaseEvidence(task,model){
   for(let index=0;index<model.history.length;index++){
    const e=model.history[index];
    if(!keys(e,['a','d','f'])||!keys(e.d,[])||!keys(e.f,fieldKeys)||
-      !fieldKeys.every(k=>text(e.f[k]))||!['start','reset','normalize'].includes(e.a))return null;
+      !fieldKeys.every(k=>text(e.f[k]))||!choices(e.f)||!['start','reset','normalize'].includes(e.a))return null;
    const allowed=board.started?recordFields(task):beforeFields(task),
     changed=fieldKeys.filter(k=>e.f[k]!==previous[k]);
    if(changed.some(k=>!allowed.includes(k)))return null;
@@ -133,23 +164,36 @@ export function replayFractionCaseEvidence(task,model){
     compatibility=ranges(ready,lower,upper);if(!compatibility.length)return null;
     lower=compatibility[0][0];
    }
-   const event={index,action:e.a,changedFields:changed,compatibleReadyPrefixes:compatibility,exactTimingKnown:false};
+   const event={index,action:e.a,changedFields:changed,compatibleReadyPrefixes:compatibility,
+    compatibleInnerPrefix:lower,exactTimingKnown:false,accepted:true,effect:true,fields:{...e.f},
+    before:structuredClone(board),issue:''};
+   const failed=(reason,message)=>Object.assign(event,{accepted:false,failure:reason,issue:message});
    if(e.a==='start'){
-    if(board.started||!next||next.action!=='predict-op'||next.index!==lower||e.f.choice!==task.op)return null;
-    let prediction,estimate=null;
-    if(task.estimate){
-     const lo=actualAmount(e.f.low,true),hi=actualAmount(e.f.high,true);
-     if(!lo||!hi||compare(lo,hi)>=0||fractions.cmp(e.f.low,e.f.high)>=0)return null;
-     prediction=kind([lo[0]*hi[1]+hi[0]*lo[1],2n*lo[1]*hi[1]]);estimate=[e.f.low,e.f.high];
-    }else{prediction=e.f.guess;if(!['negative','zero','part','one','more'].includes(prediction))return null;}
-    const workEvent=model.work.history[next.index],prior=next.index?model.work.history[next.index-1].f:fractions.fields;
-    if(next.value!==prediction||workKeys.some(k=>k!=='prediction'&&workEvent.f[k]!==prior[k]))return null;
+    if(board.started||!next||next.index!==lower)return null;
+    // The original first attempt is captured even when the request fails.
+    // Such a failure creates no automatic inner prediction and consumes no
+    // paired anchor. Both streams therefore keep their original indices.
     board.first??={choice:e.f.choice,low:e.f.low,high:e.f.high,guess:e.f.guess,story:e.f.story};
-    board.started=true;board.estimate=estimate;
-    const start={outerIndex:index,innerIndex:next.index,epoch:next.epoch,choice:e.f.choice,
-     guess:task.estimate?null:e.f.guess,estimate,automaticPrediction:prediction,
-     predictionAttribution:task.estimate?'tool-derived-from-interval':'tool-copied-from-outer-guess'};
-    starts.push(start);event.innerIndex=next.index;lower=next.index+1;anchorIndex++;
+    if(e.f.choice!==task.op)failed('choice-not-accepted',messages.choice);
+    else if(task.estimate&&(!fractions.frac(e.f.low)||!fractions.frac(e.f.high)||fractions.cmp(e.f.low,e.f.high)>=0))
+     failed('interval-not-accepted',messages.estimate);
+    else if(!task.estimate&&e.f.guess==='')failed('empty-guess',messages.guess);
+    else{
+     if(next.action!=='predict-op'||!next.accepted)return null;
+     let prediction,estimate=null;
+     if(task.estimate){
+      const lo=actualAmount(e.f.low,true),hi=actualAmount(e.f.high,true);
+      if(!lo||!hi||compare(lo,hi)>=0)return null;
+      prediction=kind([lo[0]*hi[1]+hi[0]*lo[1],2n*lo[1]*hi[1]]);estimate=[e.f.low,e.f.high];
+     }else prediction=e.f.guess;
+     const workEvent=model.work.history[next.index],prior=next.index?model.work.history[next.index-1].f:fractions.fields;
+     if(next.value!==prediction||workKeys.some(k=>k!=='prediction'&&workEvent.f[k]!==prior[k]))return null;
+     board.started=true;board.estimate=estimate;
+     const start={outerIndex:index,innerIndex:next.index,epoch:next.epoch,choice:e.f.choice,
+      guess:task.estimate?null:e.f.guess,estimate,automaticPrediction:prediction,
+      predictionAttribution:task.estimate?'tool-derived-from-interval':'tool-copied-from-outer-guess'};
+     starts.push(start);event.innerIndex=next.index;lower=next.index+1;anchorIndex++;
+    }
    }else if(e.a==='reset'){
     if(!next||next.action!=='reset')return null;
     if(!board.started){
@@ -160,16 +204,24 @@ export function replayFractionCaseEvidence(task,model){
     board=fresh(board.first);event.innerIndex=next.index;lower=next.index+1;anchorIndex++;
    }else{
     if(!task.reciprocal||!board.started||!compatibility)return null;
-    const factor=actualAmount(e.f.inverse,true),scaledA=actualAmount(e.f.scaledA),scaledB=actualAmount(e.f.scaledB);
-    if(!factor||!equal(multiply(b,factor),one)||!equal(scaledA,multiply(a,factor))||!equal(scaledB,one))return null;
-    board.normalized={factor:e.f.inverse,a:e.f.scaledA,b:e.f.scaledB};
-    normalizations.push({outerIndex:index,factor:pair(reduce(factor)),scaledA:pair(reduce(scaledA)),scaledB:[1,1],
-     submitted:{...board.normalized},compatibleReadyPrefixes:compatibility,exactTimingKnown:false});
+    const original=fractions.frac(e.f.inverse),originalAccepted=original&&
+     originalEqual(e.f.scaledA,...cases.mul(fractions.frac(task.a),original))&&
+     originalEqual(e.f.scaledB,...cases.mul(fractions.frac(task.b),original))&&originalEqual(e.f.scaledB,1,1);
+    if(!originalAccepted)failed('normalization-not-accepted',messages.normalize);
+    else{
+     const factor=actualAmount(e.f.inverse,true),scaledA=actualAmount(e.f.scaledA),scaledB=actualAmount(e.f.scaledB);
+     if(!factor||!equal(multiply(b,factor),one)||!equal(scaledA,multiply(a,factor))||!equal(scaledB,one))return null;
+     board.normalized={factor:e.f.inverse,a:e.f.scaledA,b:e.f.scaledB};
+     normalizations.push({outerIndex:index,factor:pair(reduce(factor)),scaledA:pair(reduce(scaledA)),scaledB:[1,1],
+      submitted:{...board.normalized},compatibleReadyPrefixes:compatibility,exactTimingKnown:false});
+    }
    }
+   event.after=structuredClone(board);event.effect=!same(event.before,event.after);
    previous={...e.f};outerEvents.push(event);
   }
   if(anchorIndex!==anchors.length||!board.started||!same(board,model.board)||!ready.at(-1)||
      fieldKeys.some(k=>!recordFields(task).includes(k)&&model[k]!==previous[k]))return null;
+  const issue=issueWitnesses(model,outerEvents,core);if(!issue)return null;
   let estimate=null,simple=null,mixed=null,tile=null,inverse=null,normalized=null;
   if(task.estimate){
    const [lo,hi]=board.estimate.map(s=>actualAmount(s,true));
@@ -202,7 +254,8 @@ export function replayFractionCaseEvidence(task,model){
   }
   if(task.story&&!model.story.trim())return null;
   return {operator:task.op,quantities:core.quantities,firstAttempt:board.first,currentStart:starts.at(-1),
-   starts,resets,normalizations,outerEvents,construction:core,estimate,simple,mixed,tile,inverse,normalized,
+   starts,resets,normalizations,outerEvents,failedRequests:outerEvents.filter(e=>!e.accepted),issue,
+   construction:core,estimate,simple,mixed,tile,inverse,normalized,
    storyProvided:!!task.story&&!!model.story.trim(),storyMeaningAssessed:false,independentExplanationAssessed:false,
    crossStreamTiming:'paired-start-reset-and-compatible-ready-prefixes',exactCrossStreamTimingKnown:false};
  }catch{return null;}
