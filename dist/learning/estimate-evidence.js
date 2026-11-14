@@ -1,4 +1,6 @@
-// B11 estimation evidence: only the saved estimate is an interaction event.
+// B11 estimation evidence: every estimate submission is a retained event.
+// Failed submissions preserve first and do not lock; the final successful
+// submission locks the estimate and removes those controls from the original UI.
 // Bounds are derived by the system; inverse checks and claim judgments are
 // submitted fields, not independently observed calculations or explanations.
 import * as estimates from './phase5/b11-model.js';
@@ -69,21 +71,45 @@ export function replayEstimateEvidence(task,model){
   if(!scales.includes(scale)||!keys(model,['history','issue',...selectionKeys,'first','locked','answer',
      'inverseStart','inverseOp','inversePart','inverseResult','judgment'])||model.issue!==''||
      ![...selectionKeys,'answer','inverseStart','inverseOp','inversePart','inverseResult','judgment'].every(key=>text(model[key]))||
-     !Array.isArray(model.history)||model.history.length!==1)return null;
-  const event=model.history[0];
-  if(!keys(event,['action',...selectionKeys])||event.action!=='b11-estimate'||
-     !selectionKeys.every(key=>text(event[key]))||!keys(model.first,selectionKeys)||!keys(model.locked,selectionKeys))return null;
-  const selected=Object.fromEntries(selectionKeys.map(key=>[key,event[key]]));
-  if(!same(model.first,selected)||!same(model.locked,selected)||
-     !same(Object.fromEntries(selectionKeys.map(key=>[key,model[key]])),selected))return null;
-  // A real select supplies one configured integer value, not Number() aliases
-  // such as hexadecimal or exponent notation that were never UI options.
-  const unit=task.units.find(value=>String(value)===event.unit);
-  if(unit===undefined||task.accuracy!==undefined&&unit>task.accuracy)return null;
-  const a=BigInt(task.a),b=BigInt(task.b),u=BigInt(unit),add=task.op==='+';
+     !Array.isArray(model.history)||model.history.length<1||model.history.length>10000||
+     !keys(model.first,selectionKeys)||!keys(model.locked,selectionKeys))return null;
+  const a=BigInt(task.a),b=BigInt(task.b),add=task.op==='+';
+  let first=null,locked=null,unit=null,lockedEstimateIndex=null;
+  const estimateEvents=[];
+  for(const [historyIndex,event]of model.history.entries()){
+   // There is no estimate button after a successful lock. A second success or
+   // any other appended event cannot be attributed to the original controls.
+   if(locked!==null||!keys(event,['action',...selectionKeys])||event.action!=='b11-estimate'||
+      !selectionKeys.every(key=>text(event[key])))return null;
+   // The default blank is a real option and may fail before correction.
+   // Number() aliases such as hexadecimal/exponent strings are never options.
+   const chosen=task.units.find(value=>String(value)===event.unit);
+   if(chosen===undefined&&event.unit!=='')return null;
+   const raw=Object.fromEntries(selectionKeys.map(key=>[key,event[key]]));
+   first??=structuredClone(raw);
+   const submitted=[units(event.roundedA,scale),units(event.roundedB,scale),units(event.estimate,scale)];
+   const failures=[];let expected=null;
+   if(chosen===undefined)failures.push('unit-not-selected');
+   else{
+    const interval=BigInt(chosen),ra=nearest(a,interval),rb=nearest(b,interval);
+    expected=[ra,rb,ra+(add?rb:-rb)];
+    if(task.accuracy!==undefined&&chosen>task.accuracy)failures.push('unit-exceeds-required-accuracy');
+    for(const [i,key]of ['roundedA','roundedB','estimate'].entries()){
+     if(submitted[i]===null)failures.push(key+'-not-an-exact-smallest-unit');
+     else if(submitted[i]!==expected[i])failures.push(key+'-does-not-match-rounding');
+    }
+   }
+   const accepted=failures.length===0;
+   if(accepted){locked=structuredClone(raw);unit=chosen;lockedEstimateIndex=historyIndex;}
+   estimateEvents.push({historyIndex,raw,unit:chosen??null,
+    expected:expected===null?null:expected.map(Number),submitted:submitted.map(n=>n===null?null:Number(n)),
+    accepted,lockedBefore:false,lockedAfter:accepted,failures});
+  }
+  if(locked===null||!same(model.first,first)||!same(model.locked,locked)||
+     !same(Object.fromEntries(selectionKeys.map(key=>[key,model[key]])),locked))return null;
+  const u=BigInt(unit);
   const roundedA=nearest(a,u),roundedB=nearest(b,u),estimate=roundedA+(add?roundedB:-roundedB),answer=a+(add?b:-b);
-  if(units(event.roundedA,scale)!==roundedA||units(event.roundedB,scale)!==roundedB||
-     units(event.estimate,scale)!==estimate||units(model.answer,scale)!==answer)return null;
+  if(units(model.answer,scale)!==answer)return null;
 
   const start=units(model.inverseStart,scale),part=units(model.inversePart,scale),result=units(model.inverseResult,scale);
   const inverseOp=add?'-':'+';
@@ -109,7 +135,9 @@ export function replayEstimateEvidence(task,model){
   // Original validity and completion are independent gates, never replaced.
   if(!estimates.valid(task,model)||!estimates.inspect(task,model).correct)return null;
   return {operation:task.op,scale,values:[task.a,task.b],unit,
-   rounded:[Number(roundedA),Number(roundedB)],estimate:Number(estimate),answer:Number(answer),estimateEventCount:1,
+   rounded:[Number(roundedA),Number(roundedB)],estimate:Number(estimate),answer:Number(answer),
+   estimateEventCount:estimateEvents.length,failedEstimateCount:estimateEvents.length-1,
+   firstEstimate:first,lockedEstimateIndex,estimateEvents,
    bounds:{lowTwice:Number(lowTwice),highTwice:Number(highTwice),denominator:2,lowerInclusive,upperInclusive:false,systemDerived:true},
    inverse:{start:Number(start),operation:inverseOp,part:Number(part),result:Number(result),submissionOnly:true},
    claim,accuracy:task.accuracy===undefined?null:{limit:task.accuracy,selectedUnit:unit,withinLimit:true},

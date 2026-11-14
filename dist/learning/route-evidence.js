@@ -63,32 +63,39 @@ export function replayRouteEvidence(task,model){
   if(!integer(answer,0)||!integer(target)||!integer(netChange)||!direction||
      !keys(model,['history','issue','guess','first','started','jump','landing','hops','answer'])||
      !['issue','guess','first','jump','landing','answer'].every(key=>text(model[key]))||
-     model.issue!==''||model.started!==true||!Array.isArray(model.history)||
+     model.started!==true||!Array.isArray(model.history)||
      model.history.length<2||model.history.length>10000||!Array.isArray(model.hops))return null;
   const start=model.history[0];
   if(!keys(start,['action','guess'])||start.action!=='b11-route-start'||
      exactUnits(start.guess,scale)===null||model.first!==start.guess||model.guess!==start.guess)return null;
 
-  const hops=[],steps=[];
-  let at=origin,forwardMoves=0,backwardMoves=0,undos=0;
-  for(const event of model.history.slice(1)){
+  const hops=[],steps=[],requests=[],failedRequests=[];
+  let at=origin,forwardMoves=0,backwardMoves=0,undos=0,issue='';
+  for(const [offset,event] of model.history.slice(1).entries()){
+   const historyIndex=offset+1;
    const from=at;
    if(event?.action==='b11-hop'){
-    if(!keys(event,['action','jump','landing','from'])||!integer(event.from)||event.from!==at||hops.length>=100)return null;
+    if(!keys(event,['action','jump','landing','from'])||!text(event.jump)||!text(event.landing)||
+       !integer(event.from)||event.from!==at)return null;
     const delta=exactUnits(event.jump,scale),to=exactUnits(event.landing,scale);
-    if(delta===null||delta===0||to===null||!integer(at+delta)||to!==at+delta)return null;
-    hops.push({delta,to});at=to;
-    steps.push({kind:'hop',from,delta,to});
+    const accepted=delta!==null&&delta!==0&&to!==null&&integer(at+delta)&&to===at+delta&&hops.length<100;
+    issue=accepted?'':'每一步都要从刚到的地方出发；落点要和这次的变化量一致。';
+    const request={historyIndex,action:event.action,raw:{jump:event.jump,landing:event.landing},
+     from,submittedDelta:delta,submittedLanding:to,accepted,to:accepted?to:from,issue};
+    requests.push(request);
+    if(!accepted){failedRequests.push(request);continue;}
+    hops.push({delta,to});at=to;steps.push({kind:'hop',from,delta,to});
     if(delta>0)forwardMoves++;else backwardMoves++;
    }else if(event?.action==='b11-hop-undo'){
     if(!keys(event,['action','hop'])||!keys(event.hop,['delta','to'])||!hops.length||
        !same(event.hop,hops.at(-1)))return null;
     const undone=hops.pop();at=hops.at(-1)?.to??origin;undos++;
     if(at!==from-undone.delta)return null;
-    steps.push({kind:'undo',from,delta:-undone.delta,to:at});
+    issue='';steps.push({kind:'undo',from,delta:-undone.delta,to:at});
+    requests.push({historyIndex,action:event.action,undone:{...undone},from,to:at,accepted:true,issue});
    }else return null;
   }
-  if(!hops.length||hops.length<minSteps||at!==target||!same(model.hops,hops)||
+  if(model.issue!==issue||!hops.length||hops.length<minSteps||at!==target||!same(model.hops,hops)||
      exactUnits(model.answer,scale)!==answer||hops.reduce((sum,hop)=>sum+hop.delta,0)!==netChange)return null;
 
   const retained=hops.map((hop,index)=>({from:index?hops[index-1].to:origin,...hop}));
@@ -112,7 +119,7 @@ export function replayRouteEvidence(task,model){
   // Original completion and validity remain independent requirements.
   if(!routes.valid(task,model)||!routes.inspect(task,model).correct)return null;
   return {operation:task.op,scale,origin,target,answer,netChange,countup:!!task.countup,
-   hops:retained,steps,forwardMoves,backwardMoves,undos,compensation,
+   hops:retained,steps,requests,failedRequests,forwardMoves,backwardMoves,undos,compensation,
    display:{origin:format(origin,scale),target:format(target,scale),answer:format(answer,scale),
     netChange:format(netChange,scale),values:[format(task.a,scale),format(task.b,scale)],
     hops:retained.map(hop=>({from:format(hop.from,scale),delta:format(hop.delta,scale),to:format(hop.to,scale)}))}};

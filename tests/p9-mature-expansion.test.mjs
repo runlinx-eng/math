@@ -8,6 +8,9 @@ import {exampleModel,defaultModel,inspect,validModel} from '../dist/learning/tas
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as arrays from '../dist/learning/phase5/b13-model.js';
 import * as patterns from '../dist/learning/phase5/b34-model.js';
+import * as arrayView from '../dist/learning/phase5/b13-view.js';
+import * as patternView from '../dist/learning/phase5/b34-view.js';
+import {visibleModel} from './helpers/p9-basic-visible-controls.mjs';
 import {arrayBinding,replayArrayEvidence} from '../dist/learning/array-evidence.js';
 import {sequenceBinding,replaySequenceEvidence} from '../dist/learning/sequence-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
@@ -76,12 +79,20 @@ test('sequence feedback uses actual labels for distant, current, multiple and ne
  assert.match(thinkingFeedback(old,done,record(done),{sessionId:'reason34',index:1}).observation,/第20项.*81/);
 });
 
-test('sequence rules keep exact scale, negative steps and meaningful undo while rejecting no-op history',()=>{
+test('sequence rules retain visible empty and meaningful undo without accepting hidden or forged history',()=>{
  for(const spec of reviewed.sequence){
   const t=sessionTasks(spec.id)[spec.index],m=patterns.example(t);
-  const prior=structuredClone(m);prior.history.unshift({a:'undo',i:'',v:'',w:''});
+  const emptyUndo=visibleModel(t,patterns,patternView);emptyUndo.action('p34-undo');
+  for(const step of patterns.solveSteps(t))emptyUndo.step(step);
+  const prior=emptyUndo.model;
   assert.ok(patterns.valid(t,prior)&&patterns.inspect(t,prior).correct);
-  assert.equal(replaySequenceEvidence(t,prior),null,'an initial no-op cannot be hidden by later correct work');
+  const retained=replaySequenceEvidence(t,prior);assert.ok(retained);
+  assert.equal(retained.noOpUndos,1);assert.equal(retained.undos,0);
+  assert.equal(retained.advances,t.length-1);assert.equal(retained.events.length,prior.history.length);
+  assert.deepEqual(retained.events[0].before,retained.events[0].after);
+  assert.equal(retained.events[0].changed,false);
+  const invented=structuredClone(prior);invented.board.bad=true;
+  assert.equal(replaySequenceEvidence(t,invented),null,'empty undo cannot invent a failed numeric entry');
   const ignored=structuredClone(m);ignored.history.push({a:'show',i:'',v:'',w:''});
   assert.ok(patterns.valid(t,ignored)&&patterns.inspect(t,ignored).correct);
   assert.equal(replaySequenceEvidence(t,ignored),null);
@@ -92,9 +103,15 @@ test('sequence rules keep exact scale, negative steps and meaningful undo while 
   const pending=structuredClone(m);pending.value='999';
   assert.ok(patterns.inspect(t,pending).correct);assert.equal(replaySequenceEvidence(t,pending),null,
    'the recorded last value must still match the current completed input');
-  patterns.act(t,m,'p34-undo');
-  m.value=patterns.example(t).history.at(-1).v;patterns.act(t,m,'p34-next');
-  const p=replaySequenceEvidence(t,m);assert.ok(p);assert.equal(p.undos,1);assert.equal(p.advances,t.length);
+  const visible=visibleModel(t,patterns,patternView);
+  visible.field('value',m.history[0].v);visible.action('p34-next');visible.action('p34-undo');
+  for(const step of patterns.solveSteps(t))visible.step(step);
+  const p=replaySequenceEvidence(t,visible.model);assert.ok(p);assert.equal(p.undos,1);assert.equal(p.advances,t.length);
+  assert.throws(()=>visible.action('p34-undo'),/visible enabled action/);
+  const hidden=structuredClone(m);patterns.act(t,hidden,'p34-undo');
+  hidden.value=m.history.at(-1).v;patterns.act(t,hidden,'p34-next');
+  assert.ok(patterns.inspect(t,hidden).correct);assert.equal(replaySequenceEvidence(t,hidden),null,
+   'undo after completion is absent from the original interface');
  }
  const scaled=sessionTasks('linear34')[0];
  assert.deepEqual(replaySequenceEvidence(scaled,patterns.example(scaled)).displayValues,['2.5','4','5.5','7']);
@@ -150,17 +167,30 @@ test('the one estimate describes its approximate context and rejects exact-equal
  m.equation='1000≈200×5';assert.ok(arrays.inspect(t,m).correct);assert.ok(replayArrayEvidence(t,m));
 });
 
-test('every new array rejects ignored selector payloads, extra constructions and inconsistent prediction history',()=>{
+test('every new array retains visible repeated construction and rejects ignored selectors or inconsistent prediction',()=>{
  for(const spec of reviewed.array){
   const t=sessionTasks(spec.id)[spec.index],m=arrays.example(t);
   const forged=structuredClone(m);forged.history[0].data.index=1;
   assert.ok(arrays.valid(t,forged)&&arrays.inspect(t,forged).correct);
   assert.equal(replayArrayEvidence(t,forged),null,'an unrelated selector is not part of a genuine array action');
-  const duplicate=structuredClone(m);duplicate.history.unshift(structuredClone(duplicate.history[0]));
+  const repeated=visibleModel(t,arrays,arrayView);
+  for(const step of arrays.solveSteps(t)){repeated.step(step);if(step.action==='b13-shape')repeated.action('b13-shape');}
+  const duplicate=repeated.model;
   assert.ok(arrays.valid(t,duplicate)&&arrays.inspect(t,duplicate).correct);
-  assert.equal(replayArrayEvidence(t,duplicate),null,'redundant initial construction remains visible to strict replay');
+  const proof=replayArrayEvidence(t,duplicate);assert.ok(proof);
+  assert.equal(proof.events.length,duplicate.history.length);assert.equal(proof.total,t.a*t.b*(t.unit||1));
+  assert.deepEqual(proof.events[1].before,proof.events[1].after,'repeating the same board never adds quantities');
+  const invented=structuredClone(duplicate);invented.board.rows++;
+  assert.equal(replayArrayEvidence(t,invented),null,'a real repeated request cannot justify a fabricated board');
   const prediction=structuredClone(m);prediction.prediction='less';
-  assert.ok(arrays.inspect(t,prediction).correct);assert.equal(replayArrayEvidence(t,prediction),null);
+  assert.ok(arrays.inspect(t,prediction).correct);
+  if(t.rotate){
+   repeated.field('prediction','less');
+   const retained=replayArrayEvidence(t,prediction);assert.ok(retained);
+   assert.equal(retained.retainedPrediction,m.board.prediction,'an editable later guess cannot rewrite the recorded first guess');
+   assert.equal(thinkingFeedback(t,prediction,record(m),context(spec)),null,'old submission feedback remains stale');
+   assert.ok(thinkingFeedback(t,prediction,record(prediction),context(spec)));
+  }else assert.equal(replayArrayEvidence(t,prediction),null,'non-rotation tasks have no prediction control');
  }
 });
 

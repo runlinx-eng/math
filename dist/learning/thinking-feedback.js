@@ -116,11 +116,13 @@ export function thinkingFeedback(task,model,record,context={}){
     const detail=['这里只核对本次记录中的选择、图示和当前提交；工具生成的图和读数不等于独立构造或证明，没有自动评价自由解释、故事的意义或长期掌握。'];
     if(attempts.slice(0,-1).some(a=>replayFractionCaseEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.failedRequests.length)detail.push(`记录保留了 ${proof.failedRequests.length} 次未被工具接受的开始或换算请求；最初填写、失败提示和原操作记录仍在，没有把失败算成成功开始或正确换算。后续纠正与当前作品分别核对。`);
+    if(core.failedRequests.length)detail.push(`图示记录还保留了 ${core.failedRequests.length} 次未被工具接受的请求；这些请求没有改变当时的构造，也不计作成功接合、放组或余量显示。`);
     if(proof.estimate){
       const e=proof.estimate;
-      detail.push(`最初开始时填写的范围是 ${proof.firstAttempt.low} 到 ${proof.firstAttempt.high}；本轮填写的范围是 ${e.bounds[0]} 到 ${e.bounds[1]}，包含两个端点。工具根据本轮区间中点自动记下量级估计，这不是额外一次作答。当前图示表示 ${result}，${e.inside?'在':'不在'}本轮区间内，与本次提交的判断相符；范围没有包含结果也可以如实核对。`);
+      detail.push(`最初开始时填写的范围是 ${proof.firstAttempt.low||'未填写'} 到 ${proof.firstAttempt.high||'未填写'}；本轮填写的范围是 ${e.bounds[0]} 到 ${e.bounds[1]}，包含两个端点。工具根据本轮区间中点自动记下量级估计，这不是额外一次作答。当前图示表示 ${result}，${e.inside?'在':'不在'}本轮区间内，与本次提交的判断相符；范围没有包含结果也可以如实核对。`);
     }else{
-      detail.push(`最初填写的量级猜想是“${kinds[proof.firstAttempt.guess]}”；本轮开始填写的是“${kinds[proof.currentStart.guess]}”。工具把本轮猜想带入图示，未把它算作第二次预测；当前构造得到的量${kinds[core.resultKind]}，猜想和后来的操作分别保留。`);
+      detail.push(`最初填写的量级猜想是“${kinds[proof.firstAttempt.guess]||'未选择'}”；本轮开始填写的是“${kinds[proof.currentStart.guess]}”。工具把本轮猜想带入图示，未把它算作第二次预测；当前构造得到的量${kinds[core.resultKind]}，猜想和后来的操作分别保留。`);
     }
     if(proof.resets.length)detail.push(`你重新摆放了 ${proof.resets.length} 次，之前的记录和最初猜想仍保留；下面只描述当前留下的有效构造。`);
     let observation,connection;
@@ -159,6 +161,10 @@ export function thinkingFeedback(task,model,record,context={}){
     const kinds={negative:'比0小',zero:'等于0',part:'在0与1之间',one:'等于1',more:'比1大'};
     detail.push(`最初记录的估计是“${kinds[proof.firstPrediction]}”；当前构造得到的量${kinds[proof.resultKind]}。估计与构造结果分别保留。`);
     if(proof.resets.length)detail.push(`你重置了 ${proof.resets.length} 次，之前的操作和最初估计仍保留；下面只描述当前留下的有效构造。`);
+    const emptyPredictions=proof.failedRequests.filter(e=>e.action==='predict-op').length,
+      unfinishedRequests=proof.failedRequests.length-emptyPredictions;
+    if(emptyPredictions)detail.push(`记录保留了 ${emptyPredictions} 次空选择请求；它们没有留下估计，也没有改变作品。`);
+    if(unfinishedRequests)detail.push(`记录保留了 ${unfinishedRequests} 次尚未完成的请求；这些请求没有改变当时的构造，也不计作成功接合、放组或余量显示。后续实际纠正与当前作品分别核对。`);
     let observation,connection;
     if(proof.product){
       const p=proof.product;
@@ -188,6 +194,7 @@ export function thinkingFeedback(task,model,record,context={}){
       detail.push(`你提交的分数 ${name.numerator}/${name.denominator} 与这部分等值；这个分数的写法和实际选中的 ${proof.selectedGroups.length} 组、全部 ${proof.partitions} 组已分别核对。`);
     }
     if(proof.equation)detail.push(`你提交的等式 ${proof.equation.raw} 与当前分组数量相符；等式是本次填写的关系，本控件没有记录一个独立的计算过程。`);
+    if(proof.confirmations.length)detail.push(`记录中还有 ${proof.confirmations.length} 次点击已在当前组里的物品；这些点击没有换组，也没有增加或取走物品，不算新的移动。`);
     if(proof.resets.length)detail.push(`你按过 ${proof.resets.length} 次重新摆；之前的事件仍保留，当前分组按最后留下的物品位置核对。`);
     return {title:'这次作品中的思考线索',
       observation:`这次的 ${proof.total} 颗物品最终分成 ${proof.partitions} 组，每组 ${proof.each} 颗。你当前选中了 ${proof.selectedGroups.length} 组，包含 ${proof.selectedTotal} 颗；未选中的还有 ${proof.unselectedTotal} 颗。每颗物品只有一个位置；每次分放后，各组里的物品加上尚未分放的物品，总量保持一致。`,
@@ -197,7 +204,8 @@ export function thinkingFeedback(task,model,record,context={}){
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);if(!source)return null;
     const proof=replayEstimateEvidence(task,model);if(!proof)return null;
-    const detail=['这里只核对你实际留下的一次估计与这次提交的数值关系；没有自动评价自由解释、独立逆算过程或长期掌握。'];
+    const detail=[`这里只核对保留的 ${proof.estimateEventCount} 次估计提交、最后成功锁定的估计与这次提交的数值关系；没有自动评价自由解释、独立逆算过程或长期掌握。`];
+    if(proof.failedEstimateCount)detail.unshift(`记录中保留了 ${proof.failedEstimateCount} 次尚未锁定的估计提交；你随后更正并成功锁定。首尝试仍然保留，没有被后来的估计覆盖。`);
     if(attempts.slice(0,-1).some(a=>replayEstimateEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     detail.push(`系统依据你选择的间隔推得范围：结果${proof.bounds.lowerInclusive?'不小于':'大于'} ${proof.display.low}，小于 ${proof.display.high}。这个范围由系统推导，没有据此判断你已自行构造或证明了范围。`);
@@ -207,7 +215,7 @@ export function thinkingFeedback(task,model,record,context={}){
       `给出的 ${proof.display.claim} 落在这个估计范围内，属于可能的结果。${proof.claim.exactCorrect?'它也与本题精确结果相同。':`但 ${proof.display.claim} 不等于本题精确结果 ${proof.display.answer}，可能并不代表精确正确。`}`:
       `给出的 ${proof.display.claim} 不在这个估计范围内；本次提交的“不可能”与这个范围相符。`);
     return {title:'这次作品中的思考线索',
-      observation:`你选择间隔 ${proof.display.unit}，把 ${proof.display.values[0]}、${proof.display.values[1]} 分别取为 ${proof.display.rounded[0]}、${proof.display.rounded[1]}，实际留下估计 ${proof.display.rounded[0]} ${proof.operation==='+'?'+':'−'} ${proof.display.rounded[1]} = ${proof.display.estimate}。当前填写的精确结果是 ${proof.display.answer}；估计记录和精算结果已分别核对。`,
+      observation:`你最后成功锁定的间隔是 ${proof.display.unit}，把 ${proof.display.values[0]}、${proof.display.values[1]} 分别取为 ${proof.display.rounded[0]}、${proof.display.rounded[1]}，留下估计 ${proof.display.rounded[0]} ${proof.operation==='+'?'+':'−'} ${proof.display.rounded[1]} = ${proof.display.estimate}。当前填写的精确结果是 ${proof.display.answer}；估计记录和精算结果已分别核对。`,
       connection:'如果把间隔换细一些，估计范围会怎样变化？一个数落在范围内，为什么还需要精算？',
       detail,method:null};
   }
@@ -222,7 +230,9 @@ export function thinkingFeedback(task,model,record,context={}){
       `首次留下的猜想是 ${p.value}。本题要找的是${role}，当前作品核对得到 ${p.expected}，与这个猜想${p.correct?'相同':'不同'}。`,
       '这里只核对保存的演示请求、交换和当前提交；没有记录逐颗操作或每一次尝试，也没有自动评价自由解释、独立证明或长期掌握。'
     ];
-    if(!first.matchesTask)detail.push(`最初那次探索记录的是 ${relation(first)}；其中对应猜想框的量是 ${first.guess.displayExpected}，与当时猜想${first.guess.matchesDisplay?'相同':'不同'}。这次探索与本题所求的量分别核对。`);
+    if(!first.matchesTask&&first.guess.displayExpected!==null)detail.push(`最初那次探索记录的是 ${relation(first)}；其中对应猜想框的量是 ${first.guess.displayExpected}，与当时猜想${first.guess.matchesDisplay?'相同':'不同'}。这次探索与本题所求的量分别核对。`);
+    if(proof.insufficientAttempts.length)detail.push(`记录中还保留了 ${proof.insufficientAttempts.length} 次物品不够拿的尝试；这些请求没有被当作成功取走，也没有把负数说成实物剩余。后面的演示和当前算式另外核对。`);
+    if(proof.limitedDisplays.length)detail.push(`有 ${proof.limitedDisplays.length} 次早先预览没有完整对应请求的数量或动作；这些记录仍然保留，不用它们判断数量关系。这里核对的是最后与题目对应的演示和算式。`);
     if(proof.demonstrations.some(e=>!e.matchesTask))detail.push('其他数量或动作的探索仍保留在记录中；当前算式核对最新一次符合题目条件的演示。');
     if(proof.demonstrations.some(e=>e.sameAsPreviousRecordedDisplay))detail.push('你又请求过相同数量和动作的演示；这些请求没有被累计成更多物品。');
     if(proof.reference)detail.push(`另一边的 ${proof.reference.parts[0]} 与 ${proof.reference.parts[1]} 是工具给定的参照，共 ${proof.reference.total}；你当前提交的等式把演示中的两部分与这个参照对应。`);
@@ -247,6 +257,8 @@ export function thinkingFeedback(task,model,record,context={}){
     const source=angleBinding(task,context);if(!source)return null;
     const proof=replayAngleEvidence(task,model);if(!proof)return null;
     const detail=['这里只核对本次指定并留下的开口、边长等级与当前回答；没有自动评价自由解释、独立连续推导或长期掌握。'];
+    if(proof.failedRequests.length)detail.push(`记录中保留了 ${proof.failedRequests.length} 次没有改变开口或边长的失败请求；原来的输入和提示仍在，这些请求没有被算作转动或新增记录。`);
+    if(proof.confirmations)detail.push(`相同开口、边长或记录的重复确认也已保留，没有重复累计角度或记录。`);
     if(attempts.slice(0,-1).some(a=>replayAngleEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.lengthComparison)detail.push(`你分别留下了短边、长边时同为 ${proof.lengthComparison.angle}° 的记录；改变边的长短没有改变这两份记录中的开口。`);
@@ -263,9 +275,11 @@ export function thinkingFeedback(task,model,record,context={}){
     const source=transformBinding(task,context);if(!source)return null;
     const proof=replayTransformEvidence(task,model);if(!proof)return null;
     const detail=['这里只核对本次选择的变换参数、工具生成的对应坐标和当前提交；没有自动评价自由解释、独立作图、独立量取或长期掌握。'];
+    if(proof.failedRequests.length)detail.push(`记录中保留了 ${proof.failedRequests.length} 次尚未形成预测或变换的请求；这些失败没有被当作成功变换，也没有覆盖首次留下的输入。`);
+    if(proof.confirmations)detail.push(`相同图形或读数的重复确认仍在记录中，没有被累计成新的图形变化或独立测量。`);
     if(attempts.slice(0,-1).some(a=>replayTransformEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
-    detail.push(proof.prediction.correct?'你最初填写的坐标猜想与这次第一个对应点相符。':'你最初填写的坐标猜想与这次第一个对应点不同；猜想和后来的操作已分别核对。');
+    detail.push(proof.prediction.correct?'你留下的有效坐标猜想与这次第一个对应点相符。':'你留下的有效坐标猜想与这次第一个对应点不同；猜想和后来的操作已分别核对。');
     if(proof.invariants.edgeSquared.length)detail.push(`按实际对应点核对，对应边长是原来的 ${proof.display.lengthFactor} 倍；边长平方是原来的 ${proof.display.squaredLengthFactor} 倍。`);
     if(proof.invariants.anglesPreserved)detail.push('这些对应点形成的角保持相同；这只核对本次图形。');
     if(proof.measurementCount)detail.push(`你请求工具显示过 ${proof.measurementCount} 次读数；这些读数由工具生成，没有据此判断你已独立量取。`);
@@ -279,6 +293,8 @@ export function thinkingFeedback(task,model,record,context={}){
     const source=groupsBinding(task,context);if(!source)return null;
     const proof=replayGroupsEvidence(task,model);if(!proof)return null;
     const detail=[proof.total===0?'这里只核对本次记录中空容器的数量、每份0和当前提交；没有自动评价自由解释、独立建模或长期掌握。':'这里只核对本次记录中物品的身份、实际分放和当前提交；没有自动评价自由解释、独立建模或长期掌握。'];
+    if(proof.history.resetCount)detail.push(`你重新摆了 ${proof.history.resetCount} 次。下面核对最后一轮的物品；前面的摆放和重新开始记录也已逐条核对。`);
+    if(proof.history.failedRequests.length)detail.push(`记录中有 ${proof.history.failedRequests.length} 次请求没有被教具采纳；它们保留在尝试中，没有算作物品移动或增加。`);
     if(attempts.slice(0,-1).some(a=>replayGroupsEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.rounds)detail.push(`你实际逐轮分了 ${proof.rounds} 轮，每轮给每份一个；每个物品的去向都已核对。`);
@@ -296,6 +312,9 @@ export function thinkingFeedback(task,model,record,context={}){
     const sign=proof.direction==='descending'?' ≥ ':' ≤ ',detail=[
       '这里只核对本次记录中的涂份、定位和比较操作；没有自动评价自由解释、独立证明或长期掌握。'
     ];
+    if(proof.history.resetCount)detail.push(`你重新摆了 ${proof.history.resetCount} 次；先前预测和操作都保留，下面描述最后一轮的构造。`);
+    if(proof.history.failedRequests.length)detail.push(`有 ${proof.history.failedRequests.length} 次请求未改变相应构造；失败请求与后来的有效操作分别核对，没有把它们当成成功定位或改名。`);
+    if(proof.history.placementAttempts.some(p=>!p.matchesCard))detail.push('记录中曾试过其他位置；这些尝试与当前核对正确的位置分别保留。');
     if(attempts.slice(0,-1).some(a=>replayFractionOrderEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.aligned)detail.push('你实际把原来不一样长的整体对齐，再比较它们表示的量。');
@@ -312,6 +331,7 @@ export function thinkingFeedback(task,model,record,context={}){
     const proof=replayRouteEvidence(task,model);if(!proof)return null;
     const route=proof.display.hops.slice(0,6).map(h=>`${h.from} ${h.delta.startsWith('-')?'− '+h.delta.slice(1):'+ '+h.delta} = ${h.to}`);
     const detail=['这里只核对本次记录中的数轴操作和当前提交；没有自动评价自由解释、独立心算、方法是否最优或长期掌握。'];
+    if(proof.failedRequests.length)detail.push(`还保留了 ${proof.failedRequests.length} 次没有走成的跳跃请求；每次仍停在原落点，失败没有被计入步数或路程。后续改正和撤回分别核对。`);
     if(attempts.slice(0,-1).some(a=>replayRouteEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.undos)detail.push(`你实际撤回了 ${proof.undos} 步；撤回操作和保留路径已分别核对。`);
@@ -329,6 +349,7 @@ export function thinkingFeedback(task,model,record,context={}){
     const examples=proof.exchanges.slice(0,3).map(e=>
       `${e.from.count} 个 ${proof.scale>1?e.from.unitLabel:e.from.unit} 换成 ${e.to.count} 个 ${proof.scale>1?e.to.unitLabel:e.to.unit}`);
     const detail=['这里只核对本次记录中的数位操作和当前提交；没有自动评价自由解释、独立论证、心算策略或长期掌握。'];
+    if(proof.failedActions)detail.push(`保留的记录中还有 ${proof.failedActions} 次未能开始、交换或拿走的请求；这些没有算作成功操作，最初猜想仍保留。`);
     if(attempts.slice(0,-1).some(a=>replayPlaceEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(task.written)detail.push('对应数位上写下的数字与最后各列留下的数量相符。');
@@ -345,6 +366,9 @@ export function thinkingFeedback(task,model,record,context={}){
       `最后位置含 ${proof.whole} 个完整的1，零头是 ${name(proof.remainder)}。`,
       `乘法记录核对的是每组 ${name(proof.group)}、共 ${proof.groups} 组，得到 ${name(proof.end)}；题目的组数与来回探索的前进次数分别计算。`
     ];
+    if(proof.history.epochs.length>2||proof.history.epochs[0].steps.length)detail.push('先前的等分、来回探索与重新开始都保留；下面只计算最后一次等分后的移动次数，各轮使用的小份分别核对。');
+    if(proof.history.failedRequests.length)detail.push(`有 ${proof.history.failedRequests.length} 次分份请求未被采纳，没有改变当时的小份。`);
+    if(proof.history.ineffectiveRequests.length)detail.push(`有 ${proof.history.ineffectiveRequests.length} 次边界处的请求没有移动位置，已保留但未算作前进或后退。`);
     if(attempts.slice(0,-1).some(a=>replayGroupwalkEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.bounds)detail.push(`你核对了最后位置左右相邻的整数 ${proof.bounds[0]} 和 ${proof.bounds[1]}。`);
@@ -362,6 +386,9 @@ export function thinkingFeedback(task,model,record,context={}){
     const name=r=>r.join('/'),detail=[
       '这里只核对本次记录中的逐步移动和当前提交；没有自动评价自由解释、独立论证、表示转换能力或长期掌握。'
     ];
+    if(proof.history.epochs.length>2||proof.history.epochs[0].steps.length)detail.push('先前的等分、来回探索与重新开始都保留；下面只计算最后一次等分后的移动次数，各轮使用的小份分别核对。');
+    if(proof.history.failedRequests.length)detail.push(`有 ${proof.history.failedRequests.length} 次分份请求未被采纳，没有改变当时的小份。`);
+    if(proof.history.ineffectiveRequests.length)detail.push(`有 ${proof.history.ineffectiveRequests.length} 次边界处的请求没有移动位置，已保留但未算作前进或后退。`);
     if(attempts.slice(0,-1).some(a=>replayUnitwalkEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(task.copies)detail.push(`你填写的加法包含 ${task.n} 个 ${name(proof.unit)}，与最后位置相符。`);
@@ -400,6 +427,8 @@ export function thinkingFeedback(task,model,record,context={}){
     const actions=[proof.splits?`细分 ${proof.splits} 次`:null,proof.merges?`合并 ${proof.merges} 次`:null].filter(Boolean).join('、');
     const names=proof.saved.slice(0,6).map(name).join('、')+(proof.saved.length>6?`等 ${proof.saved.length} 个名字`:'');
     const detail=['这里只核对本次分数操作和当前提交；没有自动评价自由解释、一般证明或长期掌握。'];
+    if(proof.history.resetCount)detail.push(`你重新摆了 ${proof.history.resetCount} 次；前面的尝试保留，下面描述最后一轮留下的分法和名字。`);
+    if(proof.history.failedRequests.length)detail.push(`记录中有 ${proof.history.failedRequests.length} 次请求未被采纳；这些尝试没有算作成功细分、合并或新名字。`);
     if(attempts.slice(0,-1).some(a=>a?.value&&replayFractionEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.rewinds)detail.push(`你还实际回到原分法 ${proof.rewinds} 次。`);
@@ -416,9 +445,13 @@ export function thinkingFeedback(task,model,record,context={}){
     const proof=replayArrayEvidence(task,model);
     if(!proof)return null;
     let observation=`你实际摆出了 ${proof.rows} 行、每行 ${proof.cols} 格；每格代表 ${proof.unit}，这幅阵列共表示 ${proof.total}。`;
-    if(proof.turned)observation+=`你实际转向后看到了 ${proof.cols} 行、每行 ${proof.rows} 格，总量仍是 ${proof.total}。`;
+    if(proof.turned)observation+=`你实际转向后看到了 ${proof.currentRows} 行、每行 ${proof.currentCols} 格，总量仍是 ${proof.total}。`;
     if(proof.cut!==null)observation+=`你实际在第 ${proof.cut} 列后切开，核对得到左边 ${proof.left}、右边 ${proof.right}，合起来仍是 ${proof.total}。`;
     const detail=['这里只检查本次阵列、实际操作和当前提交；不能据此判断独立解释、一般证明、归纳能力或长期掌握。'];
+    if(proof.failedActions)detail.push(`保留的记录中有 ${proof.failedActions} 次摆放或切分请求没有改变阵列，随后保留的构造已逐步核对。`);
+    if(proof.shapes>1||proof.turns>1||proof.cuts>1)detail.push(`保留的探索包含 ${proof.shapes} 次摆放、${proof.turns} 次转向和 ${proof.cuts} 次切分；上面描述的是最后保留的阵列。`);
+    if(proof.confirmations.length)detail.push(`还有 ${proof.confirmations.length} 次确认了相同的阵列或切线，画面中的构造没有改变，没有算作新的摆放或切分。`);
+    if(proof.retainedPrediction&&proof.retainedPrediction!=='same')detail.push(`最初保留的转向猜想是“${proof.retainedPrediction==='more'?'变多':'变少'}”；实际转向前后格数相等，没有把这个猜想说成正确推理。`);
     if(proof.unknown)detail.push(`题目中的未知量是${{a:'份数',b:'每份的量',p:'总量'}[proof.unknown.kind]}，你填写的 ${proof.unknown.value}${proof.unknown.original?' 已代回原来的 '+proof.unknown.original+' 核对':' 与阵列对应'}。`);
     if(proof.addition)detail.push(`你按当前的 ${proof.addition.length} 行写出连加，每一项是 ${proof.addition[0]}，合计 ${proof.total}。`);
     if(proof.reversedEquation)detail.push('你把总量写在等号左边，等号两边仍与这幅阵列对应。');
@@ -441,6 +474,8 @@ export function thinkingFeedback(task,model,record,context={}){
     const pair=x=>`边${x.first+1}与边${x.second+1}`;
     const relations=proof.tests.map(x=>pair(x)+(x.parallel?'的所在直线平行':x.perpendicular?'的所在直线垂直':'的所在直线既不平行也不垂直'));
     const detail=['这里只核对本题屏幕上实际选出的边与当前提交；不能推断独立解释、一般证明或长期掌握。'];
+    if(proof.failedComparisons)detail.push(`保留的记录中有 ${proof.failedComparisons} 次尚未选出两条不同边的请求，这些没有算作边之间的比较。`);
+    if(proof.repeatedComparisons)detail.push(`其中 ${proof.repeatedComparisons} 次重新比较了已选过的一对边；重复检查没有算作新的边对。`);
     if(attempts.slice(0,-1).some(a=>a.value&&replayLineEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
     if(record.support)detail.push('你看过提示或比较反馈。');
     return {title:'这次作品中的思考线索',
@@ -453,11 +488,14 @@ export function thinkingFeedback(task,model,record,context={}){
     const proof=replayCounterexampleEvidence(task,model);
     if(!proof)return null;
     const comparison={less:'比原来的数更小',equal:'与原来的数一样大',greater:'比原来的数更大'}[proof.actual];
+    const detail=['这里只核查本次确实执行且经检查的有理数比较；不评价独立论证、一般证明或学习迁移。'];
+    if(proof.failedRequests)detail.push(`保留的记录中有 ${proof.failedRequests} 次输入或选择未完成的请求，没有生成乘法比较。`);
+    if(proof.wrongPredictions)detail.push(`实际比较中有 ${proof.wrongPredictions} 次猜想与结果不符；最初猜想仍保留，只有最后保留的正确比较用于核对反例。`);
     return {
       title:'这次作品中的思考线索',
       observation:`你实际检验了 ${proof.comparisons} 次乘法比较；最后一次 ${proof.value} × ${proof.factor} 的结果${comparison}，与题目中的“${proof.rule==='strict'?'总会变大':'总不会变小'}”说法矛盾。`,
       connection:'一个符合条件的反例可以推翻“总是”的说法。改变乘数或者命题，再试一次，结果还矛盾吗？',
-      detail:['这里只核查本次确实执行且经检查的有理数比较；不评价独立论证、一般证明或学习迁移。'],
+      detail,
       method:{nodeId:counterexampleSource.nodeId,label:'构建数学论证',code:'ccss-math:MP.3'}
     };
   }
@@ -481,6 +519,8 @@ export function thinkingFeedback(task,model,record,context={}){
       `核对了“${question.label}”：${model.answers[index]}`:
       `“${question.label}”的回答符合题目条件`).join('；')||'当前数列符合题目条件';
     detail.push('这里只核对可重放的逐项操作与当前答案；不能据此判断独立归纳、一般证明、自由解释或长期掌握。');
+    if(proof.failedSteps)detail.push(`保留的记录中有 ${proof.failedSteps} 次输入没有接上数列；这些没有算作前进，最初输入仍保留。`);
+    if(proof.noOpUndos)detail.push(`还有 ${proof.noOpUndos} 次在起点请求退回，没有拿掉任何一项。`);
     return {title:'这次作品中的思考线索',
       observation:'你从'+proof.displayValues[0]+'出发，实际留下了 '+proof.displayValues.join('、')+
         '，逐步做了 '+steps+undo+'，并在本次检查中'+checked+'。',

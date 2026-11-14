@@ -3,10 +3,11 @@
 // The source HTTP server is stopped before every mathematical interaction.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const reviewed=require('./fixtures/p9-mature-expansion-cases.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-mature-expansion');
 const cases=Object.entries(reviewed).flatMap(([family,specs])=>specs.map(spec=>({...spec,family})));
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],explorationObservations=[],isolations=[],offline=[];
 const ok=(condition,message)=>{if(!condition)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -145,6 +146,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    for(const spec of cases){
     activeLabel=`${width}x${height}-${spec.family}-${spec.id}-${spec.index}`;
     const label=activeLabel,task=sessionTasks(spec.id)[spec.index],answers=answerInfo(spec);
+    const snapshots=[],save=async phase=>{const x=await capture(page,out,activeLabel,spec,phase);snapshots.push(x);return x;};
     await open(spec);
     ok(await guide.isVisible(),label+' reviewed native optional guide exists offline');
     ok(!(await guide.evaluate(element=>element.open)),label+' guide starts collapsed');
@@ -174,6 +176,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await field(answers.field,answers.wrong);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='revise',label+' original grader rejects wrong answer');
     ok(await hint.count()===0,label+' wrong submission has no positive feedback');
+    await save('wrong-answer');
     await field(answers.field,answers.correct);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',label+' original grader accepts corrected work');
     ok(await hint.isVisible(),label+' checked current mathematical evidence is visible');
@@ -190,24 +193,31 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     if(task.approximate)ok(words.includes('每箱大约200个')&&words.includes('5箱大约有 1000 个')&&words.includes('没有验证实际箱子的精确总数'),label+' approximate context stays approximate');
     await shot('verified-offline');
     const checked=(await saved(spec.id)).models[spec.index];
+    await save('first-correct');
     await reload(spec);ok(await hint.isVisible(),label+' current checked work restores offline');
     ok(JSON.stringify((await saved(spec.id)).models[spec.index])===JSON.stringify(checked),label+' complete workpiece survives offline reload');
+    const restored=await save('restored');
     await field(answers.field,answers.wrong);
     ok(await hint.count()===0,label+' editing immediately invalidates old feedback');
     await reload(spec);ok(await hint.count()===0,label+' edited work remains unverified after refresh');
     await submit();ok(await hint.count()===0,label+' newer failure cannot revive the older correct attempt');
+    await save('edited-failure');
     await field(answers.field,answers.correct);await submit();
     ok(await hint.isVisible(),label+' current corrected submission restores evidence');
+    await save('corrected-answer');
+    await reload(spec);ok(await hint.isVisible(),label+' final corrected work restores before its fifth independent check');
+    await submit();ok(await hint.isVisible(),label+' fifth check still uses the latest full workpiece');
+    const final=await save('final-correct');
     const end=await saved(spec.id),attempts=end.cases[spec.index].attempts;
-    ok(attempts.length===4&&attempts.every(attempt=>attempt.id&&attempt.at&&attempt.value),label+' all four attempts and v2 shapes remain');
+    ok(attempts.length===5&&attempts.every(attempt=>attempt.id&&attempt.at&&attempt.value),label+' all original four plus final offline recheck and v2 shapes remain');
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),label+' no capability scores are created');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no desktop horizontal overflow');
     observations.push({width,height,...spec,observation:words,attempts:attempts.length,proof,
-     history:end.models[spec.index].history});
+     history:end.models[spec.index].history,snapshots,firstModel:checked,restoredModel:restored.model,finalModel:final.model,record:final.record});
    }
 
-   // Real invalid histories may still finish under the unchanged original
-   // grader. Earlier invalid/no-op actions must not acquire strict evidence.
+   // Retain the same four real explorations. A failed next or empty undo does
+   // not advance; a repeated shape/cut is still an actual visible operation.
    const negatives=[
     {id:'linear34',index:1,family:'sequence',variant:'initial-undo'},
     {id:'rules34',index:1,family:'sequence',variant:'wrong-next'},
@@ -216,19 +226,31 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ];
    for(const spec of negatives){
     activeLabel=`${width}x${height}-negative-${spec.variant}`;await open(spec);
+    const snapshots=[],save=async phase=>{const x=await capture(page,out,activeLabel,spec,phase);snapshots.push(x);return x;};
     if(spec.variant==='initial-undo')await action('p34-undo');
     if(spec.variant==='wrong-next'){await field('value','999');await action('p34-next');}
+    if(spec.family==='sequence'){await submit();ok(await hint.count()===0,activeLabel+' incomplete failed/no-op work receives no completion evidence');await save('failed-request');await shot('failed-request');}
     await solve(spec);
+    if(spec.family==='array'){await submit();ok(await hint.isVisible(),activeLabel+' first complete array checks before the repeated request');await save('before-repeat');}
     if(spec.variant==='duplicate-shape')await action('b13-shape');
     if(spec.variant==='duplicate-cut')await action('b13-cut');
     await submit();
     const task=sessionTasks(spec.id)[spec.index],m=(await saved(spec.id)).models[spec.index];
     ok(modelFor(spec.family).valid(task,m)&&modelFor(spec.family).inspect(task,m).correct,activeLabel+' original grader still accepts the final work');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI passing rule is unchanged');
-    ok(!replayFor(spec.family)(task,m)&&await hint.count()===0,activeLabel+' strict replay refuses invalid/no-op history');
-    await reload(spec);ok(await hint.count()===0,activeLabel+' offline restore does not erase the invalid history');
-    negativeObservations.push({width,height,...spec,originalCorrect:true,strictFeedback:false,history:m.history});
-    await shot('rejected');
+    const proof=replayFor(spec.family)(task,m);ok(!!proof&&await hint.isVisible(),activeLabel+' strict replay retains the genuine exploration and corrected effects');
+    if(spec.variant==='initial-undo')ok(proof.noOpUndos===1&&proof.undos===0,activeLabel+' empty undo never counts as a removed term');
+    if(spec.variant==='wrong-next')ok(proof.failedSteps===1&&proof.first==='999',activeLabel+' wrong first input remains recorded without advancing');
+    if(spec.variant==='duplicate-shape')ok(proof.shapeRequests===2&&proof.shapes===1&&proof.confirmations.length===1,activeLabel+' repeat shape confirms the same board without a second construction');
+    if(spec.variant==='duplicate-cut')ok(proof.cutRequests===2&&proof.cuts===1&&proof.confirmations.length===1,activeLabel+' repeat cut confirms the same cut without a second partition');
+    const first=await save('first-correct');await shot('corrected');
+    await reload(spec);ok(await hint.isVisible(),activeLabel+' offline restore keeps the complete exploratory history');const restored=await save('restored');
+    ok(JSON.stringify(restored.model)===JSON.stringify(first.model),activeLabel+' full exploratory work survives offline reload');
+    await submit();await save('rechecked');
+    const answers=answerInfo(spec);await field(answers.field,answers.wrong);await submit();ok(await hint.count()===0,activeLabel+' newer failed answer cannot reuse older success');await save('edited-failure');
+    await field(answers.field,answers.correct);await submit();ok(await hint.isVisible(),activeLabel+' newest corrected snapshot restores evidence');
+    const final=await save('final-correct');ok(final.attempts.length===5,activeLabel+' five complete exploration snapshots retained');
+    explorationObservations.push({width,height,...spec,originalCorrect:true,strictFeedback:true,snapshots,firstModel:first.model,restoredModel:restored.model,finalModel:final.model,record:final.record,history:final.model.history,observation:await hint.innerText()});
    }
 
    // Verify a genuine MP course and a newly bound domain course coexist in the
@@ -255,19 +277,20 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' associated task keeps original grading');
     ok(await hint.count()===0,activeLabel+' associated task cannot inherit native evidence');
     await reload(spec);ok(await hint.count()===0,activeLabel+' association isolation survives offline refresh');
+    isolations.push({width,height,...spec,...await capture(page,out,activeLabel,spec,'checked'),strictFeedback:false});
     await shot('checked');
    }
    await context.close();activePage=null;
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===53*viewports.length,'all 53 newly bound tasks complete at both desktop sizes');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,explorationObservations,isolations,offline,
    nativeTasks:53,nativeNodes:27,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(item=>item.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_MATURE_EXPANSION_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:53,nativeNodes:27,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,explorationObservations,isolations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
