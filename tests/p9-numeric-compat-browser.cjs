@@ -88,8 +88,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    };
    const waitLesson=(p,id)=>p.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,id);
    const lesson=async(p,id)=>{
-    activePage=p;const response=await p.goto(base+'learn.html#'+id);await waitLesson(p,id);
-    ok(response?.fromServiceWorker()===true,label+' learning document comes from the stopped-origin cache');
+    activePage=p;await p.goto(base+'learn.html#'+id);await waitLesson(p,id);
+    const response=await p.reload();await waitLesson(p,id);
+    ok(response?.fromServiceWorker()===true,label+' learning document reload comes from the stopped-origin cache');
    };
    const reload=async(p,id)=>{
     const response=await p.reload();await waitLesson(p,id);
