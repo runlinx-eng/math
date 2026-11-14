@@ -1,3 +1,15 @@
+## 2026-11-14｜独立除法浏览器组与 CI 容量（Issue #187）
+
+基线为重新核实的正式 main `8435f32cda20b5bee1764280df67dab3f9c4503a`。[PR #178 诊断运行 43636333185](https://github.com/runlinx-eng/math/actions/runs/43636333185) 的官方结论为 cancelled，具体系统取消原因尚未证明；原命令回执与取消状态的边界继续在 #180 独立核对。[PR #183 的 Required 数位 Job 132576834118](https://github.com/runlinx-eng/math/actions/runs/43636915372/job/132576834118) 成功，官方起止为 20:26:17–21:01:07 UTC，共34分50秒。该 Job 完整日志的六命令段为2,015,360ms，除法到下一命令开始间隔739,003ms（含少量执行器/日志开销，不是从 Artifact 读取的 elapsedMs）。这两项证据支持减轻长串行组的预算压力，不证明 Issue #180 的产品启动根因。
+
+仅将既有 `tests/p9-division-adapter-browser.cjs` 与 `verification/p9-division-adapter/` 从 `evidence-place` 完整移入独立 `evidence-division`。main 的 place 四条变三条加独立一条，所有67次调用、命令环境、产物集合、原脚本和数学断言保持；分组为 `[33,10,3,1,4,3,3,1,7,2]`，正常全量含10个浏览器组、12个Job、22份Artifact。35分钟上限、组内失败后继续、组间 `fail-fast: false`、同SHA/run/attempt的完整回执门禁和P10七条命令均保留。新增反例拒绝旧四命令place回执缺失新division组、冒名division回执以及独立division失败。
+
+本项只改分组清单、Required矩阵、现有门禁测试与工程文档。产品、学习内容、记录v2、备份、Service Worker及诊断#178/#186的原执行序列不变，数学覆盖增量为0，不整合其他feature分支。各待合分支后续同步时须保留自己的新增命令，并在新HEAD重验，不能用旧绿灯替代。
+
+当前为开发准备；本地执行环境中断，未执行本地Node或Chromium。源码集合核对及静态阅读不能代替新HEAD的完整Required、适用Overview/P8、真实Chromium/P10、Artifact数学/截图验收与合并后main独立回归。原失败和未验收事项继续保留，具体状态见 [Issue #187](https://github.com/runlinx-eng/math/issues/187) 与总跟踪#130；本项不部署或发布安装包，不作儿童学习效果声明。
+
+---
+
 ## 2026-11-14｜P9 逐位除法、余量角色与精确舍入（Issue #153）
 
 本轮从原 #165 HEAD `9b4e9b0f92e934ccb154aa04ac7b0f431619f388` 整合 #163 最新 HEAD `3b5fe300a545c588d6b37491f5f2c8fbb1fd8449`，包含 #167 公共纠错与 #159→#160→#161→#162 完整准备链；实际依赖 CI/合并状态见 Issue #130。新增21道原生B14除法题/9来源节点，相对依赖新增8个A节点。逐条核对真实带下、商位、乘回量、余数、记法选择和容器增减；零商与每位单位保留，默认记法不算孩子选择。keep/up/down/fraction/decimal/round六种答案角色分别验证，工具自动显示的换单位与容器示意不冒充逐物分配。
