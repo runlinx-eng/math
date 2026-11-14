@@ -100,22 +100,24 @@ const groups={
  "evidence-place":{commands:[
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-decimal-place-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
   {"file":"tests/b14-division-container-caption-browser.cjs","env":{}},
+  {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
-  "verification/p9-division-adapter/",
   "verification/b14-division-container-caption/",
+  "verification/p9-division-adapter/",
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-fraction-operations-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
+  "verification/p9-fraction-operations-adapter/",
  ]},
  // PR #146 measured 19m57s for the four existing expansion commands.
  // Keep every invocation and artifact; give the next construction families
@@ -124,10 +126,24 @@ const groups={
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
+  "verification/p9-joinstory-adapter/",
+  "verification/p9-estimate-adapter/",
+  "verification/p9-portiongroups-adapter/",
+ ]},
+ // PR #158 measured 821071ms for the three older expansion commands.
+ // Keep the 188 fraction-case viewport instances on their own runner; every
+ // upstream command, artifact, and the 35-minute limit remain unchanged.
+ "evidence-fractioncase":{commands:[
+  {"file":"tests/p9-fractioncase-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-fractioncase-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
