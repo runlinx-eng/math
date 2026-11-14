@@ -108,13 +108,21 @@ const groups={
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-fraction-operations-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
+ ]},
+ // PR #146 measured 19m57s for the four existing expansion commands.
+ // Keep every invocation and artifact; give the next construction families
+ // a separate runner instead of extending that serial path toward its limit.
+ "evidence-expansion-2":{commands:[
+  {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-fraction-operations-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-groups-adapter/",
+  "verification/p9-transform-adapter/",
   "verification/p9-fraction-operations-adapter/",
  ]},
  "p10":{commands:[

@@ -12,6 +12,7 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
@@ -22,6 +23,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-fracoperations'){
     const source=fractionOperationsBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次运算数的是什么单位？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每个点怎样对应？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);
@@ -101,6 +106,22 @@ export function thinkingFeedback(task,model,record,context={}){
       connection='换用另一种同样小的份，选中的份数会怎样变，表示的原量又怎样保持？试着说明这次接起来或拿走的是什么单位。';
     }
     return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);if(!source)return null;
+    const proof=replayTransformEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次选择的变换参数、工具生成的对应坐标和当前提交；没有自动评价自由解释、独立作图、独立量取或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayTransformEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(proof.prediction.correct?'你最初填写的坐标猜想与这次第一个对应点相符。':'你最初填写的坐标猜想与这次第一个对应点不同；猜想和后来的操作已分别核对。');
+    if(proof.invariants.edgeSquared.length)detail.push(`按实际对应点核对，对应边长是原来的 ${proof.display.lengthFactor} 倍；边长平方是原来的 ${proof.display.squaredLengthFactor} 倍。`);
+    if(proof.invariants.anglesPreserved)detail.push('这些对应点形成的角保持相同；这只核对本次图形。');
+    if(proof.measurementCount)detail.push(`你请求工具显示过 ${proof.measurementCount} 次读数；这些读数由工具生成，没有据此判断你已独立量取。`);
+    const pairs=proof.display.sourcePoints.map((point,i)=>`${point} → ${proof.display.imagePoints[i]}`);
+    return {title:'这次作品中的思考线索',
+      observation:`你最后选择了${proof.display.operation}。工具每次都从原图计算，当前对应点是 ${pairs.join('；')}。实际记录中的 ${proof.operationCount} 次变换参数与对应坐标已逐一核对。`,
+      connection:'如果换一个点或换一种参数，怎样先猜它的对应位置？试着说明哪些量会改变，哪些量会保持。',
+      detail,method:null};
   }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);if(!source)return null;
