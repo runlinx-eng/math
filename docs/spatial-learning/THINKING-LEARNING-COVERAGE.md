@@ -1,3 +1,31 @@
+## P9 分数比较排序｜Issue #132：同一单位与精确有理数证据（2026-11-14）
+
+整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，独立 main Required [43587220292](https://github.com/runlinx-eng/math/actions/runs/43587220292) 已通过。数值兼容 [PR #139](https://github.com/runlinx-eng/math/pull/139) 的最终 HEAD `ef8c1a86a1de308f090138e60bb0bf460f74c2db` 已完成全部 PR 验收并正式合并为 main `400d31c61c92a3a3b7088aa2020ddd5ffa0cd107`；本分支已同步这个真实主线及最新浏览器测试修正。该主线的独立 Required [43589982503](https://github.com/runlinx-eng/math/actions/runs/43589982503) 另行核验。分数比较的最终 HEAD 与随后整合的 main 必须各自通过适用验收，不复用前项 CI。
+
+本项承接数轴路径 #131，新增 `fraction-order-evidence.js`，明确核对20道原生题/9来源节点，method全部为null。独立来源fixture和review manifest均固定完整原题SHA256；21道同控件关联题不继承原生引导或反馈。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| unitorder | 0、1、2 | `mt_IfEgu0X449` |
+| fractionchoices | 1 | `mt_SsLWS_APM7` |
+| samepartcompare | 0、1、2 | `mt_HnKbuCliNS` |
+| fractionbench | 0、1、2 | `mt_SXbZ3bC9z7` |
+| beyondoneorder | 0、1、2、3 | `mt_PL9VkDwXfh` |
+| simplestparts | 1 | `mt_b7T-CjOYUR` |
+| fdpswitch | 2、4 | `mt_4K1dr204Hi` |
+| fractionsanity | 2 | `mt_e7filQgayF` |
+| representations39 | 4、5 | `mt_IwEOCN6bL1` |
+
+真实card/predict/align/shade/select/place/common/rename/landmark/order历史逐条重建。错误预测和合法选择导航可保留；涂份按具体身份回放，整体不等长时要求真实对齐，定位、最终顺序、共同分母与等量命名、距1差或与1/2关系分别核对。使用BigInt有理数比较，1/3不能被0.3或舍入后的长小数替代；百分数、小数、带分数仍保留准确值。共同分母不必最小，只需所有小份能整数细分且在原范围内。两个量同在1/2一侧不能单靠该参照完成大小判断，`representations39:5`必须有真实通分/重命名操作。
+
+当前可见数学输入还须与对应最后有效事件一致，不能改输入后依靠旧board继续声称当前证据。重复无作用数学记录、错误定位/通分后修正、跨控件和未知事件均不能洗成严格过程；原题通关和原反馈仍保持。默认收起的问题不提供正确顺序，检查后的反馈只描述实际构造、位置与关系，不自动评价自由解释、独立证明或长期掌握。
+
+在此前164题/73节点基础上，本项新增20题、8个新覆盖节点；本地全量源码审计为 **A184题/81节点、B277/C150/D1232/E153**。原1996题/587节点/1223关系、776组1552关联题、323交互类型与39判题模块不变。
+
+工程验证为30项专用Node、公共来源/最新提交矩阵、完整证据审计，以及全部20题双桌面视口真实操作、五次提交、编辑撤销、刷新、真实涂份修改、失败历史、关联隔离和停源站离线。Required仍保留全部既有组和P10；最终HEAD与合并main各自独立CI/Artifact记录见关联PR，不以本地测试替代远端浏览器。儿童与独立教研、Mac人工及部署保持独立。
+
+---
+
 ## P9/P10 数值修复｜Issue #137：词法负号与仅存储兼容（2026-11-14）
 
 几何变换#135非作者审查复现两项原实现缺陷：共享B20解析将负零整数部分的带分数当成正数；B24预测图使用Number而非模型分数解析，合法`5/1`、`-1 1/2`产生NaN坐标。本项修正负号及绘点，并以钉住a7f1860的未经修改源码验证504原生题+472关联题的976个完整标准模型与原结果一致。数值语法、原有容差和原题数据保持。

@@ -12,10 +12,15 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-fracorder'){
+    const source=fractionOrderBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这些量怎样比较？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-routecalc'){
     const source=routeBinding(task,context);
     return source?{type:task.type,summary:'想一想：每一步怎样接起来？（可选）',question:source.question}:null;
@@ -60,6 +65,23 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-fracorder'){
+    const source=fractionOrderBinding(task,context);if(!source)return null;
+    const proof=replayFractionOrderEvidence(task,model);if(!proof)return null;
+    const sign=proof.direction==='descending'?' ≥ ':' ≤ ',detail=[
+      '这里只核对本次记录中的涂份、定位和比较操作；没有自动评价自由解释、独立证明或长期掌握。'
+    ];
+    if(attempts.slice(0,-1).some(a=>replayFractionOrderEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.aligned)detail.push('你实际把原来不一样长的整体对齐，再比较它们表示的量。');
+    if(proof.common)detail.push(`你把每个整体分成 ${proof.common.denominator} 个相同的小份，并记录等量的新名字：${proof.common.renames.map(r=>`${r.card} = ${r.name}`).join('；')}。`);
+    if(proof.gaps)detail.push(`你分别核对了离1的差：${proof.gaps.map(r=>`${r.card} 还差 ${r.distance}`).join('；')}。`);
+    if(proof.benchmarks)detail.push(`你还实际记录了与一半的比较：${proof.benchmarks.map(r=>`${r.card} ${r.relation} 1/2`).join('；')}。在一半的同一边时，只凭这一点还不能决定完整顺序。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你实际构造并在同一单位的数轴上定位了 ${proof.cards.join('、')}；每个量的涂份和位置已分别核对。当前排出的顺序是 ${proof.ordered.join(sign)}。`,
+      connection:'如果两个分数的小份大小不同，怎样换成可以直接比较的表示？试着说明为什么换名字或改变写法不改变原来的量。',
+      detail,method:null};
+  }
   if(task?.type==='x-routecalc'){
     const source=routeBinding(task,context);if(!source)return null;
     const proof=replayRouteEvidence(task,model);if(!proof)return null;
