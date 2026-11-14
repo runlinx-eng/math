@@ -399,6 +399,16 @@ def reader_self_test():
                 require(accepted, "malformed result self-test was accepted")
                 expected = {"checks": 0} if payload == '{"checks":[]}' else {}
                 require(result["counts"] == expected, "missing result arrays were synthesized")
+    require(strict_snapshot_object(b'{"x":[1,0.5,true,null]}') == {"x": [1, 0.5, True, None]},
+            "snapshot JSON self-test failed")
+    for broken in (b'{"x":1,"x":2}', b'{"x":{"a":1,"a":2}}', b'{"x":NaN}',
+                   b'{"x":Infinity}', b'{"x":1e999}', b'[]', b'{} trailing'):
+        try:
+            strict_snapshot_object(broken)
+        except ValueError:
+            pass
+        else:
+            raise ValueError("invalid snapshot JSON self-test was accepted")
     # Synthetic observation-reader test only: a burst of loading failures must
     # not crowd a later raw worker update out of the separate SW window.
     lifecycle = [{"kind": "ServiceWorker.workerVersionUpdated", "versions": [{"status": "running"}]},
@@ -805,6 +815,24 @@ def startup_review(archive, case):
             "firstCurrentLoaderFailure": first_summary, "cachedBodies": cached_body_summary(archive, prefix, case),
             "rootCauseEstablished": False, "mathematicalReplayPerformed": False, "countsTowardAcceptance": False}
 
+def strict_snapshot_object(data):
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "duplicate key in original snapshot JSON")
+            result[key] = value
+        return result
+    def invalid_constant(value):
+        raise ValueError("non-JSON numeric constant in original snapshot")
+    def finite_number(value):
+        parsed = float(value)
+        require(parsed not in (float("inf"), float("-inf")), "non-finite number in original snapshot")
+        return parsed
+    result = json.loads(data.decode("utf-8"), object_pairs_hook=unique_object,
+                        parse_constant=invalid_constant, parse_float=finite_number)
+    require(isinstance(result, dict), "original snapshot JSON must be an object")
+    return result
+
 def legacy_review(archive, receipt_archive, case):
     receipt_files = [name for name in receipt_archive.namelist() if name.endswith(".json")]
     require(len(receipt_files) == 1, "unexpected legacy group receipt inventory")
@@ -829,8 +857,26 @@ def legacy_review(archive, receipt_archive, case):
     require(isinstance(result["metadata"].get("error"), str), "original failure message missing")
     png = case["prefix"] + label + "-failure.png"
     matches = [name for name in archive.namelist() if name.startswith(case["prefix"] + label + "-")]
+    snapshots, snapshot_bytes = [], {}
+    for phase in ("wrong-answer", "first-correct", "restored"):
+        files = {}
+        for kind, suffix in (("storage", "-storage.txt"), ("decoded", "-decoded.json")):
+            name = case["prefix"] + label + "-" + phase + suffix
+            data = member_bytes(archive, name, 64 * 1024)
+            snapshot_bytes[(phase, kind)] = data
+            files[kind] = {"name": name, "bytes": len(data), "sha256": sha256(data),
+                           "parsedJSON": strict_snapshot_object(data)}
+        snapshots.append({"phase": phase, "capturedBeforeFailingReload": True, "files": files,
+                          "storageEqualsDecodedBytes": snapshot_bytes[(phase, "storage")] == snapshot_bytes[(phase, "decoded")]})
+    pre_failure = {"snapshots": snapshots,
+                   "firstCorrectEqualsRestoredBytes": {
+                       kind: snapshot_bytes[("first-correct", kind)] == snapshot_bytes[("restored", kind)]
+                       for kind in ("storage", "decoded")},
+                   "timing": "All six original files were written before the failed reload at line 202. None is a read after that failure.",
+                   "mathematicalReplayPerformed": False}
     return {"status": "inspected-original-failure", "exactGroupReceipt": receipt, "originalMath": result,
             "failurePNG": {"name": png, "exists": png in archive.namelist()},
+            "preFailureSnapshots": pre_failure,
             "sameLabelArtifacts": [{"name": name, "bytes": archive.getinfo(name).file_size} for name in matches[:80]],
             "runtimeSourceManifest": "not captured by the original script",
             "snapshotTiming": "The restored capture at original line 199 precedes the edited draft and failed reload at line 202. It is not a model read after that failure.",
@@ -890,7 +936,7 @@ def selected_pngs(archive, case):
         label = result["metadata"].get("at")
         require(isinstance(label, str) and re.fullmatch(r"(1440x900|1280x720)-[A-Za-z0-9_-]{1,180}", label),
                 "cannot derive the exact original failure PNG")
-        candidates = [case["prefix"] + label + "-failure.png"]
+        candidates = [case["prefix"] + label + "-failure.png", case["prefix"] + label + "-verified-offline.png"]
     else:
         candidates = case["pngs"]
     return [name for name in candidates if name in archive.namelist()][:3], [name for name in candidates if name not in archive.namelist()]
