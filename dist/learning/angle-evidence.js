@@ -2,6 +2,7 @@
 // supplied diagram, final answer and free prose do not establish a prediction,
 // a physical turn, or an independently explained geometric proof.
 import * as angles from './phase5/b25-model.js';
+import {number as originalNumber} from './phase5/b20-model.js';
 import {matchesNativeEvidenceTask,hasExactKeys as keys,sameEvidence as same} from './evidence-contract.js';
 
 // Answer roles are reviewed separately from the original answer key. Numeric
@@ -72,21 +73,27 @@ export function replayAngleEvidence(task,model){
      !Array.isArray(task.questions)||task.questions.length!==roles.length)return null;
   if(!keys(model,[...scalar,'answers','seed','board','history','issue'])||
      !scalar.every(k=>text(model[k]))||['base','a','b','other'].some(k=>model[k]!=='')||
-     !integer(model.seed,1,4294967295)||model.issue!==''||
+     !integer(model.seed,1,4294967295)||!text(model.issue)||
      !Array.isArray(model.answers)||model.answers.length!==roles.length||!model.answers.every(text)||
      !Array.isArray(model.history)||!integer(model.history.length,1,1000))return null;
-  const board={first:{},angle:0,length:1,records:[]},records=[],steps=[],advances=[];
-  let lastAngleInput='',lastLengthInput='',changes=0,confirmations=0;
+  const board={first:{},angle:0,length:1,records:[]},records=[],steps=[],advances=[],failedRequests=[];
+  let lastAngleInput='',lastLengthInput='',changes=0,confirmations=0,issue='';
   for(const [historyIndex,event]of model.history.entries()){
    if(!keys(event,['a','f','d'])||!Object.hasOwn(fields,event.a)||
       !keys(event.f,fields[event.a])||!keys(event.d,[])||
       !fields[event.a].every(k=>text(event.f[k])))return null;
    const action=event.a,fromAngle=board.angle,fromLength=board.length;
    board.first[action]??=structuredClone(event.f);
+   issue='';let accepted=true,recordAdded=false;
    if(action==='set'){
-    const value=exactInteger(event.f.angle,0,360);if(value===null)return null;
-    board.angle=value;lastAngleInput=event.f.angle;
-    if(value===fromAngle)confirmations++;
+    const value=exactInteger(event.f.angle,0,360),native=originalNumber(event.f.angle);
+    const nativeAccepted=integer(native,0,360);
+    // An original floating parser success is not a failed request. If it
+    // rounded a non-integer input into a valid angle, strict evidence stops.
+    if(nativeAccepted&&(value===null||native!==value))return null;
+    lastAngleInput=event.f.angle;
+    if(!nativeAccepted){accepted=false;issue='先填0到360之间的整数，再转动。';}
+    else{board.angle=value;if(value===fromAngle)confirmations++;}
    }else if(action==='quarter'){
     // The existing bounded control stops at a whole turn; after 360 it starts
     // the next quarter. Preserve that behavior and state the actual advance.
@@ -97,18 +104,22 @@ export function replayAngleEvidence(task,model){
     advances.push({historyIndex,from:fromAngle,to:board.angle,degrees,wrapped,clamped:degrees<90});
    }else if(action==='length'){
     const value=exactInteger(event.f.length,1,3);
-    if(!['1','2','3'].includes(event.f.length)||value===null||value===fromLength)return null;
-    board.length=value;lastLengthInput=event.f.length;
+    if(!['','1','2','3'].includes(event.f.length))return null;
+    lastLengthInput=event.f.length;
+    if(value===null){accepted=false;issue='选择一条短、中或长的边。';}
+    else{board.length=value;if(value===fromLength)confirmations++;}
    }else{
-    if(board.records.some(r=>r.angle===board.angle&&r.length===board.length))return null;
-    board.records.push({angle:board.angle,length:board.length});
-    records.push({angle:board.angle,length:board.length,historyIndex});
+    if(board.records.some(r=>r.angle===board.angle&&r.length===board.length))confirmations++;
+    else{board.records.push({angle:board.angle,length:board.length});
+     records.push({angle:board.angle,length:board.length,historyIndex});recordAdded=true;}
    }
    const changed=board.angle!==fromAngle||board.length!==fromLength;
    if(changed)changes++;
-   steps.push({action,fromAngle,toAngle:board.angle,fromLength,toLength:board.length,changed});
+   const step={historyIndex,action,raw:structuredClone(event.f),fromAngle,toAngle:board.angle,
+    fromLength,toLength:board.length,changed,accepted,recordAdded,issue};
+   steps.push(step);if(!accepted)failedRequests.push(step);
   }
-  if(!same(board,model.board)||model.angle!==lastAngleInput||model.length!==lastLengthInput||
+  if(model.issue!==issue||!same(board,model.board)||model.angle!==lastAngleInput||model.length!==lastLengthInput||
      board.angle!==task.targets.at(-1))return null;
   // Respect the requested order without pretending that unrecorded fields
   // were operations. Additional legitimate exploration may remain in history.
@@ -173,7 +184,7 @@ export function replayAngleEvidence(task,model){
    answers.push({role,value});
   }
   if(!angles.valid(task,model)||!angles.inspect(task,model).correct)return null;
-  return {angle:board.angle,length:board.length,records,targetRecords,steps,changes,confirmations,advances,
+  return {angle:board.angle,length:board.length,records,targetRecords,steps,failedRequests,changes,confirmations,advances,
    lengthComparison,differences,cross,triangle,answers};
  }catch{return null;}
 }

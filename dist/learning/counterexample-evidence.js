@@ -24,35 +24,42 @@ const fraction=raw=>{
  return a&&a[1]>0&&a.every(Number.isSafeInteger)?a:null;
 };
 const cmp=(a,b)=>BigInt(a[0])*BigInt(b[1])-BigInt(b[0])*BigInt(a[1]);
-// Every recorded test must have been a mathematically valid, genuine comparison.
-// The original B38 model may accept unrelated/no-op events; we reject those
-// for optional evidence without affecting the original grader or saved records.
+// B38 keeps the first request, failed input requests, and actual comparisons
+// whose prediction was wrong. Recompute these separately; the final matched
+// counterexample does not turn an earlier wrong prediction into a success.
 export function replayCounterexampleEvidence(task,model){
  try{
   if(task?.type!=='x-r38-counterexample'||!['strict','nonstrict'].includes(task.rule)||
      !model||!Array.isArray(model.history)||!model.history.length||model.history.length>1500||
+     !shape(model,['board','history','value','second','choice','prose','issue'])||
      !reason.valid(task,model)||!reason.inspect(task,model).correct||
-     model.issue!==''||model.board?.bad!==false)return null;
-  const records=[];let first=null;
-  for(const e of model.history){
+     !['','less','equal','greater'].includes(model.choice))return null;
+  const records=[],events=[];let first=null,bad=false,issue='',failedRequests=0,wrongPredictions=0,lastComparisonIndex=null;
+  for(const [historyIndex,e] of model.history.entries()){
    if(!shape(e,['a','i','v','w','c'])||e.a!=='test'||e.i!==''||
       ![e.v,e.w,e.c].every(x=>typeof x==='string')||
-      !['less','equal','greater'].includes(e.c))return null;
+      !['','less','equal','greater'].includes(e.c))return null;
+   first??={value:e.v,factor:e.w,prediction:e.c};issue='';
    const value=fraction(e.v),factor=fraction(e.w);
    if(!value||!factor||cmp(value,[0,1])<=0||cmp(value,[12,1])>0||
-      cmp(factor,[0,1])<0||cmp(factor,[3,1])>0)return null;
+      cmp(factor,[0,1])<0||cmp(factor,[3,1])>0){
+    issue='原来的数用大于0、不超过12的数；乘的数用0到3之间的数。';
+   }else if(e.c==='')issue='先猜一猜结果与原来的数相比怎样。';
+   if(issue){bad=true;failedRequests++;events.push({historyIndex,raw:{value:e.v,factor:e.w,prediction:e.c},compared:false,match:false,issue});continue;}
    // The starting quantity is positive, so comparing x*f and x
    // is equivalent to comparing f with 1; BigInt avoids floating rounding.
    const rel=cmp(factor,[1,1]),actual=rel<0?'less':rel>0?'greater':'equal';
-   if(e.c!==actual)return null;
+   const match=e.c===actual;
    const breaks=task.rule==='strict'?actual!=='greater':actual==='less';
-   first??={value:e.v,factor:e.w,prediction:e.c};
-   records.push({value:e.v,factor:e.w,prediction:e.c,actual,breaks,match:true});
+   if(!match){bad=true;wrongPredictions++;issue='看看两条带子的长度，再改猜测试一次。';}
+   lastComparisonIndex=historyIndex;
+   events.push({historyIndex,raw:{value:e.v,factor:e.w,prediction:e.c},compared:true,match,actual,breaks,issue});
+   records.push({value:e.v,factor:e.w,prediction:e.c,actual,breaks,match});
   }
   const last=records.at(-1);
-  if(!last.breaks||!same(first,model.board.first)||!same(records,model.board.records)||
+  if(!last?.match||!last.breaks||model.issue!==issue||!same({records,first,bad},model.board)||
      last.value!==model.value||last.factor!==model.second||last.prediction!==model.choice)return null;
   return {value:last.value,factor:last.factor,actual:last.actual,rule:task.rule,
-    comparisons:records.length};
+    comparisons:records.length,first,failedRequests,wrongPredictions,lastComparisonIndex,events};
  }catch{return null;}
 }
