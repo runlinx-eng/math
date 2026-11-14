@@ -86,6 +86,11 @@ jobs:
           node --check tests/p10-backup-safety-browser.cjs
           node --check dist/learning/sequence-evidence.js
           node --check dist/learning/counterexample-evidence.js
+          node --check dist/learning/fraction-evidence.js
+          node --check dist/learning/evidence-contract.js
+          node --check dist/learning/evidence-adapters.js
+          node --check scripts/fraction-evidence-fixture.mjs
+          node --check tests/p9-fraction-adapter-browser.cjs
           node --check tests/p9-counterexample-adapter-browser.cjs
           node --check dist/learning/line-evidence.js
           node --check tests/p9-line-adapter-browser.cjs
@@ -134,6 +139,8 @@ jobs:
             tests/thinking-feedback.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
+            tests/p9-fraction-evidence-adapter.test.mjs
+            tests/p9-evidence-contract.test.mjs
             tests/p9-line-evidence-adapter.test.mjs
             tests/p9-array-evidence-adapter.test.mjs
             tests/thinking-source-map.test.mjs
@@ -250,6 +257,7 @@ jobs:
             tests/p9-sequence-thinking-browser.cjs \
             tests/p9-sequence-adapter-browser.cjs \
             tests/p9-counterexample-adapter-browser.cjs \
+            tests/p9-fraction-adapter-browser.cjs \
             tests/p9-line-adapter-browser.cjs \
             tests/p9-array-adapter-browser.cjs \
             tests/p10-learning-continuity-browser.cjs \
@@ -348,6 +356,7 @@ jobs:
             verification/p9-sequence-thinking/
             verification/p9-sequence-adapter/
             verification/p9-counterexample-adapter/
+            verification/p9-fraction-adapter/
             verification/p9-line-adapter/
             verification/p9-array-adapter/
             verification/p10-learning-continuity/

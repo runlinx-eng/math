@@ -1,7 +1,7 @@
 // Source-bound observations of line comparisons; never changes the B23 grader.
 import * as geometry from './phase5/b23-model.js';
 import {scenario,vectors} from './phase5/b23-geometry.js';
-import {sessionMeta,sessionTasks} from './bridges.js';
+import {matchesNativeEvidenceTask} from './evidence-contract.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const keys=(x,wanted)=>x&&typeof x==='object'&&!Array.isArray(x)&&same(Object.keys(x).sort(),wanted.sort());
 const SOURCES=Object.freeze({
@@ -14,8 +14,8 @@ const SOURCES=Object.freeze({
 export function lineBinding(task,context={}){
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(task?.type!=='x-s23-lines'||!source||!Number.isInteger(context.index)||
-    !source.indices.includes(context.index)||sessionMeta(context.sessionId)?.topicId!==source.nodeId||
-    !same(sessionTasks(context.sessionId)?.[context.index],task))return null;
+    !source.indices.includes(context.index)||
+    !matchesNativeEvidenceTask(task,context,{type:'x-s23-lines',nodeId:source.nodeId}))return null;
  const question=task.required.length===2?
   '先选一对边，想想把它们延长后会怎样。再换一对：它们相交会形成直角吗？同一个图形能同时出现这两种关系吗？':
   task.required[0]==='parallel'?'先猜哪两条边延长后不会相交，再选出它们比较。图形转斜以后，你会怎样检查？':

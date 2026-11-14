@@ -1,7 +1,7 @@
 // Verify bounded multiplication-array actions independently of the original grader.
 // Correct answers or a final board without checked actions are not thinking evidence.
 import * as arrays from './phase5/b13-model.js';
-import {sessionMeta,sessionTasks} from './bridges.js';
+import {matchesNativeEvidenceTask} from './evidence-contract.js';
 
 const BINDINGS=Object.freeze({
  'structure34:1':{nodeId:'mt_FAXjFkgG6X',code:'ccss-math:MP.7',label:'数位、运算与图形中的结构',question:'先猜一猜：把六行四格的阵列转个方向，会多出或少掉点吗？怎样用行和列核对？'},
@@ -18,9 +18,7 @@ export function arrayBinding(task,context={}){
  if(task?.type!=='x-mularray'||typeof context.sessionId!=='string'||
     !Number.isInteger(context.index)||context.index<0)return null;
  const binding=BINDINGS[context.sessionId+':'+context.index];
- if(!binding||sessionMeta(context.sessionId)?.topicId!==binding.nodeId)return null;
- const original=sessionTasks(context.sessionId)?.[context.index];
- if(original?.type!==task.type||!same(original,task))return null;
+ if(!binding||!matchesNativeEvidenceTask(task,context,{type:'x-mularray',nodeId:binding.nodeId}))return null;
  return binding;
 }
 

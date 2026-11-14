@@ -42,10 +42,21 @@ test('same type never implies replay evidence or cross-course thinking attributi
     'native:geometrynotation:2','native:linemark:1','native:structure34:3',
      'native:argument38:3','native:argument38:4',
     ...[0,1,2].map(i=>'native:lineproperties:'+i),
-    ...[0,1,2,3].map(i=>'native:lineorientation:'+i)
+    ...[0,1,2,3].map(i=>'native:lineorientation:'+i),
+    ...[0,1,2].map(i=>'native:recutnames:'+i),
+    ...[0,1,2].map(i=>'native:samenames:'+i),
+    ...[0,2].map(i=>'native:simplestparts:'+i),
+    ...[0,2].map(i=>'native:tenthtohundred:'+i),
+    'native:thousandparts:1',
+    ...[0,1].map(i=>'native:decimalstops:'+i)
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 24 reviewed sequence, array, line and counterexample tasks reach A');
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 37 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,16);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:5,array:7,line:10,counterexample:2,fraction:13});
+ assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
+   [level,s.tasks])),{A:37,B:354,C:150,D:1287,E:168});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

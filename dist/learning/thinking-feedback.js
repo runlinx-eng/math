@@ -1,16 +1,21 @@
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
 import {inspect as inspectTask,validModel as validTask} from './tasks.js';
-import * as fractions from './phase5/b17-model.js';
 import * as arguments38 from './phase5/b38-model.js';
 import * as patterns34 from './phase5/b34-model.js';
 import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
 import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
 import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
+import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
+import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-fracrename'){
+    const source=fractionBinding(task,context);
+    return source?{type:task.type,summary:'想一想：换个分法，量会变吗？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-r38-counterexample'){
     const source=counterexampleBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样检验“总是”？（可选）',question:source.question}:null;
@@ -34,8 +39,8 @@ export function thinkingGuide(task,context={}){
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
 export function thinkingFeedback(task,model,record,context={}){
-  const attempts=record?.attempts||[],lastAttempt=attempts.at(-1);
-  if(!lastAttempt||JSON.stringify(lastAttempt.value)!==JSON.stringify(model))return null;
+  if(!latestSubmissionMatches(model,record))return null;
+  const attempts=record.attempts;
   // A checked representation can be described without claiming the child has
   // independently explained the equivalence or mastered a thinking ability.
   if(task?.type==='grid'){
@@ -51,6 +56,28 @@ export function thinkingFeedback(task,model,record,context={}){
       detail:['这里只确认当前作品的对应关系；没有自动判断你的自由解释，也不代表已经掌握这种思考方法。'],
       method
     };
+  }
+  if(task?.type==='x-fracrename'){
+    const source=fractionBinding(task,context);
+    if(!source)return null;
+    const proof=replayFractionEvidence(task,model);
+    if(!proof)return null;
+    const name=r=>r.join('/');
+    const changes=proof.transformations.slice(0,3).map(s=>
+      `${name(s.from)} → ${name(s.to)}（${s.action==='split'?'每份再分'+s.factor+'份':'每'+s.factor+'份合成1份'}）`);
+    const actions=[proof.splits?`细分 ${proof.splits} 次`:null,proof.merges?`合并 ${proof.merges} 次`:null].filter(Boolean).join('、');
+    const names=proof.saved.slice(0,6).map(name).join('、')+(proof.saved.length>6?`等 ${proof.saved.length} 个名字`:'');
+    const detail=['这里只核对本次分数操作和当前提交；没有自动评价自由解释、一般证明或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>a?.value&&replayFractionEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.rewinds)detail.push(`你还实际回到原分法 ${proof.rewinds} 次。`);
+    if(proof.addition)detail.push(`上下各加1得到 ${name(proof.addition.to)}，核对显示${proof.addition.relation==='same'?'这次仍与原量相同':'它与原量不同'}。`);
+    if(proof.decimalStart)detail.push(`你核对了 ${proof.decimalStart} 与 ${name(proof.start)} 的对应关系；这里没有判断你是否独立解释了小数转换。`);
+    else if(proof.decimal)detail.push(`填写的小数 ${proof.decimal} 也与原量相等；只填对小数不能代替上面的分数操作。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你从 ${name(proof.start)} 出发，实际${actions}：${changes.join('；')}${proof.transformations.length>3?'；其余步骤也已逐条核对':''}。记下的 ${names} 与原分数表示同一个量。`,
+      connection:'比较分数时，这些不同的名字能帮你做什么？试着说明为什么分法变了，整体和选中的量都没有变。',
+      detail,method:null};
   }
   const arraySource=arrayBinding(task,context);
   if(arraySource){
@@ -95,8 +122,7 @@ export function thinkingFeedback(task,model,record,context={}){
   const sequenceSource=sequenceBinding(task,context);
   const verifiedSequence=!!sequenceSource;
   const verifiedChain=task.type==='x-r38-chain'&&VERIFIED_REASONING[context.sessionId]?.includes(context.index);
-  const handler=verifiedSequence?patterns34:task.type==='x-fracrename'?fractions:
-    verifiedChain?arguments38:null;
+  const handler=verifiedSequence?patterns34:verifiedChain?arguments38:null;
   if(!handler||!handler.valid(task,model)||!handler.inspect(task,model).correct)return null;
   const detail=[];
   if(attempts.slice(0,-1).some(a=>handler.valid(task,a.value)&&!handler.inspect(task,a.value).correct))detail.push('你修改后又试了一次。');
@@ -120,11 +146,6 @@ export function thinkingFeedback(task,model,record,context={}){
       detail,
       method:{nodeId:sequenceSource.nodeId,label:sequenceSource.label,code:'ccss-math:MP.8'}
     };
-  }
-  if(task.type==='x-fracrename'){
-    const names=model.board.saved.map(([n,d])=>`${n}/${d}`).join('、');
-    return {title:'你刚才的办法',observation:`你把 ${task.n}/${task.d} 换成了 ${names}，并选择了“整体和选中的量都没变”。`,connection:'保持同一个量、换一种分法，也可以帮助比较分数或理解百分数。',detail,
-      method:{nodeId:'mt_EBYGhd8X3x',label:'连接不同表示方式',code:'ccss-math:MP.2'}};
   }
   if(task.type==='x-r38-chain'){
     // These are replay-verified card selections / model actions, not a graded

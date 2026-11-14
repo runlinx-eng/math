@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261112-p10-release-r3-v4';
+const RELEASE='math-explorer-20261114-p9-fraction-v1';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';

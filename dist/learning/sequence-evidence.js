@@ -2,7 +2,7 @@
 // An accepted answer or a merely present history is never sufficient evidence.
 import {rational} from './phase5/b16-model.js';
 import {sequenceNext,valid as validSequence,inspect as inspectSequence} from './phase5/b34-model.js';
-import {sessionMeta,sessionTasks} from './bridges.js';
+import {matchesNativeEvidenceTask} from './evidence-contract.js';
 
 const BINDINGS=Object.freeze({
   'general34:2':{
@@ -34,9 +34,7 @@ export function sequenceBinding(task,context={}){
   if(typeof sessionId!=='string'||!Number.isInteger(index)||index<0||
      task?.type!=='x-p34-sequence')return null;
   const binding=BINDINGS[sessionId+':'+index];
-  if(!binding||sessionMeta(sessionId)?.topicId!==binding.nodeId)return null;
-  const original=sessionTasks(sessionId)?.[index];
-  if(original?.type!==task.type||JSON.stringify(original)!==JSON.stringify(task))return null;
+  if(!binding||!matchesNativeEvidenceTask(task,context,{type:'x-p34-sequence',nodeId:binding.nodeId}))return null;
   return binding;
 }
 
