@@ -59,7 +59,7 @@ tests/p10-backup-safety-browser.cjs
 tests/p10-full-lessons-browser.cjs
 `.trim().split('\n');
 // Explicit reviewed additions; product discovery cannot update this list.
-const addedScripts=['tests/p9-fraction-order-adapter-browser.cjs','tests/p9-route-adapter-browser.cjs','tests/p9-mature-expansion-browser.cjs','tests/p9-groupwalk-adapter-browser.cjs',
+const addedScripts=['tests/p9-fraction-order-adapter-browser.cjs','tests/p9-numeric-compat-browser.cjs','tests/p9-route-adapter-browser.cjs','tests/p9-mature-expansion-browser.cjs','tests/p9-groupwalk-adapter-browser.cjs',
  'tests/p9-decimal-place-adapter-browser.cjs'];
 const reviewedScripts=[...originalScripts,...addedScripts];
 const context={event:'pull_request',sha:'a'.repeat(40),runId:'123456789',attempt:2};
@@ -73,11 +73,11 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
  assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','p10','p8-performance']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
- assert.equal(commands.length,56);
+ assert.equal(commands.length,57);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[33,10,2,3,6,2]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[33,10,2,3,7,2]);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}}]);
  assert.ok(BROWSER_GROUPS['evidence-core'].commands.some(command=>command.file==='tests/p9-groupwalk-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS['evidence-place'].commands,[{file:'tests/p9-place-adapter-browser.cjs',env:{}},
@@ -104,7 +104,7 @@ test('P8 baseline and normal run share an isolated group without environment lea
 });
 
 test('all P10 commands and the original upgrade repetition wrapper remain sequential after a failure',()=>{
- const expected=['p10-learning-continuity-browser','p10-longterm-offline-browser','p10-sw-nav-isolation-browser',
+ const expected=['p9-numeric-compat-browser','p10-learning-continuity-browser','p10-longterm-offline-browser','p10-sw-nav-isolation-browser',
   'p10-release-upgrade-repeat','p10-backup-safety-browser','p10-full-lessons-browser'].map(name=>'tests/'+name+'.cjs');
  assert.deepEqual(BROWSER_GROUPS.p10.commands.map(command=>command.file),expected);
  const visited=[];
@@ -123,7 +123,7 @@ test('each runner failure mode is recorded and cannot cancel the other commands 
   let calls=0;
   const report=runBrowserGroup({group:'p10',scope:'true',context,
    execute:()=>calls++===0?first:{status:0,signal:null}});
-  assert.equal(calls,6);assert.equal(report.status,'failure');
+  assert.equal(calls,7);assert.equal(report.status,'failure');
   assert.equal(report.commands[0].outcome,'failure');
   const gate=success();gate.reports[gate.reports.findIndex(item=>item.group==='p10')]=report;rejected(gate);
  }
@@ -131,7 +131,7 @@ test('each runner failure mode is recorded and cannot cancel the other commands 
  const thrown=runBrowserGroup({group:'p10',scope:'true',context,execute:()=>{
   if(calls++===0)throw Error('required script missing');return {status:0};
  }});
- assert.equal(calls,6);assert.equal(thrown.status,'failure');assert.match(thrown.commands[0].error,/missing/);
+ assert.equal(calls,7);assert.equal(thrown.status,'failure');assert.match(thrown.commands[0].error,/missing/);
 });
 
 test('main and manual scope always require all groups; PR scope includes the inventory and scheduler',()=>{
@@ -155,14 +155,14 @@ test('main and manual scope always require all groups; PR scope includes the inv
  assert.throws(()=>browserScope('pull_request',null));
 });
 
-test('a complete current result needs all six groups and fifty-four actual invocations',()=>{
+test('a complete current result needs all six groups and the complete current invocation inventory',()=>{
  const before=success(),copy=structuredClone(before);
  assert.deepEqual(validateRequiredGate(before),{sha:context.sha,runId:context.runId,required:true,
-  groups:GROUP_NAMES,invocations:56});
+  groups:GROUP_NAMES,invocations:57});
  assert.deepEqual(before,copy,'gate reads results without modifying evidence');
  for(const event of ['push','workflow_dispatch']){
   const identity={...context,event};
-  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,56);
+  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,57);
  }
 });
 
@@ -234,11 +234,11 @@ test('a successful job flag cannot hide missing commands, changed environments o
 test('same-run retries choose the newest result per group and require missing earlier successes to be available',()=>{
  const previous={...context,attempt:1},reports=fixture('true',previous);
  const retry=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:0})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,56);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,57);
  const failed=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:1})});
  rejected({needs:needs(),reports:[...reports,failed],context});
  const oldFailure=runBrowserGroup({group:'evidence-place',scope:'true',context:previous,execute:()=>({status:1})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,56);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,57);
  rejected({needs:needs(),reports:[retry],context});
  rejected({needs:needs(),reports:[...reports,retry,retry],context});
 });
