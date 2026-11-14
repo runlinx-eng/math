@@ -9,11 +9,15 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
-import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
+import {portionGroupsBinding,replayPortionGroupsEvidence} from './portiongroups-evidence.js';
+import {estimateBinding,replayEstimateEvidence} from './estimate-evidence.js';
+import {joinStoryBinding,replayJoinStoryEvidence} from './joinstory-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+
+import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -29,5 +33,8 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
  {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence},
  {id:'angle',type:'x-g25-turn',binding:angleBinding,replay:replayAngleEvidence},
+ {id:'joinstory',type:'x-joinstory',binding:joinStoryBinding,replay:replayJoinStoryEvidence},
+ {id:'estimate',type:'x-estimatecheck',binding:estimateBinding,replay:replayEstimateEvidence},
+ {id:'portiongroups',type:'x-portiongroups',binding:portionGroupsBinding,replay:replayPortionGroupsEvidence},
  {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence}
 ].map(Object.freeze));
