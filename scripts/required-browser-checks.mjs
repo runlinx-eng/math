@@ -121,9 +121,11 @@ const groups={
  "evidence-expansion-2":{commands:[
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
+  "verification/p9-angle-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
