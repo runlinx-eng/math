@@ -50,7 +50,8 @@ test('twenty-six integer exchange tasks bind exactly fourteen original nodes wit
  for(const c of cases){
   const task=sessionTasks(c.sessionId)[c.index],binding=placeBinding(task,c);
   assert.equal(binding?.nodeId,c.nodeId);assert.equal(sessionMeta(c.sessionId).topicId,c.nodeId);
-  assert.equal(binding.method,null);assert.ok(thinkingGuide(task,c)?.question.length>10);
+  assert.equal(binding.method,null);assert.equal(binding.scope,'integer');assert.equal(binding.scale,1);
+  assert.ok(thinkingGuide(task,c)?.question.length>10);
   assert.equal(task.scale??1,1);
   for(const changed of [null,[],false,'onesbridge',{}, {...c,index:String(c.index)},{...c,index:-1},{...c,sessionId:'__proto__'}])
    assert.equal(placeBinding(task,changed),null);
@@ -60,7 +61,7 @@ test('twenty-six integer exchange tasks bind exactly fourteen original nodes wit
  }
  const actual=[];
  for(const sessionId of Object.keys(LESSONS))sessionTasks(sessionId).forEach((task,index)=>{
-  if(placeBinding(task,{sessionId,index}))actual.push(sessionId+':'+index);
+  if(placeBinding(task,{sessionId,index})?.scope==='integer')actual.push(sessionId+':'+index);
  });
  assert.deepEqual(actual.sort(),cases.map(c=>c.sessionId+':'+c.index).sort());
  for(const sessionId of Object.keys(BRIDGES))sessionTasks(sessionId).forEach((task,index)=>{
@@ -225,14 +226,18 @@ test('the same total cannot justify forged per-place counts, and written columns
  const zero=structuredClone(base);zero.columnAnswers[zero.columnAnswers.length-1]='0';accepts(task,zero);
 });
 
-test('thirteen no-exchange integer tasks and nine decimal tasks retain their own grader without this binding',()=>{
+test('thirteen no-exchange tasks remain excluded and nine separately reviewed decimal tasks never inherit integer scope',()=>{
  const reviewed=new Set(cases.map(c=>c.sessionId+':'+c.index));let ordinary=0,decimal=0;
  for(const sessionId of Object.keys(LESSONS))sessionTasks(sessionId).forEach((task,index)=>{
   if(task.type!=='x-placecalc'||reviewed.has(sessionId+':'+index))return;
   const model=place.example(task),context={sessionId,index};originalAccepts(task,model);
-  if((task.scale??1)===1)ordinary++;else decimal++;
-  assert.equal(placeBinding(task,context),null);assert.equal(thinkingGuide(task,context),null);
-  assert.equal(thinkingFeedback(task,model,record(model),context),null);
+  if((task.scale??1)===1){
+   ordinary++;assert.equal(placeBinding(task,context),null);assert.equal(thinkingGuide(task,context),null);
+   assert.equal(thinkingFeedback(task,model,record(model),context),null);
+  }else{
+   decimal++;assert.equal(placeBinding(task,context)?.scope,'decimal');
+   assert.notEqual(placeBinding(task,context)?.scale,1);
+  }
  });
  assert.equal(ordinary,13);assert.equal(decimal,9);
 });

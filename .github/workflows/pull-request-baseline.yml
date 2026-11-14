@@ -79,6 +79,7 @@ jobs:
           node --check dist/learning/fraction-evidence.js
           node --check dist/learning/place-evidence.js
           node --check tests/p9-place-adapter-browser.cjs
+          node --check tests/p9-decimal-place-adapter-browser.cjs
           node --check tests/p9-mature-expansion-browser.cjs
           node --check dist/learning/unitwalk-evidence.js
           node --check dist/learning/groupwalk-evidence.js
@@ -139,6 +140,7 @@ jobs:
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs
             tests/p9-place-evidence-adapter.test.mjs
+            tests/p9-decimal-place-evidence-adapter.test.mjs
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-groupwalk-evidence-adapter.test.mjs
             tests/p9-evidence-contract.test.mjs

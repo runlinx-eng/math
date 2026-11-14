@@ -1,8 +1,18 @@
+## 2026-11-14｜P9 第九批小数数位交换（Issue #126）
+
+基线为第八批成组分数已合并且main独立Required通过的 `a8df24497260c71367e07975414dac2f8e4d074a`。在整数最小单位机制上新增9道小数数位交换，明确scale和真实末位对齐，所有守恒和取走仍用整数；新增3个此前未覆盖节点。原26道整数题和13道无交换题的独立范围保持。
+
+全量审计A149题/71节点，B277/C150/D1252/E168；从第六批基线累计新增94题/46节点。逐题来源、尺度和边界见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。全部小数来源均method:null，保留原题、原判题、v2/P10、地图与前三层进度。
+
+本批须完成小数9题与原整数26题双视口、全部既有Chromium/P10、最终HEAD适用CI与Artifact、合并main独立Required。完成后自动推进第十批独立来源清单与扩展审计，不以本批结束本轮任务。
+
+---
+
 ## 2026-11-14｜P9 第八批成组分数跳步（Issue #124）
 
 基线为成熟家族扩展专项已合并且main独立Required通过的 `7fa61f3de355d528624f709366155f7aaa4253c0`。新增6题/2节点的groupwalk数学契约：前进chunk小份、后退1小份，逐步重算并精确核对组量×组数、整份、余量和相关取整条件。和固定单位数轴共用控件但互斥绑定，不改变原题、原判题、通关或v2。
 
-全量审计A140题/68节点，B286/C150/D1252/E168。先对原始数字 token 精确预检，防止表达式解析器舍入造成错误证据；详见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。六题全部进入公共矩阵及两视口真实浏览器，所有旧家族和P10验收保持。当前阶段收口须以最终HEAD和合并main实际结果为准，完成后继续小数交换与批量来源遗漏检查。
+全量审计A140题/68节点，B286/C150/D1252/E168。先对原始数字 token 精确预检，防止表达式解析器舍入造成错误证据；详见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。[PR #125](https://github.com/runlinx-eng/math/pull/125) 已合并为main `a8df24497260c71367e07975414dac2f8e4d074a`；最终HEAD Required/Overview/P8及合并后独立 [Required 43576229418](https://github.com/runlinx-eng/math/actions/runs/43576229418) 均成功。516项Node/审计、六题12组合1807项浏览器检查、全部旧家族、P10及14份Required Artifact完成验收；成组历史与PR结果一致。继续推进小数交换与批量来源遗漏检查，儿童试用和独立教研仍另行验收。
 
 ---
 
