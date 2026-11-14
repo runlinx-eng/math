@@ -12,10 +12,15 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-fdpboard'){
+    const source=fdpBoardBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-routecalc'){
     const source=routeBinding(task,context);
     return source?{type:task.type,summary:'想一想：每一步怎样接起来？（可选）',question:source.question}:null;
@@ -60,6 +65,24 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-fdpboard'){
+    const source=fdpBoardBinding(task,context);if(!source)return null;
+    const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;
+    const shape=proof.baseRepresentation==='hundred-grid'?'百格图':'圆图';
+    const submitted=proof.fraction.submitted;
+    const detail=['这里只核对本次记录中的涂色、擦除和当前提交；没有自动评价自由解释、独立换算、作图能力或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayFdpBoardEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    const displays=[proof.systemRepresentations.line?'数轴位置':null,
+      proof.systemRepresentations.additionalCircle?'附加圆图':null].filter(Boolean);
+    if(displays.length)detail.push(`系统按当前涂出的 ${proof.selectedCount}/${proof.denominator} 自动显示${displays.join('和')}；视图请求只确认显示，图中的量会随涂色更新。`);
+    if(proof.viewRequests.some(view=>!view.addedToDisplay))detail.push('重复请求视图只确认显示，不增加涂色操作。');
+    if(proof.resets.length)detail.push('重摆前的操作和输入记录仍保留；这里核对的是最后涂出的部分和当前提交。');
+    return {title:'这次作品中的思考线索',
+      observation:`当前${shape}平均分成 ${proof.denominator} 份，实际涂了 ${proof.selectedCount} 份，还有 ${proof.unselectedCount} 份未涂。你本次提交的分数 ${submitted.numerator}/${submitted.denominator}、小数 ${proof.decimal.raw} 和百分数 ${proof.percent.raw}% 都与图中涂出的 ${proof.selectedCount}/${proof.denominator} 表示同一部分。`,
+      connection:'如果擦去一份，哪些名字需要一起改变？试着说明整体和涂出的部分分别对应哪个数。',
+      detail,method:null};
+  }
   if(task?.type==='x-routecalc'){
     const source=routeBinding(task,context);if(!source)return null;
     const proof=replayRouteEvidence(task,model);if(!proof)return null;

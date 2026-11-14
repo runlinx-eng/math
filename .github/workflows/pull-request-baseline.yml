@@ -84,6 +84,9 @@ jobs:
           node --check dist/learning/unitwalk-evidence.js
           node --check dist/learning/groupwalk-evidence.js
           node --check dist/learning/route-evidence.js
+          node --check dist/learning/fdpboard-evidence.js
+          node --check tests/fixtures/p9-fdpboard-cases.cjs
+          node --check tests/p9-fdpboard-adapter-browser.cjs
           node --check tests/p9-route-adapter-browser.cjs
           node --check tests/p9-numeric-compat-browser.cjs
           node --check dist/learning/evidence-contract.js
@@ -147,6 +150,7 @@ jobs:
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-groupwalk-evidence-adapter.test.mjs
             tests/p9-route-evidence-adapter.test.mjs
+            tests/p9-fdpboard-evidence.test.mjs
             tests/p9-numeric-compat.test.mjs
             tests/p10-numeric-save-races.test.mjs
             tests/p9-evidence-contract.test.mjs
