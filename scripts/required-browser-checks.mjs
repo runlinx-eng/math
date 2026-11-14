@@ -106,8 +106,10 @@ const groups={
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
+  {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
+  "verification/p9-route-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
