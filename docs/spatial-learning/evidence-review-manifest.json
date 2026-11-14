@@ -1708,6 +1708,78 @@
       "adapter": "fraction-order",
       "taskHash": "2c4d6d6b59982aab35e4b1bb0d933327d7b3eb914094105ea2be2951c84b0c4b",
       "method": null
+    },
+    {
+      "sessionId": "smallershare",
+      "index": 0,
+      "type": "x-samefraction",
+      "nodeId": "mt_hyvHv2BCwb",
+      "adapter": "samefraction",
+      "taskHash": "26ee3d171d4007c86c945ae2845fc0ad472d092f987a7c7acbddd7cbf1894a52",
+      "method": null
+    },
+    {
+      "sessionId": "smallershare",
+      "index": 1,
+      "type": "x-samefraction",
+      "nodeId": "mt_hyvHv2BCwb",
+      "adapter": "samefraction",
+      "taskHash": "af7b276c39785999184f33ee7f24236ed7c9cf024b62c7dfcee8698d866d2800",
+      "method": null
+    },
+    {
+      "sessionId": "smallershare",
+      "index": 2,
+      "type": "x-samefraction",
+      "nodeId": "mt_hyvHv2BCwb",
+      "adapter": "samefraction",
+      "taskHash": "08308d87e8e9e39ce360702afedd10df45c8ef4061f717935e814133edabec02",
+      "method": null
+    },
+    {
+      "sessionId": "setfractions",
+      "index": 1,
+      "type": "x-samefraction",
+      "nodeId": "mt_MyGblah2yY",
+      "adapter": "samefraction",
+      "taskHash": "4c102716e8c2fc5ae021a0a7665d294aff092cfeac706bcf3e782321114111d6",
+      "method": null
+    },
+    {
+      "sessionId": "precisefractions",
+      "index": 1,
+      "type": "x-samefraction",
+      "nodeId": "mt_HY8Yycu_rz",
+      "adapter": "samefraction",
+      "taskHash": "189029802791e6671ada3662e6c8e9e4d7c728c48835b4cc85e40ccf0fa98ddc",
+      "method": null
+    },
+    {
+      "sessionId": "fractionreason",
+      "index": 0,
+      "type": "x-samefraction",
+      "nodeId": "mt_2ESZh70NyS",
+      "adapter": "samefraction",
+      "taskHash": "e8c89da7872c44fb28abc5e4e9f66b9b559cb03a6488b191003954b95b20ef8b",
+      "method": null
+    },
+    {
+      "sessionId": "because38",
+      "index": 0,
+      "type": "x-samefraction",
+      "nodeId": "mt_a3dov8CZkq",
+      "adapter": "samefraction",
+      "taskHash": "2fc493f44d69b04f376a0258a1f5268a0715c5fbc799b174796ed092cfb9eb5b",
+      "method": null
+    },
+    {
+      "sessionId": "tools39",
+      "index": 2,
+      "type": "x-samefraction",
+      "nodeId": "mt_d-WZC2OyMB",
+      "adapter": "samefraction",
+      "taskHash": "4be59eeac3e96e771b7fc32bb0da34a32bfe23b3d17f847fcdd45533ed584616",
+      "method": null
     }
   ]
 }

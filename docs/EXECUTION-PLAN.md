@@ -1,3 +1,15 @@
+## 2026-11-14｜P9 同整体分数比较（Issue #144）
+
+本项从已正式合并 [PR #143](https://github.com/runlinx-eng/math/pull/143) 的 main `241b464e42a206ef9a72abe3d7059d4961df81fc` 同步；同步时该 main 的独立 Required [43591536536](https://github.com/runlinx-eng/math/actions/runs/43591536536) 仍在运行，不能提前记作通过。同整体分支自己的最终 HEAD 和未来集成 main 仍须各自完成适用验收。
+
+新增 `samefraction-evidence.js`：8道原生题/6来源节点，逐条回放真实预测、左右选份、叠图请求、合法共同网格与重摆。整体由工具提供，叠图和网格由系统自动显示；比较符号、整体条件与新分数名称只按当前提交描述，全部method:null。15道同控件关联题保持隔离，原题、原判题、v2/P10、学习进度不变。
+
+独立源码审计为A192题/87节点、B277/C150/D1224/E153，较本项正式主线184/81新增8题/6节点。该数字只统计本分支已接入代码，不包含其他未合并家族。共享文件后续集成时重新核对并集和来源清单，不相加各分支节点增量。
+
+专用29项Node、公共来源/最新提交矩阵、原B16回归及真实渲染控件探针已通过；完整静态门禁、全量审计和Required保留全部既有检查，新增同整体双视口入口后共58次调用，分组为33/10/2/4/7/2。浏览器脚本覆盖8题双视口各五次完整提交、15道关联隔离、早叠图/共同网格、五种合法共同分母、首猜与本轮预测、错误历史、编辑失效和停源站离线；实际Chromium、P10和CI结论以最终提交的真实运行记录为准。未部署，未发布安装包。
+
+---
+
 ## 2026-11-14｜P9 分数比较排序（Issue #132）
 
 整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，独立 main Required [43587220292](https://github.com/runlinx-eng/math/actions/runs/43587220292) 已通过。数值兼容 [PR #139](https://github.com/runlinx-eng/math/pull/139) 的最终 HEAD `ef8c1a86a1de308f090138e60bb0bf460f74c2db` 已完成全部 PR 验收并正式合并为 main `400d31c61c92a3a3b7088aa2020ddd5ffa0cd107`；本分支已同步这个真实主线及最新浏览器测试修正。该主线的独立 Required [43589982503](https://github.com/runlinx-eng/math/actions/runs/43589982503) 另行核验。分数比较的最终 HEAD 与随后整合的 main 必须各自通过适用验收，不复用前项 CI。
