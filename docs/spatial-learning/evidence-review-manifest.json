@@ -2752,6 +2752,78 @@
       "adapter": "joinstory",
       "taskHash": "1a248aae830037e7b3c4c964fbe2e7925fbc8e0dd7881f742fc881798b0558c8",
       "method": null
+    },
+    {
+      "sessionId": "storymoney",
+      "index": 0,
+      "type": "x-storyledger",
+      "nodeId": "mt_wzAZ8qFDc4",
+      "adapter": "storyledger",
+      "taskHash": "eeff7a50c203b6c5f06ba36da36f3d437d63a6c80dbbaf499036bfdfc257fd65",
+      "method": null
+    },
+    {
+      "sessionId": "storymoney",
+      "index": 1,
+      "type": "x-storyledger",
+      "nodeId": "mt_wzAZ8qFDc4",
+      "adapter": "storyledger",
+      "taskHash": "0cf170e256f448619d3ce9b894e9c7fa1b7778759848fca77628c5048df454ca",
+      "method": null
+    },
+    {
+      "sessionId": "storymoney",
+      "index": 2,
+      "type": "x-storyledger",
+      "nodeId": "mt_wzAZ8qFDc4",
+      "adapter": "storyledger",
+      "taskHash": "66b9dc151c08ad941259ae8d0ab3d6002397c4402475471d4b5eb24a29208e30",
+      "method": null
+    },
+    {
+      "sessionId": "storylarger",
+      "index": 0,
+      "type": "x-storyledger",
+      "nodeId": "mt_-F_Lv_apzH",
+      "adapter": "storyledger",
+      "taskHash": "64108a269019125b4ad512bc04a61b16d0c8acf44cddab2f4a90ecf43aa2f901",
+      "method": null
+    },
+    {
+      "sessionId": "storylarger",
+      "index": 2,
+      "type": "x-storyledger",
+      "nodeId": "mt_-F_Lv_apzH",
+      "adapter": "storyledger",
+      "taskHash": "1952eec2dea04ae2666404e8d84de4c27a8d7c7c6a516885f89068d4fab09765",
+      "method": null
+    },
+    {
+      "sessionId": "storylarger",
+      "index": 4,
+      "type": "x-storyledger",
+      "nodeId": "mt_-F_Lv_apzH",
+      "adapter": "storyledger",
+      "taskHash": "48aeb52bf307a94919263b503d4989fd1b62c4ecca240000f6b566d3e3f84ea8",
+      "method": null
+    },
+    {
+      "sessionId": "storymillion",
+      "index": 1,
+      "type": "x-storyledger",
+      "nodeId": "mt_M1tnXqmYbn",
+      "adapter": "storyledger",
+      "taskHash": "517145051e94e184482630bb9258d465d8c470a8fcb17bd3af670a7b7fe637ba",
+      "method": null
+    },
+    {
+      "sessionId": "storymillion",
+      "index": 3,
+      "type": "x-storyledger",
+      "nodeId": "mt_M1tnXqmYbn",
+      "adapter": "storyledger",
+      "taskHash": "a9a942a1984a5f604f389df734771d96d3c52cafc14aa7356a4cdd7ffa0d253f",
+      "method": null
     }
   ]
 }
