@@ -11,6 +11,7 @@ import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs'
 import expansion from './fixtures/p9-mature-expansion-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
 import fractionOrder from './fixtures/p9-fraction-order-cases.cjs';
+import fractionOperations from './fixtures/p9-fraction-operations-cases.cjs';
 
 await ensureB39Ready();
 const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
@@ -29,7 +30,8 @@ const reviewed={
  groupwalk:[...positions('manycopies',[0,1,2]),...positions('repeatfraction',[0,1,2])],
  route:[...positions('onesbridge',[2,3]),...positions('twodigitpair',[2]),...positions('addhundred',[0,2]),...positions('flexhundred',[2,3]),...positions('oneslarge',[0,1]),...positions('showwhy',[1]),...positions('flexthousand',[0,1]),...positions('mentalbig',[0,1,2])],
  'fraction-order':fractionOrder.map(({sessionId,index})=>({sessionId,index})),
- groups:groups.map(({sessionId,index})=>({sessionId,index}))
+ groups:groups.map(({sessionId,index})=>({sessionId,index})),
+ 'fraction-operations':fractionOperations.cases.map(({id,index})=>({sessionId:id,index}))
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
@@ -63,7 +65,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,10);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,11);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

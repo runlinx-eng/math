@@ -1969,6 +1969,96 @@
       "adapter": "groups",
       "taskHash": "77c3bdde09c93e505f3093aea4abaa5204c1f6a187da124e37596f1512d0a6c3",
       "method": null
+    },
+    {
+      "sessionId": "fractionchoices",
+      "index": 3,
+      "type": "x-fracoperations",
+      "nodeId": "mt_SsLWS_APM7",
+      "adapter": "fraction-operations",
+      "taskHash": "b5bd1481746e0bfd5af89bc4a287b636a86869a4499033fd529d37492795cf9a",
+      "method": null
+    },
+    {
+      "sessionId": "mixedrename",
+      "index": 2,
+      "type": "x-fracoperations",
+      "nodeId": "mt_o_p-3tCxiM",
+      "adapter": "fraction-operations",
+      "taskHash": "a1cfbe5a1beab8384705c10884c8bf3a5c39380f1bd7e37c42b2a66bdb0e1780",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 0,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "ee3fcab374e48b8e46d75e7bc94950ea9fa70bec8b897b8329fd3dc950ad3d29",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 1,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "3f4aa49768e641a48253a2a38ce06dd298eea17b45d8ce187c05aaf9d7033199",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 2,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "c3f0156872943e9ff73006946ef2e41afa17c8b77e055168e30b48d0078b3099",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 3,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "80521206d9fb56089cd2b9d212d27f5d5957e7bebe1b12bc9c0fddff5fe17ccf",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 4,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "a7662f7b872c9f39c0536561471f371eeb13028ffea5743dc74c2bf8d5de13b1",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 5,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "7e2390b3c9c2a05804c5368fe2ae40a24efa1579ebe04f270834908f8a88b25b",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 6,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "e646fab469ed7b3dd658c0f282665fb341793dd9072154ea07d587541909b8ab",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 7,
+      "type": "x-fracoperations",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "fraction-operations",
+      "taskHash": "868851466c766ffc9acef6a50502cad42ae6876d172dd39f71a352cd1b086cee",
+      "method": null
     }
   ]
 }

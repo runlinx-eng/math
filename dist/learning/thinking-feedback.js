@@ -14,10 +14,15 @@ import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js'
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-fracoperations'){
+    const source=fractionOperationsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这次运算数的是什么单位？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);
     return source?{type:task.type,summary:'想一想：每份、份数和总量怎样对应？（可选）',question:source.question}:null;
@@ -70,6 +75,33 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-fracoperations'){
+    const source=fractionOperationsBinding(task,context);if(!source)return null;
+    const proof=replayFractionOperationsEvidence(task,model);if(!proof)return null;
+    const name=r=>r[1]===1?String(r[0]):r.join('/'),result=name(proof.quantities.result);
+    const detail=['这里只核对本次记录中的选份、操作和当前提交；工具生成的结果图不等于独立构造或证明，没有自动评价自由解释或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayFractionOperationsEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    const kinds={negative:'比0小',zero:'等于0',part:'在0与1之间',one:'等于1',more:'比1大'};
+    detail.push(`最初记录的估计是“${kinds[proof.firstPrediction]}”；当前构造得到的量${kinds[proof.resultKind]}。估计与构造结果分别保留。`);
+    if(proof.resets.length)detail.push(`你重置了 ${proof.resets.length} 次，之前的操作和最初估计仍保留；下面只描述当前留下的有效构造。`);
+    let observation,connection;
+    if(proof.product){
+      const p=proof.product;
+      observation=`你实际选择了 ${p.columns.length} 列和 ${p.rows.length} 行，每个小格表示 ${name(p.cellArea)}。工具显示两种选择的交集共 ${p.cellCount} 小格，表示 ${result}；所选行列、交集面积与当前答案已分别核对。`;
+      connection='如果把行或列的小份再细分，怎样确认交集表示的量不变？整体超过1时，每个小格的单位会改变吗？';
+      if(!p.contiguousColumns||!p.contiguousRows)detail.push('这次有不连续的选择；核对的是所有交集小格的面积，不把它们冒充一块连续的长方形。');
+    }else if(proof.division){
+      const d=proof.division;
+      observation=`你选出了 ${d.originalPieces} 小份作为被分的量、${d.groupPieces} 小份作为每组的量，每小份是 ${name(proof.common.unit)}。当前构造记录了 ${d.wholeGroups} 次有效放组；工具显示还余 ${d.remainingPieces} 小份。余量是原来单位的 ${name(d.remainingAmount)}，也是一组的 ${name(d.fractionOfGroup)}；${d.wholeGroups} 整组加上这一部分，与填写的 ${result} 相符。`;
+      connection='剩下的量相对原来的整体和相对一组，为什么可以有两个分数名字？还不够一整组时，怎样记录它？';
+    }else{
+      const c=proof.combination,unit=name(proof.common.unit);
+      observation=`你在同一单位下分别选中了 ${c.leftCount} 个 ${unit} 和 ${c.rightCount} 个 ${unit}。点击“${c.operator==='+'?'把两部分接起来':'从第一部分拿走第二部分'}”后，工具显示 ${c.resultCount} 个 ${unit}，表示 ${result}；两边原量、共同单位和当前答案已分别核对。`;
+      connection='换用另一种同样小的份，选中的份数会怎样变，表示的原量又怎样保持？试着说明这次接起来或拿走的是什么单位。';
+    }
+    return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);if(!source)return null;
     const proof=replayGroupsEvidence(task,model);if(!proof)return null;

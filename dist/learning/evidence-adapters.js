@@ -11,6 +11,7 @@ import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js'
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -23,5 +24,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'groupwalk',type:'x-unitwalk',binding:groupwalkBinding,replay:replayGroupwalkEvidence},
  {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
  {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
- {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence}
+ {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
+ {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence}
 ].map(Object.freeze));
