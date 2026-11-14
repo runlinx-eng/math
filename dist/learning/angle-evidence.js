@@ -20,7 +20,8 @@ const SOURCES=Object.freeze({
 });
 
 export function angleBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!context||typeof context!=='object'||Array.isArray(context)||
+    typeof context.sessionId!=='string'||!Number.isInteger(context.index))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!Object.hasOwn(source.cases,context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-g25-turn',nodeId:source.nodeId}))return null;
