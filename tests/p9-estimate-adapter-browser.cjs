@@ -70,8 +70,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      if(Object.hasOwn(BRIDGES,id))state.daily.bridges[id]=record;else state.lessons[id]=record;
      localStorage.setItem(KEY,JSON.stringify(state));
     },spec);
-    const response=await page.goto(base+'learn.html#'+spec.id);await wait(spec);
-    ok(response?.fromServiceWorker()===true,label+' initial lesson opens from the stopped-origin cache');
+    // A hash-only navigation has no document response; the real reload also
+    // installs the newly seeded task index before waiting for its snapshot.
+    await page.goto(base+'learn.html#'+spec.id);
     await reload(spec);
     const record=await saved(spec.id);
     ok(record.models[spec.index].history.length===0&&(record.cases[spec.index]?.attempts?.length??0)===0,label+' starts with an empty workpiece and no checked snapshots');
