@@ -82,6 +82,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const source=await openContext('source'),legacyTarget=await openContext('legacy-backup-import'),target=await openContext('independent-import');
    const page=activePage=source.page;
    const trail=async p=>{activePage=p;const response=await p.goto(base+'v2.html#trail');await p.locator('#import-file').waitFor({state:'attached'});return response;};
+   const reveal=async control=>{
+    const details=control.locator('xpath=ancestor::details[1]');
+    if(await details.count()&&!(await details.evaluate(e=>e.open)))await details.locator(':scope > summary').click();
+   };
    const waitLesson=(p,id)=>p.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,id);
    const lesson=async(p,id)=>{
     activePage=p;const response=await p.goto(base+'learn.html#'+id);await waitLesson(p,id);
@@ -183,6 +187,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     assert.deepEqual(record.cases,fixture.backup.state.lessons[spec.id].cases);
     const secondaryRetry=page.locator('[data-do="p3-retry"]');
     if(await secondaryRetry.count()){
+     await reveal(secondaryRetry);ok(await secondaryRetry.isVisible(),label+' secondary retry is reached through its real visible disclosure');
      const beforeSecondaryRetry=await read(page);await secondaryRetry.click();
      const afterSecondaryRetry=await read(page);
      ok(beforeSecondaryRetry.raw===afterSecondaryRetry.raw,label+' secondary retry cannot bypass backup permission or change the original stored work');
@@ -196,10 +201,6 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#numeric-compat-notice').isVisible(),label+' offline reload preserves the read-only boundary');
    }
 
-   const reveal=async control=>{
-    const details=control.locator('xpath=ancestor::details[1]');
-    if(await details.count()&&!(await details.evaluate(e=>e.open)))await details.locator(':scope > summary').click();
-   };
    const field=async(key,value)=>{
     const control=page.locator(`[data-xfield="${key}"]`);await reveal(control);
     if(await control.evaluate(e=>e.tagName)==='SELECT')await control.selectOption(String(value));else await control.fill(String(value));
