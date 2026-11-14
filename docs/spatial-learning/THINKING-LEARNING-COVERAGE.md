@@ -1,3 +1,29 @@
+## P9 几何变换｜Issue #135：实际参数与对应点（2026-11-14）
+
+新增 `transform-evidence.js`，明确绑定23道原生题/9个新严格证据节点；全部method:null，31道同型关联题不继承反馈。完整原题SHA256由独立fixture固定并逐项加入review manifest。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| pointmove | 0、1、2 | `mt_Uq5vYqboCR` |
+| gridmotion | 0、1、2 | `mt_SH7QgFl8-v` |
+| flipandmove | 0、1、2 | `mt_efOeaGFyGM` |
+| geometrylab | 0、1、2 | `mt_RdfzwInyAj` |
+| axisrules | 0、1、2 | `mt_lxaM6iVpdr` |
+| gridchange | 0、1、2 | `mt_K0Y15w48SY` |
+| growshape | 0、1、2 | `mt_y-BuQAfw4B` |
+| similar37 | 1 | `mt_2OtRUM_0zW` |
+| tooladv39 | 1 | `mt_ZJC7JnnPCu` |
+
+真实predict、operate和measure历史独立回放，核对初猜、首个操作字段、每次参数快照、对应顶点、最终图像与当前输入。每次变换按原控件语义从原始shape计算；对称图形保留命名顶点身份，不只比较轮廓。BigInt有理数验证位移、镜线/中心、旋转方向、尺度、边长平方、点积与叉积，防止邻近小数或负零带分数被浮点或符号误判接纳。
+
+允许错误首猜和不同合法参数探索，拒绝非法后修正、恒等无作用、相邻重复显示、重复读数、未生成图像先量取和隐藏跨类型事件。单点没有边角不变量；measure只表示请求工具读数，proof明确automaticImage:true、independentMeasurementAssessed:false。反馈描述工具生成的对应坐标，不虚构独立作图或独立测量。
+
+叠加此前213题/84节点，本地审计 **A236题/93节点、B248/C150/D1209/E153**。原1996原生题/587节点/1223关系、776组1552关联题、323交互类型与39判题模块不变。
+
+专用35项Node与共享契约、全23题双视口的真实参数操作、6次完整提交快照、合法探索、负零/精度/无效历史、关联隔离和停源站离线纳入验收。首次review发现的strict负零缺陷已修复；原共享parser与B24分数预测绘点缺陷由#137单独处理并在本项合入前集成，需重新核对旧记录安全和相关测试。最终HEAD及合并main均以独立CI/Artifact为准，未进行的儿童/教研或浏览器验收不提前计入。
+
+---
+
 ## P9 分组与平均分｜Issue #133：物品身份、守恒与答案角色（2026-11-14）
 
 新增 `groups-evidence.js`，独立回放B13的29道原生题/14来源节点。9道建立等份、13道平均分、7道按每份量分组分别核对，全部method:null；24道同控件关联题不继承证据。明确位置保存在独立fixture与review manifest，固定完整原题SHA256。
