@@ -9,6 +9,7 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 
@@ -23,5 +24,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'groupwalk',type:'x-unitwalk',binding:groupwalkBinding,replay:replayGroupwalkEvidence},
  {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
  {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
- {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence}
+ {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
+ {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence}
 ].map(Object.freeze));
