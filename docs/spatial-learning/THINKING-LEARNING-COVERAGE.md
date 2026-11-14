@@ -14,6 +14,38 @@ Required保持61次原调用和全部环境/产物，改为八组[33,10,2,3,3,1,
 
 以下按日期保留既有开发记录；早期一概排除失败/重复/复位的约束由本节及各家族已更新的回放契约更正，历史CI数值不改写为本次结果。
 
+## P9 估算核对｜Issue #138：保留纠错的真实估计与有限关系反馈（2026-11-14）
+
+独立 estimate-evidence.js 绑定全部24道原生 x-estimatecheck，13来源节点中6个为新增严格覆盖：storylarger、storymillion、checkrough、checkpurpose、plan38、multi38。6同型关联题独立隔离，所有来源 method:null；下面每个位置的完整题目SHA256另列于fixture及review manifest。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| columnthree | 0、2 | `mt_SrrsLiJkr3` |
+| flexthousand | 3 | `mt_HFRYjTb-Z5` |
+| columnfour | 0、2 | `mt_mpS-JK_p_m` |
+| columnlarge | 0、2 | `mt_Yw1_4Nfsql` |
+| decimalsum | 0 | `mt_JH_6RpNWjr` |
+| storylarger | 1、3 | `mt_-F_Lv_apzH` |
+| storymillion | 0、2 | `mt_M1tnXqmYbn` |
+| checkrough | 0、1、2 | `mt_QaYfeVL-0C` |
+| checkpurpose | 0、1、2、3 | `mt_G3sVFQNCme` |
+| decimalmeasure3 | 0 | `mt_sA2OvTiech` |
+| fractionfour | 12 | `mt_gNUE4B3vuk` |
+| plan38 | 2 | `mt_O_UOTiMvT_` |
+| multi38 | 1、2 | `mt_RKeheOL9uo` |
+
+14加法、10减法，5题使用100或1000尺度；41种合法舍入间隔与65种逆算形式逐项验证。按顺序核对每条真实 b11-estimate：first 必须对应首个提交；失败保留且不锁定，最后唯一成功提交与 locked/当前舍入字段完全对应。默认空选择、错误舍入、文字或最小单位残差、重复失败和过粗间隔均可在真实控件中纠正；每次失败原因及锁定状态进入只读 proof，原记录不增字段。BigInt整数重算四舍五入和精算，双倍整数端点表达半单位边界；非负操作数的舍入原像下端截到0，加法左闭右开、减法两端开。负差与边界在独立反例中核验，但不称为负操作数估算覆盖。
+
+逆运算仅检查提交等式，不声称真实执行了独立逆算；范围由系统推导。9题claimed区分plausible与exactCorrect，包含412+389的800合理但不等于801；2题accuracy按最后成功选择的间隔保证，过粗提交不能先锁定，再用一次碰巧接近补救。真实失败后修正可以获得严格证据，反馈明确“保留的记录”和“最后成功锁定”，不抹掉首尝试。隐藏字段漂移、成功后追加事件、成功值的浮点残差、非法select值、源漂移与关联复制仍拒绝；原判题和保存功能保留。
+
+本准备树从正式 main `a1a2ec3760e8f72758413276ee88d7b9a235eaa1`（已含 #148/#154）接续，整合 #167 公共纠错检查点 `60ebdc2cbdffa670f7a1bdcb78dc239da9717076`；最终公共修复及本分支的验收/合并状态见 Issue #130。300 个上游固定来源逐值保序，仅追加本族 24 个来源；实际并集 **A324 题/128 节点、B248/C150/D1186/E88**，15 家族/324 明确绑定。1996 原生题、587 节点、1223 关系与 776 组 1552 关联分别统计。相对该依赖净增 6 节点，公共纠错整合新增题目与节点均为0，与其他并行分支不能直接相加。
+
+来源查询前核验原始 sessionId/index 类型，公共三入口 17 种真实畸形 JSON 矩阵覆盖全部绑定；合法操作回放和旧百格缺省 context 行为保持。原 38 项专用 Node 场景、41 个合法单位选择、65 种逆算形式及独立 3240 组/19504 个边界 claim 保留，本次补充可见控件纠错、重复失败、关联隔离和篡改拒绝。新的静态与来源差分见 verification/issue159-correction-review/；不得用旧 HEAD 结果替代新检查。
+
+浏览器脚本准备 24×2 正向组合，每组五次完整提交；原 24×2 错误舍入后修正与 2 个过粗→细间隔场景全部保留并强化为先失败、后成功的完整快照。另补 6 个默认空选择/文字/重复失败组合；56 组纠错中的 58 次失败与最终成功都留原始存储，6×2 关联题纠错后仍隔离。独立 Artifact 复核器以 BigInt/有理数另算每个事件与五快照，核对应 run/SHA receipt、离线压缩解码与截图文件；PNG 可见内容仍须人工检查。
+
+Required 八组 62 调用为 [33,10,2,3,3,2,7,2]：扩展二留下 groups/transform/angle，新增 evidence-quantity 承接 joinstory/estimate，全部原命令/环境/产物恰好保留，正常全量为 10 个 Job、18 份 Artifact。main Required 43601980060 的原扩展二四脚本（含 joinstory）实测合计 1593793ms，新增分组的实际耗时仍据新 CI receipt 核对 35 分钟限时。本地未运行 Chromium，修复后的最终 HEAD Required/适用 Overview/P8/P10 与 Artifact、随后 main 独立回归均须分别通过。此次纠错覆盖增量为 0，此处仍是准备分支并集，儿童和教研验收另外开展。
+
 ---
 
 ## P9 加减情境演示｜Issue #148：快照、交换与当前算式（2026-11-14）
