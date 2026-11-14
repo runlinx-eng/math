@@ -54,15 +54,17 @@ test('same type never implies replay evidence or cross-course thinking attributi
     ...[1,2,3,4].map(i=>'native:wholefractions:'+i),
     'native:translateamount:3','native:storyfraction:2','native:tenpieces:0',
     'native:decimalnames:1','native:fractionmeasure:3',
-    ...[0,1].map(i=>'native:mixedrename:'+i)
+    ...[0,1].map(i=>'native:mixedrename:'+i),
+    ...Object.entries({onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],oneslarge:[3],tenslarge:[2,3],showwhy:[0,2],fourparts:[2],buildthousand:[0,1,2],columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]})
+      .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 55 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,25);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:5,array:7,line:10,counterexample:2,fraction:13,unitwalk:18});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 81 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,39);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:5,array:7,line:10,counterexample:2,fraction:13,unitwalk:18,place:26});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:55,B:354,C:150,D:1269,E:168});
+   [level,s.tasks])),{A:81,B:328,C:150,D:1269,E:168});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,
@@ -70,6 +72,10 @@ test('same type never implies replay evidence or cross-course thinking attributi
  assert.deepEqual(rows.filter(r=>r.thinkingFeedbackBinding).map(r=>r.id),guided,
    'explicit source binding must stay course-specific');
  assert.ok(rows.filter(r=>r.kind==='bridge').every(r=>!r.optionalThinkingGuide&&!r.thinkingFeedbackBinding&&!r.replayVerified));
+ const placeRows=a.filter(r=>r.evidenceAdapter==='place');
+ assert.equal(placeRows.length,26);
+ assert.ok(placeRows.every(r=>r.hasHistory&&!r.modelFields.includes('board')&&r.modelFields.includes('counts')&&r.modelFields.includes('remaining')),
+   'A depends on independent mathematical replay, not a fabricated board field');
  const unitwalkBridges=rows.filter(r=>r.kind==='bridge'&&r.type==='x-unitwalk');
  assert.equal(unitwalkBridges.length,33);
  assert.ok(unitwalkBridges.every(r=>r.evidenceLevel!=='A'&&!r.evidenceAdapter),
