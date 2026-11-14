@@ -10,6 +10,7 @@ import {counterexampleBinding,replayCounterexampleEvidence} from './counterexamp
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
+import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
@@ -19,6 +20,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：换了单位，总量会变吗？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-unitwalk'){
+    const grouped=groupwalkBinding(task,context);
+    if(grouped)return {type:task.type,summary:'想一想：一次接几小份？（可选）',question:grouped.question};
     const source=unitwalkBinding(task,context);
     return source?{type:task.type,summary:'想一想：每一小步表示多少？（可选）',question:source.question}:null;
   }
@@ -65,6 +68,23 @@ export function thinkingFeedback(task,model,record,context={}){
     return {title:'这次作品中的思考线索',
       observation:`你实际向高位合并 ${proof.up} 次、向低位拆开 ${proof.down} 次：${examples.join('；')}${proof.exchanges.length>3?'；其余交换也已逐条核对':''}。每次交换前后数量守恒。${proof.operation==='-'?`从 ${proof.values[0]} 中实际拿走 ${proof.removed}，`:`合并的数量是 ${proof.values.join(' + ')}，`}最后各列与填写的结果 ${proof.total} 相符。`,
       connection:'如果改变交换或拿走的先后顺序，哪些条件仍要满足？试着说明为什么十个小单位和一个相邻的大单位表示同一个量。',
+      detail,method:null};
+  }
+  const groupedSource=task?.type==='x-unitwalk'?groupwalkBinding(task,context):null;
+  if(groupedSource){
+    const proof=replayGroupwalkEvidence(task,model);if(!proof)return null;
+    const name=pair=>pair.join('/'),detail=[
+      '这里只核对本次记录中的成组移动和当前提交；没有自动评价自由解释、独立论证、情境建模能力或长期掌握。',
+      `最后位置含 ${proof.whole} 个完整的1，零头是 ${name(proof.remainder)}。`,
+      `乘法记录核对的是每组 ${name(proof.group)}、共 ${proof.groups} 组，得到 ${name(proof.end)}；题目的组数与来回探索的前进次数分别计算。`
+    ];
+    if(attempts.slice(0,-1).some(a=>replayGroupwalkEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.bounds)detail.push(`你核对了最后位置左右相邻的整数 ${proof.bounds[0]} 和 ${proof.bounds[1]}。`);
+    if(proof.purchase!==null)detail.push(`按整个购买时，至少需要 ${proof.purchase} 个；购买个数与实际用量分别核对。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你把0到1分成 ${task.d} 个等长间隔，每一小份是 ${name(proof.unit)}。实际整组前进 ${proof.advances} 次，每次接上 ${task.chunk} 小份（${name(proof.group)}）；退回 ${proof.retreats} 小份，每次只退 ${name(proof.unit)}。每次位置变化已逐条核对，最后到达 ${name(proof.end)}。`,
+      connection:'如果多接一组，要退回几小份才能回到原来的位置？每组的量和组数怎样一起决定总量？',
       detail,method:null};
   }
   if(task?.type==='x-unitwalk'){

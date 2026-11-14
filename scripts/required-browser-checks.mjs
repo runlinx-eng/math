@@ -81,6 +81,7 @@ const groups={
   {"file":"tests/p9-counterexample-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-unitwalk-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-groupwalk-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-line-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-array-adapter-browser.cjs","env":{}},
  ],artifacts:[
@@ -91,6 +92,7 @@ const groups={
   "verification/p9-counterexample-adapter/",
   "verification/p9-fraction-adapter/",
   "verification/p9-unitwalk-adapter/",
+  "verification/p9-groupwalk-adapter/",
   "verification/p9-line-adapter/",
   "verification/p9-array-adapter/",
  ]},

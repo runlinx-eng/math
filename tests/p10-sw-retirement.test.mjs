@@ -112,6 +112,9 @@ test('lesson startup transitive module dependencies are all precached',()=>{
  }
  visit(new URL('learning/learn.js',root));
  assert.ok(seen.has(new URL('learning/line-evidence.js',root).href));
+ assert.ok(seen.has(new URL('learning/groupwalk-evidence.js',root).href));
+ assert.ok(seen.has(new URL('learning/phase5/b15-model.js',root).href));
+ assert.ok(seen.has(new URL('learning/phase5/b16-model.js',root).href));
  assert.ok(seen.size>100,'check a real transitive graph, not a hand-picked adapter list');
 });
 

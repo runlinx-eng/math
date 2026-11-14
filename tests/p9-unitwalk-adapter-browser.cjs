@@ -252,11 +252,15 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
 
    for(const isolated of [{id:'repeatfraction',index:2},{id:'link-translateamount-viewlinks',index:0}]){
     activeLabel=`${width}x${height}-isolation-${isolated.id}-${isolated.index}`;await open(isolated);
-    ok(await guide.count()===0,activeLabel+' grouped or associated task receives no native guide');
+    const grouped=isolated.id==='repeatfraction';
+    if(grouped)ok((await guide.innerText()).includes('一次接几小份'),activeLabel+' chunk=1 uses the separately reviewed grouped guide');
+    else ok(await guide.count()===0,activeLabel+' associated task receives no native guide');
     await solveOriginal(isolated);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original grouped or associated grading still works');
-    ok(await hint.count()===0,activeLabel+' neither chunk=1 nor an identical associated task can inherit native evidence');
-    await reload(isolated);ok(await hint.count()===0,activeLabel+' source isolation survives offline refresh');await shot('checked');
+    if(grouped)ok(await hint.isVisible()&&(await hint.innerText()).includes('整组前进')&&await hint.locator('[data-thinking-node-id]').count()===0,activeLabel+' chunk=1 receives only the independent grouped contract without an MP label');
+    else ok(await hint.count()===0,activeLabel+' an identical associated task cannot inherit native evidence');
+    await reload(isolated);
+    ok(grouped?await hint.isVisible()&&(await hint.innerText()).includes('整组前进'):await hint.count()===0,activeLabel+' source and mathematical-contract isolation survive offline refresh');await shot('checked');
    }
    await context.close();activePage=null;
   }
