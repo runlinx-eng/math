@@ -85,6 +85,10 @@ jobs:
           node --check dist/learning/groupwalk-evidence.js
           node --check dist/learning/route-evidence.js
           node --check tests/p9-route-adapter-browser.cjs
+          node --check dist/learning/portiongroups-evidence.js
+          node --check tests/p9-portiongroups-adapter-browser.cjs
+          node --check dist/learning/estimate-evidence.js
+          node --check tests/p9-estimate-adapter-browser.cjs
           node --check dist/learning/angle-evidence.js
           node --check tests/p9-angle-adapter-browser.cjs
           node --check dist/learning/joinstory-evidence.js
@@ -158,6 +162,8 @@ jobs:
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-groupwalk-evidence-adapter.test.mjs
             tests/p9-route-evidence-adapter.test.mjs
+            tests/p9-portiongroups-evidence-adapter.test.mjs
+            tests/p9-estimate-evidence-adapter.test.mjs
             tests/p9-angle-evidence-adapter.test.mjs
             tests/p9-joinstory-evidence-adapter.test.mjs
             tests/phase5-b10.test.mjs
