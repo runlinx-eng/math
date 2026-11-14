@@ -144,7 +144,7 @@ function createStartupObserver({root,out,diagnosticFile}){
       controller:navigator.serviceWorker.controller?.scriptURL||null,raw,storageError};
     }),5000,'post-original-failure DOM observation').catch(error=>({diagnosticError:String(error)}));
     if(typeof state.raw==='string'){const file='original-failure-storage.txt';fs.writeFileSync(path.join(out,file),state.raw);state.storage={file,bytes:Buffer.byteLength(state.raw),sha256:hash(state.raw)};delete state.raw;}
-    write(destination,{...frozen,domObservedAfterRequestFreeze:true,state});event('original-failure-captured',{number,label:label(),file:path.basename(destination)});
+    write(destination,{...frozen,domReadAttemptedAfterRequestFreeze:true,domReadCompleted:!state.diagnosticError,state});event('original-failure-captured',{number,label:label(),file:path.basename(destination)});
    };
    const handle=(kind,payload)=>{
     if(finished)return;

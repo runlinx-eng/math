@@ -17,7 +17,7 @@ jobs:
     # Preserve the original PR169 failure and all original tests. This diagnostic
     # observes the original complete four-command group; it is not a Required gate.
     if: >-
-      (github.event_name == 'pull_request' && github.head_ref == 'diagnostic/issue-180-mature-startup') ||
+      (github.event_name == 'pull_request' && github.head_ref == 'diagnostic/issue-180-mature-startup' && github.event.pull_request.head.repo.full_name == github.repository) ||
       (github.event_name == 'workflow_dispatch' && github.ref_name == 'diagnostic/issue-180-mature-startup')
     runs-on: ubuntu-24.04
     timeout-minutes: 35
@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          persist-credentials: false
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
