@@ -161,7 +161,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const words=await hint.innerText(),state=await saved(spec.id),model=state.models[spec.index];
     ok(words.includes(`1/${task.d}`)&&words.includes(`${task.n}/${task.d}`),label+' feedback names the actual unit fraction and endpoint');
     ok(words.includes(`前进 ${task.n+2} 次`)&&words.includes('后退 2 次'),label+' feedback describes the observed forward and backward counts');
-    ok(words.includes('不')&&(words.includes('掌握')||words.includes('解释')),label+' feedback states its interpretation boundary');
+    ok(words.includes('没有自动评价自由解释、独立论证、表示转换能力或长期掌握'),label+' feedback states its interpretation boundary');
     ok(model.history.filter(event=>event.action==='walk').length===task.n+2&&
      model.history.filter(event=>event.action==='walk-back').length===2,label+' actual forward and backward counts are preserved');
     ok(model.history.length===task.n+5&&model.history[0].action==='partition'&&model.history.every(event=>event.data.fields.parts===String(task.d)),label+' every persisted event uses the same intended unit');
