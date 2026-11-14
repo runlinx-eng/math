@@ -2,7 +2,7 @@
 // Does not change B38 grading or evaluate learner explanations.
 import * as reason from './phase5/b38-model.js';
 import {rational} from './phase5/b16-model.js';
-import {sessionMeta,sessionTasks} from './bridges.js';
+import {matchesNativeEvidenceTask} from './evidence-contract.js';
 
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const shape=(o,keys)=>o&&typeof o==='object'&&!Array.isArray(o)&&same(Object.keys(o).sort(),[...keys].sort());
@@ -13,8 +13,8 @@ const SOURCES=Object.freeze({
 export function counterexampleBinding(task,context={}){
  const source=Object.hasOwn(SOURCES,context.index)?SOURCES[context.index]:null;
  if(context.sessionId!=='argument38'||!Number.isInteger(context.index)||!source||task?.type!=='x-r38-counterexample'||
-    task.rule!==source.rule||sessionMeta(context.sessionId)?.topicId!==source.nodeId||
-    !same(sessionTasks(context.sessionId)?.[context.index],task))return null;
+    task.rule!==source.rule||
+    !matchesNativeEvidenceTask(task,context,{type:'x-r38-counterexample',nodeId:source.nodeId}))return null;
  return source;
 }
 const fraction=raw=>{

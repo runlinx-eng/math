@@ -3,23 +3,36 @@ import assert from 'node:assert/strict';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {TASKS as F} from '../dist/learning/phase5/b17.js';
 import * as fractions from '../dist/learning/phase5/b17-model.js';
+import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs';
 import {TASKS as A} from '../dist/learning/phase5/b38.js';
 import * as arguments38 from '../dist/learning/phase5/b38-model.js';
 
 const attempt=value=>({value:structuredClone(value)});
 
 test('fraction feedback requires a submitted, valid construction and describes the actual new names',()=>{
-  const t=F.recutnames[0],empty=fractions.initial(t),done=fractions.example(t);
-  assert.equal(thinkingFeedback(t,empty,null),null);
-  assert.equal(thinkingFeedback(t,empty,{attempts:[attempt(empty)],support:false}),null);
-  assert.equal(thinkingFeedback(t,done,{attempts:[],support:false}),null);
-  const result=thinkingFeedback(t,done,{attempts:[attempt(empty),attempt(done)],support:true});
+  const context={sessionId:'recutnames',index:0};
+  const t=F.recutnames[0],empty=fractions.initial(t),done=fractionEvidenceExample(t);
+  assert.equal(thinkingFeedback(t,empty,null,context),null);
+  assert.equal(thinkingFeedback(t,empty,{attempts:[attempt(empty)],support:false},context),null);
+  assert.equal(thinkingFeedback(t,done,{attempts:[],support:false},context),null);
+  assert.equal(thinkingFeedback(t,done,{attempts:[attempt(done)]}),null,'shared widget alone cannot establish the source');
+  const result=thinkingFeedback(t,done,{attempts:[attempt(empty),attempt(done)],support:true},context);
   assert.match(result.observation,/1\/3.*2\/6/);
   assert.match(result.connection,/比较分数/);
   assert.ok(result.detail.some(s=>s.includes('修改')));
   assert.ok(result.detail.some(s=>s.includes('提示')));
+  assert.equal(result.method,null,'fraction operations do not automatically inherit an MP.2 source label');
   const changed=structuredClone(done);changed.reason='top';
-  assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)],support:false}),null);
+  assert.equal(thinkingFeedback(t,changed,{attempts:[attempt(done)],support:false},context),null);
+});
+
+test('a final genuine fraction rewind never claims an unperformed later experiment',()=>{
+  const t=F.recutnames[0],m=fractionEvidenceExample(t);
+  fractions.act(t,m,'b17-rewind');
+  const note=thinkingFeedback(t,m,{attempts:[attempt(m)]},{sessionId:'recutnames',index:0});
+  assert.ok(note);
+  assert.ok(note.detail.some(line=>line==='你还实际回到原分法 1 次。'));
+  assert.doesNotMatch(note.detail.join(' '),/再试了别的分法/);
 });
 
 test('counterexample feedback reports only a tested contradiction and does not assess free text',()=>{
@@ -94,8 +107,11 @@ test('P9 emitted thinking source IDs and practice codes belong to the pinned 50-
   assert.equal(source.groups.length,8);
   assert.equal(source.groups.reduce((sum,g)=>sum+g.nodes.length,0)+source.untagged.length,50);
   const byId=new Map(source.groups.flatMap(g=>g.nodes.map(n=>[n.id,{n,code:g.code}])));
+  const {TASKS,exampleModel}=await import('../dist/learning/tasks.js');
+  const grid=Object.values(TASKS).flat().find(t=>t.type==='grid'&&!t.reverse);
+  assert.ok(grid,'retain a real MP.2 representation observation in the source-map regression');
   const cases=[
-    [F.recutnames[0],fractions.example(F.recutnames[0]),{}],
+    [grid,exampleModel(grid),{}],
     ...[
       ['show38',2],['because38',1],['because38',2],['argument38',0],['argument38',2],
       ['argument38',3],['argument38',4]

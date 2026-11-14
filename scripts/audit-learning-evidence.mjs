@@ -8,10 +8,8 @@ import {TASKS,defaultModel,validModel,inspect,exampleModel} from '../dist/learni
 import {BRIDGES,sessionTasks,sourceBridge} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
-import {sequenceBinding,replaySequenceEvidence} from '../dist/learning/sequence-evidence.js';
-import {lineBinding,replayLineEvidence} from '../dist/learning/line-evidence.js';
-import {arrayBinding,replayArrayEvidence} from '../dist/learning/array-evidence.js';
-import {counterexampleBinding,replayCounterexampleEvidence} from '../dist/learning/counterexample-evidence.js';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const out=resolve(root,'verification/learning-evidence-audit');
@@ -63,12 +61,12 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const fields=model&&typeof model==='object'?Object.keys(model).sort(sort):[];
  const freeText=fields.filter(k=>/^(prose|explanation|reflection|reason|justification|argument|why|note|notes)$/i.test(k) && typeof model[k]==='string');
  const guide=kind==='native'?thinkingGuide(task,{sessionId,index}):null;
- // Current exact replay feedback pilot; all other history fields are unverified as replay evidence.
- const verifiedReplay=kind==='native'&&history&&!!board&&(
-   (!!sequenceBinding(task,{sessionId,index})&&!!replaySequenceEvidence(task,exampleModel(task)))||
-   (!!arrayBinding(task,{sessionId,index})&&!!replayArrayEvidence(task,exampleModel(task)))||
-   (!!lineBinding(task,{sessionId,index})&&!!replayLineEvidence(task,exampleModel(task)))||
-    (!!counterexampleBinding(task,{sessionId,index})&&!!replayCounterexampleEvidence(task,exampleModel(task))));
+ // Each registered family retains its own exact native binding and replay.
+ // Fixtures exercise real actions; the existing grader/solver remains unchanged.
+ const verifiedAdapter=kind==='native'&&history&&!!board?EVIDENCE_ADAPTERS.find(adapter=>
+   adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
+   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):exampleModel(task))):null;
+ const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}
  else if(verifiedReplay){level='A';reason='Explicit native task with source-bound strict mathematics replay and current-submission regression';}
@@ -85,7 +83,7 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const row={id,kind,nodeId,relatedNodeId,sessionId,index,type:task.type,validatorOwner:owner,
   validator:owner==='native-legacy'?'dist/learning/tasks.js#inspect':'dist/learning/phase4/engine.js#inspectExtra -> '+owner,
   modelFields:fields,defaultModelValid:valid,graderCallable:checked,hasHistory:history,
-  replayVerified:verifiedReplay,intermediateModel:!!board||fields.some(k=>['selected','filled','rows','counts','heights','cuts','mark','points','shapes','tiles','pieces'].includes(k)),
+  replayVerified:verifiedReplay,evidenceAdapter:verifiedAdapter?.id||null,intermediateModel:!!board||fields.some(k=>['selected','filled','rows','counts','heights','cuts','mark','points','shapes','tiles','pieces'].includes(k)),
   finalAnswerOnly:level==='C',freeTextFields:freeText,evidenceLevel:level,evidenceReason:reason,
   sourceMapped:sourceKnown&&sourceLink,sourceEvidence:kind==='native'?'LESSONS[sessionId].topicId':'BRIDGES[id].fromTopicId/topicId + sourceBridge(id,atlas)',
   sourceThinkingCode:mpByNode.get(nodeId)||null,
@@ -159,7 +157,7 @@ const summary={schema:'math-learning-interaction-evidence/1',basis:'Live source 
  historyTasksNative:native.filter(r=>r.hasHistory).length,
  replayVerifiedTasksNative:native.filter(r=>r.replayVerified).length,
  guideBindingsNative:native.filter(r=>r.optionalThinkingGuide).length,
- caution:'A is a source-bound strict sequence, array, line-relation or counterexample replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
+ caution:'A is a source-bound strict sequence, array, line-relation, counterexample or fraction replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});
 write('types.json',{rows:byType});
