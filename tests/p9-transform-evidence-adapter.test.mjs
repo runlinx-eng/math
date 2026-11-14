@@ -176,21 +176,51 @@ test('invalid operations cannot be erased by a later correct image and original 
  m.predX='0';M.act(t,m,'p24-predict');operate(t,m);finish(t,m);assert.equal(M.inspect(t,m).correct,true);rejected(t,m);
 });
 
-test('negative-zero mixed numbers never become positive mathematical evidence',()=>{
+test('negative mixed scale and positive-target answers fail without erasing invalid-operation history',()=>{
  const scale=task('growshape'),s=predict(scale);
- operate(scale,s,{kind:'scale',factor:'-0 1/2',center:[0,0]});operate(scale,s);finish(scale,s);
+ operate(scale,s,{kind:'scale',factor:'-0 1/2',center:[0,0]});
+ assert.equal(s.board.image,null);assert.equal(s.board.op,null);assert.notEqual(s.issue,'');
+ const failed=structuredClone(s.history.at(-1));assert.equal(failed.f.factor,'-0 1/2');
+ operate(scale,s);finish(scale,s);
  assert.equal(M.valid(scale,s),true);assert.equal(M.inspect(scale,s).correct,true);
- rejected(scale,s,'a lexically negative scale is invalid even when the legacy parser treats it as positive');
- const move=task('pointmove'),m=predict(move);
- operate(move,m,{kind:'move',dx:'-0 2/1',dy:0});operate(move,m);finish(move,m);
- assert.equal(M.inspect(move,m).correct,true);rejected(move,m,'historical source interpretation disagrees with the negative input');
+ assert.deepEqual(s.history[1],failed,'the failed negative scale stays in the original event history');
+ rejected(scale,s,'a later correct image does not erase the failed negative scale');
+ const move=task('pointmove');
  for(const input of ['-0 5/1','-00 5/1',' -000 5/1 ']){
-  const n=M.example(move);n.answers[0]=input;assert.equal(M.inspect(move,n).correct,true);rejected(move,n,'negative answer is not positive five');
+  const n=M.example(move);n.answers[0]=input;assert.equal(M.valid(move,n),true);
+  assert.equal(M.inspect(move,n).correct,false);rejected(move,n,'negative five is not the required positive five');
  }
+});
+
+test('legal negative mixed displacements preserve their actual direction before returning from the original shape',()=>{
+ const move=task('pointmove');
+ for(const dx of ['-0 2/1','-00 2/1',' -000 2/1 ']){
+  const m=predict(move);operate(move,m,{kind:'move',dx,dy:'-0 3/1'});
+  assert.deepEqual(m.board.op,{kind:'move',dx:-2,dy:-3});assert.deepEqual(m.board.image,[[0,0]]);assert.equal(m.issue,'');
+  const first=structuredClone(m.history.at(-1));operate(move,m);finish(move,m);const p=accepted(move,m);
+  assert.equal(p.operationCount,2);assert.deepEqual(p.operations[0].operation,{kind:'move',dx:-2,dy:-3});
+  assert.deepEqual(p.operations[0].imagePoints,[[0,0]]);assert.deepEqual(p.imagePoints,[[5,3]]);
+  assert.deepEqual(p.operations[1].sourcePoints,[[2,3]],'returning to the goal applies to the original point');
+  assert.deepEqual(m.history[1],first);assert.equal(first.f.dx,dx);assert.equal(first.f.dy,'-0 3/1');
+ }
+ const half=predict(move);operate(move,half,{kind:'move',dx:'-0 1/2',dy:0});
+ assert.equal(half.board.image,null);assert.notEqual(half.issue,'');operate(move,half);finish(move,half);
+ assert.equal(M.inspect(move,half).correct,true);rejected(move,half,'negative half is outside this integer displacement control');
+});
+
+test('negative mixed predictions are real guesses and negative coordinates can be exactly correct answers',()=>{
+ const move=task('pointmove');
  for(const guess of [['-0 5/1','3'],['0','-0 3/1']]){
-  const n=finish(move,operate(move,predict(move,guess)));
-  assert.equal(M.inspect(move,n).correct,true);rejected(move,n,'a source prediction whose sign was reversed is not strict history');
+  const n=finish(move,operate(move,predict(move,guess))),p=accepted(move,n);
+  assert.equal(n.board.first.incorrectPrediction,true);assert.deepEqual(p.prediction.point,guess);assert.equal(p.prediction.correct,false);
+  assert.deepEqual(p.imagePoints,[[5,3]],'a wrong guess does not erase the later valid transformation');
+  const feedback=thinkingFeedback(move,n,{attempts:[{value:structuredClone(n)}]},{sessionId:'pointmove',index:0});
+  assert.ok(feedback?.detail.some(line=>line.includes('猜想')&&line.includes('不同')));
  }
+ const down=task('axisrules'),n=predict(down,['4','-0 1/1']);
+ operate(down,n,{kind:'move',dx:3,dy:'-0 2/1'});n.answers=['4','-0 1/1'];const correct=accepted(down,n);
+ assert.equal(correct.prediction.correct,true);assert.equal(n.board.first.incorrectPrediction,undefined);
+ assert.deepEqual(correct.operation,{kind:'move',dx:3,dy:-2});assert.deepEqual(correct.imagePoints,[[4,-1],[6,-1],[4,1]]);
  const zero=finish(move,operate(move,predict(move,['-0 0/1','-0.000'])));
  assert.equal(accepted(move,zero).prediction.correct,false,'signed zero remains exactly zero');
  const negative=finish(move,operate(move,predict(move,['-1 1/2','-2 1/3'])));
