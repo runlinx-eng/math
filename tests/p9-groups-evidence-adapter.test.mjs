@@ -217,7 +217,11 @@ test('feedback distinguishes a total, a per-group amount, a group count, zero an
   const role=task.mode==='build'?'全部物品的总量':task.mode==='share'?'每份的数量':'份数';
   assert.ok(feedback.observation.includes(`填写的 ${proof.result} 表示${role}`));
   assert.ok(feedback.detail.some(line=>line.includes('没有自动评价自由解释')));
-  if(c.each===0)assert.ok(feedback.detail.some(line=>line.includes('每份0个，合在一起仍是0个')));
+  if(c.each===0){
+   assert.ok(feedback.detail.some(line=>line.includes('每份0个，合在一起仍是0个')));
+   assert.ok(feedback.observation.includes('份空容器'));
+   assert.doesNotMatch(feedback.observation+feedback.detail.join(''),/放入物品|实际分放|分放时/,'zero objects cannot imply a placement event');
+  }
   if(proof.remainder)assert.ok(feedback.detail.some(line=>line.includes('桌上剩下 1 个，比 3 份少')));
   const changed=structuredClone(model);changed.answer='999';
   assert.equal(thinkingFeedback(task,changed,record,c),null);
