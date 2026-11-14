@@ -124,6 +124,7 @@ const groups={
   "verification/p9-portiongroups-adapter/",
  ]},
  "p10":{commands:[
+  {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
   {"file":"tests/p10-longterm-offline-browser.cjs","env":{}},
   {"file":"tests/p10-sw-nav-isolation-browser.cjs","env":{}},
@@ -132,6 +133,7 @@ const groups={
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
+  "verification/p9-numeric-compat/",
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},

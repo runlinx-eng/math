@@ -150,28 +150,63 @@ test('angle differences and cross relations come from the recorded openings, wit
  assert.deepEqual(q.cross,{angle:100,opposite:100,adjacent:80,around:360});
 });
 
-test('exact integer and rational inputs reject rounding and literal negative-zero mixed-number traps',()=>{
+test('exact integer and rational inputs reject rounding and unavailable length options',()=>{
  const t=sessionTasks('anglecorner')[0];
  for(const raw of ['60','60.0000','120/2','59 2/2','0 60/1']){
   const m=angles.initial(t,1),steps=angles.solveSteps(t).map(s=>s.field==='angle'?{...s,value:raw}:s);
   run(t,m,steps);assert.equal(accepts(t,m).angle,60);
  }
- for(const raw of ['60.0000000000000001','60000000000000000001/1000000000000000000','-0 60/1']){
+ for(const raw of ['60.0000000000000001','60000000000000000001/1000000000000000000']){
   const m=angles.initial(t,1);set(t,m,raw);run(t,m);original(t,m);rejects(t,m,raw);
  }
- for(const raw of ['-1','361','0/0','1e2','Infinity','60.1','-0 1/2','-1 1/2']){
+ for(const raw of ['361','0/0','1e2','Infinity','60.1']){
   const m=angles.initial(t,1);set(t,m,raw);run(t,m);original(t,m);rejects(t,m,raw);
  }
  const numerical=sessionTasks('degreeunit')[1];
- for(const raw of ['45.00000001','45.0000000000000001','-0 45/1']){
+ for(const raw of ['45.00000001','45.0000000000000001']){
   const m=angles.example(numerical);m.answers[0]=raw;original(numerical,m);rejects(numerical,m,raw);
  }
  for(const raw of ['90/2','44 2/2','45.0000']){
   const m=angles.example(numerical);m.answers[0]=raw;assert.equal(accepts(numerical,m).answers[0].value,45);
  }
- for(const raw of ['-0 3/1','6/2','3.0000000000000001']){
+ for(const raw of ['6/2','3.0000000000000001']){
   const m=angles.initial(t,1);set(t,m,60);act(t,m,'record');field(t,m,'length',raw);act(t,m,'length');act(t,m,'record');answers(t,m);
   original(t,m);rejects(t,m,'length selector values are exact UI options: '+raw);
+ }
+});
+
+test('negative mixed openings and lengths fail while later correct work retains the invalid history',()=>{
+ const t=sessionTasks('anglecorner')[0];
+ for(const raw of ['-0 60/1','-00 1/1','-0 1/2','-1','-1 1/2','-60']){
+  const m=angles.initial(t,1);set(t,m,raw);
+  assert.equal(m.board.angle,0);assert.notEqual(m.issue,'');
+  const failed=structuredClone(m.history.at(-1));assert.equal(failed.f.angle,raw);
+  run(t,m);original(t,m);assert.deepEqual(m.history[0],failed);
+  rejects(t,m,'a later valid opening does not erase the failed negative angle: '+raw);
+ }
+ for(const raw of ['-0 3/1','-00 3/1','-3']){
+  const m=angles.initial(t,1);set(t,m,60);act(t,m,'record');
+  field(t,m,'length',raw);act(t,m,'length');
+  assert.equal(m.board.length,1);assert.notEqual(m.issue,'');
+  const failed=structuredClone(m.history.at(-1));assert.equal(failed.f.length,raw);
+  assert.deepEqual(m.board.records,[{angle:60,length:1}]);
+  field(t,m,'length','3');act(t,m,'length');act(t,m,'record');answers(t,m);original(t,m);
+  assert.deepEqual(m.history[2],failed);
+  rejects(t,m,'negative length in an imported event is not a legal selector choice: '+raw);
+ }
+ const zero=angles.initial(t,1);set(t,zero,'-0 0/1');
+ assert.ok(zero.board.angle===0);assert.equal(zero.issue,'');run(t,zero);
+ assert.equal(accepts(t,zero).angle,60,'signed zero is a legal zero opening before later exploration');
+});
+
+test('negative mixed answers do not become positive angle measurements',()=>{
+ const t=sessionTasks('degreeunit')[1];
+ for(const raw of ['-0 45/1','-00 45/1',' -000 45/1 ']){
+  const m=angles.example(t);m.answers[0]=raw;
+  assert.equal(angles.valid(t,m),true);assert.equal(angles.inspect(t,m).correct,false);
+  rejects(t,m,'negative forty-five is outside this positive opening measurement');
+  assert.equal(m.answers[0],raw,'rejecting the response does not rewrite the original input');
+  m.answers[0]='45';assert.equal(accepts(t,m).answers[0].value,45,'editing a response does not fabricate or erase action history');
  }
 });
 
@@ -218,4 +253,19 @@ test('angle feedback separates recorded openings, length comparison and actual b
   if(proof.cross)assert.ok(feedback.detail.some(line=>line.includes(`对顶角为 ${proof.cross.opposite}°，邻角为 ${proof.cross.adjacent}°`)));
   if(proof.triangle)assert.ok(feedback.detail.some(line=>line.includes('本次没有实际构造三角形')));
  }
+});
+
+test('angle feedback names the specified target records when legitimate exploration lies between them',()=>{
+ const task=sessionTasks('angleadd')[0],model=angles.initial(task,1);
+ for(const opening of [65,100,180])record(task,model,opening);
+ field(task,model,'answers.0','115');
+ const proof=accepts(task,model),before=JSON.stringify(model);
+ assert.deepEqual(proof.records.map(r=>r.angle),[65,100,180]);
+ assert.deepEqual(proof.targetRecords.map(r=>r.recordIndex),[0,2]);
+ assert.deepEqual(proof.differences,[{from:65,to:180,difference:115,fromRecordIndex:0,toRecordIndex:2}]);
+ const feedback=thinkingFeedback(task,model,{attempts:[{value:structuredClone(model)}]},{sessionId:'angleadd',index:0});
+ assert.ok(feedback);
+ assert.ok(feedback.detail.some(line=>line.includes('本题指定的目标记录之间的差为：180° − 65° = 115°')));
+ assert.doesNotMatch(feedback.detail.join('\n'),/相邻记录/);
+ assert.equal(JSON.stringify(model),before,'feedback preserves the actual intermediate exploration and full event history');
 });
