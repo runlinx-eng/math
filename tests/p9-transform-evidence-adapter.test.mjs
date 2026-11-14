@@ -198,6 +198,34 @@ test('negative mixed scale and positive-target answers fail without erasing inva
  }
 });
 
+test('a fresh numeric retry preserves a wrong mixed guess and failed scale across two real submissions',()=>{
+ const t=task('growshape'),m=predict(t,['-1 1/2','-0 1/2']);
+ operate(t,m,{kind:'scale',factor:'-0 1/2',center:[0,0]});
+ const failed=structuredClone(m),record={attempts:[{value:structuredClone(failed)}]};
+ assert.equal(M.inspect(t,failed).correct,false);rejected(t,failed);
+ assert.equal(thinkingFeedback(t,failed,record,{sessionId:'growshape',index:0}),null);
+ operate(t,m);finish(t,m);const proof=accepted(t,m);
+ assert.equal(thinkingFeedback(t,m,record,{sessionId:'growshape',index:0}),null,'unsubmitted correction is still stale');
+ record.attempts.push({value:structuredClone(m)});
+ const feedback=thinkingFeedback(t,m,record,{sessionId:'growshape',index:0});assert.ok(feedback);
+ assert.deepEqual(record.attempts[0].value,failed);assert.deepEqual(m.history.slice(0,2),failed.history);
+ assert.deepEqual(m.board.first.operate,failed.board.first.operate);
+ assert.deepEqual(m.board.first.predict,{predX:'-1 1/2',predY:'-0 1/2'});
+ assert.deepEqual(proof.prediction,{point:['-1 1/2','-0 1/2'],correct:false});
+ assert.deepEqual(proof.imagePoints,[[2,2],[6,2],[2,6]]);
+ assert.equal(proof.failedRequests.length,1);assert.equal(proof.failedRequests[0].historyIndex,1);
+ assert.equal(proof.failedRequests[0].fields.factor,'-0 1/2');
+ assert.equal(proof.failedRequests[0].before.image,null);assert.equal(proof.failedRequests[0].after.image,null);
+ assert.equal(proof.operationCount,1);assert.equal(proof.measurementCount,1);
+ assert.equal(proof.automaticImage,true);assert.equal(proof.independentMeasurementAssessed,false);
+ assert.ok(feedback.detail.some(text=>text.includes('保留了 1 次尚未形成预测或变换的请求')));
+ assert.ok(feedback.detail.some(text=>text.includes('这些读数由工具生成')));
+ for(const mutate of [x=>x.history[1].f.factor='0 1/2',x=>x.board.first.operate.factor='2',
+  x=>x.board.first.predict.predX='2',x=>x.board.image=[[0.5,0.5],[1.5,0.5],[0.5,1.5]]]){
+  const forged=structuredClone(m);mutate(forged);rejected(t,forged,'failed parameters, first guesses and legacy images cannot be rewritten');
+ }
+});
+
 test('legal negative mixed displacements preserve their actual direction before returning from the original shape',()=>{
  const move=task('pointmove');
  for(const dx of ['-0 2/1','-00 2/1',' -000 2/1 ']){
