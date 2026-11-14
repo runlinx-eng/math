@@ -189,6 +189,10 @@ jobs:
           node --check scripts/audit-learning-evidence.mjs
           node --test tests/learning-evidence-audit.test.mjs
           node scripts/audit-learning-evidence.mjs
+          node --check scripts/audit-evidence-expansion.mjs
+          node --check tests/evidence-expansion-audit.test.mjs
+          node --test tests/evidence-expansion-audit.test.mjs
+          node scripts/audit-evidence-expansion.mjs
           node --check scripts/audit-interaction-semantics.mjs
           node --test tests/interaction-semantic-audit.test.mjs
           node scripts/audit-interaction-semantics.mjs
