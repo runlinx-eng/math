@@ -1,7 +1,7 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
 const RELEASE='math-explorer-20261114-p9-estimate-v1';
 registerClientRelease(RELEASE);
-import {readStored,writeStored,MAX_BACKUP_BYTES} from './storage.js';
+import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {applyNavigationCopy} from './navigation-copy.js';
 import {makeKnowledgeNames} from './spatial-names.js';
@@ -211,9 +211,11 @@ $('#import-file').addEventListener('change',async event=>{
     if(file.size>MAX_BACKUP_BYTES)throw new Error('备份超过 50 MB，尚未导入。');
     const text=await file.text(),wrapper=JSON.parse(text);
     if(wrapper?.version===2)await prepareStateForValidation(wrapper.state);
-    const currentRaw=readStored(KEY);
+    // Capture the same bytes before any await and use them for both parsing
+    // and the final compare-before-write guard.
+    const before=localStorage.getItem(KEY),currentRaw=unpackText(before);
     if(currentRaw)await prepareStateForValidation(JSON.parse(currentRaw));
-    const before=localStorage.getItem(KEY),current=currentRaw?validate(JSON.parse(currentRaw),atlas):state;
+    const current=currentRaw?validate(JSON.parse(currentRaw),atlas):state;
     const incoming=parseBackup(text,atlas);
     assertNoImportConflicts(current,incoming);
     const combined=validate(merge(current,incoming),atlas);
@@ -223,7 +225,7 @@ $('#import-file').addEventListener('change',async event=>{
   }catch(error){toast(error.message||'导入失败，原有记录没有改变。');}
   finally{event.target.value='';}
 });
-async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const stored=readStored(KEY),old=readStored(OLD_KEY);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
+async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const before=localStorage.getItem(KEY),oldBefore=localStorage.getItem(OLD_KEY),stored=unpackText(before),old=unpackText(oldBefore);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;if(localStorage.getItem(KEY)!==before||localStorage.getItem(OLD_KEY)!==oldBefore)throw new Error('加载旧记录期间学习现场发生变化，请重新打开页面。');writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
  if('serviceWorker'in navigator){
   try{
    const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});

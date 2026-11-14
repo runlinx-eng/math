@@ -251,10 +251,12 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     {variant:'negative-zero-mixed',id:'anglecorner',index:0},
     {variant:'reversed-records',id:'angleadd',index:1},
     {variant:'stale-opening',id:'anglecross',index:0},
-    {variant:'rounded-answer',id:'degreeunit',index:1}
+    {variant:'rounded-answer',id:'degreeunit',index:1},
+    {variant:'negative-mixed-answer',id:'degreeunit',index:1}
    ];
    for(const spec of negativeCases){
     activeLabel=`${width}x${height}-negative-${spec.variant}`;const task=sessionTasks(spec.id)[spec.index];await open(spec);
+    let failedOpening;
     if(spec.variant==='reversed-records'){
      for(const angle of [...task.targets].reverse())await recordAngle(spec,angle);
      await setAngle(spec,task.targets.at(-1));await answerFields(spec,task);
@@ -264,19 +266,39 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      if(spec.variant==='same-length')await action('length');
      if(['invalid-angle','rounded-angle','negative-zero-mixed'].includes(spec.variant)){
       const value=spec.variant==='invalid-angle'?'361':spec.variant==='rounded-angle'?'60.0000000000000001':'-0 60/1';
-      await field('angle',value);await action('set');await field('angle','60');await action('set');
+      const before=await model(spec);await field('angle',value);await action('set');
+      if(spec.variant==='negative-zero-mixed'){
+       const failed=await model(spec);failedOpening={index:failed.history.length-1,event:failed.history.at(-1)};
+       ok(!!failed.issue&&failed.board.angle===before.board.angle&&JSON.stringify(failed.board.records)===JSON.stringify(before.board.records),
+        activeLabel+' the negative sixty-degree opening is rejected without changing the visible construction or records');
+       ok(failedOpening.event.a==='set'&&failedOpening.event.f.angle==='-0 60/1',activeLabel+' the rejected event preserves the exact negative mixed input');
+      }
+      await field('angle','60');await action('set');
      }
      if(spec.variant==='stale-opening'){await field('angle','65');await action('set');}
      if(spec.variant==='rounded-answer')await field('answers.0','45.00000001');
+     if(spec.variant==='negative-mixed-answer')await field('answers.0','-0 45/1');
     }
     await submit();const m=await model(spec);
-    ok(angles.valid(task,m)&&angles.inspect(task,m).correct,activeLabel+' original final-result grading remains unchanged');
-    ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI still accepts its final record');
+    const originalCorrect=spec.variant!=='negative-mixed-answer';
+    ok(angles.valid(task,m)&&angles.inspect(task,m).correct===originalCorrect,activeLabel+' original grading respects the signed angle answer and record rules');
+    ok(await page.locator('#check-feedback').getAttribute('data-state')===(originalCorrect?'correct':'revise'),
+     activeLabel+' the visible result agrees with the actual positive opening measurement');
+    if(failedOpening)ok(JSON.stringify(m.history[failedOpening.index])===JSON.stringify(failedOpening.event),
+     activeLabel+' a later correct opening retains the failed negative action in its original position');
     ok(await hint.count()===0&&!replayAngleEvidence(task,m),activeLabel+' strict feedback excludes contradictory or ineffective evidence');
-    await reload(spec);ok(await hint.count()===0,activeLabel+' rejected evidence remains absent offline');
-    negativeObservations.push({width,height,id:spec.id,index:spec.index,variant:spec.variant,model:m,
-     lesson:await saved(spec.id),originalCorrect:true,strictFeedback:false});
+    await reload(spec);ok(await hint.count()===0&&JSON.stringify(await model(spec))===JSON.stringify(m),activeLabel+' rejected evidence and the complete original model remain unchanged offline');
+    const lesson=await saved(spec.id),observation={width,height,id:spec.id,index:spec.index,variant:spec.variant,model:m,
+     lesson,originalCorrect,strictFeedback:false};negativeObservations.push(observation);
     await shot('rejected');
+    if(spec.variant==='negative-mixed-answer'){
+     await field('answers.0','45');await submit();const repaired=await saved(spec.id),current=repaired.models[spec.index];
+     ok(await hint.isVisible()&&!!replayAngleEvidence(task,current),activeLabel+' correcting only the answer enables the actual recorded angle evidence');
+     ok(JSON.stringify(repaired.cases[spec.index].attempts.slice(0,-1))===JSON.stringify(lesson.cases[spec.index].attempts)&&
+      JSON.stringify(current.history)===JSON.stringify(m.history),activeLabel+' the negative answer submission and every real action remain intact after correction');
+     await reload(spec);ok(await hint.isVisible()&&JSON.stringify(await model(spec))===JSON.stringify(current),activeLabel+' correction and earlier negative response survive offline reload');
+     observation.repaired={model:current,lesson:repaired,proof:replayAngleEvidence(task,current)};
+    }
    }
 
    const bridge=Object.keys(BRIDGES).flatMap(id=>(sessionTasks(id)||[]).map((task,index)=>({id,index,task}))).find(c=>c.task.type==='x-g25-turn');
@@ -291,7 +313,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===46,'all 23 native tasks finish at both desktop sizes');
-  ok(negativeObservations.length===16,'eight real negative paths finish at both desktop sizes');
+  ok(negativeObservations.length===18,'nine real negative paths finish at both desktop sizes');
   ok(boundaries.length===8,'clipped and next-circle advances are observed at both desktop sizes');
   const nativeNodes=new Set(cases.map(c=>c.nodeId)).size;
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,boundaries,offline,

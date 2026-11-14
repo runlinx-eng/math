@@ -85,21 +85,26 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await field('jump',delta);await field('landing',from+delta);await act(spec,'b11-hop');
    };
    await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor({state:'attached'});
-   await page.waitForFunction(async expected=>{
-    if(!navigator.serviceWorker.controller)return false;
-    return new Promise(resolve=>{
-     const channel=new MessageChannel(),timeout=setTimeout(()=>{channel.port1.close();resolve(false);},1200);
-     channel.port1.onmessage=event=>{clearTimeout(timeout);channel.port1.close();resolve(event.data?.cache===expected&&event.data.complete===true&&event.data.cached===event.data.total);};
-     navigator.serviceWorker.controller.postMessage({type:'math-explorer:cache-status'},[channel.port2]);
-    });
-   },cache,{timeout:60000});
+   let ready=false;
+   for(let n=0;n<300;n++){
+    ready=await page.evaluate(async expected=>{
+     if(!navigator.serviceWorker.controller)return false;
+     return new Promise(resolve=>{
+      const channel=new MessageChannel(),timeout=setTimeout(()=>{channel.port1.close();resolve(false);},1200);
+      channel.port1.onmessage=event=>{clearTimeout(timeout);channel.port1.close();resolve(event.data?.cache===expected&&event.data.complete===true&&event.data.cached===event.data.total);};
+      navigator.serviceWorker.controller.postMessage({type:'math-explorer:cache-status'},[channel.port2]);
+     });
+    },cache);
+    if(ready)break;await page.waitForTimeout(100);
+   }
+   ok(ready,width+' current complete offline cache is confirmed before stopping the origin');
    const modules=await page.evaluate(async cache=>{
     const store=await caches.open(cache);
     return Promise.all(['learning/route-evidence.js','learning/evidence-contract.js','learning/evidence-adapters.js',
      'learning/thinking-feedback.js','learning/phase5/b11-model.js','learning/phase5/b11-view.js']
      .map(async name=>({name,cached:!!await store.match(new URL(name,location.href))})));
    },cache);
-   ok(modules.every(item=>item.cached),width+' all route dependencies are in the complete offline cache');
+   ok(modules.every(item=>item.cached),width+' all route dependencies are in the complete offline cache; missing: '+modules.filter(item=>!item.cached).map(item=>item.name).join(', '));
    await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
    ok(!server.listening,width+' origin stops before mathematical interaction');
    offline.push({width,height,cache,complete:true,originStopped:!server.listening,modules});

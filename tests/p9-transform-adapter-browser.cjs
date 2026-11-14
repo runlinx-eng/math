@@ -182,14 +182,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      observation:words,finalObservation:await hint.innerText(),initialModel:first,model:m,attempts,proof:finalProof});
    }
    for(const variant of ['invalid-parameter','duplicate-operate','duplicate-measure','identity','near-answer',
-    'negative-mixed-scale','negative-mixed-answer','negative-mixed-prediction']){
+    'negative-mixed-scale','negative-mixed-answer']){
     const spec=variant==='duplicate-measure'?{id:'gridmotion',index:0}:variant==='negative-mixed-scale'?{id:'growshape',index:0}:{id:'pointmove',index:0};
     const task=sessionTasks(spec.id)[spec.index];label=`${width}x${height}-negative-${variant}`;await open(spec);
-    if(['invalid-parameter','identity','negative-mixed-scale','negative-mixed-prediction'].includes(variant)){
-     await field('predX',variant==='negative-mixed-prediction'?'-0 5/1':'0');
-     await field('predY',variant==='negative-mixed-prediction'?'3':'0');await act(spec,'p24-predict');
-     if(variant==='negative-mixed-scale')await operate(spec,{kind:'scale',factor:'-0 1/2',center:[0,0]});
-     else if(variant!=='negative-mixed-prediction')await operate(spec,{kind:'move',dx:variant==='identity'?0:13,dy:0});
+    let failedScale;
+    if(['invalid-parameter','identity','negative-mixed-scale'].includes(variant)){
+     await field('predX','0');await field('predY','0');await act(spec,'p24-predict');
+     if(variant==='negative-mixed-scale'){
+      const failed=await operate(spec,{kind:'scale',factor:'-0 1/2',center:[0,0]});failedScale=failed.history.at(-1);
+      ok(failed.board.image===null&&failed.board.op===null&&!!failed.issue,label+' the negative half scale is rejected before creating an image');
+      ok(failedScale.f.factor==='-0 1/2',label+' failed scale retains its exact typed sign and fraction');
+     }else await operate(spec,{kind:'move',dx:variant==='identity'?0:13,dy:0});
      if(variant==='invalid-parameter')ok(!!(await model(spec)).issue,label+' original control rejects the out-of-bounds move');
      await operate(spec,task.goal);await finish(spec);
     }else{
@@ -200,11 +203,65 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      if(variant==='negative-mixed-answer')await field('answers.0','-0 5/1');
     }
     await submit();const m=await model(spec),state=await saved(spec.id);
-    ok(M.valid(task,m)&&M.inspect(task,m).correct&&await page.locator('#check-feedback').getAttribute('data-state')==='correct',label+' original final-work grading remains unchanged');
+    const originalCorrect=variant!=='negative-mixed-answer';
+    ok(M.valid(task,m)&&M.inspect(task,m).correct===originalCorrect&&
+     await page.locator('#check-feedback').getAttribute('data-state')===(originalCorrect?'correct':'revise'),
+     label+' original grading respects the signed numeric answer and final-work rules');
+    if(failedScale)ok(same(m.history[1],failedScale),label+' the later correct image cannot remove the failed scale event');
     ok(!replayTransformEvidence(task,m)&&await hint.count()===0,label+' invalid or redundant process receives no strict evidence');
     await reload(spec);ok(await hint.count()===0&&same(await model(spec),m),label+' strict exclusion and full record survive offline reload');
-    negatives.push({width,height,variant,model:m,attempts:state.cases[spec.index].attempts,originalCorrect:true,strictFeedback:false});
+    const observation={width,height,variant,model:m,attempts:state.cases[spec.index].attempts,originalCorrect,strictFeedback:false};
+    negatives.push(observation);
     await shot('rejected');
+    if(variant==='negative-mixed-answer'){
+     await field('answers.0','5');await submit();const repaired=await saved(spec.id),current=repaired.models[spec.index];
+     ok(await hint.isVisible()&&!!replayTransformEvidence(task,current),label+' correcting the answer enables the existing valid action evidence');
+     ok(same(repaired.cases[spec.index].attempts.slice(0,-1),state.cases[spec.index].attempts)&&same(current.history,m.history),
+      label+' answer correction preserves the wrong submission and all original operations');
+     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),current),label+' corrected answer and earlier failed response survive offline reload');
+     observation.repaired={model:current,attempts:repaired.cases[spec.index].attempts,proof:replayTransformEvidence(task,current)};
+    }
+   }
+   for(const spec of [
+    {kind:'negative-mixed-prediction',id:'pointmove',index:0,guess:['-0 5/1','3'],svg:[234.375,155.625]},
+    {kind:'negative-mixed-move',id:'pointmove',index:0,guess:['0','0'],svg:[350,225]},
+    {kind:'negative-mixed-correct-coordinate',id:'axisrules',index:0,guess:['4','-0 1/1'],svg:[442.5,248.125]}
+   ]){
+    label=`${width}x${height}-${spec.kind}`;const task=sessionTasks(spec.id)[spec.index];await open(spec);
+    await field('predX',spec.guess[0]);await field('predY',spec.guess[1]);await act(spec,'p24-predict');
+    const marker=page.locator('#extra-visual svg circle[stroke="#a488b3"]');
+    ok(await marker.count()===1,label+' the actual prediction produces one visible SVG marker');
+    const coordinates=await marker.evaluate(element=>['cx','cy'].map(name=>Number(element.getAttribute(name))));
+    ok(coordinates.every(Number.isFinite)&&same(coordinates,spec.svg),label+' the prediction marker is at the independently checked signed coordinate');
+    ok(!/NaN|Infinity/.test(await page.locator('#extra-visual svg').innerHTML()),label+' signed mixed prediction rendering contains only finite geometry');
+    await shot('prediction');
+    let intermediate;
+    if(spec.kind==='negative-mixed-move'){
+     intermediate=await operate(spec,{kind:'move',dx:'-0 2/1',dy:0});
+     ok(same(intermediate.board.op,{kind:'move',dx:-2,dy:0})&&same(intermediate.board.image,[[0,3]])&&!intermediate.issue,
+      label+' the typed negative displacement really moves the original point left');
+     await operate(spec,task.goal);
+    }else if(spec.kind==='negative-mixed-correct-coordinate')await operate(spec,{kind:'move',dx:3,dy:'-0 2/1'});
+    else await operate(spec,task.goal);
+    await finish(spec);
+    if(spec.kind==='negative-mixed-correct-coordinate')await field('answers.1','-0 1/1');
+    await submit();const state=await saved(spec.id),m=state.models[spec.index],proof=replayTransformEvidence(task,m);
+    ok(M.valid(task,m)&&M.inspect(task,m).correct&&!!proof&&await hint.isVisible(),label+' real signed numeric work passes the original and independent mathematical gates');
+    ok(same(proof.prediction.point,spec.guess)&&proof.prediction.correct===(spec.kind==='negative-mixed-correct-coordinate'),
+     label+' a wrong signed guess and an exactly correct negative-coordinate guess stay distinct');
+    ok(m.board.first.incorrectPrediction===(spec.kind==='negative-mixed-correct-coordinate'?undefined:true),
+     label+' original first-prediction history agrees with the signed mathematics');
+    if(intermediate){
+     ok(proof.operationCount===2&&same(proof.operations[0].imagePoints,[[0,3]])&&same(proof.operations[1].sourcePoints,[[2,3]])&&
+      same(m.history[1],intermediate.history[1]),label+' returning to the target preserves the legitimate exploration and starts again from the original point');
+    }
+    if(spec.kind==='negative-mixed-correct-coordinate')ok(same(proof.imagePoints,[[4,-1],[6,-1],[4,1]])&&m.answers[1]==='-0 1/1',
+     label+' the negative answer belongs to the actual negative coordinate');
+    ok(state.cases[spec.index].attempts.length===1&&same(state.cases[spec.index].attempts[0].value,m),
+     label+' the submission stores the complete actual signed work');
+    await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),label+' signed work and strict feedback survive offline reload');
+    explorations.push({width,height,kind:spec.kind,model:m,intermediate,proof,attempts:state.cases[spec.index].attempts,observation:await hint.innerText()});
+    await shot('verified');
    }
    const guessSpec={id:'growshape',index:0},guessTask=sessionTasks(guessSpec.id)[0];
    label=`${width}x${height}-wrong-prediction`;await open(guessSpec);
@@ -226,6 +283,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===cases.length*viewports.length,'all 23 native tasks complete at both desktop sizes');
+  ok(negatives.length===7*viewports.length,'all seven rejected paths complete at both desktop sizes');
+  ok(explorations.filter(item=>item.kind.startsWith('negative-mixed-')).length===3*viewports.length,
+   'three legal signed mixed-number paths complete at both desktop sizes');
   const result={checks,errors,remote,observations,negatives,explorations,offline,nativeTasks:cases.length,
    nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false};

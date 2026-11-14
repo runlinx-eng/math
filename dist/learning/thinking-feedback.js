@@ -110,7 +110,7 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('你看过提示或比较反馈。');
     if(proof.lengthComparison)detail.push(`你分别留下了短边、长边时同为 ${proof.lengthComparison.angle}° 的记录；改变边的长短没有改变这两份记录中的开口。`);
     if(proof.cross)detail.push(`按当前 ${proof.cross.angle}° 的开口核对，对顶角为 ${proof.cross.opposite}°，邻角为 ${proof.cross.adjacent}°；相邻两角合计180°，交点周围四角合计360°。`);
-    if(proof.differences.length)detail.push(`本题相邻记录之间的差为：${proof.differences.map(r=>`${r.to}° − ${r.from}° = ${r.difference}°`).join('；')}。这些是记录间的数量关系。`);
+    if(proof.differences.length)detail.push(`本题指定的目标记录之间的差为：${proof.differences.map(r=>`${r.to}° − ${r.from}° = ${r.difference}°`).join('；')}。这些是记录间的数量关系。`);
     if(proof.triangle)detail.push(`按这些累计开口得到的三部分为 ${proof.triangle.parts.join('°、')}°，合计 ${proof.triangle.sum}°，超过三角形内角和180°。本次没有实际构造三角形。`);
     if(proof.advances.length)detail.push(`按钮留下的实际变化包括：${proof.advances.slice(0,5).map(r=>r.wrapped?'从整圈到下一圈的90°位置':`${r.from}° 到 ${r.to}°，增加 ${r.degrees}°`).join('；')}${proof.advances.length>5?'；其余变化也已逐条核对':''}。`);
     return {title:'这次作品中的思考线索',
