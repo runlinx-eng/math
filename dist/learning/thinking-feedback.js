@@ -13,6 +13,7 @@ import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
+import {estimateBinding,replayEstimateEvidence} from './estimate-evidence.js';
 import {joinStoryBinding,replayJoinStoryEvidence} from './joinstory-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
@@ -22,6 +23,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-estimatecheck'){
+    const source=estimateBinding(task,context);
+    return source?{type:task.type,summary:'想一想：粗略结果怎样帮助检查？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);
     return source?{type:task.type,summary:'想一想：演示和算式怎样对应？（可选）',question:source.question}:null;
@@ -88,6 +93,24 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-estimatecheck'){
+    const source=estimateBinding(task,context);if(!source)return null;
+    const proof=replayEstimateEvidence(task,model);if(!proof)return null;
+    const detail=[`这里只核对保留的 ${proof.estimateEventCount} 次估计提交、最后成功锁定的估计与这次提交的数值关系；没有自动评价自由解释、独立逆算过程或长期掌握。`];
+    if(proof.failedEstimateCount)detail.unshift(`记录中保留了 ${proof.failedEstimateCount} 次尚未锁定的估计提交；你随后更正并成功锁定。首尝试仍然保留，没有被后来的估计覆盖。`);
+    if(attempts.slice(0,-1).some(a=>replayEstimateEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(`系统依据你选择的间隔推得范围：结果${proof.bounds.lowerInclusive?'不小于':'大于'} ${proof.display.low}，小于 ${proof.display.high}。这个范围由系统推导，没有据此判断你已自行构造或证明了范围。`);
+    detail.push(`你提交的逆运算等式是 ${proof.display.inverse}，其中的数量关系成立；本控件没有记录一个独立的逆运算操作过程。`);
+    if(proof.accuracy)detail.push('这次选择的间隔满足题目事先要求的误差保证；不能只凭这一次碰巧接近就换用更粗的间隔。');
+    if(proof.claim)detail.push(proof.claim.plausible?
+      `给出的 ${proof.display.claim} 落在这个估计范围内，属于可能的结果。${proof.claim.exactCorrect?'它也与本题精确结果相同。':`但 ${proof.display.claim} 不等于本题精确结果 ${proof.display.answer}，可能并不代表精确正确。`}`:
+      `给出的 ${proof.display.claim} 不在这个估计范围内；本次提交的“不可能”与这个范围相符。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你最后成功锁定的间隔是 ${proof.display.unit}，把 ${proof.display.values[0]}、${proof.display.values[1]} 分别取为 ${proof.display.rounded[0]}、${proof.display.rounded[1]}，留下估计 ${proof.display.rounded[0]} ${proof.operation==='+'?'+':'−'} ${proof.display.rounded[1]} = ${proof.display.estimate}。当前填写的精确结果是 ${proof.display.answer}；估计记录和精算结果已分别核对。`,
+      connection:'如果把间隔换细一些，估计范围会怎样变化？一个数落在范围内，为什么还需要精算？',
+      detail,method:null};
+  }
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);if(!source)return null;
     const proof=replayJoinStoryEvidence(task,model);if(!proof)return null;
