@@ -21,6 +21,8 @@ import {fractionOperationsBinding,replayFractionOperationsEvidence} from './frac
 
 import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 
+import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
+
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
@@ -39,5 +41,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'estimate',type:'x-estimatecheck',binding:estimateBinding,replay:replayEstimateEvidence},
  {id:'portiongroups',type:'x-portiongroups',binding:portionGroupsBinding,replay:replayPortionGroupsEvidence},
  {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence},
- {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence}
+ {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence},
+ {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence}
 ].map(Object.freeze));
