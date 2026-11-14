@@ -6,6 +6,7 @@ import {BRIDGES,sessionMeta,sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as walks from '../dist/learning/phase5/b16-model.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from '../dist/learning/unitwalk-evidence.js';
+import {groupwalkBinding,replayGroupwalkEvidence} from '../dist/learning/groupwalk-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 await ensureB39Ready();
@@ -251,7 +252,15 @@ test('all seven original excluded tasks still pass their own grader without inhe
   originalAccepts(task,model,sessionId+':'+index);
   rejects(task,model,'different jump semantics require separate review');
   assert.equal(unitwalkBinding(task,context),null);
-  assert.equal(thinkingGuide(task,context),null);
-  assert.equal(thinkingFeedback(task,model,record(model),context),null);
+  if(task.chunk!==undefined){
+   assert.ok(groupwalkBinding(task,context),'six reviewed grouped tasks now use their own explicit source contract');
+   assert.ok(replayGroupwalkEvidence(task,model));
+   assert.match(thinkingGuide(task,context).summary,/一次接几小份/);
+   assert.ok(thinkingFeedback(task,model,record(model),context));
+  }else{
+   assert.equal(groupwalkBinding(task,context),null);
+   assert.equal(thinkingGuide(task,context),null);
+   assert.equal(thinkingFeedback(task,model,record(model),context),null);
+  }
  }
 });

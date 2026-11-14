@@ -1,10 +1,19 @@
+## 2026-11-14｜P9 第八批成组分数跳步（Issue #124）
+
+基线为成熟家族扩展专项已合并且main独立Required通过的 `7fa61f3de355d528624f709366155f7aaa4253c0`。新增6题/2节点的groupwalk数学契约：前进chunk小份、后退1小份，逐步重算并精确核对组量×组数、整份、余量和相关取整条件。和固定单位数轴共用控件但互斥绑定，不改变原题、原判题、通关或v2。
+
+全量审计A140题/68节点，B286/C150/D1252/E168。先对原始数字 token 精确预检，防止表达式解析器舍入造成错误证据；详见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。六题全部进入公共矩阵及两视口真实浏览器，所有旧家族和P10验收保持。当前阶段收口须以最终HEAD和合并main实际结果为准，完成后继续小数交换与批量来源遗漏检查。
+
+---
+
+
 ## 2026-11-14｜P9 成熟家族扩展专项（Issue #122）
 
 第七批和CI承载改进均已合并且main独立Required通过，基线为 `86263f18d148ebae26ed36086554cffdae8373e3`。本批将来源与数学语义已逐题审查的11道数列、42道阵列接入严格证据，新增53题/27节点；保留原判题、任务和v2。未知量及代入、重复加法、反向等式与估算分别补充独立数学条件，不因共用类型直接放行。
 
 全量审计A134题/66节点，B286/C150/D1258/E168。六家族可扩展/排除清单、精确来源和反馈边界见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。新增来源均不借用MP标签；估算保留“大约”，数列反馈使用真实问题标签。
 
-本批独立PR须完成新增53题×两视口以及全部既有Chromium/P10、最终HEAD适用CI、Artifact核对和合并后main独立Required；运行中或本地预备不视为通过。完成后自动推进成组分数跳步，仍遵守独立Issue/分支/PR/验收循环。
+成熟扩展 [PR #123](https://github.com/runlinx-eng/math/pull/123) 已合并为main `7fa61f3de355d528624f709366155f7aaa4253c0`；最终HEAD的 [Required 43572641982](https://github.com/runlinx-eng/math/actions/runs/43572641982)、[Overview 43572641997](https://github.com/runlinx-eng/math/actions/runs/43572641997)、[P8 43572642003](https://github.com/runlinx-eng/math/actions/runs/43572642003) 与合并后独立 [Required 43573714409](https://github.com/runlinx-eng/math/actions/runs/43573714409) 均成功。新53题/106组合的3653项浏览器检查、既有core4662项、整数B11 3809项及P10 434项完成当次产物核对；六组52调用与729张归档PNG完整性、代表性原图已检查。全量A134/66及来源隔离保持；儿童、独立教研和Mac人工未计入。固定操作条局部覆盖的既有视觉观察保留；工程闭环后在上方独立Issue推进成组分数跳步。
 
 ---
 
