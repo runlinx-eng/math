@@ -1,3 +1,14 @@
+## 2026-11-14｜P9 分组与平均分（Issue #133）
+
+承接数轴路径#131与分数比较#132，新增29道原生分组题/14来源节点的独立物品身份回放；相对前项新增3个严格证据节点。build/share/group分别核对总量、每份量与份数；零份内数量、单份、逐轮分放和13÷3余1包含在明确审查中。最终审查补充拒绝算式数字拼接的严格边界（原判题保持），26个字段/四种空白反例及双视口纠正重验纳入。
+
+本地源码审计为A213题/84节点、B248/C150/D1232/E153。全部method:null，24道同型关联题隔离。原1996题、587节点、判题、v2/P10与地图不变。全29题双视口浏览器、完整Node与Required、P10、最终HEAD/合并main分别验收；CI实际状态见PR和追踪#130。几何变换#135与角度#136在独立工作目录继续准备。
+
+
+本项最终整合基线为已合并分数比较 [PR #143](https://github.com/runlinx-eng/math/pull/143) 的实际main `241b464e42a206ef9a72abe3d7059d4961df81fc`；其独立 [Required 43591536536](https://github.com/runlinx-eng/math/actions/runs/43591536536) 正在运行。数值修复#139的main独立回归已完整通过，当前分支保留其最终ef8浏览器fixture及全部产品/P10修复。分组题最终HEAD自己的Required与其随后main回归须分别通过，不能用前项结果代替。
+
+---
+
 ## 2026-11-14｜P9 分数比较排序（Issue #132）
 
 整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，独立 main Required [43587220292](https://github.com/runlinx-eng/math/actions/runs/43587220292) 已通过。数值兼容 [PR #139](https://github.com/runlinx-eng/math/pull/139) 的最终 HEAD `ef8c1a86a1de308f090138e60bb0bf460f74c2db` 已完成全部 PR 验收并正式合并为 main `400d31c61c92a3a3b7088aa2020ddd5ffa0cd107`；本分支已同步这个真实主线及最新浏览器测试修正。该主线的独立 Required [43589982503](https://github.com/runlinx-eng/math/actions/runs/43589982503) 另行核验。分数比较的最终 HEAD 与随后整合的 main 必须各自通过适用验收，不复用前项 CI。
