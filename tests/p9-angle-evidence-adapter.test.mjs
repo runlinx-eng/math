@@ -167,7 +167,9 @@ test('exact integer and rational inputs reject rounding and unavailable length o
   const m=angles.initial(t,1);set(t,m,raw);run(t,m);original(t,m);rejects(t,m,raw);
  }
  for(const raw of ['361','0/0','1e2','Infinity','60.1']){
-  const m=angles.initial(t,1);set(t,m,raw);run(t,m);original(t,m);rejects(t,m,raw);
+  const m=angles.initial(t,1);set(t,m,raw);run(t,m);original(t,m);
+  const p=accepts(t,m);assert.equal(p.failedRequests.length,1);assert.equal(p.failedRequests[0].raw.angle,raw);
+  assert.equal(p.failedRequests[0].fromAngle,p.failedRequests[0].toAngle);
  }
  const numerical=sessionTasks('degreeunit')[1];
  for(const raw of ['45.00000001','45.0000000000000001']){
@@ -189,7 +191,9 @@ test('negative mixed openings and lengths fail while later correct work retains 
   assert.equal(m.board.angle,0);assert.notEqual(m.issue,'');
   const failed=structuredClone(m.history.at(-1));assert.equal(failed.f.angle,raw);
   run(t,m);original(t,m);assert.deepEqual(m.history[0],failed);
-  rejects(t,m,'a later valid opening does not erase the failed negative angle: '+raw);
+  const p=accepts(t,m);assert.equal(p.failedRequests.length,1);
+  assert.equal(p.failedRequests[0].raw.angle,raw);assert.equal(p.failedRequests[0].changed,false);
+  assert.equal(p.failedRequests[0].fromAngle,p.failedRequests[0].toAngle);
  }
  for(const raw of ['-0 3/1','-00 3/1','-3']){
   const m=angles.initial(t,1);set(t,m,60);act(t,m,'record');
@@ -217,15 +221,28 @@ test('negative mixed answers do not become positive angle measurements',()=>{
  }
 });
 
-test('duplicate records, no-effect length commands, cross-widget events and reset cannot manufacture evidence',()=>{
+test('real duplicate confirmations are retained while hidden cross-widget and reset events remain rejected',()=>{
  const t=sessionTasks('anglecorner')[0];
  for(const action of ['record','length','guess','reveal','test','choose','reset']){
   const m=angles.example(t);act(t,m,action);
   if(action==='reset')run(t,m);
-  original(t,m);rejects(t,m,action);
+  original(t,m);
+  if(action==='record'||action==='length'){
+   const p=accepts(t,m);assert.ok(p.confirmations);assert.equal(p.records.length,2);
+   assert.equal(p.steps.at(-1).changed,false);assert.equal(p.steps.at(-1).recordAdded,false);
+  }else rejects(t,m,action);
  }
  const bad=angles.example(t);bad.history.push({a:'constructor',f:{},d:{}});rejects(t,bad);
  const model=angles.example(t);model.history.push({a:'__proto__',f:{},d:{}});rejects(t,model);
+});
+
+test('blank length and final invalid text are real requests and must preserve the exact failure issue',()=>{
+ const t=sessionTasks('anglecorner')[0],m=angles.initial(t,1);
+ field(t,m,'length','');act(t,m,'length');assert.ok(m.issue);run(t,m);
+ const p=accepts(t,m);assert.equal(p.failedRequests[0].raw.length,'');assert.equal(p.failedRequests[0].fromLength,1);
+ set(t,m,'-1');original(t,m);assert.ok(m.issue);
+ const q=accepts(t,m);assert.equal(q.angle,60);assert.equal(q.failedRequests.length,2);assert.equal(q.steps.at(-1).issue,m.issue);
+ const forged=structuredClone(m);forged.issue='';rejects(t,forged,'cannot erase the last real failure');
 });
 
 test('correct final grading cannot hide stale angles, pending input or reversed requested records',()=>{

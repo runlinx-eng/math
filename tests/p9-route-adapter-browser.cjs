@@ -11,6 +11,7 @@ const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CA
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
+ const {unpackText}=await import('../dist/storage.js');
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {solveSteps,valid,inspect,answer,origin,destination}=await import('../dist/learning/phase5/b11-model.js');
  const {replayRouteEvidence}=await import('../dist/learning/route-evidence.js');
@@ -45,6 +46,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
    const model=async spec=>(await saved(spec.id)).models[spec.index];
+   // Export exactly the stored bytes at existing checkpoints. Capturing does
+   // not perform any mathematical action or create another submission.
+   const captureNative=async(spec,stage)=>{
+    const raw=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+    const text=unpackText(raw),state=JSON.parse(text),lesson=state.lessons[spec.id]||state.daily.bridges[spec.id];
+    const model=lesson?.models[spec.index];
+    ok(typeof raw==='string'&&!!model&&lesson.index===spec.index,label+' '+stage+' captures complete stored lesson and current model');
+    const files={raw:label+'-'+stage+'-storage.txt',state:label+'-'+stage+'-state.json'};
+    fs.writeFileSync(path.join(out,files.raw),raw);fs.writeFileSync(path.join(out,files.state),text);
+    return{stage,raw,text,state,lesson,model,files};
+   };
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
    },spec);
@@ -124,6 +136,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await field('answer',answer(task));await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&await hint.isVisible(),label+' current corrected path passes both gates');
     const first=await model(spec),proof=replayRouteEvidence(task,first),words=await hint.innerText();
+    const nativeCaptures={first:await captureNative(spec,'native-first')};
     ok(proof&&valid(task,first)&&inspect(task,first).correct,label+' real persisted path satisfies independent replay and original grader');
     ok(proof.origin===origin(task)&&proof.target===destination(task)&&proof.answer===answer(task),label+' operation roles remain distinct');
     ok(words.includes(`从 ${proof.display.origin} 出发`)&&words.includes(`最后到达 ${proof.display.target}`),label+' feedback reports actual endpoints');
@@ -133,39 +146,51 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(/自由解释.*长期掌握/.test(words),label+' bounded interpretation is explicit');
     await shot('02-verified-offline');await reload(spec);
     ok(await hint.isVisible()&&same(await model(spec),first),label+' checked path survives offline reload unchanged');
+    nativeCaptures.firstOffline=await captureNative(spec,'native-first-offline');
     await field('answer','999999');ok(await hint.count()===0,label+' editing immediately invalidates old feedback');
     if(spec===cases[0])await shot('03-edited');
     await reload(spec);ok(await hint.count()===0,label+' reload cannot revive stale evidence');
+    nativeCaptures.pendingAnswerOffline=await captureNative(spec,'native-pending-answer-offline');
     await submit();ok(await hint.count()===0,label+' latest wrong submission outranks older correct work');
     await field('answer',answer(task));await submit();ok(await hint.isVisible(),label+' new correct submission restores evidence');
     await hop(spec,1);ok(await hint.count()===0,label+' actual route change invalidates feedback');
     await reload(spec);ok(await hint.count()===0,label+' unsubmitted movement remains unverified after offline refresh');
+    nativeCaptures.pendingMoveOffline=await captureNative(spec,'native-pending-move-offline');
     await act(spec,'b11-hop-undo');ok(await hint.count()===0,label+' same endpoint with extra history still requires a fresh check');
     await submit();ok(await hint.isVisible(),label+' valid exact undo is accepted after rechecking');
     const end=await saved(spec.id),m=end.models[spec.index],attempts=end.cases[spec.index].attempts;
+    nativeCaptures.final=await captureNative(spec,'native-final');
     ok(attempts.length===5&&attempts.every(a=>a.id&&a.at&&a.value&&typeof a.supported==='boolean'&&typeof a.exposed==='boolean'),label+' all original v2 attempts and metadata remain');
     ok(same(m.hops,first.hops)&&m.history.length===first.history.length+2,label+' final retained route and full undo history agree');
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),label+' no score or mastery field is introduced');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,task,observation:words,
-     finalObservation:await hint.innerText(),model:m,attempts,proof:replayRouteEvidence(task,m)});
+     finalObservation:await hint.innerText(),model:m,attempts,proof:replayRouteEvidence(task,m),nativeCaptures});
    }
    // These histories are produced by actual controls. Later correct final work
-   // must not erase an invalid landing or turn a backwards-first path into compensation.
+   // retain a failed landing and must not turn a backwards-first path into compensation.
    for(const variant of ['invalid-landing','false-compensation']){
     const spec={id:'addhundred',index:variant==='invalid-landing'?0:2},task=sessionTasks(spec.id)[spec.index];
     label=`${width}x${height}-negative-${variant}`;await open(spec);
     await field('guess','0');await act(spec,'b11-route-start');
+    let failed;
     if(variant==='invalid-landing'){
      await field('jump','1');await field('landing',task.a+2);await click('b11-hop');
      ok(!!(await model(spec)).issue&&(await model(spec)).hops.length===0,label+' actual invalid landing is rejected');
+     await submit();failed={model:await model(spec),lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
+     ok(await hint.count()===0,label+' unfinished failed request alone cannot prove the route');
      await steps(spec,solveSteps(task).slice(2));
     }else{await hop(spec,-1);await hop(spec,task.b+1);await field('answer',answer(task));}
     await submit();const m=await model(spec);
     ok(valid(task,m)&&inspect(task,m).correct&&await page.locator('#check-feedback').getAttribute('data-state')==='correct',label+' original final-work grading is preserved');
-    ok(!replayRouteEvidence(task,m)&&await hint.count()===0,label+' insufficient process does not receive strict feedback');
-    await reload(spec);ok(await hint.count()===0,label+' evidence exclusion survives offline refresh');
-    negatives.push({width,height,variant,model:m,originalCorrect:true,strictFeedback:false});await shot('rejected');
+    const proof=replayRouteEvidence(task,m),strictFeedback=variant==='invalid-landing';
+    if(strictFeedback){ok(!!proof&&await hint.isVisible(),label+' correction preserves the real failed request and proves successful hops');
+     ok(proof.failedRequests.length===1&&same(m.history.slice(0,failed.model.history.length),failed.model.history),label+' failure stays in its original position without adding a hop');
+    }else ok(!proof&&await hint.count()===0,label+' false compensation still receives no strict feedback');
+    const checked={lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
+    await reload(spec);ok((await hint.count()>0)===strictFeedback&&same(await model(spec),m),label+' complete correction or exclusion survives offline refresh');
+    const restored={lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
+    negatives.push({width,height,variant,failed,model:m,checked,restored,proof,originalCorrect:true,strictFeedback});await shot(strictFeedback?'corrected':'rejected');
    }
    for(const spec of [{id:'link-bridge20-addhundred',index:1},{id:'link-flexhundred-showwhy',index:1}]){
     label=`${width}x${height}-isolation-${spec.id}-${spec.index}`;await open(spec);

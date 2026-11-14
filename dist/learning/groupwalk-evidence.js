@@ -3,6 +3,7 @@
 // This checks recorded mathematics without changing the B16 grader or v2 data.
 import * as walks from './phase5/b16-model.js';
 import {parse,norm} from './phase5/b15-model.js';
+import {replayWalkHistory} from './unitwalk-evidence.js';
 import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
@@ -72,37 +73,15 @@ export function replayGroupwalkEvidence(task,model){
      !integer(task.chunk,1)||task.n%task.chunk!==0||task.whole!==true||
      ['copies','decimal','halfBound'].some(key=>Object.hasOwn(task,key))||
      !keys(model,[...fieldKeys,'board','history','issue'])||
-     !fieldKeys.every(key=>text(model[key]))||model.issue!==''||
+     !fieldKeys.every(key=>text(model[key]))||!text(model.issue)||
      !Array.isArray(model.history)||model.history.length<2||model.history.length>2000)return null;
   for(const flag of ['bounds','buy'])if(task[flag]!==undefined&&typeof task[flag]!=='boolean')return null;
   if(task.axisMax!==undefined&&!integer(task.axisMax,1))return null;
   const {n,d,chunk}=task,groups=n/chunk,whole=Math.floor(n/d),remainder=n%d;
-  const ceiling=whole+(remainder?1:0),limit=(ceiling+1)*d;
-  const b={parts:1,steps:[],first:null},steps=[];
-  let advances=0,retreats=0;
-  for(const [index,event] of model.history.entries()){
-   if(!keys(event,['action','data'])||!keys(event.data,['fields'])||
-      !keys(event.data.fields,fieldKeys)||!fieldKeys.every(key=>text(event.data.fields[key]))||
-      scalar(event.data.fields.parts)!==d)return null;
-   if(index===0){
-    if(event.action!=='partition')return null;
-    b.parts=d;continue;
-   }
-   const from=b.steps.length;let delta;
-   if(event.action==='walk'){
-    // Preserve the original PRE-move guard. A legitimate grouped advance may
-    // cross the limit; applying a new post-move cap would reject valid routes.
-    if(from>=limit)return null;
-    delta=chunk;b.first??=event.data.fields.parts;
-    for(let i=1;i<=chunk;i++)b.steps.push(from+i);
-    advances++;
-   }else if(event.action==='walk-back'){
-    if(from===0)return null;
-    delta=-1;b.steps.pop();retreats++;
-   }else return null;
-   steps.push({delta,from:[from,d],to:[from+delta,d]});
-  }
-  if(!advances||!same(b,model.board)||b.steps.length!==n||advances*chunk-retreats!==n||
+  const ceiling=whole+(remainder?1:0),history=replayWalkHistory(task,model,chunk);
+  if(!history)return null;
+  const b=history.board,{steps,advances,retreats}=history.current;
+  if(!advances||b.parts!==d||b.steps.length!==n||advances*chunk-retreats!==n||
      scalar(model.parts)!==d||!equal(model.answer,n,d)||
      !equal(model.whole,whole)||!equal(model.remainder,remainder,d)||
      !multiplicationMatches(model.equation,n,d,chunk))return null;
@@ -110,7 +89,7 @@ export function replayGroupwalkEvidence(task,model){
   if(task.buy&&scalar(model.total)!==ceiling)return null;
   if(!walks.valid(task,model)||!walks.inspect(task,model).correct)return null;
   return {start:[0,d],end:[n,d],unit:[1,d],group:[chunk,d],groups,
-   steps,advances,retreats,whole,remainder:[remainder,d],
+   steps,advances,retreats,whole,remainder:[remainder,d],history,
    bounds:task.bounds?[whole,ceiling]:null,purchase:task.buy?ceiling:null};
  }catch{return null;}
 }

@@ -114,6 +114,17 @@ test('round-robin distribution keeps the original finite pool and leaves the tru
  }
 });
 
+test('reset separates constructed object identities and counts by round',()=>{
+ for(const c of cases.filter(c=>c.mode==='build')){
+  const task=taskFor(c),model=groups.example(task);act(task,model,'reset');run(task,model);
+  const p=accepts(task,model);assert.equal(p.history.resetCount,1);assert.equal(p.created,task.total);
+  assert.equal(p.history.epochs.length,2);
+  for(const epoch of p.history.epochs)assert.equal(epoch.steps.reduce((n,s)=>n+s.created.length,0),task.total);
+  const reset=p.history.events.find(e=>e.action==='b13-reset');
+  assert.equal(reset.before.homes.length,task.total);assert.deepEqual(reset.after,{homes:[],buckets:0,selected:[]});
+ }
+});
+
 test('selection, dragging, moving back and replacing conserve the same objects',()=>{
  const task=taskFor(cases.find(c=>c.sessionId==='sharegroups'&&c.index===0)),model=groups.initial(task);
  for(let token=0;token<task.total;token++)act(task,model,'drop',{token,bucket:token%task.a});
@@ -200,7 +211,7 @@ test('operator spacing is allowed but separated digits cannot become a different
  assert.equal(separatedFields,26,'all reviewed multi-digit equation and repeated-addition fields are covered');
 });
 
-test('failed or ineffective historical actions never become evidence after a later correction',()=>{
+test('failed and ineffective visible requests are retained after correction without accepting forged controls',()=>{
  const task=taskFor(cases.find(c=>c.sessionId==='sharegroups'&&c.index===0));
  for(const kind of ['zero-pour','no-pool','same-destination','cross-widget','unknown-token','reset']){
   let model=groups.example(task);
@@ -210,11 +221,20 @@ test('failed or ineffective historical actions never become evidence after a lat
   if(kind==='cross-widget')act(task,model,'turn');
   if(kind==='unknown-token')act(task,model,'token',{token:199});
   if(kind==='reset'){act(task,model,'reset');run(task,model);}
-  originalAccepts(task,model);rejects(task,model,kind);
+  originalAccepts(task,model);
+  if(['cross-widget','unknown-token'].includes(kind))rejects(task,model,kind);
+  else{
+   const p=accepts(task,model);assert.equal(p.history.events.length,model.history.length);
+   assert.equal(p.history.failedRequests.length,['zero-pour','no-pool'].includes(kind)?1:0);
+   assert.equal(p.history.resetCount,kind==='reset'?1:0);
+   if(kind==='same-destination')assert.equal(p.history.ineffectiveRequests.at(-1).action,'b13-pour');
+  }
  }
  const build=taskFor(cases[0]),model=groups.example(build);
  act(build,model,'plate-remove');act(build,model,'token',{token:0});
- originalAccepts(build,model);rejects(build,model,'cannot delete a full group and hide the failure');
+ const p=accepts(build,model);assert.equal(p.history.failedRequests.length,1);
+ assert.equal(p.history.failedRequests[0].action,'b13-plate-remove');
+ assert.deepEqual(p.history.failedRequests[0].before,p.history.failedRequests[0].after);
 });
 
 test('invalid task domains, exact scalar boundaries and malformed models fail closed',()=>{
@@ -251,4 +271,13 @@ test('feedback distinguishes a total, a per-group amount, a group count, zero an
   assert.equal(thinkingFeedback(task,changed,record,c),null);
   assert.equal(thinkingFeedback(task,model,{attempts:[...record.attempts,{value:changed}]},c),null);
  }
+});
+
+
+test('Issue 166 original visible controls preserve failed requests, resets and latest failed issues',async()=>{
+ const {verifyVisibleCorrections}=await import('./helpers/p9-fraction-correction-controls.mjs');
+ const result=await verifyVisibleCorrections('groups',replayGroupsEvidence,thinkingFeedback);
+ assert.equal(result.paths,result.nativeTasks*3);
+ assert.ok(result.failedRequests>=result.nativeTasks);
+ assert.equal(result.forgeriesRejected,result.paths*3);
 });

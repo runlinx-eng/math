@@ -3,10 +3,11 @@
 // The HTTP origin stops before all mathematical work and actual document reloads.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const fixture=require('./fixtures/p9-pvbench-cases.cjs'),{cases,associated}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-pvbench-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],retries=[],negatives=[],isolated=[],offline=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -21,6 +22,11 @@ const hash=task=>digest(JSON.stringify(stable(task)));
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
 const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[2]<=90?
  ['down1','up1']:current.u[2]>=10?['up1','down1']:['down10','up10'];
+const fieldCorrections=[
+ {id:'rename',index:0,field:'why',wrong:'pieces',correct:'same',kind:'conservation-choice'},
+ {id:'faces1000',index:3,field:'parts.0',wrong:4,correct:400,kind:'expanded-place-value'},
+ {id:'problems1000',index:0,field:'packs',wrong:3,correct:23,kind:'whole-tens-not-tens-digit'}
+];
 
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -31,7 +37,7 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
  const {pvbenchEvidenceSteps}=await import('../scripts/pvbench-evidence-fixture.mjs');
  for(const spec of [...cases,...associated])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const [file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected,file);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,label='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -51,6 +57,7 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{
@@ -119,10 +126,11 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
     }else{await action(step.action,step.data);M.act(task,expected,step.action,step.data);}
     assert.deepEqual(await model(spec),expected,'actual original model matches every complete control step');
    };
-   const build=async(spec,{detour=false}={})=>{
+   const build=async(spec,{detour=false,extraLoops=0}={})=>{
     const task=taskFor(spec),expected=M.initial(task);
     if(task.fixed){
-     if(detour)for(const kind of loopFor(expected))await apply(spec,expected,{action:'pv-swap',data:{kind}});
+     for(let i=0;i<Number(detour)+extraLoops;i++)for(const kind of loopFor(expected))
+      await apply(spec,expected,{action:'pv-swap',data:{kind}});
      for(const step of pvbenchEvidenceSteps(task))await apply(spec,expected,step);
     }else{
      // All reviewed nonfixed bridge positions here use ordinary blocks and
@@ -248,6 +256,31 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
     await shot('05-verified-offline');
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,detour,
      first,proof,words,snapshots,finalModel,finalProof,finalWords,record:end,stored:await snapshot('final')});
+
+    // The widget has no reset event, but the shared P3 retry is a real visible
+    // action. It replaces the current model and preserves previous attempts.
+    // Use two extra initial loops so this new work cannot be byte-identical to
+    // the fifth snapshot; the original schema has no separate retry epoch.
+    const beforeRetry=await saved(spec.id),retryButton=page.locator('[data-do="p3-retry"]');
+    assert.equal(await retryButton.count(),1);await reveal(retryButton);
+    ok(await retryButton.isEnabled(),label+' shared retry is an enabled visible control');await retryButton.click();await wait(spec);
+    const reset=await saved(spec.id);assert.deepEqual(reset.models[spec.index],M.initial(task));assert.deepEqual(reset.cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' retry starts empty while previous checked histories stay in their attempts');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,reset.models);assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' the empty retry remains unverified after offline restoration');
+    const rebuilt=await build(spec,{detour,extraLoops:2});
+    assert.notDeepEqual(rebuilt,beforeRetry.models[spec.index]);assert.equal(rebuilt.history.length,beforeRetry.models[spec.index].history.length+2);
+    assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);ok(await hint.count()===0,label+' a distinct reconstructed path needs a new submission');
+    await reload(spec);assert.deepEqual(await model(spec),rebuilt);assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' reconstructed work cannot borrow the old checked path offline');
+    const checked=await check(spec,true,'06-shared-retry'),retryProof=replayPVBenchEvidence(task,checked.model),retryWords=await wordsFor(retryProof);
+    assert.equal(checked.record.cases[spec.index].attempts.length,6);
+    assert.deepEqual(checked.record.cases[spec.index].attempts.slice(0,5),beforeRetry.cases[spec.index].attempts);
+    assert.equal(retryProof.swapCount,rebuilt.history.length);assert.deepEqual(checked.model.history,rebuilt.history);
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,checked.record.models);assert.deepEqual((await saved(spec.id)).cases,checked.record.cases);
+    await wordsFor(replayPVBenchEvidence(task,await model(spec)));
+    if(spec===cases[0]||spec.savedGoal)await shot('06-shared-retry');
+    retries.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,task,before:beforeRetry,reset,rebuilt,checked,proof:retryProof,words:retryWords,stored:await snapshot('retry-final')});
    }
 
    // The original grader accepts one saved same-total representation even when
@@ -286,6 +319,50 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
     await shot('bounded');negatives.push({width,height,kind:'unlogged-capacity-click',id:spec.id,index:spec.index,before,after,checked,proof,words,stored:await snapshot('bounded')});
    }
 
+   // Numeric place values and the conservation choice remain the child's
+   // submitted fields. Correcting them must retain the exact earlier attempt
+   // and must not invent an additional exchange or an input-event history.
+   for(const scenario of fieldCorrections){
+    const spec=cases.find(c=>c.id===scenario.id&&c.index===scenario.index),task=taskFor(spec);
+    label=prefix+'-correction-'+scenario.kind;await open(spec);await build(spec);
+    const first=await check(spec,true,'first-correct');await wordsFor(replayPVBenchEvidence(task,first.model));
+    await field(scenario.field,scenario.wrong);ok(await hint.count()===0,label+' changing a submitted field removes old evidence');
+    const wrong=await check(spec,false,'wrong-field');
+    ok(await hint.count()===0&&replayPVBenchEvidence(task,wrong.model)===null,label+' real wrong submission remains outside strict evidence');
+    await reload(spec);assert.deepEqual(await model(spec),wrong.model);ok(await hint.count()===0,label+' offline wrong field cannot borrow earlier success');
+    await field(scenario.field,scenario.correct);ok(await hint.count()===0,label+' a corrected field still needs a new check');
+    const corrected=await check(spec,true,'corrected-field'),proof=replayPVBenchEvidence(task,corrected.model),words=await wordsFor(proof);
+    assert.deepEqual(corrected.record.cases[spec.index].attempts.slice(0,2),[first.attempt,wrong.attempt]);
+    assert.deepEqual(corrected.model.history,first.model.history);assert.deepEqual(corrected.model.saved,first.model.saved);
+    assert.equal(proof.swapCount,first.model.history.length);assert.equal(proof.inputScope,'stored-numbers');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).cases,corrected.record.cases);
+    await wordsFor(replayPVBenchEvidence(task,await model(spec)));await shot('retained');
+    negatives.push({width,height,kind:scenario.kind,id:spec.id,index:spec.index,first,wrong,corrected,proof,words,stored:await snapshot('retained')});
+   }
+
+   // A saved pair made by splitting a hundred has the right total but does not
+   // answer the prompt to split one ten. Add the requested representation
+   // through visible controls; preserve both early saves and their first check.
+   {
+    const spec=cases.find(c=>c.id==='problems1000'&&c.index===2),task=taskFor(spec);
+    label=prefix+'-correction-saved-one-ten';await open(spec);
+    await action('pv-save');await action('pv-swap',{kind:'down10'});await action('pv-save');await field('answer',362);
+    const wrong=await check(spec,true,'wrong-saved-pair');
+    ok(replayPVBenchEvidence(task,wrong.model)===null&&await hint.count()===0,label+' the original green check cannot turn a hundred split into the requested ten split');
+    await reload(spec);assert.deepEqual(await model(spec),wrong.model);ok(await hint.count()===0,label+' wrong saved pair remains excluded offline');
+    await action('pv-swap',{kind:'up10'});await action('pv-swap',{kind:'down1'});await action('pv-save');
+    ok(await hint.count()===0,label+' the added correct form still requires checking');
+    const corrected=await check(spec,true,'corrected-saved-pair'),proof=replayPVBenchEvidence(task,corrected.model),words=await wordsFor(proof);
+    assert.deepEqual(corrected.record.cases[spec.index].attempts[0],wrong.attempt);
+    assert.deepEqual(corrected.model.saved.slice(0,2),wrong.model.saved);
+    assert.deepEqual(corrected.model.history.slice(0,wrong.model.history.length),wrong.model.history);
+    assert.deepEqual(corrected.model.u,[3,5,12,0]);assert.equal(proof.saved.count,3);
+    assert.equal(proof.saved.goal,'before-after-one-ten');assert.equal(proof.saved.exactTimingKnown,false);
+    const beforeDuplicate=await model(spec);await action('pv-save');assert.deepEqual(await model(spec),beforeDuplicate);
+    await reload(spec);assert.deepEqual((await saved(spec.id)).cases,corrected.record.cases);await wordsFor(replayPVBenchEvidence(task,await model(spec)));
+    await shot('retained');negatives.push({width,height,kind:'saved-one-ten-correction',id:spec.id,index:spec.index,wrong,corrected,proof,words,stored:await snapshot('retained')});
+   }
+
    // Insufficient-stock controls are disabled. Observe that state without a
    // forced click or a fabricated failed event.
    {
@@ -307,15 +384,17 @@ const loopFor=current=>current.u[3]?['down100','up100']:current.u[1]&&current.u[
     if(spec===associated[0])await shot('isolated');
     isolated.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,checked,stored:await snapshot('associated')});
    }
-   await context.close();context=null;activePage=null;
+   await context.close();context=null;activePage=null;diagnostics=null;
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
-  ok(observations.length===22&&isolated.length===36,'all eleven native and eighteen associated positions ran in both viewports');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
-  console.log('P9_PVBENCH_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
+  ok(observations.length===22&&retries.length===22&&isolated.length===36,'all eleven native, shared retries and eighteen associated positions ran in both viewports');
+  ok(negatives.length===14,'all seven correction or unavailable-action boundaries ran in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,retries,negatives,isolated,offline,viewports,provenance},null,2));
+  console.log('P9_PVBENCH_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,retries:retries.length,associated:isolated.length,negatives:negatives.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,retries,negatives,isolated,offline,viewports,provenance,failureDiagnostic,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

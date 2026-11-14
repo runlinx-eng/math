@@ -1,9 +1,10 @@
 // Chromium proof for B34 MP.8 sequence: actual UI events, checks, and persisted v2 work.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const out=path.resolve(__dirname,'../verification/p9-sequence-thinking');
 const base='http://127.0.0.1:43827/';
-const checks=[],errors=[],remote=[];
+const checks=[],errors=[],remote=[],observations=[];
 const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -18,7 +19,8 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
    const shot=n=>page.screenshot({path:path.join(out,label+'-'+n+'.png'),fullPage:true});
    const record=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.tables34);
    const note=page.locator('#thinking-feedback');
-   const check=()=>page.locator('#actions [data-do="check"]').click();
+   const snapshots=[];let checkIndex=0;
+   const check=async()=>{await page.locator('#actions [data-do="check"]').click();snapshots.push(await capture(page,out,label,{id:'tables34',index:2},'check-'+(++checkIndex)));};
    const answer=async value=>page.locator('[data-xfield="answers.0"]').fill(value);
    try{
     await page.goto(base+'learn.html#tables34');
@@ -64,6 +66,7 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
     await shot('03-checked');
     await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot().index===2);
     assert(await note.isVisible(),label+' correct current saved work restores after refresh');
+    const restored=await capture(page,out,label,{id:'tables34',index:2},'restored');
     await answer('260');
     assert(await note.count()===0,label+' changed current answer immediately invalidates feedback');
     await shot('04-modified');
@@ -77,6 +80,8 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
     assert(attempts.every(a=>a.value&&a.id&&a.at),label+' v2 attempt structure unchanged');
     assert(!('thinkingScore' in saved)&&!('thinkingMastery' in saved),label+' no thinking mastery or grading fields');
     if(!withHelp)assert(saved.cases[2].support===false,label+' without opening optional question no support flag');
+    await check();assert(snapshots.at(-1).attempts.length===5,label+' fifth current check preserves all original four submissions');
+    observations.push({width,height,id:'tables34',index:2,snapshots,firstModel:snapshots[1].model,restoredModel:restored.model,finalModel:snapshots.at(-1).model,record:snapshots.at(-1).record,observation:await note.innerText(),restored});
     await shot('05-rechecked');
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' desktop has no horizontal overflow');
     await ctx.close();
@@ -84,10 +89,10 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
   }
   assert(!errors.length,'no uncaught page errors');
   assert(!remote.length,'no external requests');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,childTrial:false,pedagogicalReview:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,childTrial:false,pedagogicalReview:false},null,2));
   console.log('P9_SEQUENCE_THINKING_BROWSER_OK '+JSON.stringify({checks:checks.length}));
  }catch(e){
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,error:String(e)},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,error:String(e)},null,2));
   console.error(e.stack);process.exitCode=1;
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

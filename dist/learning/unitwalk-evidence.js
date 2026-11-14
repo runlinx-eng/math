@@ -39,46 +39,62 @@ const equal=(s,n,d=1)=>{
   BigInt(r[0])*BigInt(d)===BigInt(n)*BigInt(r[1]);
 };
 
+// B16 exposes partition, forward, backward and reset throughout a walk. The
+// saved input text is not the applied unit: only a successful partition changes
+// board.parts. Replay every visible request, including failed/no-effect ones,
+// and keep earlier units in separate epochs instead of silently erasing them.
+export function replayWalkHistory(task,model,chunk=1){
+ const fresh=first=>({parts:1,steps:[],first}),events=[],failedRequests=[],ineffectiveRequests=[],epochs=[];
+ let b=fresh(null),issue='',resetCount=0,partitionCount=0;
+ const begin=(cause,historyIndex)=>{const epoch={index:epochs.length,cause,historyIndex,parts:b.parts,steps:[],advances:0,retreats:0};epochs.push(epoch);return epoch;};
+ let current=begin('initial',-1);
+ for(const [historyIndex,e] of model.history.entries()){
+  if(!keys(e,['action','data'])||!keys(e.data,['fields'])||!keys(e.data.fields,fieldKeys)||
+     !fieldKeys.every(k=>text(e.data.fields[k]))||!['partition','walk','walk-back','reset'].includes(e.action))return null;
+  const before=structuredClone(b),f=e.data.fields;issue='';let accepted=true,reason=null;
+  if(e.action==='reset'){
+   b=fresh(b.first);resetCount++;current=begin('reset',historyIndex);
+  }else if(e.action==='partition'){
+   const p=scalar(f.parts);
+   if(!integer(p,1,12)){accepted=false;reason='invalid-partition';issue='每个0到1的长度先分成1到12个相等间隔。';}
+   else{b.parts=p;b.steps=[];partitionCount++;current=begin('partition',historyIndex);}
+  }else{
+   const from=b.steps.length,limit=(Math.ceil(task.n/task.d)+1)*b.parts;
+   let delta;
+   if(e.action==='walk'){
+    // This is the original PRE-move bound. A grouped move may cross it.
+    if(from>=limit){accepted=false;reason='forward-limit';}
+    else{delta=chunk;b.first??=f.parts;for(let i=1;i<=chunk;i++)b.steps.push(from+i);current.advances++;}
+   }else if(from===0){accepted=false;reason='already-at-zero';}
+   else{delta=-1;b.steps.pop();current.retreats++;}
+   if(delta!==undefined)current.steps.push({delta,from:[from,b.parts],to:[from+delta,b.parts]});
+  }
+  const entry={historyIndex,epoch:current.index,action:e.action,fields:structuredClone(f),accepted,
+   reason,before,after:structuredClone(b),issue};events.push(entry);
+  if(!accepted)(issue?failedRequests:ineffectiveRequests).push(entry);
+ }
+ if(!same(b,model.board)||model.issue!==issue)return null;
+ return {board:b,current,epochs,events,failedRequests,ineffectiveRequests,resetCount,partitionCount,
+  historyScope:'all-recorded-visible-walk-requests'};
+}
+
 export function replayUnitwalkEvidence(task,model){
  try{
   if(task?.type!=='x-unitwalk'||!integer(task.n,1)||!integer(task.d,2,12)||
      Object.hasOwn(task,'chunk')||Object.hasOwn(task,'buy')||
      !keys(model,[...fieldKeys,'board','history','issue'])||
-     !fieldKeys.every(k=>text(model[k]))||model.issue!==''||
+     !fieldKeys.every(k=>text(model[k]))||!text(model.issue)||
      !Array.isArray(model.history)||model.history.length<2||model.history.length>2000)return null;
   for(const flag of ['copies','whole','decimal','bounds','halfBound'])
    if(task[flag]!==undefined&&typeof task[flag]!=='boolean')return null;
   if(task.axisMax!==undefined&&!integer(task.axisMax,1))return null;
 
   const d=task.d,n=task.n,whole=Math.floor(n/d),remainder=n%d;
-  // This is the original walk guard, calculated in integer units. axisMax is
-  // display extent only; it never changes the length of the interval 0 to 1.
-  const ceiling=whole+(remainder?1:0),limit=(ceiling+1)*d;
-  const b={parts:1,steps:[],first:null},steps=[];
-  let advances=0,retreats=0;
-  for(const [index,e] of model.history.entries()){
-   if(!keys(e,['action','data'])||!keys(e.data,['fields'])||!keys(e.data.fields,fieldKeys)||
-      !fieldKeys.every(k=>text(e.data.fields[k]))||scalar(e.data.fields.parts)!==d)return null;
-   const f=e.data.fields;
-   if(index===0){
-    if(e.action!=='partition')return null;
-    b.parts=d;
-    continue;
-   }
-   const from=b.steps.length;
-   let direction;
-   if(e.action==='walk'){
-    if(from>=limit)return null;
-    direction=1;b.first??=f.parts;b.steps.push(from+1);advances++;
-   }else if(e.action==='walk-back'){
-    if(from===0)return null;
-    direction=-1;b.steps.pop();retreats++;
-   }else return null;
-   // Repeated identical walk events are successive legitimate moves. A reset,
-   // repartition, no-op or unrelated action cannot erase an invalid history.
-   steps.push({direction,from:[from,d],to:[from+direction,d]});
-  }
-  if(!advances||!same(b,model.board)||b.steps.length!==n||
+  const ceiling=whole+(remainder?1:0),history=replayWalkHistory(task,model);
+  if(!history)return null;
+  const b=history.board,{advances,retreats}=history.current;
+  const steps=history.current.steps.map(({delta,from,to})=>({direction:delta,from,to}));
+  if(!advances||b.parts!==d||b.steps.length!==n||
      advances-retreats!==n||scalar(model.parts)!==d||!equal(model.answer,n,d))return null;
   if(task.copies){
    const terms=model.equation.replace(/\s/g,'').split('+');
@@ -90,7 +106,7 @@ export function replayUnitwalkEvidence(task,model){
   if(task.halfBound&&(2*n>=d||model.relation!=='<'))return null;
   // Additional observations never replace or loosen original completion rules.
   if(!walks.valid(task,model)||!walks.inspect(task,model).correct)return null;
-  return {start:[0,d],end:[n,d],unit:[1,d],steps,advances,retreats,whole,
+  return {start:[0,d],end:[n,d],unit:[1,d],steps,advances,retreats,whole,history,
    remainder:[remainder,d],decimal:task.decimal?model.decimal:null,
    bounds:task.bounds?[whole,ceiling]:null};
  }catch{return null;}

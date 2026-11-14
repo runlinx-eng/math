@@ -134,16 +134,30 @@ test('compensation requires passing the target rather than merely including a ba
  assert.equal(proof.compensation.returnedInOneDirection,false,'feedback must describe net return, not invent a straight return');
 });
 
-test('an earlier invalid, zero or mis-landed hop cannot be hidden by later correct work',()=>{
+test('real invalid, zero or mis-landed requests remain failed events after later correction',()=>{
  const task=sessionTasks('onesbridge')[2];
  for(const [delta,to] of [[0,36],[4,41],[1,1000000001]]){
   const model=begin(task);hop(task,model,delta,to);assert.ok(model.issue);
   hop(task,model,4);hop(task,model,3);finish(task,model);
-  assert.equal(routes.inspect(task,model).correct,true);rejected(task,model);
+  assert.equal(routes.inspect(task,model).correct,true);
+  const p=replayRouteEvidence(task,model);assert.ok(p);assert.equal(p.failedRequests.length,1);
+  assert.equal(p.failedRequests[0].from,p.failedRequests[0].to);assert.equal(p.hops.length,2);
+  assert.deepEqual(p.failedRequests[0].raw,{jump:model.history[1].jump,landing:model.history[1].landing});
  }
  const textModel=begin(task);textModel.jump='1e0';textModel.landing='37';routes.act(task,textModel,'b11-hop');
  hop(task,textModel,4);hop(task,textModel,3);finish(task,textModel);
- assert.equal(routes.inspect(task,textModel).correct,true);rejected(task,textModel);
+ assert.equal(routes.inspect(task,textModel).correct,true);
+ const p=replayRouteEvidence(task,textModel);assert.ok(p);assert.equal(p.failedRequests[0].raw.jump,'1e0');
+ assert.equal(p.forwardMoves,2);assert.equal(p.steps.length,2);
+});
+
+test('a final failed request preserves a completed route and its exact issue without inventing a move',()=>{
+ const task=sessionTasks('onesbridge')[2],m=routes.example(task),before=structuredClone(m.hops);
+ m.jump='0';m.landing=String(m.hops.at(-1).to);routes.act(task,m,'b11-hop');
+ assert.ok(m.issue);assert.equal(routes.inspect(task,m).correct,true);
+ const p=replayRouteEvidence(task,m);assert.ok(p);assert.equal(p.failedRequests.length,1);
+ assert.deepEqual(m.hops,before);assert.equal(p.failedRequests[0].issue,m.issue);
+ const forged=structuredClone(m);forged.issue='';rejected(task,forged,'a missing failure prompt is not the recorded state');
 });
 
 test('all reviewed paths reject malformed, omitted, reordered or fabricated event and model details',()=>{

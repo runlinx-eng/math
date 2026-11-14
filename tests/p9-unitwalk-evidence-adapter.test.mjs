@@ -137,7 +137,7 @@ test('equivalent original numeric partition inputs keep their actual first-walk 
  }
 });
 
-test('the true upper boundary is allowed, but an extra ineffective forward action is rejected',()=>{
+test('the true upper boundary is allowed and an ineffective forward request is retained without a step',()=>{
  const task=sessionTasks('lineplaces')[0],limit=(Math.ceil(task.n/task.d)+1)*task.d;
  for(const extra of [false,true]){
   const model=start(task);
@@ -145,12 +145,13 @@ test('the true upper boundary is allowed, but an extra ineffective forward actio
   if(extra)action(task,model,'walk');
   for(let i=limit;i>task.n;i--)action(task,model,'walk-back');
   fillAnswers(task,model);originalAccepts(task,model);
-  if(extra)rejects(task,model,'original grading ignores this out-of-range action');
-  else {const proof=accepts(task,model);assert.deepEqual(proof.steps[limit-1].to,[limit,task.d]);}
+  const proof=accepts(task,model);assert.deepEqual(proof.steps[limit-1].to,[limit,task.d]);
+  assert.equal(proof.advances,limit);assert.equal(proof.history.ineffectiveRequests.length,extra?1:0);
+  if(extra)assert.equal(proof.history.ineffectiveRequests[0].reason,'forward-limit');
  }
 });
 
-test('a zero-position retreat and repeated partition cannot be hidden by a correct final board',()=>{
+test('visible zero retreats, partitions and resets remain recorded, while foreign actions are rejected',()=>{
  const task=sessionTasks('lineplaces')[2];
  for(const variant of ['initial-retreat','zero-retreat','duplicate-partition','repartition-after-walk','reset','foreign-action']){
   const model=walks.initial(task);model.parts=String(task.d);
@@ -162,11 +163,18 @@ test('a zero-position retreat and repeated partition cannot be hidden by a corre
   if(variant==='reset'){action(task,model,'reset');action(task,model,'partition');}
   if(variant==='foreign-action')action(task,model,'fold');
   for(let i=0;i<task.n;i++)action(task,model,'walk');
-  fillAnswers(task,model);originalAccepts(task,model,variant);rejects(task,model,variant);
+  fillAnswers(task,model);originalAccepts(task,model,variant);
+  if(variant==='foreign-action')rejects(task,model,variant);
+  else{
+   const proof=accepts(task,model);assert.equal(proof.history.events.length,model.history.length);
+   assert.equal(proof.advances,task.n);assert.equal(proof.retreats,0);
+   assert.equal(proof.history.resetCount,variant==='reset'?1:0);
+   assert.equal(proof.history.ineffectiveRequests.length,['initial-retreat','zero-retreat'].includes(variant)?1:0);
+  }
  }
 });
 
-test('wrong-scale movement is rejected even if a later partition erases it for the original grader',()=>{
+test('earlier units and failed partitions are retained separately from the final construction',()=>{
  const task=sessionTasks('lineplaces')[2];
  for(const variant of ['unpartitioned','wrong-partition','invalid-partition','changed-input']){
   const model=walks.initial(task);
@@ -178,15 +186,25 @@ test('wrong-scale movement is rejected even if a later partition erases it for t
   }
   model.parts=String(task.d);action(task,model,'partition');
   for(let i=0;i<task.n;i++)action(task,model,'walk');
-  fillAnswers(task,model);originalAccepts(task,model,variant);rejects(task,model,variant);
+  fillAnswers(task,model);originalAccepts(task,model,variant);const proof=accepts(task,model);
+  assert.equal(proof.advances,task.n);assert.equal(proof.history.events.length,model.history.length);
+  if(variant==='invalid-partition')assert.equal(proof.history.failedRequests.length,1);
+  else{
+   const first=proof.history.events.find(e=>e.action==='walk');
+   assert.equal(first.before.parts,variant==='unpartitioned'?1:variant==='wrong-partition'?2:task.d);
+   assert.deepEqual(first.after.steps,[1]);
+  }
  }
 });
 
-test('current inputs and each movement snapshot must keep the same unit denominator',()=>{
+test('unapplied input text cannot change the applied unit, and current submitted units still agree',()=>{
  const task=sessionTasks('lineplaces')[2],base=example(task);
  for(const wrong of ['2','1/4','4e0','0x4','NaN','Infinity','0','-4','4.5','']){
   const model=structuredClone(base);model.history[2].data.fields.parts=wrong;
-  originalAccepts(task,model,wrong+' ignored by original walk action');rejects(task,model,wrong);
+  originalAccepts(task,model,wrong+' ignored by original walk action');const proof=accepts(task,model);
+  assert.equal(proof.history.events[2].fields.parts,wrong);
+  assert.equal(proof.history.events[2].before.parts,task.d);
+  assert.deepEqual(proof.steps[1],{direction:1,from:[1,task.d],to:[2,task.d]});
  }
  const current=structuredClone(base);current.parts='2';rejects(task,current);
 });
@@ -263,4 +281,13 @@ test('all seven original excluded tasks still pass their own grader without inhe
    assert.equal(thinkingFeedback(task,model,record(model),context),null);
   }
  }
+});
+
+
+test('Issue 166 original visible controls preserve failed requests, resets and latest failed issues',async()=>{
+ const {verifyVisibleCorrections}=await import('./helpers/p9-fraction-correction-controls.mjs');
+ const result=await verifyVisibleCorrections('unitwalk',replayUnitwalkEvidence,thinkingFeedback);
+ assert.equal(result.paths,result.nativeTasks*3);
+ assert.ok(result.failedRequests>=result.nativeTasks);
+ assert.equal(result.forgeriesRejected,result.paths*3);
 });

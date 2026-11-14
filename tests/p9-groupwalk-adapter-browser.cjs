@@ -4,7 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-groupwalk-adapter');
 const cases=['manycopies','repeatfraction'].flatMap(id=>[0,1,2].map(index=>({id,index})));
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],correctionObservations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -49,6 +49,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const saved=id=>page.evaluate(id=>{
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
+   const rawStorage=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
    const model=async spec=>(await saved(spec.id)).models[spec.index];
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
@@ -154,6 +155,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' commuted multiplication factors pass original grading');
     ok(await hint.isVisible(),activeLabel+' actual grouped route receives bounded evidence');
     const words=await hint.innerText(),first=await model(spec),proof=replayGroupwalkEvidence(task,first);
+    const firstStorage=await rawStorage(),firstRecord=(await saved(spec.id)).cases[spec.index];
     ok(!!proof&&valid(task,first)&&inspect(task,first).correct,activeLabel+' saved work passes strict and original mathematics');
     ok(words.includes(`整组前进 ${groups+2} 次`)&&words.includes(`退回 ${2*task.chunk} 小份`),activeLabel+' feedback separates actual grouped advances from single-unit retreats');
     ok(words.includes(`共 ${groups} 组`)&&words.includes(`${task.n}/${task.d}`),activeLabel+' task group count and final position are checked independently');
@@ -163,6 +165,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),activeLabel+' grouped arithmetic receives no borrowed MP label');
     await shot('03-verified-offline');await reload(spec);
     ok(await hint.isVisible()&&JSON.stringify(await model(spec))===JSON.stringify(first),activeLabel+' offline reload restores exactly the checked work');
+    const offlineStorage=await rawStorage(),restored=JSON.parse(offlineStorage).lessons[spec.id];
     await field('answer','999');ok(await hint.count()===0,activeLabel+' editing the answer immediately invalidates old evidence');
     if(spec.id==='manycopies'&&spec.index===0)await shot('04-edited');
     await reload(spec);ok(await hint.count()===0,activeLabel+' stale evidence stays absent after offline refresh');
@@ -183,12 +186,16 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),activeLabel+' no desktop horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,n:task.n,d:task.d,chunk:task.chunk,groups,
      advances:finalProof.advances,retreats:finalProof.retreats,observation:words,finalObservation:await hint.innerText(),
-     history:m.history.map(event=>event.action),board:m.board,attempts:attempts.length});
+     history:m.history.map(event=>event.action),board:m.board,attempts:attempts.length,attemptRecords:attempts,
+     firstModel:first,finalModel:m,offlineModel:restored.models[spec.index],firstRecord,record:end.cases[spec.index],
+     offlineRecord:restored.cases[spec.index],proof:finalProof,
+     storageSnapshots:{first:firstStorage,offline:offlineStorage,final:await rawStorage()}});
    }
 
    const negative={id:'repeatfraction',index:1},task=sessionTasks(negative.id)[negative.index];
-   for(const variant of ['zero-back','repeat-partition','reset','wrong-scale','changed-input','upper-noop','rounded-equation']){
+   for(const variant of ['zero-back','repeat-partition','reset','wrong-scale','changed-input','upper-noop','rounded-equation','failed-partition','final-failed-partition']){
     activeLabel=`${width}x${height}-negative-${variant}`;await open(negative);
+    if(variant==='failed-partition'){await field('parts','0');await action('partition');}
     if(variant==='zero-back')await action('walk-back');
     if(variant==='repeat-partition'){await field('parts',task.d);await action('partition');}
     if(variant==='reset'){
@@ -205,13 +212,25 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      await field('parts',task.d);await action('walk');await action('walk');await answers(task);
     }else await solveOriginal(negative);
     if(variant==='rounded-equation')await field('equation','(7.0000000000000001/3)*3=21/3');
+    if(variant==='final-failed-partition'){await field('parts','0');await action('partition');await field('parts',task.d);}
     await submit();const m=await model(negative);
     ok(valid(task,m)&&inspect(task,m).correct,activeLabel+' original final-work grading is unchanged');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI accepts the final result');
-    ok(await hint.count()===0&&!replayGroupwalkEvidence(task,m),activeLabel+' strict evidence rejects invalid history or an inexact equation');
-    await reload(negative);ok(await hint.count()===0,activeLabel+' invalid current evidence remains excluded offline');
-    negativeObservations.push({width,height,variant,history:m.history.map(event=>event.action),board:m.board,originalCorrect:true,strictFeedback:false});
-    await shot('rejected');
+    const proof=replayGroupwalkEvidence(task,m);
+    if(variant==='rounded-equation'){
+     ok(await hint.count()===0&&!proof,activeLabel+' an inexact equation still cannot earn an exact multiplication claim');
+     await reload(negative);ok(await hint.count()===0,activeLabel+' inexact current evidence remains excluded offline');
+     const restoredStorage=await rawStorage(),restored=JSON.parse(restoredStorage).lessons[negative.id];
+     negativeObservations.push({width,height,id:negative.id,index:negative.index,variant,model:m,record:restored.cases[negative.index],
+      restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage,originalCorrect:true,strictFeedback:false});await shot('rejected');
+    }else{
+     ok(!!proof&&proof.history.events.length===m.history.length&&await hint.isVisible(),activeLabel+' every visible request is retained in its actual unit and epoch');
+     if(variant==='final-failed-partition')ok(m.issue!==''&&proof.history.failedRequests.at(-1).issue===m.issue,activeLabel+' final failed request is not silently cleared');
+     await reload(negative);ok(await hint.isVisible()&&JSON.stringify(await model(negative))===JSON.stringify(m),activeLabel+' recorded correction and evidence restore offline');
+     const restoredStorage=await rawStorage(),restored=JSON.parse(restoredStorage).lessons[negative.id];
+     correctionObservations.push({width,height,id:negative.id,index:negative.index,variant,model:m,proof,record:restored.cases[negative.index],
+      restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage,originalCorrect:true,strictFeedback:true});await shot('corrected');
+    }
    }
 
    // A shared widget may have two reviewed mathematical contracts, but a real
@@ -238,13 +257,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===12,'all six grouped native tasks complete at both desktop sizes');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  ok(correctionObservations.length===16&&negativeObservations.length===2,'eight correction scenarios and the exact-notation rejection run in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,correctionObservations,offline,
    nativeTasks:cases.length,nativeNodes:2,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_GROUPWALK_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes:2,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,correctionObservations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

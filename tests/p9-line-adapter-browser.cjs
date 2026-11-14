@@ -1,9 +1,10 @@
 // All ten native tasks at both desktop sizes, using real controls and a stopped origin.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-line-adapter');
 const cases=[...['lineproperties','lineorientation'].flatMap(id=>Array.from({length:id==='lineproperties'?3:4},(_,index)=>({id,index}))),{id:'geometrynotation',index:2},{id:'linemark',index:1},{id:'structure34',index:3}];
-const checks=[],errors=[],remote=[];const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
+const checks=[],errors=[],remote=[],observations=[];const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
 (async()=>{
@@ -47,6 +48,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const shot=n=>page.screenshot({path:path.join(out,label+'-'+n+'.png'),fullPage:true});
     const note=page.locator('#thinking-feedback');
     const field=async(k,v)=>page.locator(`[data-xfield="${k}"]`).selectOption(String(v));
+    const click=async action=>{const button=page.locator(`[data-x="${action}"]`),closed=button.locator('xpath=ancestor::details[not(@open)]').first();if(await closed.count())await closed.locator(':scope > summary').click();await button.click();};
+    const snapshots=[],save=async phase=>{const x=await capture(page,out,label,spec,phase);snapshots.push(x);return x;};
     try{
      // Fixture only selects the existing native position. Target work and submissions use UI.
      await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
@@ -61,38 +64,49 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      assert(!(await page.locator('#thinking-guide').evaluate(e=>e.open)),label+' guide collapsed');
      assert(await note.count()===0,label+' no unsubmitted evidence');
      await shot('01-guide-offline');
+     await click('g23-lineTest');await page.locator('#actions [data-do="check"]').click();
+     assert(await note.count()===0,label+' blank edge selection does not compare');
+     const failed=await save('failed-selection');assert(failed.model.board.tests.length===0&&failed.model.board.first.lineTest.first==='',label+' failed first selection remains recorded');
+     await field('first','0');await field('second','0');await click('g23-lineTest');await shot('01-same-edge');
      for(const step of solveSteps(task)){
       if(step.field?.startsWith('answers.'))continue;
       if(step.field)await field(step.field,step.value);
-      else await page.locator(`[data-x="${step.action}"]`).click();
+      else await click(step.action);
      }
+     await click('g23-lineTest');
      const correct=task.questions[0].value,wrong=task.questions[0].options.find(o=>o[0]!==correct)[0];
      await field('answers.0',wrong);await page.locator('#actions [data-do="check"]').click();
      assert(await note.count()===0,label+' wrong answer grants no feedback offline');
+     await save('wrong-answer');
      await field('answers.0',correct);await page.locator('#actions [data-do="check"]').click();
      assert(await note.isVisible(),label+' real checked line comparison visible offline');
      const words=await note.innerText();assert(words.includes('实际检查')&&words.includes('不能推断'),label+' factual limited observation');
      assert(await note.locator('[data-thinking-node-id]').count()===(spec.id==='structure34'?1:0),label+' no cross-source MP attribution');
      await shot('02-verified-offline');
+     const first=await save('first-correct');
      await page.reload();await page.waitForFunction(i=>window.mathLesson?.snapshot().index===i,spec.index);
      assert(await note.isVisible(),label+' checked snapshot restores offline');
+     const restored=await save('restored');assert(JSON.stringify(restored.model)===JSON.stringify(first.model),label+' all retained line events restore');
      await field('answers.0',wrong);assert(await note.count()===0,label+' edit immediately removes feedback');
      await shot('03-edited-offline');
      await page.reload();await page.waitForFunction(i=>window.mathLesson?.snapshot().index===i,spec.index);
      assert(await note.count()===0,label+' stale feedback stays absent after offline reload');
+     await page.locator('#actions [data-do="check"]').click();assert(await note.count()===0,label+' newer failed answer cannot reuse older evidence');await save('edited-failure');
      await field('answers.0',correct);await page.locator('#actions [data-do="check"]').click();
      assert(await note.isVisible(),label+' corrected work can be checked again offline');
      const saved=await page.evaluate(id=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons[id],spec.id);
-     assert(saved.cases[spec.index].attempts.length===3,label+' all attempts retained');
+     assert(saved.cases[spec.index].attempts.length===5,label+' original three and two failed checks retained');
      assert(!('thinkingScore'in saved)&&!('thinkingMastery'in saved),label+' unchanged v2 scoring boundary');
      assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no desktop overflow');
+     const final=await save('final-correct');assert(final.model.board.tests.length===task.required.length+1,label+' repeated real comparison remains distinct from failed selections');
+     observations.push({width,height,...spec,snapshots,firstModel:first.model,finalModel:final.model,record:final.record,observation:words,finalObservation:await note.innerText()});
     }catch(e){await shot('failure').catch(()=>{});throw e;}
    }
    await context.close();
   }
   assert(errors.length===0,'no browser errors');assert(remote.length===0,'no external requests');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,originStopped:true,childTrial:false,pedagogicalReview:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,originStopped:true,childTrial:false,pedagogicalReview:false},null,2));
   console.log('P9_LINE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length}));
- }catch(e){fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,error:String(e)},null,2));console.error(e.stack);process.exitCode=1;}
+ }catch(e){fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,error:String(e)},null,2));console.error(e.stack);process.exitCode=1;}
  finally{if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

@@ -31,7 +31,7 @@ const fieldKeys=Object.keys(fractions.fields);
 const text=s=>typeof s==='string'&&s.length<=500;
 const integer=(n,min=1,max=10000)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
 const natural=(s,min,max)=>{
- if(!text(s)||!/^\d+$/.test(s.trim()))return null;
+ if(!text(s)||!/^\+?\d+(?:\.0+)?$/.test(s.trim()))return null;
  const n=Number(s);return integer(n,min,max)?n:null;
 };
 const equalPair=(a,b)=>BigInt(a[0])*BigInt(b[1])===BigInt(b[0])*BigInt(a[1]);
@@ -43,14 +43,14 @@ const decimalEquals=(s,n,d)=>{
 const named=(s,n,d)=>text(s)&&s.replace(/\s/g,'')===`${n}/${d}`;
 const gcd=(a,b)=>{while(b){[a,b]=[b,a%b];}return a;};
 
-// Every event must have a legal mathematical effect. In particular, failed
-// attempts, ignored actions, duplicate saves/tests, resets and no-op rewinds
-// cannot be erased by a later valid action to obtain positive observations.
+// A failed request is not an equal repartitioning. Keep its fields, first
+// attempt and unchanged quantity, then independently replay later corrections.
+// Reset starts a new construction; earlier rounds remain visible in history.
 export function replayFractionEvidence(task,model){
  try{
   if(task?.type!=='x-fracrename'||!integer(task.n)||!integer(task.d)||task.n>task.d||
      !model||!keys(model,[...fieldKeys,'board','history','issue'])||
-     !fieldKeys.every(k=>text(model[k]))||model.issue!==''||
+     !fieldKeys.every(k=>text(model[k]))||!text(model.issue)||
      !Array.isArray(model.history)||!model.history.length||model.history.length>1500)return null;
   for(const flag of ['simple','hcf','testAdd','decimal'])if(task[flag]!==undefined&&typeof task[flag]!=='boolean')return null;
   if(task.count!==undefined&&!integer(task.count,1,1500))return null;
@@ -59,39 +59,56 @@ export function replayFractionEvidence(task,model){
   if(task.decimalStart!==undefined&&!decimalEquals(task.decimalStart,task.n,task.d))return null;
   if(!fractions.valid(task,model)||!fractions.inspect(task,model).correct)return null;
 
-  const b={n:task.n,d:task.d,saved:[],moves:0,first:null,tested:false,opened:!task.decimalStart};
-  const transformations=[];let splits=0,merges=0,rewinds=0,addition=null;
-  for(const e of model.history){
+  const fresh=first=>({n:task.n,d:task.d,saved:[],moves:0,first,tested:false,opened:!task.decimalStart});
+  let b=fresh(null),transformations=[],splits=0,merges=0,rewinds=0,addition=null,issue='',resetCount=0;
+  const events=[],failedRequests=[],ineffectiveRequests=[],epochs=[{index:0,transformations}];
+  for(const [historyIndex,e] of model.history.entries()){
    if(!keys(e,['a','d','f'])||!keys(e.d,[])||!keys(e.f,fieldKeys)||
       !fieldKeys.every(k=>text(e.f[k])))return null;
-   if(e.a==='open-decimal'){
-    if(!task.decimalStart||b.opened||!named(e.f.fraction,task.n,task.d))return null;
-    b.opened=true;
+   const before=structuredClone(b);issue='';let accepted=true;
+   if(e.a==='reset'){
+    b=fresh(b.first);transformations=[];splits=0;merges=0;rewinds=0;addition=null;resetCount++;
+    epochs.push({index:epochs.length,transformations});
+   }else if(e.a==='open-decimal'){
+    if(!task.decimalStart||b.opened)return null;
+    if(!named(e.f.fraction,task.n,task.d)){accepted=false;issue='最后一位数的是哪一种小份？把整个与选中份数都记下来。';}
+    else b.opened=true;
    }else if(e.a==='split'||e.a==='merge'){
-    const factor=natural(e.f.factor,2,1000);
-    if(!b.opened||factor===null||e.a==='merge'&&(b.n%factor||b.d%factor)||
-       e.a==='split'&&b.d*factor>10000)return null;
-    const from=[b.n,b.d],to=e.a==='split'?from.map(n=>n*factor):from.map(n=>n/factor);
-    if(!to.every(n=>integer(n))||!equalPair(from,to)||!equalPair(to,[task.n,task.d]))return null;
+    if(!b.opened)return null;
+    const original=Number(e.f.factor),factor=natural(e.f.factor,2,1000);
     b.first??={action:e.a,factor:e.f.factor};
-    [b.n,b.d]=to;b.moves++;
-    transformations.push({action:e.a,factor,from,to});
-    if(e.a==='split')splits++;else merges++;
+    if(!integer(original,2,1000)||e.a==='merge'&&(b.n%original||b.d%original)||e.a==='split'&&b.d*original>10000){
+     accepted=false;issue='每一份都要同样处理，合并时取出的份和整个的份都要能分成整组。';
+    }else{
+     // Unsupported/coerced successful numeric spellings stay outside this
+     // exact evidence contract; they are not relabelled as failed operations.
+     if(factor===null)return null;
+     const from=[b.n,b.d],to=e.a==='split'?from.map(n=>n*factor):from.map(n=>n/factor);
+     if(!to.every(n=>integer(n))||!equalPair(from,to)||!equalPair(to,[task.n,task.d]))return null;
+     [b.n,b.d]=to;b.moves++;transformations.push({action:e.a,factor,from,to});
+     if(e.a==='split')splits++;else merges++;
+    }
    }else if(e.a==='remember'){
-    if(!b.opened||!named(e.f.fraction,b.n,b.d)||
-       b.saved.some(r=>r[0]===b.n&&r[1]===b.d)||!equalPair([b.n,b.d],[task.n,task.d]))return null;
-    b.saved.push([b.n,b.d]);
+    if(!b.opened||!equalPair([b.n,b.d],[task.n,task.d]))return null;
+    if(!named(e.f.fraction,b.n,b.d)){accepted=false;issue='请给现在的分法写名字：数清涂出的份与全部份。';}
+    else if(b.saved.some(r=>r[0]===b.n&&r[1]===b.d)){accepted=false;issue='这个名字已经留下了，试一个不同分法。';}
+    else b.saved.push([b.n,b.d]);
    }else if(e.a==='rewind'){
-    if(!b.opened||b.n===task.n&&b.d===task.d)return null;
-    b.n=task.n;b.d=task.d;rewinds++;
+    if(!b.opened)return null;
+    if(b.n!==task.n||b.d!==task.d)rewinds++;
+    b.n=task.n;b.d=task.d;
    }else if(e.a==='test-add'){
-    if(!b.opened||!task.testAdd||b.tested)return null;
+    if(!b.opened||!task.testAdd)return null;
     const from=[task.n,task.d],to=[task.n+1,task.d+1];
     addition={from,to,relation:equalPair(from,to)?'same':'changed'};
     b.tested=true;
    }else return null;
+   const entry={historyIndex,epoch:epochs.length-1,action:e.a,fields:structuredClone(e.f),accepted,
+    before,after:structuredClone(b),issue};events.push(entry);
+   if(!accepted)failedRequests.push(entry);
+   else if(same(before,b))ineffectiveRequests.push(entry);
   }
-  if(!same(b,model.board)||!b.opened||!transformations.length||
+  if(!same(b,model.board)||model.issue!==issue||!b.opened||!transformations.length||
      !b.saved.some(r=>r[0]!==task.n||r[1]!==task.d)||model.reason!=='recut'||
      !named(model.fraction,...b.saved.at(-1))||
      !(task.targets||[]).every(r=>b.saved.some(s=>same(r,s)))||
@@ -101,6 +118,7 @@ export function replayFractionEvidence(task,model){
      task.testAdd&&(!addition||model.relation!==addition.relation)||
      task.decimal&&!decimalEquals(model.decimal,task.n,task.d))return null;
   return {start:[task.n,task.d],n:b.n,d:b.d,saved:b.saved,transformations,splits,merges,rewinds,
+    history:{events,failedRequests,ineffectiveRequests,epochs,resetCount,currentEpoch:epochs.length-1},
     addition,decimalStart:task.decimalStart||null,decimal:task.decimal?model.decimal:null,
     simplest:!!task.simple,hcf:task.hcf?gcd(task.n,task.d):null};
  }catch{return null;}

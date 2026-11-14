@@ -1,6 +1,7 @@
 // Source-bound observations of fraction construction and ordering. This replay
 // is independent of the original B17 grader and never assesses an explanation.
 import * as fractions from './phase5/b17-model.js';
+import {rational as originalRational} from './phase5/b16-model.js';
 import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
@@ -58,13 +59,13 @@ function amount(raw){
 const smallPair=r=>r&&r.map(Number);
 const index=(s,max)=>text(s)&&/^\d+$/.test(s)&&integer(Number(s),0,max)?Number(s):null;
 const toggle=(list,i)=>list.includes(i)?list.filter(x=>x!==i):[...list,i];
-const numberOfParts=s=>text(s)&&/^\d+$/.test(s.trim())&&integer(Number(s),1,240)?Number(s):null;
+const numberOfParts=s=>text(s)&&/^\+?\d+(?:\.0+)?$/.test(s.trim())&&integer(Number(s),1,240)?Number(s):null;
 
 export function replayFractionOrderEvidence(task,model){
  try{
   if(task?.type!=='x-fracorder'||!Array.isArray(task.cards)||!integer(task.cards.length,2,12)||
      !keys(model,[...fieldKeys,'board','history','issue'])||!fieldKeys.every(k=>text(model[k]))||
-     model.issue!==''||!Array.isArray(model.history)||!model.history.length||model.history.length>1500)return null;
+     !text(model.issue)||!Array.isArray(model.history)||!model.history.length||model.history.length>1500)return null;
   for(const flag of ['desc','mismatch','common','gaps','benchmark'])
    if(task[flag]!==undefined&&typeof task[flag]!=='boolean')return null;
   if(task.gaps&&task.benchmark)return null;
@@ -72,20 +73,25 @@ export function replayFractionOrderEvidence(task,model){
   if(!low||!high||compare(low,high)>=0||values.some(r=>!r||r[0]<=0n||r[1]>240n||
      compare(r,low)<0||compare(r,high)>0)||task.gaps&&values.some(r=>compare(r,[1n,1n])>0))return null;
   if(!fractions.valid(task,model)||!fractions.inspect(task,model).correct)return null;
-  const b={prediction:[],first:null,committed:false,aligned:!task.mismatch,selected:0,
-   parts:task.cards.map(()=>[]),placements:{},ordered:[],common:0,renames:{},gaps:{},benchmarks:{}};
-  let lastPlacement=null,lastRename=null,lastGap=null,lastBenchmark=null;
-  for(const e of model.history){
+  const fresh=first=>({prediction:[],first,committed:false,aligned:!task.mismatch,selected:0,
+   parts:task.cards.map(()=>[]),placements:{},ordered:[],common:0,renames:{},gaps:{},benchmarks:{}});
+  let b=fresh(null),lastPlacement=null,lastRename=null,lastGap=null,lastBenchmark=null,issue='',resetCount=0;
+  const events=[],failedRequests=[],ineffectiveRequests=[],placementAttempts=[],predictions=[];
+  for(const [historyIndex,e] of model.history.entries()){
    if(!keys(e,['a','d','f'])||!keys(e.f,fieldKeys)||!fieldKeys.every(k=>text(e.f[k])))return null;
    const indexed=['card','select','order'].includes(e.a),shading=e.a==='shade';
    if(!keys(e.d,indexed?['index']:shading?['row','index']:[]))return null;
    const i=indexed?index(e.d.index,task.cards.length-1):null;
    if(indexed&&i===null)return null;
-   if(e.a==='card'){
+   const before=structuredClone(b);issue='';let accepted=true,reason=null;
+   if(e.a==='reset'){
+    b=fresh(b.first);lastPlacement=null;lastRename=null;lastGap=null;lastBenchmark=null;resetCount++;
+   }else if(e.a==='card'){
     if(b.committed)return null;b.prediction=toggle(b.prediction,i);
    }else if(e.a==='predict'){
-    if(b.committed||b.prediction.length!==task.cards.length)return null;
-    b.first=[...b.prediction];b.committed=true;
+    if(b.committed)return null;
+    if(b.prediction.length!==task.cards.length){accepted=false;reason='incomplete-prediction';}
+    else{b.first??=[...b.prediction];b.committed=true;predictions.push({historyIndex,epoch:resetCount,order:[...b.prediction]});}
    }else if(e.a==='align'){
     if(!task.mismatch||!b.committed||b.aligned)return null;b.aligned=true;
    }else if(e.a==='select'){
@@ -93,40 +99,59 @@ export function replayFractionOrderEvidence(task,model){
     // mathematical operation; all original solve paths do this for card zero.
     if(!b.committed)return null;b.selected=i;
    }else if(e.a==='shade'){
-    const row=index(e.d.row,task.cards.length-1);if(row===null||!b.committed||!b.aligned)return null;
+    const row=index(e.d.row,task.cards.length-1);if(row===null||!b.committed)return null;
     const [n,d]=values[row],capacity=Number(((n+d-1n)/d)*d),part=index(e.d.index,capacity-1);
-    if(part===null)return null;b.parts[row]=toggle(b.parts[row],part);
+    if(part===null)return null;
+    // The original view renders these buttons before alignment, while the
+    // model deliberately ignores them. Do not manufacture a painted part.
+    if(!b.aligned){accepted=false;reason='whole-not-aligned';}
+    else b.parts[row]=toggle(b.parts[row],part);
    }else if(e.a==='place'){
-    const position=amount(e.f.position);
-    if(!b.committed||!b.aligned||!position||compare(position,values[b.selected])!==0||
-       Object.hasOwn(b.placements,b.selected)&&b.placements[b.selected]===e.f.position)return null;
-    b.placements[b.selected]=e.f.position;lastPlacement=e.f.position;
+    if(!b.committed||!b.aligned)return null;
+    const admitted=fractions.frac(e.f.position),position=amount(e.f.position);
+    if(admitted&&(!position||compare(position,admitted.map(BigInt))!==0))return null;
+    if(!admitted||!position||compare(position,low)<0||compare(position,high)>0){
+     accepted=false;reason='outside-axis';issue='把位置写成分数或小数，放在这条线的范围里。';
+    }else{
+     b.placements[b.selected]=e.f.position;lastPlacement=e.f.position;
+     placementAttempts.push({historyIndex,epoch:resetCount,index:b.selected,position:e.f.position,
+      matchesCard:compare(position,values[b.selected])===0});
+    }
    }else if(e.a==='order'){
     if(!b.committed)return null;b.ordered=toggle(b.ordered,i);
    }else if(e.a==='common'){
-    const den=numberOfParts(e.f.denom);
-    if(!task.common||!b.committed||!b.aligned||den===null||den===b.common||
-       values.some(([,d])=>BigInt(den)%d))return null;
-    b.common=den;b.renames={};
+    if(!task.common||!b.committed||!b.aligned)return null;
+    const original=Number(e.f.denom),den=numberOfParts(e.f.denom);
+    if(!integer(original,1,240)||values.some(([,d])=>original%Number(d))){
+     accepted=false;reason='invalid-common-parts';issue='新的小份要能把每一种原来的份都整齐细分。';
+    }else{if(den===null)return null;b.common=den;b.renames={};lastRename=null;}
    }else if(e.a==='rename'){
     if(!task.common||!b.common||!b.committed||!b.aligned)return null;
     const [n,d]=values[b.selected],name=`${n*BigInt(b.common)/d}/${b.common}`;
-    if(e.f.fraction.replace(/\s/g,'')!==name||Object.hasOwn(b.renames,b.selected))return null;
-    b.renames[b.selected]=e.f.fraction;lastRename=e.f.fraction;
+    if(e.f.fraction.replace(/\s/g,'')!==name){accepted=false;reason='incorrect-rename';issue='一小份变小了，取的份数也要跟着变。';}
+    else{b.renames[b.selected]=e.f.fraction;lastRename=e.f.fraction;}
    }else if(e.a==='landmark'){
     if(!b.committed||!b.aligned)return null;
     if(task.gaps){
-     const [n,d]=values[b.selected],gap=amount(e.f.answer);
-     if(!gap||compare(gap,[d-n,d])!==0||Object.hasOwn(b.gaps,b.selected))return null;
-     b.gaps[b.selected]=e.f.answer;lastGap=e.f.answer;
+     const [n,d]=values[b.selected],gap=amount(e.f.answer),admitted=originalRational(e.f.answer);
+     if(admitted&&(!gap||compare(gap,admitted.map(BigInt))!==0))return null;
+     if(!admitted||!gap||compare(gap,[d-n,d])!==0){
+      accepted=false;reason='incorrect-gap';issue='从这个点到1，还差多少？';
+     }else{
+      b.gaps[b.selected]=e.f.answer;lastGap=e.f.answer;
+     }
     }else if(task.benchmark){
      const relation=['<','=','>'][compare(values[b.selected],[1n,2n])+1];
-     if(e.f.relation!==relation||Object.hasOwn(b.benchmarks,b.selected))return null;
-     b.benchmarks[b.selected]=e.f.relation;lastBenchmark=e.f.relation;
+     if(!['','<','=','>'].includes(e.f.relation))return null;
+     if(e.f.relation!==relation){accepted=false;reason='incorrect-benchmark';issue='看一看它在一半的哪边。';}
+     else{b.benchmarks[b.selected]=e.f.relation;lastBenchmark=e.f.relation;}
     }else return null;
    }else return null;
+   const entry={historyIndex,epoch:resetCount,action:e.a,data:structuredClone(e.d),fields:structuredClone(e.f),
+    accepted,reason,before,after:structuredClone(b),issue};events.push(entry);
+   if(!accepted)failedRequests.push(entry);else if(same(before,b))ineffectiveRequests.push(entry);
   }
-  if(!same(b,model.board)||!b.committed||!b.aligned||model.position!==lastPlacement||
+  if(!same(b,model.board)||model.issue!==issue||!b.committed||!b.aligned||model.position!==lastPlacement||
      task.common&&model.fraction!==lastRename||task.gaps&&model.answer!==lastGap||
      task.benchmark&&model.relation!==lastBenchmark||b.ordered.length!==task.cards.length||
      values.some(([n],i)=>BigInt(b.parts[i].length)!==n||!Object.hasOwn(b.placements,i)||
@@ -137,6 +162,7 @@ export function replayFractionOrderEvidence(task,model){
      task.gaps&&values.some((_,i)=>!Object.hasOwn(b.gaps,i))||
      task.benchmark&&values.some((_,i)=>!Object.hasOwn(b.benchmarks,i)))return null;
   return {cards:[...task.cards],fractions:values.map(smallPair),prediction:b.first.map(i=>task.cards[i]),
+   history:{events,failedRequests,ineffectiveRequests,placementAttempts,predictions,resetCount},
    ordered:b.ordered.map(i=>task.cards[i]),direction:task.desc?'descending':'ascending',
    placements:task.cards.map((card,i)=>({card,position:b.placements[i]})),
    shadeCounts:b.parts.map(parts=>parts.length),aligned:!!task.mismatch,

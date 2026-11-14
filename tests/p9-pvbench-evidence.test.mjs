@@ -10,6 +10,8 @@ import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as M from '../dist/learning/phase5/b07-model.js';
 import * as V from '../dist/learning/phase5/b07-view.js';
 import {freshLesson,submitLesson,validateLesson} from '../dist/learning/state.js';
+import {defaultModel} from '../dist/learning/tasks.js';
+import {renderP3Flow} from '../dist/learning/p3-view.js';
 import {latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
 import {pvbenchBinding,replayPVBenchEvidence} from '../dist/learning/pvbench-evidence.js';
 import {pvbenchEvidenceExample,pvbenchEvidenceSteps} from '../scripts/pvbench-evidence-fixture.mjs';
@@ -144,6 +146,54 @@ test('latest checked snapshots retain wrong answers, corrections and complete or
  }
 });
 
+test('the actual browser field corrections retain the original wrong attempts without inventing exchanges',()=>{
+ const source=fs.readFileSync(new URL('./p9-pvbench-adapter-browser.cjs',import.meta.url),'utf8');
+ const definition=source.match(/const fieldCorrections=\[[\s\S]*?\n\];/)?.[0];assert.ok(definition);
+ const scenarios=JSON.parse(JSON.stringify(vm.runInNewContext(definition+'\nfieldCorrections')));
+ assert.deepEqual(scenarios.map(s=>s.kind),['conservation-choice','expanded-place-value','whole-tens-not-tens-digit']);
+ for(const scenario of scenarios){
+  const c=cases.find(c=>c.id===scenario.id&&c.index===scenario.index),task=taskFor(c),record=freshLesson(c.id);
+  record.index=c.index;const model=record.models[c.index]=M.initial(task);
+  for(const step of pvbenchEvidenceSteps(task))applyVisible(task,model,step);
+  assert.equal(submitLesson(record).correct,true);const first=clone(record.cases[c.index].attempts[0]);
+  const originalWork=clone(model);assert.ok(thinkingFeedback(task,model,record.cases[c.index],c));
+  applyVisible(task,model,{field:scenario.field,value:scenario.wrong});
+  assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null);
+  assert.equal(submitLesson(record).correct,false);const wrong=clone(record.cases[c.index].attempts[1]);
+  rejected(task,model);assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null);
+  applyVisible(task,model,{field:scenario.field,value:scenario.correct});
+  assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null,'the latest incorrect snapshot still governs until a new submission');
+  assert.equal(submitLesson(record).correct,true);const proof=accepted(task,model);
+  assert.ok(thinkingFeedback(task,model,record.cases[c.index],c));
+  assert.deepEqual(model,originalWork);assert.equal(proof.swapCount,originalWork.history.length);
+  assert.deepEqual(record.cases[c.index].attempts.slice(0,2),[first,wrong]);
+  for(const attempt of record.cases[c.index].attempts)
+   assert.deepEqual(Object.keys(attempt).sort(),['at','exposed','id','supported','value']);
+  const restored=validateLesson(JSON.parse(JSON.stringify(record)),c.id);
+  assert.deepEqual(restored.models,record.models);assert.deepEqual(restored.cases,record.cases);
+ }
+});
+
+test('a wrong saved pair can be corrected without deleting saved forms, successful exchanges or the original green attempt',()=>{
+ const c=cases.find(c=>c.id==='problems1000'&&c.index===2),task=taskFor(c),record=freshLesson(c.id);
+ record.index=c.index;const model=record.models[c.index]=M.initial(task);
+ for(const step of [{action:'pv-save'},{action:'pv-swap',data:{kind:'down10'}},{action:'pv-save'},
+  {field:'answer',value:362}])applyVisible(task,model,step);
+ assert.equal(submitLesson(record).correct,true);const wrong=clone(record.cases[c.index].attempts[0]);
+ rejected(task,model);assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null);
+ for(const step of [{action:'pv-swap',data:{kind:'up10'}},{action:'pv-swap',data:{kind:'down1'}},{action:'pv-save'}])
+  applyVisible(task,model,step);
+ assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null);
+ assert.equal(submitLesson(record).correct,true);const proof=accepted(task,model);
+ assert.equal(proof.saved.goal,'before-after-one-ten');assert.equal(proof.saved.exactTimingKnown,false);
+ assert.deepEqual(model.saved.slice(0,wrong.value.saved.length),wrong.value.saved);
+ assert.deepEqual(model.history.slice(0,wrong.value.history.length),wrong.value.history);
+ assert.deepEqual(record.cases[c.index].attempts[0],wrong);
+ assert.ok(thinkingFeedback(task,model,record.cases[c.index],c));
+ const restored=validateLesson(JSON.parse(JSON.stringify(record)),c.id);
+ assert.deepEqual(restored.cases,record.cases);assert.deepEqual(restored.models,record.models);
+});
+
 test('successful legal detours preserve the exact quantity and required ordered exchange subsequence',()=>{
  let checked=0;
  for(const c of cases){
@@ -234,6 +284,87 @@ test('saved data cannot introduce unknown forms, fields, unvisited states, dupli
  }
  const plain=sessionTasks('tenexchange')[0],noSave=pvbenchEvidenceExample(plain);
  assert.equal(button(plain,noSave,'pv-save'),undefined);save(plain,noSave);original(plain,noSave);rejected(plain,noSave,'an unavailable save control is not part of this task');
+});
+
+test('twenty real saved forms retain their order when a visible twenty-first save is silently ignored',()=>{
+ const task=sessionTasks('problems1000')[2],model=M.initial(task);
+ for(const step of pvbenchEvidenceSteps(task))applyVisible(task,model,step);
+ const reachUnsaved=()=>{
+  const seen=new Set([model.u.join(',')]),queue=[{model:clone(model),path:[]}];
+  for(let cursor=0;cursor<queue.length;cursor++){
+   const current=queue[cursor];
+   if(!model.saved.some(s=>s.u.join(',')===current.model.u.join(','))){
+    for(const kind of current.path)applyVisible(task,model,{action:'pv-swap',data:{kind}});
+    return;
+   }
+   for(const kind of Object.keys(opposite)){
+    const control=button(task,current.model,'pv-swap',kind);if(!control||/\bdisabled\b/.test(control))continue;
+    const next=clone(current.model),count=next.history.length;swap(task,next,kind);
+    if(next.history.length===count||seen.has(next.u.join(',')))continue;
+    seen.add(next.u.join(','));queue.push({model:next,path:[...current.path,kind]});
+   }
+  }
+  assert.fail('the reviewed 362 bench has more than twenty reachable forms');
+ };
+ while(model.saved.length<20){reachUnsaved();applyVisible(task,model,{action:'pv-save'});}
+ assert.equal(accepted(task,model).saved.count,20);reachUnsaved();
+ assert.doesNotMatch(button(task,model,'pv-save'),/\bdisabled\b/);
+ const before=clone(model);save(task,model);assert.deepEqual(model,before);
+ const proof=accepted(task,model);assert.equal(proof.saved.count,20);assert.equal(proof.saved.exactTimingKnown,false);
+ assert.deepEqual(proof.saved.representations.map(s=>s.units),before.saved.map(s=>s.u));
+ const invented=clone(model);invented.saved.push({u:[...model.u],form:model.form});rejected(task,invented);
+});
+
+test('the fixed widget has no internal reset event and the separate thirty-one countwalk sources remain unbound',()=>{
+ for(const c of cases)for(const model of [M.initial(taskFor(c)),pvbenchEvidenceExample(taskFor(c))]){
+  const actions=[...V.render(taskFor(c),model).matchAll(/data-x="([^"]+)"/g)].map(m=>m[1]);
+  assert.ok(actions.every(action=>['pv-swap','pv-save'].includes(action)),'no hidden reset, add or change-form action becomes part of fixed evidence');
+ }
+ const countwalk=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId)
+  .map((task,index)=>({task,context:{sessionId,index}}))).filter(c=>c.task.type==='x-countwalk');
+ assert.equal(countwalk.length,31);
+ for(const {task,context} of countwalk){assert.equal(pvbenchBinding(task,context),null);assert.equal(thinkingGuide(task,context),null);}
+});
+
+test('all actual browser shared retries retain five old attempts and rebuild a distinct visible path before the sixth check',async t=>{
+ const source=fs.readFileSync(new URL('./p9-pvbench-adapter-browser.cjs',import.meta.url),'utf8');
+ const loop=source.match(/const loopFor=current=>[\s\S]*?;/)?.[0];assert.ok(loop);
+ const start=source.indexOf('const build=async(spec'),end=source.indexOf('const check=async',start);assert.ok(start>=0&&end>start);
+ const build=vm.runInNewContext(loop+'\n'+source.slice(start,end)+'\nbuild',{
+  M,taskFor,pvbenchEvidenceSteps,label:'shared retry browser construction probe',ok:(value,message)=>assert.ok(value,message),
+  apply:async(spec,expected,step)=>applyVisible(taskFor(spec),expected,step)
+ });
+ const choose=vm.runInNewContext(loop+'\nloopFor');
+ const learn=fs.readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+ const callback=/if\(act==='p3-retry'\).*?update\(r=>\{(r\.view='task';r\.models\[r\.index\]=defaultModel\(taskFor\(id,r\.index\)\);)\}\)/.exec(learn);
+ assert.ok(callback,'exercise the unchanged shared retry callback');
+ const retry=new Function('defaultModel','taskFor','id','r',callback[1]);let paths=0,preserved=0;
+ for(const c of cases)for(const detour of [false,true]){
+  const task=taskFor(c),record=freshLesson(c.id);record.index=c.index;record.view='task';record.models[c.index]=M.initial(task);
+  assert.equal(submitLesson(record).correct,false);
+  let model=record.models[c.index]=await build(c,{detour});
+  applyVisible(task,model,{field:'answer',value:task.n-1});assert.equal(submitLesson(record).correct,false);
+  applyVisible(task,model,{field:'answer',value:task.n});assert.equal(submitLesson(record).correct,true);
+  applyVisible(task,model,{field:'answer',value:task.n-1});assert.equal(submitLesson(record).correct,false);
+  applyVisible(task,model,{field:'answer',value:task.n});
+  for(const kind of choose(model))applyVisible(task,model,{action:'pv-swap',data:{kind}});
+  assert.equal(submitLesson(record).correct,true);const before=clone(record),host={innerHTML:''};
+  renderP3Flow(host,{atlas:{nodes:[],edges:[]},id:c.id,record});
+  assert.equal((host.innerHTML.match(/data-do="p3-retry"/g)||[]).length,1,'the shared retry is genuinely rendered');
+  retry(defaultModel,(id,index)=>sessionTasks(id)[index],c.id,record);
+  assert.deepEqual(record.models[c.index],M.initial(task));assert.deepEqual(record.cases,before.cases);assert.deepEqual(record.notes,before.notes);
+  assert.equal(thinkingFeedback(task,record.models[c.index],record.cases[c.index],c),null);
+  assert.deepEqual(validateLesson(clone(record),c.id),record);
+  model=record.models[c.index]=await build(c,{detour,extraLoops:2});
+  assert.notDeepEqual(model,before.models[c.index]);assert.equal(model.history.length,before.models[c.index].history.length+2);
+  assert.deepEqual(record.cases,before.cases);assert.equal(thinkingFeedback(task,model,record.cases[c.index],c),null);
+  assert.deepEqual(validateLesson(clone(record),c.id),record);
+  assert.equal(submitLesson(record).correct,true);const proof=accepted(task,model);
+  assert.equal(record.cases[c.index].attempts.length,6);assert.deepEqual(record.cases[c.index].attempts.slice(0,5),before.cases[c.index].attempts);
+  assert.equal(proof.swapCount,model.history.length);assert.ok(thinkingFeedback(task,model,record.cases[c.index],c));
+  assert.deepEqual(validateLesson(clone(record),c.id),record);paths++;preserved+=5;
+ }
+ assert.equal(paths,22);assert.equal(preserved,110);t.diagnostic(JSON.stringify({sharedRetryPaths:paths,earlierAttemptsPreserved:preserved}));
 });
 
 test('twenty-three full tens is a count of units, never a two-digit tens-place digit',()=>{

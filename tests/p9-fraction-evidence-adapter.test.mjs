@@ -78,17 +78,20 @@ test('different valid multi-step merges preserve the same exact fraction',()=>{
  assert.equal(p.merges,2);assert.equal(p.hcf,6);assert.equal(p.simplest,true);
 });
 
-test('repeating a meaningful split is valid while duplicate saves and no-op rewinds are not',()=>{
+test('meaningful splits, duplicate-save failures and no-op rewinds keep their separate meanings',()=>{
  const t=sessionTasks('thousandparts')[1],m=fractions.initial(t);
  act(t,m,'split',{factor:'10'});act(t,m,'split',{factor:'10'});
  act(t,m,'remember',{fraction:'100/1000'});m.reason='recut';accept(t,m);
  assert.equal(replayFractionEvidence(t,m).splits,2);
  const duplicate=structuredClone(m);act(t,duplicate,'remember');
- act(t,duplicate,'rewind');rejects(t,duplicate,'later valid rewind cannot hide duplicate save');
+ act(t,duplicate,'rewind');const duplicateProof=replayFractionEvidence(t,duplicate);assert.ok(duplicateProof);
+ assert.equal(duplicateProof.history.failedRequests.length,1);assert.equal(duplicateProof.saved.length,1);
+ assert.equal(duplicateProof.splits,2);assert.equal(duplicateProof.rewinds,1);
  const initialRewind=fractions.initial(t);act(t,initialRewind,'rewind');
  act(t,initialRewind,'split',{factor:'100'});act(t,initialRewind,'remember',{fraction:'100/1000'});
  initialRewind.reason='recut';assert.equal(fractions.valid(t,initialRewind),true);
- assert.equal(fractions.inspect(t,initialRewind).correct,true);rejects(t,initialRewind);
+ assert.equal(fractions.inspect(t,initialRewind).correct,true);const initialProof=replayFractionEvidence(t,initialRewind);
+ assert.ok(initialProof);assert.equal(initialProof.history.ineffectiveRequests.length,1);assert.equal(initialProof.rewinds,0);
 });
 
 test('distinct equivalent names may be built by continuous splits or genuine rewinds',()=>{
@@ -122,25 +125,36 @@ test('addition contrast is independently calculated and never treated as equal r
   assert.deepEqual(p.addition,{from:[t.n,t.d],to:[t.n+1,t.d+1],relation:'changed'});
   const wrong=structuredClone(m);wrong.relation='same';rejects(t,wrong);
   const twice=structuredClone(m);act(t,twice,'test-add');
-  assert.equal(fractions.valid(t,twice),true);assert.equal(fractions.inspect(t,twice).correct,true);rejects(t,twice);
+  assert.equal(fractions.valid(t,twice),true);assert.equal(fractions.inspect(t,twice).correct,true);
+  const repeated=replayFractionEvidence(t,twice);assert.ok(repeated);assert.deepEqual(repeated.addition,p.addition);
+  assert.equal(repeated.history.ineffectiveRequests.at(-1).action,'test-add');
  }
  const t=sessionTasks('recutnames')[1],m=fractionEvidenceExample(t);act(t,m,'test-add');
  assert.equal(fractions.valid(t,m),true);assert.equal(fractions.inspect(t,m).correct,true);rejects(t,m);
 });
 
-test('invalid intermediate steps cannot be laundered by later valid original grading',()=>{
+test('real failed requests and reset stay observable after correction, while hidden actions remain invalid',()=>{
  const t=sessionTasks('recutnames')[1];
  for(const [action,factor] of [['merge','3'],['split','1'],['split','0'],['split','-2'],['split','1.5'],['split','1001'],['card','2'],['reset','2'],['open-decimal','2']]){
   const m=fractions.initial(t);act(t,m,action,{factor});
   act(t,m,'merge',{factor:'4'});act(t,m,'remember',{fraction:'1/2'});m.reason='recut';
   assert.equal(fractions.valid(t,m),true,action+factor);
   assert.equal(fractions.inspect(t,m).correct,true,action+factor);
-  rejects(t,m,action+factor);
+  if(['card','open-decimal'].includes(action))rejects(t,m,action+factor);
+  else{
+   const p=replayFractionEvidence(t,m);assert.ok(p,action+factor);
+   assert.equal(p.history.failedRequests.length,action==='reset'?0:1);
+   assert.equal(p.history.resetCount,action==='reset'?1:0);
+   assert.equal(p.merges,1);assert.equal(p.splits,0);
+   if(action!=='reset')assert.deepEqual(m.board.first,{action,factor});
+  }
  }
  const capped=sessionTasks('simplestparts')[0],m=fractions.initial(capped);
  act(capped,m,'split',{factor:'1000'});act(capped,m,'merge',{factor:'6'});
  act(capped,m,'remember',{fraction:'3/4'});m.reason='recut';m.hcf='6';
- assert.equal(fractions.valid(capped,m),true);assert.equal(fractions.inspect(capped,m).correct,true);rejects(capped,m);
+ assert.equal(fractions.valid(capped,m),true);assert.equal(fractions.inspect(capped,m).correct,true);
+ const p=replayFractionEvidence(capped,m);assert.ok(p);assert.equal(p.history.failedRequests.length,1);
+ assert.equal(p.splits,0);assert.equal(p.merges,1);
 });
 
 test('integer bounds, exact division and decimal syntax are checked independently',()=>{
@@ -154,6 +168,16 @@ test('integer bounds, exact division and decimal syntax are checked independentl
  m.decimal='3/10';assert.equal(fractions.inspect(decimal,m).correct,true);rejects(decimal,m);
  const exact=fractionEvidenceExample(decimal);exact.decimal='0.300';accept(decimal,exact);
  exact.decimal='0.30000001';rejects(decimal,exact);
+});
+
+test('a real reset preserves the first failed request and starts fresh successful counts',()=>{
+ const t=sessionTasks('recutnames')[1],m=fractions.initial(t);
+ act(t,m,'merge',{factor:'3'});const first=structuredClone(m.board.first);
+ assert.ok(m.issue);act(t,m,'reset');assert.deepEqual(m.board.first,first);
+ act(t,m,'merge',{factor:'4'});act(t,m,'remember',{fraction:'1/2'});m.reason='recut';accept(t,m);
+ const p=replayFractionEvidence(t,m);assert.equal(p.history.resetCount,1);assert.equal(p.history.failedRequests.length,1);
+ assert.equal(p.merges,1);assert.equal(p.splits,0);assert.deepEqual(m.board.first,{action:'merge',factor:'3'});
+ const forged=structuredClone(m);forged.board.first.factor='4';rejects(t,forged);
 });
 
 test('editing the current fraction cannot reuse an old saved name even after another submit',()=>{
@@ -210,4 +234,13 @@ test('a final saved answer without operations is insufficient even when the orig
   assert.equal(fractions.inspect(t,m).correct,true);rejects(t,m);
   assert.equal(thinkingFeedback(t,m,record(m),c),null);
  }
+});
+
+
+test('Issue 166 original visible controls preserve failed requests, resets and latest failed issues',async()=>{
+ const {verifyVisibleCorrections}=await import('./helpers/p9-fraction-correction-controls.mjs');
+ const result=await verifyVisibleCorrections('fraction',replayFractionEvidence,thinkingFeedback);
+ assert.equal(result.paths,result.nativeTasks*3);
+ assert.ok(result.failedRequests>=result.nativeTasks);
+ assert.equal(result.forgeriesRejected,result.paths*3);
 });

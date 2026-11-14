@@ -1,10 +1,12 @@
 // P9 pilot: actual UI submissions and verified thinking-method hints.
 // Technical browser evidence only; not assessment of free text or teaching outcomes.
 const fs=require('node:fs'),path=require('node:path');
+const same=require('node:util').isDeepStrictEqual;
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const out=path.resolve(__dirname,'../verification/p9-thinking-feedback');
 const base='http://127.0.0.1:43827/';
-const checks=[],errors=[],remote=[];
+const checks=[],errors=[],remote=[],snapshots=[];
 const check=(condition,message)=>{if(!condition)throw Error(message);checks.push(message);};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -79,19 +81,14 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   await field('value','6');await field('second','2');await field('choice','less');await action('r38-test');
   await submit();
   check(await page.locator('#thinking-feedback').count()===0,'an incorrect comparison is not a verified counterexample');
+  snapshots.push(await capture(page,out,'argument38-3',{id:'argument38',index:3},'wrong-prediction'));
   await field('second','1/2');await action('r38-test');await submit();
-  check(await page.locator('#thinking-feedback').count()===0,'correct last test cannot erase earlier invalid history in strict replay');
-  // Isolated browser fixture resets the current model, retaining historical
-  // attempts. All subsequent student actions still use real controls.
-  await page.evaluate(async()=>{
-   const {sessionTasks}=await import('./learning/bridges.js');
-   const {defaultModel}=await import('./learning/tasks.js');
-   const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
-   state.lessons.argument38.models[3]=defaultModel(sessionTasks('argument38')[3]);
-   localStorage.setItem('math-explorer-v2',JSON.stringify(state));
-  });
+  check(await page.locator('#thinking-feedback').isVisible(),'correct last comparison keeps the wrong earlier prediction without rewriting it');
+  const first=await capture(page,out,'argument38-3',{id:'argument38',index:3},'first-correct');snapshots.push(first);
+  check(first.model.board.first.factor==='2'&&first.model.board.records[0].match===false&&first.model.board.bad===true,'failed first prediction stays in the original model');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===3);
   await field('value','6');await field('second','1/2');await field('choice','less');await action('r38-test');await submit();
+  snapshots.push(await capture(page,out,'argument38-3',{id:'argument38',index:3},'repeat-comparison'));
   hint=await view();
   check(hint.includes('6 × 1/2')&&hint.includes('更小')&&hint.includes('反例'),'feedback describes the real tested contradiction');
   check(await page.locator('#thinking-feedback [data-thinking-node-id="mt_j5YqQnN6xe"]').count()===1,'counterexample is linked to actual MP.3 source');
@@ -99,23 +96,42 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   check(await page.locator('#thinking-feedback').count()===0,'unsubmitted prose edit cannot reuse the old checked snapshot');
   await submit();
   check((await view()).includes('反例'),'submitted checked work still shows bounded hint with ungraded prose');
+  snapshots.push(await capture(page,out,'argument38-3',{id:'argument38',index:3},'prose-checked'));
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   const lesson=saved.lessons.argument38;
-  check(lesson.cases[3].attempts.length===4&&lesson.models[3].board.records.length===1,'original incorrect and correct attempts / both comparisons remain in original schema');
+  const attempts=lesson.cases[3].attempts,model=lesson.models[3];
+  const wrongComparison={value:'6',factor:'2',prediction:'less',actual:'greater',breaks:false,match:false};
+  const correctComparison={value:'6',factor:'1/2',prediction:'less',actual:'less',breaks:true,match:true};
+  // B38 appends every comparison. Reload and prose edits do not erase the
+  // first failure or turn a repeated comparison into a replacement record.
+  check(attempts.length===4,'all four original incorrect, corrected, repeated and prose submissions remain');
+  check(same(model.board,{records:[wrongComparison,correctComparison,correctComparison],first:{value:'6',factor:'2',prediction:'less'},bad:true}),'all three actual comparisons retain the failed first prediction and exact mathematical results');
+  check(same(model.history,[{a:'test',i:'',v:'6',w:'2',c:'less'},{a:'test',i:'',v:'6',w:'1/2',c:'less'},{a:'test',i:'',v:'6',w:'1/2',c:'less'}]),'raw failed, corrected and repeated requests remain in their original order');
+  check(same(attempts.map(e=>e.value.history.length),[1,2,3,3])&&same(attempts.map(e=>e.value.board.records.length),[1,2,3,3]),'each saved attempt preserves the comparison history at its own submission time');
+  check(snapshots.every(snapshot=>same(attempts.slice(0,snapshot.attempts.length),snapshot.attempts))&&same(attempts.map(e=>e.value),snapshots.map(snapshot=>snapshot.model)),'later correction, reload and prose submission do not rewrite any earlier complete attempt');
+  check(same(Object.keys(lesson.cases[3]).sort(),['attempts','support'])&&attempts.every(e=>same(Object.keys(e).sort(),['at','exposed','id','supported','value']))&&same(attempts.map(e=>e.exposed),[false,true,true,true]),'attempts retain the original record schema and first-attempt exposure flags');
+  const outcomes=await page.evaluate(async values=>{
+   const {sessionTaskFor}=await import('./learning/bridges.js');
+   const {inspect}=await import('./learning/phase5/b38-model.js');
+   return values.map(value=>inspect(sessionTaskFor('argument38',3),value).correct);
+  },attempts.map(e=>e.value));
+  check(same(outcomes,[false,true,true,true]),'the first saved attempt stays mathematically wrong after all three later successful submissions');
   check(lesson.models[3].prose==='我想再检查其他乘数。'&&!('thinkingScore'in lesson),'original free prose saved; no thinking score field added');
   await shot('02-counterexample-checked');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');
   check((await view()).includes('6 × 1/2'),'matching saved counterexample feedback survives reload');
+  await submit();snapshots.push(await capture(page,out,'argument38-3',{id:'argument38',index:3},'final-rechecked'));
+  check(snapshots.at(-1).attempts.length===5,'five complete counterexample check snapshots retained');
   await field('second','1');
   check(await page.locator('#thinking-feedback').count()===0,'modifying counterexample removes stale claim immediately');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');
   check(await page.locator('#thinking-feedback').count()===0,'modified counterexample does not recover a stale hint');
   check(errors.length===0&&remote.length===0,'no page errors or remote calls during local learning flow');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,childTrial:false,independentMathReview:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,snapshots,childTrial:false,independentMathReview:false},null,2));
   console.log('P9_THINKING_FEEDBACK_BROWSER_OK '+JSON.stringify({checks:checks.length,errors,remote}));
  }catch(error){
   await shot('failure').catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,error:String(error)},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,snapshots,error:String(error)},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{await ctx.close();await browser.close();}
 })().catch(error=>{console.error(error.stack);process.exitCode=1;});

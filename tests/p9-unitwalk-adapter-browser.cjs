@@ -8,7 +8,7 @@ const cases=Object.entries({lineplaces:[0,1,2,3],unitcopies:[0,1,2],wholefractio
  translateamount:[3],storyfraction:[2],tenpieces:[0],decimalnames:[1],fractionmeasure:[3],mixedrename:[0,1]})
  .flatMap(([id,indices])=>indices.map(index=>({id,index})));
 const thinkingSources={translateamount:'mt_3VmBdlAeOZ',storyfraction:'mt_dXq9VWm31W'};
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -16,6 +16,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  fs.mkdirSync(out,{recursive:true});
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {solveSteps,valid,inspect}=await import('../dist/learning/phase5/b16-model.js');
+ const {replayUnitwalkEvidence}=await import('../dist/learning/unitwalk-evidence.js');
  let browser,server,activePage,activeLabel='setup';
  try{
   browser=await chromium.launch({headless:true,
@@ -54,6 +55,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const saved=id=>page.evaluate(id=>{
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
+   const rawStorage=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
    },spec);
@@ -159,6 +161,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',label+' original grader accepts the current work');
     ok(await hint.isVisible(),label+' checked forward and backward steps receive factual feedback');
     const words=await hint.innerText(),state=await saved(spec.id),model=state.models[spec.index];
+    const firstStorage=await rawStorage();
     ok(words.includes(`1/${task.d}`)&&words.includes(`${task.n}/${task.d}`),label+' feedback names the actual unit fraction and endpoint');
     ok(words.includes(`前进 ${task.n+2} 次`)&&words.includes('后退 2 次'),label+' feedback describes the observed forward and backward counts');
     ok(words.includes('没有自动评价自由解释、独立论证、表示转换能力或长期掌握'),label+' feedback states its interpretation boundary');
@@ -172,6 +175,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await shot('02-verified-offline');
     await reload(spec);ok(await hint.isVisible(),label+' checked work restores after offline reload');
     ok(JSON.stringify((await saved(spec.id)).models[spec.index])===JSON.stringify(model),label+' offline reload preserves the complete mathematical workpiece');
+    const offlineStorage=await rawStorage(),restored=JSON.parse(offlineStorage).lessons[spec.id];
 
     await field('answer','999');
     ok(await hint.count()===0,label+' editing the current answer immediately removes old feedback');
@@ -196,14 +200,18 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' desktop page has no horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,node:node||null,n:task.n,d:task.d,
      observation:words,finalObservation:finalWords,history:endModel.history.map(event=>event.action),
-     forward:task.n+3,backward:3,attempts:attempts.length});
+     forward:task.n+3,backward:3,attempts:attempts.length,attemptRecords:attempts,
+     firstModel:model,finalModel:endModel,offlineModel:restored.models[spec.index],
+     firstRecord:state.cases[spec.index],record:end.cases[spec.index],offlineRecord:restored.cases[spec.index],
+     proof:replayUnitwalkEvidence(task,endModel),storageSnapshots:{first:firstStorage,offline:offlineStorage,final:await rawStorage()}});
    }
 
-   // These real but invalid histories can finish with a correct original grade.
-   // Their invalid earlier steps must not be erased by later valid operations.
+   // These visible requests retain their actual units, failures and resets.
+   // No-effect requests stay in the history without becoming movement.
    const negative={id:'lineplaces',index:2},negativeTask=sessionTasks(negative.id)[negative.index];
-   for(const variant of ['zero-back','duplicate-partition','reset','wrong-scale','changed-input-scale','upper-noop','walk-before-partition']){
-    activeLabel=`${width}x${height}-negative-${variant}`;await open(negative);
+   for(const variant of ['zero-back','duplicate-partition','reset','wrong-scale','changed-input-scale','upper-noop','walk-before-partition','failed-partition','final-failed-partition']){
+    activeLabel=`${width}x${height}-correction-${variant}`;await open(negative);
+    if(variant==='failed-partition'){await field('parts','0');await action('partition');}
     if(variant==='zero-back')await action('walk-back');
     if(variant==='duplicate-partition'){await field('parts',negativeTask.d);await action('partition');}
     if(variant==='reset'){
@@ -224,14 +232,19 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      for(let n=1;n<negativeTask.n;n++)await action('walk');
      await answers(negativeTask);
     }else await solveOriginal(negative);
+    if(variant==='final-failed-partition'){await field('parts','0');await action('partition');await field('parts',negativeTask.d);}
     await submit();
     const m=(await saved(negative.id)).models[negative.index];
     ok(valid(negativeTask,m)&&inspect(negativeTask,m).correct,activeLabel+' original mathematical grading remains unchanged');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI still passes the final work');
-    ok(await hint.count()===0,activeLabel+' strict evidence rejects the invalid earlier event');
-    await reload(negative);ok(await hint.count()===0,activeLabel+' offline restore cannot erase an invalid history');
-    negativeObservations.push({width,height,variant,history:m.history.map(event=>event.action),board:m.board,originalCorrect:true,strictFeedback:false});
-    await shot('rejected');
+    const proof=replayUnitwalkEvidence(negativeTask,m);
+    ok(!!proof&&proof.history.events.length===m.history.length&&await hint.isVisible(),activeLabel+' strict evidence retains every request without inventing a move');
+    if(variant==='final-failed-partition')ok(m.issue!==''&&proof.history.failedRequests.at(-1).issue===m.issue,activeLabel+' genuine latest failure is retained beside the correct construction');
+    await reload(negative);ok(await hint.isVisible()&&JSON.stringify((await saved(negative.id)).models[negative.index])===JSON.stringify(m),activeLabel+' the full correction history and evidence restore offline');
+    const restoredStorage=await rawStorage(),restored=JSON.parse(restoredStorage).lessons[negative.id];
+    correctionObservations.push({width,height,id:negative.id,index:negative.index,variant,model:m,proof,record:restored.cases[negative.index],
+     restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage,originalCorrect:true,strictFeedback:true});
+    await shot('corrected');
    }
 
    // Switch away from an MP.2-bearing course without replacing its saved data.
@@ -266,13 +279,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===cases.length*viewports.length,'all 18 native tasks complete at both desktop sizes');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  ok(correctionObservations.length===18,'all nine correction and boundary scenarios run in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,
    nativeTasks:cases.length,nativeNodes:9,taskViewportPairs:observations.length,viewports,originStopped:offline.every(x=>x.originStopped),
    childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_UNITWALK_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes:9,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

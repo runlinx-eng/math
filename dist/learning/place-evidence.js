@@ -68,53 +68,69 @@ export function replayPlaceEvidence(task,model){
   const width=Math.max(String(Math.max(...task.values,target)).length+1,places+2);
   const modelKeys=['history','issue','guess','first','align','started','counts','remaining','answer'];
   if(task.written)modelKeys.push('columnAnswers');
-  if(!keys(model,modelKeys)||model.issue!==''||model.started!==true||
+  if(!keys(model,modelKeys)||!text(model.issue)||model.started!==true||
      !text(model.guess)||!text(model.first)||!text(model.answer)||
      !Array.isArray(model.history)||model.history.length<2||model.history.length>10000)return null;
-  const alignment=labels.map(label=>String(places-(label.split('.')[1]?.length??0))),start=model.history[0];
-  if(!keys(start,['action','guess','align'])||start.action!=='b11-place-start'||
-     !text(start.guess)||place.number(start.guess,scale)===null||
-     !same(start.align,alignment)||!same(model.align,alignment)||
-     model.first!==start.guess||model.guess!==start.guess)return null;
+  const alignment=labels.map(label=>String(places-(label.split('.')[1]?.length??0)));
   const initialDigits=task.values.map(n=>digits(n,width));
-  const counts=task.op==='+'?Array.from({length:width},(_,i)=>initialDigits.reduce((n,row)=>n+row[i],0)):
-   [...initialDigits[0]];
-  const startCounts=[...counts],remaining=task.op==='-'?[...initialDigits[1]]:Array(width).fill(0);
-  const exchanges=[],removals=[];
-  let up=0,down=0,removed=0;
+  let counts=[...initialDigits[0]],startCounts=null;
+  const remaining=task.op==='-'?[...initialDigits[1]]:Array(width).fill(0);
+  const exchanges=[],removals=[],events=[],startEvents=[];
+  let up=0,down=0,removed=0,started=false,first=null,lastGuess=null,issue='',failedActions=0;
   if(!counts.every(n=>integer(n,0,100)))return null;
-  for(const event of model.history.slice(1)){
+  for(const [historyIndex,event] of model.history.entries()){
+   issue='';
+   if(event?.action==='b11-place-start'){
+    if(started||!keys(event,['action','guess','align'])||!text(event.guess)||
+       place.number(event.guess,scale)===null||!Array.isArray(event.align)||event.align.length!==alignment.length||
+       !event.align.every(x=>x===''||Array.from({length:width},(_,i)=>String(i)).includes(x)))return null;
+    first??=event.guess;lastGuess=event.guess;
+    const before=[...counts],accepted=same(event.align,alignment);
+    if(accepted){started=true;counts=task.op==='+'?Array.from({length:width},(_,i)=>initialDigits.reduce((n,row)=>n+row[i],0)):[...initialDigits[0]];startCounts=[...counts];}
+    else{failedActions++;issue='相同大小的单位要放在同一列。看一看每个数的最后一位。';}
+    const observed={historyIndex,action:event.action,guess:event.guess,align:[...event.align],accepted,before,after:[...counts],issue};
+    startEvents.push(observed);events.push(observed);continue;
+   }
+   if(!started)return null;
    if(!event||!integer(event.index,0,width-1)||!same(event.before,counts))return null;
    const i=event.index,before=[...counts],quantityBefore=total(counts);
+   let accepted=false;
    if(event.action==='b11-exchange'){
     if(!keys(event,['action','index','dir','before']))return null;
     let from,to;
     if(event.dir==='up'){
-     if(i>=width-1||counts[i]<10||counts[i+1]>=100)return null;
-     counts[i]-=10;counts[i+1]++;up++;
+     // The source-count condition disables the button. Destination capacity
+     // does not; a visible request at capacity is retained without moving.
+     if(i>=width-1||counts[i]<10)return null;
+     if(counts[i+1]<100){counts[i]-=10;counts[i+1]++;up++;accepted=true;}
      from={count:10,unit:10**i,unitLabel:place.placeLabel(task,i)};
      to={count:1,unit:10**(i+1),unitLabel:place.placeLabel(task,i+1)};
     }else if(event.dir==='down'){
-     if(i<=0||counts[i]<1||counts[i-1]>90)return null;
-     counts[i]--;counts[i-1]+=10;down++;
+     if(i<=0||counts[i]<1)return null;
+     if(counts[i-1]<=90){counts[i]--;counts[i-1]+=10;down++;accepted=true;}
      from={count:1,unit:10**i,unitLabel:place.placeLabel(task,i)};
      to={count:10,unit:10**(i-1),unitLabel:place.placeLabel(task,i-1)};
     }else return null;
     if(total(counts)!==quantityBefore||from.count*from.unit!==to.count*to.unit)return null;
-    exchanges.push({index:i,direction:event.dir,from,to,before,after:[...counts],total:quantityBefore});
+    if(accepted)exchanges.push({index:i,direction:event.dir,from,to,before,after:[...counts],total:quantityBefore});
+    else issue='大单位换小单位要有一份；小单位换大单位要先凑够十份。格子太满时先向左合一合。';
    }else if(event.action==='b11-remove'){
     if(task.op!=='-'||!keys(event,['action','index','before','needed'])||
-       !integer(event.needed,1,9)||event.needed!==remaining[i]||counts[i]<event.needed)return null;
+       !integer(event.needed,1,9)||event.needed!==remaining[i])return null;
     const quantity=event.needed*10**i;
-    counts[i]-=event.needed;remaining[i]=0;removed+=quantity;
-    if(total(counts)!==quantityBefore-quantity)return null;
-    removals.push({index:i,count:event.needed,unit:10**i,quantity,before,after:[...counts]});
+    if(counts[i]<event.needed)issue='这一列还不够拿。可以把左边一份换成这里的十份，总量不变。';
+    else{counts[i]-=event.needed;remaining[i]=0;removed+=quantity;accepted=true;
+     if(total(counts)!==quantityBefore-quantity)return null;
+     removals.push({index:i,count:event.needed,unit:10**i,quantity,before,after:[...counts]});}
    }else return null;
+   if(!accepted)failedActions++;
+   events.push({historyIndex,action:event.action,index:i,...(event.action==='b11-exchange'?{direction:event.dir}:{needed:event.needed}),accepted,before,after:[...counts],remaining:[...remaining],issue});
    if(!counts.every(n=>integer(n,0,100))||total(counts)!==
       (task.op==='+'?target:task.values[0]-removed)||
       (task.op==='-'&&removed+total(remaining)!==task.values[1]))return null;
   }
-  if(!exchanges.length||!same(model.counts,counts)||!same(model.remaining,remaining)||
+  if(!started||model.first!==first||model.guess!==lastGuess||!same(model.align,alignment)||model.issue!==issue||
+     !exchanges.length||!same(model.counts,counts)||!same(model.remaining,remaining)||
      counts.some(n=>n>=10)||remaining.some(n=>n!==0)||total(counts)!==target||
      place.number(model.answer,scale)!==target)return null;
   if(task.written){
@@ -128,7 +144,7 @@ export function replayPlaceEvidence(task,model){
   // All numeric quantities above remain integer smallest units. Only these
   // strings and the exchange unit labels describe the displayed number scale.
   return {operation:task.op,values:[...task.values],scale,startCounts,counts,remaining,
-   total:target,exchanges,removals,up,down,removed,
+   total:target,exchanges,removals,up,down,removed,first,startEvents,failedActions,events,
    display:{values:[...labels],total:place.fmt(target,scale),removed:place.fmt(removed,scale)}};
  }catch{return null;}
 }
