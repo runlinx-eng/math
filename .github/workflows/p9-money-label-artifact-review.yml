@@ -1,0 +1,85 @@
+name: P9 fixed money label artifact review
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/review-money-label-artifacts.py'
+      - '.github/workflows/p9-money-label-artifact-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  control:
+    if: >-
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'audit/issue-179-label-artifacts') ||
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'audit/issue-179-label-artifacts')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Compile the unchanged reader and money wrapper
+        run: python3 -m py_compile scripts/review-startup-diagnostic-artifacts.py scripts/review-money-label-artifacts.py
+      - name: Reproduce the unchanged fixed 184 control
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/review-startup-diagnostic-artifacts.py --case control
+      - name: Preserve the control review or its failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-label-control-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifact-review-output/
+          if-no-files-found: error
+          overwrite: false
+
+  money-result:
+    needs: control
+    if: needs.control.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Read the fixed successful money command and label records
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/review-money-label-artifacts.py
+      - name: Preserve the original observations or reader failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-label-result-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: money-label-review-output/
+          if-no-files-found: error
+          overwrite: false
+
+  original-pngs:
+    needs: [control, money-result]
+    if: needs.control.result == 'success' && needs['money-result'].result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print the three unedited original corrected PNGs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/review-money-label-artifacts.py --png-only
+      - name: Preserve a PNG transport failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-label-png-review-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: money-label-review-output/
+          if-no-files-found: error
+          overwrite: false
