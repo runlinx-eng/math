@@ -1,6 +1,6 @@
 ## 2026-11-14｜P9 分数比较排序（Issue #132）
 
-整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，主线提交为 `290cc8348ae69fa5662951a20edee66eff10a251`。本分支已整合数值兼容修复 `3926e8fdb632431efe7b313c4f522a4a359018bb`；[PR #139](https://github.com/runlinx-eng/math/pull/139) 仍等待 CI 完成，尚不能视为已合并。分数比较的最终 HEAD 与整合后的 main 必须各自通过适用验收，不复用前项 CI。
+整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，独立 main Required [43587220292](https://github.com/runlinx-eng/math/actions/runs/43587220292) 已通过。数值兼容 [PR #139](https://github.com/runlinx-eng/math/pull/139) 的最终 HEAD `ef8c1a86a1de308f090138e60bb0bf460f74c2db` 已完成全部 PR 验收并正式合并为 main `400d31c61c92a3a3b7088aa2020ddd5ffa0cd107`；本分支已同步这个真实主线及最新浏览器测试修正。该主线的独立 Required [43589982503](https://github.com/runlinx-eng/math/actions/runs/43589982503) 另行核验。分数比较的最终 HEAD 与随后整合的 main 必须各自通过适用验收，不复用前项 CI。
 
 承接数轴路径#131，独立严格回放20道分数比较原生题：同一整体、涂份与定位、精确排序、通分、距1与1/2参照。全部method:null，B39来源显式装载，21道关联题保持隔离。现有任务/判题、v2/P10和地图进度不变。
 
