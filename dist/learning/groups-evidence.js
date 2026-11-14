@@ -35,7 +35,10 @@ const integer=(n,min=0,max=1000000)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
 const text=n=>typeof n==='string'&&n.length<=2000;
 const number=n=>text(n)&&/^\d{1,9}$/.test(n.trim())&&integer(Number(n))?Number(n):null;
 const norm=n=>n.replace(/\s/g,'').replace(/[xX*✕]/g,'×').replace(/[／/]/g,'÷').replace(/＝/g,'=');
-const matches=(raw,options)=>text(raw)&&options.some(want=>norm(raw)===want||norm(raw)===want.split('=').reverse().join('='));
+// Spaces may separate numbers and operators; they cannot join two digit
+// tokens into a different number (for example, "1 2" must not become 12).
+const matches=(raw,options)=>text(raw)&&!/\d\s+\d/.test(raw)&&
+ options.some(want=>norm(raw)===want||norm(raw)===want.split('=').reverse().join('='));
 const fieldKeys=['rows','cols','cut','answer','equation','addition','base','left','right','rest','check','prediction','amount','result'];
 const dataKeys=['amount','answer','bucket','cols','cut','index','prediction','result','rows','token'];
 const actions=new Set(['b13-plate-add','b13-plate-remove','b13-token','b13-drop','b13-pour','b13-round']);

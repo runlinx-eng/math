@@ -32,6 +32,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  assert.equal(digest(oldFile('learning/phase5/b20-model.js')),fixture.sourceHashes.b20);
  assert.equal(digest(oldFile('learning/phase5/b24-model.js')),fixture.sourceHashes.b24);
  const {sessionTasks}=await import('../dist/learning/bridges.js');
+ const {fresh}=await import('../dist/exploration-core.js');
  const M=await import('../dist/learning/phase5/b24-model.js');
  const {inspect}=await import('../dist/learning/tasks.js');
  const {lessonSummary,numericCompatibility,validStoredModel}=await import('../dist/learning/state.js');
@@ -322,8 +323,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    assert.deepEqual(afterOther.notes,beforeOther.notes);assert.equal(afterOther.draft,beforeOther.draft);
 
    label=prefix+'-legacy-backup-restore';
-   const emptyLegacy=await read(legacyTarget.page);
-   ok(emptyLegacy.raw===null&&emptyLegacy.text===null,label+' old-workpiece restore uses independent empty storage');
+   // Opening the real trail persists fresh V2 state; independence means the
+   // complete state has no inherited records, not that its storage key is absent.
+   const emptyLegacy=await capture(legacyTarget.page,prefix+'-legacy-target-before-import');
+   assert.deepEqual(emptyLegacy,fresh(),label+' old-workpiece destination is the complete independent fresh state');
+   ok(true,label+' old-workpiece restore uses independent fresh storage');
    ok((await importFile(legacyTarget.page,pointRetry.savedBackup.payload,'before-retry-v2.json')).includes('备份已合并'),label+' the actual pre-retry V2 download restores offline');
    const restoredLegacy=await capture(legacyTarget.page,prefix+'-restored-original-v2');
    assert.deepEqual(restoredLegacy,pointRetry.savedBackup.backup.state);
@@ -344,8 +348,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ok(exported.backup.version===2&&exported.backup.state.schema===2,label+' completed new work and unchanged historical attempts export in established V2 format');
 
    label=prefix+'-new-work-import';
-   const emptyFinal=await read(target.page);
-   ok(emptyFinal.raw===null&&emptyFinal.text===null,label+' destination context contains no inherited lessons');
+   const emptyFinal=await capture(target.page,prefix+'-final-target-before-import');
+   assert.deepEqual(emptyFinal,fresh(),label+' final-work destination is the complete independent fresh state');
+   ok(true,label+' destination context contains no inherited records');
    ok((await importFile(target.page,exported.payload,'new-work-v2.json')).includes('备份已合并'),label+' actual final V2 file imports offline into independent storage');
    const restored=await capture(target.page,prefix+'-restored-final-v2');assert.deepEqual(restored,finalState);
    const restoredBytes=(await read(target.page)).text;
