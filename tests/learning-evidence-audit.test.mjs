@@ -40,11 +40,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
     'native:derivepatterns:0','native:derivepatterns:3','native:derivepatterns:4',
     'native:derivepatterns:5','native:derivepatterns:6',
     'native:geometrynotation:2','native:linemark:1','native:structure34:3',
+     'native:argument38:3','native:argument38:4',
     ...[0,1,2].map(i=>'native:lineproperties:'+i),
     ...[0,1,2,3].map(i=>'native:lineorientation:'+i)
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 22 reviewed sequence, array and line tasks reach A');
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 24 reviewed sequence, array, line and counterexample tasks reach A');
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

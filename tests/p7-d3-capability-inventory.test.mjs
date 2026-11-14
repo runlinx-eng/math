@@ -79,7 +79,7 @@ test('D3-C reasoning/counterexample: replay-based construction is graded but arb
  const a=freshLesson('argument38');a.index=index;a.models[index]=altered;
  assert.equal(submitLesson(a).correct,true);
  assert.equal(currentSubmission(a).status,'correct');
- assert.ok(thinkingFeedback(task,a.models[index],a.cases[index]));
+ assert.ok(thinkingFeedback(task,a.models[index],a.cases[index],{sessionId:'argument38',index}));
  a.models[index].prose='已修改的自由文字';
  assert.equal(currentSubmission(a).status,'modified');
  assert.equal(thinkingFeedback(task,a.models[index],a.cases[index]),null,'no stale thinking observation after editing');

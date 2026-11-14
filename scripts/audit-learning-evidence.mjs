@@ -11,6 +11,7 @@ import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {sequenceBinding,replaySequenceEvidence} from '../dist/learning/sequence-evidence.js';
 import {lineBinding,replayLineEvidence} from '../dist/learning/line-evidence.js';
 import {arrayBinding,replayArrayEvidence} from '../dist/learning/array-evidence.js';
+import {counterexampleBinding,replayCounterexampleEvidence} from '../dist/learning/counterexample-evidence.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const out=resolve(root,'verification/learning-evidence-audit');
@@ -66,7 +67,8 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const verifiedReplay=kind==='native'&&history&&!!board&&(
    (!!sequenceBinding(task,{sessionId,index})&&!!replaySequenceEvidence(task,exampleModel(task)))||
    (!!arrayBinding(task,{sessionId,index})&&!!replayArrayEvidence(task,exampleModel(task)))||
-   (!!lineBinding(task,{sessionId,index})&&!!replayLineEvidence(task,exampleModel(task))));
+   (!!lineBinding(task,{sessionId,index})&&!!replayLineEvidence(task,exampleModel(task)))||
+    (!!counterexampleBinding(task,{sessionId,index})&&!!replayCounterexampleEvidence(task,exampleModel(task))));
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}
  else if(verifiedReplay){level='A';reason='Explicit native task with source-bound strict mathematics replay and current-submission regression';}
@@ -157,7 +159,7 @@ const summary={schema:'math-learning-interaction-evidence/1',basis:'Live source 
  historyTasksNative:native.filter(r=>r.hasHistory).length,
  replayVerifiedTasksNative:native.filter(r=>r.replayVerified).length,
  guideBindingsNative:native.filter(r=>r.optionalThinkingGuide).length,
- caution:'A is a source-bound strict sequence, array or line-relation replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
+ caution:'A is a source-bound strict sequence, array, line-relation or counterexample replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});
 write('types.json',{rows:byType});
