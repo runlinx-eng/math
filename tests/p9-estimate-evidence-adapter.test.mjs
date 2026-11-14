@@ -49,7 +49,12 @@ test('24 exact native positions span 13 reviewed sources, with all six associate
   assert.equal(binding?.nodeId,c.nodeId);assert.equal(binding.method,null);assert.ok(binding.question.length>15);
   assert.equal(estimateBinding(structuredClone(task),c)?.nodeId,c.nodeId);
   for(const context of [null,[],true,c.id,{}, {...c,index:String(c.index)},{...c,index:-1},
-   {...c,index:10000},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'}])assert.equal(estimateBinding(task,context),null);
+   {...c,index:10000},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'},
+   ...JSON.parse(JSON.stringify([
+    {sessionId:null,index:c.index},{sessionId:7,index:c.index},{sessionId:[c.id],index:c.index},
+    {sessionId:{toString:null},index:c.index},{sessionId:c.id,index:null},
+    {sessionId:c.id,index:[c.index]},{sessionId:c.id,index:{toString:null}},{sessionId:c.id,index:0.5}
+   ]))])assert.equal(estimateBinding(task,context),null);
   for(const changed of [{...task,prompt:task.prompt+' changed'},{...task,a:task.a+1},{...task,b:task.b+1},
    {...task,op:task.op==='+'?'-':'+'},{...task,scale:10},{...task,units:[...task.units,123]},
    {...task,claimed:999},{...task,accuracy:1}])assert.equal(estimateBinding(changed,c),null);
