@@ -74,7 +74,11 @@ async function main(){
  let browser,server,context,activePage,diagnostics,label='setup';
  try{
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
-   args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});provenance.browserVersion=browser.version();
+   // Preserve the browser's own network failure reason. A cancelled static
+   // module can leave an HTML shell without a pageerror; logging must not
+   // retry that navigation or change any readiness/mathematics assertion.
+   args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--log-net-log='+path.join(out,'browser-netlog.json')]});
+  provenance.browserVersion=browser.version();provenance.networkLog='browser-netlog.json';
   for(const [width,height]of viewports){
    const prefix=width+'x'+height;label=prefix+'-cache';
    server=http.createServer((req,res)=>{
