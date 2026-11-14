@@ -82,8 +82,10 @@ CASES = {
         "checkout": "b1ae944142b4f4f3cc31e05afd2ecebeab897721",
         "tree": "53c418e88f57fc4c983ca213d1ba0e42dd16f694",
         "dist": "37dc6e429f073affa28d6eaac9db3157e07583cf",
-        "artifact": None,
+        "artifact": 14131840298,
         "name": "p9-place-startup-diagnostic-43636333185-1",
+        "bytes": 129632418,
+        "sha256": "6b136d291300a2cdbcfd068f9857ef9c42cb43937a333a8a1c3b112be314c3be",
         "prefix": "p9-wideshift-adapter/", "kind": "startup",
         "original": "tests/p9-wideshift-adapter-browser.cjs",
         "original_sha256": "52bdd8d7eeab5f8a633acf0b718d19520cebf1064f8d1668b158690fad8beae1",
@@ -783,11 +785,11 @@ def cached_body_summary(archive, prefix, case):
 def startup_review(archive, case):
     prefix = case["prefix"] + "startup-diagnostics/"
     report_name = prefix + "report.json"
+    receipt_name = "p9-place-startup-diagnostic/command-results.json"
+    receipt = load_member(archive, receipt_name) if receipt_name in archive.namelist() else None
+    if receipt is not None:
+        check_provenance(receipt["provenance"], case)
     if report_name not in archive.namelist():
-        receipt_name = "p9-place-startup-diagnostic/command-results.json"
-        receipt = load_member(archive, receipt_name) if receipt_name in archive.namelist() else None
-        if receipt:
-            check_provenance(receipt["provenance"], case)
         return {"status": "observer-report-missing", "commandReceipt": receipt,
                 "native": {"status": "missing", "errors": None}, "netlog": {"status": "missing", "negativeCodes": None},
                 "rootCauseEstablished": False}
@@ -808,7 +810,7 @@ def startup_review(archive, case):
         first_summary = {"first": first.get("first"), "currentLoaderId": first.get("currentLoaderId"),
                          "currentURL": first.get("currentURL"), "currentRequestCount": len(first.get("currentRequests", [])),
                          "alreadyFailedCurrentRequests": raw_failures[:MAX_EXAMPLES]}
-    return {"status": "inspected", "originalOutcome": report.get("originalOutcome"),
+    return {"status": "inspected", "commandReceipt": receipt, "originalOutcome": report.get("originalOutcome"),
             "originalError": report.get("originalError"), "reportedNativeFailures": report.get("nativeFailures"),
             "reportedDiagnosticErrors": report.get("diagnosticErrors"),
             "sourceManifest": source, "originalMath": math, "cdp": cdp, "native": native, "netlog": netlog,

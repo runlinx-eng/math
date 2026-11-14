@@ -14,7 +14,7 @@ permissions:
 env:
   # First run validates only the completed 184 control. A separately reviewed
   # one-line checkpoint may select case169, then target after its run completes.
-  REVIEW_CASE: case169
+  REVIEW_CASE: target
 
 jobs:
   control:
