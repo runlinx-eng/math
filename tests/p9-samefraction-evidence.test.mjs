@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import vm from 'node:vm';
 import {createHash} from 'node:crypto';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
@@ -11,6 +12,8 @@ import {sameFractionBinding,replaySameFractionEvidence} from '../dist/learning/s
 import {latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,validateLesson} from '../dist/learning/state.js';
+import {defaultModel} from '../dist/learning/tasks.js';
+import {renderP3Flow} from '../dist/learning/p3-view.js';
 import fixture from './fixtures/p9-samefraction-cases.cjs';
 
 await ensureB39Ready();
@@ -466,4 +469,58 @@ test('newest submissions and exact names stay required while actual refinement c
  assert.match(feedbackText(thinkingFeedback(task,model,checked(model),spec)),/未画出新共同网格的请求及原填写和提示/);
  act(task,model,'reset');build(task,{existing:model});assert.equal(M.inspect(task,model).correct,true);
  assert.ok(thinkingFeedback(task,model,checked(model),spec));assert.deepEqual(model.history.slice(0,failed.history.length),failed.history);
+});
+
+test('actual browser shared-retry builds preserve old submissions, first predictions, terminal issues and snapshot equality',async t=>{
+ const source=fs.readFileSync(new URL('./p9-samefraction-adapter-browser.cjs',import.meta.url),'utf8');
+ const start=source.indexOf('const build=async(spec'),end=source.indexOf('const visualFor=async',start);assert.ok(start>=0&&end>start);
+ let current,currentTask;const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%task.right[1]===0)return d;throw Error('no common grid');};
+ const browserBuild=vm.runInNewContext(source.slice(start,end)+'\nbuild',{
+  M,assert,structuredClone,relation,wrong,commonDenominator,taskFor:spec=>taskAt(spec.id,spec.index),
+  model:async()=>current,field:async(key,value)=>visibleField(currentTask,current,key,value),
+  action:async(name,data)=>visibleAction(currentTask,current,name,data),ok:(value,label)=>assert.ok(value,label),label:'shared retry original controls'
+ });
+ const learn=fs.readFileSync(new URL('../dist/learning/learn.js',import.meta.url),'utf8');
+ const callback=/if\(act==='p3-retry'\).*?update\(r=>\{(r\.view='task';r\.models\[r\.index\]=defaultModel\(taskFor\(id,r\.index\)\);)\}\)/.exec(learn);
+ assert.ok(callback,'use the unchanged actual shared retry callback');
+ const retry=new Function('defaultModel','taskFor','id','r',callback[1]);
+ let paths=0,identicalPaths=0,issuePaths=0,preserved=0;
+ for(const spec of cases)for(const reverse of [false,true]){
+  const task=currentTask=taskAt(spec.id,spec.index),record=freshLesson(spec.id);record.index=spec.index;record.view='task';current=modelForLesson(record);
+  const reset=()=>{
+   const before=structuredClone(record),host={innerHTML:''};renderP3Flow(host,{atlas:{nodes:[],edges:[]},id:spec.id,record});
+   assert.equal((host.innerHTML.match(/data-do="p3-retry"/g)||[]).length,1,'the original shared retry is rendered');
+   retry(defaultModel,(id,index)=>sessionTasks(id)[index],spec.id,record);current=record.models[spec.index];
+   assert.deepEqual(current,M.initial(task));assert.deepEqual(record.cases,before.cases);assert.deepEqual(record.notes,before.notes);
+   assert.equal(thinkingFeedback(task,current,record.cases[spec.index],spec),null);assert.deepEqual(validateLesson(structuredClone(record),spec.id),record);return before;
+  };
+  await browserBuild(spec,{reverse,early:reverse});
+  visibleField(task,current,'relation',wrong(relation(task)));assert.equal(submitLesson(record).correct,false);
+  visibleField(task,current,'relation',relation(task));assert.equal(submitLesson(record).correct,true);
+  visibleField(task,current,'reason','any-whole');assert.equal(submitLesson(record).correct,false);
+  visibleField(task,current,'reason','same-whole');assert.equal(submitLesson(record).correct,true);
+  const identity=current.board.left[0];visibleAction(task,current,'fraction',{row:'left',index:identity});visibleAction(task,current,'fraction',{row:'left',index:identity});assert.equal(submitLesson(record).correct,true);
+  const before=reset(),options={reverse:!reverse,early:!reverse,denominator:task.common?(reverse?36:60):null,guess:relation(task)};
+  await browserBuild(spec,options);assert.notDeepEqual(current,before.models[spec.index]);assert.equal(current.board.first,relation(task));assert.notEqual(current.board.first,before.models[spec.index].board.first);
+  assert.deepEqual(record.cases,before.cases);assert.equal(currentSubmission(record).status,'modified');assert.equal(latestSubmissionMatches(current,record.cases[spec.index]),false);
+  assert.equal(thinkingFeedback(task,current,record.cases[spec.index],spec),null);assert.equal(submitLesson(record).correct,true);
+  assert.equal(record.cases[spec.index].attempts.length,6);assert.deepEqual(record.cases[spec.index].attempts.slice(0,5),before.cases[spec.index].attempts);
+  const proof=accepted(task,current);assert.equal(proof.resets.length,0);assert.equal(proof.firstPrediction.value,relation(task));assert.equal(proof.issue,'');
+  assert.ok(thinkingFeedback(task,current,record.cases[spec.index],spec));preserved+=5;paths++;
+  const checked=reset();await browserBuild(spec,options);
+  assert.deepEqual(current,checked.models[spec.index]);assert.deepEqual(record.cases,checked.cases);assert.equal(currentSubmission(record).status,'correct');
+  assert.equal(latestSubmissionMatches(current,record.cases[spec.index]),true);assert.deepEqual(accepted(task,current),proof);assert.ok(thinkingFeedback(task,current,record.cases[spec.index],spec));
+  assert.equal(record.cases[spec.index].attempts.length,6);assert.deepEqual(validateLesson(structuredClone(record),spec.id),record);identicalPaths++;
+  if(task.common){
+   const d=current.parts;visibleField(task,current,'parts','5');visibleAction(task,current,'refine');visibleField(task,current,'parts',d);
+   assert.ok(current.issue);assert.equal(accepted(task,current).issue,current.issue);assert.equal(submitLesson(record).correct,true);
+   const beforeIssue=reset();assert.equal(current.issue,'');assert.equal(current.board.first,null);assert.deepEqual(current.history,[]);
+   await browserBuild(spec,{reverse,early:true,denominator:60,guess:'>'});assert.notDeepEqual(current,beforeIssue.models[spec.index]);
+   assert.equal(thinkingFeedback(task,current,record.cases[spec.index],spec),null);assert.equal(submitLesson(record).correct,true);
+   assert.deepEqual(record.cases[spec.index].attempts.slice(0,-1),beforeIssue.cases[spec.index].attempts);assert.ok(record.cases[spec.index].attempts.at(-2).value.issue);
+   const final=accepted(task,current);assert.equal(final.failedRequests.length,0);assert.equal(final.resets.length,0);assert.equal(final.issue,'');
+   assert.deepEqual(validateLesson(structuredClone(record),spec.id),record);issuePaths++;
+  }
+ }
+ assert.deepEqual({paths,identicalPaths,issuePaths,preserved},{paths:16,identicalPaths:16,issuePaths:2,preserved:80});t.diagnostic(JSON.stringify({paths,identicalPaths,issuePaths,preserved}));
 });

@@ -7,7 +7,7 @@ const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs'
 const fixture=require('./fixtures/p9-samefraction-cases.cjs');
 const {cases,associatedCases}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-samefraction-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[],emptyPredictions=[],submissions=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[],emptyPredictions=[],submissions=[],retries=[],issueRetries=[],visuals=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
@@ -143,13 +143,30 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
     const overlay=page.locator('#extra-visual .b16-overlay');
     ok(await overlay.count()===(current.board.overlay?1:0),label+' overlay appears only after a real display request');
     if(current.board.overlay){
-     const widths=await overlay.locator(':scope > i').evaluateAll(elements=>elements.map(e=>Number.parseFloat(e.style.width)));
-     assert.equal(widths.length,2);
-     ['left','right'].forEach((row,i)=>ok(Math.abs(widths[i]-current.board[row].length/task[row][1]*100)<1e-9,
-      label+' automatic '+row+' overlay represents the current selected quantity'));
-     const grid=await overlay.locator('em').evaluateAll(elements=>elements.map(e=>Number.parseFloat(e.style.left)));
-     assert.equal(grid.length,current.board.refine===null?0:current.board.refine+1);
-     grid.forEach((value,i)=>ok(Math.abs(value-i/current.board.refine*100)<1e-9,label+' system common-grid boundary '+i+' is exact within display precision'));
+     // CSSOM serializes percentages with browser-defined display precision.
+     // Check the authored quantity exactly first, then compare CSSOM strings
+     // against an independently constructed, detached style in this browser.
+     // Neither operation changes the fraction or permits a numeric tolerance.
+     const percentages=async(locator,property,ratios)=>{
+      const actual=await locator.evaluateAll((elements,{property,ratios})=>elements.map((element,index)=>{
+       const ratio=ratios[index];if(!ratio)return {rawStyle:element.getAttribute('style'),actualCSSOM:element.style.getPropertyValue(property)};
+       const expectedPercent=String(ratio.numerator/ratio.denominator*100)+'%',probe=document.createElement('span');
+       probe.style.setProperty(property,expectedPercent);
+       return {...ratio,property,expectedPercent,rawStyle:element.getAttribute('style'),actualCSSOM:element.style.getPropertyValue(property),expectedCSSOM:probe.style.getPropertyValue(property)};
+      }),{property,ratios});
+      visuals.push({label,width,height,id:spec.id,index:spec.index,property,ratios,actual});
+      assert.equal(actual.length,ratios.length);
+      for(const [i,item]of actual.entries()){
+       assert.equal(item.rawStyle,property+':'+item.expectedPercent,label+' authored '+property+' '+i+' represents its exact selected fraction or grid index');
+       assert.notEqual(item.expectedCSSOM,'');
+       assert.equal(item.actualCSSOM,item.expectedCSSOM,label+' CSSOM '+property+' '+i+' matches the independent percentage serialization');
+       ok(true,label+' '+property+' '+i+' preserves the authored quantity and browser serialization',item);
+      }
+      return actual;
+     };
+     await percentages(overlay.locator(':scope > i'),'width',['left','right'].map(row=>({numerator:current.board[row].length,denominator:task[row][1]})));
+     await percentages(overlay.locator('em'),'left',current.board.refine===null?[]:
+      Array.from({length:current.board.refine+1},(_,i)=>({numerator:i,denominator:current.board.refine})));
     }
     ok(await page.locator('[data-xfield="parts"]').count()===(predicted&&task.common?1:0),label+' common-grid control follows the real task flag');
     for(const key of ['left','right'])ok(await page.locator(`[data-xfield="${key}"]`).count()===(task.common&&current.board.overlay&&current.board.refine!==null?1:0),
@@ -166,6 +183,18 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
     ok(await page.locator('#check-feedback').getAttribute('data-state')===(correct?'correct':'revise'),label+' '+suffix+' original result is observed');
     submissions.push({width,height,id:spec.id,index:spec.index,correct,name:suffix,native:!!sameFractionBinding(taskFor(spec),spec)});
     return {name:suffix,model:beforeModel,attempt,record:after};
+   };
+   const sharedRetry=async(spec,suffix)=>{
+    const before=await saved(spec.id),button=page.locator('[data-do="p3-retry"]');
+    assert.equal(await button.count(),1);await reveal(button);
+    ok(await button.isEnabled(),label+' '+suffix+' is an enabled shared retry');await button.click();await wait(spec);
+    const reset=await saved(spec.id);assert.deepEqual(reset.models[spec.index],M.initial(taskFor(spec)));
+    assert.deepEqual(reset.cases,before.cases);assert.deepEqual(reset.notes,before.notes);
+    ok(await hint.count()===0,label+' '+suffix+' clears current work while retaining every old attempt');
+    await reload(spec);const restored=await saved(spec.id);
+    assert.deepEqual(restored.models,reset.models);assert.deepEqual(restored.cases,before.cases);
+    ok(await hint.count()===0,label+' '+suffix+' empty work restores without earlier feedback');
+    return {before,reset};
    };
    const wordsFor=async proof=>{
     ok(!!proof&&await hint.isVisible(),label+' strict feedback requires the current successful checked model');
@@ -262,6 +291,36 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');
     await shot('05-verified-offline');observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,
      reverse,early,first,proof,words,snapshots,finalModel,finalProof,finalWords,record:end,stored:await snapshot('final')});
+
+    // The shared retry replaces the whole model, unlike b16-reset which keeps
+    // first/history. Old submitted models remain byte-for-byte in their cases.
+    const retryStart=await sharedRetry(spec,'different-rebuild');
+    const retryOptions={reverse:!reverse,early:!early,denominator:task.common?(reverse?36:60):null,guess:relation(task)};
+    const rebuilt=await build(spec,retryOptions);assert.notDeepEqual(rebuilt,end.models[spec.index]);
+    assert.equal(rebuilt.board.first,relation(task));assert.notEqual(rebuilt.board.first,end.models[spec.index].board.first);
+    assert.deepEqual((await saved(spec.id)).cases,end.cases);ok(await hint.count()===0,label+' a different reconstructed workpiece needs its own check');
+    await reload(spec);assert.deepEqual(await model(spec),rebuilt);assert.deepEqual((await saved(spec.id)).cases,end.cases);
+    ok(await hint.count()===0,label+' offline reconstruction cannot borrow the previous checked model');
+    const retryChecked=await check(spec,true,'06-shared-retry'),retryProof=replaySameFractionEvidence(task,retryChecked.model),retryWords=await wordsFor(retryProof);
+    assert.equal(retryChecked.record.cases[spec.index].attempts.length,6);assert.deepEqual(retryChecked.record.cases[spec.index].attempts.slice(0,5),end.cases[spec.index].attempts);
+    assert.equal(retryProof.resets.length,0);assert.equal(retryProof.firstPrediction.value,relation(task));assert.equal(retryProof.issue,'');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,retryChecked.record.models);assert.deepEqual((await saved(spec.id)).cases,retryChecked.record.cases);
+    await wordsFor(retryProof);await visualFor(spec,retryChecked.model);
+    if(spec===cases[0]||spec.common)await shot('06-shared-retry');
+    const checkedStorage=await snapshot('shared-retry-checked');
+
+    // There is no retry epoch in the original schema. A second real retry
+    // followed by exactly the same visible construction matches the existing
+    // latest submission after reload; it must not invent a seventh attempt.
+    const sameStart=await sharedRetry(spec,'identical-rebuild'),identical=await build(spec,retryOptions);
+    assert.deepEqual(identical,retryChecked.model);assert.deepEqual((await saved(spec.id)).cases,retryChecked.record.cases);
+    await reload(spec);const sameRecord=await saved(spec.id);
+    assert.deepEqual(sameRecord.models[spec.index],retryChecked.model);assert.deepEqual(sameRecord.cases,retryChecked.record.cases);
+    const sameProof=replaySameFractionEvidence(task,identical);assert.deepEqual(sameProof,retryProof);await wordsFor(sameProof);
+    ok(sameRecord.cases[spec.index].attempts.length===6,label+' an identical rebuilt snapshot follows the existing contract without a new epoch or attempt');
+    if(spec===cases[0]||spec.common)await shot('06-identical-rebuild');
+    retries.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,task,retryStart,retryOptions,rebuilt,checked:retryChecked,proof:retryProof,words:retryWords,stored:checkedStorage,
+     sameRebuild:{...sameStart,model:identical,proof:sameProof,record:sameRecord,stored:await snapshot('shared-retry-identical')}});
    }
 
    // Clicking the visible empty prediction records a no-op. The first actual
@@ -367,6 +426,26 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
    negatives.push({width,height,kind:'invalid-refine-history',id:commonSpec.id,index:commonSpec.index,invalid,invalidChecked,corrected,correctedProof,invalidReset,resetCorrected,correctedResetProof,
     terminalFailure,restoredInput,terminalProof,terminalWords,cleared,clearedProof,stored:await snapshot('invalid-history')});
 
+   // Also retry from a valid current workpiece whose last refinement failed.
+   // Only the new current model loses the issue; the complete failed history
+   // and its checked snapshot must still be present in the previous attempts.
+   await field('parts','5');await action('refine');await field('parts','24');
+   const issueBefore=await check(commonSpec,true,'shared-retry-issue-before'),issueBeforeProof=replaySameFractionEvidence(commonTask,issueBefore.model);
+   assert.ok(issueBefore.model.issue);assert.equal(issueBeforeProof.issue,issueBefore.model.issue);await wordsFor(issueBeforeProof);
+   const issueStart=await sharedRetry(commonSpec,'terminal-issue');
+   assert.equal(issueStart.reset.models[commonSpec.index].issue,'');assert.equal(issueStart.reset.models[commonSpec.index].board.first,null);
+   const issueRebuilt=await build(commonSpec,{reverse:width===1440,early:true,denominator:60,guess:'>'});
+   assert.notDeepEqual(issueRebuilt,issueBefore.model);assert.deepEqual((await saved(commonSpec.id)).cases,issueBefore.record.cases);
+   ok(await hint.count()===0,label+' rebuilding after an issue cannot borrow the old checked snapshot');
+   await reload(commonSpec);assert.deepEqual(await model(commonSpec),issueRebuilt);ok(await hint.count()===0,label+' issue retry still needs its own check offline');
+   const issueAfter=await check(commonSpec,true,'shared-retry-issue-after'),issueAfterProof=replaySameFractionEvidence(commonTask,issueAfter.model);
+   assert.deepEqual(issueAfter.record.cases[commonSpec.index].attempts.slice(0,-1),issueBefore.record.cases[commonSpec.index].attempts);
+   assert.equal(issueAfterProof.issue,'');assert.equal(issueAfterProof.failedRequests.length,0);assert.equal(issueAfterProof.resets.length,0);
+   assert.ok(issueAfter.record.cases[commonSpec.index].attempts.at(-2).value.issue);await wordsFor(issueAfterProof);
+   await reload(commonSpec);assert.deepEqual((await saved(commonSpec.id)).models,issueAfter.record.models);assert.deepEqual((await saved(commonSpec.id)).cases,issueAfter.record.cases);
+   await wordsFor(issueAfterProof);await shot('shared-retry-terminal-issue');
+   issueRetries.push({width,height,id:commonSpec.id,index:commonSpec.index,task:commonTask,before:issueBefore,beforeProof:issueBeforeProof,start:issueStart,rebuilt:issueRebuilt,checked:issueAfter,proof:issueAfterProof,stored:await snapshot('shared-retry-terminal-issue')});
+
    label=prefix+'-split-digit-submission';await open(commonSpec);await build(commonSpec);
    await field('left','9/1 2');await action('overlay');const split=await check(commonSpec,true,'original-split-digits');
    ok(replaySameFractionEvidence(commonTask,split.model)===null&&await hint.count()===0,label+' distinct digit tokens cannot become a submitted denominator');
@@ -391,13 +470,16 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
   ok(observations.length===16&&isolated.length===30,'all eight native and fifteen associated positions ran in both viewports');
   ok(emptyPredictions.length===16&&negatives.length===8,'all empty-choice and correction/reset boundaries ran in both viewports');
-  ok(submissions.filter(s=>s.native).length===144&&submissions.filter(s=>!s.native).length===30,'all 144 native and 30 associated complete checks are recorded separately');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,viewports,provenance},null,2));
-  console.log('P9_SAMEFRACTION_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length,emptyPredictions:emptyPredictions.length,submissions:submissions.length}));
+  const retryNames=new Set(['06-shared-retry','shared-retry-issue-before','shared-retry-issue-after']);
+  ok(submissions.filter(s=>s.native&&!retryNames.has(s.name)).length===144&&submissions.filter(s=>!s.native).length===30,'all original 144 native and 30 associated complete checks remain');
+  ok(retries.length===16&&issueRetries.length===2&&submissions.filter(s=>s.native&&retryNames.has(s.name)).length===20,'all sixteen distinct and identical rebuild paths plus both terminal-issue retries run');
+  ok(submissions.filter(s=>s.native).length===164,'all 164 native checks remain separate from associated practice');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,retries,issueRetries,visuals,viewports,provenance},null,2));
+  console.log('P9_SAMEFRACTION_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length,emptyPredictions:emptyPredictions.length,retries:retries.length,issueRetries:issueRetries.length,submissions:submissions.length}));
  }catch(error){
   if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,viewports,provenance,failureDiagnostic,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,retries,issueRetries,visuals,viewports,provenance,failureDiagnostic,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
