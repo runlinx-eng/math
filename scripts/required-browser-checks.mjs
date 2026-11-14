@@ -129,8 +129,10 @@ const groups={
  // every command/artifact, including all correction paths, within 35 minutes.
  "evidence-quantity":{commands:[
   {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-joinstory-adapter/",
+  "verification/p9-storyledger-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
