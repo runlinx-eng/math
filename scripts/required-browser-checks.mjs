@@ -131,9 +131,11 @@ const groups={
  "evidence-quantity":{commands:[
   {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-estimate-adapter/",
+  "verification/p9-portiongroups-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
