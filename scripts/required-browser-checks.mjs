@@ -101,11 +101,17 @@ const groups={
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-decimal-place-adapter-browser.cjs","env":{}},
   {"file":"tests/b14-division-container-caption-browser.cjs","env":{}},
-  {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
   "verification/b14-division-container-caption/",
+ ]},
+ // Issue #187: PR #183's six-command place job finished in 34m50s.
+ // Keep the existing division command and artifact on their own runner;
+ // preserve every invocation and the 35-minute limit. This is not a startup fix.
+ "evidence-division":{commands:[
+  {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-division-adapter/",
  ]},
  "evidence-expansion":{commands:[
