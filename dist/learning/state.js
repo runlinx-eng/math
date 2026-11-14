@@ -1,9 +1,36 @@
 import {completionApplies} from './phase5/b19-model.js';
 import {LESSONS} from './catalog.js';
 import {defaultModel,validModel,inspect} from './tasks.js';
+import {usesSharedNumber} from './phase4/engine.js';
 import {BRIDGES,sessionTasks,sessionTaskFor as taskFor} from './bridges.js';
 const stamp=()=>new Date().toISOString();
 const event=v=>({id:globalThis.crypto.randomUUID(),at:stamp(),...v});
+// The former shared parser read "-0 1/2" as positive. A storage-only projection
+// replays that exact defect through the otherwise unchanged original validator.
+// Never persist the projection or use it for grading, completion or P9 evidence.
+export function numericCompatibility(t,m){
+ if(!t||!usesSharedNumber(t)||validModel(t,m))return false;
+ try{
+  let changed=false;
+  const projected=JSON.parse(JSON.stringify(m,(_key,value)=>{
+   if(typeof value!=='string')return value;
+   const match=value.match(/^(\s*)-(0+\s+(\d+)\/(\d+)\s*)$/);
+   if(!match||!(+match[3]>0)||!(+match[4]>0)||!Number.isFinite(+match[3]/+match[4]))return value;
+   changed=true;return match[1]+match[2];
+  }));
+  return changed&&validModel(t,projected);
+ }catch{return false;}
+}
+export const validStoredModel=(t,m)=>validModel(t,m)||numericCompatibility(t,m);
+// Like the existing explicit retry, this replaces only the current workpiece.
+// The UI requires a backup export for this exact legacy model before invoking it.
+// Historical attempts and notes are never synthesized, rewritten or removed.
+export function retryNumericLesson(a,exportedModel){
+ const t=taskFor(a.id,a.index),old=a.models[a.index];
+ if(a.view!=='task'||!t||!numericCompatibility(t,old))throw new Error('这份作品不需要旧数值记录重做。');
+ if(typeof exportedModel!=='string'||exportedModel!==JSON.stringify(old))throw new Error('旧作品已变化，请重新导出备份后再重做。');
+ a.models[a.index]=defaultModel(t);a.updatedAt=stamp();return a;
+}
 export function freshLesson(id){if(!LESSONS[id]&&!BRIDGES[id])throw new Error('未知学习活动');return {id,view:'task',index:0,models:{},cases:{},notes:[],draft:'',updatedAt:stamp(),ui:{spread:0,view:null,camera:null}};}
 export function modelForLesson(a,index=a.view==='play'?-1:a.index){return a.models[index]??=defaultModel(taskFor(a.id,index));}
 // Previous releases stored a separate ungraded 'play' view and models[-1].
@@ -32,7 +59,7 @@ export function currentSubmission(a){
  return {status:result.correct?'correct':'revise',result};
 }
 export function supportLesson(a){if(a.view!=='task')return;const r=a.cases[a.index]??={support:false,attempts:[]};r.support=true;a.updatedAt=stamp();}
-export function submitLesson(a){if(a.view!=='task')throw new Error('请先进入实际任务');const t=taskFor(a.id,a.index),m=modelForLesson(a),r=a.cases[a.index]??={support:false,attempts:[]};if(!validModel(t,m))throw new Error('作品格式无效');const result=inspect(t,m);r.attempts.push(event({value:structuredClone(m),supported:r.support,exposed:r.attempts.length>0}));a.updatedAt=stamp();return result;}
+export function submitLesson(a){if(a.view!=='task')throw new Error('请先进入实际任务');const t=taskFor(a.id,a.index),m=modelForLesson(a);if(numericCompatibility(t,m))return {correct:false,code:'numeric-legacy',feedback:'旧作品中的负带分数需要重新核对。请先导出备份，再重新操作本题。'};if(!validModel(t,m))throw new Error('作品格式无效');const r=a.cases[a.index]??={support:false,attempts:[]},result=inspect(t,m);r.attempts.push(event({value:structuredClone(m),supported:r.support,exposed:r.attempts.length>0}));a.updatedAt=stamp();return result;}
 export function lessonSummary(a){if(!a)return {completed:false,independent:false,done:0,total:0};const cases=sessionTasks(a.id).map((t,i)=>{const r=a.cases[i],attempts=r?.attempts||[],last=attempts.at(-1),first=attempts[0],complete=attempts.some(e=>inspect(t,e.value).correct&&completionApplies(t,a.models[i],e.value));return {complete,independent:complete&&!!first&&inspect(t,first.value).correct&&!first.supported&&!first.exposed&&!r.support&&inspect(t,last.value).correct&&(!/^x-(?:r3[78]|s39)-/.test(t.type)||inspect(t,a.models[i]).correct),attempts:attempts.length};});return {completed:cases.every(c=>c.complete),independent:cases.every(c=>c.independent),done:cases.filter(c=>c.complete).length,total:cases.length,cases,explanation:a.notes.length?'pending':'missing'};}
 export function addLessonNote(a,text){if(text.trim()){a.notes.push(event({text:text.trim().slice(0,2000)}));a.draft='';a.updatedAt=stamp();}}
 export function validateLesson(raw,id,{allowBridge=false}={}){const fail=()=>{throw new Error('新活动记录无效，原记录不会被覆盖。');};
@@ -40,10 +67,10 @@ export function validateLesson(raw,id,{allowBridge=false}={}){const fail=()=>{th
  const eventOk=e=>obj(e)&&typeof e.id==='string'&&e.id.length>0&&e.id.length<=100&&date(e.at);
  if((!LESSONS[id]&&!(allowBridge&&BRIDGES[id]))||!obj(raw)||raw.id!==id||!['play','task','summary'].includes(raw.view)||!Number.isInteger(raw.index)||raw.index<0||raw.index>=sessionTasks(id).length||!obj(raw.models)||!obj(raw.cases)||!Array.isArray(raw.notes)||raw.notes.length>1000||typeof raw.draft!=='string'||raw.draft.length>2000||!date(raw.updatedAt))fail();
  const out=freshLesson(id);if(raw.ui!==undefined){const u=raw.ui,v=x=>Array.isArray(x)&&x.length===3&&x.every(n=>Number.isFinite(n)&&Math.abs(n)<1000);if(!obj(u)||![0,1].includes(u.spread)||![null,'tally','picture','bar','block','table','list'].includes(u.view)||u.camera!==null&&(!obj(u.camera)||!v(u.camera.position)||!v(u.camera.target)))fail();out.ui=structuredClone(u);}Object.assign(out,{view:raw.view,index:raw.index,draft:raw.draft,updatedAt:raw.updatedAt});
- for(const [key,m] of Object.entries(raw.models)){if(!/^(?:-1|\d+)$/.test(key)||!taskFor(id,+key)||!validModel(taskFor(id,+key),m))fail();out.models[key]=structuredClone(m);}
- for(const [key,r] of Object.entries(raw.cases)){if(!/^\d+$/.test(key)||!sessionTasks(id)[+key]||!obj(r)||typeof r.support!=='boolean'||!Array.isArray(r.attempts)||r.attempts.length>1000||new Set(r.attempts.map(e=>e?.id)).size!==r.attempts.length)fail();out.cases[key]={support:r.support,attempts:r.attempts.map((e,i)=>{if(!eventOk(e)||!validModel(sessionTasks(id)[+key],e.value)||typeof e.supported!=='boolean'||typeof e.exposed!=='boolean')fail();return {id:e.id,at:e.at,value:structuredClone(e.value),supported:e.supported,exposed:e.exposed||i>0};})};}
+ for(const [key,m] of Object.entries(raw.models)){if(!/^(?:-1|\d+)$/.test(key)||!taskFor(id,+key)||!validStoredModel(taskFor(id,+key),m))fail();out.models[key]=structuredClone(m);}
+ for(const [key,r] of Object.entries(raw.cases)){if(!/^\d+$/.test(key)||!sessionTasks(id)[+key]||!obj(r)||typeof r.support!=='boolean'||!Array.isArray(r.attempts)||r.attempts.length>1000||new Set(r.attempts.map(e=>e?.id)).size!==r.attempts.length)fail();out.cases[key]={support:r.support,attempts:r.attempts.map((e,i)=>{if(!eventOk(e)||!validStoredModel(sessionTasks(id)[+key],e.value)||typeof e.supported!=='boolean'||typeof e.exposed!=='boolean')fail();return {id:e.id,at:e.at,value:structuredClone(e.value),supported:e.supported,exposed:e.exposed||i>0};})};}
  if(new Set(raw.notes.map(e=>e?.id)).size!==raw.notes.length)fail();out.notes=raw.notes.map(e=>{if(!eventOk(e)||typeof e.text!=='string'||e.text.length>2000)fail();return {id:e.id,at:e.at,text:e.text};});
- if(out.view==='summary'&&!lessonSummary(out).completed)out.view='task';
+ if(out.view==='summary'&&(!lessonSummary(out).completed||numericCompatibility(taskFor(id,out.index),out.models[out.index])))out.view='task';
  return out;
 }
 // P10: two open learning surfaces may hold different versions of one workpiece.
