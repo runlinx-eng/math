@@ -144,8 +144,12 @@ test('main and manual scope always require all groups; PR scope includes the inv
  for(const file of [...reviewedScripts,'dist/learning/place-evidence.js','scripts/required-browser-checks.mjs',
   'tests/required-browser-checks.test.mjs','.github/workflows/pull-request-baseline.yml',
   '.github/workflows/overview-readability-check.yml','docs/spatial-learning/INTERACTION-RULES.md',
-  'docs/language/TERMS.md','scripts/audit-learning-nodes.mjs','tests/learning-task-rules.test.mjs'])
+  'docs/language/TERMS.md','scripts/audit-learning-nodes.mjs','tests/learning-task-rules.test.mjs',
+  'scripts/audit-evidence-expansion.mjs','tests/evidence-expansion-audit.test.mjs',
+  'docs/spatial-learning/evidence-review-manifest.json'])
   assert.equal(browserScope('pull_request',[file]),'true',file);
+ for(const file of ['scripts/audit-evidence-expansion.mjs.bak','docs/spatial-learning/evidence-review-manifest.json.bak'])
+  assert.equal(browserScope('pull_request',[file]),'false',file);
  for(const value of [undefined,null,'',true,false,'TRUE','unknown'])assert.throws(()=>validateScope(value,'pull_request'));
  for(const event of ['',undefined,'pull_request_target','schedule'])assert.throws(()=>browserScope(event,[]));
  assert.throws(()=>browserScope('pull_request',null));

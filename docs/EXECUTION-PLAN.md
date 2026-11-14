@@ -1,10 +1,18 @@
+## 2026-11-14｜P9 第十批来源清单与规模化审计（Issue #128）
+
+基线为第九批已合并且main独立Required通过的 `6a14fbff2c9570ae4f4ab60abc11dc97a9b07c90`。新增独立149位置来源清单和扩展审计，检测来源/完整题目指纹漂移、漏绑定、重复/重叠、MP错配以及同控件未审题目和关联题的UI证据泄漏。CI只读清单，样例可回放只列候选，不自动升级A。
+
+数学覆盖保持A149题/71节点，B277/C150/D1252/E168；本批无新增题，累计较第六批新增94题/46节点。同时补齐本轮实际发现的局部聚焦测试截图归档遗漏；只增加Artifact目录，原题、适配器回放、运行时、浏览器断言、v2/P10及地图进度均保持。工程验收包括专用10项正反审计测试、完整既有门禁、Artifact核对及main独立Required；实际记录见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)与本PR。
+
+---
+
 ## 2026-11-14｜P9 第九批小数数位交换（Issue #126）
 
 基线为第八批成组分数已合并且main独立Required通过的 `a8df24497260c71367e07975414dac2f8e4d074a`。在整数最小单位机制上新增9道小数数位交换，明确scale和真实末位对齐，所有守恒和取走仍用整数；新增3个此前未覆盖节点。原26道整数题和13道无交换题的独立范围保持。
 
 全量审计A149题/71节点，B277/C150/D1252/E168；从第六批基线累计新增94题/46节点。逐题来源、尺度和边界见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。全部小数来源均method:null，保留原题、原判题、v2/P10、地图与前三层进度。
 
-本批须完成小数9题与原整数26题双视口、全部既有Chromium/P10、最终HEAD适用CI与Artifact、合并main独立Required。完成后自动推进第十批独立来源清单与扩展审计，不以本批结束本轮任务。
+[PR #127](https://github.com/runlinx-eng/math/pull/127) 已正式合并为main `6a14fbff2c9570ae4f4ab60abc11dc97a9b07c90`。最终HEAD Required/Overview/P8及合并后独立 [Required 43578191519](https://github.com/runlinx-eng/math/actions/runs/43578191519) 均成功。532项Node/审计、小数9题18组合1643检查、整数26题52组合3867检查、全部既有数学家族、P10六入口434项和14份Required Artifact完成验收；main数学结果与PR逐项一致。累计新增94题/46节点后，连续推进第十批来源清单和扩展审计；儿童试用、独立教研与Mac人工仍另行验收。
 
 ---
 

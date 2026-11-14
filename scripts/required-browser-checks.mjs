@@ -49,6 +49,7 @@ const groups={
   "verification/spatial-unified-map/",
   "verification/spatial-theme-overview/",
   "verification/grade-progression-overview/",
+  "verification/spatial-local-focus/",
   "verification/learning-workspace/",
   "verification/concept-language-pilot/",
   "verification/node-name-review/",
@@ -156,10 +157,14 @@ export function browserScope(event,changedFiles=[]){
  if(event!=='pull_request')return 'true';
  check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
  const scripts=new Set(Object.values(BROWSER_GROUPS).flatMap(group=>group.commands.map(command=>command.file)));
+ // Future source-review-only edits still need the complete browser/P10 gate,
+ // even when no runtime, browser script or workflow file changes with them.
+ const sourceReview=new Set(['scripts/audit-evidence-expansion.mjs',
+  'tests/evidence-expansion-audit.test.mjs','docs/spatial-learning/evidence-review-manifest.json']);
  // Preserve the existing source/document scope and include the actual browser
  // inventory and its scheduler, so a test-only edit cannot omit its own run.
  const relevant=/^(dist\/|tests\/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs\/spatial-learning\/INTERACTION-RULES\.md$|docs\/language\/|scripts\/(audit-learning-nodes|audit-learning-task-rules|required-browser-checks)\.mjs$|tests\/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs|required-browser-checks\.test\.mjs)$|\.github\/workflows\/(pull-request-baseline|overview-readability-check)\.yml$)/;
- return changedFiles.some(file=>scripts.has(file)||relevant.test(file))?'true':'false';
+ return changedFiles.some(file=>scripts.has(file)||sourceReview.has(file)||relevant.test(file))?'true':'false';
 }
 
 function validateContext(context){
