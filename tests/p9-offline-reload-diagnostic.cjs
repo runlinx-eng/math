@@ -45,18 +45,43 @@ function assertPreservedState(before,after,id){
  assert.deepEqual(right,left,'only the original reopen timestamps may change');
 }
 
-async function preserveTrace(cdp,destination,categories){
- const completed=new Promise(resolve=>cdp.once('Tracing.tracingComplete',resolve));
- await cdp.send('Tracing.end');
- const {stream}=await bounded(completed,10000,'native tracing completion');
- const gzip=zlib.createGzip(),file=fs.createWriteStream(destination),finished=pipeline(gzip,file);
- finished.catch(()=>{});
- const digest=crypto.createHash('sha256');let bytes=0;
- try{
-  for(;;){const chunk=await cdp.send('IO.read',{handle:stream,size:1024*1024});const data=Buffer.from(chunk.data,chunk.base64Encoded?'base64':'utf8');bytes+=data.length;digest.update(data);if(!gzip.write(data))await once(gzip,'drain');if(chunk.eof)break;}
-  gzip.end();await finished;return {file:path.basename(destination),bytes,sha256:digest.digest('hex'),categories,mode:'record-continuously',retention:'native circular buffer; latest events, not a complete run history'};
- }catch(error){gzip.destroy();await finished.catch(()=>{});throw error;}
- finally{await cdp.send('IO.close',{handle:stream}).catch(()=>{});}
+// Tracing.end acknowledges an asynchronous flush. Keep one stop promise and
+// the original listener through a diagnostic timeout; never send a second end.
+function nativeTraceCapture(cdp,destination,categories){
+ const lifecycle={file:path.basename(destination),categories,events:[]};
+ const note=(kind,detail={})=>{lifecycle.events.push({at:new Date().toISOString(),kind,...detail});write(destination+'.lifecycle.json',lifecycle);};
+ let resolveComplete,rejectComplete,resolveEnd,rejectEnd,started=false,stopPromise;
+ const completed=new Promise((resolve,reject)=>{resolveComplete=resolve;rejectComplete=reject;});completed.catch(()=>{});
+ const endAcknowledged=new Promise((resolve,reject)=>{resolveEnd=resolve;rejectEnd=reject;});endAcknowledged.catch(()=>{});
+ const onComplete=event=>{note('tracing-complete',event);resolveComplete(event);};
+ cdp.on('Tracing.tracingComplete',onComplete);note('listener-registered');
+ return {
+  completion:completed,endAcknowledged,
+  async start(){
+   note('start-sent');await cdp.send('Tracing.start',{categories:categories.selected.join(','),transferMode:'ReturnAsStream',options:'record-continuously'});started=true;note('start-acknowledged');
+  },
+  stop(){
+   if(stopPromise)return stopPromise;
+   stopPromise=(async()=>{
+    assert.equal(started,true,'native tracing must start before it stops');
+    note('end-sent');await cdp.send('Tracing.end');note('end-acknowledged');resolveEnd();
+    const completion=await completed,stream=completion.stream;assert.equal(typeof stream,'string','native tracing completion must supply its stream');
+    const gzip=zlib.createGzip(),file=fs.createWriteStream(destination),finished=pipeline(gzip,file);finished.catch(()=>{});
+    const digest=crypto.createHash('sha256');let bytes=0;
+    try{
+     note('stream-read-started');
+     for(;;){const chunk=await cdp.send('IO.read',{handle:stream,size:1024*1024});const data=Buffer.from(chunk.data,chunk.base64Encoded?'base64':'utf8');bytes+=data.length;digest.update(data);if(!gzip.write(data))await once(gzip,'drain');if(chunk.eof)break;}
+     gzip.end();await finished;
+     const result={file:path.basename(destination),bytes,sha256:digest.digest('hex'),categories,completion,mode:'record-continuously',retention:'native circular buffer; latest events, not a complete run history'};
+     note('stream-saved',{bytes,sha256:result.sha256,dataLossOccurred:completion.dataLossOccurred});return result;
+    }catch(error){gzip.destroy();await finished.catch(()=>{});throw error;}
+    finally{await cdp.send('IO.close',{handle:stream}).catch(error=>note('stream-close-error',{error:String(error)}));}
+   })();
+   stopPromise.catch(error=>{rejectEnd(error);rejectComplete(error);note('capture-error',{error:String(error)});}).finally(()=>cdp.off('Tracing.tracingComplete',onComplete));
+   return stopPromise;
+  },
+  abandon(error){note('preservation-abandoned',{error:String(error)});rejectComplete(error);cdp.off('Tracing.tracingComplete',onComplete);}
+ };
 }
 
 async function main(){
@@ -79,7 +104,7 @@ async function main(){
  const files=git(['ls-files','dist']).split('\n').filter(Boolean).map(file=>({file,sha256:hash(fs.readFileSync(path.join(root,file)))}));
  write(path.join(out,'product-source-manifest.json'),{...provenance,files});
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
- let browser,server,context,page,diagnostics,browserCDP,traceStarted=false,current,phase='setup',caseOut=out,eventFd,closing=false;
+ let browser,server,context,page,diagnostics,browserCDP,traceCapture,current,diagnosticFailure,phase='setup',caseOut=out,eventFd,closing=false;
  const trials=[],errors=[],remote=[],nativeCategories='ServiceWorker,CacheStorage,loading,blink.user_timing';
  const log=(kind,detail={})=>{const entry={at:new Date().toISOString(),phase,kind,...detail};if(eventFd!==undefined)fs.writeSync(eventFd,JSON.stringify(entry)+'\n');return entry;};
  const stopOrigin=async()=>{if(server?.listening){await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});log('origin-stopped');}};
@@ -92,6 +117,19 @@ async function main(){
   provenance.nativeTraceCategories={available,requested,selected,missing:requested.filter(category=>!available.includes(category))};
   write(path.join(out,'native-trace-categories.json'),provenance.nativeTraceCategories);write(path.join(out,'provenance.json'),provenance);
   assert.ok(selected.length>0,'at least one requested native trace category must be available');
+  // Check the protocol and exported marker before the costly product scene.
+  // This isolated about:blank page never visits dist or learner storage.
+  phase='native-trace-preflight';
+  context=await browser.newContext();page=await context.newPage();
+  traceCapture=nativeTraceCapture(browserCDP,path.join(out,'native-trace-preflight.json.gz'),provenance.nativeTraceCategories);await traceCapture.start();
+  const marker='p9-offline-reload-native-trace-preflight';await page.evaluate(name=>performance.mark(name),marker);
+  const preflightStop=traceCapture.stop();await traceCapture.endAcknowledged;await bounded(traceCapture.completion,10000,'native tracing completion');
+  phase='native-trace-preflight-export';const preflightTrace=await preflightStop;traceCapture=null;
+  const preflightEvents=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(out,preflightTrace.file)))).traceEvents;
+  const markers=preflightEvents.filter(event=>event.name===marker&&event.cat.split(',').includes('blink.user_timing'));
+  assert.ok(markers.length>0,'the exported native trace must contain the actual preflight mark');
+  write(path.join(out,'native-trace-preflight-verification.json'),{trace:preflightTrace,marker,events:preflightEvents.length,markers,productVisited:false,learnerStorageAccessed:false});
+  await context.close();context=null;page=null;
   for(const [width,height]of viewports){
    const prefix=width+'x'+height;phase=prefix+'-cache';caseOut=path.join(out,prefix);fs.mkdirSync(caseOut,{recursive:true});
    eventFd=fs.openSync(path.join(caseOut,'events.jsonl'),'w');
@@ -129,7 +167,7 @@ async function main(){
    };
    for(const name of ['Network.requestWillBeSent','Network.responseReceived','Network.loadingFinished','Network.loadingFailed'])cdp.on(name,payload=>recordCDP(name,payload));
    await cdp.send('Network.enable');
-   await browserCDP.send('Tracing.start',{categories:selected.join(','),transferMode:'ReturnAsStream',options:'record-continuously'});traceStarted=true;
+   traceCapture=nativeTraceCapture(browserCDP,path.join(caseOut,'native-trace.json.gz'),provenance.nativeTraceCategories);await traceCapture.start();
    const read=()=>page.evaluate(async()=>{const {readStored}=await import('./storage.js');return {raw:localStorage.getItem('math-explorer-v2'),text:readStored('math-explorer-v2'),beforeApp:window.__p9OfflineReloadBeforeApp,beforeAppError:window.__p9OfflineReloadBeforeAppError||null};});
    const record=async()=>JSON.parse((await read()).text).daily.bridges[spec.id];
    const wait=()=>page.waitForFunction(({id,index})=>{const value=window.mathLesson?.snapshot();return value?.id===id&&value.index===index&&value.view==='task';},spec);
@@ -181,22 +219,25 @@ async function main(){
     if(index%100===0){captureRunner('reload-'+index);console.log('P9_OFFLINE_RELOAD_PROGRESS '+JSON.stringify({viewport:prefix,completed:index,headSha:provenance.headSha}));}
    }
    current.status='completed-without-reproduction';await page.screenshot({path:path.join(caseOut,'completed.png'),fullPage:true});
-   current.nativeTrace=await preserveTrace(browserCDP,path.join(caseOut,'native-trace.json.gz'),provenance.nativeTraceCategories);traceStarted=false;
+   phase=prefix+'-native-trace-completion';const traceStop=traceCapture.stop();await traceCapture.endAcknowledged;await bounded(traceCapture.completion,10000,'native tracing completion');
+   phase=prefix+'-native-trace-export';current.nativeTrace=await traceStop;traceCapture=null;
    write(path.join(caseOut,'report.json'),current);observing=false;phase=prefix+'-close-context';await context.close();context=null;page=null;diagnostics=null;fs.closeSync(eventFd);eventFd=undefined;
   }
  }catch(error){
-  process.exitCode=1;log('diagnostic-stopped',{error:String(error),stack:error.stack});
+  process.exitCode=1;diagnosticFailure=log('diagnostic-stopped',{error:String(error),stack:error.stack});
   if(current){current.status='first-failure';current.error=String(error);current.stack=error.stack;current.phase=phase;}
   try{write(path.join(caseOut,'runner-at-failed-operation.json'),runnerSnapshot());}catch(problem){if(current)current.runnerSnapshotError=String(problem);}
   if(diagnostics){const failure=await diagnostics.dump(error).catch(problem=>({diagnosticError:String(problem)}));if(current)current.failureDiagnostic=failure;}
   if(page)await page.screenshot({path:path.join(caseOut,'first-failure.png'),fullPage:true}).catch(()=>{});
   console.error(error.stack);
  }finally{
-  if(traceStarted&&browserCDP){try{const trace=await preserveTrace(browserCDP,path.join(caseOut,'native-trace.json.gz'),provenance.nativeTraceCategories);if(current)current.nativeTrace=trace;}catch(error){if(current)current.traceError=String(error);process.exitCode=1;}}
+  // The first 10s export failure remains a failure. This separate 20s budget
+  // only preserves a late stream from the same end; it cannot resume trials.
+  if(traceCapture){try{const trace=await bounded(traceCapture.stop(),20000,'late native trace preservation');if(current)current.nativeTrace=trace;else write(path.join(out,'late-preflight-trace.json'),trace);}catch(error){traceCapture.abandon(error);if(current)current.traceError=String(error);process.exitCode=1;}}
   if(current)write(path.join(caseOut,'report.json'),current);
   await stopOrigin();closing=true;if(context)await context.close().catch(()=>{});if(browser)await browser.close().catch(()=>{});if(eventFd!==undefined)fs.closeSync(eventFd);
-  write(path.join(out,'results.json'),{provenance,trials,errors,remote,rootCauseResolved:false,acceptanceClaim:false});
+  write(path.join(out,'results.json'),{provenance,trials,errors,remote,diagnosticFailure,rootCauseResolved:false,acceptanceClaim:false});
  }
 }
-module.exports={assertPreservedState};
+module.exports={assertPreservedState,nativeTraceCapture};
 if(require.main===module)main().catch(error=>{console.error(error.stack);process.exitCode=1;});
