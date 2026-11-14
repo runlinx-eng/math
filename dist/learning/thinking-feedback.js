@@ -16,10 +16,11 @@ import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
-import {latestSubmissionMatches} from './evidence-contract.js';
+import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(!isEvidenceContext(context))return null;
   if(task?.type==='x-g25-turn'){
     const source=angleBinding(task,context);
     return source?{type:task.type,summary:'想一想：开口和边的长短怎样比较？（可选）',question:source.question}:null;
@@ -78,7 +79,9 @@ export function thinkingGuide(task,context={}){
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
 export function thinkingFeedback(task,model,record,context={}){
-  if(!latestSubmissionMatches(model,record))return null;
+  // The pre-existing grid observation is context-free and remains outside the
+  // strict source-bound adapters. Its original grading and snapshot gate stay.
+  if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
   if(task?.type==='x-g25-turn'){
     const source=angleBinding(task,context);if(!source)return null;

@@ -1,7 +1,7 @@
 // Replay the actual identity of every grouped object. A correct division answer
 // alone does not show how the learner distributed or constructed the groups.
 import * as groups from './phase5/b13-model.js';
-import {matchesNativeEvidenceTask,hasExactKeys as keys,sameEvidence as same} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,hasExactKeys as keys,sameEvidence as same} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  equalgroups:{indices:[0,1],nodeId:'mt_PZ909yPrEC'},
@@ -21,7 +21,7 @@ const SOURCES=Object.freeze({
 });
 
 export function groupsBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-mulgroups',nodeId:source.nodeId}))return null;
