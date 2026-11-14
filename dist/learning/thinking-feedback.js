@@ -14,6 +14,7 @@ import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js'
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
 import {estimateBinding,replayEstimateEvidence} from './estimate-evidence.js';
+import {portionGroupsBinding,replayPortionGroupsEvidence} from './portiongroups-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
@@ -21,6 +22,10 @@ import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-portiongroups'){
+    const source=portionGroupsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：几组和几颗怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);
     return source?{type:task.type,summary:'想一想：粗略结果怎样帮助检查？（可选）',question:source.question}:null;
@@ -85,6 +90,24 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-portiongroups'){
+    const source=portionGroupsBinding(task,context);if(!source)return null;
+    const proof=replayPortionGroupsEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次记录中物品的身份、分放、所选的组和当前提交；没有自动评价自由解释、独立计算步骤或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayPortionGroupsEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(`按组来看，当前选了 ${proof.fraction.groups[0]}/${proof.fraction.groups[1]}；按物品来看，当前选了 ${proof.fraction.tokens[0]}/${proof.fraction.tokens[1]}。这里的整体都是全部 ${proof.total} 颗物品，不能只把未选中的物品当作整体。`);
+    if(proof.fraction.submitted){
+      const name=proof.fraction.submitted;
+      detail.push(`你提交的分数 ${name.numerator}/${name.denominator} 与这部分等值；这个分数的写法和实际选中的 ${proof.selectedGroups.length} 组、全部 ${proof.partitions} 组已分别核对。`);
+    }
+    if(proof.equation)detail.push(`你提交的等式 ${proof.equation.raw} 与当前分组数量相符；等式是本次填写的关系，本控件没有记录一个独立的计算过程。`);
+    if(proof.resets.length)detail.push(`你按过 ${proof.resets.length} 次重新摆；之前的事件仍保留，当前分组按最后留下的物品位置核对。`);
+    return {title:'这次作品中的思考线索',
+      observation:`这次的 ${proof.total} 颗物品最终分成 ${proof.partitions} 组，每组 ${proof.each} 颗。你当前选中了 ${proof.selectedGroups.length} 组，包含 ${proof.selectedTotal} 颗；未选中的还有 ${proof.unselectedTotal} 颗。每颗物品只有一个位置；每次分放后，各组里的物品加上尚未分放的物品，总量保持一致。`,
+      connection:'如果整体的物品变多，仍取相同的分数，取出的颗数会怎样变化？试着用组数和物品数分别解释。',
+      detail,method:null};
+  }
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);if(!source)return null;
     const proof=replayEstimateEvidence(task,model);if(!proof)return null;

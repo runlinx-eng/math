@@ -112,6 +112,7 @@ const groups={
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
@@ -120,6 +121,7 @@ const groups={
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
   "verification/p9-estimate-adapter/",
+  "verification/p9-portiongroups-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},

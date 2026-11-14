@@ -2599,6 +2599,123 @@
       "adapter": "estimate",
       "taskHash": "fe13bbc926532ad933b45f63229369ea53f0371bcfe01e06686e28d17acfd187",
       "method": null
+    },
+    {
+      "sessionId": "halfpaper",
+      "index": 0,
+      "type": "x-portiongroups",
+      "nodeId": "mt_-hTTat0mBR",
+      "adapter": "portiongroups",
+      "taskHash": "45e0298da3c8b6eda9cb57e236df1a94b720c836beb0d128941d501afab81590",
+      "method": null
+    },
+    {
+      "sessionId": "quarterpaper",
+      "index": 1,
+      "type": "x-portiongroups",
+      "nodeId": "mt_g3W0mdADVu",
+      "adapter": "portiongroups",
+      "taskHash": "2968d91033a907a1c726934354fbdbfd1cd8aa44b3381c4bea89b31107b3fbba",
+      "method": null
+    },
+    {
+      "sessionId": "setfractions",
+      "index": 0,
+      "type": "x-portiongroups",
+      "nodeId": "mt_MyGblah2yY",
+      "adapter": "portiongroups",
+      "taskHash": "f3d6624d1b1413bd309bb92fe4a2974b9203dcdcdd1c0f1e2a2a51b16b3adceb",
+      "method": null
+    },
+    {
+      "sessionId": "setfractions",
+      "index": 2,
+      "type": "x-portiongroups",
+      "nodeId": "mt_MyGblah2yY",
+      "adapter": "portiongroups",
+      "taskHash": "f6a7d66df395375fd9444b2332d496045bf514c6da49b69ede1173d3f86ebb5e",
+      "method": null
+    },
+    {
+      "sessionId": "unitsets",
+      "index": 0,
+      "type": "x-portiongroups",
+      "nodeId": "mt_k2WE0-22-4",
+      "adapter": "portiongroups",
+      "taskHash": "c741faff91f2b5d6eee5bf183549cc346ca6b43a1bf64d7daa12542ccf5693e7",
+      "method": null
+    },
+    {
+      "sessionId": "unitsets",
+      "index": 1,
+      "type": "x-portiongroups",
+      "nodeId": "mt_k2WE0-22-4",
+      "adapter": "portiongroups",
+      "taskHash": "8a18ec193117506bcaccb8365b027cd3c69facb720aebcb061549fd203fc1a75",
+      "method": null
+    },
+    {
+      "sessionId": "unitsets",
+      "index": 2,
+      "type": "x-portiongroups",
+      "nodeId": "mt_k2WE0-22-4",
+      "adapter": "portiongroups",
+      "taskHash": "b22b43af9e8a8b89305e65d29e81502eea66d1814d607e49c79dfcc4d7d16062",
+      "method": null
+    },
+    {
+      "sessionId": "unitsets",
+      "index": 3,
+      "type": "x-portiongroups",
+      "nodeId": "mt_k2WE0-22-4",
+      "adapter": "portiongroups",
+      "taskHash": "cd55bfe15f41a8c3f8348ca6ddecc96fa585b69046e479d3b1da18b569757265",
+      "method": null
+    },
+    {
+      "sessionId": "nonunitamount",
+      "index": 0,
+      "type": "x-portiongroups",
+      "nodeId": "mt_3y7xKP9MjU",
+      "adapter": "portiongroups",
+      "taskHash": "f19743d21d9663cfdfc3237a8bc7b51756855e6287b4bb576401c0300bdd5173",
+      "method": null
+    },
+    {
+      "sessionId": "nonunitamount",
+      "index": 1,
+      "type": "x-portiongroups",
+      "nodeId": "mt_3y7xKP9MjU",
+      "adapter": "portiongroups",
+      "taskHash": "db1fecb14fba261eda0b810cc426af2b35be3603c286fa1a2fc6991f7dcde1be",
+      "method": null
+    },
+    {
+      "sessionId": "nonunitamount",
+      "index": 2,
+      "type": "x-portiongroups",
+      "nodeId": "mt_3y7xKP9MjU",
+      "adapter": "portiongroups",
+      "taskHash": "219bad112e28e487a50be0da66892bd94051a273c16ca7eaf157b73049719bfb",
+      "method": null
+    },
+    {
+      "sessionId": "precise38",
+      "index": 0,
+      "type": "x-portiongroups",
+      "nodeId": "mt_mywsN77hGZ",
+      "adapter": "portiongroups",
+      "taskHash": "8a18ec193117506bcaccb8365b027cd3c69facb720aebcb061549fd203fc1a75",
+      "method": null
+    },
+    {
+      "sessionId": "multiShape38",
+      "index": 2,
+      "type": "x-portiongroups",
+      "nodeId": "mt_SmghasIvbT",
+      "adapter": "portiongroups",
+      "taskHash": "f19743d21d9663cfdfc3237a8bc7b51756855e6287b4bb576401c0300bdd5173",
+      "method": null
     }
   ]
 }
