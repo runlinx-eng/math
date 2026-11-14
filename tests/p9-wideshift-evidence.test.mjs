@@ -14,6 +14,7 @@ import {wideShiftEvidenceSteps,wideShiftEvidenceExample} from '../scripts/widesh
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {freshLesson,modelForLesson,submitLesson,currentSubmission,validateLesson} from '../dist/learning/state.js';
+import {studyActionFocus,learningActionPlan,learningStage} from '../dist/learning/workspace-flow.js';
 
 await ensureB39Ready();
 const {cases,associated,excludedAdd,excludedBoards}=fixture,copy=structuredClone;
@@ -150,16 +151,43 @@ test('hidden fields, altered frozen guesses, extra keys and incomplete or stale 
  }
 });
 
-test('all native lessons retain five complete attempts, visible correction, edit expiry and original JSON records',()=>{
- for(const c of cases){const t=taskFor(c),a=freshLesson(c.id);a.index=c.index;const m=modelForLesson(a);assert.equal(submitLesson(a).correct,false);
-  for(const s of wideShiftEvidenceSteps(t))visibleStep(t,m,s);const answer=m.answer;m.answer='-999';assert.equal(submitLesson(a).correct,false);
-  m.answer=answer;assert.equal(submitLesson(a).correct,true);const first=copy(a.cases[c.index].attempts[2]);assert.ok(thinkingFeedback(t,m,a.cases[c.index],c));
-  m.answer='-998';assert.equal(currentSubmission(a).status,'modified');assert.equal(thinkingFeedback(t,m,a.cases[c.index],c),null);assert.equal(submitLesson(a).correct,false);
-  m.answer=answer;visibleStep(t,m,{action:'wide-move',data:{delta:1}});visibleStep(t,m,{action:'wide-move',data:{delta:-1}});assert.equal(submitLesson(a).correct,true);
+test('all native lessons obey empty and prediction-only gates before five real attempts, visible correction and original JSON records',()=>{
+ for(const c of cases)for(const detour of [false,true]){const t=taskFor(c),a=freshLesson(c.id);a.index=c.index;const m=modelForLesson(a);
+  const gate=()=>{const stage=learningStage(a,currentSubmission(a)),focus=studyActionFocus({stage,task:t,model:m});return learningActionPlan({stage,readyToCheck:focus.readyToCheck});};
+  const check=correct=>{const plan=gate(),button=[plan.primary,...plan.secondary].find(x=>x.action==='check');assert.ok(button&&!button.disabled,'the original renderer permits checking');assert.equal(submitLesson(a).correct,correct);};
+  assert.equal(gate().primary.disabled,true);assert.equal(a.cases[c.index]?.attempts?.length??0,0);
+  const direct=Array.from({length:Math.abs(c.targetShift)},()=>Math.sign(c.targetShift)),guess=detour?c.end:'-1';
+  const steps=wideShiftEvidenceSteps(t,{guess,trace:detour?[1,-1,...direct]:direct});
+  for(const s of steps.slice(0,2))visibleStep(t,m,s);
+  assert.equal(m.committed,guess);assert.deepEqual(m.trace,[]);assert.equal(gate().primary.disabled,true);assert.equal(a.cases[c.index]?.attempts?.length??0,0);
+  assert.doesNotMatch(V.render(t,m),/data-x="wide-predict"|data-xfield="guess"/);
+  visibleStep(t,m,steps[2]);assert.equal(m.trace.length,1);assert.equal(m.answer,'');check(false);
+  const incomplete=copy(a.cases[c.index].attempts[0]);assert.deepEqual(incomplete.value,m);
+  const remaining=browserFixture.remainingBuildSteps(t,m,steps,M);assert.ok(remaining.every(s=>s.field!=='guess'&&s.action!=='wide-predict'));
+  for(const s of remaining)visibleStep(t,m,s);assert.deepEqual(m.trace,detour?[1,-1,...direct]:direct);assert.equal(m.guess,m.committed);
+  const answer=m.answer;visibleStep(t,m,{field:'answer',value:'-999'});check(false);
+  visibleStep(t,m,{field:'answer',value:answer});check(true);const first=copy(a.cases[c.index].attempts[2]);assert.ok(thinkingFeedback(t,m,a.cases[c.index],c));
+  visibleStep(t,m,{field:'answer',value:'-998'});assert.equal(currentSubmission(a).status,'modified');assert.equal(thinkingFeedback(t,m,a.cases[c.index],c),null);check(false);
+  visibleStep(t,m,{field:'answer',value:answer});visibleStep(t,m,{action:'wide-move',data:{delta:1}});visibleStep(t,m,{action:'wide-move',data:{delta:-1}});check(true);
   assert.deepEqual(a.cases[c.index].attempts.map(x=>M.inspect(t,x.value).correct),[false,false,true,false,true]);assert.deepEqual(a.cases[c.index].attempts[2],first);
+  assert.deepEqual(a.cases[c.index].attempts[0],incomplete);
   const restored=validateLesson(JSON.parse(JSON.stringify(a)),c.id);assert.ok(restored);assert.deepEqual(restored.models,a.models);assert.deepEqual(restored.cases,a.cases);
   const f=thinkingFeedback(t,m,a.cases[c.index],c);assert.ok(f);assert.equal(f.method,null);assert.match(f.observation,/成功移动/);assert.match(f.detail.join(' '),/工具.*自动画出/);assert.match(f.detail.join(' '),/没有核对每一次点击/);
   assert.doesNotMatch(JSON.stringify(f),/MP\.\d|已掌握|独立完成/);
  }
  console.log('WIDESHIFT_REAL_CONTROL_PROBES',JSON.stringify(probes));
+});
+
+test('continuation accepts only the actual visible plan prefix and never replays hidden prediction controls',()=>{
+ for(const c of cases){const t=taskFor(c),steps=wideShiftEvidenceSteps(t),m=M.initial(t);
+  assert.throws(()=>browserFixture.remainingBuildSteps(t,m,steps,M));
+  for(const s of steps.slice(0,2))visibleStep(t,m,s);
+  assert.throws(()=>browserFixture.remainingBuildSteps(t,m,steps,M));
+  visibleStep(t,m,steps[2]);const before=copy(m),rest=browserFixture.remainingBuildSteps(t,m,steps,M);
+  assert.deepEqual(rest,steps.slice(3));assert.deepEqual(m,before);
+  for(const mutate of [x=>x.guess='0',x=>x.committed='0',x=>x.shift+=1,x=>x.trace[0]*=-1,x=>x.answer=c.end,x=>x.factor='1',x=>x.exponent='1',x=>x.moves=[1]]){
+   const altered=copy(m);mutate(altered);assert.throws(()=>browserFixture.remainingBuildSteps(t,altered,steps,M));
+  }
+  const otherPlan=wideShiftEvidenceSteps(t,{guess:c.end});assert.throws(()=>browserFixture.remainingBuildSteps(t,m,otherPlan,M));
+ }
 });

@@ -19,6 +19,22 @@ const Q=1000000n,LIMIT=100000000n*Q;
 const ticks=s=>{assert.match(s,/^-?\d+(?:\.\d{1,6})?$/);const [w,f='']=s.replace(/^-/,'').split('.');return (BigInt(w)*Q+BigInt(f.padEnd(6,'0')))*(s.startsWith('-')?-1n:1n);};
 const decimal=n=>{const f=String(n%Q).padStart(6,'0').replace(/0+$/,'');return String(n/Q)+(f?'.'+f:'');};
 
+// Resume only a complete, already observed prefix of the original visible plan.
+// Replaying a prefix here checks its identity; it never writes browser state or
+// clicks a prediction control that disappeared after the first commitment.
+function remainingBuildSteps(task,existing,steps,M){
+ assert.ok(M.valid(task,existing));assert.ok(existing.committed!==null&&existing.trace.length>0);
+ assert.equal(steps[0]?.field,'guess');assert.equal(steps[1]?.action,'wide-predict');
+ const completed=2+existing.trace.length,prefix=steps.slice(0,completed),expected=M.initial(task);
+ assert.ok(completed<steps.length);assert.ok(prefix.slice(2).every(step=>step.action==='wide-move'));
+ for(const step of prefix){
+  if(step.field){expected[step.field]=String(step.value);M.field(task,expected,step.field);}
+  else M.act(task,expected,step.action,step.data);
+ }
+ assert.deepEqual(existing,expected,'the existing work is exactly the observed plan prefix');
+ return steps.slice(completed);
+}
+
 // This verifier uses exact integer arithmetic and the raw trace. Neither the
 // original targetShift/log10 nor the production replay establishes the maths.
 function exact(spec,model,proof){
@@ -105,13 +121,15 @@ async function main(){
     await field('answer',spec.end);if(spec.mode==='scientific')await field('exponent',spec.exponent);
     else{await field('factor',spec.factor);await field('direction',spec.direction);}
    };
-   const build=async(spec,{guess='-1',detour=false,trace}={})=>{
-    const task=taskFor(spec),expected=M.initial(task),direct=Array.from({length:Math.abs(spec.targetShift)},()=>Math.sign(spec.targetShift));
-    for(const step of wideShiftEvidenceSteps(task,{guess,trace:trace??(detour?[1,-1,...direct]:direct)}))await apply(spec,expected,step);
+   const build=async(spec,{guess='-1',detour=false,trace,existing}={})=>{
+    const task=taskFor(spec),expected=existing?structuredClone(existing):M.initial(task),direct=Array.from({length:Math.abs(spec.targetShift)},()=>Math.sign(spec.targetShift));
+    const steps=wideShiftEvidenceSteps(task,{guess,trace:trace??(detour?[1,-1,...direct]:direct)});
+    for(const step of existing?remainingBuildSteps(task,existing,steps,M):steps)await apply(spec,expected,step);
     ok(M.valid(task,expected)&&M.inspect(task,expected).correct,label+' real controls finish the unchanged task');return expected;
    };
    const check=async(spec,expected,suffix)=>{
-    const before=await saved(spec.id),beforeModel=structuredClone(before.models[spec.index]);await page.locator('#actions [data-do="check"]').click();
+    const before=await saved(spec.id),beforeModel=structuredClone(before.models[spec.index]),button=page.locator('#actions [data-do="check"]');
+    assert.equal(await button.count(),1);ok(await button.isEnabled(),label+' '+suffix+' is a legal visible check');await button.click();
     const after=await saved(spec.id),attempts=after.cases[spec.index].attempts,attempt=attempts.at(-1);
     assert.equal(attempts.length,(before.cases[spec.index]?.attempts?.length??0)+1);assert.deepEqual(attempt.value,beforeModel);assert.deepEqual(after.models[spec.index],beforeModel);
     assert.deepEqual(attempts.slice(0,-1),before.cases[spec.index]?.attempts??[]);
@@ -162,8 +180,22 @@ async function main(){
     let afterGuide;for(let i=0;i<20;i++){afterGuide=await saved(spec.id);if(afterGuide.cases[spec.index]?.support===true)break;await page.waitForTimeout(50);}
     if(spec===cases[0])await shot('01-guide');await guide.locator('summary').click();assert.deepEqual(afterGuide.models,beforeGuide.models);
     ok(afterGuide.cases[spec.index]?.support===true&&(afterGuide.cases[spec.index]?.attempts?.length??0)===0,label+' opening guidance invents no moves or submission');
-    const snapshots=[await check(spec,false,'01-blank')];ok(await hint.count()===0,label+' blank work is not evidence');
-    await build(spec,{guess,detour});ok(await hint.count()===0,label+' completed controls still require checking');
+    const blank=await saved(spec.id),expected=M.initial(task),checkButton=page.locator('#actions [data-do="check"]');
+    assert.deepEqual(blank.models[spec.index],expected);assert.equal(await checkButton.count(),1);
+    ok(await checkButton.isDisabled(),label+' empty work disables checking');assert.equal(blank.cases[spec.index]?.attempts?.length??0,0);
+    ok(await hint.count()===0,label+' blank work is not evidence');
+    const direct=Array.from({length:Math.abs(spec.targetShift)},()=>Math.sign(spec.targetShift));
+    const plan=wideShiftEvidenceSteps(task,{guess,trace:detour?[1,-1,...direct]:direct});
+    for(const step of plan.slice(0,2))await apply(spec,expected,step);
+    const predicted=await saved(spec.id);assert.equal(predicted.models[spec.index].committed,guess);assert.equal(predicted.models[spec.index].trace.length,0);
+    ok(await checkButton.isDisabled(),label+' a prediction without a move still disables checking');assert.equal(predicted.cases[spec.index]?.attempts?.length??0,0);
+    assert.equal(await page.locator('[data-x="wide-predict"]').count(),0);assert.equal(await page.locator('[data-xfield="guess"]').count(),0);
+    assert.equal(plan[2].action,'wide-move');await apply(spec,expected,plan[2]);
+    const started=await model(spec);assert.equal(started.trace.length,1);assert.equal(started.answer,'');assert.equal(M.inspect(task,started).correct,false);
+    ok(await checkButton.isEnabled(),label+' the first real move permits a genuine incomplete check');
+    const snapshots=[await check(spec,false,'01-started-incomplete')];ok(await hint.count()===0,label+' the genuinely started incomplete work is not evidence');
+    await build(spec,{guess,detour,existing:started});assert.deepEqual((await model(spec)).trace.slice(0,started.trace.length),started.trace);
+    ok(await hint.count()===0,label+' completed controls still require checking');
     await field('answer','0');snapshots.push(await check(spec,false,'02-wrong-answer'));ok(await hint.count()===0,label+' wrong final answer earns no strict feedback');
     await field('answer',spec.end);snapshots.push(await check(spec,true,'03-correct-answer'));
     const first=await model(spec),proof=replayWideShiftEvidence(task,first),math=exact(spec,first,proof),words=await wordsFor(proof),firstVisual=await visual(spec,first);
@@ -181,7 +213,7 @@ async function main(){
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),label+' feedback writes no new score or mastery state');
     await reload(spec);assert.deepEqual((await saved(spec.id)).models,end.models);assert.deepEqual((await saved(spec.id)).cases,end.cases);await wordsFor(finalProof);
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');await shot('05-verified-offline');
-    observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,detour,guess,first,proof,math,words,firstVisual,snapshots,finalModel,finalProof,finalMath,finalWords,finalVisual,record:end,stored:await snapshot('final')});
+    observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,detour,guess,readiness:{blank,predicted,started},first,proof,math,words,firstVisual,snapshots,finalModel,finalProof,finalMath,finalWords,finalVisual,record:end,stored:await snapshot('final')});
 
     // Shared retry replaces only the current workpiece. Check the real button,
     // retain all five earlier submissions and rebuild a distinct visible trace.
@@ -270,5 +302,5 @@ async function main(){
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,retries,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label,failureDiagnostic},null,2));console.error(error.stack);process.exitCode=1;
  }finally{if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});if(context)await context.close();if(browser)await browser.close();}
 }
-module.exports={exact};
+module.exports={exact,remainingBuildSteps};
 if(require.main===module)main().catch(error=>{console.error(error.stack);process.exitCode=1;});

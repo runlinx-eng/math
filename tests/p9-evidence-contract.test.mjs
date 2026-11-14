@@ -1,3 +1,6 @@
+import wideshift from './fixtures/p9-wideshift-cases.cjs';
+import storyLedger from './fixtures/p9-storyledger-cases.cjs';
+import sameFraction from './fixtures/p9-samefraction-cases.cjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
@@ -11,8 +14,12 @@ import {wideShiftEvidenceExample} from '../scripts/wideshift-evidence-fixture.mj
 import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs';
 import {joinStoryEvidenceExample} from '../scripts/joinstory-evidence-fixture.mjs';
 import expansion from './fixtures/p9-mature-expansion-cases.cjs';
-import wideshift from './fixtures/p9-wideshift-cases.cjs';
+import division from './fixtures/p9-division-cases.cjs';
+import fractionCase from './fixtures/p9-fractioncase-cases.cjs';
+import fractionOperations from './fixtures/p9-fraction-operations-cases.cjs';
 import angle from './fixtures/p9-angle-cases.cjs';
+import portion from './fixtures/p9-portiongroups-cases.cjs';
+import estimate from './fixtures/p9-estimate-cases.cjs';
 import joinStory from './fixtures/p9-joinstory-cases.cjs';
 import transform from './fixtures/p9-transform-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
@@ -39,11 +46,18 @@ const reviewed={
  transform:transform.cases.map(({sessionId,index})=>({sessionId,index})),
  angle:angle.map(({sessionId,index})=>({sessionId,index})),
  joinstory:joinStory.cases.map(({sessionId,index})=>({sessionId,index})),
+ estimate:estimate.cases.map(({sessionId,index})=>({sessionId,index})),
+ portiongroups:portion.cases.map(({sessionId,index})=>({sessionId,index})),
+ 'fraction-operations':fractionOperations.cases.map(({id,index})=>({sessionId:id,index})),
+ fractioncase:fractionCase.cases.map(({id,index})=>({sessionId:id,index})),
+ division:division.cases.map(({id,index})=>({sessionId:id,index})),
+ samefraction:sameFraction.cases.map(({sessionId,index})=>({sessionId,index})),
+ storyledger:storyLedger.cases.map(({sessionId,index})=>({sessionId,index})),
  wideshift:wideshift.cases.map(({sessionId,index})=>({sessionId,index}))
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
-const example=(adapter,task)=>adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):exampleModel(task);
+const example=(adapter,task)=>adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -115,7 +129,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,14);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,21);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
