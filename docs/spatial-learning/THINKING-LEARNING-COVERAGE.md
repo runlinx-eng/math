@@ -19,19 +19,22 @@
 | groupstories | 0、1、2 | `mt_Zdv-b-iW5K` |
 | structure34 | 2 | `mt_FAXjFkgG6X` |
 
-真实plate-add/remove、token、drop、pour和round逐条重建容器及每个物品的身份。已有物品优先复用，只有建立等份任务的实际pour才可增加物品；平均分与按份量分组始终保持原有总量。每次记录核对各容器计数加桌上剩余等于当前总量，物品不会同时属于两份。最终按任务模式分别核对答案角色、乘除算式与重复加法，保留原valid/inspect双重门槛。
+真实plate-add/remove、token、drop、pour和round逐条重建容器及每个物品的身份。已有物品优先复用，只有建立等份任务的实际pour才可增加物品；平均分与按份量分组始终保持原有总量。每次记录核对各容器计数加桌上剩余等于当前总量，物品不会同时属于两份。最终按任务模式分别核对答案角色、乘除算式与重复加法，保留原valid/inspect双重门槛。算式允许数字与符号之间的空白，但不能把数字间的空白删掉后拼接成另一个整数，例如1 2不视作12；26个多位数算式/重复加法字段覆盖四种空白反例，真实浏览器补充错误写法、纠正后重新检查与离线恢复。
 
 特别包含5份每份0、6份每份1、1份8个，以及13个平均分3份每份4余1。余数严格小于份数，不把余数冒充一份；零物品题仍要求真实建立5个空容器。无效丢放、空操作、数量不足、伪造身份、跨控件历史、修改后旧提交均不能获得严格反馈。允许真实来回移动、重新分配与逆序填充，但移动次数不等于物品总数。
 
 在此前184题/81节点基础上，本项新增29题和3个新覆盖节点。本地审计为 **A213题/84节点、B248/C150/D1232/E153**；原1996原生题/587节点/1223关系、776组1552关联题、323交互类型与39判题模块不变。
 
-验证包括39项专用Node与共享契约、全部29题×2视口的真实控件、完整首次/最终模型和5次提交快照、逆序或逐轮分配、物品来回移动、停止源站后的恢复、失败历史和关联隔离。浏览器必须由最终HEAD的GitHub Required实际执行；合并后main另验，不把本地源码审计当成儿童学习效果。状态与Artifact见PR和总追踪#130。
+验证包括40项专用Node与共享契约、全部29题×2视口的真实控件、完整首次/最终模型和5次提交快照、逆序或逐轮分配、物品来回移动、停止源站后的恢复、失败历史和关联隔离。浏览器必须由最终HEAD的GitHub Required实际执行；合并后main另验，不把本地源码审计当成儿童学习效果。状态与Artifact见PR和总追踪#130。
+
+
+本项最终整合基线为已合并分数比较 [PR #143](https://github.com/runlinx-eng/math/pull/143) 的实际main `241b464e42a206ef9a72abe3d7059d4961df81fc`；其独立 [Required 43591536536](https://github.com/runlinx-eng/math/actions/runs/43591536536) 正在运行。数值修复#139的main独立回归已完整通过，当前分支保留其最终ef8浏览器fixture及全部产品/P10修复。分组题最终HEAD自己的Required与其随后main回归须分别通过，不能用前项结果代替。
 
 ---
 
 ## P9 分数比较排序｜Issue #132：同一单位与精确有理数证据（2026-11-14）
 
-整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，主线提交为 `290cc8348ae69fa5662951a20edee66eff10a251`。本分支已整合数值兼容修复 `3926e8fdb632431efe7b313c4f522a4a359018bb`；[PR #139](https://github.com/runlinx-eng/math/pull/139) 仍等待 CI 完成，尚不能视为已合并。分数比较的最终 HEAD 与整合后的 main 必须各自通过适用验收，不复用前项 CI。
+整合状态：数轴路径 [PR #134](https://github.com/runlinx-eng/math/pull/134) 已合并，独立 main Required [43587220292](https://github.com/runlinx-eng/math/actions/runs/43587220292) 已通过。数值兼容 [PR #139](https://github.com/runlinx-eng/math/pull/139) 的最终 HEAD `ef8c1a86a1de308f090138e60bb0bf460f74c2db` 已完成全部 PR 验收并正式合并为 main `400d31c61c92a3a3b7088aa2020ddd5ffa0cd107`；本分支已同步这个真实主线及最新浏览器测试修正。该主线的独立 Required [43589982503](https://github.com/runlinx-eng/math/actions/runs/43589982503) 另行核验。分数比较的最终 HEAD 与随后整合的 main 必须各自通过适用验收，不复用前项 CI。
 
 本项承接数轴路径 #131，新增 `fraction-order-evidence.js`，明确核对20道原生题/9来源节点，method全部为null。独立来源fixture和review manifest均固定完整原题SHA256；21道同控件关联题不继承原生引导或反馈。
 
