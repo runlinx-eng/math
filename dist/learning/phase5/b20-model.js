@@ -1,6 +1,6 @@
 export const TYPES=new Set(['x-eventchart','x-timeplot','x-timetable','x-dotdraw','x-piesector','x-histbuild','x-boxsummary','x-scatterbuild','x-graphcompare','x-correlationlab']);
 const cp=x=>structuredClone(x),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),int=(x,a,z)=>Number.isInteger(x)&&x>=a&&x<=z,txt=x=>typeof x==='string'&&x.length<=1000;
-export function number(s){s=String(s).trim();if(!s)return NaN;const m=s.match(/^(-?\d+)\s+(\d+)\/(\d+)$/),f=s.match(/^(-?\d+)\/(\d+)$/);if(m&&+m[3])return +m[1]+Math.sign(+m[1]||1)*(+m[2]/+m[3]);if(f&&+f[2])return +f[1]/+f[2];return /^-?\d+(?:\.\d+)?$/.test(s)?+s:NaN;}
+export function number(s){s=String(s).trim();if(!s)return NaN;const m=s.match(/^(-?\d+)\s+(\d+)\/(\d+)$/),f=s.match(/^(-?\d+)\/(\d+)$/);if(m&&+m[3])return +m[1]+(m[1].startsWith('-')?-1:1)*(+m[2]/+m[3]);if(f&&+f[2])return +f[1]/+f[2];return /^-?\d+(?:\.\d+)?$/.test(s)?+s:NaN;}
 const eq=(a,b)=>Number.isFinite(a)&&Math.abs(a-b)<1e-8;
 export const clock=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
 export function events(t){if(!t.random)return t.events;let seed=t.seed;return Array.from({length:t.n},()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return Math.floor(seed/4294967296*t.labels.length);});}

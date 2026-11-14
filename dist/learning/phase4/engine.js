@@ -42,6 +42,10 @@ export const isExtra=t=>!!t?.type?.startsWith('x-');
 const engine=t=>b39?.TYPES.has(t.type)?b39:b38.TYPES.has(t.type)?b38:b37.TYPES.has(t.type)?b37:b02.TYPES.has(t.type)?b02:b03.TYPES.has(t.type)?b03:b04.TYPES.has(t.type)?b04:b05.TYPES.has(t.type)?b05:b06.TYPES.has(t.type)?b06:b07.TYPES.has(t.type)?b07:b08.TYPES.has(t.type)?b08:b09.TYPES.has(t.type)?b09:b10.TYPES.has(t.type)?b10:b11.TYPES.has(t.type)?b11:b12.TYPES.has(t.type)?b12:b13.TYPES.has(t.type)?b13:b14.TYPES.has(t.type)?b14:b15.TYPES.has(t.type)?b15:b16.TYPES.has(t.type)?b16:b17.TYPES.has(t.type)?b17:b18.TYPES.has(t.type)?b18:b19.TYPES.has(t.type)?b19:b20.TYPES.has(t.type)?b20:b21.TYPES.has(t.type)?b21:b22.TYPES.has(t.type)?b22:b23.TYPES.has(t.type)?b23:b24.TYPES.has(t.type)?b24:b25.TYPES.has(t.type)?b25:b26.TYPES.has(t.type)?b26:b27.TYPES.has(t.type)?b27:b28.TYPES.has(t.type)?b28:b29.TYPES.has(t.type)?b29:b30.TYPES.has(t.type)?b30:b31.TYPES.has(t.type)?b31:b32.TYPES.has(t.type)?b32:b33.TYPES.has(t.type)?b33:b34.TYPES.has(t.type)?b34:b35.TYPES.has(t.type)?b35:b36.TYPES.has(t.type)?b36:null;
 export const initialExtra=t=>engine(t)?.initial(t);
 export const validExtra=(t,m)=>{try{return !!engine(t)?.valid(t,m);}catch{return false;}};
+// Only these original engines shared B20's former signed-mixed-number parser.
+// The storage compatibility check must never extend to unrelated task families.
+const sharedNumberEngines=new Set([b20,b21,b22,b23,b24,b25,b26,b28,b29,b30]);
+export const usesSharedNumber=t=>sharedNumberEngines.has(engine(t));
 export const inspectExtra=(t,m)=>engine(t)?.inspect(t,m)||{correct:false,feedback:'这个操作还没有准备好。'};
 export const exampleExtra=t=>engine(t)?.example(t);
 export const actExtra=(t,m,act,data)=>engine(t)?.act(t,m,act,data);
