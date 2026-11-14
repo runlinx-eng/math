@@ -1,7 +1,7 @@
 // Source-bound observations of fraction construction and ordering. This replay
 // is independent of the original B17 grader and never assesses an explanation.
 import * as fractions from './phase5/b17-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  unitorder:{indices:[0,1,2],nodeId:'mt_IfEgu0X449'},
@@ -16,7 +16,7 @@ const SOURCES=Object.freeze({
 });
 
 export function fractionOrderBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-fracorder',nodeId:source.nodeId}))return null;
