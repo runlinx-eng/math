@@ -176,6 +176,30 @@ test('equation meaning is not interchangeable between sharing and counting group
  }
 });
 
+test('operator spacing is allowed but separated digits cannot become a different integer in an equation',()=>{
+ let separatedFields=0;
+ for(const c of cases){
+  const task=taskFor(c),base=groups.example(task);
+  for(const field of ['equation',...(task.repeated?['addition']:[])]){
+   const spaced=structuredClone(base);
+   spaced[field]='  '+base[field].replace(/([×÷+=])/g,' $1 ')+'  ';
+   accepts(task,spaced);
+   if(!/\d{2}/.test(base[field]))continue;
+   separatedFields++;
+   for(const space of [' ','\t','\u00a0','\u3000']){
+    const bad=structuredClone(base);bad[field]=bad[field].replace(/(\d)(\d)/,(_,a,b)=>a+space+b);
+    originalAccepts(task,bad);rejects(task,bad,field+' must not concatenate separated digits');
+    const record={attempts:[{value:structuredClone(bad)}]};
+    assert.equal(thinkingFeedback(task,bad,record,c),null);
+    assert.equal(thinkingFeedback(task,base,record,c),null,'fixing text still needs a new current check');
+    record.attempts.push({value:structuredClone(base)});
+    assert.ok(thinkingFeedback(task,base,record,c),'the complete corrected current submission can receive evidence');
+   }
+  }
+ }
+ assert.equal(separatedFields,26,'all reviewed multi-digit equation and repeated-addition fields are covered');
+});
+
 test('failed or ineffective historical actions never become evidence after a later correction',()=>{
  const task=taskFor(cases.find(c=>c.sessionId==='sharegroups'&&c.index===0));
  for(const kind of ['zero-pour','no-pool','same-destination','cross-widget','unknown-token','reset']){

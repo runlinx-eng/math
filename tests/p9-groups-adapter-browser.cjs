@@ -5,7 +5,7 @@ const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const reviewed=require('./fixtures/p9-groups-cases.cjs');
 const cases=reviewed.map(c=>({...c,id:c.sessionId}));
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-groups-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],notationObservations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -226,6 +226,29 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await shot('rejected');
    }
 
+   activeLabel=`${width}x${height}-separated-digits`;await open(negative);await originalSolve(negative);
+   await field('equation','1 0 ÷ 2 = 5');await submit();
+   const separated=await model(negative),separatedRecord=await saved(negative.id);
+   ok(groups.valid(task,separated)&&groups.inspect(task,separated).correct,
+    activeLabel+' original grading remains unchanged for its whitespace-tolerant equation');
+   ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&
+    !replayGroupsEvidence(task,separated)&&await hint.count()===0,
+    activeLabel+' strict evidence does not silently join separated digits into ten');
+   await reload(negative);ok(await hint.count()===0,activeLabel+' ambiguous submitted notation stays unverified offline');
+   await shot('rejected');await field('equation','10 ÷ 2 = 5');
+   ok(!!replayGroupsEvidence(task,await model(negative))&&await hint.count()===0,
+    activeLabel+' ordinary operator spacing is valid but changed notation needs a fresh check');
+   await submit();const corrected=await model(negative),correctedRecord=await saved(negative.id);
+   ok(await hint.isVisible()&&groups.inspect(task,corrected).correct,
+    activeLabel+' the explicit current corrected integer equation receives evidence');
+   const notationAttempts=correctedRecord.cases[negative.index].attempts;
+   ok(notationAttempts.length===2&&JSON.stringify(notationAttempts[0])===JSON.stringify(separatedRecord.cases[negative.index].attempts[0])&&
+    JSON.stringify(notationAttempts[0].value)===JSON.stringify(separated)&&JSON.stringify(notationAttempts[1].value)===JSON.stringify(corrected),
+    activeLabel+' original and corrected complete submissions both remain intact');
+   await reload(negative);ok(await hint.isVisible()&&JSON.stringify(await model(negative))===JSON.stringify(corrected),
+    activeLabel+' freshly checked corrected notation restores offline');await shot('corrected');
+   notationObservations.push({width,height,id:negative.id,index:negative.index,separated,corrected,attempts:notationAttempts});
+
    const bridge=Object.keys(BRIDGES).flatMap(id=>(sessionTasks(id)||[]).map((task,index)=>({id,index,task}))).find(c=>c.task.type==='x-mulgroups');
    ok(!!bridge,width+' a real associated grouping task is available for source isolation');
    activeLabel=`${width}x${height}-associated-${bridge.id}-${bridge.index}`;await open(bridge);
@@ -238,14 +261,15 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===58,'all 29 native tasks finish at both desktop sizes');
+  ok(notationObservations.length===2,'separated-digit rejection and explicitly rechecked correction run in both viewports');
   const nativeNodes=new Set(cases.map(c=>c.nodeId)).size;
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,notationObservations,offline,
    nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_GROUPS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,notationObservations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
