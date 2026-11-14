@@ -8,6 +8,7 @@ import route from './fixtures/p9-route-cases.cjs';
 import transform from './fixtures/p9-transform-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
 import fractionOrder from './fixtures/p9-fraction-order-cases.cjs';
+import division from './fixtures/p9-division-cases.cjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const path=name=>new URL('../verification/learning-evidence-audit/'+name,import.meta.url);
 const read=name=>JSON.parse(readFileSync(path(name),'utf8'));
@@ -39,6 +40,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...division.cases.map(({id,index})=>'native:'+id+':'+index),
    ...transform.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...groups.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...fractionOrder.map(({id,index})=>'native:'+id+':'+index),
@@ -75,12 +77,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 236 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,93);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 257 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,101);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','division'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,division:21});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:236,B:248,C:150,D:1209,E:153});
+   [level,s.tasks])),{A:257,B:248,C:150,D:1188,E:153});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

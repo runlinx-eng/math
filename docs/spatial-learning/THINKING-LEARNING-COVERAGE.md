@@ -1,3 +1,29 @@
+## P9 逐位除法｜Issue #153：单位守恒、余量角色与舍入（2026-11-14）
+
+新增 `division-evidence.js`，明确绑定21道原生题/9来源节点；相对正式main `d69eeb1acf9d440a184cf7ccfb192e6887e6bc7a` 新增8个严格证据节点，tooladv39此前已有变换证据。全部method:null，24道同型关联任务另列并隔离。独立fixture固定完整task SHA256以及B14/B39题源、B14模型/视图指纹。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| largerfacts | 2 | `mt_8A3pZNOp7Z` |
+| writtenstart | 1 | `mt_DyGBW3ZHh3` |
+| shortdivide | 0、1、2、3 | `mt_MCu_SNg_OW` |
+| divide16 | 0、1、2 | `mt_FvEq4heNBx` |
+| longdivide | 0、1、2 | `mt_WsM4EmdOLe` |
+| remainders | 0、1、2 | `mt_p-nbe0w_lf` |
+| roundanswers | 0、1、2、3 | `mt_QU5R7Aajy9` |
+| estimatecheck | 3 | `mt_ilPrU0cbtT` |
+| tooladv39 | 0 | `mt_ZJC7JnnPCu` |
+
+BigInt逐事件验证 `current = previousRemainder×10 + nextDigit`、`used = quotientDigit×divisor`、`used + remainder = current`、`prefix = quotientPrefix×divisor + remainder` 和 `0 ≤ remainder < divisor`。保留零商、原history索引、reset轮次、33字段全快照、实际index/side/value以及每位十进单位。method只在真实可见选择面板接纳；默认short/long保持题目归因。重做不清洗失败事件，旧字段保留与隐藏期间不可改写分别验证。
+
+六种答案角色独立核对：keep保留整数商与原单位余数；up验证最少足够的容量；down只保留完整份且历史不能曾超出整数商；fraction区分原单位余量与每份的余数/除数；decimal要求精确相等及已经除尽；round用精确分数验证指定精度、中点向上和跨整数进位。59÷16只记录到03.68，余量12的单位是百分之一，`exactAfterSteps:false`；数学舍入真值不冒充孩子多做的小数步骤。容器图是工具自动填充，增减次数不等于份数。
+
+标准正例全部经原V.render可见/启用控件与原model API构造。反例覆盖错误商/乘回/余数、原number语法拒绝、失败后重做、隐藏method/提前容器/无作用调用、200容器边界、down负余量、逆算数字拼接/邻近小数、非法分母/精度、完整State的旧成功与当前编辑隔离。专用48项Node和原B14 30项已实际执行；浏览器脚本包含21题×2视口×5提交、6种负例×2、4种合法探索×2及24关联×2，完整models/attempts/原始压缩状态/独立proof与截图归档，所有数学操作在停止HTTP后执行。
+
+当前本地源码审计 **A257题/101节点、B248/C150/D1188/E153**，13个数学适配器家族；原1996核心题/587节点、776组1552关联练习和原评分/P10保持。新浏览器只追加到既有数位组，60调用七组 `[33,10,3,3,2,7,2]`，全部旧命令、产物和最终统一门禁保留。本项真实Chromium与最终HEAD/合并main独立Required尚需后续CI验收；未执行的验收不计通过，不部署，不声称儿童或独立教研已完成。
+
+---
+
 ## P9 几何变换｜Issue #135：实际参数与对应点（2026-11-14）
 
 新增 `transform-evidence.js`，明确绑定23道原生题/9个新严格证据节点；全部method:null，31道同型关联题不继承反馈。完整原题SHA256由独立fixture固定并逐项加入review manifest。

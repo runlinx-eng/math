@@ -12,6 +12,7 @@ import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -25,5 +26,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
  {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
  {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
- {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence}
+ {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence},
+ {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence}
 ].map(Object.freeze));

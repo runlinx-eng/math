@@ -15,10 +15,15 @@ import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-divtable'){
+    const source=divisionBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每一位的余量和最后的答案各表示什么？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-p24-transform'){
     const source=transformBinding(task,context);
     return source?{type:task.type,summary:'想一想：每个点怎样对应？（可选）',question:source.question}:null;
@@ -75,6 +80,38 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-divtable'){
+    const source=divisionBinding(task,context);if(!source)return null;
+    const proof=replayDivisionEvidence(task,model);if(!proof)return null;
+    const unit=power=>power>=0?['一','十','百','千','万'][power]:['十分之一','百分之一','千分之一','万分之一','十万分之一','百万分之一'][-power-1];
+    const notation=proof.method.value==='short'?'紧凑':'展开乘减';
+    const detail=[proof.method.origin==='task-default'?`本题题目给定${notation}记法；本轮没有记录选择记法的操作。`:
+      `你在这一轮选择了${notation}记法。这表示本次使用的记录形式。`,
+      '工具显示本次带下和换单位的数值示意；这里核对填写的数值，不据此评价独立画图、逐物分配或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayDivisionEvidence(task,a.value)===null))detail.unshift('你修改后又检查了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    for(const s of proof.steps)detail.push(`第${s.position+1}步，单位是${unit(s.power)}：${s.current} = ${s.quotientDigit} × ${proof.divisor} + ${s.remainder}；乘回填写 ${s.used}，余数 ${s.remainder} 小于 ${proof.divisor}。`);
+    detail.push(`提交的倒算核对了整数商、除数和原单位余数：${proof.integerQuotient} × ${proof.divisor} + ${proof.remainingOriginal} = ${proof.dividend}。`);
+    if(proof.answer.role==='keep')detail.push(`你提交的整数商是 ${proof.integerQuotient}，剩下 ${proof.remainingOriginal} 个原来的单位。`);
+    if(proof.answer.role==='fraction')detail.push(`你提交的每份结果 ${proof.answer.raw} 与 ${proof.dividend}/${proof.divisor} 精确相等。整数部分后余 ${proof.remainingOriginal} 个原来的单位；继续平均分到每份，对应 ${proof.answer.fractionalShare.join('/')}。`);
+    if(proof.answer.role==='decimal')detail.push(`你提交的每份小数 ${proof.answer.raw} 与 ${proof.dividend}/${proof.divisor} 精确相等。逐位记录到${unit(-proof.calculated.places)}，这一位的余数已经是0。`);
+    if(proof.rounding){
+      const r=proof.rounding,c=proof.calculated;
+      detail.push(`逐位记录只到 ${c.written}，此时还余 ${c.remainder} 个${unit(-c.places)}的原量。按题目要求保留${r.places}位小数，提交的近似结果是 ${r.formatted}。`);
+      detail.push(`近似值按精确分数 ${proof.dividend}/${proof.divisor} 核对，恰在中点时向上取；实际逐位操作范围仍是已记录的${c.places}位小数。`);
+      if(r.precisionChosen)detail.push(`当前精度选择是${r.places}位小数，与题目要求相符。`);
+    }
+    if(proof.containers){
+      const c=proof.containers;
+      detail.push(c.minimumSufficient?`当前 ${c.count} 份每份最多 ${c.perContainer}，可放 ${c.capacity}，足够安排 ${proof.dividend}；少一份只能放 ${c.adjacentCapacity}，还不够。`:
+        `当前 ${c.count} 份都是完整的 ${c.perContainer}，用去 ${c.capacity}，剩 ${proof.remainingOriginal}；再加一整份需要 ${c.adjacentCapacity}，超过原来的 ${proof.dividend}。`);
+      detail.push(`本轮记录了 ${c.events.length} 次容器增减，最后份数是 ${c.count}。容器示意由工具按份数自动填充，不据此评价逐个物品的分配。`);
+    }
+    if(proof.resets.length)detail.push(`历史保留了 ${proof.resets.length} 次重新做；上面的逐位步骤对应最近一轮。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你为 ${proof.dividend} ÷ ${proof.divisor} 逐位填写了商、乘回量和余数。当前商的逐位记录为 ${proof.calculated.written}${proof.steps.some(s=>s.quotientDigit===0)?'，其中的0也保留在相应数位':''}。每一步的单位和数量关系已核对。`,
+      connection:'换一个用途时，余量能继续分、需要另添一份，还是只能留下完整份？怎样用当前记录说明答案的含义？',detail,method:null};
+  }
   if(task?.type==='x-p24-transform'){
     const source=transformBinding(task,context);if(!source)return null;
     const proof=replayTransformEvidence(task,model);if(!proof)return null;
