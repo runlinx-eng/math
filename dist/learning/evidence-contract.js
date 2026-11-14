@@ -5,6 +5,13 @@ import {BRIDGES,sessionTasks} from './bridges.js';
 
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 
+// Validate raw JSON types before any source-map property lookup can coerce
+// a malformed session or position into a JavaScript property key.
+export function isEvidenceContext(context){
+ return object(context)&&typeof context.sessionId==='string'&&
+  Number.isInteger(context.index)&&context.index>=0;
+}
+
 // Keep the existing serialized snapshot comparison, including property order.
 // Malformed/cyclic values must fail closed instead of breaking the learning UI.
 export function sameEvidence(a,b){
@@ -20,7 +27,7 @@ export function hasExactKeys(value,keys){
 }
 
 export function matchesNativeEvidenceTask(task,context,binding){
- if(!object(task)||!object(context)||!object(binding))return false;
+ if(!object(task)||!isEvidenceContext(context)||!object(binding))return false;
  const {sessionId,index}=context,{type,nodeId}=binding;
  if(typeof sessionId!=='string'||!Number.isInteger(index)||index<0||
     typeof type!=='string'||typeof nodeId!=='string'||task.type!==type||

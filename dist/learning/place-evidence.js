@@ -2,7 +2,7 @@
 // Whole-number and decimal tasks have separately reviewed native scopes;
 // this adapter neither changes the B11 grader nor the v2 workpiece format.
 import * as place from './phase5/b11-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const INTEGER_SOURCES=Object.freeze({
  onesbridge:{indices:[0,1],nodeId:'mt_AKAtWEwpcj'},
@@ -28,7 +28,7 @@ const DECIMAL_SOURCES=Object.freeze({
 });
 
 export function placeBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const integerSource=Object.hasOwn(INTEGER_SOURCES,context.sessionId)?INTEGER_SOURCES[context.sessionId]:null;
  const decimalSource=Object.hasOwn(DECIMAL_SOURCES,context.sessionId)?DECIMAL_SOURCES[context.sessionId]:null;
  const source=integerSource||decimalSource,scale=decimalSource?.scale??1;

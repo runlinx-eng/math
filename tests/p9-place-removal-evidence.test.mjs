@@ -74,7 +74,12 @@ test('source context and complete task changes cannot borrow a reviewed binding'
  for(const c of cases){
   const t=taskAt(c);
   for(const context of [null,[],true,c.id,{}, {...c,index:String(c.index)},{...c,index:-1},
-   {...c,sessionId:'__proto__'},{...c,sessionId:'constructor'}])assert.equal(placeRemovalBinding(t,context),null);
+   {...c,sessionId:'__proto__'},{...c,sessionId:'constructor'},
+   ...JSON.parse(JSON.stringify([
+    {sessionId:null,index:c.index},{sessionId:7,index:c.index},{sessionId:[c.id],index:c.index},
+    {sessionId:{toString:null},index:c.index},{sessionId:c.id,index:null},
+    {sessionId:c.id,index:[c.index]},{sessionId:c.id,index:{toString:null}},{sessionId:c.id,index:0.5}
+   ]))])assert.equal(placeRemovalBinding(t,context),null);
   for(const changed of [{...t,prompt:t.prompt+' changed'},{...t,values:[...t.values].reverse()},
    {...t,scale:100},{...t,op:'+'},{...t,extra:true}])assert.equal(placeRemovalBinding(changed,c),null);
  }
