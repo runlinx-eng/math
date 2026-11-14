@@ -17,6 +17,7 @@ import {joinStoryBinding,replayJoinStoryEvidence} from './joinstory-evidence.js'
 import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
@@ -25,6 +26,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);
     return source?{type:task.type,summary:'想一想：演示和算式怎样对应？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-wideshift'){
+    const source=wideShiftBinding(task,context);
+    return source?{type:task.type,summary:'想一想：数字换到什么单位？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-g25-turn'){
     const source=angleBinding(task,context);
@@ -121,6 +126,22 @@ export function thinkingFeedback(task,model,record,context={}){
         task.swap?'交换两部分后，合并与取走各会怎样？试着说明数量相同与实物够不够的区别。':
         task.hidden?'把找到的那一部分代回完整故事，怎样核对它和已知数量的关系？':
         '如果只改变其中一部分，演示的结果和写下的算式怎样一起改变？',detail,method:null};
+  }
+  if(task?.type==='x-wideshift'){
+    const source=wideShiftBinding(task,context);if(!source)return null;
+    const proof=replayWideShiftEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对记录到的成功移动，没有核对每一次点击；不据此评价自由解释、独立作图或长期掌握。',
+      `你最初留下的猜想是 ${proof.display.guess}，${proof.guess.matchesResult?'与这次得到的数相符':'与这次得到的数不同'}；猜想和后来的移动分别保留。`,
+      '小数点固定在个位和十分位之间，数位行由工具按当前的数自动画出。'];
+    if(attempts.slice(0,-1).some(a=>replayWideShiftEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.leftMoves&&proof.rightMoves)detail.push(`记录保留了向左 ${proof.leftMoves} 次、向右 ${proof.rightMoves} 次的来回探索；总的变化按全部成功移动一起核对。`);
+    const relation=proof.scientific?`${proof.display.end} × 10^${proof.scientific.exponent} = ${proof.display.start}`:
+      `${proof.display.start} ${proof.direction==='times'?'×':'÷'} ${proof.display.factor} = ${proof.display.end}`;
+    return {title:'这次作品中的思考线索',
+      observation:`从 ${proof.display.start} 出发，记录里有 ${proof.successfulMoves} 次成功移动。每次向左一格乘10，向右一格除10；现在表示 ${proof.display.end}，与你这次填写的数一致。${proof.scientific?'第一部分至少1、小于10，用填写的指数乘回去得到原数：':'合起来的数量关系是：'}${relation}。`,
+      connection:proof.scientific?'第一部分向左放大时，为什么需要负指数把它还原？试着把这个表示乘回原数。':'如果先向左再向右移动，数字所代表的单位怎样变化？试着用原数和现在的数核对总的倍数。',
+      detail,method:null};
   }
   if(task?.type==='x-g25-turn'){
     const source=angleBinding(task,context);if(!source)return null;

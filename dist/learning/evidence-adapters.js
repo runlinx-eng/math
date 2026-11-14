@@ -15,6 +15,8 @@ import {transformBinding,replayTransformEvidence} from './transform-evidence.js'
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 
+import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
+
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
@@ -29,5 +31,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
  {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence},
  {id:'angle',type:'x-g25-turn',binding:angleBinding,replay:replayAngleEvidence},
- {id:'joinstory',type:'x-joinstory',binding:joinStoryBinding,replay:replayJoinStoryEvidence}
+ {id:'joinstory',type:'x-joinstory',binding:joinStoryBinding,replay:replayJoinStoryEvidence},
+ {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence}
 ].map(Object.freeze));
