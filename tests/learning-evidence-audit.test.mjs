@@ -5,7 +5,12 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import expansion from './fixtures/p9-mature-expansion-cases.cjs';
 import route from './fixtures/p9-route-cases.cjs';
+import fractionCase from './fixtures/p9-fractioncase-cases.cjs';
+import fractionOperations from './fixtures/p9-fraction-operations-cases.cjs';
 import angle from './fixtures/p9-angle-cases.cjs';
+import portion from './fixtures/p9-portiongroups-cases.cjs';
+import estimate from './fixtures/p9-estimate-cases.cjs';
+import joinStory from './fixtures/p9-joinstory-cases.cjs';
 import transform from './fixtures/p9-transform-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
 import fractionOrder from './fixtures/p9-fraction-order-cases.cjs';
@@ -40,6 +45,11 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...fractionCase.cases.map(({id,index})=>'native:'+id+':'+index),
+   ...fractionOperations.cases.map(({id,index})=>'native:'+id+':'+index),
+   ...portion.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
+   ...estimate.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
+   ...joinStory.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...angle.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...transform.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...groups.map(({sessionId,index})=>'native:'+sessionId+':'+index),
@@ -77,12 +87,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 259 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,103);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 385 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,147);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:259,B:248,C:150,D:1186,E:153});
+   [level,s.tasks])),{A:385,B:210,C:150,D:1163,E:88});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

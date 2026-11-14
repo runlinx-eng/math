@@ -85,8 +85,15 @@ jobs:
           node --check dist/learning/groupwalk-evidence.js
           node --check dist/learning/route-evidence.js
           node --check tests/p9-route-adapter-browser.cjs
+          node --check dist/learning/portiongroups-evidence.js
+          node --check tests/p9-portiongroups-adapter-browser.cjs
+          node --check dist/learning/estimate-evidence.js
+          node --check tests/p9-estimate-adapter-browser.cjs
           node --check dist/learning/angle-evidence.js
           node --check tests/p9-angle-adapter-browser.cjs
+          node --check dist/learning/joinstory-evidence.js
+          node --check scripts/joinstory-evidence-fixture.mjs
+          node --check tests/p9-joinstory-adapter-browser.cjs
           node --check dist/learning/transform-evidence.js
           node --check dist/learning/phase5/b14-view.js
           node --check tests/b14-division-container-caption-browser.cjs
@@ -95,6 +102,10 @@ jobs:
           node --check tests/p9-groups-adapter-browser.cjs
           node --check dist/learning/fraction-order-evidence.js
           node --check tests/p9-fraction-order-adapter-browser.cjs
+          node --check dist/learning/fraction-operations-evidence.js
+          node --check tests/p9-fraction-operations-adapter-browser.cjs
+          node --check dist/learning/fractioncase-evidence.js
+          node --check tests/p9-fractioncase-adapter-browser.cjs
           node --check tests/p9-numeric-compat-browser.cjs
           node --check dist/learning/evidence-contract.js
           node --check dist/learning/evidence-adapters.js
@@ -157,12 +168,19 @@ jobs:
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-groupwalk-evidence-adapter.test.mjs
             tests/p9-route-evidence-adapter.test.mjs
+            tests/p9-portiongroups-evidence-adapter.test.mjs
+            tests/p9-estimate-evidence-adapter.test.mjs
             tests/p9-angle-evidence-adapter.test.mjs
+            tests/p9-joinstory-evidence-adapter.test.mjs
+            tests/phase5-b10.test.mjs
             tests/p9-transform-evidence-adapter.test.mjs
             tests/phase5-b14.test.mjs
             tests/b14-division-container-caption.test.mjs
             tests/p9-groups-evidence-adapter.test.mjs
             tests/p9-fraction-order-evidence-adapter.test.mjs
+            tests/p9-fraction-operations-evidence-adapter.test.mjs
+            tests/p9-fractioncase-evidence-adapter.test.mjs
+            tests/phase5-b18.test.mjs
             tests/p9-numeric-compat.test.mjs
             tests/p10-numeric-save-races.test.mjs
             tests/p9-evidence-contract.test.mjs
@@ -249,7 +267,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, p10, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-fractioncase, p10, p8-performance]
     env:
       MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
