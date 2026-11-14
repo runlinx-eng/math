@@ -10,6 +10,7 @@ import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
+import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const out=resolve(root,'verification/learning-evidence-audit');
@@ -67,7 +68,8 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // reviewed binding and successful independent replay establish A, not a board key.
  const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):exampleModel(task))):null;
+   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):
+    task.type==='x-pvbench'?pvbenchEvidenceExample(task):exampleModel(task))):null;
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}

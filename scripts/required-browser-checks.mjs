@@ -100,9 +100,11 @@ const groups={
  "evidence-place":{commands:[
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-decimal-place-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
+  "verification/p9-pvbench-adapter/",
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},

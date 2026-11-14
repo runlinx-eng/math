@@ -10,6 +10,7 @@ import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -21,5 +22,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'place',type:'x-placecalc',binding:placeBinding,replay:replayPlaceEvidence},
  {id:'groupwalk',type:'x-unitwalk',binding:groupwalkBinding,replay:replayGroupwalkEvidence},
  {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
- {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence}
+ {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
+ {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence}
 ].map(Object.freeze));

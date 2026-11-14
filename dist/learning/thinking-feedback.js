@@ -13,10 +13,15 @@ import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
+import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-pvbench'){
+    const source=pvbenchBinding(task,context);
+    return source?{type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fracorder'){
     const source=fractionOrderBinding(task,context);
     return source?{type:task.type,summary:'想一想：这些量怎样比较？（可选）',question:source.question}:null;
@@ -65,6 +70,30 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-pvbench'){
+    const source=pvbenchBinding(task,context);if(!source)return null;
+    const proof=replayPVBenchEvidence(task,model);if(!proof)return null;
+    const units={hundreds:'百',tens:'十',ones:'一',thousands:'千'};
+    const form=u=>[3,0,1,2].filter(i=>u[i]>0).map(i=>`${u[i]} 个 ${units[proof.unitOrder[i]]}`).join('、');
+    const examples=proof.swaps.slice(0,3).map(s=>`${s.fromCount} 个 ${units[s.fromUnit]} 换成 ${s.toCount} 个 ${units[s.toUnit]}（都是 ${s.quantity}）`);
+    const detail=['这里只核对记录中的成功交换和当前提交；没有自动评价自由解释、独立证明或长期掌握。',
+      '没有留下交换记录的点击，不据此判断有没有尝试或为什么没有变化。'];
+    if(attempts.slice(0,-1).some(a=>replayPVBenchEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.saved){
+      detail.push(`已保存 ${proof.saved.count} 种装法：${proof.saved.representations.map(s=>form(s.units)).join('；')}。它们都表示 ${proof.total}，保存顺序可以与记录中的交换路径对应。`);
+      detail.push('这里只核对保存装法与交换路径的对应关系，不能确定每次保存发生在第几次交换之后。');
+      if(proof.saved.goal==='specified-end')detail.push(`留下的装法中包含题目要求的 ${form(proof.final)}。`);
+      if(proof.saved.goal==='before-after-one-ten')detail.push('保存记录中有原装法，也有把其中1个十换成10个一后的装法。');
+    }
+    if(proof.submitted.packReport)detail.push(`你这次提交的记录是 ${proof.submitted.packReport.packs} 包十颗，余 ${proof.submitted.packReport.remainder} 颗；这里核对的是一共可装的整十包数。`);
+    if(proof.submitted.expanded)detail.push(`你这次提交的展开记录是 ${proof.submitted.expanded.join(' + ')} = ${proof.total}，这些填写值与当前总量相符。`);
+    return {title:'这次作品中的思考线索',
+      observation:`本次记录里有 ${proof.swapCount} 次成功交换：合并 ${proof.combined} 次、拆开 ${proof.split} 次。${examples.join('；')}${proof.swapCount>3?'；其余已记录交换也逐条核对':''}。每条记录中的交换前后，总量都是 ${proof.total}。当前装法为 ${form(proof.final)}，与你这次填写的总量 ${proof.submitted.answer} 相符。`,
+      connection:task.packReport?'一共能装多少包十颗，与十位上的数字有什么不同？试着用现在的装法说明。':
+       '块数或条数变了，总量为什么还能保持？试着说明十个小单位和一个相邻大单位之间的关系。',
+      detail,method:null};
+  }
   if(task?.type==='x-fracorder'){
     const source=fractionOrderBinding(task,context);if(!source)return null;
     const proof=replayFractionOrderEvidence(task,model);if(!proof)return null;
