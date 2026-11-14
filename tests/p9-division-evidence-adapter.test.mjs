@@ -240,8 +240,8 @@ test('up permits adding then removing an extra container while describing automa
  const extra=p.containers.events.at(-2);assert.equal(extra.to,17);assert.equal(extra.shownAllocated,125);assert.equal(extra.unusedCapacity,11);assert.equal(extra.toolFillsDiagram,true);
 });
 
-test('down cannot describe the original negative remainder caption as a legal physical exploration',()=>{
- const t=at('remainders',2),m=solve(t);click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/完整装入后剩 -2/);
+test('down histories without a renderer version retain the conservative evidence boundary after the caption fix',()=>{
+ const t=at('remainders',2),m=solve(t);click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/要把这些份都装满还差 2/);
  click(t,m,'b14-container',{value:-1});original(t,m);rejects(t,m);click(t,m,'b14-reset');solve(t,m);original(t,m);rejects(t,m);
  const valid=solve(t);click(t,valid,'b14-container',{value:-1});click(t,valid,'b14-container',{value:1});const p=accepts(t,valid);
  assert.equal(p.containers.count,5);assert.equal(p.containers.adjacentCapacity,54);assert.equal(p.containers.fullContainersOnly,true);assert.equal(p.remainingOriginal,7);
@@ -278,7 +278,7 @@ test('browser negative and exploration plans use original visible controls and r
     run(t,m,browserPlan.operationPlan(F,t).filter(s=>s.position===undefined||s.position>=1));
    }else{click(t,m,'b14-reset');solve(t,m);}
   }else{
-   solve(t,m);if(variant==='down-overfill'){click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/完整装入后剩 -2/);click(t,m,'b14-container',{value:-1});}
+   solve(t,m);if(variant==='down-overfill'){click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/要把这些份都装满还差 2/);click(t,m,'b14-container',{value:-1});}
    else change(t,m,'check',variant==='inverse-digit-join'?'1 5×8+5=125':'15.00000000000000001×8+5=125');
   }
   assert.equal(submit(a).correct,true);counts.submissions++;rejects(t,m);assert.ok(validateLesson(JSON.parse(JSON.stringify(a)),id));

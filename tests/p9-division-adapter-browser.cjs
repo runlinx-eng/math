@@ -216,7 +216,7 @@ if(require.main===module)(async()=>{
     }else{
      await run(spec);
      if(variant==='down-overfill'){
-      await mathematicalAction(spec,'b14-container',{value:1});ok((await page.locator('#extra-visual').innerText()).includes('完整装入后剩 -2'),activeLabel+' original overfill caption is negative and cannot be called a valid physical distribution');
+      await mathematicalAction(spec,'b14-container',{value:1});ok((await page.locator('#extra-visual').innerText()).includes('要把这些份都装满还差 2'),activeLabel+' current caption accurately reports missing capacity; versionless historical evidence remains conservative');
       await mathematicalAction(spec,'b14-container',{value:-1});
      }else await field('check',variant==='inverse-digit-join'?'1 5×8+5=125':'15.00000000000000001×8+5=125');
     }

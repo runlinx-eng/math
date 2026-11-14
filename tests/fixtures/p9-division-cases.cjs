@@ -444,6 +444,6 @@ module.exports={
     "dist/learning/phase5/b14.js": "ea9fc678c74ecaebcd7557a302128312c48e3075c04bab38aaae3efcdda54093",
     "dist/learning/phase5/b39.js": "f282d5afe8b478b1e6ff623424f473d42f70212142556a0a433d68d369670838",
     "dist/learning/phase5/b14-model.js": "9fe453c590a81e350fcd6f9988bc44ff27727fc5c51991363db803116c8a3ea4",
-    "dist/learning/phase5/b14-view.js": "ce5cc9637ef387ecb35f6c337cee589d3dc007d57bcc43de5a2eb6e299c9a990"
+    "dist/learning/phase5/b14-view.js": "964a738353548589afa95ce39eeac6b03a2e07e925b25362f567b481b273b007"
   }
 };

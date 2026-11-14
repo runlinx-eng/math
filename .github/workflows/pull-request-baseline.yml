@@ -88,6 +88,8 @@ jobs:
           node --check dist/learning/angle-evidence.js
           node --check tests/p9-angle-adapter-browser.cjs
           node --check dist/learning/transform-evidence.js
+          node --check dist/learning/phase5/b14-view.js
+          node --check tests/b14-division-container-caption-browser.cjs
           node --check dist/learning/division-evidence.js
           node --check tests/p9-division-adapter-browser.cjs
           node --check tests/p9-transform-adapter-browser.cjs
@@ -159,6 +161,8 @@ jobs:
             tests/p9-route-evidence-adapter.test.mjs
             tests/p9-angle-evidence-adapter.test.mjs
             tests/p9-transform-evidence-adapter.test.mjs
+            tests/phase5-b14.test.mjs
+            tests/b14-division-container-caption.test.mjs
             tests/p9-division-evidence-adapter.test.mjs
             tests/p9-groups-evidence-adapter.test.mjs
             tests/p9-fraction-order-evidence-adapter.test.mjs
