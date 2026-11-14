@@ -5,11 +5,13 @@ import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
 import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
+import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
  {id:'line',type:'x-s23-lines',binding:lineBinding,replay:replayLineEvidence},
  {id:'counterexample',type:'x-r38-counterexample',binding:counterexampleBinding,replay:replayCounterexampleEvidence},
- {id:'fraction',type:'x-fracrename',binding:fractionBinding,replay:replayFractionEvidence}
+ {id:'fraction',type:'x-fracrename',binding:fractionBinding,replay:replayFractionEvidence},
+ {id:'unitwalk',type:'x-unitwalk',binding:unitwalkBinding,replay:replayUnitwalkEvidence}
 ].map(Object.freeze));

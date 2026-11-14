@@ -8,10 +8,15 @@ import {arrayBinding,replayArrayEvidence} from './array-evidence.js';
 import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
+import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-unitwalk'){
+    const source=unitwalkBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每一小步表示多少？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fracrename'){
     const source=fractionBinding(task,context);
     return source?{type:task.type,summary:'想一想：换个分法，量会变吗？（可选）',question:source.question}:null;
@@ -41,6 +46,25 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-unitwalk'){
+    const source=unitwalkBinding(task,context);
+    if(!source)return null;
+    const proof=replayUnitwalkEvidence(task,model);
+    if(!proof)return null;
+    const name=r=>r.join('/'),detail=[
+      '这里只核对本次记录中的逐步移动和当前提交；没有自动评价自由解释、独立论证、表示转换能力或长期掌握。'
+    ];
+    if(attempts.slice(0,-1).some(a=>replayUnitwalkEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(task.copies)detail.push(`你填写的加法包含 ${task.n} 个 ${name(proof.unit)}，与最后位置相符。`);
+    if(task.whole)detail.push(`最后位置含 ${proof.whole} 个完整的1，零头是 ${name(proof.remainder)}。`);
+    if(proof.decimal)detail.push(`填写的 ${proof.decimal} 与最后位置表示同一个量；这只核对了本次对应关系。`);
+    if(proof.bounds)detail.push(`你核对了相邻整数 ${proof.bounds[0]} 和 ${proof.bounds[1]}${task.halfBound?'，最后位置在1/2的左边':''}。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你把0到1分成 ${task.d} 个等长间隔，每一小步是 ${name(proof.unit)}。从0出发，实际前进 ${proof.advances} 次、后退 ${proof.retreats} 次；每一步的位置变化已逐条核对，最后到达 ${name(proof.end)}。`,
+      connection:'如果先多走一小步，再退回一小步，位置会怎样？换一种等分时，同样的步数还表示同一个量吗？',
+      detail,method:source.method};
+  }
   // A checked representation can be described without claiming the child has
   // independently explained the equivalence or mastered a thinking ability.
   if(task?.type==='grid'){

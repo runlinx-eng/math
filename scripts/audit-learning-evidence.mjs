@@ -157,7 +157,7 @@ const summary={schema:'math-learning-interaction-evidence/1',basis:'Live source 
  historyTasksNative:native.filter(r=>r.hasHistory).length,
  replayVerifiedTasksNative:native.filter(r=>r.replayVerified).length,
  guideBindingsNative:native.filter(r=>r.optionalThinkingGuide).length,
- caution:'A is a source-bound strict sequence, array, line-relation, counterexample or fraction replay capability for exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
+ caution:'A is a source-bound strict mathematical replay capability of the individually reviewed registered adapters at exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});
 write('types.json',{rows:byType});
