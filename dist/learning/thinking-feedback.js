@@ -131,11 +131,21 @@ export function thinkingFeedback(task,model,record,context={}){
     let observation=`你实际摆出了 ${proof.rows} 行、每行 ${proof.cols} 格；每格代表 ${proof.unit}，这幅阵列共表示 ${proof.total}。`;
     if(proof.turned)observation+=`你实际转向后看到了 ${proof.cols} 行、每行 ${proof.rows} 格，总量仍是 ${proof.total}。`;
     if(proof.cut!==null)observation+=`你实际在第 ${proof.cut} 列后切开，核对得到左边 ${proof.left}、右边 ${proof.right}，合起来仍是 ${proof.total}。`;
+    const detail=['这里只检查本次阵列、实际操作和当前提交；不能据此判断独立解释、一般证明、归纳能力或长期掌握。'];
+    if(proof.unknown)detail.push(`题目中的未知量是${{a:'份数',b:'每份的量',p:'总量'}[proof.unknown.kind]}，你填写的 ${proof.unknown.value}${proof.unknown.original?' 已代回原来的 '+proof.unknown.original+' 核对':' 与阵列对应'}。`);
+    if(proof.addition)detail.push(`你按当前的 ${proof.addition.length} 行写出连加，每一项是 ${proof.addition[0]}，合计 ${proof.total}。`);
+    if(proof.reversedEquation)detail.push('你把总量写在等号左边，等号两边仍与这幅阵列对应。');
+    if(proof.approximate){
+      // The only reviewed estimate is tensproducts[3], whose given box amount
+      // is approximate. Exact model arithmetic does not measure its real boxes.
+      observation=`你按题目中“每箱大约200个”摆出 ${proof.rows} 行、每行 ${proof.cols} 格，每格代表 ${proof.unit}；估算模型表示 ${proof.total}，所以5箱大约有 ${proof.total} 个。`;
+      detail.push('题目给出的每箱数量本来就是估计；这里只核对估算阵列和 ≈ 关系，没有验证实际箱子的精确总数。');
+    }
     return {title:'这次作品中的思考线索',observation,
-      connection:proof.cut!==null?'为什么左右两边都保留了同样的行数？试着把等式说给别人听。':
+      connection:proof.approximate?'如果每箱实际数量比估计多一点或少一点，实际总量会怎样？为什么这里要保留“大约”？':
+        proof.cut!==null?'为什么左右两边都保留了同样的行数？试着把等式说给别人听。':
         proof.turned?'转向只换了行和列，为什么格子总数没有变化？':'如果每格代表的数量再变化，这幅阵列又会表示多少？',
-      detail:['这里只检查本次阵列、实际操作和当前提交；不能据此判断独立解释、一般证明、归纳能力或长期掌握。'],
-      method:{nodeId:arraySource.nodeId,label:arraySource.label,code:arraySource.code}};
+      detail,method:arraySource.method};
   }
   const lineSource=lineBinding(task,context);
   if(lineSource){
@@ -180,8 +190,9 @@ export function thinkingFeedback(task,model,record,context={}){
       task.op==='multiply'?'按乘'+task.step+'的规则':task.op==='affine'?'按乘'+task.a+'再加'+task.b+'的规则':'按位置规则';
     const steps=proof.advances+' 次'+move;
     const undo=proof.undos?'，其中还实际撤回了 '+proof.undos+' 次':'';
-    const numericPrediction=task.questions?.length===1&&task.questions[0].kind==='number';
-    const checked=numericPrediction?'预测下一项是 '+model.answers[0]:'填写的回答与题目条件相符';
+    const checked=(task.questions||[]).map((question,index)=>question.kind==='number'?
+      `核对了“${question.label}”：${model.answers[index]}`:
+      `“${question.label}”的回答符合题目条件`).join('；')||'当前数列符合题目条件';
     detail.push('这里只核对可重放的逐项操作与当前答案；不能据此判断独立归纳、一般证明、自由解释或长期掌握。');
     return {title:'这次作品中的思考线索',
       observation:'你从'+proof.displayValues[0]+'出发，实际留下了 '+proof.displayValues.join('、')+
@@ -189,7 +200,7 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:task.op==='add'?'换个起点后，相邻两项仍怎样变化？你能说明为什么吗？':
         '换一个起点或运算规则，这些步骤还能照搬吗？你会先检查哪一步？',
       detail,
-      method:{nodeId:sequenceSource.nodeId,label:sequenceSource.label,code:'ccss-math:MP.8'}
+      method:sequenceSource.method
     };
   }
   if(task.type==='x-r38-chain'){

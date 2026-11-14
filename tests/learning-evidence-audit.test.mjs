@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import expansion from './fixtures/p9-mature-expansion-cases.cjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const path=name=>new URL('../verification/learning-evidence-audit/'+name,import.meta.url);
 const read=name=>JSON.parse(readFileSync(path(name),'utf8'));
@@ -34,6 +35,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...[...expansion.sequence,...expansion.array].map(({id,index})=>'native:'+id+':'+index),
    'native:general34:2','native:general34:3',
    'native:reason34:1','native:tables34:0','native:tables34:2',
     'native:structure34:1','native:tables34:1',
@@ -59,12 +61,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 81 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,39);
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 134 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,66);
  assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:5,array:7,line:10,counterexample:2,fraction:13,unitwalk:18,place:26});
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:26});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:81,B:328,C:150,D:1269,E:168});
+   [level,s.tasks])),{A:134,B:286,C:150,D:1258,E:168});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

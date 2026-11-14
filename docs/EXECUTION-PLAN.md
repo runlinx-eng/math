@@ -1,3 +1,14 @@
+## 2026-11-14｜P9 成熟家族扩展专项（Issue #122）
+
+第七批和CI承载改进均已合并且main独立Required通过，基线为 `86263f18d148ebae26ed36086554cffdae8373e3`。本批将来源与数学语义已逐题审查的11道数列、42道阵列接入严格证据，新增53题/27节点；保留原判题、任务和v2。未知量及代入、重复加法、反向等式与估算分别补充独立数学条件，不因共用类型直接放行。
+
+全量审计A134题/66节点，B286/C150/D1258/E168。六家族可扩展/排除清单、精确来源和反馈边界见[覆盖台账](spatial-learning/THINKING-LEARNING-COVERAGE.md)。新增来源均不借用MP标签；估算保留“大约”，数列反馈使用真实问题标签。
+
+本批独立PR须完成新增53题×两视口以及全部既有Chromium/P10、最终HEAD适用CI、Artifact核对和合并后main独立Required；运行中或本地预备不视为通过。完成后自动推进成组分数跳步，仍遵守独立Issue/分支/PR/验收循环。
+
+---
+
+
 ## 2026-11-14｜P9 规模扩展的 CI 承载（Issue #120）
 
 从第七批已合并且独立 Required 成功的 main `855f6f11bbc3a7be518297354d6be588e184c3ee` 开始。PR #119 的最终 Required [43565671703](https://github.com/runlinx-eng/math/actions/runs/43565671703) 实际用时31分50秒，其中主浏览器循环29分41秒；接下来的成熟家族专项将增加106个题目/视口组合，现有35分钟单job已经没有安全余量。
@@ -6,7 +17,7 @@
 
 同名 `required-checks` 作为最终阻塞门禁，在 `always()` 中核对静态任务、完整矩阵和当前run/SHA的逐组执行记录。失败、取消、跳过、缺组、命令遗漏、过期来源均不能合并；main和手动运行总是完整执行。不相关PR只允许明确不适用记录。每组截图/日志分别归档，不通过扩大令牌权限或分支保护变更实现并行。
 
-本分支必须以最新HEAD实跑五组Chromium及全部适用CI、核对Artifact和截图后合并，并再次独立验证main；只有该闭环完成后，才启动成熟家族53题的独立专项。执行记录与实际验收范围记于Issue/PR。
+CI承载 [PR #121](https://github.com/runlinx-eng/math/pull/121) 已合并为main `86263f18d148ebae26ed36086554cffdae8373e3`；最终HEAD的 [Required 43570839533](https://github.com/runlinx-eng/math/actions/runs/43570839533)、[Overview 43570839525](https://github.com/runlinx-eng/math/actions/runs/43570839525) 与合并后独立 [Required 43571798002](https://github.com/runlinx-eng/math/actions/runs/43571798002) 均成功。真实五组51调用、P10、611张归档PNG完整性及代表性原图已核对；同run/SHA执行记录实际被汇总门禁读取。本次PR Required用时10分08秒，保留全部原断言与适用检查。后续成熟扩展在上方独立Issue中推进；局部聚焦测试的既有截图归档遗漏留给第十批补齐，不改地图行为。
 
 ---
 

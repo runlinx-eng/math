@@ -35,7 +35,7 @@ test('five reviewed native positions bind exactly to their own MP.8 source goal'
     for(const [index,task] of tasks.entries()){
       if(task.type!=='x-p34-sequence')continue;
       const key=id+':'+index,binding=sequenceBinding(task,{sessionId:id,index});
-      assert.equal(!!binding,eligible.has(key),key+' must not inherit a source label');
+      assert.equal(!!binding?.method,eligible.has(key),key+' must not inherit an MP.8 source label');
     }
   }
   const t=TASKS.tables34[2];

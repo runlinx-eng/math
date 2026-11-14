@@ -79,6 +79,7 @@ jobs:
           node --check dist/learning/fraction-evidence.js
           node --check dist/learning/place-evidence.js
           node --check tests/p9-place-adapter-browser.cjs
+          node --check tests/p9-mature-expansion-browser.cjs
           node --check dist/learning/unitwalk-evidence.js
           node --check dist/learning/evidence-contract.js
           node --check dist/learning/evidence-adapters.js
@@ -138,6 +139,7 @@ jobs:
             tests/p9-place-evidence-adapter.test.mjs
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-evidence-contract.test.mjs
+            tests/p9-mature-expansion.test.mjs
             tests/p9-line-evidence-adapter.test.mjs
             tests/p9-array-evidence-adapter.test.mjs
             tests/thinking-source-map.test.mjs
@@ -216,7 +218,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ui, evidence-core, evidence-place, p10, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, p10, p8-performance]
     env:
       MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
