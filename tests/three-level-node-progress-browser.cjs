@@ -20,7 +20,12 @@ const checks=[],errors=[];
   const screenshot=async name=>page.screenshot({path:path.join(out,name+'.png')});
   const waitTier=async expected=>page.waitForFunction(({id,tier})=>{
     const el=document.querySelector('.space-label.node[data-key="node:'+id+'"]');
-    return el?.dataset.progress==='tier-'+tier;
+    // refresh updates DOM progress before paintObjects updates the actual
+    // completion-ring matrix on the next frame. Await both in the existing
+    // deadline so neither lighting nor extinguishing reads the previous frame.
+    return el?.dataset.progress==='tier-'+tier&&
+      typeof window.mathSpace?.completionMarker==='function'&&
+      window.mathSpace.completionMarker('node:'+id)===(tier===3);
   },{id:nodeId,tier:expected},{timeout:30000});
   const saveReport=()=>fs.writeFileSync(path.join(out,'browser-results.json'),JSON.stringify({schema:'math-node-progress-browser/1',checks,errors,sourceNode:nodeId,chromium:true},null,2)+'\n');
   try{

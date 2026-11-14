@@ -243,7 +243,10 @@ if(require.main===module)(async()=>{
      ok(backup.version===2&&same(backup.state.lessons[id],beforeExport.lesson),activeLabel+' real V2 export preserves huge old failure and exact corrected record');
      await seedEmpty(null);await page.goto(base+'v2.html#trail');await page.locator('#import-file').waitFor({state:'attached'});
      const importFile=async(text,name)=>{
-      await page.locator('#import-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(text)});
+      // The hidden input exists before boot loads atlas; the visible import
+      // button is rendered only after the original application is ready.
+      const choosing=page.waitForEvent('filechooser');await page.locator('[data-do="import"]').click();
+      const chooser=await choosing;await chooser.setFiles({name,mimeType:'application/json',buffer:Buffer.from(text)});
       await page.waitForFunction(()=>document.querySelector('#import-file')?.value==='');return page.locator('#toast').innerText();
      };
      ok((await importFile(payload,'order-real-export.json')).includes('备份已合并'),activeLabel+' real backup imports into empty test state while offline');
