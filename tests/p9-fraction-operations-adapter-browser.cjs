@@ -324,7 +324,7 @@ if(require.main===module)(async()=>{
     if(variant==='repeat-confirmation')ok(proof.events.at(-1).effect===false&&proof.events.at(-2).effect===false,
      activeLabel+' repeated valid confirmations are not described as new groups');
     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),activeLabel+' checked exploration restores offline');await shot('checked');
-    explorationObservations.push({width,height,variant,before,model:m,proof,record:final.record,rawState:final.rawState,state:final.state,observation:await hint.innerText()});
+    explorationObservations.push({width,height,variant,id:spec.id,index:spec.index,before,model:m,proof,record:final.record,rawState:final.rawState,state:final.state,observation:await hint.innerText()});
    }
 
    for(const spec of associated){
