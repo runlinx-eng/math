@@ -8,14 +8,17 @@ import {sameEvidence,hasExactKeys,matchesNativeEvidenceTask,latestSubmissionMatc
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs';
+import expansion from './fixtures/p9-mature-expansion-cases.cjs';
 
 await ensureB39Ready();
 const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
- sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1])],
- array:[...positions('structure34',[1]),...positions('tables34',[1]),...positions('derivepatterns',[0,3,4,5,6])],
+ sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
+  ...expansion.sequence.map(({id,index})=>({sessionId:id,index}))],
+ array:[...positions('structure34',[1]),...positions('tables34',[1]),...positions('derivepatterns',[0,3,4,5,6]),
+  ...expansion.array.map(({id,index})=>({sessionId:id,index}))],
  line:[...positions('lineproperties',[0,1,2]),...positions('geometrynotation',[2]),...positions('lineorientation',[0,1,2,3]),...positions('linemark',[1]),...positions('structure34',[3])],
  counterexample:positions('argument38',[3,4]),
  fraction:[...positions('recutnames',[0,1,2]),...positions('samenames',[0,1,2]),...positions('simplestparts',[0,2]),...positions('tenthtohundred',[0,2]),...positions('thousandparts',[1]),...positions('decimalstops',[0,1])],

@@ -99,6 +99,11 @@ const groups={
  ],artifacts:[
   "verification/p9-place-adapter/",
  ]},
+ "evidence-expansion":{commands:[
+  {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-mature-expansion/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
   {"file":"tests/p10-longterm-offline-browser.cjs","env":{}},

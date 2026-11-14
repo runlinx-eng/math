@@ -30,7 +30,9 @@ test('seven explicitly sourced native B13 arrays offer optional prompts',()=>{
   assert.ok(thinkingGuide(task,context).question.length>10);
   assert.equal(arrayBinding({...task,unit:10000},context),null);
  }
- assert.equal(arrayBinding(T13.productways[0],{sessionId:'productways',index:0}),null);
+ const domain=arrayBinding(T13.productways[0],{sessionId:'productways',index:0});
+ assert.equal(domain?.nodeId,'mt_Lb2ZnMdkYR');
+ assert.equal(domain.method,null,'domain array facts must not inherit an MP label');
  assert.equal(arrayBinding(T34.structure34[1],{sessionId:'structure34',index:3}),null);
  assert.equal(arrayBinding(T34.structure34[1],{sessionId:'link-productways-structure34',index:1}),null);
 });

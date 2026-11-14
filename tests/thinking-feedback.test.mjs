@@ -202,7 +202,9 @@ test('MP.8 tables34 sequence uses only replay-checked native events and never la
   const other=B34.linear34[2],otherDone=p34.example(other);
   assert.equal(thinkingFeedback(other,otherDone,{attempts:[attempt(otherDone)]},context),null,
     'a different actual task definition cannot claim MP.8 tables34');
-  assert.equal(thinkingFeedback(other,otherDone,{attempts:[attempt(otherDone)]},{sessionId:'linear34',index:2}),null);
+  const domain=thinkingFeedback(other,otherDone,{attempts:[attempt(otherDone)]},{sessionId:'linear34',index:2});
+  assert.equal(domain?.method,null,'reviewed domain facts never inherit the thinking course MP.8 label');
+  assert.match(domain.observation,/第10项.*41/);
   const src=JSON.parse((await import('node:fs')).readFileSync(new URL('../docs/spatial-learning/thinking-source-map.json',import.meta.url)));
   const node=src.groups.find(g=>g.code==='ccss-math:MP.8').nodes.find(n=>n.id===result.method.nodeId);
   assert.equal(node.lessonId,'tables34');
