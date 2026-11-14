@@ -234,6 +234,7 @@ def selected_states(archive, selected):
         R.require(state.get("schema") == 2, "selected decoded state is not original schema 2")
         lesson = state["lessons"][key[0]]
         model, record = lesson["models"][str(key[1])], lesson["cases"][str(key[1])]
+        R.require(isinstance(model.get("history"), list), "selected original history is missing")
         R.require(same_json(model, phase["model"]) and same_json(record, phase["record"]) and same_json(lesson, phase["lesson"]),
                   "selected original state differs from its result capture")
         R.require(same_json(record["attempts"], phase["attempts"]), "selected attempt array differs")
@@ -246,12 +247,10 @@ def selected_states(archive, selected):
                      "rawTransport": {"kind": "lzw16-envelope" if compressed else "plain-json",
                                       "decodedByThisReader": not compressed,
                                       "rawEqualsDecodedJSONObject": None if compressed else True},
-                     "originalModelFields": {name: model.get(name) for name in ("answers", "prose", "board")},
-                     "originalHistoryActions": [event.get("action") for event in model.get("history", [])],
-                     "originalRecordSupport": record.get("support"),
-                     "originalAttempts": [{"id": a.get("id"), "at": a.get("at"), "supported": a.get("supported"),
-                                           "exposed": a.get("exposed"), "answers": a.get("value", {}).get("answers")}
-                                          for a in record["attempts"]],
+                     "originalModelFields": {name: model[name] for name in ("answers", "prose", "board") if name in model},
+                     "originalHistoryEvents": model["history"],
+                     "originalRecordSupport": record["support"],
+                     "originalAttempts": record["attempts"],
                      "originalVisibleWords": phase["words"], "correct": phase["correct"], "strict": phase["strict"],
                      "stateMatchesOriginalCapture": True, "mathematicalReplayPerformed": False})
     return rows
