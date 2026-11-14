@@ -1,9 +1,11 @@
-name: P9 offline reload diagnostic
+name: P9 evidence-place startup diagnostic
 
 on:
   pull_request:
     paths:
-      - 'tests/p9-offline-reload-diagnostic.cjs'
+      - 'tests/p9-place-startup-diagnostic.cjs'
+      - 'tests/p9-wideshift-startup-diagnostic.cjs'
+      - 'tests/helpers/p9-place-startup-observer.cjs'
       - '.github/workflows/p9-offline-reload-diagnostic.yml'
   workflow_dispatch:
 
@@ -11,13 +13,17 @@ permissions:
   contents: read
 
 jobs:
-  offline-reload-diagnostic:
-    # The current failure investigation only. This is not a Required/P10 gate.
+  place-startup-diagnostic:
+    # Keep the old 800-reload script and historical failed runs. This new
+    # diagnostic observes the original complete group; it is not a Required gate.
     if: >-
       (github.event_name == 'pull_request' && github.head_ref == 'diagnostic/issue-172-offline-reload') ||
       (github.event_name == 'workflow_dispatch' && github.ref_name == 'diagnostic/issue-172-offline-reload')
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 35
+    env:
+      MATH_BROWSER_REQUIRED: 'true'
+      MATH_BROWSER_GROUP: evidence-place
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,23 +31,54 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install the unchanged Chromium version
+      - name: Install the unchanged Required runtime and CJK fonts
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install chromium
-      - name: Diagnose the original stopped-origin scene
-        env:
-          # Preserve Chromium subprocess stdout/stderr in the artifact console.
-          DEBUG: pw:browser
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+      - name: Run the original complete evidence-place command order
         shell: bash
         run: |
-          node --check tests/p9-offline-reload-diagnostic.cjs
-          mkdir -p verification/p9-offline-reload-diagnostic
-          node tests/p9-offline-reload-diagnostic.cjs 2>&1 | tee verification/p9-offline-reload-diagnostic/console.log
-      - name: Preserve the first failure and all preceding observations
+          node --check tests/helpers/p9-place-startup-observer.cjs
+          node --check tests/p9-wideshift-startup-diagnostic.cjs
+          node --check tests/p9-place-startup-diagnostic.cjs
+          mkdir -p verification/p9-place-startup-diagnostic
+          fc-list :lang=zh-cn family > verification/p9-place-startup-diagnostic/cjk-fonts.txt
+          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
+          browser_server_pid=$!
+          trap 'kill "$browser_server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then
+            cat /tmp/math-http.log
+            echo "Local preview server did not become ready."
+            exit 1
+          fi
+          node tests/p9-place-startup-diagnostic.cjs 2>&1 | tee verification/p9-place-startup-diagnostic/console.log
+      - name: Preserve every actual command and the first native failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: p9-offline-reload-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
-          path: verification/p9-offline-reload-diagnostic/
+          name: p9-place-startup-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            verification/p9-place-startup-diagnostic/
+            verification/p9-place-adapter/
+            verification/p9-decimal-place-adapter/
+            verification/b14-division-container-caption/
+            verification/p9-division-adapter/
+            verification/p9-wideshift-adapter/
+            verification/p9-pvbench-adapter/
           if-no-files-found: error
+          compression-level: 6
+          overwrite: false
