@@ -3,7 +3,7 @@
 // This checks recorded mathematics without changing the B16 grader or v2 data.
 import * as walks from './phase5/b16-model.js';
 import {parse,norm} from './phase5/b15-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  manycopies:{indices:[0,1,2],nodeId:'mt_HJA2Oz-Zh1'},
@@ -11,7 +11,7 @@ const SOURCES=Object.freeze({
 });
 
 export function groupwalkBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-unitwalk',nodeId:source.nodeId}))return null;

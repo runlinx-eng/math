@@ -6,13 +6,15 @@ import {defaultModel,exampleModel,validModel,inspect} from '../dist/learning/tas
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {sameEvidence,hasExactKeys,matchesNativeEvidenceTask,latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
-import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs';
+import {joinStoryEvidenceExample} from '../scripts/joinstory-evidence-fixture.mjs';
 import expansion from './fixtures/p9-mature-expansion-cases.cjs';
+import angle from './fixtures/p9-angle-cases.cjs';
+import joinStory from './fixtures/p9-joinstory-cases.cjs';
+import transform from './fixtures/p9-transform-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
 import fractionOrder from './fixtures/p9-fraction-order-cases.cjs';
-import joinStory from './fixtures/p9-joinstory-cases.cjs';
-import {joinStoryEvidenceExample} from '../scripts/joinstory-evidence-fixture.mjs';
 
 await ensureB39Ready();
 const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
@@ -32,12 +34,27 @@ const reviewed={
  route:[...positions('onesbridge',[2,3]),...positions('twodigitpair',[2]),...positions('addhundred',[0,2]),...positions('flexhundred',[2,3]),...positions('oneslarge',[0,1]),...positions('showwhy',[1]),...positions('flexthousand',[0,1]),...positions('mentalbig',[0,1,2])],
  'fraction-order':fractionOrder.map(({sessionId,index})=>({sessionId,index})),
  groups:groups.map(({sessionId,index})=>({sessionId,index})),
+ transform:transform.cases.map(({sessionId,index})=>({sessionId,index})),
+ angle:angle.map(({sessionId,index})=>({sessionId,index})),
  joinstory:joinStory.cases.map(({sessionId,index})=>({sessionId,index}))
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
 const example=(adapter,task)=>adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
+
+// These inputs can all come from JSON. In particular, object property keys
+// must not be coerced before the source context has passed its admission gate.
+const malformedContexts=context=>JSON.parse(JSON.stringify([
+ null,false,true,0,'not a context',[],{},
+ {sessionId:null,index:context.index},{sessionId:7,index:context.index},
+ {sessionId:[context.sessionId],index:context.index},
+ {sessionId:{toString:null},index:context.index},
+ {sessionId:context.sessionId,index:null},{sessionId:context.sessionId,index:String(context.index)},
+ {sessionId:context.sessionId,index:[context.index]},
+ {sessionId:context.sessionId,index:{toString:null}},
+ {sessionId:context.sessionId,index:-1},{sessionId:context.sessionId,index:0.5}
+]));
 
 test('shared evidence gates fail closed on missing or malformed saved submissions',()=>{
  const model={answer:'1/2',history:[],board:{n:1,d:2}},saved=record(model);
@@ -61,12 +78,41 @@ test('shared evidence gates fail closed on missing or malformed saved submission
  assert.equal(hasExactKeys(null,[]),false);
 });
 
+test('existing reasoning-card feedback also rejects malformed JSON contexts without changing valid work',()=>{
+ for(const [sessionId,index] of [['show38',2],['because38',1],['because38',2],['argument38',0],['argument38',2]]){
+  const context={sessionId,index},task=sessionTasks(sessionId)[index],model=exampleModel(task),saved=record(model);
+  const before=JSON.stringify({task,model,saved});
+  assert.ok(thinkingFeedback(task,model,saved,context));
+  for(const bad of malformedContexts(context)){
+   assert.equal(thinkingGuide(task,bad),null);
+   assert.equal(thinkingFeedback(task,model,saved,bad),null);
+  }
+  assert.equal(JSON.stringify({task,model,saved}),before);
+ }
+});
+
+test('legacy grid observations retain their optional context without acquiring strict source evidence',()=>{
+ const grids=[...native,...Object.keys(BRIDGES).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})))].filter(({task})=>task.type==='grid');
+ assert.ok(grids.length>0);
+ for(const {task,context} of grids){
+  const model=exampleModel(task),saved=record(model),before=JSON.stringify({task,model,saved});
+  const existing=thinkingFeedback(task,model,saved);
+  assert.ok(existing&&validModel(task,model)&&inspect(task,model).correct);
+  for(const optional of [{},context,...malformedContexts(context)]){
+   assert.deepEqual(thinkingFeedback(task,model,saved,optional),existing);
+   assert.equal(thinkingGuide(task,optional),null);
+   for(const adapter of EVIDENCE_ADAPTERS)assert.equal(adapter.binding(task,optional),null);
+  }
+  assert.equal(JSON.stringify({task,model,saved}),before);
+ }
+});
+
 test('registered families stay distinct and cover exactly the reviewed native locations',()=>{
  assert.deepEqual(EVIDENCE_ADAPTERS.map(a=>a.id),Object.keys(reviewed));
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,11);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,13);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
@@ -79,6 +125,22 @@ test('registered families stay distinct and cover exactly the reviewed native lo
 });
 
 for(const adapter of EVIDENCE_ADAPTERS){
+ test(adapter.id+': malformed JSON source contexts fail closed at every public entry point',()=>{
+  for(const context of reviewed[adapter.id]){
+   const task=sessionTasks(context.sessionId)[context.index],model=example(adapter,task),saved=record(model);
+   const before=JSON.stringify({task,model,saved});
+   assert.ok(adapter.binding(task,context));
+   assert.ok(thinkingGuide(task,context));
+   assert.ok(thinkingFeedback(task,model,saved,context));
+   for(const bad of malformedContexts(context)){
+    const label=adapter.id+' '+key(context)+' '+JSON.stringify(bad);
+    assert.equal(adapter.binding(task,bad),null,label+' binding');
+    assert.equal(thinkingGuide(task,bad),null,label+' guide');
+    assert.equal(thinkingFeedback(task,model,saved,bad),null,label+' feedback');
+   }
+   assert.equal(JSON.stringify({task,model,saved}),before,'invalid context lookups leave all learning data untouched');
+  }
+ });
  test(adapter.id+': every reviewed task retains source binding, real replay and the latest checked work',()=>{
   const outside=native.find(({task,context})=>task.type===adapter.type&&!reviewed[adapter.id].some(c=>key(c)===key(context)));
   for(const context of reviewed[adapter.id]){

@@ -12,16 +12,27 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
+import {joinStoryBinding,replayJoinStoryEvidence} from './joinstory-evidence.js';
+import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
-import {joinStoryBinding,replayJoinStoryEvidence} from './joinstory-evidence.js';
-import {latestSubmissionMatches} from './evidence-contract.js';
+import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(!isEvidenceContext(context))return null;
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);
     return source?{type:task.type,summary:'想一想：演示和算式怎样对应？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-g25-turn'){
+    const source=angleBinding(task,context);
+    return source?{type:task.type,summary:'想一想：开口和边的长短怎样比较？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每个点怎样对应？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);
@@ -73,7 +84,9 @@ export function thinkingGuide(task,context={}){
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
 export function thinkingFeedback(task,model,record,context={}){
-  if(!latestSubmissionMatches(model,record))return null;
+  // The pre-existing grid observation is context-free and remains outside the
+  // strict source-bound adapters. Its original grading and snapshot gate stay.
+  if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);if(!source)return null;
@@ -106,6 +119,38 @@ export function thinkingFeedback(task,model,record,context={}){
         task.swap?'交换两部分后，合并与取走各会怎样？试着说明数量相同与实物够不够的区别。':
         task.hidden?'把找到的那一部分代回完整故事，怎样核对它和已知数量的关系？':
         '如果只改变其中一部分，演示的结果和写下的算式怎样一起改变？',detail,method:null};
+  }
+  if(task?.type==='x-g25-turn'){
+    const source=angleBinding(task,context);if(!source)return null;
+    const proof=replayAngleEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次指定并留下的开口、边长等级与当前回答；没有自动评价自由解释、独立连续推导或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayAngleEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.lengthComparison)detail.push(`你分别留下了短边、长边时同为 ${proof.lengthComparison.angle}° 的记录；改变边的长短没有改变这两份记录中的开口。`);
+    if(proof.cross)detail.push(`按当前 ${proof.cross.angle}° 的开口核对，对顶角为 ${proof.cross.opposite}°，邻角为 ${proof.cross.adjacent}°；相邻两角合计180°，交点周围四角合计360°。`);
+    if(proof.differences.length)detail.push(`本题指定的目标记录之间的差为：${proof.differences.map(r=>`${r.to}° − ${r.from}° = ${r.difference}°`).join('；')}。这些是记录间的数量关系。`);
+    if(proof.triangle)detail.push(`按这些累计开口得到的三部分为 ${proof.triangle.parts.join('°、')}°，合计 ${proof.triangle.sum}°，超过三角形内角和180°。本次没有实际构造三角形。`);
+    if(proof.advances.length)detail.push(`按钮留下的实际变化包括：${proof.advances.slice(0,5).map(r=>r.wrapped?'从整圈到下一圈的90°位置':`${r.from}° 到 ${r.to}°，增加 ${r.degrees}°`).join('；')}${proof.advances.length>5?'；其余变化也已逐条核对':''}。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你按先后留下了本题要求的开口 ${proof.targetRecords.map(r=>r.angle+'°').join('、')}；当前控件的开口为 ${proof.angle}°。实际操作、保存的记录与这次填写的关系已分别核对。`,
+      connection:proof.lengthComparison?'保持开口不动，只把两条边画长些，哪些记录会变？':'如果换一个开口，怎样用已记录的角度解释它与半圈、整圈或相邻开口的关系？',
+      detail,method:null};
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);if(!source)return null;
+    const proof=replayTransformEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次选择的变换参数、工具生成的对应坐标和当前提交；没有自动评价自由解释、独立作图、独立量取或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayTransformEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(proof.prediction.correct?'你最初填写的坐标猜想与这次第一个对应点相符。':'你最初填写的坐标猜想与这次第一个对应点不同；猜想和后来的操作已分别核对。');
+    if(proof.invariants.edgeSquared.length)detail.push(`按实际对应点核对，对应边长是原来的 ${proof.display.lengthFactor} 倍；边长平方是原来的 ${proof.display.squaredLengthFactor} 倍。`);
+    if(proof.invariants.anglesPreserved)detail.push('这些对应点形成的角保持相同；这只核对本次图形。');
+    if(proof.measurementCount)detail.push(`你请求工具显示过 ${proof.measurementCount} 次读数；这些读数由工具生成，没有据此判断你已独立量取。`);
+    const pairs=proof.display.sourcePoints.map((point,i)=>`${point} → ${proof.display.imagePoints[i]}`);
+    return {title:'这次作品中的思考线索',
+      observation:`你最后选择了${proof.display.operation}。工具每次都从原图计算，当前对应点是 ${pairs.join('；')}。实际记录中的 ${proof.operationCount} 次变换参数与对应坐标已逐一核对。`,
+      connection:'如果换一个点或换一种参数，怎样先猜它的对应位置？试着说明哪些量会改变，哪些量会保持。',
+      detail,method:null};
   }
   if(task?.type==='x-mulgroups'){
     const source=groupsBinding(task,context);if(!source)return null;
