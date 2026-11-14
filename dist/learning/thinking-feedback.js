@@ -9,10 +9,15 @@ import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
+import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-placecalc'){
+    const source=placeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：换了单位，总量会变吗？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-unitwalk'){
     const source=unitwalkBinding(task,context);
     return source?{type:task.type,summary:'想一想：每一小步表示多少？（可选）',question:source.question}:null;
@@ -46,6 +51,22 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-placecalc'){
+    const source=placeBinding(task,context);
+    if(!source)return null;
+    const proof=replayPlaceEvidence(task,model);
+    if(!proof)return null;
+    const examples=proof.exchanges.slice(0,3).map(e=>
+      `${e.from.count} 个 ${e.from.unit} 换成 ${e.to.count} 个 ${e.to.unit}`);
+    const detail=['这里只核对本次记录中的数位操作和当前提交；没有自动评价自由解释、独立论证、心算策略或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayPlaceEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(task.written)detail.push('对应数位上写下的数字与最后各列留下的数量相符。');
+    return {title:'这次作品中的思考线索',
+      observation:`你实际向高位合并 ${proof.up} 次、向低位拆开 ${proof.down} 次：${examples.join('；')}${proof.exchanges.length>3?'；其余交换也已逐条核对':''}。每次交换前后数量守恒。${proof.operation==='-'?`从 ${proof.values[0]} 中实际拿走 ${proof.removed}，`:`合并的数量是 ${proof.values.join(' + ')}，`}最后各列与填写的结果 ${proof.total} 相符。`,
+      connection:'如果改变交换或拿走的先后顺序，哪些条件仍要满足？试着说明为什么十个小单位和一个相邻的大单位表示同一个量。',
+      detail,method:null};
+  }
   if(task?.type==='x-unitwalk'){
     const source=unitwalkBinding(task,context);
     if(!source)return null;

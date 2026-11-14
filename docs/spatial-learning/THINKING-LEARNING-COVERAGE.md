@@ -1,3 +1,44 @@
+## P9 第七批｜Issue #118：整数十进交换的严格回放（2026-11-14）
+
+从已验证 main `86a678d356c37183ed541eb6f4b74e037a664f95` 开发；第六批合并后 Required [43562483380](https://github.com/runlinx-eng/math/actions/runs/43562483380) 已确认成功。本批新增 `place-evidence.js`，复用公共来源/最新提交契约和注册表。`x-placecalc` 的原生范围实测48题/21节点；本批仅接入标准路径含真实十进交换的26道整数题/14节点，全部保留原判题与原题。
+
+| sessionId | 索引（从0起） | 真实来源节点 |
+| --- | --- | --- |
+| onesbridge | 0,1 | `mt_AKAtWEwpcj` |
+| tensmove | 3 | `mt_I5j1ZWo2cn` |
+| decadetake | 2 | `mt_HJTuIGHvcR` |
+| twodigitpair | 0,1 | `mt_UQnAFPs83F` |
+| flexhundred | 0,1 | `mt_cChv2j_-Da` |
+| oneslarge | 3 | `mt_oDU_8zMZjp` |
+| tenslarge | 2,3 | `mt_aHQ9kNt3is` |
+| showwhy | 0,2 | `mt_zxST3MarI9` |
+| fourparts | 2 | `mt_TiQbi027PE` |
+| buildthousand | 0,1,2 | `mt_ewmuMMPAzP` |
+| columnthree | 1,3 | `mt_SrrsLiJkr3` |
+| flexthousand | 2,4 | `mt_HFRYjTb-Z5` |
+| columnfour | 1,3 | `mt_mpS-JK_p_m` |
+| columnlarge | 1,3,4 | `mt_Yw1_4Nfsql` |
+
+### 数学契约与反馈
+
+首事件必须是有效且唯一的开始：保留原猜想（允许猜错）、正确的整数单位对齐。加法按原加数的逐位数量合并，减法从被减数各位和减数待取数量开始。每次交换核对完整 `before` 和相邻数位，独立计算10个小单位与1个大单位等量；减法每次只取本位真实待取数量，核对 `needed`、取走量和剩余。最终完整 `counts/remaining`、归一数位、结果及要求的逐列书写全部对应，且原 `valid/inspect` 仍须通过。
+
+允许真实的不同操作顺序、先拿百位再拆换以及有作用的往返交换；连续同位的两次进位可成立，不能按动作名去重。失败对齐、无效交换、零数量取走、未知字段/动作、删改事件及伪造 `before/needed` 均不给额外事实反馈。当前作品必须等于最新提交；编辑或真实操作后即失效，重新检查与刷新均重新核对。没有虚构 `board`，没有改变顶层原记录格式。
+
+所有14个来源节点均没有本次适用的MP来源标签，`method:null`。默认收起的可选“想一想”询问单位与守恒；通过后只描述实际合并/拆开次数、具体交换、取走量和最后结果，不推断首猜正确、心算策略、自由解释、独立证明或长期掌握。记录没有身份签名，严格回放证明数学与保存内容一致，不能鉴定整体自洽改写的物理点击来源。
+
+### 实测覆盖与验收边界
+
+本地审计为 **A81题/39节点、B328/C150/D1269/E168**；本批从B类新增26题/14节点。587节点、1223关系、1996原生题、776组/1552关联题、323类型、39原判题模块保持。A不再依赖 `history && board` 的结构猜测，只由注册表中逐题来源绑定和独立数学回放认定；专门断言26题使用顶层 `counts/remaining`，全体关联题不继承。
+
+专用Node覆盖26个真实位置、数学正反例、不同顺序、跨零拆换、多加数连续进位、首猜与书写、来源/篡改/最新快照；公共矩阵和全量审计同步。`p9-place-adapter-browser.cjs` 对26题两视口用真实控件逐步断言守恒、提交/编辑/刷新，在完整缓存后停HTTP源站继续；额外检查真实非法历史与未绑定整数/小数/关联题。SW只同步发布证书与模块清单，递归依赖与P10保护规则不变。
+
+本地37项专用Node与公共/审计检查已通过。本地Chromium因运行环境禁止socket而未启动，不能计通过；最终结果必须以 [Issue #118](https://github.com/runlinx-eng/math/issues/118) 对应PR最新HEAD Required/Overview/P8、完整Chromium/P10日志及实际截图Artifact和合并后main独立回归为准。CI总时限从25到35分钟，仅容纳新增52个题目×视口组合；各原用例断言和失败门槛保持。独立教研、儿童实用、Mac人工仍待分别验收，不部署。
+
+13道标准路径不需交换的整数题及9道小数尺度题留作独立契约审核，不因同类型自动接入。连续任务下一步为成熟家族的逐题来源扩展审计与独立PR。
+
+---
+
 ## P9 第六批｜Issue #116：固定单位分数数轴的逐步证据（2026-11-14）
 
 基线为第五批已合并的 main `aaf3e30c81ad24f53df687a8813fb31775b25dea`；远端 Required [43556685536](https://github.com/runlinx-eng/math/actions/runs/43556685536) 已确认成功。本批新增 `unitwalk-evidence.js`，复用第五批 `evidence-contract.js` 的完整原生来源/最新提交门槛，作为第六个家族接入 `evidence-adapters.js`。不改五个既有家族的数学回放、B16原题/原判题/通关。

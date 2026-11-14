@@ -63,7 +63,9 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const guide=kind==='native'?thinkingGuide(task,{sessionId,index}):null;
  // Each registered family retains its own exact native binding and replay.
  // Fixtures exercise real actions; the existing grader/solver remains unchanged.
- const verifiedAdapter=kind==='native'&&history&&!!board?EVIDENCE_ADAPTERS.find(adapter=>
+ // Some original workpieces store counts/remaining at the top level. Only a
+ // reviewed binding and successful independent replay establish A, not a board key.
+ const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
    adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):exampleModel(task))):null;
  const verifiedReplay=!!verifiedAdapter;

@@ -19,7 +19,8 @@ jobs:
   required-checks:
     name: required-checks
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    # Includes every reviewed adapter at both desktop sizes and the full P10 gate.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -87,6 +88,8 @@ jobs:
           node --check dist/learning/sequence-evidence.js
           node --check dist/learning/counterexample-evidence.js
           node --check dist/learning/fraction-evidence.js
+          node --check dist/learning/place-evidence.js
+          node --check tests/p9-place-adapter-browser.cjs
           node --check dist/learning/unitwalk-evidence.js
           node --check dist/learning/evidence-contract.js
           node --check dist/learning/evidence-adapters.js
@@ -142,6 +145,7 @@ jobs:
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs
+            tests/p9-place-evidence-adapter.test.mjs
             tests/p9-unitwalk-evidence-adapter.test.mjs
             tests/p9-evidence-contract.test.mjs
             tests/p9-line-evidence-adapter.test.mjs
@@ -261,6 +265,7 @@ jobs:
             tests/p9-sequence-adapter-browser.cjs \
             tests/p9-counterexample-adapter-browser.cjs \
             tests/p9-fraction-adapter-browser.cjs \
+            tests/p9-place-adapter-browser.cjs \
             tests/p9-unitwalk-adapter-browser.cjs \
             tests/p9-line-adapter-browser.cjs \
             tests/p9-array-adapter-browser.cjs \
@@ -361,6 +366,7 @@ jobs:
             verification/p9-sequence-adapter/
             verification/p9-counterexample-adapter/
             verification/p9-fraction-adapter/
+            verification/p9-place-adapter/
             verification/p9-unitwalk-adapter/
             verification/p9-line-adapter/
             verification/p9-array-adapter/

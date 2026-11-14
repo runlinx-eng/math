@@ -6,6 +6,7 @@ import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
+import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -13,5 +14,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'line',type:'x-s23-lines',binding:lineBinding,replay:replayLineEvidence},
  {id:'counterexample',type:'x-r38-counterexample',binding:counterexampleBinding,replay:replayCounterexampleEvidence},
  {id:'fraction',type:'x-fracrename',binding:fractionBinding,replay:replayFractionEvidence},
- {id:'unitwalk',type:'x-unitwalk',binding:unitwalkBinding,replay:replayUnitwalkEvidence}
+ {id:'unitwalk',type:'x-unitwalk',binding:unitwalkBinding,replay:replayUnitwalkEvidence},
+ {id:'place',type:'x-placecalc',binding:placeBinding,replay:replayPlaceEvidence}
 ].map(Object.freeze));
