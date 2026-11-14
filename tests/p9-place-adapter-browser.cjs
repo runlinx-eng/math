@@ -1,13 +1,16 @@
-// All 26 reviewed integer place-value tasks at both desktop sizes. Only an
+// Reviewed integer or separately selected decimal tasks at both desktop sizes. Only an
 // empty lesson position is seeded; mathematical work uses actual UI controls.
 // Every case runs with the HTTP origin stopped after the complete SW cache.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
-const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-place-adapter');
-const groups={onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],
+const decimalScope=process.env.MATH_PLACE_EVIDENCE_SCOPE==='decimal';
+const root=path.resolve(__dirname,'..'),out=path.join(root,decimalScope?'verification/p9-decimal-place-adapter':'verification/p9-place-adapter');
+const groups=decimalScope?{decimalsum:[1,2,3,4],decimalmeasure3:[1,2],fractionmeasure:[1],fractionfour:[13,14]}:
+ {onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],
  oneslarge:[3],tenslarge:[2,3],showwhy:[0,2],fourparts:[2],buildthousand:[0,1,2],
  columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]};
 const cases=Object.entries(groups).flatMap(([id,indices])=>indices.map(index=>({id,index})));
+const nativeNodes=Object.keys(groups).length;
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -16,7 +19,8 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const {sessionTasks}=await import('../dist/learning/bridges.js');
- const {solveSteps,valid,inspect,answer}=await import('../dist/learning/phase5/b11-model.js');
+ const {solveSteps,valid,inspect,answer,fmt,rowOffset}=await import('../dist/learning/phase5/b11-model.js');
+ const displayedAnswer=task=>fmt(answer(task),task.scale??1);
  const {replayPlaceEvidence}=await import('../dist/learning/place-evidence.js');
  let browser,server,activePage,activeLabel='setup';
  try{
@@ -94,6 +98,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     }else if(name==='b11-place-start'){
      ok(after.started,activeLabel+' original alignment starts the construction');
      ok(amount(after.counts)===(task.op==='+'?answer(task):task.values[0]),activeLabel+' aligned starting piles represent exactly the original operands');
+     ok(JSON.stringify(after.align)===JSON.stringify(task.values.map((_,i)=>String(rowOffset(task,i)))),activeLabel+' each written last digit aligns with its actual place unit');
     }
     return after;
    };
@@ -143,7 +148,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     await guide.locator('summary').click();
     await page.waitForFunction(({id,index})=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons[id].cases[index]?.support===true,spec);
     ok(await guide.locator('p').isVisible(),activeLabel+' optional mathematical question is readable');
-    if(spec.id==='onesbridge'&&spec.index===0)await shot('01-guide-open');
+    if(spec.id===cases[0].id&&spec.index===cases[0].index)await shot('01-guide-open');
     await guide.locator('summary').click();
     ok(!(await guide.evaluate(element=>element.open)),activeLabel+' optional guide closes again');
     const initial=await saved(spec.id);
@@ -153,7 +158,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     await field('answer','999999');await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='revise',activeLabel+' wrong answer fails original grading');
     ok(await hint.count()===0,activeLabel+' failed submission yields no positive evidence');
-    await field('answer',answer(task));await submit();
+    await field('answer',displayedAnswer(task));await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' corrected current work passes original grading');
     ok(await hint.isVisible(),activeLabel+' actual exchanges yield bounded factual feedback');
     const words=await hint.innerText(),first=await model(spec),proof=replayPlaceEvidence(task,first);
@@ -161,7 +166,14 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     const up=first.history.filter(e=>e.action==='b11-exchange'&&e.dir==='up').length;
     const down=first.history.filter(e=>e.action==='b11-exchange'&&e.dir==='down').length;
     ok(words.includes(`向高位合并 ${up} 次`)&&words.includes(`向低位拆开 ${down} 次`),activeLabel+' feedback reports actual exchange directions and counts');
-    ok(words.includes('数量守恒')&&words.includes(String(answer(task))),activeLabel+' feedback relates conserved exchanges to the actual result');
+    ok(words.includes('数量守恒')&&words.includes(`结果 ${displayedAnswer(task)} 相符`),activeLabel+' feedback relates conserved exchanges to the actual displayed result');
+    if(decimalScope){
+     const names=task.scale===100?['百分之一','十分之一','一','十','百']:['千分之一','百分之一','十分之一','一','十','百'];
+     const event=first.history.find(e=>e.action==='b11-exchange'),next=event.index+(event.dir==='up'?1:-1);
+     ok(words.includes(names[event.index])&&words.includes(names[next]),activeLabel+' feedback names the actual fractional units on both sides of the exchange');
+     ok(!words.includes(`结果 ${answer(task)} 相符`),activeLabel+' raw integer smallest units never appear as the displayed answer');
+     ok(proof.scale===task.scale&&proof.total===answer(task),activeLabel+' exact internal integer quantity remains distinct from its display scale');
+    }
     ok(/解释|证明|掌握/.test(words),activeLabel+' feedback states its interpretation boundary');
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),activeLabel+' ordinary arithmetic source receives no borrowed thinking label');
     ok(!Object.hasOwn(first,'board'),activeLabel+' original top-level counts and remaining are preserved without a fictional board');
@@ -170,10 +182,10 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(JSON.stringify(await model(spec))===JSON.stringify(first),activeLabel+' complete mathematical work survives offline reload');
     await field('answer','999999');
     ok(await hint.count()===0,activeLabel+' editing immediately removes old feedback');
-    if(spec.id==='onesbridge'&&spec.index===0)await shot('03-edited');
+    if(spec.id===cases[0].id&&spec.index===cases[0].index)await shot('03-edited');
     await reload(spec);ok(await hint.count()===0,activeLabel+' edited answer cannot revive stale feedback after refresh');
     await submit();ok(await hint.count()===0,activeLabel+' newer failed check cannot reuse older success');
-    await field('answer',answer(task));await submit();ok(await hint.isVisible(),activeLabel+' fresh correct check restores current evidence');
+    await field('answer',displayedAnswer(task));await submit();ok(await hint.isVisible(),activeLabel+' fresh correct check restores current evidence');
 
     const previous=await model(spec),column=previous.counts.findIndex((n,i)=>i>0&&n>0);
     await act(spec,'b11-exchange',{index:column,dir:'down'});
@@ -189,21 +201,22 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(m.remaining.every(n=>n===0),activeLabel+' all required take-away quantities have been removed');
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),activeLabel+' no mastery or score storage is introduced');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),activeLabel+' desktop page has no horizontal overflow');
-    observations.push({width,height,id:spec.id,index:spec.index,values:task.values,operation:task.op,written:!!task.written,
+    observations.push({width,height,id:spec.id,index:spec.index,values:task.values,scale:task.scale??1,displayedAnswer:displayedAnswer(task),align:m.align,operation:task.op,written:!!task.written,
      observation:words,finalObservation:await hint.innerText(),history:m.history,counts:m.counts,remaining:m.remaining,attempts:attempts.length});
    }
 
    // Both mistakes use genuinely reachable controls. The original grader may
    // later pass; the earlier invalid event must remain excluded from evidence.
    for(const variant of ['misaligned-start','insufficient-take']){
-    const spec={id:'onesbridge',index:variant==='misaligned-start'?0:1},task=sessionTasks(spec.id)[spec.index];
+    const spec=decimalScope?(variant==='misaligned-start'?{id:'decimalmeasure3',index:2}:{id:'decimalsum',index:3}):
+     {id:'onesbridge',index:variant==='misaligned-start'?0:1},task=sessionTasks(spec.id)[spec.index];
     activeLabel=`${width}x${height}-negative-${variant}`;await open(spec);
     const all=solveSteps(task),startAt=all.findIndex(step=>step.action==='b11-place-start');
     await steps(spec,all.slice(0,startAt));
     if(variant==='misaligned-start'){
-     await field('align.0','1');await click('b11-place-start');
+     await field('align.0',rowOffset(task,0)===0?'1':'0');await click('b11-place-start');
      ok(!(await model(spec)).started,activeLabel+' wrong actual alignment refuses to start');
-     await field('align.0','0');await act(spec,'b11-place-start');
+     await field('align.0',rowOffset(task,0));await act(spec,'b11-place-start');
     }else{
      await act(spec,'b11-place-start');await click('b11-remove',{index:0});
      ok(!!(await model(spec)).issue,activeLabel+' taking unavailable units is an actual failed action');
@@ -217,7 +230,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    }
 
    // Switch courses without replacing the source's actual saved evidence.
-   const source={id:'onesbridge',index:0},outside={id:'tensmove',index:0};
+   const source=decimalScope?{id:'decimalsum',index:1}:{id:'onesbridge',index:0},outside={id:'tensmove',index:0};
    activeLabel=`${width}x${height}-cross-course-source`;await open(source);await solve(source);await submit();
    ok(await hint.isVisible(),activeLabel+' reviewed source initially has verified evidence');
    const sourceWork=JSON.stringify(await model(source));
@@ -228,8 +241,10 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    activeLabel=`${width}x${height}-cross-course-return`;await navigate(source);
    ok(JSON.stringify(await model(source))===sourceWork&&await hint.isVisible(),activeLabel+' returning preserves and restores only the matching saved evidence');
 
-   // Check the same widget in independent native, decimal and associated work.
-   for(const spec of [{id:'tensmove',index:0},{id:'decimalsum',index:1},{id:'link-basicadd-onesbridge',index:1}]){
+   // Decimal tasks now have a separately reviewed scope. Unreviewed native
+   // arithmetic and independent associated work still cannot inherit evidence.
+   for(const spec of [{id:'tensmove',index:0},{id:'general34',index:1},
+    {id:decimalScope?'link-columnlarge-decimalsum':'link-basicadd-onesbridge',index:1}]){
     activeLabel=`${width}x${height}-isolation-${spec.id}-${spec.index}`;await open(spec);
     ok(await guide.count()===0&&await hint.count()===0,activeLabel+' outside tasks receive no native exchange guide');
     await solve(spec);await submit();
@@ -240,11 +255,12 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    await context.close();activePage=null;
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
-  ok(observations.length===cases.length*viewports.length,'all 26 native tasks complete at both desktop sizes');
+  ok(observations.length===cases.length*viewports.length,`all ${cases.length} ${decimalScope?'decimal':'integer'} native tasks complete at both desktop sizes`);
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
-   nativeTasks:cases.length,nativeNodes:14,taskViewportPairs:observations.length,viewports,
+   scope:decimalScope?'decimal':'integer',nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
-  console.log('P9_PLACE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes:14,taskViewportPairs:observations.length}));
+  console.log((decimalScope?'P9_DECIMAL_PLACE_ADAPTER_BROWSER_OK ':'P9_PLACE_ADAPTER_BROWSER_OK ')+
+   JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
