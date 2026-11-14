@@ -102,6 +102,8 @@ jobs:
           node --check tests/p9-fraction-order-adapter-browser.cjs
           node --check dist/learning/fraction-operations-evidence.js
           node --check tests/p9-fraction-operations-adapter-browser.cjs
+          node --check dist/learning/fractioncase-evidence.js
+          node --check tests/p9-fractioncase-adapter-browser.cjs
           node --check tests/p9-numeric-compat-browser.cjs
           node --check dist/learning/evidence-contract.js
           node --check dist/learning/evidence-adapters.js
@@ -173,6 +175,8 @@ jobs:
             tests/p9-groups-evidence-adapter.test.mjs
             tests/p9-fraction-order-evidence-adapter.test.mjs
             tests/p9-fraction-operations-evidence-adapter.test.mjs
+            tests/p9-fractioncase-evidence-adapter.test.mjs
+            tests/phase5-b18.test.mjs
             tests/p9-numeric-compat.test.mjs
             tests/p10-numeric-save-races.test.mjs
             tests/p9-evidence-contract.test.mjs
@@ -259,7 +263,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, p10, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10, p8-performance]
     env:
       MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}

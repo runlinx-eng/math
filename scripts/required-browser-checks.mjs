@@ -139,6 +139,14 @@ const groups={
   "verification/p9-estimate-adapter/",
   "verification/p9-portiongroups-adapter/",
  ]},
+ // PR #158 measured 821071ms for the three older expansion commands.
+ // Keep the 188 fraction-case viewport instances on their own runner; every
+ // upstream command, artifact, and the 35-minute limit remain unchanged.
+ "evidence-fractioncase":{commands:[
+  {"file":"tests/p9-fractioncase-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-fractioncase-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
