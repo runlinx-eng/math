@@ -11,10 +11,15 @@ import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
+import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-routecalc'){
+    const source=routeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每一步怎样接起来？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-placecalc'){
     const source=placeBinding(task,context);
     return source?{type:task.type,summary:source.scope==='decimal'?
@@ -55,6 +60,20 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-routecalc'){
+    const source=routeBinding(task,context);if(!source)return null;
+    const proof=replayRouteEvidence(task,model);if(!proof)return null;
+    const route=proof.display.hops.slice(0,6).map(h=>`${h.from} ${h.delta.startsWith('-')?'− '+h.delta.slice(1):'+ '+h.delta} = ${h.to}`);
+    const detail=['这里只核对本次记录中的数轴操作和当前提交；没有自动评价自由解释、独立心算、方法是否最优或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayRouteEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.undos)detail.push(`你实际撤回了 ${proof.undos} 步；撤回操作和保留路径已分别核对。`);
+    if(proof.compensation)detail.push('保留路径确实先越过目标，随后净返回目标；多走的量与随后净退还的量相等。');
+    return {title:'这次作品中的思考线索',
+      observation:`你从 ${proof.display.origin} 出发，实际向右走 ${proof.forwardMoves} 次、向左走 ${proof.backwardMoves} 次。保留路径是：${route.join('；')}${proof.hops.length>6?'；其余步骤也已逐条核对':''}。最后到达 ${proof.display.target}。${proof.countup?`两端的差是 ${proof.display.answer}；终点和两端的差已分别核对。`:`所有保留步子的净变化是 ${proof.display.netChange}；起点 ${proof.display.origin} 加上这个净变化，得到填写的结果 ${proof.display.answer}。`}`,
+      connection:proof.countup?'如果换成别的步子，两端的位置与它们的差会变吗？试着说明每一步为什么要从上一步的落点出发。':'如果改变步子的大小或拆分方式，怎样确认最后仍到同一个地方？试着说明多走再退还时，哪些量抵消了。',
+      detail,method:null};
+  }
   if(task?.type==='x-placecalc'){
     const source=placeBinding(task,context);
     if(!source)return null;

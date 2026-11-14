@@ -24,7 +24,8 @@ const reviewed={
  fraction:[...positions('recutnames',[0,1,2]),...positions('samenames',[0,1,2]),...positions('simplestparts',[0,2]),...positions('tenthtohundred',[0,2]),...positions('thousandparts',[1]),...positions('decimalstops',[0,1])],
  unitwalk:[...positions('lineplaces',[0,1,2,3]),...positions('unitcopies',[0,1,2]),...positions('wholefractions',[1,2,3,4]),...positions('translateamount',[3]),...positions('storyfraction',[2]),...positions('tenpieces',[0]),...positions('decimalnames',[1]),...positions('fractionmeasure',[3]),...positions('mixedrename',[0,1])],
  place:[...positions('onesbridge',[0,1]),...positions('tensmove',[3]),...positions('decadetake',[2]),...positions('twodigitpair',[0,1]),...positions('flexhundred',[0,1]),...positions('oneslarge',[3]),...positions('tenslarge',[2,3]),...positions('showwhy',[0,2]),...positions('fourparts',[2]),...positions('buildthousand',[0,1,2]),...positions('columnthree',[1,3]),...positions('flexthousand',[2,4]),...positions('columnfour',[1,3]),...positions('columnlarge',[1,3,4]),...positions('decimalsum',[1,2,3,4]),...positions('decimalmeasure3',[1,2]),...positions('fractionmeasure',[1]),...positions('fractionfour',[13,14])],
- groupwalk:[...positions('manycopies',[0,1,2]),...positions('repeatfraction',[0,1,2])]
+ groupwalk:[...positions('manycopies',[0,1,2]),...positions('repeatfraction',[0,1,2])],
+ route:[...positions('onesbridge',[2,3]),...positions('twodigitpair',[2]),...positions('addhundred',[0,2]),...positions('flexhundred',[2,3]),...positions('oneslarge',[0,1]),...positions('showwhy',[1]),...positions('flexthousand',[0,1]),...positions('mentalbig',[0,1,2])]
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
@@ -58,7 +59,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,7);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,8);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
