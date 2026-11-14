@@ -3,6 +3,7 @@
 // Every case runs with the HTTP origin stopped after the complete SW cache.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const decimalScope=process.env.MATH_PLACE_EVIDENCE_SCOPE==='decimal';
 const root=path.resolve(__dirname,'..'),out=path.join(root,decimalScope?'verification/p9-decimal-place-adapter':'verification/p9-place-adapter');
@@ -23,7 +24,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
  const {solveSteps,valid,inspect,answer,fmt,rowOffset}=await import('../dist/learning/phase5/b11-model.js');
  const displayedAnswer=task=>fmt(answer(task),task.scale??1);
  const {replayPlaceEvidence}=await import('../dist/learning/place-evidence.js');
- let browser,server,activePage,activeLabel='setup';
+ let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -41,6 +42,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
    page.on('pageerror',error=>errors.push(activeLabel+': '+String(error)));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const shot=async name=>{
@@ -281,8 +283,9 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
   console.log((decimalScope?'P9_DECIMAL_PLACE_ADAPTER_BROWSER_OK ':'P9_PLACE_ADAPTER_BROWSER_OK ')+
    JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),failureDiagnostic,at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

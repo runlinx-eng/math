@@ -1,6 +1,7 @@
 // P9 pilot: actual UI submissions and verified thinking-method hints.
 // Technical browser evidence only; not assessment of free text or teaching outcomes.
 const fs=require('node:fs'),path=require('node:path');
+const same=require('node:util').isDeepStrictEqual;
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const out=path.resolve(__dirname,'../verification/p9-thinking-feedback');
@@ -98,7 +99,23 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   snapshots.push(await capture(page,out,'argument38-3',{id:'argument38',index:3},'prose-checked'));
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
   const lesson=saved.lessons.argument38;
-  check(lesson.cases[3].attempts.length===4&&lesson.models[3].board.records.length===1,'original incorrect and correct attempts / both comparisons remain in original schema');
+  const attempts=lesson.cases[3].attempts,model=lesson.models[3];
+  const wrongComparison={value:'6',factor:'2',prediction:'less',actual:'greater',breaks:false,match:false};
+  const correctComparison={value:'6',factor:'1/2',prediction:'less',actual:'less',breaks:true,match:true};
+  // B38 appends every comparison. Reload and prose edits do not erase the
+  // first failure or turn a repeated comparison into a replacement record.
+  check(attempts.length===4,'all four original incorrect, corrected, repeated and prose submissions remain');
+  check(same(model.board,{records:[wrongComparison,correctComparison,correctComparison],first:{value:'6',factor:'2',prediction:'less'},bad:true}),'all three actual comparisons retain the failed first prediction and exact mathematical results');
+  check(same(model.history,[{a:'test',i:'',v:'6',w:'2',c:'less'},{a:'test',i:'',v:'6',w:'1/2',c:'less'},{a:'test',i:'',v:'6',w:'1/2',c:'less'}]),'raw failed, corrected and repeated requests remain in their original order');
+  check(same(attempts.map(e=>e.value.history.length),[1,2,3,3])&&same(attempts.map(e=>e.value.board.records.length),[1,2,3,3]),'each saved attempt preserves the comparison history at its own submission time');
+  check(snapshots.every(snapshot=>same(attempts.slice(0,snapshot.attempts.length),snapshot.attempts))&&same(attempts.map(e=>e.value),snapshots.map(snapshot=>snapshot.model)),'later correction, reload and prose submission do not rewrite any earlier complete attempt');
+  check(same(Object.keys(lesson.cases[3]).sort(),['attempts','support'])&&attempts.every(e=>same(Object.keys(e).sort(),['at','exposed','id','supported','value']))&&same(attempts.map(e=>e.exposed),[false,true,true,true]),'attempts retain the original record schema and first-attempt exposure flags');
+  const outcomes=await page.evaluate(async values=>{
+   const {sessionTaskFor}=await import('./learning/bridges.js');
+   const {inspect}=await import('./learning/phase5/b38-model.js');
+   return values.map(value=>inspect(sessionTaskFor('argument38',3),value).correct);
+  },attempts.map(e=>e.value));
+  check(same(outcomes,[false,true,true,true]),'the first saved attempt stays mathematically wrong after all three later successful submissions');
   check(lesson.models[3].prose==='我想再检查其他乘数。'&&!('thinkingScore'in lesson),'original free prose saved; no thinking score field added');
   await shot('02-counterexample-checked');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');

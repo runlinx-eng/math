@@ -3,6 +3,7 @@
 // the HTTP origin stops; full original models and attempts are retained below.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const cases=require('./fixtures/p9-angle-cases.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-angle-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],boundaries=[],offline=[];
@@ -16,7 +17,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  const {sessionTasks,BRIDGES}=await import('../dist/learning/bridges.js');
  const angles=await import('../dist/learning/phase5/b25-model.js');
  const {replayAngleEvidence}=await import('../dist/learning/angle-evidence.js');
- let browser,server,activePage,activeLabel='setup';
+ let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -34,6 +35,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
    page.on('pageerror',error=>errors.push(activeLabel+': '+String(error)));
    const guide=page.locator('#thinking-guide'),hint=page.locator('#thinking-feedback');
    const shot=async name=>{
@@ -345,8 +347,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_ANGLE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,boundaries,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,boundaries,offline,error:String(error),failureDiagnostic,at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

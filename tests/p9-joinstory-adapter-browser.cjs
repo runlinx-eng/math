@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const fixture=require('./fixtures/p9-joinstory-cases.cjs'),{cases,associated}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-joinstory-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
@@ -27,7 +28,7 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
  const {joinStoryBinding,replayJoinStoryEvidence}=await import('../dist/learning/joinstory-evidence.js');
  for(const spec of [...cases,...associated])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const[file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,label='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -47,6 +48,7 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{
@@ -301,8 +303,9 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
   console.log('P9_JOINSTORY_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),failureDiagnostic,stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
