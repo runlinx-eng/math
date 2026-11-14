@@ -127,6 +127,13 @@ const groups={
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
  ]},
+ // Main run 43601980060 used 1,593,793ms for the four commands. Keep
+ // every command/artifact, including all correction paths, within 35 minutes.
+ "evidence-quantity":{commands:[
+  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-joinstory-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},

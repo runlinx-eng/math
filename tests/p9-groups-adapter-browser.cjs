@@ -5,7 +5,7 @@ const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const reviewed=require('./fixtures/p9-groups-cases.cjs');
 const cases=reviewed.map(c=>({...c,id:c.sessionId}));
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-groups-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],notationObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],notationObservations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -60,6 +60,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
    const model=async spec=>(await saved(spec.id)).models[spec.index];
+   const rawStorage=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
    },spec);
@@ -180,12 +181,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&await hint.isVisible(),
      activeLabel+' new correct submission receives bounded grouping feedback');
     const first=await model(spec),words=await hint.innerText();
+    const firstStorage=await rawStorage(),firstRecord=(await saved(spec.id)).cases[spec.index];
     ok(groups.valid(task,first)&&groups.inspect(task,first).correct&&!!replayGroupsEvidence(task,first),
      activeLabel+' saved real actions satisfy both original grading and strict mathematics');
     ok(words.includes(String(spec.total))&&words.includes(String(spec.groups)),activeLabel+' factual feedback includes the actual total and grouping');
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),activeLabel+' no MP label is borrowed from another task');
     await shot('verified-offline');await reload(spec);
     ok(await hint.isVisible()&&JSON.stringify(await model(spec))===JSON.stringify(first),activeLabel+' offline refresh restores the exact checked work');
+    const offlineStorage=await rawStorage(),restored=JSON.parse(offlineStorage).lessons[spec.id];
     await field('answer','999');ok(await hint.count()===0,activeLabel+' editing immediately invalidates old feedback');
     await reload(spec);ok(await hint.count()===0,activeLabel+' edited pending work stays unverified after offline refresh');
     await submit();ok(await hint.count()===0,activeLabel+' latest failed submission cannot reuse an earlier success');
@@ -204,26 +207,32 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,mode:spec.mode,
      total:proof.total,groups:proof.groups,each:proof.each,remainder:proof.remainder,result:proof.result,resultRole:proof.resultRole,
      created:proof.created,moved:proof.moved,rounds:proof.rounds,observation:words,finalObservation:await hint.innerText(),
-     firstModel:first,finalModel:m,attempts,proof});
+     firstModel:first,finalModel:m,attempts,proof,offlineModel:restored.models[spec.index],firstRecord,record:end.cases[spec.index],
+     offlineRecord:restored.cases[spec.index],storageSnapshots:{first:firstStorage,offline:offlineStorage,final:await rawStorage()}});
    }
 
    const negative={id:'sharegroups',index:0},task=sessionTasks(negative.id)[negative.index];
-   for(const variant of ['zero-pour','empty-pool-round','same-destination','reset']){
-    activeLabel=`${width}x${height}-negative-${variant}`;await open(negative);await originalSolve(negative);
+   for(const variant of ['zero-pour','empty-pool-round','same-destination','reset','final-failed-pour']){
+    activeLabel=`${width}x${height}-correction-${variant}`;await open(negative);await originalSolve(negative);
     if(variant==='zero-pour'){
      await field('amount','0');await action('pour',{bucket:0});await action('token',{token:0});
     }else if(variant==='empty-pool-round'){
      await action('round');await action('token',{token:0});
     }else if(variant==='same-destination'){
      await action('token',{token:0});await action('pour',{bucket:0});
-    }else{await action('reset');await originalSolve(negative);}
+    }else if(variant==='reset'){await action('reset');await originalSolve(negative);}
+    else{await field('amount','0');await action('pour',{bucket:0});}
     await submit();const m=await model(negative);
     ok(groups.valid(task,m)&&groups.inspect(task,m).correct,activeLabel+' existing final-result grading is unchanged');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI still accepts its correct final work');
-    ok(await hint.count()===0&&!replayGroupsEvidence(task,m),activeLabel+' strict evidence excludes invalid or ineffective earlier actions');
-    await reload(negative);ok(await hint.count()===0,activeLabel+' invalid evidence remains absent after offline refresh');
-    negativeObservations.push({width,height,variant,model:m,record:(await saved(negative.id)).cases[negative.index],originalCorrect:true,strictFeedback:false});
-    await shot('rejected');
+    const proof=replayGroupsEvidence(task,m);
+    ok(!!proof&&proof.history.events.length===m.history.length&&await hint.isVisible(),activeLabel+' strict evidence preserves the attempts without claiming failed distribution');
+    if(variant==='final-failed-pour')ok(m.issue!==''&&proof.history.failedRequests.at(-1).issue===m.issue,activeLabel+' the current failed pour retains its exact issue');
+    await reload(negative);ok(await hint.isVisible()&&JSON.stringify(await model(negative))===JSON.stringify(m),activeLabel+' full correction history and evidence restore offline');
+    const restoredStorage=await rawStorage(),restored=JSON.parse(restoredStorage).lessons[negative.id];
+    correctionObservations.push({width,height,id:negative.id,index:negative.index,variant,model:m,proof,record:restored.cases[negative.index],
+     restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage,originalCorrect:true,strictFeedback:true});
+    await shot('corrected');
    }
 
    activeLabel=`${width}x${height}-separated-digits`;await open(negative);await originalSolve(negative);
@@ -263,13 +272,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   ok(observations.length===58,'all 29 native tasks finish at both desktop sizes');
   ok(notationObservations.length===2,'separated-digit rejection and explicitly rechecked correction run in both viewports');
   const nativeNodes=new Set(cases.map(c=>c.nodeId)).size;
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,notationObservations,offline,
+  ok(correctionObservations.length===10,'five correction scenarios run in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,notationObservations,offline,
    nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_GROUPS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,notationObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,notationObservations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

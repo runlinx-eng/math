@@ -103,18 +103,16 @@ test('group advances and single-unit retreats allow real detours without confusi
  }
 });
 
-test('repeatfraction 7/3 advances may cross the original pre-move limit, but a subsequent no-op is rejected',()=>{
+test('repeatfraction 7/3 advances cross the original pre-move limit and retain a subsequent no-op separately',()=>{
  const task=sessionTasks('repeatfraction')[1];assert.deepEqual([task.n,task.d,task.chunk],[21,3,7]);
  for(const extra of [false,true]){
   const model=start(task);for(let i=0;i<4;i++)act(task,model,'walk');
   assert.equal(model.board.steps.length,28,'21 < 24 permits the original advance to 28');
   if(extra){act(task,model,'walk');assert.equal(model.board.steps.length,28);}
   for(let i=0;i<7;i++)act(task,model,'walk-back');answers(task,model);originalAccepts(task,model);
-  if(extra)rejects(task,model,'an out-of-limit ineffective walk cannot be hidden by later retreats');
-  else{
-   const proof=accepts(task,model);assert.deepEqual(proof.steps[3],{delta:7,from:[21,3],to:[28,3]});
-   assert.equal(proof.advances,4);assert.equal(proof.groups,3);assert.equal(proof.retreats,7);
-  }
+  const proof=accepts(task,model);assert.deepEqual(proof.steps[3],{delta:7,from:[21,3],to:[28,3]});
+  assert.equal(proof.advances,4);assert.equal(proof.groups,3);assert.equal(proof.retreats,7);
+  assert.equal(proof.history.ineffectiveRequests.length,extra?1:0);
  }
 });
 
@@ -126,7 +124,8 @@ test('every reviewed upper boundary obeys the original before-move guard',()=>{
    const reached=model.board.steps.length;assert.ok(reached>=limit&&reached<limit+c.chunk);
    if(extra)act(task,model,'walk');
    while(model.board.steps.length>c.n)act(task,model,'walk-back');answers(task,model);originalAccepts(task,model);
-   if(extra)rejects(task,model);else accepts(task,model);
+   const proof=accepts(task,model);assert.equal(proof.history.ineffectiveRequests.length,extra?1:0);
+   assert.equal(proof.advances,Math.ceil(limit/task.chunk));
   }
  }
 });
@@ -193,7 +192,7 @@ test('first group string is preserved, and later same-endpoint edits still requi
  assert.ok(thinkingFeedback(task,model,record(model),context));
 });
 
-test('zero retreat, repeated partition, wrong scale, reset and unrelated operations cannot be erased',()=>{
+test('visible exploration is replayed by applied units and epochs without accepting unrelated operations',()=>{
  const task=sessionTasks('manycopies')[0];
  for(const variant of ['zero-back','repeat-partition','reset','wrong-scale','foreign','unpartitioned','changed-input']){
   const model=walks.initial(task);model.parts=String(task.d);
@@ -208,7 +207,15 @@ test('zero retreat, repeated partition, wrong scale, reset and unrelated operati
    if(variant==='changed-input'&&i===1)model.parts='2';
    act(task,model,'walk');model.parts=String(task.d);
   }
-  answers(task,model);originalAccepts(task,model,variant);rejects(task,model,variant);
+  answers(task,model);originalAccepts(task,model,variant);
+  if(variant==='foreign')rejects(task,model,variant);
+  else{
+   const proof=accepts(task,model);assert.equal(proof.history.events.length,model.history.length);
+   assert.equal(proof.advances,task.n/task.chunk);assert.equal(proof.retreats,0);
+   assert.equal(proof.history.resetCount,variant==='reset'?1:0);
+   if(variant==='wrong-scale')assert.equal(proof.history.events.find(e=>e.action==='walk').before.parts,2);
+   if(variant==='zero-back')assert.equal(proof.history.ineffectiveRequests[0].reason,'already-at-zero');
+  }
  }
 });
 
@@ -246,4 +253,13 @@ test('unsupported task semantics and the denominator-one task do not inherit gro
  for(const step of walks.solveSteps(excluded)){if(step.field)work[step.field]=step.value;else walks.act(excluded,work,step.action,step.data);}
  originalAccepts(excluded,work);assert.equal(groupwalkBinding(excluded,context),null);rejects(excluded,work);
  assert.equal(thinkingGuide(excluded,context),null);assert.equal(thinkingFeedback(excluded,work,record(work),context),null);
+});
+
+
+test('Issue 166 original visible controls preserve failed requests, resets and latest failed issues',async()=>{
+ const {verifyVisibleCorrections}=await import('./helpers/p9-fraction-correction-controls.mjs');
+ const result=await verifyVisibleCorrections('groupwalk',replayGroupwalkEvidence,thinkingFeedback);
+ assert.equal(result.paths,result.nativeTasks*3);
+ assert.ok(result.failedRequests>=result.nativeTasks);
+ assert.equal(result.forgeriesRejected,result.paths*3);
 });

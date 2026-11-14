@@ -5,7 +5,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const fixture=require('./fixtures/p9-wideshift-cases.cjs'),{cases,associated,excludedAdd}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-wideshift-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],retries=[],negatives=[],isolated=[],offline=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
@@ -46,6 +46,7 @@ function exact(spec,model,proof){
 
 async function main(){
  const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+ const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
  fs.mkdirSync(out,{recursive:true});
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {ensureB39Ready}=await import('../dist/learning/phase4/async-batches.js');await ensureB39Ready();
@@ -54,7 +55,7 @@ async function main(){
  const {wideShiftEvidenceSteps}=await import('../scripts/wideshift-evidence-fixture.mjs');
  for(const spec of [...cases,...associated,...excludedAdd,...fixture.excludedBoards])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const [file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected,file);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,diagnostics,label='setup';
  try{
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
    args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});provenance.browserVersion=browser.version();
@@ -68,6 +69,7 @@ async function main(){
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);page.on('pageerror',error=>errors.push({label,error:String(error)}));
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{const {readStored}=await import('./storage.js');return {raw:localStorage.getItem('math-explorer-v2'),text:readStored('math-explorer-v2')};});
    const saved=async id=>{const state=JSON.parse((await read()).text);return state.lessons[id]||state.daily.bridges[id];};
@@ -180,6 +182,30 @@ async function main(){
     await reload(spec);assert.deepEqual((await saved(spec.id)).models,end.models);assert.deepEqual((await saved(spec.id)).cases,end.cases);await wordsFor(finalProof);
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');await shot('05-verified-offline');
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,detour,guess,first,proof,math,words,firstVisual,snapshots,finalModel,finalProof,finalMath,finalWords,finalVisual,record:end,stored:await snapshot('final')});
+
+    // Shared retry replaces only the current workpiece. Check the real button,
+    // retain all five earlier submissions and rebuild a distinct visible trace.
+    // The original schema has no retry epoch, so byte-identical reconstructions
+    // are governed by its existing snapshot-equality contract, not a new rule.
+    const beforeRetry=await saved(spec.id),retryButton=page.locator('[data-do="p3-retry"]');
+    assert.equal(await retryButton.count(),1);await reveal(retryButton);
+    ok(await retryButton.isEnabled(),label+' shared retry is an enabled visible control');await retryButton.click();await wait(spec);
+    const reset=await saved(spec.id);assert.deepEqual(reset.models[spec.index],M.initial(task));assert.deepEqual(reset.cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' retry clears the current workpiece without borrowing the old checked trace');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,reset.models);assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' the empty retry and every old attempt restore offline');
+    const rebuilt=await build(spec,{guess:detour?'-1':spec.end,detour:!detour});
+    assert.notDeepEqual(rebuilt,beforeRetry.models[spec.index]);assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' a different complete reconstruction still needs its own check');
+    await reload(spec);assert.deepEqual(await model(spec),rebuilt);assert.deepEqual((await saved(spec.id)).cases,beforeRetry.cases);
+    ok(await hint.count()===0,label+' offline reconstruction does not receive stale feedback');
+    const retryChecked=await check(spec,true,'06-retry-rechecked'),retryProof=replayWideShiftEvidence(task,retryChecked.model);
+    const retryMath=exact(spec,retryChecked.model,retryProof),retryWords=await wordsFor(retryProof),afterRetry=await saved(spec.id);
+    assert.equal(afterRetry.cases[spec.index].attempts.length,6);
+    assert.deepEqual(afterRetry.cases[spec.index].attempts.slice(0,-1),beforeRetry.cases[spec.index].attempts);
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,afterRetry.models);assert.deepEqual((await saved(spec.id)).cases,afterRetry.cases);await wordsFor(retryProof);
+    if(spec===cases[0]||spec===cases.find(c=>c.mode==='scientific'))await shot('06-shared-retry');
+    retries.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,task,before:beforeRetry,reset,rebuilt,checked:retryChecked,proof:retryProof,math:retryMath,words:retryWords,record:afterRetry,stored:await snapshot('retry-final')});
    }
 
    // Observe disabled precision/range controls without clicking or fabricating
@@ -235,12 +261,13 @@ async function main(){
    await context.close();context=null;activePage=null;
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
-  ok(observations.length===52&&isolated.length===44&&negatives.length===12,'all native, associated and boundary cases ran in both viewports');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
-  console.log('P9_WIDESHIFT_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
+  ok(observations.length===52&&retries.length===52&&isolated.length===44&&negatives.length===12,'all native, shared retry, associated and boundary cases ran in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,retries,negatives,isolated,offline,viewports,provenance},null,2));
+  console.log('P9_WIDESHIFT_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,retries:retries.length,associated:isolated.length,negatives:negatives.length}));
  }catch(error){
+  const failureDiagnostic=diagnostics?await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)})):null;
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));console.error(error.stack);process.exitCode=1;
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,retries,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label,failureDiagnostic},null,2));console.error(error.stack);process.exitCode=1;
  }finally{if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});if(context)await context.close();if(browser)await browser.close();}
 }
 module.exports={exact};
