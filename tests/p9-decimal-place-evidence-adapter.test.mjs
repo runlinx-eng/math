@@ -157,7 +157,7 @@ test('a real tenth/hundredth alternative route and repeated thousandth carries r
  assert.equal(p.display.total,'4.000');assert.equal(p.exchanges[0].from.unitLabel,'千分之一');
 });
 
-test('failed decimal alignment and an attempted oversized take cannot be erased by later correct work',()=>{
+test('failed decimal alignment and oversized take stay visible in the corrected replay',()=>{
  const task=sessionTasks('decimalmeasure3')[2],model=place.initial(task);
  model.guess='1.000';model.align=['0','0'];place.act(task,model,'b11-place-start');
  assert.equal(model.started,false);model.align=['2','0'];place.act(task,model,'b11-place-start');
@@ -166,14 +166,18 @@ test('failed decimal alignment and an attempted oversized take cannot be erased 
   if(step.field){const ps=step.field.split('.');let object=model;for(const k of ps.slice(0,-1))object=object[k];object[ps.at(-1)]=step.value;}
   else place.act(task,model,step.action,step.data);
  }
- assert.equal(place.inspect(task,model).correct,true);rejects(task,model);
+ assert.equal(place.inspect(task,model).correct,true);const aligned=accepts(task,model);
+ assert.equal(aligned.failedActions,1);assert.equal(aligned.startEvents[0].accepted,false);
+ assert.deepEqual(aligned.startEvents[0].before,aligned.startEvents[0].after);
  const t=sessionTasks('decimalsum')[3],m=start(t);place.act(t,m,'b11-remove',{index:0});
  assert.ok(m.issue);
  for(const step of place.solveSteps(t).slice(place.solveSteps(t).findIndex(s=>s.action==='b11-place-start')+1)){
   if(step.field){const ps=step.field.split('.');let object=m;for(const k of ps.slice(0,-1))object=object[k];object[ps.at(-1)]=step.value;}
   else place.act(t,m,step.action,step.data);
  }
- assert.equal(place.inspect(t,m).correct,true);rejects(t,m);
+ assert.equal(place.inspect(t,m).correct,true);const taken=accepts(t,m);
+ assert.equal(taken.failedActions,1);assert.equal(taken.events[1].accepted,false);
+ assert.deepEqual(taken.events[1].before,taken.events[1].after);
 });
 
 test('a decimal operation edit invalidates an old submitted snapshot even after the digits return',()=>{

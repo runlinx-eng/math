@@ -157,54 +157,70 @@ export function replayTransformEvidence(task,model){
   const goal=goalOperation(task.goal);if(!goal)return null;
   const source=task.shape.map(p=>p.map(R)),target=apply(source,goal),kind=task.goal.kind;
   if(!keys(model,[...fieldNames,'answers','seed','board','history','issue'])||
-     !fieldNames.every(k=>text(model[k]))||model.issue!==''||!integer(model.seed,1,4294967295)||
+     !fieldNames.every(k=>text(model[k]))||!text(model.issue)||!integer(model.seed,1,4294967295)||
      !Array.isArray(model.answers)||model.answers.length!==task.questions.length||!model.answers.every(text)||
      !Array.isArray(model.history)||model.history.length<2||model.history.length>1000||
      !['x','y','item','kind','slot','amplitude'].every(k=>model[k]===''))return null;
-  const b={first:{},prediction:null,image:null,op:null,saved:null,measured:false},operations=[];
-  let measured=0,prediction=null,last=null,lastImage=null,lastInvariants=null;
-  for(const event of model.history){
-   if(!keys(event,['a','f','d'])||!keys(event.d,[]))return null;
+  const b={first:{},prediction:null,image:null,op:null,saved:null,measured:false},operations=[],requests=[],failedRequests=[];
+  let measured=0,prediction=null,last=null,lastImage=null,lastInvariants=null,confirmations=0,issue='';
+  for(const [historyIndex,event]of model.history.entries()){
+   if(!keys(event,['a','f','d'])||!keys(event.d,[])||!['predict','operate','measure'].includes(event.a))return null;
+   const before=clone(b);let accepted=true,changed=false;
+   issue='';
    if(event.a==='predict'){
-    if(prediction||operations.length||!keys(event.f,['predX','predY']))return null;
-    const point=[parse(event.f.predX),parse(event.f.predY)];if(point.some(v=>v===null))return null;
-    if(!point.every((p,i)=>{
-     const observed=transforms.number(event.f[i?'predY':'predX']);
-     return Number.isFinite(observed)&&Math.sign(observed)===(p.n<0n?-1:p.n>0n?1:0);
-    }))return null;
-    b.first.predict=clone(event.f);b.prediction={x:event.f.predX,y:event.f.predY};b.first.prediction=clone(b.prediction);
+    if(prediction||last||!keys(event.f,['predX','predY'])||!Object.values(event.f).every(text))return null;
+    b.first.predict??=clone(event.f);
+    const point=[parse(event.f.predX),parse(event.f.predY)],observed=[transforms.number(event.f.predX),transforms.number(event.f.predY)];
+    if(!observed.every(Number.isFinite)){accepted=false;issue='先留下你猜的两个数。';}
+    else{
+    if(point.some(v=>v===null)||!point.every((p,i)=>Math.sign(observed[i])===(p.n<0n?-1:p.n>0n?1:0)))return null;
+    b.prediction={x:event.f.predX,y:event.f.predY};b.first.prediction??=clone(b.prediction);
     // Preserve the original metadata convention only. Exact prediction
     // correctness below does not borrow the original grader's tolerance.
     if(!point.every((_,i)=>Math.abs(transforms.number(event.f[i?'predY':'predX'])-number(target[0][i]))<1e-7))b.first.incorrectPrediction=true;
-    prediction={point:[event.f.predX,event.f.predY],correct:pointEqual(point,target[0])};
+    prediction={point:[event.f.predX,event.f.predY],correct:pointEqual(point,target[0])};changed=true;
+    }
    }else if(event.a==='operate'){
     if(!prediction||!keys(event.f,operationFields)||!operationFields.every(k=>text(event.f[k])))return null;
-    const op=operation(kind,event.f);if(!op)return null;
+    if(operationFields.some(k=>!activeFields[kind].includes(k)&&event.f[k]!=='' )||
+       kind==='mirror'&&!['','x','y','y=x','y=-x'].includes(event.f.axis)||
+       kind==='turn'&&!['','90','-90','180'].includes(event.f.angle))return null;
+    b.first.operate??=clone(event.f);
+    const op=operation(kind,event.f),native=transforms.opFromFields(task,event.f);
+    if(native===null){accepted=false;issue='先填完整的移动、镜线、角度或中心。';}
+    else{
     // The old parser treats a negative-zero mixed number as positive. Keep
     // native grading unchanged, but reject any historical parameter that the
     // native tool interpreted differently from this exact mathematical input.
-    if(!same(transforms.opFromFields(task,event.f),op.value))return null;
+    if(!op||!same(native,op.value))return null;
     // No composition: the native UI applies every new choice to task.shape.
     const image=apply(source,op),checks=invariants(source,image,op);if(!checks)return null;
     // Compare corresponding vertices, not the unordered outline: rotating a
     // symmetric polygon can leave its outline while genuinely moving vertices.
-    if(image.every((p,i)=>pointEqual(p,(lastImage||source)[i])))return null;
+    const exactChanged=!image.every((p,i)=>pointEqual(p,(lastImage||source)[i]));
     // Scaling uses a floating display in the original tool. Preserve that
     // display, while the geometry above stays rational. A tiny input rounded
     // away by the tool cannot masquerade as a new visible transformation.
     const shown=kind==='scale'?task.shape.map(p=>p.map((v,i)=>op.value.center[i]+op.value.factor*(v-op.value.center[i]))):pointNumbers(image);
-    if(same(shown,b.image||task.shape))return null;
-    b.first.operate??=clone(event.f);b.op=clone(op.value);b.saved=clone(event.f);b.image=shown;b.measured=false;
-    operations.push({operation:clone(op.value),exactFactor:str(op.factor),sourcePoints:clone(task.shape),
+    const shownChanged=!same(shown,b.image||task.shape);
+    if(exactChanged!==shownChanged)return null;
+    changed=exactChanged;b.op=clone(op.value);b.saved=clone(event.f);b.image=shown;b.measured=false;
+    if(changed)operations.push({operation:clone(op.value),exactFactor:str(op.factor),sourcePoints:clone(task.shape),
      imagePoints:clone(shown),exactImagePoints:pointStrings(image),invariants:checks});
+    else confirmations++;
     last=op;lastImage=image;lastInvariants=checks;
+    }
    }else if(event.a==='measure'){
-    if(!task.needsMeasure||!last||b.measured||!keys(event.f,[]))return null;
-    b.first.measure??={};b.measured=true;measured++;
+    if(!task.needsMeasure||!last||!keys(event.f,[]))return null;
+    b.first.measure??={};changed=!b.measured;
+    if(changed)measured++;else confirmations++;
+    b.measured=true;
    }else return null;
+   const request={historyIndex,action:event.a,fields:clone(event.f),accepted,changed,before,after:clone(b),issue};
+   requests.push(request);if(!accepted)failedRequests.push(request);
   }
   if(!prediction||!last||!same(last.value,goal.value)||!equal(last.factor,goal.factor)||
-     !lastImage.every((p,i)=>pointEqual(p,target[i]))||!same(b,model.board)||
+     !lastImage.every((p,i)=>pointEqual(p,target[i]))||model.issue!==issue||!same(b,model.board)||
      model.predX!==b.prediction.x||model.predY!==b.prediction.y||
      (task.needsMeasure&&!b.measured))return null;
   const current=operation(kind,model);
@@ -222,7 +238,7 @@ export function replayTransformEvidence(task,model){
   // Original record validity and completion remain independent requirements.
   if(!transforms.valid(task,model)||!transforms.inspect(task,model).correct)return null;
   return{kind,operation:clone(last.value),sourcePoints:clone(task.shape),imagePoints:pointNumbers(lastImage),
-   operations,operationCount:operations.length,measurementCount:measured,measured:b.measured,prediction,
+   operations,requests,failedRequests,confirmations,operationCount:operations.length,measurementCount:measured,measured:b.measured,prediction,
    invariants:lastInvariants,automaticImage:true,independentMeasurementAssessed:false,
    display:{operation:operationLabel(last),sourcePoints:pointStrings(source).map(p=>'('+p.join(',')+')'),
     imagePoints:pointStrings(lastImage).map(p=>'('+p.join(',')+')'),lengthFactor:lastInvariants.lengthFactor,
