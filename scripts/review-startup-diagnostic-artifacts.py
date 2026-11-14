@@ -782,6 +782,28 @@ def cached_body_summary(archive, prefix, case):
             "comparisons": comparisons[:MAX_EXAMPLES], "comparisonCount": len(comparisons),
             "limitation": "Browser-reported hashes are compared with immutable Git bytes. This post-failure snapshot cannot prove what was transferred before the failure."}
 
+def place_completion_evidence(archive, case):
+    console_name = "p9-place-startup-diagnostic/console.log"
+    result_name = "p9-pvbench-adapter/results.json"
+    console = {"status": "missing", "name": console_name, "tailText": None}
+    if console_name in archive.namelist():
+        data = member_bytes(archive, console_name, 1024 * 1024)
+        lines = data.decode("utf-8").splitlines(keepends=True)
+        tail = lines[-80:]
+        console = {"status": "captured", "name": console_name, "bytes": len(data),
+                   "sha256": sha256(data), "totalLines": len(lines), "tailLines": len(tail),
+                   "omittedLines": len(lines)-len(tail), "tailText": "".join(tail)}
+    result = {"status": "missing", "name": result_name, "originalMath": None}
+    if result_name in archive.namelist():
+        size, digest = member_digest(archive, result_name)
+        original_math = math_summary(archive, result_name)
+        require(isinstance(original_math["metadata"].get("provenance"), dict), "pvbench original result provenance is missing")
+        check_provenance(original_math["metadata"]["provenance"], case)
+        result = {"status": "captured", "name": result_name, "bytes": size,
+                  "sha256": digest, "originalMath": original_math}
+    return {"console": console, "pvbenchResult": result,
+            "limitation": "Original artifact bytes only. This does not change the cancelled workflow status or replace a complete Required/P10 gate."}
+
 def startup_review(archive, case):
     prefix = case["prefix"] + "startup-diagnostics/"
     report_name = prefix + "report.json"
@@ -789,8 +811,9 @@ def startup_review(archive, case):
     receipt = load_member(archive, receipt_name) if receipt_name in archive.namelist() else None
     if receipt is not None:
         check_provenance(receipt["provenance"], case)
+    completion = place_completion_evidence(archive, case) if receipt is not None else None
     if report_name not in archive.namelist():
-        return {"status": "observer-report-missing", "commandReceipt": receipt,
+        return {"status": "observer-report-missing", "commandReceipt": receipt, "commandCompletionEvidence": completion,
                 "native": {"status": "missing", "errors": None}, "netlog": {"status": "missing", "negativeCodes": None},
                 "rootCauseEstablished": False}
     report = load_member(archive, report_name)
@@ -810,7 +833,7 @@ def startup_review(archive, case):
         first_summary = {"first": first.get("first"), "currentLoaderId": first.get("currentLoaderId"),
                          "currentURL": first.get("currentURL"), "currentRequestCount": len(first.get("currentRequests", [])),
                          "alreadyFailedCurrentRequests": raw_failures[:MAX_EXAMPLES]}
-    return {"status": "inspected", "commandReceipt": receipt, "originalOutcome": report.get("originalOutcome"),
+    return {"status": "inspected", "commandReceipt": receipt, "commandCompletionEvidence": completion, "originalOutcome": report.get("originalOutcome"),
             "originalError": report.get("originalError"), "reportedNativeFailures": report.get("nativeFailures"),
             "reportedDiagnosticErrors": report.get("diagnosticErrors"),
             "sourceManifest": source, "originalMath": math, "cdp": cdp, "native": native, "netlog": netlog,
