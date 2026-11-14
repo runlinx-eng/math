@@ -159,6 +159,14 @@ const groups={
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
  ]},
+ // Twenty time constructions, every same-family associated source, and the
+ // original answer-only boundaries have their own stopped-origin runner.
+ // Its actual duration must be reviewed; no existing group loses a command.
+ "evidence-time":{commands:[
+  {"file":"tests/p9-time-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-time-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},

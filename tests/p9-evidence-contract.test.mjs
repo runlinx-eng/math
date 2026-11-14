@@ -1,3 +1,5 @@
+import time from './fixtures/p9-time-cases.cjs';
+import {timeEvidenceExample} from '../scripts/time-evidence-fixture.mjs';
 import pvbench from './fixtures/p9-pvbench-cases.cjs';
 import wideshift from './fixtures/p9-wideshift-cases.cjs';
 import storyLedger from './fixtures/p9-storyledger-cases.cjs';
@@ -56,11 +58,14 @@ const reviewed={
  samefraction:sameFraction.cases.map(({sessionId,index})=>({sessionId,index})),
  storyledger:storyLedger.cases.map(({sessionId,index})=>({sessionId,index})),
  wideshift:wideshift.cases.map(({sessionId,index})=>({sessionId,index})),
- pvbench:pvbench.cases.map(({sessionId,index})=>({sessionId,index}))
+ pvbench:pvbench.cases.map(({sessionId,index})=>({sessionId,index})),
+ ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>[
+  'time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))
+ ]))
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
-const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):exampleModel(task);
+const example=(adapter,task)=>adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -132,7 +137,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,22);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,27);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

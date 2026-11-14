@@ -1,3 +1,4 @@
+import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
@@ -58,6 +59,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-portiongroups'){
     const source=portionGroupsBinding(task,context);
     return source?{type:task.type,summary:'想一想：几组和几颗怎样对应？（可选）',question:source.question}:null;
+  }
+  if(typeof task?.type==='string'&&task.type.startsWith('x-t32-')){
+    const source=timeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这次构造中的时间关系（可选）',question:source.question}:null;
   }
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);
@@ -328,6 +333,48 @@ export function thinkingFeedback(task,model,record,context={}){
       observation:`这次的 ${proof.total} 颗物品最终分成 ${proof.partitions} 组，每组 ${proof.each} 颗。你当前选中了 ${proof.selectedGroups.length} 组，包含 ${proof.selectedTotal} 颗；未选中的还有 ${proof.unselectedTotal} 颗。每颗物品只有一个位置；每次分放后，各组里的物品加上尚未分放的物品，总量保持一致。`,
       connection:'如果整体的物品变多，仍取相同的分数，取出的颗数会怎样变化？试着用组数和物品数分别解释。',
       detail,method:null};
+  }
+  if(typeof task?.type==='string'&&task.type.startsWith('x-t32-')){
+    const source=timeBinding(task,context);if(!source)return null;
+    const proof=replayTimeEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,h=proof.history,detail=[];let observation,connection;
+    if(proof.kind==='order'){
+      const references={'relative-day':'以故事中的今天为参照','time-of-day':'同一天内的时刻',duration:'同为分钟的时长',weekday:'题目指定从周一开始的一周',month:'题目指定从1月开始的一年'};
+      observation=`你逐张放入项目，当前排列是 ${c.labels.join(' → ')}。按${references[c.reference]}核对，对应的${c.unit}数为 ${c.values.join(' ≤ ')}。`;
+      detail.push('这里只核对实际放入的身份和当前顺序，没有记录每次比较的理由，也没有据此判断独立比较策略。');
+      if(h.wrongOrders.length)detail.push(`先前留下过 ${h.wrongOrders.length} 次尚未按要求排好的完整排列；原顺序和后来的调整都保留。`);
+      connection='如果只改变一个项目所表示的时间，相邻的顺序需要怎样重新核对？';
+    }else if(proof.kind==='parts'){
+      observation=`工具给定的一整段是 ${c.whole} ${c.unit}，平均分成 ${c.equalParts} 份。你实际选中了第 ${c.identities.map(i=>i+1).join('、')} 份，共 ${c.count} 份，是这个整体的 ${c.fraction}，对应 ${c.amount} ${c.unit}，与当前回答相符。`;
+      detail.push(`每份对应 ${c.unitPart} ${c.unit}；等分来自工具，这里没有把选择一份说成自己完成了分割或写出了除法推导。`);
+      if(task.requiredParts)detail.push('这道题还核对了所选区域的先后位置：相同份量不能替代题目指定的前半场。');
+      else detail.push('题目没有指定必须选哪一块等份；这里核对份量，不把所选区域说成特定起点开始的计时路径。');
+      connection='整体变长或变短时，同样的一份会是多少？怎样用整个活动与所选区域说明？';
+    }else if(proof.kind==='roman'){
+      observation=`你把十二个符号分别放到了钟面的对应位置：${c.positions.map(p=>`${p.label} → ${p.position||12}`).join('，')}。每个符号只有一个位置；当前填写的 IIII = ${c.four} 也已核对。`;
+      detail.push('这里记录的是选符号、摆放、移动或重新摆，不是从最后的钟面补写一条操作路径。');
+      if(proof.first.place){const first=proof.first.place;detail.push(`第一次实际摆放把 ${['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'][first.numeral]} 放到第 ${first.position||12} 个位置；这次最初摆放仍保留，不称作事先预测。`);}
+      connection='换一种数字写法，哪些位置保持不变？把一个符号移走时，原来的位置怎样处理？';
+    }else if(proof.kind==='stopwatch'){
+      observation=`你用按钮让模拟计时实际前进 ${c.ticks.length} 次：${c.ticks.join(' + ')} = ${c.elapsed} 秒，也就是 ${c.minutes} 分钟，最后在 ${c.elapsed} 秒停表。`;
+      detail.push(`首次实际停止在 ${c.firstStop} 秒；如果当时活动尚未结束，暂停和后来的继续分别保留。`);
+      detail.push('这是手动推进的模拟活动，显示读数由工具生成，没有据此评价真实活动计时或独立实测。');
+      if(h.failedRequests.some(e=>e.action==='tick'))detail.push('超过终点的前进请求没有推进任何秒数；没有截取其中一部分，也没有把请求步长计入总时长。');
+      connection='暂时停下以后继续，哪些已经经过的秒数要保留？怎样核对秒与分钟的关系？';
+    }else{
+      observation=`你当前保留下来的分段是 ${c.segments.map(s=>s.step).join(' + ')} = ${c.duration} 分钟，从 ${c.startClock} 接到 ${c.endClock}。${c.answerRole==='end-time'?`当前回答的结束时刻为 ${proof.answers[0].expected}。`:`当前回答表示经过的 ${c.duration} 分钟。`}`;
+      detail.push(`这些段依次对应 ${c.segments.map(s=>`${s.fromClock} ＋ ${s.step} 分钟 → ${s.toClock}`).join('；')}。时间坐标由工具显示，这里核对实际分段与这些坐标的关系，不称作已经记录了独立时刻换算。`);
+      if(h.undone.length)detail.push(`实际退回过 ${h.undone.length} 个末段；退回记录保留，但那些段不计入当前保留的合计。`);
+      if(proof.jumpInput.pending)detail.push('当前步长框还有待应用的输入；它与最后一次走段请求不同，没有形成新的已记录分段，不计入上述合计。');
+      connection='如果换一种分段，怎样保持起点、终点与合计时间一致？跨过整点时要留意什么？';
+    }
+    detail.push(`记录中保留了 ${h.events.length} 次原控件请求；这里只描述当前构造，未自动评价自由解释、独立证明或长期掌握。`);
+    if(h.clears.length)detail.push(`你请求重新构造 ${h.clears.length} 次；先前的操作与首次记录没有删除，当前关系只使用最后保留下来的作品。`);
+    if(h.failedRequests.length)detail.push(`其中 ${h.failedRequests.length} 次请求当时没有达到相应条件；原输入、实际结果和提示逐条保留，不把这些请求说成成功完成。`);
+    if(h.noops.length)detail.push(`另有 ${h.noops.length} 次请求没有改变构造；这些真实点击保留，但不增加份量、时长或新的摆放。`);
+    if(attempts.length>1)detail.push('以前的检查快照仍保留；这里对应最新一次检查的完整作品。');
+    if(record.support)detail.push('你打开过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
   }
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);if(!source)return null;

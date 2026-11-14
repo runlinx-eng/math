@@ -31,6 +31,8 @@ import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js'
 
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 
+import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
@@ -54,5 +56,10 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
  {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
  {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
- {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence}
+ {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
+ ...['order','parts','roman','stopwatch','steps'].map(kind=>({
+  id:'time-'+kind,type:'x-t32-'+kind,
+  binding:(task,context)=>task?.type==='x-t32-'+kind?timeBinding(task,context):null,
+  replay:replayTimeEvidence
+ }))
 ].map(Object.freeze));
