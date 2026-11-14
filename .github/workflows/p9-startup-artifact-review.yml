@@ -1,0 +1,90 @@
+name: P9 fixed startup artifact review
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/review-startup-diagnostic-artifacts.py'
+      - '.github/workflows/p9-startup-artifact-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  # First run validates only the completed 184 control. A separately reviewed
+  # one-line checkpoint may select case169, then target after its run completes.
+  REVIEW_CASE: control
+
+jobs:
+  control:
+    if: >-
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'diagnostic/issue-180-artifact-review') ||
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'diagnostic/issue-180-artifact-review')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      next_case: ${{ steps.control.outputs.next_case }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Compile the reader
+        run: python3 -m py_compile scripts/review-startup-diagnostic-artifacts.py
+      - name: Reproduce the independently reviewed fixed control
+        id: control
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/review-startup-diagnostic-artifacts.py --case control --next-case "$REVIEW_CASE"
+      - name: Preserve the exact control review or its failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: startup-artifact-control-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifact-review-output/
+          if-no-files-found: error
+          overwrite: false
+
+  selected:
+    needs: control
+    if: needs.control.result == 'success' && needs.control.outputs.next_case != 'control'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Inspect the next fixed original archive
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SELECTED_CASE: ${{ needs.control.outputs.next_case }}
+        run: python3 scripts/review-startup-diagnostic-artifacts.py --case "$SELECTED_CASE"
+      - name: Preserve the selected review or its failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: startup-artifact-selected-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifact-review-output/
+          if-no-files-found: error
+          overwrite: false
+
+  original-pngs:
+    needs: [control, selected]
+    if: >-
+      always() && needs.control.result == 'success' &&
+      (needs.selected.result == 'success' ||
+       (needs.selected.result == 'skipped' && needs.control.outputs.next_case == 'control'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print only selected original PNG bytes for independent viewing
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SELECTED_CASE: ${{ needs.control.outputs.next_case }}
+        run: python3 scripts/review-startup-diagnostic-artifacts.py --case "$SELECTED_CASE" --png-only
