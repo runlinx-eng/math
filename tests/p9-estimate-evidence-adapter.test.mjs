@@ -5,6 +5,7 @@ import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as estimates from '../dist/learning/phase5/b11-model.js';
+import * as estimateView from '../dist/learning/phase5/b11-view.js';
 import {estimateBinding,replayEstimateEvidence} from '../dist/learning/estimate-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
@@ -133,7 +134,7 @@ test('no missing, repeated, foreign or extra estimate event can certify an other
  }
 });
 
-test('first, locked and hidden current rounding fields must equal the single real event exactly',()=>{
+test('first, locked and hidden current rounding fields must match their respective real events exactly',()=>{
  const {task,model}=sample();
  for(const container of ['first','locked'])for(const key of ['unit','roundedA','roundedB','estimate']){
   const bad=structuredClone(model);bad[container][key]+='0';rejected(task,bad,container+'.'+key);
@@ -151,15 +152,39 @@ test('first, locked and hidden current rounding fields must equal the single rea
  rejected(task,wrong,'another mathematically valid rounding unit still needs its own actual event');
 });
 
-test('a real wrong rounding attempt followed by correction preserves original completion but cannot become strict history',()=>{
+test('a real wrong rounding attempt followed by correction preserves first and certifies only the successful final lock',()=>{
  for(const c of cases){
   const task=taskAt(c.id,c.index),path=c.paths[0],model=estimates.initial(task);
   fillEstimate(task,model,path);model.roundedA=display(path.rounded[0]+1,task);estimates.act(task,model,'b11-estimate');
   assert.ok(model.issue);assert.equal(model.locked,null);assert.equal(model.history.length,1);
   fillEstimate(task,model,path);estimates.act(task,model,'b11-estimate');fillFinal(task,model,path);
   assert.equal(model.history.length,2);assert.equal(estimates.valid(task,model),true);assert.equal(estimates.inspect(task,model).correct,true);
-  rejected(task,model,'correction retains the invalid earlier event');
-  rejected(task,JSON.parse(JSON.stringify(model)),'serialization cannot erase an invalid earlier event');
+  const proof=accepted(task,model);
+  assert.equal(proof.estimateEventCount,2);assert.equal(proof.failedEstimateCount,1);assert.equal(proof.lockedEstimateIndex,1);
+  assert.deepEqual(proof.firstEstimate,model.first);assert.notDeepEqual(model.first,model.locked);
+  assert.deepEqual(proof.estimateEvents.map(e=>[e.accepted,e.lockedBefore,e.lockedAfter]),[[false,false,false],[true,false,true]]);
+  assert.deepEqual(proof.estimateEvents[0].failures,['roundedA-does-not-match-rounding']);
+  for(const [i,event]of proof.estimateEvents.entries())assert.deepEqual(event.raw,Object.fromEntries(['unit','roundedA','roundedB','estimate'].map(key=>[key,model.history[i][key]])));
+  assert.deepEqual(accepted(task,JSON.parse(JSON.stringify(model))),proof,'serialization retains every failed and successful submission');
+  const record={support:false,attempts:[{value:structuredClone(model)}]},feedback=thinkingFeedback(task,model,record,c);
+  assert.ok(feedback);assert.match(feedback.detail.join(' '),/1 次尚未锁定.*首尝试仍然保留/);
+  const changed=structuredClone(model);changed.inverseResult='0';assert.equal(thinkingFeedback(task,changed,record,c),null);
+ }
+});
+
+test('all six associated tasks may correct a real default submission without borrowing a native guide or feedback',()=>{
+ for(const c of associatedCases){
+  const task=taskAt(c.id,c.index),model=estimates.initial(task);
+  estimates.act(task,model,'b11-estimate');assert.equal(model.locked,null);const failed=structuredClone(model);
+  for(const step of estimates.solveSteps(task)){
+   if(step.field){model[step.field]=String(step.value);estimates.field(task,model,step.field);}
+   else estimates.act(task,model,step.action,step.data);
+  }
+  const proof=accepted(task,model);assert.equal(proof.failedEstimateCount,1);assert.deepEqual(model.first,failed.first);
+  assert.deepEqual(proof.estimateEvents[0].failures,['unit-not-selected']);assert.deepEqual(model.history[0],failed.history[0]);
+  const record={support:false,attempts:[{value:failed},{value:structuredClone(model)}]};
+  assert.equal(estimateBinding(task,c),null);assert.equal(thinkingGuide(task,c),null);
+  assert.equal(thinkingFeedback(task,model,record,c),null);
  }
 });
 
@@ -170,10 +195,75 @@ test('the accuracy requirement is applied to the selected configured unit, inclu
  fillEstimate(task,coarse,{unit:1000,rounded:[48000,23000],estimate:71000});estimates.act(task,coarse,'b11-estimate');
  assert.ok(coarse.issue);assert.equal(coarse.locked,null);
  fillEstimate(task,coarse,spec.paths[0]);estimates.act(task,coarse,'b11-estimate');fillFinal(task,coarse,spec.paths[0]);
- assert.equal(estimates.inspect(task,coarse).correct,true);rejected(task,coarse);
+ assert.equal(estimates.inspect(task,coarse).correct,true);
+ const corrected=accepted(task,coarse);assert.equal(corrected.failedEstimateCount,1);
+ assert.equal(corrected.firstEstimate.unit,'1000');assert.equal(corrected.unit,100);
+ assert.deepEqual(corrected.estimateEvents[0].failures,['unit-exceeds-required-accuracy']);
  for(const spelling of ['1e2','0x64','100.0','+100',' 100 ']){
   const aliased=structuredClone(fine);rewriteSelection(aliased,'unit',spelling);
   assert.equal(estimates.inspect(task,aliased).correct,true);rejected(task,aliased,'a select never supplied '+spelling);
+ }
+});
+
+test('blank selections, typed errors and repeated failures follow original visible controls before successful correction',()=>{
+ const attrs=text=>Object.fromEntries([...text.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
+ const field=(task,model,key,value)=>{
+  const html=estimateView.controls(task,model),matches=[...html.matchAll(/<(input|select)\b[^>]*>/g)].filter(m=>attrs(m[0])['data-xfield']===key);
+  assert.equal(matches.length,1,'one original current field '+key);
+  if(matches[0][1]==='select')assert.ok([...html.slice(matches[0].index,html.indexOf('</select>',matches[0].index)).matchAll(/<option\b[^>]*>/g)].some(m=>attrs(m[0]).value===String(value)),'offered selection '+value);
+  model[key]=String(value);estimates.field(task,model,key);
+ };
+ const submit=(task,model)=>{
+  const html=estimateView.controls(task,model);assert.equal((html.match(/data-x="b11-estimate"/g)||[]).length,1);
+  const before=structuredClone(model),row=Object.fromEntries(['unit','roundedA','roundedB','estimate'].map(k=>[k,model[k]]));
+  estimates.act(task,model,'b11-estimate');assert.deepEqual(model.history.slice(0,-1),before.history);
+  assert.deepEqual(model.history.at(-1),{action:'b11-estimate',...row});assert.deepEqual(model.first,before.first??row);
+ };
+ for(const c of cases)for(const kind of ['empty','blank-unit','text','residue','repeat']){
+  const task=taskAt(c.id,c.index),path=c.paths[0],model=estimates.initial(task);
+  if(kind!=='empty'){
+   const values={unit:kind==='blank-unit'?'':String(path.unit),roundedA:kind==='text'?'1e2':display(path.rounded[0],task),
+    roundedB:display(path.rounded[1],task),estimate:kind==='residue'?'0.000001':kind==='repeat'?'':display(path.estimate,task)};
+   for(const [key,value]of Object.entries(values))field(task,model,key,value);
+  }
+  submit(task,model);assert.equal(model.locked,null);assert.ok(model.issue);
+  if(kind==='repeat'){submit(task,model);assert.equal(model.locked,null);}
+  const originalFirst=structuredClone(model.first),failed=structuredClone(model.history);
+  for(const [key,value]of Object.entries({unit:String(path.unit),roundedA:display(path.rounded[0],task),roundedB:display(path.rounded[1],task),estimate:display(path.estimate,task)}))field(task,model,key,value);
+  submit(task,model);assert.equal(model.issue,'');assert.deepEqual(model.first,originalFirst);assert.deepEqual(model.history.slice(0,failed.length),failed);
+  assert.doesNotMatch(estimateView.controls(task,model),/data-x="b11-estimate"/);
+  for(const [key,value]of Object.entries({answer:display(path.answer,task),inverseStart:display(path.answer,task),inverseOp:task.op==='+'?'-':'+',inversePart:display(task.b,task),inverseResult:display(task.a,task),...(path.claim?{judgment:path.claim.judgment}:{})}))field(task,model,key,value);
+  const proof=accepted(task,model);assert.equal(proof.failedEstimateCount,failed.length);assert.equal(proof.lockedEstimateIndex,failed.length);
+  assert.deepEqual(proof.estimateEvents.map(e=>e.accepted),[...failed.map(()=>false),true]);
+  const sameModel=structuredClone(model);estimates.act(task,model,'b11-estimate');assert.deepEqual(model,sameModel,'post-lock original action cannot append');
+ }
+});
+
+test('corrected histories still reject forged options, altered first rows and all events after the successful lock',()=>{
+ const {task,spec}=sample(),path=spec.paths[0],model=estimates.initial(task);
+ fillEstimate(task,model,path);model.roundedA='0';estimates.act(task,model,'b11-estimate');
+ fillEstimate(task,model,path);estimates.act(task,model,'b11-estimate');fillFinal(task,model,path);accepted(task,model);
+ for(const mutate of [m=>m.first=structuredClone(m.locked),m=>m.locked=structuredClone(m.first),m=>m.history.shift(),m=>m.history.reverse(),
+  m=>m.history.push(structuredClone(m.history[0])),m=>m.history.push(structuredClone(m.history[1])),
+  m=>m.history[0].extra=true,m=>m.history[0].action='b11-hop',m=>m.estimate='0']){
+  const bad=structuredClone(model);mutate(bad);rejected(task,bad);
+ }
+ for(const unit of ['1e2','0x64','100.0','+100',' 100 ','999']){
+  const bad=structuredClone(model);bad.first.unit=unit;bad.history[0].unit=unit;
+  assert.equal(estimates.valid(task,bad)&&estimates.inspect(task,bad).correct,true);
+  rejected(task,bad,'a failed event also needs a real selector option');
+ }
+ const repeated=structuredClone(model);repeated.history.splice(1,0,structuredClone(repeated.history[0]));
+ assert.equal(accepted(task,repeated).failedEstimateCount,2,'repeated original failures are retained, never silently deduplicated');
+});
+
+test('changing to another offered unit after a failed estimate keeps first and uses only the final interval',()=>{
+ for(const c of cases.filter(c=>c.paths.length>1)){
+  const task=taskAt(c.id,c.index),first=c.paths[0],last=c.paths.at(-1),model=estimates.initial(task);
+  fillEstimate(task,model,first);model.estimate='';estimates.act(task,model,'b11-estimate');const savedFirst=structuredClone(model.first);
+  fillEstimate(task,model,last);estimates.act(task,model,'b11-estimate');fillFinal(task,model,last);
+  const proof=accepted(task,model);assert.deepEqual(proof.firstEstimate,savedFirst);assert.equal(proof.unit,last.unit);
+  assert.deepEqual(proof.rounded,last.rounded);assert.equal(proof.bounds.lowTwice,last.lowTwice);assert.equal(proof.bounds.highTwice,last.highTwice);
  }
 });
 
@@ -216,7 +306,11 @@ test('equivalent decimal spellings are accepted exactly while fractional residue
   const {task,model}=sample(id,index),original=accepted(task,model);
   for(const key of ['roundedA','roundedB','estimate']){
    const varied=structuredClone(model),value=' ＋'+model[key]+(model[key].includes('.')?'00':'.0000')+' ';
-   rewriteSelection(varied,key,value);assert.deepEqual(accepted(task,varied),original);
+   rewriteSelection(varied,key,value);const proof=accepted(task,varied);
+   const {firstEstimate:oldFirst,estimateEvents:oldEvents,...oldMath}=original;
+   const {firstEstimate,estimateEvents,...math}=proof;assert.deepEqual(math,oldMath);
+   assert.deepEqual(firstEstimate,varied.first);assert.deepEqual(estimateEvents[0].raw,varied.first);
+   assert.deepEqual(estimateEvents.map(({raw,...event})=>event),oldEvents.map(({raw,...event})=>event));
   }
   for(const key of ['answer','inverseStart','inversePart','inverseResult']){
    const varied=structuredClone(model);varied[key]=' +'+model[key]+(model[key].includes('.')?'00':'.0000')+' ';
@@ -244,14 +338,14 @@ test('unknown task shapes, unsupported scales and numeric metadata fail closed w
  assert.equal(JSON.stringify(model),before);
 });
 
-test('feedback attributes one estimate to the learner, bounds to the system and inverse only to submitted fields',()=>{
+test('feedback attributes the final locked estimate to the learner, bounds to the system and inverse only to submitted fields',()=>{
  for(const c of cases)for(const path of c.paths)for(const swap of taskAt(c.id,c.index).op==='+'?[false,true]:[false]){
   const task=taskAt(c.id,c.index),model=build(task,path,swap),before=JSON.stringify(model);
   const record={support:false,attempts:[{value:structuredClone(model)}]};
   assert.equal(thinkingFeedback(task,model,{attempts:[]},c),null);
   const feedback=thinkingFeedback(task,model,record,c),proof=accepted(task,model);
   assert.ok(feedback);assert.equal(feedback.method,null);
-  assert.match(feedback.observation,/实际留下估计/);
+  assert.match(feedback.observation,/最后成功锁定/);assert.match(feedback.observation,/留下估计/);
   const detail=feedback.detail.join(' ');
   assert.ok(detail.includes(proof.display.inverse));assert.match(detail,/提交的逆运算等式/);
   assert.match(detail,/没有记录一个独立的逆运算操作过程/);assert.match(detail,/系统依据.*推得范围/);
