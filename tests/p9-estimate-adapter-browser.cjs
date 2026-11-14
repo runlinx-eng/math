@@ -1,14 +1,14 @@
 // Real estimate controls, exact submitted equations and five complete checked
 // snapshots per native task. Only empty lesson positions are seeded.
-const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const fs=require('node:fs'),nodePath=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {cases,associatedCases}=require('./fixtures/p9-estimate-cases.cjs');
-const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-estimate-adapter');
+const root=nodePath.resolve(__dirname,'..'),out=nodePath.join(root,'verification/p9-estimate-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
-const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
+const cache=fs.readFileSync(nodePath.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
 const event=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
 const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheckoutSha:checkoutSha,
@@ -35,8 +35,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const prefix=width+'x'+height;label=prefix+'-cache';
    server=http.createServer((req,res)=>{
     const rel=new URL(req.url,'http://localhost').pathname.replace(/^\/+/, '')||'index.html';
-    fs.readFile(path.join(root,'dist',rel),(error,data)=>{
-     res.writeHead(error?404:200,{'Content-Type':mime[path.extname(rel)]||'application/octet-stream','Cache-Control':'no-store'});
+    fs.readFile(nodePath.join(root,'dist',rel),(error,data)=>{
+     res.writeHead(error?404:200,{'Content-Type':mime[nodePath.extname(rel)]||'application/octet-stream','Cache-Control':'no-store'});
      res.end(error?'missing':data);
     });
    });
@@ -79,7 +79,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    };
    const shot=async suffix=>{
     await page.evaluate(()=>window.scrollTo({top:0,left:0,behavior:'instant'}));
-    await page.screenshot({path:path.join(out,label+'-'+suffix+'.png'),fullPage:true});
+    await page.screenshot({path:nodePath.join(out,label+'-'+suffix+'.png'),fullPage:true});
    };
    const field=async(key,value)=>{
     const control=page.locator(`[data-xfield="${key}"]`);
@@ -207,7 +207,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await reload(spec);assert.deepEqual((await saved(spec.id)).models,end.models);assert.deepEqual((await saved(spec.id)).cases,end.cases);
     ok(await hint.isVisible(),label+' final new check survives offline restoration');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');await shot('05-verified-offline');
-    const stored=await read();fs.writeFileSync(path.join(out,label+'-storage.txt'),stored.raw);fs.writeFileSync(path.join(out,label+'-state.json'),stored.text);
+    const stored=await read();fs.writeFileSync(nodePath.join(out,label+'-storage.txt'),stored.raw);fs.writeFileSync(nodePath.join(out,label+'-state.json'),stored.text);
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,path,
      observation:words,finalObservation:finalWords,model:finalModel,attempts:end.cases[spec.index].attempts,snapshots,proof:finalProof});
 
@@ -251,11 +251,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   const result={checks,errors,remote,observations,negatives,isolated,offline,provenance,viewports,
    nativeTasks:cases.length,nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,
    associatedTasks:associatedCases.length,originStopped:offline.every(x=>x.originStopped)};
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(result,null,2));
+  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify(result,null,2));
   console.log('P9_ESTIMATE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes:result.nativeNodes,taskViewportPairs:observations.length,associatedTasks:associatedCases.length}));
  }catch(error){
-  if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  if(activePage)await activePage.screenshot({path:nodePath.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
+  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,provenance,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
