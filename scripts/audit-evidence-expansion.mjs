@@ -11,6 +11,7 @@ import {exampleModel,validModel,inspect} from '../dist/learning/tasks.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
 import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -20,7 +21,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=task=>task.type==='x-fracrename'?fractionEvidenceExample(task):exampleModel(task);
+const fixtureFor=task=>task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
