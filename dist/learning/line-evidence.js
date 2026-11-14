@@ -1,7 +1,7 @@
 // Source-bound observations of line comparisons; never changes the B23 grader.
 import * as geometry from './phase5/b23-model.js';
 import {scenario,vectors} from './phase5/b23-geometry.js';
-import {matchesNativeEvidenceTask} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask} from './evidence-contract.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const keys=(x,wanted)=>x&&typeof x==='object'&&!Array.isArray(x)&&same(Object.keys(x).sort(),wanted.sort());
 const SOURCES=Object.freeze({
@@ -12,6 +12,7 @@ const SOURCES=Object.freeze({
  structure34:{indices:[3],nodeId:'mt_FAXjFkgG6X',method:{nodeId:'mt_FAXjFkgG6X',label:'数位、运算与图形中的结构',code:'ccss-math:MP.7'}}
 });
 export function lineBinding(task,context={}){
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(task?.type!=='x-s23-lines'||!source||!Number.isInteger(context.index)||
     !source.indices.includes(context.index)||

@@ -2,7 +2,7 @@
 // original grader. This describes the current saved work, never the learner's
 // independent reasoning, mental strategy, fluency or long-term mastery.
 import * as routes from './phase5/b11-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  onesbridge:{indices:[2,3],nodeId:'mt_AKAtWEwpcj'},
@@ -16,7 +16,7 @@ const SOURCES=Object.freeze({
 });
 
 export function routeBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-routecalc',nodeId:source.nodeId}))return null;

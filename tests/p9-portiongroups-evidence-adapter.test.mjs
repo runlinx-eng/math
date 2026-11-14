@@ -63,7 +63,12 @@ test('all 13 native positions and seven sources have complete independent finger
   assert.equal(binding?.nodeId,c.nodeId);assert.equal(binding.method,null);assert.ok(binding.question.length>20);
   assert.equal(portionGroupsBinding(structuredClone(task),c)?.nodeId,c.nodeId);
   for(const context of [null,[],true,c.id,{}, {...c,index:String(c.index)},{...c,index:-1},
-   {...c,index:999},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'}])assert.equal(portionGroupsBinding(task,context),null);
+   {...c,index:999},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'},
+   ...JSON.parse(JSON.stringify([
+    {sessionId:null,index:c.index},{sessionId:7,index:c.index},{sessionId:[c.id],index:c.index},
+    {sessionId:{toString:null},index:c.index},{sessionId:c.id,index:null},
+    {sessionId:c.id,index:[c.index]},{sessionId:c.id,index:{toString:null}},{sessionId:c.id,index:0.5}
+   ]))])assert.equal(portionGroupsBinding(task,context),null);
   for(const changed of [{...task,prompt:task.prompt+' changed'},{...task,total:task.total+1},
    {...task,d:task.d+1},{...task,n:0},{...task,type:'x-portionbar'},{...task,name:!task.name},
    {...task,equation:['0=0']},{...task,extra:true}])assert.equal(portionGroupsBinding(changed,c),null);

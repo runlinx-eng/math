@@ -10,6 +10,7 @@ import * as angles from '../dist/learning/phase5/b25-model.js';
 import * as view from '../dist/learning/phase5/b25-view.js';
 import {angleBinding,replayAngleEvidence} from '../dist/learning/angle-evidence.js';
 import {latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 
 await ensureB39Ready();
 const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?
@@ -43,8 +44,14 @@ test('23 reviewed native positions bind 10 exact nodes and fixed full source has
   assert.equal(!!t.compareLengths,c.compareLengths);assert.equal(t.scene||null,c.scene);
   assert.deepEqual(t.questions.map(q=>q.value),c.answers);
   for(const bad of [null,[],false,'anglecorner',{}, {...c,index:String(c.index)},
-   {...c,index:-1},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'},{...c,index:99}])
+   {...c,index:-1},{...c,sessionId:'__proto__'},{...c,sessionId:'constructor'},{...c,index:99},
+   JSON.parse('{"sessionId":{"toString":null},"index":0}'),
+   JSON.parse('{"sessionId":"anglecorner","index":{"toString":null}}')]){
    assert.equal(angleBinding(t,bad),null);
+   assert.equal(thinkingGuide(t,bad),null,'malformed source context cannot crash the optional guide');
+   assert.equal(EVIDENCE_ADAPTERS.find(adapter=>adapter.id==='angle').binding(t,bad),null,
+    'the registered entry point also refuses malformed JSON positions');
+  }
   for(const bad of [{...t,prompt:t.prompt+' changed'},{...t,targets:[...t.targets,0]},
    {...t,compareLengths:!t.compareLengths},{...t,questions:[]},{...t,type:'x-g25-estimate'}]){
    assert.equal(angleBinding(bad,c),null);rejects(bad,angles.example(t));
