@@ -16,10 +16,12 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  required-checks:
-    name: required-checks
+  static-checks:
+    name: static-checks
+    outputs:
+      run_browser: ${{ steps.scope.outputs.run_browser }}
     runs-on: ubuntu-24.04
-    # Includes every reviewed adapter at both desktop sizes and the full P10 gate.
+    # Syntax, unit tests and source-derived audits keep their existing gates.
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
@@ -32,21 +34,7 @@ jobs:
 
       - name: Determine whether browser regression is relevant
         id: scope
-        shell: bash
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
-            echo "run_browser=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          changed_files="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")"
-          if grep -Eq '^(dist/|tests/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs/spatial-learning/INTERACTION-RULES\.md$|docs/language/|scripts/(audit-learning-nodes|audit-learning-task-rules)\.mjs$|tests/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs)$|\.github/workflows/(pull-request-baseline|overview-readability-check)\.yml$)' <<< "$changed_files"; then
-            echo "run_browser=true" >> "$GITHUB_OUTPUT"
-            echo "Browser regression is required for this change."
-          else
-            echo "run_browser=false" >> "$GITHUB_OUTPUT"
-            echo "Browser regression is not relevant to the changed files."
-          fi
+        run: node scripts/required-browser-checks.mjs scope
 
       - name: Check patch whitespace and merge markers
         shell: bash
@@ -63,6 +51,7 @@ jobs:
 
       - name: Check runtime module syntax
         run: |
+          node --check scripts/required-browser-checks.mjs
           node --check dist/spatial-scene.js
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
@@ -132,6 +121,7 @@ jobs:
             tests/spatial-focus-filter.test.mjs
             tests/spatial-exploration.test.mjs
             tests/deployment-static.test.mjs
+            tests/required-browser-checks.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
@@ -200,23 +190,55 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: learning-evidence-audit
+          name: learning-evidence-audit-${{ github.run_attempt }}
           path: verification/learning-evidence-audit/
           if-no-files-found: warn
 
       - name: Check deployment script syntax
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
+      - name: Preserve Node audit and inventory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-required-checks-node-evidence-${{ github.run_attempt }}
+          path: |
+            verification/learning-node-audit/
+            verification/p7-d3/
+            verification/p7-d7/coverage.json
+          if-no-files-found: warn
+
+  browser:
+    name: browser (${{ matrix.group }})
+    needs: static-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [ui, evidence-core, evidence-place, p10, p8-performance]
+    env:
+      MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
+      MATH_BROWSER_GROUP: ${{ matrix.group }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate group identity and browser scope
+        id: group_config
+        run: node scripts/required-browser-checks.mjs prepare "$MATH_BROWSER_GROUP"
+
       - name: Install isolated Chromium test runtime
         id: browser_runtime
-        if: steps.scope.outputs.run_browser == 'true'
+        if: env.MATH_BROWSER_REQUIRED == 'true'
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          # GitHub Ubuntu runner already has Chromium system libraries; apt mirrors can have DNS outages.
-          # Keep the same real Chromium test and assertions, only avoid apt downloads.
+          # Keep the existing runner, browser and CJK font requirements.
           npx playwright install chromium
-          # Real CJK glyphs are required to measure 3D label collisions and
-          # review readable screenshots, not tofu placeholders.
           if ! fc-list :lang=zh-cn family | grep -q .; then
             sudo apt-get update -qq -o Acquire::Retries=3
             sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
@@ -224,162 +246,65 @@ jobs:
           fi
           fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
 
-      - name: Run browser regression suite
-        if: steps.scope.outputs.run_browser == 'true'
+      - name: Run every browser command in this group
         shell: bash
         run: |
-          python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
-
-          ready=false
-          for attempt in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
-              ready=true
-              break
-            fi
-            sleep 1
-          done
-
-          if [[ "$ready" != true ]]; then
-            cat /tmp/math-http.log
-            echo "Local preview server did not become ready."
-            exit 1
-          fi
-
-          status=0
-          # Diagnose the pointer-hover target early; still run every browser suite.
-          for test_file in \
-            tests/learning-node-runtime-browser.cjs \
-            tests/three-level-node-progress-browser.cjs \
-            tests/explore-during-learning-browser.cjs \
-            tests/spatial-theme-overview-browser.cjs \
-            tests/p11-focus-hover-browser.cjs \
-            tests/p11-entry-simplification-browser.cjs \
-            tests/p7-d5-entry-browser.cjs \
-            tests/p7-d6-fixed-ui-browser.cjs \
-            tests/p7-d7-multi-type-browser.cjs \
-            tests/p9-thinking-feedback-browser.cjs \
-            tests/p9-geometry-thinking-browser.cjs \
-            tests/p9-sequence-thinking-browser.cjs \
-            tests/p9-sequence-adapter-browser.cjs \
-            tests/p9-counterexample-adapter-browser.cjs \
-            tests/p9-fraction-adapter-browser.cjs \
-            tests/p9-place-adapter-browser.cjs \
-            tests/p9-unitwalk-adapter-browser.cjs \
-            tests/p9-line-adapter-browser.cjs \
-            tests/p9-array-adapter-browser.cjs \
-            tests/p10-learning-continuity-browser.cjs \
-            tests/p10-longterm-offline-browser.cjs \
-            tests/p10-sw-nav-isolation-browser.cjs \
-            tests/p10-release-upgrade-repeat.cjs \
-            tests/p8-node-surface-browser.cjs \
-            tests/p8-trail-performance-browser.cjs \
-            tests/p8-mode-real-click-browser.cjs \
-            tests/p8-b39-lazy-browser.cjs \
-            tests/p1-navigation-browser.cjs \
-            tests/p2-grade-distribution-browser.cjs \
-            tests/p3-learning-flow-browser.cjs \
-            tests/p7-learning-panel-browser.cjs \
-            tests/p7-d4-multi-type-browser.cjs \
-            tests/p4-learning-reliability-browser.cjs \
-            tests/p5-integration-browser.cjs \
-            tests/continuous-space-browser.cjs \
-            tests/p6b-layout-browser.cjs \
-            tests/spatial-overview-browser.cjs \
-            tests/spatial-focus-transition-browser.cjs \
-            tests/spatial-focus-semantics-browser.cjs \
-            tests/spatial-focus-filter-browser.cjs \
-            tests/spatial-guide-inplace-browser.cjs \
-            tests/spatial-unified-map-browser.cjs \
-            tests/grade-progression-overview-browser.cjs \
-            tests/spatial-local-focus-browser.cjs \
-            tests/learning-workspace-browser.cjs \
-            tests/concept-visual-browser.cjs \
-            tests/node-name-browser.cjs \
-            tests/relationship-wording-browser.cjs
-          do
-            if [[ -f "$test_file" ]]; then
-              echo "::group::${test_file}"
-              if [[ "$test_file" == "tests/concept-visual-browser.cjs" ]]; then
-                MATH_CONCEPT_BROWSER_SCOPE=smoke node "$test_file" || status=1
-              else
-                if [[ "$test_file" == "tests/p8-trail-performance-browser.cjs" ]]; then
-                  MATH_P8_BASELINE=1 node "$test_file" || status=1
-                fi
-                node "$test_file" || status=1
+          if [[ "$MATH_BROWSER_REQUIRED" == true ]]; then
+            python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
+            browser_server_pid=$!
+            trap 'kill "$browser_server_pid" 2>/dev/null || true' EXIT
+            ready=false
+            for attempt in $(seq 1 30); do
+              if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
+                ready=true
+                break
               fi
-              echo "::endgroup::"
+              sleep 1
+            done
+            if [[ "$ready" != true ]]; then
+              cat /tmp/math-http.log
+              echo "Local preview server did not become ready."
+              exit 1
             fi
-          done
-          exit "$status"
+          fi
+          node scripts/required-browser-checks.mjs run "$MATH_BROWSER_GROUP"
 
-      - name: Run complete P10 lessons and storage safety independently
-        if: ${{ !cancelled() && steps.browser_runtime.outcome == 'success' }}
-        shell: bash
-        run: |
-          python3 -m http.server 43827 --directory dist > /tmp/math-p10-safety-http.log 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
-          for attempt in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then break; fi
-            sleep 1
-          done
-          status=0
-          node tests/p10-backup-safety-browser.cjs || status=1
-          node tests/p10-full-lessons-browser.cjs || status=1
-          exit "$status"
-
-      - name: Preserve browser screenshots and verification evidence
-        if: always() && steps.scope.outputs.run_browser == 'true'
+      - name: Preserve this group's browser screenshots and evidence
+        if: ${{ always() && steps.group_config.outcome == 'success' && env.MATH_BROWSER_REQUIRED == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: math-required-checks-browser-evidence
-          path: |
-            verification/overview-readability-v1/
-            verification/spatial-focus-transition/
-            verification/spatial-focus-semantics/
-            verification/spatial-focus-filter/
-            verification/spatial-guide-inplace/
-            verification/spatial-unified-map/
-            verification/spatial-theme-overview/
-            verification/grade-progression-overview/
-            verification/learning-workspace/
-            verification/concept-language-pilot/
-            verification/node-name-review/
-            verification/language-direction/
-            verification/p1-navigation/
-            verification/p2-grade-distribution/
-            verification/p3-learning-flow/
-            verification/p7-learning-panel/
-            verification/learning-node-audit/
-            verification/three-level-node-progress/
-            verification/explore-during-learning/
-            verification/p7-d3/
-            verification/p7-d4/
-            verification/p7-d5/
-            verification/p7-d6/
-            verification/p7-d7/
-            verification/p9-thinking-feedback/
-            verification/p9-geometry-thinking/
-            verification/p9-sequence-thinking/
-            verification/p9-sequence-adapter/
-            verification/p9-counterexample-adapter/
-            verification/p9-fraction-adapter/
-            verification/p9-place-adapter/
-            verification/p9-unitwalk-adapter/
-            verification/p9-line-adapter/
-            verification/p9-array-adapter/
-            verification/p10-learning-continuity/
-            verification/p10-longterm-round2/
-            verification/p10-release-upgrade/
-            verification/p8-node-surfaces/
-            verification/p8-trail-performance/
-            verification/p8-mode-clicks/
-            verification/p11-focus-hover/
-            verification/p11-entry-simplification/
-            verification/p4-learning-reliability/
-            verification/p5-integration/
-            verification/continuous-space/
-            verification/p6b-layout/
-          if-no-files-found: warn
+          name: math-required-checks-browser-evidence-${{ matrix.group }}-${{ github.run_attempt }}
+          path: ${{ steps.group_config.outputs.artifact_paths }}
+          if-no-files-found: error
+
+      - name: Preserve this group's exact command results
+        if: ${{ always() && steps.group_config.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: required-browser-result-${{ matrix.group }}-attempt-${{ github.run_attempt }}
+          path: verification/required-browser-groups/*.json
+          if-no-files-found: error
+
+  required-checks:
+    name: required-checks
+    needs: [static-checks, browser]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Read the small group result artifacts
+        if: needs.browser.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          pattern: required-browser-result-*
+          merge-multiple: true
+          path: verification/required-browser-results/
+      - name: Require every applicable check and complete group inventory
+        if: always()
+        env:
+          MATH_REQUIRED_NEEDS: ${{ toJSON(needs) }}
+        run: node scripts/required-browser-checks.mjs gate

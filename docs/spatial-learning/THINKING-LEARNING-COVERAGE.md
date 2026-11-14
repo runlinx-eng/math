@@ -33,7 +33,9 @@
 
 专用Node覆盖26个真实位置、数学正反例、不同顺序、跨零拆换、多加数连续进位、首猜与书写、来源/篡改/最新快照；公共矩阵和全量审计同步。`p9-place-adapter-browser.cjs` 对26题两视口用真实控件逐步断言守恒、提交/编辑/刷新，在完整缓存后停HTTP源站继续；额外检查真实非法历史与未绑定整数/小数/关联题。SW只同步发布证书与模块清单，递归依赖与P10保护规则不变。
 
-本地37项专用Node与公共/审计检查已通过。本地Chromium因运行环境禁止socket而未启动，不能计通过；最终结果必须以 [Issue #118](https://github.com/runlinx-eng/math/issues/118) 对应PR最新HEAD Required/Overview/P8、完整Chromium/P10日志及实际截图Artifact和合并后main独立回归为准。CI总时限从25到35分钟，仅容纳新增52个题目×视口组合；各原用例断言和失败门槛保持。独立教研、儿童实用、Mac人工仍待分别验收，不部署。
+[PR #119](https://github.com/runlinx-eng/math/pull/119) 已正式合并为 main `855f6f11bbc3a7be518297354d6be588e184c3ee`；最终PR HEAD `aaca75b04dfdfa0c09c45fa5385a90e66d11e2f3` 的 Required [43565671703](https://github.com/runlinx-eng/math/actions/runs/43565671703)、Overview [43565671723](https://github.com/runlinx-eng/math/actions/runs/43565671723) 与 P8 [43565671771](https://github.com/runlinx-eng/math/actions/runs/43565671771) 成功，合并后独立 Required [43568482518](https://github.com/runlinx-eng/math/actions/runs/43568482518) 亦成功。26题×两视口的3809项整数浏览器检查、完整P10和截图Artifact均完成核对；浏览器验证在GitHub Actions执行，本地环境因socket限制未启动。人工图像核对覆盖两视口代表题、正误/编辑状态和P10关键安全场景，并非全量截图逐张视觉验收；独立教研、儿童实用和Mac人工仍待分别完成，不部署。
+
+本次main浏览器Artifact [14104407587](https://github.com/runlinx-eng/math/actions/runs/43568482518/artifacts/14104407587) 的ZIP SHA256为 `c32c78ee0bf74819823093a14eaaf64673f0d6c68d29936d1aeebbf48d143ab2`，包含611张可解码PNG；42个结果文件未出现非空错误数组。独立P10的434项与实际checkout/tree对应。1280视口既有固定操作条局部覆盖数位计数或已禁用控件，完整真实控件路径通过；此视觉观察保留，不表述为完全无覆盖。CI承载改进在独立Issue #120中继续，所有原用例与失败门槛保持。
 
 13道标准路径不需交换的整数题及9道小数尺度题留作独立契约审核，不因同类型自动接入。连续任务下一步为成熟家族的逐题来源扩展审计与独立PR。
 

@@ -7,6 +7,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
 import os from 'node:os';
 import net from 'node:net';
+import { browserScope, validateScope } from '../scripts/required-browser-checks.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -94,7 +95,9 @@ test('the preview server keeps the app under a protected root and a public healt
   assert.match(checks, /^  pull_request:/m);
   assert.match(checks, /^  push:\n    branches: \[main\]/m);
   assert.match(checks, /name: Pull request required checks/);
-  assert.match(checks, /run_browser=true/, 'main push requires complete browser coverage');
+  assert.match(checks, /node scripts\/required-browser-checks\.mjs scope/, 'the workflow invokes its tested scope decision');
+  assert.equal(browserScope('push', []), 'true', 'main push requires complete browser coverage');
+  assert.throws(() => validateScope('false', 'push'), 'main cannot accept an omitted browser run');
 
   // Integration safety gate: no workflow_run, push or PR can publish a release.
   assert.doesNotMatch(deploy, /^  workflow_run:/m, 'CI success must never automatically deploy');
