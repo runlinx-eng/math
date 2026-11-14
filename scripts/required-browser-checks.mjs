@@ -109,11 +109,13 @@ const groups={
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
   "verification/p9-groups-adapter/",
+  "verification/p9-joinstory-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
@@ -168,6 +170,7 @@ export function browserScope(event,changedFiles=[]){
  // Future source-review-only edits still need the complete browser/P10 gate,
  // even when no runtime, browser script or workflow file changes with them.
  const sourceReview=new Set(['scripts/audit-evidence-expansion.mjs',
+  'scripts/joinstory-evidence-fixture.mjs','tests/fixtures/p9-joinstory-cases.cjs',
   'tests/evidence-expansion-audit.test.mjs','docs/spatial-learning/evidence-review-manifest.json']);
  // Preserve the existing source/document scope and include the actual browser
  // inventory and its scheduler, so a test-only edit cannot omit its own run.
