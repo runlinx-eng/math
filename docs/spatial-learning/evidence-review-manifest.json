@@ -2383,6 +2383,222 @@
       "adapter": "angle",
       "taskHash": "e7c26b3136e9126c14d449edf8b03f85feaf7ac13725d88c7f73cbbb7d55854f",
       "method": null
+    },
+    {
+      "sessionId": "columnthree",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_SrrsLiJkr3",
+      "adapter": "estimate",
+      "taskHash": "ca806630bf25a9de92c645ff2f5e0fe5d342ea585d092036189a887671b9dba1",
+      "method": null
+    },
+    {
+      "sessionId": "columnthree",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_SrrsLiJkr3",
+      "adapter": "estimate",
+      "taskHash": "1d545460a91947a81022686163c21020630d116880d0218c88cd9317ad334c92",
+      "method": null
+    },
+    {
+      "sessionId": "flexthousand",
+      "index": 3,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_HFRYjTb-Z5",
+      "adapter": "estimate",
+      "taskHash": "3b3051deb1c101748db1314e558c404295691693e0b579ffe0df8fca05b8785d",
+      "method": null
+    },
+    {
+      "sessionId": "columnfour",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_mpS-JK_p_m",
+      "adapter": "estimate",
+      "taskHash": "23d4fd87f0740bcc1eb5396a8993c03b6cea1f7e6769324c085771d78e09cb18",
+      "method": null
+    },
+    {
+      "sessionId": "columnfour",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_mpS-JK_p_m",
+      "adapter": "estimate",
+      "taskHash": "a084f9851857e42a82897ec388103edda774ff0d4a2237b2bfd3db096ec63726",
+      "method": null
+    },
+    {
+      "sessionId": "columnlarge",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_Yw1_4Nfsql",
+      "adapter": "estimate",
+      "taskHash": "64a1e3f7ec1e7d7de41fa150865f495161a5942fd37f521269ace66b6076e7ed",
+      "method": null
+    },
+    {
+      "sessionId": "columnlarge",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_Yw1_4Nfsql",
+      "adapter": "estimate",
+      "taskHash": "b93e495b7068e849d4ac813f62eb0e6aec713c62f25fb79cc4d2c5bded44e17b",
+      "method": null
+    },
+    {
+      "sessionId": "decimalsum",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_JH_6RpNWjr",
+      "adapter": "estimate",
+      "taskHash": "a75d3a81b37f81f77dacdf7a6ce99e0805b330922f5cb8234020d779649295bb",
+      "method": null
+    },
+    {
+      "sessionId": "storylarger",
+      "index": 1,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_-F_Lv_apzH",
+      "adapter": "estimate",
+      "taskHash": "bfb33b89c80e7483328d12ffce2830995dda1e4713766cdc0b05bcf654589cb7",
+      "method": null
+    },
+    {
+      "sessionId": "storylarger",
+      "index": 3,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_-F_Lv_apzH",
+      "adapter": "estimate",
+      "taskHash": "8c5e969c152a80ba0cb344b7a6da09e29fe1ee9fc1e9081bb06e4b036b9a69e6",
+      "method": null
+    },
+    {
+      "sessionId": "storymillion",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_M1tnXqmYbn",
+      "adapter": "estimate",
+      "taskHash": "9361653cdd2940f70e4e6f55d90af49e2f6ee4fb49f87ca24435adf490074612",
+      "method": null
+    },
+    {
+      "sessionId": "storymillion",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_M1tnXqmYbn",
+      "adapter": "estimate",
+      "taskHash": "6687bd48d78d91c76c51023c7ff2356fa14dc97057c1c1e8c0ca6ec584df505b",
+      "method": null
+    },
+    {
+      "sessionId": "checkrough",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_QaYfeVL-0C",
+      "adapter": "estimate",
+      "taskHash": "981f2c2b1b2840eefd38c4e69f732a4389f34c9375e9567cbecd261f9f73a3c0",
+      "method": null
+    },
+    {
+      "sessionId": "checkrough",
+      "index": 1,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_QaYfeVL-0C",
+      "adapter": "estimate",
+      "taskHash": "fe13bbc926532ad933b45f63229369ea53f0371bcfe01e06686e28d17acfd187",
+      "method": null
+    },
+    {
+      "sessionId": "checkrough",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_QaYfeVL-0C",
+      "adapter": "estimate",
+      "taskHash": "841d2168aabfa72a8b82b401889b1cb2dfffdf3d6187cccb363dd1121ec9c9bb",
+      "method": null
+    },
+    {
+      "sessionId": "checkpurpose",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_G3sVFQNCme",
+      "adapter": "estimate",
+      "taskHash": "5156dbef2901e0cac05ddbbaf51d0337c91b2dd5bae04673470fd1e7b9f8bc20",
+      "method": null
+    },
+    {
+      "sessionId": "checkpurpose",
+      "index": 1,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_G3sVFQNCme",
+      "adapter": "estimate",
+      "taskHash": "881bd401a77431953ce582aaafea1e83b51e9f36867d6bbbb6d3e40cdeecb8e6",
+      "method": null
+    },
+    {
+      "sessionId": "checkpurpose",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_G3sVFQNCme",
+      "adapter": "estimate",
+      "taskHash": "8c38b5d8cdee7c3799450175b013502da010dc36e7360c014b36dc9ee8baf555",
+      "method": null
+    },
+    {
+      "sessionId": "checkpurpose",
+      "index": 3,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_G3sVFQNCme",
+      "adapter": "estimate",
+      "taskHash": "b13ec93f7f4903bf1ec46e9e7f4a9c04eb0f3087b8266df5d56e2f26003fa43a",
+      "method": null
+    },
+    {
+      "sessionId": "decimalmeasure3",
+      "index": 0,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_sA2OvTiech",
+      "adapter": "estimate",
+      "taskHash": "832b60b22cade476065a7635a168c7d2d2c8264aa05db662bb11452dc92d1cd2",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 12,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "estimate",
+      "taskHash": "7f40c84ee8a5b333fb97ead8ba19f9ac9d4bfefeb01a5f49c7d0a4780fc2736f",
+      "method": null
+    },
+    {
+      "sessionId": "plan38",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_O_UOTiMvT_",
+      "adapter": "estimate",
+      "taskHash": "981f2c2b1b2840eefd38c4e69f732a4389f34c9375e9567cbecd261f9f73a3c0",
+      "method": null
+    },
+    {
+      "sessionId": "multi38",
+      "index": 1,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_RKeheOL9uo",
+      "adapter": "estimate",
+      "taskHash": "981f2c2b1b2840eefd38c4e69f732a4389f34c9375e9567cbecd261f9f73a3c0",
+      "method": null
+    },
+    {
+      "sessionId": "multi38",
+      "index": 2,
+      "type": "x-estimatecheck",
+      "nodeId": "mt_RKeheOL9uo",
+      "adapter": "estimate",
+      "taskHash": "fe13bbc926532ad933b45f63229369ea53f0371bcfe01e06686e28d17acfd187",
+      "method": null
     }
   ]
 }

@@ -1,3 +1,31 @@
+## P9 估算核对｜Issue #138：一条真实估计与有限关系反馈（2026-11-14）
+
+独立 estimate-evidence.js 绑定全部24道原生 x-estimatecheck，13来源节点中6个为新增严格覆盖：storylarger、storymillion、checkrough、checkpurpose、plan38、multi38。6同型关联题独立隔离，所有来源 method:null；下面每个位置的完整题目SHA256另列于fixture及review manifest。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| columnthree | 0、2 | `mt_SrrsLiJkr3` |
+| flexthousand | 3 | `mt_HFRYjTb-Z5` |
+| columnfour | 0、2 | `mt_mpS-JK_p_m` |
+| columnlarge | 0、2 | `mt_Yw1_4Nfsql` |
+| decimalsum | 0 | `mt_JH_6RpNWjr` |
+| storylarger | 1、3 | `mt_-F_Lv_apzH` |
+| storymillion | 0、2 | `mt_M1tnXqmYbn` |
+| checkrough | 0、1、2 | `mt_QaYfeVL-0C` |
+| checkpurpose | 0、1、2、3 | `mt_G3sVFQNCme` |
+| decimalmeasure3 | 0 | `mt_sA2OvTiech` |
+| fractionfour | 12 | `mt_gNUE4B3vuk` |
+| plan38 | 2 | `mt_O_UOTiMvT_` |
+| multi38 | 1、2 | `mt_RKeheOL9uo` |
+
+14加法、10减法，5题使用100或1000尺度；41种合法舍入间隔与65种逆算形式逐项验证。仅承认一条实际b11-estimate事件，要求first/locked/当前舍入字段完全对应。BigInt整数重算四舍五入和精算，双倍整数端点表达半单位边界；非负操作数的舍入原像下端截到0，加法左闭右开、减法两端开。负差与边界在独立反例中核验，但不称为负操作数估算覆盖。
+
+逆运算仅检查提交等式，不声称真实执行了独立逆算；范围由系统推导。9题claimed区分plausible与exactCorrect，包含412+389的800合理但不等于801；2题accuracy按预先选择的间隔保证，实际误差碰巧小不补救过粗选择。错误事件后修正、隐藏字段漂移、重复事件、浮点残差、非法select值、源漂移与关联复制全部拒绝严格证据，原判题和保存功能保留。
+
+本地审计A283题/109节点，B248/C150/D1186/E129；1996原生题、587节点、1223关系及776组1552关联题分母保持。38项专用Node加公共契约与来源审计；另独立枚举3240组/19504个边界claim。浏览器脚本全24×2正向组合、每组5次完整提交，另24×2错误舍入后修正、accuracy反例、6×2关联隔离、完整离线模型和存储快照。所有脚本进入最终HEAD的Required，合并main独立回归；未执行的远端CI、儿童与教研不计入已完成。
+
+---
+
 ## P9 角度记录｜Issue #136：开口、边长与实际关系（2026-11-14）
 
 新增 `angle-evidence.js`，23道原生题/10个新严格证据节点。所有来源method:null，13道同型关联题隔离；独立fixture及review manifest固定每道完整原题SHA256。
