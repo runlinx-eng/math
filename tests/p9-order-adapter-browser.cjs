@@ -88,9 +88,14 @@ if(require.main===module)(async()=>{
    diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const visible=async locator=>{
-    const closed=locator.locator('xpath=ancestor::details[not(@open)]').first();
-    if(await closed.count())await closed.locator(':scope > summary').click();
-    await locator.evaluate(e=>e.scrollIntoView({block:'center',inline:'center',behavior:'instant'}));
+    for(let count=0;count<10;count++){
+     const closed=locator.locator('xpath=ancestor::details[not(@open)][last()]');
+     if(!(await closed.count())){
+      await locator.evaluate(e=>e.scrollIntoView({block:'center',inline:'center',behavior:'instant'}));return;
+     }
+     await closed.locator(':scope > summary').click();
+    }
+    throw Error('too many nested disclosures');
    };
    const field=async(key,value)=>{
     const input=page.locator(`[data-xfield="${key}"]`);await visible(input);

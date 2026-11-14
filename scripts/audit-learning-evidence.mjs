@@ -9,6 +9,8 @@ import {BRIDGES,sessionTasks,sourceBridge} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
+import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
 import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
 import {joinStoryEvidenceExample} from './joinstory-evidence-fixture.mjs';
 import {orderEvidenceExample} from './order-evidence-fixture.mjs';
@@ -69,7 +71,7 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // reviewed binding and successful independent replay establish A, not a board key.
  const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task))):null;
+   adapter.replay(task,adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task))):null;
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}

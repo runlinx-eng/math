@@ -22,6 +22,16 @@ import {fractionOperationsBinding,replayFractionOperationsEvidence} from './frac
 import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 
+import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
+
+import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evidence.js';
+
+import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
+
+import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
+
+import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
+
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
@@ -41,5 +51,10 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'portiongroups',type:'x-portiongroups',binding:portionGroupsBinding,replay:replayPortionGroupsEvidence},
  {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence},
  {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence},
+ {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence},
+ {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
+ {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
+ {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
+ {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
  {id:'order',type:'x-orderlab',binding:orderBinding,replay:replayOrderEvidence}
 ].map(Object.freeze));

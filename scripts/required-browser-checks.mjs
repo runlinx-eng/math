@@ -85,6 +85,7 @@ const groups={
   {"file":"tests/p9-groupwalk-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-line-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-array-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-samefraction-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-thinking-feedback/",
   "verification/p9-geometry-thinking/",
@@ -96,15 +97,22 @@ const groups={
   "verification/p9-groupwalk-adapter/",
   "verification/p9-line-adapter/",
   "verification/p9-array-adapter/",
+  "verification/p9-samefraction-adapter/",
  ]},
  "evidence-place":{commands:[
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-decimal-place-adapter-browser.cjs","env":{}},
   {"file":"tests/b14-division-container-caption-browser.cjs","env":{}},
+  {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
   "verification/b14-division-container-caption/",
+  "verification/p9-division-adapter/",
+  "verification/p9-wideshift-adapter/",
+  "verification/p9-pvbench-adapter/",
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
@@ -136,10 +144,12 @@ const groups={
   {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-estimate-adapter/",
   "verification/p9-portiongroups-adapter/",
+  "verification/p9-storyledger-adapter/",
  ]},
  // PR #158 measured 821071ms for the three older expansion commands.
  // Keep the 188 fraction-case viewport instances on their own runner; every
