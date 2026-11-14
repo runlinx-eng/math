@@ -158,7 +158,7 @@ test('exact arithmetic rejects near answers, near integer parameters and rounded
  }
 });
 
-test('invalid operations cannot be erased by a later correct image and original final-work pass',()=>{
+test('real invalid text requests survive correction while unavailable selector values still fail closed',()=>{
  const candidates=[
   [task('pointmove'),{kind:'move',dx:13,dy:0}],
   [task('gridmotion',1),{kind:'mirror',line:'z'}],
@@ -170,10 +170,15 @@ test('invalid operations cannot be erased by a later correct image and original 
  ];
  for(const [t,bad]of candidates){
   const m=predict(t);operate(t,m,bad);assert.notEqual(m.issue,'');operate(t,m);finish(t,m);
-  assert.equal(M.valid(t,m),true);assert.equal(M.inspect(t,m).correct,true);rejected(t,m);
+  assert.equal(M.valid(t,m),true);assert.equal(M.inspect(t,m).correct,true);
+  if(bad.line==='z'||bad.angle===45)rejected(t,m,'not a visible select option');
+  else{const p=accepted(t,m);assert.equal(p.failedRequests.length,1);assert.equal(p.operationCount,1);
+   assert.deepEqual(p.failedRequests[0].before.image,p.failedRequests[0].after.image);}
  }
  const t=task('pointmove'),m=M.initial(t,314159);m.predX='bad';m.predY='0';M.act(t,m,'p24-predict');
- m.predX='0';M.act(t,m,'p24-predict');operate(t,m);finish(t,m);assert.equal(M.inspect(t,m).correct,true);rejected(t,m);
+ m.predX='0';M.act(t,m,'p24-predict');operate(t,m);finish(t,m);assert.equal(M.inspect(t,m).correct,true);
+ const p=accepted(t,m);assert.equal(p.failedRequests[0].fields.predX,'bad');assert.equal(p.prediction.point[0],'0');
+ assert.equal(m.board.first.predict.predX,'bad');assert.equal(m.board.first.prediction.x,'0');
 });
 
 test('negative mixed scale and positive-target answers fail without erasing invalid-operation history',()=>{
@@ -184,7 +189,8 @@ test('negative mixed scale and positive-target answers fail without erasing inva
  operate(scale,s);finish(scale,s);
  assert.equal(M.valid(scale,s),true);assert.equal(M.inspect(scale,s).correct,true);
  assert.deepEqual(s.history[1],failed,'the failed negative scale stays in the original event history');
- rejected(scale,s,'a later correct image does not erase the failed negative scale');
+ const proof=accepted(scale,s);assert.equal(proof.failedRequests.length,1);
+ assert.equal(proof.failedRequests[0].fields.factor,'-0 1/2');assert.equal(proof.operationCount,1);
  const move=task('pointmove');
  for(const input of ['-0 5/1','-00 5/1',' -000 5/1 ']){
   const n=M.example(move);n.answers[0]=input;assert.equal(M.valid(move,n),true);
@@ -205,7 +211,8 @@ test('legal negative mixed displacements preserve their actual direction before 
  }
  const half=predict(move);operate(move,half,{kind:'move',dx:'-0 1/2',dy:0});
  assert.equal(half.board.image,null);assert.notEqual(half.issue,'');operate(move,half);finish(move,half);
- assert.equal(M.inspect(move,half).correct,true);rejected(move,half,'negative half is outside this integer displacement control');
+ assert.equal(M.inspect(move,half).correct,true);
+ const p=accepted(move,half);assert.equal(p.failedRequests[0].fields.dx,'-0 1/2');assert.equal(p.operationCount,1);
 });
 
 test('negative mixed predictions are real guesses and negative coordinates can be exactly correct answers',()=>{
@@ -227,7 +234,7 @@ test('negative mixed predictions are real guesses and negative coordinates can b
  assert.equal(accepted(move,negative).prediction.correct,false,'ordinary negative mixed predictions remain valid');
 });
 
-test('redundant and hidden events fail strict replay while original grading remains unchanged',()=>{
+test('visible confirmations do not inflate construction while hidden events remain refused',()=>{
  for(const kind of ['operate-before-prediction','measure-before-image','reset','dot','duplicate-predict','duplicate-operate','duplicate-measure','identity']){
   const t=task('gridmotion'),m=M.initial(t,314159);
   if(kind==='operate-before-prediction')operate(t,m);
@@ -239,10 +246,21 @@ test('redundant and hidden events fail strict replay while original grading rema
   if(kind==='reset'){M.act(t,m,'p24-reset');M.act(t,m,'p24-predict');}
   operate(t,m);if(kind==='duplicate-operate')operate(t,m);
   finish(t,m);if(kind==='duplicate-measure')M.act(t,m,'p24-measure');
-  assert.equal(M.valid(t,m),true,kind);assert.equal(M.inspect(t,m).correct,true,kind);rejected(t,m,kind);
+  assert.equal(M.valid(t,m),true,kind);assert.equal(M.inspect(t,m).correct,true,kind);
+  if(['duplicate-operate','duplicate-measure','identity'].includes(kind)){
+   const p=accepted(t,m);assert.equal(p.operationCount,1);assert.equal(p.measurementCount,1);assert.equal(p.confirmations,1);
+  }else rejected(t,m,kind);
  }
  const t=task('pointmove'),m=M.example(t);M.act(t,m,'p24-measure');
  assert.equal(M.inspect(t,m).correct,true);rejected(t,m,'no measurement control exists for this task');
+});
+
+test('the last failed transform request preserves a previously completed image and the exact issue',()=>{
+ const t=task('pointmove'),m=M.example(t),before=structuredClone(m.board.image);
+ operate(t,m,{kind:'move',dx:13,dy:0});assert.ok(m.issue);m.dx=String(t.goal.dx);m.dy=String(t.goal.dy);
+ assert.equal(M.inspect(t,m).correct,true);const p=accepted(t,m);
+ assert.equal(p.failedRequests.length,1);assert.deepEqual(m.board.image,before);assert.equal(p.failedRequests[0].issue,m.issue);
+ const forged=structuredClone(m);forged.issue='';rejected(t,forged,'cannot erase the real final failure prompt');
 });
 
 test('a symmetric outline is not a no-op when corresponding vertex identities move',()=>{

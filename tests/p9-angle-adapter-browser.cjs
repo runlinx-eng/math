@@ -12,6 +12,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
 
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
+ const {unpackText}=await import('../dist/storage.js');
  const {sessionTasks,BRIDGES}=await import('../dist/learning/bridges.js');
  const angles=await import('../dist/learning/phase5/b25-model.js');
  const {replayAngleEvidence}=await import('../dist/learning/angle-evidence.js');
@@ -62,6 +63,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
    const model=async spec=>(await saved(spec.id)).models[spec.index];
+   // Export exactly the stored bytes at existing checkpoints. Capturing does
+   // not perform any mathematical action or create another submission.
+   const captureNative=async(spec,stage)=>{
+    const raw=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+    const text=unpackText(raw),state=JSON.parse(text),lesson=state.lessons[spec.id]||state.daily.bridges[spec.id];
+    const model=lesson?.models[spec.index];
+    ok(typeof raw==='string'&&!!model&&lesson.index===spec.index,activeLabel+' '+stage+' captures complete stored lesson and current model');
+    const files={raw:activeLabel+'-'+stage+'-storage.txt',state:activeLabel+'-'+stage+'-state.json'};
+    fs.writeFileSync(path.join(out,files.raw),raw);fs.writeFileSync(path.join(out,files.state),text);
+    return{stage,raw,text,state,lesson,model,files};
+   };
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
    },spec);
@@ -203,6 +215,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&await hint.isVisible(),
      activeLabel+' new correct submission receives bounded angle feedback');
     const firstLesson=await saved(spec.id),first=firstLesson.models[spec.index],words=await hint.innerText();
+    const nativeCaptures={first:await captureNative(spec,'native-first')};
     ok(angles.valid(task,first)&&angles.inspect(task,first).correct&&!!replayAngleEvidence(task,first),
      activeLabel+' saved UI actions satisfy original grading and strict mathematics');
     ok(spec.targets.every(angle=>words.includes(String(angle))),activeLabel+' factual feedback names the actual recorded openings');
@@ -210,10 +223,13 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await shot('verified-offline');await reload(spec);
     ok(await hint.isVisible()&&JSON.stringify(await model(spec))===JSON.stringify(first),
      activeLabel+' offline refresh preserves the exact checked model');
+    nativeCaptures.firstOffline=await captureNative(spec,'native-first-offline');
 
     await field('angle','999');ok(await hint.count()===0,activeLabel+' pending input immediately invalidates old feedback');
     await reload(spec);ok(await hint.count()===0,activeLabel+' pending input stays unverified offline');
+    nativeCaptures.pendingInputOffline=await captureNative(spec,'native-pending-input-offline');
     await submit();const pendingLesson=await saved(spec.id),pending=pendingLesson.models[spec.index];
+    nativeCaptures.pendingChecked=await captureNative(spec,'native-pending-checked');
     ok(angles.inspect(task,pending).correct&&await page.locator('#check-feedback').getAttribute('data-state')==='correct',
      activeLabel+' original record-based grading is unchanged for an unacted input');
     ok(await hint.count()===0&&!replayAngleEvidence(task,pending),activeLabel+' stale construction cannot verify a pending 999-degree input');
@@ -229,8 +245,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(returned.history.length===beforeReturn.history.length+2&&await hint.count()===0,
      activeLabel+' new actual history needs a new check even after the opening returns');
     await reload(spec);ok(await hint.count()===0,activeLabel+' changed history remains unverified after offline refresh');
+    nativeCaptures.pendingHistoryOffline=await captureNative(spec,'native-pending-history-offline');
     await submit();ok(await hint.isVisible(),activeLabel+' a fresh check verifies the complete new history');
     const end=await saved(spec.id),m=end.models[spec.index],attempts=end.cases[spec.index].attempts,proof=replayAngleEvidence(task,m);
+    nativeCaptures.final=await captureNative(spec,'native-final');
     ok(attempts.length===5,activeLabel+' all five submissions are retained');
     ok(attempts.every(attempt=>attempt.id&&attempt.at&&attempt.value&&typeof attempt.supported==='boolean'&&typeof attempt.exposed==='boolean'),
      activeLabel+' original submission metadata and snapshots remain intact');
@@ -240,7 +258,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),activeLabel+' no horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,
      targets:spec.targets,observation:words,finalObservation:await hint.innerText(),firstModel:first,finalModel:m,
-     firstLesson,pendingLesson,finalLesson:end,attempts,proof});
+     firstLesson,pendingLesson,finalLesson:end,attempts,proof,nativeCaptures});
    }
 
    const negativeCases=[
@@ -256,7 +274,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ];
    for(const spec of negativeCases){
     activeLabel=`${width}x${height}-negative-${spec.variant}`;const task=sessionTasks(spec.id)[spec.index];await open(spec);
-    let failedOpening;
+    let failedOpening,failed;
     if(spec.variant==='reversed-records'){
      for(const angle of [...task.targets].reverse())await recordAngle(spec,angle);
      await setAngle(spec,task.targets.at(-1));await answerFields(spec,task);
@@ -273,6 +291,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
         activeLabel+' the negative sixty-degree opening is rejected without changing the visible construction or records');
        ok(failedOpening.event.a==='set'&&failedOpening.event.f.angle==='-0 60/1',activeLabel+' the rejected event preserves the exact negative mixed input');
       }
+      await submit();failed={model:await model(spec),lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
       await field('angle','60');await action('set');
      }
      if(spec.variant==='stale-opening'){await field('angle','65');await action('set');}
@@ -286,11 +305,16 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      activeLabel+' the visible result agrees with the actual positive opening measurement');
     if(failedOpening)ok(JSON.stringify(m.history[failedOpening.index])===JSON.stringify(failedOpening.event),
      activeLabel+' a later correct opening retains the failed negative action in its original position');
-    ok(await hint.count()===0&&!replayAngleEvidence(task,m),activeLabel+' strict feedback excludes contradictory or ineffective evidence');
-    await reload(spec);ok(await hint.count()===0&&JSON.stringify(await model(spec))===JSON.stringify(m),activeLabel+' rejected evidence and the complete original model remain unchanged offline');
-    const lesson=await saved(spec.id),observation={width,height,id:spec.id,index:spec.index,variant:spec.variant,model:m,
-     lesson,originalCorrect,strictFeedback:false};negativeObservations.push(observation);
-    await shot('rejected');
+    const strictFeedback=['duplicate-record','same-length','invalid-angle','negative-zero-mixed'].includes(spec.variant),proof=replayAngleEvidence(task,m);
+    if(strictFeedback){ok(!!proof&&await hint.isVisible(),activeLabel+' real failed requests and confirmations preserve completed angle evidence');
+     if(failed)ok(proof.failedRequests.length===1&&JSON.stringify(m.history.slice(0,failed.model.history.length))===JSON.stringify(failed.model.history),activeLabel+' failure remains exact and is not counted as an angle change');
+     else ok(proof.confirmations>0,activeLabel+' duplicate confirmation does not manufacture extra records');
+    }else ok(await hint.count()===0&&!proof,activeLabel+' inexact, stale or contradictory final evidence remains excluded');
+    const checked=await saved(spec.id),checkedRaw=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+    await reload(spec);ok((await hint.count()>0)===strictFeedback&&JSON.stringify(await model(spec))===JSON.stringify(m),activeLabel+' complete original model and faithful evidence decision survive offline');
+    const lesson=await saved(spec.id),observation={width,height,id:spec.id,index:spec.index,variant:spec.variant,failed,model:m,
+     lesson,checked,checkedRaw,restoredRaw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2')),proof,originalCorrect,strictFeedback};negativeObservations.push(observation);
+    await shot(strictFeedback?'corrected':'rejected');
     if(spec.variant==='negative-mixed-answer'){
      await field('answers.0','45');await submit();const repaired=await saved(spec.id),current=repaired.models[spec.index];
      ok(await hint.isVisible()&&!!replayAngleEvidence(task,current),activeLabel+' correcting only the answer enables the actual recorded angle evidence');
@@ -313,7 +337,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===46,'all 23 native tasks finish at both desktop sizes');
-  ok(negativeObservations.length===18,'nine real negative paths finish at both desktop sizes');
+  ok(negativeObservations.length===18,'all nine correction, confirmation and negative paths finish at both desktop sizes');
   ok(boundaries.length===8,'clipped and next-circle advances are observed at both desktop sizes');
   const nativeNodes=new Set(cases.map(c=>c.nodeId)).size;
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,boundaries,offline,

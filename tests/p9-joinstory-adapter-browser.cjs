@@ -240,10 +240,25 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
     const spec=cases.find(c=>c.id===id&&c.index===index);label=prefix+'-unsuitable-'+id+'-'+index+'-'+a+'-'+op;
     await open(spec);await demonstrate(spec,{a,b,op,guess:'0'});const unsuitable=await model(spec),shown=await page.locator('#extra-visual').innerText();
     await finish(spec);const corrected=await check(spec,true,'original-correct-after-unsuitable-display');
-    ok(replayJoinStoryEvidence(taskFor(spec),corrected.model)===null&&await hint.count()===0,label+' a later correct display does not erase the unsuitable recorded display');
+    const proof=replayJoinStoryEvidence(taskFor(spec),corrected.model);await wordsFor(proof);
+    ok(proof.limitedDisplays.length+proof.insufficientAttempts.length===1,label+' earlier display limitation or shortage is explicitly retained, not called a success');
     assert.deepEqual(corrected.model.history.slice(0,unsuitable.history.length),unsuitable.history);
-    await reload(spec);ok(await hint.count()===0,label+' exclusion survives stopped-origin restore');await shot('excluded');
-    negatives.push({width,height,kind:'unsuitable-display-retained',id,index,unsuitable,shown,corrected,stored:await snapshot('excluded')});
+    await reload(spec);ok(await hint.isVisible(),label+' honest correction survives stopped-origin restore');await shot('corrected-limit');
+    negatives.push({width,height,kind:'unsuitable-display-retained',id,index,unsuitable,shown,corrected,proof,stored:await snapshot('corrected-limit')});
+   }
+
+   {
+    const spec=cases.find(c=>c.id==='takethings'&&c.index===0);label=prefix+'-insufficient-zero-take';await open(spec);
+    await demonstrate(spec,{a:0,b:2,op:'-',guess:'3'});const insufficient=await model(spec),shown=await page.locator('#extra-visual').innerText();
+    ok(/仍然不够/.test(shown)&&insufficient.done.result===-2,label+' source displays shortage for the recorded negative arithmetic request');
+    const failed=await check(spec,false,'insufficient-attempt');await finish(spec);const corrected=await check(spec,true,'corrected-take');
+    const proof=replayJoinStoryEvidence(taskFor(spec),corrected.model);await wordsFor(proof);
+    ok(proof.insufficientAttempts.length===1&&proof.insufficientAttempts[0].physicalResult===null&&proof.insufficientAttempts[0].missing===2,
+     label+' no negative physical objects or successful take are inferred');
+    assert.deepEqual(corrected.model.history.slice(0,insufficient.history.length),insufficient.history);
+    assert.deepEqual(corrected.record.cases[spec.index].attempts[0],failed.attempt);
+    await reload(spec);assert.deepEqual(await model(spec),corrected.model);ok(await hint.isVisible(),label+' correction and failed attempt restore offline');await shot('corrected');
+    negatives.push({width,height,kind:'insufficient-attempt-corrected',id:spec.id,index:spec.index,insufficient,shown,failed,corrected,proof,stored:await snapshot('shortage-corrected')});
    }
 
    for(const[id,index]of [['jointhings',0],['takethings',0],['smallstories',3],['notice34',0]]){

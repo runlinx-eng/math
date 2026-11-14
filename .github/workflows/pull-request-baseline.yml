@@ -250,7 +250,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, p10, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, p10, p8-performance]
     env:
       MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
