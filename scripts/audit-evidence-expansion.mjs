@@ -1,3 +1,4 @@
+import {areaEvidenceExample} from './area-evidence-fixture.mjs';
 import {timeEvidenceExample} from './time-evidence-fixture.mjs';
 // Source-derived candidates are review work, never automatic runtime admission.
 // The committed review manifest is an independent, deliberate approval record:
@@ -24,7 +25,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=task=>task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):exampleModel(task);
+const fixtureFor=task=>task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 

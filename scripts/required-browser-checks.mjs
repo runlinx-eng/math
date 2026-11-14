@@ -167,6 +167,13 @@ const groups={
  ],artifacts:[
   "verification/p9-time-adapter/",
  ]},
+ // Source-bound B30 geometry has its own stopped-origin runner; no prior
+ // command, environment, artifact or 35-minute limit changes.
+ "evidence-geometry":{commands:[
+  {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-area-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},

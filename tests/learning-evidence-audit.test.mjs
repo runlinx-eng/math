@@ -1,3 +1,4 @@
+import area from './fixtures/p9-area-cases.cjs';
 import time from './fixtures/p9-time-cases.cjs';
 import pvbench from './fixtures/p9-pvbench-cases.cjs';
 import wideshift from './fixtures/p9-wideshift-cases.cjs';
@@ -51,6 +52,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...area.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...time.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...pvbench.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...wideshift.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
@@ -99,12 +101,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 479 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,186);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','wideshift','pvbench','time-order','time-parts','time-roman','time-stopwatch','time-steps'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,wideshift:26,pvbench:11,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 496 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,195);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','wideshift','pvbench','time-order','time-parts','time-roman','time-stopwatch','time-steps','area-partition','area-design','area-compare','area-pieces','area-stadium','area-openbox'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,wideshift:26,pvbench:11,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6,'area-partition':6,'area-design':1,'area-compare':4,'area-pieces':4,'area-stadium':1,'area-openbox':1});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:479,B:210,C:124,D:1103,E:80});
+   [level,s.tasks])),{A:496,B:210,C:124,D:1086,E:80});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

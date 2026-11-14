@@ -1,4 +1,5 @@
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
@@ -32,6 +33,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
   if(!isEvidenceContext(context))return null;
+  if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
+    const source=areaBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这次图形中的部分、面积和外边（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-pvbench'){
     const source=pvbenchBinding(task,context);
     return source?{type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:source.question}:null;
@@ -138,6 +143,46 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
+    const source=areaBinding(task,context);if(!source)return null;
+    const proof=replayAreaEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,h=proof.history,detail=[];let observation,connection;
+    if(proof.kind==='partition'||proof.kind==='design'){
+      const pieces=c.rectangles.map(r=>`${r.width}×${r.height}=${r.area}`).join('，');
+      observation=proof.kind==='partition'?`你实际放下了 ${c.rectangles.length} 块长方形：${pieces}。这些格位没有重叠或遗漏，合起来是 ${c.totalArea} ${c.unit}²，与这次填写的面积相符。`:
+        `你实际放下的 ${c.rectangles.length} 块长方形组成一个 L 形。包围它的长方形是 ${c.shape.box.width}×${c.shape.box.height}，缺去一个角的 ${c.shape.removedCorner.width}×${c.shape.removedCorner.height}；当前外边一圈为 ${c.perimeter} ${c.unit}，内部的分界不计入这一圈。`;
+      detail.push('这里只核对你实际放下的矩形、格位和当前数量；没有把工具显示的方格或边界计算说成你已经写出的独立推导。');
+      if(proof.pending.unapplied)detail.push(`当前还有 ${proof.pending.corners.length} 个待放的角点；它们尚未形成新的矩形，不计入已经放好的部分。`);
+      connection=proof.kind==='partition'?'如果换一种切法，怎样确认面积合计仍相同，且没有重叠或遗漏？':'转动或翻转这个 L 形后，哪些长度保持？怎样分清外边和内部的接缝？';
+    }else if(proof.kind==='compare'){
+      observation=`你实际摆出的两个长方形是 ${c.dimensions[0]}×${c.dimensions[1]} 和 ${c.dimensions[2]}×${c.dimensions[3]}。它们的面积分别是 ${c.areas.join('、')} cm²，周长分别是 ${c.perimeters.join('、')} cm，满足${c.condition==='area'?'面积相同而周长不同':'周长相同而面积不同'}的两个条件。`;
+      detail.push('这里的尺寸来自最近实际摆出并保留的矩形；图和读数由工具显示，没有据此评价独立心算过程。');
+      if(proof.pending.unapplied)detail.push('输入框还有未重新摆出的填写；这里只按已摆出的长和宽核对，没有把待应用输入当作新的精确边长。');
+      connection='只知道面积或周长，能确定另一个量吗？试着用另一个具体长方形说明。';
+    }else if(proof.kind==='pieces'){
+      const terms=c.parts.map(p=>`${p.name} ${p.area}`).join('，');
+      observation=`你实际记下了这些部分的面积：${terms}。${c.operation==='subtract'?`外框 ${c.outerArea} 减去这些角的合计 ${c.partsTotal}`:`各部分相加 ${c.parts.map(p=>p.area).join(' + ')}`} = ${c.area} ${c.unit}，与当前合计相符。`;
+      detail.push('这些预切部分来自工具；这里只核对各部分身份、逐次记下的面积与当前合计，没有把预切图形说成你亲自完成了分割。');
+      if(proof.pending.unapplied)detail.push('当前“这一块的面积”还有待应用的填写；尚未点击记下，不替代已经保留的各部分记录。');
+      connection='怎样用每一部分在图上的位置解释相加或相减？如果重复算一块，会多算多少？';
+    }else if(proof.kind==='stadium'){
+      observation=`你选定的外边是上直边、下直边和两段半圆弧，内部接缝不计入周长。两个半圆合成一个圆，按题目给定 π≈3.14，外边约 ${c.displayPerimeter} ${c.unit}，长方形与两个半圆的面积合计约 ${c.displayArea} ${c.unit}²。`;
+      detail.push('这里核对真实选择和指定近似值；预切部分与圆周拉直来自工具，不据此声称你自己切分或推导了圆的公式。');
+      connection='内部接缝为什么不属于整个图形的外边？它对分块面积又有什么作用？';
+    }else{
+      observation=`你当前选中底面和四个侧面，没有把上盖计入。当前各面的面积是 ${c.faces.map(f=>`${f.name} ${f.area}`).join('，')}，合计 ${c.surface} ${c.unit}。`;
+      detail.push('这里只核对所选面的身份、当前各面填写与合计；立体与展开图由工具提供，记录没有保存每个面积字段的唯一编辑时刻。');
+      if(c.storedUnselected[0].raw!=='')detail.push('以前选过又取消的上盖仍保留原填写，但它没有计入当前盒子的表面积。');
+      connection='如果加上盖子，表面积会增加哪一块？为什么这和盒子里面的体积不是同一个量？';
+    }
+    if(h.failedRequests.length)detail.push(`记录保留了 ${h.failedRequests.length} 次当时未达到条件的请求；这些错误与后来的纠正都没有删除，未改变的成功部分仍按实际保留值核对。`);
+    if(h.approximateAccepted.length)detail.push('先前填写过与精确数量不完全相同的数；旧请求仍保留，这里只采用后来实际重新摆出或记下的精确数量。');
+    if(h.clears.length||h.undone.length)detail.push('重新搭或撤回只改变当前作品，旧操作与首次记录仍保留；已撤去的矩形不计入当前面积。');
+    if(attempts.length>1)detail.push('以前的检查快照仍保留；这里对应最新一次检查的完整作品。');
+    detail.push('这里只描述本次可核对的构造关系，没有自动评价自由解释、独立证明或长期掌握。');
+    if(record.support)detail.push('你打开过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
   if(task?.type==='x-pvbench'){
     const source=pvbenchBinding(task,context);if(!source)return null;
     const proof=replayPVBenchEvidence(task,model);if(!proof)return null;
