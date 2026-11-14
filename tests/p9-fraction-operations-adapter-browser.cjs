@@ -24,7 +24,9 @@ function operationPlan(F,task,{prediction='negative',forms,denominator}={}){
  field('answer','answer',F.ftext(result));field('answer','reason',task.op==='*'?'scale':task.op==='/'?'groups':'same-parts');
  return steps;
 }
-module.exports={operationPlan};
+const correctionVariants=['early-combine','early-rest','extra-fit-reset','raw-decimal-reset','percent-reset','rounded-common',
+ 'empty-predict','wrong-forms','bad-common','early-fit'];
+module.exports={operationPlan,correctionVariants};
 
 if(require.main===module)(async()=>{
  const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
@@ -137,7 +139,11 @@ if(require.main===module)(async()=>{
     const task=sessionTasks(spec.id)[spec.index],proof=replay(task,m);
     ok(F.valid(task,m)&&F.inspect(task,m).correct&&!!proof,activeLabel+' original grading and independent exact replay both accept actual work');
     ok(same(proof.quantities.result,spec.result||F.operation(task)),activeLabel+' exact result matches the reviewed operands');
-    ok(proof.events.length===m.history.length&&proof.events.every((e,i)=>e.index===i),activeLabel+' proof retains every original history index');
+    ok(proof.events.length===m.history.length&&proof.events.every((e,i)=>e.index===i&&typeof e.accepted==='boolean'),
+     activeLabel+' proof retains every original history index and its actual accepted status');
+    ok(same(proof.failedRequests,proof.events.filter(e=>!e.accepted)),activeLabel+' failed requests are a complete subset of retained history');
+    const successfulIndices=proof.division?[...proof.division.fitIndices,...proof.division.restIndices]:proof.combination?.combineIndices||[];
+    ok(successfulIndices.every(i=>proof.events[i]?.accepted===true),activeLabel+' only successful requests support the current construction');
     if(proof.common){
      ok(same(proof.common.unit,[1,m.board.denom]),activeLabel+' unit is the current actual common part');
      ok(proof.common.left.length===proof.common.counts[0]&&proof.common.right.length===proof.common.counts[1],activeLabel+' selected identities represent both entire original quantities');
@@ -219,27 +225,87 @@ if(require.main===module)(async()=>{
      observation:words,finalObservation:await hint.innerText(),rawState:final.rawState,state:final.state});
    }
 
-   for(const variant of ['early-combine','early-rest','extra-fit-reset','raw-decimal-reset','percent-reset','rounded-common']){
-    const spec={id:'fractionfour',index:['early-rest','extra-fit-reset'].includes(variant)?3:0},task=sessionTasks(spec.id)[spec.index];
-    activeLabel=`${width}x${height}-negative-${variant}`;await open(spec);
+   for(const variant of correctionVariants){
+    const spec={id:'fractionfour',index:['early-rest','early-fit','extra-fit-reset'].includes(variant)?3:0},task=sessionTasks(spec.id)[spec.index];
+    activeLabel=`${width}x${height}-negative-${variant}`;await open(spec);let failure=null,inexact=null;
+    const failed=async name=>{
+     const before=await model(spec),expected=F.act(task,structuredClone(before),name),after=await mathematicalAction(spec,name);
+     ok(same(after,expected)&&same(after.board,before.board),activeLabel+' failed visible request retains the complete unchanged original state');
+     ok(same(after.history.slice(0,before.history.length),before.history),activeLabel+' failure keeps every earlier raw event');
+     ok(same(after.history.at(-1).f,Object.fromEntries(Object.keys(F.fields).map(k=>[k,before[k]]))),
+      activeLabel+' failure records all 28 actual field strings without alteration');
+     const originalCorrect=F.inspect(task,after).correct;await submit();await checked(originalCorrect);
+     const strictFeedback=originalCorrect;
+     if(strictFeedback){
+      const proof=verifyProof(spec,after);
+      ok(variant==='extra-fit-reset'&&proof.failedRequests.length===1&&proof.division.fitIndices.length===1&&await hint.isVisible(),
+       activeLabel+' a retained failure does not invalidate the previously complete construction after a fresh check');
+     }else ok(replay(task,after)===null&&await hint.count()===0,activeLabel+' incomplete construction still cannot create strict feedback');
+     const checkedState=await capture(spec.id),attempts=checkedState.record.cases[spec.index].attempts;
+     ok(attempts.length===1&&same(attempts[0].value,after),activeLabel+' the original failed-request snapshot is actually checked and retained');
+     failure={before,after,index:before.history.length,originalCorrect,strictFeedback,...checkedState};
+     await reload(spec);
+     ok((strictFeedback?await hint.isVisible():await hint.count()===0)&&same(await model(spec),after),
+      activeLabel+' real offline reload preserves the failed request, its exact issue and the verified current status');
+     await shot('failed-request');
+    };
     if(['raw-decimal-reset','percent-reset'].includes(variant)){
      await field('prediction','more');await mathematicalAction(spec,'predict-op');
-     await field('aform',variant==='raw-decimal-reset'?'0.750000000':'75%');await field('bform','2/3');await mathematicalAction(spec,'forms');
+     await field('aform',variant==='raw-decimal-reset'?'0.750000000':'75%');await field('bform','2/3');await failed('forms');
      ok((await model(spec)).board.forms===null,activeLabel+' original input rejection is observed before reset');
      await mathematicalAction(spec,'reset');await run(spec);
     }else if(variant==='extra-fit-reset'){
-     await run(spec);await mathematicalAction(spec,'fit');ok((await model(spec)).issue!=='',activeLabel+' extra visible fit really fails');
+     await run(spec);await failed('fit');ok((await model(spec)).issue!=='',activeLabel+' extra visible fit really fails');
      await mathematicalAction(spec,'reset');await run(spec);
+    }else if(variant==='empty-predict'){
+     await failed('predict-op');ok((await model(spec)).board.first===null,activeLabel+' the empty request creates no first prediction');await run(spec);
+    }else if(variant==='wrong-forms'){
+     await field('prediction','negative');await mathematicalAction(spec,'predict-op');
+     await field('aform','0');await field('bform','2/3');await failed('forms');
+     await field('aform','3/4');await mathematicalAction(spec,'forms');await run(spec,['construct','finish','answer']);
+    }else if(variant==='bad-common'){
+     await run(spec,['start']);await field('denom','5');await failed('common');await run(spec,['construct','finish','answer']);
     }else{
-     await run(spec,['start']);await field('denom',variant==='rounded-common'?'12.0000000000000001':'12');await mathematicalAction(spec,'common');
-     if(variant!=='rounded-common')await mathematicalAction(spec,variant==='early-rest'?'rest':'combine');
+     await run(spec,['start']);await field('denom',variant==='rounded-common'?'12.0000000000000001':'12');
+     const before=await model(spec),after=await mathematicalAction(spec,'common');
+     if(variant==='rounded-common'){
+      ok(after.board.denom===12&&!same(before.board,after.board)&&after.issue==='',activeLabel+' original floating-point coercion changes the board despite the inexact written unit');
+      inexact={before,after,index:before.history.length};
+     }else await failed(variant==='early-rest'?'rest':variant==='early-fit'?'fit':'combine');
      await run(spec,['construct','finish','answer']);
     }
-    await submit();await checked(true);const final=await capture(spec.id),m=final.record.models[spec.index];
+    await submit();await checked(true);const final=await capture(spec.id),m=final.record.models[spec.index],attempts=final.record.cases[spec.index].attempts;
     ok(F.valid(task,m)&&F.inspect(task,m).correct,activeLabel+' original final-result grading remains unchanged');
-    ok(replay(task,m)===null&&await hint.count()===0,activeLabel+' failed or inexact earlier action cannot become strict evidence after correction');
-    await reload(spec);ok(await hint.count()===0&&same(await model(spec),m),activeLabel+' complete rejected history persists offline');await shot('rejected');
-    negativeObservations.push({width,height,variant,id:spec.id,index:spec.index,model:m,record:final.record,rawState:final.rawState,state:final.state});
+    let proof=null,observation=null;
+    if(variant==='rounded-common'){
+     ok(replay(task,m)===null&&await hint.count()===0,activeLabel+' original tool acceptance of an inexact unit remains insufficient for strict evidence');
+     ok(attempts.length===1&&same(attempts[0].value,m)&&same(m.history.slice(0,inexact.after.history.length),inexact.after.history),
+      activeLabel+' the complete inexact original history and its final checked snapshot are retained');
+    }else{
+     proof=verifyProof(spec,m);const e=proof.events[failure.index];
+     ok(proof.failedRequests.length===1&&e.accepted===false&&e.effect===false&&e.action===failure.after.history.at(-1).a,
+      activeLabel+' exactly one failed request remains separate from successful construction');
+     ok(same(e.before,failure.before.board)&&same(e.after,failure.after.board)&&same(e.fields,failure.after.history.at(-1).f)&&e.issue===failure.after.issue,
+      activeLabel+' the failure proof retains both original states, all 28 fields and the original issue');
+     ok(same(m.history.slice(0,failure.after.history.length),failure.after.history)&&attempts.length===2&&
+        same(attempts[0],failure.record.cases[spec.index].attempts[0])&&same(attempts[1].value,m),
+      activeLabel+' final success preserves the entire failed history and its previously checked attempt');
+     ok(await hint.isVisible(),activeLabel+' actual correction or reset followed by complete construction earns fresh strict feedback');
+     observation=await hint.innerText();
+     if(variant==='empty-predict'){
+      ok(proof.firstPrediction==='negative'&&proof.predictions.length===1&&proof.predictions[0].index>failure.index&&/空选择请求.*没有留下估计/.test(observation),
+       activeLabel+' the later valid selection is the first prediction; an empty request is not described as a guess');
+     }else ok(/尚未完成的请求.*不计作成功接合、放组或余量显示/.test(observation),
+      activeLabel+' feedback explicitly separates failed requests from the actual completed construction');
+     ok(!/MP\.\d/.test(observation)&&await hint.locator('[data-thinking-node-id]').count()===0,
+      activeLabel+' corrected work does not borrow unrelated method tags');
+    }
+    await reload(spec);
+    ok((variant==='rounded-common'?await hint.count()===0:await hint.isVisible())&&same(await model(spec),m),
+     activeLabel+' complete final history and its current feedback status persist offline');
+    await shot(variant==='rounded-common'?'rejected':'corrected');
+    negativeObservations.push({width,height,variant,id:spec.id,index:spec.index,model:m,record:final.record,rawState:final.rawState,state:final.state,
+     failure,inexact,proof,strictFeedback:variant!=='rounded-common',observation});
    }
 
    for(const variant of ['rescale-common','reset-preserves-first','repeat-confirmation']){
@@ -273,10 +339,14 @@ if(require.main===module)(async()=>{
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===20,'all ten original tasks complete five submissions in both viewports');
-  ok(negativeObservations.length===12&&explorationObservations.length===6&&associatedObservations.length===4,
-   'all six negative histories, three legal exploration paths and two associated tasks run in both viewports');
+  ok(negativeObservations.length===20&&negativeObservations.filter(x=>x.strictFeedback).length===18&&
+     negativeObservations.filter(x=>!x.strictFeedback).length===2&&explorationObservations.length===6&&associatedObservations.length===4,
+   'all six original boundary paths plus four new correction paths, three legal explorations and two associated tasks run in both viewports');
+  const checkedSnapshots=observations.reduce((n,x)=>n+x.attempts.length,0)+
+   [...negativeObservations,...explorationObservations,...associatedObservations].reduce((n,x)=>n+x.record.cases[x.index].attempts.length,0);
+  ok(checkedSnapshots===148,'all 148 original checked snapshots remain complete, including each unresolved request and its later corrected submission');
   const result={checks,errors,remote,observations,negativeObservations,explorationObservations,associatedObservations,offline,viewports,
-   nativeTasks:cases.length,nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,
+   nativeTasks:cases.length,nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,checkedSnapshots,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(result,null,2));
   console.log('P9_FRACTION_OPERATIONS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,taskViewportPairs:observations.length}));

@@ -62,40 +62,59 @@ const visible=(t,b)=>!b.prediction?['prediction']:!b.forms?['aform','bform']:
 const capacity=(form,denominator=form[1])=>Math.ceil(form[0]/form[1])*denominator;
 const counts=b=>b.forms.map(([n,d])=>n*b.denom/d);
 const contiguous=xs=>xs.length<2||Math.max(...xs)-Math.min(...xs)+1===xs.length;
+const predictionChoices=['','negative','zero','part','one','more'],reasonChoices=['','same-parts','scale','groups'];
+const choices=fields=>predictionChoices.includes(fields.prediction)&&reasonChoices.includes(fields.reason);
+// Determine whether the unchanged tool accepted these written forms. Its
+// parser/limits can reject an exact mathematical name (for example 75% or a
+// decimal with too many raw places). Such a request leaves the board unchanged.
+// A tool-accepted form must still pass the independent exact checks below.
+function originalForms(task,fields){
+ if(fields.aform.trim().endsWith('%')||fields.bform.trim().endsWith('%'))return null;
+ const forms=[fractions.frac(fields.aform),fractions.frac(fields.bform)],sources=[fractions.frac(task.a),fractions.frac(task.b)];
+ if(forms.some(r=>!r||r.some(n=>!integer(n,0,100))||!r[1])||sources.some(r=>!r))return null;
+ return forms.every((r,i)=>equal(r.map(BigInt),sources[i].map(BigInt)))?forms:null;
+}
 
 export function replayFractionOperationsEvidence(task,model){
  try{
   if(!keys(task,['type','a','b','op','prompt'])||task.type!=='x-fracoperations'||
      !text(task.prompt)||!['+','-','*','/'].includes(task.op)||
      !keys(model,[...fieldKeys,'board','history','issue'])||!fieldKeys.every(k=>text(model[k]))||
-     model.issue!==''||!Array.isArray(model.history)||!model.history.length||model.history.length>1500)return null;
+     !text(model.issue)||!Array.isArray(model.history)||!model.history.length||model.history.length>1500)return null;
   const a=amount(task.a),c=amount(task.b);
   if(!a||!c||a[0]<0n||c[0]<0n||task.op==='/'&&c[0]===0n)return null;
   const result=task.op==='+'?add(a,c):task.op==='-'?add(a,c,-1n):task.op==='*'?multiply(a,c):multiply(a,[c[1],c[0]]);
   // This construction shows quantities taken away, not directed negative bars.
   if(result[0]<0n||!fractions.valid(task,model)||!fractions.inspect(task,model).correct)return null;
-  let b=fresh(null),previous={...fractions.fields},epoch=0,constructionAfterIndex=-1;
+  let b=fresh(null),previous={...fractions.fields},epoch=0,constructionAfterIndex=-1,issue='';
   const events=[],predictions=[],resets=[],epochs=[{epoch:0,startIndex:0,endExclusive:null}];
   for(let historyIndex=0;historyIndex<model.history.length;historyIndex++){
    const e=model.history[historyIndex];
-   if(!keys(e,['a','d','f'])||!keys(e.f,fieldKeys)||!fieldKeys.every(k=>text(e.f[k])))return null;
+   if(!keys(e,['a','d','f'])||!keys(e.f,fieldKeys)||!fieldKeys.every(k=>text(e.f[k]))||!choices(e.f))return null;
    const allowed=visible(task,b);
    if(fieldKeys.some(k=>!allowed.includes(k)&&e.f[k]!==previous[k]))return null;
    previous={...e.f};
    const expected=e.a==='shade'?['row','index']:['column','row'].includes(e.a)?['index']:[];
    if(!keys(e.d,expected))return null;
-   const event={index:historyIndex,epoch,action:e.a,effect:true};
+   const event={index:historyIndex,epoch,action:e.a,effect:true,accepted:true};issue='';
+   const failed=(reason,message='')=>{
+    issue=message;Object.assign(event,{effect:false,accepted:false,failure:reason,fields:{...e.f},
+     before:structuredClone(b),after:structuredClone(b),issue});events.push(event);
+   };
    if(e.a==='reset'){
     event.effect=!!(b.prediction||b.forms);event.nextEpoch=epoch+1;
     resets.push({index:historyIndex,fromEpoch:epoch,toEpoch:epoch+1,preservedFirst:b.first});
     epochs[epoch].endExclusive=historyIndex;epochs[epoch].resetAfterIndex=historyIndex;
     b=fresh(b.first);constructionAfterIndex=historyIndex;epoch++;epochs.push({epoch,startIndex:historyIndex+1,endExclusive:null});
    }else if(e.a==='predict-op'){
-    if(b.prediction||!['negative','zero','part','one','more'].includes(e.f.prediction))return null;
+    if(b.prediction)return null;
+    if(e.f.prediction===''){failed('empty-prediction');continue;}
     b.first??=e.f.prediction;b.prediction=e.f.prediction;
     event.value=e.f.prediction;predictions.push({index:historyIndex,epoch,value:e.f.prediction});
    }else if(e.a==='forms'){
     if(!b.prediction||b.forms)return null;
+    const original=originalForms(task,e.f);
+    if(!original){failed('forms-not-accepted','两边都要保持原来的量。整份和零头一起换成相同小份。');continue;}
     const aa=amount(e.f.aform),bb=amount(e.f.bform);
     if(!equal(aa,a)||!equal(bb,c)||[aa,bb].some(r=>r[0]<0n||r[0]>100n||r[1]<1n||r[1]>100n))return null;
     // BigInt establishes the mathematics; the original parser additionally
@@ -103,13 +122,17 @@ export function replayFractionOperationsEvidence(task,model){
     // In particular its raw decimal denominator limit applies before reduction.
     // The forms action also uses B16's raw equality parser, which does not
     // accept percent notation even though the general B17 frac helper does.
-    if(e.f.aform.trim().endsWith('%')||e.f.bform.trim().endsWith('%')||
-       !same(fractions.frac(e.f.aform),pair(aa))||!same(fractions.frac(e.f.bform),pair(bb)))return null;
+    if(!same(original[0],pair(aa))||!same(original[1],pair(bb)))return null;
     b.forms=[pair(aa),pair(bb)];event.forms=b.forms.map(x=>[...x]);
     constructionAfterIndex=historyIndex;
    }else if(e.a==='common'){
+    if(!b.forms||task.op==='*')return null;
+    const original=Number(e.f.denom);
+    if(!integer(original,1,240)||b.forms.some(([,d])=>original%d)){
+     failed('common-not-accepted','两种份都要能整齐切成这种更小的份。');continue;
+    }
     const den=decimalInteger(e.f.denom,1,240);
-    if(!b.forms||task.op==='*'||den===null||b.forms.some(([,d])=>den%d))return null;
+    if(den===null||den!==original||b.forms.some(([,d])=>den%d))return null;
     event.effect=den!==b.denom||b.left.length>0||b.right.length>0||b.fits>0||b.rest||b.combined;
     b.denom=den;b.left=[];b.right=[];b.fits=0;b.rest=false;b.combined=false;event.denominator=den;
     constructionAfterIndex=historyIndex;
@@ -122,7 +145,9 @@ export function replayFractionOperationsEvidence(task,model){
     constructionAfterIndex=historyIndex;
    }else if(e.a==='combine'){
     if(!b.forms||!['+','-'].includes(task.op)||!b.denom)return null;
-    const [A,B]=counts(b);if(b.left.length!==A||b.right.length!==B)return null;
+    const [A,B]=counts(b);if(b.left.length!==A||b.right.length!==B){
+     failed('selection-incomplete','先在两个同单位的整体上摆出题目中的量。');continue;
+    }
     event.effect=!b.combined;b.combined=true;
     event.counts=[A,B];event.resultCount=task.op==='+'?A+B:A-B;event.denominator=b.denom;
    }else if(e.a==='column'||e.a==='row'){
@@ -131,25 +156,28 @@ export function replayFractionOperationsEvidence(task,model){
     if(i===null)return null;b[list]=toggle(b[list],i);event.part=i;event.selected=b[list].includes(i);
    }else if(e.a==='fit'){
     if(!b.forms||task.op!=='/'||!b.denom)return null;
-    const [A,B]=counts(b);if(B<=0||b.left.length!==A||b.right.length!==B||(b.fits+1)*B>A)return null;
+    const [A,B]=counts(b);if(B<=0)return null;
+    if(b.left.length!==A||b.right.length!==B){failed('selection-incomplete','先摆好被分的量与每一组的量。');continue;}
+    if((b.fits+1)*B>A){failed('no-whole-group-remains','剩下的不够一整组，可以看看还占一组的几分之几。');continue;}
     event.before=b.fits;b.fits++;event.after=b.fits;event.remainingPieces=A-b.fits*B;event.groupPieces=B;event.denominator=b.denom;
    }else if(e.a==='rest'){
     if(!b.forms||task.op!=='/'||!b.denom)return null;
-    const [A,B]=counts(b);if(B<=0||b.left.length!==A||b.right.length!==B||b.fits!==Math.floor(A/B))return null;
+    const [A,B]=counts(b);if(B<=0)return null;
+    if(b.left.length!==A||b.right.length!==B||b.fits!==Math.floor(A/B)){failed('groups-not-complete');continue;}
     event.effect=!b.rest;b.rest=true;event.remainingPieces=A-b.fits*B;event.groupPieces=B;event.denominator=b.denom;
    }else return null;
    events.push(event);
   }
   epochs[epoch].endExclusive=model.history.length;
   const currentVisible=visible(task,b);
-  if(fieldKeys.some(k=>!currentVisible.includes(k)&&model[k]!==previous[k])||!same(b,model.board)||
+  if(fieldKeys.some(k=>!currentVisible.includes(k)&&model[k]!==previous[k])||!choices(model)||model.issue!==issue||!same(b,model.board)||
      !b.prediction||!b.forms||!equal(amount(model.answer),result)||
      model.reason!==(['+','-'].includes(task.op)?'same-parts':task.op==='*'?'scale':'groups')||
      !equal(amount(model.aform),a)||!equal(amount(model.bform),c))return null;
   // Common-unit changes and reversible shading invalidate previous fits or
   // combinations without erasing their history. Only later events describe
   // the currently displayed construction; all earlier facts remain in events.
-  const currentEvents=events.filter(e=>e.epoch===epoch&&e.index>constructionAfterIndex),common=task.op==='*'?null:{
+  const currentEvents=events.filter(e=>e.accepted&&e.epoch===epoch&&e.index>constructionAfterIndex),common=task.op==='*'?null:{
    denominator:b.denom,unit:unit(b.denom),left:[...b.left],right:[...b.right],counts:counts(b)
   };
   let combination=null,product=null,division=null;
@@ -181,7 +209,7 @@ export function replayFractionOperationsEvidence(task,model){
   }
   return {operator:task.op,quantities:{a:pair(reduce(a)),b:pair(reduce(c)),result:pair(result)},
    forms:b.forms.map(x=>[...x]),firstPrediction:b.first,currentPrediction:b.prediction,resultKind:size(result),
-   predictions,resets,epochs,currentEpoch:epoch,constructionAfterIndex,events,common,combination,product,division,
+   predictions,resets,epochs,currentEpoch:epoch,constructionAfterIndex,events,failedRequests:events.filter(e=>!e.accepted),common,combination,product,division,
    submitted:{answer:model.answer,reason:model.reason,whole:task.op==='/'?model.whole:null,part:task.op==='/'?model.part:null},
    predictionAttribution:'recorded-field',independentExplanationAssessed:false};
  }catch{return null;}

@@ -113,6 +113,10 @@ export function thinkingFeedback(task,model,record,context={}){
     const kinds={negative:'比0小',zero:'等于0',part:'在0与1之间',one:'等于1',more:'比1大'};
     detail.push(`最初记录的估计是“${kinds[proof.firstPrediction]}”；当前构造得到的量${kinds[proof.resultKind]}。估计与构造结果分别保留。`);
     if(proof.resets.length)detail.push(`你重置了 ${proof.resets.length} 次，之前的操作和最初估计仍保留；下面只描述当前留下的有效构造。`);
+    const emptyPredictions=proof.failedRequests.filter(e=>e.action==='predict-op').length,
+      unfinishedRequests=proof.failedRequests.length-emptyPredictions;
+    if(emptyPredictions)detail.push(`记录保留了 ${emptyPredictions} 次空选择请求；它们没有留下估计，也没有改变作品。`);
+    if(unfinishedRequests)detail.push(`记录保留了 ${unfinishedRequests} 次尚未完成的请求；这些请求没有改变当时的构造，也不计作成功接合、放组或余量显示。后续实际纠正与当前作品分别核对。`);
     let observation,connection;
     if(proof.product){
       const p=proof.product;

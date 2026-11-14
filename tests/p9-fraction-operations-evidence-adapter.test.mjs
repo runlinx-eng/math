@@ -79,6 +79,19 @@ function accepts(t,m){
  assert.deepEqual(replay(t,JSON.parse(before)),proof);assert.deepEqual(JSON.parse(JSON.stringify(proof)),proof);return proof;
 }
 const rejects=(t,m)=>assert.equal(replay(t,m),null);
+function failedRequest(t,m,name){
+ const before=copy(m),index=m.history.length;click(t,m,name);const after=copy(m);
+ assert.deepEqual(after.board,before.board);assert.deepEqual(after.history.slice(0,index),before.history);
+ return {before,after,index};
+}
+function retainsFailure(proof,model,request){
+ const event=proof.events[request.index];assert.equal(event.accepted,false);assert.equal(event.effect,false);
+ assert.deepEqual(event.before,request.before.board);assert.deepEqual(event.after,request.after.board);
+ assert.deepEqual(event.fields,request.after.history.at(-1).f);assert.equal(Object.keys(event.fields).length,28);
+ assert.equal(event.issue,request.after.issue);assert.deepEqual(model.history.slice(0,request.after.history.length),request.after.history);
+ assert.ok(proof.failedRequests.some(e=>e.index===request.index));assert.equal(proof.events.length,model.history.length);
+ return event;
+}
 function submit(a){probes.submissions++;return submitLesson(a);}
 function roundTrip(t,m){
  const b=m.board;
@@ -227,41 +240,79 @@ test('hidden repeated prediction and repeated forms are not accepted as reachabl
  m.denom='12';F.act(t,m,'b17-common');original(t,m);rejects(t,m);
 });
 
-test('real incorrect forms or common units followed by correction cannot manufacture a fully valid process',()=>{
+test('real incorrect forms or common units preserve failed states while later correct construction earns evidence',()=>{
  for(const bad of ['forms','common']){
-  const t=at(0),m=F.initial(t);change(t,m,'prediction','more');click(t,m,'predict-op');
-  if(bad==='forms'){change(t,m,'aform','1/4');change(t,m,'bform','2/3');click(t,m,'forms');assert.equal(m.board.forms,null);}
-  start(t,m);if(bad==='common'){change(t,m,'denom','5');click(t,m,'common');assert.equal(m.board.denom,0);}
-  construct(t,m);answers(t,m);original(t,m);rejects(t,m);
+  const t=at(0),m=F.initial(t);let request;change(t,m,'prediction','more');click(t,m,'predict-op');
+  if(bad==='forms'){change(t,m,'aform','1/4');change(t,m,'bform','2/3');request=failedRequest(t,m,'forms');assert.equal(m.board.forms,null);}
+  start(t,m);if(bad==='common'){change(t,m,'denom','5');request=failedRequest(t,m,'common');assert.equal(m.board.denom,0);}
+  assert.notEqual(request.after.issue,'');construct(t,m);answers(t,m);const proof=accepts(t,m);
+  retainsFailure(proof,m,request);assert.equal(proof.failedRequests.length,1);
+  assert.ok(proof.combination.combineIndices.every(i=>proof.events[i].accepted));
  }
 });
 
-test('raw decimal and percent parser rejections remain rejected even after a real reset and correct construction',()=>{
+test('original decimal and percent input failures stay recorded through reset without blocking later exact construction',()=>{
  for(const value of ['0.750000000','75.000000000%']){
   const t=at(0),m=F.initial(t);change(t,m,'prediction','more');click(t,m,'predict-op');
-  change(t,m,'aform',value);change(t,m,'bform','2/3');click(t,m,'forms');
+  change(t,m,'aform',value);change(t,m,'bform','2/3');const request=failedRequest(t,m,'forms');
   assert.equal(F.frac(value),null);assert.equal(m.board.forms,null);assert.notEqual(m.issue,'');
-  click(t,m,'reset');solve(t,m);original(t,m);rejects(t,m);
+  click(t,m,'reset');solve(t,m);const proof=accepts(t,m);retainsFailure(proof,m,request);
+  assert.equal(proof.failedRequests.length,1);assert.equal(proof.events.filter(e=>e.action==='forms'&&e.accepted).length,1);
  }
  for(const value of ['0.75000000','0.75']){
   const t=at(0),m=solve(t,undefined,{forms:[value,'2/3']});assert.deepEqual(accepts(t,m).forms,[[3,4],[2,3]]);
  }
- // frac can name a percent, but forms also requires the original raw equality
- // parser. That extra source restriction must survive reset just as errors do.
+ // frac can name a percent, but the actual forms action additionally rejects
+ // it. Preserve that failed outcome rather than claiming it built the forms.
  for(const value of ['75%','75.00000000%']){
   const t=at(0),m=F.initial(t);change(t,m,'prediction','more');click(t,m,'predict-op');
-  change(t,m,'aform',value);change(t,m,'bform','2/3');click(t,m,'forms');
+  change(t,m,'aform',value);change(t,m,'bform','2/3');const request=failedRequest(t,m,'forms');
   assert.deepEqual(F.frac(value),[3,4]);assert.equal(m.board.forms,null);assert.notEqual(m.issue,'');
-  click(t,m,'reset');solve(t,m);original(t,m);rejects(t,m);
+  click(t,m,'reset');solve(t,m);const proof=accepts(t,m);retainsFailure(proof,m,request);
+  assert.equal(proof.events.filter(e=>e.action==='forms'&&e.accepted).length,1);
  }
 });
 
-test('real early combine/rest and an extra visible fit cannot be washed away by later success or reset',()=>{
- for(const name of ['combine','rest','fit']){
+test('premature combine/rest/fit and extra visible fits retain unchanged states and never increase successful construction counts',()=>{
+ for(const name of ['combine','rest','fit','early-fit']){
   const t=at(name==='combine'?0:3),m=F.initial(t);start(t,m);change(t,m,'denom','12');click(t,m,'common');
-  if(name==='fit'){construct(t,m);answers(t,m);click(t,m,'fit');assert.notEqual(m.issue,'');click(t,m,'reset');solve(t,m);}
-  else{click(t,m,name);assert.equal(m.board.combined,false);assert.equal(m.board.rest,false);construct(t,m);answers(t,m);}
-  original(t,m);rejects(t,m);
+  let request;
+  if(name==='fit'){construct(t,m);answers(t,m);request=failedRequest(t,m,'fit');assert.notEqual(m.issue,'');click(t,m,'reset');solve(t,m);}
+  else{request=failedRequest(t,m,name==='early-fit'?'fit':name);assert.equal(m.board.combined,false);assert.equal(m.board.rest,false);construct(t,m);answers(t,m);}
+  const proof=accepts(t,m),event=retainsFailure(proof,m,request);assert.equal(proof.failedRequests.length,1);
+  assert.equal(event.issue==='',name==='rest');
+  if(proof.division){assert.equal(proof.division.fitIndices.length,proof.division.wholeGroups);assert.ok([...proof.division.fitIndices,...proof.division.restIndices].every(i=>proof.events[i].accepted));}
+  else assert.ok(proof.combination.combineIndices.every(i=>proof.events[i].accepted));
+ }
+});
+
+test('empty prediction requests and failed forms preserve every native first field without inventing a prediction',()=>{
+ for(const c of cases){
+  const t=sessionTasks(c.id)[c.index],m=F.initial(t),empty=failedRequest(t,m,'predict-op');
+  assert.equal(m.board.first,null);assert.equal(m.board.prediction,null);assert.equal(m.issue,'');
+  change(t,m,'prediction','negative');click(t,m,'predict-op');change(t,m,'aform','');change(t,m,'bform','');const forms=failedRequest(t,m,'forms');
+  solve(t,m);let proof=accepts(t,m);retainsFailure(proof,m,empty);retainsFailure(proof,m,forms);
+  assert.equal(proof.predictions[0].index,1);assert.equal(proof.firstPrediction,'negative');assert.equal(proof.predictions.length,1);
+  const old=copy(m.history);click(t,m,'reset');change(t,m,'prediction','');const again=failedRequest(t,m,'predict-op');
+  assert.equal(m.board.first,'negative');solve(t,m,{prediction:'more'});proof=accepts(t,m);retainsFailure(proof,m,again);
+  assert.equal(proof.firstPrediction,'negative');assert.equal(proof.currentPrediction,'more');assert.equal(proof.predictions.length,2);
+  assert.deepEqual(m.history.slice(0,old.length),old);assert.equal(proof.failedRequests.length,3);
+ }
+});
+
+test('a complete construction can retain a last real failure issue, but cannot erase that issue or borrow an older checked snapshot',()=>{
+ const t=at(3),m=solve(t),c=cases.find(c=>c.id==='fractionfour'&&c.index===3),old=copy(m),request=failedRequest(t,m,'fit');
+ const retained=accepts(t,m);retainsFailure(retained,m,request);assert.equal(retained.division.fitIndices.length,1);
+ assert.notEqual(m.issue,'');assert.equal(thinkingFeedback(t,m,{attempts:[{value:old}]},context(c)),null);
+ const feedback=thinkingFeedback(t,m,{attempts:[{value:m}]},context(c));assert.ok(feedback);
+ assert.match(feedback.detail.join(' '),/尚未完成的请求.*不计作成功接合、放组或余量显示/);
+ const erased=copy(m);erased.issue='';original(t,erased);rejects(t,erased);
+ click(t,m,'rest');const proof=accepts(t,m);retainsFailure(proof,m,request);
+ assert.equal(proof.division.fitIndices.length,1);assert.ok(!proof.division.fitIndices.includes(request.index));
+ for(const mutate of [x=>x.board.fits++,x=>x.history[request.index].f.reason='invented-option',
+  x=>x.history[request.index].f.factor='3',x=>x.history[request.index].d.extra='invented',
+  x=>delete x.history[request.index].f.angle,x=>x.history.unshift(x.history.splice(request.index,1)[0])]){
+  const changed=copy(m);mutate(changed);rejects(t,changed);
  }
 });
 
@@ -342,18 +393,31 @@ test('the actual standalone browser plan reaches every native, associated, error
   }
   assert.equal(submit(a).correct,true);accepts(t,m);
  }
- for(const variant of ['early-combine','early-rest','extra-fit-reset','raw-decimal-reset','percent-reset','rounded-common']){
-  const index=['early-rest','extra-fit-reset'].includes(variant)?3:0,t=at(index),a=freshLesson('fractionfour');a.index=index;const m=modelForLesson(a);
+ for(const variant of browserPlan.correctionVariants){
+  const index=['early-rest','early-fit','extra-fit-reset'].includes(variant)?3:0,t=at(index),a=freshLesson('fractionfour');a.index=index;const m=modelForLesson(a);let failure=null;
+  const failed=name=>{failure=failedRequest(t,m,name);const value=copy(m),correct=F.inspect(t,m).correct;assert.equal(submit(a).correct,correct);
+   assert.deepEqual(a.cases[index].attempts.at(-1).value,value);
+   if(correct){const proof=accepts(t,m);retainsFailure(proof,m,failure);assert.equal(variant,'extra-fit-reset');}else rejects(t,m);};
   if(['raw-decimal-reset','percent-reset'].includes(variant)){
    change(t,m,'prediction','more');click(t,m,'predict-op');change(t,m,'aform',variant==='raw-decimal-reset'?'0.750000000':'75%');
-   change(t,m,'bform','2/3');click(t,m,'forms');assert.equal(m.board.forms,null);click(t,m,'reset');run(t,m);
+   change(t,m,'bform','2/3');failed('forms');assert.equal(m.board.forms,null);click(t,m,'reset');run(t,m);
   }else if(variant==='extra-fit-reset'){
-   run(t,m);click(t,m,'fit');assert.notEqual(m.issue,'');click(t,m,'reset');run(t,m);
+   run(t,m);failed('fit');assert.notEqual(m.issue,'');click(t,m,'reset');run(t,m);
+  }else if(variant==='empty-predict'){
+   failed('predict-op');assert.equal(m.board.first,null);run(t,m);
+  }else if(variant==='wrong-forms'){
+   change(t,m,'prediction','negative');click(t,m,'predict-op');change(t,m,'aform','0');change(t,m,'bform','2/3');failed('forms');
+   change(t,m,'aform','3/4');click(t,m,'forms');run(t,m,['construct','finish','answer']);
+  }else if(variant==='bad-common'){
+   run(t,m,['start']);change(t,m,'denom','5');failed('common');run(t,m,['construct','finish','answer']);
   }else{
    run(t,m,['start']);change(t,m,'denom',variant==='rounded-common'?'12.0000000000000001':'12');click(t,m,'common');
-   if(variant!=='rounded-common')click(t,m,variant==='early-rest'?'rest':'combine');run(t,m,['construct','finish','answer']);
+   if(variant!=='rounded-common')failed(variant==='early-rest'?'rest':variant==='early-fit'?'fit':'combine');run(t,m,['construct','finish','answer']);
   }
-  assert.equal(submit(a).correct,true);rejects(t,m);
+  assert.equal(submit(a).correct,true);
+  if(variant==='rounded-common')rejects(t,m);
+  else{const proof=accepts(t,m);retainsFailure(proof,m,failure);assert.equal(proof.failedRequests.length,1);
+   assert.deepEqual(a.cases[index].attempts[0].value,failure.after);assert.equal(a.cases[index].attempts.length,2);}
  }
  for(const variant of ['rescale-common','reset-preserves-first','repeat-confirmation']){
   const t=at(3),a=freshLesson('fractionfour');a.index=3;const m=modelForLesson(a);run(t,m);const prefix=copy(m.history);
@@ -362,7 +426,7 @@ test('the actual standalone browser plan reaches every native, associated, error
   else{click(t,m,'rest');click(t,m,'rest');}
   assert.equal(submit(a).correct,true);accepts(t,m);assert.deepEqual(m.history.slice(0,prefix.length),prefix);
  }
- console.log('fraction-operations browser-plan source probes '+JSON.stringify({paths:21,
+ console.log('fraction-operations browser-plan source probes '+JSON.stringify({paths:25,
   actions:probes.actions-before.actions,fields:probes.fields-before.fields,submissions:probes.submissions-before.submissions}));
 });
 
@@ -406,7 +470,7 @@ test('division feedback separates current fits, original-unit remainder and grou
 });
 
 test('source-only control probes include every native five-attempt path and leave original APIs untouched',()=>{
- assert.equal(probes.submissions,111);assert.ok(probes.actions>1000);assert.ok(probes.fields>500);
+ assert.equal(probes.submissions,124);assert.ok(probes.actions>1000);assert.ok(probes.fields>500);
  for(const [file,sha]of Object.entries(reviewed.sourceHashes))assert.equal(digest(readFileSync(new URL('../'+file,import.meta.url))),sha,file);
  console.log('fraction-operations original-control probes '+JSON.stringify(probes));
 });
