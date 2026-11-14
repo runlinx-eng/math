@@ -2,7 +2,7 @@
 // Does not change B38 grading or evaluate learner explanations.
 import * as reason from './phase5/b38-model.js';
 import {rational} from './phase5/b16-model.js';
-import {matchesNativeEvidenceTask} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask} from './evidence-contract.js';
 
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const shape=(o,keys)=>o&&typeof o==='object'&&!Array.isArray(o)&&same(Object.keys(o).sort(),[...keys].sort());
@@ -11,6 +11,7 @@ const SOURCES=Object.freeze({
   4:{nodeId:'mt_j5YqQnN6xe',rule:'nonstrict',question:'如果把“总会变大”改成“总不会变小”，乘1还能作反例吗？试试0与小于1的乘数。'}
 });
 export function counterexampleBinding(task,context={}){
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.index)?SOURCES[context.index]:null;
  if(context.sessionId!=='argument38'||!Number.isInteger(context.index)||!source||task?.type!=='x-r38-counterexample'||
     task.rule!==source.rule||

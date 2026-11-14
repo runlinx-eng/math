@@ -15,7 +15,8 @@ const SOURCES=Object.freeze({
 });
 
 export function fdpBoardBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!context||typeof context!=='object'||Array.isArray(context)||
+    typeof context.sessionId!=='string'||!Number.isInteger(context.index)||context.index<0)return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-fdpboard',nodeId:source.nodeId}))return null;

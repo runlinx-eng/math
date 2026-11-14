@@ -2,7 +2,7 @@
 // Replayed mathematics is evidence about this saved work, not click provenance
 // or an assessment of the learner's explanation, independence or mastery.
 import * as walks from './phase5/b16-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  lineplaces:{indices:[0,1,2,3],nodeId:'mt_Kr3IyA6m-O'},
@@ -17,7 +17,7 @@ const SOURCES=Object.freeze({
 });
 
 export function unitwalkBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-unitwalk',nodeId:source.nodeId}))return null;
