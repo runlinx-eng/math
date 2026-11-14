@@ -7,6 +7,7 @@ import {counterexampleBinding,replayCounterexampleEvidence} from './counterexamp
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
+import {placeRemovalBinding,replayPlaceRemovalEvidence} from './place-removal-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 
@@ -19,5 +20,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'unitwalk',type:'x-unitwalk',binding:unitwalkBinding,replay:replayUnitwalkEvidence},
  {id:'place',type:'x-placecalc',binding:placeBinding,replay:replayPlaceEvidence},
  {id:'groupwalk',type:'x-unitwalk',binding:groupwalkBinding,replay:replayGroupwalkEvidence},
- {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence}
+ {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
+ {id:'place-removal',type:'x-placecalc',binding:placeRemovalBinding,replay:replayPlaceRemovalEvidence}
 ].map(Object.freeze));

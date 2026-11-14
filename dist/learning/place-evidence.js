@@ -46,7 +46,15 @@ const integer=(x,min=0,max=1000000000)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
 const total=counts=>counts.reduce((n,c,i)=>n+c*10**i,0);
 const digits=(n,width)=>Array.from({length:width},(_,i)=>Math.floor(n/10**i)%10);
 
-export function replayPlaceEvidence(task,model){
+// The existing exchange contract continues to require a real exchange. The
+// separately source-bound removal contract also admits subtraction that
+// genuinely takes objects away without needing an exchange.
+export function replayPlaceEvidence(task,model){return replayPlace(task,model,'exchange');}
+export function replayPlaceRemovalEvidence(task,model){
+ if(task?.op!=='-'||(task.scale??1)!==1)return null;
+ return replayPlace(task,model,'removal');
+}
+function replayPlace(task,model,requiredAction){
  try{
   const scale=task?.scale===undefined?1:task.scale;
   if(task?.type!=='x-placecalc'||![1,100,1000].includes(scale)||
@@ -114,7 +122,8 @@ export function replayPlaceEvidence(task,model){
       (task.op==='+'?target:task.values[0]-removed)||
       (task.op==='-'&&removed+total(remaining)!==task.values[1]))return null;
   }
-  if(!exchanges.length||!same(model.counts,counts)||!same(model.remaining,remaining)||
+  if((requiredAction==='exchange'?!exchanges.length:!removals.length)||
+     !same(model.counts,counts)||!same(model.remaining,remaining)||
      counts.some(n=>n>=10)||remaining.some(n=>n!==0)||total(counts)!==target||
      place.number(model.answer,scale)!==target)return null;
   if(task.written){

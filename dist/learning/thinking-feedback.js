@@ -10,6 +10,7 @@ import {counterexampleBinding,replayCounterexampleEvidence} from './counterexamp
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
+import {placeRemovalBinding,replayPlaceRemovalEvidence} from './place-removal-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
@@ -21,6 +22,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：每一步怎样接起来？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-placecalc'){
+    const removed=placeRemovalBinding(task,context);
+    if(removed)return {type:task.type,summary:'想一想：拿走一份，实际少了多少？（可选）',question:removed.question};
     const source=placeBinding(task,context);
     return source?{type:task.type,summary:source.scope==='decimal'?
       '想一想：小数怎样对齐和换单位？（可选）':'想一想：换了单位，总量会变吗？（可选）',question:source.question}:null;
@@ -75,6 +78,22 @@ export function thinkingFeedback(task,model,record,context={}){
       detail,method:null};
   }
   if(task?.type==='x-placecalc'){
+    const removalSource=placeRemovalBinding(task,context);
+    if(removalSource){
+      const proof=replayPlaceRemovalEvidence(task,model);if(!proof)return null;
+      const units=['一','十','百','千','万','十万','百万','千万','亿','十亿'];
+      const moves=proof.removals.map(r=>`从${r.index===0?'个':units[r.index]}位拿走 ${r.count} 个${units[r.index]}（${r.quantity}）`);
+      const exchanges=proof.exchanges.length?
+        `你实际向高位合并 ${proof.up} 次、向低位拆开 ${proof.down} 次，每次交换都保持数量不变。`:'这次没有交换数位。';
+      const detail=['这里只核对本次实际数位操作和当前提交；没有自动评价自由解释、心算策略、一般证明或长期掌握。',
+        `每次取走后，余量加上已经拿走的量仍是原来的 ${proof.values[0]}；已取走的量与还待取走的量合计始终为 ${proof.values[1]}。当前各位都已拿够，不把点击次数当作物品数量。`];
+      if(attempts.slice(0,-1).some(a=>replayPlaceRemovalEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+      if(record.support)detail.push('你看过提示或比较反馈。');
+      return {title:'这次作品中的思考线索',
+        observation:`你从 ${proof.values[0]} 出发，实际${moves.join('；')}。${exchanges}合计拿走 ${proof.removed}，最后各列的余量与填写的结果 ${proof.total} 相符。`,
+        connection:'拿走相同的实际数量，有必要改变每一列吗？哪些列可以保持不变？如果换一种拆合方式，结果会怎样？',
+        detail,method:null};
+    }
     const source=placeBinding(task,context);
     if(!source)return null;
     const proof=replayPlaceEvidence(task,model);

@@ -5,6 +5,7 @@ import {BRIDGES,sessionMeta,sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as place from '../dist/learning/phase5/b11-model.js';
 import {placeBinding,replayPlaceEvidence} from '../dist/learning/place-evidence.js';
+import {placeRemovalBinding,replayPlaceRemovalEvidence} from '../dist/learning/place-removal-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 await ensureB39Ready();
@@ -226,18 +227,24 @@ test('the same total cannot justify forged per-place counts, and written columns
  const zero=structuredClone(base);zero.columnAnswers[zero.columnAnswers.length-1]='0';accepts(task,zero);
 });
 
-test('thirteen no-exchange tasks remain excluded and nine separately reviewed decimal tasks never inherit integer scope',()=>{
- const reviewed=new Set(cases.map(c=>c.sessionId+':'+c.index));let ordinary=0,decimal=0;
+test('no-exchange tasks never inherit exchange scope; six actual removals have their own reviewed contract',()=>{
+ const reviewed=new Set(cases.map(c=>c.sessionId+':'+c.index));let ordinary=0,decimal=0,removal=0,addition=0;
  for(const sessionId of Object.keys(LESSONS))sessionTasks(sessionId).forEach((task,index)=>{
   if(task.type!=='x-placecalc'||reviewed.has(sessionId+':'+index))return;
   const model=place.example(task),context={sessionId,index};originalAccepts(task,model);
   if((task.scale??1)===1){
-   ordinary++;assert.equal(placeBinding(task,context),null);assert.equal(thinkingGuide(task,context),null);
-   assert.equal(thinkingFeedback(task,model,record(model),context),null);
+   ordinary++;assert.equal(placeBinding(task,context),null);assert.equal(replayPlaceEvidence(task,model),null);
+   if(placeRemovalBinding(task,context)){
+    removal++;assert.equal(task.op,'-');assert.ok(replayPlaceRemovalEvidence(task,model));
+    assert.ok(thinkingGuide(task,context));assert.ok(thinkingFeedback(task,model,record(model),context));
+   }else{
+    addition++;assert.equal(task.op,'+');assert.equal(thinkingGuide(task,context),null);
+    assert.equal(thinkingFeedback(task,model,record(model),context),null);
+   }
   }else{
    decimal++;assert.equal(placeBinding(task,context)?.scope,'decimal');
    assert.notEqual(placeBinding(task,context)?.scale,1);
   }
  });
- assert.equal(ordinary,13);assert.equal(decimal,9);
+ assert.equal(ordinary,13);assert.equal(decimal,9);assert.equal(removal,6);assert.equal(addition,7);
 });

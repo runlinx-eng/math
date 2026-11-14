@@ -1528,6 +1528,60 @@
       "adapter": "route",
       "taskHash": "b8f75428b8dda16559f9a0a5b80d806dfb979d9494c04938eb5ee1b68e7f2088",
       "method": null
+    },
+    {
+      "sessionId": "tensmove",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_I5j1ZWo2cn",
+      "adapter": "place-removal",
+      "taskHash": "42ef003e834f6b4407f857005e52e0585d2e0a29b186abc19e7cfef39b9af343",
+      "method": null
+    },
+    {
+      "sessionId": "decadetake",
+      "index": 0,
+      "type": "x-placecalc",
+      "nodeId": "mt_HJTuIGHvcR",
+      "adapter": "place-removal",
+      "taskHash": "532850ef4f8a177ca9c8fd336629c91ea80b3f3dd050006009d9659d568291c9",
+      "method": null
+    },
+    {
+      "sessionId": "decadetake",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_HJTuIGHvcR",
+      "adapter": "place-removal",
+      "taskHash": "449d5cc1834e0c393291807ee3cb40f39f3dccd2cd29fb0a26288b726725f7fa",
+      "method": null
+    },
+    {
+      "sessionId": "tenslarge",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_aHQ9kNt3is",
+      "adapter": "place-removal",
+      "taskHash": "8faead9b18d54d2893d7910d9be5065c0a9280aa9d083f214e38bbed0b2d706b",
+      "method": null
+    },
+    {
+      "sessionId": "hundredsmove",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_xPqczp7zPX",
+      "adapter": "place-removal",
+      "taskHash": "d64f49f77037193a52099f5cb98410800609c8afc9dc254889593a26b74abb3d",
+      "method": null
+    },
+    {
+      "sessionId": "general34",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_fZTn0W_iZR",
+      "adapter": "place-removal",
+      "taskHash": "11e5277a57a182ea024695cc3be0b346ad784a9c0918558b100005a678fb6c57",
+      "method": null
     }
   ]
 }

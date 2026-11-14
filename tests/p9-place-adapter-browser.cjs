@@ -243,7 +243,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
 
    // Decimal tasks now have a separately reviewed scope. Unreviewed native
    // arithmetic and independent associated work still cannot inherit evidence.
-   for(const spec of [{id:'tensmove',index:0},{id:'general34',index:1},
+   for(const spec of [{id:'tensmove',index:0},{id:'hundredsmove',index:0},
     {id:decimalScope?'link-columnlarge-decimalsum':'link-basicadd-onesbridge',index:1}]){
     activeLabel=`${width}x${height}-isolation-${spec.id}-${spec.index}`;await open(spec);
     ok(await guide.count()===0&&await hint.count()===0,activeLabel+' outside tasks receive no native exchange guide');
