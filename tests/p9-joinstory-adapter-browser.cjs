@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const fixture=require('./fixtures/p9-joinstory-cases.cjs'),{cases,associated}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-joinstory-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
@@ -27,7 +28,7 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
  const {joinStoryBinding,replayJoinStoryEvidence}=await import('../dist/learning/joinstory-evidence.js');
  for(const spec of [...cases,...associated])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const[file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,label='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -47,6 +48,7 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{
@@ -240,10 +242,25 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
     const spec=cases.find(c=>c.id===id&&c.index===index);label=prefix+'-unsuitable-'+id+'-'+index+'-'+a+'-'+op;
     await open(spec);await demonstrate(spec,{a,b,op,guess:'0'});const unsuitable=await model(spec),shown=await page.locator('#extra-visual').innerText();
     await finish(spec);const corrected=await check(spec,true,'original-correct-after-unsuitable-display');
-    ok(replayJoinStoryEvidence(taskFor(spec),corrected.model)===null&&await hint.count()===0,label+' a later correct display does not erase the unsuitable recorded display');
+    const proof=replayJoinStoryEvidence(taskFor(spec),corrected.model);await wordsFor(proof);
+    ok(proof.limitedDisplays.length+proof.insufficientAttempts.length===1,label+' earlier display limitation or shortage is explicitly retained, not called a success');
     assert.deepEqual(corrected.model.history.slice(0,unsuitable.history.length),unsuitable.history);
-    await reload(spec);ok(await hint.count()===0,label+' exclusion survives stopped-origin restore');await shot('excluded');
-    negatives.push({width,height,kind:'unsuitable-display-retained',id,index,unsuitable,shown,corrected,stored:await snapshot('excluded')});
+    await reload(spec);ok(await hint.isVisible(),label+' honest correction survives stopped-origin restore');await shot('corrected-limit');
+    negatives.push({width,height,kind:'unsuitable-display-retained',id,index,unsuitable,shown,corrected,proof,stored:await snapshot('corrected-limit')});
+   }
+
+   {
+    const spec=cases.find(c=>c.id==='takethings'&&c.index===0);label=prefix+'-insufficient-zero-take';await open(spec);
+    await demonstrate(spec,{a:0,b:2,op:'-',guess:'3'});const insufficient=await model(spec),shown=await page.locator('#extra-visual').innerText();
+    ok(/仍然不够/.test(shown)&&insufficient.done.result===-2,label+' source displays shortage for the recorded negative arithmetic request');
+    const failed=await check(spec,false,'insufficient-attempt');await finish(spec);const corrected=await check(spec,true,'corrected-take');
+    const proof=replayJoinStoryEvidence(taskFor(spec),corrected.model);await wordsFor(proof);
+    ok(proof.insufficientAttempts.length===1&&proof.insufficientAttempts[0].physicalResult===null&&proof.insufficientAttempts[0].missing===2,
+     label+' no negative physical objects or successful take are inferred');
+    assert.deepEqual(corrected.model.history.slice(0,insufficient.history.length),insufficient.history);
+    assert.deepEqual(corrected.record.cases[spec.index].attempts[0],failed.attempt);
+    await reload(spec);assert.deepEqual(await model(spec),corrected.model);ok(await hint.isVisible(),label+' correction and failed attempt restore offline');await shot('corrected');
+    negatives.push({width,height,kind:'insufficient-attempt-corrected',id:spec.id,index:spec.index,insufficient,shown,failed,corrected,proof,stored:await snapshot('shortage-corrected')});
    }
 
    for(const[id,index]of [['jointhings',0],['takethings',0],['smallstories',3],['notice34',0]]){
@@ -286,8 +303,9 @@ const equation=t=>t.balance?`${t.a}+${t.b}=${t.balance[0]}+${t.balance[1]}`:`${t
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
   console.log('P9_JOINSTORY_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),failureDiagnostic,stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

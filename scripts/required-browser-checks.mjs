@@ -120,12 +120,17 @@ const groups={
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
+ ]},
+ // Main run 43601980060 used 1,593,793ms for the four commands. Keep
+ // every command/artifact, including all correction paths, within 35 minutes.
+ "evidence-quantity":{commands:[
+  {"file":"tests/p9-joinstory-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-storyledger-adapter/",
  ]},

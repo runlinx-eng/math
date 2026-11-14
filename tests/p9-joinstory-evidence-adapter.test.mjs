@@ -215,14 +215,18 @@ test('guess integers preserve raw spelling while expressions, fractional precisi
  }
 });
 
-test('inaccurate hand and pairing displays cannot be laundered by a later correct demonstration',()=>{
+test('earlier rendering limits and insufficient takes remain explicit when a later demonstration is correct',()=>{
  const runs=[['showactions',1,6,2,'+'],['showactions',1,5,2,'-'],['takethings',2,7,4,'+'],['takethings',2,3,5,'-'],['takethings',0,2,5,'-']];
  for(const[id,index,a,b,op]of runs){
   const t=sessionTasks(id)[index],m=M.initial(t);demo(t,m,a,b,op,'0');const badVisual=V.visual(t,m);
   if(t.rep==='fingers'&&a===6)assert.equal((badVisual.match(/class="up"/g)||[]).length,7,'source really caps a six-finger part at five');
   if(t.rep==='fingers'&&op==='-')assert.equal((badVisual.match(/class="up"/g)||[]).length,5,'source does not cross out fingers');
   if(t.compare)assert.match(badVisual,/同列配成一对/);
-  finish(t,m);original(t,m);rejects(t,m,id+':'+index+' retains the unsuitable historical display');
+  const first=clone(m.history[0]);finish(t,m);original(t,m);const p=accepts(t,m);
+  assert.deepEqual(m.history[0],first);assert.equal(p.demonstrations.length,2);
+  assert.equal(p.demonstrations[0].guess.displayExpected,null);assert.equal(p.demonstrations[0].guess.matchesDisplay,null);
+  assert.equal(p.limitedDisplays.length+p.insufficientAttempts.length,1);
+  assert.equal(p.latest.result,t.a+(t.op==='+'?t.b:-t.b));
  }
 });
 
@@ -356,12 +360,23 @@ test('feedback describes exchanged insufficiency without negative objects or an 
  const re=words(thinkingFeedback(jt,jm,savedRecord(jm),j));assert.match(re,/又请求过相同数量和动作的演示/);assert.doesNotMatch(re,/画面没有改变|你逐颗|你逐个/);
 });
 
-test('correct-looking models with unsuitable history or invisible fields receive no shared strict feedback',()=>{
+test('invisible fields remain rejected and earlier rendering limitations are honestly described',()=>{
  for(const c of cases.filter(c=>c.task.swap)){
   const t=sessionTasks(c.id)[c.index],m=M.example(t);original(t,m);assert.equal(thinkingFeedback(t,m,savedRecord(m),c),null);
  }
  for(const[id,index,a,b,op]of [['showactions',1,6,2,'+'],['showactions',1,5,2,'-'],['takethings',2,7,4,'+'],['takethings',0,2,5,'-']]){
   const c=cases.find(c=>c.id===id&&c.index===index),t=sessionTasks(id)[index],m=M.initial(t);demo(t,m,a,b,op,'0');finish(t,m);original(t,m);
-  assert.equal(thinkingFeedback(t,m,savedRecord(m),c),null);
+  const feedback=thinkingFeedback(t,m,savedRecord(m),c);assert.ok(feedback);
+  assert.match(words(feedback),/早先预览|物品不够拿/);assert.doesNotMatch(words(feedback),/对应猜想框的量是 null/);
  }
+});
+
+test('a recorded zero-minus-two attempt is retained as shortage, never negative physical objects',()=>{
+ const c=cases.find(c=>c.id==='takethings'&&c.index===0),t=sessionTasks(c.id)[c.index],m=M.initial(t);
+ demo(t,m,0,2,'-','3');const first=clone(m.history[0]);assert.match(V.visual(t,m),/仍然不够/);
+ finish(t,m);const p=accepts(t,m);assert.deepEqual(m.history[0],first);
+ assert.equal(first.result,-2);assert.equal(p.insufficientAttempts[0].physicalResult,null);
+ assert.equal(p.insufficientAttempts[0].missing,2);assert.equal(p.insufficientAttempts[0].remaining,0);
+ const feedback=thinkingFeedback(t,m,savedRecord(m),c);assert.ok(feedback);assert.match(words(feedback),/物品不够拿/);
+ assert.doesNotMatch(feedback.observation,/(?:还剩|剩余)\s*[-−]2|[-−]2\s*个/);
 });

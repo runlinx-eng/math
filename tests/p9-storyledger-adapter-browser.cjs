@@ -3,6 +3,7 @@
 const fs=require('node:fs'),nodePath=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const fixture=require('./fixtures/p9-storyledger-cases.cjs'),{cases,associatedCases:associated}=fixture;
 const root=nodePath.resolve(__dirname,'..'),out=nodePath.join(root,'verification/p9-storyledger-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
@@ -28,7 +29,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  const {storyLedgerBinding,replayStoryLedgerEvidence}=await import('../dist/learning/storyledger-evidence.js');
  for(const spec of [...cases,...associated])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const[file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(nodePath.join(root,file))),expected);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,diagnostics,label='setup';
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -48,6 +49,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{
@@ -226,7 +228,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   const result={checks,errors,remote,observations,negatives,isolated,retries,offline,provenance,viewports,nativeTasks:cases.length,associatedTasks:associated.length,originStopped:offline.every(x=>x.originStopped)};
   fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify(result,null,2));console.log('P9_STORYLEDGER_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,taskViewportPairs:observations.length,associatedPairs:isolated.length}));
  }catch(error){
+  const failureDiagnostic=diagnostics?await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)})):null;
   if(activePage)await activePage.screenshot({path:nodePath.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,retries,offline,provenance,error:String(error),stack:error.stack,at:label},null,2));console.error(error.stack);process.exitCode=1;
+  fs.writeFileSync(nodePath.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,retries,offline,provenance,error:String(error),stack:error.stack,at:label,failureDiagnostic},null,2));console.error(error.stack);process.exitCode=1;
  }finally{if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});if(context)await context.close();if(browser)await browser.close();}
 })();
