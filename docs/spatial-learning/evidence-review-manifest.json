@@ -2178,6 +2178,213 @@
       "method": null
     },
     {
+      "sessionId": "anglecorner",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_8OAGVdeTJ_",
+      "adapter": "angle",
+      "taskHash": "326ec258bb765382d27c041a031d76c631b76a17cfbd8f2d0a359a17817ea065",
+      "method": null
+    },
+    {
+      "sessionId": "anglecorner",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_8OAGVdeTJ_",
+      "adapter": "angle",
+      "taskHash": "44b00b1f52a2113bcc322d90c2335bec825d37e6ed16db645218844636c3a751",
+      "method": null
+    },
+    {
+      "sessionId": "angleparts",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_3S10OOGPqu",
+      "adapter": "angle",
+      "taskHash": "61c34fa36f7cbe9c42a1dc8b5aaf4071071ba552f0cd3efac6574069a6024640",
+      "method": null
+    },
+    {
+      "sessionId": "angleparts",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_3S10OOGPqu",
+      "adapter": "angle",
+      "taskHash": "3f43209821968408f94eb4fd05203e29dc8d3256574985efdb3c83c49b2e15c6",
+      "method": null
+    },
+    {
+      "sessionId": "rightcheck",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_MFfYcnv6Tv",
+      "adapter": "angle",
+      "taskHash": "a7ef607768f610826ac739a7db6e4f4fa11bc60408fdfe4962097cf098a73ba0",
+      "method": null
+    },
+    {
+      "sessionId": "anglestraight",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_LBT-9jz7kR",
+      "adapter": "angle",
+      "taskHash": "0cdd086468e340552a54cabeaf40790086e4984e30cf1e8b1fd266ad1898a86c",
+      "method": null
+    },
+    {
+      "sessionId": "anglestraight",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_LBT-9jz7kR",
+      "adapter": "angle",
+      "taskHash": "1b38d3ac55d5eb5d8f6b0d077b7f304a86f659eb25d158319a6df406d45dea19",
+      "method": null
+    },
+    {
+      "sessionId": "degreeunit",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_qUGMyMYn9m",
+      "adapter": "angle",
+      "taskHash": "1339aaf30a8c6ac4665edf0204ea4d80c1417648a164f664b0753acbdd714b7b",
+      "method": null
+    },
+    {
+      "sessionId": "degreeunit",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_qUGMyMYn9m",
+      "adapter": "angle",
+      "taskHash": "7edc4b0269018fa66d2a390a461dad96d7af8758880c7067d3c41b54fdcf0bd9",
+      "method": null
+    },
+    {
+      "sessionId": "degreeunit",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_qUGMyMYn9m",
+      "adapter": "angle",
+      "taskHash": "feadec03f43cab4592d663fa72b0da35ea3d7a3e6169eeae71f1368647d68b20",
+      "method": null
+    },
+    {
+      "sessionId": "angleadd",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_89riIKwGYp",
+      "adapter": "angle",
+      "taskHash": "ce99aeef115d7f750a0188855b46724546327bdcb800fc66693ecbe09e43c963",
+      "method": null
+    },
+    {
+      "sessionId": "angleadd",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_89riIKwGYp",
+      "adapter": "angle",
+      "taskHash": "56ec15bc481b9b43f8d40501abebe24cc638225adad6ed01f6dddc56260a203d",
+      "method": null
+    },
+    {
+      "sessionId": "angleadd",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_89riIKwGYp",
+      "adapter": "angle",
+      "taskHash": "fb50d4da63207709fb5e77a7ad9af9cd229a777e462bd00730825851da6fbda2",
+      "method": null
+    },
+    {
+      "sessionId": "anglearound",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_oqziWKry-L",
+      "adapter": "angle",
+      "taskHash": "fd7891277de2463430d712009b3887dfeeb1c8852096cce28faec805a62f91b2",
+      "method": null
+    },
+    {
+      "sessionId": "anglearound",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_oqziWKry-L",
+      "adapter": "angle",
+      "taskHash": "5a8eebdc618cb10f5c508c955a77a9d50f568d615c628d1148fe0da41942ac1c",
+      "method": null
+    },
+    {
+      "sessionId": "anglearound",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_oqziWKry-L",
+      "adapter": "angle",
+      "taskHash": "51dd9f653e48bdaac2d806ba84df29c9ef9b574af848862f41c82d727de244a5",
+      "method": null
+    },
+    {
+      "sessionId": "anglecross",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_QDTO3GAgcq",
+      "adapter": "angle",
+      "taskHash": "3e7f68b49ad34531b419bdf4ca88969feb05556202042d5c5c2e48cb2c81eecd",
+      "method": null
+    },
+    {
+      "sessionId": "anglecross",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_QDTO3GAgcq",
+      "adapter": "angle",
+      "taskHash": "b29a6323cf67283009cb5a771bbda37233f46d12d8a4a7bc771a5a4af39860d5",
+      "method": null
+    },
+    {
+      "sessionId": "anglecross",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_QDTO3GAgcq",
+      "adapter": "angle",
+      "taskHash": "6bb38503865fe6085164d3ba90db9dcfed702407090ccd30af97ea5bc1923d28",
+      "method": null
+    },
+    {
+      "sessionId": "anglechain",
+      "index": 0,
+      "type": "x-g25-turn",
+      "nodeId": "mt_tedML_iu4Y",
+      "adapter": "angle",
+      "taskHash": "e3099d534c0ee6ce6dfce3cc90fb1684e0fe82cb7f5393d6e5372191f6e3eede",
+      "method": null
+    },
+    {
+      "sessionId": "anglechain",
+      "index": 1,
+      "type": "x-g25-turn",
+      "nodeId": "mt_tedML_iu4Y",
+      "adapter": "angle",
+      "taskHash": "68db5df5cc87bfa3e0efb14fb1aabafd04cc7db764132e03b8d32925bf9ea35a",
+      "method": null
+    },
+    {
+      "sessionId": "anglechain",
+      "index": 2,
+      "type": "x-g25-turn",
+      "nodeId": "mt_tedML_iu4Y",
+      "adapter": "angle",
+      "taskHash": "f94cba6867ebd28e201add29202d91d99b940567cf6f50d8fa9755fcdb7fc245",
+      "method": null
+    },
+    {
+      "sessionId": "trianglepossible",
+      "index": 6,
+      "type": "x-g25-turn",
+      "nodeId": "mt_4bc3EAxhlY",
+      "adapter": "angle",
+      "taskHash": "e7c26b3136e9126c14d449edf8b03f85feaf7ac13725d88c7f73cbbb7d55854f",
+      "method": null
+    },
+    {
       "sessionId": "fractionchoices",
       "index": 3,
       "type": "x-fracoperations",
