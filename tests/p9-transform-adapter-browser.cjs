@@ -12,6 +12,7 @@ const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CA
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
+ const {unpackText}=await import('../dist/storage.js');
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {ensureB39Ready}=await import('../dist/learning/phase4/async-batches.js');await ensureB39Ready();
  const M=await import('../dist/learning/phase5/b24-model.js');
@@ -57,6 +58,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
    const model=async spec=>(await saved(spec.id)).models[spec.index];
+   // Export exactly the stored bytes at existing checkpoints. Capturing does
+   // not perform any mathematical action or create another submission.
+   const captureNative=async(spec,stage)=>{
+    const raw=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+    const text=unpackText(raw),state=JSON.parse(text),lesson=state.lessons[spec.id]||state.daily.bridges[spec.id];
+    const model=lesson?.models[spec.index];
+    ok(typeof raw==='string'&&!!model&&lesson.index===spec.index,label+' '+stage+' captures complete stored lesson and current model');
+    const files={raw:label+'-'+stage+'-storage.txt',state:label+'-'+stage+'-state.json'};
+    fs.writeFileSync(path.join(out,files.raw),raw);fs.writeFileSync(path.join(out,files.state),text);
+    return{stage,raw,text,state,lesson,model,files};
+   };
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const state=window.mathLesson?.snapshot();return state?.id===id&&state.index===index&&state.view==='task';
    },spec);
@@ -80,7 +92,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(after.history.length===before.history.length+1&&event?.a===name.replace(/^p24-/,''),label+' real '+name+' appends exactly one event');
     ok(same(event.d,{}),label+' transform event has no cross-widget data');
     if(name==='p24-predict'){
-     ok(!before.board.prediction&&same(after.board.prediction,{x:before.predX,y:before.predY}),label+' prediction preserves the actual typed values');
+     ok(!before.board.prediction,label+' prediction button belongs to the unpredicted state');
+     if([before.predX,before.predY].every(x=>Number.isFinite(M.number(x))))
+      ok(same(after.board.prediction,{x:before.predX,y:before.predY}),label+' prediction preserves the actual typed values');
+     else ok(after.board.prediction===null&&!!after.issue&&same(after.board.first.predict,event.f),label+' empty prediction request stays recorded without inventing a guess');
     }else if(name==='p24-operate'){
      ok(same(event.f,Object.fromEntries(['dx','dy','axis','angle','cx','cy','factor'].map(k=>[k,before[k]]))),label+' operation captures the actual parameter fields');
     }else if(name==='p24-measure'){
@@ -148,6 +163,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await field('answers.0',task.questions[0].value);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&await hint.isVisible(),label+' the latest correct submission passes both gates');
     const first=await model(spec),proof=replayTransformEvidence(task,first),words=await hint.innerText();
+    const nativeCaptures={first:await captureNative(spec,'native-first')};
     ok(proof&&M.valid(task,first)&&M.inspect(task,first).correct,label+' real persisted work passes independent geometry and the original grader');
     ok(words.includes(proof.display.operation)&&words.includes(proof.display.sourcePoints[0])&&words.includes(proof.display.imagePoints[0]),label+' feedback names actual parameters and corresponding coordinates');
     ok(proof.operationCount===1&&proof.measurementCount===(task.needsMeasure?1:0),label+' evidence counts real operations and readout requests');
@@ -157,36 +173,45 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(/自由解释.*长期掌握/.test(words),label+' interpretation remains bounded');
     await shot('02-verified-offline');await reload(spec);
     ok(await hint.isVisible()&&same(await model(spec),first),label+' complete checked model survives offline reload unchanged');
+    nativeCaptures.firstOffline=await captureNative(spec,'native-first-offline');
     await field('answers.0',wrongAnswer(task));ok(await hint.count()===0,label+' editing invalidates the previous feedback immediately');
     if(spec===cases[0])await shot('03-edited');
     await reload(spec);ok(await hint.count()===0,label+' reload does not revive an obsolete correct snapshot');
+    nativeCaptures.pendingAnswerOffline=await captureNative(spec,'native-pending-answer-offline');
     await submit();ok(await hint.count()===0,label+' latest wrong answer outranks the earlier correct answer');
     await field('answers.0',task.questions[0].value);await submit();ok(await hint.isVisible(),label+' a fresh correct submission restores feedback');
     const changed=await operate(spec,alternative(task));ok(await hint.count()===0,label+' actual different transformation invalidates feedback');
     ok(!same(changed.board.image,first.board.image),label+' exploration changes corresponding point positions');
     if(task.needsMeasure)await act(spec,'p24-measure');
     await reload(spec);ok(await hint.count()===0,label+' an unsubmitted new image remains unverified after offline reload');
+    nativeCaptures.pendingImageOffline=await captureNative(spec,'native-pending-image-offline');
     await submit();ok(await page.locator('#check-feedback').getAttribute('data-state')==='revise'&&await hint.count()===0,label+' valid different transformation is not the required goal');
     await operate(spec,task.goal);if(task.needsMeasure)await act(spec,'p24-measure');
     ok(await hint.count()===0,label+' returning to the target still requires a new check');
     await submit();ok(await hint.isVisible(),label+' legal exploration and a new target check restore strict feedback');
     const end=await saved(spec.id),m=end.models[spec.index],attempts=end.cases[spec.index].attempts,finalProof=replayTransformEvidence(task,m);
+    nativeCaptures.final=await captureNative(spec,'native-final');
     ok(finalProof?.operationCount===3&&finalProof.measurementCount===(task.needsMeasure?3:0),label+' all transformations start from the original shape and remain in history');
     ok(same(m.board.image,first.board.image)&&m.history.length===first.history.length+(task.needsMeasure?4:2),label+' restored image and full real exploration history agree');
     ok(attempts.length===6&&attempts.every(a=>a.id&&a.at&&a.value&&typeof a.supported==='boolean'&&typeof a.exposed==='boolean'),label+' original v2 attempt snapshots and metadata remain intact');
     ok(same(attempts.at(-1).value,m)&&m.prose===first.prose,label+' latest attempt contains the complete current model and optional prose');
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),label+' no score or mastery record is added');
     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),label+' final exploration record and feedback survive offline reload');
+    nativeCaptures.finalOffline=await captureNative(spec,'native-final-offline');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,
-     observation:words,finalObservation:await hint.innerText(),initialModel:first,model:m,attempts,proof:finalProof});
+     observation:words,finalObservation:await hint.innerText(),initialModel:first,model:m,attempts,proof:finalProof,nativeCaptures});
    }
    for(const variant of ['invalid-parameter','duplicate-operate','duplicate-measure','identity','near-answer',
-    'negative-mixed-scale','negative-mixed-answer']){
+    'negative-mixed-scale','negative-mixed-answer','empty-prediction']){
     const spec=variant==='duplicate-measure'?{id:'gridmotion',index:0}:variant==='negative-mixed-scale'?{id:'growshape',index:0}:{id:'pointmove',index:0};
     const task=sessionTasks(spec.id)[spec.index];label=`${width}x${height}-negative-${variant}`;await open(spec);
-    let failedScale;
-    if(['invalid-parameter','identity','negative-mixed-scale'].includes(variant)){
+    let failedScale,failed;
+    if(variant==='empty-prediction'){
+     await act(spec,'p24-predict');await submit();
+     failed={model:await model(spec),lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
+     ok(await hint.count()===0,label+' empty request alone cannot prove a transformation');await solve(spec);
+    }else if(['invalid-parameter','identity','negative-mixed-scale'].includes(variant)){
      await field('predX','0');await field('predY','0');await act(spec,'p24-predict');
      if(variant==='negative-mixed-scale'){
       const failed=await operate(spec,{kind:'scale',factor:'-0 1/2',center:[0,0]});failedScale=failed.history.at(-1);
@@ -194,6 +219,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       ok(failedScale.f.factor==='-0 1/2',label+' failed scale retains its exact typed sign and fraction');
      }else await operate(spec,{kind:'move',dx:variant==='identity'?0:13,dy:0});
      if(variant==='invalid-parameter')ok(!!(await model(spec)).issue,label+' original control rejects the out-of-bounds move');
+     await submit();failed={model:await model(spec),lesson:await saved(spec.id),raw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2'))};
      await operate(spec,task.goal);await finish(spec);
     }else{
      await solve(spec);
@@ -208,11 +234,18 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      await page.locator('#check-feedback').getAttribute('data-state')===(originalCorrect?'correct':'revise'),
      label+' original grading respects the signed numeric answer and final-work rules');
     if(failedScale)ok(same(m.history[1],failedScale),label+' the later correct image cannot remove the failed scale event');
-    ok(!replayTransformEvidence(task,m)&&await hint.count()===0,label+' invalid or redundant process receives no strict evidence');
-    await reload(spec);ok(await hint.count()===0&&same(await model(spec),m),label+' strict exclusion and full record survive offline reload');
-    const observation={width,height,variant,model:m,attempts:state.cases[spec.index].attempts,originalCorrect,strictFeedback:false};
+    const strictFeedback=!['near-answer','negative-mixed-answer'].includes(variant),proof=replayTransformEvidence(task,m);
+    if(strictFeedback){ok(!!proof&&await hint.isVisible(),label+' faithful correction or confirmation preserves successful evidence');
+     if(['invalid-parameter','negative-mixed-scale','empty-prediction'].includes(variant))ok(proof.failedRequests.length===1,label+' one failed request is retained without becoming a successful transformation');
+     else ok(proof.confirmations===1,label+' a no-effect request is not another construction');
+     if(failed)ok(same(m.history.slice(0,failed.model.history.length),failed.model.history)&&same(state.cases[spec.index].attempts.slice(0,-1),failed.lesson.cases[spec.index].attempts),label+' failed history and checked submission remain exact');
+    }else ok(!proof&&await hint.count()===0,label+' incorrect or inexact final answers still have no strict evidence');
+    const checkedRaw=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+    await reload(spec);ok((await hint.count()>0)===strictFeedback&&same(await model(spec),m),label+' full record and evidence decision survive offline reload');
+    const observation={width,height,variant,failed,model:m,attempts:state.cases[spec.index].attempts,lesson:state,checkedRaw,
+     restored:await saved(spec.id),restoredRaw:await page.evaluate(()=>localStorage.getItem('math-explorer-v2')),proof,originalCorrect,strictFeedback};
     negatives.push(observation);
-    await shot('rejected');
+    await shot(strictFeedback?'corrected':'rejected');
     if(variant==='negative-mixed-answer'){
      await field('answers.0','5');await submit();const repaired=await saved(spec.id),current=repaired.models[spec.index];
      ok(await hint.isVisible()&&!!replayTransformEvidence(task,current),label+' correcting the answer enables the existing valid action evidence');
@@ -283,7 +316,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===cases.length*viewports.length,'all 23 native tasks complete at both desktop sizes');
-  ok(negatives.length===7*viewports.length,'all seven rejected paths complete at both desktop sizes');
+  ok(negatives.length===8*viewports.length,'all eight correction, confirmation and rejected paths complete at both desktop sizes');
   ok(explorations.filter(item=>item.kind.startsWith('negative-mixed-')).length===3*viewports.length,
    'three legal signed mixed-number paths complete at both desktop sizes');
   const result={checks,errors,remote,observations,negatives,explorations,offline,nativeTasks:cases.length,
