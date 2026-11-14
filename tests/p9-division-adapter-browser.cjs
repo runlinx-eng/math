@@ -13,10 +13,11 @@ module.exports={operationPlan};
 
 if(require.main===module)(async()=>{
  const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+ const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
  const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
  const {cases,associated}=require('./fixtures/p9-division-cases.cjs');
  const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-division-adapter');
- const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],explorationObservations=[],associatedObservations=[],offline=[];
+ const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],negativeObservations=[],explorationObservations=[],associatedObservations=[],offline=[];
  const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
  const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -26,7 +27,7 @@ if(require.main===module)(async()=>{
   import('../dist/learning/bridges.js'),import('../dist/learning/phase5/b14-model.js'),
   import('../dist/learning/division-evidence.js'),import('../dist/learning/phase4/async-batches.js')
  ]);
- await ensureB39Ready();let browser,server,activePage,activeLabel='setup';
+ await ensureB39Ready();let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -43,6 +44,7 @@ if(require.main===module)(async()=>{
    const base='http://127.0.0.1:'+server.address().port+'/',context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
    page.on('pageerror',error=>errors.push(activeLabel+': '+String(error)));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const shot=async name=>{
@@ -103,7 +105,11 @@ if(require.main===module)(async()=>{
      else{const s=after.board.steps.at(-1);ok(after.board.steps.length===before.board.steps.length+1&&s.used===s.q*task.d&&s.used+s.r===s.current&&s.r>=0&&s.r<task.d,
       activeLabel+' entered quotient product and remainder conserve this place');}
     }
-    if(name==='b14-container')ok(after.board.containers===before.board.containers+Number(data.value),activeLabel+' this enabled container control actually changes the diagram count');
+    if(name==='b14-container'){
+     const requested=before.board.containers+Number(data.value),expected=requested>200?before.board.containers:requested;
+     ok(after.board.containers===expected,activeLabel+' this enabled container request follows the original 200-container limit');
+     if(requested>200)ok(same(after.board,before.board)&&after.issue==='',activeLabel+' a visible request at the ceiling preserves the board and original empty issue');
+    }
     if(name==='b14-reset')ok(Object.keys(event.data.fields).every(k=>after[k]===before[k]),activeLabel+' actual reset preserves every entered field');
     return after;
    };
@@ -204,11 +210,14 @@ if(require.main===module)(async()=>{
 
    for(const variant of ['wrong-step-reset','long-decimal-reset','wrong-step-corrected','down-overfill','inverse-digit-join','inverse-nearby-token']){
     const spec={id:variant==='down-overfill'?'remainders':'shortdivide',index:variant==='down-overfill'?2:1},task=sessionTasks(spec.id)[spec.index];
-    activeLabel=`${width}x${height}-negative-${variant}`;await open(spec);
+    activeLabel=`${width}x${height}-boundary-${variant}`;await open(spec);let intermediate=null;
     if(['wrong-step-reset','long-decimal-reset','wrong-step-corrected'].includes(variant)){
      await mathematicalAction(spec,'b14-bring');await field('q',variant==='long-decimal-reset'?'0.0000000':'0');
      await field('used',variant==='wrong-step-corrected'?'1':'0');await field('rest',variant==='wrong-step-reset'?'8':'1');
      await mathematicalAction(spec,'b14-div-step');ok((await model(spec)).issue!=='',activeLabel+' the original tool visibly rejects this real input');
+     await submit();await checked(false);intermediate=await capture(spec.id);
+     ok(await hint.count()===0,activeLabel+' an incomplete failed submission has no strict feedback');await reload(spec);
+     ok(same(await model(spec),intermediate.record.models[spec.index]),activeLabel+' the rejected raw fields issue and ready board survive offline before correction');
      if(variant==='wrong-step-corrected'){
       await field('q','0');await field('used','0');await field('rest','1');await mathematicalAction(spec,'b14-div-step');
       await run(spec,['work','containers','answer'],{fromPosition:1});
@@ -216,29 +225,60 @@ if(require.main===module)(async()=>{
     }else{
      await run(spec);
      if(variant==='down-overfill'){
-      await mathematicalAction(spec,'b14-container',{value:1});ok((await page.locator('#extra-visual').innerText()).includes('要把这些份都装满还差 2'),activeLabel+' current caption accurately reports missing capacity; versionless historical evidence remains conservative');
+      await mathematicalAction(spec,'b14-container',{value:1});ok((await page.locator('#extra-visual').innerText()).includes('要把这些份都装满还差 2'),activeLabel+' the current renderer reports the actual shortfall without identifying the renderer used in a saved historical event');
+      await submit();await checked(false);intermediate=await capture(spec.id);await reload(spec);
+      ok(await hint.count()===0&&same(await model(spec),intermediate.record.models[spec.index]),activeLabel+' the excess count and failed full submission persist before removal');
       await mathematicalAction(spec,'b14-container',{value:-1});
      }else await field('check',variant==='inverse-digit-join'?'1 5×8+5=125':'15.00000000000000001×8+5=125');
     }
-    await submit();await checked(true);const rejected=await capture(spec.id),m=rejected.record.models[spec.index];
-    ok(F.valid(task,m)&&F.inspect(task,m).correct&&replay(task,m)===null&&await hint.count()===0,activeLabel+' original completion is preserved while unsupported strict evidence is withheld');
-    await reload(spec);ok(await hint.count()===0&&same(await model(spec),m),activeLabel+' full rejected history survives offline');await shot('rejected');
+    await submit();await checked(true);const checkedState=await capture(spec.id),m=checkedState.record.models[spec.index];
     let corrected=null;
     if(variant.startsWith('inverse-')){
+     ok(F.valid(task,m)&&F.inspect(task,m).correct&&replay(task,m)===null&&await hint.count()===0,activeLabel+' original completion is preserved while unsupported strict evidence is withheld');
+     await reload(spec);ok(await hint.count()===0&&same(await model(spec),m),activeLabel+' full rejected history survives offline');await shot('rejected');
      await field('check','15 × 8 + 5 = 125');ok(await hint.count()===0,activeLabel+' correcting notation alone does not borrow an old submission');
      await submit();await checked(true);ok(await hint.isVisible(),activeLabel+' an explicit correct recheck verifies the corrected notation');
      corrected=await capture(spec.id);verifyProof(spec,corrected.record.models[spec.index]);await reload(spec);
      ok(await hint.isVisible(),activeLabel+' corrected checked notation restores offline');
+     negativeObservations.push({width,height,variant,id:spec.id,index:spec.index,model:m,record:checkedState.record,rawState:checkedState.rawState,state:checkedState.state,corrected});
+    }else{
+     const proof=verifyProof(spec,m),old=intermediate.record.models[spec.index],attempts=checkedState.record.cases[spec.index].attempts;
+     ok(await hint.isVisible(),activeLabel+' the real corrected history receives strict evidence after an explicit new check');
+     ok(same(m.history.slice(0,old.history.length),old.history),activeLabel+' every rejected or exploratory raw event is preserved');
+     ok(same(attempts.slice(0,1),intermediate.record.cases[spec.index].attempts)&&same(attempts.map(x=>F.inspect(task,x.value).correct),[false,true]),
+      activeLabel+' complete failed and corrected attempts retain their original order and values');
+     if(variant==='down-overfill'){
+      const excess=proof.containers.events.at(-2);
+      ok(excess.to===6&&excess.capacity===54&&excess.shownAllocated===52&&excess.allSelectedCanBeFull===false&&excess.historicalCaptionKnown===false,
+       activeLabel+' an excess trial is a quantity relation without an invented full-container or historical-caption claim');
+      ok((await hint.innerText()).includes('不据此还原当时的说明文字'),activeLabel+' the historical display limitation is explicit');
+     }else{
+      const failure=proof.failedRequests[0];
+      ok(proof.failedRequests.length===1&&!failure.accepted&&!failure.effect&&same(failure.fields,old.history.at(-1).data.fields)&&same(failure.before,old.board)&&same(failure.after,old.board)&&failure.issue===old.issue,
+       activeLabel+' the exact rejected fields board and original issue remain separate from successful digits');
+      ok((await hint.innerText()).includes('没有增加已完成位数'),activeLabel+' failed requests are not attributed as completed digits');
+     }
+     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),activeLabel+' the complete checked correction survives offline');await shot('corrected');
+     correctionObservations.push({width,height,variant,id:spec.id,index:spec.index,intermediate,model:m,proof,record:checkedState.record,rawState:checkedState.rawState,state:checkedState.state,observation:await hint.innerText()});
     }
-    negativeObservations.push({width,height,variant,id:spec.id,index:spec.index,model:m,record:rejected.record,rawState:rejected.rawState,state:rejected.state,corrected});
    }
 
-   for(const variant of ['up-extra-room','choose-alternate','empty-reset','precision-edit']){
+   for(const variant of ['up-extra-room','choose-alternate','empty-reset','precision-edit','empty-method','container-ceiling']){
     const spec=variant==='up-extra-room'?{id:'shortdivide',index:2}:variant==='choose-alternate'?{id:'divide16',index:0}:
-     variant==='empty-reset'?{id:'writtenstart',index:1}:{id:'roundanswers',index:1};
+     variant==='empty-reset'?{id:'writtenstart',index:1}:variant==='empty-method'?{id:'divide16',index:0}:
+     variant==='container-ceiling'?{id:'remainders',index:1}:{id:'roundanswers',index:1};
     activeLabel=`${width}x${height}-explore-${variant}`;await open(spec);
     if(variant==='empty-reset')await mathematicalAction(spec,'b14-reset');
-    await run(spec,undefined,{method:variant==='choose-alternate'?'short':'long'});const before=await model(spec),oldLength=before.history.length;
+    if(variant==='empty-method'){
+     const blank=await model(spec);await mathematicalAction(spec,'b14-method');const empty=await model(spec);
+     ok(same(empty.board,blank.board)&&empty.issue==='',activeLabel+' an empty visible notation request changes neither board nor issue');
+    }
+    if(variant==='container-ceiling'){
+     await run(spec,['method','work']);for(let i=0;i<201;i++)await mathematicalAction(spec,'b14-container',{value:1});
+     ok((await model(spec)).board.containers===200,activeLabel+' 201 actual enabled add requests produce exactly 200 containers');
+     for(let i=200;i>6;i--)await mathematicalAction(spec,'b14-container',{value:-1});await run(spec,['answer']);
+    }else await run(spec,undefined,{method:variant==='choose-alternate'?'short':'long'});
+    const before=await model(spec),oldLength=before.history.length;
     if(variant==='up-extra-room'){await mathematicalAction(spec,'b14-container',{value:1});await mathematicalAction(spec,'b14-container',{value:-1});}
     if(variant==='choose-alternate'){await mathematicalAction(spec,'b14-reset');await run(spec,undefined,{method:'long'});}
     if(variant==='precision-edit'){
@@ -253,6 +293,16 @@ if(require.main===module)(async()=>{
     if(variant==='choose-alternate')ok(proof.choices.length===2&&proof.choices[0].method==='short'&&proof.method.value==='long'&&proof.currentEpoch===1,activeLabel+' each actual notation choice belongs to its reset epoch');
     if(variant==='empty-reset')ok(proof.events[0].effect===false,activeLabel+' empty reset is not counted as a mathematical change');
     if(variant==='precision-edit')ok(final.record.cases[spec.index].attempts.length===3&&proof.rounding.precisionChosen,activeLabel+' price precision changes retain all three original attempts');
+    if(variant==='empty-method')ok(proof.failedRequests.length===1&&proof.failedRequests[0].failure==='empty-method'&&proof.choices.length===1&&proof.method.choiceIndex===1,
+     activeLabel+' the empty request is retained without inventing a second chosen notation');
+    if(variant==='container-ceiling'){
+     const failure=proof.failedRequests[0];
+     ok(proof.failedRequests.length===1&&failure.failure==='container-limit'&&!failure.accepted&&!failure.effect&&failure.from===200&&failure.to===200&&failure.requestedCount===201&&same(failure.before,failure.after),
+      activeLabel+' the exact cap no-op survives independently of the eventual six-container solution');
+     ok(proof.containers.count===6&&proof.containers.events.length===394&&proof.events.filter(e=>e.action==='b14-container').length===395,
+      activeLabel+' one ceiling request is excluded from actual container movement counts');
+     ok((await hint.innerText()).includes('不计作一次容器增加'),activeLabel+' feedback does not count the ceiling request as a movement');
+    }
     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),activeLabel+' checked exploration restores exactly offline');await shot('checked');
     explorationObservations.push({width,height,variant,before,model:m,proof,record:final.record,rawState:final.rawState,state:final.state,observation:await hint.innerText()});
    }
@@ -274,18 +324,19 @@ if(require.main===module)(async()=>{
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===42,'all 21 native tasks complete five actual submissions in both viewports');
-  ok(negativeObservations.length===12&&explorationObservations.length===8&&associatedObservations.length===48,
-   'all six negative variants four legal explorations and 24 associated tasks run in both viewports');
-  const result={checks,errors,remote,observations,negativeObservations,explorationObservations,associatedObservations,offline,viewports,
+  ok(correctionObservations.length===8&&negativeObservations.length===4&&explorationObservations.length===12&&associatedObservations.length===48,
+   'all four real correction variants two strict inverse boundaries six legal explorations and 24 associated tasks run in both viewports');
+  const result={checks,errors,remote,observations,correctionObservations,negativeObservations,explorationObservations,associatedObservations,offline,viewports,
    nativeTasks:cases.length,nativeNodes:new Set(cases.map(c=>c.nodeId)).size,taskViewportPairs:observations.length,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(result,null,2));
   console.log('P9_DIVISION_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,taskViewportPairs:observations.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage){await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
    fs.writeFileSync(path.join(out,activeLabel+'-failure.html'),await activePage.content().catch(()=>''));}
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,explorationObservations,
-   associatedObservations,offline,error:String(error),at:activeLabel},null,2));console.error(error.stack);process.exitCode=1;
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,negativeObservations,explorationObservations,
+   associatedObservations,offline,error:String(error),at:activeLabel,failureDiagnostic},null,2));console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
   if(browser)await browser.close();

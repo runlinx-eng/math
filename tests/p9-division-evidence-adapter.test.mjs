@@ -165,13 +165,61 @@ test('empty reset is a legal reset with no mathematical effect; preserved hidden
  solve(t,m);p=accepts(t,m);assert.equal(p.resets.length,2);assert.equal(p.currentEpoch,2);assert.equal(p.events.length,m.history.length);
 });
 
-test('real wrong step values cannot be washed into valid evidence by correction and reset',()=>{
+test('real rejected digits remain failed requests after a visible correction or reset',()=>{
  const t=at('shortdivide',1);
- for(const [key,value]of [['q','10'],['q','0.000001'],['q','0.0000000'],['q','1'],['used','1'],['rest','8'],['rest','0'],['rest','-1']]){
+ for(const [key,value]of [['q',''],['q','bad'],['q','10'],['q','0.000001'],['q','0.0000000'],['q','1'],['used','1'],['rest','8'],['rest','0'],['rest','-1']])for(const reset of [false,true]){
   const m=F.initial(t);click(t,m,'b14-bring');for(const [k,v]of [['q','0'],['used','0'],['rest','1']])change(t,m,k,v);
+  const board=copy(m.board);
   change(t,m,key,value);click(t,m,'b14-div-step');assert.ok(m.issue,`${key}=${value} is rejected by the actual original tool`);
-  click(t,m,'b14-reset');solve(t,m);original(t,m);rejects(t,m);
+  const rejected=copy(m),failureIndex=m.history.length-1;
+  assert.deepEqual(m.board,board);assert.equal(m.board.ready,true);assert.equal(m.board.steps.length,0);
+  if(reset){click(t,m,'b14-reset');solve(t,m);}
+  else{
+   for(const [k,v]of [['q','0'],['used','0'],['rest','1']])change(t,m,k,v);click(t,m,'b14-div-step');
+   run(t,m,browserPlan.operationPlan(F,t).filter(s=>s.position===undefined||s.position>=1));
+  }
+  const p=accepts(t,m),failed=p.failedRequests[0];assert.equal(p.failedRequests.length,1);
+  assert.deepEqual(m.history.slice(0,rejected.history.length),rejected.history);assert.equal(p.events.length,m.history.length);
+  assert.equal(failed.index,failureIndex);assert.equal(failed.accepted,false);assert.equal(failed.effect,false);
+  assert.equal(failed.failure,'digit-not-accepted');assert.equal(failed.issue,rejected.issue);
+  assert.deepEqual(failed.fields,rejected.history.at(-1).data.fields);assert.equal(failed.fields[key],value);
+  assert.deepEqual(failed.before,board);assert.deepEqual(failed.after,board);assert.equal(p.steps.length,3);
+  assert.equal(p.currentEpoch,Number(reset));assert.equal(p.issue,'');
+  const forged=copy(m);forged.history[failureIndex].data.fields.sideA='1';rejects(t,forged);
+  const hidden=copy(m);F.act(t,hidden,'b14-div-step');original(t,hidden);rejects(t,hidden);
  }
+});
+
+test('every native task keeps failed complete attempts and real digit corrections in both reset paths',()=>{
+ for(const c of cases)for(const reset of [false,true]){
+  const t=at(c.id,c.index),a=freshLesson(c.id);a.index=c.index;const m=modelForLesson(a);
+  const plan=browserPlan.operationPlan(F,t);run(t,m,plan.filter(s=>s.stage==='method'));
+  click(t,m,'b14-bring');for(const key of ['q','used','rest'])change(t,m,key,'');click(t,m,'b14-div-step');
+  const rejected=copy(m);assert.ok(m.issue);assert.equal(submit(a).correct,false);const old=copy(a.cases[c.index].attempts);
+  if(reset){click(t,m,'b14-reset');solve(t,m);}
+  else run(t,m,plan.filter(s=>s.stage!=='method'&&!(s.action==='b14-bring'&&s.position===0)));
+  const p=accepts(t,m);assert.equal(p.failedRequests.length,1);assert.deepEqual(p.failedRequests[0].fields,rejected.history.at(-1).data.fields);
+  assert.deepEqual(m.history.slice(0,rejected.history.length),rejected.history);assert.equal(submit(a).correct,true);
+  assert.deepEqual(a.cases[c.index].attempts.slice(0,old.length),old);
+  assert.deepEqual(a.cases[c.index].attempts.map(x=>F.inspect(t,x.value).correct),[false,true]);
+  assert.deepEqual(validateLesson(JSON.parse(JSON.stringify(a)),c.id),a);
+  const words=JSON.stringify(thinkingFeedback(t,m,a.cases[c.index],context(c)));
+  assert.match(words,/保留了 1 次尚未对上的逐位请求.*原填写和提示仍在/);assert.match(words,/没有增加已完成位数/);
+ }
+});
+
+test('an empty visible notation request is preserved without inventing a selected method',()=>{
+ const t=at('divide16',0),m=F.initial(t);click(t,m,'b14-method');const rejected=copy(m);
+ assert.equal(m.issue,'');assert.equal(m.board.method,null);assert.deepEqual(m.board,F.initial(t).board);
+ solve(t,m,{method:'short'});const p=accepts(t,m),failed=p.failedRequests[0];
+ assert.equal(p.failedRequests.length,1);assert.equal(failed.failure,'empty-method');assert.equal(failed.issue,'');
+ assert.equal(failed.effect,false);assert.equal(failed.accepted,false);assert.deepEqual(failed.before,rejected.board);assert.deepEqual(failed.after,rejected.board);
+ assert.deepEqual(failed.fields,rejected.history[0].data.fields);assert.equal(p.choices.length,1);assert.equal(p.method.choiceIndex,1);
+ assert.equal(p.method.value,'short');assert.deepEqual(m.history[0],rejected.history[0]);
+ click(t,m,'b14-reset');change(t,m,'method','');click(t,m,'b14-method');solve(t,m,{method:'long'});
+ const after=accepts(t,m);assert.equal(after.failedRequests.length,2);assert.equal(after.choices.length,2);assert.equal(after.currentEpoch,1);
+ const feedback=thinkingFeedback(t,m,{attempts:[{value:copy(m)}]},{sessionId:'divide16',index:0});assert.match(JSON.stringify(feedback),/尚未选择记法的请求.*没有把空选择当作一种记法/);
+ const forged=copy(m);forged.history[0].data.fields.method='unsupported';rejects(t,forged);
 });
 
 test('finite decimal integer inputs that the original tool accepts preserve exact mathematics',()=>{
@@ -240,10 +288,19 @@ test('up permits adding then removing an extra container while describing automa
  const extra=p.containers.events.at(-2);assert.equal(extra.to,17);assert.equal(extra.shownAllocated,125);assert.equal(extra.unusedCapacity,11);assert.equal(extra.toolFillsDiagram,true);
 });
 
-test('down histories without a renderer version retain the conservative evidence boundary after the caption fix',()=>{
+test('down overfill and removal preserve quantities without claiming a versionless historical caption',()=>{
  const t=at('remainders',2),m=solve(t);click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/要把这些份都装满还差 2/);
- click(t,m,'b14-container',{value:-1});original(t,m);rejects(t,m);click(t,m,'b14-reset');solve(t,m);original(t,m);rejects(t,m);
- const valid=solve(t);click(t,valid,'b14-container',{value:-1});click(t,valid,'b14-container',{value:1});const p=accepts(t,valid);
+ const over=copy(m);click(t,m,'b14-container',{value:-1});let p=accepts(t,m),extra=p.containers.events.at(-2);
+ assert.equal(extra.to,6);assert.equal(extra.capacity,54);assert.equal(extra.shownAllocated,52);assert.equal(extra.unusedCapacity,2);
+ assert.equal(extra.allSelectedCanBeFull,false);assert.equal(extra.historicalCaptionKnown,false);assert.deepEqual(m.history.slice(0,over.history.length),over.history);
+ assert.equal(p.containers.count,5);assert.equal(p.containers.fullContainersOnly,true);
+ const words=JSON.stringify(thinkingFeedback(t,m,{attempts:[{value:copy(m)}]},{sessionId:'remainders',index:2}));
+ assert.match(words,/中间状态不作为所有份都已装满的证据/);assert.match(words,/不据此还原当时的说明文字/);
+ const before=copy(m.history);click(t,m,'b14-reset');solve(t,m);p=accepts(t,m);
+ assert.deepEqual(m.history.slice(0,before.length),before);assert.equal(p.currentEpoch,1);
+ assert.ok(p.events.some(e=>e.action==='b14-container'&&e.to===6&&!e.allSelectedCanBeFull&&!e.historicalCaptionKnown));
+ assert.ok(p.containers.events.every(e=>e.epoch===1&&e.allSelectedCanBeFull&&!e.historicalCaptionKnown));
+ const valid=solve(t);click(t,valid,'b14-container',{value:-1});click(t,valid,'b14-container',{value:1});p=accepts(t,valid);
  assert.equal(p.containers.count,5);assert.equal(p.containers.adjacentCapacity,54);assert.equal(p.containers.fullContainersOnly,true);assert.equal(p.remainingOriginal,7);
 });
 
@@ -253,9 +310,15 @@ test('container actions require the completed visible panel, exact ±1 and an en
  for(const value of [-1,0,2,'plus']){const bad=copy(empty);F.act(t,bad,'b14-container',{value});run(t,bad,browserPlan.operationPlan(F,t).filter(s=>['containers','answer'].includes(s.stage)));original(t,bad);rejects(t,bad);}
 });
 
-test('the visible add button at the original 200-container ceiling cannot create a successful no-op',()=>{
+test('the visible add request at the original 200-container ceiling is retained as a no-op',()=>{
  const t=task(1,1,'up'),m=F.initial(t);work(t,m);for(let i=0;i<201;i++)click(t,m,'b14-container',{value:1});
- assert.equal(m.board.containers,200);for(let i=0;i<199;i++)click(t,m,'b14-container',{value:-1});answers(t,m);original(t,m);rejects(t,m);
+ assert.equal(m.board.containers,200);const ceiling=copy(m);for(let i=0;i<199;i++)click(t,m,'b14-container',{value:-1});answers(t,m);
+ const p=accepts(t,m),failed=p.failedRequests[0];assert.equal(p.failedRequests.length,1);assert.equal(failed.failure,'container-limit');
+ assert.deepEqual([failed.from,failed.to,failed.requestedCount],[200,200,201]);assert.equal(failed.effect,false);assert.equal(failed.accepted,false);
+ assert.equal(failed.issue,'');assert.deepEqual(failed.fields,ceiling.history.at(-1).data.fields);assert.deepEqual(failed.before,ceiling.board);assert.deepEqual(failed.after,ceiling.board);
+ assert.equal(p.containers.events.length,399);assert.equal(p.events.filter(e=>e.action==='b14-container').length,400);
+ assert.equal(p.containers.count,1);assert.deepEqual(m.history.slice(0,ceiling.history.length),ceiling.history);
+ const forged=copy(m);forged.history[failed.index].data.value=0;rejects(t,forged);
 });
 
 test('the same integer quotient and remainder produce distinct keep, up, down and fraction answers',()=>{
@@ -273,22 +336,38 @@ test('browser negative and exploration plans use original visible controls and r
   if(['wrong-step-reset','long-decimal-reset','wrong-step-corrected'].includes(variant)){
    click(t,m,'b14-bring');change(t,m,'q',variant==='long-decimal-reset'?'0.0000000':'0');
    change(t,m,'used',variant==='wrong-step-corrected'?'1':'0');change(t,m,'rest',variant==='wrong-step-reset'?'8':'1');click(t,m,'b14-div-step');assert.ok(m.issue);
+   assert.equal(submit(a).correct,false);counts.submissions++;
    if(variant==='wrong-step-corrected'){
     for(const [k,v]of [['q','0'],['used','0'],['rest','1']])change(t,m,k,v);click(t,m,'b14-div-step');
     run(t,m,browserPlan.operationPlan(F,t).filter(s=>s.position===undefined||s.position>=1));
    }else{click(t,m,'b14-reset');solve(t,m);}
   }else{
-   solve(t,m);if(variant==='down-overfill'){click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/要把这些份都装满还差 2/);click(t,m,'b14-container',{value:-1});}
+   solve(t,m);if(variant==='down-overfill'){
+    click(t,m,'b14-container',{value:1});assert.match(V.render(t,m),/要把这些份都装满还差 2/);
+    assert.equal(submit(a).correct,false);counts.submissions++;click(t,m,'b14-container',{value:-1});
+   }
    else change(t,m,'check',variant==='inverse-digit-join'?'1 5×8+5=125':'15.00000000000000001×8+5=125');
   }
-  assert.equal(submit(a).correct,true);counts.submissions++;rejects(t,m);assert.ok(validateLesson(JSON.parse(JSON.stringify(a)),id));
+  assert.equal(submit(a).correct,true);counts.submissions++;assert.ok(validateLesson(JSON.parse(JSON.stringify(a)),id));
+  if(variant.startsWith('inverse-'))rejects(t,m);
+  else{
+   const p=accepts(t,m);assert.equal(p.events.length,m.history.length);
+   if(variant==='down-overfill')assert.ok(p.containers.events.some(e=>e.to===6&&!e.allSelectedCanBeFull&&!e.historicalCaptionKnown));
+   else{assert.equal(p.failedRequests.length,1);assert.equal(p.failedRequests[0].effect,false);assert.equal(p.failedRequests[0].fields.q,variant==='long-decimal-reset'?'0.0000000':'0');}
+  }
   if(variant.startsWith('inverse-')){change(t,m,'check','15 × 8 + 5 = 125');assert.equal(currentSubmission(a).status,'modified');assert.equal(submit(a).correct,true);counts.submissions++;accepts(t,m);}
   counts.paths++;
  }
- for(const variant of ['up-extra-room','choose-alternate','empty-reset','precision-edit']){
-  const [id,index]=variant==='up-extra-room'?['shortdivide',2]:variant==='choose-alternate'?['divide16',0]:variant==='empty-reset'?['writtenstart',1]:['roundanswers',1];
+ for(const variant of ['up-extra-room','choose-alternate','empty-reset','precision-edit','empty-method','container-ceiling']){
+  const [id,index]=variant==='up-extra-room'?['shortdivide',2]:['choose-alternate','empty-method'].includes(variant)?['divide16',0]:
+   variant==='empty-reset'?['writtenstart',1]:variant==='container-ceiling'?['remainders',1]:['roundanswers',1];
   const t=at(id,index),a=freshLesson(id);a.index=index;const m=modelForLesson(a);
-  if(variant==='empty-reset')click(t,m,'b14-reset');solve(t,m,{method:variant==='choose-alternate'?'short':'long'});
+  if(variant==='empty-reset')click(t,m,'b14-reset');
+  if(variant==='empty-method')click(t,m,'b14-method');
+  if(variant==='container-ceiling'){
+   work(t,m);for(let i=0;i<201;i++)click(t,m,'b14-container',{value:1});
+   for(let i=200;i>6;i--)click(t,m,'b14-container',{value:-1});answers(t,m);
+  }else solve(t,m,{method:variant==='choose-alternate'?'short':'long'});
   const history=copy(m.history);
   if(variant==='up-extra-room'){click(t,m,'b14-container',{value:1});click(t,m,'b14-container',{value:-1});}
   if(variant==='choose-alternate'){click(t,m,'b14-reset');solve(t,m,{method:'long'});}
@@ -296,9 +375,16 @@ test('browser negative and exploration plans use original visible controls and r
    assert.equal(submit(a).correct,true);counts.submissions++;change(t,m,'precision','1');assert.equal(currentSubmission(a).status,'modified');
    assert.equal(submit(a).correct,false);counts.submissions++;change(t,m,'precision','2');assert.equal(currentSubmission(a).status,'modified');
   }
-  assert.equal(submit(a).correct,true);counts.submissions++;accepts(t,m);assert.deepEqual(m.history.slice(0,history.length),history);assert.ok(validateLesson(JSON.parse(JSON.stringify(a)),id));counts.paths++;
+  assert.equal(submit(a).correct,true);counts.submissions++;const p=accepts(t,m);
+  if(variant==='empty-method'){assert.equal(p.failedRequests[0].failure,'empty-method');assert.equal(p.method.choiceIndex,1);}
+  if(variant==='container-ceiling'){
+   assert.equal(p.failedRequests[0].failure,'container-limit');assert.equal(p.containers.events.length,394);
+   assert.equal(p.events.filter(e=>e.action==='b14-container').length,395);
+   assert.match(JSON.stringify(thinkingFeedback(t,m,a.cases[index],{sessionId:id,index})),/不计作一次容器增加/);
+  }
+  assert.deepEqual(m.history.slice(0,history.length),history);assert.ok(validateLesson(JSON.parse(JSON.stringify(a)),id));counts.paths++;
  }
- assert.deepEqual(counts,{paths:10,submissions:14});
+ assert.deepEqual(counts,{paths:12,submissions:20});
 });
 
 test('planned native and associated browser operations are independently reachable in original V.render',()=>{

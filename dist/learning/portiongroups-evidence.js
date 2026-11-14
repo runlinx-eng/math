@@ -130,7 +130,7 @@ export function replayPortionGroupsEvidence(task,model){
   const editable=new Set(['per','answer',...(task.name?['num','den']:[]),...(task.equation?['equation']:[])]);
   if(FIELD_KEYS.some(key=>!editable.has(key)&&model[key]!==DEFAULTS[key]))return null;
   let board=initial(task.total),lastFields={...DEFAULTS};
-  const assignments=[],navigation=[],selections=[],resets=[];
+  const assignments=[],confirmations=[],navigation=[],selections=[],resets=[];
   for(const [historyIndex,event]of model.history.entries()){
    if(!keys(event,['action','data'])||!['group','token','take','reset'].includes(event.action)||
       !keys(event.data,event.action==='reset'?['fields']:['index','fields'])||
@@ -149,8 +149,11 @@ export function replayPortionGroupsEvidence(task,model){
    if(event.action==='group'){
     navigation.push({historyIndex,from:board.group,to:item,changed:board.group!==item});board.group=item;
    }else if(event.action==='token'){
-    const from=board.groups[item];if(from===board.group)return null;
-    assignments.push({historyIndex,token:item,from,to:board.group});board.groups[item]=board.group;
+    const from=board.groups[item];
+    // The token remains a visible enabled button in its current group. A
+    // repeated click is retained as a confirmation, never an extra movement.
+    if(from===board.group)confirmations.push({historyIndex,token:item,group:board.group});
+    else {assignments.push({historyIndex,token:item,from,to:board.group});board.groups[item]=board.group;}
    }else{
     const selected=!board.taken.includes(item);
     board.taken=selected?[...board.taken,item]:board.taken.filter(group=>group!==item);
@@ -180,7 +183,7 @@ export function replayPortionGroupsEvidence(task,model){
   if(task.equation&&!submittedEquation)return null;
   if(!portions.valid(task,model)||!portions.inspect(task,model).correct)return null;
   return {total,partitions:groups.length,each,groups,counts,selectedGroups,selectedTokens,selectedTotal,
-   unselectedTotal:total-selectedTotal,assignments,navigation,selections,resets,eventCount:model.history.length,
+   unselectedTotal:total-selectedTotal,assignments,confirmations,navigation,selections,resets,eventCount:model.history.length,
    fraction:{groups:[selectedGroups.length,groups.length],tokens:[selectedTotal,total],submitted},
    equation:submittedEquation};
  }catch{return null;}

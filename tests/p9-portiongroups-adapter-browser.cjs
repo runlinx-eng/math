@@ -6,7 +6,7 @@ const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const fixture=require('./fixtures/p9-portiongroups-cases.cjs');
 const {cases,associatedCases}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-portiongroups-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],explorations=[],isolated=[],offline=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -142,6 +142,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     if(proof.fraction.submitted)ok(words.includes('提交')&&words.includes(proof.fraction.submitted.numerator+'/'+proof.fraction.submitted.denominator),
      label+' equivalent fraction is attributed to the submitted name, not reinterpreted as actual group counts');
     if(proof.equation)ok(words.includes('提交')&&words.includes(proof.equation.raw),label+' written equation is identified as a submission');
+    if(proof.confirmations.length)ok(words.includes(`${proof.confirmations.length} 次点击`)&&words.includes('没有换组')&&words.includes('不算新的移动'),label+' repeated clicks are retained without inventing a move or quantity');
     ok(!/先(?:把|将)?.{0,12}(?:平均分|均分).{0,15}再/.test(words),label+' feedback does not invent an obligatory order of selection and distribution');
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),label+' no mathematical-practice label is inferred');
     ok(/长期掌握/.test(words)&&/自由解释|自由文字/.test(words),label+' interpretation stays bounded');return words;
@@ -231,22 +232,35 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
      reverse,early,proof,words,first,snapshots,finalProof,finalWords,finalModel,record:end,stored});
    }
 
-   // A no-op token placement is not cured by resetting and rebuilding. Every
-   // event below comes from the real original controls, which remain usable.
+   // The original same-group click and reset/rebuild scenarios remain. Each
+   // no-op is now retained as a confirmation, without inventing a token move.
    for(const [id,index]of [['halfpaper',0],['unitsets',2],['nonunitamount',1],['multiShape38',2]]){
-    const spec=cases.find(c=>c.id===id&&c.index===index),task=taskFor(spec);label=prefix+'-invalid-history-'+id+'-'+index;
-    await open(spec);await build(spec);await action('group',0);await action('token',0);
-    const invalid=await model(spec);ok(M.inspect(task,invalid).correct&&replayPortionGroupsEvidence(task,invalid)===null,label+' a same-group placement is original completion but lacks strict effect');
+    const spec=cases.find(c=>c.id===id&&c.index===index),task=taskFor(spec);label=prefix+'-confirmation-history-'+id+'-'+index;
+    await open(spec);await build(spec);const beforeConfirmation=await model(spec),originalProof=replayPortionGroupsEvidence(task,beforeConfirmation);
+    await action('group',0);const sameGroup=structuredClone((await model(spec)).board);await action('token',0);
+    const confirmed=await model(spec),confirmationProof=replayPortionGroupsEvidence(task,confirmed);
+    assert.deepEqual(confirmed.board,sameGroup);assert.deepEqual(confirmed.history.slice(0,beforeConfirmation.history.length),beforeConfirmation.history);
+    ok(M.inspect(task,confirmed).correct&&confirmationProof?.confirmations.length===1,label+' a visible same-group click remains correct and is recorded as a confirmation');
+    assert.deepEqual(confirmationProof.assignments,originalProof.assignments);
+    ok(await hint.count()===0,label+' the current confirmation still requires its own check');
+    const confirmedCheck=await check(spec,true,'checked-confirmation'),confirmedWords=await wordsFor(confirmationProof),confirmedStored=await snapshot('confirmed');
     const beforeReset=await model(spec);await action('reset');const reset=await model(spec);
     assert.deepEqual(reset.history.slice(0,beforeReset.history.length),beforeReset.history);
     assert.deepEqual(reset.board,{groups:Array(task.total).fill(-1),group:0,taken:[]});
     for(const key of Object.keys(M.fields))assert.equal(reset[key],beforeReset[key]);
     ok(await page.locator('[data-xfield="per"]').count()===0,label+' reset hides answer controls but keeps all old input values');
+    ok(await hint.count()===0,label+' reset invalidates the previously checked confirmation');
+    const resetCheck=await check(spec,false,'reset-needs-rebuilding');ok(await hint.count()===0,label+' an empty reset board is unfinished');
+    const resetStored=await snapshot('reset');
     await build(spec,{reverse:true,early:true,existing:reset});const checked=await check(spec,true,'correct-after-retained-no-op');
-    const current=await model(spec);ok(replayPortionGroupsEvidence(task,current)===null&&await hint.count()===0,label+' reset cannot erase the rejected historical action');
+    const current=await model(spec),proof=replayPortionGroupsEvidence(task,current),words=await wordsFor(proof);
+    assert.deepEqual(proof.confirmations,confirmationProof.confirmations);assert.equal(proof.assignments.length,task.total*2);
+    assert.deepEqual(current.history.slice(0,reset.history.length),reset.history);
+    ok(checked.record.cases[spec.index].attempts.length===3,label+' confirmation, unfinished reset and rebuilt work all retain complete checked snapshots');
     await reload(spec);assert.deepEqual((await saved(spec.id)).models,checked.record.models);assert.deepEqual((await saved(spec.id)).cases,checked.record.cases);
-    ok(await hint.count()===0,label+' offline restoration cannot promote the invalid history');await shot('retained');
-    negatives.push({width,height,kind:'no-op-before-reset',id,index,beforeReset,reset,checked,stored:await snapshot('negative')});
+    await wordsFor(replayPortionGroupsEvidence(task,await model(spec)));await shot('retained');
+    explorations.push({width,height,kind:'no-op-before-reset',id,index,beforeConfirmation,beforeReset,reset,confirmedCheck,resetCheck,checked,
+     confirmationProof,proof,confirmedWords,words,confirmedStored,resetStored,stored:await snapshot('rebuilt')});
    }
 
    // These are submitted-field mistakes, not invalid mathematical actions.
@@ -277,22 +291,25 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    for(const spec of associatedCases){
     label=prefix+'-associated-'+spec.id+'-'+spec.index;await open(spec);
     ok(portionGroupsBinding(taskFor(spec),spec)===null&&await guide.count()===0,label+' associated task has no borrowed native binding or guide');
-    await build(spec,{reverse:width===1280,early:width===1280});const checked=await check(spec,true,'associated-original-check');
+    await build(spec,{reverse:width===1280,early:width===1280});await action('group',0);await action('token',0);
+    const proof=replayPortionGroupsEvidence(taskFor(spec),await model(spec));ok(proof?.confirmations.length===1,label+' a real associated same-group click is a mathematical no-op');
+    const checked=await check(spec,true,'associated-original-check');
     ok(await hint.count()===0,label+' successful associated work does not inherit native strict feedback');
     await reload(spec);assert.deepEqual((await saved(spec.id)).models,checked.record.models);assert.deepEqual((await saved(spec.id)).cases,checked.record.cases);
     ok(await hint.count()===0,label+' offline restore preserves the associated-task boundary');
     if(spec===associatedCases[0])await shot('isolated');
-    isolated.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,checked,stored:await snapshot('associated')});
+    isolated.push({width,height,id:spec.id,index:spec.index,taskHash:spec.taskHash,checked,proof,stored:await snapshot('associated')});
    }
    await context.close();context=null;activePage=null;
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
   ok(observations.length===26&&isolated.length===40,'all 13 native and 20 associated positions ran in both viewports');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
-  console.log('P9_PORTIONGROUPS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
+  ok(explorations.length===8&&negatives.length===6,'all original no-op/reset explorations and precision/quantity counterexamples are retained');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,explorations,isolated,offline,viewports,provenance},null,2));
+  console.log('P9_PORTIONGROUPS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length,explorations:explorations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,explorations,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

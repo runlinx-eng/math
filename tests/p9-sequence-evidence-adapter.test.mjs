@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {TASKS} from '../dist/learning/phase5/b34.js';
 import * as p34 from '../dist/learning/phase5/b34-model.js';
+import * as view from '../dist/learning/phase5/b34-view.js';
+import {visibleModel} from './helpers/p9-basic-visible-controls.mjs';
 import {sessionMeta} from '../dist/learning/bridges.js';
 import {sequenceBinding,replaySequenceEvidence} from '../dist/learning/sequence-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
@@ -89,7 +91,7 @@ test('strict sequence proof also handles negative, scaled, multiply, affine, pos
     ['3','1','-1','-3']);
 });
 
-test('tampering, no-op actions, illegal order and recovered bad actions cannot create process evidence',()=>{
+test('tampering and hidden actions are rejected; a recorded wrong entry can be corrected',()=>{
   const t=TASKS.tables34[0],done=p34.example(t);
   const mutated=(fn)=>{const x=structuredClone(done);fn(x);return x;};
   assert.equal(replaySequenceEvidence(t,mutated(m=>m.history.push({a:'show',i:'',v:'',w:''}))),null,
@@ -112,14 +114,18 @@ test('tampering, no-op actions, illegal order and recovered bad actions cannot c
   assert.equal(p34.valid(t,recovered),true);
   assert.equal(p34.inspect(t,recovered).correct,true);
   assert.equal(recovered.board.bad,true);
-  assert.equal(replaySequenceEvidence(t,recovered),null,'prior invalid operation is not clean sequence evidence');
+  const recoveredProof=replaySequenceEvidence(t,recovered);assert.ok(recoveredProof);
+  assert.equal(recoveredProof.first,'9');assert.equal(recoveredProof.failedSteps,1);
+  assert.equal(recoveredProof.advances,4);assert.deepEqual(recoveredProof.events[0].before,recoveredProof.events[0].after);
+  assert.equal(recoveredProof.events[0].accepted,false);assert.equal(recoveredProof.events[1].accepted,true);
+  const erased=structuredClone(recovered);erased.board.bad=false;assert.equal(replaySequenceEvidence(t,erased),null);
 });
 
-test('meaningful undo and redo replay; undo before first step is an invalid no-op',()=>{
+test('visible undo before completion and empty undo replay; hidden completed-stage undo is rejected',()=>{
   const t=TASKS.general34[3],m=p34.initial(t);
-  for(const value of ['7','12']){m.value=value;p34.act(t,m,'p34-next');}
+  m.value='7';p34.act(t,m,'p34-next');
   p34.act(t,m,'p34-undo');
-  m.value='12';p34.act(t,m,'p34-next');
+  for(const value of ['7','12']){m.value=value;p34.act(t,m,'p34-next');}
   m.answers[0]='two-seven';
   const proof=replaySequenceEvidence(t,m);
   assert.ok(proof);
@@ -130,5 +136,32 @@ test('meaningful undo and redo replay; undo before first step is an invalid no-o
   for(const value of ['7','12']){noOp.value=value;p34.act(t,noOp,'p34-next');}
   noOp.answers[0]='two-seven';
   assert.equal(p34.valid(t,noOp),true);
-  assert.equal(replaySequenceEvidence(t,noOp),null);
+  assert.equal(replaySequenceEvidence(t,noOp)?.noOpUndos,1);
+  assert.equal(replaySequenceEvidence(t,noOp)?.undos,0);
+  const hidden=p34.example(t);p34.act(t,hidden,'p34-undo');hidden.value='12';p34.act(t,hidden,'p34-next');
+  assert.ok(p34.inspect(t,hidden).correct);assert.equal(replaySequenceEvidence(t,hidden),null);
+});
+
+test('every bound sequence retains visible empty/nonnumeric/wrong entries and empty undo before its exact solution',()=>{
+ for(const [id,tasks] of Object.entries(TASKS))for(const [index,t] of tasks.entries()){
+  const context={sessionId:id,index};if(!sequenceBinding(t,context))continue;
+  const d=visibleModel(t,p34,view);d.action('p34-undo');
+  for(const raw of ['', 'not-a-number', String(t.start===999?998:999)]){
+   d.field('value',raw);const result=d.action('p34-next');
+   assert.deepEqual(result.before.board.values,result.after.board.values);assert.equal(result.after.board.bad,true);
+  }
+  const before=structuredClone(d.model);
+  for(const step of p34.solveSteps(t))d.step(step);
+  const proof=replaySequenceEvidence(t,d.model);assert.ok(proof,id+':'+index);
+  assert.equal(proof.first,'');assert.equal(proof.failedSteps,3);assert.equal(proof.noOpUndos,1);
+  assert.equal(proof.advances,t.length-1);assert.equal(d.model.history.length,t.length+3);
+  for(const e of proof.events.filter(e=>e.action==='next'&&e.accepted)){
+   const last=BigInt(e.before.at(-1)),expected=t.op==='add'?last+BigInt(t.step):t.op==='multiply'?last*BigInt(t.step):t.op==='affine'?last*BigInt(t.a)+BigInt(t.b):BigInt(t.a)*BigInt(e.before.length+1)+BigInt(t.b);
+   assert.equal(BigInt(e.after.at(-1)),expected);
+  }
+  assert.equal(thinkingFeedback(t,d.model,record(before),context),null);assert.ok(thinkingFeedback(t,d.model,record(d.model),context));
+  for(const mutate of [m=>m.board.bad=false,m=>m.board.first.next='changed',m=>m.history[0].a='clear',m=>m.issue='invented']){
+   const m=structuredClone(d.model);mutate(m);assert.equal(replaySequenceEvidence(t,m),null);
+  }
+ }
 });

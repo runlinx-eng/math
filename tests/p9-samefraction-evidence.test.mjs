@@ -10,6 +10,7 @@ import * as V from '../dist/learning/phase5/b16-view.js';
 import {sameFractionBinding,replaySameFractionEvidence} from '../dist/learning/samefraction-evidence.js';
 import {latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {freshLesson,modelForLesson,submitLesson,currentSubmission,validateLesson} from '../dist/learning/state.js';
 import fixture from './fixtures/p9-samefraction-cases.cjs';
 
 await ensureB39Ready();
@@ -41,6 +42,24 @@ const build=(task,{reverse=false,earlyOverlay=false,earlyRefine=false,denominato
  if(task.common&&!earlyRefine){model.parts=String(denominator);act(task,model,'refine');}
  return fill(task,model);
 };
+const attributes=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
+function visibleField(task,model,key,value){
+ const html=V.render(task,model),tag=[...html.matchAll(/<(?:input|select)\b[^>]*>/g)].map(m=>m[0]).find(s=>attributes(s)['data-xfield']===key);
+ assert.ok(tag,'original visible field '+key);assert.doesNotMatch(tag,/\bdisabled\b/);
+ if(tag.startsWith('<select'))assert.ok(html.slice(html.indexOf(tag),html.indexOf('</select>',html.indexOf(tag))).includes(`value="${value}"`));
+ model[key]=String(value);M.field(task,model,key);
+}
+function visibleAction(task,model,name,data={}){
+ const tags=[...V.render(task,model).matchAll(/<button\b[^>]*>/g)].map(m=>m[0]);
+ const tag=tags.find(s=>{const a=attributes(s);return a['data-x']==='b16-'+name&&Object.entries(data).every(([key,value])=>a['data-'+key]===String(value));});
+ assert.ok(tag,'original visible action '+name);assert.doesNotMatch(tag,/\bdisabled\b/);
+ const count=model.history.length;act(task,model,name,data);assert.equal(model.history.length,count+1);assert.equal(M.valid(task,model),true);
+}
+function visibleSolve(task,model){
+ for(const step of M.solveSteps(task))if(step.field)visibleField(task,model,step.field,step.value);
+ else visibleAction(task,model,step.action.replace(/^b16-/,''),step.data);
+ return model;
+}
 const sample=(id='smallershare',index=0)=>{const task=taskAt(id,index);return {task,model:build(task)};};
 const accepted=(task,model)=>{
  assert.equal(M.valid(task,model),true);assert.equal(M.inspect(task,model).correct,true);
@@ -191,16 +210,64 @@ test('legal fraction whitespace and decimal integer grid inputs are exact withou
  }
 });
 
-test('invalid refinement histories stay excluded after a valid correction or reset',()=>{
+test('rejected visible refinements retain their exact fields board and issue after correction or reset',()=>{
  for(const bad of ['0','5','11','13','61','12.5','12.00000001','NaN','Infinity','1e1','12.0000000001']){
-  const {task,model}=sample('fractionreason',0);model.parts=bad;act(task,model,'refine');
-  model.parts='12';act(task,model,'refine');fill(task,model);originalOnly(task,model,'failed refinement '+bad);
-  act(task,model,'reset');build(task,{existing:model});originalOnly(task,model,'reset after failed refinement '+bad);
+  const task=taskAt('fractionreason',0),model=visibleSolve(task,M.initial(task)),before=structuredClone(model);
+  visibleField(task,model,'parts',bad);visibleAction(task,model,'refine');const failed=structuredClone(model);
+  assert.equal(model.issue,'新小格要同时把两边原来的一份继续平均分开。');assert.deepEqual(model.board,before.board);
+  visibleField(task,model,'parts','12');visibleAction(task,model,'refine');let p=accepted(task,model),request=p.failedRequests[0];
+  assert.equal(p.failedRequests.length,1);assert.equal(p.events.length,model.history.length);
+  assert.equal(request.failure,'refinement-not-accepted');assert.equal(request.accepted,false);assert.equal(request.effect,false);
+  assert.deepEqual(request.fields,failed.history.at(-1).data.fields);assert.equal(request.fields.parts,bad);
+  assert.deepEqual(request.before,before.board);assert.deepEqual(request.after,before.board);assert.equal(request.issue,failed.issue);
+  assert.deepEqual(model.history.slice(0,failed.history.length),failed.history);assert.equal(p.issue,'');
+  assert.equal(p.refinements.length,2);assert.equal(p.refinements[1].changed,false);
+  visibleAction(task,model,'reset');visibleSolve(task,model);p=accepted(task,model);
+  assert.deepEqual(model.history.slice(0,failed.history.length),failed.history);assert.equal(p.failedRequests.length,1);
+  assert.deepEqual(p.failedRequests[0],request);assert.equal(p.resets.length,1);assert.equal(p.firstPrediction.value,before.board.first);
+  const forged=structuredClone(model);forged.history[request.historyIndex].data.fields.answer='hidden';rejected(task,forged,'failed request still obeys hidden field rules');
+ }
+});
+
+test('all native empty predictions preserve failed complete attempts and the first actual choice through reset',()=>{
+ for(const spec of cases)for(const reset of [false,true]){
+  const task=taskAt(spec.id,spec.index),a=freshLesson(spec.id);a.index=spec.index;const model=modelForLesson(a);
+  visibleAction(task,model,'predict');const empty=structuredClone(model);assert.equal(model.board.first,null);assert.equal(model.board.prediction,null);assert.equal(model.issue,'');
+  assert.equal(submitLesson(a).correct,false);const attempt=structuredClone(a.cases[spec.index].attempts[0]);
+  if(reset)visibleAction(task,model,'reset');visibleSolve(task,model);const p=accepted(task,model),request=p.failedRequests[0];
+  assert.equal(p.failedRequests.length,1);assert.equal(request.failure,'empty-prediction');assert.equal(request.accepted,false);assert.equal(request.effect,false);
+  assert.deepEqual(request.fields,empty.history[0].data.fields);assert.deepEqual(request.before,empty.board);assert.deepEqual(request.after,empty.board);assert.equal(request.issue,'');
+  assert.equal(p.predictions.length,1);assert.equal(p.firstPrediction.historyIndex,reset?2:1);assert.equal(p.firstPrediction.round,reset?1:0);
+  assert.deepEqual(model.history.slice(0,empty.history.length),empty.history);assert.equal(submitLesson(a).correct,true);
+  assert.deepEqual(a.cases[spec.index].attempts[0],attempt);assert.deepEqual(a.cases[spec.index].attempts.map(x=>M.inspect(task,x.value).correct),[false,true]);
+  assert.deepEqual(validateLesson(structuredClone(a),spec.id),a);
+  assert.match(feedbackText(thinkingFeedback(task,model,a.cases[spec.index],spec)),/空选择没有被计为第一次或本轮预测/);
+  const forged=structuredClone(model);forged.board.first=wrong(relation(task));rejected(task,forged,'an empty request cannot supply the first prediction');
+ }
+});
+
+test('a last rejected refinement keeps the old valid grid and exact issue even after visible field correction',()=>{
+ for(const spec of cases.filter(c=>c.common)){
+  const task=taskAt(spec.id,spec.index),a=freshLesson(spec.id);a.index=spec.index;const model=visibleSolve(task,modelForLesson(a));
+  assert.equal(submitLesson(a).correct,true);const old=structuredClone(a.cases[spec.index].attempts[0]),board=structuredClone(model.board);
+  visibleField(task,model,'parts','5');visibleAction(task,model,'refine');const failed=structuredClone(model);
+  assert.equal(submitLesson(a).correct,false);assert.deepEqual(model.board,board);assert.ok(model.issue);
+  visibleField(task,model,'parts','12');assert.equal(currentSubmission(a).status,'modified');
+  assert.equal(thinkingFeedback(task,model,a.cases[spec.index],spec),null);
+  let p=accepted(task,model);assert.equal(p.issue,failed.issue);assert.equal(p.refinements.length,1);
+  assert.equal(p.failedRequests.at(-1).historyIndex,model.history.length-1);assert.equal(p.common.denominator,12);
+  assert.equal(submitLesson(a).correct,true);const words=feedbackText(thinkingFeedback(task,model,a.cases[spec.index],spec));
+  assert.match(words,/最后一次细分请求的提示仍保留/);assert.match(words,/没有把那次失败说成成功/);
+  assert.deepEqual(a.cases[spec.index].attempts[0],old);assert.deepEqual(a.cases[spec.index].attempts.map(x=>M.inspect(task,x.value).correct),[true,false,true]);
+  const cleared=structuredClone(model);cleared.issue='';originalOnly(task,cleared,'a visible field edit cannot erase the original failure issue');
+  visibleAction(task,model,'overlay');p=accepted(task,model);assert.equal(p.issue,'');assert.deepEqual(p.failedRequests[0].fields,failed.history.at(-1).data.fields);
+  assert.equal(thinkingFeedback(task,model,a.cases[spec.index],spec),null);assert.equal(submitLesson(a).correct,true);
+  assert.deepEqual(validateLesson(structuredClone(a),spec.id),a);
  }
 });
 
 test('hidden predict, fraction, overlay and non-common refinement actions cannot borrow later valid work',()=>{
- for(const action of ['fraction','overlay','refine','predict']){
+ for(const action of ['fraction','overlay','refine']){
   const task=taskAt('smallershare',0),model=M.initial(task);
   if(action==='refine')model.parts='4';
   act(task,model,action,action==='fraction'?{row:'left',index:0}:{});
@@ -314,6 +381,14 @@ test('all browser mathematical paths use unique reachable original controls and 
     const index=ui.model.board.left[0];ui.action('fraction',{row:'left',index});ui.action('fraction',{row:'left',index});ui.check(true,true);
    }else{ui.check(true,true);assert.equal(sameFractionBinding(task,spec),null);}
   }
+  for(const spec of cases){
+   const task=taskAt(spec.id,spec.index),empty=driver(task);totals.paths++;
+   empty.action('predict');empty.check(false,false);const failed=structuredClone(empty.model);
+   empty.build({reverse,early:reverse});empty.check(true,true);
+   const proof=replaySameFractionEvidence(task,empty.model);
+   assert.equal(proof.firstPrediction.historyIndex,1);assert.deepEqual(proof.failedRequests[0].fields,failed.history[0].data.fields);
+   assert.deepEqual(empty.model.history.slice(0,failed.history.length),failed.history);
+  }
   const task=taskAt('fractionreason',0),reset=driver(task);totals.paths++;
   reset.build({early:true,guess:'<'});reset.check(true,true);reset.action('reset');reset.build({reverse:true,early:true,d:60,guess:'>'});reset.check(true,true);
   const proof=replaySameFractionEvidence(task,reset.model);assert.equal(proof.firstPrediction.value,'<');assert.equal(proof.currentPrediction.value,'>');
@@ -321,13 +396,23 @@ test('all browser mathematical paths use unique reachable original controls and 
   for(const d of [24,36,48,60,12,12]){grids.field('parts',d);grids.action('refine');grids.names(d);grids.action('overlay');grids.check(true,true);}
   assert.equal(replaySameFractionEvidence(task,grids.model).refinements.at(-1).changed,false);
   const invalid=driver(task);totals.paths++;invalid.field('prediction','<');invalid.action('predict');invalid.field('parts','5');invalid.action('refine');
+  invalid.check(false,false);
   invalid.field('parts','12');invalid.action('refine');for(const row of ['left','right'])for(let index=0;index<task[row][0];index++)invalid.action('fraction',{row,index});
-  invalid.action('overlay');invalid.names(12);invalid.field('relation','>');invalid.field('reason','same-whole');invalid.check(true,false);
-  invalid.action('reset');invalid.build({reverse:true,early:true,d:24});invalid.check(true,false);
+  invalid.action('overlay');invalid.names(12);invalid.field('relation','>');invalid.field('reason','same-whole');invalid.check(true,true);
+  const rejectedHistory=structuredClone(invalid.model.history);assert.equal(replaySameFractionEvidence(task,invalid.model).failedRequests[0].fields.parts,'5');
+  invalid.action('reset');invalid.build({reverse:true,early:true,d:24});invalid.check(true,true);
+  assert.deepEqual(invalid.model.history.slice(0,rejectedHistory.length),rejectedHistory);
+  const rebuilt=structuredClone(invalid.model);invalid.field('parts','5');invalid.action('refine');invalid.check(false,false);
+  const terminalFailure=structuredClone(invalid.model);assert.deepEqual(terminalFailure.board,rebuilt.board);
+  invalid.field('parts','24');invalid.check(true,true);assert.equal(invalid.model.issue,terminalFailure.issue);
+  assert.deepEqual(invalid.model.history,terminalFailure.history);
+  const terminalProof=replaySameFractionEvidence(task,invalid.model);assert.equal(terminalProof.failedRequests.length,2);
+  invalid.action('overlay');invalid.check(true,true);assert.equal(invalid.model.issue,'');
+  assert.deepEqual(replaySameFractionEvidence(task,invalid.model).failedRequests,terminalProof.failedRequests);
   const split=driver(task);totals.paths++;split.build();split.field('left','9/1 2');split.action('overlay');split.check(true,false);
   split.field('left',' 9 / 12 ');split.field('right','8 ÷ 12');split.check(true,true);
  }
- assert.equal(totals.paths,54);assert.equal(totals.verdicts,134);t.diagnostic(JSON.stringify(totals));
+ assert.equal(totals.paths,70);assert.equal(totals.verdicts,174);t.diagnostic(JSON.stringify(totals));
 });
 
 const checked=model=>({support:false,attempts:[{value:structuredClone(model)}]});
@@ -369,15 +454,16 @@ test('feedback retains the first prediction separately from a different current 
  assert.match(words,/保留了 1 次重摆/);assert.match(words,/45\/60 和 40\/60/);
 });
 
-test('newest submissions, edits, ambiguous names and invalid recorded refinements cannot borrow positive feedback',()=>{
+test('newest submissions and exact names stay required while actual refinement corrections retain their history',()=>{
  const spec=cases.find(c=>c.common),task=taskAt(spec.id,spec.index),model=build(task),saved=checked(model);
  model.reason='any-whole';assert.equal(thinkingFeedback(task,model,saved,spec),null);assert.equal(thinkingFeedback(task,model,checked(model),spec),null);
  model.reason='same-whole';model.left='9/1 2';assert.equal(M.inspect(task,model).correct,true);
  assert.equal(thinkingFeedback(task,model,checked(model),spec),null);
  model.left=' 9 / 12 ';model.right='8 ÷ 12';assert.ok(thinkingFeedback(task,model,checked(model),spec));
  const newer={attempts:[{value:structuredClone(model)},{value:M.initial(task)}]};assert.equal(thinkingFeedback(task,model,newer,spec),null);
- model.parts='5';act(task,model,'refine');model.parts='12';act(task,model,'refine');fill(task,model);
- assert.equal(M.inspect(task,model).correct,true);assert.equal(thinkingFeedback(task,model,checked(model),spec),null);
+ model.parts='5';act(task,model,'refine');const failed=structuredClone(model);model.parts='12';act(task,model,'refine');fill(task,model);
+ assert.equal(M.inspect(task,model).correct,true);assert.equal(thinkingFeedback(task,model,saved,spec),null);
+ assert.match(feedbackText(thinkingFeedback(task,model,checked(model),spec)),/未画出新共同网格的请求及原填写和提示/);
  act(task,model,'reset');build(task,{existing:model});assert.equal(M.inspect(task,model).correct,true);
- assert.equal(thinkingFeedback(task,model,checked(model),spec),null);
+ assert.ok(thinkingFeedback(task,model,checked(model),spec));assert.deepEqual(model.history.slice(0,failed.history.length),failed.history);
 });

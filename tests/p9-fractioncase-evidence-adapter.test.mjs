@@ -68,6 +68,39 @@ function finish(t,m,options={}){for(const s of steps(t,options))step(t,m,s);retu
 const example=(t,options)=>{counters.paths++;return finish(t,M.initial(t),options);};
 function until(t,m,action,options={}){const all=steps(t,options),end=all.findIndex(s=>s.action===action);assert.ok(end>=0);for(const s of all.slice(0,end+1))step(t,m,s);return all.slice(end+1);}
 const continueSteps=(t,m,list)=>{for(const s of list)step(t,m,s);return m;};
+// Recreate each claimed compatible issue ordering through the unchanged B18
+// action API, including the inner anchors automatically emitted by that API.
+// This checks a witness, not a claim that the record contains its chronology.
+function checkIssueWitnesses(t,m,p){
+ assert.equal(p.issue.exactCrossStreamTimingKnown,false);
+ assert.equal(p.issue.exactLastWriterKnown,p.issue.possibleLastWriters.length===1);
+ assert.equal(p.issue.compatibleOrders.length,p.issue.possibleLastWriters.length);
+ for(const witness of p.issue.compatibleOrders){
+  assert.equal(witness.exactTimingKnown,false);const replay=M.initial(t);let at=0;
+  const inner=()=>{
+   const e=m.work.history[at];assert.ok(replay.board.started);
+   assert.ok(!['predict-op','reset'].includes(e.a),'paired anchors must be emitted by their outer action');
+   Object.assign(replay.work,e.f);M.act(t,replay,'b18-op-'+e.a,e.d);
+   assert.deepEqual(replay.work.history.at(-1),e);at++;
+  };
+  for(const[index,e]of m.history.entries()){
+   assert.ok(witness.outerPrefixes[index]>=at);
+   while(at<witness.outerPrefixes[index])inner();
+   // Visible inner answer edits have no standalone events. The paired reset
+   // captures those current fields; its snapshot is independently checked by
+   // the core and must be restored before invoking the original outer reset.
+   if(e.a==='reset')Object.assign(replay.work,m.work.history[at].f);
+   Object.assign(replay,e.f);const previous=replay.work.history.length;M.act(t,replay,'b18-'+e.a,e.d);
+   assert.deepEqual(replay.history.at(-1),e);
+   for(const event of replay.work.history.slice(previous))assert.deepEqual(event,m.work.history[at++]);
+  }
+  while(at<m.work.history.length)inner();
+  assert.deepEqual(replay.history,m.history);assert.deepEqual(replay.work.history,m.work.history);
+  assert.deepEqual(replay.board,m.board);assert.deepEqual(replay.work.board,m.work.board);
+  assert.equal(replay.issue,m.issue);assert.equal(replay.work.issue,m.work.issue);
+  assert.equal(witness.lastWriter.issue,m.issue);
+ }
+}
 
 test('independent fingerprints enumerate exactly 38 native positions, 14 sources and 56 associated copies',()=>{
  assert.equal(cases.length,38);assert.equal(new Set(cases.map(c=>c.nodeId)).size,14);assert.equal(associated.length,56);
@@ -185,7 +218,10 @@ test('closed interval endpoints, missed intervals and percent bounds are checked
 test('a source floating comparison limitation does not become an exact strict interval',()=>{
  const t=taskFor(spec('unlikeparts')),m=M.initial(t);field(t,m,'choice',t.op);field(t,m,'low','999999990001/99999999');field(t,m,'high','999999980001/99999998');
  assert.ok(999999990001n*99999998n<999999980001n*99999999n);assert.equal(F.cmp(m.low,m.high),0);
- act(t,m,'b18-start');assert.equal(m.board.started,false);assert.ok(m.issue);finish(t,m);original(t,m);rejects(t,m);
+ act(t,m,'b18-start');assert.equal(m.board.started,false);assert.ok(m.issue);const failed=clone(m);
+ finish(t,m);const p=accepts(t,m);assert.equal(p.failedRequests[0].failure,'interval-not-accepted');
+ assert.deepEqual(p.failedRequests[0].fields,failed.history[0].f);assert.deepEqual(p.firstAttempt,failed.board.first);
+ assert.equal(p.starts.length,1,'the tool-rejected interval never starts a construction');
 });
 
 test('failed outer choices and failed intervals cannot be erased by correction or reset',()=>{
@@ -193,19 +229,109 @@ test('failed outer choices and failed intervals cannot be erased by correction o
   const t=taskFor(c),m=M.initial(t);field(t,m,'choice',t.estimate?t.op:'*');
   if(t.estimate){field(t,m,'low','2');field(t,m,'high','1');}else field(t,m,'guess','part');
   act(t,m,'b18-start');assert.ok(m.issue);const failed=clone(m.history);
-  if(reset)act(t,m,'b18-reset');finish(t,m);original(t,m);assert.deepEqual(m.history.slice(0,failed.length),failed);rejects(t,m);
+  const first=clone(m.board.first),issue=m.issue;
+  if(reset)act(t,m,'b18-reset');finish(t,m);const p=accepts(t,m);
+  assert.deepEqual(m.history.slice(0,failed.length),failed);assert.deepEqual(p.firstAttempt,first);
+  assert.equal(p.failedRequests.length,1);assert.equal(p.failedRequests[0].issue,issue);
+  assert.deepEqual(p.failedRequests[0].fields,failed[0].f);assert.equal(p.failedRequests[0].after.started,false);
+  assert.equal(p.starts.length,1);assert.equal(p.resets.length,reset?1:0);
+  const forged=clone(m);forged.history[0].f.choice='invented-option';rejects(t,forged);
  }
 });
 
-test('failed forms and invalid common units stay excluded after valid completion and reset',()=>{
+test('failed forms and invalid common units stay recorded after valid completion and reset',()=>{
  for(const failure of['forms','common'])for(const reset of[false,true]){
   const t=taskFor(spec('joinfractions')),m=M.initial(t);let remaining=until(t,m,'b18-start');
   if(failure==='forms'){field(t,m,'work.aform','1/5');field(t,m,'work.bform','2/5');act(t,m,'b18-op-forms');}
   else{remaining=continueSteps(t,m,remaining.slice(0,3))&&remaining.slice(3);field(t,m,'work.denom','3');act(t,m,'b18-op-common');}
   assert.ok(m.issue);const old=clone(m.work.history);
   if(reset){act(t,m,'b18-reset');finish(t,m);}else continueSteps(t,m,remaining);
-  original(t,m);assert.deepEqual(m.work.history.slice(0,old.length),old);rejects(t,m);
+  const p=accepts(t,m);assert.deepEqual(m.work.history.slice(0,old.length),old);
+  const failureEvent=p.construction.failedRequests[0];assert.equal(failureEvent.action,failure);
+  assert.equal(failureEvent.accepted,false);assert.equal(failureEvent.effect,false);
+  assert.deepEqual(failureEvent.fields,old.at(-1).f);assert.deepEqual(failureEvent.before,failureEvent.after);
+  assert.equal(p.construction.failedRequests.length,1);assert.equal(p.resets.length,reset?1:0);
+  const forged=clone(m);forged.work.history[old.length-1].f.fraction='hidden';rejects(t,forged);
  }
+});
+
+test('all native empty and wrong first starts survive correction and reset without a fake inner prediction',()=>{
+ for(const c of cases)for(const reset of[false,true]){
+  const t=taskFor(c),m=M.initial(t);act(t,m,'b18-start');const first=clone(m);
+  assert.equal(m.work.history.length,0);assert.equal(m.board.started,false);
+  field(t,m,'choice',t.op);act(t,m,'b18-start');const second=clone(m);
+  assert.equal(m.work.history.length,0);assert.equal(m.board.started,false);assert.deepEqual(m.board.first,first.board.first);
+  if(reset)act(t,m,'b18-reset');finish(t,m);const p=accepts(t,m);
+  assert.equal(p.failedRequests.length,2);assert.equal(p.starts.length,1);assert.equal(p.construction.predictions.length,1);
+  assert.deepEqual(p.firstAttempt,first.board.first);assert.deepEqual(m.history.slice(0,2),second.history);
+  assert.deepEqual(p.failedRequests.map(e=>e.fields),second.history.map(e=>e.f));
+  assert.equal(p.failedRequests[0].failure,'choice-not-accepted');
+  assert.equal(p.failedRequests[1].failure,t.estimate?'interval-not-accepted':'empty-guess');
+  assert.equal(p.failedRequests[0].before.first,null);assert.deepEqual(p.failedRequests[0].after.first,first.board.first);
+  assert.equal(p.failedRequests[1].effect,false);checkIssueWitnesses(t,m,p);
+  const forged=clone(m);forged.board.first=clone(p.currentStart);rejects(t,forged);
+ }
+});
+
+test('failed inner requests keep a completed ready window and either actual final issue writer can be witnessed',()=>{
+ const t=taskFor(spec('fractionquotient',1));
+ for(const normalizeAfter of[false,true]){
+  const m=example(t),before=clone(m),denom=m.work.denom;
+  field(t,m,'work.denom','1');act(t,m,'b18-op-common');const failed=clone(m);
+  assert.ok(m.issue);assert.deepEqual(m.work.board,before.work.board);
+  field(t,m,'work.denom',denom);
+  if(normalizeAfter)act(t,m,'b18-normalize');
+  const p=accepts(t,m);checkIssueWitnesses(t,m,p);
+  assert.equal(p.construction.failedRequests.length,1);assert.deepEqual(p.construction.failedRequests[0].fields,failed.work.history.at(-1).f);
+  assert.equal(p.issue.possibleLastWriters[0].stream,normalizeAfter?'outer':'inner');
+  assert.equal(m.issue,normalizeAfter?'':failed.issue);assert.equal(m.work.issue,failed.work.issue);
+  assert.ok(p.outerEvents.at(-1).compatibleReadyPrefixes.some(([lo,hi])=>lo<=m.work.history.length&&hi>=m.work.history.length));
+  const forged=clone(m);forged.work.issue='';rejects(t,forged,'an outer clear must not erase the inner failure issue');
+  forged.work.issue=failed.work.issue;forged.issue='invented failure';rejects(t,forged);
+ }
+});
+
+test('terminal normalization failures preserve earlier normalization and the full current submission',()=>{
+ const c=spec('fractionquotient',1),t=taskFor(c);
+ for(const key of['inverse','scaledA','scaledB']){
+  const m=example(t),prior=clone(m),right=m[key];field(t,m,key,'999');act(t,m,'b18-normalize');const failed=clone(m);
+  field(t,m,key,right);const p=accepts(t,m);checkIssueWitnesses(t,m,p);
+  assert.equal(p.normalizations.length,1);assert.equal(p.failedRequests.length,1);
+  assert.deepEqual(p.normalized.submitted,prior.board.normalized);assert.deepEqual(p.failedRequests[0].before,p.failedRequests[0].after);
+  assert.equal(p.issue.current,failed.issue);assert.deepEqual(p.issue.possibleLastWriters.map(e=>e.stream),['outer']);
+  assert.equal(p.issue.exactLastWriterKnown,true);assert.deepEqual(m.history,failed.history);
+  const record=saved(m);assert.ok(feedback(c,m,record));field(t,m,key,'998');assert.equal(feedback(c,m,record),null);
+  field(t,m,key,right);act(t,m,'b18-normalize');const cleared=accepts(t,m);checkIssueWitnesses(t,m,cleared);
+  const stale=clone(m);stale.issue=failed.issue;rejects(t,stale,'an earlier failure cannot supply the issue of a later successful request');
+ }
+});
+
+test('identical clear messages do not imply a unique outer or inner last writer',()=>{
+ const t=taskFor(spec('fractionquotient',1)),m=example(t);act(t,m,'b18-op-rest');
+ const p=accepts(t,m);checkIssueWitnesses(t,m,p);
+ assert.deepEqual(p.issue.possibleLastWriters.map(e=>e.stream),['outer','inner']);
+ assert.equal(p.issue.exactLastWriterKnown,false);assert.equal(p.exactCrossStreamTimingKnown,false);
+ assert.notDeepEqual(p.issue.compatibleOrders[0].outerPrefixes,p.issue.compatibleOrders[1].outerPrefixes);
+ assert.equal(p.normalizations.length,1);assert.equal(p.construction.events.at(-1).effect,false);
+});
+
+test('all interleavings of success and failure in both streams give exactly the observed last-writer candidates',()=>{
+ const t=taskFor(spec('fractionquotient',1)),permutations=xs=>xs.length?xs.flatMap((x,i)=>permutations(xs.filter((_,j)=>j!==i)).map(tail=>[x,...tail])):[[]];
+ const grouped=new Map();let paths=0;
+ for(const order of permutations(['outer-clear','outer-failure','inner-clear','inner-failure'])){
+  const m=example(t);
+  for(const kind of order){
+   if(kind==='outer-clear')act(t,m,'b18-normalize');
+   if(kind==='outer-failure'){const prior=m.scaledA;field(t,m,'scaledA','999');act(t,m,'b18-normalize');field(t,m,'scaledA',prior);}
+   if(kind==='inner-clear')act(t,m,'b18-op-rest');
+   if(kind==='inner-failure'){const prior=m.work.denom;field(t,m,'work.denom','1');act(t,m,'b18-op-common');field(t,m,'work.denom',prior);}
+  }
+  const p=accepts(t,m);checkIssueWitnesses(t,m,p);assert.equal(p.failedRequests.length,1);assert.equal(p.construction.failedRequests.length,1);
+  const key=JSON.stringify(m),row=grouped.get(key)||{proof:p,writers:new Set()};row.writers.add(order.at(-1).split('-')[0]);grouped.set(key,row);paths++;
+ }
+ assert.equal(paths,24);assert.ok(grouped.size>4);
+ for(const {proof,writers}of grouped.values())assert.deepEqual(proof.issue.possibleLastWriters.map(w=>w.stream).sort(),[...writers].sort());
+ assert.ok([...grouped.values()].some(row=>row.writers.size===2),'indistinguishable clear messages retain two possible actors');
 });
 
 test('outer and inner histories must agree on each automatic prediction even when both original validators pass',()=>{
@@ -300,8 +426,15 @@ test('a wrong reciprocal or one-sided scaling followed by correction retains the
  const t=taskFor(spec('fractionquotient',1));
  for(const[fieldName,bad]of[['inverse','1/2'],['scaledA','3/4'],['scaledB','1/2']]){
   const m=example(t),correct=m[fieldName];field(t,m,fieldName,bad);act(t,m,'b18-normalize');assert.ok(m.issue);
-  field(t,m,fieldName,correct);act(t,m,'b18-normalize');original(t,m);rejects(t,m);
-  act(t,m,'b18-reset');finish(t,m);original(t,m);rejects(t,m);
+  const failed=clone(m),oldNormalized=clone(m.board.normalized);
+  field(t,m,fieldName,correct);act(t,m,'b18-normalize');let p=accepts(t,m);
+  assert.equal(p.failedRequests.length,1);assert.equal(p.failedRequests[0].failure,'normalization-not-accepted');
+  assert.equal(p.failedRequests[0].effect,false);assert.deepEqual(p.failedRequests[0].before,p.failedRequests[0].after);
+  assert.deepEqual(p.failedRequests[0].after.normalized,oldNormalized);
+  assert.deepEqual(p.failedRequests[0].fields,failed.history.at(-1).f);assert.equal(p.normalizations.length,2);
+  act(t,m,'b18-reset');finish(t,m);p=accepts(t,m);
+  assert.deepEqual(m.history.slice(0,failed.history.length),failed.history);assert.equal(p.failedRequests.length,1);
+  assert.deepEqual(p.firstAttempt,failed.board.first);assert.equal(p.normalizations.length,3);
  }
 });
 
@@ -328,7 +461,9 @@ test('the smallest accepted percent intervals remain exact and raw overprecision
  for(const s of list){if(s.field==='low')s.value='1/100000000%';if(s.field==='high')s.value='2/100000000%';if(s.field==='inside')s.value='no';step(t,m,s);}
  const p=accepts(t,m);assert.deepEqual(p.estimate.lower,[1,10000000000]);assert.deepEqual(p.estimate.upper,[1,5000000000]);assert.equal(p.estimate.inside,false);
  const bad=M.initial(t);field(t,bad,'choice',t.op);field(t,bad,'low','0.750000000');field(t,bad,'high','5');act(t,bad,'b18-start');
- assert.ok(bad.issue);act(t,bad,'b18-reset');finish(t,bad);original(t,bad);rejects(t,bad);
+ assert.ok(bad.issue);const failed=clone(bad);act(t,bad,'b18-reset');finish(t,bad);
+ const corrected=accepts(t,bad);assert.equal(corrected.failedRequests[0].failure,'interval-not-accepted');
+ assert.deepEqual(corrected.failedRequests[0].fields,failed.history[0].f);assert.equal(corrected.starts.length,1);
 });
 
 test('unknown, redundant, cross-type and structurally tampered histories fail without mutating their inputs',()=>{
@@ -367,6 +502,46 @@ test('the exact browser planners use enabled original controls for both complete
    const p=accepts(t,m);counters.verdicts++;assert.deepEqual(p.estimate.bounds,bounds);
   }
  }
+});
+
+test('the actual browser correction block uses original visible controls and retains all three checked models',async()=>{
+ const source=fs.readFileSync(new URL('./p9-fractioncase-adapter-browser.cjs',import.meta.url),'utf8');
+ const start=source.indexOf(' function solveSteps('),end=source.indexOf(' for(const spec of [...cases,...associated])');
+ const browserSteps=new Function('M','F',source.slice(start,end)+'\nreturn solveSteps;')(M,F);
+ const first=source.indexOf("   for(const kind of['wrong-choice'"),last=source.indexOf("   for(const[id,index]of[['joinfractions'",first);
+ assert.ok(first>=0&&last>first);const code=source.slice(first,last);
+ let paths=0,submissions=0;
+ for(const width of[1440,1280]){
+  let record,current;const negatives=[],getModel=()=>record.models[current.index];
+  const getFeedback=()=>thinkingFeedback(taskFor(current),getModel(),record.cases[current.index],context(current));
+  const open=async c=>{current=c;record=freshLesson(c.id);record.index=c.index;record.view='task';record.models[c.index]=M.initial(taskFor(c));paths++;};
+  const perform=async(c,list)=>{for(const item of list)step(taskFor(c),getModel(),item);return clone(getModel());};
+  const edit=async(c,key,value)=>{field(taskFor(c),getModel(),key,value);return clone(getModel());};
+  const action=async(c,key,data={})=>{act(taskFor(c),getModel(),key,data);return clone(getModel());};
+  const finish=async(c,options={})=>{await perform(c,browserSteps(taskFor(c),options));original(taskFor(c),getModel());return clone(getModel());};
+  const check=async(c,correct,name)=>{
+   const before=clone(getModel()),old=clone(record.cases[c.index]?.attempts||[]);assert.equal(submitLesson(record).correct,correct);submissions++;
+   assert.deepEqual(getModel(),before);assert.deepEqual(record.cases[c.index].attempts.slice(0,-1),old);
+   assert.deepEqual(record.cases[c.index].attempts.at(-1).value,before);
+   return{name,model:before,attempt:clone(record.cases[c.index].attempts.at(-1)),record:clone(record)};
+  };
+  const dependencies={assert,structuredClone,solveSteps:browserSteps,specFor:spec,taskFor,width,height:width===1440?900:720,
+   prefix:String(width),open,edit,act:action,finish,perform,check,negatives,
+   ok:(value,label)=>assert.ok(value,label),hint:{count:async()=>getFeedback()?1:0,isVisible:async()=>!!getFeedback()},
+   wordsFor:async proof=>{assert.ok(proof);checkIssueWitnesses(taskFor(current),getModel(),proof);return words(getFeedback());},
+   model:async()=>clone(getModel()),snapshot:async()=>clone(record),reload:async()=>{record=JSON.parse(JSON.stringify(record));},shot:async()=>{},
+   replayFractionCaseEvidence};
+  const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+  await new AsyncFunction(...Object.keys(dependencies),'let label;\n'+code)(...Object.values(dependencies));
+  assert.equal(negatives.length,13);
+  for(const row of negatives.filter(row=>row.failed)){
+   assert.equal(row.resetCorrected.record.cases[row.index].attempts.length,3);
+   assert.deepEqual(row.corrected.model.history.slice(0,row.failed.history.length),row.failed.history);
+   assert.deepEqual(row.corrected.model.work.history.slice(0,row.failed.work.history.length),row.failed.work.history);
+  }
+ }
+ assert.equal(paths,26);assert.equal(submissions,74);
+ console.log('P9_FRACTIONCASE_BROWSER_CORRECTION_PLAN '+JSON.stringify({paths,submissions,browserExecuted:false}));
 });
 
 const saved=value=>({support:false,attempts:[{value:clone(value)}]});
@@ -444,11 +619,14 @@ test('extra names, inverse relationships and stories stay attributed to the curr
  const mp=spec('argument38',1),card=feedback(mp,M.example(taskFor(mp)));assert.equal(card.method,null);
 });
 
-test('originally correct repaired work receives no feedback when an earlier recorded normalization was invalid',()=>{
+test('repaired work keeps its invalid normalization in both proof and current-submission feedback',()=>{
  const c=spec('fractionquotient',1),t=taskFor(c),m=example(t);
  field(t,m,'scaledB','2');act(t,m,'b18-normalize');field(t,m,'scaledB','1');act(t,m,'b18-normalize');
- original(t,m);assert.equal(feedback(c,m),null);
- act(t,m,'b18-reset');finish(t,m);original(t,m);assert.equal(feedback(c,m),null);
+ const before=clone(m),p=accepts(t,m);assert.equal(p.failedRequests.length,1);
+ assert.match(words(feedback(c,m)),/保留了 1 次未被工具接受的开始或换算请求/);
+ const record=saved(m);field(t,m,'scaledB','2');assert.equal(feedback(c,m,record),null);field(t,m,'scaledB','1');
+ act(t,m,'b18-reset');finish(t,m);accepts(t,m);assert.match(words(feedback(c,m)),/保留了 1 次未被工具接受的开始或换算请求/);
+ assert.deepEqual(m.history.slice(0,before.history.length),before.history);
 });
 
 test('recorded control-probe totals distinguish actual model operations from browser validation',()=>{

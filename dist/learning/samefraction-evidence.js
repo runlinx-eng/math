@@ -67,25 +67,31 @@ export function replaySameFractionEvidence(task,model){
  try{
   if(!keys(task,['type','left','right','prompt','common'])||task.type!=='x-samefraction'||
      !pair(task.left)||!pair(task.right)||!text(task.prompt)||typeof task.common!=='boolean')return null;
-  if(!keys(model,[...FIELD_KEYS,'board','history','issue'])||model.issue!==''||
+  if(!keys(model,[...FIELD_KEYS,'board','history','issue'])||!text(model.issue)||
      !keys(model.board,['left','right','first','prediction','overlay','refine'])||
      !Array.isArray(model.history)||!model.history.length||model.history.length>2000)return null;
-  const target=compare(task.left,task.right),predictions=[],changes=[],overlays=[],refinements=[],resets=[];
-  let board=initial(),lastFields={...DEFAULTS},round=0;
+  const target=compare(task.left,task.right),predictions=[],changes=[],overlays=[],refinements=[],resets=[],events=[];
+  let board=initial(),lastFields={...DEFAULTS},round=0,issue='';
   for(const [historyIndex,event]of model.history.entries()){
    if(!keys(event,['action','data'])||!['predict','fraction','overlay','refine','reset'].includes(event.action)||
       !keys(event.data,event.action==='fraction'?['row','index','fields']:['fields'])||
       !validFields(event.data.fields,lastFields,visible(task,board)))return null;
    const fields=event.data.fields;lastFields=fields;
+   const before=structuredClone(board),eventRound=round;issue='';
+   const record=(accepted=true,failure=null)=>events.push({historyIndex,round:eventRound,action:event.action,
+    accepted,effect:!same(before,board),...(failure?{failure}:{}),fields:{...fields},before,
+    after:structuredClone(board),issue});
    if(event.action==='reset'){
     resets.push({historyIndex,round,left:[...board.left],right:[...board.right],prediction:board.prediction,
      first:board.first,overlay:board.overlay,refine:board.refine});
-    board=initial(board.first);round++;continue;
+    board=initial(board.first);round++;record();continue;
    }
    if(event.action==='predict'){
-    if(board.prediction!==null||!choice(fields.prediction))return null;
+    if(board.prediction!==null)return null;
+    if(fields.prediction===''){record(false,'empty-prediction');continue;}
+    if(!choice(fields.prediction))return null;
     board.first??=fields.prediction;board.prediction=fields.prediction;
-    predictions.push({historyIndex,round,value:fields.prediction,correct:fields.prediction===target.relation});continue;
+    predictions.push({historyIndex,round,value:fields.prediction,correct:fields.prediction===target.relation});record();continue;
    }
    if(board.prediction===null)return null;
    if(event.action==='fraction'){
@@ -99,7 +105,11 @@ export function replaySameFractionEvidence(task,model){
      left:[board.left.length,task.left[1]],right:[board.right.length,task.right[1]]});board.overlay=true;
    }else{
     if(!task.common)return null;
-    const p=commonParts(fields.parts);if(p===null||p%task.left[1]||p%task.right[1])return null;
+    const original=fractions.number(fields.parts);
+    if(!integer(original,1,60)||original%task.left[1]||original%task.right[1]){
+     issue='新小格要同时把两边原来的一份继续平均分开。';record(false,'refinement-not-accepted');continue;
+    }
+    const p=commonParts(fields.parts);if(p===null||p!==original||p%task.left[1]||p%task.right[1])return null;
     refinements.push({historyIndex,round,from:board.refine,to:p,changed:board.refine!==p,
      leftScale:p/task.left[1],rightScale:p/task.right[1],
      left:[board.left.length*p/task.left[1],p],right:[board.right.length*p/task.right[1],p]});
@@ -107,9 +117,10 @@ export function replaySameFractionEvidence(task,model){
    }
    if(['left','right'].some(side=>new Set(board[side]).size!==board[side].length||
       board[side].some(id=>!integer(id,0,task[side][1]-1))))return null;
+   record();
   }
   const currentFields=Object.fromEntries(FIELD_KEYS.map(key=>[key,model[key]]));
-  if(!same(board,model.board)||!validFields(currentFields,lastFields,visible(task,board))||
+  if(!same(board,model.board)||model.issue!==issue||!validFields(currentFields,lastFields,visible(task,board))||
      board.prediction===null||!board.overlay||board.left.length!==task.left[0]||board.right.length!==task.right[0]||
      model.relation!==target.relation||model.reason!=='same-whole')return null;
   let common=null;
@@ -126,7 +137,7 @@ export function replaySameFractionEvidence(task,model){
    selectedCount:board[side].length,denominator:task[side][1],unit:[1,task[side][1]],fraction:[board[side].length,task[side][1]]}]));
   return {...rows,relation:target.relation,crossProducts:target.crossProducts,
    firstPrediction:{...predictions[0]},currentPrediction:{...predictions.at(-1)},
-   predictions,changes,overlays,refinements,resets,eventCount:model.history.length,common,
+   predictions,changes,overlays,refinements,resets,events,failedRequests:events.filter(e=>!e.accepted),issue,eventCount:model.history.length,common,
    sameWhole:{toolProvided:true,submitted:model.reason,submissionOnly:true},
    submittedRelation:{value:model.relation,submissionOnly:true},
    systemOverlay:{left:[board.left.length,task.left[1]],right:[board.right.length,task.right[1]],systemComputed:true}};

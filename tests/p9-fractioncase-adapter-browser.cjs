@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const fixture=require('./fixtures/p9-fractioncase-cases.cjs'),{cases,associated}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-fractioncase-adapter');
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
@@ -47,7 +48,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  }
  for(const spec of [...cases,...associated])assert.equal(hash(taskFor(spec)),spec.taskHash);
  for(const[file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,diagnostics,failureDiagnostic=null,label='setup';
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -65,6 +66,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{const {readStored}=await import('./storage.js');return{raw:localStorage.getItem('math-explorer-v2'),text:readStored('math-explorer-v2')};});
@@ -207,28 +209,67 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     observations.push({width,height,id:spec.id,index:spec.index,nodeId:spec.nodeId,taskHash:spec.taskHash,task,first,proof,words,snapshots,beforeReset,reset,finalModel,finalProof,finalWords,record:end,stored:await snapshot('final')});
    }
 
-   for(const kind of['wrong-choice','wrong-forms','raw-decimal-precision','zero-groups-fit','wrong-normalization']){
-    const spec=kind==='wrong-normalization'?specFor('fractionquotient',1):kind==='zero-groups-fit'?specFor('fractionquotient'):specFor('joinfractions');
-    const task=taskFor(spec);label=prefix+'-'+kind;await open(spec);let failed;
-    if(kind==='wrong-choice'){
-     await edit(spec,'choice','*');await edit(spec,'guess','negative');failed=await act(spec,'b18-start');await finish(spec);
-    }else if(kind==='wrong-forms'||kind==='raw-decimal-precision'){
-     const list=solveSteps(task),start=list.findIndex(s=>s.action==='b18-start');await perform(spec,list.slice(0,start+1));
-     await edit(spec,'work.aform',kind==='wrong-forms'?'1/5':'0.400000000');await edit(spec,'work.bform','2/5');failed=await act(spec,'b18-op-forms');
-     await perform(spec,list.slice(start+1));
+   for(const kind of['wrong-choice','empty-start','wrong-interval','raw-interval-precision','wrong-forms','raw-decimal-precision',
+    'wrong-common','zero-groups-fit','wrong-normalization','terminal-normalization','terminal-inner-failure','normalization-clears-outer-issue']){
+    const normalized=['wrong-normalization','terminal-normalization','terminal-inner-failure','normalization-clears-outer-issue'].includes(kind);
+    const spec=normalized?specFor('fractionquotient',1):kind==='zero-groups-fit'?specFor('fractionquotient'):
+     ['wrong-interval','raw-interval-precision'].includes(kind)?specFor('unlikeparts'):specFor('joinfractions');
+    const task=taskFor(spec);label=prefix+'-'+kind;await open(spec);let failed,repair;
+    if(kind==='wrong-choice'||kind==='empty-start'){
+     if(kind==='wrong-choice'){await edit(spec,'choice','*');await edit(spec,'guess','negative');}
+     failed=await act(spec,'b18-start');repair=()=>finish(spec);
+    }else if(kind==='wrong-interval'||kind==='raw-interval-precision'){
+     await edit(spec,'choice',task.op);await edit(spec,'low',kind==='wrong-interval'?'2':'0.750000000');await edit(spec,'high',kind==='wrong-interval'?'1':'5');
+     failed=await act(spec,'b18-start');repair=()=>finish(spec);
+    }else if(kind==='wrong-forms'||kind==='raw-decimal-precision'||kind==='wrong-common'){
+     const list=solveSteps(task),end=list.findIndex(s=>s.action===(kind==='wrong-common'?'b18-op-forms':'b18-start'));
+     await perform(spec,list.slice(0,end+1));
+     if(kind==='wrong-common'){await edit(spec,'work.denom','1');failed=await act(spec,'b18-op-common');}
+     else{await edit(spec,'work.aform',kind==='wrong-forms'?'1/5':'0.400000000');await edit(spec,'work.bform','2/5');failed=await act(spec,'b18-op-forms');}
+     repair=()=>perform(spec,list.slice(end+1));
     }else if(kind==='zero-groups-fit'){
      const list=solveSteps(task),rest=list.findIndex(s=>s.action==='b18-op-rest');await perform(spec,list.slice(0,rest));
-     failed=await act(spec,'b18-op-fit');await perform(spec,list.slice(rest));
+     failed=await act(spec,'b18-op-fit');repair=()=>perform(spec,list.slice(rest));
+    }else if(kind==='terminal-inner-failure'||kind==='normalization-clears-outer-issue'){
+     await finish(spec);const denominator=(await model(spec)).work.denom;
+     await edit(spec,'work.denom','1');failed=await act(spec,'b18-op-common');
+     repair=async()=>{await edit(spec,'work.denom',denominator);if(kind==='normalization-clears-outer-issue')await act(spec,'b18-normalize');};
     }else{
-     await finish(spec);await edit(spec,'scaledA','3/4');failed=await act(spec,'b18-normalize');await edit(spec,'scaledA','3/2');await act(spec,'b18-normalize');
+     await finish(spec);await edit(spec,'scaledA','3/4');failed=await act(spec,'b18-normalize');
+     repair=async()=>{await edit(spec,'scaledA','3/2');if(kind!=='terminal-normalization')await act(spec,'b18-normalize');};
     }
-    ok(!!failed.issue,label+' actual visible action reports the invalid step');const corrected=await check(spec,true,'original-correct-after-recorded-failure');
-    ok(replayFractionCaseEvidence(task,corrected.model)===null&&await hint.count()===0,label+' later correctness cannot erase failed history');
+    ok(!!failed.issue,label+' actual visible action reports the invalid step');
+    const failedChecked=await check(spec,false,'actual-recorded-failure');ok(await hint.count()===0,label+' the unfinished current submission has no strict feedback');
+    await repair();const corrected=await check(spec,true,'original-correct-after-recorded-failure'),proof=replayFractionCaseEvidence(task,corrected.model);
+    const words=await wordsFor(proof);ok(/保留了.*未被工具接受/.test(words),label+' feedback retains failed requests without counting them as successful construction');
     assert.deepEqual(corrected.model.history.slice(0,failed.history.length),failed.history);assert.deepEqual(corrected.model.work.history.slice(0,failed.work.history.length),failed.work.history);
-    await act(spec,'b18-reset');await finish(spec);const resetCorrected=await check(spec,true,'original-correct-after-reset');
-    ok(replayFractionCaseEvidence(task,resetCorrected.model)===null&&await hint.count()===0,label+' paired reset cannot wash away invalid events');
-    await reload(spec);ok(await hint.count()===0,label+' the strict exclusion persists offline');await shot('excluded');
-    negatives.push({width,height,kind,id:spec.id,index:spec.index,failed,corrected,resetCorrected,stored:await snapshot('excluded')});
+    assert.deepEqual(proof.firstAttempt,failed.board.first);assert.equal(proof.failedRequests.length+proof.construction.failedRequests.length,1);
+    assert.equal(proof.issue.exactLastWriterKnown,proof.issue.possibleLastWriters.length===1);
+    if(kind==='terminal-normalization')assert.deepEqual(proof.issue.possibleLastWriters.map(e=>e.stream),['outer']);
+    if(kind==='terminal-inner-failure')assert.deepEqual(proof.issue.possibleLastWriters.map(e=>e.stream),['inner']);
+    if(kind==='normalization-clears-outer-issue'){
+     assert.equal(corrected.model.issue,'');assert.equal(corrected.model.work.issue,failed.work.issue);
+     assert.deepEqual(proof.issue.possibleLastWriters.map(e=>e.stream),['outer']);
+    }
+    await reload(spec);ok(await hint.isVisible(),label+' corrected current proof and preserved failures restore offline');
+    assert.deepEqual(await model(spec),corrected.model);await shot('corrected');
+    await act(spec,'b18-reset');await finish(spec);const resetCorrected=await check(spec,true,'original-correct-after-reset'),resetProof=replayFractionCaseEvidence(task,resetCorrected.model);
+    await wordsFor(resetProof);assert.equal(resetProof.failedRequests.length+resetProof.construction.failedRequests.length,1);
+    assert.deepEqual(resetCorrected.model.history.slice(0,failed.history.length),failed.history);assert.deepEqual(resetCorrected.model.work.history.slice(0,failed.work.history.length),failed.work.history);
+    assert.deepEqual(resetProof.firstAttempt,failed.board.first);assert.deepEqual(resetCorrected.record.cases[spec.index].attempts.map(a=>a.value),[failedChecked.model,corrected.model,resetCorrected.model]);
+    await reload(spec);ok(await hint.isVisible(),label+' paired reset preserves failed attempts and the new valid proof offline');await shot('rebuilt');
+    const forged=structuredClone(resetCorrected.model);forged.issue='invented failure';ok(replayFractionCaseEvidence(task,forged)===null,label+' inconsistent copied issue is rejected without changing stored work');
+    assert.deepEqual(await model(spec),resetCorrected.model);
+    negatives.push({width,height,kind,id:spec.id,index:spec.index,failed,failedChecked,corrected,proof,words,resetCorrected,resetProof,stored:await snapshot('corrected')});
+   }
+
+   {
+    const spec=specFor('fractionquotient',1),task=taskFor(spec);label=prefix+'-ambiguous-clear-writer';await open(spec);await finish(spec);
+    await act(spec,'b18-op-rest');const checked=await check(spec,true,'same-clear-messages'),proof=replayFractionCaseEvidence(task,checked.model);await wordsFor(proof);
+    assert.deepEqual(proof.issue.possibleLastWriters.map(e=>e.stream),['outer','inner']);assert.equal(proof.issue.exactLastWriterKnown,false);
+    assert.equal(proof.exactCrossStreamTimingKnown,false);assert.equal(proof.issue.compatibleOrders.length,2);
+    await reload(spec);ok(await hint.isVisible(),label+' ambiguous ordering remains explicit after real offline restoration');await shot('compatible-orders');
+    negatives.push({width,height,kind:'ambiguous-clear-writer',id:spec.id,index:spec.index,checked,proof,stored:await snapshot('compatible-orders')});
    }
 
    for(const[id,index]of[['joinfractions',0],['joinfractions',1],['fractionarea',0],['fractionquotient',0]]){
@@ -263,8 +304,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
   console.log('P9_FRACTIONCASE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));console.error(error.stack);process.exitCode=1;
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,failureDiagnostic,error:String(error),stack:error.stack,at:label},null,2));console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});if(context)await context.close();if(browser)await browser.close();
  }

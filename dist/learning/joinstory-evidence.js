@@ -101,17 +101,24 @@ function matchesEquation(q,a,b,op){
 
 function display(t,a,b,op,swapped=false){
  if(t.compare){
-  if(op!=='-'||a<b)return null;
+  if(op!=='-'||a<b){
+   const paired=Math.min(a,b);
+   return{kind:'comparison-boundary',left:a,right:b,paired,leftUnpaired:a-paired,rightUnpaired:b-paired,
+    shownDifference:Math.abs(a-b),recordedOperation:op,recordedResult:Number(calculate(a,b,op)),mathematicalEvidence:false};
+  }
   return{kind:'comparison',left:a,right:b,paired:b,leftUnpaired:a-b,rightUnpaired:0,difference:a-b};
  }
  // The current hand renderer has five fingers per part and does not draw
- // crossed-out fingers. Keep misleading past displays out of strict evidence.
- if(t.rep==='fingers'&&(a>5||b>5||op==='-'&&b!==0))return null;
+ // crossed-out fingers. Retain the request and its rendering limitation;
+ // never count this earlier preview as a successful mathematical display.
+ if(t.rep==='fingers'&&(a>5||b>5||op==='-'&&b!==0))return{
+  kind:'representation-limit',representation:'fingers',requestedParts:[a,b],recordedOperation:op,
+  shownFingers:op==='+'?[Math.min(a,5),Math.min(b,5)]:[Math.min(a,5)],
+  recordedResult:Number(calculate(a,b,op)),mathematicalEvidence:false};
  if(op==='+')return{kind:'join',parts:[a,b],total:a+b,zeroChange:b===0};
  if(a<b){
-  // Only an explicitly recorded exchange may be evidence of the task's
-  // insufficient-objects boundary; a direct impossible take is not a take.
-  if(!swapped)return null;
+  // A direct attempt is observable too. The tool explicitly says there are
+  // too few objects; the negative arithmetic snapshot is not a physical rest.
   return{kind:'insufficient',available:a,requested:b,shownRemoved:a,remaining:0,missing:b-a,physicalResult:null};
  }
  return{kind:'take',whole:a,taken:b,remaining:a-b,zeroChange:b===0};
@@ -136,10 +143,12 @@ export function replayJoinStoryEvidence(task,model){
        !integer(e.result,-40,80)||BigInt(e.result)!==calculate(e.a,e.b,e.op)||guess(e.guess)===null)return null;
     const shown=display(task,e.a,e.b,e.op);if(!shown)return null;
     first??=e.guess;lastGuess=e.guess;
-    const snapshot={a:e.a,b:e.b,op:e.op,result:e.result},displayExpected=role==='result'?e.result:e[role];
+    const snapshot={a:e.a,b:e.b,op:e.op,result:e.result};
+    const usableDisplay=shown.mathematicalEvidence!==false&&shown.kind!=='insufficient';
+    const displayExpected=usableDisplay?(role==='result'?e.result:e[role]):null;
     demonstrations.push({historyIndex:i,...snapshot,display:shown,
      guess:{raw:e.guess,value:Number(guess(e.guess)),role,scope:'task-question',expected,correct:guess(e.guess)===BigInt(expected),
-      displayExpected,matchesDisplay:guess(e.guess)===BigInt(displayExpected)},
+      displayExpected,matchesDisplay:displayExpected===null?null:guess(e.guess)===BigInt(displayExpected)},
      matchesTask:e.a===task.a&&e.b===task.b&&e.op===task.op,
      // Counter/op edits between records are unknown. This compares only with
      // the previous recorded display, never the immediately preceding screen.
@@ -172,6 +181,8 @@ export function replayJoinStoryEvidence(task,model){
   return{
    evidenceScope:'recorded-demonstrations-and-swaps',representation:task.rep||'counters',
    demonstrations,swaps,firstPrediction:{role,scope:'task-question',expected,raw:first,value:Number(guess(first)),correct:guess(first)===BigInt(expected)},
+   insufficientAttempts:demonstrations.filter(d=>d.display.kind==='insufficient').map(d=>({historyIndex:d.historyIndex,...d.display})),
+   limitedDisplays:demonstrations.filter(d=>d.display.mathematicalEvidence===false).map(d=>({historyIndex:d.historyIndex,...d.display})),
    latest:{...current,display:display(task,current.a,current.b,current.op),guess:lastGuess},
    currentDisplay:display(task,swapped?current.b:current.a,swapped?current.a:current.b,current.op,swapped),
    submitted:{equation:submitted,otherEquation:other,shortage:task.swap&&task.op==='-'?model.shortage:null},

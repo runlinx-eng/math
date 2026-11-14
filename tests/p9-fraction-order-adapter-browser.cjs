@@ -4,7 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const cases=require('./fixtures/p9-fraction-order-cases.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-fraction-order-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],offline=[];
 const ok=(condition,message)=>{if(!condition)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -56,6 +56,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];
    },id);
    const model=async spec=>(await saved(spec.id)).models[spec.index];
+   const rawStorage=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
    const wait=spec=>page.waitForFunction(({id,index})=>{
     const snapshot=window.mathLesson?.snapshot();return snapshot?.id===id&&snapshot.index===index&&snapshot.view==='task';
    },spec);
@@ -132,6 +133,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' complete genuine construction passes original mathematics');
     ok(await hint.isVisible(),activeLabel+' complete checked construction receives bounded facts');
     const checked=await model(spec),proof=replayFractionOrderEvidence(task,checked),words=await hint.innerText();
+    const firstStorage=await rawStorage(),firstRecord=(await saved(spec.id)).cases[spec.index];
     ok(!!proof&&fractions.valid(task,checked)&&fractions.inspect(task,checked).correct,activeLabel+' stored work passes independent replay and original grading');
     ok(proof.cards.every(card=>words.includes(card)),activeLabel+' observations refer to the actual source fractions');
     ok(await hint.locator('[data-thinking-node-id]').count()===0&&!/MP\.\d/.test(words),activeLabel+' no borrowed mathematical-practice label');
@@ -142,6 +144,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     if(task.mismatch)ok(checked.history.some(e=>e.a==='align')&&proof.aligned,activeLabel+' unequal diagram wholes were actually aligned');
     await shot('01-verified-offline');await reload(spec);
     ok(await hint.isVisible()&&JSON.stringify(await model(spec))===JSON.stringify(checked),activeLabel+' stopped-origin refresh preserves exact submitted work and evidence');
+    const offlineStorage=await rawStorage(),restored=JSON.parse(offlineStorage).lessons[spec.id];
     await field('position','999');ok(await hint.count()===0,activeLabel+' editing invalidates checked feedback immediately');
     await reload(spec);ok(await hint.count()===0,activeLabel+' edited draft remains unverified after offline refresh');
     await submit();
@@ -156,15 +159,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     ok(attempts.every(a=>a.id&&a.at&&a.value&&typeof a.supported==='boolean'&&typeof a.exposed==='boolean'),activeLabel+' original v2 attempt format is retained');
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),activeLabel+' no score or mastery state is added');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),activeLabel+' no desktop horizontal overflow');
-    observations.push({width,height,id:spec.id,index:spec.index,source:spec.nodeId,proof:replayFractionOrderEvidence(task,m),
-     observation:words,firstModel:checked,finalModel:m,attempts,proof:replayFractionOrderEvidence(task,m)});
+    observations.push({width,height,id:spec.id,index:spec.index,source:spec.nodeId,
+     observation:words,firstModel:checked,finalModel:m,attempts,proof:replayFractionOrderEvidence(task,m),
+     offlineModel:restored.models[spec.index],firstRecord,record:end.cases[spec.index],offlineRecord:restored.cases[spec.index],
+     storageSnapshots:{first:firstStorage,offline:offlineStorage,final:await rawStorage()}});
    }
 
-   // These errors are all exercised through visible controls. The final board
-   // still passes the unchanged grader; the stricter history remains excluded.
+   // These visible attempts are replayed without treating an earlier location,
+   // failed subdivision or duplicate record as a new successful construction.
    const negative={id:'fractionbench',index:0},task=sessionTasks(negative.id)[negative.index];
-   for(const variant of ['wrong-place','wrong-common','duplicate-place','duplicate-rename']){
-    activeLabel=`${width}x${height}-negative-${variant}`;await open(negative);
+   for(const variant of ['wrong-place','wrong-common','duplicate-place','duplicate-rename','reset','final-failed-place']){
+    activeLabel=`${width}x${height}-correction-${variant}`;await open(negative);
     const steps=fractions.solveSteps(task);let injected=false;
     for(const s of steps){
      if(!injected&&variant==='wrong-place'&&s.action==='b17-place'){
@@ -177,13 +182,22 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     }
     if(variant==='duplicate-place')await action('b17-place');
     if(variant==='duplicate-rename')await action('b17-rename');
+    if(variant==='reset'){await action('b17-reset');await solve(task);}
+    if(variant==='final-failed-place'){
+     const current=(await model(negative)).position;await field('position','-1');await action('b17-place');await field('position',current);
+    }
     await submit();const m=await model(negative);
     ok(fractions.valid(task,m)&&fractions.inspect(task,m).correct,activeLabel+' unchanged original grading accepts the final construction');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original completion remains available');
-    ok(await hint.count()===0&&!replayFractionOrderEvidence(task,m),activeLabel+' rejected process cannot earn strict factual feedback');
-    await reload(negative);ok(await hint.count()===0,activeLabel+' rejected process remains excluded after stopped-origin refresh');
-    negativeObservations.push({width,height,variant,originalCorrect:true,strictFeedback:false,model:m});
-    await shot('rejected');
+    const proof=replayFractionOrderEvidence(task,m);
+    ok(!!proof&&proof.history.events.length===m.history.length&&await hint.isVisible(),activeLabel+' previous attempts and the final exact positions are separately checked');
+    if(variant==='wrong-place')ok(proof.history.placementAttempts.some(p=>!p.matchesCard),activeLabel+' wrong earlier placement is retained rather than called correct');
+    if(variant==='final-failed-place')ok(m.issue!==''&&proof.history.failedRequests.at(-1).issue===m.issue,activeLabel+' final failed placement is retained without clearing its issue');
+    await reload(negative);ok(await hint.isVisible()&&JSON.stringify(await model(negative))===JSON.stringify(m),activeLabel+' full corrected history and evidence restore offline');
+    const restoredStorage=await rawStorage(),restored=JSON.parse(restoredStorage).lessons[negative.id];
+    correctionObservations.push({width,height,id:negative.id,index:negative.index,variant,originalCorrect:true,strictFeedback:true,model:m,proof,record:restored.cases[negative.index],
+     restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage});
+    await shot('corrected');
    }
    const bridge=Object.keys(BRIDGES).flatMap(id=>sessionTasks(id).map((task,index)=>({id,index,task}))).find(c=>c.task.type==='x-fracorder');
    ok(!!bridge,width+' actual associated fraction-order task exists');
@@ -197,13 +211,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===40,'all twenty native fraction-order tasks complete at both desktop sizes');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  ok(correctionObservations.length===12,'six correction scenarios run in both viewports');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,
    nativeTasks:20,nativeNodes:9,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_FRACTION_ORDER_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:20,nativeNodes:9,taskViewportPairs:observations.length}));
  }catch(error){
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

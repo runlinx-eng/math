@@ -24,27 +24,38 @@ export function lineBinding(task,context={}){
  return {...source,question};
 }
 // Recompute from edge vectors, rather than trusting stored relation booleans.
-// Accept distinct exploratory pairs, but conservatively refuse duplicate/no-op,
-// reset, irrelevant actions, malformed fields and any invalid intermediate event.
+// Keep every visible request: an empty/same-edge choice fails without adding a
+// comparison, and repeating a pair really adds another comparison in B23.
+// The lines view has no reset button; unrelated actions remain unbound.
 export function replayLineEvidence(task,model){
  try{
   if(task?.type!=='x-s23-lines'||!model||!Array.isArray(model.history)||
-     !model.history.length||!geometry.valid(task,model)||!geometry.inspect(task,model).correct||model.issue!=='')return null;
-  const vs=vectors(scenario(task.shape,task.rotation)),seen=new Set(),tests=[];
-  if(model.history.length>vs.length*(vs.length-1)/2)return null;
-  for(const e of model.history){
+     !model.history.length||!geometry.valid(task,model)||!geometry.inspect(task,model).correct||
+     !keys(model,[...Object.keys(geometry.fields(task)),'seed','board','history','issue']))return null;
+  const vs=vectors(scenario(task.shape,task.rotation)),seen=new Set(),tests=[],events=[];
+  const option=s=>s===''||vs.some((_,i)=>s===String(i));
+  if(!option(model.first)||!option(model.second))return null;
+  for(const [k,v] of Object.entries(geometry.fields(task)))if(!['first','second','answers','prose'].includes(k)&&!same(model[k],v))return null;
+  let firstAttempt=null,issue='',failedComparisons=0,repeatedComparisons=0;
+  for(const [historyIndex,e] of model.history.entries()){
    if(!keys(e,['a','f','d'])||e.a!=='lineTest'||!keys(e.f,['first','second'])||!keys(e.d,[])||
-      ![e.f.first,e.f.second].every(s=>typeof s==='string'&&/^\d+$/.test(s)))return null;
-   const first=Number(e.f.first),second=Number(e.f.second);
-   if(!Number.isInteger(first)||!Number.isInteger(second)||first===second||first>=vs.length||second>=vs.length)return null;
+      ![e.f.first,e.f.second].every(s=>typeof s==='string'&&option(s)))return null;
+   firstAttempt??={...e.f};issue='';
+   const first=e.f.first===''?null:Number(e.f.first),second=e.f.second===''?null:Number(e.f.second);
+   if(first===null||second===null||first===second){
+    issue='选两条不同的边，再把它们延长比较。';failedComparisons++;
+    events.push({historyIndex,fields:{...e.f},accepted:false,comparisonIndex:null,issue});continue;
+   }
    const key=[first,second].sort((a,b)=>a-b).join(':');
-   if(seen.has(key))return null;seen.add(key);
+   const repeated=seen.has(key);if(repeated)repeatedComparisons++;seen.add(key);
    const a=vs[first],b=vs[second];
    const parallel=Math.abs(a[0]*b[1]-a[1]*b[0])<1e-7;
    const perpendicular=Math.abs(a[0]*b[0]+a[1]*b[1])<1e-7;
+   events.push({historyIndex,fields:{...e.f},accepted:true,comparisonIndex:tests.length,repeated,parallel,perpendicular,issue});
    tests.push({first,second,parallel,perpendicular});
   }
-  if(!same(tests,model.board.tests)||!task.required.every(k=>tests.some(x=>x[k]===true)))return null;
-  return {tests,shape:task.shape,rotation:task.rotation||0};
+  if(model.issue!==issue||!same({first:{lineTest:firstAttempt},tests},model.board)||
+     !task.required.every(k=>tests.some(x=>x[k]===true)))return null;
+  return {tests,shape:task.shape,rotation:task.rotation||0,firstAttempt,failedComparisons,repeatedComparisons,events};
  }catch{return null;}
 }

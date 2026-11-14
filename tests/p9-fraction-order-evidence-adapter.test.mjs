@@ -111,6 +111,18 @@ test('common parts can be any valid shared denominator, with exact names and equ
  }
 });
 
+test('reset preserves the first prediction while the new round can record a different guess',()=>{
+ for(const c of cases){
+  const task=sessionTasks(c.id)[c.index],model=fractions.example(task),first=[...model.board.first];
+  apply(task,model,'reset');const reversed=[...first].reverse();
+  for(const index of reversed)apply(task,model,'card',{index});apply(task,model,'predict');
+  const steps=fractions.solveSteps(task);run(task,model,steps.slice(steps.findIndex(s=>s.action==='b17-predict')+1));
+  const p=accepts(task,model);assert.deepEqual(model.board.first,first);assert.deepEqual(model.board.prediction,reversed);
+  assert.deepEqual(p.history.predictions.map(x=>x.order),[first,reversed]);assert.equal(p.history.resetCount,1);
+  const forged=structuredClone(model);forged.board.first=reversed;rejects(task,forged);
+ }
+});
+
 test('decimal, percent and mixed names are exact, while tied values allow either order',()=>{
  const mixed=sessionTasks('beyondoneorder')[2],mixedProof=accepts(mixed,fractions.example(mixed));
  assert.deepEqual(mixedProof.fractions,[[7,5],[4,3],[7,4]]);
@@ -145,20 +157,22 @@ test('history, event schema, board, first prediction and mathematical fields are
  }
 });
 
-test('originally ignored global actions, duplicate mathematical records and impossible effects never earn evidence',()=>{
+test('hidden global actions and impossible identities remain rejected while visible duplicates preserve the construction',()=>{
  for(const c of cases){
   const task=sessionTasks(c.id)[c.index];
-  for(const action of ['split','remember','predict','align','place']){
+  for(const action of ['split','remember','predict','align']){
    const model=fractions.example(task);apply(task,model,action);original(task,model);
    rejects(task,model,c.id+':'+c.index+' '+action);
   }
+  const duplicate=fractions.example(task);apply(task,duplicate,'place');
+  const duplicateProof=accepts(task,duplicate);assert.equal(duplicateProof.history.ineffectiveRequests.at(-1).action,'place');
   const model=fractions.example(task);apply(task,model,'shade',{row:0,index:999999});original(task,model);rejects(task,model);
-  if(task.common){const model=fractions.example(task);apply(task,model,'rename');original(task,model);rejects(task,model);}
-  if(task.gaps||task.benchmark){const model=fractions.example(task);apply(task,model,'landmark');original(task,model);rejects(task,model);}
+  if(task.common){const model=fractions.example(task);apply(task,model,'rename');const p=accepts(task,model);assert.equal(p.history.ineffectiveRequests.at(-1).action,'rename');}
+  if(task.gaps||task.benchmark){const model=fractions.example(task);apply(task,model,'landmark');const p=accepts(task,model);assert.equal(p.history.ineffectiveRequests.at(-1).action,'landmark');}
  }
 });
 
-test('invalid attempted placement or common division cannot be hidden by later successful work',()=>{
+test('earlier wrong locations and failed common divisions are retained without claiming them as correct',()=>{
  for(const [id,index,wrong,selected] of [['fdpswitch',2,'0.3',1],['beyondoneorder',2,'1.3',0]]){
   const task=sessionTasks(id)[index],model=fractions.initial(task),steps=fractions.solveSteps(task);
   let inserted=false;
@@ -168,14 +182,17 @@ test('invalid attempted placement or common division cannot be hidden by later s
    }
    run(task,model,[step]);
   }
-  original(task,model);rejects(task,model,'a wrong recorded location is still present in history');
+  const p=accepts(task,model),attempt=p.history.placementAttempts.find(x=>x.position===wrong&&x.index===selected);
+  assert.ok(attempt);assert.equal(attempt.matchesCard,false);
+  assert.equal(p.placements[selected].position,task.cards[selected]);
  }
  const task=sessionTasks('fractionbench')[0],model=fractions.initial(task);
  for(const step of fractions.solveSteps(task)){
   if(step.action==='b17-common'){const current=model.denom;model.denom='7';apply(task,model,'common');model.denom=current;}
   run(task,model,[step]);
  }
- original(task,model);rejects(task,model);
+ const p=accepts(task,model);assert.equal(p.history.failedRequests.length,1);
+ assert.equal(p.history.failedRequests[0].reason,'invalid-common-parts');
 });
 
 test('current auxiliary inputs must still match the last recorded mathematical action',()=>{
@@ -196,4 +213,13 @@ test('malformed and precision-sensitive values fail closed without throwing',()=
  }
  for(const changed of [{...task,cards:[]},{...task,cards:['1/0','1/2']},{...task,common:'yes'},
   {...task,gaps:true,benchmark:true},{...task,max:0},{...task,cards:['-1','1/2']}])rejects(changed,done);
+});
+
+
+test('Issue 166 original visible controls preserve failed requests, resets and latest failed issues',async()=>{
+ const {verifyVisibleCorrections}=await import('./helpers/p9-fraction-correction-controls.mjs');
+ const result=await verifyVisibleCorrections('fraction-order',replayFractionOrderEvidence,thinkingFeedback);
+ assert.equal(result.paths,result.nativeTasks*3);
+ assert.ok(result.failedRequests>=result.nativeTasks);
+ assert.equal(result.forgeriesRejected,result.paths*3);
 });

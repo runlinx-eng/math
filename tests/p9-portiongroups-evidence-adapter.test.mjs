@@ -153,17 +153,47 @@ test('empty reset and partial reset are controls, do not fabricate assignments, 
  assert.deepEqual(proof.resets.map(r=>r.assigned),[0,0,1]);assert.equal(proof.selectedTotal,4);
 });
 
-test('same-token same-group placement remains original completion but never strict mathematical evidence',()=>{
- const {task,model}=sample();act(task,model,'group',0);act(task,model,'token',0);oldOnly(task,model,'duplicate no-op placement');
+test('same-token same-group clicks remain recorded confirmations without adding a move or quantity',()=>{
+ for(const c of [...cases,...associatedCases]){
+  const task=taskAt(c.id,c.index),model=build(task),before=structuredClone(model),original=accepted(task,model);
+  act(task,model,'group',0);
+  for(let i=0;i<2;i++){
+   const html=V.visual(task,model),buttons=[...html.matchAll(/<button\b[^>]*>/g)].filter(m=>m[0].includes('data-x="b16-token"')&&m[0].includes('data-index="0"'));
+   assert.equal(buttons.length,1);assert.doesNotMatch(buttons[0][0],/\bdisabled\b/);
+   const board=structuredClone(model.board);act(task,model,'token',0);assert.deepEqual(model.board,board);
+  }
+  const proof=accepted(task,model);assert.deepEqual(proof.assignments,original.assignments);
+  assert.deepEqual(proof.confirmations,[{historyIndex:before.history.length+1,token:0,group:0},{historyIndex:before.history.length+2,token:0,group:0}]);
+  assert.equal(proof.eventCount,before.history.length+3);assert.deepEqual(model.history.slice(0,before.history.length),before.history);
+  assert.deepEqual(proof.groups,original.groups);assert.deepEqual(proof.selectedTokens,original.selectedTokens);assert.equal(proof.selectedTotal,original.selectedTotal);
+  const oldRecord={support:false,attempts:[{value:before}]},newRecord={support:false,attempts:[{value:before},{value:structuredClone(model)}]};
+  assert.equal(thinkingFeedback(task,model,oldRecord,c),null,'a retained no-op still changes the work that must be checked');
+  if(Object.hasOwn(BRIDGES,c.id)){assert.equal(portionGroupsBinding(task,c),null);assert.equal(thinkingGuide(task,c),null);assert.equal(thinkingFeedback(task,model,newRecord,c),null);}
+  else {const feedback=thinkingFeedback(task,model,newRecord,c);assert.ok(feedback);assert.match(feedback.detail.join(' '),/2 次点击.*没有换组.*不算新的移动/);}
+ }
 });
 
-test('reset cannot wash a no-op, invalid index, or cross-widget action out of retained history',()=>{
+test('reset preserves a legal no-op while still rejecting invalid indices and cross-widget actions',()=>{
  for(const invalid of ['duplicate','out-of-range','cross-type']){
   const task=taskAt('halfpaper'),model=M.initial(task);
   if(invalid==='duplicate'){act(task,model,'token',0);act(task,model,'token',0);}
   if(invalid==='out-of-range')act(task,model,'token',task.total);
   if(invalid==='cross-type')act(task,model,'bar');
-  act(task,model,'reset');distribute(task,model);act(task,model,'take',0);fill(task,model);oldOnly(task,model,invalid);
+  const before=structuredClone(model);act(task,model,'reset');distribute(task,model);act(task,model,'take',0);fill(task,model);
+  assert.deepEqual(model.history.slice(0,before.history.length),before.history);
+  if(invalid==='duplicate'){
+   const proof=accepted(task,model);assert.deepEqual(proof.confirmations,[{historyIndex:1,token:0,group:0}]);
+   assert.equal(proof.assignments.length,task.total+1);assert.deepEqual(proof.resets,[{historyIndex:2,assigned:1,selected:[]}]);
+   assert.deepEqual(accepted(task,JSON.parse(JSON.stringify(model))),proof);
+  }else oldOnly(task,model,invalid);
+ }
+});
+
+test('confirmations cannot hide a forged token owner, altered event, or hidden field change',()=>{
+ const {task,model}=sample();act(task,model,'group',0);act(task,model,'token',0);accepted(task,model);
+ for(const change of [m=>m.board.groups[0]=1,m=>m.history.at(-1).data.index='01',m=>m.history.at(-1).data.extra=true,
+  m=>m.history.at(-1).data.fields.color='1',m=>m.history.at(-1).action='bar']){
+  const changed=structuredClone(model);change(changed);rejected(task,changed);
  }
 });
 

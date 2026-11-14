@@ -3,9 +3,10 @@
 // check is performed through the actual browser controls.
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const out=path.resolve(__dirname,'../verification/p9-geometry-thinking');
 const base='http://127.0.0.1:43827/';
-const checks=[],errors=[],remote=[];
+const checks=[],errors=[],remote=[],observations=[];
 const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -27,7 +28,8 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
     await page.locator('[data-x="g23-lineTest"]').click();
    };
    const answer=async v=>page.locator('[data-xfield="answers.0"]').selectOption(v);
-   const check=()=>page.locator('#actions [data-do="check"]').click();
+   const snapshots=[];let checkIndex=0;
+   const check=async()=>{await page.locator('#actions [data-do="check"]').click();snapshots.push(await capture(page,out,label,{id:'structure34',index:3},'check-'+(++checkIndex)));};
    try{
     await page.goto(base+'learn.html#structure34');
     await page.waitForFunction(()=>window.mathLesson?.snapshot().id==='structure34');
@@ -71,6 +73,7 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
     await page.reload();
     await page.waitForFunction(()=>window.mathLesson?.snapshot().index===3);
     assert(await note.isVisible(),label+' feedback restores only with matching saved successful attempt');
+    const restored=await capture(page,out,label,{id:'structure34',index:3},'restored');
     await answer('one');
     assert(await note.count()===0,label+' editing removes old successful feedback immediately');
     await shot('04-modified');
@@ -85,6 +88,8 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
     assert(attempts.every(x=>x.value&&x.id&&x.at),label+' original attempt format preserved');
     assert(!('thinkingScore'in saved)&&!('thinkingMastery'in saved),label+' no mastery fields added');
     if(!withHelp)assert(saved.cases[3].support===false,label+' independent path does not mark optional help');
+    await check();assert(snapshots.at(-1).attempts.length===5,label+' fifth current check preserves all four original submissions');
+    observations.push({width,height,id:'structure34',index:3,snapshots,firstModel:snapshots[1].model,restoredModel:restored.model,finalModel:snapshots.at(-1).model,record:snapshots.at(-1).record,observation:await note.innerText(),restored});
     await shot('05-rechecked');
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no desktop horizontal overflow');
     await ctx.close();
@@ -92,10 +97,10 @@ const assert=(v,s)=>{if(!v)throw Error(s);checks.push(s);};
   }
   assert(!errors.length,'no uncaught browser errors');
   assert(!remote.length,'no external requests');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,childTrial:false,independentReview:false},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,childTrial:false,independentReview:false},null,2));
   console.log('P9_GEOMETRY_THINKING_BROWSER_OK '+JSON.stringify({checks:checks.length}));
  }catch(e){
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,error:String(e)},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,error:String(e)},null,2));
   console.error(e.stack);process.exitCode=1;
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

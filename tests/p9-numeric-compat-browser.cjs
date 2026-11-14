@@ -34,6 +34,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {fresh}=await import('../dist/exploration-core.js');
  const M=await import('../dist/learning/phase5/b24-model.js');
+ const {replayTransformEvidence}=await import('../dist/learning/transform-evidence.js');
  const {inspect}=await import('../dist/learning/tasks.js');
  const {lessonSummary,numericCompatibility,validStoredModel}=await import('../dist/learning/state.js');
  let browser,server,activePage,label='setup';const contexts=new Set();
@@ -302,16 +303,34 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ok(grow.models[0].board.image===null&&!!grow.models[0].issue,label+' negative scale is rejected without fabricating a positive image');
    await submit();ok(await page.locator('#check-feedback').getAttribute('data-state')==='revise'&&await page.locator('#thinking-feedback').count()===0,
     label+' invalid negative scale cannot produce positive completion or P9 evidence');
+   const growFailed=await capture(page,prefix+'-growshape-failed-scale');
    await field('factor','2');await click('p24-operate');await click('p24-measure');
    for(const [i,q]of sessionTasks('growshape')[0].questions.entries())await field('answers.'+i,q.value);
    await submit();grow=(await state(page)).lessons.growshape;
    ok(inspect(sessionTasks('growshape')[0],grow.models[0]).correct&&await page.locator('#check-feedback').getAttribute('data-state')==='correct',
     label+' original correction workflow remains usable under fixed numeric semantics');
-   ok(await page.locator('#thinking-feedback').count()===0,label+' correcting an invalid operation does not invent strict mathematical history');
+   const growCorrected=await capture(page,prefix+'-growshape-corrected-scale');
+   const growProof=replayTransformEvidence(sessionTasks('growshape')[0],grow.models[0]);
+   assert.ok(growProof);assert.deepEqual(growProof.requests.map(r=>r.action),['predict','operate','operate','measure']);
+   assert.equal(growProof.failedRequests.length,1);assert.equal(growProof.failedRequests[0].historyIndex,1);
+   assert.equal(growProof.failedRequests[0].fields.factor,'-0 1/2');
+   assert.equal(growProof.failedRequests[0].before.image,null);assert.equal(growProof.failedRequests[0].after.image,null);
+   assert.equal(growProof.operationCount,1);assert.equal(growProof.measurementCount,1);
+   assert.deepEqual(growProof.prediction,{point:['-1 1/2','-0 1/2'],correct:false});
+   assert.equal(growProof.automaticImage,true);assert.equal(growProof.independentMeasurementAssessed,false);
+   assert.deepEqual(grow.models[0].history.slice(0,2),growFailed.lessons.growshape.models[0].history);
+   assert.deepEqual(grow.cases[0].attempts.slice(0,1),growFailed.lessons.growshape.cases[0].attempts);
+   assert.deepEqual(grow.models[0].board.first.operate,growFailed.lessons.growshape.models[0].board.first.operate);
+   const growFeedbackText=await page.locator('#thinking-feedback').innerText();
+   ok(await page.locator('#thinking-feedback').isVisible()&&growFeedbackText.includes('保留了 1 次尚未形成预测或变换的请求')&&
+    growFeedbackText.includes('这些读数由工具生成'),label+' fresh retry preserves the failed request and attributes only the later successful transform and tool readout');
    assert.deepEqual(growRetry.savedBackup.backup.state.lessons.growshape.models[0],growRetry.oldWorkpiece);
    ok(grow.cases[0].attempts.length===2,label+' only the two real new submissions enter the attempt list');
    assert.deepEqual(grow.notes,growRetry.before.notes);assert.equal(grow.draft,growRetry.before.draft);
    await reload(page,'growshape');assert.deepEqual((await state(page)).lessons.growshape.cases,grow.cases);
+   const growReloaded=await capture(page,prefix+'-growshape-corrected-reloaded');
+   assert.deepEqual(growReloaded.lessons.growshape.models,grow.models);
+   assert.equal(await page.locator('#thinking-feedback').innerText(),growFeedbackText);
    await shot(page,label+'-corrected');
 
    label=prefix+'-unaffected';const beforeOther=(await state(page)).lessons.lineplaces;
@@ -362,6 +381,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    await exportFile(target.page,prefix+'-restored-export-v2');await shot(target.page,label+'-restored');
    ok(await target.page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),label+' no horizontal overflow');
    observations.push({width,height,legacyImported:imported,negativePrediction,mixedPrediction,pointRetry,growRetry,
+    growCorrection:{failed:growFailed,corrected:growCorrected,reloaded:growReloaded,proof:growProof,feedbackText:growFeedbackText},
     oldActivePage:{initial:oldUIBefore,pointBefore:oldPointBefore,warning:oldWarning,beforeWrite:beforeOldWrite,afterWrite:afterOldWrite,scope:'ordinary edit uses the existing same-lesson conflict guard'},
     finalState,restored,restoredLegacy,exports:{initialVersion:initialExport.backup.version,finalVersion:exported.backup.version,
      finalSha256:digest(exported.payload)}});

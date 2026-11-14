@@ -66,8 +66,10 @@ const matches=(s,options)=>options.some(want=>norm(s)===want||norm(s)===want.spl
 const modelKeys=['rows','cols','cut','answer','equation','addition','base','left','right','rest','check',
  'prediction','amount','result','board','history','issue'];
 
-// Confirm one real shape and at most one necessary turn or cut. Reject resets,
-// redundant clicks, corrective histories and unsupported actions conservatively.
+// Replay every visible shape/turn/cut request. A failed request keeps the old
+// board, a later shape really rebuilds it, and every turn/cut uses that board.
+// The first retained rotation prediction is a guess, not a prerequisite for
+// the actual point-conserving operation. This view exposes no reset button.
 export function replayArrayEvidence(task,model){
  try{
  if(task?.type!=='x-mularray'||!hasExactKeys(model,modelKeys)||!Array.isArray(model.history)||
@@ -82,33 +84,58 @@ export function replayArrayEvidence(task,model){
  if(task.original!==undefined&&(typeof task.original!=='string'||!task.hidden||
     norm(task.original).split('□').length!==2))return null;
  if(task.approximate&&(task.hidden||task.reverseEquation||task.original))return null;
- if(!arrays.valid(task,model)||!arrays.inspect(task,model).correct||
-    model.issue!=='')return null;
- const expected=['b13-shape',...(task.rotate?['b13-turn']:task.split?['b13-cut']:[])];
- if(model.history.length!==expected.length)return null;
- const [shape,second]=model.history;
- const prediction=task.rotate?'same':'';
- if(shape.action!=='b13-shape'||number(shape.data.rows)!==task.a||
-    number(shape.data.cols)!==task.b||shape.data.prediction!==prediction||
-    model.prediction!==prediction)return null;
- const board={rows:task.a,cols:task.b,built:{rows:task.a,cols:task.b},cut:null,turns:0,prediction};
- for(const e of model.history)if(e.data.bucket!==null||e.data.index!==null||e.data.token!==null||
-    number(e.data.rows)!==task.a||number(e.data.cols)!==task.b||e.data.prediction!==prediction)return null;
- if(task.rotate){
-  if(second?.action!=='b13-turn')return null;
-  [board.rows,board.cols]=[task.b,task.a];board.turns=1;
- }else if(task.split){
-  const cut=number(second?.data?.cut);
-  if(second?.action!=='b13-cut'||!Number.isInteger(cut)||cut<1||cut>=task.b||
-     (task.requiredCut!==undefined&&cut!==task.requiredCut))return null;
-  board.cut=cut;
+ if(!arrays.valid(task,model)||!arrays.inspect(task,model).correct||!model.history.length)return null;
+ // Whitespace may separate operators, but may not concatenate two written
+ // digits into a different number when the equation is normalized.
+ if([model.equation,model.addition,model.check,task.original??''].some(s=>/\d\s+\d/.test(s)))return null;
+ const range=(s,max)=>typeof s==='string'&&Array.from({length:max+1},(_,i)=>String(i)).includes(s);
+ const prediction=s=>task.rotate?['','more','less','same'].includes(s):s==='';
+ const defaults=arrays.initial(task);
+ for(const key of ['amount','result','rest',...(!task.split?['cut','left','right']:[]),
+  ...(!task.repeated?['addition']:[]),...((task.unit??1)===1?['base']:[]),...(!task.original?['check']:[])])
+  if(model[key]!==defaults[key])return null;
+ if(!range(model.rows,12)||!range(model.cols,12)||!prediction(model.prediction))return null;
+ const board={rows:0,cols:0,built:null,cut:null,turns:0,prediction:null},events=[],confirmations=[];
+ let issue='',lastCut='0',shapes=0,turns=0,cuts=0,shapeRequests=0,cutRequests=0,failedActions=0,predictionMismatches=0;
+ for(const [historyIndex,e] of model.history.entries()){
+  const d=e.data;
+  if(!hasExactKeys(e,['action','data'])||!hasExactKeys(d,['amount','answer','bucket','cols','cut','index','prediction','result','rows','token'])||
+     d.bucket!==null||d.index!==null||d.token!==null||d.amount!=='1'||d.result!==''||
+     !range(d.rows,12)||!range(d.cols,12)||!prediction(d.prediction)||
+     !(d.cut===lastCut||task.split&&board.built&&range(d.cut,board.cols)))return null;
+  if(!task.split&&d.cut!=='0')return null;
+  const before=structuredClone(board);let accepted=false;issue='';lastCut=d.cut;
+  if(e.action==='b13-shape'){
+   const rows=Number(d.rows),cols=Number(d.cols);
+   if(rows===0||cols===0)issue='先给长方形摆出行和列。';
+   else if(task.rotate&&d.prediction==='')issue='先留下转向以后会怎样的猜想，再摆出来。';
+   else{board.rows=rows;board.cols=cols;board.built={rows,cols};board.cut=null;board.turns=0;board.prediction??=d.prediction;accepted=true;shapeRequests++;}
+  }else if(e.action==='b13-turn'){
+   if(!task.rotate||!board.built||number(d.rows)!==board.built.rows||number(d.cols)!==board.built.cols)return null;
+   [board.rows,board.cols]=[board.cols,board.rows];board.turns++;board.cut=null;accepted=true;turns++;
+   if(board.prediction!=='same'){issue='转向改变了行和列。同一批点没有增加或减少，可以再检查自己的猜想。';predictionMismatches++;}
+   if(BigInt(before.rows)*BigInt(before.cols)!==BigInt(board.rows)*BigInt(board.cols))return null;
+  }else if(e.action==='b13-cut'){
+   if(!task.split||!board.built||number(d.rows)!==board.built.rows||number(d.cols)!==board.built.cols)return null;
+   const cut=number(d.cut);
+   if(cut===null||cut<1||cut>=board.cols)issue='切线要留在两列之间，两边都要留下一些。';
+   else{board.cut=cut;accepted=true;cutRequests++;}
+  }else return null;
+  const changed=!same(before,board);
+  if(!accepted)failedActions++;
+  else if(!changed)confirmations.push({historyIndex,action:e.action});
+  else if(e.action==='b13-shape')shapes++;
+  else if(e.action==='b13-cut')cuts++;
+  events.push({historyIndex,action:e.action,fields:{...d},accepted,changed,before,after:structuredClone(board),issue});
  }
- if(!same(board,model.board)||number(model.rows)!==task.a||number(model.cols)!==task.b)return null;
- for(let i=0;i<expected.length;i++)if(model.history[i].action!==expected[i])return null;
+ if(model.issue!==issue||!same(board,model.board)||number(model.rows)!==task.a||number(model.cols)!==task.b||
+    !same(board.built,{rows:task.a,cols:task.b})||task.rotate&&board.turns<1)return null;
  const unit=task.unit??1,total=task.a*task.b*unit;
  const cut=task.split?board.cut:null;
  const left=cut===null?null:task.a*cut*unit;
  const right=cut===null?null:task.a*(task.b-cut)*unit;
+ if(task.split&&(cut===null||!Number.isInteger(cut)||cut<1||cut>=board.cols||
+   task.requiredCut!==undefined&&cut!==task.requiredCut))return null;
  if(cut!==null&&(number(model.cut)!==cut||number(model.left)!==left||number(model.right)!==right||left+right!==total))return null;
  const values={a:String(task.a),b:String(task.b*unit),p:String(total)};
  const answer=task.hidden?Number(values[task.hidden]):total;
@@ -130,6 +157,8 @@ export function replayArrayEvidence(task,model){
  }
  return {rows:task.a,cols:task.b,unit,total,turned:!!task.rotate,cut,left,right,
   unknown:task.hidden?{kind:task.hidden,value:answer,original:task.original||null}:null,
-  addition,reversedEquation:!!task.reverseEquation,approximate:!!task.approximate};
+  addition,reversedEquation:!!task.reverseEquation,approximate:!!task.approximate,
+  currentRows:board.rows,currentCols:board.cols,retainedPrediction:board.prediction,
+  shapes,turns,cuts,shapeRequests,cutRequests,confirmations,failedActions,predictionMismatches,events};
  }catch{return null;}
 }

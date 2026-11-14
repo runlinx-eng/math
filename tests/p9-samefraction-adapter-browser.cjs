@@ -3,10 +3,11 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const fixture=require('./fixtures/p9-samefraction-cases.cjs');
 const {cases,associatedCases}=fixture;
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-samefraction-adapter');
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negatives=[],isolated=[],offline=[],emptyPredictions=[],submissions=[];
 const ok=(value,label,details={})=>{assert.ok(value,label);checks.push({label,...details});};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
@@ -29,7 +30,7 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
  const {sameFractionBinding,replaySameFractionEvidence}=await import('../dist/learning/samefraction-evidence.js');
  for(const spec of [...cases,...associatedCases])assert.equal(hash(sessionTasks(spec.id)[spec.index]),spec.taskHash);
  for(const [file,expected]of Object.entries(fixture.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected);
- let browser,server,context,activePage,label='setup';
+ let browser,server,context,activePage,diagnostics,failureDiagnostic=null,label='setup';
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -49,6 +50,7 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>errors.push({label,error:String(error)}));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const read=()=>page.evaluate(async()=>{
@@ -162,6 +164,7 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
     assert.deepEqual(attempts.slice(0,-1),before.cases[spec.index]?.attempts??[]);
     ok(attempt.id&&attempt.at&&typeof attempt.supported==='boolean'&&typeof attempt.exposed==='boolean',label+' '+suffix+' original attempt metadata is retained');
     ok(await page.locator('#check-feedback').getAttribute('data-state')===(correct?'correct':'revise'),label+' '+suffix+' original result is observed');
+    submissions.push({width,height,id:spec.id,index:spec.index,correct,name:suffix,native:!!sameFractionBinding(taskFor(spec),spec)});
     return {name:suffix,model:beforeModel,attempt,record:after};
    };
    const wordsFor=async proof=>{
@@ -261,6 +264,29 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
      reverse,early,first,proof,words,snapshots,finalModel,finalProof,finalWords,record:end,stored:await snapshot('final')});
    }
 
+   // Clicking the visible empty prediction records a no-op. The first actual
+   // choice remains distinct, and both complete checked attempts survive reload.
+   for(const spec of cases){
+    label=prefix+'-empty-prediction-'+spec.id+'-'+spec.index;await open(spec);
+    await action('predict');const empty=await model(spec);
+    assert.equal(empty.board.first,null);assert.equal(empty.board.prediction,null);assert.equal(empty.issue,'');
+    const failed=await check(spec,false,'empty-prediction');ok(await hint.count()===0,label+' an empty choice is not completed mathematics');
+    await reload(spec);assert.deepEqual(await model(spec),empty);assert.deepEqual((await saved(spec.id)).cases,failed.record.cases);
+    await build(spec,{existing:empty,reverse:width===1280,early:width===1280});
+    const corrected=await check(spec,true,'chosen-prediction'),proof=replaySameFractionEvidence(taskFor(spec),corrected.model),words=await wordsFor(proof);
+    assert.equal(proof.failedRequests.length,1);assert.equal(proof.failedRequests[0].failure,'empty-prediction');
+    assert.equal(proof.failedRequests[0].accepted,false);assert.equal(proof.failedRequests[0].effect,false);
+    assert.deepEqual(proof.failedRequests[0].fields,empty.history[0].data.fields);
+    assert.deepEqual(proof.failedRequests[0].before,empty.board);assert.deepEqual(proof.failedRequests[0].after,empty.board);
+    assert.equal(proof.predictions.length,1);assert.equal(proof.firstPrediction.historyIndex,1);
+    assert.deepEqual(corrected.model.history.slice(0,empty.history.length),empty.history);
+    assert.deepEqual(corrected.record.cases[spec.index].attempts[0],failed.attempt);
+    ok(words.includes('空选择没有被计为第一次或本轮预测'),label+' feedback does not turn an empty request into a prediction');
+    await reload(spec);assert.deepEqual((await saved(spec.id)).models,corrected.record.models);assert.deepEqual((await saved(spec.id)).cases,corrected.record.cases);
+    ok(await hint.isVisible(),label+' a real corrected choice and the failed attempt survive offline restore');
+    if(spec===cases[0])await shot('corrected');emptyPredictions.push({width,height,id:spec.id,index:spec.index,empty,failed,corrected,proof,words,stored:await snapshot('empty-prediction')});
+   }
+
    // Reset retains the first prediction and hidden submitted text. A new
    // prediction opens the next round; the two guesses have distinct provenance.
    const commonSpec=cases.find(c=>c.common),commonTask=taskFor(commonSpec);
@@ -294,17 +320,52 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
    label=prefix+'-invalid-refinement-cannot-be-erased';await open(commonSpec);
    await field('prediction','<');await action('predict');await field('parts','5');await action('refine');
    const invalid=await model(commonSpec);ok(!!invalid.issue&&invalid.board.refine===null,label+' a visible invalid common-grid request was actually rejected');
+   const invalidChecked=await check(commonSpec,false,'invalid-grid-request');await reload(commonSpec);
+   assert.deepEqual(await model(commonSpec),invalid);assert.deepEqual((await saved(commonSpec.id)).cases,invalidChecked.record.cases);
+   ok(await hint.count()===0,label+' the real rejected request survives reload without positive feedback');
    await field('parts','12');await action('refine');
    for(const row of ['left','right'])for(let index=0;index<commonTask[row][0];index++)await action('fraction',{row,index});
    await action('overlay');await names(commonTask,12);await field('relation','>');await field('reason','same-whole');
    const corrected=await check(commonSpec,true,'original-correct-after-invalid');
-   ok(replaySameFractionEvidence(commonTask,corrected.model)===null&&await hint.count()===0,label+' original completion cannot erase the invalid operation');
+   const correctedProof=replaySameFractionEvidence(commonTask,corrected.model);await wordsFor(correctedProof);
+   assert.equal(correctedProof.failedRequests.length,1);assert.equal(correctedProof.failedRequests[0].failure,'refinement-not-accepted');
+   assert.deepEqual(correctedProof.failedRequests[0].fields,invalid.history.at(-1).data.fields);
+   assert.deepEqual(correctedProof.failedRequests[0].after,invalid.board);assert.equal(correctedProof.failedRequests[0].issue,invalid.issue);
+   assert.equal(correctedProof.failedRequests[0].effect,false);assert.equal(correctedProof.issue,'');
+   assert.deepEqual(corrected.model.history.slice(0,invalid.history.length),invalid.history);
+   assert.deepEqual(corrected.record.cases[commonSpec.index].attempts[0],invalidChecked.attempt);
+   ok(true,label+' valid correction retains the complete invalid request and checked attempt');
    await action('reset');const invalidReset=await model(commonSpec);await build(commonSpec,{existing:invalidReset,reverse:true,early:true,denominator:24});
    const resetCorrected=await check(commonSpec,true,'reset-after-invalid');
-   ok(replaySameFractionEvidence(commonTask,resetCorrected.model)===null&&await hint.count()===0,label+' reset and valid rebuilding cannot wash invalid history');
-   assert.deepEqual(resetCorrected.record.cases[commonSpec.index].attempts[0],corrected.attempt);
-   await reload(commonSpec);ok(await hint.count()===0,label+' offline restoration preserves the invalid-history exclusion');await shot('excluded');
-   negatives.push({width,height,kind:'invalid-refine-history',id:commonSpec.id,index:commonSpec.index,invalid,corrected,invalidReset,resetCorrected,stored:await snapshot('invalid-history')});
+   const correctedResetProof=replaySameFractionEvidence(commonTask,resetCorrected.model);await wordsFor(correctedResetProof);
+   assert.deepEqual(correctedResetProof.failedRequests,correctedProof.failedRequests);assert.equal(correctedResetProof.resets.length,1);
+   assert.equal(correctedResetProof.firstPrediction.value,correctedProof.firstPrediction.value);
+   assert.deepEqual(resetCorrected.model.history.slice(0,corrected.model.history.length),corrected.model.history);
+   assert.deepEqual(resetCorrected.record.cases[commonSpec.index].attempts.slice(0,2),corrected.record.cases[commonSpec.index].attempts);
+   await reload(commonSpec);assert.deepEqual((await saved(commonSpec.id)).models,resetCorrected.record.models);assert.deepEqual((await saved(commonSpec.id)).cases,resetCorrected.record.cases);
+   ok(await hint.isVisible(),label+' reset and offline restoration retain real failure and valid rebuilt work');await shot('corrected-after-reset');
+
+   // A failed request preserves the old grid. Merely correcting its input does
+   // not clear the old issue or relabel the failed request as a successful grid.
+   await field('parts','5');await action('refine');const terminalFailure=await check(commonSpec,false,'last-invalid-grid');
+   assert.deepEqual(terminalFailure.model.board,resetCorrected.model.board);assert.ok(terminalFailure.model.issue);
+   await field('parts','24');ok(await hint.count()===0,label+' an input correction still requires a new check');
+   const restoredInput=await check(commonSpec,true,'existing-grid-corrected-input'),terminalProof=replaySameFractionEvidence(commonTask,restoredInput.model),terminalWords=await wordsFor(terminalProof);
+   assert.deepEqual(restoredInput.model.history,terminalFailure.model.history);assert.equal(terminalProof.issue,terminalFailure.model.issue);
+   assert.equal(terminalProof.failedRequests.length,2);assert.equal(terminalProof.refinements.length,correctedResetProof.refinements.length);
+   assert.equal(terminalProof.failedRequests.at(-1).historyIndex,restoredInput.model.history.length-1);
+   ok(terminalWords.includes('最后一次细分请求的提示仍保留')&&terminalWords.includes('没有把那次失败说成成功'),label+' feedback identifies the existing grid and the still-failed last request');
+   const forgedIssue=structuredClone(restoredInput.model);forgedIssue.issue='';
+   ok(M.inspect(commonTask,forgedIssue).correct&&replaySameFractionEvidence(commonTask,forgedIssue)===null,label+' a forged issue clear cannot borrow the old grid');
+   await reload(commonSpec);assert.deepEqual((await saved(commonSpec.id)).models,restoredInput.record.models);assert.deepEqual((await saved(commonSpec.id)).cases,restoredInput.record.cases);
+   await wordsFor(terminalProof);await shot('last-failure-preserved');
+   await action('overlay');ok(await hint.count()===0,label+' a real issue-clearing action invalidates the old checked snapshot');
+   const cleared=await check(commonSpec,true,'real-overlay-clears-issue'),clearedProof=replaySameFractionEvidence(commonTask,cleared.model);await wordsFor(clearedProof);
+   assert.equal(clearedProof.issue,'');assert.deepEqual(clearedProof.failedRequests,terminalProof.failedRequests);
+   assert.deepEqual(cleared.record.cases[commonSpec.index].attempts.slice(0,5),restoredInput.record.cases[commonSpec.index].attempts);
+   assert.deepEqual(cleared.record.cases[commonSpec.index].attempts.map(item=>M.inspect(commonTask,item.value).correct),[false,true,true,false,true,true]);
+   negatives.push({width,height,kind:'invalid-refine-history',id:commonSpec.id,index:commonSpec.index,invalid,invalidChecked,corrected,correctedProof,invalidReset,resetCorrected,correctedResetProof,
+    terminalFailure,restoredInput,terminalProof,terminalWords,cleared,clearedProof,stored:await snapshot('invalid-history')});
 
    label=prefix+'-split-digit-submission';await open(commonSpec);await build(commonSpec);
    await field('left','9/1 2');await action('overlay');const split=await check(commonSpec,true,'original-split-digits');
@@ -329,11 +390,14 @@ const commonDenominator=task=>{for(let d=1;d<=60;d++)if(d%task.left[1]===0&&d%ta
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
   ok(observations.length===16&&isolated.length===30,'all eight native and fifteen associated positions ran in both viewports');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance},null,2));
-  console.log('P9_SAMEFRACTION_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length}));
+  ok(emptyPredictions.length===16&&negatives.length===8,'all empty-choice and correction/reset boundaries ran in both viewports');
+  ok(submissions.filter(s=>s.native).length===144&&submissions.filter(s=>!s.native).length===30,'all 144 native and 30 associated complete checks are recorded separately');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,viewports,provenance},null,2));
+  console.log('P9_SAMEFRACTION_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,associated:isolated.length,negatives:negatives.length,emptyPredictions:emptyPredictions.length,submissions:submissions.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,viewports,provenance,error:String(error),stack:error.stack,at:label},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negatives,isolated,offline,emptyPredictions,submissions,viewports,provenance,failureDiagnostic,error:String(error),stack:error.stack,at:label},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});

@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {sessionTasks,sessionMeta,BRIDGES} from '../dist/learning/bridges.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import * as geometry from '../dist/learning/phase5/b23-model.js';
+import * as view from '../dist/learning/phase5/b23-view.js';
+import {visibleModel} from './helpers/p9-basic-visible-controls.mjs';
 import {lineBinding,replayLineEvidence} from '../dist/learning/line-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
@@ -54,7 +56,12 @@ test('reject valid-grader no-ops and malformed histories, fabricated booleans, p
    for(const e of done.history){m.first=e.f.first;m.second=e.f.second;geometry.act(t,m,'g23-lineTest');}
    m.answers=done.answers;
    assert.ok(geometry.valid(t,m));assert.ok(geometry.inspect(t,m).correct);
-   assert.equal(replayLineEvidence(t,m),null,'invalid/duplicate pair is not observational evidence');
+   const proof=replayLineEvidence(t,m);assert.ok(proof,'visible failed/repeated requests are retained');
+   assert.equal(proof.failedComparisons,a===b?1:0);assert.equal(proof.repeatedComparisons,a===b?0:1);
+   assert.deepEqual(proof.firstAttempt,{first:String(a),second:String(b)});
+   assert.equal(proof.events[0].accepted,a!==b);
+   const erased=structuredClone(m);erased.board.first.lineTest={...done.history[0].f};
+   if(a===b)assert.equal(replayLineEvidence(t,erased),null,'first failed selection is not erased');
   }
   if(t.required.length===2){const m=structuredClone(done);m.history.pop();assert.equal(replayLineEvidence(t,m),null);}
  }
@@ -69,4 +76,21 @@ test('independently checked edge relations distinguish slanted parallel, rotated
  m.answers=['both'];assert.ok(replayLineEvidence(t,m));
  const reversed=structuredClone(m);reversed.history.reverse();
  assert.equal(replayLineEvidence(t,reversed),null,'reordered history must agree with the actual board');
+});
+
+test('blank and same-edge requests preserve first metadata; repeated real comparisons and final issue remain observable',()=>{
+ for(const [id,index] of cases){
+  const t=sessionTasks(id)[index],d=visibleModel(t,geometry,view),ctx={sessionId:id,index};
+  d.action('g23-lineTest');d.field('first','0');d.field('second','0');d.action('g23-lineTest');
+  const initial=structuredClone(d.model);for(const s of geometry.solveSteps(t))d.step(s);
+  d.action('g23-lineTest');
+  let proof=replayLineEvidence(t,d.model);assert.ok(proof,id+':'+index);assert.equal(proof.failedComparisons,2);assert.equal(proof.repeatedComparisons,1);
+  assert.deepEqual(proof.firstAttempt,{first:'',second:''});assert.equal(proof.tests.length,t.required.length+1);
+  assert.equal(thinkingFeedback(t,d.model,record(initial),ctx),null);assert.ok(thinkingFeedback(t,d.model,record(d.model),ctx));
+  d.field('second',d.model.first);d.action('g23-lineTest');
+  proof=replayLineEvidence(t,d.model);assert.ok(proof);assert.equal(proof.failedComparisons,3);assert.ok(d.model.issue);
+  for(const mutate of [m=>m.issue='',m=>m.board.first.lineTest.first='0',m=>m.history[0].f.first='00',m=>m.history.push({a:'reset',f:{},d:{}})]){
+   const m=structuredClone(d.model);mutate(m);assert.equal(replayLineEvidence(t,m),null);
+  }
+ }
 });

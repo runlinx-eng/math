@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {sessionTasks,sessionMeta,BRIDGES} from '../dist/learning/bridges.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import * as m38 from '../dist/learning/phase5/b38-model.js';
+import * as view from '../dist/learning/phase5/b38-view.js';
+import {visibleModel} from './helpers/p9-basic-visible-controls.mjs';
 import {counterexampleBinding,replayCounterexampleEvidence} from '../dist/learning/counterexample-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
@@ -97,4 +99,30 @@ test('adversarial records, invalid history, no-ops and board edits never become 
   assert.equal(p?.comparisons,2,'two actual mathematically valid comparisons allowed');
   assert.equal(p?.factor,'1/3');
  }
+});
+
+test('visible wrong predictions, blank choices and out-of-range text are retained before a corrected exact counterexample',()=>{
+ for(const index of cases)for(const [value,factor,choice] of [['6','1/2','greater'],['6','1/2',''],['0','1','equal'],['12','4','greater'],['invalid','1','equal'],['6','-1','less'],['6','1/0','less']]){
+  const task=sessionTasks('argument38')[index],d=visibleModel(task,m38,view);
+  for(const [key,x] of [['value',value],['second',factor],['choice',choice]])d.field(key,x);
+  d.action('r38-test');const failed=structuredClone(d.model);
+  for(const s of m38.solveSteps(task))d.step(s);
+  const p=replayCounterexampleEvidence(task,d.model);assert.ok(p);
+  assert.deepEqual(p.first,{value,factor,prediction:choice});assert.equal(d.model.board.bad,true);
+  assert.equal(p.wrongPredictions+p.failedRequests,1);assert.equal(p.events.length,2);
+  assert.equal(p.events[0].match,false);assert.equal(p.events[1].match,true);
+  assert.equal(p.actual,'less');assert.equal(BigInt(6)*1n*1n<6n*2n,true);
+  assert.equal(thinkingFeedback(task,d.model,record(failed),context(index)),null);assert.ok(thinkingFeedback(task,d.model,record(d.model),context(index)));
+  for(const mutate of [m=>m.board.bad=false,m=>m.board.first.prediction='less',m=>m.history[0].c='fake-option',m=>m.history[0].i='0']){
+   const m=structuredClone(d.model);mutate(m);if(JSON.stringify(m)!==JSON.stringify(d.model))assert.equal(replayCounterexampleEvidence(task,m),null);
+  }
+ }
+});
+
+test('a real later failed request never replaces the last actual comparison or its original issue',()=>{
+ const task=sessionTasks('argument38')[3],d=visibleModel(task,m38,view);for(const s of m38.solveSteps(task))d.step(s);
+ d.field('value','0');d.action('r38-test');d.field('value','6');
+ assert.ok(m38.inspect(task,d.model).correct);const p=replayCounterexampleEvidence(task,d.model);
+ assert.ok(p);assert.equal(p.lastComparisonIndex,0);assert.equal(p.failedRequests,1);assert.equal(p.comparisons,1);assert.ok(d.model.issue);
+ const erased=structuredClone(d.model);erased.issue='';assert.equal(replayCounterexampleEvidence(task,erased),null);
 });
