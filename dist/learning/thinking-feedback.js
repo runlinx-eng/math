@@ -12,15 +12,31 @@ import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
 import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
+import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
+import {transformBinding,replayTransformEvidence} from './transform-evidence.js';
+import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
-import {latestSubmissionMatches} from './evidence-contract.js';
+import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(!isEvidenceContext(context))return null;
   if(task?.type==='x-pvbench'){
     const source=pvbenchBinding(task,context);
     return source?{type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-g25-turn'){
+    const source=angleBinding(task,context);
+    return source?{type:task.type,summary:'想一想：开口和边的长短怎样比较？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每个点怎样对应？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-mulgroups'){
+    const source=groupsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每份、份数和总量怎样对应？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-fracorder'){
     const source=fractionOrderBinding(task,context);
@@ -68,7 +84,9 @@ export function thinkingGuide(task,context={}){
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
 export function thinkingFeedback(task,model,record,context={}){
-  if(!latestSubmissionMatches(model,record))return null;
+  // The pre-existing grid observation is context-free and remains outside the
+  // strict source-bound adapters. Its original grading and snapshot gate stay.
+  if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
   if(task?.type==='x-pvbench'){
     const source=pvbenchBinding(task,context);if(!source)return null;
@@ -92,6 +110,53 @@ export function thinkingFeedback(task,model,record,context={}){
       observation:`本次记录里有 ${proof.swapCount} 次成功交换：合并 ${proof.combined} 次、拆开 ${proof.split} 次。${examples.join('；')}${proof.swapCount>3?'；其余已记录交换也逐条核对':''}。每条记录中的交换前后，总量都是 ${proof.total}。当前装法为 ${form(proof.final)}，与你这次填写的总量 ${proof.submitted.answer} 相符。`,
       connection:task.packReport?'一共能装多少包十颗，与十位上的数字有什么不同？试着用现在的装法说明。':
        '块数或条数变了，总量为什么还能保持？试着说明十个小单位和一个相邻大单位之间的关系。',
+      detail,method:null};
+  }
+  if(task?.type==='x-g25-turn'){
+    const source=angleBinding(task,context);if(!source)return null;
+    const proof=replayAngleEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次指定并留下的开口、边长等级与当前回答；没有自动评价自由解释、独立连续推导或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayAngleEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.lengthComparison)detail.push(`你分别留下了短边、长边时同为 ${proof.lengthComparison.angle}° 的记录；改变边的长短没有改变这两份记录中的开口。`);
+    if(proof.cross)detail.push(`按当前 ${proof.cross.angle}° 的开口核对，对顶角为 ${proof.cross.opposite}°，邻角为 ${proof.cross.adjacent}°；相邻两角合计180°，交点周围四角合计360°。`);
+    if(proof.differences.length)detail.push(`本题指定的目标记录之间的差为：${proof.differences.map(r=>`${r.to}° − ${r.from}° = ${r.difference}°`).join('；')}。这些是记录间的数量关系。`);
+    if(proof.triangle)detail.push(`按这些累计开口得到的三部分为 ${proof.triangle.parts.join('°、')}°，合计 ${proof.triangle.sum}°，超过三角形内角和180°。本次没有实际构造三角形。`);
+    if(proof.advances.length)detail.push(`按钮留下的实际变化包括：${proof.advances.slice(0,5).map(r=>r.wrapped?'从整圈到下一圈的90°位置':`${r.from}° 到 ${r.to}°，增加 ${r.degrees}°`).join('；')}${proof.advances.length>5?'；其余变化也已逐条核对':''}。`);
+    return {title:'这次作品中的思考线索',
+      observation:`你按先后留下了本题要求的开口 ${proof.targetRecords.map(r=>r.angle+'°').join('、')}；当前控件的开口为 ${proof.angle}°。实际操作、保存的记录与这次填写的关系已分别核对。`,
+      connection:proof.lengthComparison?'保持开口不动，只把两条边画长些，哪些记录会变？':'如果换一个开口，怎样用已记录的角度解释它与半圈、整圈或相邻开口的关系？',
+      detail,method:null};
+  }
+  if(task?.type==='x-p24-transform'){
+    const source=transformBinding(task,context);if(!source)return null;
+    const proof=replayTransformEvidence(task,model);if(!proof)return null;
+    const detail=['这里只核对本次选择的变换参数、工具生成的对应坐标和当前提交；没有自动评价自由解释、独立作图、独立量取或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayTransformEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(proof.prediction.correct?'你最初填写的坐标猜想与这次第一个对应点相符。':'你最初填写的坐标猜想与这次第一个对应点不同；猜想和后来的操作已分别核对。');
+    if(proof.invariants.edgeSquared.length)detail.push(`按实际对应点核对，对应边长是原来的 ${proof.display.lengthFactor} 倍；边长平方是原来的 ${proof.display.squaredLengthFactor} 倍。`);
+    if(proof.invariants.anglesPreserved)detail.push('这些对应点形成的角保持相同；这只核对本次图形。');
+    if(proof.measurementCount)detail.push(`你请求工具显示过 ${proof.measurementCount} 次读数；这些读数由工具生成，没有据此判断你已独立量取。`);
+    const pairs=proof.display.sourcePoints.map((point,i)=>`${point} → ${proof.display.imagePoints[i]}`);
+    return {title:'这次作品中的思考线索',
+      observation:`你最后选择了${proof.display.operation}。工具每次都从原图计算，当前对应点是 ${pairs.join('；')}。实际记录中的 ${proof.operationCount} 次变换参数与对应坐标已逐一核对。`,
+      connection:'如果换一个点或换一种参数，怎样先猜它的对应位置？试着说明哪些量会改变，哪些量会保持。',
+      detail,method:null};
+  }
+  if(task?.type==='x-mulgroups'){
+    const source=groupsBinding(task,context);if(!source)return null;
+    const proof=replayGroupsEvidence(task,model);if(!proof)return null;
+    const detail=[proof.total===0?'这里只核对本次记录中空容器的数量、每份0和当前提交；没有自动评价自由解释、独立建模或长期掌握。':'这里只核对本次记录中物品的身份、实际分放和当前提交；没有自动评价自由解释、独立建模或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayGroupsEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.rounds)detail.push(`你实际逐轮分了 ${proof.rounds} 轮，每轮给每份一个；每个物品的去向都已核对。`);
+    if(proof.remainder)detail.push(`桌上剩下 ${proof.remainder} 个，比 ${proof.groups} 份少，已经不够每份再分一个。`);
+    if(proof.each===0)detail.push(`你实际建立了 ${proof.groups} 份空的容器；每份0个，合在一起仍是0个。`);
+    const role=proof.resultRole==='total'?'全部物品的总量':proof.resultRole==='each'?'每份的数量':'份数';
+    return {title:'这次作品中的思考线索',
+      observation:proof.total===0?`你实际建立了 ${proof.groups} 份空容器，每份0个，合计0个。填写的 ${proof.result} 表示${role}；容器数量、等量关系和算式已分别核对。`:`你${proof.mode==='build'?'实际建立并放入物品':'实际分放原有的物品'}，最后有 ${proof.groups} 份，每份 ${proof.each} 个${proof.remainder?`，桌上剩下 ${proof.remainder} 个`:''}，合计 ${proof.total} 个。每个物品只在一个位置，分放时没有漏算或重复计算。填写的 ${proof.result} 表示${role}；分放、等量关系和算式已分别核对。`,
+      connection:proof.mode==='build'?'如果份数不变、每份多一个，总量会怎样改变？每份都是0时又怎样？':'同一个总量，已知份数与已知每份数量时，答案分别在说什么？试着用实际物品说明。',
       detail,method:null};
   }
   if(task?.type==='x-fracorder'){

@@ -3,7 +3,7 @@
 // Replaying this log proves only its recorded exchanges. Numeric fields already
 // contain Numbers; their original spelling and precision cannot be recovered.
 import * as place from './phase5/b07-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  tenexchange:{indices:[0,1],nodeId:'mt_r0VXbfAmsH'},
@@ -15,7 +15,7 @@ const SOURCES=Object.freeze({
 });
 
 export function pvbenchBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-pvbench',nodeId:source.nodeId}))return null;

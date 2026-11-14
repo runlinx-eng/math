@@ -47,6 +47,26 @@ const applyVisible=(task,model,step)=>{
 const boundedFeedback=(task,model,record,context)=>pvbenchBinding(task,context)&&latestSubmissionMatches(model,record)?
  replayPVBenchEvidence(task,model):null;
 
+test('all fixed source entries reject malformed JSON keys before source lookup without changing valid work',()=>{
+ for(const c of cases){
+  const task=taskFor(c),model=pvbenchEvidenceExample(task),record={support:false,attempts:[{value:clone(model)}]};
+  const before=JSON.stringify({task,model,record}),good=pvbenchBinding(task,c);
+  assert.ok(good);assert.ok(thinkingGuide(task,c));assert.ok(thinkingFeedback(task,model,record,c));
+  const malformed=JSON.parse(JSON.stringify([
+   {sessionId:{toString:null},index:c.index},{sessionId:{toString:0,valueOf:null},index:c.index},
+   {sessionId:[c.id],index:c.index},{sessionId:null,index:c.index},{sessionId:false,index:c.index},
+   {sessionId:c.id,index:{toString:null}},{sessionId:c.id,index:[c.index]},
+   {sessionId:c.id,index:String(c.index)},{sessionId:c.id,index:false},{sessionId:c.id,index:0.5}
+  ]));
+  for(const context of malformed){
+   assert.equal(pvbenchBinding(task,context),null);
+   assert.equal(thinkingGuide(task,context),null);assert.equal(thinkingFeedback(task,model,record,context),null);
+  }
+  assert.deepEqual(pvbenchBinding(task,JSON.parse(JSON.stringify(c))),good);
+  assert.equal(JSON.stringify({task,model,record}),before);
+ }
+});
+
 test('eleven reviewed native questions, six source nodes, complete hashes and no associated authorization',()=>{
  assert.equal(cases.length,11);assert.equal(new Set(cases.map(c=>c.nodeId)).size,6);
  assert.equal(cases.filter(c=>c.savedGoal===null).length,8);assert.equal(cases.filter(c=>c.savedGoal!==null).length,3);
