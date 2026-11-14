@@ -1,0 +1,68 @@
+// Independently reviewed native identities and quantities. Do not derive this
+// acceptance fixture from the runtime binding table it is meant to check.
+module.exports=[
+ ['equalgroups',0,'mt_PZ909yPrEC','build',3,2,6],
+ ['equalgroups',1,'mt_PZ909yPrEC','build',4,3,12],
+ ['sharegroups',0,'mt_LpSuPgL31x','share',2,5,10],
+ ['sharegroups',1,'mt_LpSuPgL31x','group',4,3,12],
+ ['sharegroups',2,'mt_LpSuPgL31x','group',4,2,8],
+ ['sharegroups',3,'mt_LpSuPgL31x','share',3,4,12],
+ ['screenshare',0,'mt_1GDEHyEZYH','share',2,5,10],
+ ['screenshare',1,'mt_1GDEHyEZYH','group',4,3,12],
+ ['screenshare',2,'mt_1GDEHyEZYH','share',3,2,6],
+ ['bagstories',0,'mt_wh3UqnWsa7','build',5,2,10],
+ ['bagstories',1,'mt_wh3UqnWsa7','share',3,5,15],
+ ['groupsproblems',0,'mt_qUjW0N1cYO','share',3,6,18],
+ ['groupsproblems',1,'mt_qUjW0N1cYO','group',4,5,20],
+ ['divisionmeaning',0,'mt_iNdrM2-oJf','share',8,7,56],
+ ['divisionmeaning',1,'mt_iNdrM2-oJf','group',7,8,56],
+ ['divisionmeaning',2,'mt_iNdrM2-oJf','share',3,4,13],
+ ['rowsums',1,'mt_B1zj1RwQ3a','build',3,4,12],
+ ['mulsymbols',1,'mt_zOWwLxa77y','share',3,4,12],
+ ['productmeaning',0,'mt_gtTl3R5buH','build',4,6,24],
+ ['productmeaning',2,'mt_gtTl3R5buH','build',6,4,24],
+ ['evenhalves',1,'mt_0u4KLbvBa1','share',2,8,16],
+ ['mentalproducts',1,'mt_pjfmCMMPjO','build',5,0,0],
+ ['mentalproducts',2,'mt_pjfmCMMPjO','build',6,1,6],
+ ['mentalproducts',3,'mt_pjfmCMMPjO','share',1,8,8],
+ ['mixedfacts',2,'mt_WX30dzi4dt','group',7,8,56],
+ ['groupstories',0,'mt_Zdv-b-iW5K','build',6,8,48],
+ ['groupstories',1,'mt_Zdv-b-iW5K','group',7,4,28],
+ ['groupstories',2,'mt_Zdv-b-iW5K','share',4,7,28],
+ ['structure34',2,'mt_FAXjFkgG6X','share',4,6,24]
+].map(([sessionId,index,nodeId,mode,groups,each,total])=>
+ Object.freeze({sessionId,index,nodeId,mode,groups,each,total}));
+
+// Complete original question fingerprints from the deliberate Issue #133 review.
+const hashes={
+  "equalgroups:0": "a2d92bdc42cba8009ee946e9bfd37645174ba542f3815c61b4fd8c7bf71fcbf5",
+  "equalgroups:1": "336afa59d603f637f219f5404a509571a1a7ad797526084b6038bb2d157f9c29",
+  "sharegroups:0": "294b1bf4a1ef71d0aa6ee43a707fc44b2ae874af3dc2307c64c7589ab1313997",
+  "sharegroups:1": "0ce9a76ea369bcbd32e7e5c36fbe92438af8c2557e0157f71acede2ce014233f",
+  "sharegroups:2": "6e85ec6fae69968ee4a74af6bb43814d8638f6fd3afb7869a67671f7e33a9a7f",
+  "sharegroups:3": "be36e23e601bf2921ec462ccc02363b88d8eb29cbca8aca338bd69176f15c9f5",
+  "screenshare:0": "9b708c23d22d4d7eb04df848b66ac5f34d2f7770c391633c5eda53391b688e2d",
+  "screenshare:1": "c233d5cd08bd5b3a1706e61de402604270dfd010f73f9a34c609b5213161dd52",
+  "screenshare:2": "3353040960bc42452070828112a51c8f22e685493c64738ab86f165df79c1e2a",
+  "bagstories:0": "e8b99fa4a998f62bb0e1bc798fa4675e9d34fa7391015f92064093ef3d336451",
+  "bagstories:1": "b95467ae4c10f4ef3fb407476decf65a39f91e52aa9e347096497a30b71ce50a",
+  "groupsproblems:0": "3795cf5df6da0006acf3f7181d4f7cac07810dd5a9dfd275a9d95d2c95322364",
+  "groupsproblems:1": "6cbbd9e09ffd22f790260c1ee16e7f98cff2665a763d7dc605b668372707b5b4",
+  "divisionmeaning:0": "f1e1fbd5f9974d995b8e5b2f0abe2f56b675cf6defaec3d67a056171fbf82e12",
+  "divisionmeaning:1": "05a532c5ea85f9820d48e47ea4cb9eecf63b4fd50e7430ef7a1ea7432d529d92",
+  "divisionmeaning:2": "f2af4cb47c27f103fc34a7d898e12ea88713cbfb447b74bfe1a860fe2005fce6",
+  "rowsums:1": "2e3ea37981293c038af7ef8cd41f2977f1ff110dbe12e9f40bf60252ead5515d",
+  "mulsymbols:1": "06c8b3a0b266ad129c26632ad1e327763e91417de6ec8bca2dd8bd7f30882058",
+  "productmeaning:0": "87169e7a9eca1cb002d7da43e8b83f537486e9fd92ba1f4bbc38473dc4b8e8a0",
+  "productmeaning:2": "ec65f4a4065b46cd99c04c436090a14e80df53ee31fd59a8b43521e40266fc20",
+  "evenhalves:1": "7f1cbd3683b26779f7e7c294ed8728e5a0c50726b4e85f195e55b0f997ba7fc7",
+  "mentalproducts:1": "9b8724440e136822d1c15c50ab8ee8e7bc287abb48c62c7c959b01d3da271a0a",
+  "mentalproducts:2": "be420f3a3e21d99cbfce39b8cf0d94de67584c59cbecf5267b2e0f067023dc0f",
+  "mentalproducts:3": "8d004ecee7deaf7cc1190230ab14b67c1161bb6978c10b8fd27166492e613a36",
+  "mixedfacts:2": "a8099cb31998a40f11f80e7a599667e941e4a742002b54de510a194afa2e61b2",
+  "groupstories:0": "5824041e3eff17704bffc559c0f9e2d6b27d2632ca3c241f29de77ae609b31f0",
+  "groupstories:1": "ccde292b0f665a124721051e200ccd6670cb7c4440e5f6c8f8cdfc767ebe61d6",
+  "groupstories:2": "05c8455bec8fdf07fae7e31174b8754d8610193cd24e05a934047befe4cd5ace",
+  "structure34:2": "77c3bdde09c93e505f3093aea4abaa5204c1f6a187da124e37596f1512d0a6c3"
+};
+module.exports=module.exports.map(row=>Object.freeze({...row,taskHash:hashes[row.sessionId+':'+row.index]}));

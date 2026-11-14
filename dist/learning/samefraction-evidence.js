@@ -2,7 +2,7 @@
 // automatic overlays; the learner records predictions, selected identities,
 // requested common grids and submitted comparison/name fields.
 import * as fractions from './phase5/b16-model.js';
-import {matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,sameEvidence as same,hasExactKeys as keys} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
  smallershare:{indices:[0,1,2],nodeId:'mt_hyvHv2BCwb'},
@@ -13,7 +13,7 @@ const SOURCES=Object.freeze({
  tools39:{indices:[2],nodeId:'mt_d-WZC2OyMB'}
 });
 export function sameFractionBinding(task,context={}){
- if(!context||typeof context!=='object'||Array.isArray(context))return null;
+ if(!isEvidenceContext(context))return null;
  const source=Object.hasOwn(SOURCES,context.sessionId)?SOURCES[context.sessionId]:null;
  if(!source||!source.indices.includes(context.index)||
     !matchesNativeEvidenceTask(task,context,{type:'x-samefraction',nodeId:source.nodeId}))return null;

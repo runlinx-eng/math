@@ -81,6 +81,26 @@ test('eight native positions from six sources and all fifteen associated positio
  for(const c of associatedCases){const task=taskAt(c.id,c.index);assert.equal(hash(task),c.taskHash);accepted(task,M.example(task));}
 });
 
+test('all native source entries reject malformed JSON keys before source lookup without changing valid work',()=>{
+ for(const c of cases){
+  const task=taskAt(c.id,c.index),model=M.example(task),record={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,record}),good=sameFractionBinding(task,c);
+  assert.ok(good);assert.ok(thinkingGuide(task,c));assert.ok(thinkingFeedback(task,model,record,c));
+  const malformed=JSON.parse(JSON.stringify([
+   {sessionId:{toString:null},index:c.index},{sessionId:{toString:0,valueOf:null},index:c.index},
+   {sessionId:[c.id],index:c.index},{sessionId:null,index:c.index},{sessionId:false,index:c.index},
+   {sessionId:c.id,index:{toString:null}},{sessionId:c.id,index:[c.index]},
+   {sessionId:c.id,index:String(c.index)},{sessionId:c.id,index:false},{sessionId:c.id,index:0.5}
+  ]));
+  for(const context of malformed){
+   assert.equal(sameFractionBinding(task,context),null);
+   assert.equal(thinkingGuide(task,context),null);assert.equal(thinkingFeedback(task,model,record,context),null);
+  }
+  assert.deepEqual(sameFractionBinding(task,JSON.parse(JSON.stringify(c))),good);
+  assert.equal(JSON.stringify({task,model,record}),before);
+ }
+});
+
 for(const c of cases)test(`${c.id}:${c.index} verifies real selected identities and an exact same-whole comparison`,()=>{
  const task=taskAt(c.id,c.index);
  for(const options of [{},{reverse:true,guess:wrong(c.relation)},{earlyOverlay:true,earlyRefine:true},

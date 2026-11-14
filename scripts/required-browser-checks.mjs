@@ -115,6 +115,18 @@ const groups={
   "verification/p9-fraction-order-adapter/",
   "verification/p9-samefraction-adapter/",
  ]},
+ // PR #146 measured 19m57s for the four existing expansion commands.
+ // Keep every invocation and artifact; give the next construction families
+ // a separate runner instead of extending that serial path toward its limit.
+ "evidence-expansion-2":{commands:[
+  {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-groups-adapter/",
+  "verification/p9-transform-adapter/",
+  "verification/p9-angle-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
