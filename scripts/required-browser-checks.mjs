@@ -149,6 +149,13 @@ const groups={
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
  ]},
+ // The full B15 error/correction/retry and backup matrix has its own runner;
+ // no existing command, artifact, assertion or timeout is removed.
+ "evidence-order":{commands:[
+  {"file":"tests/p9-order-adapter-browser.cjs","env":{}},
+ ],artifacts:[
+  "verification/p9-order-adapter/",
+ ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},

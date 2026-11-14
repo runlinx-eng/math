@@ -20,6 +20,7 @@ import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order
 import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 
 import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
+import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -39,5 +40,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'estimate',type:'x-estimatecheck',binding:estimateBinding,replay:replayEstimateEvidence},
  {id:'portiongroups',type:'x-portiongroups',binding:portionGroupsBinding,replay:replayPortionGroupsEvidence},
  {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence},
- {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence}
+ {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence},
+ {id:'order',type:'x-orderlab',binding:orderBinding,replay:replayOrderEvidence}
 ].map(Object.freeze));
