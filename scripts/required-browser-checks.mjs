@@ -109,9 +109,11 @@ const groups={
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
+  "verification/p9-fraction-order-adapter/",
  ]},
  "p10":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
