@@ -1,3 +1,38 @@
+## P9 分数情境题｜Issue #151：真实构造与两层记录边界（2026-11-14）
+
+依赖开发检查点为Issue #150的 `aa709cf1283ad5a3c8fa16792e94f6e6881a85c6`，它包含正式main `d69eeb1acf9d440a184cf7ccfb192e6887e6bc7a`。下述并集只属于本准备分支，不代表依赖或本项已经合并。新增 `fractioncase-evidence.js`，每道完整原题及源文件SHA256固定在独立fixture，review manifest显式列出以下38位置；全部method:null。
+
+| 原生课程 | 索引 | 来源节点 |
+| --- | --- | --- |
+| joinfractions | 0、1、2、3 | `mt_a1FdAsRKOF` |
+| fractioncarry | 0、1、2 | `mt_CBHwluE6Lp` |
+| mixedexchange | 3 | `mt_70qDTI14td` |
+| relatedparts | 0、1、2、3 | `mt_-V7EnqU7gG` |
+| fractionstories | 0、1、2 | `mt_ZLqYE7la4Z` |
+| unlikeparts | 0、1、2 | `mt_14T5yPXUq_` |
+| fractionarea | 0、1、2 | `mt_gx6KQK5-Kx` |
+| productfractions | 0、1、2 | `mt_AabJisinfi` |
+| fractionrecipe | 0、1、2 | `mt_lvaSGHwvQ5` |
+| countsmallgroups | 0、1、2 | `mt_1PAWhRhpdg` |
+| fractiondividewords | 1 | `mt_rCMdwG-YOE` |
+| fractionsanity | 0、1、3 | `mt_e7filQgayF` |
+| fractionquotient | 0、1、2 | `mt_9Y96vxG_LH` |
+| argument38 | 1 | `mt_j5YqQnN6xe` |
+
+仅把 `type/a/b/op/prompt` 五个数学键投影到已审查基础回放，外层22字段与内层28字段分别严格核对。外层每次start与内层自动predict-op、每次reset与内层reset一一对应，保留最初输入和全部历史。自动估计归工具，不能把外层一次猜想重复算成两次儿童操作；原模型分别valid但两流预测不一致的组合会拒绝。未开始时隐藏的内层输入、无按钮的重复start、未匹配reset、原工具拒绝的形式和失败normalize均不能获证，后续纠正或重摆不清除这些历史。
+
+BigInt独立验证有理数、严格输入字面形式、闭区间端点和逆算关系，并同时要求原解析入口接受相同数学值与原判题通过。合法负带分数、百分数区间、未约分的真实分法与分散行列选择可核对；超精度小数、指数/数字拼接及舍入假等量保守排除。当前原B17浮点比较会拒绝某些极接近的大分数区间，即使精确数学上有序也仍需原门槛通过，本项不修改原判题。
+
+构造就绪按每个内层前缀独立重算：改变共同单位或涂份会使之前的合并/整组失效。外层normalize及记录输入只承认本次开始与重摆锚点之间存在兼容的就绪前缀，范围排除未完成的空隙，不能借后一次重摆的作品替早先记录作证。`exactTimingKnown:false`及`exactCrossStreamTimingKnown:false`明确不能证明不同记录流中的精确时刻；若合法UI与提前API调用留下相同可观察记录，只核对其可兼容关系，不宣称复原实际先后。换算证明两边同乘同一倒数且除数变1，不把提交的量或系统显示当成儿童独立计算。
+
+加减、乘法、除法分别沿基础契约核对真实身份、单位、面积及A=qB+R；余量R/D表示原单位中的量，R/B表示一组的比例，0整组也可如实描述。最简名字、带分数、面积格数和逆运算等式仅归于本次提交；故事只确认文字保留，不评价其含义、一般证明或长期掌握。工具输出与孩子的真实选份分开描述，反馈只出现在当前完整作品等于最新提交时。
+
+实际审计以A246/93节点为基线，新增 **38道B→A、12个新覆盖节点**，得到 **A284/105节点、B210、C150、D1199、E153**；14来源中2个已有其他严格题。3548条审计行只有这38条变化，其他3510条逐值保持，全部1996原生题、587节点、1223关系和1552关联题保持；本族56道同型关联题全部隔离。14个注册家族、扩展审计0缺陷，不借同型控件或候选通过扩大绑定。
+
+71项专用Node覆盖原V.render可用按钮/字段、全部38题两轮共380次真实State.submitLesson、重摆保留、反馈归因及边界；原B18的38项和底层37项另行保留。双视口浏览器脚本覆盖76个原生实例、112个关联实例及26条反例/替代表达路径，在停HTTP源站后操作，真实reload并核验来自Service Worker，保存每题五次完整model/attempt及原始存储、proof和截图。本地未启动Chromium，源控件探针不替代实际浏览器。Required保全七组旧调用并新增一条，共61次33/10/2/3/4/7/2；扩展二四条命令合计耗时尚待实测。完整最终HEAD与随后main独立Required/P10仍需正式验收；依赖与本项检查点状态见Issue，不把本准备覆盖并入正式主线。
+
+---
+
 ## P9 分数四则运算｜Issue #150：当前构造与精确单位（2026-11-14）
 
 基线为正式 main `d69eeb1acf9d440a184cf7ccfb192e6887e6bc7a`。新增 `fraction-operations-evidence.js`，只绑定10道明确审查的B17原生题，完整原题SHA256固定于专用fixture和review manifest，全部method:null。

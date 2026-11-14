@@ -13,6 +13,7 @@ import {transformBinding,replayTransformEvidence} from './transform-evidence.js'
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
+import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
@@ -27,5 +28,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
  {id:'groups',type:'x-mulgroups',binding:groupsBinding,replay:replayGroupsEvidence},
  {id:'transform',type:'x-p24-transform',binding:transformBinding,replay:replayTransformEvidence},
- {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence}
+ {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence},
+ {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence}
 ].map(Object.freeze));

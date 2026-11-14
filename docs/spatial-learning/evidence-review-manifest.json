@@ -2266,6 +2266,348 @@
       "adapter": "fraction-operations",
       "taskHash": "868851466c766ffc9acef6a50502cad42ae6876d172dd39f71a352cd1b086cee",
       "method": null
+    },
+    {
+      "sessionId": "joinfractions",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_a1FdAsRKOF",
+      "adapter": "fractioncase",
+      "taskHash": "a1cd80b4e2d9c1899e8e85ca6beecdfc2f046d6552f3556400db821ff340b07b",
+      "method": null
+    },
+    {
+      "sessionId": "joinfractions",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_a1FdAsRKOF",
+      "adapter": "fractioncase",
+      "taskHash": "ded380bbd681cde1ffd4fada597223bb52ef5689589ccd5313d71bff40077e0a",
+      "method": null
+    },
+    {
+      "sessionId": "joinfractions",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_a1FdAsRKOF",
+      "adapter": "fractioncase",
+      "taskHash": "88bebb6511e397b1fd58853d3729eb9d309aee43276af65daa25c7c975e610dd",
+      "method": null
+    },
+    {
+      "sessionId": "joinfractions",
+      "index": 3,
+      "type": "x-fractioncase",
+      "nodeId": "mt_a1FdAsRKOF",
+      "adapter": "fractioncase",
+      "taskHash": "4bb516c3314a3e253a9004c51c2c4ed2e6fd0c340311c46b35b38a2c04f3eddd",
+      "method": null
+    },
+    {
+      "sessionId": "fractioncarry",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_CBHwluE6Lp",
+      "adapter": "fractioncase",
+      "taskHash": "58704f2d23539b525663fdf710370eb4cd434e252ea8c070c4289ebaf2a39331",
+      "method": null
+    },
+    {
+      "sessionId": "fractioncarry",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_CBHwluE6Lp",
+      "adapter": "fractioncase",
+      "taskHash": "951b6a2ced6eac4599c1d3409b066e12ff207015a3fab162049073ab28b18c7e",
+      "method": null
+    },
+    {
+      "sessionId": "fractioncarry",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_CBHwluE6Lp",
+      "adapter": "fractioncase",
+      "taskHash": "58c404a694523a8508acfc6bedb075a9c48314510a803708d8557e22098de29a",
+      "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 3,
+      "type": "x-fractioncase",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "fractioncase",
+      "taskHash": "0c2931e9893301ec9c6f18a90f95c742210e2dd980a31975f274a5402eb10a35",
+      "method": null
+    },
+    {
+      "sessionId": "relatedparts",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_-V7EnqU7gG",
+      "adapter": "fractioncase",
+      "taskHash": "738712f55b2c62f2f612c8abdbd7ac1811a7f4fa132ce4df561a5093bd8ea794",
+      "method": null
+    },
+    {
+      "sessionId": "relatedparts",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_-V7EnqU7gG",
+      "adapter": "fractioncase",
+      "taskHash": "4b24abd2c6a541a0f90cf78e6fd6405db361780117751f33949f02c36418757a",
+      "method": null
+    },
+    {
+      "sessionId": "relatedparts",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_-V7EnqU7gG",
+      "adapter": "fractioncase",
+      "taskHash": "e868305c9e229711f1e1d312d1db66a89c203f9856091e8cba8de85393b8b0a3",
+      "method": null
+    },
+    {
+      "sessionId": "relatedparts",
+      "index": 3,
+      "type": "x-fractioncase",
+      "nodeId": "mt_-V7EnqU7gG",
+      "adapter": "fractioncase",
+      "taskHash": "a913354ea1641af83bbb1b052850d7c05063ddb9eb5c2f5bf84a796e1de7ee89",
+      "method": null
+    },
+    {
+      "sessionId": "fractionstories",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_ZLqYE7la4Z",
+      "adapter": "fractioncase",
+      "taskHash": "99e1290a084caa5d2a90686224efb471f55d084bc66b0dcdf8b5531404cd5ee8",
+      "method": null
+    },
+    {
+      "sessionId": "fractionstories",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_ZLqYE7la4Z",
+      "adapter": "fractioncase",
+      "taskHash": "740dd38ab293875327b03d25b52c37f43f99a5c465b7f0579a350d1c4a237542",
+      "method": null
+    },
+    {
+      "sessionId": "fractionstories",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_ZLqYE7la4Z",
+      "adapter": "fractioncase",
+      "taskHash": "a47eccffbf551068521db7402b005131a3f951a084b00a265c5f555b1a250084",
+      "method": null
+    },
+    {
+      "sessionId": "unlikeparts",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_14T5yPXUq_",
+      "adapter": "fractioncase",
+      "taskHash": "08371c55af3e9dc641f2a92985140af550ffc86a5693fdf7aec7cf5dfccf2ff5",
+      "method": null
+    },
+    {
+      "sessionId": "unlikeparts",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_14T5yPXUq_",
+      "adapter": "fractioncase",
+      "taskHash": "f43292f291709538ecc3a7274bf8cc8669af2eb45d18b34c79a0a7c6fc43f833",
+      "method": null
+    },
+    {
+      "sessionId": "unlikeparts",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_14T5yPXUq_",
+      "adapter": "fractioncase",
+      "taskHash": "b933be3e730a5a1de28fbdf28d6607777ab1308e6ec98613b332dcf6bce8a91a",
+      "method": null
+    },
+    {
+      "sessionId": "fractionarea",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_gx6KQK5-Kx",
+      "adapter": "fractioncase",
+      "taskHash": "0dd6fb187a6427af4461495f61e3936ce113c9da7abc6a085e65cf6270062c42",
+      "method": null
+    },
+    {
+      "sessionId": "fractionarea",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_gx6KQK5-Kx",
+      "adapter": "fractioncase",
+      "taskHash": "62f09db85c9c0793a2fc40be35a8f22a4a16b6abf0f4c38cfd16ce73964a228c",
+      "method": null
+    },
+    {
+      "sessionId": "fractionarea",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_gx6KQK5-Kx",
+      "adapter": "fractioncase",
+      "taskHash": "8c45479d4582d0f9835fb116a9efb3d5b411ba5faad00166e5c35df892a7235f",
+      "method": null
+    },
+    {
+      "sessionId": "productfractions",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_AabJisinfi",
+      "adapter": "fractioncase",
+      "taskHash": "6da14ffbe42401c01f00e715af1a48ba2359b0a78e5b5ab1e134b999ac27a8b9",
+      "method": null
+    },
+    {
+      "sessionId": "productfractions",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_AabJisinfi",
+      "adapter": "fractioncase",
+      "taskHash": "d5377245c793736aa95303421b97836b8852cd2c9ad932ba29f0f1bb7b052c3f",
+      "method": null
+    },
+    {
+      "sessionId": "productfractions",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_AabJisinfi",
+      "adapter": "fractioncase",
+      "taskHash": "ace5f8052b4480632abaf6ecc942645b47b38b6142a0396ad1bb29178af9a8bb",
+      "method": null
+    },
+    {
+      "sessionId": "fractionrecipe",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_lvaSGHwvQ5",
+      "adapter": "fractioncase",
+      "taskHash": "b743153c646675029c5cce575ccb310b7a9ce0703e2ac235c48869f2c9ddaf4a",
+      "method": null
+    },
+    {
+      "sessionId": "fractionrecipe",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_lvaSGHwvQ5",
+      "adapter": "fractioncase",
+      "taskHash": "ea9988387046c54cd77d96252dd177701b85fcd2416ed803431964e16d58ea06",
+      "method": null
+    },
+    {
+      "sessionId": "fractionrecipe",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_lvaSGHwvQ5",
+      "adapter": "fractioncase",
+      "taskHash": "dd47083298ccf70ccbd274976b69c4692e2667a0d83787476b5dd263a5925f78",
+      "method": null
+    },
+    {
+      "sessionId": "countsmallgroups",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_1PAWhRhpdg",
+      "adapter": "fractioncase",
+      "taskHash": "711a11ffa658a31d97a2a4b1b32810f84c0fd2df7a3b997ac03eda2e929dcca7",
+      "method": null
+    },
+    {
+      "sessionId": "countsmallgroups",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_1PAWhRhpdg",
+      "adapter": "fractioncase",
+      "taskHash": "31955bdb4cf41cb6167ee68b0eeabbffef858bcf254c984de814d94a53c64a2c",
+      "method": null
+    },
+    {
+      "sessionId": "countsmallgroups",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_1PAWhRhpdg",
+      "adapter": "fractioncase",
+      "taskHash": "2900ff1bbf9db37117084688b22a9aa0ad9472cbc90b42f5e5548236f242972e",
+      "method": null
+    },
+    {
+      "sessionId": "fractiondividewords",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_rCMdwG-YOE",
+      "adapter": "fractioncase",
+      "taskHash": "7d30d5921919e477d26861b79d0890ae8a7ac7569208b46fdf09e714eff63359",
+      "method": null
+    },
+    {
+      "sessionId": "fractionsanity",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_e7filQgayF",
+      "adapter": "fractioncase",
+      "taskHash": "ba520ef2aae336413664b8faad0e8823fa03a29be63a589bddebf42dd63ac062",
+      "method": null
+    },
+    {
+      "sessionId": "fractionsanity",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_e7filQgayF",
+      "adapter": "fractioncase",
+      "taskHash": "8342157dea2eb1965814899258dfa94b222c1c35d8ff2b2ca34010664fd6f3eb",
+      "method": null
+    },
+    {
+      "sessionId": "fractionsanity",
+      "index": 3,
+      "type": "x-fractioncase",
+      "nodeId": "mt_e7filQgayF",
+      "adapter": "fractioncase",
+      "taskHash": "39384b83d9544f6900d71a498bff1f4819feedbcfc480918583202fbd15198a1",
+      "method": null
+    },
+    {
+      "sessionId": "fractionquotient",
+      "index": 0,
+      "type": "x-fractioncase",
+      "nodeId": "mt_9Y96vxG_LH",
+      "adapter": "fractioncase",
+      "taskHash": "c6294032a427a8fbe5058710f110f2281be799433eeac294a9489257768d8353",
+      "method": null
+    },
+    {
+      "sessionId": "fractionquotient",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_9Y96vxG_LH",
+      "adapter": "fractioncase",
+      "taskHash": "0c50a8da2effa2091490f7117a14a0e3b68d70c68b7f0e146c3d658f663cbe97",
+      "method": null
+    },
+    {
+      "sessionId": "fractionquotient",
+      "index": 2,
+      "type": "x-fractioncase",
+      "nodeId": "mt_9Y96vxG_LH",
+      "adapter": "fractioncase",
+      "taskHash": "0186a169239df00d8ac6486f6638b7fff0423d8c8c8add07697332623e1b6a38",
+      "method": null
+    },
+    {
+      "sessionId": "argument38",
+      "index": 1,
+      "type": "x-fractioncase",
+      "nodeId": "mt_j5YqQnN6xe",
+      "adapter": "fractioncase",
+      "taskHash": "a45eeaabf001e9831fd2c92b35ad088911d1cfe21a7108f5e0d57caa2529737f",
+      "method": null
     }
   ]
 }

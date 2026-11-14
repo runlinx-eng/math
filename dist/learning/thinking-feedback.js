@@ -16,10 +16,15 @@ import {transformBinding,replayTransformEvidence} from './transform-evidence.js'
 import {groupsBinding,replayGroupsEvidence} from './groups-evidence.js';
 import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order-evidence.js';
 import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
+import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 import {latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-fractioncase'){
+    const source=fractionCaseBinding(task,context);
+    return source?{type:task.type,summary:'想一想：情境中的量与图上的份怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fracoperations'){
     const source=fractionOperationsBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次运算数的是什么单位？（可选）',question:source.question}:null;
@@ -80,6 +85,47 @@ const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 export function thinkingFeedback(task,model,record,context={}){
   if(!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-fractioncase'){
+    const source=fractionCaseBinding(task,context);if(!source)return null;
+    const proof=replayFractionCaseEvidence(task,model);if(!proof)return null;
+    const core=proof.construction,name=r=>r[1]===1?String(r[0]):r.join('/'),result=name(proof.quantities.result);
+    const kinds={negative:'比0小',zero:'等于0',part:'在0与1之间',one:'等于1',more:'比1大'};
+    const detail=['这里只核对本次记录中的选择、图示和当前提交；工具生成的图和读数不等于独立构造或证明，没有自动评价自由解释、故事的意义或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayFractionCaseEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.estimate){
+      const e=proof.estimate;
+      detail.push(`最初开始时填写的范围是 ${proof.firstAttempt.low} 到 ${proof.firstAttempt.high}；本轮填写的范围是 ${e.bounds[0]} 到 ${e.bounds[1]}，包含两个端点。工具根据本轮区间中点自动记下量级估计，这不是额外一次作答。当前图示表示 ${result}，${e.inside?'在':'不在'}本轮区间内，与本次提交的判断相符；范围没有包含结果也可以如实核对。`);
+    }else{
+      detail.push(`最初填写的量级猜想是“${kinds[proof.firstAttempt.guess]}”；本轮开始填写的是“${kinds[proof.currentStart.guess]}”。工具把本轮猜想带入图示，未把它算作第二次预测；当前构造得到的量${kinds[core.resultKind]}，猜想和后来的操作分别保留。`);
+    }
+    if(proof.resets.length)detail.push(`你重新摆放了 ${proof.resets.length} 次，之前的记录和最初猜想仍保留；下面只描述当前留下的有效构造。`);
+    let observation,connection;
+    if(core.product){
+      const p=core.product;
+      observation=`你实际选择了 ${p.columns.length} 列和 ${p.rows.length} 行，每个小格表示 ${name(p.cellArea)} 个面积单位。工具显示交集有 ${p.cellCount} 小格，合计 ${result} 个面积单位；行列选择、交集面积与当前填写的答案分别核对。`;
+      connection='情境中的两个量各对应哪一边的小份？换一种等值分法时，每格的面积和格数怎样一起改变？';
+      if(!p.contiguousColumns||!p.contiguousRows)detail.push('这次包含不连续的行或列；核对的是所有交集小格的面积，没有把它们当作一块连续长方形。');
+    }else if(core.division){
+      const d=core.division;
+      observation=`你选中了 ${d.originalPieces} 小份作为原来的量、${d.groupPieces} 小份作为一组的量，每小份是 ${name(core.common.unit)}。当前构造记录了 ${d.wholeGroups} 次有效放组，工具显示余下 ${d.remainingPieces} 小份；余量是原单位的 ${name(d.remainingAmount)}，也是一组的 ${name(d.fractionOfGroup)}。${d.wholeGroups} 整组加上这一部分，与当前填写的 ${result} 相符。`;
+      connection='在这个情境里，答案数的是多少个什么？不足一组的余量，相对原单位和相对一组各怎样命名？';
+    }else{
+      const c=core.combination,unit=name(core.common.unit);
+      observation=`你把情境中的两个量分别表示为 ${c.leftCount} 个 ${unit} 和 ${c.rightCount} 个 ${unit}。点击“${c.operator==='+'?'把两部分接起来':'从第一部分拿走第二部分'}”后，工具显示 ${c.resultCount} 个 ${unit}，表示 ${result}；原量、实际选份、共同单位与当前答案分别核对。`;
+      connection='情境中哪些量被接起来或拿走？换成同样大的小份时，怎样保持每个原量不变？';
+    }
+    if(proof.simple)detail.push(`本次提交的最简名字 ${proof.simple.raw} 与图示结果等值；这里只核对填写的名字，没有把它记成一次独立约分操作。`);
+    if(proof.mixed)detail.push(`本次提交的整份 ${proof.mixed.submitted.whole} 和余下部分 ${proof.mixed.submitted.part}，分别表示 ${proof.mixed.whole} 整与 ${name(proof.mixed.part)} 个原单位，合在一起与当前结果相符。`);
+    if(proof.tile)detail.push(`本次提交的每格面积 ${proof.tile.submitted.tile} 和格数 ${proof.tile.submitted.count}，与实际交集的单位 ${name(proof.tile.unit)}、${proof.tile.count} 小格相符；填写这些数本身不是额外一次构造。`);
+    if(proof.inverse)detail.push(`本次提交的算式 ${proof.inverse.raw} 已核对：组数 ${name(proof.inverse.result)} 与每组的量 ${name(proof.inverse.group)} 相乘，等于原来的量 ${name(proof.inverse.total)}。这里只核对提交的关系，没有把算式当成另外一次计算操作。`);
+    if(proof.normalized){
+      const n=proof.normalized,factor=name(n.factor);
+      detail.push(`你请求工具显示换算；本次记录的两边同乘 ${factor}：${name(proof.quantities.a)} × ${factor} = ${name(n.scaledA)}，${name(proof.quantities.b)} × ${factor} = 1。两边使用相同倍数，商保持不变。这里核对的是与已完成图示兼容的换算关系，不能确定换算发生的精确时刻。`);
+    }
+    if(proof.storyProvided)detail.push('你填写的故事仍然保留；这里没有自动判断故事是否完整说明了数学关系。');
+    return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
   if(task?.type==='x-fracoperations'){
     const source=fractionOperationsBinding(task,context);if(!source)return null;
     const proof=replayFractionOperationsEvidence(task,model);if(!proof)return null;
