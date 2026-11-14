@@ -1,4 +1,7 @@
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
+import * as view from '../dist/learning/phase5/b11-view.js';
+import {visibleModel} from './helpers/p9-basic-visible-controls.mjs';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionMeta,sessionTasks} from '../dist/learning/bridges.js';
@@ -154,14 +157,20 @@ test('a multi-addend column may require the same effective exchange twice with s
  originalAccepts(task,repeated);rejects(task,repeated,'a duplicate old before state is not a second effective exchange');
 });
 
-test('failed alignment or insufficient removal cannot be hidden by a later correct original result',()=>{
+test('failed alignment or insufficient removal stays in the replay when later corrected',()=>{
  const alignTask=sessionTasks('onesbridge')[0],alignModel=place.initial(alignTask);
  alignModel.guess='40';alignModel.align=['1','0'];place.act(alignTask,alignModel,'b11-place-start');
  assert.equal(alignModel.started,false);alignModel.align=['0','0'];place.act(alignTask,alignModel,'b11-place-start');
- remainingSteps(alignTask,alignModel);originalAccepts(alignTask,alignModel);rejects(alignTask,alignModel);
+ remainingSteps(alignTask,alignModel);originalAccepts(alignTask,alignModel);
+ const aligned=accepts(alignTask,alignModel);assert.equal(aligned.failedActions,1);assert.equal(aligned.startEvents.length,2);
+ assert.equal(aligned.first,'40');assert.equal(aligned.startEvents[0].accepted,false);
+ assert.deepEqual(aligned.startEvents[0].before,aligned.startEvents[0].after);
  const task=sessionTasks('onesbridge')[1],model=start(task);
  place.act(task,model,'b11-remove',{index:0});assert.ok(model.issue);
- remainingSteps(task,model);originalAccepts(task,model);rejects(task,model,'an earlier failed take remains in history');
+ remainingSteps(task,model);originalAccepts(task,model);const taken=accepts(task,model);
+ assert.equal(taken.failedActions,1);assert.equal(taken.events[1].accepted,false);
+ assert.deepEqual(taken.events[1].before,taken.events[1].after);
+ assert.equal(taken.removed,task.values[1]);
 });
 
 test('ineffective exchanges and zero-needed removals remain outside the strict contract',()=>{
@@ -174,6 +183,29 @@ test('ineffective exchanges and zero-needed removals remain outside the strict c
  const subtract=sessionTasks('onesbridge')[1],model=place.example(subtract);
  place.act(subtract,model,'b11-remove',{index:0});originalAccepts(subtract,model);
  assert.equal(model.history.at(-1).needed,0);rejects(subtract,model,'taking zero has no mathematical effect');
+});
+
+test('all 35 bound integer and decimal positions preserve two different first guesses and visible failed starts',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))).tasks;
+ const selected=manifest.filter(c=>c.adapter==='place');assert.equal(selected.length,35);
+ for(const c of selected){
+  const task=sessionTasks(c.sessionId)[c.index],d=visibleModel(task,place,view),all=place.solveSteps(task),startAt=all.findIndex(s=>s.action==='b11-place-start');
+  for(const s of all.slice(0,startAt))d.step(s);
+  const alignment=d.get('align.0'),guess=d.get('guess');d.field('guess','0');d.field('align.0',alignment==='0'?'1':'0');d.action('b11-place-start');
+  const failed=structuredClone(d.model);assert.equal(failed.started,false);assert.equal(failed.first,'0');
+  d.field('guess',guess);d.field('align.0',alignment);d.action('b11-place-start');
+  const shortage=task.op==='-'?d.model.counts.findIndex((n,i)=>n<d.model.remaining[i]):-1;
+  if(shortage>=0){const result=d.action('b11-remove',{index:shortage});assert.deepEqual(result.before.counts,result.after.counts);assert.deepEqual(result.before.remaining,result.after.remaining);}
+  for(const s of all.slice(startAt+1))d.step(s);
+  const p=accepts(task,d.model);assert.equal(p.first,'0');assert.equal(p.failedActions,shortage>=0?2:1);
+  assert.equal(p.startEvents.length,2);assert.equal(p.startEvents[0].accepted,false);assert.equal(p.startEvents[1].accepted,true);
+  const sum=xs=>xs.reduce((n,x,i)=>n+BigInt(x)*10n**BigInt(i),0n);
+  for(const e of p.exchanges)assert.equal(sum(e.before),sum(e.after));
+  for(const e of p.removals)assert.equal(sum(e.before)-sum(e.after),BigInt(e.count)*BigInt(e.unit));
+  const ctx={sessionId:c.sessionId,index:c.index};assert.equal(thinkingFeedback(task,d.model,record(failed),ctx),null);
+  assert.ok(thinkingFeedback(task,d.model,record(d.model),ctx));
+  const erased=structuredClone(d.model);erased.first=guess;if(guess!=='0')rejects(task,erased);
+ }
 });
 
 test('malformed, missing, reordered or altered event details cannot certify correct-looking digits',()=>{

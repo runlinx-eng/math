@@ -3,6 +3,8 @@
 // Every case runs with the HTTP origin stopped after the complete SW cache.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
+const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const decimalScope=process.env.MATH_PLACE_EVIDENCE_SCOPE==='decimal';
 const root=path.resolve(__dirname,'..'),out=path.join(root,decimalScope?'verification/p9-decimal-place-adapter':'verification/p9-place-adapter');
 const groups=decimalScope?{decimalsum:[1,2,3,4],decimalmeasure3:[1,2],fractionmeasure:[1],fractionfour:[13,14]}:
@@ -11,7 +13,7 @@ const groups=decimalScope?{decimalsum:[1,2,3,4],decimalmeasure3:[1,2],fractionme
  columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]};
 const cases=Object.entries(groups).flatMap(([id,indices])=>indices.map(index=>({id,index})));
 const nativeNodes=Object.keys(groups).length;
-const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],offline=[];
+const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],isolations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -22,7 +24,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
  const {solveSteps,valid,inspect,answer,fmt,rowOffset}=await import('../dist/learning/phase5/b11-model.js');
  const displayedAnswer=task=>fmt(answer(task),task.scale??1);
  const {replayPlaceEvidence}=await import('../dist/learning/place-evidence.js');
- let browser,server,activePage,activeLabel='setup';
+ let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -40,6 +42,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
    page.on('pageerror',error=>errors.push(activeLabel+': '+String(error)));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const shot=async name=>{
@@ -141,6 +144,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
 
    for(const spec of cases){
     activeLabel=`${width}x${height}-${spec.id}-${spec.index}`;
+    const snapshots=[],save=async phase=>{const x=await capture(page,out,activeLabel,spec,phase);snapshots.push(x);return x;};
     const task=sessionTasks(spec.id)[spec.index];await open(spec);
     ok(await guide.isVisible(),activeLabel+' exact native optional guide works offline');
     ok(!(await guide.evaluate(element=>element.open)),activeLabel+' optional guide starts collapsed');
@@ -158,10 +162,12 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     await field('answer','999999');await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='revise',activeLabel+' wrong answer fails original grading');
     ok(await hint.count()===0,activeLabel+' failed submission yields no positive evidence');
+    await save('wrong-answer');
     await field('answer',displayedAnswer(task));await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' corrected current work passes original grading');
     ok(await hint.isVisible(),activeLabel+' actual exchanges yield bounded factual feedback');
     const words=await hint.innerText(),first=await model(spec),proof=replayPlaceEvidence(task,first);
+    await save('first-correct');
     ok(!!proof&&valid(task,first)&&inspect(task,first).correct,activeLabel+' actual persisted work satisfies strict and original checks');
     const up=first.history.filter(e=>e.action==='b11-exchange'&&e.dir==='up').length;
     const down=first.history.filter(e=>e.action==='b11-exchange'&&e.dir==='down').length;
@@ -180,12 +186,15 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     await shot('02-verified-offline');await reload(spec);
     ok(await hint.isVisible(),activeLabel+' checked result restores on offline reload');
     ok(JSON.stringify(await model(spec))===JSON.stringify(first),activeLabel+' complete mathematical work survives offline reload');
+    const restored=await save('restored');
     await field('answer','999999');
     ok(await hint.count()===0,activeLabel+' editing immediately removes old feedback');
     if(spec.id===cases[0].id&&spec.index===cases[0].index)await shot('03-edited');
     await reload(spec);ok(await hint.count()===0,activeLabel+' edited answer cannot revive stale feedback after refresh');
     await submit();ok(await hint.count()===0,activeLabel+' newer failed check cannot reuse older success');
+    await save('edited-failure');
     await field('answer',displayedAnswer(task));await submit();ok(await hint.isVisible(),activeLabel+' fresh correct check restores current evidence');
+    await save('corrected-answer');
 
     const previous=await model(spec),column=previous.counts.findIndex((n,i)=>i>0&&n>0);
     await act(spec,'b11-exchange',{index:column,dir:'down'});
@@ -195,6 +204,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(await hint.count()===0,activeLabel+' returning to the same digits with new events still needs a check');
     await submit();ok(await hint.isVisible(),activeLabel+' new complete history passes after a fresh check');
     const end=await saved(spec.id),m=end.models[spec.index],attempts=end.cases[spec.index].attempts;
+    const final=await save('final-correct');
     ok(attempts.length===5,activeLabel+' all failed and successful attempts remain in history');
     ok(attempts.every(attempt=>attempt.id&&attempt.at&&attempt.value&&typeof attempt.supported==='boolean'&&typeof attempt.exposed==='boolean'),activeLabel+' existing v2 submission format remains');
     ok(m.history.length===first.history.length+2&&amount(m.counts)===answer(task),activeLabel+' later reversible exchanges remain in the current history');
@@ -202,31 +212,41 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(!Object.hasOwn(end,'thinkingScore')&&!Object.hasOwn(end,'thinkingMastery'),activeLabel+' no mastery or score storage is introduced');
     ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),activeLabel+' desktop page has no horizontal overflow');
     observations.push({width,height,id:spec.id,index:spec.index,values:task.values,scale:task.scale??1,displayedAnswer:displayedAnswer(task),align:m.align,operation:task.op,written:!!task.written,
-     observation:words,finalObservation:await hint.innerText(),history:m.history,counts:m.counts,remaining:m.remaining,attempts:attempts.length});
+     observation:words,finalObservation:await hint.innerText(),history:m.history,counts:m.counts,remaining:m.remaining,attempts:attempts.length,
+     snapshots,firstModel:first,restoredModel:restored.model,finalModel:m,record:final.record});
    }
 
-   // Both mistakes use genuinely reachable controls. The original grader may
-   // later pass; the earlier invalid event must remain excluded from evidence.
+   // Both mistakes use genuinely reachable controls. Their failed requests
+   // remain intact while corrected work can provide evidence of actual effects.
    for(const variant of ['misaligned-start','insufficient-take']){
     const spec=decimalScope?(variant==='misaligned-start'?{id:'decimalmeasure3',index:2}:{id:'decimalsum',index:3}):
      {id:'onesbridge',index:variant==='misaligned-start'?0:1},task=sessionTasks(spec.id)[spec.index];
     activeLabel=`${width}x${height}-negative-${variant}`;await open(spec);
+    const snapshots=[],save=async phase=>{const x=await capture(page,out,activeLabel,spec,phase);snapshots.push(x);return x;};
     const all=solveSteps(task),startAt=all.findIndex(step=>step.action==='b11-place-start');
     await steps(spec,all.slice(0,startAt));
     if(variant==='misaligned-start'){
      await field('align.0',rowOffset(task,0)===0?'1':'0');await click('b11-place-start');
      ok(!(await model(spec)).started,activeLabel+' wrong actual alignment refuses to start');
+     await submit();ok(await hint.count()===0,activeLabel+' unsuccessful start has no completed evidence');await save('failed-request');await shot('failed-request');
      await field('align.0',rowOffset(task,0));await act(spec,'b11-place-start');
     }else{
      await act(spec,'b11-place-start');await click('b11-remove',{index:0});
      ok(!!(await model(spec)).issue,activeLabel+' taking unavailable units is an actual failed action');
+     await submit();ok(await hint.count()===0,activeLabel+' unfinished subtraction has no completed evidence');await save('failed-request');await shot('failed-request');
     }
     await steps(spec,all.slice(startAt+1));await submit();const m=await model(spec);
     ok(valid(task,m)&&inspect(task,m).correct,activeLabel+' original final-work grading remains unchanged');
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' original UI accepts the final mathematical answer');
-    ok(await hint.count()===0&&!replayPlaceEvidence(task,m),activeLabel+' strict evidence does not erase an earlier invalid event');
-    await reload(spec);ok(await hint.count()===0,activeLabel+' invalid history remains excluded after offline refresh');
-    negativeObservations.push({width,height,variant,history:m.history,originalCorrect:true,strictFeedback:false});await shot('rejected');
+    const proof=replayPlaceEvidence(task,m);ok(await hint.isVisible()&&proof?.failedActions===1,activeLabel+' completed proof keeps the earlier failure without counting it as a successful effect');
+    const first=await save('first-correct');await shot('corrected');
+    await reload(spec);ok(await hint.isVisible(),activeLabel+' actual corrected history restores offline');
+    const restored=await save('restored');ok(JSON.stringify(restored.model)===JSON.stringify(first.model),activeLabel+' all failed and successful events survive reload');
+    await submit();await save('rechecked');
+    await field('answer','999999');await submit();ok(await hint.count()===0,activeLabel+' newer wrong answer cannot inherit older success');await save('edited-failure');
+    await field('answer',displayedAnswer(task));await submit();ok(await hint.isVisible(),activeLabel+' current corrected answer rechecks');
+    const final=await save('final-correct');ok(final.attempts.length===5,activeLabel+' five correction submission snapshots retained');
+    correctionObservations.push({width,height,...spec,variant,snapshots,firstModel:first.model,restoredModel:restored.model,finalModel:final.model,record:final.record,history:final.model.history,originalCorrect:true,strictFeedback:true,observation:await hint.innerText()});
    }
 
    // Switch courses without replacing the source's actual saved evidence.
@@ -251,19 +271,21 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' excluded original task remains usable');
     ok(await hint.count()===0,activeLabel+' same widget cannot inherit reviewed native evidence');
     await reload(spec);ok(await hint.count()===0,activeLabel+' source isolation survives offline restoration');await shot('checked');
+    isolations.push({width,height,...spec,...await capture(page,out,activeLabel,spec,'checked'),strictFeedback:false});
    }
    await context.close();activePage=null;
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===cases.length*viewports.length,`all ${cases.length} ${decimalScope?'decimal':'integer'} native tasks complete at both desktop sizes`);
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,
    scope:decimalScope?'decimal':'integer',nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log((decimalScope?'P9_DECIMAL_PLACE_ADAPTER_BROWSER_OK ':'P9_PLACE_ADAPTER_BROWSER_OK ')+
    JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,offline,error:String(error),at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),failureDiagnostic,at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
