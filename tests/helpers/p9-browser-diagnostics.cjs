@@ -48,6 +48,17 @@ function observeBrowserDiagnostics(page,{out,base,label}){
  page.on('load',()=>note('load',{url:page.url()}));
  return {async dump(error){
   const name=label()+'-failure-diagnostics';
+  // Persist storage before asynchronous cache/body diagnostics. A broken cache
+  // read must not swallow the current page's already available learner bytes.
+  const storageStartedAt=new Date().toISOString();
+  const initialStorage=await bounded(page.evaluate(()=>({raw:localStorage.getItem('math-explorer-v2')})),1000);
+  let storage=null;
+  const storageCapture={source:'before-cache-diagnostics',startedAt:storageStartedAt,
+   completedAt:new Date().toISOString(),...Object.fromEntries(Object.entries(initialStorage).filter(([key])=>key!=='raw'))};
+  if(typeof initialStorage.raw==='string'){
+   storage=name+'-storage.txt';fs.writeFileSync(path.join(out,storage),initialStorage.raw);
+   storageCapture.bytes=Buffer.byteLength(initialStorage.raw,'utf8');
+  }else if(initialStorage.raw===null)storageCapture.missing=true;
   const failedResources=[...currentResources.values()].filter(resource=>resource.failure).map(resource=>resource.url);
   const state=await bounded(page.evaluate(async failedURLs=>{
    const limit=async(promise,ms=1500)=>{
@@ -91,11 +102,15 @@ function observeBrowserDiagnostics(page,{out,base,label}){
     resources:performance.getEntriesByType('resource').map(({name,initiatorType,duration,transferSize,decodedBodySize})=>({name,initiatorType,duration,transferSize,decodedBodySize}))};
   },failedResources),4000);
   const {raw,...details}=state;
-  const storage=typeof raw==='string'?name+'-storage.txt':null;
-  if(storage)fs.writeFileSync(path.join(out,storage),raw);
+  if(!Object.hasOwn(initialStorage,'raw')&&typeof raw==='string'){
+   storage=name+'-storage.txt';fs.writeFileSync(path.join(out,storage),raw);
+   storageCapture.fallback={source:'after-cache-diagnostics',at:new Date().toISOString(),bytes:Buffer.byteLength(raw,'utf8')};
+  }
+  if(Object.hasOwn(initialStorage,'raw')&&Object.hasOwn(state,'raw'))
+   storageCapture.changedDuringDiagnostics=initialStorage.raw!==raw;
   const html=await bounded(page.content(),2000),documentFile=typeof html==='string'?name+'.html':null;
   if(documentFile)fs.writeFileSync(path.join(out,documentFile),html);
-  const report={at:new Date().toISOString(),label:label(),error:String(error),...details,storage,documentFile,
+  const report={at:new Date().toISOString(),label:label(),error:String(error),...details,storage,storageCapture,documentFile,
    ...(!documentFile?{documentDiagnostic:html}:{}),events:[...events],eventsByKind:byKind,
    currentNavigationResources:[...currentResources.values()],pendingSameOrigin:[...pending.values()]};
   fs.writeFileSync(path.join(out,name+'.json'),JSON.stringify(report,null,2));

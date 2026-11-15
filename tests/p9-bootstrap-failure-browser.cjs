@@ -104,10 +104,18 @@ const ok=(state,description)=>{assert.ok(state,description);checks.push(descript
    assert.equal(after.raw,before,label+' cached module failure must not modify saved work');
    checks.push(label+' original saved bytes preserved');
    await page.screenshot({path:path.join(out,label+'-missing-module-warning.png'),fullPage:false});
+   // Exercise the failure writer in real Chromium while the module graph is
+   // deliberately broken; this expected fault is distinct from a test failure.
+   const expectedFailureDiagnostic=await diagnostics.dump(new Error('Intentional missing-module fixture'));
+   const captured=JSON.parse(fs.readFileSync(path.join(out,expectedFailureDiagnostic),'utf8'));
+   assert.equal(captured.storageCapture.source,'before-cache-diagnostics');
+   assert.equal(fs.readFileSync(path.join(out,captured.storage),'utf8'),before,
+    label+' actual missing-module diagnostics retain the original storage bytes');
+   checks.push(label+' real module-failure diagnostics preserve exact saved bytes');
    Object.assign(activeResult,{
     response:{status:response.status(),fromServiceWorker:response.fromServiceWorker()},
     after:{readyState:after.readyState,warning:after.warning,
-     lesson:after.lesson,storedBytes:after.raw.length,title:after.title},status:'complete',stage:'complete'});
+     lesson:after.lesson,storedBytes:after.raw.length,title:after.title},expectedFailureDiagnostic,status:'complete',stage:'complete'});
    await context.close();context=null;page=null;diagnostics=null;
   }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({headSha,testedCheckoutSha,release,
