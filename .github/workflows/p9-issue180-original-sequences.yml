@@ -1,0 +1,131 @@
+name: P9 issue180 original math sequence first-error capture
+
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-fraction-order-adapter-browser.cjs'
+      - 'tests/p9-place-adapter-browser.cjs'
+      - 'tests/p9-fraction-operations-adapter-browser.cjs'
+      - 'tests/helpers/p9-issue180-reload-probe.cjs'
+      - '.github/workflows/p9-issue180-original-sequences.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Supplemental diagnostic only. Required, original math assertions, data and
+# the 20-second app-readiness criterion remain unchanged.
+jobs:
+  original-sequence:
+    name: Native first-error (${{ matrix.suite }} / trial-${{ matrix.trial }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [place, fraction-order, fraction-operations]
+        trial: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify original browser scripts and first-error diagnostic
+        shell: bash
+        env:
+          SUITE: ${{ matrix.suite }}
+        run: |
+          set -euo pipefail
+          node --check tests/helpers/p9-issue180-reload-probe.cjs
+          case "$SUITE" in
+            place)
+              node --check tests/p9-place-adapter-browser.cjs
+              node --test tests/p9-place-evidence-adapter.test.mjs
+              ;;
+            fraction-order)
+              node --check tests/p9-fraction-order-adapter-browser.cjs
+              node --test tests/p9-fraction-order-evidence-adapter.test.mjs
+              ;;
+            fraction-operations)
+              node --check tests/p9-fraction-operations-adapter-browser.cjs
+              node --test tests/p9-fraction-operations-evidence-adapter.test.mjs
+              ;;
+            *) echo "Unknown original sequence" >&2; exit 2 ;;
+          esac
+
+      - name: Install original Playwright Chromium and Chinese fonts
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+
+      - name: Execute original complete math flow with native startup first-error capture
+        shell: bash
+        env:
+          SUITE: ${{ matrix.suite }}
+          TRIAL: ${{ matrix.trial }}
+          MATH_ISSUE180_PLACE_NATIVE_PROBE: '1'
+          MATH_ISSUE180_ORDER_NATIVE_PROBE: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-original-sequences
+          prefix="verification/issue180-original-sequences/$SUITE-trial-$TRIAL"
+          printf 'suite=%s trial=%s sha=%s\n' "$SUITE" "$TRIAL" "$GITHUB_SHA" | tee "$prefix.summary.txt"
+          printf 'host_cpu_count=%s\n' "$(nproc)" | tee -a "$prefix.summary.txt"
+          free -m | tee -a "$prefix.summary.txt"
+          (
+            while :; do
+              printf '\nSAMPLE %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              cat /proc/loadavg
+              awk '/^cpu / {print}' /proc/stat
+              awk '/^(MemTotal|MemAvailable|SwapFree):/ {print}' /proc/meminfo
+              ps -eo pid,comm,rss,%cpu --no-headers | awk '$2 ~ /chrome|chromium|node/ {print}'
+              for item in memory.current memory.peak memory.max memory.events; do
+                if [ -f "/sys/fs/cgroup/$item" ]; then
+                  printf '%s=' "$item"
+                  tr '\n' ' ' < "/sys/fs/cgroup/$item"
+                  printf '\n'
+                fi
+              done
+              sleep 5
+            done
+          ) > "$prefix.resources.txt" 2>&1 &
+          monitor_pid=$!
+          trap 'kill "$monitor_pid" 2>/dev/null || true' EXIT
+          case "$SUITE" in
+            place) script=tests/p9-place-adapter-browser.cjs ;;
+            fraction-order) script=tests/p9-fraction-order-adapter-browser.cjs ;;
+            fraction-operations) script=tests/p9-fraction-operations-adapter-browser.cjs ;;
+            *) exit 2 ;;
+          esac
+          set +e
+          node "$script" > "$prefix.browser.log" 2>&1
+          status=$?
+          set -e
+          kill "$monitor_pid" 2>/dev/null || true
+          wait "$monitor_pid" 2>/dev/null || true
+          printf 'exit_code=%s\n' "$status" | tee -a "$prefix.summary.txt"
+          tail -n 60 "$prefix.browser.log"
+          exit "$status"
+
+      - name: Preserve complete math results, first-error CDP, SW, NetLog and raw storage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-original-sequence-${{ matrix.suite }}-trial-${{ matrix.trial }}
+          path: |
+            verification/issue180-original-sequences/
+            verification/p9-place-adapter/
+            verification/p9-fraction-order-adapter/
+            verification/p9-fraction-operations-adapter/
+          if-no-files-found: warn
