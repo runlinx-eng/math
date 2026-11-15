@@ -1,0 +1,51 @@
+name: P9 exact reset native window diagnostic
+on:
+  pull_request:
+    paths:
+      - 'tests/helpers/p9-fraction-targeted-native-playwright.cjs'
+      - 'tests/helpers/p9-native-sw-trace.cjs'
+      - 'tests/p9-fraction-targeted-native.test.mjs'
+      - 'tests/p9-native-sw-trace.test.mjs'
+      - '.github/workflows/p9-fraction-targeted-native.yml'
+permissions:
+  contents: read
+jobs:
+  original-reset-window:
+    if: github.head_ref == 'diagnostic/issue180-targeted-reset-native'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install unchanged Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Freeze the original product and mathematical sequence
+        shell: bash
+        run: |
+          git diff --exit-code 397dddb6c3db9a658edfb91fa199b20fb3036fb9 -- dist tests/p9-fraction-order-adapter-browser.cjs tests/fixtures/p9-fraction-order-cases.cjs scripts/required-browser-checks.mjs
+          mkdir -p verification/p9-fraction-order-adapter
+          node --test tests/p9-fraction-targeted-native.test.mjs tests/p9-native-sw-trace.test.mjs 2>&1 | tee verification/p9-fraction-order-adapter/targeted-native-contract.log
+      - name: Run unchanged complete fraction sequence with only the exact reset window traced
+        shell: bash
+        run: |
+          MATH_PLAYWRIGHT_MODULE="$PWD/tests/helpers/p9-fraction-targeted-native-playwright.cjs" node tests/p9-fraction-order-adapter-browser.cjs 2>&1 | tee verification/p9-fraction-order-adapter/targeted-native-command.log
+      - name: Preserve original mathematical records and selected native window
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-fraction-targeted-native-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/p9-fraction-order-adapter/
+          if-no-files-found: error
