@@ -4,6 +4,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
+const {createPassiveServiceWorkerObserver}=require('./p9-issue180-sw-runtime.cjs');
 
 function createReloadStartupProbe({context,page,out,cache}){
  const events=[],requests=new Map(),firstFailures=[];
@@ -20,7 +21,7 @@ function createReloadStartupProbe({context,page,out,cache}){
   const record={seq:++eventCount,kind,at:new Date().toISOString(),...payload};
   try{fs.appendFileSync(journalFile,JSON.stringify(record)+'\n');writtenCount++;}
   catch(error){if(!journalError)journalError=String(error);}
-  if(['loadingFailed','playwrightRequestFailed','serviceWorkerError'].includes(kind)&&firstFailures.length<40)
+  if(['loadingFailed','playwrightRequestFailed','serviceWorkerError','serviceWorkerRuntimeError','serviceWorkerOwnedRequestFailed'].includes(kind)&&firstFailures.length<40)
    firstFailures.push(record);
   events.push(record);
   if(events.length>700)events.splice(0,events.length-700);
@@ -38,6 +39,8 @@ function createReloadStartupProbe({context,page,out,cache}){
    error:journalError||String(error)};}
  };
  const relevant=entry=>/(?:learn\.js|module-recovery|sw\.js|learning\/)/i.test(entry?.url||'');
+ const passiveWorker=process.env.MATH_ISSUE180_SW_RUNTIME_PROBE==='1'?
+  createPassiveServiceWorkerObserver({context,note:push}):null;
  async function start(){
   session=await context.newCDPSession(page);
   session.on('Network.requestWillBeSent',event=>{
@@ -118,9 +121,12 @@ function createReloadStartupProbe({context,page,out,cache}){
   }catch(error){push('serviceWorkerSessionError',{error:String(error),fallback:'playwright-serviceworker-events-and-page-snapshots'});}
   push('serviceWorkerObservationCapabilities',{nativeCdpEvents:swNativeAvailable,playwrightWorkerEvents:true,
    limitation:swNativeAvailable?null:'No native ServiceWorker error/version stream; page registration/controller/cache snapshots still available'});
-  push('probeStarted',{cache,startedAt});
+  if(passiveWorker)await passiveWorker.start().catch(error=>
+   push('serviceWorkerRuntimeStartupFailed',{error:String(error)}));
+  push('probeStarted',{cache,startedAt,passiveWorkerRequested:!!passiveWorker});
  }
- const snapshot=async()=>page.evaluate(async release=>{
+ const snapshot=async()=>{
+  const pageState=await page.evaluate(async release=>{
   const raw=localStorage.getItem('math-explorer-v2');
   const controller=navigator.serviceWorker?.controller;
   const registration=await navigator.serviceWorker?.getRegistration().catch(()=>null);
@@ -152,6 +158,10 @@ function createReloadStartupProbe({context,page,out,cache}){
    warningVisible:document.querySelector('#storage-warning')?.hidden===false,
    raw,resources};
  },cache).catch(error=>({captureError:String(error),raw:null}));
+  if(passiveWorker)pageState.serviceWorkerRuntime=await passiveWorker.snapshot()
+   .catch(error=>({unavailable:true,error:String(error)}));
+  return pageState;
+ };
  const digest=s=>s==null?null:crypto.createHash('sha256').update(s).digest('hex');
  const metadata=value=>{
   if(!value)return null;
@@ -172,6 +182,7 @@ function createReloadStartupProbe({context,page,out,cache}){
    probeStartedAt:startedAt,error:error?String(error):null,
    before:metadata(before),after:metadata(after),
    serviceWorkerObservation:{nativeCdpEvents:swNativeAvailable,playwrightWorkerEvents:true,
+    passiveWorkerRequested:!!passiveWorker,
     playwrightWorkersObserved:watchedWorkers.size},
    rawIdentical:typeof before?.raw==='string'&&typeof after?.raw==='string'?
     before.raw===after.raw:null,firstFailures,journal:journalSummary(),
@@ -190,6 +201,7 @@ function createReloadStartupProbe({context,page,out,cache}){
  }
  async function close(){
   closed=true;
+  passiveWorker?.close();
   if(workerListener){context.off('serviceworker',workerListener);workerListener=null;}
   if(requestFailureListener){page.off('requestfailed',requestFailureListener);requestFailureListener=null;}
   if(consoleErrorListener){page.off('console',consoleErrorListener);consoleErrorListener=null;}
