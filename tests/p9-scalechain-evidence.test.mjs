@@ -479,4 +479,3 @@ test('malformed task/model input and a forged terminal issue fail closed without
 test.after(()=>console.log('P9_SCALECHAIN_INDEPENDENT_NODE '+JSON.stringify({...metrics,nativeTasks:cases.length,
  nativeStages:cases.reduce((n,c)=>n+c.expectedStages.length,0),associatedTasks:bridges.length,practicePositions:practices.length,
  actualChromium:false,childLearningAssessed:false})));
-
