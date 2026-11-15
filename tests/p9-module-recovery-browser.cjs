@@ -6,6 +6,33 @@ const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-module-recovery');
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/^const CACHE = '([^']+)'/m)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
+// The harness alters only the SW bytes served to this isolated test origin.
+ // Production dist/sw.js and its complete cache remain byte-identical.
+const baseWorker=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8');
+const injectedWorker=baseWorker
+ .replace("self.addEventListener('fetch',event=>{",String.raw`let __testScriptFaultArmed=false,__testScriptFaults=0;
+self.addEventListener('message',event=>{
+ if(event.data?.type==='test-arm-entry-fault'){
+  __testScriptFaultArmed=true;event.ports?.[0]?.postMessage({armed:true});
+ }else if(event.data?.type==='test-entry-fault-count'){
+  event.ports?.[0]?.postMessage({count:__testScriptFaults});
+ }
+});
+self.addEventListener('fetch',event=>{`)
+ .replace(" if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){",String.raw` if(__testScriptFaultArmed&&event.request.destination==='script'&&
+    url.pathname.endsWith('/learning/learn.js')&&!url.searchParams.has(MODULE_RECOVERY_KEY)){
+  __testScriptFaultArmed=false;__testScriptFaults++;
+  event.respondWith(Promise.resolve(new Response('intentional resource failure',{status:503,
+   headers:{'Content-Type':'text/plain'}})));return;
+ }
+ if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){`);
+if(injectedWorker===baseWorker||!injectedWorker.includes('__testScriptFaults++'))
+ throw Error('test-only SW response fixture failed to install');
+const askWorker=(page,type)=>page.evaluate(type=>new Promise(resolve=>{
+ const channel=new MessageChannel(),timer=setTimeout(()=>resolve(null),2000);
+ channel.port1.onmessage=event=>{clearTimeout(timer);channel.port1.close();resolve(event.data);};
+ navigator.serviceWorker.controller.postMessage({type},[channel.port2]);
+}),type);
 const output={release:cache,viewports:[],checks:[],failures:[],historicRootCauseEstablished:false};
 const ok=(condition,why)=>{assert.ok(condition,why);output.checks.push(why);};
 const wait=page=>page.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='share',{timeout:20000});
@@ -37,8 +64,9 @@ const state=page=>page.evaluate(()=>({
    server=http.createServer((req,res)=>{
     const file=new URL(req.url,'http://localhost').pathname.replace(/^\/+/,'')||'index.html';
     fs.readFile(path.join(root,'dist',file),(err,data)=>{
+     const workerCode=!err&&file==='sw.js'?Buffer.from(injectedWorker):data;
      res.writeHead(err?404:200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream','Cache-Control':'no-store'});
-     res.end(err?'missing':data);
+     res.end(err?'missing':workerCode);
     });
    });
    await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -71,24 +99,14 @@ const state=page=>page.evaluate(()=>({
     width+' healthy stopped-origin reload uses existing SW without recovery');
    ok(learningHistory(offline.raw)===learningHistory(healthy.raw),width+' healthy offline reload preserves mathematics, original models and attempts');
    record.steps.push({kind:'offline',fromServiceWorker:response.fromServiceWorker(),rawBytes:offline.raw?.length});
-   // CDP request interception targets precisely the normal entry URL;
-   // release-scoped mirror imports are never intercepted. Avoid cache deletion.
-   const cdp=await context.newCDPSession(page);
-   let failures=0;
-   cdp.on('Fetch.requestPaused',async event=>{
-    const u=new URL(event.request.url);
-    const original=u.pathname==='/learning/learn.js'&&!u.searchParams.has('module-recovery');
-    try{
-     if(original&&failures===0){
-      failures++;
-      record.injections.push({url:event.request.url,requestId:event.requestId,kind:'Fetch.failRequest',reason:'Aborted'});
-      await cdp.send('Fetch.failRequest',{requestId:event.requestId,errorReason:'Aborted'});
-     }else await cdp.send('Fetch.continueRequest',{requestId:event.requestId});
-    }catch(error){record.errors.push('CDP Fetch: '+error);}
-   });
-   await cdp.send('Fetch.enable',{patterns:[{urlPattern:'*learning/learn.js*',requestStage:'Request'}]});
+   // Inject the same observable original SCRIPT resource failure on the
+   // actual stopped-origin worker path, without removing any cached module.
+   const armed=await askWorker(page,'test-arm-entry-fault');
+   ok(armed?.armed===true,width+' test worker armed exactly one original ESM resource failure');
    const injectedResponse=await page.reload();await wait(page);
-   await cdp.send('Fetch.disable');
+   const count=await askWorker(page,'test-entry-fault-count');
+   const failures=count?.count||0;
+   record.injections.push({kind:'test-only-SW-503',failedScript:'learning/learn.js',count:failures});
    const recovered=await state(page);
    record.steps.push({kind:'injected',failures,ready:recovered.ready?.id,
     recovery:recovered.recovery,rawBytes:recovered.raw?.length,
