@@ -3985,6 +3985,51 @@
       "adapter": "fdpboard",
       "taskHash": "210ccd8a65554b5e4106ed6abb5b5541d774b81522e604afa739e9de24d24b2c",
       "method": null
+    },
+    {
+      "sessionId": "sharesmallpart",
+      "index": 0,
+      "type": "x-fracshare",
+      "nodeId": "mt_ifPDOYvUqm",
+      "adapter": "fracshare",
+      "taskHash": "a21013e4cfe1d249c3cbe7026f286f99a1250ab9bc8618ba8eb6e5640ec2e99d",
+      "method": null
+    },
+    {
+      "sessionId": "sharesmallpart",
+      "index": 1,
+      "type": "x-fracshare",
+      "nodeId": "mt_ifPDOYvUqm",
+      "adapter": "fracshare",
+      "taskHash": "643844548350eba4d4bddba31d118da3f4fe032681dfdd582baec7b4d1f813f1",
+      "method": null
+    },
+    {
+      "sessionId": "sharesmallpart",
+      "index": 2,
+      "type": "x-fracshare",
+      "nodeId": "mt_ifPDOYvUqm",
+      "adapter": "fracshare",
+      "taskHash": "a63730ca7e5110792299377cadd1d9064f899b1b2a123c25232bc793bcbce1f1",
+      "method": null
+    },
+    {
+      "sessionId": "fractiondividewords",
+      "index": 0,
+      "type": "x-fracshare",
+      "nodeId": "mt_rCMdwG-YOE",
+      "adapter": "fracshare",
+      "taskHash": "dfdbb99e090603d901f537b35815df2f43e30168962f1e7bfead2ab617d41dc3",
+      "method": null
+    },
+    {
+      "sessionId": "fractiondividewords",
+      "index": 2,
+      "type": "x-fracshare",
+      "nodeId": "mt_rCMdwG-YOE",
+      "adapter": "fracshare",
+      "taskHash": "40d0025e9740b820a2fe9e0cf45a307dca81980a312972f3ad9b494579f2aea7",
+      "method": null
     }
   ]
 }
