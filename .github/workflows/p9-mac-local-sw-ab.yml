@@ -1,0 +1,36 @@
+name: P0 Mac-local service vs SW A/B
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-mac-local-sw-ab-browser.cjs'
+      - '.github/workflows/p9-mac-local-sw-ab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mac-local-ab:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check tests/p9-mac-local-sw-ab-browser.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Compare isolated local HTTP and SW modes
+        run: node tests/p9-mac-local-sw-ab-browser.cjs
+      - name: Preserve real A/B evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue207-mac-local-ab-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/issue207-mac-local-ab/
+          if-no-files-found: warn
