@@ -64,6 +64,7 @@ jobs:
           node --check tests/p7-learning-panel-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
+          node --check dist/local-runtime.js
           node --check dist/learning/three-view-runtime.js
           node --check tests/p9-three-view-lazy-browser.cjs
           node --check dist/learning/state.js
