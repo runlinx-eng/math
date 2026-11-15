@@ -29,7 +29,6 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
- {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
  {id:'line',type:'x-s23-lines',binding:lineBinding,replay:replayLineEvidence},
@@ -50,5 +49,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence},
  {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence},
  {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
- {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence}
+ {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
+ {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
 ].map(Object.freeze));
