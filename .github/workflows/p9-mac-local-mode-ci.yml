@@ -1,0 +1,57 @@
+name: P0 Mac-local opt-in, preservation and rollback
+on:
+  pull_request:
+    paths:
+      - 'dist/mac-local.html'
+      - 'dist/sw-client.js'
+      - 'dist/space.js'
+      - 'dist/exploration.js'
+      - 'dist/index.html'
+      - 'dist/v2.html'
+      - 'dist/learn.html'
+      - 'dist/learning/learn.js'
+      - 'dist/sw.js'
+      - 'tests/p9-mac-local-mode-browser.cjs'
+      - 'tests/p9-mac-local-mode.test.mjs'
+      - '.github/workflows/p9-mac-local-mode-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  optin-rollback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and contract tests
+        run: |
+          node --check dist/sw-client.js
+          node --check dist/space.js
+          node --check dist/exploration.js
+          node --check tests/p9-mac-local-mode-browser.cjs
+          node --test tests/p9-mac-local-mode.test.mjs tests/p9-module-recovery.test.mjs tests/p10-sw-retirement.test.mjs
+      - name: Install Chromium and Chinese fonts
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+      - name: Real local preference, original learner record and rollback
+        run: node tests/p9-mac-local-mode-browser.cjs
+      - name: Retain screenshots and results even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue207-product-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/issue207-mac-local-mode/
+          if-no-files-found: warn
