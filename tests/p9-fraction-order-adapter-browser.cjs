@@ -4,6 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const {observeCDPLifecycle}=require('./helpers/p9-cdp-lifecycle-diagnostics.cjs');
+const {createReloadStartupProbe}=require('./helpers/p9-issue180-reload-probe.cjs');
 const cases=require('./fixtures/p9-fraction-order-cases.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-fraction-order-adapter');
 const networkLog='browser-netlog.json';
@@ -20,6 +21,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  ]);
  await ensureB39Ready();
  let browser,server,activePage,diagnostics,activeCDP,failureDiagnostic=null,activeLabel='setup';
+ let activeNativeProbe=null,activeNativeBefore=null;
  const cdpDiagnostics=[],cdpLogs=[];
  try{
   browser=await chromium.launch({headless:true,
@@ -182,7 +184,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    // failed subdivision or duplicate record as a new successful construction.
    const negative={id:'fractionbench',index:0},task=sessionTasks(negative.id)[negative.index];
    for(const variant of ['wrong-place','wrong-common','duplicate-place','duplicate-rename','reset','final-failed-place']){
-    activeLabel=`${width}x${height}-correction-${variant}`;await open(negative);
+    activeLabel=`${width}x${height}-correction-${variant}`;
+    // Opt-in ONLY: follow the exact original #43680293519 correction-reset
+    // entry and its subsequent offline reload, with the original math actions
+    // and 20-second readiness criterion left untouched.
+    const nativeTarget=process.env.MATH_ISSUE180_ORDER_NATIVE_PROBE==='1'&&variant==='reset';
+    if(nativeTarget){
+     activeNativeProbe=createReloadStartupProbe({context,page,out,cache});
+     await activeNativeProbe.start();
+     activeNativeBefore=await activeNativeProbe.snapshot();
+    }
+    await open(negative);
     const steps=fractions.solveSteps(task);let injected=false;
     for(const s of steps){
      if(!injected&&variant==='wrong-place'&&s.action==='b17-place'){
@@ -211,6 +223,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     correctionObservations.push({width,height,id:negative.id,index:negative.index,variant,originalCorrect:true,strictFeedback:true,model:m,proof,record:restored.cases[negative.index],
      restoredModel:restored.models[negative.index],restoredRecord:restored.cases[negative.index],restoredStorage});
     await shot('corrected');
+    if(nativeTarget){
+     await activeNativeProbe.success({label:activeLabel,before:activeNativeBefore});
+     await activeNativeProbe.close();
+     activeNativeProbe=null;activeNativeBefore=null;
+    }
    }
    const bridge=Object.keys(BRIDGES).flatMap(id=>sessionTasks(id).map((task,index)=>({id,index,task}))).find(c=>c.task.type==='x-fracorder');
    ok(!!bridge,width+' actual associated fraction-order task exists');
@@ -231,6 +248,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_FRACTION_ORDER_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:20,nativeNodes:9,taskViewportPairs:observations.length}));
  }catch(error){
+  // Preserve the first error and raw learner record before broad cache/body
+  // diagnostics can change the observed state. Never retry the failed reload.
+  if(activeNativeProbe)await activeNativeProbe.failure({label:activeLabel,before:activeNativeBefore,error})
+   .catch(probeError=>console.error('Native correction-reset evidence:',String(probeError)));
   activeCDP?.mark('test-failure-observed',{error:String(error)});
   activeCDP?.mark('diagnostic-dump-start');
   if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
@@ -241,6 +262,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,networkLog,cdpLogs,failureDiagnostic,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
+  if(activeNativeProbe)await activeNativeProbe.close().catch(()=>{});
   for(const trace of cdpDiagnostics)trace.mark('test-cleanup-start',{originListening:!!server?.listening});
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
   for(const trace of cdpDiagnostics)trace.mark('browser-close-start');
