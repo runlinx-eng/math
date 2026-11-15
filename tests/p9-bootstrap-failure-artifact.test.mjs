@@ -177,8 +177,15 @@ test('independent monitor covers main pushes and uploads failure evidence withou
  const workflow=fs.readFileSync(new URL('../.github/workflows/p9-bootstrap-failure-regression.yml',import.meta.url),'utf8');
  assert.match(workflow,/\n  push:\n    branches: \[main\]/);
  assert.match(workflow,/tests\/helpers\/p9-browser-diagnostics\.cjs/);
- assert.match(workflow,/tests\/p9-mature-expansion-browser\.cjs/);
- assert.match(workflow,/tests\/p9-fraction-order-adapter-browser\.cjs/);
+ // Math evidence scripts are still exercised by the independent artifact
+ // contract above and the Required math groups. They are no longer triggers
+ // for this expensive SW fault-injection workflow on math-only PRs.
+ assert.doesNotMatch(workflow,/^\s*-\s*'tests\/p9-mature-expansion-browser\.cjs'/m);
+ assert.doesNotMatch(workflow,/^\s*-\s*'tests\/p9-fraction-order-adapter-browser\.cjs'/m);
+ assert.doesNotMatch(workflow,/^\s*-\s*'dist\/learning\/learn\.js'/m);
+ for(const path of ['dist/learn.html','dist/sw.js','dist/sw-client.js',
+  'tests/p9-bootstrap-failure-browser.cjs'])
+  assert.ok(workflow.includes("'"+path+"'"),path+' must still trigger the SW diagnostic');
  assert.match(workflow,/tests\/p9-bootstrap-failure-artifact\.test\.mjs/);
  assert.match(workflow,/if: always\(\)/);
  assert.match(workflow,/if-no-files-found: error/);
