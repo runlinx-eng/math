@@ -4,6 +4,7 @@ on:
     paths:
       - 'tests/p9-fraction-operations-adapter-browser.cjs'
       - 'tests/helpers/p9-issue180-reload-probe.cjs'
+      - 'tests/p9-issue180-reload-probe.test.cjs'
       - '.github/workflows/p9-fraction-ops-native-first-error.yml'
   workflow_dispatch:
 permissions:
@@ -24,6 +25,7 @@ jobs:
         run: |
           node --check tests/p9-fraction-operations-adapter-browser.cjs
           node --check tests/helpers/p9-issue180-reload-probe.cjs
+          node --test tests/p9-issue180-reload-probe.test.cjs
           node --test tests/p9-fraction-operations-evidence-adapter.test.mjs
       - name: Install the existing Chromium runtime
         run: |
