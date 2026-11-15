@@ -1,5 +1,5 @@
 import {registerClientRelease} from '../sw-client.js';
-registerClientRelease('math-explorer-20261115-p9-esm-recovery-v1');
+registerClientRelease('math-explorer-20261115-p9-storyledger-esm-recovery-v1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal

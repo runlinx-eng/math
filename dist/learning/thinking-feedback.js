@@ -1,3 +1,4 @@
+import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
 import {inspect as inspectTask,validModel as validTask} from './tasks.js';
@@ -51,6 +52,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-estimatecheck'){
     const source=estimateBinding(task,context);
     return source?{type:task.type,summary:'想一想：粗略结果怎样帮助检查？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-storyledger'){
+    const source=storyLedgerBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每件事从哪个数量继续？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);
@@ -291,6 +296,24 @@ export function thinkingFeedback(task,model,record,context={}){
       observation:`你最后成功锁定的间隔是 ${proof.display.unit}，把 ${proof.display.values[0]}、${proof.display.values[1]} 分别取为 ${proof.display.rounded[0]}、${proof.display.rounded[1]}，留下估计 ${proof.display.rounded[0]} ${proof.operation==='+'?'+':'−'} ${proof.display.rounded[1]} = ${proof.display.estimate}。当前填写的精确结果是 ${proof.display.answer}；估计记录和精算结果已分别核对。`,
       connection:'如果把间隔换细一些，估计范围会怎样变化？一个数落在范围内，为什么还需要精算？',
       detail,method:null};
+  }
+  if(task?.type==='x-storyledger'){
+    const source=storyLedgerBinding(task,context);if(!source)return null;
+    const proof=replayStoryLedgerEvidence(task,model);if(!proof)return null;
+    const places=String(proof.scale).length-1,display=n=>{
+      const value=BigInt(n),negative=value<0n,a=negative?-value:value;
+      return (negative?'-':'')+String(a/BigInt(proof.scale))+(places?'.'+String(a%BigInt(proof.scale)).padStart(places,'0'):'');
+    };
+    const equations=proof.accepted.map(e=>`${display(e.balanceBefore)} ${e.expectedOperation==='+'?'+':'−'} ${display(e.expectedAmount)} = ${display(e.balanceAfter)}`);
+    const quantity=source.role==='remaining-goal'?'距离目标还差的数量':source.role==='smaller-comparison'?'比较中要找的较小数量':source.role==='remaining-length'?'余下的长度':'账本里留下的数量';
+    const observation=`这次保留的记录从 ${display(proof.start)} ${proof.unit} 开始，依次提交了 ${equations.join('；')}。${quantity}最后是 ${display(proof.end)} ${proof.unit}；每条被保存的结果都与下一件事的起点接上。`;
+    const detail=['这里只描述保留的逐步提交与当前已检查作品，不把填写结果当作逐件操作、独立证明或长期掌握；没有自动评价自由解释。'];
+    if(proof.failed.length)detail.push(`保留的记录中有 ${proof.failed.length} 次未推进的提交：它们没有改变当时的数量或进入下一件事；随后同一步的更正仍保留，首尝试与后来保存的正确条目分别核对。`);
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(source.role==='smaller-comparison')detail.push('这里用已知较大的数量减去两者的差，求较小数量；提交的减法不表示实际拿走了物品。');
+    if(source.role==='remaining-goal')detail.push('这里追踪距离目标还差多少；继续收集会减小这个差额，没有把它当成已收集数量在减少。');
+    detail.push('你选择的“在心里想”“画一画或写下来”或“借助计算工具”只作为自己的方法记录保留，这里没有验证实际心算、书写或工具使用过程。');
+    return {title:'这次作品中的思考线索',observation,detail,connection:source.role==='remaining-goal'?'如果再收集一些，剩余差额怎样变？怎样用目标和已收集量检查它？':'如果漏掉中间一件事，后面的起点会怎样变化？你可以怎样检查每一步的数量关系？',method:null};
   }
   if(task?.type==='x-joinstory'){
     const source=joinStoryBinding(task,context);if(!source)return null;
