@@ -5,6 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-bootstrap-failure');
 const release=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
@@ -15,12 +16,17 @@ const checks=[],results=[],errors=[];
 const ok=(state,description)=>{assert.ok(state,description);checks.push(description);};
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
- let browser,server,context,page,label='setup';
+ let browser,server,context,page,diagnostics,activeResult,failureDiagnostic=null,label='setup';
  try{
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{})});
   for(const [width,height]of [[1440,900],[1280,720]]){
    label=width+'x'+height;
+   activeResult={label,release,status:'running',stage:'setup',successfulOfflineReloads:[],
+    pageErrors:[],consoleErrors:[],failedRequests:[]};
+   // Register before navigation so catch also retains an unfinished viewport.
+   results.push(activeResult);
+   const {pageErrors,consoleErrors,failedRequests,successfulOfflineReloads}=activeResult;
    server=http.createServer((request,response)=>{
     const relative=new URL(request.url,'http://localhost').pathname.replace(/^\/+/, '')||'index.html';
     fs.readFile(path.join(root,'dist',relative),(error,data)=>{
@@ -32,14 +38,14 @@ const ok=(state,description)=>{assert.ok(state,description);checks.push(descript
    const base='http://127.0.0.1:'+server.address().port+'/';
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    page=await context.newPage();page.setDefaultTimeout(20000);
-   const pageErrors=[],consoleErrors=[],failedRequests=[];
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>label});
    page.on('pageerror',error=>pageErrors.push(String(error)));
    page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
    page.on('requestfailed',request=>failedRequests.push({url:request.url(),error:request.failure()?.errorText||null}));
    await page.goto(base+'v2.html#trail');
    await page.waitForFunction(release=>navigator.serviceWorker.controller?.state==='activated'&&
     new URL(navigator.serviceWorker.controller.scriptURL).searchParams.get('release')===release,release);
-   const cacheReport=await page.evaluate(async release=>{
+   const cacheReport=activeResult.cacheReport=await page.evaluate(async release=>{
     const worker=navigator.serviceWorker.controller;
     return await new Promise(resolve=>{
      const channel=new MessageChannel(),t=setTimeout(()=>resolve({complete:false}),1200);
@@ -58,8 +64,9 @@ const ok=(state,description)=>{assert.ok(state,description);checks.push(descript
     label+' normal lesson initializes saved v2 state without warning');
    await page.screenshot({path:path.join(out,label+'-healthy.png'),fullPage:false});
    await new Promise(resolve=>server.close(resolve));server.closeAllConnections();server=null;
-   const successfulOfflineReloads=[];
+   activeResult.stage='healthy-offline-reload';
    for(let attempt=0;attempt<12;attempt++){
+    activeResult.offlineReloadAttempt=attempt+1;
     const res=await page.reload();
     await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='share');
     const healthy=await page.evaluate(()=>({title:document.querySelector('#title')?.textContent||'',
@@ -70,8 +77,11 @@ const ok=(state,description)=>{assert.ok(state,description);checks.push(descript
     successfulOfflineReloads.push({attempt:attempt+1,status:res.status(),fromServiceWorker:res.fromServiceWorker(),
      title:healthy.title,instructionLength:healthy.instruction.length});
    }
+   activeResult.stage='deliberate-missing-module';
    const before=await page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
-   const deletion=await page.evaluate(async release=>{
+   activeResult.before={rawBytes:before.length};
+   activeResult.missingModule='learning/phase5/b18-view.js';
+   const deletion=activeResult.deletion=await page.evaluate(async release=>{
     const cache=await caches.open(release),url=new URL('./learning/phase5/b18-view.js',location.href);
     const existed=!!(await cache.match(url)),deleted=await cache.delete(url);
     return{existed,deleted,after:!!(await cache.match(url))};
@@ -94,21 +104,23 @@ const ok=(state,description)=>{assert.ok(state,description);checks.push(descript
    assert.equal(after.raw,before,label+' cached module failure must not modify saved work');
    checks.push(label+' original saved bytes preserved');
    await page.screenshot({path:path.join(out,label+'-missing-module-warning.png'),fullPage:false});
-   results.push({label,release,cacheReport,successfulOfflineReloads,
-    missingModule:'learning/phase5/b18-view.js',deletion,
+   Object.assign(activeResult,{
     response:{status:response.status(),fromServiceWorker:response.fromServiceWorker()},
-    before:{rawBytes:before.length},after:{readyState:after.readyState,warning:after.warning,
-     lesson:after.lesson,storedBytes:after.raw.length,title:after.title},
-    pageErrors,consoleErrors,failedRequests});
-   await context.close();context=null;page=null;
+    after:{readyState:after.readyState,warning:after.warning,
+     lesson:after.lesson,storedBytes:after.raw.length,title:after.title},status:'complete',stage:'complete'});
+   await context.close();context=null;page=null;diagnostics=null;
   }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({headSha,testedCheckoutSha,release,
    browserVersion:browser.version(),checks,results,errors},null,2));
   console.log('P9_BOOTSTRAP_FAILURE_BROWSER '+JSON.stringify({status:'success',headSha,checks:checks.length,viewports:results.length}));
  }catch(error){
   errors.push({label,message:String(error),stack:error?.stack});
+  if(activeResult)activeResult.status='failed';
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
+  if(activeResult)activeResult.failureDiagnostic=failureDiagnostic;
   try{if(page)await page.screenshot({path:path.join(out,label+'-failure.png'),timeout:4000});}catch{}
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({headSha,testedCheckoutSha,release,checks,results,errors},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({headSha,testedCheckoutSha,release,
+   browserVersion:browser?.version(),checks,results,errors,failureDiagnostic},null,2));
   console.error(error);process.exitCode=1;
  }finally{
   try{if(context)await context.close();}catch{}
