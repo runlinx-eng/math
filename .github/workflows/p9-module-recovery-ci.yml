@@ -4,9 +4,11 @@ on:
     paths:
       - 'dist/learn.html'
       - 'dist/learning/learn.js'
+      - 'dist/learning/three-view-runtime.js'
       - 'dist/sw.js'
       - 'tests/p9-module-recovery.test.mjs'
       - 'tests/p9-module-recovery-browser.cjs'
+      - 'tests/p9-three-view-lazy-browser.cjs'
       - '.github/workflows/p9-module-recovery-ci.yml'
   workflow_dispatch:
 permissions:
@@ -27,17 +29,22 @@ jobs:
         run: |
           node --check dist/sw.js
           node --check dist/learning/learn.js
-          node --test tests/p9-module-recovery.test.mjs tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs
+          node --check dist/learning/three-view-runtime.js
+          node --test tests/p9-module-recovery.test.mjs tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs tests/p9-three-view-lazy.test.mjs
       - name: Install Chromium
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install chromium
       - name: Controlled browser startup errors, release and storage validation
         run: node tests/p9-module-recovery-browser.cjs
+      - name: Ordinary and 3D lessons load correctly with stopped HTTP origin
+        run: node tests/p9-three-view-lazy-browser.cjs
       - name: Retain evidence even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: p9-module-recovery-${{ github.run_id }}-${{ github.run_attempt }}
-          path: verification/p9-module-recovery/
+          path: |
+            verification/p9-module-recovery/
+            verification/p9-three-view-lazy/
           if-no-files-found: warn

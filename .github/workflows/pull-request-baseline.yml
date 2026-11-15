@@ -64,6 +64,8 @@ jobs:
           node --check tests/p7-learning-panel-browser.cjs
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
+          node --check dist/learning/three-view-runtime.js
+          node --check tests/p9-three-view-lazy-browser.cjs
           node --check dist/learning/state.js
           node --check tests/p10-learning-continuity-browser.cjs
           node --check tests/p10-longterm-offline-browser.cjs
@@ -206,6 +208,7 @@ jobs:
             tests/p10-learning-continuity.test.mjs
             tests/p10-sw-retirement.test.mjs
             tests/p9-offline-static-import-cache.test.mjs
+            tests/p9-three-view-lazy.test.mjs
             tests/p9-offline-sw-script-cache.test.mjs
             tests/p9-learning-bootstrap-error-banner.test.mjs
             tests/p6b-trail-priority.test.mjs
