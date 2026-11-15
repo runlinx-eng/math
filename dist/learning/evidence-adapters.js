@@ -1,3 +1,4 @@
+import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 // Reviewed mathematical families, not validator batches or automatic type tags.
 // Eligibility remains the exact native position and source checked by binding().
 import {sequenceBinding,replaySequenceEvidence} from './sequence-evidence.js';
@@ -28,6 +29,7 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
  {id:'line',type:'x-s23-lines',binding:lineBinding,replay:replayLineEvidence},
