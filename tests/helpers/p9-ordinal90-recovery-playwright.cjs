@@ -6,7 +6,8 @@ const baseline='9b4d48c3174d005750845c60a5b468a91edcf0efab7f0d955368376087b8390e
 const sha=buf=>crypto.createHash('sha256').update(buf).digest('hex');
 const runner=fs.readFileSync(path.join(root,'tests/p9-fraction-order-adapter-browser.cjs'));
 if(sha(runner)!==baseline)throw Error('Original runner fingerprint changed; ordinal 90 is unproven');
-const report={type:'real-Chromium-original-fraction-order-ordinal-90-fault',target:{width:1280,height:720,ordinal:90,
+const expectRecovery=process.env.MATH_EXPECT_RECOVERY!=='false';
+const report={mode:expectRecovery?'candidate-recovery':'baseline-counterfactual',type:'real-Chromium-original-fraction-order-ordinal-90-fault',target:{width:1280,height:720,ordinal:90,
  scenario:'correction-reset',id:'fractionbench',index:0},originalRunnerSHA256:baseline,injected:0,results:[],errors:[]};
 // Test-only worker overlay: never edits the shipped SW or original runner.
 const workerSource=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8');
@@ -20,13 +21,15 @@ self.addEventListener('message',event=>{
  }
 });
 self.addEventListener('fetch',event=>{`)
- .replace(" if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){",String.raw` if(__testScriptFaultArmed&&event.request.destination==='script'&&
-    url.pathname.endsWith('/learning/learn.js')&&!url.searchParams.has(MODULE_RECOVERY_KEY)){
+ .replace(workerSource.includes(" if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){" )?
+  " if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){":
+  " if(event.request.destination==='script'){",String.raw` if(__testScriptFaultArmed&&event.request.destination==='script'&&
+    url.pathname.endsWith('/learning/learn.js')&&!url.searchParams.has('module-recovery')){
   __testScriptFaultArmed=false;__testScriptFaults++;
   event.respondWith(Promise.resolve(new Response('intentional resource failure',{status:503,
    headers:{'Content-Type':'text/plain'}})));return;
  }
- if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY)){`);
+ ${workerSource.includes('MODULE_RECOVERY_KEY')?"if(event.request.destination==='script'&&url.searchParams.has(MODULE_RECOVERY_KEY))":"if(event.request.destination==='script')"}{`);
 if(testWorkerSource===workerSource||!testWorkerSource.includes('__testScriptFaults++'))
  throw Error('test-only SW overlay unavailable');
 const originalReadFile=fs.readFile;
@@ -91,7 +94,15 @@ function wrapBrowser(browser){
       save();
      }
      return result;
-    }catch(error){if(reloads===90){report.errors.push({stage:'original-readiness',error:String(error)});save();}throw error;}
+    }catch(error){if(reloads===90){
+      const after=await page.evaluate(()=>({raw:localStorage.getItem('math-explorer-v2'),
+       snapshot:window.mathLesson?.snapshot?.()||null,
+       recovery:window.mathStartupRecovery||null,
+       warning:document.querySelector('#storage-warning')?.textContent||''})).catch(err=>({error:String(err)}));
+      report.after={rawBytes:after.raw?.length,mathematicalHistoryIdentical:after.raw?mathHistory(after.raw)===mathHistory(report.before.raw):false,
+       snapshot:after.snapshot,recovery:after.recovery,warning:after.warning,error:after.error};
+      report.errors.push({stage:'original-readiness',error:String(error)});save();
+     }throw error;}
    };
    return page;
   };
@@ -99,7 +110,9 @@ function wrapBrowser(browser){
  };
  browser.close=async function(...args){
   save();
-  if(report.injected!==1||report.after?.mathematicalHistoryIdentical!==true||report.after?.recovery?.status!=='recovered')
+  if(report.injected!==1||report.after?.mathematicalHistoryIdentical!==true||
+    (expectRecovery?report.after?.recovery?.status!=='recovered':
+     report.after?.snapshot!==null||!report.after?.warning?.includes('程序未能加载')))
    {process.exitCode=1;report.errors.push({stage:'acceptance',error:'target fault was not single or stored bytes changed'});save();}
   return Reflect.apply(close,this,args);
  };
