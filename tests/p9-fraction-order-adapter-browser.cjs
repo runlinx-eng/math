@@ -244,9 +244,15 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   for(const trace of cdpDiagnostics)trace.mark('test-cleanup-start',{originListening:!!server?.listening});
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
   for(const trace of cdpDiagnostics)trace.mark('browser-close-start');
-  try{if(browser)await browser.close();}
+  try{
+   if(browser)await browser.close();
+   for(const trace of cdpDiagnostics)trace.mark('browser-close-complete');
+  }catch(error){
+   for(const trace of cdpDiagnostics)trace.mark('browser-close-failed',{error:String(error)});
+   throw error;
+  }
   finally{
-   for(const trace of cdpDiagnostics){trace.mark('browser-close-complete');await trace.finish();}
+   for(const trace of cdpDiagnostics)await trace.finish();
   }
  }
 })().catch(error=>{console.error(error.stack);process.exitCode=1;});

@@ -2,7 +2,7 @@
 // The original Required commands and their reload counts stay unchanged.
 // No solved work is seeded; this does not add mathematical evidence coverage.
 const assert=require('node:assert/strict');
-const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),crypto=require('node:crypto');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
@@ -25,11 +25,18 @@ const mathematicalRecord=raw=>{
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  let browser,server,context,page,diagnostics,cdp,nativeTrace,nativePage,active,label='setup',failureDiagnostic=null,status='running';
- const diagnosticStreams=[];
+ let healthyReloadsCompleted=false,nativeCaptureSaved=false,diagnosticOutcome='pending',windowIntegrity='unknown';
+ const diagnosticStreams=[],nativeFinishErrors=[];
+ const finishNative=async reason=>{
+  try{if(nativeTrace)await nativeTrace.finish(reason);}
+  catch(error){nativeFinishErrors.push({label,stage:'native-trace-finish',error:String(error)});}
+ };
  const persist=()=>fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
   headSha,testedCheckoutSha,release,browserVersion:browser?.version(),reloadsPerViewport,spec,
   experiment:'long healthy reload sequence; stop on first failure; no recovery retries',
-  mathematicalCoverageAdded:0,status,checks,viewports,errors,networkLog,failureDiagnostic,diagnosticStreams,nativeTrace:nativeTrace?.report
+  mathematicalCoverageAdded:0,status,healthyReloadsCompleted,nativeCaptureSaved,diagnosticOutcome,
+  traceCoverage:'bounded-tail',wholeSequenceGuaranteed:false,windowIntegrity,
+  checks,viewports,errors,networkLog,failureDiagnostic,diagnosticStreams,nativeTrace:nativeTrace?.report
  },null,2));
  try{
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader',
@@ -117,9 +124,9 @@ const mathematicalRecord=raw=>{
    'both independent viewports complete their full healthy sequence');
   persist();
  }catch(error){
-  void nativeTrace?.finish({kind:'original-test-failure-fallback',label,error:String(error)});
-  cdp?.mark('test-failure-observed',{error:String(error)});
   status='failure';if(active)active.status='failed';errors.push({label,error:String(error),stack:error?.stack});
+  void finishNative({kind:'original-test-failure-fallback',label,error:String(error)});
+  cdp?.mark('test-failure-observed',{error:String(error)});
   // Persist current storage independently: a later cache-body read may itself
   // fail or time out, and must not discard bytes already read from this page.
   if(page&&active){
@@ -143,8 +150,10 @@ const mathematicalRecord=raw=>{
   try{if(page)await page.screenshot({path:path.join(out,label+'-failure.png'),timeout:4000,fullPage:true});}catch{}
   persist();console.error(error);process.exitCode=1;
  }finally{
-  nativeTrace?.beginCleanup();
-  if(nativeTrace)await nativeTrace.finish({kind:status==='failure'?'failure-cleanup':'healthy-sequence-complete',label});
+  healthyReloadsCompleted=viewports.length===2&&viewports.every(v=>v.successfulReloads.length===reloadsPerViewport);
+  try{nativeTrace?.beginCleanup();}
+  catch(error){nativeFinishErrors.push({label,stage:'native-trace-cleanup',error:String(error)});}
+  await finishNative({kind:status==='failure'?'failure-cleanup':'healthy-sequence-complete',label});
   for(const trace of cdpDiagnostics)trace.mark('test-cleanup-start');
   try{if(server){await new Promise(resolve=>server.close(resolve));server.closeAllConnections();}}
   catch(error){errors.push({label,stage:'origin-close',error:String(error)});process.exitCode=1;}
@@ -162,10 +171,33 @@ const mathematicalRecord=raw=>{
     if(result.writeError){errors.push({label,stage:'diagnostic-stream',...result});process.exitCode=1;}
    }catch(error){errors.push({label,stage:'diagnostic-stream',file:trace.file,error:String(error)});process.exitCode=1;}
   }
-  status=errors.length===0&&viewports.length===2&&viewports.every(v=>v.status==='complete')?'success':'failure';
-  if(status==='failure')process.exitCode=1;
+  // A healthy reload sequence cannot certify a failed or incomplete capture.
+  // Check only after cleanup, retaining any original test error at errors[0].
+  errors.push(...nativeFinishErrors);
+  const native=nativeTrace?.report;
+  if(native?.status==='saved'){
+   try{
+    assert.ok(native.tracingComplete?.stream,'native trace is missing its completed stream');
+    const bytes=fs.readFileSync(path.join(out,native.file));
+    assert.ok(bytes.length>0,'native trace file is empty');
+    assert.equal(bytes.length,native.bytes,'native trace byte count differs from the saved stream');
+    assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),native.sha256,'native trace SHA-256 differs from the saved stream');
+    nativeCaptureSaved=true;
+   }catch(error){errors.push({label,stage:'native-trace-artifact',error:String(error)});}
+  }else errors.push({label,stage:'native-trace',error:'Native trace was not saved',status:native?.status||'missing'});
+  if(native?.errors?.length)errors.push({label,stage:'native-trace',error:'Native trace reported diagnostic errors',details:native.errors});
+  if(nativeCaptureSaved){
+   if(native.dataLossOccurred===false)windowIntegrity='no-loss-reported';
+   else if(native.dataLossOccurred===true)windowIntegrity='not-proven';
+   else errors.push({label,stage:'native-trace-integrity',error:'Native trace data loss status is unknown'});
+  }
+  const diagnosticErrors=errors.some(error=>error.stage);
+  diagnosticOutcome=!nativeCaptureSaved||diagnosticErrors?'incomplete':windowIntegrity==='not-proven'?'partial':'saved';
+  const healthy=healthyReloadsCompleted&&viewports.every(v=>v.status==='complete')&&errors.length===0;
+  status=healthy&&diagnosticOutcome==='saved'?'success':healthy&&diagnosticOutcome==='partial'?'partial':'failure';
+  if(status!=='success')process.exitCode=1;
   persist();
  }
  console.log('P9_OFFLINE_LONG_RELOAD '+JSON.stringify({status,headSha,checks:checks.length,
-  reloads:viewports.reduce((sum,v)=>sum+v.successfulReloads.length,0)}));
+  reloads:viewports.reduce((sum,v)=>sum+v.successfulReloads.length,0),healthyReloadsCompleted,nativeCaptureSaved,diagnosticOutcome,windowIntegrity}));
 })().catch(error=>{console.error(error);process.exitCode=1;});

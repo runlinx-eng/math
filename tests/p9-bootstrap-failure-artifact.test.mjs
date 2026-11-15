@@ -15,7 +15,7 @@ const release='contract-release',base='http://127.0.0.1:18080/';
 
 // Exercise the actual runner's catch and the shared diagnostic writer. This
 // controlled browser double is a failure-artifact contract, not Chromium proof.
-async function runProbe({failureViewport=0,brokenScreenshot=false,mature=false,fractionOrder=false,brokenDiagnostics=false}={}){
+async function runProbe({failureViewport=0,brokenScreenshot=false,mature=false,fractionOrder=false,brokenDiagnostics=false,brokenCache=false,brokenClose=false}={}){
  const adapter=mature||fractionOrder;
  const sourceURL=new URL(fractionOrder?'./p9-fraction-order-adapter-browser.cjs':mature?'./p9-mature-expansion-browser.cjs':'./p9-bootstrap-failure-browser.cjs',import.meta.url);
  const source=fs.readFileSync(sourceURL,'utf8');
@@ -69,8 +69,11 @@ async function runProbe({failureViewport=0,brokenScreenshot=false,mature=false,f
    }
    const page=this,controller={state:'activated',scriptURL:base+'sw.js?release='+release,
     postMessage(_,ports){ports[0].postMessage({complete:!page.missing,cache:release,cached:page.missing?2:3,total:3});}};
-   const cache={match:async url=>page.missing&&String(url).endsWith('b18-view.js')?null:
-    {status:200,headers:{get:()=> 'text/javascript'},arrayBuffer:async()=>new Uint8Array([1,2,3]).buffer},
+   const cache={match:async url=>{
+    if(brokenCache&&page.failed)throw new Error('contract cache body unavailable');
+    return page.missing&&String(url).endsWith('b18-view.js')?null:
+     {status:200,headers:{get:()=> 'text/javascript'},arrayBuffer:async()=>new Uint8Array([1,2,3]).buffer};
+   },
     delete:async()=>{page.missing=true;return true;}};
    return await vm.runInNewContext('('+fn.toString()+')(__arg)',{
     __arg:arg,URL,MessageChannel:Channel,setTimeout,clearTimeout,crypto:webcrypto,Uint8Array,
@@ -94,6 +97,7 @@ async function runProbe({failureViewport=0,brokenScreenshot=false,mature=false,f
  }
  const browser={version:()=> 'contract-browser',close:async()=>{
    browserCloses++;
+   if(brokenClose)throw new Error('contract browser close unavailable');
    const flag=launches[0]?.args.find(arg=>arg.startsWith('--log-net-log='));
    if(flag)fs.writeFileSync(flag.slice('--log-net-log='.length),JSON.stringify({contractFixture:true,notChromiumNetLog:true}));
   },
@@ -127,13 +131,16 @@ test('healthy monitor preserves all 24 reloads and both deliberate missing-modul
  const run=await runProbe();
  assert.equal(run.exitCode,0);
  assert.equal(run.result.results.length,2);
- assert.equal(run.result.checks.length,38);
+ assert.equal(run.result.checks.length,40);
  for(const result of run.result.results){
   assert.equal(result.successfulOfflineReloads.length,12);
   assert.deepEqual(result.deletion,{existed:true,deleted:true,after:false});
   assert.equal(result.before.rawBytes,raw.length);
   assert.equal(result.after.storedBytes,raw.length);
   assert.match(result.after.warning,/已保存的学习记录没有被清除/);
+  const captured=JSON.parse(run.files[result.expectedFailureDiagnostic]);
+  assert.equal(captured.storageCapture.source,'before-cache-diagnostics');
+  assert.equal(run.files[captured.storage],raw);
  }
 });
 
@@ -247,4 +254,31 @@ test('fraction-order retains its original failure and NetLog when diagnostic wri
  assert.equal(run.launches.length,1);assert.equal(run.browserCloses,1);
  assert.equal(run.contexts[0].page.reloads,1);
  assert.ok(run.files[run.result.networkLog]);
+});
+
+for(const runner of ['bootstrap','mature','fraction-order'])test(runner+' cache diagnostic failure cannot discard current failure storage',async()=>{
+ const run=await runProbe({mature:runner==='mature',fractionOrder:runner==='fraction-order',
+  failureViewport:1,brokenScreenshot:true,brokenCache:true});
+ assert.equal(run.exitCode,1);
+ const diagnostic=JSON.parse(run.files[run.result.failureDiagnostic]);
+ assert.match(diagnostic.diagnosticError,/cache body unavailable/);
+ assert.match(diagnostic.error,/readiness failure/);
+ assert.notEqual(run.contexts[0].page.raw,raw);
+ assert.equal(run.files[diagnostic.storage],run.contexts[0].page.raw);
+ assert.equal(diagnostic.storageCapture.source,'before-cache-diagnostics');
+ assert.equal(diagnostic.storageCapture.bytes,Buffer.byteLength(run.contexts[0].page.raw));
+ assert.equal(run.contexts[0].page.reloads,runner==='bootstrap'?2:1,'failed operations are not retried');
+});
+
+test('fraction-order distinguishes a failed browser close from successful trace cleanup',async()=>{
+ const run=await runProbe({fractionOrder:true,failureViewport:1,brokenScreenshot:true,brokenClose:true});
+ assert.equal(run.exitCode,1);
+ assert.match(run.result.error,/readiness failure/);
+ assert.ok(run.logs.some(line=>/browser close unavailable/.test(line)));
+ const rows=run.files[run.result.cdpLogs[0]].trim().split('\n').map(line=>JSON.parse(line));
+ assert.ok(rows.some(row=>row.kind==='browser-close-start'));
+ assert.ok(rows.some(row=>row.kind==='browser-close-failed'&&/browser close unavailable/.test(row.error)));
+ assert.equal(rows.some(row=>row.kind==='browser-close-complete'),false);
+ assert.equal(rows.at(-1).kind,'diagnostic-stream-end');
+ assert.equal(run.contexts[0].page.reloads,1);
 });

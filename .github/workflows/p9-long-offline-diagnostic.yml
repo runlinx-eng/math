@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'tests/p9-offline-long-reload-browser.cjs'
+      - 'tests/p9-offline-long-reload-artifact.test.mjs'
+      - 'tests/p9-native-sw-trace.test.mjs'
       - 'tests/helpers/p9-native-sw-trace.cjs'
       - '.github/workflows/p9-long-offline-diagnostic.yml'
 permissions:
@@ -35,6 +37,7 @@ jobs:
         run: |
           node --check tests/p9-offline-long-reload-browser.cjs
           node --check tests/helpers/p9-native-sw-trace.cjs
+          node --test tests/p9-offline-long-reload-artifact.test.mjs tests/p9-native-sw-trace.test.mjs
           mkdir -p verification/p9-offline-long-reload
           node tests/p9-offline-long-reload-browser.cjs 2>&1 | tee verification/p9-offline-long-reload/console.log
       - name: Preserve the first failure or complete healthy sequence
