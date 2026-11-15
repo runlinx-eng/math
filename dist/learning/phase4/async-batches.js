@@ -9,6 +9,12 @@ const isB39=id=>LESSONS[id]?.batch==='B39'||BRIDGES[id]?.batch==='B39';
 const bridgeId=b=>'link-'+b.from+'-'+b.to;
 let ready=false,loading=null,loadedModel=null,attempt=0;
 let viewLoading=null,viewReady=false,viewAttempt=0;
+// When this module is the verified recovery mirror, its computed B39 imports
+// must stay in that same graph, including while validating existing records.
+// Ordinary loads retain their existing retry URLs; the mirror allows only
+// its one release parameter and never combines it with an unrelated query.
+const recoveryRelease=new URL(import.meta.url).searchParams.get('module-recovery');
+const batchImportSuffix=retry=>recoveryRelease?'?module-recovery='+encodeURIComponent(recoveryRelease):retry?'?retry='+retry:'';
 export const isB39Ready=()=>ready;
 export const needsB39Runtime=raw=>{
   if(!raw||typeof raw!=='object')return false;
@@ -20,7 +26,7 @@ export async function ensureB39Ready(){
   if(ready)return;
   if(loading)return loading;
   const retry=attempt++;
-  const suffix=retry?'?retry='+retry:'';
+  const suffix=batchImportSuffix(retry);
   loading=Promise.all([import('../phase5/b39.js'+suffix),import('../phase5/b39-model.js'+suffix)])
     .then(([batch,model])=>{
       const ids=Object.keys(batch.TASKS);
@@ -49,7 +55,7 @@ export async function prepareSessionRuntime(id,{view=false}={}){
   if(!view||viewReady)return;
   if(!viewLoading){
     const retry=viewAttempt++;
-    const suffix=retry?'?retry='+retry:'';
+    const suffix=batchImportSuffix(retry);
     viewLoading=Promise.all([import('../phase5/b39-view.js'+suffix),import('./view-engine.js')])
       .then(([renderer,dispatcher])=>{dispatcher.registerB39View(loadedModel,renderer);viewReady=true;})
       .catch(error=>{viewLoading=null;throw error;});
