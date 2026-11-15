@@ -1,0 +1,71 @@
+name: P9 issue180 historical abort signature controlled replay
+
+on:
+  pull_request:
+    paths:
+      - 'tests/fixtures/issue180-historical-b11-abort-cluster.json'
+      - 'tests/p9-issue180-historical-abort-replay-browser.cjs'
+      - '.github/workflows/p9-issue180-historical-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Diagnostic-only SW fixture served on a fresh disposable localhost origin.
+# All dist files, the permanent SW, cache release, math fixtures and Required
+# acceptance remain untouched. Never conflate synthetic and natural failures.
+jobs:
+  compare-historical-causes:
+    name: B11 synthetic replay (${{ matrix.mode }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [single, cluster, navigation]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate historical fixture and unmodified B11 math contract
+        run: |
+          set -euo pipefail
+          node --check tests/p9-issue180-historical-abort-replay-browser.cjs
+          node --test tests/p9-place-evidence-adapter.test.mjs
+          node -e "const f=require('./tests/fixtures/issue180-historical-b11-abort-cluster.json');if(f.paths.length!==22||new Set(f.paths).size!==22||f.observed.cache.cached!==276||f.observed.cache.complete!==true)process.exit(1)"
+      - name: Install pinned original Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Reproduce historical ESM abort signature under one known cause
+        shell: bash
+        env:
+          MATH_ISSUE180_REPLAY_MODE: ${{ matrix.mode }}
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-historical-replay
+          printf 'synthetic=true mode=%s sha=%s\n' "$MATH_ISSUE180_REPLAY_MODE" "$GITHUB_SHA" > verification/issue180-historical-replay/run-metadata.txt
+          set +e
+          node tests/p9-issue180-historical-abort-replay-browser.cjs > verification/issue180-historical-replay/browser.log 2>&1
+          status=$?
+          set -e
+          printf 'exit_code=%s\n' "$status" | tee -a verification/issue180-historical-replay/run-metadata.txt
+          tail -n 45 verification/issue180-historical-replay/browser.log
+          exit "$status"
+      - name: Archive original-path, time-correlated CDP, cache and storage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-synthetic-replay-${{ matrix.mode }}
+          path: verification/issue180-historical-replay/
+          if-no-files-found: warn
