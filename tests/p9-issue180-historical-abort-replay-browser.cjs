@@ -10,8 +10,9 @@ const path=require('node:path');
 const assert=require('node:assert/strict');
 const crypto=require('node:crypto');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {createRecoveryModuleGraphTrace}=require('./helpers/p9-issue180-recovery-module-graph.cjs');
 const historical=require('./fixtures/issue180-historical-b11-abort-cluster.json');
-const modes=['single','cluster','navigation'];
+const modes=['baseline','single','cluster','navigation'];
 const mode=process.env.MATH_ISSUE180_REPLAY_MODE;
 if(!modes.includes(mode))throw Error('MATH_ISSUE180_REPLAY_MODE must be single, cluster or navigation');
 assert.equal(historical.paths.length,22,'historical fixture must retain exactly 22 failed scripts');
@@ -229,7 +230,7 @@ async function terminal(page,mode){
  const report={schema:'issue180-historical-synthetic-replay/1',mode,source:historical.source,
   historical:historical.observed,signature:historical.clock,viewports:[],synthetic:true,
   historicalRootCauseEstablished:false,noProductionFilesChanged:true};
- let browser=null,server=null,context=null;
+ let browser=null,server=null,context=null,activeGraphTrace=null;
  try{
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{})});
@@ -254,6 +255,13 @@ async function terminal(page,mode){
     rawSha256:sha256(setup.baseline.raw),rawBytes:Buffer.byteLength(setup.baseline.raw)};
    v.stage='armed';
    const fault=noteFailureEvents(page,context),cdp=await fault.ready;
+   // Trace browser module resolution/parse/evaluation as well as HTTP status.
+   // A 200 from SW does not guarantee that a dependency completed evaluation.
+   if(process.env.MATH_ISSUE180_RECOVERY_GRAPH_TRACE==='1'){
+    activeGraphTrace=createRecoveryModuleGraphTrace({context,page,out,
+     label:mode+'-'+width+'x'+height});
+    await activeGraphTrace.start();
+   }
    const armed=await workerMessage(page,{type:'issue180:arm',mode});
    assert.equal(armed?.mode,mode,'test-only SW fault did not arm');
    v.arm=armed;
@@ -278,6 +286,10 @@ async function terminal(page,mode){
     await page.reload();
    }
    v.terminal=await terminal(page,mode);
+   if(activeGraphTrace){
+    v.graph=await activeGraphTrace.close();activeGraphTrace=null;
+    assert.equal(v.graph.journal.complete,true,'CDP module parser journal lost evidence');
+   }
    v.workerStats=await workerMessage(page,{type:'issue180:stats'});
    v.cacheAfter=await verifyCache(page);
    v.latencyMs=Date.now()-start;
@@ -311,6 +323,7 @@ async function terminal(page,mode){
   report.status='failure';report.failure=serializeError(error);report.failedStage=report.viewports.at(-1)?.stage||'setup';
   console.error('ISSUE180_SYNTHETIC_REPLAY_ERROR '+report.failure);process.exitCode=1;
  }finally{
+  if(activeGraphTrace)await activeGraphTrace.close().catch(()=>{});
   report.completedAt=new Date().toISOString();
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2));
   if(context)await context.close().catch(()=>{});
