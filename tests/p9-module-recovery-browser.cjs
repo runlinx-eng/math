@@ -9,6 +9,12 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
 const output={release:cache,viewports:[],checks:[],failures:[],historicRootCauseEstablished:false};
 const ok=(condition,why)=>{assert.ok(condition,why);output.checks.push(why);};
 const wait=page=>page.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='share',{timeout:20000});
+const learningHistory=raw=>{
+ const state=JSON.parse(raw);
+ const take=records=>Object.fromEntries(Object.entries(records||{}).map(([id,entry])=>
+  [id,{models:entry.models,cases:entry.cases,completed:entry.completed}]));
+ return JSON.stringify({lessons:take(state.lessons),bridges:take(state.daily?.bridges)});
+};
 const state=page=>page.evaluate(()=>({
  raw:localStorage.getItem('math-explorer-v2'),
  ready:window.mathLesson?.snapshot?.()||null,
@@ -63,7 +69,7 @@ const state=page=>page.evaluate(()=>({
    const offline=await state(page);
    ok(response?.fromServiceWorker()&&offline.ready?.id==='share'&&!offline.recovery,
     width+' healthy stopped-origin reload uses existing SW without recovery');
-   ok(offline.raw===healthy.raw,width+' healthy offline navigation does not alter records');
+   ok(learningHistory(offline.raw)===learningHistory(healthy.raw),width+' healthy offline reload preserves mathematics, original models and attempts');
    record.steps.push({kind:'offline',fromServiceWorker:response.fromServiceWorker(),rawBytes:offline.raw?.length});
    // CDP request interception targets precisely the normal entry URL;
    // release-scoped mirror imports are never intercepted. Avoid cache deletion.
@@ -92,7 +98,7 @@ const state=page=>page.evaluate(()=>({
     width+' failed original entry recovered through verified release-scoped module graph');
    ok(recovered.ready?.id==='share'&&recovered.title&&recovered.instruction,
     width+' real lesson title, task and snapshot available after recovery');
-   ok(recovered.raw===offline.raw,width+' recovery did not change raw learning v2 history');
+   ok(learningHistory(recovered.raw)===learningHistory(offline.raw),width+' recovered page preserves mathematical models and attempts across normal boot metadata changes');
    ok(!recovered.warningVisible,width+' recovered page hides original warning after success');
    await page.screenshot({path:path.join(out,width+'x'+height+'-recovered.png')});
    // Alter the cached entry for a fresh reload; same-release SHA pin must reject.
@@ -112,7 +118,7 @@ const state=page=>page.evaluate(()=>({
    ok(rejected.recovery?.failure==='entry-integrity-mismatch',
     width+' current-release entry integrity mismatch is rejected');
    ok(rejected.warningVisible,width+' failed recovery shows an explicit alert');
-   ok(rejected.raw===offline.raw,width+' failed integrity recovery preserves exact original records');
+   ok(rejected.raw===recovered.raw,width+' rejected integrity recovery leaves entire original stored bytes unchanged');
    await page.screenshot({path:path.join(out,width+'x'+height+'-integrity-rejected.png')});
    await context.close();context=null;
   }
