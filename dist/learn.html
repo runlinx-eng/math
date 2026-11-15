@@ -1,13 +1,56 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>动手发现数学</title><link rel="icon" href="icon.svg"><link rel="stylesheet" href="learning/learn.css"><link rel="stylesheet" href="learning/question.css"><link rel="stylesheet" href="learning/phase5/b06.css"><script>
-// A module dependency may fail before learn.js runs; show a safe warning.
-// Never read or modify learning records in this early error handler.
+// Original learning module is still the only normal bootstrap.
+// Only a resource error on its exact external SCRIPT starts one recovery.
+const STARTUP_RELEASE='math-explorer-20261115-p9-esm-recovery-v1';
+const STARTUP_ENTRY_SHA256='9015258ffe9eb50a9c8fa8a960da70ed353648edca797cebda033f74700d43f2';
+let startupRecoveryAttempted=false;
+const startupErrorText='学习页面所需的程序未能加载。已保存的学习记录没有被清除；请检查网络或离线缓存后重新打开。';
+async function recoverLessonModule(){
+ if(window.mathLesson)throw Error('entry-already-started');
+ const sw=navigator.serviceWorker?.controller;
+ const expected=new URL('sw.js?release='+encodeURIComponent(STARTUP_RELEASE),location.href).href;
+ if(!sw||sw.scriptURL!==expected||sw.state!=='activated')throw Error('release-controller-unavailable');
+ const registration=await navigator.serviceWorker.getRegistration();
+ if(registration?.active!==sw||navigator.serviceWorker.controller!==sw)throw Error('controller-changed');
+ const report=await new Promise(resolve=>{
+  const channel=new MessageChannel();let done=false;
+  const finish=value=>{if(done)return;done=true;clearTimeout(timer);channel.port1.close();resolve(value);};
+  const timer=setTimeout(()=>finish(null),2500);
+  channel.port1.onmessage=event=>finish(event.data);
+  try{sw.postMessage({type:'math-explorer:cache-status'},[channel.port2]);}catch{finish(null);}
+ });
+ if(report?.type!=='math-explorer:cache-status'||report.cache!==STARTUP_RELEASE||
+    report.complete!==true||!Number.isInteger(report.total)||report.total<1||report.cached!==report.total)
+  throw Error('current-release-cache-incomplete');
+ if(registration.active!==sw||navigator.serviceWorker.controller!==sw)throw Error('controller-changed');
+ const store=await caches.open(STARTUP_RELEASE);
+ const cached=await store.match(new URL('learning/learn.js',location.href));
+ if(!cached?.ok||!/javascript|ecmascript/i.test(cached.headers.get('content-type')||''))
+  throw Error('entry-cache-unavailable');
+ const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await cached.arrayBuffer())),
+  byte=>byte.toString(16).padStart(2,'0')).join('');
+ if(digest!==STARTUP_ENTRY_SHA256)throw Error('entry-integrity-mismatch');
+ if(window.mathLesson)throw Error('entry-already-started');
+ window.mathStartupRecovery.status='importing-verified-release';
+ // The SW mirrors the full relative ESM graph under a fresh, release-scoped URL.
+ await import('./learning/learn.js?module-recovery='+encodeURIComponent(STARTUP_RELEASE));
+ if(!window.mathLesson?.snapshot)throw Error('recovery-entry-not-ready');
+}
 window.addEventListener('error',event=>{
  const target=event.target;
  if(target?.tagName!=='SCRIPT'||target.type!=='module'||target.getAttribute('src')!=='learning/learn.js')return;
  const warning=document.getElementById('storage-warning');
- if(warning){
-  warning.hidden=false;
-  warning.textContent='学习页面所需的程序未能加载。已保存的学习记录没有被清除；请检查网络或离线缓存后重新打开。';
- }
+ if(warning){warning.hidden=false;warning.textContent=startupErrorText;}
+ if(startupRecoveryAttempted)return;
+ startupRecoveryAttempted=true;
+ // Preserve the original resource-error identity in memory; never touch learner records.
+ const record=window.mathStartupRecovery={attempts:1,status:'checking',release:STARTUP_RELEASE,
+  original:{kind:'module-script-resource-error',src:target.getAttribute('src')}};
+ Promise.resolve().then(recoverLessonModule).then(()=>{
+  record.status='recovered';if(warning){warning.hidden=true;warning.textContent='';}
+ }).catch(error=>{
+  record.status='failed';record.failure=String(error?.message||error);
+  if(warning){warning.hidden=false;warning.textContent=startupErrorText+' 已尝试一次同版本恢复，但未成功（'+record.failure+'）。';}
+ });
 },true);
 </script><script type="module" src="learning/learn.js"></script></head><body><div id="storage-warning" role="alert" hidden></div><main id="lesson"><header><a id="back" href="index.html#space">← 返回知识空间</a><span id="route-title"></span><button type="button" data-do="question" disabled>留到下次</button><span id="status">未完成</span></header><section id="scene"><aside id="question-context" class="question-context" hidden></aside><div class="stage-top" role="group" aria-label="当前知识与学习进度"><div class="lesson-heading"><h1 id="title"></h1><p id="learning-goal"></p></div><ol id="steps" aria-label="学习步骤"></ol></div><section id="learning-problem" class="learning-region" aria-label="要解决的问题"><h2 class="learning-region-title">要解决的问题</h2><p id="instruction"></p><p id="action-cue" role="status" aria-live="polite"></p></section><section id="learning-interaction" class="learning-region" aria-label="动手探索"><h2 id="interaction-title" class="learning-region-title">动手探索</h2><div id="work"></div></section><div class="execution-command" role="group" aria-label="当前任务的检查与下一步"><div id="actions" aria-label="当前任务唯一主要操作"></div></div><section id="learning-check" class="learning-region" aria-label="检查与反馈"><h2 id="check-title" class="learning-region-title">检查与反馈</h2><section id="check-feedback" role="status" aria-live="polite" hidden></section><section id="math-explanation" aria-label="这次检查的数学解释" hidden></section><p id="note-save-status" role="status" aria-live="polite" hidden></p></section><section id="learning-next" class="learning-region" aria-label="发现与继续"><h2 class="learning-region-title">发现与继续</h2><p id="next-guidance"></p><details id="learning-support" class="learning-support"><summary>更多学习与资料（可选）</summary><section id="p3-learning-flow" class="p3-learning-flow" aria-label="学习记录与可选探索"></section><details id="route-collapsible"><summary>其他知识点（可选）</summary><nav id="route" aria-label="这条学习路线"></nav></details></details></section></section><details id="record"><summary>这次留下的记录</summary><div id="record-body"></div></details></main></body></html>
