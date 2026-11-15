@@ -151,9 +151,11 @@ const groups={
  // Keep the 188 fraction-case viewport instances on their own runner; every
  // upstream command, artifact, and the 35-minute limit remain unchanged.
  "evidence-fractioncase":{commands:[
+  {"file":"tests/p9-fdpboard-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fractioncase-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
+  "verification/p9-fdpboard-adapter/",
  ]},
  "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
