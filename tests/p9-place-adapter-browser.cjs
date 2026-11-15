@@ -5,6 +5,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
 const {createReloadStartupProbe}=require('./helpers/p9-issue180-reload-probe.cjs');
+const {selectDiagnosticCases}=require('./helpers/p9-issue180-case-shard.cjs');
 const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const decimalScope=process.env.MATH_PLACE_EVIDENCE_SCOPE==='decimal';
 const root=path.resolve(__dirname,'..'),out=path.join(root,decimalScope?'verification/p9-decimal-place-adapter':'verification/p9-place-adapter');
@@ -12,8 +13,11 @@ const groups=decimalScope?{decimalsum:[1,2,3,4],decimalmeasure3:[1,2],fractionme
  {onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],
  oneslarge:[3],tenslarge:[2,3],showwhy:[0,2],fourparts:[2],buildthousand:[0,1,2],
  columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]};
-const cases=Object.entries(groups).flatMap(([id,indices])=>indices.map(index=>({id,index})));
-const nativeNodes=Object.keys(groups).length;
+const fullCases=Object.entries(groups).flatMap(([id,indices])=>indices.map(index=>({id,index})));
+const diagnosticShard=process.env.MATH_ISSUE180_PLACE_SHARD||'';
+if(decimalScope&&diagnosticShard)throw Error('Issue #180 case sharding is for integer B11 only');
+const cases=selectDiagnosticCases(fullCases,diagnosticShard);
+const nativeNodes=diagnosticShard?new Set(cases.map(x=>x.id)).size:Object.keys(groups).length;
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],isolations=[],offline=[];
 const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -295,6 +299,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
   ok(observations.length===cases.length*viewports.length,`all ${cases.length} ${decimalScope?'decimal':'integer'} native tasks complete at both desktop sizes`);
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,
    scope:decimalScope?'decimal':'integer',nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length,viewports,
+   ...(diagnosticShard?{diagnosticShard,fullNativeTasks:fullCases.length,selectedNativeCases:cases,experimentalOnly:true}:{}),
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log((decimalScope?'P9_DECIMAL_PLACE_ADAPTER_BROWSER_OK ':'P9_PLACE_ADAPTER_BROWSER_OK ')+
    JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
@@ -303,7 +308,8 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    .catch(probeError=>console.error('Passive native startup failure evidence:',String(probeError)));
   if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),failureDiagnostic,at:activeLabel},null,2));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),failureDiagnostic,at:activeLabel,
+   ...(diagnosticShard?{diagnosticShard,fullNativeTasks:fullCases.length,selectedNativeCases:cases,experimentalOnly:true}:{})},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
   if(activeNativeProbe)await activeNativeProbe.close().catch(()=>{});
