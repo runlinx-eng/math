@@ -1,5 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
-registerClientRelease('math-explorer-20261115-p9-storyledger-esm-recovery-v1');
+import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
+registerClientRelease('math-explorer-20261115-p9-lazy-three-v1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -21,13 +22,6 @@ import {renderExtra,visualExtra,controlsExtra} from './phase4/view-engine.js';
 import {setField} from './phase4/ui.js';
 import {mountB06} from './phase5/b06-runtime.js';
 import {TYPES as B06_TYPES} from './phase5/b06-model.js';
-import {SolidView} from './phase4/solid-view.js';
-import {SpaceLab} from './phase5/b27-solid-view.js';
-import {AreaSolidLab} from './phase5/b30-solid-view.js';
-import {FractionCubeView} from './phase5/b31-cube-view.js';
-import {PatternGrowthView} from './phase5/b34-space-view.js';
-import {FrameView} from './phase5/b23-solid-view.js';
-import {PowerView} from './phase5/b09-power-view.js';
 import {KEY,fresh,validate,nodeState,now,backup} from '../exploration-core.js';
 import {LESSONS,ROUTES,lessonIds,routeFor,REFLECTIONS} from './catalog.js';
 import {TASKS,PRACTICE,defaultModel,validModel,inspect,voxels,exampleModel} from './tasks.js';
@@ -38,12 +32,13 @@ import {askQuestion} from './question-ui.js';
 import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
-import {CubeView} from './cubes.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
 const entry=(key,label,value)=>`<label class="field">${label}<input type="text" data-field="${key}" aria-label="${label}" autocomplete="off" maxlength="40" value="${esc(value)}"></label>`;
 let extraLab=null,extraKey='',cleanupB06=null;
+// View constructors are loaded before the session's first synchronous render.
+let CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView;
 let questionId=new URLSearchParams(location.search).get('question'),atlas,all,id,a,blocked=false,feedback='',spread=0,view=null,cube=null,cubeKey='',dirty=false;
 let savedNoteFeedback='';
 let lessonOpenSerial=0;
@@ -304,6 +299,10 @@ async function openLesson(next,{keepQuestion=false}={}){
     const stored=readStored(KEY);
     if(stored)await prepareStateForValidation(JSON.parse(stored));
     await prepareSessionRuntime(next,{view:true});
+    // A session may switch to a 3D task through Next; load before any state write/render.
+    if(sessionTasks(next).some(needsThreeView)){
+      ({CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView}=await loadThreeViews());
+    }
   }catch(error){
     if(serial!==lessonOpenSerial)return;
     notice.textContent='任务加载失败，原记录未修改：'+error.message+' ';

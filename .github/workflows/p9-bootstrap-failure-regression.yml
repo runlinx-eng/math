@@ -8,6 +8,7 @@ on:
       - 'dist/learn.html'
       - 'dist/sw.js'
       - 'dist/learning/learn.js'
+      - 'dist/learning/three-view-runtime.js'
       - 'tests/p9-bootstrap-failure-browser.cjs'
       - 'tests/p9-mature-expansion-browser.cjs'
       - 'tests/p9-fraction-order-adapter-browser.cjs'

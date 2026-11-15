@@ -4,6 +4,7 @@ on:
     paths:
       - 'dist/learn.html'
       - 'dist/learning/learn.js'
+      - 'dist/learning/three-view-runtime.js'
       - 'dist/sw.js'
       - 'tests/p9-module-recovery.test.mjs'
       - 'tests/p9-module-recovery-browser.cjs'
@@ -27,7 +28,8 @@ jobs:
         run: |
           node --check dist/sw.js
           node --check dist/learning/learn.js
-          node --test tests/p9-module-recovery.test.mjs tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs
+          node --check dist/learning/three-view-runtime.js
+          node --test tests/p9-module-recovery.test.mjs tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs tests/p9-three-view-lazy.test.mjs
       - name: Install Chromium
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
