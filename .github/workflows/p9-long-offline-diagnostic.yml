@@ -1,0 +1,49 @@
+name: P9 long offline reload diagnostic
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-offline-long-reload-browser.cjs'
+      - 'tests/p9-offline-long-reload-artifact.test.mjs'
+      - 'tests/p9-native-sw-trace.test.mjs'
+      - 'tests/helpers/p9-native-sw-trace.cjs'
+      - '.github/workflows/p9-long-offline-diagnostic.yml'
+permissions:
+  contents: read
+jobs:
+  first-failure-capture:
+    if: github.head_ref == 'diagnostic/issue-180-long-offline-reloads'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install unchanged Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Stop on the first failure in the bounded healthy reload sequence
+        shell: bash
+        run: |
+          node --check tests/p9-offline-long-reload-browser.cjs
+          node --check tests/helpers/p9-native-sw-trace.cjs
+          node --test tests/p9-offline-long-reload-artifact.test.mjs tests/p9-native-sw-trace.test.mjs
+          mkdir -p verification/p9-offline-long-reload
+          node tests/p9-offline-long-reload-browser.cjs 2>&1 | tee verification/p9-offline-long-reload/console.log
+      - name: Preserve the first failure or complete healthy sequence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-long-offline-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/p9-offline-long-reload/
+          if-no-files-found: error
