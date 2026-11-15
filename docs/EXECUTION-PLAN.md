@@ -1,5 +1,7 @@
 ## 2026-11-14｜P9 小账本逐步关系与保留纠错（Issue #164 / PR #168，连续链整合）
 
+**2026-11-15 合并依赖新检查点（须重新验收）：** 以正式 `main@a7d8aac1ad0cb5ad15376ef2dcdc8661ce245f8e`（已合并 #195 离线 ESM 受控恢复）作为本分支第二父提交，以旧 `#168@065c301e4bc4a349dad557d8a0d1e2b354bccd7b` 为第一父提交，重整合树 `626d7cdb20d233ee3941ea354159322c2e0b8b4e`。逐项对比确认 414 条主线数学 manifest 原位置、原值顺序不变，只追加 8 条 storyledger。正式注册、学习工作区、Service Worker 和足迹入口统一新发布缓存 `math-explorer-20261115-p9-storyledger-esm-recovery-v1`，恢复入口 SHA256 与新学习入口绑定且原 #180 失败回退保留。不将旧 #168 的成功 Required 或原 #195 的旧 HEAD 绿色记作**本新 HEAD**通过。新数学 69 次 Required、原生 Chromium、P10/备份、离线纠错及全部 Artifact 需要重新跑完；正式 main 当前仅有 414 道严格证据题，422 道为 PR 候选，禁止提前计数或自动合并。
+
 本轮从 #168 原 HEAD `6b46e31141df290bb4e109369e96eb6c9c50eda8` 合入 Issue #144 新 HEAD `a0fa242e73a0c58609b91acea6913c32c4ee0a84`，保留 #167 公共纠错及 #159→#160→#161→#162→#163→#165→#144 的完整准备链。旧 #168 的验收记录只属于旧 HEAD；这次新HEAD完整CI、真实Chromium/P10、Artifact以及合并main独立回归须重新核验。依赖实际状态见Issue #130，不把准备并集记成正式main覆盖。
 
 storyledger生产适配器、两个fixture、专用Node和浏览器脚本五文件逐字保持6b46。共享registry/manifest/反馈/缓存清单、公共审计与CI清单按真实并集整合，当前只增加小账本的8个位置：storymoney[0,1,2]、storylarger[0,2,4]、storymillion[1,3]。固定3个来源节点和完整任务指纹，全部method:null；5道同型关联隔离。相对准确 #144 依赖，准备并集为 **A422题/161节点、B210/C150/D1134/E80**，净增8题和1个此前未覆盖节点storymoney；storylarger与storymillion已有上游估算证据，不能重复增加节点。1996原生题与1552关联题分别统计。
