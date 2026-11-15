@@ -1,0 +1,72 @@
+name: P9 issue180 ESM recovery parser graph evidence
+
+on:
+  pull_request:
+    paths:
+      - 'tests/helpers/p9-issue180-recovery-module-graph.cjs'
+      - 'tests/p9-issue180-historical-abort-replay-browser.cjs'
+      - '.github/workflows/p9-issue180-recovery-module-graph.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Supplemental scoped ESM parser/runtime evidence only; original math/cache and
+# production SW unchanged. Injection modes are NOT natural reproductions.
+jobs:
+  recovery-module-graph:
+    name: ESM graph (${{ matrix.mode }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [baseline, single, cluster]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate passive trace and original math fixture
+        run: |
+          set -euo pipefail
+          node --check tests/helpers/p9-issue180-recovery-module-graph.cjs
+          node --check tests/p9-issue180-historical-abort-replay-browser.cjs
+          node --test tests/p9-place-evidence-adapter.test.mjs
+          node -e "const f=require('./tests/fixtures/issue180-historical-b11-abort-cluster.json');if(f.paths.length!==22||f.observed.cache.complete!==true)process.exit(1)"
+      - name: Install pinned Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Inspect module graph after complete 200 responses and recovery rejection
+        shell: bash
+        env:
+          MATH_ISSUE180_REPLAY_MODE: ${{ matrix.mode }}
+          MATH_ISSUE180_RECOVERY_GRAPH_TRACE: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-historical-replay
+          printf 'mode=%s sha=%s synthetic=true\n' "$MATH_ISSUE180_REPLAY_MODE" "$GITHUB_SHA" > verification/issue180-historical-replay/graph-run-metadata.txt
+          set +e
+          node tests/p9-issue180-historical-abort-replay-browser.cjs > verification/issue180-historical-replay/graph-browser.log 2>&1
+          status=$?
+          set -e
+          printf 'exit_code=%s\n' "$status" | tee -a verification/issue180-historical-replay/graph-run-metadata.txt
+          tail -n 60 verification/issue180-historical-replay/graph-browser.log
+          exit "$status"
+      - name: Save full CDP parser/exception timeline and storage snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-recovery-graph-${{ matrix.mode }}
+          path: verification/issue180-historical-replay/
+          if-no-files-found: warn
