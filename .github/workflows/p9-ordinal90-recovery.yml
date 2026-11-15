@@ -4,9 +4,8 @@ on:
     paths:
       - 'dist/learn.html'
       - 'dist/sw.js'
-      - 'dist/learning/learn.js'
-      - 'dist/space.js'
-      - 'dist/exploration.js'
+      - 'dist/sw-client.js'
+      - 'dist/local-runtime.js'
       - 'tests/helpers/p9-ordinal90-recovery-playwright.cjs'
       - '.github/workflows/p9-ordinal90-recovery.yml'
   workflow_dispatch:

@@ -20,6 +20,7 @@ jobs:
     name: static-checks
     outputs:
       run_browser: ${{ steps.scope.outputs.run_browser }}
+      run_offline: ${{ steps.scope.outputs.run_offline }}
     runs-on: ubuntu-24.04
     # Syntax, unit tests and source-derived audits keep their existing gates.
     timeout-minutes: 35
@@ -283,9 +284,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-offline, p8-performance]
     env:
-      MATH_BROWSER_REQUIRED: ${{ needs.static-checks.outputs.run_browser }}
+      MATH_BROWSER_REQUIRED: ${{ matrix.group == 'p10-offline' && needs.static-checks.outputs.run_offline || needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
     steps:
       - uses: actions/checkout@v4

@@ -155,17 +155,22 @@ const groups={
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
  ]},
- "p10":{commands:[
+ "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
-  {"file":"tests/p10-longterm-offline-browser.cjs","env":{}},
-  {"file":"tests/p10-sw-nav-isolation-browser.cjs","env":{}},
-  {"file":"tests/p10-release-upgrade-repeat.cjs","env":{}},
   {"file":"tests/p10-backup-safety-browser.cjs","env":{}},
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
+ ]},
+ // Full offline is mandatory on SW/startup PRs, main pushes and manual runs.
+ // Ordinary math PRs leave an explicit, audited not-required group receipt.
+ "p10-offline":{commands:[
+  {"file":"tests/p10-longterm-offline-browser.cjs","env":{}},
+  {"file":"tests/p10-sw-nav-isolation-browser.cjs","env":{}},
+  {"file":"tests/p10-release-upgrade-repeat.cjs","env":{}},
+ ],artifacts:[
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},
@@ -211,8 +216,39 @@ export function browserScope(event,changedFiles=[]){
   'tests/evidence-expansion-audit.test.mjs','docs/spatial-learning/evidence-review-manifest.json']);
  // Preserve the existing source/document scope and include the actual browser
  // inventory and its scheduler, so a test-only edit cannot omit its own run.
- const relevant=/^(dist\/|tests\/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs\/spatial-learning\/INTERACTION-RULES\.md$|docs\/language\/|scripts\/(audit-learning-nodes|audit-learning-task-rules|required-browser-checks)\.mjs$|tests\/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs|required-browser-checks\.test\.mjs)$|\.github\/workflows\/(pull-request-baseline|overview-readability-check)\.yml$)/;
- return changedFiles.some(file=>scripts.has(file)||sourceReview.has(file)||relevant.test(file))?'true':'false';
+ const relevant=/^(dist\/|tests\/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs\/spatial-learning\/INTERACTION-RULES\.md$|docs\/language\/|scripts\/((audit-learning-nodes|audit-learning-task-rules|required-browser-checks)\.mjs|server\.py)$|tests\/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs|required-browser-checks\.test\.mjs)$|\.github\/workflows\/(pull-request-baseline|overview-readability-check|p9-module-recovery-ci|p9-bootstrap-failure-regression|p9-ordinal90-recovery)\.yml$)/;
+ return changedFiles.some(file=>scripts.has(file)||sourceReview.has(file)||relevant.test(file)||OFFLINE_SENSITIVE_FILES.has(file)||OFFLINE_SENSITIVE_TEST.test(file))?'true':'false';
+}
+
+// Keep deep SW/cache browser checks out of unrelated math PRs, but retain
+// every math/backup assertion and the complete 69-command main regression.
+const OFFLINE_SENSITIVE_FILES=new Set([
+ 'dist/sw.js','dist/sw-client.js','dist/learn.html',
+ 'dist/space.js','dist/exploration.js','dist/index.html','dist/v2.html',
+ 'dist/mac-local.html','dist/local-runtime.js',
+ 'scripts/server.py','scripts/required-browser-checks.mjs',
+ 'tests/required-browser-checks.test.mjs',
+ '.github/workflows/pull-request-baseline.yml',
+ '.github/workflows/p9-module-recovery-ci.yml',
+ '.github/workflows/p9-bootstrap-failure-regression.yml',
+ '.github/workflows/p9-ordinal90-recovery.yml'
+]);
+const OFFLINE_SENSITIVE_TEST=/^tests\/(p10-(longterm-offline|sw-nav-isolation|release-upgrade|sw-retirement)|p9-(offline-|module-recovery|bootstrap-failure|ordinal90-|mac-local-))/;
+export function offlineScope(event,changedFiles=[],browserRequired=browserScope(event,changedFiles)){
+ validEvent(event);
+ if(event!=='pull_request')return 'true';
+ check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
+ check(browserRequired==='true'||browserRequired==='false','Missing or invalid browser scope');
+ const required=changedFiles.some(file=>OFFLINE_SENSITIVE_FILES.has(file)||OFFLINE_SENSITIVE_TEST.test(file));
+ check(!required||browserRequired==='true','Offline-sensitive changes must also run browser regressions');
+ return required?'true':'false';
+}
+function validateScopes(outputs,event){
+ check(object(outputs),'Missing browser/offline scope outputs');
+ const browser=validateScope(outputs.run_browser,event);
+ const offline=validateScope(outputs.run_offline,event);
+ check(!offline||browser,'Deep offline scope requires browser regression');
+ return {browser,offline};
 }
 
 function validateContext(context){
@@ -287,11 +323,11 @@ export function validateRequiredGate({needs,reports,context}){
   'Missing or unexpected required job');
  for(const name of ['static-checks','browser'])
   check(needs[name]?.result==='success',name+' must finish with success; got '+String(needs[name]?.result));
- const required=validateScope(needs['static-checks'].outputs?.run_browser,context.event);
+ const {browser:required,offline:offlineRequired}=validateScopes(needs['static-checks'].outputs,context.event);
  check(Array.isArray(reports),'Missing browser group reports');
  const newest=new Map(),attempts=new Set();
  for(const report of reports){
-  validateReport(report,context,required);
+  validateReport(report,context,report.group==='p10-offline'?offlineRequired:required);
   const key=report.group+':'+report.attempt;
   check(!attempts.has(key),'Duplicate browser group attempt');attempts.add(key);
   if(!newest.has(report.group)||newest.get(report.group).attempt<report.attempt)newest.set(report.group,report);
@@ -299,11 +335,11 @@ export function validateRequiredGate({needs,reports,context}){
  check(newest.size===GROUP_NAMES.length&&GROUP_NAMES.every(group=>newest.has(group)),
   'Every declared browser group needs its own result');
  for(const [group,report] of newest)
-  check(report.status===(required?'success':'not-required'),group+' did not complete the required work');
+  check(report.status===((group==='p10-offline'?offlineRequired:required)?'success':'not-required'),group+' did not complete the required work');
  // Rerun-failed-jobs may reuse successful members from an earlier attempt of
  // this same run and exact SHA. A newer failure always supersedes older success.
- return {sha:context.sha,runId:context.runId,required,groups:GROUP_NAMES,
-  invocations:required?[...newest.values()].reduce((sum,report)=>sum+report.commands.length,0):0};
+ return {sha:context.sha,runId:context.runId,required,offlineRequired,groups:GROUP_NAMES,
+  invocations:[...newest.values()].reduce((sum,report)=>sum+report.commands.length,0)};
 }
 
 function workflowContext(){
@@ -329,8 +365,9 @@ function main(){
    files=execFileSync('git',['diff','--name-only','origin/'+process.env.GITHUB_BASE_REF+'...HEAD'],
     {cwd:root,encoding:'utf8'}).trim().split('\n').filter(Boolean);
   }
-  const scope=browserScope(event,files);output('run_browser='+scope+'\n');
-  console.log('Browser regression required: '+scope);return;
+  const scope=browserScope(event,files),offline=offlineScope(event,files,scope);
+  output('run_browser='+scope+'\nrun_offline='+offline+'\n');
+  console.log('Browser regression required: '+scope+'; deep offline required: '+offline);return;
  }
  const context=workflowContext();
  if(operation==='prepare'){
