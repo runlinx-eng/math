@@ -128,8 +128,12 @@ const state=page=>page.evaluate(()=>({
     return true;
    },cache);
    ok(tamper,width+' isolated entry tamper is deliberate');
+   const tamperArmed=await askWorker(page,'test-arm-entry-fault');
+   ok(tamperArmed?.armed,width+' second isolated page load has a controlled resource error');
    await page.reload();
    await page.waitForFunction(()=>window.mathStartupRecovery?.status==='failed');
+   const rejectedCount=(await askWorker(page,'test-entry-fault-count'))?.count;
+   ok(rejectedCount===2,width+' integrity-negative case executed a second independent injected resource fault');
    const rejected=await state(page);
    record.steps.push({kind:'integrity-tamper',recovery:rejected.recovery,warning:rejected.warning,
     rawBytes:rejected.raw?.length});
