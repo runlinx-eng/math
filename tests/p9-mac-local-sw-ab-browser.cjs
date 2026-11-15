@@ -52,11 +52,24 @@ async function scenario(base,name,sw,viewport){
   await page.locator('[data-do="row-part"][data-row="'+row+'"][data-index="'+index+'"]').click();
  await page.locator('#actions [data-do="check"]').click();
  ok(await page.locator('#scene').getAttribute('data-stage')==='passed',label+' original grader passes');
+ // The note field exists on this lesson's final reflection step, not after its first fraction task.
+ // Follow the same native actions proven by P10, without injecting DOM or synthetic storage.
+ for(const mark of ['4','6']){
+  await page.locator('#actions [data-do="next"]').click();
+  await page.locator('input[data-field="mark"]').fill(mark);
+  await page.locator('#actions [data-do="check"]').click();
+  ok(await page.locator('#scene').getAttribute('data-stage')==='passed',
+   label+' native number-line step '+mark+' passes');
+ }
+ await page.locator('#actions [data-do="next"]').click();
  const note='Issue207 isolated record and draft example';
+ const draft='Issue207 unsent explanation draft';
  await page.locator('#note').fill(note);
  await page.locator('[data-do="save-note"]').click();
+ await page.locator('#note').fill(draft);
  const before=stable((await record(page)).lessons.equivalent);
- ok(before.includes(note),label+' note preserved before reload');
+ ok(before.includes(note)&&before.includes(draft),
+   label+' original note and unsent draft preserved before reload');
  await page.reload();
  await page.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='equivalent');
  const after=stable((await record(page)).lessons.equivalent);
