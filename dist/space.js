@@ -1,4 +1,4 @@
-import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady,isMacLocalMode} from './sw-client.js';
 const RELEASE='math-explorer-20261115-p9-lazy-three-v2';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
@@ -1214,6 +1214,7 @@ document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLower
 
 async function offline(){
   const status=$('#offline-status');
+  if(isMacLocalMode()){status.textContent='本机保存 · Mac 本地服务模式';return;}
   if(!('serviceWorker'in navigator)){status.textContent='本机保存 · 此环境无法使用离线缓存';return;}
   try{
     const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});

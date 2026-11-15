@@ -1,4 +1,4 @@
-import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady,isMacLocalMode} from './sw-client.js';
 const RELEASE='math-explorer-20261115-p9-lazy-three-v2';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
@@ -226,7 +226,8 @@ $('#import-file').addEventListener('change',async event=>{
   finally{event.target.value='';}
 });
 async function boot(){try{if(redirectRetiredMap())return;const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('地图数据读取失败');atlas=applyNavigationCopy(await response.json());knowledgeNames=makeKnowledgeNames(atlas);nodeById=new Map(atlas.nodes.map(n=>[n.id,n]));packById=new Map(atlas.packs.map(p=>[p.id,p]));state=fresh();try{const before=localStorage.getItem(KEY),oldBefore=localStorage.getItem(OLD_KEY),stored=unpackText(before),old=unpackText(oldBefore);if(stored){const parsed=JSON.parse(stored);await prepareStateForValidation(parsed);state=validate(parsed,atlas);}if(old){const migrated=migrateLegacy(JSON.parse(old),atlas.nodes.map(n=>n.id));state=stored?validate(merge(state,migrated),atlas):migrated;if(localStorage.getItem(KEY)!==before||localStorage.getItem(OLD_KEY)!==oldBefore)throw new Error('加载旧记录期间学习现场发生变化，请重新打开页面。');writeStored(KEY,JSON.stringify(state));}}catch{readBlocked=true;warn('现有记录暂时无法读取，已停止覆盖原数据。可以浏览地图；新探索请及时导出备份。');}render();
- if('serviceWorker'in navigator){
+ if(isMacLocalMode()){$('#offline-status').textContent=' · Mac 本地服务模式';}
+ else if('serviceWorker'in navigator){
   try{
    const registration=await navigator.serviceWorker.register(releaseWorkerURL(RELEASE),{updateViaCache:'none'});
    await navigator.serviceWorker.ready;
