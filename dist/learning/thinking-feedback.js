@@ -1,4 +1,5 @@
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
+import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
@@ -29,6 +30,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-scalechain'){
+    const source=scaleChainBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这一轮的整体是哪个量？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
@@ -128,6 +133,32 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-scalechain'){
+    const source=scaleChainBinding(task,context);if(!source)return null;
+    const proof=replayScaleChainEvidence(task,model);if(!proof)return null;
+    const unit=proof.unit||'',name=r=>{
+      const scaled=BigInt(r[0])*100n,den=BigInt(r[1]);
+      if(unit==='元'&&scaled%den===0n){
+        const cents=scaled/den,absolute=cents<0n?-cents:cents;
+        return `${cents<0n?'-':''}${absolute/100n}.${String(absolute%100n).padStart(2,'0')}`;
+      }
+      return r[1]===1?String(r[0]):r.join('/');
+    };
+    const observations=proof.stages.map((step,index)=>{
+      const ending=step.mode==='off'?'从本轮整体减去这部分，留下':step.mode==='add'?'把这部分加回本轮整体，得到':'把取出的量作为本轮结果，得到';
+      const relation=step.decimalRequired?`你填写的 ${step.submitted.decimal} 倍与题目的 ${step.percent}%（${step.ratio.join('/')}）等值。`:
+        `本轮按题目取整体的 ${step.ratio.join('/')}。`;
+      return `第 ${index+1} 轮以 ${name(step.before)}${unit} 为整体，平均分成 ${step.denominator} 份，每份 ${name(step.pieceValue)}${unit}。你选了 ${step.selectedCount} 份，取出 ${name(step.amount)}${unit}；${ending} ${name(step.result)}${unit}。${relation}`;
+    });
+    const detail=['框和等分格由工具显示；这里只核对保留的选份、数量记录与当前提交，不判断独立作图、建模或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayScaleChainEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.failedRequests.length)detail.push(`记录保留了 ${proof.failedRequests.length} 次未成功的请求；这些请求没有被当成成功完成的一轮，后来的纠正仍能核对。`);
+    if(proof.resets.length)detail.push('重做前的操作和最初填写仍保留；上面的各轮对应当前留下的结果。');
+    if(proof.stages.length>1)detail.push('后一轮使用前一轮留下的结果作为新整体，不能直接沿用最初的整体。');
+    return {title:'这次作品中的思考线索',observation:observations.join(' '),
+      connection:'选出的部分与最后的结果有什么不同？用每小份的量，说明这一轮的整体和取量关系。',detail,method:null};
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);if(!source)return null;
     const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;

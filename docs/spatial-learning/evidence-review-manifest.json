@@ -3985,6 +3985,96 @@
       "adapter": "fdpboard",
       "taskHash": "210ccd8a65554b5e4106ed6abb5b5541d774b81522e604afa739e9de24d24b2c",
       "method": null
+    },
+    {
+      "sessionId": "portionoperator",
+      "index": 0,
+      "type": "x-scalechain",
+      "nodeId": "mt_J339bO7qLe",
+      "adapter": "scalechain",
+      "taskHash": "9c9f558723210928b4fcaa50d7abc8a8e2a80a5ac9b8de7a431650c70fbc05a2",
+      "method": null
+    },
+    {
+      "sessionId": "portionoperator",
+      "index": 1,
+      "type": "x-scalechain",
+      "nodeId": "mt_J339bO7qLe",
+      "adapter": "scalechain",
+      "taskHash": "5219ff27ddfd9f002ae75e43bd5421f67d8e2df2ba7a8447c153bdf05b442313",
+      "method": null
+    },
+    {
+      "sessionId": "portionoperator",
+      "index": 2,
+      "type": "x-scalechain",
+      "nodeId": "mt_J339bO7qLe",
+      "adapter": "scalechain",
+      "taskHash": "4da41a6b5acdeb105b8421bdb2ef77c45eeaec489e4d047590818b6ebc006b68",
+      "method": null
+    },
+    {
+      "sessionId": "portionoperator",
+      "index": 3,
+      "type": "x-scalechain",
+      "nodeId": "mt_J339bO7qLe",
+      "adapter": "scalechain",
+      "taskHash": "913fbb7877f747e40be091669fda48b0b4ae7be385cb1edec0fd16b628397bdc",
+      "method": null
+    },
+    {
+      "sessionId": "pctNames37",
+      "index": 1,
+      "type": "x-scalechain",
+      "nodeId": "mt_4ubP_RMg9o",
+      "adapter": "scalechain",
+      "taskHash": "153cb875975df6dd3673301ce145d3a2cea6bf83caee563fc3af5fd06ccf5580",
+      "method": null
+    },
+    {
+      "sessionId": "pctNames37",
+      "index": 3,
+      "type": "x-scalechain",
+      "nodeId": "mt_4ubP_RMg9o",
+      "adapter": "scalechain",
+      "taskHash": "3706182b1013572189bef4f206ec7b36811ae2dbcdb645558e007ede72760af4",
+      "method": null
+    },
+    {
+      "sessionId": "pctFraction37",
+      "index": 2,
+      "type": "x-scalechain",
+      "nodeId": "mt_ALUrJpY0cZ",
+      "adapter": "scalechain",
+      "taskHash": "177399cbff461ddbf5e2e223c9ac89361ce71f2b0596a50d8179534c137bd886",
+      "method": null
+    },
+    {
+      "sessionId": "pctFraction37",
+      "index": 3,
+      "type": "x-scalechain",
+      "nodeId": "mt_ALUrJpY0cZ",
+      "adapter": "scalechain",
+      "taskHash": "64281683fecde294396af06415c0ee60f144992d453c9d2b8883a1508a455c99",
+      "method": null
+    },
+    {
+      "sessionId": "pctFraction37",
+      "index": 4,
+      "type": "x-scalechain",
+      "nodeId": "mt_ALUrJpY0cZ",
+      "adapter": "scalechain",
+      "taskHash": "3c69ec4bfa5a8383f2df972c4690b538b96f3249388ce282373f0240fd3d273f",
+      "method": null
+    },
+    {
+      "sessionId": "model38",
+      "index": 2,
+      "type": "x-scalechain",
+      "nodeId": "mt_8xVHooT4aI",
+      "adapter": "scalechain",
+      "taskHash": "3706182b1013572189bef4f206ec7b36811ae2dbcdb645558e007ede72760af4",
+      "method": null
     }
   ]
 }
