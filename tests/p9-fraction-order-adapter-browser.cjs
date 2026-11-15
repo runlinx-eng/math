@@ -2,8 +2,11 @@
 // Only empty lesson positions are seeded; the HTTP origin stops before math.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
+const {observeCDPLifecycle}=require('./helpers/p9-cdp-lifecycle-diagnostics.cjs');
 const cases=require('./fixtures/p9-fraction-order-cases.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-fraction-order-adapter');
+const networkLog='browser-netlog.json';
 const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],correctionObservations=[],offline=[];
 const ok=(condition,message)=>{if(!condition)throw Error(message);checks.push(message);};
 const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
@@ -16,12 +19,15 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
   import('../dist/learning/fraction-order-evidence.js'),import('../dist/learning/phase4/async-batches.js')
  ]);
  await ensureB39Ready();
- let browser,server,activePage,activeLabel='setup';
+ let browser,server,activePage,diagnostics,activeCDP,failureDiagnostic=null,activeLabel='setup';
+ const cdpDiagnostics=[],cdpLogs=[];
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
-   args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+   // Keep the original single browser lifecycle; NetLog only records it.
+   args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--log-net-log='+path.join(out,networkLog)]});
   for(const [width,height] of viewports){
+   activeLabel=`${width}x${height}-setup`;
    server=http.createServer((req,res)=>{
     const rel=new URL(req.url,'http://localhost').pathname.replace(/^\/+/,'')||'index.html';
     fs.readFile(path.join(root,'dist',rel),(error,data)=>{
@@ -34,6 +40,9 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
    const page=activePage=await context.newPage();page.setDefaultTimeout(20000);
+   diagnostics=observeBrowserDiagnostics(page,{out,base,label:()=>activeLabel});
+   activeCDP=await observeCDPLifecycle(page,{out,base,label:()=>activeLabel,file:`${width}x${height}-cdp-lifecycle.jsonl`});
+   cdpDiagnostics.push(activeCDP);cdpLogs.push(activeCDP.file);
    page.on('pageerror',error=>errors.push(activeLabel+': '+String(error)));
    const hint=page.locator('#thinking-feedback'),guide=page.locator('#thinking-guide');
    const shot=async name=>{
@@ -61,7 +70,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const snapshot=window.mathLesson?.snapshot();return snapshot?.id===id&&snapshot.index===index&&snapshot.view==='task';
    },spec);
    const reload=async spec=>{
-    const response=await page.reload();await wait(spec);
+    activeCDP.mark('reload-start',{spec});
+    const response=await page.reload();
+    activeCDP.mark('reload-response',{status:response?.status(),fromServiceWorker:response?.fromServiceWorker()});
+    activeCDP.mark('readiness-wait-start',{spec});await wait(spec);
+    activeCDP.mark('readiness-wait-complete',{spec});
     ok(response?.fromServiceWorker()===true,activeLabel+' reload comes from stopped-origin Service Worker');
    };
    const open=async spec=>{
@@ -207,21 +220,39 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' associated original mathematics still works');
    ok(await hint.count()===0,activeLabel+' associated task earns no borrowed native evidence');
    await reload(bridge);ok(await hint.count()===0,activeLabel+' source isolation persists offline');await shot('checked');
-   await context.close();activePage=null;
+   activeCDP.mark('context-close-start');await context.close();activeCDP.mark('context-close-complete');
+   activePage=null;diagnostics=null;activeCDP=null;
   }
   ok(!errors.length,'no browser runtime errors');ok(!remote.length,'no external requests');
   ok(observations.length===40,'all twenty native fraction-order tasks complete at both desktop sizes');
   ok(correctionObservations.length===12,'six correction scenarios run in both viewports');
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,networkLog,cdpLogs,
    nativeTasks:20,nativeNodes:9,taskViewportPairs:observations.length,viewports,
    originStopped:offline.every(x=>x.originStopped),childTrial:false,independentTeachingReview:false},null,2));
   console.log('P9_FRACTION_ORDER_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:20,nativeNodes:9,taskViewportPairs:observations.length}));
  }catch(error){
+  activeCDP?.mark('test-failure-observed',{error:String(error)});
+  activeCDP?.mark('diagnostic-dump-start');
+  if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
+  activeCDP?.mark('diagnostic-dump-complete',{failureDiagnostic});
+  activeCDP?.mark('failure-screenshot-start');
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,error:String(error),at:activeLabel},null,2));
+  activeCDP?.mark('failure-screenshot-complete');
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,offline,networkLog,cdpLogs,failureDiagnostic,error:String(error),at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
+  for(const trace of cdpDiagnostics)trace.mark('test-cleanup-start',{originListening:!!server?.listening});
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
-  if(browser)await browser.close();
+  for(const trace of cdpDiagnostics)trace.mark('browser-close-start');
+  try{
+   if(browser)await browser.close();
+   for(const trace of cdpDiagnostics)trace.mark('browser-close-complete');
+  }catch(error){
+   for(const trace of cdpDiagnostics)trace.mark('browser-close-failed',{error:String(error)});
+   throw error;
+  }
+  finally{
+   for(const trace of cdpDiagnostics)await trace.finish();
+  }
  }
 })().catch(error=>{console.error(error.stack);process.exitCode=1;});

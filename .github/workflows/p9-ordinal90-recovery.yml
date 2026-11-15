@@ -1,0 +1,51 @@
+name: P9 fraction-order ordinal 90 recovery
+on:
+  pull_request:
+    paths:
+      - 'dist/learn.html'
+      - 'dist/sw.js'
+      - 'dist/learning/learn.js'
+      - 'dist/space.js'
+      - 'dist/exploration.js'
+      - 'tests/helpers/p9-ordinal90-recovery-playwright.cjs'
+      - '.github/workflows/p9-ordinal90-recovery.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-fraction-order-reload-90:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify runner and wrapper syntax
+        run: |
+          node --check tests/p9-fraction-order-adapter-browser.cjs
+          node --check tests/helpers/p9-ordinal90-recovery-playwright.cjs
+      - name: Install matching Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Run unmodified 188-reload fraction-order runner with controlled abort at 1280 correction-reset #90
+        env:
+          MATH_PLAYWRIGHT_MODULE: ./helpers/p9-ordinal90-recovery-playwright.cjs
+        run: node tests/p9-fraction-order-adapter-browser.cjs
+      - name: Retain the exact injected failure, original mathematical results and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-fraction-ordinal90-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/p9-fraction-order-adapter/
+          if-no-files-found: error

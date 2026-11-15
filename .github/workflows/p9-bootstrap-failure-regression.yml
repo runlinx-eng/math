@@ -1,11 +1,20 @@
 name: P9 learning module failure fallback
 on:
+  # Each merged main commit gets its own stopped-origin regression artifact.
+  push:
+    branches: [main]
   pull_request:
     paths:
       - 'dist/learn.html'
       - 'dist/sw.js'
       - 'dist/learning/learn.js'
       - 'tests/p9-bootstrap-failure-browser.cjs'
+      - 'tests/p9-mature-expansion-browser.cjs'
+      - 'tests/p9-fraction-order-adapter-browser.cjs'
+      - 'tests/helpers/p9-browser-diagnostics.cjs'
+      - 'tests/helpers/p9-cdp-lifecycle-diagnostics.cjs'
+      - 'tests/p9-bootstrap-failure-artifact.test.mjs'
+      - 'tests/p9-learning-bootstrap-error-banner.test.mjs'
       - '.github/workflows/p9-bootstrap-failure-regression.yml'
   workflow_dispatch:
 permissions:
@@ -35,7 +44,7 @@ jobs:
       - name: Verify browser probe syntax and failure banner contract
         run: |
           node --check tests/p9-bootstrap-failure-browser.cjs
-          node --test tests/p9-learning-bootstrap-error-banner.test.mjs
+          node --test tests/p9-learning-bootstrap-error-banner.test.mjs tests/p9-bootstrap-failure-artifact.test.mjs
       - name: Real Chromium healthy and deliberately incomplete offline module graph
         run: node tests/p9-bootstrap-failure-browser.cjs
       - name: Retain real Chromium screenshots and error evidence

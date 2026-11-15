@@ -1,0 +1,66 @@
+name: P9 original main ordinal 90 counterfactual
+on:
+  pull_request:
+    paths:
+      - 'tests/helpers/p9-ordinal90-recovery-playwright.cjs'
+      - '.github/workflows/p9-ordinal90-baseline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-main-expected-startup-failure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare the exact old main and separately supplied identical fault injector
+        run: |
+          git worktree add --detach /tmp/math-before-issue180 397dddb6c3db9a658edfb91fa199b20fb3036fb9
+          cp tests/helpers/p9-ordinal90-recovery-playwright.cjs /tmp/math-before-issue180/tests/helpers/
+          test "$(git -C /tmp/math-before-issue180 rev-parse HEAD)" = 397dddb6c3db9a658edfb91fa199b20fb3036fb9
+          node --check /tmp/math-before-issue180/tests/helpers/p9-ordinal90-recovery-playwright.cjs
+      - name: Install matching Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Execute unchanged baseline with fault at original correction-reset reload 90 and prove expected failure
+        shell: bash
+        run: |
+          cd /tmp/math-before-issue180
+          set +e
+          NODE_PATH="$GITHUB_WORKSPACE/node_modules" MATH_PLAYWRIGHT_MODULE=./helpers/p9-ordinal90-recovery-playwright.cjs MATH_EXPECT_RECOVERY=false node tests/p9-fraction-order-adapter-browser.cjs
+          actual=$?
+          set -e
+          ORIGINAL_EXIT="$actual" node - <<'NODE'
+          const fs=require('fs'),assert=require('assert');
+          const dir='/tmp/math-before-issue180/verification/p9-fraction-order-adapter/';
+          const report=JSON.parse(fs.readFileSync(dir+'ordinal90-recovery-injection.json','utf8'));
+          const original=JSON.parse(fs.readFileSync(dir+'results.json','utf8'));
+          assert.equal(Number(process.env.ORIGINAL_EXIT),1,'baseline original runner must fail on injected resource');
+          assert.equal(report.mode,'baseline-counterfactual');
+          assert.equal(report.injected,1,'fault must reach original reload exactly once');
+          assert.equal(report.after?.snapshot,null,'baseline maths must fail to initialize');
+          assert.equal(report.after?.mathematicalHistoryIdentical,true,'math attempts must remain intact');
+          assert.match(report.after?.warning||'',/程序未能加载/);
+          assert.match(original.error||'',/Timeout|timeout/i,'old original readiness must fail');
+          console.log('OLD_MAIN_COUNTERFACTUAL_CONFIRMED '+JSON.stringify({oldMain:'397dddb6c3db9a658edfb91fa199b20fb3036fb9',faults:report.injected,readinessFailure:original.error,storageIntact:true}));
+          NODE
+      - name: Retain complete old-main mathematical and fault evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-original-main-ordinal90-${{ github.run_id }}-${{ github.run_attempt }}
+          path: /tmp/math-before-issue180/verification/p9-fraction-order-adapter/
+          if-no-files-found: error

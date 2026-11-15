@@ -1,0 +1,43 @@
+name: P9 bounded ESM recovery fault injection
+on:
+  pull_request:
+    paths:
+      - 'dist/learn.html'
+      - 'dist/learning/learn.js'
+      - 'dist/sw.js'
+      - 'tests/p9-module-recovery.test.mjs'
+      - 'tests/p9-module-recovery-browser.cjs'
+      - '.github/workflows/p9-module-recovery-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recovery-contract-and-chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Contract and syntax checks
+        run: |
+          node --check dist/sw.js
+          node --check dist/learning/learn.js
+          node --test tests/p9-module-recovery.test.mjs tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Controlled browser startup errors, release and storage validation
+        run: node tests/p9-module-recovery-browser.cjs
+      - name: Retain evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-module-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/p9-module-recovery/
+          if-no-files-found: warn
