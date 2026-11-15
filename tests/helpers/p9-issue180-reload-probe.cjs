@@ -8,14 +8,15 @@ const crypto=require('node:crypto');
 function createReloadStartupProbe({context,page,out,cache}){
  const events=[],requests=new Map(),firstFailures=[];
  let session=null,workerSession=null,savedFailure=false,eventCount=0,writtenCount=0,journalError=null;
- const watchedWorkers=new Set();
- let workerListener=null,swNativeAvailable=false;
+ const watchedWorkers=new Set(),workerCloseListeners=new Map();
+ let workerListener=null,requestFailureListener=null,consoleErrorListener=null,swNativeAvailable=false,closed=false;
  const startedAt=new Date().toISOString();
  const viewport=page.viewportSize()||{width:0,height:0};
  const journalFile=path.join(out,viewport.width+'x'+viewport.height+'-native-startup-network.jsonl');
  // The JSON snapshot is a bounded tail for quick inspection; the append-only
  // journal is the full first-to-last CDP stream, including the first error.
  const push=(kind,payload)=>{
+  if(closed)return;
   const record={seq:++eventCount,kind,at:new Date().toISOString(),...payload};
   try{fs.appendFileSync(journalFile,JSON.stringify(record)+'\n');writtenCount++;}
   catch(error){if(!journalError)journalError=String(error);}
@@ -72,12 +73,14 @@ function createReloadStartupProbe({context,page,out,cache}){
    if(request?.type==='Script')push('loadingFinished',{requestId:event.requestId,url:request.url,
     encodedDataLength:event.encodedDataLength});
   });
-  page.on('requestfailed',request=>push('playwrightRequestFailed',
+  requestFailureListener=request=>push('playwrightRequestFailed',
    {url:request.url(),errorText:request.failure()?.errorText||null,
-    resourceType:request.resourceType()}));
-  page.on('console',message=>{
+    resourceType:request.resourceType()});
+  page.on('requestfailed',requestFailureListener);
+  consoleErrorListener=message=>{
    if(message.type()==='error')push('consoleError',{text:message.text().slice(0,900)});
-  });
+  };
+  page.on('console',consoleErrorListener);
   await session.send('Network.enable');
   // Playwright worker events remain usable when Chromium omits the CDP
   // ServiceWorker domain. They do not expose internal SW errors or versions.
@@ -85,7 +88,9 @@ function createReloadStartupProbe({context,page,out,cache}){
    if(watchedWorkers.has(worker))return;
    watchedWorkers.add(worker);
    push('playwrightServiceWorker',{url:worker.url(),existing});
-   worker.on('close',()=>push('playwrightServiceWorkerClosed',{url:worker.url()}));
+   const onClose=()=>push('playwrightServiceWorkerClosed',{url:worker.url()});
+   workerCloseListeners.set(worker,onClose);
+   worker.on('close',onClose);
   };
   workerListener=worker=>observeWorker(worker,false);
   context.on('serviceworker',workerListener);
@@ -181,7 +186,12 @@ function createReloadStartupProbe({context,page,out,cache}){
   persist({label,before,after,error,status:'failure'});
  }
  async function close(){
+  closed=true;
   if(workerListener){context.off('serviceworker',workerListener);workerListener=null;}
+  if(requestFailureListener){page.off('requestfailed',requestFailureListener);requestFailureListener=null;}
+  if(consoleErrorListener){page.off('console',consoleErrorListener);consoleErrorListener=null;}
+  for(const [worker,onClose] of workerCloseListeners)worker.off('close',onClose);
+  workerCloseListeners.clear();
   if(session){await session.detach().catch(()=>{});session=null;}
   if(workerSession){await workerSession.detach().catch(()=>{});workerSession=null;}
  }
