@@ -32,6 +32,7 @@ if(require.main===module)(async()=>{
  const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
  const {cases,associated}=require('./fixtures/p9-fraction-operations-cases.cjs');
+ const {createReloadStartupProbe}=require('./helpers/p9-issue180-reload-probe.cjs');
  const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-fraction-operations-adapter');
  const viewports=[[1440,900],[1280,720]],checks=[],errors=[],remote=[],observations=[],negativeObservations=[],explorationObservations=[],associatedObservations=[],offline=[];
  const ok=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
@@ -43,7 +44,7 @@ if(require.main===module)(async()=>{
   import('../dist/learning/bridges.js'),import('../dist/learning/phase5/b17-model.js'),
   import('../dist/learning/fraction-operations-evidence.js'),import('../dist/learning/phase4/async-batches.js')
  ]);
- await ensureB39Ready();let browser,server,activePage,activeLabel='setup';
+ await ensureB39Ready();let browser,server,activePage,activeLabel='setup',activeProbe=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -88,7 +89,16 @@ if(require.main===module)(async()=>{
     const s=window.mathLesson?.snapshot();return s?.id===id&&s.index===index&&s.view==='task';
    },spec);
    const reload=async spec=>{
-    const response=await page.reload();await wait(spec);
+    // Preserve the real 20s readiness criterion; diagnostics do not retry.
+    const observed=!!activeProbe&&activeLabel.endsWith('explore-reset-preserves-first');
+    const before=observed?await activeProbe.snapshot():null;
+    let response;
+    try{response=await page.reload();await wait(spec);}
+    catch(error){
+     if(observed)await activeProbe.failure({label:activeLabel,before,error}).catch(()=>{});
+     throw error;
+    }
+    if(observed)await activeProbe.success({label:activeLabel,before}).catch(()=>{});
     ok(response?.fromServiceWorker()===true,activeLabel+' real document reload uses the stopped-origin Service Worker');
    };
    const open=async spec=>{
@@ -310,6 +320,10 @@ if(require.main===module)(async()=>{
 
    for(const variant of ['rescale-common','reset-preserves-first','repeat-confirmation']){
     const spec={id:'fractionfour',index:3},task=sessionTasks(spec.id)[spec.index];activeLabel=`${width}x${height}-explore-${variant}`;
+    if(variant==='reset-preserves-first'){
+     activeProbe=createReloadStartupProbe({context,page,out,cache});
+     await activeProbe.start();
+    }
     await open(spec);await run(spec);const before=await model(spec),oldLength=before.history.length;
     if(variant==='rescale-common')await run(spec,['construct','finish','answer'],{denominator:24});
     else if(variant==='reset-preserves-first'){await mathematicalAction(spec,'reset');await run(spec,undefined,{prediction:'more'});}
@@ -325,6 +339,9 @@ if(require.main===module)(async()=>{
      activeLabel+' repeated valid confirmations are not described as new groups');
     await reload(spec);ok(await hint.isVisible()&&same(await model(spec),m),activeLabel+' checked exploration restores offline');await shot('checked');
     explorationObservations.push({width,height,variant,id:spec.id,index:spec.index,before,model:m,proof,record:final.record,rawState:final.rawState,state:final.state,observation:await hint.innerText()});
+    if(variant==='reset-preserves-first'){
+     await activeProbe.close();activeProbe=null;
+    }
    }
 
    for(const spec of associated){
@@ -351,6 +368,7 @@ if(require.main===module)(async()=>{
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(result,null,2));
   console.log('P9_FRACTION_OPERATIONS_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:cases.length,taskViewportPairs:observations.length}));
  }catch(error){
+  if(activeProbe)await activeProbe.failure({label:activeLabel,error}).catch(()=>{});
   if(activePage){
    await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
    fs.writeFileSync(path.join(out,activeLabel+'-failure.html'),await activePage.content().catch(()=>''));
@@ -358,6 +376,7 @@ if(require.main===module)(async()=>{
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,negativeObservations,explorationObservations,
    associatedObservations,offline,error:String(error),at:activeLabel},null,2));console.error(error.stack);process.exitCode=1;
  }finally{
+  if(activeProbe)await activeProbe.close().catch(()=>{});
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
   if(browser)await browser.close();
  }
