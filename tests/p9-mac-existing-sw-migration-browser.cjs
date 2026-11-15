@@ -12,6 +12,9 @@ const checks=[],errors=[],steps=[];
 let browser,context,server;
 const present=async page=>page.evaluate(key=>localStorage.getItem(key),key);
 const lesson=async page=>page.evaluate(key=>JSON.parse(localStorage.getItem(key)).lessons.equivalent,key);
+// A lesson's transient view/index/updatedAt can be updated by native openLesson.
+// These are not mathematical observations. Every model, attempt, note and draft must persist.
+const preserved=s=>JSON.stringify({id:s?.id,models:s?.models,cases:s?.cases,notes:s?.notes,draft:s?.draft});
 const assertOk=(yes,label)=>{assert.ok(yes,label);checks.push(label);};
 const point=async(page,label)=>{
  const data=await page.evaluate(async()=>{
@@ -107,8 +110,8 @@ const point=async(page,label)=>{
    'backup contains every original lesson field after retirement');
   await local.goto(origin+'learn.html#equivalent');
   await local.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='equivalent');
-  assertOk(JSON.stringify(await lesson(local))===JSON.stringify(beforeLesson),
-   'lesson reload works without SW and preserves prior failed attempt');
+  assertOk(preserved(await lesson(local))===preserved(beforeLesson),
+   'lesson reload without SW preserves every model, attempt, note and draft');
   await local.locator('#actions [data-do="hint"]').click();
   for(const [row,index] of [[0,1],[1,2],[2,3]]){
    await local.locator('[data-do="row-part"][data-row="'+row+'"][data-index="'+index+'"]').click();
@@ -127,8 +130,8 @@ const point=async(page,label)=>{
   const restored=await point(local,'rollback: same-origin SW registered again');
   assertOk(restored.controller?.includes('sw.js?release=')&&restored.registrations===1,
    're-enabling the old mode restores a controlling SW');
-  assertOk(JSON.stringify(await lesson(local))===JSON.stringify(correctedLesson),
-   'rollback retains updated learning history exactly');
+  assertOk(preserved(await lesson(local))===preserved(correctedLesson),
+   'rollback preserves updated mathematical evidence, notes and draft');
   await local.screenshot({path:path.join(output,'sw-restored.png')});
   await local.close();
   console.log('ISSUE207_SW_RETIREMENT '+JSON.stringify({status:'success',checks:checks.length,steps:steps.length}));
