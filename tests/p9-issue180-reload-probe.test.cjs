@@ -41,6 +41,11 @@ test('preserves native first failure and SW fallback without truncating the jour
  assert.equal(page.listenerCount('requestfailed'),1);
  assert.equal(page.listenerCount('console'),1);
  assert.equal(worker.listenerCount('close'),1);
+ // Late events can arrive after persistence but before close() finishes.
+ worker.emit('close');
+ page.emit('console',{type:()=> 'error',text:()=> 'late-before-close'});
+ network.emit('Network.loadingFailed',{requestId:'late',errorText:'net::ERR_ABORTED'});
+ assert.deepEqual(fs.readFileSync(journalPath),journalAtFailure,'journal must freeze at persistence, before cleanup');
  await probe.close();
  assert.equal(page.listenerCount('requestfailed'),0);
  assert.equal(page.listenerCount('console'),0);
