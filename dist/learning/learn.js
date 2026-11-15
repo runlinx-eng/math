@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261115-p9-lazy-three-v1');
+registerClientRelease('math-explorer-20261115-p9-lazy-three-v2');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -300,7 +300,7 @@ async function openLesson(next,{keepQuestion=false}={}){
     if(stored)await prepareStateForValidation(JSON.parse(stored));
     await prepareSessionRuntime(next,{view:true});
     // A session may switch to a 3D task through Next; load before any state write/render.
-    if(sessionTasks(next).some(needsThreeView)){
+    if(sessionTasks(next).some(needsThreeView)||needsThreeView(PRACTICE[next])){
       ({CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView}=await loadThreeViews());
     }
   }catch(error){

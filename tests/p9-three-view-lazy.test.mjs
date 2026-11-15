@@ -28,6 +28,7 @@ test('preload is before session mutation and synchronous render',()=>{
  const render=entry.indexOf('render();window.scrollTo(0,0)');
  assert.ok(check>0&&load>check&&storage>load&&render>storage);
  assert.equal(typeof loadThreeViews,'function');
+ assert.match(entry,/needsThreeView\(PRACTICE\[next\]\)/,'optional practice modes must preload 3D views too');
 });
 
 test('actual current-release manifest keeps the lazy helper and all optional view files offline',()=>{
