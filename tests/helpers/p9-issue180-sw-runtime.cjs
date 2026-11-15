@@ -126,7 +126,7 @@ function createPassiveServiceWorkerObserver({context,note}) {
    try{
     const value=await withTimeout(worker.evaluate(readInsideWorker));
     for(const event of value.events||[])if(event.seq>info.seen)
-     note('serviceWorkerRuntimeError',{workerUrl:url,...event});
+     note('serviceWorkerRuntimeError',{workerUrl:url,workerEvent:event});
     info.seen=Math.max(info.seen,value.eventCount||0);
     results.push({url,...value});
    }catch(error){results.push({url,unavailable:true,error:String(error)});}
