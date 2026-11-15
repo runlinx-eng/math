@@ -181,21 +181,36 @@ function noteFailureEvents(page,context){
 }
 function analyze(events){
  const starts=events.filter(e=>e.kind==='request'&&e.resourceType==='Script');
- const bad=events.filter(e=>e.kind==='loadingFailed'||e.kind==='pageRequestFailed');
- const relevant=bad.filter(e=>{
+ const cdpBad=events.filter(e=>e.kind==='loadingFailed');
+ const pageBad=events.filter(e=>e.kind==='pageRequestFailed');
+ const allBad=[...cdpBad,...pageBad];
+ const matches=e=>{
   const url=e.url||e.request?.url||'';
   return historical.paths.some(p=>url.endsWith('/'+p));
- });
+ };
+ const relevant=allBad.filter(matches);
+ const paths=entries=>[...new Set(entries.map(e=>{
+  try{return new URL(e.url||e.request?.url).pathname.slice(1);}catch{return '';}
+ }).filter(Boolean))];
+ const failedPaths=paths(relevant);
  const aborted=relevant.filter(e=>String(e.errorText).includes('ERR_ABORTED'));
- const uniquePaths=[...new Set(relevant.map(e=>{try{return new URL(e.url||e.request.url).pathname.slice(1);}catch{return '';}}).filter(Boolean))];
- const timed=relevant.filter(e=>e.kind==='loadingFailed'&&typeof e.cdpTimestamp==='number');
- const span=timed.length?Math.max(...timed.map(e=>e.cdpTimestamp))-Math.min(...timed.map(e=>e.cdpTimestamp)):null;
+ const timed=cdpBad.filter(matches).filter(e=>
+  typeof e.cdpTimestamp==='number'&&typeof e.request?.cdpStarted==='number');
+ const elapsed=timed.map(e=>roundTo((e.cdpTimestamp-e.request.cdpStarted)*1000));
+ const spread=timed.length?Math.max(...timed.map(e=>e.cdpTimestamp))-
+  Math.min(...timed.map(e=>e.cdpTimestamp)):null;
+ const httpErrors=events.filter(e=>e.kind==='response'&&e.status>=400&&matches(e));
  return {originalFailureRun:failureRoot,historicalFailedScripts:historical.observed.failureCount,
-  originalError:historical.observed.error,observedFailures:bad.length,
-  historicalScriptFailures:relevant.length,uniqueAffectedPaths:uniquePaths.length,
-  overlappingHistoricalPaths:uniquePaths.filter(p=>historical.paths.includes(p)),
-  abortedEvents:aborted.length,cdpFailureSpreadMs:span===null?null:roundTo(span*1000),
-  firstFailedEvent:bad[0]||null,scriptRequests:starts.length};
+  originalError:historical.observed.error,observedRequestFailureEvents:allBad.length,
+  historicalScriptFailures:failedPaths.length,uniqueAffectedPaths:failedPaths.length,
+  overlappingHistoricalPaths:failedPaths.filter(p=>historical.paths.includes(p)),
+  abortedPaths:paths(aborted).length,cdpAbortEvents:cdpBad.filter(matches)
+   .filter(e=>String(e.errorText).includes('ERR_ABORTED')).length,
+  httpErrorResponses:httpErrors.map(e=>({url:e.url,status:e.status})),
+  cdpFailureSpreadMs:spread===null?null:roundTo(spread*1000),
+  startToFailureMs:{min:elapsed.length?Math.min(...elapsed):null,
+   max:elapsed.length?Math.max(...elapsed):null},
+  firstFailedEvent:allBad[0]||null,scriptRequests:starts.length};
 }
 async function terminal(page,mode){
  if(mode==='navigation'){
@@ -205,7 +220,7 @@ async function terminal(page,mode){
  await page.waitForFunction(()=>{
   const s=window.mathStartupRecovery;
   return s?.status==='failed'||s?.status==='recovered'||Boolean(window.mathLesson?.snapshot?.());
- },{timeout:7000}).catch(()=>{});
+ },null,{timeout:7000}).catch(()=>{});
  await page.waitForTimeout(300);
  return state(page);
 }
@@ -283,7 +298,7 @@ async function terminal(page,mode){
     assert.ok(v.workerStats?.count>0,'navigation scenario did not intercept original modules');
    v.stage='done';
    console.log('ISSUE180_SYNTHETIC_REPLAY_CASE_OK '+JSON.stringify({mode,width,height,intercepts:v.workerStats.count,
-    failures:v.compare.historicalScriptFailures,aborted:v.compare.abortedEvents,
+    failures:v.compare.historicalScriptFailures,aborted:v.compare.abortedPaths,
     overlappingPaths:v.compare.uniqueAffectedPaths,modelPreserved:v.modelPreserved,
     recovery:v.terminal.recovery?.status||null}));
    await context.close();context=null;await shutdown(server);server=null;
@@ -291,7 +306,7 @@ async function terminal(page,mode){
   report.status='success';
   console.log('ISSUE180_SYNTHETIC_REPLAY_OK '+JSON.stringify({mode,cases:report.viewports.length,
    snapshots:report.viewports.map(x=>({viewport:[x.width,x.height],failed:x.compare.historicalScriptFailures,
-    aborted:x.compare.abortedEvents,recovery:x.terminal.recovery?.status||null}))}));
+    aborted:x.compare.abortedPaths,recovery:x.terminal.recovery?.status||null}))}));
  }catch(error){
   report.status='failure';report.failure=serializeError(error);report.failedStage=report.viewports.at(-1)?.stage||'setup';
   console.error('ISSUE180_SYNTHETIC_REPLAY_ERROR '+report.failure);process.exitCode=1;
