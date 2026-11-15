@@ -1,4 +1,5 @@
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
+import {mixedTradeBinding,replayMixedTradeEvidence} from './mixedtrade-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
 // are not a score, an assessment of free text, or a claim of general mastery.
@@ -29,6 +30,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-mixedtrade'){
+    const source=mixedTradeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：整体和小份怎样换，拿走的量怎样核对？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
@@ -128,6 +133,34 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-mixedtrade'){
+    const source=mixedTradeBinding(task,context);if(!source)return null;
+    const proof=replayMixedTradeEvidence(task,model);if(!proof)return null;
+    const name=r=>r[1]===1?String(r[0]):r.join('/'),b=proof.finalConstruction,
+      detail=[
+        proof.operation==='+'?'最初两部分合在一起的图由工具摆出；这里只核对后来的实际换单位操作和当前提交。':'最初的量、整体图和数量说明由工具显示；这里只核对实际换单位、拿走的量和当前提交。',
+        `首次成功摆图时留下的猜测“${proof.firstGuess.raw}”仍保留；本轮开始时填写的是“${proof.currentGuess.raw}”。猜测与最后提交分别记录。`,
+        '这些记录没有自动评价独立作图、自由解释或长期掌握。'
+      ];
+    if(attempts.slice(0,-1).some(a=>replayMixedTradeEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    const failedStarts=proof.failedRequests.filter(event=>event.action==='start').length,
+      failedRemovals=proof.failedRequests.filter(event=>event.action!=='start').length;
+    if(failedStarts)detail.push(`记录保留了 ${failedStarts} 次没有成功摆出图的请求；这些填写没有被当成有效的首次猜测。`);
+    if(failedRemovals)detail.push(`记录保留了 ${failedRemovals} 次小份不足等未成功的拿取和原提示；之后的换开与纠正仍逐步核对。`);
+    if(proof.removals.some(event=>event.removedAs==='fraction-pieces'&&event.action==='take-whole'))
+      detail.push(`有一次或多次拿走一个整体时，工具直接拿走了 ${proof.denominator} 个小份；没有另算一次“合成整体”的操作。`);
+    if(proof.exchanges.some(event=>event.action==='all-pieces'&&event.wholesExchanged>1))
+      detail.push('“全部换成小份”的一次请求可以换开多个整体；按钮次数和换开的整体数分别保留。');
+    if(proof.resets.length)detail.push('重摆前的输入、最初猜测和全部操作仍保留；这里核对最后一轮的作品和最新提交。');
+    const operation=proof.operation==='+'?
+      `工具先把 ${name(proof.operandA)} 与 ${name(proof.operandB)} 摆在一起，初始总量是 ${name(proof.initialQuantity)}。`:
+      `从 ${name(proof.operandA)} 出发，记录实际拿走 ${b.takenW} 个整体和 ${b.takenP} 个小份，共 ${name(proof.removedQuantity)}。`;
+    return {title:'这次作品中的思考线索',
+      observation:`${operation}每个小份是 1/${proof.denominator}。当前剩下 ${b.w} 个整体、${b.p} 个小份，总量为 ${name(proof.result)}。本次填写的整体“${proof.whole.raw}”、零头“${proof.part.raw}”和总量“${proof.answer.raw}”分别与当前图一致。`,
+      connection:proof.operation==='+'?'先全部换成小份，与先把够一整个的小份合起来，有什么相同和不同？怎样核对换单位前后的总量不变？':'先全部换成小份，与只在小份不够时换开一个整体，有什么相同和不同？怎样核对留下的量与拿走的量仍合成原来的量？',
+      detail,method:null};
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);if(!source)return null;
     const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;

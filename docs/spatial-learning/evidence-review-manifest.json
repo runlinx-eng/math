@@ -3985,6 +3985,33 @@
       "adapter": "fdpboard",
       "taskHash": "210ccd8a65554b5e4106ed6abb5b5541d774b81522e604afa739e9de24d24b2c",
       "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 0,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "ed74b4b61fb0b3793559c62808c909a388d1e725692de98394031333f17e6dd0",
+      "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 1,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "0b8cda5c4eea7d1eea1f0bbdbbc4159f3a8f03f520885b72c564866994a8a894",
+      "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 2,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "b7d0c6bf5ed1acaf76ad51220632f8dc9ea48e467f16e9a33102c7344a95b6eb",
+      "method": null
     }
   ]
 }
