@@ -3,9 +3,10 @@ on:
   pull_request:
     paths:
       - 'dist/learn.html'
-      - 'dist/learning/learn.js'
       - 'dist/learning/three-view-runtime.js'
       - 'dist/sw.js'
+      - 'dist/sw-client.js'
+      - 'dist/local-runtime.js'
       - 'tests/p9-module-recovery.test.mjs'
       - 'tests/p9-module-recovery-browser.cjs'
       - 'tests/p9-three-view-lazy-browser.cjs'
