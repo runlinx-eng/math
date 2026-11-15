@@ -8,6 +8,7 @@ on:
       - 'dist/sw.js'
       - 'tests/p9-module-recovery.test.mjs'
       - 'tests/p9-module-recovery-browser.cjs'
+      - 'tests/p9-three-view-lazy-browser.cjs'
       - '.github/workflows/p9-module-recovery-ci.yml'
   workflow_dispatch:
 permissions:
@@ -36,10 +37,14 @@ jobs:
           npx playwright install chromium
       - name: Controlled browser startup errors, release and storage validation
         run: node tests/p9-module-recovery-browser.cjs
+      - name: Ordinary and 3D lessons load correctly with stopped HTTP origin
+        run: node tests/p9-three-view-lazy-browser.cjs
       - name: Retain evidence even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: p9-module-recovery-${{ github.run_id }}-${{ github.run_attempt }}
-          path: verification/p9-module-recovery/
+          path: |
+            verification/p9-module-recovery/
+            verification/p9-three-view-lazy/
           if-no-files-found: warn

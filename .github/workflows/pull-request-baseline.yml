@@ -65,6 +65,7 @@ jobs:
           node --check dist/import-conflicts.js
           node --check dist/learning/learn.js
           node --check dist/learning/three-view-runtime.js
+          node --check tests/p9-three-view-lazy-browser.cjs
           node --check dist/learning/state.js
           node --check tests/p10-learning-continuity-browser.cjs
           node --check tests/p10-longterm-offline-browser.cjs
