@@ -165,6 +165,8 @@ const groups={
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
+  "verification/p10-release-upgrade/backup-safety/",
+  "verification/p10-release-upgrade/full-lessons/",
  ]},
  // Full offline is mandatory on SW/startup PRs, main pushes and manual runs.
  // Ordinary math PRs leave an explicit, audited not-required group receipt.

@@ -132,6 +132,28 @@ test('P10 learner-data and deep offline groups preserve all seven original comma
   const gate=success();gate.reports[gate.reports.findIndex(r=>r.group===group)]=failed;rejected(gate);
  }
 });
+test('P10 reports are archived by the same runner that executes each data-safety command',()=>{
+ const outputs={
+  'tests/p9-numeric-compat-browser.cjs':'verification/p9-numeric-compat/results.json',
+  'tests/p10-learning-continuity-browser.cjs':'verification/p10-learning-continuity/results.json',
+  'tests/p10-backup-safety-browser.cjs':'verification/p10-release-upgrade/backup-safety/results.json',
+  'tests/p10-full-lessons-browser.cjs':'verification/p10-release-upgrade/full-lessons/results.json',
+  'tests/p10-longterm-offline-browser.cjs':'verification/p10-longterm-round2/results.json',
+  'tests/p10-sw-nav-isolation-browser.cjs':'verification/p10-release-upgrade/isolation-results.json',
+  'tests/p10-release-upgrade-repeat.cjs':'verification/p10-release-upgrade/results.json',
+ };
+ for(const [file,output] of Object.entries(outputs)){
+  const owners=Object.entries(BROWSER_GROUPS).filter(([,group])=>group.commands.some(command=>command.file===file));
+  assert.equal(owners.length,1,file+' has one executing runner');
+  const [name,group]=owners[0];
+  assert.ok(group.artifacts.some(path=>output.startsWith(path)),name+' must preserve '+output+' from its own filesystem');
+ }
+ assert.deepEqual(BROWSER_GROUPS['p10-learning'].artifacts,[
+  'verification/p10-learning-continuity/','verification/p9-numeric-compat/',
+  'verification/p10-release-upgrade/backup-safety/','verification/p10-release-upgrade/full-lessons/'
+ ]);
+});
+
 test('each P10 group records every runner failure, without suppressing later data-safety commands',()=>{
  for(const group of ['p10-learning','p10-offline']){
   const count=BROWSER_GROUPS[group].commands.length;
