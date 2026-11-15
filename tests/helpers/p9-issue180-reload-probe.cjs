@@ -6,12 +6,33 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 
 function createReloadStartupProbe({context,page,out,cache}){
- const events=[],requests=new Map();
- let session=null,savedFailure=false;
+ const events=[],requests=new Map(),firstFailures=[];
+ let session=null,workerSession=null,savedFailure=false,eventCount=0,writtenCount=0,journalError=null;
  const startedAt=new Date().toISOString();
+ const viewport=page.viewportSize()||{width:0,height:0};
+ const journalFile=path.join(out,viewport.width+'x'+viewport.height+'-native-startup-network.jsonl');
+ // The JSON snapshot is a bounded tail for quick inspection; the append-only
+ // journal is the full first-to-last CDP stream, including the first error.
  const push=(kind,payload)=>{
-  events.push({kind,at:new Date().toISOString(),...payload});
+  const record={seq:++eventCount,kind,at:new Date().toISOString(),...payload};
+  try{fs.appendFileSync(journalFile,JSON.stringify(record)+'\\n');writtenCount++;}
+  catch(error){if(!journalError)journalError=String(error);}
+  if(['loadingFailed','playwrightRequestFailed','serviceWorkerError'].includes(kind)&&firstFailures.length<40)
+   firstFailures.push(record);
+  events.push(record);
   if(events.length>700)events.splice(0,events.length-700);
+ };
+ const journalSummary=()=>{
+  try{
+   const buffer=fs.readFileSync(journalFile),lines=buffer.toString('utf8').trimEnd().split('\\n');
+   const last=JSON.parse(lines.at(-1));
+   return {file:path.basename(journalFile),bytes:buffer.length,
+    sha256:crypto.createHash('sha256').update(buffer).digest('hex'),
+    eventCount,writtenCount,lineCount:lines.length,
+    complete:!journalError&&eventCount===writtenCount&&lines.length===eventCount&&last.seq===eventCount,
+    error:journalError};
+  }catch(error){return {file:path.basename(journalFile),eventCount,writtenCount,complete:false,
+   error:journalError||String(error)};}
  };
  const relevant=entry=>/(?:learn\.js|module-recovery|sw\.js|learning\/)/i.test(entry?.url||'');
  async function start(){
@@ -28,7 +49,16 @@ function createReloadStartupProbe({context,page,out,cache}){
    if(event.type==='Script'||(request&&relevant(request)))
     push('response',{requestId:event.requestId,url:event.response?.url||request?.url||'',
      status:event.response?.status,fromServiceWorker:event.response?.fromServiceWorker===true,
+     fromDiskCache:event.response?.fromDiskCache===true,
+     fromPrefetchCache:event.response?.fromPrefetchCache===true,
+     recoveryHeader:event.response?.headers?.['x-math-module-recovery']||
+       event.response?.headers?.['X-Math-Module-Recovery']||null,
      mimeType:event.response?.mimeType,type:event.type,loaderId:event.loaderId});
+  });
+  session.on('Network.requestServedFromCache',event=>{
+   const request=requests.get(event.requestId);
+   if(request&&(request.type==='Script'||relevant(request)))
+    push('requestServedFromCache',{requestId:event.requestId,url:request.url,type:request.type});
   });
   session.on('Network.loadingFailed',event=>{
    push('loadingFailed',{requestId:event.requestId,request:requests.get(event.requestId)||null,
@@ -47,6 +77,26 @@ function createReloadStartupProbe({context,page,out,cache}){
    if(message.type()==='error')push('consoleError',{text:message.text().slice(0,900)});
   });
   await session.send('Network.enable');
+  try{
+   workerSession=await context.browser()?.newBrowserCDPSession?.();
+   if(workerSession){
+    workerSession.on('ServiceWorker.workerErrorReported',event=>{
+     const error=event.errorMessage||{};
+     push('serviceWorkerError',{error:String(error.errorMessage||''),sourceURL:error.sourceURL||'',
+      lineNumber:error.lineNumber||null});
+    });
+    workerSession.on('ServiceWorker.workerVersionUpdated',event=>{
+     push('serviceWorkerVersion',{versions:(event.versions||[]).map(version=>({
+      scriptURL:version.scriptURL,status:version.status,runningStatus:version.runningStatus,
+      controlledClientCount:version.controlledClients?.length||0}))});
+    });
+    workerSession.on('ServiceWorker.workerRegistrationUpdated',event=>{
+     push('serviceWorkerRegistration',{registrations:(event.registrations||[]).map(reg=>({
+      scopeURL:reg.scopeURL,isDeleted:reg.isDeleted===true}))});
+    });
+    await workerSession.send('ServiceWorker.enable');
+   }else push('serviceWorkerSessionUnavailable',{});
+  }catch(error){push('serviceWorkerSessionError',{error:String(error)});}
   push('probeStarted',{cache,startedAt});
  }
  const snapshot=async()=>page.evaluate(async release=>{
@@ -98,7 +148,8 @@ function createReloadStartupProbe({context,page,out,cache}){
    probeStartedAt:startedAt,error:error?String(error):null,
    before:metadata(before),after:metadata(after),
    rawIdentical:typeof before?.raw==='string'&&typeof after?.raw==='string'?
-    before.raw===after.raw:null,events
+    before.raw===after.raw:null,firstFailures,journal:journalSummary(),
+   eventsTailTruncated:eventCount>events.length,events
   },null,2));
  };
  async function success({label,before}){
@@ -113,6 +164,7 @@ function createReloadStartupProbe({context,page,out,cache}){
  }
  async function close(){
   if(session){await session.detach().catch(()=>{});session=null;}
+  if(workerSession){await workerSession.detach().catch(()=>{});workerSession=null;}
  }
  return {start,snapshot,success,failure,close};
 }
