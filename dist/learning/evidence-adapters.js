@@ -23,6 +23,8 @@ import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evi
 
 import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
 
+import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evidence.js';
+
 export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
  {id:'array',type:'x-mularray',binding:arrayBinding,replay:replayArrayEvidence},
@@ -42,5 +44,6 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'portiongroups',type:'x-portiongroups',binding:portionGroupsBinding,replay:replayPortionGroupsEvidence},
  {id:'fraction-operations',type:'x-fracoperations',binding:fractionOperationsBinding,replay:replayFractionOperationsEvidence},
  {id:'fractioncase',type:'x-fractioncase',binding:fractionCaseBinding,replay:replayFractionCaseEvidence},
- {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence}
+ {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence},
+ {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence}
 ].map(Object.freeze));

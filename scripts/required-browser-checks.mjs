@@ -85,6 +85,7 @@ const groups={
   {"file":"tests/p9-groupwalk-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-line-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-array-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-samefraction-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-thinking-feedback/",
   "verification/p9-geometry-thinking/",
@@ -96,6 +97,7 @@ const groups={
   "verification/p9-groupwalk-adapter/",
   "verification/p9-line-adapter/",
   "verification/p9-array-adapter/",
+  "verification/p9-samefraction-adapter/",
  ]},
  "evidence-place":{commands:[
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},

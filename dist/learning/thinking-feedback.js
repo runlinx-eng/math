@@ -22,11 +22,16 @@ import {fractionOrderBinding,replayFractionOrderEvidence} from './fraction-order
 import {fractionOperationsBinding,replayFractionOperationsEvidence} from './fraction-operations-evidence.js';
 import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
+import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evidence.js';
 import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-samefraction'){
+    const source=sameFractionBinding(task,context);
+    return source?{type:task.type,summary:'想一想：同样大的整体怎样比较？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-divtable'){
     const source=divisionBinding(task,context);
     return source?{type:task.type,summary:'想一想：每一位的余量和最后的答案各表示什么？（可选）',question:source.question}:null;
@@ -113,6 +118,29 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-samefraction'){
+    const source=sameFractionBinding(task,context);if(!source)return null;
+    const proof=replaySameFractionEvidence(task,model);if(!proof)return null;
+    const left=proof.left.fraction.join('/'),right=proof.right.fraction.join('/'),detail=[
+      '这里只核对本次实际选份、显示请求和当前提交；没有自动评价自由解释、独立证明或长期掌握。',
+      `你本轮留下的预测是“${proof.currentPrediction.value}”；本次最终提交的比较是“${proof.relation}”。`
+    ];
+    if(attempts.slice(0,-1).some(a=>replaySameFractionEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    const emptyPredictions=proof.failedRequests.filter(e=>e.action==='predict').length,
+      failedRefinements=proof.failedRequests.filter(e=>e.action==='refine').length;
+    if(emptyPredictions)detail.push(`记录还保留了 ${emptyPredictions} 次尚未选择比较符号的请求；空选择没有被计为第一次或本轮预测。`);
+    if(failedRefinements)detail.push(`记录保留了 ${failedRefinements} 次未画出新共同网格的请求及原填写和提示；当时已有的选份与网格没有改变。`);
+    if(proof.issue)detail.push('最后一次细分请求的提示仍保留；这里核对的是已有共同网格和本次提交，没有把那次失败说成成功。');
+    if(proof.resets.length)detail.push(`记录保留了 ${proof.resets.length} 次重摆；第一次留下的预测“${proof.firstPrediction.value}”与本轮预测分别保留。`);
+    if(proof.overlays.some(request=>request.left[0]!==proof.left.selectedCount||request.right[0]!==proof.right.selectedCount))
+      detail.push('较早请求的叠图显示当时所选的量；系统随后会按你的新选择更新显示。');
+    if(proof.common)detail.push(`你请求显示 ${proof.common.denominator} 等份的共同网格，由系统画出。你本次提交的新分数 ${proof.common.left.join('/')} 和 ${proof.common.right.join('/')}，分别与 ${left} 和 ${right} 等值。`);
+    return {title:'这次作品中的思考线索',
+      observation:`工具提供了同样大的两个整体。你当前在上边 ${proof.left.denominator} 个等份中选了 ${proof.left.selectedCount} 份（${left}），在下边 ${proof.right.denominator} 个等份中选了 ${proof.right.selectedCount} 份（${right}）。系统按当前选择自动显示叠图；你本次提交的比较是 ${left} ${proof.relation} ${right}，并选择了“两边整体一样大”。`,
+      connection:'如果两边每一小份大小不同，怎样从同一个整体出发比较所选的量？试着说明，为什么只看分母还不能比较所有分数。',
+      detail,method:null};
+  }
   if(task?.type==='x-divtable'){
     const source=divisionBinding(task,context);if(!source)return null;
     const proof=replayDivisionEvidence(task,model);if(!proof)return null;
