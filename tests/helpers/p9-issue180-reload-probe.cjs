@@ -159,6 +159,9 @@ function createReloadStartupProbe({context,page,out,cache}){
   return {...details,rawBytes:typeof raw==='string'?Buffer.byteLength(raw):null,rawSha256:digest(raw)};
  };
  const persist=({label,before,after,error,status})=>{
+  // The journal and its digest must describe the same immutable event set.
+  // A worker may close between persistence and listener cleanup.
+  closed=true;
   const prefix=path.join(out,label+'-native-startup');
   if(status==='failure'){
    if(typeof before?.raw==='string')fs.writeFileSync(prefix+'-before-storage.txt',before.raw);
