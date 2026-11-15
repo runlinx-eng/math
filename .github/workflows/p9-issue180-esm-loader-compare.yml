@@ -1,0 +1,100 @@
+name: P9 issue180 ESM loader SW discrimination
+
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-issue180-esm-loader-compare-browser.cjs'
+      - 'tests/helpers/p9-issue180-reload-probe.cjs'
+      - '.github/workflows/p9-issue180-esm-loader-compare.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Supplemental A/B only. Does not replace Required or alter production bundles.
+jobs:
+  native-esm-loader-compare:
+    name: B11 startup (${{ matrix.mode }} / trial-${{ matrix.trial }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [sw-online, bypass-online, sw-offline]
+        trial: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify independent ESM diagnostic and original B11 math contract
+        run: |
+          node --check tests/p9-issue180-esm-loader-compare-browser.cjs
+          node --check tests/helpers/p9-issue180-reload-probe.cjs
+          node --test tests/p9-place-evidence-adapter.test.mjs
+
+      - name: Install original Playwright Chromium and CJK font support
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+
+      - name: Compare original B11 startup with SW, SW bypass, and stopped origin
+        shell: bash
+        env:
+          MATH_ISSUE180_LOADER_MODE: ${{ matrix.mode }}
+          ISSUE180_TRIAL: ${{ matrix.trial }}
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-loader-compare
+          prefix="verification/issue180-loader-compare/${MATH_ISSUE180_LOADER_MODE}-trial-${ISSUE180_TRIAL}"
+          printf 'mode=%s trial=%s sha=%s\n' "$MATH_ISSUE180_LOADER_MODE" "$ISSUE180_TRIAL" "$GITHUB_SHA" | tee "${prefix}.summary.txt"
+          printf 'host_cpu_count=%s\n' "$(nproc)" | tee -a "${prefix}.summary.txt"
+          free -m | tee -a "${prefix}.summary.txt"
+          (
+            while :; do
+              printf '\nSAMPLE %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              cat /proc/loadavg
+              awk '/^cpu / {print}' /proc/stat
+              awk '/^(MemTotal|MemAvailable|SwapFree):/ {print}' /proc/meminfo
+              ps -eo pid,comm,rss,%cpu --no-headers | awk '$2 ~ /chrome|chromium|node/ {print}'
+              for item in memory.current memory.peak memory.max memory.events; do
+                if [ -f "/sys/fs/cgroup/$item" ]; then
+                  printf '%s=' "$item"
+                  tr '\n' ' ' < "/sys/fs/cgroup/$item"
+                  printf '\n'
+                fi
+              done
+              sleep 5
+            done
+          ) > "${prefix}.resources.txt" 2>&1 &
+          monitor_pid=$!
+          trap 'kill "$monitor_pid" 2>/dev/null || true' EXIT
+          set +e
+          node tests/p9-issue180-esm-loader-compare-browser.cjs > "${prefix}.browser.log" 2>&1
+          status=$?
+          set -e
+          kill "$monitor_pid" 2>/dev/null || true
+          wait "$monitor_pid" 2>/dev/null || true
+          printf 'exit_code=%s\n' "$status" | tee -a "${prefix}.summary.txt"
+          tail -n 40 "${prefix}.browser.log"
+          exit "$status"
+
+      - name: Preserve original CDP first-error journal and learner snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-esm-loader-${{ matrix.mode }}-trial-${{ matrix.trial }}
+          path: |
+            verification/issue180-loader-compare/
+          if-no-files-found: warn
