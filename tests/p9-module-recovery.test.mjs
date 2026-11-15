@@ -10,6 +10,7 @@ const dist=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../dist');
 const swSource=fs.readFileSync(path.join(dist,'sw.js'),'utf8');
 const entry=fs.readFileSync(path.join(dist,'learning/learn.js'),'utf8');
 const html=fs.readFileSync(path.join(dist,'learn.html'),'utf8');
+const space=fs.readFileSync(path.join(dist,'space.js'),'utf8');
 const release=swSource.match(/^const CACHE = '([^']+)'/m)?.[1];
 const inline=html.match(/<script>([\s\S]*?)<\/script><script type="module" src="learning\/learn\.js"><\/script>/)?.[1];
 const pinned=inline?.match(/STARTUP_ENTRY_SHA256='([0-9a-f]{64})'/)?.[1];
@@ -19,6 +20,7 @@ assert.ok(release&&inline&&pinned,'release must have an inline integrity-pinned 
 test('released HTML, module, SW and SHA256 share exactly one immutable version',()=>{
  assert.match(inline,new RegExp("STARTUP_RELEASE='"+release+"'"));
  assert.match(entry,new RegExp("registerClientRelease\\('"+release+"'\\)"));
+ assert.match(space,new RegExp("const RELEASE='"+release+"'"),'space must register the same worker');
  assert.equal(pinned,createHash('sha256').update(entry).digest('hex'));
  assert.match(inline,/target\.getAttribute\('src'\)!=='learning\/learn\.js'/);
  assert.match(inline,/startupRecoveryAttempted=true/);
