@@ -1,0 +1,115 @@
+name: P9 issue180 runner pressure A-B diagnostic
+
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-place-adapter-browser.cjs'
+      - 'tests/helpers/p9-issue180-case-shard.cjs'
+      - 'tests/p9-issue180-case-shard.test.cjs'
+      - '.github/workflows/p9-issue180-runner-pressure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Experimental only: this workflow supplements and never replaces Required.
+jobs:
+  compare-b11-runner-pressure:
+    name: B11 pressure (${{ matrix.mode }} / trial-${{ matrix.trial }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [full, shard-0, shard-1]
+        trial: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check unchanged math contract and experimental case coverage
+        run: |
+          node --check tests/p9-place-adapter-browser.cjs
+          node --check tests/helpers/p9-issue180-case-shard.cjs
+          node --test tests/p9-issue180-case-shard.test.cjs
+          node --test tests/p9-place-evidence-adapter.test.mjs
+
+      - name: Install the original Chromium test runtime and fonts
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+
+      - name: Run original B11 sequence full or split on independent 4-CPU runners
+        shell: bash
+        env:
+          PRESSURE_MODE: ${{ matrix.mode }}
+          PRESSURE_TRIAL: ${{ matrix.trial }}
+          MATH_ISSUE180_PLACE_NATIVE_PROBE: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-runner-pressure
+          prefix="verification/issue180-runner-pressure/${PRESSURE_MODE}-trial-${PRESSURE_TRIAL}"
+          printf 'mode=%s trial=%s sha=%s\n' "$PRESSURE_MODE" "$PRESSURE_TRIAL" "$GITHUB_SHA" | tee "${prefix}.summary.txt"
+          printf 'host_cpu_count=%s\n' "$(nproc)" | tee -a "${prefix}.summary.txt"
+          free -m | tee -a "${prefix}.summary.txt"
+          df -Pm . | tee -a "${prefix}.summary.txt"
+          case "$PRESSURE_MODE" in
+            full) unset MATH_ISSUE180_PLACE_SHARD ;;
+            shard-0) export MATH_ISSUE180_PLACE_SHARD=0 ;;
+            shard-1) export MATH_ISSUE180_PLACE_SHARD=1 ;;
+            *) echo "Unexpected diagnostic mode"; exit 2 ;;
+          esac
+          # Lightweight 5-second resource snapshots, including browser RSS and CPU totals.
+          (
+            while :; do
+              printf '\nSAMPLE %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              cat /proc/loadavg
+              awk '/^cpu / {print}' /proc/stat
+              awk '/^(MemTotal|MemAvailable|SwapFree):/ {print}' /proc/meminfo
+              ps -eo pid,comm,rss,%cpu --no-headers | awk '$2 ~ /chrome|chromium|node/ {print}'
+              for item in memory.current memory.peak memory.max memory.events; do
+                if [ -f "/sys/fs/cgroup/$item" ]; then
+                  printf '%s=' "$item"
+                  tr '\n' ' ' < "/sys/fs/cgroup/$item"
+                  printf '\n'
+                fi
+              done
+              sleep 5
+            done
+          ) > "${prefix}.resources.txt" 2>&1 &
+          monitor_pid=$!
+          trap 'kill "$monitor_pid" 2>/dev/null || true' EXIT
+          set +e
+          node tests/p9-place-adapter-browser.cjs > "${prefix}.browser.log" 2>&1
+          status=$?
+          set -e
+          kill "$monitor_pid" 2>/dev/null || true
+          wait "$monitor_pid" 2>/dev/null || true
+          printf 'exit_code=%s\n' "$status" | tee -a "${prefix}.summary.txt"
+          tail -n 40 "${prefix}.browser.log"
+          if [ -f verification/p9-place-adapter/results.json ]; then
+            cp verification/p9-place-adapter/results.json "${prefix}.results.json"
+          fi
+          exit "$status"
+
+      - name: Preserve diagnostic measurements and original failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-runner-pressure-${{ matrix.mode }}-trial-${{ matrix.trial }}
+          path: |
+            verification/issue180-runner-pressure/
+            verification/p9-place-adapter/
+          if-no-files-found: warn
