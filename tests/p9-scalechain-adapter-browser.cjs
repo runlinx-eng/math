@@ -382,10 +382,13 @@ async function main(){
     ok((await restorePage.locator('#toast').innerText()).includes('备份已合并'),label+' actual file input reports a completed merge');
    };
    await importFile('scalechain-real-browser-v2.json');const restored=await readPage(restorePage),restoredState=JSON.parse(restored.text);
+   const firstImportFile=label+'-first-import-storage.txt';fs.writeFileSync(path.join(out,firstImportFile),restored.raw);
    assert.deepEqual(restoredState,backup.state);
    assert.deepEqual(restoredState.lessons,backup.state.lessons);assert.deepEqual(restoredState.daily.bridges,backup.state.daily.bridges);
    for(const spec of cases)proofFor(spec,restoredState.lessons[spec.id].models[spec.index]);
-   await importFile('scalechain-identical-repeat-v2.json');assert.equal((await readPage(restorePage)).raw,restored.raw);
+   await importFile('scalechain-identical-repeat-v2.json');const repeated=await readPage(restorePage);
+   const repeatedImportFile=label+'-repeated-import-storage.txt';fs.writeFileSync(path.join(out,repeatedImportFile),repeated.raw);
+   assert.equal(repeated.raw,restored.raw);
    ok(true,label+' independent import preserves every lesson and bridge field; repeated import is byte-idempotent');
    const restoreSpec=cases.at(-1),lessonResponse=await restorePage.goto(base+'learn.html#'+restoreSpec.id);await wait(restorePage,restoreSpec);
    ok(lessonResponse?.fromServiceWorker()===true&&await restorePage.locator('#thinking-feedback').isVisible(),label+' imported current work receives its own bounded feedback offline');
@@ -394,6 +397,8 @@ async function main(){
    assert.deepEqual(afterOpen.lessons[restoreSpec.id].cases,backup.state.lessons[restoreSpec.id].cases);
    await shot('restored',restorePage);const restoredSnapshot=await snapshot('restored',restorePage);
    backups.push({width,height,file:path.basename(backupPath),bytes:Buffer.byteLength(payload),sha256:digest(payload),
+    firstImport:{file:firstImportFile,bytes:Buffer.byteLength(restored.raw),sha256:digest(restored.raw)},
+    repeatedImport:{file:repeatedImportFile,bytes:Buffer.byteLength(repeated.raw),sha256:digest(repeated.raw)},
     originalState:backup.state,restoredState:restoredState,restoredSnapshot,independentEmptyContext:true,
     originStopped:!server.listening,nativeCases:cases.length,associatedCases:bridges.length,idempotent:true});
    provenance.realBrowserBackupImport=true;provenance.backupImportsCompleted=backups.length;
