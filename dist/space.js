@@ -1,6 +1,7 @@
-import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady,isMacLocalMode} from './sw-client.js';
-const RELEASE='math-explorer-20261116-mac-local-optin-v1';
-registerClientRelease(RELEASE);
+import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
+import {isMacLocalMode} from './local-runtime.js';
+const RELEASE='math-explorer-20261116-mac-local-optin-v2';
+if(!isMacLocalMode())registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';

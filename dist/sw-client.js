@@ -1,13 +1,5 @@
 // The entry module supplies its own fixed source version. A shared helper or a
 // new controller must not relabel a document that loaded an older entry module.
-// Local preference is separate from all mathematical records and backups.
-export const MAC_LOCAL_MODE_KEY='math-explorer-runtime-mode-v1';
-export function isMacLocalMode(){
- try{return location.protocol==='http:'&&
-  ['127.0.0.1','localhost'].includes(location.hostname)&&
-  localStorage.getItem(MAC_LOCAL_MODE_KEY)==='mac-local';}
- catch{return false;}
-}
 export function releaseWorkerURL(release){
  const url=new URL('./sw.js',import.meta.url);
  url.searchParams.set('release',release);
@@ -22,7 +14,6 @@ export function isCurrentReleaseReady({release,registration,controller,worker,re
   Number.isInteger(report.total)&&report.total>0&&report.cached===report.total;
 }
 export function registerClientRelease(RELEASE){
-if(isMacLocalMode())return;
 if('serviceWorker'in navigator){
  navigator.serviceWorker.addEventListener('message',event=>{
   if(event.data?.type==='math-explorer:client-release'&&event.ports?.[0])

@@ -4,6 +4,7 @@ on:
     paths:
       - 'dist/mac-local.html'
       - 'dist/sw-client.js'
+      - 'dist/local-runtime.js'
       - 'dist/space.js'
       - 'dist/exploration.js'
       - 'dist/index.html'
@@ -32,6 +33,7 @@ jobs:
       - name: Syntax and contract tests
         run: |
           node --check dist/sw-client.js
+          node --check dist/local-runtime.js
           node --check dist/space.js
           node --check dist/exploration.js
           node --check tests/p9-mac-local-mode-browser.cjs
