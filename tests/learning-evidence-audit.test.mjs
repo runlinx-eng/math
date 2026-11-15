@@ -1,3 +1,4 @@
+import fdpboard from './fixtures/p9-fdpboard-cases.cjs';
 import storyLedger from './fixtures/p9-storyledger-cases.cjs';
 import sameFraction from './fixtures/p9-samefraction-cases.cjs';
 import test from 'node:test';
@@ -48,6 +49,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...fdpboard.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...storyLedger.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...sameFraction.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...division.cases.map(({id,index})=>'native:'+id+':'+index),
@@ -93,12 +95,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 422 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,161);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 437 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,167);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:422,B:210,C:150,D:1134,E:80});
+   [level,s.tasks])),{A:437,B:210,C:150,D:1134,E:65});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,
