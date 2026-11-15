@@ -18,7 +18,7 @@ jobs:
         run: |
           set -euo pipefail
           git rev-parse HEAD | tee source-checkout-sha.txt
-          tar -czf issue-180-source.tar.gz dist tests scripts .github docs vendor package.json package-lock.json AGENTS.md README.md
+          tar -czf issue-180-source.tar.gz dist tests scripts .github docs vendor AGENTS.md README.md
           sha256sum issue-180-source.tar.gz | tee source-archive-sha256.txt
       - uses: actions/upload-artifact@v4
         with:
