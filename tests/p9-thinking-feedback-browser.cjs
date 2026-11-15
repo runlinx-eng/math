@@ -1,3 +1,4 @@
+// #210 isolated CI scope proof: math-only browser script, no SW/boot/cache edits.
 // P9 pilot: actual UI submissions and verified thinking-method hints.
 // Technical browser evidence only; not assessment of free text or teaching outcomes.
 const fs=require('node:fs'),path=require('node:path');
