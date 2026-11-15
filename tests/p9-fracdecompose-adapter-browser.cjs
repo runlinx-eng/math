@@ -418,7 +418,7 @@ async function main(){
     assert.deepEqual(await model(spec),M.initial(taskFor(spec)));assert.equal((await saved(spec.id)).cases[spec.index],undefined);
     assert.equal(fracDecomposeBinding(taskFor(spec),ctx(spec)),null);
     ok(await guide.count()===0&&await hint.count()===0,label+' associated copy has no borrowed native guide or strict feedback');
-    await runSteps(spec,rebuildSteps(taskFor(spec))); 
+    await runSteps(spec,rebuildSteps(taskFor(spec)));
     const checked=await check(spec,true,'associated-original-check');await visual(spec,checked.model);proofFor(spec,checked.model);
     ok(await hint.count()===0,label+' original mathematical success stays outside the native source binding');
     assert.deepEqual((await state()).lessons,nativeBefore);await reload(spec);
