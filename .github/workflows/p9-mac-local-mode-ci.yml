@@ -13,6 +13,7 @@ on:
       - 'dist/learning/learn.js'
       - 'dist/sw.js'
       - 'tests/p9-mac-local-mode-browser.cjs'
+      - 'tests/p9-mac-local-upgrade-browser.cjs'
       - 'tests/p9-mac-local-mode.test.mjs'
       - '.github/workflows/p9-mac-local-mode-ci.yml'
   workflow_dispatch:
@@ -37,6 +38,7 @@ jobs:
           node --check dist/space.js
           node --check dist/exploration.js
           node --check tests/p9-mac-local-mode-browser.cjs
+          node --check tests/p9-mac-local-upgrade-browser.cjs
           node --test tests/p9-mac-local-mode.test.mjs tests/p9-module-recovery.test.mjs tests/p10-sw-retirement.test.mjs
       - name: Install Chromium and Chinese fonts
         run: |
@@ -50,10 +52,14 @@ jobs:
           fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
       - name: Real local preference, original learner record and rollback
         run: node tests/p9-mac-local-mode-browser.cjs
+      - name: Historical last-main SW to new Mac-local mode and rollback
+        run: node tests/p9-mac-local-upgrade-browser.cjs
       - name: Retain screenshots and results even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: issue207-product-${{ github.run_id }}-${{ github.run_attempt }}
-          path: verification/issue207-mac-local-mode/
+          path: |
+            verification/issue207-mac-local-mode/
+            verification/issue207-mac-local-upgrade/
           if-no-files-found: warn
