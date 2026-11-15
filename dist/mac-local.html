@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mac 本地运行模式 · 数学探索</title>
+<style>
+:root{font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;color:#253039;background:#f6f5f0}
+body{margin:0;min-height:100vh;display:grid;place-items:center}
+main{width:min(620px,calc(100% - 32px));background:#fff;border:1px solid #d7dbdb;border-radius:16px;padding:24px;box-sizing:border-box}
+h1{font-size:1.45rem;margin:0 0 6px}p{margin:12px 0}.notice{background:#f1f4f5;padding:12px;border-radius:8px}
+button{font:inherit;border:1px solid #78878a;border-radius:8px;padding:9px 14px;background:#f7f8f8;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+label{display:flex;gap:10px;align-items:flex-start}a{color:#205d7a}#result{white-space:pre-wrap;min-height:1.5em}small{color:#58656a}
+</style></head><body><main>
+<h1>Mac 本地运行模式</h1>
+<p>数学题、三维操作、学习记录和备份仍用原来的程序。这里只改变程序文件的取得方式。</p>
+<p class="notice"><strong>Mac 本地模式</strong>需要保持「启动数学探索.command」或 Python 本地服务运行；断开外网仍能用。关闭本地服务后，将不能保证刷新或重新打开页面。</p>
+<p>原有完整离线模式保留，可以恢复。模式切换不会主动删除学习记录或离线缓存。</p>
+<p><strong>当前选择：</strong><span id="mode">检查中…</span></p>
+<p><strong>本地服务器：</strong><span id="health">检查中…</span></p>
+<p><a href="v2.html#trail">先到「我的足迹」导出 JSON 学习备份</a>。</p>
+<label><input type="checkbox" id="ack">我已保存必要备份，并了解切换后须关闭本应用的所有其他标签页，再重新打开。</label>
+<div class="actions"><button type="button" id="enable" disabled>启用 Mac 本地模式</button>
+<button type="button" id="restore" disabled>恢复原有完整离线模式</button>
+<button type="button" id="retry">重新检查本地服务</button></div>
+<p id="result" role="status" aria-live="polite"></p>
+<p><small>保留原浏览器、原端口和原存储地址。只尝试注销当前数学树的 Service Worker 注册，不删除 CacheStorage、localStorage 或学习历史。旧标签页在关闭前可能仍受旧缓存控制。</small></p>
+<p><a href="index.html#space">返回数学探索</a></p>
+</main><script>
+(()=>{
+'use strict';
+// Inline code avoids stale external ESM modules served by a historical worker.
+const KEY='math-explorer-runtime-mode-v1',LOCAL='mac-local';
+const $=id=>document.getElementById(id);
+const allowed=location.protocol==='http:'&&['127.0.0.1','localhost'].includes(location.hostname);
+let healthy=false;
+const isLocal=()=>{try{return localStorage.getItem(KEY)===LOCAL;}catch{return false;}};
+const notice=message=>{$('result').textContent=message;};
+function render(){
+ $('mode').textContent=isLocal()?'Mac 本地模式（本地服务需保持运行）':'原有完整离线模式';
+ $('enable').disabled=!allowed||!healthy||isLocal()||!$('ack').checked;
+ $('restore').disabled=!allowed||!healthy||!isLocal();
+}
+async function serverReady(){
+ if(!allowed)return false;
+ try{
+  // The shipped SW explicitly bypasses all /health requests.
+  const response=await fetch('/health?mac-probe='+Date.now(),{cache:'no-store'});
+  if(!response.ok)return false;
+  const data=await response.json();
+  return data?.app==='local-math-explorer'&&data.version===1&&
+   typeof data.project_root==='string'&&data.project_root.length>0;
+ }catch{return false;}
+}
+async function refresh(){
+ healthy=await serverReady();
+ $('health').textContent=healthy?'正在运行':'没有检测到本应用的本地服务，请先运行启动脚本';
+ if(!allowed)notice('仅可在本机 127.0.0.1 或 localhost 的 HTTP 地址切换。');
+ render();
+}
+function ownRegistration(reg){
+ const scope=new URL('./',location.href).href,script=new URL('sw.js',scope);
+ const workers=[reg.active,reg.waiting,reg.installing].filter(Boolean);
+ return reg.scope===scope&&workers.length>0&&workers.every(worker=>{
+  const url=new URL(worker.scriptURL);
+  return url.origin===script.origin&&url.pathname===script.pathname;
+ });
+}
+$('ack').addEventListener('change',render);
+$('retry').addEventListener('click',refresh);
+$('enable').addEventListener('click',async()=>{
+ if(!allowed||!$('ack').checked||!await serverReady()){notice('本地服务未就绪或尚未确认备份，没有更改。');await refresh();return;}
+ if(!confirm('切换为 Mac 本地模式？不会删除学习记录或缓存。完成后须关闭其他数学树标签页，再从启动脚本重新打开。'))return;
+ $('enable').disabled=true;
+ let previous;
+ try{
+  previous=localStorage.getItem(KEY);
+  const reg=await navigator.serviceWorker?.getRegistration();
+  if(reg&&!ownRegistration(reg))throw Error('发现非本应用的 Service Worker 注册，为避免误操作已停止');
+  localStorage.setItem(KEY,LOCAL);
+  if(localStorage.getItem(KEY)!==LOCAL)throw Error('运行模式选择无法保存');
+  if(reg&&!(await reg.unregister()))throw Error('无法注销旧 Service Worker');
+  if(await navigator.serviceWorker?.getRegistration())throw Error('旧 Service Worker 仍在注册中，请关闭其他标签页后重试');
+  notice('已切换选择：记录和缓存没有被删除。请关闭所有数学树标签页，从原来的启动脚本重新打开。');
+ }catch(error){
+  try{if(previous===null)localStorage.removeItem(KEY);else if(previous!==undefined)localStorage.setItem(KEY,previous);}catch{}
+  notice('切换未完成：'+String(error?.message||error)+'。原有学习记录和缓存未执行清理。');
+ }
+ await refresh();
+});
+$('restore').addEventListener('click',async()=>{
+ if(!allowed||!await serverReady()){notice('请先启动本地服务器，再恢复离线模式。');await refresh();return;}
+ try{
+  localStorage.removeItem(KEY);
+  notice('已恢复离线模式的选择。请返回数学树，等待旧离线缓存重新就绪。学习记录和原缓存均未清理。');
+ }catch(error){notice('没有更改模式：'+String(error?.message||error));}
+ await refresh();
+});
+refresh();
+})();
+</script></body></html>

@@ -11,6 +11,8 @@ const clientSource=fs.readFileSync(new URL('../dist/sw-client.js',import.meta.ur
 const browserClientSource=clientSource.replaceAll('export function','function')
  .replaceAll('import.meta.url',JSON.stringify('https://math.test/app/sw-client.js'));
 const browserWorkerURL='https://math.test/app/sw.js?release='+encodeURIComponent(release);
+// These lifecycle probes explicitly exercise the existing SW branch; the new
+// Mac-local opt-out is independently exercised by a genuine browser test.
 function entryOfflineProgram(file){
  const entry=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
  const start=entry.indexOf(file==='space.js'?'async function offline(){':" if('serviceWorker'in navigator){");
@@ -160,7 +162,7 @@ test('both entry status checks register the fixed release and never probe a lega
   const serviceWorker={controller:legacy,ready:Promise.resolve(),addEventListener(){},
    async register(url,options){registrations.push({url,options});return {active:legacy};}};
   await vm.runInNewContext(browserClientSource+'\nconst RELEASE='+JSON.stringify(release)+';\n'+program,
-   {navigator:{serviceWorker},$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
+   {navigator:{serviceWorker},isMacLocalMode:()=>false,$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
   assert.deepEqual(sent,[],file+' must identify the controller before requesting cache status');
   assert.deepEqual(observed,[],file+' must not monitor an unknown historical worker');
   assert.equal(registrations.length,1);assert.equal(registrations[0].url,browserWorkerURL);
@@ -179,7 +181,7 @@ for(const file of ['helper','space.js','exploration.js'])test(file+' resumes rea
   register:async()=>registration,getRegistration:async()=>registration};
  const program=file==='helper'?'registerClientRelease(RELEASE);':entryOfflineProgram(file);
  await vm.runInNewContext(browserClientSource+'\nconst RELEASE='+JSON.stringify(release)+';\n'+program,
-  {navigator:{serviceWorker},document,window,$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
+  {navigator:{serviceWorker},isMacLocalMode:()=>false,document,window,$:()=>status,URL,MessageChannel,setTimeout,clearTimeout});
  document.readyState='complete';
  await serviceWorker.emit('controllerchange');
  await serviceWorker.emit('controllerchange');
