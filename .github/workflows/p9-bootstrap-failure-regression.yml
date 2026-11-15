@@ -1,0 +1,47 @@
+name: P9 learning module failure fallback
+on:
+  pull_request:
+    paths:
+      - 'dist/learn.html'
+      - 'dist/sw.js'
+      - 'dist/learning/learn.js'
+      - 'tests/p9-bootstrap-failure-browser.cjs'
+      - '.github/workflows/p9-bootstrap-failure-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-failure-fallback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install matching Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Verify browser probe syntax and failure banner contract
+        run: |
+          node --check tests/p9-bootstrap-failure-browser.cjs
+          node --test tests/p9-learning-bootstrap-error-banner.test.mjs
+      - name: Real Chromium healthy and deliberately incomplete offline module graph
+        run: node tests/p9-bootstrap-failure-browser.cjs
+      - name: Retain real Chromium screenshots and error evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-bootstrap-error-fallback-${{ github.run_id }}-${{ github.run_attempt }}
+          path: verification/p9-bootstrap-failure/
+          if-no-files-found: error

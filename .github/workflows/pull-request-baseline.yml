@@ -209,6 +209,9 @@ jobs:
             tests/p5-integration-safety.test.mjs
             tests/p10-learning-continuity.test.mjs
             tests/p10-sw-retirement.test.mjs
+            tests/p9-offline-static-import-cache.test.mjs
+            tests/p9-offline-sw-script-cache.test.mjs
+            tests/p9-learning-bootstrap-error-banner.test.mjs
             tests/p6b-trail-priority.test.mjs
           )
 
