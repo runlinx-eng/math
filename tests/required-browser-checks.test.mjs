@@ -60,7 +60,7 @@ tests/p10-full-lessons-browser.cjs
 `.trim().split('\n');
 // Explicit reviewed additions; product discovery cannot update this list.
 const addedScripts=['tests/p9-storyledger-adapter-browser.cjs','tests/p9-samefraction-adapter-browser.cjs','tests/p9-division-adapter-browser.cjs','tests/b14-division-container-caption-browser.cjs','tests/p9-fractioncase-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs','tests/p9-portiongroups-adapter-browser.cjs','tests/p9-estimate-adapter-browser.cjs','tests/p9-joinstory-adapter-browser.cjs','tests/p9-angle-adapter-browser.cjs','tests/p9-numeric-compat-browser.cjs','tests/p9-transform-adapter-browser.cjs','tests/p9-groups-adapter-browser.cjs','tests/p9-fraction-order-adapter-browser.cjs','tests/p9-route-adapter-browser.cjs','tests/p9-mature-expansion-browser.cjs','tests/p9-groupwalk-adapter-browser.cjs',
- 'tests/p9-decimal-place-adapter-browser.cjs'];
+ 'tests/p9-decimal-place-adapter-browser.cjs','tests/p9-fdpboard-adapter-browser.cjs'];
 const reviewedScripts=[...originalScripts,...addedScripts];
 const context={event:'pull_request',sha:'a'.repeat(40),runId:'123456789',attempt:2};
 const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline}},browser:{result:'success',outputs:{}}});
@@ -73,19 +73,19 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
  assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
- assert.equal(commands.length,69);
+ assert.equal(commands.length,70);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[33,11,4,4,3,4,1,4,3,2]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[33,11,4,4,3,4,2,4,3,2]);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-operations-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion-2'].commands,[{file:'tests/p9-groups-adapter-browser.cjs',env:{}},{file:'tests/p9-transform-adapter-browser.cjs',env:{}},{file:'tests/p9-angle-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].commands,[{file:'tests/p9-joinstory-adapter-browser.cjs',env:{}},{file:'tests/p9-estimate-adapter-browser.cjs',env:{}},{file:'tests/p9-portiongroups-adapter-browser.cjs',env:{}},{file:'tests/p9-storyledger-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].artifacts,['verification/p9-joinstory-adapter/','verification/p9-estimate-adapter/','verification/p9-portiongroups-adapter/','verification/p9-storyledger-adapter/']);
  const artifacts=Object.values(BROWSER_GROUPS).flatMap(group=>group.artifacts);
  assert.equal(new Set(artifacts).size,artifacts.length,'each artifact path remains in exactly one group');
- assert.deepEqual(BROWSER_GROUPS['evidence-fractioncase'].commands,[{file:'tests/p9-fractioncase-adapter-browser.cjs',env:{}}]);
- assert.deepEqual(BROWSER_GROUPS['evidence-fractioncase'].artifacts,['verification/p9-fractioncase-adapter/']);
+ assert.deepEqual(BROWSER_GROUPS['evidence-fractioncase'].commands,[{file:'tests/p9-fdpboard-adapter-browser.cjs',env:{}},{file:'tests/p9-fractioncase-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['evidence-fractioncase'].artifacts,['verification/p9-fractioncase-adapter/','verification/p9-fdpboard-adapter/']);
  assert.ok(BROWSER_GROUPS['evidence-core'].commands.some(command=>command.file==='tests/p9-groupwalk-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS['evidence-core'].commands,[{"file":"tests/p9-thinking-feedback-browser.cjs","env":{}},{"file":"tests/p9-geometry-thinking-browser.cjs","env":{}},{"file":"tests/p9-sequence-thinking-browser.cjs","env":{}},{"file":"tests/p9-sequence-adapter-browser.cjs","env":{}},{"file":"tests/p9-counterexample-adapter-browser.cjs","env":{}},{"file":"tests/p9-fraction-adapter-browser.cjs","env":{}},{"file":"tests/p9-unitwalk-adapter-browser.cjs","env":{}},{"file":"tests/p9-groupwalk-adapter-browser.cjs","env":{}},{"file":"tests/p9-line-adapter-browser.cjs","env":{}},{"file":"tests/p9-array-adapter-browser.cjs","env":{}},{"file":"tests/p9-samefraction-adapter-browser.cjs","env":{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-place'].commands,[{file:'tests/p9-place-adapter-browser.cjs',env:{}},
@@ -132,6 +132,28 @@ test('P10 learner-data and deep offline groups preserve all seven original comma
   const gate=success();gate.reports[gate.reports.findIndex(r=>r.group===group)]=failed;rejected(gate);
  }
 });
+test('P10 reports are archived by the same runner that executes each data-safety command',()=>{
+ const outputs={
+  'tests/p9-numeric-compat-browser.cjs':'verification/p9-numeric-compat/results.json',
+  'tests/p10-learning-continuity-browser.cjs':'verification/p10-learning-continuity/results.json',
+  'tests/p10-backup-safety-browser.cjs':'verification/p10-release-upgrade/backup-safety/results.json',
+  'tests/p10-full-lessons-browser.cjs':'verification/p10-release-upgrade/full-lessons/results.json',
+  'tests/p10-longterm-offline-browser.cjs':'verification/p10-longterm-round2/results.json',
+  'tests/p10-sw-nav-isolation-browser.cjs':'verification/p10-release-upgrade/isolation-results.json',
+  'tests/p10-release-upgrade-repeat.cjs':'verification/p10-release-upgrade/results.json',
+ };
+ for(const [file,output] of Object.entries(outputs)){
+  const owners=Object.entries(BROWSER_GROUPS).filter(([,group])=>group.commands.some(command=>command.file===file));
+  assert.equal(owners.length,1,file+' has one executing runner');
+  const [name,group]=owners[0];
+  assert.ok(group.artifacts.some(path=>output.startsWith(path)),name+' must preserve '+output+' from its own filesystem');
+ }
+ assert.deepEqual(BROWSER_GROUPS['p10-learning'].artifacts,[
+  'verification/p10-learning-continuity/','verification/p9-numeric-compat/',
+  'verification/p10-release-upgrade/backup-safety/','verification/p10-release-upgrade/full-lessons/'
+ ]);
+});
+
 test('each P10 group records every runner failure, without suppressing later data-safety commands',()=>{
  for(const group of ['p10-learning','p10-offline']){
   const count=BROWSER_GROUPS[group].commands.length;
@@ -189,20 +211,20 @@ test('main and manual scope always require all groups; PR scope includes the inv
 test('a complete current result needs all ten groups and the complete current invocation inventory',()=>{
  const before=success(),copy=structuredClone(before);
  assert.deepEqual(validateRequiredGate(before),{sha:context.sha,runId:context.runId,required:true,offlineRequired:true,
-  groups:GROUP_NAMES,invocations:69});
+  groups:GROUP_NAMES,invocations:70});
  assert.deepEqual(before,copy,'gate reads results without modifying evidence');
  for(const event of ['push','workflow_dispatch']){
   const identity={...context,event};
-  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,69);
+  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,70);
  }
 });
 
-test('math-only PR runs all 66 non-offline Chromium commands, including real backup and math history',()=>{
+test('math-only PR runs all 67 non-offline Chromium commands, including real backup and math history',()=>{
  const jobs=needs('true','false'),reports=fixture('true',context,'false');
  const gate=validateRequiredGate({needs:jobs,reports,context});
  assert.equal(gate.required,true);
  assert.equal(gate.offlineRequired,false);
- assert.equal(gate.invocations,66);
+ assert.equal(gate.invocations,67);
  const offline=reports.find(r=>r.group==='p10-offline');
  assert.deepEqual({required:offline.required,status:offline.status,commands:offline.commands},
   {required:false,status:'not-required',commands:[]});
@@ -292,11 +314,11 @@ test('a successful job flag cannot hide missing commands, changed environments o
 test('same-run retries choose the newest result per group and require missing earlier successes to be available',()=>{
  const previous={...context,attempt:1},reports=fixture('true',previous);
  const retry=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:0})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,69);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,70);
  const failed=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:1})});
  rejected({needs:needs(),reports:[...reports,failed],context});
  const oldFailure=runBrowserGroup({group:'evidence-place',scope:'true',context:previous,execute:()=>({status:1})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,69);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,70);
  rejected({needs:needs(),reports:[retry],context});
  rejected({needs:needs(),reports:[...reports,retry,retry],context});
 });
