@@ -3985,6 +3985,78 @@
       "adapter": "fdpboard",
       "taskHash": "210ccd8a65554b5e4106ed6abb5b5541d774b81522e604afa739e9de24d24b2c",
       "method": null
+    },
+    {
+      "sessionId": "mixedpoints",
+      "index": 1,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_PsylzZ9lHW",
+      "adapter": "mixedaxis",
+      "taskHash": "8d9a4906907b29f163a2ec192b87e689e816c6b59e30c17a1769a773059e03ba",
+      "method": null
+    },
+    {
+      "sessionId": "mixedpoints",
+      "index": 2,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_PsylzZ9lHW",
+      "adapter": "mixedaxis",
+      "taskHash": "7cbe5601dd334c84a2c5e45bc33809169f7717e639c13a131568e647251f931e",
+      "method": null
+    },
+    {
+      "sessionId": "orderforms",
+      "index": 0,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_uDJY0X0hgo",
+      "adapter": "mixedaxis",
+      "taskHash": "9b608dc584d15309b23c8f4c5543743c6c1982dff90992cdc06f16533564d771",
+      "method": null
+    },
+    {
+      "sessionId": "orderforms",
+      "index": 1,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_uDJY0X0hgo",
+      "adapter": "mixedaxis",
+      "taskHash": "9ae273408aff47ead0c6003201a85d986dbbe13c4b2d90df894314f7015f4818",
+      "method": null
+    },
+    {
+      "sessionId": "orderforms",
+      "index": 2,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_uDJY0X0hgo",
+      "adapter": "mixedaxis",
+      "taskHash": "32310122c7b2f15f93c8617b567fe95303512fedd5b0160fa7b3bee408a38af9",
+      "method": null
+    },
+    {
+      "sessionId": "decimalorder2",
+      "index": 0,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_IegHBHERVa",
+      "adapter": "mixedaxis",
+      "taskHash": "f26ed92eca6c3a6959f1ff0f6d30fbe8d802125264105f765492df47c2539f0f",
+      "method": null
+    },
+    {
+      "sessionId": "decimalorder2",
+      "index": 2,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_IegHBHERVa",
+      "adapter": "mixedaxis",
+      "taskHash": "9eeb15ea00453c9211f501b818efb0e7a9b9a73630a6f7a8c48ea6bd7be86c0f",
+      "method": null
+    },
+    {
+      "sessionId": "raggeddecimals",
+      "index": 1,
+      "type": "x-mixedaxis",
+      "nodeId": "mt_933BohS9BH",
+      "adapter": "mixedaxis",
+      "taskHash": "60a06f1ebc612ae7d7ee60267e97de5059d3547abfc5f845042495d6d90e09f1",
+      "method": null
     }
   ]
 }

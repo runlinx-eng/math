@@ -1,3 +1,4 @@
+import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 // Reviewed mathematical families, not validator batches or automatic type tags.
 // Eligibility remains the exact native position and source checked by binding().
@@ -51,4 +52,5 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
  {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
  {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
+ {id:'mixedaxis',type:'x-mixedaxis',binding:mixedAxisBinding,replay:replayMixedAxisEvidence},
 ].map(Object.freeze));
