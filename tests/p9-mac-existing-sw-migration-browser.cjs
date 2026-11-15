@@ -74,7 +74,8 @@ const point=async(page,label)=>{
    'actual incorrect fraction attempt creates a retained learning record');
   const beforeRaw=await present(old);
   const beforeLesson=await lesson(old);
-  assertOk(!!beforeRaw&&!!beforeLesson?.attempts,'stored math evidence exists before retirement');
+  assertOk(!!beforeRaw&&beforeLesson?.cases?.[0]?.attempts?.length===1,
+   'the actual first incorrect attempt exists in cases[0].attempts before retirement');
   await old.evaluate(flag=>localStorage.setItem(flag,'local'),flag);
   const unregistered=await old.evaluate(async()=>{
    const registration=await navigator.serviceWorker.getRegistration();
