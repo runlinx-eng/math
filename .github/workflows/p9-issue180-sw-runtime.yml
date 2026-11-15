@@ -1,0 +1,107 @@
+name: P9 issue180 passive service worker runtime evidence
+
+on:
+  pull_request:
+    paths:
+      - 'tests/helpers/p9-issue180-sw-runtime.cjs'
+      - 'tests/helpers/p9-issue180-reload-probe.cjs'
+      - 'tests/p9-issue180-sw-runtime.test.cjs'
+      - 'tests/p9-issue180-sw-runtime-audit.cjs'
+      - '.github/workflows/p9-issue180-sw-runtime.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Supplemental only; unchanged mathematical assertions, original 20s readiness,
+# original navigation/Service Worker code, no retry and no altered Required gate.
+jobs:
+  native-sw-runtime:
+    name: SW runtime first-error (${{ matrix.suite }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [place, fraction-order, fraction-operations]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate diagnostic observer and unchanged mathematical contract
+        shell: bash
+        env:
+          SUITE: ${{ matrix.suite }}
+        run: |
+          set -euo pipefail
+          node --check tests/helpers/p9-issue180-sw-runtime.cjs
+          node --check tests/helpers/p9-issue180-reload-probe.cjs
+          node --check tests/p9-issue180-sw-runtime-audit.cjs
+          node --test tests/p9-issue180-sw-runtime.test.cjs
+          case "$SUITE" in
+            place)
+              node --check tests/p9-place-adapter-browser.cjs
+              node --test tests/p9-place-evidence-adapter.test.mjs
+              ;;
+            fraction-order)
+              node --check tests/p9-fraction-order-adapter-browser.cjs
+              node --test tests/p9-fraction-order-evidence-adapter.test.mjs
+              ;;
+            fraction-operations)
+              node --check tests/p9-fraction-operations-adapter-browser.cjs
+              node --test tests/p9-fraction-operations-evidence-adapter.test.mjs
+              ;;
+            *) echo "Unknown suite"; exit 2 ;;
+          esac
+      - name: Install pinned Chromium and Chinese fonts
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Run original complete mathematical path and verify SW runtime visibility
+        shell: bash
+        env:
+          SUITE: ${{ matrix.suite }}
+          MATH_ISSUE180_SW_RUNTIME_PROBE: '1'
+          MATH_ISSUE180_PLACE_NATIVE_PROBE: '1'
+          MATH_ISSUE180_ORDER_NATIVE_PROBE: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-sw-runtime
+          case "$SUITE" in
+            place) script=tests/p9-place-adapter-browser.cjs ;;
+            fraction-order) script=tests/p9-fraction-order-adapter-browser.cjs ;;
+            fraction-operations) script=tests/p9-fraction-operations-adapter-browser.cjs ;;
+            *) exit 2 ;;
+          esac
+          printf 'suite=%s sha=%s\n' "$SUITE" "$GITHUB_SHA" > "verification/issue180-sw-runtime/$SUITE-summary.txt"
+          set +e
+          node "$script" > "verification/issue180-sw-runtime/$SUITE-browser.log" 2>&1
+          browser_status=$?
+          node tests/p9-issue180-sw-runtime-audit.cjs "$SUITE" > "verification/issue180-sw-runtime/$SUITE-audit.log" 2>&1
+          audit_status=$?
+          set -e
+          printf 'browser_exit=%s audit_exit=%s\n' "$browser_status" "$audit_status" | tee -a "verification/issue180-sw-runtime/$SUITE-summary.txt"
+          tail -n 30 "verification/issue180-sw-runtime/$SUITE-browser.log"
+          cat "verification/issue180-sw-runtime/$SUITE-audit.log"
+          if [ "$browser_status" -ne 0 ] || [ "$audit_status" -ne 0 ]; then exit 1; fi
+      - name: Preserve first-error SW runtime, CDP and original mathematical evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue180-passive-sw-runtime-${{ matrix.suite }}
+          path: |
+            verification/issue180-sw-runtime/
+            verification/p9-place-adapter/
+            verification/p9-fraction-order-adapter/
+            verification/p9-fraction-operations-adapter/
+          if-no-files-found: warn
