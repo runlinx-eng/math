@@ -1,0 +1,87 @@
+name: P9 issue180 PR169 cache-first cross-branch trial
+on:
+  push:
+    branches:
+      - diagnostic/issue-180-169-cachefirst-trial
+
+permissions:
+  contents: read
+
+jobs:
+  original-mature-group:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      MATH_BROWSER_REQUIRED: 'true'
+      MATH_BROWSER_GROUP: evidence-expansion
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Freeze original PR169 math/browser sources and validate cache policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p verification/issue180-169-cachefirst
+          {
+            printf 'originalPR169=%s\n' 'f7c8f1103207be217af014163e086b007728d0d6'
+            printf 'testedCheckout=%s\n' "$(git rev-parse HEAD)"
+            printf 'testedTree=%s\n' "$(git rev-parse HEAD^{tree})"
+            printf 'productTree=%s\n' "$(git rev-parse HEAD:dist)"
+          } | tee verification/issue180-169-cachefirst/provenance.txt
+          for file in tests/p9-mature-expansion-browser.cjs tests/p9-route-adapter-browser.cjs tests/p9-fraction-order-adapter-browser.cjs tests/p9-fraction-operations-adapter-browser.cjs scripts/required-browser-checks.mjs; do
+            git show "f7c8f1103207be217af014163e086b007728d0d6:$file" | cmp - "$file"
+            printf 'unchanged: %s\n' "$file"
+          done
+          node --check dist/sw.js
+          node --test tests/p9-offline-static-import-cache.test.mjs tests/p9-offline-sw-script-cache.test.mjs tests/p9-learning-bootstrap-error-banner.test.mjs | tee verification/issue180-169-cachefirst/static-tests.log
+      - name: Install the original required Chromium and CJK runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Run exact original four-command evidence-expansion order
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=verification/issue180-169-cachefirst
+          python3 -m http.server 43827 --directory dist > "$out/preview-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then ready=true; break; fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then echo 'Preview server unavailable'; exit 1; fi
+          failure=0
+          for file in tests/p9-mature-expansion-browser.cjs tests/p9-route-adapter-browser.cjs tests/p9-fraction-order-adapter-browser.cjs tests/p9-fraction-operations-adapter-browser.cjs; do
+            name=$(basename "$file" .cjs)
+            printf 'START %s %s\n' "$file" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" | tee -a "$out/command-receipt.txt"
+            if node "$file" > "$out/$name.log" 2>&1; then status=0; else status=$?; failure=1; fi
+            tail -n 15 "$out/$name.log"
+            printf 'END %s exit=%s at=%s\n' "$file" "$status" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" | tee -a "$out/command-receipt.txt"
+          done
+          exit "$failure"
+      - name: Preserve complete original math and offline verification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-issue180-pr169-cachefirst-trial-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            verification/issue180-169-cachefirst/
+            verification/p9-mature-expansion/
+            verification/p9-route-adapter/
+            verification/p9-fraction-order-adapter/
+            verification/p9-fraction-operations-adapter/
+          if-no-files-found: error
+          retention-days: 14
