@@ -1,0 +1,31 @@
+name: Issue 180 source snapshot (temporary diagnostic)
+on:
+  push:
+    branches:
+      - fix/issue-180-offline-module-startup
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Archive exact checkout for local investigation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee source-checkout-sha.txt
+          tar -czf issue-180-source.tar.gz dist tests scripts .github docs vendor package.json package-lock.json AGENTS.md README.md
+          sha256sum issue-180-source.tar.gz | tee source-archive-sha256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: issue-180-source-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            source-checkout-sha.txt
+            source-archive-sha256.txt
+            issue-180-source.tar.gz
+          if-no-files-found: error
+          retention-days: 2
