@@ -8,6 +8,8 @@ const crypto=require('node:crypto');
 function createReloadStartupProbe({context,page,out,cache}){
  const events=[],requests=new Map(),firstFailures=[];
  let session=null,workerSession=null,savedFailure=false,eventCount=0,writtenCount=0,journalError=null;
+ const watchedWorkers=new Set();
+ let workerListener=null,swNativeAvailable=false;
  const startedAt=new Date().toISOString();
  const viewport=page.viewportSize()||{width:0,height:0};
  const journalFile=path.join(out,viewport.width+'x'+viewport.height+'-native-startup-network.jsonl');
@@ -77,6 +79,17 @@ function createReloadStartupProbe({context,page,out,cache}){
    if(message.type()==='error')push('consoleError',{text:message.text().slice(0,900)});
   });
   await session.send('Network.enable');
+  // Playwright worker events remain usable when Chromium omits the CDP
+  // ServiceWorker domain. They do not expose internal SW errors or versions.
+  const observeWorker=(worker,existing=false)=>{
+   if(watchedWorkers.has(worker))return;
+   watchedWorkers.add(worker);
+   push('playwrightServiceWorker',{url:worker.url(),existing});
+   worker.on('close',()=>push('playwrightServiceWorkerClosed',{url:worker.url()}));
+  };
+  workerListener=worker=>observeWorker(worker,false);
+  context.on('serviceworker',workerListener);
+  for(const worker of context.serviceWorkers())observeWorker(worker,true);
   try{
    workerSession=await context.browser()?.newBrowserCDPSession?.();
    if(workerSession){
@@ -95,8 +108,11 @@ function createReloadStartupProbe({context,page,out,cache}){
       scopeURL:reg.scopeURL,isDeleted:reg.isDeleted===true}))});
     });
     await workerSession.send('ServiceWorker.enable');
+    swNativeAvailable=true;
    }else push('serviceWorkerSessionUnavailable',{});
-  }catch(error){push('serviceWorkerSessionError',{error:String(error)});}
+  }catch(error){push('serviceWorkerSessionError',{error:String(error),fallback:'playwright-serviceworker-events-and-page-snapshots'});}
+  push('serviceWorkerObservationCapabilities',{nativeCdpEvents:swNativeAvailable,playwrightWorkerEvents:true,
+   limitation:swNativeAvailable?null:'No native ServiceWorker error/version stream; page registration/controller/cache snapshots still available'});
   push('probeStarted',{cache,startedAt});
  }
  const snapshot=async()=>page.evaluate(async release=>{
@@ -147,6 +163,8 @@ function createReloadStartupProbe({context,page,out,cache}){
    schema:'p9-fraction-operations-native-startup/1',label,status,
    probeStartedAt:startedAt,error:error?String(error):null,
    before:metadata(before),after:metadata(after),
+   serviceWorkerObservation:{nativeCdpEvents:swNativeAvailable,playwrightWorkerEvents:true,
+    playwrightWorkersObserved:watchedWorkers.size},
    rawIdentical:typeof before?.raw==='string'&&typeof after?.raw==='string'?
     before.raw===after.raw:null,firstFailures,journal:journalSummary(),
    eventsTailTruncated:eventCount>events.length,events
@@ -163,6 +181,7 @@ function createReloadStartupProbe({context,page,out,cache}){
   persist({label,before,after,error,status:'failure'});
  }
  async function close(){
+  if(workerListener){context.off('serviceworker',workerListener);workerListener=null;}
   if(session){await session.detach().catch(()=>{});session=null;}
   if(workerSession){await workerSession.detach().catch(()=>{});workerSession=null;}
  }
