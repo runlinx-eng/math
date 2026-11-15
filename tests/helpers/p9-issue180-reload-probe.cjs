@@ -15,7 +15,7 @@ function createReloadStartupProbe({context,page,out,cache}){
  // journal is the full first-to-last CDP stream, including the first error.
  const push=(kind,payload)=>{
   const record={seq:++eventCount,kind,at:new Date().toISOString(),...payload};
-  try{fs.appendFileSync(journalFile,JSON.stringify(record)+'\\n');writtenCount++;}
+  try{fs.appendFileSync(journalFile,JSON.stringify(record)+'\n');writtenCount++;}
   catch(error){if(!journalError)journalError=String(error);}
   if(['loadingFailed','playwrightRequestFailed','serviceWorkerError'].includes(kind)&&firstFailures.length<40)
    firstFailures.push(record);
@@ -24,7 +24,7 @@ function createReloadStartupProbe({context,page,out,cache}){
  };
  const journalSummary=()=>{
   try{
-   const buffer=fs.readFileSync(journalFile),lines=buffer.toString('utf8').trimEnd().split('\\n');
+   const buffer=fs.readFileSync(journalFile),lines=buffer.toString('utf8').trimEnd().split('\n');
    const last=JSON.parse(lines.at(-1));
    return {file:path.basename(journalFile),bytes:buffer.length,
     sha256:crypto.createHash('sha256').update(buffer).digest('hex'),
