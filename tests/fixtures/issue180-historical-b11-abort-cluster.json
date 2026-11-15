@@ -1,0 +1,74 @@
+{
+  "schema": "issue180-historical-b11-abort-cluster/1",
+  "source": {
+    "repo": "runlinx-eng/math",
+    "runId": 43705224073,
+    "artifactId": 14157743738,
+    "commit": "65b0eae454200f702d00e80719e8fadce549c72f",
+    "file": "p9-place-adapter/1440x900-twodigitpair-1-failure-diagnostics.json"
+  },
+  "case": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "id": "twodigitpair",
+    "index": 1,
+    "originStopped": true,
+    "screen": "learn.html#twodigitpair"
+  },
+  "clock": {
+    "navigationRequest": "2026-11-15T10:42:49.703Z",
+    "originalEntryFinished": "2026-11-15T10:42:49.726Z",
+    "firstScriptStart": "2026-11-15T10:42:49.979Z",
+    "firstScriptFailure": "2026-11-15T10:42:50.135Z",
+    "lastScriptFailure": "2026-11-15T10:42:50.136Z",
+    "observedBurstLatencyMs": [
+      155,
+      157
+    ],
+    "recoveryEntryStart": "2026-11-15T10:42:50.198Z",
+    "recoveryEntryFinished": "2026-11-15T10:42:50.240Z"
+  },
+  "paths": [
+    "learning/phase5/b18.js",
+    "learning/phase5/b19.js",
+    "learning/phase5/b20.js",
+    "learning/phase5/b21.js",
+    "learning/phase5/b22.js",
+    "learning/phase5/b23.js",
+    "learning/phase5/b24.js",
+    "learning/phase5/b25.js",
+    "learning/phase5/b27.js",
+    "learning/phase5/b28.js",
+    "learning/phase5/b30.js",
+    "learning/phase5/b31.js",
+    "learning/phase5/b32.js",
+    "learning/phase5/b33.js",
+    "learning/phase5/b34.js",
+    "learning/phase5/b35.js",
+    "learning/phase5/b37.js",
+    "learning/phase5/b38.js",
+    "learning/phase4/catalog.js",
+    "learning/cube-tasks.js",
+    "exploration-content.js",
+    "core.js"
+  ],
+  "observed": {
+    "error": "net::ERR_ABORTED",
+    "failureCount": 22,
+    "cache": {
+      "cached": 276,
+      "total": 276,
+      "complete": true
+    },
+    "activeWorker": true,
+    "entryStatus": 200,
+    "recoveryEntryStatus": 200,
+    "lessonReady": false,
+    "warningVisible": true,
+    "recoveryFailed": true,
+    "storageBytesAtFailure": 433
+  },
+  "interpretation": "Captured from original natural failure. The recorded timestamps show correlation, not a proven first cause. Any induced CDP failure is a synthetic replay, not a natural recurrence."
+}
