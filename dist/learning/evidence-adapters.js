@@ -1,3 +1,4 @@
+import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
@@ -42,6 +43,7 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ {id:'cubefraction',type:'x-m31-cubes',binding:cubeFractionBinding,replay:replayCubeFractionEvidence},
  ...['coins','cart'].map(kind=>({id:'money-'+kind,type:'x-m33-'+kind,
   binding:(task,context)=>task?.type==='x-m33-'+kind?moneyBinding(task,context):null,replay:replayMoneyEvidence})),
  {id:'order',type:'x-orderlab',binding:orderBinding,replay:replayOrderEvidence},

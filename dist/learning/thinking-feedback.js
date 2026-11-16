@@ -1,3 +1,4 @@
+import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
@@ -83,6 +84,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m31-cubes'){
+    const source=cubeFractionBinding(task,context);
+    return source?{type:task.type,summary:'想一想：小块、层与体积怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m33-coins'||task?.type==='x-m33-cart'){
     const source=moneyBinding(task,context);
     return source?{type:task.type,summary:task.type==='x-m33-coins'?
@@ -194,6 +199,29 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m31-cubes'){
+    const source=cubeFractionBinding(task,context);if(!source)return null;
+    const proof=replayCubeFractionEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,square=proof.squareUnit,cubic=proof.cubicUnit;
+    const detail=[
+      '网格、尺寸和小块边长由工具给定；这里核对已记录的填入、取回和保存量，不据此评价独立乘法过程、空间想象、文字解释或实际测量。',
+      `当前每层 ${c.perLayer} 块，共 ${c.layers} 层：${c.perLayer} × ${c.layers} = ${c.total} 块。`,
+      `每小块边长 ${c.edge.text} ${proof.unit}，三个方向相乘得到 ${c.oneCube.text} ${cubic}；${c.total} 块合计 ${c.volume.text} ${cubic}。`,
+      `底面积 ${c.base.text} ${square}，高 ${c.dimensions[2].text} ${proof.unit}；底面积与高相乘也对应 ${c.baseTimesHeight.text} ${cubic}。`,
+      `你曾打开各层；当前${c.currentlySpread?'各层仍展开':'各层已合起'}，保存过的块数和大小分别保留。`,
+      `本次填写的“小块加起来的体积”是“${model.volume}”，“按长宽高算出的体积”是“${model.product}”，单位是 ${model.unit}；这里只核对当前填写，没有把它们算作两条独立乘法过程。`
+    ];
+    if(c.failedPlans)detail.push(`本轮保留了 ${c.failedPlans} 次块数保存未通过的请求；第一次填写是每层“${c.first.plan.perLayer}”、层数“${c.first.plan.layers}”、总块数“${c.first.plan.total}”，没有改写成后来的结果。`);
+    if(c.failedParts)detail.push(`本轮保留了 ${c.failedParts} 次大小保存未通过的请求；第一次填写是小块体积“${c.first.part.oneCube}”、底面积“${c.first.part.base}”。`);
+    const removed=proof.events.filter(e=>e.outcome==='cell-removed').length;
+    if(removed)detail.push(`历史保留了 ${removed} 次实际取回；之后的块数和大小经过重新保存。`);
+    if(c.emptyRemovals)detail.push(`还有 ${c.emptyRemovals} 次在空盒子上请求取回；这些请求没有拿走任何小块。`);
+    if(proof.historyAtCapacity)detail.push('本轮保留的操作记录已达原上限；这里只核对已经保存的历史，不把后续未记录的点击补成操作。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整模型一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:`当前盒子保留了 ${c.total} 个小立方体，逐块身份与分层块数相符，保存的块数和体积记录也对应。`,
+      connection:'如果小块的边长再分成更多份，一小块的体积、每层块数和总块数会怎样一起变化？',detail,method:null};
+  }
   if(task?.type==='x-m33-coins'||task?.type==='x-m33-cart'){
     const source=moneyBinding(task,context);if(!source)return null;
     const proof=replayMoneyEvidence(task,model);if(!proof)return null;
