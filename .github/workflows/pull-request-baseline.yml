@@ -130,6 +130,10 @@ jobs:
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
+          node --check dist/learning/area-evidence.js
+          node --check scripts/area-evidence-fixture.mjs
+          node --check tests/fixtures/p9-area-navigation.cjs
+          node --check tests/p9-area-adapter-browser.cjs
           node --check dist/learning/time-evidence.js
           node --check scripts/time-evidence-fixture.mjs
           node --check tests/fixtures/p9-time-navigation.cjs
@@ -228,6 +232,8 @@ jobs:
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
             tests/p9-wideshift-navigation.test.mjs
+            tests/p9-area-evidence-adapter.test.mjs
+            tests/p9-area-navigation.test.mjs
             tests/p9-time-evidence-adapter.test.mjs
             tests/p9-time-navigation.test.mjs
             tests/p9-pvbench-evidence.test.mjs
