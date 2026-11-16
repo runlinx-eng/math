@@ -1,3 +1,13 @@
+## Issue #231｜等长单位的可见事件与累计记录（准备分支）
+
+仅6原生/3来源节点且3净新增/1合同：lengthstart:0/2、sameunitlength:0/1/2、twounits:2。5关联与3旧practice单列，ruler/refine/compare/convert等不接入本合同。
+
+place事件只接受可见按钮的规范index字符串；clear/record的原data是{}，record只携带原measure/unit字符串。隐藏offset/estimate/error/values保留初始值；跨类型help/align等不能伪装为单位控件。seed仅是合法随机元数据，不是思维证据。
+
+7课程15位置含4真实前置，按index递增真实Next到达；ruler/compare的原range由键盘input对齐，不播种游标。保留gap、wrong-unit、size2真实overlap、近似原成功、等值未保存、prose改动、取回重建、clear与shared retry。完整attempt前缀、notes/draft、raw/State/v2均核；2空原生context/4真chooser导入与构造兼容、坏包拒绝分别报告。最终场景/PNG计数以冻结脚本及Issue231收据为准，源码/Node不等于Chrome。
+
+2000个原动作后，数学模型整体no-op，但原extra handler仍update时间戳等元数据，保留的bad/issue还可能令case.support为true；旧attempt.supported/exposed原样保留，不能要求全raw不写。原字段仍可编辑，但capped record不能保存新measure/unit字节；返回原保存pair或真实P3恢复，零attempt先实际Check，通常无需reload。1200字符prose可写；无HTML maxlength的1201输入是另一条原验证写拒绝/blocked，旧raw保全，reload恢复。构造容量与原生路线明确分列。
+
 ## Issue #230｜按位乘法的真实字段窗口与累计记录（准备分支）
 
 严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。

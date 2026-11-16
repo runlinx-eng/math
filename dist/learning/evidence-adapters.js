@@ -1,3 +1,4 @@
+import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
@@ -44,6 +45,7 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ {id:'unitcover',type:'x-m28-units',binding:unitcoverBinding,replay:replayUnitcoverEvidence},
  {id:'multable',type:'x-multable',binding:multableBinding,replay:replayMultableEvidence},
  {id:'cubefraction',type:'x-m31-cubes',binding:cubeFractionBinding,replay:replayCubeFractionEvidence},
  ...['coins','cart'].map(kind=>({id:'money-'+kind,type:'x-m33-'+kind,
