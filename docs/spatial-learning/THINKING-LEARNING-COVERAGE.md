@@ -1,3 +1,24 @@
+## 待验候选｜十进位移（Issue #156 / PR #169）
+
+本候选基于纸张等分WIP `5f738389b088f505ab7d265bf313c9a598894334`，只追加26个已逐题审查的原生来源指纹。实际源码审计并集为 **A510/1,996原生、186/587来源节点、30个严格契约**，分布A510/B189/C124/D1093/E80；相对该固定依赖的484题/177节点增加26题和9个此前未覆盖节点。原484条manifest逐值保序，1552个关联位置全部独立；这些数字只表示未合并候选能力，不代表正式main、儿童理解或工程验收完成。
+
+| 原生课程 | 固定索引 | 真实来源节点 |
+| --- | --- | --- |
+| tenpattern | 0、1、2 | mt_QqG6IdmTSE |
+| decimalscale | 0、1、2 | mt_EDgw64OmfA |
+| decimalplaces | 1 | mt_lNGpnILM5C |
+| powerpattern | 0、1、2、3 | mt_HLUqHJ9Y7n |
+| standardform | 0、1、2 | mt_bO-njVOige |
+| largerfacts | 3 | mt_8A3pZNOp7Z |
+| shifttens | 0、1、2、3 | mt_LlMl2PbaZe |
+| shiftfine | 0、1、2 | mt_wPgpMJ0-PA |
+| dividebyten | 0、2、4 | mt_kDMKJ5Ztt6 |
+| structure39 | 1 | mt__Itf4aQZUj |
+
+15道scale、9道shift、2道scientific逐步用BigInt微单位核对成功移动、完整轨迹、范围和精度、最终倍数与科学计数法乘回原数；全部method:null。4道add原生、28道wideboard、21道非add关联和1道add关联明确排除，数位图仍归因于系统。旧核心/helper/来源fixture/37项数学Node测试保持原件，新增真实导航fixture和2项Node验证。专用Chromium须实际执行两个视口、累计记录、真实导出及独立空context首次/重复导入；完整Required与P10/Artifact及随后新main必须独立验收，不借用旧PR #169绿灯。
+
+---
+
 ## 纸张等分与等面积（Issue #222）
 
 本族仅绑定halfpaper[1,2]、quarterpaper[0,2]、shapeparts[0,1,2,3]、areaparts[0,1,2]、tenpieces[1]共12个原生位置和5个真实来源节点，新增来源节点仅shapeparts、areaparts。24关联/3practice另计，method:null。独立核对等份大小与份数、原格子身份、当前保存分界和真实历史；颜色重命名不算新分法，重摆前成果不算当前轮。能力计数不代表学习效果，实际正式覆盖和独立验收状态以Issue #130最新检查点为准。
