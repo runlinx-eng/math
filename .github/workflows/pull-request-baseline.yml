@@ -120,6 +120,8 @@ jobs:
           node --check tests/p9-decimalengine-adapter-browser.cjs
           node --check dist/learning/fdpboard-evidence.js
           node --check tests/p9-fdpboard-adapter-browser.cjs
+          node --check dist/learning/fracshare-evidence.js
+          node --check tests/p9-fracshare-adapter-browser.cjs
           node --check dist/learning/scalechain-evidence.js
           node --check tests/p9-scalechain-adapter-browser.cjs
           node --check tests/p9-numeric-compat-browser.cjs
@@ -203,6 +205,7 @@ jobs:
             tests/p9-mixedaxis-evidence.test.mjs
             tests/p9-decimalengine-evidence.test.mjs
             tests/p9-fdpboard-evidence.test.mjs
+            tests/p9-fracshare-evidence.test.mjs
             tests/p9-scalechain-evidence.test.mjs
             tests/phase5-b18.test.mjs
             tests/p9-numeric-compat.test.mjs
