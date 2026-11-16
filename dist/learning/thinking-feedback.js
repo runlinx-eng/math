@@ -1,3 +1,4 @@
+import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
@@ -82,6 +83,11 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m33-coins'||task?.type==='x-m33-cart'){
+    const source=moneyBinding(task,context);
+    return source?{type:task.type,summary:task.type==='x-m33-coins'?
+      '想一想：面值、枚数与合计怎样对应？（可选）':'想一想：选了哪些东西，钱的数量怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-orderlab'){
     const source=orderBinding(task,context);
     return source?{type:task.type,summary:'想一想：这一小块要先准备什么？（可选）',question:source.question}:null;
@@ -188,6 +194,53 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m33-coins'||task?.type==='x-m33-cart'){
+    const source=moneyBinding(task,context);if(!source)return null;
+    const proof=replayMoneyEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,unit=proof.minorUnit;
+    const detail=['合计和余款由工具显示；这里核对本次记录的摆放或选择与当前提交，不据此评价独立心算、文字解释、真实付款或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayMoneyEvidence(task,a.value)===null))
+      detail.unshift('此前的提交原样保留，下面只描述本次重新检查的作品。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    let observation;
+    if(proof.kind==='coins'){
+      observation=`你保存了 ${c.distinctAccepted} 种不同的合格摆法，每种合计 ${c.targetMinorUnits} ${unit}。下面按当时保存的面值和枚数核对。`;
+      // A later clear or failed save need not invalidate earlier qualifying
+      // saved compositions. Never describe the current table as that proof.
+      for(const savedIndex of c.acceptedSavedIndices){
+        const s=c.saves.find(entry=>entry.savedIndex===savedIndex&&entry.qualifies);
+        detail.push(`第 ${savedIndex+1} 次保存：${s.terms.map(term=>`${term.count} × ${term.minorUnits}`).join(' + ')} = ${s.totalMinorUnits} ${unit}，共 ${s.coinCount} 枚（或张）。`);
+      }
+      if(task.mustCounts?.length)detail.push(`题目指定的面额数量也已核对：${task.mustCounts.map(([i,count])=>`${task.denoms[i].label} ${count} 枚（或张）`).join('、')}。`);
+      if(c.minimum)detail.push(`这次合格摆法用了 ${c.minimum.coins} 枚；核对器用整数面值检验了最少枚数。这不表示记录里包含你独立证明“不能更少”的过程。`);
+      const wrong=c.saves.filter(s=>!s.amountMatches).length,limited=c.saves.filter(s=>!s.stored).length;
+      if(wrong)detail.push(`历史保留了 ${wrong} 次金额尚未对上的保存请求及原填写，没有把这些请求算作合格摆法。`);
+      if(limited)detail.push(`还有 ${limited} 次保存请求发生在已保存 12 次之后；请求仍在历史里，没有新增保存的摆法。`);
+      const capped=proof.events.filter(e=>e.reason==='per-denomination-capacity').length;
+      if(capped)detail.push(`历史保留了 ${capped} 次某一面额已达 50 枚后的放入请求；这些请求没有增加枚数。`);
+      detail.push(`当前桌面是 ${c.current.coinCount} 枚（或张），工具合计 ${c.current.totalMinorUnits} ${unit}；这与此前保存的摆法分别记录。`);
+      if(proof.issue)detail.push('当前保存提示仍在，之前合格的保存记录没有被改写。');
+      if(c.relation){const r=c.relation;
+        detail.push(r.role==='change'?`题目给定付款 ${r.paid} ${unit}、价格 ${r.price} ${unit}；已保存的 ${r.resultMinorUnits} ${unit} 对应两者之差。`:
+          `题目给定价格 ${r.price} ${unit}、已有 ${r.held} ${unit}；已保存的 ${r.resultMinorUnits} ${unit} 对应还差的数量。`);
+      }
+    }else{
+      observation=`你选择了 ${c.items.length} 件商品：${c.items.map(item=>item.name).join('、')}。工具合计 ${c.totalMinorUnits} ${unit}，本次选择记录与这些价格相符。`;
+      detail.push(`所选价格按题目中的商品逐项对应：${c.items.map(item=>item.minorUnits).join(' + ')} = ${c.totalMinorUnits} ${unit}。`);
+      if(c.requiredItems.length)detail.push('题目要求的商品都在当前篮子里。');
+      if(c.budget)detail.push(`当前选择不少于 ${c.minimumItems} 件，合计 ${c.totalMinorUnits} ${unit} 不超过预算 ${c.budget.minorUnits} ${unit}。工具显示余下 ${c.budget.remainingMinorUnits} ${unit}；这条显示不作为一次独立的余款作答。`);
+      if(c.payment)detail.push(`题目给定付款 ${c.payment.minorUnits} ${unit}，与当前所选总价之差为 ${c.payment.changeMinorUnits} ${unit}。这是按题意核对的数量关系，没有额外记为一次付款操作。`);
+    }
+    const clears=proof.events.filter(e=>e.action==='m33-clear').length;
+    if(clears)detail.push(`本轮历史保留了 ${clears} 次${proof.kind==='coins'?'重新摆':'重新选'}及前后的数量，旧提交没有删除。`);
+    for(const answer of proof.answers){
+      const option=answer.kind==='choice'?task.questions[answer.index].options.find(([value])=>value===answer.raw):null;
+      const displayed=option?option[1]:answer.raw;
+      detail.push(`本次提交的“${answer.label}”是“${displayed}”，与这次记录及题目中的数量关系相符；输入修改的具体时序没有单独记录。`);
+    }
+    return {title:'这次作品中的思考线索',observation,
+      connection:proof.kind==='coins'?'如果换一组面值或枚数，怎样说明合计仍相同，或者已经改变？':'如果拿出或换进一件商品，哪些金额会改变？怎样根据当前选择说明？',detail,method:null};
+  }
   if(task?.type==='x-orderlab'){
     const source=orderBinding(task,context);if(!source)return null;
     const proof=replayOrderEvidence(task,model);if(!proof)return null;

@@ -1,3 +1,4 @@
+import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
@@ -41,6 +42,8 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ ...['coins','cart'].map(kind=>({id:'money-'+kind,type:'x-m33-'+kind,
+  binding:(task,context)=>task?.type==='x-m33-'+kind?moneyBinding(task,context):null,replay:replayMoneyEvidence})),
  {id:'order',type:'x-orderlab',binding:orderBinding,replay:replayOrderEvidence},
  ...[['partition','grid'],['design','grid'],['compare','compare'],['pieces','pieces'],['stadium','circle'],['openbox','solid']].map(([kind,type])=>({
   id:'area-'+kind,type:'x-a30-'+type,

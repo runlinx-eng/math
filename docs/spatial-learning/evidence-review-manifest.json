@@ -5227,6 +5227,258 @@
       "adapter": "order",
       "taskHash": "009dd6c53f4aeadb8fc3b09fb3c91935ad674a31980622c8558b23489e71b162",
       "method": null
+    },
+    {
+      "sessionId": "poundnotation",
+      "index": 0,
+      "type": "x-m33-coins",
+      "nodeId": "mt_pbuhUQJjtt",
+      "adapter": "money-coins",
+      "taskHash": "4c6870527f379a056a933c3ec80b4da30b5aacf848860880c220e47b2a10dbfa",
+      "method": null
+    },
+    {
+      "sessionId": "poundnotation",
+      "index": 1,
+      "type": "x-m33-coins",
+      "nodeId": "mt_pbuhUQJjtt",
+      "adapter": "money-coins",
+      "taskHash": "bf8fbc8d03a1ed32dacc20f4eaefbec027d71170cddf74ea9de34b6a5679dba4",
+      "method": null
+    },
+    {
+      "sessionId": "poundnotation",
+      "index": 2,
+      "type": "x-m33-cart",
+      "nodeId": "mt_pbuhUQJjtt",
+      "adapter": "money-cart",
+      "taskHash": "571d8ebe5f45c1ef6684979272363ffdb9977e50336c92c52078fcf11519a983",
+      "method": null
+    },
+    {
+      "sessionId": "coincombo",
+      "index": 0,
+      "type": "x-m33-coins",
+      "nodeId": "mt_AF2BeFQwfX",
+      "adapter": "money-coins",
+      "taskHash": "57c38e943f9acd2cf39e39bfa6f3b76a68d1a5b2cbc340d7a2951f6d5753a91c",
+      "method": null
+    },
+    {
+      "sessionId": "coincombo",
+      "index": 1,
+      "type": "x-m33-coins",
+      "nodeId": "mt_AF2BeFQwfX",
+      "adapter": "money-coins",
+      "taskHash": "8f661802fdc1d17681160063a086c04ee7aeb04ad87a879b39467688f0896893",
+      "method": null
+    },
+    {
+      "sessionId": "coincombo",
+      "index": 2,
+      "type": "x-m33-coins",
+      "nodeId": "mt_AF2BeFQwfX",
+      "adapter": "money-coins",
+      "taskHash": "c7b7a784584ca1f7f4b4e79f9c649e74715487bb8e535830523c0cc6d9ffe78f",
+      "method": null
+    },
+    {
+      "sessionId": "pennyshop",
+      "index": 0,
+      "type": "x-m33-cart",
+      "nodeId": "mt_6J1wmCWf41",
+      "adapter": "money-cart",
+      "taskHash": "3197691a637c62cf1a0edfd02e12e9c163f8d24c8fa8f55074c2d1988db4fec9",
+      "method": null
+    },
+    {
+      "sessionId": "pennyshop",
+      "index": 1,
+      "type": "x-m33-coins",
+      "nodeId": "mt_6J1wmCWf41",
+      "adapter": "money-coins",
+      "taskHash": "c6f9cbc0b8fc1ed220aa227bfc90d30b04c7406ce270709a6d7a500e7ece52c1",
+      "method": null
+    },
+    {
+      "sessionId": "pennyshop",
+      "index": 2,
+      "type": "x-m33-coins",
+      "nodeId": "mt_6J1wmCWf41",
+      "adapter": "money-coins",
+      "taskHash": "6b586d7fcb76f2620389cca5c62cefe621d412d43c6057b31fd02ae5271d7159",
+      "method": null
+    },
+    {
+      "sessionId": "poundchange",
+      "index": 0,
+      "type": "x-m33-cart",
+      "nodeId": "mt_6_O6THdEDK",
+      "adapter": "money-cart",
+      "taskHash": "456d3ca34bbc9c0b6b41eb902ebb0c1cf03dbf151014b5dff35d7ce84dc121ee",
+      "method": null
+    },
+    {
+      "sessionId": "poundchange",
+      "index": 1,
+      "type": "x-m33-cart",
+      "nodeId": "mt_6_O6THdEDK",
+      "adapter": "money-cart",
+      "taskHash": "71b011cd6a3eb3a9004a951d33f5435927a103756f3800765fb5d0f83bbdbff8",
+      "method": null
+    },
+    {
+      "sessionId": "poundchange",
+      "index": 2,
+      "type": "x-m33-cart",
+      "nodeId": "mt_6_O6THdEDK",
+      "adapter": "money-cart",
+      "taskHash": "6280de478f22b4551d9701156ccf8d60c42d02a1afd70952bf00321d50451afb",
+      "method": null
+    },
+    {
+      "sessionId": "modmoney",
+      "index": 1,
+      "type": "x-m33-cart",
+      "nodeId": "mt_iQYPw8bMfN",
+      "adapter": "money-cart",
+      "taskHash": "240bbcde689a42b99189730de756edda78d4a1b76ece53db9839f622d821dc66",
+      "method": null
+    },
+    {
+      "sessionId": "auscoins",
+      "index": 1,
+      "type": "x-m33-coins",
+      "nodeId": "mt_FSLJbKkryb",
+      "adapter": "money-coins",
+      "taskHash": "ed071dddf9cb1d095467fea870812dd62d52a926073c9a2f589c6324d4d61a49",
+      "method": null
+    },
+    {
+      "sessionId": "auscoins",
+      "index": 2,
+      "type": "x-m33-cart",
+      "nodeId": "mt_FSLJbKkryb",
+      "adapter": "money-cart",
+      "taskHash": "bd19c1bc260c83d77dc33a47d2dec7e484391a3ccc8deee3a940346ae5cc47cf",
+      "method": null
+    },
+    {
+      "sessionId": "austrans",
+      "index": 0,
+      "type": "x-m33-cart",
+      "nodeId": "mt_8cs4YPkp23",
+      "adapter": "money-cart",
+      "taskHash": "cdeeb52b01300d826572dd4beb99a026bf570d17b02d3c0b26047cfc1197b254",
+      "method": null
+    },
+    {
+      "sessionId": "austrans",
+      "index": 1,
+      "type": "x-m33-cart",
+      "nodeId": "mt_8cs4YPkp23",
+      "adapter": "money-cart",
+      "taskHash": "9274ea57700f594cc6c4d767884015649f5cb243a578393b27d6b789caa8978d",
+      "method": null
+    },
+    {
+      "sessionId": "austrans",
+      "index": 2,
+      "type": "x-m33-coins",
+      "nodeId": "mt_8cs4YPkp23",
+      "adapter": "money-coins",
+      "taskHash": "57a87de54d8717f6233207827eec9659409785a364ffee11eba9ddfcadd6a090",
+      "method": null
+    },
+    {
+      "sessionId": "dollarcents",
+      "index": 0,
+      "type": "x-m33-coins",
+      "nodeId": "mt_9L5qyBYmg-",
+      "adapter": "money-coins",
+      "taskHash": "bc3e09fb1120a1c3e208a81f2d150dd8e8c47669bda8c1a97d9efb53f728cd84",
+      "method": null
+    },
+    {
+      "sessionId": "dollarcents",
+      "index": 1,
+      "type": "x-m33-coins",
+      "nodeId": "mt_9L5qyBYmg-",
+      "adapter": "money-coins",
+      "taskHash": "1a0808910f081dc7977820923635ceb20d126b0fe4d47dd6e2dd664a80ba28a9",
+      "method": null
+    },
+    {
+      "sessionId": "dollarcents",
+      "index": 2,
+      "type": "x-m33-coins",
+      "nodeId": "mt_9L5qyBYmg-",
+      "adapter": "money-coins",
+      "taskHash": "d598e91dd1d5a530cd7e699ed36e99dd61d11d8170765a0bc6c8e5c0586820fc",
+      "method": null
+    },
+    {
+      "sessionId": "dollarcents",
+      "index": 3,
+      "type": "x-m33-coins",
+      "nodeId": "mt_9L5qyBYmg-",
+      "adapter": "money-coins",
+      "taskHash": "5f800a27f96569d222da9ee6051fcbe9b72831e9433f0d9b2fa10547c7530719",
+      "method": null
+    },
+    {
+      "sessionId": "usmoney",
+      "index": 0,
+      "type": "x-m33-coins",
+      "nodeId": "mt_3tz3Otap5j",
+      "adapter": "money-coins",
+      "taskHash": "ab2b58eb8ff526677aaa01e6cddd7f63f80820af8b5f7f14a52f7dd466d605fb",
+      "method": null
+    },
+    {
+      "sessionId": "usmoney",
+      "index": 1,
+      "type": "x-m33-cart",
+      "nodeId": "mt_3tz3Otap5j",
+      "adapter": "money-cart",
+      "taskHash": "f658c369220719bed274dc61aa20a43f3146aa4645337f5564dacfd02255af2c",
+      "method": null
+    },
+    {
+      "sessionId": "usmoney",
+      "index": 2,
+      "type": "x-m33-coins",
+      "nodeId": "mt_3tz3Otap5j",
+      "adapter": "money-coins",
+      "taskHash": "a664a0d6fb5988f682b5e7125f475e0b76de7b68595c1fbc253163e8f0769089",
+      "method": null
+    },
+    {
+      "sessionId": "measuremoney",
+      "index": 2,
+      "type": "x-m33-cart",
+      "nodeId": "mt_mFJ-2ZF6Tk",
+      "adapter": "money-cart",
+      "taskHash": "91fb3ff1e47d943ece4e0f47d4c561f5e243e8f78bdd9ad8ada7936f8640f646",
+      "method": null
+    },
+    {
+      "sessionId": "budgetchoices",
+      "index": 0,
+      "type": "x-m33-cart",
+      "nodeId": "mt_Qe2PsFmSAH",
+      "adapter": "money-cart",
+      "taskHash": "8ed9980315ce9b093b77769cee723a17643962259d076fe9e2a4d737ddd9bc55",
+      "method": null
+    },
+    {
+      "sessionId": "lifemath38",
+      "index": 2,
+      "type": "x-m33-cart",
+      "nodeId": "mt_f67qGDhyfi",
+      "adapter": "money-cart",
+      "taskHash": "240bbcde689a42b99189730de756edda78d4a1b76ece53db9839f622d821dc66",
+      "method": null
     }
   ]
 }
