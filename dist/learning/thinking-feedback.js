@@ -1,6 +1,7 @@
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
 import {fracShareBinding,replayFracShareEvidence} from './fracshare-evidence.js';
+import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
@@ -33,6 +34,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-paperlab'){
+    const source=paperLabBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这些小份真的相等吗？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-scalechain'){
     const source=scaleChainBinding(task,context);
     return source?{type:task.type,summary:'想一想：这一轮的整体是哪个量？（可选）',question:source.question}:null;
@@ -148,6 +153,34 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-paperlab'){
+    const source=paperLabBinding(task,context);if(!source)return null;
+    const proof=replayPaperLabEvidence(task,model);if(!proof)return null;
+    const details=['工具预先画出的纸格和折痕不算独立作图；这里只核对实际按下的对折、切分、选取、判断、涂色与保存记录。'];
+    let observation='',connection='';
+    if(proof.mode==='paint'){
+      const draft=proof.currentDraft;
+      const state=draft.valid?(draft.alreadySaved?'当前涂色与已经保存的一种分界相同。':'当前草稿达到每色4格，但还没有保存成另一种作品。'):'当前未保存草稿还没有做到每种颜色各4格，不能混入已经保存的作品。';
+      observation='你已经保存 '+proof.savedWork.length+' 种不同的等面积分法；每种保存作品的四种颜色都各占16格中的4格。'+state;
+      connection='只是交换颜色名称，为什么不能算新的等面积分界？试着比一比各组真正占着哪些格。';
+      for(const [i,saved]of proof.savedWork.entries())details.push('已保存第 '+(i+1)+' 种：四组分别占 '+saved.groups.map(g=>g.length).join('、')+' 格，分界按格子的身份比较，而不是看颜色名称。');
+    }else if(proof.mode==='classify'){
+      const correct=proof.judgements.filter(j=>j.correct);
+      observation='你逐张核对了 '+correct.length+' 种分法：除了分成几份，还检查了各份大小是否相同。';
+      connection='如果切成了规定的块数，但其中一块比另一块大，为什么不能都叫单位分数？';
+      for(const j of proof.judgements.filter(j=>j.correct))details.push('第 '+(j.caseIndex+1)+' 张：各份占 '+j.observedShares.join('、')+' 格，判断为'+(j.truth?'相等份':'不相等份')+'。');
+      if(proof.first!==null)details.push('第一次判断的原选择是“'+(proof.first||'未选择')+'”，以后纠正没有覆盖这条历史。');
+    }else{
+      observation='你把一个整体实际分成 '+proof.d+' 个单位份，选中了 '+proof.selectedIds.length+' 份，提交的量与 '+proof.answer[0]+'/'+proof.answer[1]+' 对上了。';
+      connection='为什么分出来的每一份必须一样大？所选小份全部拼回去，还能和原来的整体对上吗？';
+      if(proof.mode==='fold')details.push('操作记录留下 '+proof.folds.length+' 次真实对折，折痕方向与单位份数分别核对。');
+      if(proof.mode==='build')details.push('行、列和选中小格的真实身份已独立核对；改变分法必须重新核算单位份，不能只看最后填写的名字。');
+    }
+    if(proof.failures.length)details.push('记录保留了 '+proof.failures.length+' 次不成立的判断或保存请求；正确作品没有抹去先前失败。');
+    if(proof.resets.length)details.push('记录保留了 '+proof.resets.length+' 次重摆，第一次判断与原历史没有被当作新结果覆盖。');
+    if(record.support)details.push('你曾查看可选提示或比较反馈，不能据此认定没有获得工具帮助。');
+    return {title:'这次作品中的思考线索',observation,connection,detail:details,method:null};
+  }
   if(task?.type==='x-scalechain'){
     const source=scaleChainBinding(task,context);if(!source)return null;
     const proof=replayScaleChainEvidence(task,model);if(!proof)return null;

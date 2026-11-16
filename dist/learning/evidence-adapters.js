@@ -1,6 +1,7 @@
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
 import {fracShareBinding,replayFracShareEvidence} from './fracshare-evidence.js';
+import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 // Reviewed mathematical families, not validator batches or automatic type tags.
@@ -54,6 +55,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'division',type:'x-divtable',binding:divisionBinding,replay:replayDivisionEvidence},
  {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
  {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
+ {id:'paperlab',type:'x-paperlab',binding:paperLabBinding,replay:replayPaperLabEvidence},
  {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
  {id:'fracshare',type:'x-fracshare',binding:fracShareBinding,replay:replayFracShareEvidence},
  {id:'decimalengine',type:'x-decimalengine',binding:decimalEngineBinding,replay:replayDecimalEngineEvidence},
