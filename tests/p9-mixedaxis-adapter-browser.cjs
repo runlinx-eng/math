@@ -314,8 +314,18 @@ async function main(){
    };
    const open=async spec=>{
     const active=await page.evaluate(()=>window.mathLesson?.snapshot()?.id||null);
-    if(active!==spec.id){const response=await page.goto(base+'learn.html#'+spec.id);await wait(page,{id:spec.id,index:0});
-     if(!server.listening)assert.equal(response?.fromServiceWorker(),true);}
+    if(active!==spec.id){
+     const beforeUrl=new URL(page.url()),targetUrl=new URL(base+'learn.html#'+spec.id);
+     const response=await page.goto(targetUrl.href);await wait(page,{id:spec.id,index:0});
+     // A same-document hash navigation has no Document Response. Its actual
+     // lesson readiness is still required; every offline reload below still
+     // requires a real response from the Service Worker.
+     if(response){if(!server.listening)assert.equal(response.fromServiceWorker(),true);}
+     else{assert.equal(beforeUrl.origin+beforeUrl.pathname+beforeUrl.search,targetUrl.origin+targetUrl.pathname+targetUrl.search);
+      assert.notEqual(beforeUrl.hash,targetUrl.hash);}
+     ok(true,label+' course navigation reaches the real first task',{id:spec.id,index:0,originStopped:!server.listening,
+      navigationMode:response?'document':'hash',fromServiceWorker:response?response.fromServiceWorker():null});
+    }
     let current=(await saved(spec.id)).index;
     while(current<spec.index){
      const record=await saved(spec.id);
