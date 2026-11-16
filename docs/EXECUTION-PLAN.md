@@ -1,3 +1,22 @@
+## 2026-11-16｜Issue #233 尺家族隔离开发候选
+
+固定候选父为已保存unitrefine 7aaf258ebac6d692e960eed0c34c5a1433a63703 /tree0884130abe8637b7b3dd9cb1b9e2098fa06b03b4。父628旧proof/1256双形态反馈、3548原来源与628条manifest必须逐项保全；只追加16个原生D→A。本次完整audit确认候选A644/1996、244/587节点、50合同，B189/C124/D959/E80，1552关联另计；尚未完成真实CI的候选不能计正式main。
+
+本次准备时工程main90435ca7（时间173已双门禁后正常合并）正做独立push验收；既有面积175 HEADfc47517a同时跑新CI。正式已验仍b622/A521/192节点/31合同。后续按area→order→money→cube→230 multable→231 unitcover→232 unitrefine→233 ruler顺序重接真实新main，不重复既有源码或越过双门禁。
+
+仅16原生/8来源节点/5净新增节点/1合同：lengthstart:1；estimateLength:0/1/2/3；lengthtools:0/1/2/3/4；twounits:0/1；measurecalc:0；measuremoney:0；communicate38:1；strategy39:2。plain5/estimate5/tool6三种证明形状，完整task和上下文共同绑定，全部method:null。11关联与2旧practice只作隔离兼容，其他B28类型排除。
+
+完整当前工作树四块workflow静态已实跑通过：2035 tests（2005+1+13+3+10+3）、0失败，模块与部署脚本仅语法检查；没有执行部署。核心36项、原controller五项及完整归档一项通过；原controller包含329源Check/476capture/22retry/16Next、56cap Check/137capture/10retry、9text Check/54capture/6retry，均为Node回放，真实Chromium仍0。非作者核心1023 replay/1013 binding独审通过；公共保全22758断言和3408反馈调用/4645断言通过，628旧proof/1256反馈/3548源保持，仅16原生D→A。原controller/browser按原源码、实际Node回放及计划逐项独审；完整CI、官方ZIP和真实Chrome须等依赖轮到本族后执行。
+
+双视口脚本计划17课程、27目标+6literal前置=33位置/视口，32原Next。原生路线不播种index/model/答案/记录，保留初错、真正纠正、重复提交、等值未保存、near原成功、末尾issue、移尺归零、工具重选、首次预测与共享重试。source计划658checked（582原生+42边界+22关联+12前置）/952captures/44retry；构造cap112checked/274captures/20retry、构造text18/108/12，合计788checked/1334captures/76retry，1334对raw/State、2668个唯一文件路径（每capture两文件）。2独立空原生恢复context共4次实际按钮filechooser导入、首次全State/重复raw幂等；19空context/视口含独立旧practice、10cap和6text，构造数据与原生记录分开。数字是冻结计划和Node实际回调结果，不是已完成Chromium。
+
+Required只在现有p10-learning四原命令后追加ruler一次和专属产物，完整88调用[34,13,8,6,8,5,4,5,3,2]。原87命令的组/顺序/env/产物、10组/12jobs/22Required ZIP、35分钟组上限和P10断言保持。PR173相同四个学习/备份命令的官方新receipt合计87164ms，仅作现有组选择依据；新ruler及新发布载荷的组合容量未实测，必须最终HEAD全组通过，不按动作数线性外推，不开展CI减负或架构项目。
+
+前置main与本PR当前HEAD分别完整独立验收后才正常合并；新合并main的push Required/Fallback与全部官方ZIP/数学/备份/P10/原图再独立通过，最后手动结案233和记正式覆盖。#180/#145继续开放，#209不自动合并。不部署、不改原题/模型/控件/判题/State/v2、不重试既有Chrome socket EPERM，不声称Mac/儿童人工验收。
+
+
+本族完整报告已采用逐capture完整文件与SHA索引，避免2000history证明重复内嵌超过Node单字符串上限；动作、数学、原record/attempt、全部raw/State与CI门槛保持。归档结构与真实2035项回归见DEVELOPMENT-WORKFLOW顶部，真实Chrome仍须最终PR独立CI。
+
 ## 2026-11-16｜Issue #232 两种单位与余量完整候选
 
 - 工程父为unitcover完整WIP6ba8dae4，保全全部既有成果。仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。

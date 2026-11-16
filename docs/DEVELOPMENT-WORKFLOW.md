@@ -1,3 +1,18 @@
+## 2026-11-16｜Issue #233 尺读数与原记录验收入口
+
+完整当前工作树四块workflow静态已实跑通过：2035 tests（2005+1+13+3+10+3）、0失败，模块与部署脚本仅语法检查；没有执行部署。核心36项、原controller五项及完整归档一项通过；原controller包含329源Check/476capture/22retry/16Next、56cap Check/137capture/10retry、9text Check/54capture/6retry，均为Node回放，真实Chromium仍0。非作者核心1023 replay/1013 binding独审通过；公共保全22758断言和3408反馈调用/4645断言通过，628旧proof/1256反馈/3548源保持，仅16原生D→A。原controller/browser按原源码、实际Node回放及计划逐项独审；完整CI、官方ZIP和真实Chrome须等依赖轮到本族后执行。
+
+Required只在现有p10-learning四原命令后追加ruler一次和专属产物，完整88调用[34,13,8,6,8,5,4,5,3,2]。原87命令的组/顺序/env/产物、10组/12jobs/22Required ZIP、35分钟组上限和P10断言保持。PR173相同四个学习/备份命令的官方新receipt合计87164ms，仅作现有组选择依据；新ruler及新发布载荷的组合容量未实测，必须最终HEAD全组通过，不按动作数线性外推，不开展CI减负或架构项目。
+
+独立BigInt数学/完整原事件/字段窗口/来源绑定先行，完整公共保全、真实原controller导航、最终Chromium/原ZIP及合并main分别验收。原数学核心独审已1023 replay/1013 binding通过；162705逐字段断言含2000cap，不当作覆盖数。
+
+前置main与本PR当前HEAD分别完整独立验收后才正常合并；新合并main的push Required/Fallback与全部官方ZIP/数学/备份/P10/原图再独立通过，最后手动结案233和记正式覆盖。#180/#145继续开放，#209不自动合并。不部署、不改原题/模型/控件/判题/State/v2、不重试既有Chrome socket EPERM，不声称Mac/儿童人工验收。
+
+首轮静态发现并修复4项接入回归，失败日志保留：cube/multable的learn.js整文件指纹同步实际入口；money的measuremoney:0、unitcover的lengthstart:1/twounits:0/1前置现有本族尺反馈，Node与浏览器只对这些精确位置核ruler来源/replay/最新完整提交，仍不计money/unitcover严格覆盖。原数量、历史、原题和备份断言全保留；两旧浏览器额外归档/离线核ruler模块。这些修复后的2034项回归通过；补齐归档回归后完整2035项再次通过。
+
+
+完整报告的源码审查发现重复内嵌cap proof至少807481068字符，超过Node单字符串536870888上限。仅修复本族测试的最终归档：每个完整capture（含当前model、原record、完整proof及真正checked才有的attempt）一次保存为captures/capture-NNNNNN.json；results.json各原集合使用captureId/file/sha256/bytes引用，captureArchive.version=1登记全部文件与引用次数。最终才落盘，保留check后补入的attempt；未提交当前model仍与历史attempt分开。原1334捕获、788检查、76retry、32Next和2668个raw/State路径及全部断言不减，完整State仍保留。读取旧文件必须逐字相同，否则拒绝覆盖；success和失败报告都走同一路径。新增真实2000history归档测试构造641112400字符的旧重复证明下界，完整sidecar解引用、SHA/字节、旧record、未提交草稿、损坏拒覆盖与失败诊断全部通过；不以压缩摘要替代原数学证明。
+
 ## 2026-11-16｜Issue #232 单位大小与余量验收入口
 
 只在现有evidence-place末尾追加本族，87调用[34,13,8,6,8,5,4,4,3,2]，原86命令的组/顺序/env/产物、12jobs/10组/22ZIP/35min及P10不变。已验PR170的相同七条脚本命令合计1487008ms，属于命令耗时而非job墙钟；新八条组合、额外context与发布载荷尚未实测，不按动作数线性外推，不保证容量，最终HEAD须真实全组通过。

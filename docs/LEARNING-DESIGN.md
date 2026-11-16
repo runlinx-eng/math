@@ -1,3 +1,15 @@
+## 2026-11-16｜Issue #233 模拟尺对齐、读数与首次估计
+
+仅16原生/8来源节点/5净新增节点/1合同：lengthstart:1；estimateLength:0/1/2/3；lengthtools:0/1/2/3/4；twounits:0/1；measurecalc:0；measuremoney:0；communicate38:1；strategy39:2。plain5/estimate5/tool6三种证明形状，完整task和上下文共同绑定，全部method:null。11关联与2旧practice只作隔离兼容，其他B28类型排除。
+
+物体长度、参照段和尺刻度由工具给定并绘制；只证明这份模拟作品的对齐、原记录读数/单位、源要求的工具选择与首次估计/当前误差对应。不授物理测量、一般工具理由、独立换算、独立减法或自由文字解释能力。
+
+saved保存measure/unit原字符串，7改7.0未record仍是未保存草稿；真实重新record后可完成，首次数量原文不替换。first.measure只在前置工具/归零/finite全部满足的第一次实际保存建立，空白失败不占first；原near与strict exact分开，near成功的bad=false不得改写。非数字record可保留旧save和真实issue，恢复原保存字节可重新完成，不能以issue非空一律拒绝。选错工具的first/bad保留，重选同一工具也清saved。
+
+只有首次finite预测锁定estimate/predict，先前空白/非finite失败保留；锁定后隐藏编辑或重复predict拒绝，预测前的隐藏record不授证据。原UI允许负预测，严格只核首次预测原文和当前精确绝对差，不评价估计合理；error没有减法事件历史。twounits:0实际254/25=10.16cm，要求最近整厘米10，差4/25<1/2；系统英寸图与厘米图都为416px不证明孩子独立换算，25px平移也不是一个数量单位。
+
+2000条历史时按钮对整个model无效，外层controller仍写时间戳/support；range输入却可先改变root.offset而board/history未变。严格必须核root和重放board一致；归零可恢复旧保存，不补造align事件。10个明确构造兼容模式覆盖plain/tool/estimate的clean/bad/issue/未预测及0/1旧attempt；零attempt先真实Check才有P3 retry。1201文本另分6模式，原validator拒写并blocked，旧raw不变；可见按钮/字段均不能覆盖，reload恢复后再按原资格retry。
+
 ## 2026-11-16｜Issue #232 单位大小与余量
 
 仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。

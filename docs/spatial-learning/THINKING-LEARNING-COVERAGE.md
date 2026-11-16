@@ -1,3 +1,17 @@
+## P9 尺对齐与保存读数｜Issue #233（2026-11-16，候选）
+
+固定候选父为已保存unitrefine 7aaf258ebac6d692e960eed0c34c5a1433a63703 /tree0884130abe8637b7b3dd9cb1b9e2098fa06b03b4。父628旧proof/1256双形态反馈、3548原来源与628条manifest必须逐项保全；只追加16个原生D→A。本次完整audit确认候选A644/1996、244/587节点、50合同，B189/C124/D959/E80，1552关联另计；尚未完成真实CI的候选不能计正式main。
+
+仅16原生/8来源节点/5净新增节点/1合同：lengthstart:1；estimateLength:0/1/2/3；lengthtools:0/1/2/3/4；twounits:0/1；measurecalc:0；measuremoney:0；communicate38:1；strategy39:2。plain5/estimate5/tool6三种证明形状，完整task和上下文共同绑定，全部method:null。11关联与2旧practice只作隔离兼容，其他B28类型排除。
+
+saved保存measure/unit原字符串，7改7.0未record仍是未保存草稿；真实重新record后可完成，首次数量原文不替换。first.measure只在前置工具/归零/finite全部满足的第一次实际保存建立，空白失败不占first；原near与strict exact分开，near成功的bad=false不得改写。非数字record可保留旧save和真实issue，恢复原保存字节可重新完成，不能以issue非空一律拒绝。选错工具的first/bad保留，重选同一工具也清saved。
+
+只有首次finite预测锁定estimate/predict，先前空白/非finite失败保留；锁定后隐藏编辑或重复predict拒绝，预测前的隐藏record不授证据。原UI允许负预测，严格只核首次预测原文和当前精确绝对差，不评价估计合理；error没有减法事件历史。twounits:0实际254/25=10.16cm，要求最近整厘米10，差4/25<1/2；系统英寸图与厘米图都为416px不证明孩子独立换算，25px平移也不是一个数量单位。
+
+双视口脚本计划17课程、27目标+6literal前置=33位置/视口，32原Next。原生路线不播种index/model/答案/记录，保留初错、真正纠正、重复提交、等值未保存、near原成功、末尾issue、移尺归零、工具重选、首次预测与共享重试。source计划658checked（582原生+42边界+22关联+12前置）/952captures/44retry；构造cap112checked/274captures/20retry、构造text18/108/12，合计788checked/1334captures/76retry，1334对raw/State、2668个唯一文件路径（每capture两文件）。2独立空原生恢复context共4次实际按钮filechooser导入、首次全State/重复raw幂等；19空context/视口含独立旧practice、10cap和6text，构造数据与原生记录分开。数字是冻结计划和Node实际回调结果，不是已完成Chromium。
+
+前置main与本PR当前HEAD分别完整独立验收后才正常合并；新合并main的push Required/Fallback与全部官方ZIP/数学/备份/P10/原图再独立通过，最后手动结案233和记正式覆盖。#180/#145继续开放，#209不自动合并。不部署、不改原题/模型/控件/判题/State/v2、不重试既有Chrome socket EPERM，不声称Mac/儿童人工验收。
+
 ## 当前准备分支｜单位大小与余量（Issue #232，2026-11-16）
 
 固定工程父6ba8dae4cb493fe713e19dfdd7c230b7b62f01fe，treeca8d8e6e898ad635d94c294136d9da1f0b0c10af，是已保存unitcover WIP而非正式已验main。保全原625/238/48，本候选A628/1996、239/587节点、49合同，A628/B189/C124/D975/E80，1552关联另计。只三处D→A必须由本次完整独立audit实算；正式统计以Issue130最新新main独立验收为准。

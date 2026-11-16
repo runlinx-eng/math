@@ -1,3 +1,15 @@
+## Issue #233｜尺的可见操作、保存与预测锁定（准备分支）
+
+仅16原生/8来源节点/5净新增节点/1合同：lengthstart:1；estimateLength:0/1/2/3；lengthtools:0/1/2/3/4；twounits:0/1；measurecalc:0；measuremoney:0；communicate38:1；strategy39:2。plain5/estimate5/tool6三种证明形状，完整task和上下文共同绑定，全部method:null。11关联与2旧practice只作隔离兼容，其他B28类型排除。
+
+仅align/tool/predict/record。align由真实range输入产生，offset只能为-3..3规范整数字符串；tool仅原按钮id，其他data空。record字段只measure/unit，单位须原select可选；predict字段只estimate且必须仍可见。model隐藏values空，非估计题estimate/error空，预测锁定后estimate等于首次finite原文；完整board/first/bad/issue逐步重放，外加最新完整提交门槛。
+
+saved保存measure/unit原字符串，7改7.0未record仍是未保存草稿；真实重新record后可完成，首次数量原文不替换。first.measure只在前置工具/归零/finite全部满足的第一次实际保存建立，空白失败不占first；原near与strict exact分开，near成功的bad=false不得改写。非数字record可保留旧save和真实issue，恢复原保存字节可重新完成，不能以issue非空一律拒绝。选错工具的first/bad保留，重选同一工具也清saved。
+
+2000条历史时按钮对整个model无效，外层controller仍写时间戳/support；range输入却可先改变root.offset而board/history未变。严格必须核root和重放board一致；归零可恢复旧保存，不补造align事件。10个明确构造兼容模式覆盖plain/tool/estimate的clean/bad/issue/未预测及0/1旧attempt；零attempt先真实Check才有P3 retry。1201文本另分6模式，原validator拒写并blocked，旧raw不变；可见按钮/字段均不能覆盖，reload恢复后再按原资格retry。
+
+双视口脚本计划17课程、27目标+6literal前置=33位置/视口，32原Next。原生路线不播种index/model/答案/记录，保留初错、真正纠正、重复提交、等值未保存、near原成功、末尾issue、移尺归零、工具重选、首次预测与共享重试。source计划658checked（582原生+42边界+22关联+12前置）/952captures/44retry；构造cap112checked/274captures/20retry、构造text18/108/12，合计788checked/1334captures/76retry，1334对raw/State、2668个唯一文件路径（每capture两文件）。2独立空原生恢复context共4次实际按钮filechooser导入、首次全State/重复raw幂等；19空context/视口含独立旧practice、10cap和6text，构造数据与原生记录分开。数字是冻结计划和Node实际回调结果，不是已完成Chromium。
+
 ## Issue #232｜两种单位的可见操作与有效保存（准备分支）
 
 仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。

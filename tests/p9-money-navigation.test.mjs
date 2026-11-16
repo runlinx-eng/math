@@ -13,6 +13,7 @@ import * as Engine from '../dist/learning/phase4/engine.js';
 import {renderExtra} from '../dist/learning/phase4/view-engine.js';
 import {setField} from '../dist/learning/phase4/ui.js';
 import {moneyBinding,replayMoneyEvidence as replay} from '../dist/learning/money-evidence.js';
+import {rulerBinding,replayRulerEvidence} from '../dist/learning/ruler-evidence.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {learningStage,studyActionFocus,learningActionPlan} from '../dist/learning/workspace-flow.js';
 import {renderP3Flow} from '../dist/learning/p3-view.js';
@@ -72,10 +73,13 @@ function harness(records,{constructedCompatibilityFixture=false}={}){
  const capture=(c,phase,strict,{role,checkedAttempt=false}={})=>{
   const key=label+'-'+phase;assert.ok(!names.has(key),'one immutable snapshot stem: '+key);names.add(key);
   const a=lesson(c),record=cp(a.cases[c.index]||null),current=cp(model(c)),task=taskFor(c),proof=replay(task,current);
-  const feedback=thinkingFeedback(task,current,record,context(c));assert.equal(!!feedback,strict,key);assert.equal(Tasks.validModel(task,current),true);
+  const feedback=thinkingFeedback(task,current,record,context(c));
+  const rulerPrerequisite=role==='prerequisite'&&c.id==='measuremoney'&&c.index===0;
+  assert.equal(!!feedback,strict||rulerPrerequisite,key);assert.equal(Tasks.validModel(task,current),true);
+  if(rulerPrerequisite){assert.equal(moneyBinding(task,context(c)),null);assert.ok(rulerBinding(task,context(c))&&replayRulerEvidence(task,current));assert.deepEqual(record.attempts.at(-1).value,current);assert.equal(feedback.method,null);}
   if(strict){assert.ok(proof&&moneyBinding(task,context(c)));assert.deepEqual(record.attempts.at(-1).value,current);}
   const value={id:c.id,index:c.index,phase,role,model:current,record,proof,words:feedback?JSON.stringify(feedback):null,correct:Tasks.inspect(task,current).correct,
-   strict,checked:checkedAttempt,constructedCompatibilityFixture,stem:key};captures.push(value);return value;
+   strict,existingRulerPrerequisiteFeedback:rulerPrerequisite,checked:checkedAttempt,constructedCompatibilityFixture,stem:key};captures.push(value);return value;
  };
  const check=(c,correct,strict,phase,role)=>{
   const a=lesson(c),t=taskFor(c),before=cp(a.cases[c.index]?.attempts||[]),m=cp(model(c));
@@ -129,6 +133,7 @@ test('48 targets and ten prerequisites follow one cumulative route including eve
   }else{h.solve(c);const row=h.check(c,true,false,'associated-checked','associated');assert.ok(row.proof);assert.equal(moneyBinding(taskFor(c),context(c)),null);}
  }
  assert.equal(prerequisites,10);assert.equal(nextCount,33);assert.equal(Object.keys(records).length,25);assert.equal(h.checked.length,255);assert.equal(h.captures.length,321);assert.equal(h.retries.length,36);
+ assert.deepEqual(h.checked.filter(x=>x.existingRulerPrerequisiteFeedback).map(x=>[x.id,x.index]),[['measuremoney',0]]);
  assert.deepEqual(Object.fromEntries(['native','associated','boundary','prerequisite'].map(role=>[role,h.checked.filter(x=>x.role===role).length])),{native:181,associated:20,boundary:44,prerequisite:10});
  const positions=[...new Set(h.checked.map(x=>x.id+':'+x.index))];assert.equal(positions.length,58);
  for(const key of positions){const rows=h.checked.filter(x=>x.id+':'+x.index===key),last=rows.at(-1),a=records[last.id];assert.deepEqual(a.cases[last.index].attempts,rows.map(x=>x.attempt));assert.deepEqual(a.models[last.index],last.model);}

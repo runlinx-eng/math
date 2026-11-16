@@ -191,16 +191,21 @@ const groups={
   "verification/p9-area-adapter/",
   "verification/p9-cubefraction-adapter/",
  ]},
+ // PR173's unchanged four learning/backup commands took 87164 ms in total.
+ // Append the ruler source and record audit after them without moving P10,
+ // changing its environment/artifacts or increasing the 35-minute group limit.
  "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
   {"file":"tests/p10-backup-safety-browser.cjs","env":{}},
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
+  {"file":"tests/p9-ruler-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
   "verification/p10-release-upgrade/backup-safety/",
   "verification/p10-release-upgrade/full-lessons/",
+  "verification/p9-ruler-adapter/",
  ]},
  // Full offline is mandatory on SW/startup PRs, main pushes and manual runs.
  // Ordinary math PRs leave an explicit, audited not-required group receipt.
