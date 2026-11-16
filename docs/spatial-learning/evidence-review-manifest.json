@@ -4147,6 +4147,60 @@
       "adapter": "mixedaxis",
       "taskHash": "60a06f1ebc612ae7d7ee60267e97de5059d3547abfc5f845042495d6d90e09f1",
       "method": null
+    },
+    {
+      "sessionId": "fdpswitch",
+      "index": 0,
+      "type": "x-decimalengine",
+      "nodeId": "mt_4K1dr204Hi",
+      "adapter": "decimalengine",
+      "taskHash": "94099be93da6caa3e2ab95d5adc8ca86e04f6ecf7f8720660ba911350487b8bf",
+      "method": null
+    },
+    {
+      "sessionId": "fdpswitch",
+      "index": 3,
+      "type": "x-decimalengine",
+      "nodeId": "mt_4K1dr204Hi",
+      "adapter": "decimalengine",
+      "taskHash": "790d524fd366d22f5f1d9234c21362062801b3f27a2f566d8c2d0aa25c2fca2a",
+      "method": null
+    },
+    {
+      "sessionId": "decimalstops",
+      "index": 2,
+      "type": "x-decimalengine",
+      "nodeId": "mt_SBkTGjiZjZ",
+      "adapter": "decimalengine",
+      "taskHash": "f2aa36f5c7e612faa55b73095a59e5f6dce84b6d86499854d22ba49dad832a1a",
+      "method": null
+    },
+    {
+      "sessionId": "decimalstops",
+      "index": 3,
+      "type": "x-decimalengine",
+      "nodeId": "mt_SBkTGjiZjZ",
+      "adapter": "decimalengine",
+      "taskHash": "b64c4dc82219de930bc5f53faa25886030f89ad6d81fc735e1f4bd1d5ee9d845",
+      "method": null
+    },
+    {
+      "sessionId": "decimalstops",
+      "index": 4,
+      "type": "x-decimalengine",
+      "nodeId": "mt_SBkTGjiZjZ",
+      "adapter": "decimalengine",
+      "taskHash": "0dad55d0bbed93a796e5fcaf34f3e9bc85df3d36e10607d6a7ff41b98a624f84",
+      "method": null
+    },
+    {
+      "sessionId": "decimalstops",
+      "index": 5,
+      "type": "x-decimalengine",
+      "nodeId": "mt_SBkTGjiZjZ",
+      "adapter": "decimalengine",
+      "taskHash": "0b5c4b33d13d2e75b0e06910c1c1bcc9a64d46e9aafeb1b4b5cfa6700fd6e8fe",
+      "method": null
     }
   ]
 }

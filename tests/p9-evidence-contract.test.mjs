@@ -1,4 +1,5 @@
 import mixedaxis from './fixtures/p9-mixedaxis-cases.cjs';
+import decimalengine from './fixtures/p9-decimalengine-cases.cjs';
 import fdpboard from './fixtures/p9-fdpboard-cases.cjs';
 import scalechain from './fixtures/p9-scalechain-cases.cjs';
 import storyLedger from './fixtures/p9-storyledger-cases.cjs';
@@ -56,6 +57,7 @@ const reviewed={
  samefraction:sameFraction.cases.map(({sessionId,index})=>({sessionId,index})),
  storyledger:storyLedger.cases.map(({sessionId,index})=>({sessionId,index})),
  fdpboard:fdpboard.cases.map(({sessionId,index})=>({sessionId,index})),
+ decimalengine:decimalengine.cases.map(({sessionId,index})=>({sessionId,index})),
  mixedaxis:mixedaxis.cases.map(({sessionId,index})=>({sessionId,index})),
  scalechain:scalechain.cases.map(({sessionId,index})=>({sessionId,index}))
 };
@@ -133,7 +135,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,23);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,24);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
