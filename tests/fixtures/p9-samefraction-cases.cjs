@@ -250,6 +250,6 @@ module.exports={
     "dist/learning/phase5/b38.js": "8953ff1e7e76a2bab98c2d0d94a24f9a896c5540b0127df4e95befcd5bcbcbe3",
     "dist/learning/phase5/b39.js": "f282d5afe8b478b1e6ff623424f473d42f70212142556a0a433d68d369670838",
     "dist/learning/phase5/b16-model.js": "ab907c6334f7d0b0fb557a1f2a036be8228dd25253ff11736236865de6d53fab",
-    "dist/learning/phase5/b16-view.js": "ad8b205450b38286857d1212fe0c0843e4b7db5499a2780ca88d9b3df9a6cb75"
+    "dist/learning/phase5/b16-view.js": "2f319e0c77dcbd612cbbb71e21b728fad5e9dc7c257cbd94a6808c7ec4f459e7"
   }
 };

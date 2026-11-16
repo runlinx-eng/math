@@ -1,3 +1,4 @@
+import paperlab from './fixtures/p9-paperlab-cases.cjs';
 import mixedaxis from './fixtures/p9-mixedaxis-cases.cjs';
 import decimalengine from './fixtures/p9-decimalengine-cases.cjs';
 import fracdecompose from './fixtures/p9-fracdecompose-cases.cjs';
@@ -55,6 +56,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
  const rows=read('tasks.json').rows;
  const a=rows.filter(r=>r.evidenceLevel==='A');
  const exact=[
+   ...paperlab.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...scalechain.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...fracdecompose.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
    ...mixedtrade.cases.map(({sessionId,index})=>'native:'+sessionId+':'+index),
@@ -107,12 +109,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 472 reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,175);
- assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard','scalechain','mixedaxis','decimalengine','fracshare','mixedtrade','fracdecompose'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 484 reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,177);
+ assert.deepEqual(Object.fromEntries(['sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard','scalechain','mixedaxis','decimalengine','fracshare','mixedtrade','fracdecompose','paperlab'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3,paperlab:12});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:472,B:189,C:150,D:1105,E:80});
+   [level,s.tasks])),{A:484,B:189,C:150,D:1093,E:80});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

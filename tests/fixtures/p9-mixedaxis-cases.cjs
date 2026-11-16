@@ -1726,7 +1726,7 @@ module.exports={
     "dist/learning/phase5/b16.js": "32dd356d23a765122b60e0c40d804d7ee9353e3950757386704a6e9435e39d79",
     "dist/learning/phase5/b17.js": "7598232e6f0d99ffbfedbd1e2bd923c45dec5afc935bfc7fca415ed5370bb9b2",
     "dist/learning/phase5/b16-model.js": "ab907c6334f7d0b0fb557a1f2a036be8228dd25253ff11736236865de6d53fab",
-    "dist/learning/phase5/b16-view.js": "ad8b205450b38286857d1212fe0c0843e4b7db5499a2780ca88d9b3df9a6cb75",
+    "dist/learning/phase5/b16-view.js": "2f319e0c77dcbd612cbbb71e21b728fad5e9dc7c257cbd94a6808c7ec4f459e7",
     "dist/learning/phase5/b17-model.js": "52e8665b482c26ad444c95096130ef87c89b0793038db101fcc2cce23320ae78",
     "dist/learning/phase5/b17-view.js": "7ae3320116fc5d75cc4d576794c207d1d1ea54b490f46f406403d21b1e0c5d27",
     "dist/learning/phase4/ui.js": "88a1fe937b6b4e9b2f1405e2f80d6e48a8750afa833b8ac2d76b046bd28678a8"
