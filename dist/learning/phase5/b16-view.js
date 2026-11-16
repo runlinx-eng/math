@@ -5,7 +5,14 @@ const relations=[['<','< 小于'],['=','= 等于'],['>','> 大于'],['≠','≠ 
 const p=(x,y,r,a)=>[x+r*Math.cos(a*Math.PI/180),y-r*Math.sin(a*Math.PI/180)],sector=(x,y,r,start,end)=>{const a=p(x,y,r,start),b=p(x,y,r,end);return`M${x},${y} L${a} A${r},${r} 0 ${end-start>180?1:0} 0 ${b} Z`;};
 const svgButton=(a,i,label,body,extra='')=>`<g data-x="b16-${a}" data-index="${i}" role="button" tabindex="0" aria-label="${esc(label)}" ${extra}>${body}</g>`;
 const strip=(d,selected,a='fraction',row='',cls='')=>`<div class="b16-strip ${cls}" style="--parts:${d}">${Array.from({length:d},(_,i)=>btn(a,selected.includes(i)?'●':'',`data-index="${i}" ${row?`data-row="${row}"`:''} aria-label="${row==='left'?'上':row==='right'?'下':''}第${i+1}份" ${on(selected.includes(i))}`)).join('')}</div>`;
-function pie(d,selected,a='cell'){return`<svg viewBox="0 0 260 230" class="b16-pie" aria-label="一整个圆平均分成${d}份">${Array.from({length:d},(_,i)=>svgButton(a,i,`第${i+1}份`,`<path d="${sector(130,115,95,90+i*360/d,90+(i+1)*360/d)}" fill="${selected.includes(i)?colors[0]:'#f9f4e9'}" stroke="#705b41" stroke-width="2"/>`,on(selected.includes(i)))).join('')}</svg>`;}
+function pie(d,selected,a='cell'){
+ // A single SVG arc with coincident endpoints cannot draw the whole circle.
+ const pieces=Array.from({length:d},(_,i)=>{
+  const shape=d===1?'<circle cx="130" cy="115" r="95"':`<path d="${sector(130,115,95,90+i*360/d,90+(i+1)*360/d)}"`;
+  return svgButton(a,i,`第${i+1}份`,`${shape} fill="${selected.includes(i)?colors[0]:'#f9f4e9'}" stroke="#705b41" stroke-width="2"/>`,on(selected.includes(i)));
+ }).join('');
+ return`<svg viewBox="0 0 260 230" class="b16-pie" aria-label="一整个圆平均分成${d}份">${pieces}</svg>`;
+}
 function paper(t,m){const b=m.board;if(t.mode==='classify'){const c=t.cases[b.judgments.length];return c?`<div class="b16-piece-row">${c.map((v,i)=>`<span style="flex:${v}" aria-label="第${i+1}份占${v}格">${Array.from({length:v},()=>'<i></i>').join('')}</span>`).join('')}</div>`:'<div class="b16-note">这些分法都检查过了。</div>';}
  if(t.mode==='paint')return`<div class="b16-paint">${b.cells.map((c,i)=>btn('paint','',`data-index="${i}" aria-label="第${i+1}格" style="background:${c<0?'#f9f4e9':colors[c]}"`)).join('')}</div><div class="b16-saved">${b.saved.map((xs,i)=>`<div aria-label="第${i+1}种等面积分法">${xs.map(c=>`<i style="background:${colors[c]}"></i>`).join('')}</div>`).join('')}</div>`;
  if(t.shape==='circle')return pie(b.rows*b.cols,b.selected,'paper');return`<div class="b16-paper" style="--cols:${b.cols};--rows:${b.rows}">${Array.from({length:b.rows*b.cols},(_,i)=>btn('paper',b.selected.includes(i)?'●':'',`data-index="${i}" ${on(b.selected.includes(i))} aria-label="第${i+1}份"`)).join('')}</div>${b.folds.length?`<div class="b16-folds">${b.folds.map((v,i)=>`<span>${v==='x'?'左右':'上下'}对折 → ${2**(i+1)}份</span>`).join('')}</div>`:''}`;}
