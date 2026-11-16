@@ -159,11 +159,13 @@ const groups={
   {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-time-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-estimate-adapter/",
   "verification/p9-portiongroups-adapter/",
   "verification/p9-storyledger-adapter/",
+  "verification/p9-time-adapter/",
  ]},
  // PR #158 measured 821071ms for the three older expansion commands.
  // Keep the 188 fraction-case viewport instances on their own runner; every
