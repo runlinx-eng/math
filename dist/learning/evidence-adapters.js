@@ -1,3 +1,4 @@
+import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
 import {fracShareBinding,replayFracShareEvidence} from './fracshare-evidence.js';
@@ -57,6 +58,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'samefraction',type:'x-samefraction',binding:sameFractionBinding,replay:replaySameFractionEvidence},
  {id:'storyledger',type:'x-storyledger',binding:storyLedgerBinding,replay:replayStoryLedgerEvidence},
  {id:'fdpboard',type:'x-fdpboard',binding:fdpBoardBinding,replay:replayFdpBoardEvidence},
+ {id:'paperlab',type:'x-paperlab',binding:paperLabBinding,replay:replayPaperLabEvidence},
  {id:'fracdecompose',type:'x-fracdecompose',binding:fracDecomposeBinding,replay:replayFracDecomposeEvidence},
  {id:'mixedtrade',type:'x-mixedtrade',binding:mixedTradeBinding,replay:replayMixedTradeEvidence},
  {id:'fracshare',type:'x-fracshare',binding:fracShareBinding,replay:replayFracShareEvidence},
