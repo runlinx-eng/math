@@ -1,4 +1,18 @@
-## 待验候选整合｜面积与周界构造（Issue #174 / PR #175）
+## 待验候选整合｜运算顺序与逐块归约（Issue #176 / PR #177）
+
+工程父为PR #175正常squash合并后的实际main `1545c22567b933bcaae80f79e75e568e8ea4145e`，tree `5ec29a318a88e0425b7448ce2f5efcaf5122b208`，唯一父90435。本候选复用已保存且独立源码审查的order `adab5f65406283cbb5a58d3c0ca6452ef59f6019`；28项变更中26项固定源码/测试/文档资产逐字相同，只有本执行计划与覆盖文档记录实际父及门禁。旧PR177 HEAD `c7c6d7108014b649b0bff24582812747f978c214`保留在 `archive/pr177-head-c7c6d710-before-area-main`，更新原PR，不建重复PR。
+
+正式已验基线是90435：A541/1996、202/587节点、36合同，B189/C124/D1062/E80；[172完整23包主线收据](https://github.com/runlinx-eng/math/issues/172#issuecomment-6910056746)，172已完成。175已满足[双验准入](https://github.com/runlinx-eng/math/pull/175#issuecomment-6910062085)并合并，其新main1545的push Required43823034617/Fallback43823034687正在独验，A558/211/42暂不计正式。父main和本PR当次新HEAD分别完整验收后才能正常合并，本PR合并后的新main另验才结案176。
+
+本族追加17原生、5净增来源节点、1合同，实际源码候选A575/1996、216/587节点、43合同，B189/C124/D1028/E80；3个writeOnly原生与11关联隔离，1552关联不并入A。四个数学核心资产与原14项Node按保存源码复用，既有独立数学23156断言（1991表达式、22合法依赖顺序/63完成集合）仍归属该精确源码；不以源审代替新CI。独立公共17630断言与完整原controller连续路线审查见[176源审收据](https://github.com/runlinx-eng/math/issues/176#issuecomment-6907432209)。
+
+连续原控件计划31目标、15课程、7literal前置，双视口286checked（204原生+40边界+22关联+6writeOnly+14前置）、52retry、46Next、136另列反事实；2个独立空context共4次可见导入按钮/chooser导入、2次损坏不写入。首次整份State和重复原raw幂等、所有旧attempt/first/issue/current model均由本次新run原件确认。不得用Node回调或旧部分浏览器运行替代。
+
+发布order-v4，learn.js SHA256 `54987bd91aff08caaceddf32687a829edb434f2adfb4cbf5fe437abec79d78a7`；仅按该完整hash同步既有area导航fixture，literal任务和动作不改。现有evidence-expansion末尾只加order一次，82调用/十组[33,13,7,5,7,5,3,4,3,2]，全部原81命令/环境/顺序/产物、12jobs/22RequiredZIP/35分钟与P10门槛保持。本HEAD容量以当次receipt核验。
+
+#180/#145保持开放，#209不自动合并；不部署，不改原题/模型/判题/State/v2，不改CI或离线架构，不重试本地Chrome EPERM，不声称Mac/儿童验收。以下上游准备文字保留其当时状态，以本节及Issue130最新收据为准。
+
+## 历史准备记录｜面积与周界构造（Issue #174 / PR #175）
 
 工程父为PR #173实际squash合并后的main `90435ca7a50399daf0cc623b0f850eeb6be0f619`（tree `d0cbebf3aac133413b24af1ca8dd8624b20ae66b`，唯一父b622）。本候选精确复用已保存并独立源码审查的面积 `f4fcfbb93d16ac0176b9cb908f17dc3e15aad1b3`；27项变更中25项可执行/测试/固定文档资产逐字不变，仅本执行计划与覆盖文档更新实际工程父和当前门禁。旧PR175 HEAD `df09ce3ac8120cf9d7cd0008c91b029384e9c7ac`已保留在 `archive/pr175-head-df09ce3a-before-time-main`，不创建重复PR。
 
