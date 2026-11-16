@@ -95,7 +95,7 @@ async function main(){
       const prep=navigation.find(x=>x.id===c.id&&x.index===at);assert.ok(prep,'frozen exact navigation prerequisite');
       for(const step of prep.steps){if(step.field)await field(previous,step.field,step.value);else await action(previous,step.action,step.data);}
       assert.equal(Tasks.inspect(task,await model(previous)).correct,true);
-      const checked=await check(previous,true,'navigation-prerequisite');preparations.push({width,height,...prep,checked,strictTimeCoverage:false});
+      const checked=await check(previous,true,'navigation-prerequisite-'+at);preparations.push({width,height,...prep,checked,strictTimeCoverage:false});
      }
      const before=originalState(JSON.parse((await read()).text)),next=page.locator('#actions [data-do="next"]');
      assert.equal(await next.count(),1);assert.equal(await next.isEnabled(),true);await next.click();at++;
