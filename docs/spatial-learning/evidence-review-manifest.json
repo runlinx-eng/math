@@ -4246,6 +4246,33 @@
       "adapter": "fracshare",
       "taskHash": "40d0025e9740b820a2fe9e0cf45a307dca81980a312972f3ad9b494579f2aea7",
       "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 0,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "ed74b4b61fb0b3793559c62808c909a388d1e725692de98394031333f17e6dd0",
+      "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 1,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "0b8cda5c4eea7d1eea1f0bbdbbc4159f3a8f03f520885b72c564866994a8a894",
+      "method": null
+    },
+    {
+      "sessionId": "mixedexchange",
+      "index": 2,
+      "type": "x-mixedtrade",
+      "nodeId": "mt_70qDTI14td",
+      "adapter": "mixedtrade",
+      "taskHash": "b7d0c6bf5ed1acaf76ad51220632f8dc9ea48e467f16e9a33102c7344a95b6eb",
+      "method": null
     }
   ]
 }

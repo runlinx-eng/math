@@ -14,6 +14,7 @@ import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback
 import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
 import {joinStoryEvidenceExample} from './joinstory-evidence-fixture.mjs';
 import {fracShareEvidenceExample} from './fracshare-evidence-fixture.mjs';
+import {mixedTradeEvidenceExample} from './mixedtrade-evidence-fixture.mjs';
 import {scaleChainEvidenceExample} from './scalechain-evidence-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -23,7 +24,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=task=>task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):exampleModel(task);
+const fixtureFor=task=>task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
