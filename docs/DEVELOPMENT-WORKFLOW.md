@@ -1,3 +1,15 @@
+## 2026-11-16｜Issue #234 天平验收入口
+
+独立预冻结327模型/145绑定核心审查730991断言通过；公共22628保全断言及3597调用/19440断言通过，旧644完整proof、1288反馈及全部3548源不变，仅6原生D→A。候选实算A650/1996、246/587节点、52合同/49类型，B189/C124/D953/E80，1552关联另计。完整当前workflow四块静态实际2068 tests（2038+1+13+3+10+3）/0fail，runtime与部署脚本仅语法检查，未部署；真实Chrome/PR/CI仍未执行。
+
+原controller Node已跑来源123 Check/178完整capture/11retry/6Next；10cap 56/147/10；6text 9/64/6；4legacy 3Check/9capture。source支持标记在Node为明确构造，浏览器则实际点击guide。双视口browser冻结计划382checked（136原生+98边界+8关联+4前置+112cap+18text+6legacy）、796完整capture、796对raw/State及1592个唯一文件、54共享retry+4数值重做、12原Next。22独立空context/视口；原生恢复共4次实际按钮filechooser计划，首次全State一致、重复raw幂等、损坏拒绝，构造兼容导入另计。所有数字区分Node已跑与Chrome待跑；本地不重试EPERM。
+
+Required只在既有p10-learning尾部追加balance及其产物，89调用/86非离线调用，组[34,13,8,6,8,5,4,6,3,2]；88旧调用组/顺序/env/产物、12jobs/10组/22Required ZIP/35min/P10门槛保持。新增模块令完整缓存296→297，五发布入口balance-v1，六旧导航learn.js pin与新增导航同次更新，原controller五段hash不改。新ruler+balance组合的真实容量须最终HEAD CI证明，不线性外推或以Node替代。
+
+完整capture单独保存原对象、SHA256、bytes及完整索引引用，不抽样、截断或删history/proof。归档压力实测原重复proof至少607927200字符超过V8单字符串536870888上限，4完整对象8145905bytes、索引2119235bytes逐引用复核，原model/attempt/raw保持；无调大heap。
+
+前置main与候选PR当前HEAD各自全量独立通过后正常合并；新main push Required/Fallback与官方原包/数学/P10/原图另验后才结案234及计正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/模型/判题/State/v2或离线架构，不声称Mac/儿童人工验收。
+
 ## 2026-11-16｜Issue #233 尺读数与原记录验收入口
 
 完整当前工作树四块workflow静态已实跑通过：2035 tests（2005+1+13+3+10+3）、0失败，模块与部署脚本仅语法检查；没有执行部署。核心36项、原controller五项及完整归档一项通过；原controller包含329源Check/476capture/22retry/16Next、56cap Check/137capture/10retry、9text Check/54capture/6retry，均为Node回放，真实Chromium仍0。非作者核心1023 replay/1013 binding独审通过；公共保全22758断言和3408反馈调用/4645断言通过，628旧proof/1256反馈/3548源保持，仅16原生D→A。原controller/browser按原源码、实际Node回放及计划逐项独审；完整CI、官方ZIP和真实Chrome须等依赖轮到本族后执行。

@@ -1,3 +1,19 @@
+## 2026-11-16｜Issue #234 天平家族隔离候选
+
+固定父为已保存ruler e79db84ee454ecb56e407fe28e1a711c9a669658，tree7e0ffadb07a1b0260ed6108f9141c913eb26618c。工程main1545（175已合并）和原Draft177的ff8b各自新CI独验中；正式已验90435/A541/202/36。按order→money→cube→230 multable→231 unitcover→232 unitrefine→233 ruler→234 balance顺序接入，不重做已保存来源。
+
+仅6原生/3来源节点/净2节点/2合同：compareweight:0/1/2、weightstart:0 为 balance-compare；weightstart:1、measurecalc:2 为 balance-weigh。4关联与1旧practice独立隔离，全部method:null。完整task及上下文共同绑定，不因同型控件扩张来源。
+
+独立预冻结327模型/145绑定核心审查730991断言通过；公共22628保全断言及3597调用/19440断言通过，旧644完整proof、1288反馈及全部3548源不变，仅6原生D→A。候选实算A650/1996、246/587节点、52合同/49类型，B189/C124/D953/E80，1552关联另计。完整当前workflow四块静态实际2068 tests（2038+1+13+3+10+3）/0fail，runtime与部署脚本仅语法检查，未部署；真实Chrome/PR/CI仍未执行。
+
+原controller Node已跑来源123 Check/178完整capture/11retry/6Next；10cap 56/147/10；6text 9/64/6；4legacy 3Check/9capture。source支持标记在Node为明确构造，浏览器则实际点击guide。双视口browser冻结计划382checked（136原生+98边界+8关联+4前置+112cap+18text+6legacy）、796完整capture、796对raw/State及1592个唯一文件、54共享retry+4数值重做、12原Next。22独立空context/视口；原生恢复共4次实际按钮filechooser计划，首次全State一致、重复raw幂等、损坏拒绝，构造兼容导入另计。所有数字区分Node已跑与Chrome待跑；本地不重试EPERM。
+
+Required只在既有p10-learning尾部追加balance及其产物，89调用/86非离线调用，组[34,13,8,6,8,5,4,6,3,2]；88旧调用组/顺序/env/产物、12jobs/10组/22Required ZIP/35min/P10门槛保持。新增模块令完整缓存296→297，五发布入口balance-v1，六旧导航learn.js pin与新增导航同次更新，原controller五段hash不改。新ruler+balance组合的真实容量须最终HEAD CI证明，不线性外推或以Node替代。
+
+完整capture单独保存原对象、SHA256、bytes及完整索引引用，不抽样、截断或删history/proof。归档压力实测原重复proof至少607927200字符超过V8单字符串536870888上限，4完整对象8145905bytes、索引2119235bytes逐引用复核，原model/attempt/raw保持；无调大heap。
+
+前置main与候选PR当前HEAD各自全量独立通过后正常合并；新main push Required/Fallback与官方原包/数学/P10/原图另验后才结案234及计正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/模型/判题/State/v2或离线架构，不声称Mac/儿童人工验收。
+
 ## 2026-11-16｜Issue #233 尺家族隔离开发候选
 
 固定候选父为已保存unitrefine 7aaf258ebac6d692e960eed0c34c5a1433a63703 /tree0884130abe8637b7b3dd9cb1b9e2098fa06b03b4。父628旧proof/1256双形态反馈、3548原来源与628条manifest必须逐项保全；只追加16个原生D→A。本次完整audit确认候选A644/1996、244/587节点、50合同，B189/C124/D959/E80，1552关联另计；尚未完成真实CI的候选不能计正式main。

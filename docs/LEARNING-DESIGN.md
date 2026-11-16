@@ -1,3 +1,13 @@
+## 2026-11-16｜Issue #234 模拟天平的比较与称量记录
+
+仅6原生/3来源节点/净2节点/2合同：compareweight:0/1/2、weightstart:0 为 balance-compare；weightstart:1、measurecalc:2 为 balance-weigh。4关联与1旧practice独立隔离，全部method:null。完整task及上下文共同绑定，不因同型控件扩张来源。
+
+比较只核先用可见test、再选择原选项的过程与当前轻重关系；较轻字段仅保存当前值，允许在test前填写，不编造填写时序。物体质量数字不在原图显示，大小不代表质量，31px只为质性倾斜；不向反馈泄露隐藏质量。称量核保留砝码及精确和、当前measure/unit与实际saved原文一致；5块唯一方案、700g的6多重集合/26有序组合全部保留。工具显示加数而不自动写合计，不授独立加法、单位换算、物理测量或一般掌握。
+
+空remove与第31次weight仍是可见事件；它们可保留旧save并清issue，真正改变砝码才使save失效。finite record可早于平衡，first.measure与原bad保持原判题语义；未平衡本身不伪称bad。原near/极小带分数近似可绿而strict拒绝，真正精确重存后才获证。空白失败record保留旧save与真实issue，恢复原字符串可重新Check；等值改写必须实际record。
+
+完整作品与最新提交共同门禁；既有失败、支持标记、真实末尾提示、原话与未检查草稿不重写。可解释反馈是当前模拟作品的工程核对，不证明儿童稳定掌握或教学效果。
+
 ## 2026-11-16｜Issue #233 模拟尺对齐、读数与首次估计
 
 仅16原生/8来源节点/5净新增节点/1合同：lengthstart:1；estimateLength:0/1/2/3；lengthtools:0/1/2/3/4；twounits:0/1；measurecalc:0；measuremoney:0；communicate38:1；strategy39:2。plain5/estimate5/tool6三种证明形状，完整task和上下文共同绑定，全部method:null。11关联与2旧practice只作隔离兼容，其他B28类型排除。

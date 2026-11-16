@@ -1,3 +1,4 @@
+import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
@@ -88,6 +89,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-balance'){
+    const source=balanceBinding(task,context);
+    return source?{type:task.type,summary:task.mode==='compare'?'想一想：天平的样子与这次选择怎样对应？（可选）':'想一想：砝码、平衡与保存的数量怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-ruler'){
     const source=rulerBinding(task,context);
     return source?{type:task.type,summary:'想一想：对齐零刻度后，怎样留下读数和单位？（可选）',question:source.question}:null;
@@ -219,6 +224,33 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-balance'){
+    const source=balanceBinding(task,context);if(!source)return null;
+    const proof=replayBalanceEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,detail=[];let observation;
+    if(c.mode==='compare'){
+      const left=c.left.name,right=c.right.name,relationship=c.relation==='equal'?`“${left}”与“${right}”一样重。`:
+        c.relation==='left'?`“${left}”比“${right}”重。`:`“${right}”比“${left}”重。`;
+      observation='使用天平控件后，这次选择与当前模拟场景的轻重关系对应。';
+      detail.push('天平的倾斜或平衡由工具按原题模拟；图中没有显示物体的质量读数，外形大小也不表示质量。',
+        relationship,`这次先使用天平控件，再选择“${c.choice.label}”；最早选择“${c.firstChoice.label}”的原记录仍保留。`);
+      for(const q of c.currentQuestions){const sourceQuestion=task.questions.find(x=>x.label===q.label),label=sourceQuestion.options.find(x=>String(x[0])===q.raw)[1];
+        detail.push(`当前“${q.label}”选择“${label}”，与这份作品中的关系对应；这里只有当前字段，没有记录它填写的时刻。`);}
+    }else{
+      observation='当前保留的砝码达到模拟平衡，保存的数字与单位和这些加数的精确和一致。';
+      detail.push('工具显示已选择的砝码加数与单位，并模拟天平位置；这里核对这份作品的选择、平衡与保存记录。',
+        `当前保留的加数为 ${c.weights.map(w=>w.amount).join(' + ')} = ${c.sum.text} ${c.unit}。`,
+        `实际保存的数量原文“${c.record.raw}”、单位“${c.record.unit}”，与当前砝码的合计精确一致。`,
+        `最早有限数字保存的原文“${c.firstMeasure.raw}”仍在记录中；它可能早于平衡，这里没有把它改写成首次平衡读数。`);
+      if(proof.removals.length)detail.push('原记录中的移除请求仍保留；真正改变砝码后，需要重新保存数量和单位。');
+      if(proof.weights.some(w=>w.ignoredAtWeightLimit))detail.push('砝码达到30块后没有再加入的请求仍保留，没有把这次点击算成新增砝码。');
+    }
+    if(proof.issue)detail.push('作品末尾仍保留工具的真实提示；先前有效保存与后来未成功保存的请求都在原记录中。');
+    if(proof.historyAtCapacity)detail.push('操作记录已到保存上限；这里只核对已经保留的作品，不补记之后未保存的动作。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整作品一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation,connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-ruler'){
     const source=rulerBinding(task,context);if(!source)return null;
     const proof=replayRulerEvidence(task,model);if(!proof)return null;

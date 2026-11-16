@@ -200,12 +200,14 @@ const groups={
   {"file":"tests/p10-backup-safety-browser.cjs","env":{}},
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
   {"file":"tests/p9-ruler-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-balance-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
   "verification/p10-release-upgrade/backup-safety/",
   "verification/p10-release-upgrade/full-lessons/",
   "verification/p9-ruler-adapter/",
+  "verification/p9-balance-adapter/",
  ]},
  // Full offline is mandatory on SW/startup PRs, main pushes and manual runs.
  // Ordinary math PRs leave an explicit, audited not-required group receipt.
