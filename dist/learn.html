@@ -32,7 +32,8 @@ async function recoverLessonModule(){
  if(digest!==STARTUP_ENTRY_SHA256)throw Error('entry-integrity-mismatch');
  if(window.mathLesson)throw Error('entry-already-started');
  window.mathStartupRecovery.status='importing-verified-release';
- // The SW mirrors the full relative ESM graph under a fresh, release-scoped URL.
+ // The SW mirrors static dependencies and literal lazy imports under fresh,
+ // release-scoped URLs; the computed B39 imports inherit that verified release.
  await import('./learning/learn.js?module-recovery='+encodeURIComponent(STARTUP_RELEASE));
  if(!window.mathLesson?.snapshot)throw Error('recovery-entry-not-ready');
 }
