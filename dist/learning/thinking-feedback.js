@@ -1,3 +1,4 @@
+import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
@@ -84,6 +85,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-multable'){
+    const source=multableBinding(task,context);
+    return source?{type:task.type,summary:'想一想：换成一捆以后，数量去了哪一位？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m31-cubes'){
     const source=cubeFractionBinding(task,context);
     return source?{type:task.type,summary:'想一想：小块、层与体积怎样对应？（可选）',question:source.question}:null;
@@ -199,6 +204,23 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-multable'){
+    const source=multableBinding(task,context);if(!source)return null;
+    const proof=replayMultableEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '列位、计数片和写法由工具给定；这里核对已记录的十换一、进位与部分积，不据此评价独立排版、文字解释或通用算法掌握。',
+      `当前重建的作品里有 ${c.trades.length} 次十换一：每次少十个这一位的单位、多一个相邻高位的单位，表示的数量保持不变。`,
+      `这份模型最早保留的估计是“${c.firstEstimate.raw}”；当前这段按题目给定的近似数核对 ${c.estimate.estimatedMultiplicand} × ${c.estimate.multiplier} = ${c.estimate.product}，没有替换最早的填写。`
+    ];
+    for(const row of c.rows)detail.push(`第 ${row.row+1} 行：${c.multiplicand} × ${row.multiplierDigit} × ${row.rowScale} = ${row.value}；这里的 ${row.rowScale} 表示这一行的位值，填写的部分积是“${row.rawValue}”。`);
+    detail.push(`当前填写的结果“${proof.submittedAnswer.raw}”与这些部分积的合计相符；这里只核对填写的量，没有把它算作另一个独立的加法过程。`);
+    if(proof.resets.length)detail.push(`历史里保留了 ${proof.resets.length} 次重新开始板面的动作和最早估计；这里的换十、进位与部分积只描述最后重新建成的作品。`);
+    if(proof.historyAtCapacity)detail.push('这份作品的操作记录已到可保存的上限；这里只描述已经保存的这份作品。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整模型一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:`当前作品的十换一、逐列进位与 ${c.rows.length} 行部分积相符，各行的位值和当前结果也对应。`,
+      connection:c.rows.length>1?'把十个这一位的单位换成一个相邻高位的单位时，数量为什么不变？第二行乘的是几份一，还是几份十？':'把十个这一位的单位换成一个相邻高位的单位时，数量为什么不变？',detail,method:null};
+  }
   if(task?.type==='x-m31-cubes'){
     const source=cubeFractionBinding(task,context);if(!source)return null;
     const proof=replayCubeFractionEvidence(task,model);if(!proof)return null;

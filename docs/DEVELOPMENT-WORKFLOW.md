@@ -1,3 +1,11 @@
+## 2026-11-16｜Issue #230 按位乘法验收入口
+
+仅向现有evidence-expansion末尾追加本族，85调用[34,13,7,6,7,5,4,4,3,2]。旧84命令的组/序/env/产物、12jobs/10组/22ZIP/35min与P10完整保留。历史a94 expansion的1195977ms与旧order的272655ms来自不同run，只是容量参考；新组合没有实测保证，必须当前HEAD完整job与全部原件通过。
+
+独立数学重放、精确来源/字段窗口、旧609proof/1218反馈/3548来源保全与完整审计；浏览器原控件/Next/Retry、真实离线/备份、全原件官方size/SHA256/CRC与actual checkout均绑定最终HEAD。构造cap兼容与原生路线分列，不用原grade接受替代严格回放，不以Node渲染替代Chromium。
+
+前置main与当前PR均全验后正常合并；新push main再次独立验收后手动结案Issue，不用自动结案关键词跳过主线门禁。
+
 ## 2026-11-16｜Issue #229 分数小立方体验证入口
 
 在现有10组83调用上，向evidence-fractioncase末尾追加一个cubefraction命令与专属产物，84调用[34,13,7,5,7,5,4,4,3,2]。原83组/序/env/产物、12Job/22Artifact/35min及全部P10不变，不预称新组合容量足够。完整Node/数学、来源清单/反馈、原控件、真实WebGL、离线/备份、官方ZIP与实际checkout均绑定最终HEAD；新main须再独立验收才手动结案Issue。

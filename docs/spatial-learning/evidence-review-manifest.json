@@ -5533,6 +5533,96 @@
       "adapter": "cubefraction",
       "taskHash": "f658a182e8568a39d3487dc1bd719129f36ac7de118c4ad8bec7335d5ad3766c",
       "method": null
+    },
+    {
+      "sessionId": "writtenstart",
+      "index": 2,
+      "type": "x-multable",
+      "nodeId": "mt_DyGBW3ZHh3",
+      "adapter": "multable",
+      "taskHash": "c1216ca5f5a93bc5093a1d9c0785bbe18c2a0cc1a2f256617f21b0cdac1c9617",
+      "method": null
+    },
+    {
+      "sessionId": "shortproduct",
+      "index": 0,
+      "type": "x-multable",
+      "nodeId": "mt_18fK9sQdIz",
+      "adapter": "multable",
+      "taskHash": "fd3f22c611a3ae8ee479910cf12f96709d0a27ede8345834f3b1feb1cc80c2da",
+      "method": null
+    },
+    {
+      "sessionId": "shortproduct",
+      "index": 1,
+      "type": "x-multable",
+      "nodeId": "mt_18fK9sQdIz",
+      "adapter": "multable",
+      "taskHash": "5676c78aa89f1b42966e39bc8a5271060b5273ed87fafb213c928fa92cfb785b",
+      "method": null
+    },
+    {
+      "sessionId": "shortproduct",
+      "index": 2,
+      "type": "x-multable",
+      "nodeId": "mt_18fK9sQdIz",
+      "adapter": "multable",
+      "taskHash": "40ef3878b7bff1f2e2929e5191fc163c08985a3aa7a746068ae83c8385b55072",
+      "method": null
+    },
+    {
+      "sessionId": "longproduct",
+      "index": 0,
+      "type": "x-multable",
+      "nodeId": "mt_q9EaJc2FP8",
+      "adapter": "multable",
+      "taskHash": "5351737d9354ef387e74eaa0d778bd71916cff5373b234e67fe4cadc3795cf13",
+      "method": null
+    },
+    {
+      "sessionId": "longproduct",
+      "index": 1,
+      "type": "x-multable",
+      "nodeId": "mt_q9EaJc2FP8",
+      "adapter": "multable",
+      "taskHash": "245fb99631abd7f8d85edbb94aabb7627e8762c9b8602816ea4f68c1dff192ec",
+      "method": null
+    },
+    {
+      "sessionId": "longproduct",
+      "index": 3,
+      "type": "x-multable",
+      "nodeId": "mt_q9EaJc2FP8",
+      "adapter": "multable",
+      "taskHash": "7139950c9a988f83ee15216e8324030a7e7874ca0c337711e533dd24eecec599",
+      "method": null
+    },
+    {
+      "sessionId": "bigproduct",
+      "index": 0,
+      "type": "x-multable",
+      "nodeId": "mt_XLP1IM3Qbb",
+      "adapter": "multable",
+      "taskHash": "94a95a7539daad7b3a8848ae5e14f899578b3713be5918154dbf0d4605d2b646",
+      "method": null
+    },
+    {
+      "sessionId": "bigproduct",
+      "index": 1,
+      "type": "x-multable",
+      "nodeId": "mt_XLP1IM3Qbb",
+      "adapter": "multable",
+      "taskHash": "8a1664286312addb93e76ffca403db10977466f4744fd8e5fc881e1726730850",
+      "method": null
+    },
+    {
+      "sessionId": "translateamount",
+      "index": 2,
+      "type": "x-multable",
+      "nodeId": "mt_3VmBdlAeOZ",
+      "adapter": "multable",
+      "taskHash": "4ecdf0a674e5802286b85774983b162cfdbf389281852d776c39f05d06b680f7",
+      "method": null
     }
   ]
 }

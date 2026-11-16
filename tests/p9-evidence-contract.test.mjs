@@ -1,3 +1,4 @@
+import multable from './fixtures/p9-multable-cases.cjs';
 import cubeFraction from './fixtures/p9-cubefraction-cases.cjs';
 import money from './fixtures/p9-money-cases.cjs';
 import order from './fixtures/p9-order-cases.cjs';
@@ -52,6 +53,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ multable:multable.cases.map(({id:sessionId,index})=>({sessionId,index})),
  cubefraction:cubeFraction.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['coins','cart'].map(kind=>['money-'+kind,money.cases.filter(c=>c.type==='x-m33-'+kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  order:order.cases.map(({id:sessionId,index})=>({sessionId,index})),
@@ -165,7 +167,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,44);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,45);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

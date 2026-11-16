@@ -1,3 +1,13 @@
+## 当前准备分支｜按位乘法十换一（Issue #230，2026-11-16）
+
+固定工程父f7a679f6147abbfc473f5d44933b381d82bbaf96，tree5519cfdc44baf9d4565252b458eba13411723cac，是已保存cube WIP而非正式已验main。原609/232/46完整保全；本候选A619/1996、235/587节点、47合同，A619/B189/C124/D984/E80，1552关联另计。正式统计仍依Issue130当期独立main收据，不能借WIP计A。
+
+严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
+
+仅向现有evidence-expansion末尾追加本族，85调用[34,13,7,6,7,5,4,4,3,2]。旧84命令的组/序/env/产物、12jobs/10组/22ZIP/35min与P10完整保留。历史a94 expansion的1195977ms与旧order的272655ms来自不同run，只是容量参考；新组合没有实测保证，必须当前HEAD完整job与全部原件通过。
+
+原31个同型example按真实控件与独立数学可用，不新增audit helper、不改原model/题/判题。源绑定、当前段进位与行量、firstEstimate与全部旧提交/当前模型、3000/3001恢复和真实v2各自验收。新multable-v1只同步真实发布入口与既有area/cube导航源hash，原专项与未知来源边界保持。
+
 ## 当前准备分支｜分数单位小立方体（Issue #229，2026-11-16）
 
 固定工程父是钱币WIP 9b36f805d3a6d7fd79e96ac64445c574031d5648（tree72c7d9ec25a3298a5f91becd87e8c194d520c5eb），其603原生/228节点/45合同保持。新增仅6原生/4净节点/1合同，候选A609/1996、232/587节点、46合同，A609/B189/C124/D994/E80。正式main只以Issue130最新独立验收为准；本候选无新HEADCI，不能计正式覆盖。

@@ -1,3 +1,13 @@
+## 2026-11-16｜Issue #230 按位乘法中的十换一与部分积
+
+严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
+
+每次实际十换一保持 raw=loose+10×bundles，保存本位数字后将整捆送到相邻高位。逐列以独立整数核raw、incoming、digit与carry；每行由已存数字和最后carry重组，再乘该行10的幂，核当前shift和rowvalue。最后answer与各部分积总量相符，不把两项填值宣传为另一个独立加法过程。
+
+列位、计数片与写法由工具给定；指定近似数的估计不被归因为自由估算策略。最早estimate跨内部reset保留，当前段必须重新记录真实十换一；过往已reset的交换不能替代当前作品。派生segments只在proof内，不改State/引入epoch。自由原话不自动评分，method:null。
+
+原B14到3001事件会先改变临时模型，再被原learn.update写前验证拒绝并阻止继续覆盖，旧raw保持；不是动作noop。刷新后读取有效3000记录，再用有旧attempt才显示的共享retry恢复；零attempt先实际Check。内部reset保留firstEstimate/历史并追加事件，不能清开上限；不改原保存或v2行为。构造兼容上限案例必须单独标注，不计原生手工路线。
+
 ## 2026-11-16｜Issue #229 小块、层与立方单位的证据
 
 6道原生分数单位小立方体题核对实际填入/取回的块身份、每层块数、层数、保存的小块体积与底面积，以及当前体积填写。网格、尺寸、小块边长和3D布局由工具给定，不归因为孩子独立画图、测量、空间想象或逐步乘法证明；自由解释保持原文且不自动评分，全部method:null。
