@@ -1,3 +1,4 @@
+import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
@@ -39,6 +40,11 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ ...[['partition','grid'],['design','grid'],['compare','compare'],['pieces','pieces'],['stadium','circle'],['openbox','solid']].map(([kind,type])=>({
+  id:'area-'+kind,type:'x-a30-'+type,
+  binding:(task,context)=>{const source=areaBinding(task,context);return source?.kind===kind?source:null;},
+  replay:replayAreaEvidence
+ })),
  ...['order','parts','roman','stopwatch','steps'].map(kind=>({
   id:'time-'+kind,type:'x-t32-'+kind,
   binding:(task,context)=>task?.type==='x-t32-'+kind?timeBinding(task,context):null,

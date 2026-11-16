@@ -1,4 +1,20 @@
-## 待验候选整合｜时间构造（Issue #172 / PR #173）
+## 待验候选整合｜面积与周界构造（Issue #174 / PR #175）
+
+工程父为PR #173实际squash合并后的main `90435ca7a50399daf0cc623b0f850eeb6be0f619`（tree `d0cbebf3aac133413b24af1ca8dd8624b20ae66b`，唯一父b622）。本候选精确复用已保存并独立源码审查的面积 `f4fcfbb93d16ac0176b9cb908f17dc3e15aad1b3`；27项变更中25项可执行/测试/固定文档资产逐字不变，仅本执行计划与覆盖文档更新实际工程父和当前门禁。旧PR175 HEAD `df09ce3ac8120cf9d7cd0008c91b029384e9c7ac`已保留在 `archive/pr175-head-df09ce3a-before-time-main`，不创建重复PR。
+
+当前正式已验基线仍为b622：A521/1996原生、192/587节点、31合同，B189/C124/D1082/E80；[主线完整收据](https://github.com/runlinx-eng/math/issues/147#issuecomment-6909270134)。时间PR173已经完成[独立全验](https://github.com/runlinx-eng/math/pull/173#issuecomment-6909328708)并正常合并，但新main90435的push Required43818274839/Fallback43818274966正在独立验收，A541/202/36仍不可提前计入正式覆盖。可与本PR的新六workflow并行执行；本PR合并必须等工程父main和本HEAD分别独立全验，合并后再验新main才结案174。
+
+面积只增加17原生、9净增节点、6合同，候选并集A558/1996、211/587节点、42合同，B189/C124/D1045/E80。26其他原生与44关联独立隔离；全仓1552关联不混入A。原题/模型/控件/判题/State/v2及全部旧来源保持。四原数学资产与原13项数学Node保持，既有独立14440几何断言归属同一源码；不能代替本HEAD实际CI。
+
+七项家族资产含24个真实literal前置、49课程原Next导航。双视口计划544次检查（356原生、88关联、52排除、48前置）、110真实重试、124 Next；完整raw/State与2个独立空context共4次真实HTML fileinput导入、重复原raw幂等均须由新run原件确认。原五阶段与pending/terminal issue/近似纠正/错源几何/镜像细分L/接缝/上盖边界完整保留；本地静态和源回放不冒称Chromium执行。
+
+当前完整四段Required静态已真实运行1785/0fail；本次重接只更新两份状态文档。发布area-v2，学习入口SHA256 `d77aba5e39eb15985df24feba6778e3be104986bdeb9072d223a9c385b1cc033`，缓存仅新增area模块。现有evidence-fractioncase组末尾只追加area一次，完整81调用、十组 `[33,13,7,4,7,5,3,4,3,2]`、12 jobs/22 Required ZIP、35分钟组上限不变。全部旧80调用/环境/产物/P10/离线保持，新组合容量必须由本次CI确认。
+
+#180/#145独立保持开放；#209不自动合并。不部署、不改CI或离线架构、不重试已确认Chrome socket EPERM，不声称Mac或儿童人工验收。正式状态以Issue130最新收据为准。
+
+## 历史准备记录｜时间构造（Issue #172 / PR #173）
+
+本节保留PR173重接时的候选状态；该PR现已完成独立验收并合并为上文工程父90435。新main独立push验收尚在进行，正式计数以Issue130最新收据为准。
 
 当前时间构造仍是待验候选。工程父main正在进行自己的新push Required/Fallback与原件验收，可并行运行本PR的新完整CI；合并必须等待父main和本PR各自独立全验。不能把旧时间脚本成功、本地源码审查或本PR绿灯代替父main门禁。
 
