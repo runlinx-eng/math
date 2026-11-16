@@ -217,6 +217,49 @@ test('all allowed rectangular grids and exact fraction names are independently r
  assert.equal(replayPaperLabEvidence(t,m),null);
 });
 
+test('paint empty visible color records a genuine no-op before a corrected complete construction',()=>{
+ const c=paper.cases.find(c=>c.mode==='paint'),t=taskOf(c),m=b16.initial(t);
+ fill(t,m,'color','');step(t,m,'save');assert.ok(m.issue);
+ const cells=clone(m.board.cells);step(t,m,'paint',{index:0});
+ assert.deepEqual(m.board.cells,cells);assert.equal(m.issue,'');
+ const prefix=clone(m.history);
+ for(const action of paperLabSolveSteps(t))applyPaperVisibleStep(t,m,action);
+ assert.equal(b16.inspect(t,m).correct,true);assert.deepEqual(m.history.slice(0,prefix.length),prefix);
+ const proof=replayPaperLabEvidence(t,m);assert.ok(proof);
+ const noop=proof.operations[1];assert.equal(noop.action,'paint');assert.equal(noop.fields.color,'');
+ assert.equal(noop.accepted,true);assert.equal(noop.changed,false);assert.equal(noop.issue,'');
+ assert.deepEqual(noop.before,noop.after);assert.equal(proof.changes.length,32);
+ assert.equal(proof.savedWork.length,2);assert.equal(proof.failures.length,1);
+});
+
+test('paint save and final editable state preserve the actual empty color option without inventing a color',()=>{
+ const c=paper.cases.find(c=>c.mode==='paint'),t=taskOf(c),m=b16.initial(t);
+ for(const pattern of paperPaintPatterns.slice(0,2)){
+  for(const [index,color]of pattern.entries()){fill(t,m,'color',color);step(t,m,'paint',{index});}
+  fill(t,m,'color','');step(t,m,'save');
+ }
+ fill(t,m,'answer','1/4');assert.equal(m.color,'');assert.equal(b16.inspect(t,m).correct,true);
+ const proof=replayPaperLabEvidence(t,m);assert.ok(proof);assert.equal(proof.savedWork.length,2);
+ assert.deepEqual(proof.operations.filter(op=>op.action==='save').map(op=>op.fields.color),['','']);
+ assert.deepEqual(proof.savedWork.map(saved=>saved.colors),paperPaintPatterns.slice(0,2));
+ const fake=clone(m);fake.color='4';assert.equal(replayPaperLabEvidence(t,fake),null);
+ const invented=clone(m);invented.history[0].data.fields.color='not-an-option';
+ assert.equal(replayPaperLabEvidence(t,invented),null);
+});
+
+test('paint reset with empty color retains prior work as history and accepts only the rebuilt current round',()=>{
+ const c=paper.cases.find(c=>c.mode==='paint'),t=taskOf(c),m=paperLabEvidenceExample(t);
+ fill(t,m,'color','');const prefix=clone(m.history);step(t,m,'reset');
+ assert.deepEqual(m.history.slice(0,prefix.length),prefix);assert.equal(m.color,'');
+ assert.equal(m.board.saved.length,0);assert.equal(replayPaperLabEvidence(t,m),null);
+ for(const action of paperLabSolveSteps(t))applyPaperVisibleStep(t,m,action);
+ fill(t,m,'color','');assert.equal(b16.inspect(t,m).correct,true);
+ const proof=replayPaperLabEvidence(t,m);assert.ok(proof);assert.equal(proof.round,1);
+ assert.equal(proof.savedWork.length,2);assert.equal(proof.historicalSavedWork.length,4);
+ assert.equal(proof.operations.find(op=>op.action==='reset').fields.color,'');
+ assert.deepEqual(m.history.slice(0,prefix.length),prefix);
+});
+
 test('only changing color names is duplicate; unsaved valid boundaries and invalid drafts remain separate from saved work',()=>{
  const c=paper.cases.find(c=>c.mode==='paint'),t=taskOf(c),m=paperLabEvidenceExample(t);
  for(const [i,color]of paperPaintPatterns[1].entries()){fill(t,m,'color',(color+1)%4);step(t,m,'paint',{index:i});}
@@ -235,6 +278,9 @@ test('classify feedback distinguishes equal-size shares with the wrong count fro
  const c=paper.cases.find(x=>x.id==='quarterpaper'&&x.index===2),t=taskOf(c),m=paperLabEvidenceExample(t);
  const p=replayPaperLabEvidence(t,m),feedback=thinkingFeedback(t,m,record(m),context(c));
  assert.deepEqual(p.judgements.map(j=>j.truth),[true,false,false,true]);
+ const unequal=t.cases[1],total=unequal.reduce((sum,n)=>sum+n,0);
+ assert.deepEqual(unequal.map(n=>total/n),[6,6,6,2],'unequal shares can each be a unit fraction, just not all the required 1/4');
+ assert.match(feedback.connection,/不能把每一块都叫作整个的 1\/4/);
  const twoEqual=feedback.detail.find(line=>line.startsWith('第 3 张：'));
  assert.match(twoEqual,/各份占 2、2 格/);
  assert.match(twoEqual,/这 2 份大小相同，但题目要求 4 个相等份/);

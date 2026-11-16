@@ -93,7 +93,7 @@ function fieldSnapshot(fields,previous,editable){
  return keys(fields,FIELD_KEYS)&&FIELD_KEYS.every(k=>text(fields[k])&&
   (editable.has(k)||fields[k]===previous[k]))&&
   (!editable.has('choice')||['','yes','no'].includes(fields.choice))&&
-  (!editable.has('color')||['0','1','2','3'].includes(fields.color));
+  (!editable.has('color')||['','0','1','2','3'].includes(fields.color));
 }
 
 export function replayPaperLabEvidence(task,model){
@@ -139,9 +139,14 @@ export function replayPaperLabEvidence(task,model){
    }else if(action==='paint'){
     if(task.mode!=='paint')return null;
     const i=index(event.data.index,15),color=number(f.color);
-    if(i===null||!integer(color,0,3))return null;
-    board.cells[i]=color;
-    changes.push({historyIndex,round,index:i,color,unitParts:16});
+    if(i===null)return null;
+    // The original select includes an empty placeholder. Clicking a cell with
+    // that visible option records a silent no-op and clears the previous issue.
+    if(f.color!==''){
+     if(!integer(color,0,3))return null;
+     board.cells[i]=color;
+     changes.push({historyIndex,round,index:i,color,unitParts:16});
+    }
    }else if(action==='save'){
     if(task.mode!=='paint')return null;
     if(!equalColors(board.cells))issue='四种颜色各占同样多的格子，形状可以不同。';

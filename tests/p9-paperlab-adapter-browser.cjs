@@ -308,7 +308,15 @@ async function main(){
      await field(spec,'choice',spec.expected.truth[0]?'no':'yes');await action(spec,'judge');
     }else{
      if(task.mode==='build'){await field(spec,'rows','7');await action(spec,'partition');assert.ok((await model(spec)).issue);}
-     if(task.mode==='paint'){await action(spec,'save');assert.ok((await model(spec)).issue);}
+     if(task.mode==='paint'){
+      await field(spec,'color','');await action(spec,'save');assert.ok((await model(spec)).issue);
+      const emptyColorBefore=await model(spec);
+      await action(spec,'paint',{index:0});const emptyColorAfter=await model(spec);
+      assert.deepEqual(emptyColorAfter.board,emptyColorBefore.board);assert.equal(emptyColorAfter.issue,'');
+      assert.deepEqual(emptyColorAfter.history.slice(0,-1),emptyColorBefore.history);
+      ok(emptyColorAfter.history.at(-1).data.fields.color==='',label+' real empty color selection records a silent paint no-op');
+      special.push({kind:'empty-color-silent-no-op',before:emptyColorBefore,after:emptyColorAfter});
+     }
      await runSteps(spec,paperPlan(spec,{reverse}));await field(spec,'answer','999');
     }
     snapshots.push(await check(spec,false,'01-original-wrong'));ok(await hint.count()===0,label+' wrong submission has no evidence');await shot('01-wrong');
@@ -329,7 +337,7 @@ async function main(){
      await reload(spec);ok(await hint.count()===0,label+' offline restore cannot revive obsolete feedback');
      snapshots.push(await check(spec,true,'03-equivalent-current'));await wordsFor(proofFor(spec,await model(spec)));
      if(task.mode==='paint'){
-      await paint(spec,paintPatterns[1].map(color=>(color+1)%4),reverse);await action(spec,'save');
+      await paint(spec,paintPatterns[1].map(color=>(color+1)%4),reverse);await field(spec,'color','');await action(spec,'save');
       assert.equal((await model(spec)).board.saved.length,2);assert.ok((await model(spec)).issue);
       snapshots.push(await check(spec,true,'04-duplicate-color-labels'));let p=proofFor(spec,await model(spec));assert.ok(p.failures.length>=2);await wordsFor(p);
       await paint(spec,paintPatterns[2],reverse);snapshots.push(await check(spec,true,'05-valid-unsaved-draft'));
@@ -348,9 +356,17 @@ async function main(){
        special.push({kind:'failed-partition-with-retained-construction',proof:p});
       }
      }
+     if(task.mode==='paint')await field(spec,'color','');
      const beforeReset=await model(spec);await action(spec,'reset');assert.deepEqual((await model(spec)).history.slice(0,beforeReset.history.length),beforeReset.history);
      snapshots.push(await check(spec,false,'reset-empty'));ok(await hint.count()===0,label+' reset construction never borrows former evidence');
-     await runSteps(spec,paperPlan(spec,{reverse:!reverse}));snapshots.push(await check(spec,true,'reset-completed'));
+     await runSteps(spec,paperPlan(spec,{reverse:!reverse}));
+     if(task.mode==='paint'){
+      await field(spec,'color','');const emptyColorBefore=await model(spec);
+      await action(spec,'paint',{index:0});const emptyColorAfter=await model(spec);
+      assert.deepEqual(emptyColorAfter.board,emptyColorBefore.board);assert.equal(emptyColorAfter.issue,'');
+      ok(emptyColorAfter.color==='',label+' a final empty palette does not invalidate already saved equal-area work');
+     }
+     snapshots.push(await check(spec,true,'reset-completed'));
     }
     const final=await model(spec),proof=proofFor(spec,final),words=await wordsFor(proof);await visual(spec);
     assert.equal(proof.round,1);assert.deepEqual(final.history.slice(0,first.history.length),first.history);

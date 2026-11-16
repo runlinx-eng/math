@@ -177,7 +177,7 @@ export function thinkingFeedback(task,model,record,context={}){
     }else if(proof.mode==='classify'){
       const correct=proof.judgements.filter(j=>j.correct);
       observation='你在最后一轮逐张核对了 '+correct.length+' 种分法：除了分成几份，还检查了各份大小是否相同。';
-      connection='如果切成了规定的块数，但其中一块比另一块大，为什么不能都叫单位分数？';
+      connection='如果切成了规定的块数，但其中一块比另一块大，为什么不能把每一块都叫作整个的 1/'+proof.d+'？';
       for(const j of correct){
         const count=j.observedShares.length,equalSized=j.observedShares.every(n=>n===j.observedShares[0]);
         const conclusion=j.truth?'是题目要求的 '+proof.d+' 个相等份':equalSized?
