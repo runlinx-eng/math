@@ -219,11 +219,15 @@ const groups={
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},
+ // Append scale only after both original P8 samples. The accepted main1545
+ // receipt measured 19.798s for those samples; the new combination still needs CI.
  "p8-performance":{commands:[
   {"file":"tests/p8-trail-performance-browser.cjs","env":{"MATH_P8_BASELINE":"1"}},
   {"file":"tests/p8-trail-performance-browser.cjs","env":{}},
+  {"file":"tests/p9-scale-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p8-trail-performance/",
+  "verification/p9-scale-adapter/",
  ]},
 };
 for(const group of Object.values(groups)){

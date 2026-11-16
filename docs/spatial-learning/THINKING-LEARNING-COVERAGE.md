@@ -1,3 +1,21 @@
+## P9 刻度和数字读数｜Issue #235（2026-11-16，候选）
+
+固定父为已保存balance c13bf79a7c96191e1fab9940847a1a2abd8abc25，treec85cfe89b60854e8e951615d0fc47770ea38072e。正式已验main1545c225、A558/211节点/42合同，174已结案；原Draft177 ff8b6f1f的Required43823824098 attempt1官方35分钟超时已永久留存，唯一同HEAD failed-jobs attempt2正在独验。依次完成order→money→cube→230 multable→231 unitcover→232 unitrefine→233 ruler→234 balance→235 scale；已保存来源不重做。
+
+现行Required静态范围已全部覆盖通过，共2099项（2069 active invariants + 1/13/3/10/3审计），0未解决失败。第一次有两份历史兼容测试因clone缺a7f1860c指定历史对象而加载失败；已从GitHub取回真实提交并核原SHA，62项历史兼容测试及尚未运行审计全部通过，未重跑其余2007项已过且字节不变的测试。原失败日志保留，不改断言。157条runtime语法与部署脚本仅语法检查通过；未部署，实际Chrome/PR/CI仍待依赖轮到本族后完成。
+
+仅8原生/3来源节点/净1节点/2合同：weightstart:2；readscales:0/1/2/3/4；measurecalc:1/3。7道analog和1道digital分别绑定scale-analog/scale-digital。2关联与2旧practice只作隔离兼容，完整task与真实native context共同绑定，全部method:null。
+
+固定核心f64bbf542b1e9593396afc210fdac4e9a1ca9dc636d50eab693f5767781dcdd9的独立审查通过：先冻141模型/380绑定及209原controller帧，再验382 replay（144正/238负）、76198条完整事件和917818断言。公共独审28484断言，旧650完整proof/1300反馈/全部3548源与3540非新增guide保持，仅8原生D→A。候选实算A658/1996、247/587节点、54合同/50类型，B189/C124/D945/E80，1552关联另计；这不是正式main计数。
+
+仪器图、指针、液面、尺端点与01:26.4显示均由原工具给定，输入读数不改变图。严格层核实际record的raw/unit、给定相邻标记与精确位置；500g和2.5kg均为全量程5/8，175mL为7/10，23℃为3/8，12.7cm为127/150且从起点起127小格。数字显示单独按1×60+26.4=86.4秒重建，不能把min=max=0作为analog分母。保存读数可观察，独立插值/换算步骤、实物测量、自由解释和一般掌握均不评价。
+
+保存读数与单位必须和最后有效record逐字符串相等，等值改写须真实重存；当前127mm追问只核最新完整提交中的字段，不虚构编辑时钟或换算事件。first保留首次有限读数；空白/非数字失败不占first但保留issue，失败record可保留旧save，恢复其原raw后允许重新Check。原near/Number下溢判绿的历史事实与strict精确拒绝分开；2000历史下整次model action无变化，原外层controller仍写时间戳/support。1201字符被原validation阻止写入，旧raw不变，reload后才能恢复。
+
+旧650条manifest逐项逐字段保持，只追加8条独立核过的原源指纹。readscales是唯一净增节点；已覆盖的weightstart/measurecalc不重复累计。原关联与practice即使题面相同，在其真实context下不授native反馈。
+
+前置main与候选PR当前HEAD分别完整独立通过才正常合并；随后新push-main自身Required/Fallback与官方ZIP/数学/P10/原图再验，最后手动结案235和记正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/控件/模型/判题/State/v2/离线架构、不重试本地Chrome EPERM、不冒称Mac或儿童人工验收。
+
 ## P9 天平比较与保存砝码｜Issue #234（2026-11-16，候选）
 
 仅6原生/3来源节点/净2节点/2合同：compareweight:0/1/2、weightstart:0 为 balance-compare；weightstart:1、measurecalc:2 为 balance-weigh。4关联与1旧practice独立隔离，全部method:null。完整task及上下文共同绑定，不因同型控件扩张来源。

@@ -5902,6 +5902,78 @@
       "adapter": "balance-weigh",
       "taskHash": "4afb8f95c6649994654c8df07bafae4265dbce4bd82d905041ba2ae726e3b820",
       "method": null
+    },
+    {
+      "sessionId": "weightstart",
+      "index": 2,
+      "type": "x-m28-scale",
+      "nodeId": "mt_zd0YkB3xNj",
+      "adapter": "scale-analog",
+      "taskHash": "c0adc66e4afcb6f2056e08f7b9daf4002740dda6115619d53b238d3ab119a231",
+      "method": null
+    },
+    {
+      "sessionId": "readscales",
+      "index": 0,
+      "type": "x-m28-scale",
+      "nodeId": "mt_SOM6Imm2sO",
+      "adapter": "scale-analog",
+      "taskHash": "b27de94fc17a87f4aeccaee432ae933cf7bf0add2609059f56fdbb258ffbd9fc",
+      "method": null
+    },
+    {
+      "sessionId": "readscales",
+      "index": 1,
+      "type": "x-m28-scale",
+      "nodeId": "mt_SOM6Imm2sO",
+      "adapter": "scale-analog",
+      "taskHash": "fef222d995112609c7ba1e7dd588bf43f79fe99d52ef9be2bf382110becf37ca",
+      "method": null
+    },
+    {
+      "sessionId": "readscales",
+      "index": 2,
+      "type": "x-m28-scale",
+      "nodeId": "mt_SOM6Imm2sO",
+      "adapter": "scale-analog",
+      "taskHash": "7387eac7c190aa85b6680724fd7e553c31c4b57255557212bb4eb3a61846c2bc",
+      "method": null
+    },
+    {
+      "sessionId": "readscales",
+      "index": 3,
+      "type": "x-m28-scale",
+      "nodeId": "mt_SOM6Imm2sO",
+      "adapter": "scale-analog",
+      "taskHash": "7978199629283fd8762b1146c3d5b4d793a338705c28935b6db7ad76d031e443",
+      "method": null
+    },
+    {
+      "sessionId": "readscales",
+      "index": 4,
+      "type": "x-m28-scale",
+      "nodeId": "mt_SOM6Imm2sO",
+      "adapter": "scale-digital",
+      "taskHash": "f17d82daab7db45835f9537fb68cce7ec507f14a84b77d6f4d1704a2e55342a5",
+      "method": null
+    },
+    {
+      "sessionId": "measurecalc",
+      "index": 1,
+      "type": "x-m28-scale",
+      "nodeId": "mt_6oxQPNLHNv",
+      "adapter": "scale-analog",
+      "taskHash": "892c4fd033c82c1c8adb22de1baa19db58653866e518156a8cd51c719bc5e952",
+      "method": null
+    },
+    {
+      "sessionId": "measurecalc",
+      "index": 3,
+      "type": "x-m28-scale",
+      "nodeId": "mt_6oxQPNLHNv",
+      "adapter": "scale-analog",
+      "taskHash": "516a751ca33addb52d582333cbffe54d68e44a97aa509a6a5ac67afc96357417",
+      "method": null
     }
   ]
 }

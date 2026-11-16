@@ -199,7 +199,7 @@ async function main(){
  const hash=value=>digest(JSON.stringify(stable(value))),ok=(value,message,detail={})=>{assert.ok(value,message);checks.push({message,...detail});};
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
  const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),event=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
- const sourceFiles=['dist/learning/balance-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-balance-adapter-browser.cjs','tests/fixtures/p9-balance-cases.cjs','tests/p9-balance-evidence.test.mjs','tests/fixtures/p9-balance-navigation.cjs','tests/p9-balance-navigation.test.mjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
+ const sourceFiles=['dist/learning/balance-evidence.js','dist/learning/scale-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-balance-adapter-browser.cjs','tests/fixtures/p9-balance-cases.cjs','tests/p9-balance-evidence.test.mjs','tests/fixtures/p9-balance-navigation.cjs','tests/p9-balance-navigation.test.mjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
  const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheckoutSha:checkoutSha,githubSha:process.env.GITHUB_SHA||null,runId:process.env.GITHUB_RUN_ID||null,runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,
   workflow:process.env.GITHUB_WORKFLOW||null,workingTreeDirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),nodeVersion:process.version,cache,
   sourceFiles:Object.fromEntries(sourceFiles.map(file=>[file,digest(fs.readFileSync(path.join(root,file)))])),childTrial:false,independentTeachingReview:false,nativeSourceSeededCorrectWork:false,nativeSourceSeededLessonPositions:false,
@@ -208,6 +208,7 @@ async function main(){
  const {sessionTaskFor,BRIDGES}=await import('../dist/learning/bridges.js'),M=await import('../dist/learning/phase5/b28-model.js');
  const Tasks=await import('../dist/learning/tasks.js'),Engine=await import('../dist/learning/phase4/engine.js'),{setField}=await import('../dist/learning/phase4/ui.js');
  const {thinkingFeedback}=await import('../dist/learning/thinking-feedback.js');
+ const {scaleBinding,replayScaleEvidence}=await import('../dist/learning/scale-evidence.js');
  const State=await import('../dist/learning/state.js'),Core=await import('../dist/exploration-core.js'),{studyActionFocus}=await import('../dist/learning/workspace-flow.js');
  const {balanceBinding:binding,replayBalanceEvidence:replay}=await import('../dist/learning/balance-evidence.js'),atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
@@ -324,6 +325,7 @@ async function main(){
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
     assert.equal(Tasks.validModel(task,m),true);const expectedFeedback=thinkingFeedback(task,m,record,ctx(c)),native=!!binding(task,ctx(c));
     assert.equal(native&&!!expectedFeedback,strict);if(role!=='prerequisite')assert.equal(!!expectedFeedback,strict);
+    else{const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===c.index);assert.ok(prep);assert.equal(!!expectedFeedback,prep.existingOtherFeedback);if(c.id==='measurecalc'&&c.index===1){assert.ok(scaleBinding(task,ctx(c)));const scale=replayScaleEvidence(task,m);assert.equal(scale.construction.record.raw,'12.7');assert.equal(scale.construction.record.unit,'cm');assert.equal(scale.construction.currentQuestions[0].quantity.text,'127');assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);}}
     assert.equal(await hint.count(),expectedFeedback?1:0);if(expectedFeedback)assert.equal(await hint.isVisible(),true);const words=expectedFeedback?await hint.innerText():null;
     if(strict){
      assert.ok(proof&&native);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);

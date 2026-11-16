@@ -1,3 +1,23 @@
+## 2026-11-16｜Issue #235 刻度与数字读数隔离候选
+
+固定父为已保存balance c13bf79a7c96191e1fab9940847a1a2abd8abc25，treec85cfe89b60854e8e951615d0fc47770ea38072e。正式已验main1545c225、A558/211节点/42合同，174已结案；原Draft177 ff8b6f1f的Required43823824098 attempt1官方35分钟超时已永久留存，唯一同HEAD failed-jobs attempt2正在独验。依次完成order→money→cube→230 multable→231 unitcover→232 unitrefine→233 ruler→234 balance→235 scale；已保存来源不重做。
+
+现行Required静态范围已全部覆盖通过，共2099项（2069 active invariants + 1/13/3/10/3审计），0未解决失败。第一次有两份历史兼容测试因clone缺a7f1860c指定历史对象而加载失败；已从GitHub取回真实提交并核原SHA，62项历史兼容测试及尚未运行审计全部通过，未重跑其余2007项已过且字节不变的测试。原失败日志保留，不改断言。157条runtime语法与部署脚本仅语法检查通过；未部署，实际Chrome/PR/CI仍待依赖轮到本族后完成。
+
+仅8原生/3来源节点/净1节点/2合同：weightstart:2；readscales:0/1/2/3/4；measurecalc:1/3。7道analog和1道digital分别绑定scale-analog/scale-digital。2关联与2旧practice只作隔离兼容，完整task与真实native context共同绑定，全部method:null。
+
+固定核心f64bbf542b1e9593396afc210fdac4e9a1ca9dc636d50eab693f5767781dcdd9的独立审查通过：先冻141模型/380绑定及209原controller帧，再验382 replay（144正/238负）、76198条完整事件和917818断言。公共独审28484断言，旧650完整proof/1300反馈/全部3548源与3540非新增guide保持，仅8原生D→A。候选实算A658/1996、247/587节点、54合同/50类型，B189/C124/D945/E80，1552关联另计；这不是正式main计数。
+
+原controller Node已实际通过：source 162 Check/221完整capture/13共享retry/11原Next；10cap为74/166/10；6text为9/54/6；6legacy为4Check/12capture。源路线覆盖5课程、10目标+6literal前置=16位置，未播种答案或位置；Node支持标记属于明确构造，browser用实际guide点击。前置balance/ruler原证明保留；旧balance路线中的measurecalc:1现按scale独立核实12.7cm与当前127mm，但不计balance覆盖。
+
+双视口browser计划498checked（262原生+46边界+4关联+12前置+148cap+18text+8legacy）、906完整capture及906对raw/State/1812唯一文件、58共享retry+4数值重做、22原Next。24独立空context/视口；原生恢复计划4次实际按钮filechooser，构造兼容另88次，46次损坏/超限导入拒绝，最终46份备份。旧practice的不同首题与同题复制、负零数值只读/实际导出后重做分别核验；这些是已写完的Chrome计划，未声称已执行。
+
+Required只在p8-performance原baseline/normal两次采样之后追加scale及独立产物，90调用/87产物目录/87非离线调用，组[34,13,8,6,8,5,4,6,3,3]。89旧调用的组/顺序/env与86旧产物、12jobs/10组/22Required ZIP/35min/P10保持；每条命令清除P8旧env，原两次采样先完成。已验main1545该组两命令19.798秒、全job60秒只作放置依据；新组合须最终HEAD实际CI证明容量。新增模块令完整缓存297→298，五入口scale-v1，七旧导航与新scale的learn.js整文件pin同步；原五controller片段hash不改。
+
+完整906原controller归档独审发现旧shape的索引277349167bytes，重复内嵌final State和retry前后record导致超过32MiB。仅修新writer：capture/state/record均保存完整独立JSON及path/bytes/SHA引用。复用同一批906原对象，不重跑轨迹，修复后索引3297680bytes、余30256752bytes；906capture/1182002438bytes逐字不变，50State/64311943bytes、58record/46318771bytes，总1014侧车/1292633152bytes、2958引用逐字逐SHA通过。最大capture7467906、State4151657、record2994338bytes；全部原model/attempt/history/proof/raw/State保留，未改动作或产品/CI heap设置。独立完整聚合审计器两次显式使用4096MiB heap（本机默认heap上限2348810240B，覆盖后4496293888B）；这只授格式/字节保全验收，不授默认内存或Chrome容量验收。原过大报告与修复后报告分别留存。新writer语法及单个归档压力/还原/不可覆盖测试通过，其他已验流/核心/公共代码逐字保持；2099项静态范围不重复计数。该容量实验是Node完整模拟，不冒称Chrome或35分钟CI容量。
+
+前置main与候选PR当前HEAD分别完整独立通过才正常合并；随后新push-main自身Required/Fallback与官方ZIP/数学/P10/原图再验，最后手动结案235和记正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/控件/模型/判题/State/v2/离线架构、不重试本地Chrome EPERM、不冒称Mac或儿童人工验收。
+
 ## 2026-11-16｜Issue #234 天平家族隔离候选
 
 固定父为已保存ruler e79db84ee454ecb56e407fe28e1a711c9a669658，tree7e0ffadb07a1b0260ed6108f9141c913eb26618c。工程main1545（175已合并）和原Draft177的ff8b各自新CI独验中；正式已验90435/A541/202/36。按order→money→cube→230 multable→231 unitcover→232 unitrefine→233 ruler→234 balance顺序接入，不重做已保存来源。

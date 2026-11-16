@@ -1,3 +1,15 @@
+## 2026-11-16｜Issue #235 固定仪器图与实际读数记录
+
+仅8原生/3来源节点/净1节点/2合同：weightstart:2；readscales:0/1/2/3/4；measurecalc:1/3。7道analog和1道digital分别绑定scale-analog/scale-digital。2关联与2旧practice只作隔离兼容，完整task与真实native context共同绑定，全部method:null。
+
+仪器图、指针、液面、尺端点与01:26.4显示均由原工具给定，输入读数不改变图。严格层核实际record的raw/unit、给定相邻标记与精确位置；500g和2.5kg均为全量程5/8，175mL为7/10，23℃为3/8，12.7cm为127/150且从起点起127小格。数字显示单独按1×60+26.4=86.4秒重建，不能把min=max=0作为analog分母。保存读数可观察，独立插值/换算步骤、实物测量、自由解释和一般掌握均不评价。
+
+保存读数与单位必须和最后有效record逐字符串相等，等值改写须真实重存；当前127mm追问只核最新完整提交中的字段，不虚构编辑时钟或换算事件。first保留首次有限读数；空白/非数字失败不占first但保留issue，失败record可保留旧save，恢复其原raw后允许重新Check。原near/Number下溢判绿的历史事实与strict精确拒绝分开；2000历史下整次model action无变化，原外层controller仍写时间戳/support。1201字符被原validation阻止写入，旧raw不变，reload后才能恢复。
+
+原图不随输入或保存移动。初始、真正重存、末尾失败和重试后分别核原SVG/非空截图，图的固定性本身是正确行为；不得要求输入造成新的指针位置。只有当前模型与最后完整提交相同才可呈现反馈。
+
+前置main与候选PR当前HEAD分别完整独立通过才正常合并；随后新push-main自身Required/Fallback与官方ZIP/数学/P10/原图再验，最后手动结案235和记正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/控件/模型/判题/State/v2/离线架构、不重试本地Chrome EPERM、不冒称Mac或儿童人工验收。
+
 ## 2026-11-16｜Issue #234 模拟天平的比较与称量记录
 
 仅6原生/3来源节点/净2节点/2合同：compareweight:0/1/2、weightstart:0 为 balance-compare；weightstart:1、measurecalc:2 为 balance-weigh。4关联与1旧practice独立隔离，全部method:null。完整task及上下文共同绑定，不因同型控件扩张来源。

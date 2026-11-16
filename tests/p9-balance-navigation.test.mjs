@@ -4,6 +4,7 @@ import navigationFixture from './fixtures/p9-balance-navigation.cjs';
 import flows from './p9-balance-adapter-browser.cjs';
 import {balanceBinding as binding,replayBalanceEvidence as replay} from '../dist/learning/balance-evidence.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {scaleBinding,replayScaleEvidence} from '../dist/learning/scale-evidence.js';
 // Read-only investigation: execute unchanged original callbacks in Node.
 // These are DOM stubs, not Chromium or trusted user input.
 import assert from 'node:assert/strict';
@@ -133,6 +134,7 @@ test('two literal prerequisites use unchanged original controls and exact task/c
  for(const c of navigationFixture.navigation){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);assert.equal(c.strictBalanceCoverage,false);assert.equal(binding(taskFor(c),ctx(c)),null);
   const state=Core.fresh(),a=State.freshLesson(c.id);a.index=c.index;(Object.hasOwn(BRIDGES,c.id)?state.daily.bridges:state.lessons)[c.id]=a;const env=environment(state),page=env.open(c.id);
   for(const s of c.steps)s.field?page.field(s.field,s.value):page.action(s.action,s.data||{});page.check(true);assert.equal(replay(taskFor(c),page.model),null);assert.equal(!!thinkingFeedback(taskFor(c),page.model,page.record.cases[c.index],ctx(c)),c.existingOtherFeedback);
+  if(c.id==='measurecalc'&&c.index===1){assert.ok(scaleBinding(taskFor(c),ctx(c)));const p=replayScaleEvidence(taskFor(c),page.model);assert.equal(p.construction.record.raw,'12.7');assert.equal(p.construction.record.unit,'cm');assert.equal(p.construction.currentQuestions[0].quantity.text,'127');assert.equal(thinkingFeedback(taskFor(c),page.model,page.record.cases[c.index],ctx(c)).method,null);}
  }
 });
 

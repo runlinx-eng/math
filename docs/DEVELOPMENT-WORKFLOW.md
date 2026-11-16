@@ -1,3 +1,19 @@
+## 2026-11-16｜Issue #235 刻度读数验收入口
+
+固定核心f64bbf542b1e9593396afc210fdac4e9a1ca9dc636d50eab693f5767781dcdd9的独立审查通过：先冻141模型/380绑定及209原controller帧，再验382 replay（144正/238负）、76198条完整事件和917818断言。公共独审28484断言，旧650完整proof/1300反馈/全部3548源与3540非新增guide保持，仅8原生D→A。候选实算A658/1996、247/587节点、54合同/50类型，B189/C124/D945/E80，1552关联另计；这不是正式main计数。
+
+原controller Node已实际通过：source 162 Check/221完整capture/13共享retry/11原Next；10cap为74/166/10；6text为9/54/6；6legacy为4Check/12capture。源路线覆盖5课程、10目标+6literal前置=16位置，未播种答案或位置；Node支持标记属于明确构造，browser用实际guide点击。前置balance/ruler原证明保留；旧balance路线中的measurecalc:1现按scale独立核实12.7cm与当前127mm，但不计balance覆盖。
+
+双视口browser计划498checked（262原生+46边界+4关联+12前置+148cap+18text+8legacy）、906完整capture及906对raw/State/1812唯一文件、58共享retry+4数值重做、22原Next。24独立空context/视口；原生恢复计划4次实际按钮filechooser，构造兼容另88次，46次损坏/超限导入拒绝，最终46份备份。旧practice的不同首题与同题复制、负零数值只读/实际导出后重做分别核验；这些是已写完的Chrome计划，未声称已执行。
+
+Required只在p8-performance原baseline/normal两次采样之后追加scale及独立产物，90调用/87产物目录/87非离线调用，组[34,13,8,6,8,5,4,6,3,3]。89旧调用的组/顺序/env与86旧产物、12jobs/10组/22Required ZIP/35min/P10保持；每条命令清除P8旧env，原两次采样先完成。已验main1545该组两命令19.798秒、全job60秒只作放置依据；新组合须最终HEAD实际CI证明容量。新增模块令完整缓存297→298，五入口scale-v1，七旧导航与新scale的learn.js整文件pin同步；原五controller片段hash不改。
+
+完整906原controller归档独审发现旧shape的索引277349167bytes，重复内嵌final State和retry前后record导致超过32MiB。仅修新writer：capture/state/record均保存完整独立JSON及path/bytes/SHA引用。复用同一批906原对象，不重跑轨迹，修复后索引3297680bytes、余30256752bytes；906capture/1182002438bytes逐字不变，50State/64311943bytes、58record/46318771bytes，总1014侧车/1292633152bytes、2958引用逐字逐SHA通过。最大capture7467906、State4151657、record2994338bytes；全部原model/attempt/history/proof/raw/State保留，未改动作或产品/CI heap设置。独立完整聚合审计器两次显式使用4096MiB heap（本机默认heap上限2348810240B，覆盖后4496293888B）；这只授格式/字节保全验收，不授默认内存或Chrome容量验收。原过大报告与修复后报告分别留存。新writer语法及单个归档压力/还原/不可覆盖测试通过，其他已验流/核心/公共代码逐字保持；2099项静态范围不重复计数。该容量实验是Node完整模拟，不冒称Chrome或35分钟CI容量。
+
+现行Required静态范围已全部覆盖通过，共2099项（2069 active invariants + 1/13/3/10/3审计），0未解决失败。第一次有两份历史兼容测试因clone缺a7f1860c指定历史对象而加载失败；已从GitHub取回真实提交并核原SHA，62项历史兼容测试及尚未运行审计全部通过，未重跑其余2007项已过且字节不变的测试。原失败日志保留，不改断言。157条runtime语法与部署脚本仅语法检查通过；未部署，实际Chrome/PR/CI仍待依赖轮到本族后完成。
+
+前置main与候选PR当前HEAD分别完整独立通过才正常合并；随后新push-main自身Required/Fallback与官方ZIP/数学/P10/原图再验，最后手动结案235和记正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/控件/模型/判题/State/v2/离线架构、不重试本地Chrome EPERM、不冒称Mac或儿童人工验收。
+
 ## 2026-11-16｜Issue #234 天平验收入口
 
 独立预冻结327模型/145绑定核心审查730991断言通过；公共22628保全断言及3597调用/19440断言通过，旧644完整proof、1288反馈及全部3548源不变，仅6原生D→A。候选实算A650/1996、246/587节点、52合同/49类型，B189/C124/D953/E80，1552关联另计。完整当前workflow四块静态实际2068 tests（2038+1+13+3+10+3）/0fail，runtime与部署脚本仅语法检查，未部署；真实Chrome/PR/CI仍未执行。

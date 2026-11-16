@@ -1,3 +1,19 @@
+## Issue #235｜刻度可见record与当前字段（准备分支）
+
+仅8原生/3来源节点/净1节点/2合同：weightstart:2；readscales:0/1/2/3/4；measurecalc:1/3。7道analog和1道digital分别绑定scale-analog/scale-digital。2关联与2旧practice只作隔离兼容，完整task与真实native context共同绑定，全部method:null。
+
+仪器图、指针、液面、尺端点与01:26.4显示均由原工具给定，输入读数不改变图。严格层核实际record的raw/unit、给定相邻标记与精确位置；500g和2.5kg均为全量程5/8，175mL为7/10，23℃为3/8，12.7cm为127/150且从起点起127小格。数字显示单独按1×60+26.4=86.4秒重建，不能把min=max=0作为analog分母。保存读数可观察，独立插值/换算步骤、实物测量、自由解释和一般掌握均不评价。
+
+保存读数与单位必须和最后有效record逐字符串相等，等值改写须真实重存；当前127mm追问只核最新完整提交中的字段，不虚构编辑时钟或换算事件。first保留首次有限读数；空白/非数字失败不占first但保留issue，失败record可保留旧save，恢复其原raw后允许重新Check。原near/Number下溢判绿的历史事实与strict精确拒绝分开；2000历史下整次model action无变化，原外层controller仍写时间戳/support。1201字符被原validation阻止写入，旧raw不变，reload后才能恢复。
+
+原controller Node已实际通过：source 162 Check/221完整capture/13共享retry/11原Next；10cap为74/166/10；6text为9/54/6；6legacy为4Check/12capture。源路线覆盖5课程、10目标+6literal前置=16位置，未播种答案或位置；Node支持标记属于明确构造，browser用实际guide点击。前置balance/ruler原证明保留；旧balance路线中的measurecalc:1现按scale独立核实12.7cm与当前127mm，但不计balance覆盖。
+
+双视口browser计划498checked（262原生+46边界+4关联+12前置+148cap+18text+8legacy）、906完整capture及906对raw/State/1812唯一文件、58共享retry+4数值重做、22原Next。24独立空context/视口；原生恢复计划4次实际按钮filechooser，构造兼容另88次，46次损坏/超限导入拒绝，最终46份备份。旧practice的不同首题与同题复制、负零数值只读/实际导出后重做分别核验；这些是已写完的Chrome计划，未声称已执行。
+
+给定SVG按原仪器独立核盘面针角/刻度、尺151条分格及端点、液面位置、数字display；浮点容差仅用于SVG三角函数投影，数学proof始终精确有理数。旧practice打开的weightstart:0是原balance前置，不能当作scale图或scale证据。
+
+前置main与候选PR当前HEAD分别完整独立通过才正常合并；随后新push-main自身Required/Fallback与官方ZIP/数学/P10/原图再验，最后手动结案235和记正式覆盖。#180/#145保留，#209不自动合并；不部署、不改原任务/控件/模型/判题/State/v2/离线架构、不重试本地Chrome EPERM、不冒称Mac或儿童人工验收。
+
 ## Issue #234｜天平可见控件与保存边界（准备分支）
 
 仅6原生/3来源节点/净2节点/2合同：compareweight:0/1/2、weightstart:0 为 balance-compare；weightstart:1、measurecalc:2 为 balance-weigh。4关联与1旧practice独立隔离，全部method:null。完整task及上下文共同绑定，不因同型控件扩张来源。
