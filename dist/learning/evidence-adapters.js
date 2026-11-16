@@ -1,3 +1,4 @@
+import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -38,6 +39,11 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ ...['order','parts','roman','stopwatch','steps'].map(kind=>({
+  id:'time-'+kind,type:'x-t32-'+kind,
+  binding:(task,context)=>task?.type==='x-t32-'+kind?timeBinding(task,context):null,
+  replay:replayTimeEvidence
+ })),
  {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
  {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},

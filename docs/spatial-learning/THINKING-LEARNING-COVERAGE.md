@@ -1,3 +1,26 @@
+## 待验候选｜时间构造（Issue #172 / PR #173）
+
+本候选接在PVBench完整WIP `36ef11d74aeafbee39058cf237a8ac5d266cf548` 之后，追加20条已审原生来源、10个此前未覆盖节点及5个严格契约。候选并集目标为 **A541/1,996原生、202/587节点、36契约**，分布 A541/B189/C124/D1062/E80；原521条审查清单和上游数学能力保全。正式main状态须以Issue #130新的独立验收为准。
+
+| 原生课程 | 固定索引 | 真实来源节点 |
+| --- | --- | --- |
+| eventorder | 1、2 | mt_-vvVxpOHG2 |
+| durationunit | 0、1 | mt__N55B7u7HD |
+| durationorder | 0、2 | mt_6XCURuNwPw |
+| durationwork | 0、2 | mt_4emC463IyW |
+| fractiontime | 0、1、2、3 | mt_Jz9UuT8BXW |
+| elapsedtime | 0、1、2 | mt_IL86kadLSS |
+| romanclock | 1 | mt_5J2quSTspi |
+| minuteclock | 1 | mt_UNzojLkNdm |
+| quarterclock | 2 | mt_MgsDabdnr1 |
+| weekmonth | 0、1 | mt_bj1YCgNWUx |
+
+五个契约分别为time-order 5题、time-parts 5题、time-roman 1题、time-stopwatch 3题和time-steps 6题。独立核对时间参照、选区份量、罗马符号、秒/分钟与实际多段累计；全部method:null。40个其余原生与63关联不继承严格来源。最初摆放/停止、真实失败与重试、当前保留段和待应用jump严格分开，系统绘图和模拟读数不推断为独立作图或现实测量。
+
+核心/helper/完整来源fixture/原14项数学Node复用；新增2项原控件导航测试和已独立审查的连续浏览器脚本。浏览器双视口计划434次真实检查（260原生、126关联、16未覆盖代表、32前置），2空恢复context/4真实导入，完整保留失败、纠正、旧attempt和原始存储。Required在现有数量组末尾追加本族一次，完整80调用、分布 `[33,13,7,4,7,5,2,4,3,2]`，原79调用、全部旧产物和35分钟限时保留。当前HEAD与新main各自的完整原Artifact、P10、离线与真实数学结果必须实际通过，旧PR #173结果和计划数量不能代替。
+
+---
+
 ## 待验候选｜固定数位工作台（Issue #147 / PR #170）
 
 本候选基于十进位移 WIP `864007c4eec67674e63767620422e4410d172aa7`，仅追加11条固定原生来源指纹。实际审计并集为 **A521/1,996原生、192/587来源节点、31个严格契约**，分布 A521/B189/C124/D1082/E80；相对固定依赖净增11题及6个此前未覆盖节点，旧510条清单逐值保序。正式 main 状态仍以 Issue #130 最新独立验收为准，候选数字不代表已合并覆盖。
