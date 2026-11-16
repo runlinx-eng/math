@@ -1,3 +1,22 @@
+## 当前准备分支｜运算顺序与逐块归约（Issue #176 / PR #177，2026-11-16）
+
+直接工程父为175正常合并后的实际main `1545c22567b933bcaae80f79e75e568e8ea4145e`（tree5ec29a318a88e0425b7448ce2f5efcaf5122b208、唯一父90435），其源码558原生/211节点/42合同保持，但自身新push Required43823034617/Fallback43823034687尚在独验。正式已验main90435为A541/202/36，见[172主线收据](https://github.com/runlinx-eng/math/issues/172#issuecomment-6910056746)。当前候选精确复用保存adab，只追加17原生/5净增节点/1合同，实际源码A575/1996、216/587节点、43合同，A575/B189/C124/D1028/E80；1552关联独立统计。父main及本HEAD各自完整验收才普通合并；合并后新main另验才结案176和计正式覆盖。
+
+| 原生课程 | 独立题目索引 | 来源节点 |
+| --- | --- | --- |
+| bracketlab | 0、1、2 | `mt_8jFSnXxqQD` |
+| orderlab | 0、1、2、3 | `mt_jHgRQ4hR0g` |
+| powerorder | 0、1、2、3、4 | `mt_X5cypSGoGU` |
+| signedproducts | 3 | `mt_rxInpOQ74w` |
+| mentalchoices | 1、3、4 | `mt_vmW2cb5c7A` |
+| storyfraction | 0 | `mt_dXq9VWm31W`（已有其他家族） |
+
+原core/helper/cases/14Node四资产与保存的4b708290逐字相同；独立有理数解析、1991表达式及全部22合法依赖顺序/63完成集合状态等23156断言通过。3个writeOnly原生、11关联保持隔离。新七资产增加7真实前置导航与2条Node，累计原六阶段、十类边界和完整备份；286checked/52retry/46Next、2空context/4成功+2损坏导入计划均须新HEAD真实原件确认。
+
+只向现有evidence-expansion末尾追加order调用/专属产物，82调用分布[33,13,7,5,7,5,3,4,3,2]；原81调用的组、顺序、环境、产物及12Job/22Artifact/35分钟全保留。旧order官方receipt272655ms（Required43634425210）与已验main6025该现有组946227ms、a522旧运行1198856ms仅用于容量选择，新版实际耗时仍待本次CI。入口order-v4按实际字节更新，面积导航fixture仅同步其依赖的learn.js完整hash，literal任务和动作不变。原任务/判题/State/v2及上游全量来源保持；不部署、不改变CI架构。
+
+保存adab的26项非状态变更资产逐字相同，只有执行/覆盖两份状态文档重绑。原PR177旧HEADc7c6已归档，未另建PR；既有[独立源码收据](https://github.com/runlinx-eng/math/issues/176#issuecomment-6907432209)复用，不把相同源码审查重复计数。下面上游段落为其当时准备记录，当前正式状态以上文及Issue130最新收据为准。
+
 ## P9 面积与周界构造｜Issue #174（2026-11-16，开发中）
 
 工程父为PR173已实际合并的main `90435ca7a50399daf0cc623b0f850eeb6be0f619`，tree `d0cbebf3aac133413b24af1ca8dd8624b20ae66b`，唯一父b622。时间541原生/202节点/36契约完整保留，但新main的push Required43818274839/Fallback43818274966尚在独立验收，不能提前作为正式覆盖。当前正式已验基线b622为A521/1996、192/587节点、31契约，B189/C124/D1082/E80；[独立原件收据](https://github.com/runlinx-eng/math/issues/147#issuecomment-6909270134)。本面积候选复用已保存f4fc源码，仅两份状态文档更新依赖；完整四段静态1785/0fail已实跑。其新HEAD与父main必须分别全验，合并后新main还须独立验收才更新正式计数。
