@@ -1,3 +1,4 @@
+import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
@@ -33,6 +34,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-scalechain'){
     const source=scaleChainBinding(task,context);
     return source?{type:task.type,summary:'想一想：这一轮的整体是哪个量？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-mixedaxis'){
+    const source=mixedAxisBinding(task,context);
+    return source?{type:task.type,summary:'想一想：不同写法的数怎样共用一条数轴？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
@@ -159,6 +164,38 @@ export function thinkingFeedback(task,model,record,context={}){
     return {title:'这次作品中的思考线索',observation:observations.join(' '),
       connection:'选出的部分与最后的结果有什么不同？用每小份的量，说明这一轮的整体和取量关系。',detail,method:null};
   }
+  if(task?.type==='x-mixedaxis'){
+    const source=mixedAxisBinding(task,context);if(!source)return null;
+    const proof=replayMixedAxisEvidence(task,model);if(!proof)return null;
+    const quantity=value=>value[1]===1?String(value[0]):value.join('/');
+    const ordered=proof.order.indices.map(index=>task.cards[index]).join(' → ');
+    const detail=['系统根据已经放下的坐标绘制数轴、刻度和点；这里只核对现存操作与提交，没有自动评价独立画图、自由解释或长期掌握。'];
+    if(attempts.slice(0,-1).some(attempt=>replayMixedAxisEvidence(task,attempt.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    for(const group of proof.order.equalValueGroups)detail.push(`卡片 ${group.indices.map(index=>task.cards[index]).join('、')} 表示同一个数 ${quantity(group.value)}，落在同一点；它们之间的先后不改变大小关系。`);
+    if(proof.comparisons.length)detail.push(`已确认的 ${proof.comparisons.length} 句比较同时核对了两边的数值与题目指定的说法，包括“严格”和“允许相等”的区别。`);
+    const draft=proof.currentDraft;
+    if(draft.status==='invalid-number')detail.push('当前输入还不是工具可接受的数轴坐标；图中这张卡仍保留在已经放下的位置。');
+    else if(draft.status==='outside-axis')detail.push('当前输入超出这条数轴的范围；图中这张卡仍保留在已经放下的位置。');
+    else if(draft.status==='different-from-card')detail.push('当前输入与这张卡已经放下的正确坐标不同；这份反馈核对的是已经应用的落点，当前输入尚未改变它。');
+    else if(!draft.matchesLastPlacementInput)detail.push('当前输入与这张卡的落点数值相同，但写法不同；这里只确认已经留下的落点，当前写法尚未成为新的放置记录。');
+    else detail.push('当前输入与最近一次放下这张卡时留下的输入一致。');
+    const wrongPlacements=proof.events.filter(event=>event.action==='place'&&event.accepted&&!event.placement.matchesCard).length;
+    const invalidPlacements=proof.failedRequests.filter(event=>event.action==='place').length;
+    const rejectedComparisons=proof.failedRequests.filter(event=>event.action==='symbol').length;
+    if(wrongPlacements)detail.push(`历史保留了 ${wrongPlacements} 次曾经放错的位置；当前每张卡的落点已重新核对，旧错误没有删去。`);
+    if(invalidPlacements)detail.push(`还有 ${invalidPlacements} 次无效或越界的坐标请求；当时没有放下新点，也没有把它们算成首次落点。`);
+    if(rejectedComparisons)detail.push(`记录保留了 ${rejectedComparisons} 次未通过的比较请求及其输入和提示，后来确认的正确比较分别核对。`);
+    if(proof.resets.length){
+      const first=proof.firstPlacement,current=proof.currentRoundFirstPlacement;
+      detail.push(`记录保留了 ${proof.resets.length} 次重摆。最早实际放下的是卡片 ${first.card}，当时坐标为 ${quantity(first.value)}；本轮第一次实际放下的是卡片 ${current.card}，坐标为 ${quantity(current.value)}。首次位置即使曾经放错也仍保留。`);
+    }
+    return {title:'这次作品中的思考线索',
+      observation:`本次已经把 ${proof.cards.length} 张卡放在 ${proof.axis.min} 到 ${proof.axis.max} 的同一条数轴上，各卡的数值与已应用坐标相符。留下的从小到大顺序是 ${ordered}。`,
+      connection:'如果两张卡写法不同却落在同一点，怎样说明它们的量相同？再看看输入框：改了文字之后，图上的点什么时候才会移动？',
+      detail,method:null};
+  }
+
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);if(!source)return null;
     const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;
