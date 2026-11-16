@@ -1,3 +1,4 @@
+import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
 import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
 import {paperLabEvidenceExample} from './paperlab-evidence-fixture.mjs';
 // Source-derived candidates are review work, never automatic runtime admission.
@@ -26,7 +27,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=task=>task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):exampleModel(task);
+const fixtureFor=task=>task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
