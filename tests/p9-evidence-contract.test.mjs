@@ -1,3 +1,4 @@
+import money from './fixtures/p9-money-cases.cjs';
 import order from './fixtures/p9-order-cases.cjs';
 import {orderEvidenceExample} from '../scripts/order-evidence-fixture.mjs';
 import area from './fixtures/p9-area-cases.cjs';
@@ -50,6 +51,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ ...Object.fromEntries(['coins','cart'].map(kind=>['money-'+kind,money.cases.filter(c=>c.type==='x-m33-'+kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  order:order.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(kind=>['area-'+kind,area.cases.filter(c=>c.kind===kind).map(({sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>['time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))])),
@@ -161,7 +163,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,41);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,43);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

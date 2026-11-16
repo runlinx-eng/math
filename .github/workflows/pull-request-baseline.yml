@@ -130,6 +130,9 @@ jobs:
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
+          node --check dist/learning/money-evidence.js
+          node --check tests/fixtures/p9-money-navigation.cjs
+          node --check tests/p9-money-adapter-browser.cjs
           node --check dist/learning/order-evidence.js
           node --check scripts/order-evidence-fixture.mjs
           node --check tests/fixtures/p9-order-navigation.cjs
@@ -236,6 +239,8 @@ jobs:
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
             tests/p9-wideshift-navigation.test.mjs
+            tests/p9-money-evidence-adapter.test.mjs
+            tests/p9-money-navigation.test.mjs
             tests/p9-order-evidence-adapter.test.mjs
             tests/p9-order-navigation.test.mjs
             tests/p9-area-evidence-adapter.test.mjs

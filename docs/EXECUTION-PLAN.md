@@ -1,3 +1,11 @@
+## 2026-11-16｜Issue #179 钱币完整候选
+
+- 从运算顺序WIP adab5f65/tree a1ec5988继续；宽移/PV/time/area/order及已审整圆修复完整保持。正式已验main6025仍A472，候选不能先算主线。
+- 原28原生/12净增节点/2合同，候选A603/228/45；20关联及10旧practice隔离。核心、固定案例、49Node逐字复用b07，保留最新真实choice label显示修正；独立数学145222断言已通过。
+- 六资产升级48目标/25课程/10真实前置、516checked/650当前模型captures/74retry/66Next，全部旧capture与retry保留。兼容构造来源独立导入与统计，4 native成功+2兼容成功+4损坏真实chooser路径待当前HEAD Chromium验证。
+- 公共整合追加28来源manifest、两注册、可选引导反馈、money-v3精确入口/缓存；原audit example路径无需修改。area导航仅同步learn.js发布字节hash。money只追加现有ui，83调用/12Job/22Artifact/35min及原82调用保持。
+- 当前候选未正式CI验收，后续按实际新main逐个推进169→170→173→175→177→183。#180/#145保持，#209不自动合并；不部署、不改原题/判题/v2、不重试本地Chromium EPERM。
+
 ## 2026-11-16｜Issue #176 运算顺序完整候选
 
 - 从面积WIP f4fcfbb9（tree d53ca6c9）继续，保留已保存宽移/PV/time/area及已审查整圆修复；当前正式main6025/A472不因候选增长变化。按Issue130既有169→170→173→175→177依实际新main逐项验收。

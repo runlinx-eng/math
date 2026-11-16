@@ -40,6 +40,7 @@ const groups={
   {"file":"tests/concept-visual-browser.cjs","env":{"MATH_CONCEPT_BROWSER_SCOPE":"smoke"}},
   {"file":"tests/node-name-browser.cjs","env":{}},
   {"file":"tests/relationship-wording-browser.cjs","env":{}},
+  {"file":"tests/p9-money-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/overview-readability-v1/",
   "verification/spatial-focus-transition/",
@@ -73,6 +74,7 @@ const groups={
   "verification/p5-integration/",
   "verification/continuous-space/",
   "verification/p6b-layout/",
+  "verification/p9-money-adapter/",
  ]},
  "evidence-core":{commands:[
   {"file":"tests/p9-thinking-feedback-browser.cjs","env":{}},
