@@ -1,3 +1,5 @@
+import area from './fixtures/p9-area-cases.cjs';
+import {areaEvidenceExample} from '../scripts/area-evidence-fixture.mjs';
 import time from './fixtures/p9-time-cases.cjs';
 import {timeEvidenceExample} from '../scripts/time-evidence-fixture.mjs';
 import pvbench from './fixtures/p9-pvbench-cases.cjs';
@@ -46,6 +48,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ ...Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(kind=>['area-'+kind,area.cases.filter(c=>c.kind===kind).map(({sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>['time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))])),
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
@@ -83,7 +86,7 @@ const reviewed={
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
-const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):exampleModel(task);
+const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -155,7 +158,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,35);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,40);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
