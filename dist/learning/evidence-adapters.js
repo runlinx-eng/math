@@ -1,3 +1,4 @@
+import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
@@ -40,6 +41,7 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ {id:'order',type:'x-orderlab',binding:orderBinding,replay:replayOrderEvidence},
  ...[['partition','grid'],['design','grid'],['compare','compare'],['pieces','pieces'],['stadium','circle'],['openbox','solid']].map(([kind,type])=>({
   id:'area-'+kind,type:'x-a30-'+type,
   binding:(task,context)=>{const source=areaBinding(task,context);return source?.kind===kind?source:null;},

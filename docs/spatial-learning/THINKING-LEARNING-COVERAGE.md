@@ -1,3 +1,20 @@
+## 当前准备分支｜运算顺序与逐块归约（Issue #176 / PR #177，2026-11-16）
+
+直接工程父为已保存面积候选f4fcfbb93d16ac0176b9cb908f17dc3e15aad1b3，其558原生/211节点/42合同保持；正式已验main6025仍A472/175/28。本候选只追加17原生/5净增节点/1合同，预期A575/1996、216/587节点、43合同，A575/B189/C124/D1028/E80；1552关联独立统计。当前候选未正式CI验收，不能算main覆盖。
+
+| 原生课程 | 独立题目索引 | 来源节点 |
+| --- | --- | --- |
+| bracketlab | 0、1、2 | `mt_8jFSnXxqQD` |
+| orderlab | 0、1、2、3 | `mt_jHgRQ4hR0g` |
+| powerorder | 0、1、2、3、4 | `mt_X5cypSGoGU` |
+| signedproducts | 3 | `mt_rxInpOQ74w` |
+| mentalchoices | 1、3、4 | `mt_vmW2cb5c7A` |
+| storyfraction | 0 | `mt_dXq9VWm31W`（已有其他家族） |
+
+原core/helper/cases/14Node四资产与保存的4b708290逐字相同；独立有理数解析、1991表达式及全部22合法依赖顺序/63完成集合状态等23156断言通过。3个writeOnly原生、11关联保持隔离。新七资产增加7真实前置导航与2条Node，累计原六阶段、十类边界和完整备份；286checked/52retry/46Next、2空context/4成功+2损坏导入计划均须新HEAD真实原件确认。
+
+只向现有evidence-expansion末尾追加order调用/专属产物，82调用分布[33,13,7,5,7,5,3,4,3,2]；原81调用的组、顺序、环境、产物及12Job/22Artifact/35分钟全保留。旧order官方receipt272655ms（Required43634425210）与已验main6025该现有组946227ms、a522旧运行1198856ms仅用于容量选择，新版实际耗时仍待本次CI。入口order-v4按实际字节更新，面积导航fixture仅同步其依赖的learn.js完整hash，literal任务和动作不变。原任务/判题/State/v2及上游全量来源保持；不部署、不改变CI架构。
+
 ## P9 面积与周界构造｜Issue #174（2026-11-16，开发中）
 
 直接开发基线为已保存的时间候选 `a770a49027783fca78b3ee88c594c3fc5aa686f4`，其541原生/202节点/36契约完整保留；它仍待前置逐族主干验收，不能当作正式覆盖。当前已验main6025的正式覆盖为A472/175节点/28契约。完整B30范围43原生/16源节点及44关联固定在 `tests/fixtures/p9-area-cases.cjs`，原model/view/geometry/solid-view/题源指纹逐字校验；注册只限以下17来源，不按widget类型自动授予证据。

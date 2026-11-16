@@ -1,3 +1,4 @@
+import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
@@ -81,6 +82,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-orderlab'){
+    const source=orderBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这一小块要先准备什么？（可选）',question:source.question}:null;
+  }
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次图形中的部分、面积和外边（可选）',question:source.question}:null;
@@ -183,6 +188,20 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-orderlab'){
+    const source=orderBinding(task,context);if(!source)return null;
+    const proof=replayOrderEvidence(task,model);if(!proof)return null;
+    const result=proof.built.value[1]==='1'?proof.built.value[0]:proof.built.value.join('/');
+    const detail=['这里只核对当前运算树中每一小块的依赖、亲手合成的精确量和本次结果；没有自动评价心算方法、自由解释、故事理解或长期掌握。'];
+    if(attempts.slice(0,-1).some(a=>replayOrderEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.failedRequests.length)detail.push(`保留的记录中有 ${proof.failedRequests.length} 次未完成的请求；先选了还没准备好的部分、未成功的合成或摆树仍按原样保留，没有当成成功操作。`);
+    if(proof.earlierInexactReductions.length)detail.push('旧构造中工具接受过的近似数仍保留；这次核对的是后来重新摆出并逐块精确完成的构造。');
+    if(proof.constructions.some(e=>e.kind==='reset'))detail.push('重新做保留了原来的字段、操作与尝试；本轮每一块已经重新核对。');
+    if(proof.pending&&!proof.pending.rawMatchesBuilt)detail.push('输入框中的文字与已摆出的关系精确对应，但没有把未点击摆出的文字当成另一轮操作。');
+    if(proof.currentIssue)detail.push('末次请求的原提示仍保留；它没有改变已完成的运算树，这次检查核对的是当前完整作品。');
+    return{title:'这次作品中的思考线索',observation:`你在当前关系中亲手合过 ${proof.effectiveSteps.length} 块；每块所需的部分先准备好，填写的量与原算式精确对应。最后得到 ${result}，与这次提交的结果一致。`,connection:'如果先换到另一块，它需要的量是否都已准备好？哪些小块互不依赖，哪些必须先后接起来？',detail,method:null};
+  }
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);if(!source)return null;
     const proof=replayAreaEvidence(task,model);if(!proof)return null;
