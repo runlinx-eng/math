@@ -1,3 +1,4 @@
+import {paperLabEvidenceExample} from './paperlab-evidence-fixture.mjs';
 // Read-only, source-derived task interaction and evidence capability inventory.
 // Capability is not verified learner mastery or individual browser validation.
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
@@ -71,7 +72,7 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // reviewed binding and successful independent replay establish A, not a board key.
  const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):exampleModel(task))):null;
+   adapter.replay(task,adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):exampleModel(task))):null;
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}

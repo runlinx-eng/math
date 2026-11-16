@@ -4300,6 +4300,114 @@
       "adapter": "fracdecompose",
       "taskHash": "6c3c1cea77e36672aac00913ec97f8e6a3c60128e873d2ab165c14aa81de23e9",
       "method": null
+    },
+    {
+      "sessionId": "halfpaper",
+      "index": 1,
+      "type": "x-paperlab",
+      "nodeId": "mt_-hTTat0mBR",
+      "adapter": "paperlab",
+      "taskHash": "d7f860fb2e5a3ffa064a636b2cdcd98d9a6aaa6be0f439671cc61aac25e03582",
+      "method": null
+    },
+    {
+      "sessionId": "halfpaper",
+      "index": 2,
+      "type": "x-paperlab",
+      "nodeId": "mt_-hTTat0mBR",
+      "adapter": "paperlab",
+      "taskHash": "d7a22cf0b6b726646dafd440be575e3f37256fb35fd48187993631f1f53e93b0",
+      "method": null
+    },
+    {
+      "sessionId": "quarterpaper",
+      "index": 0,
+      "type": "x-paperlab",
+      "nodeId": "mt_g3W0mdADVu",
+      "adapter": "paperlab",
+      "taskHash": "84d02d04a51e1a77023c3640cffbd8277600daaffe51aa752ed90d2ed6d621a3",
+      "method": null
+    },
+    {
+      "sessionId": "quarterpaper",
+      "index": 2,
+      "type": "x-paperlab",
+      "nodeId": "mt_g3W0mdADVu",
+      "adapter": "paperlab",
+      "taskHash": "d14932dcdc2d9ae478088075dc1e7452d5bc797433f6462d27cf1315b74d197a",
+      "method": null
+    },
+    {
+      "sessionId": "shapeparts",
+      "index": 0,
+      "type": "x-paperlab",
+      "nodeId": "mt_xACS3rWWDp",
+      "adapter": "paperlab",
+      "taskHash": "4d1c84bdbbc10a7e89d314ceb7c88a6605042c8fde401569ee41426d9eebbda1",
+      "method": null
+    },
+    {
+      "sessionId": "shapeparts",
+      "index": 1,
+      "type": "x-paperlab",
+      "nodeId": "mt_xACS3rWWDp",
+      "adapter": "paperlab",
+      "taskHash": "833791debf12e69518857c080f54e5eaf7b63d4e18f053c75aea722bf4404ca9",
+      "method": null
+    },
+    {
+      "sessionId": "shapeparts",
+      "index": 2,
+      "type": "x-paperlab",
+      "nodeId": "mt_xACS3rWWDp",
+      "adapter": "paperlab",
+      "taskHash": "a77be38e90c215524595a8c39744e624a95e90fd424c5caec61196649eb91678",
+      "method": null
+    },
+    {
+      "sessionId": "shapeparts",
+      "index": 3,
+      "type": "x-paperlab",
+      "nodeId": "mt_xACS3rWWDp",
+      "adapter": "paperlab",
+      "taskHash": "e63dbb0245631a3371bca67690ec36f1b4d82cc72a2e0ab9f36098819f33c680",
+      "method": null
+    },
+    {
+      "sessionId": "areaparts",
+      "index": 0,
+      "type": "x-paperlab",
+      "nodeId": "mt_idbKDrf9qZ",
+      "adapter": "paperlab",
+      "taskHash": "d72a6319639b9ab75e67e23a1be299bdff34ad8f9adb8a8812c94ba686e77c77",
+      "method": null
+    },
+    {
+      "sessionId": "areaparts",
+      "index": 1,
+      "type": "x-paperlab",
+      "nodeId": "mt_idbKDrf9qZ",
+      "adapter": "paperlab",
+      "taskHash": "c3b48cd34eb12261a6b4c345fa161fd66fdf42202fd72814217c0456fafb0122",
+      "method": null
+    },
+    {
+      "sessionId": "areaparts",
+      "index": 2,
+      "type": "x-paperlab",
+      "nodeId": "mt_idbKDrf9qZ",
+      "adapter": "paperlab",
+      "taskHash": "bad8c6e9fbc072c774a0000e73544f59c2c733dfd1db7e3cb7bf6ad25a25f9ea",
+      "method": null
+    },
+    {
+      "sessionId": "tenpieces",
+      "index": 1,
+      "type": "x-paperlab",
+      "nodeId": "mt_YzM5goBctT",
+      "adapter": "paperlab",
+      "taskHash": "7838eb61c0ddc2552ba542521ab0fee409a80ab184bacd39c6a27ae93fc06e77",
+      "method": null
     }
   ]
 }
