@@ -1,5 +1,6 @@
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
+import {fracShareBinding,replayFracShareEvidence} from './fracshare-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
@@ -43,6 +44,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-decimalengine'){
     const source=decimalEngineBinding(task,context);
     return source?{type:task.type,summary:'想一想：余数怎样帮助检验小数的预测？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-fracshare'){
+    const source=fracShareBinding(task,context);
+    return source?{type:task.type,summary:'想一想：这一小份怎样平均分给每个人？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
@@ -231,6 +236,26 @@ export function thinkingFeedback(task,model,record,context={}){
       detail,method:null};
   }
 
+  if(task?.type==='x-fracshare'){
+    const source=fracShareBinding(task,context);if(!source)return null;
+    const proof=replayFracShareEvidence(task,model);if(!proof)return null;
+    const name=r=>r[1]===1?String(r[0]):r.join('/'),unit=proof.unit||'个整体';
+    const detail=[
+      '整条、等分、归属颜色和每人块数由工具显示；这里只核对保留的分配操作与当前提交，不评价独立作图、实物分享、自由解释或长期掌握。',
+      `最初填写的猜测“${proof.firstGuess.raw}”仍保留；本轮开始时填写的是“${proof.currentGuess.raw}”。猜测和最后提交分别记录。`
+    ];
+    if(attempts.slice(0,-1).some(a=>replayFracShareEvidence(task,a.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    if(proof.failedRequests.length)detail.push(`记录保留了 ${proof.failedRequests.length} 次未成功的开始或细分请求；这些请求没有被当成成功分配，后来的纠正仍能核对。`);
+    if(proof.cutRequests.filter(request=>request.accepted).length>1)detail.push('重新切分后，小块需要重新分配；较早的分配仍保留在操作记录中。');
+    if(proof.resets.length)detail.push('重做保留了原输入和最初猜测；这里核对的是本轮留下的分配和最新提交。');
+    if(proof.issue)detail.push('最后一次细分请求的提示仍保留；这里核对的是已有小块和改回合法分法后的当前提交，没有把那次失败说成成功。');
+    if(proof.story.required)detail.push('你填写的故事原文仍保留；这里没有判断故事语义、作者或解释是否充分。');
+    return {title:'这次作品中的思考线索',
+      observation:`整条表示 1${unit}，原来要分的是 ${name(proof.originalQuantity)}${unit}。当前的 ${proof.totalPieces} 个小块全部分给了 ${proof.people} 人，每人 ${proof.recipients[0].count} 块；每小块是 ${name(proof.pieceValue)}${unit}，每人得到 ${name(proof.result)}${unit}。你本次提交的答案“${proof.answer.raw}”与各人的量等值；逆算“${proof.inverse.raw}”把每人的量乘回人数，回到原来的 ${name(proof.originalQuantity)}${unit}。`,
+      connection:'如果再把每小块切细，块数和每块大小会怎样一起变化？为什么每人的量乘回人数应回到原来要分的那一小份？',
+      detail,method:null};
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);if(!source)return null;
     const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;
