@@ -1,3 +1,4 @@
+import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 // Describe only the submitted, current, replay-validated work. These observations
@@ -29,6 +30,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-decimalengine'){
+    const source=decimalEngineBinding(task,context);
+    return source?{type:task.type,summary:'想一想：余数怎样帮助检验小数的预测？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
@@ -128,6 +133,36 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-decimalengine'){
+    const source=decimalEngineBinding(task,context);if(!source)return null;
+    const proof=replayDecimalEngineEvidence(task,model);if(!proof)return null;
+    const quantity=value=>value[1]===1?String(value[0]):value.join('/');
+    const prediction=value=>value==='stop'?'会分完':'会循环';
+    const detail=['下一行输入、单位、重复余数检测和循环提示由工具生成；这里只核对保留的输入与逐行数量关系，没有自动评价独立约分、自由解释、一般证明或长期掌握。'];
+    if(attempts.slice(0,-1).some(attempt=>replayDecimalEngineEvidence(task,attempt.value)===null))detail.unshift('你修改后又试了一次。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    detail.push(`本轮输入的表示是 ${proof.reduction.raw}，工具保存为 ${quantity(proof.simple)}；这里只核对提交表示与原量相同。`);
+    if(proof.reduction.toolNormalized)detail.push('这个输入经过工具规范化；记录没有包含逐步求公因数或分子分母同除的过程。');
+    const last=proof.rows.at(-1);
+    detail.push(`最后一行记录为 ${last.input} = ${last.quotient} × ${proof.simple[1]} + ${last.remainder}，这一行每个单位是 ${quantity(last.unit)}。`);
+    if(proof.expansion.kind==='stop')detail.push('最后余数为0，本次记录的除法在这里分完。');
+    else{
+      const prefix=proof.expansion.nonrepeatingDigits;
+      detail.push(`记录中的余数 ${proof.expansion.firstRepeatedRemainder} 再次出现，工具标出的重复段为 ${proof.expansion.repeatingDigits}，从小数第 ${proof.expansion.cycleStartFractionalPlace} 位开始。${prefix?'前面的 '+prefix+' 是不重复的一段。':'循环前没有不重复的小数位。'}`);
+    }
+    const first=proof.firstPrediction,current=proof.currentRoundFirstPrediction;
+    detail.push(`最早实际留下的预测是“${prediction(first.value)}”，${first.matchesExpected?'与本题核对结果相符。':'它与本题核对结果不同，原预测仍保留。'}`);
+    if(proof.resets.length)detail.push(`保留了 ${proof.resets.length} 次重做；本轮第一次实际留下的预测是“${prediction(current.value)}”。重做没有删除最早预测或旧操作。`);
+    if(proof.failedRequests.length)detail.push(`历史保留了 ${proof.failedRequests.length} 次没有推进构造的请求；当时的输入和提示分别保留，后来成功的步骤另行核对。`);
+    const wrongPredictions=proof.events.filter(event=>event.action==='predict-stop'&&event.accepted&&!event.mathematicallyCorrect).length;
+    if(wrongPredictions)detail.push(`记录中有 ${wrongPredictions} 次与结果不符的预测，最后实际记录的判断已与逐行结果核对。`);
+    detail.push('关于10的质因子和重复余数的说明是本次选择的固定选项；独立解释需要另外观察。');
+    return {title:'这次作品中的思考线索',
+      observation:`你留下的分母因子是 ${proof.factorization.factors.join(' × ')}。逐行商位和余数核对得到 ${task.n}/${task.d} = ${proof.expansion.notation}。`,
+      connection:proof.expansion.kind==='stop'?'为什么要先看最简分母？用每一行余数说明，这次怎样走到了0？':'找一找第一次重复的余数：从它继续计算，哪几步会再次出现？',
+      detail,method:null};
+  }
+
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);if(!source)return null;
     const proof=replayFdpBoardEvidence(task,model);if(!proof)return null;
