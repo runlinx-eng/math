@@ -406,8 +406,16 @@ async function main(){
    }
    for(const spec of bridges){
     label=prefix+'-associated-'+spec.id+'-'+spec.index;const nativeBefore=structuredClone((await state()).lessons);
-    const response=await page.goto(base+'learn.html#'+spec.id),firstSpec={id:spec.id,index:0};await wait(page,firstSpec);
-    ok(response?.fromServiceWorker()===true,label+' associated lesson opens from stopped-origin cache');
+    const beforeURL=new URL(page.url()),targetURL=new URL(base+'learn.html#'+spec.id);
+    const response=await page.goto(targetURL.href),firstSpec={id:spec.id,index:0};await wait(page,firstSpec);assert.equal(page.url(),targetURL.href);
+    if(response)ok(response.fromServiceWorker()===true,label+' associated lesson opens from stopped-origin cache');
+    else{
+     assert.equal(response,null);assert.equal(beforeURL.origin,targetURL.origin);assert.equal(beforeURL.pathname,targetURL.pathname);
+     assert.equal(beforeURL.search,targetURL.search);assert.notEqual(beforeURL.hash,targetURL.hash);
+     ok(true,label+' associated lesson opens through the existing document hash');
+    }
+    offline.push({width,height,id:spec.id,phase:'associated-lesson-navigation',beforeURL:beforeURL.href,targetURL:targetURL.href,
+     navigationMode:response?'document':'hash',fromServiceWorker:response?response.fromServiceWorker():null});
     assert.deepEqual(await model(firstSpec),Tasks.defaultModel(taskFor(firstSpec)));
     if(spec.index===1){
      const prep=prerequisites[spec.id];assert.ok(prep);assert.deepEqual(taskFor(firstSpec),prep.task);
