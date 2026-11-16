@@ -1,4 +1,31 @@
-## 待验候选｜固定数位工作台（Issue #147 / PR #170）
+## 待验候选｜时间构造（Issue #172 / PR #173）
+
+当前时间构造仍是待验候选。工程父main正在进行自己的新push Required/Fallback与原件验收，可并行运行本PR的新完整CI；合并必须等待父main和本PR各自独立全验。不能把旧时间脚本成功、本地源码审查或本PR绿灯代替父main门禁。
+
+本候选接在已合并的固定数位工作台main `b622290dc7d885a1ff2c5f773fa650b795d46ef3`（tree `c067bbf63f6ed349222ad4af987aba2f53372002`） 之后，追加20条已审原生来源、10个此前未覆盖节点及5个严格契约。候选并集目标为 **A541/1,996原生、202/587节点、36契约**，分布 A541/B189/C124/D1062/E80；原521条审查清单和上游数学能力保全。正式main状态须以Issue #130新的独立验收为准。
+
+| 原生课程 | 固定索引 | 真实来源节点 |
+| --- | --- | --- |
+| eventorder | 1、2 | mt_-vvVxpOHG2 |
+| durationunit | 0、1 | mt__N55B7u7HD |
+| durationorder | 0、2 | mt_6XCURuNwPw |
+| durationwork | 0、2 | mt_4emC463IyW |
+| fractiontime | 0、1、2、3 | mt_Jz9UuT8BXW |
+| elapsedtime | 0、1、2 | mt_IL86kadLSS |
+| romanclock | 1 | mt_5J2quSTspi |
+| minuteclock | 1 | mt_UNzojLkNdm |
+| quarterclock | 2 | mt_MgsDabdnr1 |
+| weekmonth | 0、1 | mt_bj1YCgNWUx |
+
+五个契约分别为time-order 5题、time-parts 5题、time-roman 1题、time-stopwatch 3题和time-steps 6题。独立核对时间参照、选区份量、罗马符号、秒/分钟与实际多段累计；全部method:null。40个其余原生与63关联不继承严格来源。最初摆放/停止、真实失败与重试、当前保留段和待应用jump严格分开，系统绘图和模拟读数不推断为独立作图或现实测量。
+
+核心/helper/完整来源fixture/原14项数学Node复用；新增2项原控件导航测试和已独立审查的连续浏览器脚本。浏览器双视口计划434次真实检查（260原生、126关联、16未覆盖代表、32前置），2空恢复context/4真实导入，完整保留失败、纠正、旧attempt和原始存储。Required在现有数量组末尾追加本族一次，完整80调用、分布 `[33,13,7,4,7,5,2,4,3,2]`，原79调用、全部旧产物和35分钟限时保留。当前HEAD与新main各自的完整原Artifact、P10、离线与真实数学结果必须实际通过，旧PR #173结果和计划数量不能代替。
+
+---
+
+## 历史准备记录｜固定数位工作台（Issue #147 / PR #170）
+
+本节保留PR170重接时的候选与验收状态；该PR现已合并为上文工程父。其新main独立push验收与正式覆盖以Issue130最新收据为准。
 
 当前PV仍是待验候选。父main正在进行自己的新push Required/Fallback与原件验收；可并行启动本PR的完整CI，合并必须等待父main及本PR各自独立验收通过。不能用旧PV成功或本PR绿灯代替父main门禁。
 
