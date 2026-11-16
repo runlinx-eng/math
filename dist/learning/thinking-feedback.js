@@ -2,6 +2,7 @@ import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js'
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
 import {fracShareBinding,replayFracShareEvidence} from './fracshare-evidence.js';
 import {mixedTradeBinding,replayMixedTradeEvidence} from './mixedtrade-evidence.js';
+import {fracDecomposeBinding,replayFracDecomposeEvidence} from './fracdecompose-evidence.js';
 import {fdpBoardBinding,replayFdpBoardEvidence} from './fdpboard-evidence.js';
 import {scaleChainBinding,replayScaleChainEvidence} from './scalechain-evidence.js';
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
@@ -53,6 +54,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-mixedtrade'){
     const source=mixedTradeBinding(task,context);
     return source?{type:task.type,summary:'想一想：整体和小份怎样换，拿走的量怎样核对？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-fracdecompose'){
+    const source=fracDecomposeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：怎样留下真正不同的拆法？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-fdpboard'){
     const source=fdpBoardBinding(task,context);
@@ -287,6 +292,32 @@ export function thinkingFeedback(task,model,record,context={}){
     return {title:'这次作品中的思考线索',
       observation:`${operation}每个小份是 1/${proof.denominator}。当前剩下 ${b.w} 个整体、${b.p} 个小份，总量为 ${name(proof.result)}。本次填写的整体“${proof.whole.raw}”、零头“${proof.part.raw}”和总量“${proof.answer.raw}”分别与当前图一致。`,
       connection:proof.operation==='+'?'先全部换成小份，与先把够一整个的小份合起来，有什么相同和不同？怎样核对换单位前后的总量不变？':'先全部换成小份，与只在小份不够时换开一个整体，有什么相同和不同？怎样核对留下的量与拿走的量仍合成原来的量？',
+      detail,method:null};
+  }
+  if(task?.type==='x-fracdecompose'){
+    const source=fracDecomposeBinding(task,context);if(!source)return null;
+    const proof=replayFracDecomposeEvidence(task,model);if(!proof)return null;
+    const q=value=>value[1]===1?String(value[0]):value.join('/'),draft=proof.currentDraft;
+    const draftMessage=draft.savedSnapshotMatches?'当前分组和等式与已有的一种保存记录一致。':
+      !draft.isSplit?'当前草稿还没有拆成两组，未作为新的拆法保存。':
+      !draft.equation.valid?'当前草稿的等式还没有与当前分组对上；这里只确认已保存的作品。':
+      draft.sameDecompositionSavedIndices.length?'当前草稿只是已有分组的顺序或写法变化，没有增加一种新的拆法。':
+      '当前草稿的分组与等式已经对上，但还没有保存成新的作品。';
+    const detail=[
+      '工具提供等大的小份，并按切口画出分组、显示每组小份数；这里核对实际切口和保存等式，不评价独立作图、自由解释或长期掌握。',
+      ...proof.savedDecompositions.map((saved,index)=>`已保存第 ${index+1} 种：各组有 ${saved.parts.join('、')} 个小份，对应的量为 ${saved.groupQuantities.map(q).join('、')}；你留下的等式是“${saved.equation.raw}”。等式各项与这些组一一对应，但记录没有把书写先后指定为图上组的顺序。`)
+    ];
+    const first=proof.firstAttempt;
+    detail.push(`第一次保存请求的分组是 ${first.decomposition.parts.join('、')} 个小份，填写“${first.fields.equation||'（空）'}”；${first.accepted?'当时已成功保存':'当时未保存成功，原填写和提示仍保留'}。`);
+    if(proof.failedRequests.length)detail.push(`记录保留了 ${proof.failedRequests.length} 次未保存成功的请求，包括当时的分组、等式和提示，没有把这些请求算作新拆法。`);
+    if(proof.issue)detail.push('最后一次保存未成功的提示仍保留；已经保存的作品与这次未成功的请求分别核对。');
+    if(proof.newGroups.length)detail.push('“换一种分组”只清开当前切口，先前保存的拆法和原填写仍保留。');
+    if(proof.resets.length)detail.push(`记录保留了 ${proof.resets.length} 次重摆。这里列出最后一轮的保存成果；更早的保存与失败仍在操作记录中，第一次保存请求也没有被替换。`);
+    if(attempts.slice(0,-1).some(a=>replayFracDecomposeEvidence(task,a.value)===null))detail.push('你修改后又检查了一次；较早的检查记录仍保留。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',
+      observation:`你已经保存 ${proof.savedDecompositions.length} 种不同的分组；每个小份是 ${q(proof.unitValue)}，每种保存作品的分组与等式都拼回原来的 ${q(proof.totalQuantity)}。${draftMessage}`,
+      connection:'把分组交换先后，为什么还是同一种拆法？试着指出等式中的每一项分别对应哪些小份。',
       detail,method:null};
   }
   if(task?.type==='x-fdpboard'){

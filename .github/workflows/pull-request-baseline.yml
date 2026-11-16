@@ -124,6 +124,8 @@ jobs:
           node --check tests/p9-fracshare-adapter-browser.cjs
           node --check dist/learning/mixedtrade-evidence.js
           node --check tests/p9-mixedtrade-adapter-browser.cjs
+          node --check dist/learning/fracdecompose-evidence.js
+          node --check tests/p9-fracdecompose-adapter-browser.cjs
           node --check dist/learning/scalechain-evidence.js
           node --check tests/p9-scalechain-adapter-browser.cjs
           node --check tests/p9-numeric-compat-browser.cjs
@@ -209,6 +211,7 @@ jobs:
             tests/p9-fdpboard-evidence.test.mjs
             tests/p9-fracshare-evidence.test.mjs
             tests/p9-mixedtrade-evidence.test.mjs
+            tests/p9-fracdecompose-evidence.test.mjs
             tests/p9-scalechain-evidence.test.mjs
             tests/phase5-b18.test.mjs
             tests/p9-numeric-compat.test.mjs
