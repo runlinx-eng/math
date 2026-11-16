@@ -1,3 +1,15 @@
+## Issue #232｜两种单位的可见操作与有效保存（准备分支）
+
+仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。
+
+size仅接受源按钮的规范index，add/remove/record的data为空，record的fields严格为measure与空unit。可见输入为measure、answers.0、prose；隐藏offset为2、estimate/error/unit为空、values为空。原种子仅为合法uint32元数据。额外字段、伪造issue、非规范index及跨类型动作不授严格证据，原validator和备份兼容不改。
+
+两课程6位置含两个真前置，每视口4Next：原vessels选择容器0/spoon/pour六次/seen/填写6；关联units从0到5放块后记录6块。source路线不注入模型/答案/游标，真实共享retry和完整State/v2累积保全；2空原生恢复context/4真按钮chooser导入，构造cap与旧practice及坏包拒绝分别报告。实际场景数量以冻结脚本和Issue232收据为准，不把Node/SVG定义写成Chromium/PNG成功。
+
+每种size的first包括首次空白或非数字失败；未选size的失败不立first。重新点同size清count并只删除该size保存，成功add/remove也使当前保存失效；满额add与失败record可保留旧run及真实issue。两个大小顺序均可实际到达，反馈不无据声称先大后小。首次原文、bad、失败请求、旧attempt、notes/draft都保留。
+
+2000历史上限下整个model no-op，但原外层update仍写时间戳并按bad/issue设置support；旧attempt元数据不回写。构造兼容7模式为空板无attempt及clean/bad/issue×0/1，零attempt先真实Check才有可见P3 retry，容量重试无须reload。1200字符可写，1201写前validation blocked且旧raw不变，另按0/1旧attempt实际可见控件测试，reload后才恢复。
+
 ## Issue #231｜等长单位的可见事件与累计记录（准备分支）
 
 仅6原生/3来源节点且3净新增/1合同：lengthstart:0/2、sameunitlength:0/1/2、twounits:2。5关联与3旧practice单列，ruler/refine/compare/convert等不接入本合同。

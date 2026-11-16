@@ -1,3 +1,14 @@
+## 2026-11-16｜Issue #232 两种单位与余量完整候选
+
+- 工程父为unitcover完整WIP6ba8dae4，保全全部既有成果。仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。
+- 候选628/239/49须本次完整共同audit实算；正式main以Issue130最新独立收据为准，不借WIP或旧CI。
+- 原工具给定单位大小、顺序排放、显示完整单位数和余量；严格层只核两种源单位下T=q×s+r、0≤r<s及各自有效保存。较小源单位1在这些题中余0，不推广更小单位余量总更少，不证明独立摆放、数数、一般除法、物理测量、自选单位或自由解释，method:null。
+- 原runs只存size/count/remainder，不存数量原文。每个仍有效的成功record须按实际历史独立核精确数量；当前measure也须精确，但9改9.0可不重录，最新完整提交门槛仍须重新Check。原near成功不能改写为原判错；另一个非当前大小的near保存也必须重新精确保存，不能借当前正确数字背书。
+- 每种size的first包括首次空白或非数字失败；未选size的失败不立first。重新点同size清count并只删除该size保存，成功add/remove也使当前保存失效；满额add与失败record可保留旧run及真实issue。两个大小顺序均可实际到达，反馈不无据声称先大后小。首次原文、bad、失败请求、旧attempt、notes/draft都保留。
+- 2000历史上限下整个model no-op，但原外层update仍写时间戳并按bad/issue设置support；旧attempt元数据不回写。构造兼容7模式为空板无attempt及clean/bad/issue×0/1，零attempt先真实Check才有可见P3 retry，容量重试无须reload。1200字符可写，1201写前validation blocked且旧raw不变，另按0/1旧attempt实际可见控件测试，reload后才恢复。
+- 只在现有evidence-place末尾追加本族，87调用[34,13,8,6,8,5,4,4,3,2]，原86命令的组/顺序/env/产物、12jobs/10组/22ZIP/35min及P10不变。已验PR170的相同七条脚本命令合计1487008ms，属于命令耗时而非job墙钟；新八条组合、额外context与发布载荷尚未实测，不按动作数线性外推，不保证容量，最终HEAD须真实全组通过。
+- 六资产完整冻结、独立core/browser/common源审与全静态后保存可追溯WIP；最终HEAD全CI、原日志/产物size+SHA+CRC、数学/原图/P10/v2仍单独门槛。前置与PR双全验后合并，新main再全验才结案。#180/#145保持，#209不自动合并；不部署、不重做离线、不重试本地Chrome EPERM。
+
 ## 2026-11-16｜Issue #231 等长单位完整候选
 
 - 工程父multable完整WIP6307317f，保留全部前序成果。仅6原生/3来源节点且3净新增/1合同：lengthstart:0/2、sameunitlength:0/1/2、twounits:2。5关联与3旧practice单列，ruler/refine/compare/convert等不接入本合同。

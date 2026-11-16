@@ -113,6 +113,7 @@ const groups={
   {"file":"tests/p9-decimalengine-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-unitrefine-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
@@ -121,6 +122,7 @@ const groups={
   "verification/p9-decimalengine-adapter/",
   "verification/p9-wideshift-adapter/",
   "verification/p9-pvbench-adapter/",
+  "verification/p9-unitrefine-adapter/",
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},

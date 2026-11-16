@@ -60,7 +60,7 @@ tests/p10-full-lessons-browser.cjs
 `.trim().split('\n');
 // Explicit reviewed additions; product discovery cannot update this list.
 const addedScripts=['tests/p9-storyledger-adapter-browser.cjs','tests/p9-samefraction-adapter-browser.cjs','tests/p9-division-adapter-browser.cjs','tests/b14-division-container-caption-browser.cjs','tests/p9-fractioncase-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs','tests/p9-portiongroups-adapter-browser.cjs','tests/p9-estimate-adapter-browser.cjs','tests/p9-joinstory-adapter-browser.cjs','tests/p9-angle-adapter-browser.cjs','tests/p9-numeric-compat-browser.cjs','tests/p9-transform-adapter-browser.cjs','tests/p9-groups-adapter-browser.cjs','tests/p9-fraction-order-adapter-browser.cjs','tests/p9-route-adapter-browser.cjs','tests/p9-mature-expansion-browser.cjs','tests/p9-groupwalk-adapter-browser.cjs',
- 'tests/p9-decimal-place-adapter-browser.cjs','tests/p9-fdpboard-adapter-browser.cjs','tests/p9-scalechain-adapter-browser.cjs','tests/p9-mixedaxis-adapter-browser.cjs','tests/p9-decimalengine-adapter-browser.cjs','tests/p9-fracshare-adapter-browser.cjs','tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs','tests/p9-paperlab-adapter-browser.cjs','tests/p9-wideshift-adapter-browser.cjs','tests/p9-pvbench-adapter-browser.cjs','tests/p9-time-adapter-browser.cjs','tests/p9-area-adapter-browser.cjs','tests/p9-order-adapter-browser.cjs','tests/p9-money-adapter-browser.cjs','tests/p9-cubefraction-adapter-browser.cjs','tests/p9-multable-adapter-browser.cjs','tests/p9-unitcover-adapter-browser.cjs'];
+ 'tests/p9-decimal-place-adapter-browser.cjs','tests/p9-fdpboard-adapter-browser.cjs','tests/p9-scalechain-adapter-browser.cjs','tests/p9-mixedaxis-adapter-browser.cjs','tests/p9-decimalengine-adapter-browser.cjs','tests/p9-fracshare-adapter-browser.cjs','tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs','tests/p9-paperlab-adapter-browser.cjs','tests/p9-wideshift-adapter-browser.cjs','tests/p9-pvbench-adapter-browser.cjs','tests/p9-time-adapter-browser.cjs','tests/p9-area-adapter-browser.cjs','tests/p9-order-adapter-browser.cjs','tests/p9-money-adapter-browser.cjs','tests/p9-cubefraction-adapter-browser.cjs','tests/p9-multable-adapter-browser.cjs','tests/p9-unitcover-adapter-browser.cjs','tests/p9-unitrefine-adapter-browser.cjs'];
 const reviewedScripts=[...originalScripts,...addedScripts];
 const context={event:'pull_request',sha:'a'.repeat(40),runId:'123456789',attempt:2};
 const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline}},browser:{result:'success',outputs:{}}});
@@ -73,11 +73,11 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
  assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
- assert.equal(commands.length,86);
+ assert.equal(commands.length,87);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[34,13,7,6,8,5,4,4,3,2]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[34,13,8,6,8,5,4,4,3,2]);
  assert.deepEqual(BROWSER_GROUPS.ui.commands.at(-1),{file:'tests/p9-money-adapter-browser.cjs',env:{}});
  assert.equal(BROWSER_GROUPS.ui.artifacts.at(-1),'verification/p9-money-adapter/');
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-operations-adapter-browser.cjs',env:{}},{file:'tests/p9-order-adapter-browser.cjs',env:{}},{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
@@ -91,7 +91,7 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.ok(BROWSER_GROUPS['evidence-core'].commands.some(command=>command.file==='tests/p9-groupwalk-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS['evidence-core'].commands,[{"file":"tests/p9-thinking-feedback-browser.cjs","env":{}},{"file":"tests/p9-geometry-thinking-browser.cjs","env":{}},{"file":"tests/p9-sequence-thinking-browser.cjs","env":{}},{"file":"tests/p9-sequence-adapter-browser.cjs","env":{}},{"file":"tests/p9-counterexample-adapter-browser.cjs","env":{}},{"file":"tests/p9-fraction-adapter-browser.cjs","env":{}},{"file":"tests/p9-unitwalk-adapter-browser.cjs","env":{}},{"file":"tests/p9-groupwalk-adapter-browser.cjs","env":{}},{"file":"tests/p9-line-adapter-browser.cjs","env":{}},{"file":"tests/p9-array-adapter-browser.cjs","env":{}},{"file":"tests/p9-samefraction-adapter-browser.cjs","env":{}},{"file":"tests/p9-mixedaxis-adapter-browser.cjs","env":{}},{"file":"tests/p9-paperlab-adapter-browser.cjs","env":{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-place'].commands,[{file:'tests/p9-place-adapter-browser.cjs',env:{}},
-  {file:'tests/p9-decimal-place-adapter-browser.cjs',env:{}},{file:'tests/b14-division-container-caption-browser.cjs',env:{}},{file:'tests/p9-division-adapter-browser.cjs',env:{}},{file:'tests/p9-decimalengine-adapter-browser.cjs',env:{}},{file:'tests/p9-wideshift-adapter-browser.cjs',env:{}},{file:'tests/p9-pvbench-adapter-browser.cjs',env:{}}]);
+  {file:'tests/p9-decimal-place-adapter-browser.cjs',env:{}},{file:'tests/b14-division-container-caption-browser.cjs',env:{}},{file:'tests/p9-division-adapter-browser.cjs',env:{}},{file:'tests/p9-decimalengine-adapter-browser.cjs',env:{}},{file:'tests/p9-wideshift-adapter-browser.cjs',env:{}},{file:'tests/p9-pvbench-adapter-browser.cjs',env:{}},{file:'tests/p9-unitrefine-adapter-browser.cjs',env:{}}]);
  for(const command of commands)assert.ok(existsSync(new URL('../'+command.file,import.meta.url)),command.file);
  for(const group of Object.values(BROWSER_GROUPS)){
   assert.ok(group.artifacts.length>0);assert.ok(Object.isFrozen(group.commands));
@@ -213,20 +213,20 @@ test('main and manual scope always require all groups; PR scope includes the inv
 test('a complete current result needs all ten groups and the complete current invocation inventory',()=>{
  const before=success(),copy=structuredClone(before);
  assert.deepEqual(validateRequiredGate(before),{sha:context.sha,runId:context.runId,required:true,offlineRequired:true,
-  groups:GROUP_NAMES,invocations:86});
+  groups:GROUP_NAMES,invocations:87});
  assert.deepEqual(before,copy,'gate reads results without modifying evidence');
  for(const event of ['push','workflow_dispatch']){
   const identity={...context,event};
-  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,86);
+  assert.equal(validateRequiredGate({needs:needs(),reports:fixture('true',identity),context:identity}).invocations,87);
  }
 });
 
-test('math-only PR runs all 83 non-offline Chromium commands, including real backup and math history',()=>{
+test('math-only PR runs all 84 non-offline Chromium commands, including real backup and math history',()=>{
  const jobs=needs('true','false'),reports=fixture('true',context,'false');
  const gate=validateRequiredGate({needs:jobs,reports,context});
  assert.equal(gate.required,true);
  assert.equal(gate.offlineRequired,false);
- assert.equal(gate.invocations,83);
+ assert.equal(gate.invocations,84);
  const offline=reports.find(r=>r.group==='p10-offline');
  assert.deepEqual({required:offline.required,status:offline.status,commands:offline.commands},
   {required:false,status:'not-required',commands:[]});
@@ -316,11 +316,11 @@ test('a successful job flag cannot hide missing commands, changed environments o
 test('same-run retries choose the newest result per group and require missing earlier successes to be available',()=>{
  const previous={...context,attempt:1},reports=fixture('true',previous);
  const retry=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:0})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,86);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports,retry],context}).invocations,87);
  const failed=runBrowserGroup({group:'evidence-place',scope:'true',context,execute:()=>({status:1})});
  rejected({needs:needs(),reports:[...reports,failed],context});
  const oldFailure=runBrowserGroup({group:'evidence-place',scope:'true',context:previous,execute:()=>({status:1})});
- assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,86);
+ assert.equal(validateRequiredGate({needs:needs(),reports:[...reports.filter(report=>report.group!=='evidence-place'),oldFailure,retry],context}).invocations,87);
  rejected({needs:needs(),reports:[retry],context});
  rejected({needs:needs(),reports:[...reports,retry,retry],context});
 });

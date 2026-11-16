@@ -1,3 +1,17 @@
+## 当前准备分支｜单位大小与余量（Issue #232，2026-11-16）
+
+固定工程父6ba8dae4cb493fe713e19dfdd7c230b7b62f01fe，treeca8d8e6e898ad635d94c294136d9da1f0b0c10af，是已保存unitcover WIP而非正式已验main。保全原625/238/48，本候选A628/1996、239/587节点、49合同，A628/B189/C124/D975/E80，1552关联另计。只三处D→A必须由本次完整独立audit实算；正式统计以Issue130最新新main独立验收为准。
+
+仅3原生：precisionunits:0/2/3，同属mt_e7tLi9SCIE，净新增1节点/1合同。link-sameunitlength-precisionunits:1关联与precisionunits:-1旧practice另列；vessels前置、units/ruler/convert等不并入合同。
+
+原工具给定单位大小、顺序排放、显示完整单位数和余量；严格层只核两种源单位下T=q×s+r、0≤r<s及各自有效保存。较小源单位1在这些题中余0，不推广更小单位余量总更少，不证明独立摆放、数数、一般除法、物理测量、自选单位或自由解释，method:null。
+
+原runs只存size/count/remainder，不存数量原文。每个仍有效的成功record须按实际历史独立核精确数量；当前measure也须精确，但9改9.0可不重录，最新完整提交门槛仍须重新Check。原near成功不能改写为原判错；另一个非当前大小的near保存也必须重新精确保存，不能借当前正确数字背书。
+
+只在现有evidence-place末尾追加本族，87调用[34,13,8,6,8,5,4,4,3,2]，原86命令的组/顺序/env/产物、12jobs/10组/22ZIP/35min及P10不变。已验PR170的相同七条脚本命令合计1487008ms，属于命令耗时而非job墙钟；新八条组合、额外context与发布载荷尚未实测，不按动作数线性外推，不保证容量，最终HEAD须真实全组通过。
+
+全部5原example作为被检验对象核验，不作oracle，不新增audit helper。原B28/task/评分/State/storage/v2不改；保全625proof/1250反馈/3548源及非新增guide。unitrefine-v1刷新真实入口及area/cube/multable/unitcover/new-unitrefine五份导航的learn.js pin，不覆盖其他源hash。
+
 ## 当前准备分支｜等长单位首尾铺盖（Issue #231，2026-11-16）
 
 固定工程父6307317f638e115eedbdfc3ced7f04194ccd8bc9，tree6c35a6cc3f09c211a85e1d07520f7a4cc0967830，是已保存multable WIP而非正式已验main。原619/235/47完整保全；本候选A625/1996、238/587节点、48合同，A625/B189/C124/D978/E80，1552关联另计。仅六个原生位置D→A须由独立完整audit确认；正式统计仍依Issue130当期新main独立验收，不能借WIP计A。
