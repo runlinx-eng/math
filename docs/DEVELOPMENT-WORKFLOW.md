@@ -1,3 +1,9 @@
+## 2026-11-16｜Issue #229 分数小立方体验证入口
+
+在现有10组83调用上，向evidence-fractioncase末尾追加一个cubefraction命令与专属产物，84调用[37,12,5,4,5,4,3,8,3,3]。原83组/序/env/产物、12Job/22Artifact/35min及全部P10不变，不预称新组合容量足够。完整Node/数学、来源清单/反馈、原控件、真实WebGL、离线/备份、官方ZIP与实际checkout均绑定最终HEAD；新main须再独立验收才手动结案Issue。
+
+source检查6原生/4关联/1排除项及10真实前置，2旧practice另计。所有失败/正确、取回/重建、当前草稿/已提交、历史上限、来源/隐藏窗口与完整State恢复边界均保留，不能以原grade为正确就替代严格回放，也不能把Node渲染当成Chromium结果。
+
 ## 2026-11-17｜Issue #179 Required 容量重平衡（保留全部门槛）
 
 Required attempt 1 与 attempt 2 均在35分钟硬限制下取消六至七个浏览器组；没有命令日志显示数学断言失败。七组 attempt 2 原始ZIP已下载，官方SHA256、本地SHA256及ZIP CRC全部匹配。连续runner样本显示2-vCPU runner CPU PSI some avg10中位数约46%–64%，cgroup throttling、memory PSI、CPU full pressure均为0，未见稳定CPU steal；这是CPU等待证据，不足以证明GitHub主机故障。UI原组的容量风险此前已有精确记录：旧Money命令1,413,682ms，加已验main UI job 672,000ms，距35分钟仅14,318ms；本次UI包亦显示Money双视口只完成50/56个原生题视口对，不能算完整验收。

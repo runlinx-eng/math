@@ -1,3 +1,4 @@
+import cubeFraction from './fixtures/p9-cubefraction-cases.cjs';
 import money from './fixtures/p9-money-cases.cjs';
 import order from './fixtures/p9-order-cases.cjs';
 import {orderEvidenceExample} from '../scripts/order-evidence-fixture.mjs';
@@ -51,6 +52,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ cubefraction:cubeFraction.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['coins','cart'].map(kind=>['money-'+kind,money.cases.filter(c=>c.type==='x-m33-'+kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  order:order.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(kind=>['area-'+kind,area.cases.filter(c=>c.kind===kind).map(({sessionId,index})=>({sessionId,index}))])),
