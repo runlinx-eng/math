@@ -1,6 +1,6 @@
 // One reviewed browser inventory. Groups run on separate runners; commands
 // within each group remain sequential and never suppress another result.
-// 2026-11-17 capacity rebalance preserves all 83 invocations, ten groups,
+// 2026-11-17 P8 capacity fix preserves all 85 invocations across eleven groups,
 // all artifact paths, P10 scope and the 35-minute hard limit.
 import {appendFileSync,existsSync,mkdirSync,readdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';
@@ -206,16 +206,18 @@ const groups={
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},
- // #230 capacity evidence: keep all 84 existing commands fixed and append Multable once.
- // Its two isolated browser viewports execute concurrently inside the original P8 invocation.
+ // #239 CI capacity fix: keep P8 baseline and Money together; isolate Multable in its own required Runner.
  "p8-performance":{commands:[
   {"file":"tests/p8-trail-performance-browser.cjs","env":{"MATH_P8_BASELINE":"1"}},
   {"file":"tests/p8-trail-performance-browser.cjs","env":{}},
   {"file":"tests/p9-money-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-multable-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p8-trail-performance/",
   "verification/p9-money-adapter/",
+ ]},
+ "p9-multable":{commands:[
+  {"file":"tests/p9-multable-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-multable-adapter/",
  ]},
 };
