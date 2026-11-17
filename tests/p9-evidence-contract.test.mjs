@@ -165,7 +165,9 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.id)).size,Object.keys(reviewed).length);
  // Two mathematical contracts may share a widget; no native task may receive
  // both. Widget-type uniqueness is not a substitute for this source check.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,43);
+ // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
+ // intentionally share their widgets but never the same native source.
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,44);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
