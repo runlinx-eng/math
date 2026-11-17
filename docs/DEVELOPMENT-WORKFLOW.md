@@ -162,3 +162,12 @@ Issue #144 的 samefraction 专用命令加入核心证据组，只追加一次�
 ### P9 Issue #164 / PR #168 的连续链整合
 
 在 Issue #144 的完整九组68调用基础上，仅向数量组追加 storyledger 一次调用和专属产物路径；当前69调用分布为[33,11,4,4,3,4,1,7,2]。既有命令、环境、20份Artifact、P10全部入口和35分钟组限时保持。旧 #168 HEAD 的成功验收作为历史保留；合入新依赖后按新HEAD重新运行完整Required、真实Chromium/P10并核对产物，随后另验main。
+
+## 2026-11-17｜仓库公开后的 Actions 与证据可见性
+
+- 已核实仓库 `runlinx-eng/math` 当前为 Public。标准 GitHub-hosted runner 在公开仓库中免费；larger runners 仍可能收费。公开可见性不会自动重跑此前失败的 workflow，必须由新 PR 提交或手动 workflow dispatch 触发新运行。
+- 不把公开仓库视为自动免除 Artifact 配额。GitHub 官方文档明确标准 runner 在 Public 免费，但当前存储额度/共享计量规则仍需以本仓库公开后的新上传结果和 Billing 页面核实。Required 仍须成功上传全部原始证据；不能因 runner 免费而跳过 Artifact gate。
+- 公开仓库的代码、Issues、PR、Actions 日志及可下载的 workflow Artifact 对所有读者可见。Artifact 中只允许使用合成测试记录；禁止真实儿童姓名、联系方式、学校/班级、真实学习账户标识、真实家庭数据、访问令牌或其他个人/机密信息。
+- 2026-11-17 抽查既有 P10 learning Artifact `14221287476` 和旧 Money UI Artifact `14254556808`：截图展示的是自动生成的数学任务；对解压后的 JSON/文本按姓名、联系方式、学校、账户等字段进行扫描，未发现明显个人身份信息。此为抽样检查，不等于全仓库/全部历史 Artifact 的完整隐私审计；新上传 Artifact 在发布前仍须检查。
+- PR #183 当前 HEAD `4f89230a5836c8a81d0319fcda90cae196f6dd01`，仍 Draft。公开前 Required #44003549449 因 Artifact storage quota 失败，browser matrix 被 fail-closed 跳过；不能把该结果当作新公开环境的验收。新提交后的 Required 必须在此 HEAD 基础上完整执行 10 组浏览器检查，核对命令收据、官方 Artifact 元数据、SHA-256、ZIP CRC 和 Money 双视口/备份恢复/离线 reload。
+- 不删除历史正式证据，不降低数学断言或 35 分钟硬限制，不因公开而自动合并。完成新 HEAD 的完整 Required 与独立验收后，才可将 PR Ready 并合并；随后仍须独立验收 main。
