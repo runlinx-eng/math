@@ -1,3 +1,11 @@
+## 2026-11-17｜Issue #229 分数小立方体完整候选
+
+- 当前隔离WIP `wip/issue-229-cubefraction-rebased` HEAD `ea55b5879e4be95b7f53df53cb73ef8599f8d077`，唯一父为Money正常合并后的main `4d8561d2e89d83cd50a6b45290fa9e1a5eb0587b`；旧分支 `f7a679f`（父9b36 Money WIP）完整保留，不重放旧父链。6原生/4净节点/1合同，候选A609/232/46，不提前记正式main；main自己的Required仍在独立回归，状态见Issue130最新检查点。
+- 原B31的逐块身份、展开、转动、first/bad/保存窗口与issue逐事件独立核对；体积/底面积用精确有理数。4关联、2practice与同课product排除项分开，原题/判题/State/v2不变。
+- 原example已适用，无额外audit helper。6固定来源追加manifest、注册/可选反馈、cubefraction-v1入口与缓存；新nav及既有area-nav仅同步实际learn.js完整hash。
+- browser按11目标/8课程/10真实前置累计操作和原Next，全State真实导出/独立空context首次重复导入与停源恢复另验。源码/Node通过不代表WebGL或CI执行。
+- 仅追加现有fractioncase新调用，84调用/12Job/22ZIP/35min及前83调用保持；新组合容量仍是实际CI门槛。前置main及本PR双验后合并，新main再验后手动结案。#180/#145保持，#209不自动合并；不部署、不重做离线架构、不重试本地Chrome EPERM。
+
 ## 2026-11-16｜Issue #179 钱币完整候选
 
 - 从已保存的 Money WIP `9b36f805d3a6d7fd79e96ac64445c574031d5648`（唯一父 `adab5f65406283cbb5a58d3c0ca6452ef59f6019`）继续；宽移/PV/time/area/order及已审整圆修复完整保持。当前正式已验 main 为 `654156d96b454a872b77c17f6f042cf44d2f2b60`，覆盖 A575/1996、216/587 来源节点、43 合同；候选不能提前计入主线。

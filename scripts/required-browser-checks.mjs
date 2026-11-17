@@ -171,9 +171,11 @@ const groups={
  "evidence-fractioncase":{commands:[
   {"file":"tests/p9-fdpboard-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fractioncase-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-cubefraction-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
   "verification/p9-fdpboard-adapter/",
+  "verification/p9-cubefraction-adapter/",
  ]},
  "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},

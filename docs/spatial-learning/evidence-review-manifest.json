@@ -5479,6 +5479,60 @@
       "adapter": "money-cart",
       "taskHash": "240bbcde689a42b99189730de756edda78d4a1b76ece53db9839f622d821dc66",
       "method": null
+    },
+    {
+      "sessionId": "fractionvolume",
+      "index": 0,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_IlDaxVr60U",
+      "adapter": "cubefraction",
+      "taskHash": "f658a182e8568a39d3487dc1bd719129f36ac7de118c4ad8bec7335d5ad3766c",
+      "method": null
+    },
+    {
+      "sessionId": "fractionvolume",
+      "index": 1,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_IlDaxVr60U",
+      "adapter": "cubefraction",
+      "taskHash": "6f83de6c3faca5ad1f0424501367fb48c35d47042fe5b915bee0975e59171e47",
+      "method": null
+    },
+    {
+      "sessionId": "fractionvolume",
+      "index": 2,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_IlDaxVr60U",
+      "adapter": "cubefraction",
+      "taskHash": "6ac1a3f343744a5d63cb2fdcbde5f6aea4deed4546daf9069854235479d78445",
+      "method": null
+    },
+    {
+      "sessionId": "term38",
+      "index": 3,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_xfwv0M83mJ",
+      "adapter": "cubefraction",
+      "taskHash": "f658a182e8568a39d3487dc1bd719129f36ac7de118c4ad8bec7335d5ad3766c",
+      "method": null
+    },
+    {
+      "sessionId": "advancedWords38",
+      "index": 2,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_3rTIyJDw7-",
+      "adapter": "cubefraction",
+      "taskHash": "f658a182e8568a39d3487dc1bd719129f36ac7de118c4ad8bec7335d5ad3766c",
+      "method": null
+    },
+    {
+      "sessionId": "modelChoice38",
+      "index": 1,
+      "type": "x-m31-cubes",
+      "nodeId": "mt_yqZiX6vS7D",
+      "adapter": "cubefraction",
+      "taskHash": "f658a182e8568a39d3487dc1bd719129f36ac7de118c4ad8bec7335d5ad3766c",
+      "method": null
     }
   ]
 }
