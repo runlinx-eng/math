@@ -71,21 +71,23 @@ const rejected=value=>assert.throws(()=>validateRequiredGate(value));
 
 test('all fifty existing scripts and the reviewed expansion remain, with only the P8 baseline repeated',()=>{
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
- assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance']);
+ assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance','p9-multable']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
  assert.equal(commands.length,85);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,4,5,4,3,8,3,4]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,4,5,4,3,8,3,3,1]);
  assert.ok(!BROWSER_GROUPS.ui.commands.some(command=>command.file==='tests/p9-money-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS.ui.commands.slice(-4).map(x=>x.file),[
   'tests/p9-paperlab-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs',
   'tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs'
  ]);
- assert.deepEqual(BROWSER_GROUPS['p8-performance'].commands.slice(-2),[{file:'tests/p9-money-adapter-browser.cjs',env:{}},{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['p8-performance'].commands.slice(-1),[{file:'tests/p9-money-adapter-browser.cjs',env:{}}]);
  assert.ok(BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-money-adapter/'));
- assert.ok(BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-multable-adapter/'));
+ assert.ok(!BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-multable-adapter/'));
+ assert.deepEqual(BROWSER_GROUPS['p9-multable'].commands,[{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['p9-multable'].artifacts,['verification/p9-multable-adapter/']);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-area-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion-2'].commands,[{file:'tests/p9-groups-adapter-browser.cjs',env:{}},{file:'tests/p9-transform-adapter-browser.cjs',env:{}},{file:'tests/p9-angle-adapter-browser.cjs',env:{}},{file:'tests/p9-scalechain-adapter-browser.cjs',env:{}},{file:'tests/p9-fracshare-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].commands,[{file:'tests/p9-joinstory-adapter-browser.cjs',env:{}},{file:'tests/p9-estimate-adapter-browser.cjs',env:{}},{file:'tests/p9-portiongroups-adapter-browser.cjs',env:{}},{file:'tests/p9-storyledger-adapter-browser.cjs',env:{}}]);
@@ -358,7 +360,7 @@ test('workflow retains the stable final check, isolated fixed groups, complete r
  assert.match(browser,/matrix\.group == 'p10-offline'/);
  const gate=workflow.split('\n  required-checks:\n')[1];
  assert.deepEqual(browser.match(/group: \[([^\]]+)\]/)[1].split(',').map(value=>value.trim()),GROUP_NAMES);
- assert.match(browser,/fail-fast: false/);assert.doesNotMatch(workflow,/continue-on-error:/);
+ assert.match(browser,/fail-fast: false/);assert.match(browser,/max-parallel: 10/);assert.doesNotMatch(workflow,/continue-on-error:/);
  assert.doesNotMatch(browser,/^    if:/m,'browser jobs themselves cannot be silently skipped by scope');
  assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-noto-cjk/);
  assert.match(browser,/required-browser-result-\$\{\{ matrix\.group \}\}-attempt-\$\{\{ github\.run_attempt \}\}/);

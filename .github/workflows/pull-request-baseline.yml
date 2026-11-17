@@ -352,8 +352,9 @@ jobs:
     timeout-minutes: 35
     strategy:
       fail-fast: false
+      max-parallel: 10
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-offline, p8-performance]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-offline, p8-performance, p9-multable]
     env:
       MATH_BROWSER_REQUIRED: ${{ matrix.group == 'p10-offline' && needs.static-checks.outputs.run_offline || needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
