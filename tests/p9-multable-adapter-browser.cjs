@@ -155,17 +155,22 @@ async function main(){
  for(const[file,sha]of Object.entries({...fixture.sourceHashes,...navigationFixture.sourceHashes}))assert.equal(digest(fs.readFileSync(path.join(root,file))),sha,file);
  const artifactPaths=new Set(),uniqueFile=name=>{assert.ok(!artifactPaths.has(name),'one immutable raw artifact: '+name);artifactPaths.add(name);return path.join(out,name);};
  fs.writeFileSync(uniqueFile('fixed-source-cases.json'),JSON.stringify(fixture,null,2));fs.writeFileSync(uniqueFile('fixed-navigation.json'),JSON.stringify(navigationFixture,null,2));
- let browser,server,activePage,label='setup';const openContexts=new Set(),diagnostics=new Map();
+ let browser;const openContexts=new Set(),diagnostics=new Map();
  const report=()=>({provenance,viewports,checks,errors,remote,observations,isolated,boundaries,forgeries,backups,offline,preparations,retries,navigations,checkedLedger,captures,visuals,capacity,
   nativeTasks:10,nativeNodes:5,associatedTasks:17,excludedTasks:1,practiceCompatibilityPositions:3,targets:28,sessions:20,childTrial:false,independentTeachingReview:false});
  try{
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});provenance.browserVersion=browser.version();
-  for(const[width,height]of viewports){
+  // The two viewport runs have separate origins, contexts and immutable evidence paths.
+ // Running them concurrently preserves every real-browser check while keeping the
+ // complete two-viewport regression inside the existing 35-minute job limit.
+ const runViewport=async([width,height])=>{
+  let server,activePage,label='setup';
+  const profiles=[];
+  try{
    const prefix=width+'x'+height;label=prefix+'-cache';
    const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
    server=http.createServer((req,res)=>{const rel=new URL(req.url,'http://localhost').pathname.replace(/^\/+/, '')||'index.html';fs.readFile(path.join(root,'dist',rel),(error,data)=>{res.writeHead(error?404:200,{'Content-Type':mime[path.extname(rel)]||'application/octet-stream','Cache-Control':'no-store'});res.end(error?'missing':data);});});
    await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+server.address().port+'/';
-   const profiles=[];
    for(const role of['source','native-restore-target','constructed-compatibility','constructed-cap-empty','constructed-cap-saved']){
     const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce',acceptDownloads:true,serviceWorkers:'allow'});openContexts.add(context);
     context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
@@ -461,9 +466,20 @@ async function main(){
      documentReloadRequired:true,zeroAttemptNeedsCheckBeforeRetry:mode==='empty',nativeHandEnteredHistory:false,backupFile:final.file,backupSha256:final.sha256,originalState:final.backup.state};
     capacity.push(item);backups.push({...item,kind:'constructed-capacity-final-v2'});
    }
-   for(const profile of profiles){await profile.context.close();openContexts.delete(profile.context);}activePage=null;
+   activePage=null;
+  }catch(error){
+   if(error.diagnosticPage)activePage=error.diagnosticPage;
+   const diagnosticFile=activePage&&diagnostics.has(activePage)?await diagnostics.get(activePage).dump(error).catch(reason=>({diagnosticError:String(reason)})):null;
+   if(activePage){await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});fs.writeFileSync(path.join(out,label+'-failure.html'),await activePage.content().catch(()=>''));}
+   error.diagnosticFile=diagnosticFile;error.label=label;throw error;
+  }finally{
+   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
+   for(const profile of profiles){await profile.context.close();openContexts.delete(profile.context);}
   }
-  assert.equal(errors.length,0);assert.equal(remote.length,0);assert.equal(observations.length,20);assert.equal(forgeries.length,160);assert.equal(preparations.length,18);assert.equal(navigations.length,34);
+ };
+ const viewportResults=await Promise.allSettled(viewports.map(runViewport));
+ const viewportFailure=viewportResults.find(result=>result.status==='rejected');if(viewportFailure)throw viewportFailure.reason;
+ assert.equal(errors.length,0);assert.equal(remote.length,0);assert.equal(observations.length,20);assert.equal(forgeries.length,160);assert.equal(preparations.length,18);assert.equal(navigations.length,34);
   assert.equal(isolated.filter(x=>x.kind==='associated').length,34);assert.equal(isolated.filter(x=>x.kind==='excluded').length,2);assert.equal(isolated.filter(x=>x.kind==='old-practice-compatibility').length,6);assert.equal(boundaries.length,14);assert.equal(capacity.length,4);
   const nativeChecked=checkedLedger.filter(x=>x.contextRole==='source'),nativeCaptures=captures.filter(x=>x.contextRole==='source'),capacityChecked=checkedLedger.filter(x=>x.role==='capacity'),capacityCaptures=captures.filter(x=>x.role==='capacity');
   assert.equal(nativeChecked.length,344);assert.equal(nativeCaptures.length,444);assert.equal(capacityChecked.length,8);assert.equal(capacityCaptures.length,34);
@@ -477,11 +493,10 @@ async function main(){
   fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2));fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),attemptCounts,uniqueCheckedFiles:704,uniqueCaptureFiles:956,originStopped:offline.every(x=>x.originStopped)},null,2));
   console.log('P9_MULTABLE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:10,taskViewportPairs:20,sourceChecked:344,compatibilityChecked:8,checked:352,sourceCaptures:444,compatibilityCaptures:34,captures:478,oldPractice:6,sourceRetries:34,compatibilityRetries:4,next:34,forgeries:160,nativeBackups:2,compatibilityBackups:6,visuals:visuals.length}));
  }catch(error){
-  if(error.diagnosticPage)activePage=error.diagnosticPage;const diagnosticFile=activePage&&diagnostics.has(activePage)?await diagnostics.get(activePage).dump(error).catch(reason=>({diagnosticError:String(reason)})):null;
-  if(activePage){await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});fs.writeFileSync(path.join(out,label+'-failure.html'),await activePage.content().catch(()=>''));}
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),error:String(error),stack:error.stack,at:label,diagnosticFile},null,2));console.error(error.stack);process.exitCode=1;
+  const diagnosticFile=error.diagnosticFile??null;
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),error:String(error),stack:error.stack,at:error.label||'viewport',diagnosticFile},null,2));console.error(error.stack);process.exitCode=1;
  }finally{
-  if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});for(const context of openContexts)await context.close();if(browser)await browser.close();
+  for(const context of openContexts)await context.close();if(browser)await browser.close();
  }
 }
 if(require.main===module)main().catch(error=>{console.error(error.stack);process.exitCode=1;});

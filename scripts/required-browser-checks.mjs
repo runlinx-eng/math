@@ -206,8 +206,8 @@ const groups={
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},
- // #230 capacity evidence: expansion already took 21-32min before the added multable browser.
- // Keep 84 old commands fixed; append only the new command to the proven 10-11min required runner.
+ // #230 capacity evidence: keep all 84 existing commands fixed and append Multable once.
+ // Its two isolated browser viewports execute concurrently inside the original P8 invocation.
  "p8-performance":{commands:[
   {"file":"tests/p8-trail-performance-browser.cjs","env":{"MATH_P8_BASELINE":"1"}},
   {"file":"tests/p8-trail-performance-browser.cjs","env":{}},
