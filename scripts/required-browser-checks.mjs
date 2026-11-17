@@ -129,11 +129,13 @@ const groups={
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-multable-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
   "verification/p9-area-adapter/",
+  "verification/p9-multable-adapter/",
  ]},
  // PR #146 measured 19m57s for the four existing expansion commands.
  // Keep every invocation and artifact; give the next construction families
