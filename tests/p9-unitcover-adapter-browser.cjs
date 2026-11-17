@@ -83,7 +83,26 @@ async function unitcoverCapacityFlow(mode,spec,api){
  await api.field('prose','上限后仍可编辑的原话。');phases.push(await api.capture('at-capacity-prose-unsubmitted',false));phases.push(await api.check(true,true,'at-capacity-prose-rechecked'));
  await api.retry('capacity-'+mode.id);phases.push(await api.capture('shared-retry-after-capacity',false));await api.solve();phases.push(await api.check(true,true,'capacity-retry-corrected'));return phases;
 }
-module.exports={orderedUnitcoverTargets,unitcoverOperationPlan,unitcoverNativeFlow,unitcoverBoundaryKindsFor,unitcoverBoundaryFlow,unitcoverCapacityModes,constructUnitcoverCapacityFixture,unitcoverCapacityFlow};
+function compactUnitcoverReport(value,{preserveModels=false}={}) {
+ if(Array.isArray(value))return value.map(item=>compactUnitcoverReport(item,{preserveModels}));
+ if(!value||typeof value!=='object')return value;
+ const out={};
+ for(const[key,item]of Object.entries(value)){
+  if(['record','attempts','emptyModel','originalState','decodedState'].includes(key))continue;
+  if(key==='model'&&!preserveModels)continue;
+  if(key==='attempt'){
+   out.attemptSummary=item?{id:item.id??null,at:item.at??null,supported:item.supported??null,exposed:item.exposed??null}:null;
+   continue;
+  }
+  if(key==='beforeRecord'||key==='afterRecord'){
+   out[key+'Summary']=item?{attemptCount:item.attempts?.length??0,support:item.support??null,exposed:item.exposed??null}:null;
+   continue;
+  }
+  out[key]=compactUnitcoverReport(item,{preserveModels});
+ }
+ return out;
+}
+module.exports={orderedUnitcoverTargets,unitcoverOperationPlan,unitcoverNativeFlow,unitcoverBoundaryKindsFor,unitcoverBoundaryFlow,unitcoverCapacityModes,constructUnitcoverCapacityFixture,unitcoverCapacityFlow,compactUnitcoverReport};
 
 async function main(){
  const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),crypto=require('node:crypto'),assert=require('node:assert/strict');
@@ -116,7 +135,11 @@ async function main(){
  const artifactPaths=new Set(),uniqueFile=name=>{assert.ok(!artifactPaths.has(name),'one immutable raw artifact: '+name);artifactPaths.add(name);return path.join(out,name);};
  fs.writeFileSync(uniqueFile('fixed-source-cases.json'),JSON.stringify(fixture,null,2));fs.writeFileSync(uniqueFile('fixed-navigation.json'),JSON.stringify(navigationFixture,null,2));
  let browser,server,activePage,label='setup';const openContexts=new Set(),diagnostics=new Map();
- const report=()=>({provenance,viewports,checks,errors,remote,observations,isolated,boundaries,forgeries,backups,offline,preparations,retries,navigations,checkedLedger,captures,visuals,capacity,
+ const compact=(value,preserveModels=false)=>compactUnitcoverReport(value,{preserveModels});
+ const report=()=>({provenance,viewports,checks,errors,remote,
+  observations:compact(observations),isolated:compact(isolated),boundaries:compact(boundaries),forgeries:compact(forgeries,true),
+  backups:compact(backups),offline:compact(offline),preparations:compact(preparations),retries:compact(retries),navigations:compact(navigations),
+  checkedLedger:compact(checkedLedger),captures:compact(captures),visuals:compact(visuals),capacity:compact(capacity),
   nativeTasks:6,nativeNodes:3,associatedTasks:5,practiceCompatibilityPositions:3,targets:11,sessions:7,childTrial:false,independentTeachingReview:false});
  try{
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});provenance.browserVersion=browser.version();
