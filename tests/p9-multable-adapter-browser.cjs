@@ -158,6 +158,28 @@ async function main(){
  let browser;const openContexts=new Set(),diagnostics=new Map();
  const report=()=>({provenance,viewports,checks,errors,remote,observations,isolated,boundaries,forgeries,backups,offline,preparations,retries,navigations,checkedLedger,captures,visuals,capacity,
   nativeTasks:10,nativeNodes:5,associatedTasks:17,excludedTasks:1,practiceCompatibilityPositions:3,targets:28,sessions:20,childTrial:false,independentTeachingReview:false});
+ // Preserve the complete report schema without constructing a single multi-gigabyte
+ // JSON string. Each top-level array entry is serialized independently; the original
+ // per-capture state/storage/PNG files remain the primary immutable raw evidence.
+ const writeJsonReport=(file,value)=>{
+  const fd=fs.openSync(file,'w');
+  const write=chunk=>{
+   const bytes=Buffer.from(chunk);let offset=0;
+   while(offset<bytes.length)offset+=fs.writeSync(fd,bytes,offset,bytes.length-offset);
+  };
+  try{
+   write('{');const entries=Object.entries(value);
+   for(let i=0;i<entries.length;i++){
+    if(i)write(',');const[key,item]=entries[i];write(JSON.stringify(key));write(':');
+    if(Array.isArray(item)){
+     write('[');
+     for(let j=0;j<item.length;j++){if(j)write(',');const encoded=JSON.stringify(item[j]);write(encoded===undefined?'null':encoded);}
+     write(']');
+    }else{const encoded=JSON.stringify(item);write(encoded===undefined?'null':encoded);}
+   }
+   write('}');
+  }finally{fs.closeSync(fd);}
+ };
  try{
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});provenance.browserVersion=browser.version();
   // The two viewport runs have separate origins, contexts and immutable evidence paths.
@@ -490,11 +512,13 @@ async function main(){
   const attemptCounts=Object.fromEntries(['native','boundary','associated','excluded','prerequisite','capacity'].map(role=>[role,checkedLedger.filter(x=>x.role===role).length]));
   assert.deepEqual(attemptCounts,{native:260,boundary:30,associated:34,excluded:2,prerequisite:18,capacity:8});
   const checkedPaths=checkedLedger.flatMap(x=>[x.storage.raw,x.storage.state]),capturePaths=captures.flatMap(x=>[x.storage.raw,x.storage.state]);assert.equal(new Set(checkedPaths).size,704);assert.equal(new Set(capturePaths).size,956);
-  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2));fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),attemptCounts,uniqueCheckedFiles:704,uniqueCaptureFiles:956,originStopped:offline.every(x=>x.originStopped)},null,2));
+  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2));writeJsonReport(path.join(out,'results.json'),{...report(),attemptCounts,uniqueCheckedFiles:704,uniqueCaptureFiles:956,originStopped:offline.every(x=>x.originStopped)});
   console.log('P9_MULTABLE_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:10,taskViewportPairs:20,sourceChecked:344,compatibilityChecked:8,checked:352,sourceCaptures:444,compatibilityCaptures:34,captures:478,oldPractice:6,sourceRetries:34,compatibilityRetries:4,next:34,forgeries:160,nativeBackups:2,compatibilityBackups:6,visuals:visuals.length}));
  }catch(error){
   const diagnosticFile=error.diagnosticFile??null;
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),error:String(error),stack:error.stack,at:error.label||'viewport',diagnosticFile},null,2));console.error(error.stack);process.exitCode=1;
+  const counts=Object.fromEntries(Object.entries(report()).filter(([,value])=>Array.isArray(value)).map(([key,value])=>[key,value.length]));
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({schema:'math-p9-multable-browser-failure/1',provenance,counts,error:String(error),stack:error.stack,at:error.label||'viewport',diagnosticFile,artifactFiles:[...artifactPaths].sort()},null,2));
+  console.error(error.stack);process.exitCode=1;
  }finally{
   for(const context of openContexts)await context.close();if(browser)await browser.close();
  }
