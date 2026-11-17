@@ -3,7 +3,7 @@
 - 从已保存的 Money WIP `9b36f805d3a6d7fd79e96ac64445c574031d5648`（唯一父 `adab5f65406283cbb5a58d3c0ca6452ef59f6019`）继续；宽移/PV/time/area/order及已审整圆修复完整保持。当前正式已验 main 为 `654156d96b454a872b77c17f6f042cf44d2f2b60`，覆盖 A575/1996、216/587 来源节点、43 合同；候选不能提前计入主线。
 - 原28原生/12净增节点/2合同，候选A603/228/45；20关联及10旧practice隔离。核心、固定案例、49Node逐字复用b07，保留最新真实choice label显示修正；独立数学145222断言已通过。
 - 六资产升级48目标/25课程/10真实前置、516checked/650当前模型captures/74retry/66Next，全部旧capture与retry保留。兼容构造来源独立导入与统计，4 native成功+2兼容成功+4损坏真实chooser路径待当前HEAD Chromium验证。
-- 公共整合追加28来源manifest、两注册、可选引导反馈、money-v3精确入口/缓存；原audit example路径无需修改。area导航仅同步learn.js发布字节hash。money只追加现有ui，83调用/12Job/22Artifact/35min及原82调用保持。UI组容量风险明确：旧Money调用1,413,682ms与已验main UI完整Job 672,000ms合计距35分钟仅14,318ms；新HEAD必须以真实UI Job和receipt在35分钟内通过，否则保持Draft，不减断言、不挪调用。
+- 公共整合追加28来源manifest、两注册、可选引导反馈、money-v3精确入口/缓存；原audit example路径无需修改。area导航仅同步learn.js发布字节hash。attempt1/2均暴露35分钟容量阻塞后，Required在新HEAD保留83调用、10组、12Job、22Artifact及35min硬限制，按分组顺序[37,12,5,4,5,4,2,8,3,3]重平衡。Money放在p8两项测量之后；time/order/wideshift/PVbench移入始终执行的p10-learning；p10-offline仍只跑原三项条件离线检查；其他长尾按实测时间拆分。只移动完整命令和Artifact归属，不删断言或跳过测试。新HEAD必须完整Required和Artifact复核通过，未通过仍Draft。
 - 本轮以 main `654156d96b454a872b77c17f6f042cf44d2f2b60` 为整合基线；Issue #176 已完成合并后独立验收并关闭，更新既有 Draft PR #183，不另开重复 PR。PR 新 HEAD 和合并后 main 均须分别通过完整验收。#180/#145保持，#209不自动合并；不部署、不改原题/判题/v2、不重试本地Chromium EPERM。
 
 ## 待验候选整合｜运算顺序与逐块归约（Issue #176 / PR #177）

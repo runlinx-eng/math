@@ -1,6 +1,10 @@
-## 2026-11-16｜Issue #179 钱币的完整验证入口
+## 2026-11-17｜Issue #179 Required 容量重平衡（保留全部门槛）
 
-在十组82调用基础上，仅向现有ui组末尾追加新money命令及专属产物，83调用[34,13,7,5,7,5,3,4,3,2]。原82调用的组、顺序、环境和产物不变，12Job/22Artifact/35分钟保持。旧money官方receipt1413682ms已核SHA/size/CRC和旧脚本身份；已验main6025的完整UI job672000ms与之相加，只比35分钟少14318ms。当前组没有稳定容量的证据，候选必须在新HEAD实际完整job内成功且原件齐全；超时继续阻止合并，不能用历史用时或源码路线优化保证通过。
+Required attempt 1 与 attempt 2 均在35分钟硬限制下取消六至七个浏览器组；没有命令日志显示数学断言失败。七组 attempt 2 原始ZIP已下载，官方SHA256、本地SHA256及ZIP CRC全部匹配。连续runner样本显示2-vCPU runner CPU PSI some avg10中位数约46%–64%，cgroup throttling、memory PSI、CPU full pressure均为0，未见稳定CPU steal；这是CPU等待证据，不足以证明GitHub主机故障。UI原组的容量风险此前已有精确记录：旧Money命令1,413,682ms，加已验main UI job 672,000ms，距35分钟仅14,318ms；本次UI包亦显示Money双视口只完成50/56个原生题视口对，不能算完整验收。
+
+因此在不删命令、不减断言、不改环境、不跳过P10、不改35分钟限制的前提下，保留10组、12个Job、22份Artifact和83次调用，按分组顺序[37,12,5,4,5,4,2,8,3,3]重分配。Money移至p8-performance组的两项P8测量之后；P9 time/order/wideshift/PVbench移至始终执行的p10-learning组；P10-offline仍只包含原三项条件离线检查，避免普通math-only PR把P9测试一起标记not-required。其余长尾命令在UI、core、place、expansion、expansion-2、quantity、fractioncase间重新平衡。所有原始命令和产物目录均只移动归属，未删除或改写。
+
+这只是新的容量分配候选。必须在新HEAD重新跑完整Required，核对全部10组命令收据、22份官方Artifact及实际Money双视口、备份恢复和离线原件；新HEAD通过前PR保持Draft，任何取消仍不计成功。
 
 原49Node保持，增加10真实前置、完整原State连续路线与兼容隔离的3项Node。两视口要求516checked（510真实来源+6明确构造兼容）、650当前模型captures+20practice、74retry、66Next、224单列反事实、2空native restore context/4真chooser成功导入，以及2兼容context/2兼容成功/4损坏拒绝。原模型、任务、评分、v2及P10不改，全量Required/适用专项/原件绑定最终HEAD；合并后另验新push-main才手动结案Issue。
 
