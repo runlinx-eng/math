@@ -1,3 +1,15 @@
+## 当前准备分支｜按位乘法十换一（Issue #230，2026-11-16）
+
+固定工程父f7a679f6147abbfc473f5d44933b381d82bbaf96，tree5519cfdc44baf9d4565252b458eba13411723cac，是已保存cube WIP而非正式已验main。原609/232/46完整保全；本候选A619/1996、235/587节点、47合同，A619/B189/C124/D984/E80，1552关联另计。正式统计仍依Issue130当期独立main收据，不能借WIP计A。
+
+严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
+
+仅向现有evidence-expansion末尾追加本族，85调用[37,12,5,5,5,4,3,8,3,3]。旧84命令的组/序/env/产物、12jobs/10组/22ZIP/35min与P10完整保留。历史a94 expansion的1195977ms与旧order的272655ms来自不同run，只是容量参考；新组合没有实测保证，必须当前HEAD完整job与全部原件通过。
+
+原31个同型example按真实控件与独立数学可用，不新增audit helper、不改原model/题/判题。源绑定、当前段进位与行量、firstEstimate与全部旧提交/当前模型、3000/3001恢复和真实v2各自验收。新multable-v1只同步真实发布入口与既有area/cube导航源hash，原专项与未知来源边界保持。
+
+
+> 2026-11-17 重接记录：本家族只取旧 WIP `6307317` 的独立增量；以已验 `main@9964612` 为父重建隔离提交，不引入旧祖先。新 Required 分组按当前 main 的十组真实清单 [37,12,5,5,5,4,3,8,3,3] 计，旧 84 次调用保持顺序，新加一次。正式覆盖仍为 A609/232/46，候选 A619/235/47 待独立全验。
 ## 当前准备分支｜分数单位小立方体（Issue #229，2026-11-17）
 
 当前隔离WIP `wip/issue-229-cubefraction-rebased` HEAD `ea55b5879e4be95b7f53df53cb73ef8599f8d077`，唯一父为Money正常合并后的main `4d8561d2e89d83cd50a6b45290fa9e1a5eb0587b`；旧WIP `f7a679f` / 父 `9b36` 完整保留，不重放旧Money父链。main Required push `44018007969` 正在独立验收，static audit 当前候选A603/1996、228/587节点；该值在main Required最终成功前不更新正式覆盖。新增仅6原生/4净节点/1合同，Cube候选A609/1996、232/587节点、46合同，A609/B189/C124/D994/E80。该WIP尚无当前HEAD Chromium/Required验收，不能计正式覆盖。

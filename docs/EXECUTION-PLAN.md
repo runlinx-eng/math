@@ -1,3 +1,14 @@
+## 2026-11-16｜Issue #230 按位乘法完整候选
+
+- 工程父为cube WIP f7a679f6，保留前序全部成果。严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
+- 当前并集候选A619/235/47只由本次源码审计确认，正式main看Issue130独立验收；不借前序CI。
+- 独立整数逐列换十/进位/行位值，当前段与历史reset分开；最终输入不宣传独立加法。原例可靠无新helper；原B14/State/v2不改。
+- 原B14到3001事件会先改变临时模型，再被原learn.update写前验证拒绝并阻止继续覆盖，旧raw保持；不是动作noop。刷新后读取有效3000记录，再用有旧attempt才显示的共享retry恢复；零attempt先实际Check。内部reset保留firstEstimate/历史并追加事件，不能清开上限；不改原保存或v2行为。构造兼容上限案例必须单独标注，不计原生手工路线。
+- 仅向现有evidence-expansion末尾追加本族，85调用[37,12,5,5,5,4,3,8,3,3]。旧84命令的组/序/env/产物、12jobs/10组/22ZIP/35min与P10完整保留。历史a94 expansion的1195977ms与旧order的272655ms来自不同run，只是容量参考；新组合没有实测保证，必须当前HEAD完整job与全部原件通过。
+- 两空context四次真导入、累计全部尝试/原图/离线必须固定HEAD真实CI另验；完成PR门禁再验新main才结案。#180/#145保留，#209不自动合并，不部署或重做离线架构，不重试本地Chrome EPERM。
+
+
+> 2026-11-17 重接记录：本家族只取旧 WIP `6307317` 的独立增量；以已验 `main@9964612` 为父重建隔离提交，不引入旧祖先。新 Required 分组按当前 main 的十组真实清单 [37,12,5,5,5,4,3,8,3,3] 计，旧 84 次调用保持顺序，新加一次。正式覆盖仍为 A609/232/46，候选 A619/235/47 待独立全验。
 ## 2026-11-17｜Issue #229 分数小立方体完整候选
 
 - 当前隔离WIP `wip/issue-229-cubefraction-rebased` HEAD `ea55b5879e4be95b7f53df53cb73ef8599f8d077`，唯一父为Money正常合并后的main `4d8561d2e89d83cd50a6b45290fa9e1a5eb0587b`；旧分支 `f7a679f`（父9b36 Money WIP）完整保留，不重放旧父链。6原生/4净节点/1合同，候选A609/232/46，不提前记正式main；main自己的Required仍在独立回归，状态见Issue130最新检查点。

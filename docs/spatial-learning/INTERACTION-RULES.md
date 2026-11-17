@@ -1,3 +1,13 @@
+## Issue #230｜按位乘法的真实字段窗口与累计记录（准备分支）
+
+严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
+
+估计/raw/pending-digit/shift与rowvalue/answer按原UI阶段开放。合法空shift选项与失败保存保留；不足十时disabled trade不能写成可见操作。各事件全部33字段快照、隐藏字段沿用、issue与空metadata按原控件逐次验证。原内部reset与共享P3 retry分别核，旧attempts/notes保存。
+
+28目标加9原前置，共37原位置/20课程，必须原Next连续到达；不写原生题号或答案模型。累计所有场景后导出全State，两独立空context各首次/重复真filechooser导入与原raw核验，origin停源后真实离线继续。具体最终checked/capture/retry/PNG数量以冻结脚本与Issue230收据为准，源码/Node不等同Chrome。
+
+原B14到3001事件会先改变临时模型，再被原learn.update写前验证拒绝并阻止继续覆盖，旧raw保持；不是动作noop。刷新后读取有效3000记录，再用有旧attempt才显示的共享retry恢复；零attempt先实际Check。内部reset保留firstEstimate/历史并追加事件，不能清开上限；不改原保存或v2行为。构造兼容上限案例必须单独标注，不计原生手工路线。
+
 ## Issue #229｜分数小立方体的真实控件与累计记录（准备分支，2026-11-17）
 
 11目标/8课程包含6原生、4关联和1同课product排除项，10个前置使用固定原题与可见控件，按原Next连续到达。不写入原生lesson.index、答案、历史或正确模型；原canvas可选未填块的入口与按钮的下一块入口分别保留，不把所有历史强制解释为升序按钮。

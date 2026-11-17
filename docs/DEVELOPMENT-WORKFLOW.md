@@ -1,3 +1,13 @@
+## 2026-11-16｜Issue #230 按位乘法验收入口
+
+仅向现有evidence-expansion末尾追加本族，85调用[37,12,5,5,5,4,3,8,3,3]。旧84命令的组/序/env/产物、12jobs/10组/22ZIP/35min与P10完整保留。历史a94 expansion的1195977ms与旧order的272655ms来自不同run，只是容量参考；新组合没有实测保证，必须当前HEAD完整job与全部原件通过。
+
+独立数学重放、精确来源/字段窗口、旧609proof/1218反馈/3548来源保全与完整审计；浏览器原控件/Next/Retry、真实离线/备份、全原件官方size/SHA256/CRC与actual checkout均绑定最终HEAD。构造cap兼容与原生路线分列，不用原grade接受替代严格回放，不以Node渲染替代Chromium。
+
+前置main与当前PR均全验后正常合并；新push main再次独立验收后手动结案Issue，不用自动结案关键词跳过主线门禁。
+
+
+> 2026-11-17 重接记录：本家族只取旧 WIP `6307317` 的独立增量；以已验 `main@9964612` 为父重建隔离提交，不引入旧祖先。新 Required 分组按当前 main 的十组真实清单 [37,12,5,5,5,4,3,8,3,3] 计，旧 84 次调用保持顺序，新加一次。正式覆盖仍为 A609/232/46，候选 A619/235/47 待独立全验。
 ## 2026-11-17｜Issue #229 分数小立方体验证入口
 
 在现有10组83调用上，向evidence-fractioncase末尾追加一个cubefraction命令与专属产物，84调用[37,12,5,4,5,4,3,8,3,3]。原83调用的相对顺序、环境和产物均保留，12Job/22Artifact/35min及全部P10不变，不预称新组合容量足够。当前隔离WIP为`wip/issue-229-cubefraction-rebased` @ `ea55b5879e4be95b7f53df53cb73ef8599f8d077`，工程父为新main `4d8561d2e89d83cd50a6b45290fa9e1a5eb0587b`；旧WIP `f7a679f` 完整保留，不带回旧Money父链。完整Node/数学、来源清单/反馈、原控件、真实WebGL、离线/备份、官方ZIP与实际checkout均绑定最终HEAD；新main须再独立验收才手动结案Issue。
