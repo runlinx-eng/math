@@ -1,7 +1,7 @@
 // One reviewed browser inventory. Groups run on separate runners; commands
 // within each group remain sequential and never suppress another result.
-// 2026-11-17 P8 capacity fix preserves all 85 invocations across eleven groups,
-// all artifact paths, P10 scope and the 35-minute hard limit.
+// 2026-11-18 Unit Cover adds one reviewed invocation: 86 across eleven groups.
+// Preserve the P8/Multable split, all artifact paths, P10 and the 35-minute limit.
 import {appendFileSync,existsSync,mkdirSync,readdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {dirname,resolve} from 'node:path';
@@ -135,21 +135,22 @@ const groups={
   "verification/p9-fraction-order-adapter/",
   "verification/p9-area-adapter/",
  ]},
- // PR #146 measured 19m57s for the four existing expansion commands.
- // Keep every invocation and artifact; give the next construction families
- // a separate runner instead of extending that serial path toward its limit.
+ // Preserve the existing expansion-2 order and append the single Unit Cover call.
+ // The unchanged 35-minute job budget remains the capacity gate for this combined group.
  "evidence-expansion-2":{commands:[
   {"file":"tests/p9-groups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-transform-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-scalechain-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fracshare-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-unitcover-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
   "verification/p9-scalechain-adapter/",
   "verification/p9-fracshare-adapter/",
+  "verification/p9-unitcover-adapter/",
  ]},
  // Main run 43601980060 measured 1593793 ms for the four expansion commands.
  // Keep groups/transform/angle together; quantity families get a full runner.

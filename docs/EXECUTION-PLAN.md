@@ -1,3 +1,15 @@
+## 2026-11-16｜Issue #231 等长单位完整候选
+
+- 工程父multable完整WIP6307317f，保留全部前序成果。仅6原生/3来源节点且3净新增/1合同：lengthstart:0/2、sameunitlength:0/1/2、twounits:2。5关联与3旧practice单列，ruler/refine/compare/convert等不接入本合同。
+- 当前并集候选625/238/48须本次独立源audit确认；正式main以Issue130新main验收为准，不借前序CI。
+- 原工具给定网格、长度和单位，直接显示已放块数。严格证据只描述当前等长单位对每个基本区间恰好覆盖一次，以及精确数量/单位和当前保存字符串一致；不归因为独立数数、物理测量、自选单位、通用换算或两种独立方法，method:null。twounits:2的more只是原当前选项。保留sameunitlength:1原prompt纸片与unit回形针的来源措辞，不暗改原题。
+- 首次有限数字record的原文保留在first.measure，不能称第一次Check或第一次猜想；失败或近似旧尝试与sticky bad全部保留。原near容差可能把4.00000001判正确，严格层用与原输入语法兼容的BigInt有理数要求精确相等，不能改写原grade或声称原界面判错。place/clear清saved，clear保留first/bad/填写/history；数学等值但原文不同的measure/unit仍须重新record。prose/questions属于完整当前模型，最新提交相等门槛不放宽。
+- 2000个原动作后，数学模型整体no-op，但原extra handler仍update时间戳等元数据，保留的bad/issue还可能令case.support为true；旧attempt.supported/exposed原样保留，不能要求全raw不写。原字段仍可编辑，但capped record不能保存新measure/unit字节；返回原保存pair或真实P3恢复，零attempt先实际Check，通常无需reload。1200字符prose可写；无HTML maxlength的1201输入是另一条原验证写拒绝/blocked，旧raw保全，reload恢复。构造容量与原生路线明确分列。
+- 仅在现有evidence-expansion-2末尾追加本族，86调用[37,12,5,5,6,4,3,8,3,3]。原85命令的组/顺序/env/路径与12jobs/10组/22ZIP/35min/P10均保留。相同七脚本已验169/main3a8与历史228的原收据分别为963888/1019710/1562692ms，只提供原组实测范围；新组合、外层发布载荷和runner开销尚未测，不按操作量线性估算，不保证容量，必须当前HEAD完整job通过。
+- 全累计状态、2空4真chooser和两视口实际PNG仍须最终HEAD真实CI；PR门禁后再验新main才结案。#180/#145保留，#209不自动合并；不部署、不重做离线、不重试本地Chrome EPERM。
+
+
+> 2026-11-17 从已存 #231 WIP `6ba8dae4` 的独立27文件增量预接到未合并 #238 HEAD `8c992406` 之上的隔离 WIP；此父提交尚未正式main验收，不做 PR、不计正式覆盖。当前 #230 CI 前仍仅正式 A609/232/46。本段86调用/分组为预接待验，不主张独立CI或容量已通过。
 ## 2026-11-16｜Issue #230 按位乘法完整候选
 
 - 工程父为cube WIP f7a679f6，保留前序全部成果。严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
