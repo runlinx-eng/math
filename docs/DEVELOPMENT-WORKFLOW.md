@@ -1,3 +1,13 @@
+## 2026-11-17｜Issue #179 Required 容量重平衡（保留全部门槛）
+
+Required attempt 1 与 attempt 2 均在35分钟硬限制下取消六至七个浏览器组；没有命令日志显示数学断言失败。七组 attempt 2 原始ZIP已下载，官方SHA256、本地SHA256及ZIP CRC全部匹配。连续runner样本显示2-vCPU runner CPU PSI some avg10中位数约46%–64%，cgroup throttling、memory PSI、CPU full pressure均为0，未见稳定CPU steal；这是CPU等待证据，不足以证明GitHub主机故障。UI原组的容量风险此前已有精确记录：旧Money命令1,413,682ms，加已验main UI job 672,000ms，距35分钟仅14,318ms；本次UI包亦显示Money双视口只完成50/56个原生题视口对，不能算完整验收。
+
+因此在不删命令、不减断言、不改环境、不跳过P10、不改35分钟限制的前提下，保留10组、12个Job、22份Artifact和83次调用，按分组顺序[37,12,5,4,5,4,2,8,3,3]重分配。Money移至p8-performance组的两项P8测量之后；P9 time/order/wideshift/PVbench移至始终执行的p10-learning组；P10-offline仍只包含原三项条件离线检查，避免普通math-only PR把P9测试一起标记not-required。其余长尾命令在UI、core、place、expansion、expansion-2、quantity、fractioncase间重新平衡。所有原始命令和产物目录均只移动归属，未删除或改写。
+
+这只是新的容量分配候选。必须在新HEAD重新跑完整Required，核对全部10组命令收据、22份官方Artifact及实际Money双视口、备份恢复和离线原件；新HEAD通过前PR保持Draft，任何取消仍不计成功。
+
+原49Node保持，增加10真实前置、完整原State连续路线与兼容隔离的3项Node。两视口要求516checked（510真实来源+6明确构造兼容）、650当前模型captures+20practice、74retry、66Next、224单列反事实、2空native restore context/4真chooser成功导入，以及2兼容context/2兼容成功/4损坏拒绝。原模型、任务、评分、v2及P10不改，全量Required/适用专项/原件绑定最终HEAD；合并后另验新push-main才手动结案Issue。
+
 ## 2026-11-16｜Issue #176 运算顺序的完整验证入口
 
 在面积候选的十组81调用基础上，仅将新order命令及专属产物追加现有evidence-expansion末尾，完整82调用[33,13,7,5,7,5,3,4,3,2]。保留原81调用的组、相对顺序、环境和全部产物，12Job/22Artifact/35分钟不变。官方历史order调用272655ms，现有扩展一在main6025为946227ms、旧a522为1198856ms；容量选择不代表新版通过，必须验本次receipt。
@@ -152,3 +162,12 @@ Issue #144 的 samefraction 专用命令加入核心证据组，只追加一次�
 ### P9 Issue #164 / PR #168 的连续链整合
 
 在 Issue #144 的完整九组68调用基础上，仅向数量组追加 storyledger 一次调用和专属产物路径；当前69调用分布为[33,11,4,4,3,4,1,7,2]。既有命令、环境、20份Artifact、P10全部入口和35分钟组限时保持。旧 #168 HEAD 的成功验收作为历史保留；合入新依赖后按新HEAD重新运行完整Required、真实Chromium/P10并核对产物，随后另验main。
+
+## 2026-11-17｜仓库公开后的 Actions 与证据可见性
+
+- 已核实仓库 `runlinx-eng/math` 当前为 Public。标准 GitHub-hosted runner 在公开仓库中免费；larger runners 仍可能收费。公开可见性不会自动重跑此前失败的 workflow，必须由新 PR 提交或手动 workflow dispatch 触发新运行。
+- 不把公开仓库视为自动免除 Artifact 配额。GitHub 官方文档明确标准 runner 在 Public 免费，但当前存储额度/共享计量规则仍需以本仓库公开后的新上传结果和 Billing 页面核实。Required 仍须成功上传全部原始证据；不能因 runner 免费而跳过 Artifact gate。
+- 公开仓库的代码、Issues、PR、Actions 日志及可下载的 workflow Artifact 对所有读者可见。Artifact 中只允许使用合成测试记录；禁止真实儿童姓名、联系方式、学校/班级、真实学习账户标识、真实家庭数据、访问令牌或其他个人/机密信息。
+- 2026-11-17 抽查既有 P10 learning Artifact `14221287476` 和旧 Money UI Artifact `14254556808`：截图展示的是自动生成的数学任务；对解压后的 JSON/文本按姓名、联系方式、学校、账户等字段进行扫描，未发现明显个人身份信息。此为抽样检查，不等于全仓库/全部历史 Artifact 的完整隐私审计；新上传 Artifact 在发布前仍须检查。
+- PR #183 当前 HEAD `4f89230a5836c8a81d0319fcda90cae196f6dd01`，仍 Draft。公开前 Required #44003549449 因 Artifact storage quota 失败，browser matrix 被 fail-closed 跳过；不能把该结果当作新公开环境的验收。新提交后的 Required 必须在此 HEAD 基础上完整执行 10 组浏览器检查，核对命令收据、官方 Artifact 元数据、SHA-256、ZIP CRC 和 Money 双视口/备份恢复/离线 reload。
+- 不删除历史正式证据，不降低数学断言或 35 分钟硬限制，不因公开而自动合并。完成新 HEAD 的完整 Required 与独立验收后，才可将 PR Ready 并合并；随后仍须独立验收 main。

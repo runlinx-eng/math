@@ -130,6 +130,9 @@ jobs:
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
+          node --check dist/learning/money-evidence.js
+          node --check tests/fixtures/p9-money-navigation.cjs
+          node --check tests/p9-money-adapter-browser.cjs
           node --check dist/learning/order-evidence.js
           node --check scripts/order-evidence-fixture.mjs
           node --check tests/fixtures/p9-order-navigation.cjs
@@ -236,6 +239,8 @@ jobs:
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
             tests/p9-wideshift-navigation.test.mjs
+            tests/p9-money-evidence-adapter.test.mjs
+            tests/p9-money-navigation.test.mjs
             tests/p9-order-evidence-adapter.test.mjs
             tests/p9-order-navigation.test.mjs
             tests/p9-area-evidence-adapter.test.mjs
@@ -372,9 +377,35 @@ jobs:
         shell: bash
         run: |
           if [[ "$MATH_BROWSER_REQUIRED" == true ]]; then
+            diag_dir=verification/runner-diagnostics
+            mkdir -p "$diag_dir"
+            diag_file="$diag_dir/${MATH_BROWSER_GROUP}-attempt-${GITHUB_RUN_ATTEMPT}.txt"
+            {
+              printf "group=%s run_id=%s attempt=%s sha=%s\n" "$MATH_BROWSER_GROUP" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$GITHUB_SHA"
+              date -u +"started_at=%Y-%m-%dT%H:%M:%SZ"
+              uname -a
+              lscpu | grep -E "Model name|CPU\\(s\\)|Thread|Core|Socket" || true
+              free -b || true
+              df -B1 / || true
+              node --version || true
+              npm --version || true
+              npx playwright --version || true
+            } > "$diag_file" 2>&1
+            capture_metrics() {
+              printf "\\n--- sample %s ---\\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              printf "loadavg: "; cat /proc/loadavg 2>/dev/null || true
+              printf "proc_stat: "; sed -n "1p" /proc/stat 2>/dev/null || true
+              for metric in /sys/fs/cgroup/cpu.max /sys/fs/cgroup/cpu.stat /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory.current /sys/fs/cgroup/memory.events /proc/pressure/cpu /proc/pressure/memory /proc/pressure/io; do
+                if [[ -r "$metric" ]]; then printf "%s: " "$metric"; tr "\\n" " " < "$metric"; printf "\\n"; fi
+              done
+              ps -eo pid,ppid,pcpu,pmem,etime,stat,comm --sort=-pcpu 2>/dev/null | head -n 12 || true
+            }
+            capture_metrics >> "$diag_file" 2>&1
+            (while true; do sleep 30; capture_metrics; done) >> "$diag_file" 2>&1 &
+            diag_sampler_pid=$!
             python3 -m http.server 43827 --directory dist > /tmp/math-http.log 2>&1 &
             browser_server_pid=$!
-            trap 'kill "$browser_server_pid" 2>/dev/null || true' EXIT
+            trap 'kill "$browser_server_pid" 2>/dev/null || true; wait "$browser_server_pid" 2>/dev/null || true; kill "$diag_sampler_pid" 2>/dev/null || true; wait "$diag_sampler_pid" 2>/dev/null || true' EXIT
             ready=false
             for attempt in $(seq 1 30); do
               if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then
@@ -396,7 +427,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: math-required-checks-browser-evidence-${{ matrix.group }}-${{ github.run_attempt }}
-          path: ${{ steps.group_config.outputs.artifact_paths }}
+          path: |
+            ${{ steps.group_config.outputs.artifact_paths }}
+            verification/runner-diagnostics/${{ matrix.group }}-attempt-${{ github.run_attempt }}.txt
           if-no-files-found: error
 
       - name: Preserve this group's exact command results

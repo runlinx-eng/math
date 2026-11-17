@@ -1,5 +1,7 @@
 // One reviewed browser inventory. Groups run on separate runners; commands
 // within each group remain sequential and never suppress another result.
+// 2026-11-17 capacity rebalance preserves all 83 invocations, ten groups,
+// all artifact paths, P10 scope and the 35-minute hard limit.
 import {appendFileSync,existsSync,mkdirSync,readdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {dirname,resolve} from 'node:path';
@@ -40,6 +42,10 @@ const groups={
   {"file":"tests/concept-visual-browser.cjs","env":{"MATH_CONCEPT_BROWSER_SCOPE":"smoke"}},
   {"file":"tests/node-name-browser.cjs","env":{}},
   {"file":"tests/relationship-wording-browser.cjs","env":{}},
+  {"file":"tests/p9-paperlab-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-fraction-operations-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-mixedtrade-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-fracdecompose-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/overview-readability-v1/",
   "verification/spatial-focus-transition/",
@@ -73,6 +79,10 @@ const groups={
   "verification/p5-integration/",
   "verification/continuous-space/",
   "verification/p6b-layout/",
+  "verification/p9-paperlab-adapter/",
+  "verification/p9-fraction-operations-adapter/",
+  "verification/p9-mixedtrade-adapter/",
+  "verification/p9-fracdecompose-adapter/",
  ]},
  "evidence-core":{commands:[
   {"file":"tests/p9-thinking-feedback-browser.cjs","env":{}},
@@ -87,7 +97,6 @@ const groups={
   {"file":"tests/p9-array-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-samefraction-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-mixedaxis-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-paperlab-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-thinking-feedback/",
   "verification/p9-geometry-thinking/",
@@ -101,7 +110,6 @@ const groups={
   "verification/p9-array-adapter/",
   "verification/p9-samefraction-adapter/",
   "verification/p9-mixedaxis-adapter/",
-  "verification/p9-paperlab-adapter/",
  ]},
  "evidence-place":{commands:[
   {"file":"tests/p9-place-adapter-browser.cjs","env":{}},
@@ -109,29 +117,23 @@ const groups={
   {"file":"tests/b14-division-container-caption-browser.cjs","env":{}},
   {"file":"tests/p9-division-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-decimalengine-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-place-adapter/",
   "verification/p9-decimal-place-adapter/",
   "verification/b14-division-container-caption/",
   "verification/p9-division-adapter/",
   "verification/p9-decimalengine-adapter/",
-  "verification/p9-wideshift-adapter/",
-  "verification/p9-pvbench-adapter/",
  ]},
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-fraction-operations-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-order-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
-  "verification/p9-fraction-operations-adapter/",
-  "verification/p9-order-adapter/",
+  "verification/p9-area-adapter/",
  ]},
  // PR #146 measured 19m57s for the four existing expansion commands.
  // Keep every invocation and artifact; give the next construction families
@@ -142,16 +144,12 @@ const groups={
   {"file":"tests/p9-angle-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-scalechain-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fracshare-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-mixedtrade-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-fracdecompose-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-groups-adapter/",
   "verification/p9-transform-adapter/",
   "verification/p9-angle-adapter/",
   "verification/p9-scalechain-adapter/",
   "verification/p9-fracshare-adapter/",
-  "verification/p9-mixedtrade-adapter/",
-  "verification/p9-fracdecompose-adapter/",
  ]},
  // Main run 43601980060 measured 1593793 ms for the four expansion commands.
  // Keep groups/transform/angle together; quantity families get a full runner.
@@ -161,13 +159,11 @@ const groups={
   {"file":"tests/p9-estimate-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-portiongroups-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-storyledger-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-time-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-joinstory-adapter/",
   "verification/p9-estimate-adapter/",
   "verification/p9-portiongroups-adapter/",
   "verification/p9-storyledger-adapter/",
-  "verification/p9-time-adapter/",
  ]},
  // PR #158 measured 821071ms for the three older expansion commands.
  // Keep the 188 fraction-case viewport instances on their own runner; every
@@ -175,22 +171,28 @@ const groups={
  "evidence-fractioncase":{commands:[
   {"file":"tests/p9-fdpboard-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fractioncase-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-fractioncase-adapter/",
   "verification/p9-fdpboard-adapter/",
-  "verification/p9-area-adapter/",
  ]},
  "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
   {"file":"tests/p10-backup-safety-browser.cjs","env":{}},
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
+  {"file":"tests/p9-time-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-order-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
   "verification/p10-release-upgrade/backup-safety/",
   "verification/p10-release-upgrade/full-lessons/",
+  "verification/p9-time-adapter/",
+  "verification/p9-order-adapter/",
+  "verification/p9-wideshift-adapter/",
+  "verification/p9-pvbench-adapter/",
  ]},
  // Full offline is mandatory on SW/startup PRs, main pushes and manual runs.
  // Ordinary math PRs leave an explicit, audited not-required group receipt.
@@ -205,8 +207,10 @@ const groups={
  "p8-performance":{commands:[
   {"file":"tests/p8-trail-performance-browser.cjs","env":{"MATH_P8_BASELINE":"1"}},
   {"file":"tests/p8-trail-performance-browser.cjs","env":{}},
+  {"file":"tests/p9-money-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p8-trail-performance/",
+  "verification/p9-money-adapter/",
  ]},
 };
 for(const group of Object.values(groups)){
