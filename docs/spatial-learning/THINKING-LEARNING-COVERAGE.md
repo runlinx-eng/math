@@ -1,6 +1,6 @@
-## 当前准备分支｜分数单位小立方体（Issue #229，2026-11-16）
+## 当前准备分支｜分数单位小立方体（Issue #229，2026-11-17）
 
-固定工程父是钱币WIP 9b36f805d3a6d7fd79e96ac64445c574031d5648（tree72c7d9ec25a3298a5f91becd87e8c194d520c5eb），其603原生/228节点/45合同保持。新增仅6原生/4净节点/1合同，候选A609/1996、232/587节点、46合同，A609/B189/C124/D994/E80。正式main只以Issue130最新独立验收为准；本候选无新HEADCI，不能计正式覆盖。
+当前隔离WIP `wip/issue-229-cubefraction-rebased` HEAD `ea55b5879e4be95b7f53df53cb73ef8599f8d077`，唯一父为Money正常合并后的main `4d8561d2e89d83cd50a6b45290fa9e1a5eb0587b`；旧WIP `f7a679f` / 父 `9b36` 完整保留，不重放旧Money父链。main Required push `44018007969` 正在独立验收，static audit 当前候选A603/1996、228/587节点；该值在main Required最终成功前不更新正式覆盖。新增仅6原生/4净节点/1合同，Cube候选A609/1996、232/587节点、46合同，A609/B189/C124/D994/E80。该WIP尚无当前HEAD Chromium/Required验收，不能计正式覆盖。
 
 | 原生课程 | 原索引 |
 | --- | --- |
