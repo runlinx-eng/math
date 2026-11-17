@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import fixture from './fixtures/p9-unitcover-cases.cjs';
+import unitcoverBrowser from './p9-unitcover-adapter-browser.cjs';
+const {compactUnitcoverReport}=unitcoverBrowser;
 import * as M from '../dist/learning/phase5/b28-model.js';
 import * as V from '../dist/learning/phase5/b28-view.js';
 import * as State from '../dist/learning/state.js';
@@ -23,6 +25,26 @@ const stable=x=>Array.isArray(x)?x.map(stable):x&&typeof x==='object'?Object.fro
 const digest=x=>createHash('sha256').update(x).digest('hex'),hash=x=>digest(JSON.stringify(stable(x)));
 const attrs=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(x=>[x[1],x[2]]));
 const atlas=JSON.parse(readFileSync(new URL('../dist/data/atlas.json',import.meta.url),'utf8'));
+
+test('browser report compaction keeps evidence references and bounded audit summaries without duplicating full State models',()=>{
+ const model={history:Array.from({length:2000},(_,i)=>({a:'record',d:{},f:{measure:String(i),unit:'块'}})),board:{positions:[0,1]}};
+ const record={attempts:[{id:'a1',value:model},{id:'a2',value:model}],support:true,exposed:false};
+ const raw={model,record,attempts:record.attempts,emptyModel:model,originalState:{lessons:{x:{models:{0:model}}}},
+  beforeRecord:record,afterRecord:record,attempt:{id:'a2',at:'2026-11-18T00:00:00Z',supported:true,exposed:false,value:model},
+  storage:{raw:'raw-storage.txt',state:'state.json',rawSHA256:'abc',stateSHA256:'def'},
+  proof:{kind:'unitcover',eventCount:4,construction:{positions:[0,1]}},backupFile:'backup-v2.json'};
+ const compact=compactUnitcoverReport(raw);
+ assert.equal(Object.hasOwn(compact,'model'),false);assert.equal(Object.hasOwn(compact,'record'),false);
+ assert.equal(Object.hasOwn(compact,'attempts'),false);assert.equal(Object.hasOwn(compact,'emptyModel'),false);
+ assert.equal(Object.hasOwn(compact,'originalState'),false);
+ assert.deepEqual(compact.beforeRecordSummary,{attemptCount:2,support:true,exposed:false});
+ assert.deepEqual(compact.afterRecordSummary,{attemptCount:2,support:true,exposed:false});
+ assert.deepEqual(compact.attemptSummary,{id:'a2',at:'2026-11-18T00:00:00Z',supported:true,exposed:false});
+ assert.equal(compact.storage.state,'state.json');assert.equal(compact.backupFile,'backup-v2.json');
+ assert.deepEqual(compact.proof,raw.proof);
+ const forged=compactUnitcoverReport({model:{history:[{a:'forged'}]},strict:false},{preserveModels:true});
+ assert.deepEqual(forged.model,{history:[{a:'forged'}]});
+});
 function field(t,m,key,value){
  const html=V.controls(t,m),tags=[...html.matchAll(/<(?:input|select)\b[^>]*>/g)].map(x=>x[0]).filter(x=>attrs(x)['data-xfield']===key);
  assert.equal(tags.length,1,'one original visible field '+key);assert.doesNotMatch(tags[0],/\bdisabled\b|\breadonly\b/);
