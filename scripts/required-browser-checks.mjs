@@ -129,13 +129,11 @@ const groups={
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-multable-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
   "verification/p9-area-adapter/",
-  "verification/p9-multable-adapter/",
  ]},
  // PR #146 measured 19m57s for the four existing expansion commands.
  // Keep every invocation and artifact; give the next construction families
@@ -208,13 +206,17 @@ const groups={
   "verification/p10-longterm-round2/",
   "verification/p10-release-upgrade/",
  ]},
+ // #230 capacity evidence: expansion already took 21-32min before the added multable browser.
+ // Keep 84 old commands fixed; append only the new command to the proven 10-11min required runner.
  "p8-performance":{commands:[
   {"file":"tests/p8-trail-performance-browser.cjs","env":{"MATH_P8_BASELINE":"1"}},
   {"file":"tests/p8-trail-performance-browser.cjs","env":{}},
   {"file":"tests/p9-money-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-multable-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p8-trail-performance/",
   "verification/p9-money-adapter/",
+  "verification/p9-multable-adapter/",
  ]},
 };
 for(const group of Object.values(groups)){

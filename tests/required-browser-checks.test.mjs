@@ -77,15 +77,16 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,5,5,4,3,8,3,3]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,4,5,4,3,8,3,4]);
  assert.ok(!BROWSER_GROUPS.ui.commands.some(command=>command.file==='tests/p9-money-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS.ui.commands.slice(-4).map(x=>x.file),[
   'tests/p9-paperlab-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs',
   'tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs'
  ]);
- assert.deepEqual(BROWSER_GROUPS['p8-performance'].commands.at(-1),{file:'tests/p9-money-adapter-browser.cjs',env:{}});
+ assert.deepEqual(BROWSER_GROUPS['p8-performance'].commands.slice(-2),[{file:'tests/p9-money-adapter-browser.cjs',env:{}},{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
  assert.ok(BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-money-adapter/'));
- assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-area-adapter-browser.cjs',env:{}},{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
+ assert.ok(BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-multable-adapter/'));
+ assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-area-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion-2'].commands,[{file:'tests/p9-groups-adapter-browser.cjs',env:{}},{file:'tests/p9-transform-adapter-browser.cjs',env:{}},{file:'tests/p9-angle-adapter-browser.cjs',env:{}},{file:'tests/p9-scalechain-adapter-browser.cjs',env:{}},{file:'tests/p9-fracshare-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].commands,[{file:'tests/p9-joinstory-adapter-browser.cjs',env:{}},{file:'tests/p9-estimate-adapter-browser.cjs',env:{}},{file:'tests/p9-portiongroups-adapter-browser.cjs',env:{}},{file:'tests/p9-storyledger-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].artifacts,['verification/p9-joinstory-adapter/','verification/p9-estimate-adapter/','verification/p9-portiongroups-adapter/','verification/p9-storyledger-adapter/']);
@@ -148,6 +149,7 @@ test('P10 original commands keep their order and P9 capacity additions stay in a
 test('P10 reports are archived by the same runner that executes each data-safety command',()=>{
  const outputs={
   'tests/p9-money-adapter-browser.cjs':'verification/p9-money-adapter/results.json',
+  'tests/p9-multable-adapter-browser.cjs':'verification/p9-multable-adapter/results.json',
   'tests/p9-cubefraction-adapter-browser.cjs':'verification/p9-cubefraction-adapter/results.json',
   'tests/p9-paperlab-adapter-browser.cjs':'verification/p9-paperlab-adapter/results.json',
   'tests/p9-fraction-operations-adapter-browser.cjs':'verification/p9-fraction-operations-adapter/results.json',
