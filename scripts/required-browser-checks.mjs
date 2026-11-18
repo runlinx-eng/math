@@ -244,9 +244,9 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const check=(condition,message)=>{if(!condition)throw Error(message);};
-const groupFor=name=>{
- check(typeof name==='string'&&Object.hasOwn(BROWSER_GROUPS,name),'Unknown browser group: '+String(name));
- return BROWSER_GROUPS[name];
+const groupFor=(name,definitions=BROWSER_GROUPS)=>{
+ check(typeof name==='string'&&Object.hasOwn(definitions,name),'Unknown browser group: '+String(name));
+ return definitions[name];
 };
 const validEvent=event=>check(['pull_request','push','workflow_dispatch'].includes(event),'Unknown workflow event');
 
@@ -269,7 +269,9 @@ export function browserScope(event,changedFiles=[]){
  // Preserve the existing source/document scope and include the actual browser
  // inventory and its scheduler, so a test-only edit cannot omit its own run.
  const relevant=/^(dist\/|tests\/(spatial-(overview|focus|guide|relationship|theme|local).*|grade-progression-overview-browser.*|learning-workspace.*|concept-visual.*|node-name.*|relationship-wording.*)|docs\/spatial-learning\/INTERACTION-RULES\.md$|docs\/language\/|scripts\/((audit-learning-nodes|audit-learning-task-rules|required-browser-checks)\.mjs|server\.py)$|tests\/(learning-node-audit\.test\.mjs|learning-task-rules\.test\.mjs|learning-node-runtime-browser\.cjs|required-browser-checks\.test\.mjs)$|\.github\/workflows\/(pull-request-baseline|overview-readability-check|p9-module-recovery-ci|p9-bootstrap-failure-regression|p9-ordinal90-recovery)\.yml$)/;
- return changedFiles.some(file=>scripts.has(file)||sourceReview.has(file)||relevant.test(file)||OFFLINE_SENSITIVE_FILES.has(file)||OFFLINE_SENSITIVE_TEST.test(file))?'true':'false';
+ return changedFiles.some(file=>scripts.has(file)||sourceReview.has(file)||relevant.test(file)||OFFLINE_SENSITIVE_FILES.has(file)||OFFLINE_SENSITIVE_TEST.test(file)||
+  file==='ci/math-families.json'||file==='ci/live-browser-matrix.json'||file==='scripts/ci-live-browser-matrix.mjs'||
+  /^tests\/[a-zA-Z0-9/_-]+-browser\.cjs$/.test(file))?'true':'false';
 }
 
 // Keep deep SW/cache browser checks out of unrelated math PRs, but retain
@@ -316,9 +318,9 @@ export function commandEnvironment(environment,command){
  return {...result,...command.env};
 }
 
-export function runBrowserGroup({group,scope,context,execute,log=()=>{}}){
+export function runBrowserGroup({group,scope,context,execute,log=()=>{},definitions=BROWSER_GROUPS}){
  validateContext(context);
- const required=validateScope(scope,context.event),definition=groupFor(group);
+ const required=validateScope(scope,context.event),definition=groupFor(group,definitions);
  check(typeof execute==='function','Missing browser command executor');
  const report={schema,group,...context,required,status:required?'success':'not-required',commands:[]};
  if(!required)return report;
@@ -337,9 +339,9 @@ export function runBrowserGroup({group,scope,context,execute,log=()=>{}}){
  return report;
 }
 
-function validateReport(report,context,required){
+function validateReport(report,context,required,definitions=BROWSER_GROUPS){
  check(object(report)&&report.schema===schema,'Missing or unknown browser report schema');
- const definition=groupFor(report.group);
+ const definition=groupFor(report.group,definitions);
  check(report.sha===context.sha&&report.runId===context.runId&&report.event===context.event,
   'Browser report belongs to a different checkout or workflow run');
  check(Number.isSafeInteger(report.attempt)&&report.attempt>=1&&report.attempt<=context.attempt,
@@ -369,28 +371,37 @@ function validateReport(report,context,required){
  check(report.status===expectedStatus,'Missing, unknown or inconsistent browser group outcome');
 }
 
-export function validateRequiredGate({needs,reports,context}){
+export function validateRequiredGate({needs,reports,context,definitions=BROWSER_GROUPS}){
  validateContext(context);
  check(object(needs)&&same(Object.keys(needs).sort(),['browser','static-checks']),
   'Missing or unexpected required job');
  for(const name of ['static-checks','browser'])
   check(needs[name]?.result==='success',name+' must finish with success; got '+String(needs[name]?.result));
  const {browser:required,offline:offlineRequired}=validateScopes(needs['static-checks'].outputs,context.event);
+ const expectedNames=Object.keys(definitions);
+ const rawMatrix=needs['static-checks'].outputs?.browser_matrix;
+ check(typeof rawMatrix==='string'&&rawMatrix.length>0,'Missing GitHub dynamic browser matrix output');
+ let matrix;
+ try{matrix=JSON.parse(rawMatrix);}catch(error){throw Error('Invalid GitHub browser matrix JSON: '+error.message);}
+ check(same(matrix,{group:expectedNames}),
+  'GitHub matrix output does not match the exact registered and legacy required groups');
+ check(expectedNames.length>=GROUP_NAMES.length&&GROUP_NAMES.every((name,index)=>expectedNames[index]===name),
+  'The original thirteen required browser groups must remain the ordered prefix');
  check(Array.isArray(reports),'Missing browser group reports');
  const newest=new Map(),attempts=new Set();
  for(const report of reports){
-  validateReport(report,context,report.group==='p10-offline'?offlineRequired:required);
+  validateReport(report,context,report.group==='p10-offline'?offlineRequired:required,definitions);
   const key=report.group+':'+report.attempt;
   check(!attempts.has(key),'Duplicate browser group attempt');attempts.add(key);
   if(!newest.has(report.group)||newest.get(report.group).attempt<report.attempt)newest.set(report.group,report);
  }
- check(newest.size===GROUP_NAMES.length&&GROUP_NAMES.every(group=>newest.has(group)),
+ check(newest.size===expectedNames.length&&expectedNames.every(group=>newest.has(group)),
   'Every declared browser group needs its own result');
  for(const [group,report] of newest)
   check(report.status===((group==='p10-offline'?offlineRequired:required)?'success':'not-required'),group+' did not complete the required work');
  // Rerun-failed-jobs may reuse successful members from an earlier attempt of
  // this same run and exact SHA. A newer failure always supersedes older success.
- return {sha:context.sha,runId:context.runId,required,offlineRequired,groups:GROUP_NAMES,
+ return {sha:context.sha,runId:context.runId,required,offlineRequired,groups:expectedNames,
   invocations:[...newest.values()].reduce((sum,report)=>sum+report.commands.length,0)};
 }
 
@@ -408,7 +419,7 @@ function output(value){
  appendFileSync(process.env.GITHUB_OUTPUT,value);
 }
 
-function main(){
+async function main(){
  const [operation,group]=process.argv.slice(2);
  if(operation==='scope'){
   const event=process.env.GITHUB_EVENT_NAME;validEvent(event);let files=[];
@@ -421,20 +432,50 @@ function main(){
   output('run_browser='+scope+'\nrun_offline='+offline+'\n');
   console.log('Browser regression required: '+scope+'; deep offline required: '+offline);return;
  }
+ // The same reviewed registry and deterministic plan are used for the live
+ // matrix, each runner's work and the final exact-group fail-closed gate.
+ const {buildLiveBrowserMatrix}=await import('./ci-live-browser-matrix.mjs');
+ const definitions=buildLiveBrowserMatrix().definitions;
  const context=workflowContext();
  if(operation==='prepare'){
   validateScope(process.env.MATH_BROWSER_REQUIRED,context.event);
-  const definition=groupFor(group);
+  const definition=groupFor(group,definitions);
   output('artifact_paths<<MATH_BROWSER_ARTIFACT_PATHS\n'+definition.artifacts.join('\n')+'\nMATH_BROWSER_ARTIFACT_PATHS\n');
   return;
  }
  if(operation==='run'){
   const report=runBrowserGroup({group,scope:process.env.MATH_BROWSER_REQUIRED,context,log:console.log,
-   execute:command=>{
+   definitions,execute:command=>{
     check(existsSync(resolve(root,command.file)),'Required browser script is missing: '+command.file);
     return spawnSync(process.execPath,[command.file],{cwd:root,stdio:'inherit',
      env:commandEnvironment(process.env,command)});
    }});
+  // First-party additional modules must produce original results and screenshots
+  // on the executing runner, before uploads can be green. This is stricter
+  // than if-no-files-found because that only checks at least one path exists.
+  if(definitions[group].newFamily&&report.status==='success'){
+   for(const module of definitions[group].modules){
+    for(const dir of module.artifacts){
+     const base=resolve(root,dir);
+     check(existsSync(base),'Missing newly registered evidence path: '+dir);
+     const results=resolve(base,'results.json');
+     check(existsSync(results),'Missing new family math results JSON: '+results);
+     const item=JSON.parse(readFileSync(results,'utf8'));
+     check(Array.isArray(item.errors)&&item.errors.length===0,
+      'New family has missing or nonempty mathematical errors: '+dir);
+     check(Array.isArray(item.checks)&&item.checks.length>0||
+      Number.isInteger(item.checks)&&item.checks>0,'New family has no mathematical assertions: '+dir);
+     check(Array.isArray(item.proofContracts)&&module.proofContracts.every(x=>item.proofContracts.includes(x)),
+      'Missing actual math/correction/persistence proof contract: '+dir);
+     check(item.provenance?.testedCheckoutSha===context.sha&&
+      String(item.provenance?.runId)===context.runId&&
+      Number(item.provenance?.runAttempt)===context.attempt,
+      'New family evidence provenance does not match checkout/run/attempt: '+dir);
+     check(readdirSync(base).some(f=>f.toLowerCase().endsWith('.png')),
+      'New family original Chromium screenshot missing: '+dir);
+    }
+   }
+  }
   const destination=resolve(root,'verification/required-browser-groups');mkdirSync(destination,{recursive:true});
   writeFileSync(resolve(destination,group+'-attempt-'+context.attempt+'.json'),JSON.stringify(report,null,2)+'\n');
   console.log('REQUIRED_BROWSER_GROUP '+JSON.stringify({group,status:report.status,invocations:report.commands.length}));
@@ -446,11 +487,11 @@ function main(){
   const files=existsSync(directory)?readdirSync(directory):[];
   check(files.every(file=>file.endsWith('.json')),'Unexpected browser result artifact');
   const reports=files.map(file=>JSON.parse(readFileSync(resolve(directory,file),'utf8')));
-  console.log('REQUIRED_CHECKS_SUCCESS '+JSON.stringify(validateRequiredGate({needs,reports,context})));return;
+  console.log('REQUIRED_CHECKS_SUCCESS '+JSON.stringify(validateRequiredGate({needs,reports,context,definitions})));return;
  }
  throw Error('Unknown required-browser-checks operation');
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- try{main();}catch(error){console.error(error.stack);process.exitCode=1;}
+ main().catch(error=>{console.error(error.stack);process.exitCode=1;});
 }
