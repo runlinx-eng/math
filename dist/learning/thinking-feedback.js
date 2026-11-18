@@ -1,3 +1,4 @@
+import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
@@ -85,6 +86,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-units'){
+    const source=unitcoverBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每块一样长，怎样正好盖住这段长度？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-multable'){
     const source=multableBinding(task,context);
     return source?{type:task.type,summary:'想一想：换成一捆以后，数量去了哪一位？（可选）',question:source.question}:null;
@@ -204,6 +209,22 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-units'){
+    const source=unitcoverBinding(task,context);if(!source)return null;
+    const proof=replayUnitcoverEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '图上的网格、每块长度和“已放”块数由工具提供；这里描述当前摆放和保存的记录。',
+      `当前 ${c.count} 个“${c.unit}”各占 ${c.size} 个小格，首尾相接，正好覆盖 ${c.length} 个小格；每个小格只盖一次。`,
+      `保存的数量原文是“${c.saved.measure}”，单位是“${c.saved.unit}”；它们与当前摆放表示的数量和单位精确一致。`,
+      `这份作品最早保留的数字记录是“${c.firstMeasure.raw}”；这里核对当前保存的记录，没有替换最早的原文。`
+    ];
+    if(proof.removals.length||proof.clears.length)detail.push('取回和清空的操作记录仍保留；这里描述最后保存的覆盖。');
+    if(proof.historyAtCapacity)detail.push('这份作品的操作记录已到可保存的上限；这里只描述已经保存的这份作品。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整模型一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:`当前 ${c.count} 个相同长度的“${c.unit}”正好覆盖这段长度，保存的数量和单位也与当前摆放一致。`,
+      connection:'每块一样长时，怎样检查起点、终点和中间都刚好接上？',detail,method:null};
+  }
   if(task?.type==='x-multable'){
     const source=multableBinding(task,context);if(!source)return null;
     const proof=replayMultableEvidence(task,model);if(!proof)return null;

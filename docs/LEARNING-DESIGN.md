@@ -1,3 +1,15 @@
+## 2026-11-16｜Issue #231 等长单位首尾铺盖
+
+仅6原生/3来源节点且3净新增/1合同：lengthstart:0/2、sameunitlength:0/1/2、twounits:2。5关联与3旧practice单列，ruler/refine/compare/convert等不接入本合同。
+
+原工具给定网格、长度和单位，直接显示已放块数。严格证据只描述当前等长单位对每个基本区间恰好覆盖一次，以及精确数量/单位和当前保存字符串一致；不归因为独立数数、物理测量、自选单位、通用换算或两种独立方法，method:null。twounits:2的more只是原当前选项。保留sameunitlength:1原prompt纸片与unit回形针的来源措辞，不暗改原题。
+
+首次有限数字record的原文保留在first.measure，不能称第一次Check或第一次猜想；失败或近似旧尝试与sticky bad全部保留。原near容差可能把4.00000001判正确，严格层用与原输入语法兼容的BigInt有理数要求精确相等，不能改写原grade或声称原界面判错。place/clear清saved，clear保留first/bad/填写/history；数学等值但原文不同的measure/unit仍须重新record。prose/questions属于完整当前模型，最新提交相等门槛不放宽。
+
+以整数区间独立核对每一小格被盖一次，允许任意合法摆放顺序与错放后取回、清空重建；不把唯一最终覆盖集合误写成唯一操作顺序。原输入、原单位、第一次数字记录与后续纠正均保留，不评价自由文字含义。
+
+2000个原动作后，数学模型整体no-op，但原extra handler仍update时间戳等元数据，保留的bad/issue还可能令case.support为true；旧attempt.supported/exposed原样保留，不能要求全raw不写。原字段仍可编辑，但capped record不能保存新measure/unit字节；返回原保存pair或真实P3恢复，零attempt先实际Check，通常无需reload。1200字符prose可写；无HTML maxlength的1201输入是另一条原验证写拒绝/blocked，旧raw保全，reload恢复。构造容量与原生路线明确分列。
+
 ## 2026-11-16｜Issue #230 按位乘法中的十换一与部分积
 
 严格10原生/5来源节点、净3节点/1合同：writtenstart:2、shortproduct:0/1/2、longproduct:0/1/3、bigproduct:0/1、translateamount:2。bigproduct:2的3040×20没有合法十换一，不授本族A；17关联与3旧practice兼容隔离。
