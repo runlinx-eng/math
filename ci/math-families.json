@@ -1,0 +1,103 @@
+{
+  "schema": "math-ci-family-registry/1",
+  "mode": "shadow-only",
+  "baseline": {
+    "acceptedMainSha": "b23bff217fa0baf5967b42e8553e01951d70d7c3",
+    "source": "scripts/required-browser-checks.mjs",
+    "expectedGroups": 13,
+    "expectedCommands": 86,
+    "expectedScripts": 85,
+    "expectedEvidenceDirs": 83,
+    "acceptedRequiredRunId": "44287490501",
+    "observedGroupScriptMinutes": [
+      {
+        "id": "ui",
+        "minutes": 25.17
+      },
+      {
+        "id": "evidence-core",
+        "minutes": 15.3
+      },
+      {
+        "id": "evidence-place",
+        "minutes": 15.57
+      },
+      {
+        "id": "evidence-expansion",
+        "minutes": 10.37
+      },
+      {
+        "id": "evidence-area",
+        "minutes": 16.07
+      },
+      {
+        "id": "evidence-expansion-2",
+        "minutes": 21.03
+      },
+      {
+        "id": "evidence-quantity",
+        "minutes": 15.42
+      },
+      {
+        "id": "evidence-fractioncase",
+        "minutes": 26.48
+      },
+      {
+        "id": "p10-learning",
+        "minutes": 14.59
+      },
+      {
+        "id": "p10-learning-tail",
+        "minutes": 10.25
+      },
+      {
+        "id": "p10-offline",
+        "minutes": 1.97
+      },
+      {
+        "id": "p8-performance",
+        "minutes": 10.38
+      },
+      {
+        "id": "p9-multable",
+        "minutes": 14.37
+      }
+    ],
+    "observations": "One independently accepted main run; script-duration sums exclude queue, runner setup, Chromium installation and artifact upload. These values are not P50/P90/P95."
+  },
+  "limits": {
+    "maxParallel": 10,
+    "jobTimeoutMinutes": 35,
+    "planningStartupReserveMinutes": 6,
+    "maxNewScriptsMinutesPerJob": 29,
+    "maxNewMemoryMiB": 8192,
+    "runnerTypes": [
+      "standard",
+      "cpu-heavy"
+    ]
+  },
+  "futureBrowserViewport": {
+    "width": 1920,
+    "height": 1080,
+    "unit": "Chromium content pixels",
+    "legacyExempt": true
+  },
+  "legacyPilots": [
+    {
+      "familyId": "area",
+      "existingGroup": "evidence-area",
+      "entry": "tests/p9-area-adapter-browser.cjs"
+    },
+    {
+      "familyId": "unitcover",
+      "existingGroup": "evidence-expansion-2",
+      "entry": "tests/p9-unitcover-adapter-browser.cjs"
+    },
+    {
+      "familyId": "multable",
+      "existingGroup": "p9-multable",
+      "entry": "tests/p9-multable-adapter-browser.cjs"
+    }
+  ],
+  "newFamilies": []
+}
