@@ -99,5 +99,32 @@
       "entry": "tests/p9-multable-adapter-browser.cjs"
     }
   ],
-  "newFamilies": []
+  "newFamilies": [
+    {
+      "familyId": "sequence-invariance",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-sequence-invariance-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-sequence-invariance/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 5,
+        "memoryMiB": 2048,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
+    }
+  ]
 }

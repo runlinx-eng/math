@@ -42,15 +42,17 @@ test('#239 bridge preview ensures the live matrix is generated from the preserve
  assert.equal(p.requiredLegacyJobs.reduce((n,g)=>n+g.commands.length,0),86);
  assert.equal(p.requiredLegacyJobs.flatMap(g=>g.artifacts).length,83);
  assert.deepEqual(p.comparison.liveMatrix,p.requiredLegacyJobs.map(g=>g.id));
- assert.deepEqual(p.unactivatedFutureJobs,[]);
- assert.equal(p.expectedFullRequiredReceipts.length,13);
+ assert.equal(p.unactivatedFutureJobs.length,1);
+ assert.equal(p.unactivatedFutureJobs[0].commands[0].file,
+  'tests/p9-sequence-invariance-browser.cjs');
+ assert.equal(p.expectedFullRequiredReceipts.length,14);
  assert.equal(p.digest,make().digest,'Stable input yields stable digest');
 });
 
 test('#239 simulated promotion needs all original receipts and actual evidence ownership',()=>{
  const x=fixture();
  assert.deepEqual(validateMockPromotion(x),{
-  status:'simulated-only',complete:true,groups:13,commands:86});
+  status:'simulated-only',complete:true,groups:14,commands:87});
  const missing=fixture();missing.receipts.pop();
  assert.throws(()=>validateMockPromotion(missing),/Missing or extra/);
  const missingZIP=fixture();missingZIP.evidence.pop();
