@@ -124,15 +124,21 @@ const groups={
   "verification/p9-division-adapter/",
   "verification/p9-decimalengine-adapter/",
  ]},
+ // Area was the fourth command in the 35-minute expansion group; a main
+ // runner timed out before producing its receipt despite three preceding OKs.
+ // Split its real browser evidence onto a separate required runner, not a skip.
  "evidence-expansion":{commands:[
   {"file":"tests/p9-mature-expansion-browser.cjs","env":{}},
   {"file":"tests/p9-route-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-fraction-order-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p9-mature-expansion/",
   "verification/p9-route-adapter/",
   "verification/p9-fraction-order-adapter/",
+ ]},
+ "evidence-area":{commands:[
+  {"file":"tests/p9-area-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-area-adapter/",
  ]},
  // Preserve the existing expansion-2 order and append the single Unit Cover call.
