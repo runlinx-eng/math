@@ -221,7 +221,7 @@ jobs:
             tests/ci-audit-viewports.test.mjs
             tests/ci-plan-math-families.test.mjs
             tests/ci-matrix-bridge.test.mjs
-            tests/ci-live-browser-matrix.test.mjs
+            tests/ci-live-matrix.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
@@ -357,7 +357,7 @@ jobs:
         id: live_browser_matrix
         run: |
           node --check scripts/ci-live-browser-matrix.mjs
-          node --check tests/ci-live-browser-matrix.test.mjs
+          node --check tests/ci-live-matrix.test.mjs
           node scripts/ci-live-browser-matrix.mjs output
 
       - name: Archive evidence audit source-derived report
