@@ -8,7 +8,9 @@ const OLD='96844424ceb534e7ca5f864a006b72a52efd0d60';
 const phase=process.env.P10_UPGRADE_PHASE||'full';
 assert.ok(phase==='full'||phase==='retry','P10_UPGRADE_PHASE must be full or retry');
 const root=path.resolve(__dirname,'..'),out=process.env.P10_UPGRADE_OUTPUT||path.join(root,'verification/p10-release-upgrade',phase==='retry'?'retry-independent':'');
-const port=Number(process.env.P10_UPGRADE_PORT||43829),base='http://127.0.0.1:'+port+'/';
+// Port 0 asks the kernel to bind an available port; the real origin is set after listen.
+const port=Number(process.env.P10_UPGRADE_PORT||43829);
+let base='http://127.0.0.1:'+port+'/';
 const checks=[],scenarios=[],errors=[];
 const check=(condition,label,detail={})=>{assert.ok(condition,label);checks.push(label);scenarios.push({label,result:'A',...detail});};
 const read=page=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
@@ -77,7 +79,18 @@ const poll=async(page,predicate,arg,label,timeout=90000,onSample=()=>{})=>{
     res.end(data);
    });
   });
-  await new Promise(resolve=>server.listen(port,'127.0.0.1',resolve));
+  await new Promise((resolve,reject)=>{
+   const onError=error=>{server.off('listening',onListening);reject(error);};
+   const onListening=()=>{server.off('error',onError);resolve();};
+   server.once('error',onError);
+   server.once('listening',onListening);
+   server.listen(port,'127.0.0.1');
+  });
+  const serverPort=server.address()?.port;
+  assert.ok(Number.isInteger(serverPort)&&serverPort>0,'upgrade test must bind a real localhost TCP port');
+  base='http://127.0.0.1:'+serverPort+'/';
+  provenance.serverPort=serverPort;
+  provenance.origin=base;
   const launchOptions={headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{})};
   const observeContext=(context,label)=>context.on('serviceworker',worker=>{
