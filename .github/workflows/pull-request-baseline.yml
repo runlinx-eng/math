@@ -50,9 +50,18 @@ jobs:
             exit 1
           fi
 
+      - name: Enforce standard viewport for new browser test entrypoints
+        run: |
+          node --check scripts/check-new-browser-viewports.mjs
+          node --check tests/helpers/standard-desktop-viewport.cjs
+          node --check tests/desktop-viewport-policy.test.mjs
+          node scripts/check-new-browser-viewports.mjs
+
       - name: Check runtime module syntax
         run: |
           node --check scripts/required-browser-checks.mjs
+          node --check scripts/ci-audit-viewports.mjs
+          node --check tests/ci-audit-viewports.test.mjs
           node --check dist/spatial-scene.js
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
@@ -208,6 +217,8 @@ jobs:
             tests/spatial-exploration.test.mjs
             tests/deployment-static.test.mjs
             tests/required-browser-checks.test.mjs
+            tests/ci-audit-viewports.test.mjs
+            tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
@@ -359,7 +370,7 @@ jobs:
       fail-fast: false
       max-parallel: 10
       matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-area, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-offline, p8-performance, p9-multable]
+        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-area, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-learning-tail, p10-offline, p8-performance, p9-multable]
     env:
       MATH_BROWSER_REQUIRED: ${{ matrix.group == 'p10-offline' && needs.static-checks.outputs.run_offline || needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}

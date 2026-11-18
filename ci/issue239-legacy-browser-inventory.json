@@ -1,0 +1,698 @@
+{
+  "schema": "math-ci-issue239-legacy-browser-inventory/1",
+  "source": {
+    "checkoutSha": "0231280c506309f3487f0d4a8dfe2f266068a9bf",
+    "inventoryBlobSha": "70f0806d4365149fc95cc81ab1f6efd8383493eb",
+    "requiredRunId": "44258604531",
+    "requiredWorkflow": ".github/workflows/pull-request-baseline.yml",
+    "groupCommandExecutionMinutesOnly": 209.4,
+    "excludes": "runner setup, dependency installation, queueing, uploads; one successful run, not P90/P95"
+  },
+  "status": "frozen pre-migration command-and-evidence-directory baseline; NOT a scenario-level old-to-new mapping",
+  "standardContentBox": {
+    "candidate": [
+      1440,
+      900
+    ],
+    "state": "pending semantic/layout/coordinate review",
+    "priorSecondary": [
+      1280,
+      720
+    ]
+  },
+  "safeguards": {
+    "expectedGroups": 12,
+    "expectedCommands": 86,
+    "expectedDistinctEntries": 85,
+    "existingMaxParallel": 10,
+    "existingJobTimeoutMinutes": 35,
+    "changePolicy": "Any difference needs explicit reviewed migration and independently preserved scenario/receipt/artifact evidence; never auto-accept a deleted call"
+  },
+  "observedScriptMinutesByGroup": {
+    "ui": 24.8,
+    "evidence-core": 22.9,
+    "evidence-place": 15.9,
+    "evidence-expansion": 10,
+    "evidence-area": 12.7,
+    "evidence-expansion-2": 20.9,
+    "evidence-quantity": 17.4,
+    "evidence-fractioncase": 23.3,
+    "p10-learning": 32.6,
+    "p10-offline": 1.6,
+    "p8-performance": 12.5,
+    "p9-multable": 14.6
+  },
+  "pilots": [
+    {
+      "family": "area",
+      "entry": "tests/p9-area-adapter-browser.cjs",
+      "legacyNativePerViewport": 17,
+      "requiredKinds": [
+        "native observation",
+        "21 boundary variants per viewport",
+        "wrong/corrected operation",
+        "shared retry",
+        "prerequisite Next order",
+        "associated and excluded isolation",
+        "real State-v2 export/import",
+        "offline stopped-origin",
+        "screenshot"
+      ],
+      "sceneMapping": "pending"
+    },
+    {
+      "family": "unitcover",
+      "entry": "tests/p9-unitcover-adapter-browser.cjs",
+      "legacyNativePerViewport": 6,
+      "requiredKinds": [
+        "math replay and exact rational records",
+        "wrong then corrected action",
+        "capacity 2000 events",
+        "save/reload/retry",
+        "State-v2 real import",
+        "constructed compatibility distinguished from native",
+        "forgery negative checks",
+        "screenshots"
+      ],
+      "sceneMapping": "pending"
+    },
+    {
+      "family": "multable",
+      "entry": "tests/p9-multable-adapter-browser.cjs",
+      "legacyNativePerViewport": 10,
+      "requiredKinds": [
+        "original multiplication rows/exchange",
+        "wrong estimate and correction",
+        "capacity 3000 events",
+        "State-v2 and backups",
+        "forgery negative checks",
+        "independent parallel viewport timing",
+        "screenshots"
+      ],
+      "sceneMapping": "pending"
+    }
+  ],
+  "groups": [
+    {
+      "id": "ui",
+      "commands": [
+        {
+          "legacyId": "ui#01",
+          "entry": "tests/learning-node-runtime-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#02",
+          "entry": "tests/three-level-node-progress-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#03",
+          "entry": "tests/explore-during-learning-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#04",
+          "entry": "tests/spatial-theme-overview-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#05",
+          "entry": "tests/p11-focus-hover-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#06",
+          "entry": "tests/p11-entry-simplification-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#07",
+          "entry": "tests/p7-d5-entry-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#08",
+          "entry": "tests/p7-d6-fixed-ui-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#09",
+          "entry": "tests/p7-d7-multi-type-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#10",
+          "entry": "tests/p8-node-surface-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#11",
+          "entry": "tests/p8-mode-real-click-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#12",
+          "entry": "tests/p8-b39-lazy-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#13",
+          "entry": "tests/p1-navigation-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#14",
+          "entry": "tests/p2-grade-distribution-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#15",
+          "entry": "tests/p3-learning-flow-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#16",
+          "entry": "tests/p7-learning-panel-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#17",
+          "entry": "tests/p7-d4-multi-type-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#18",
+          "entry": "tests/p4-learning-reliability-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#19",
+          "entry": "tests/p5-integration-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#20",
+          "entry": "tests/continuous-space-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#21",
+          "entry": "tests/p6b-layout-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#22",
+          "entry": "tests/spatial-overview-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#23",
+          "entry": "tests/spatial-focus-transition-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#24",
+          "entry": "tests/spatial-focus-semantics-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#25",
+          "entry": "tests/spatial-focus-filter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#26",
+          "entry": "tests/spatial-guide-inplace-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#27",
+          "entry": "tests/spatial-unified-map-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#28",
+          "entry": "tests/grade-progression-overview-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#29",
+          "entry": "tests/spatial-local-focus-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#30",
+          "entry": "tests/learning-workspace-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#31",
+          "entry": "tests/concept-visual-browser.cjs",
+          "env": {
+            "MATH_CONCEPT_BROWSER_SCOPE": "smoke"
+          }
+        },
+        {
+          "legacyId": "ui#32",
+          "entry": "tests/node-name-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#33",
+          "entry": "tests/relationship-wording-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#34",
+          "entry": "tests/p9-paperlab-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#35",
+          "entry": "tests/p9-fraction-operations-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#36",
+          "entry": "tests/p9-mixedtrade-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "ui#37",
+          "entry": "tests/p9-fracdecompose-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/overview-readability-v1/",
+        "verification/spatial-focus-transition/",
+        "verification/spatial-focus-semantics/",
+        "verification/spatial-focus-filter/",
+        "verification/spatial-guide-inplace/",
+        "verification/spatial-unified-map/",
+        "verification/spatial-theme-overview/",
+        "verification/grade-progression-overview/",
+        "verification/spatial-local-focus/",
+        "verification/learning-workspace/",
+        "verification/concept-language-pilot/",
+        "verification/node-name-review/",
+        "verification/language-direction/",
+        "verification/p1-navigation/",
+        "verification/p2-grade-distribution/",
+        "verification/p3-learning-flow/",
+        "verification/p7-learning-panel/",
+        "verification/learning-node-audit/",
+        "verification/three-level-node-progress/",
+        "verification/explore-during-learning/",
+        "verification/p7-d4/",
+        "verification/p7-d5/",
+        "verification/p7-d6/",
+        "verification/p7-d7/",
+        "verification/p8-node-surfaces/",
+        "verification/p8-mode-clicks/",
+        "verification/p11-focus-hover/",
+        "verification/p11-entry-simplification/",
+        "verification/p4-learning-reliability/",
+        "verification/p5-integration/",
+        "verification/continuous-space/",
+        "verification/p6b-layout/",
+        "verification/p9-paperlab-adapter/",
+        "verification/p9-fraction-operations-adapter/",
+        "verification/p9-mixedtrade-adapter/",
+        "verification/p9-fracdecompose-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-core",
+      "commands": [
+        {
+          "legacyId": "evidence-core#01",
+          "entry": "tests/p9-thinking-feedback-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#02",
+          "entry": "tests/p9-geometry-thinking-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#03",
+          "entry": "tests/p9-sequence-thinking-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#04",
+          "entry": "tests/p9-sequence-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#05",
+          "entry": "tests/p9-counterexample-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#06",
+          "entry": "tests/p9-fraction-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#07",
+          "entry": "tests/p9-unitwalk-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#08",
+          "entry": "tests/p9-groupwalk-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#09",
+          "entry": "tests/p9-line-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#10",
+          "entry": "tests/p9-array-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#11",
+          "entry": "tests/p9-samefraction-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-core#12",
+          "entry": "tests/p9-mixedaxis-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-thinking-feedback/",
+        "verification/p9-geometry-thinking/",
+        "verification/p9-sequence-thinking/",
+        "verification/p9-sequence-adapter/",
+        "verification/p9-counterexample-adapter/",
+        "verification/p9-fraction-adapter/",
+        "verification/p9-unitwalk-adapter/",
+        "verification/p9-groupwalk-adapter/",
+        "verification/p9-line-adapter/",
+        "verification/p9-array-adapter/",
+        "verification/p9-samefraction-adapter/",
+        "verification/p9-mixedaxis-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-place",
+      "commands": [
+        {
+          "legacyId": "evidence-place#01",
+          "entry": "tests/p9-place-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-place#02",
+          "entry": "tests/p9-decimal-place-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-place#03",
+          "entry": "tests/b14-division-container-caption-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-place#04",
+          "entry": "tests/p9-division-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-place#05",
+          "entry": "tests/p9-decimalengine-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-place-adapter/",
+        "verification/p9-decimal-place-adapter/",
+        "verification/b14-division-container-caption/",
+        "verification/p9-division-adapter/",
+        "verification/p9-decimalengine-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-expansion",
+      "commands": [
+        {
+          "legacyId": "evidence-expansion#01",
+          "entry": "tests/p9-mature-expansion-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion#02",
+          "entry": "tests/p9-route-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion#03",
+          "entry": "tests/p9-fraction-order-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-mature-expansion/",
+        "verification/p9-route-adapter/",
+        "verification/p9-fraction-order-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-area",
+      "commands": [
+        {
+          "legacyId": "evidence-area#01",
+          "entry": "tests/p9-area-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-area-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-expansion-2",
+      "commands": [
+        {
+          "legacyId": "evidence-expansion-2#01",
+          "entry": "tests/p9-groups-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion-2#02",
+          "entry": "tests/p9-transform-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion-2#03",
+          "entry": "tests/p9-angle-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion-2#04",
+          "entry": "tests/p9-scalechain-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion-2#05",
+          "entry": "tests/p9-fracshare-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-expansion-2#06",
+          "entry": "tests/p9-unitcover-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-groups-adapter/",
+        "verification/p9-transform-adapter/",
+        "verification/p9-angle-adapter/",
+        "verification/p9-scalechain-adapter/",
+        "verification/p9-fracshare-adapter/",
+        "verification/p9-unitcover-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-quantity",
+      "commands": [
+        {
+          "legacyId": "evidence-quantity#01",
+          "entry": "tests/p9-joinstory-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-quantity#02",
+          "entry": "tests/p9-estimate-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-quantity#03",
+          "entry": "tests/p9-portiongroups-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-quantity#04",
+          "entry": "tests/p9-storyledger-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-joinstory-adapter/",
+        "verification/p9-estimate-adapter/",
+        "verification/p9-portiongroups-adapter/",
+        "verification/p9-storyledger-adapter/"
+      ]
+    },
+    {
+      "id": "evidence-fractioncase",
+      "commands": [
+        {
+          "legacyId": "evidence-fractioncase#01",
+          "entry": "tests/p9-fdpboard-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-fractioncase#02",
+          "entry": "tests/p9-fractioncase-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "evidence-fractioncase#03",
+          "entry": "tests/p9-cubefraction-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-fractioncase-adapter/",
+        "verification/p9-fdpboard-adapter/",
+        "verification/p9-cubefraction-adapter/"
+      ]
+    },
+    {
+      "id": "p10-learning",
+      "commands": [
+        {
+          "legacyId": "p10-learning#01",
+          "entry": "tests/p9-numeric-compat-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#02",
+          "entry": "tests/p10-learning-continuity-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#03",
+          "entry": "tests/p10-backup-safety-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#04",
+          "entry": "tests/p10-full-lessons-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#05",
+          "entry": "tests/p9-time-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#06",
+          "entry": "tests/p9-order-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#07",
+          "entry": "tests/p9-wideshift-adapter-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-learning#08",
+          "entry": "tests/p9-pvbench-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p10-learning-continuity/",
+        "verification/p9-numeric-compat/",
+        "verification/p10-release-upgrade/backup-safety/",
+        "verification/p10-release-upgrade/full-lessons/",
+        "verification/p9-time-adapter/",
+        "verification/p9-order-adapter/",
+        "verification/p9-wideshift-adapter/",
+        "verification/p9-pvbench-adapter/"
+      ]
+    },
+    {
+      "id": "p10-offline",
+      "commands": [
+        {
+          "legacyId": "p10-offline#01",
+          "entry": "tests/p10-longterm-offline-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-offline#02",
+          "entry": "tests/p10-sw-nav-isolation-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p10-offline#03",
+          "entry": "tests/p10-release-upgrade-repeat.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p10-longterm-round2/",
+        "verification/p10-release-upgrade/"
+      ]
+    },
+    {
+      "id": "p8-performance",
+      "commands": [
+        {
+          "legacyId": "p8-performance#01",
+          "entry": "tests/p8-trail-performance-browser.cjs",
+          "env": {
+            "MATH_P8_BASELINE": "1"
+          }
+        },
+        {
+          "legacyId": "p8-performance#02",
+          "entry": "tests/p8-trail-performance-browser.cjs",
+          "env": {}
+        },
+        {
+          "legacyId": "p8-performance#03",
+          "entry": "tests/p9-money-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p8-trail-performance/",
+        "verification/p9-money-adapter/"
+      ]
+    },
+    {
+      "id": "p9-multable",
+      "commands": [
+        {
+          "legacyId": "p9-multable#01",
+          "entry": "tests/p9-multable-adapter-browser.cjs",
+          "env": {}
+        }
+      ],
+      "evidenceDirs": [
+        "verification/p9-multable-adapter/"
+      ]
+    }
+  ]
+}

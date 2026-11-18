@@ -1,0 +1,38 @@
+{
+  "schema": "math-ci-p10-capacity-split/1",
+  "legacySourceSha": "0231280c506309f3487f0d4a8dfe2f266068a9bf",
+  "from": "p10-learning",
+  "groupCuts": [
+    {
+      "id": "p10-learning",
+      "start": 0,
+      "end": 6
+    },
+    {
+      "id": "p10-learning-tail",
+      "start": 6,
+      "end": 8
+    }
+  ],
+  "trigger": {
+    "runId": "44273004041",
+    "conclusion": "cancelled",
+    "reason": "35-minute job hard timeout during eighth browser command p9-pvbench; other 11 browser groups succeeded"
+  },
+  "requirements": {
+    "oldGroupCommands": 8,
+    "newGroupCommands": [
+      6,
+      2
+    ],
+    "totalBrowserInvocations": 86,
+    "reviewedScriptEntries": 85,
+    "originalArtifactDirectories": 83,
+    "requiredGroups": 13,
+    "missingGroupOrReceipt": "failure",
+    "mathStateP10OfflineAndOriginalEvidence": "unchanged",
+    "legacyViewportTests": "unchanged",
+    "timeoutMinutes": 35,
+    "maxParallel": 10
+  }
+}
