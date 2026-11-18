@@ -21,14 +21,26 @@ export function buildMatrixBridgePreview(plan,workflow){
  assert.equal(plan.legacyEvidenceDirs,83);
  assert.ok(plan.legacyGroups.every(g=>g.mandatory===true));
  assert.ok(typeof workflow==='string');
- const matches=[...workflow.matchAll(/^[ \t]*group:[ \t]*\[([^\]\n]+)\]/gm)];
+ // Scope each constraint to its REAL GitHub Actions job. A 35-minute
+ // static job must not accidentally mask a 60-minute browser runner.
+ const browserStart=workflow.indexOf('\n  browser:\n');
+ const gateStart=workflow.indexOf('\n  required-checks:\n',browserStart+1);
+ assert.ok(browserStart>=0&&gateStart>browserStart,
+  'Missing live browser job or final Required gate');
+ const browserBlock=workflow.slice(browserStart,gateStart);
+ const gateBlock=workflow.slice(gateStart);
+ const matches=[...browserBlock.matchAll(/^[ \t]*group:[ \t]*\[([^\]\n]+)\]/gm)];
  assert.equal(matches.length,1,'Current workflow must have exactly one reviewed browser matrix');
  const live=matches[0][1].split(',').map(s=>s.trim());
  eq(live,plan.legacyGroups.map(g=>g.id));
- assert.match(workflow,/max-parallel:\s*10\b/);
- assert.match(workflow,/timeout-minutes:\s*35\b/);
- assert.match(workflow,/needs:\s*\[static-checks,\s*browser\]/);
- assert.match(workflow,/node scripts\/required-browser-checks\.mjs gate/);
+ assert.match(browserBlock,/needs:\s*static-checks\b/);
+ assert.match(browserBlock,/fail-fast:\s*false\b/);
+ assert.match(browserBlock,/max-parallel:\s*10\b/);
+ assert.match(browserBlock,/timeout-minutes:\s*35\b/);
+ assert.match(gateBlock,/needs:\s*\[static-checks,\s*browser\]/);
+ assert.match(gateBlock,/if:\s*\$\{\{\s*always\(\)\s*\}\}/);
+ assert.match(gateBlock,/pattern:\s*required-browser-result-\*/);
+ assert.match(gateBlock,/node scripts\/required-browser-checks\.mjs gate/);
  const jobs=plan.legacyGroups.map(g=>({
   id:g.id,kind:'mandatory-legacy',wave:0,required:true,
   commands:g.commands.map(c=>({file:c.file,env:{...c.env}})),
