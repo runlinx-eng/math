@@ -218,6 +218,7 @@ jobs:
             tests/deployment-static.test.mjs
             tests/required-browser-checks.test.mjs
             tests/ci-audit-viewports.test.mjs
+            tests/ci-plan-math-families.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
@@ -339,6 +340,13 @@ jobs:
           node --test tests/interaction-semantic-audit.test.mjs
           node scripts/audit-interaction-semantics.mjs
 
+      # Shadow mode ONLY: write a plan without controlling matrix/Required gate.
+      - name: Validate declarative math-family registry and preserve shadow plan
+        run: |
+          node --check scripts/ci-plan-math-families.mjs
+          node --check tests/ci-plan-math-families.test.mjs
+          node scripts/ci-plan-math-families.mjs --output verification/ci-shadow-plan/execution-plan.json
+
       - name: Archive evidence audit source-derived report
         if: always()
         uses: actions/upload-artifact@v4
@@ -359,6 +367,7 @@ jobs:
             verification/learning-node-audit/
             verification/p7-d3/
             verification/p7-d7/coverage.json
+            verification/ci-shadow-plan/
           if-no-files-found: warn
 
   browser:
