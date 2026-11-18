@@ -71,13 +71,13 @@ const rejected=value=>assert.throws(()=>validateRequiredGate(value));
 
 test('all fifty existing scripts and the reviewed expansion remain, with only the P8 baseline repeated',()=>{
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
- assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-area','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance','p9-multable']);
+ assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-area','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-learning-tail','p10-offline','p8-performance','p9-multable']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
  assert.equal(commands.length,86);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,3,1,6,4,3,8,3,3,1]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,3,1,6,4,3,6,2,3,3,1]);
  assert.ok(!BROWSER_GROUPS.ui.commands.some(command=>command.file==='tests/p9-money-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS.ui.commands.slice(-4).map(x=>x.file),[
   'tests/p9-paperlab-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs',
@@ -135,12 +135,13 @@ test('P10 original commands keep their order and P9 capacity additions stay in a
  const offline=['p10-longterm-offline-browser','p10-sw-nav-isolation-browser',
   'p10-release-upgrade-repeat'].map(name=>'tests/'+name+'.cjs');
  assert.deepEqual(BROWSER_GROUPS['p10-learning'].commands.slice(0,4).map(x=>x.file),learner);
- assert.deepEqual(BROWSER_GROUPS['p10-learning'].commands.slice(4).map(x=>x.file),additions);
+ assert.deepEqual(BROWSER_GROUPS['p10-learning'].commands.slice(4).map(x=>x.file),additions.slice(0,2));
+ assert.deepEqual(BROWSER_GROUPS['p10-learning-tail'].commands.map(x=>x.file),additions.slice(2));
  assert.deepEqual(BROWSER_GROUPS['p10-offline'].commands.map(x=>x.file),offline);
  assert.deepEqual([...learner,...offline].sort(),['p9-numeric-compat-browser','p10-learning-continuity-browser',
   'p10-longterm-offline-browser','p10-sw-nav-isolation-browser','p10-release-upgrade-repeat',
   'p10-backup-safety-browser','p10-full-lessons-browser'].map(name=>'tests/'+name+'.cjs').sort());
- for(const [group,expected] of [['p10-learning',[...learner,...additions]],['p10-offline',offline]]){
+ for(const [group,expected] of [['p10-learning',[...learner,...additions.slice(0,2)]],['p10-learning-tail',additions.slice(2)],['p10-offline',offline]]){
   const visited=[];
   const failed=runBrowserGroup({group,scope:'true',context,execute:command=>{
    visited.push(command.file);return {status:visited.length===1?1:0,signal:null};
@@ -149,6 +150,20 @@ test('P10 original commands keep their order and P9 capacity additions stay in a
   assert.equal(failed.status,'failure');
   assert.ok(failed.commands.slice(1).every(command=>command.outcome==='success'));
   const gate=success();gate.reports[gate.reports.findIndex(r=>r.group===group)]=failed;rejected(gate);
+ }
+});
+
+test('P10 capacity split keeps all eight original invocations and both required runner receipts',()=>{
+ const expected=['p9-numeric-compat-browser','p10-learning-continuity-browser',
+  'p10-backup-safety-browser','p10-full-lessons-browser','p9-time-adapter-browser',
+  'p9-order-adapter-browser','p9-wideshift-adapter-browser','p9-pvbench-adapter-browser'].map(name=>'tests/'+name+'.cjs');
+ const actual=[...BROWSER_GROUPS['p10-learning'].commands,...BROWSER_GROUPS['p10-learning-tail'].commands].map(x=>x.file);
+ assert.deepEqual(actual,expected);
+ assert.equal(new Set(actual).size,8);
+ for(const group of ['p10-learning','p10-learning-tail']){
+  const missing=success();missing.reports=missing.reports.filter(x=>x.group!==group);rejected(missing);
+  const partial=success();partial.reports.find(x=>x.group===group).commands.pop();rejected(partial);
+  const failed=success();failed.reports.find(x=>x.group===group).commands[0].exitCode=1;rejected(failed);
  }
 });
 
@@ -184,13 +199,15 @@ test('P10 reports are archived by the same runner that executes each data-safety
  assert.deepEqual(BROWSER_GROUPS['p10-learning'].artifacts,[
   'verification/p10-learning-continuity/','verification/p9-numeric-compat/',
   'verification/p10-release-upgrade/backup-safety/','verification/p10-release-upgrade/full-lessons/',
-  'verification/p9-time-adapter/','verification/p9-order-adapter/',
+  'verification/p9-time-adapter/','verification/p9-order-adapter/'
+ ]);
+ assert.deepEqual(BROWSER_GROUPS['p10-learning-tail'].artifacts,[
   'verification/p9-wideshift-adapter/','verification/p9-pvbench-adapter/'
  ]);
 });
 
 test('each P10 group records every runner failure, without suppressing later data-safety commands',()=>{
- for(const group of ['p10-learning','p10-offline']){
+ for(const group of ['p10-learning','p10-learning-tail','p10-offline']){
   const count=BROWSER_GROUPS[group].commands.length;
   for(const first of [{status:1,signal:null},{status:null,signal:'SIGTERM'},
    {status:0,signal:'SIGTERM'},{status:0,error:Error('spawn failed')},{},null]){
@@ -243,7 +260,7 @@ test('main and manual scope always require all groups; PR scope includes the inv
  assert.throws(()=>offlineScope('pull_request',null));
 });
 
-test('a complete current result needs all twelve groups and the complete current invocation inventory',()=>{
+test('a complete current result needs all thirteen groups and the complete current invocation inventory',()=>{
  const before=success(),copy=structuredClone(before);
  assert.deepEqual(validateRequiredGate(before),{sha:context.sha,runId:context.runId,required:true,offlineRequired:true,
   groups:GROUP_NAMES,invocations:86});
@@ -254,7 +271,7 @@ test('a complete current result needs all twelve groups and the complete current
  }
 });
 
-test('math-only PR runs all 82 non-offline Chromium commands, including real backup and math history',()=>{
+test('math-only PR runs all 83 non-offline Chromium commands, including real backup and math history',()=>{
  const jobs=needs('true','false'),reports=fixture('true',context,'false');
  const gate=validateRequiredGate({needs:jobs,reports,context});
  assert.equal(gate.required,true);
@@ -263,7 +280,9 @@ test('math-only PR runs all 82 non-offline Chromium commands, including real bac
  const offline=reports.find(r=>r.group==='p10-offline');
  assert.deepEqual({required:offline.required,status:offline.status,commands:offline.commands},
   {required:false,status:'not-required',commands:[]});
- assert.equal(reports.find(r=>r.group==='p10-learning').commands.length,8);
+ assert.equal(reports.find(r=>r.group==='p10-learning').commands.length,6);
+ assert.equal(reports.find(r=>r.group==='p10-learning-tail').commands.length,2);
+ assert.equal(reports.find(r=>r.group==='p10-learning-tail').status,'success');
  assert.equal(reports.find(r=>r.group==='p10-learning').status,'success');
  const hidden=structuredClone(reports);hidden.find(r=>r.group==='p10-offline').status='success';
  rejected({needs:jobs,reports:hidden,context});

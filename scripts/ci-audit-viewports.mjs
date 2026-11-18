@@ -7,6 +7,7 @@ import {BROWSER_GROUPS,GROUP_NAMES} from './required-browser-checks.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const manifest=JSON.parse(readFileSync(resolve(root,'ci/issue239-legacy-browser-inventory.json'),'utf8'));
+const capacitySplit=JSON.parse(readFileSync(resolve(root,'ci/issue239-p10-capacity-split.json'),'utf8'));
 const same=(a,b)=>assert.deepEqual(a,b);
 const expectedSha='0231280c506309f3487f0d4a8dfe2f266068a9bf';
 const pilotMarkers={
@@ -20,13 +21,29 @@ export function validateFrozenInventory(){
  assert.equal(manifest.source.inventoryBlobSha,'70f0806d4365149fc95cc81ab1f6efd8383493eb');
  assert.equal(manifest.standardContentBox.state,'pending semantic/layout/coordinate review');
  assert.deepEqual(manifest.standardContentBox.candidate,[1440,900]);
- same(GROUP_NAMES,manifest.groups.map(x=>x.id));
- const expected=manifest.groups.flatMap(group=>group.commands);
- const actual=GROUP_NAMES.flatMap(id=>BROWSER_GROUPS[id].commands.map((command,index)=>({
-  legacyId:id+'#'+String(index+1).padStart(2,'0'),entry:command.file,env:command.env
- })));
+ // Frozen source remains the original 12 groups/86 commands; the separate
+ // reviewed capacity contract authorizes exactly one 6+2 split, no omissions.
+ assert.equal(manifest.groups.length,12);
+ assert.equal(capacitySplit.schema,'math-ci-p10-capacity-split/1');
+ assert.equal(capacitySplit.legacySourceSha,expectedSha);
+ assert.equal(capacitySplit.from,'p10-learning');
+ same(capacitySplit.groupCuts,[{id:'p10-learning',start:0,end:6},{id:'p10-learning-tail',start:6,end:8}]);
+ const sourceGroup=manifest.groups.find(x=>x.id===capacitySplit.from);
+ assert.equal(sourceGroup.commands.length,8);
+ assert.equal(sourceGroup.evidenceDirs.length,8);
+ const reviewedGroups=manifest.groups.flatMap(group=>group.id!==capacitySplit.from?[group]:
+  capacitySplit.groupCuts.map(cut=>({id:cut.id,
+   commands:group.commands.slice(cut.start,cut.end),
+   evidenceDirs:group.evidenceDirs.slice(cut.start,cut.end)})));
+ same(GROUP_NAMES,reviewedGroups.map(x=>x.id));
+ for(const group of reviewedGroups){
+  same(BROWSER_GROUPS[group.id].commands,group.commands.map(c=>({file:c.entry,env:c.env})));
+  same(BROWSER_GROUPS[group.id].artifacts,group.evidenceDirs);
+ }
+ const expected=manifest.groups.flatMap(group=>group.commands.map(c=>({entry:c.entry,env:c.env})));
+ const actual=GROUP_NAMES.flatMap(id=>BROWSER_GROUPS[id].commands.map(c=>({entry:c.file,env:c.env})));
  same(actual,expected);
- for(const group of manifest.groups)same(BROWSER_GROUPS[group.id].artifacts,group.evidenceDirs);
+ same(GROUP_NAMES.flatMap(id=>BROWSER_GROUPS[id].artifacts),manifest.groups.flatMap(x=>x.evidenceDirs));
  assert.equal(actual.length,86);
  assert.equal(new Set(actual.map(x=>x.entry)).size,85);
  const outputDirs=manifest.groups.flatMap(x=>x.evidenceDirs);

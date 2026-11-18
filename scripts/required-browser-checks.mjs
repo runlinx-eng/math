@@ -1,6 +1,6 @@
 // One reviewed browser inventory. Groups run on separate runners; commands
 // within each group remain sequential and never suppress another result.
-// 2026-11-18 Unit Cover adds one reviewed invocation: 86 across eleven groups.
+// 2026-11-18: retain all 86 reviewed calls in thirteen required groups after P10 capacity split.
 // Preserve the P8/Multable split, all artifact paths, P10 and the 35-minute limit.
 import {appendFileSync,existsSync,mkdirSync,readdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';
@@ -184,6 +184,7 @@ const groups={
   "verification/p9-fdpboard-adapter/",
   "verification/p9-cubefraction-adapter/",
  ]},
+ // #239: keep all eight original P10/quantity calls, but split the >35-minute runner.
  "p10-learning":{commands:[
   {"file":"tests/p9-numeric-compat-browser.cjs","env":{}},
   {"file":"tests/p10-learning-continuity-browser.cjs","env":{}},
@@ -191,8 +192,6 @@ const groups={
   {"file":"tests/p10-full-lessons-browser.cjs","env":{}},
   {"file":"tests/p9-time-adapter-browser.cjs","env":{}},
   {"file":"tests/p9-order-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
-  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
  ],artifacts:[
   "verification/p10-learning-continuity/",
   "verification/p9-numeric-compat/",
@@ -200,6 +199,12 @@ const groups={
   "verification/p10-release-upgrade/full-lessons/",
   "verification/p9-time-adapter/",
   "verification/p9-order-adapter/",
+ ]},
+ // Separate required receipt for the final two original math families.
+ "p10-learning-tail":{commands:[
+  {"file":"tests/p9-wideshift-adapter-browser.cjs","env":{}},
+  {"file":"tests/p9-pvbench-adapter-browser.cjs","env":{}},
+ ],artifacts:[
   "verification/p9-wideshift-adapter/",
   "verification/p9-pvbench-adapter/",
  ]},

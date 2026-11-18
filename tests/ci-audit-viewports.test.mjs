@@ -5,7 +5,7 @@ import {validateFrozenInventory,scanViewports,audit} from '../scripts/ci-audit-v
 
 test('#239 immutable pre-migration inventory preserves all current commands, env and artifact paths',()=>{
  const counts=validateFrozenInventory();
- assert.deepEqual(counts,{groups:12,commands:86,distinctScripts:85,evidenceDirs:83});
+ assert.deepEqual(counts,{groups:13,commands:86,distinctScripts:85,evidenceDirs:83});
 });
 
 test('#239 all 85 distinct Chromium entrypoints receive an honest static viewport report',()=>{
@@ -39,4 +39,7 @@ test('#239 audit is read-only: never upgrades unreviewed scenarios or claims a c
  assert.equal(baseline.groups.length,12);
  assert.ok(baseline.pilots.every(x=>x.sceneMapping==='pending'));
  assert.equal(report.scripts.length,85);
+ assert.equal(report.locked.groups,13);
+ const split=JSON.parse(readFileSync(new URL('../ci/issue239-p10-capacity-split.json',import.meta.url)));
+ assert.deepEqual(split.groupCuts,[{id:'p10-learning',start:0,end:6},{id:'p10-learning-tail',start:6,end:8}]);
 });
