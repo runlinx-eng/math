@@ -35,13 +35,15 @@ jobs:
       - name: Install matching Chromium runtime
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
+          # Keep the same verified lightweight CJK fallback used by Required.
           npx playwright install chromium
           if ! fc-list :lang=zh-cn family | grep -q .; then
             sudo apt-get update -qq -o Acquire::Retries=3
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
             fc-cache -f >/dev/null
           fi
-          fc-list :lang=zh-cn family | grep -q .
+          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+          fc-match -f 'Fallback CJK font: %{family} [%{file}]\n' 'sans-serif:lang=zh-cn'
       - name: Verify browser probe syntax and failure banner contract
         run: |
           node --check tests/p9-bootstrap-failure-browser.cjs

@@ -71,13 +71,13 @@ const rejected=value=>assert.throws(()=>validateRequiredGate(value));
 
 test('all fifty existing scripts and the reviewed expansion remain, with only the P8 baseline repeated',()=>{
  assert.equal(originalScripts.length,50);assert.equal(new Set(originalScripts).size,50);
- assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance','p9-multable']);
+ assert.deepEqual(GROUP_NAMES,['ui','evidence-core','evidence-place','evidence-expansion','evidence-area','evidence-expansion-2','evidence-quantity','evidence-fractioncase','p10-learning','p10-offline','p8-performance','p9-multable']);
  const commands=Object.values(BROWSER_GROUPS).flatMap(group=>group.commands);
  assert.equal(commands.length,86);
  assert.deepEqual([...new Set(commands.map(command=>command.file))].sort(),[...reviewedScripts].sort());
  const repeated=commands.filter((command,index)=>commands.findIndex(other=>other.file===command.file)!==index);
  assert.deepEqual(repeated.map(command=>command.file),['tests/p8-trail-performance-browser.cjs']);
- assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,4,6,4,3,8,3,3,1]);
+ assert.deepEqual(Object.values(BROWSER_GROUPS).map(group=>group.commands.length),[37,12,5,3,1,6,4,3,8,3,3,1]);
  assert.ok(!BROWSER_GROUPS.ui.commands.some(command=>command.file==='tests/p9-money-adapter-browser.cjs'));
  assert.deepEqual(BROWSER_GROUPS.ui.commands.slice(-4).map(x=>x.file),[
   'tests/p9-paperlab-adapter-browser.cjs','tests/p9-fraction-operations-adapter-browser.cjs',
@@ -88,7 +88,10 @@ test('all fifty existing scripts and the reviewed expansion remain, with only th
  assert.ok(!BROWSER_GROUPS['p8-performance'].artifacts.includes('verification/p9-multable-adapter/'));
  assert.deepEqual(BROWSER_GROUPS['p9-multable'].commands,[{file:'tests/p9-multable-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(BROWSER_GROUPS['p9-multable'].artifacts,['verification/p9-multable-adapter/']);
- assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}},{file:'tests/p9-area-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].commands,[{file:'tests/p9-mature-expansion-browser.cjs',env:{}},{file:'tests/p9-route-adapter-browser.cjs',env:{}},{file:'tests/p9-fraction-order-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['evidence-expansion'].artifacts,['verification/p9-mature-expansion/','verification/p9-route-adapter/','verification/p9-fraction-order-adapter/']);
+ assert.deepEqual(BROWSER_GROUPS['evidence-area'].commands,[{file:'tests/p9-area-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(BROWSER_GROUPS['evidence-area'].artifacts,['verification/p9-area-adapter/']);
  assert.deepEqual(BROWSER_GROUPS['evidence-expansion-2'].commands,[{file:'tests/p9-groups-adapter-browser.cjs',env:{}},{file:'tests/p9-transform-adapter-browser.cjs',env:{}},{file:'tests/p9-angle-adapter-browser.cjs',env:{}},{file:'tests/p9-scalechain-adapter-browser.cjs',env:{}},{file:'tests/p9-fracshare-adapter-browser.cjs',env:{}},{file:'tests/p9-unitcover-adapter-browser.cjs',env:{}}]);
   assert.ok(BROWSER_GROUPS['evidence-expansion-2'].artifacts.includes('verification/p9-unitcover-adapter/'));
  assert.deepEqual(BROWSER_GROUPS['evidence-quantity'].commands,[{file:'tests/p9-joinstory-adapter-browser.cjs',env:{}},{file:'tests/p9-estimate-adapter-browser.cjs',env:{}},{file:'tests/p9-portiongroups-adapter-browser.cjs',env:{}},{file:'tests/p9-storyledger-adapter-browser.cjs',env:{}}]);
@@ -240,7 +243,7 @@ test('main and manual scope always require all groups; PR scope includes the inv
  assert.throws(()=>offlineScope('pull_request',null));
 });
 
-test('a complete current result needs all eleven groups and the complete current invocation inventory',()=>{
+test('a complete current result needs all twelve groups and the complete current invocation inventory',()=>{
  const before=success(),copy=structuredClone(before);
  assert.deepEqual(validateRequiredGate(before),{sha:context.sha,runId:context.runId,required:true,offlineRequired:true,
   groups:GROUP_NAMES,invocations:86});
@@ -391,4 +394,22 @@ test('CI Chromium runner uses a small Chinese font fallback and still fails with
  assert.ok(install.includes('fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }'),
   'missing Chinese font coverage must remain fail-closed');
  assert.ok(install.includes('fc-match -f'),'selected CJK font must be recorded in the logs');
+});
+
+test('Area split is mandatory in the fail-closed gate and fallback uses the reviewed CJK font',()=>{
+ const reports=fixture();
+ const noArea=reports.filter(report=>report.group!=='evidence-area');
+ rejected({needs:needs(),reports:noArea,context});
+ const oldSuccess=reports.find(report=>report.group==='evidence-area');
+ const failed=runBrowserGroup({group:'evidence-area',scope:'true',context,execute:()=>({status:1})});
+ rejected({needs:needs(),reports:[...noArea,failed],context});
+ assert.equal(oldSuccess.commands.length,1);
+ assert.equal(oldSuccess.commands[0].file,'tests/p9-area-adapter-browser.cjs');
+ const fallback=readFileSync(new URL('../.github/workflows/p9-bootstrap-failure-regression.yml',import.meta.url),'utf8');
+ assert.match(fallback,/timeout-minutes: 15/,'fallback timeout stays unchanged');
+ assert.match(fallback,/npx playwright install chromium/,'fallback keeps real Chromium');
+ assert.match(fallback,/fonts-wqy-microhei/,'fallback must use small Chinese font');
+ assert.doesNotMatch(fallback,/fonts-noto-cjk/,'large Noto package must not return to fallback');
+ assert.match(fallback,/Missing CJK fonts/,'fallback must fail closed without Chinese coverage');
+ assert.match(fallback,/fc-match -f/,'fallback logs effective Chinese font');
 });
