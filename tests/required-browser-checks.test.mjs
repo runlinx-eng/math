@@ -376,3 +376,19 @@ test('workflow retains the stable final check, isolated fixed groups, complete r
  for(const path of ['verification/learning-evidence-audit/','verification/learning-node-audit/',
   'verification/p7-d3/','verification/p7-d7/coverage.json'])assert.ok(workflow.includes(path),path);
 });
+
+test('CI Chromium runner uses a small Chinese font fallback and still fails without CJK coverage',()=>{
+ const yaml=readFileSync(new URL('../.github/workflows/pull-request-baseline.yml',import.meta.url),'utf8');
+ const install=yaml.split('      - name: Install isolated Chromium test runtime')[1]
+  ?.split('      - name: Run every browser command')[0]??'';
+ assert.ok(install,'Chromium runtime install step must exist');
+ assert.ok(install.includes('npx playwright install chromium'),'real Chromium must remain installed');
+ assert.ok(install.includes('if ! fc-list :lang=zh-cn family | grep -q .; then'),'preinstalled CJK fonts must be preferred');
+ assert.ok(install.includes('apt-get install -y --no-install-recommends fonts-wqy-microhei'),
+  'missing CJK fonts must use the small Ubuntu 24.04 fallback');
+ assert.ok(!install.includes('apt-get install -y --no-install-recommends fonts-noto-cjk'),
+  'the old 61 MB font download must not remain the default');
+ assert.ok(install.includes('fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }'),
+  'missing Chinese font coverage must remain fail-closed');
+ assert.ok(install.includes('fc-match -f'),'selected CJK font must be recorded in the logs');
+});
