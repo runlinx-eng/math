@@ -1,0 +1,12 @@
+{
+  "schema": "math-ci-live-browser-matrix/1",
+  "activation": "enabled",
+  "dependencyMode": "reject-cross-group",
+  "rollbackMainSha": "6718586b02b59228ff53acab1567e02da7b32268",
+  "legacyGroupCount": 13,
+  "legacyInvocationCount": 86,
+  "legacyEvidenceDirs": 83,
+  "maxParallel": 10,
+  "browserTimeoutMinutes": 35,
+  "reviewRequirement": "All old 86 calls mandatory. Reject new modules with cross-group dependencies until GitHub wave needs chains are implemented."
+}

@@ -32,12 +32,12 @@ const future=id=>({
  dependsOn:[]
 });
 
-test('#239 bridge preview exactly matches live 13-group matrix and never activates it',()=>{
+test('#239 bridge preview ensures the live matrix is generated from the preserved 13-group baseline',()=>{
  const p=make();
  assert.equal(p.schema,'math-ci-matrix-bridge-preview/1');
  assert.equal(p.mode,'shadow-only');
  assert.equal(p.activationAllowed,false);
- assert.equal(p.liveWorkflowUnchanged,true);
+ assert.equal(p.liveWorkflowUnchanged,false);
  assert.equal(p.requiredLegacyJobs.length,13);
  assert.equal(p.requiredLegacyJobs.reduce((n,g)=>n+g.commands.length,0),86);
  assert.equal(p.requiredLegacyJobs.flatMap(g=>g.artifacts).length,83);
@@ -104,8 +104,8 @@ test('#239 evidence checks must be original ZIP paths with bound run identity',(
 
 test('#239 any mismatched live workflow matrix, budget or missing gate fails preview',()=>{
  const plan=planShadow(reg());
- assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('p10-learning-tail, ',''))
-  ,/deep-equal/);
+ assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('fromJSON(needs.static-checks.outputs.browser_matrix)','fromJSON("{}")'))
+  ,/match/);
  assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('max-parallel: 10','max-parallel: 15'))
   ,/match/);
  assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('    timeout-minutes: 35\n    strategy:', '    timeout-minutes: 60\n    strategy:'))
@@ -119,7 +119,7 @@ test('#239 synthetic new family remains unactivated, all old work mandatory',()=
  const plan=planShadow(src,{fileExists:()=>true});
  const preview=buildMatrixBridgePreview(plan,wf());
  assert.equal(preview.activationAllowed,false);
- assert.equal(preview.comparison.addedLiveJobs,0);
+ assert.equal(preview.comparison.addedLiveJobs,1);
  assert.equal(preview.requiredLegacyJobs.length,13);
  assert.equal(preview.requiredLegacyJobs.reduce((n,g)=>n+g.commands.length,0),86);
  assert.equal(preview.unactivatedFutureJobs.length,1);

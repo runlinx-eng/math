@@ -63,7 +63,7 @@ const addedScripts=['tests/p9-storyledger-adapter-browser.cjs','tests/p9-samefra
  'tests/p9-decimal-place-adapter-browser.cjs','tests/p9-fdpboard-adapter-browser.cjs','tests/p9-scalechain-adapter-browser.cjs','tests/p9-mixedaxis-adapter-browser.cjs','tests/p9-decimalengine-adapter-browser.cjs','tests/p9-fracshare-adapter-browser.cjs','tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs','tests/p9-paperlab-adapter-browser.cjs','tests/p9-wideshift-adapter-browser.cjs','tests/p9-pvbench-adapter-browser.cjs','tests/p9-time-adapter-browser.cjs','tests/p9-area-adapter-browser.cjs','tests/p9-order-adapter-browser.cjs','tests/p9-money-adapter-browser.cjs','tests/p9-cubefraction-adapter-browser.cjs','tests/p9-multable-adapter-browser.cjs','tests/p9-unitcover-adapter-browser.cjs'];
 const reviewedScripts=[...originalScripts,...addedScripts];
 const context={event:'pull_request',sha:'a'.repeat(40),runId:'123456789',attempt:2};
-const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline}},browser:{result:'success',outputs:{}}});
+const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline,browser_matrix:JSON.stringify({group:GROUP_NAMES})}},browser:{result:'success',outputs:{}}});
 const fixture=(scope='true',identity=context,offline=scope)=>GROUP_NAMES.map(group=>runBrowserGroup({group,scope:group==='p10-offline'?offline:scope,
  context:identity,execute:()=>({status:0,signal:null})}));
 const success=()=>({needs:needs(),reports:fixture(),context});
@@ -377,13 +377,42 @@ test('same-run retries choose the newest result per group and require missing ea
  rejected({needs:needs(),reports:[...reports,retry,retry],context});
 });
 
-test('workflow retains the stable final check, isolated fixed groups, complete runtime and artifact paths',()=>{
+test('#239 live gate binds exact dynamic group list and rejects missing new family receipts',()=>{
+ const id='family-wave-1-job-01';
+ const definitions={...BROWSER_GROUPS,[id]:{commands:[{file:'tests/p9-newfamily-browser.cjs',env:{}}],
+  artifacts:['verification/p9-newfamily/'],newFamily:true}};
+ const jobs=needs();jobs['static-checks'].outputs.browser_matrix=JSON.stringify({group:Object.keys(definitions)});
+ const reports=[...fixture(),runBrowserGroup({group:id,scope:'true',context,definitions,
+  execute:()=>({status:0,signal:null})})];
+ assert.equal(validateRequiredGate({needs:jobs,reports,context,definitions}).invocations,87);
+ const invalid=(copy)=>assert.throws(()=>validateRequiredGate({...copy,definitions}));
+ invalid({needs:jobs,reports:reports.slice(0,-1),context});
+ const partial=structuredClone(reports);partial.at(-1).commands.pop();invalid({needs:jobs,reports:partial,context});
+ const failure=structuredClone(reports);failure.at(-1).commands[0].exitCode=1;invalid({needs:jobs,reports:failure,context});
+ const mismatch=structuredClone(jobs);mismatch['static-checks'].outputs.browser_matrix=JSON.stringify({group:GROUP_NAMES});
+ invalid({needs:mismatch,reports,context});
+ const wrongSha=structuredClone(reports);wrongSha.at(-1).sha='f'.repeat(40);invalid({needs:jobs,reports:wrongSha,context});
+ const missingMatrix=structuredClone(jobs);delete missingMatrix['static-checks'].outputs.browser_matrix;
+ invalid({needs:missingMatrix,reports,context});
+});
+
+test('#239 future registered browser scripts and registry edits always trigger Chromium scope',()=>{
+ for(const changed of ['ci/math-families.json','ci/live-browser-matrix.json',
+  'scripts/ci-live-browser-matrix.mjs','tests/p9-newfamily-browser.cjs']){
+  assert.equal(browserScope('pull_request',[changed]),'true',changed);
+ }
+ assert.equal(browserScope('pull_request',['README.md']),'false');
+});
+
+test('workflow retains the stable final check, isolated dynamic groups, complete runtime and artifact paths',()=>{
  const workflow=readFileSync(new URL('../.github/workflows/pull-request-baseline.yml',import.meta.url),'utf8');
  const browser=workflow.split('\n  browser:\n')[1].split('\n  required-checks:\n')[0];
  assert.match(workflow,/run_offline: \$\{\{ steps\.scope\.outputs\.run_offline \}\}/);
  assert.match(browser,/matrix\.group == 'p10-offline'/);
  const gate=workflow.split('\n  required-checks:\n')[1];
- assert.deepEqual(browser.match(/group: \[([^\]]+)\]/)[1].split(',').map(value=>value.trim()),GROUP_NAMES);
+ assert.match(browser,/matrix: \$\{\{ fromJSON\(needs\.static-checks\.outputs\.browser_matrix\) \}\}/);
+ assert.match(workflow,/browser_matrix: \$\{\{ steps\.live_browser_matrix\.outputs\.browser_matrix \}\}/);
+ assert.match(workflow,/node scripts\/ci-live-browser-matrix\.mjs output/);
  assert.match(browser,/fail-fast: false/);assert.match(browser,/max-parallel: 10/);assert.doesNotMatch(workflow,/continue-on-error:/);
  assert.doesNotMatch(browser,/^    if:/m,'browser jobs themselves cannot be silently skipped by scope');
  assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-wqy-microhei/);

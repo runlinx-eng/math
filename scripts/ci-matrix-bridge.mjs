@@ -29,10 +29,14 @@ export function buildMatrixBridgePreview(plan,workflow){
   'Missing live browser job or final Required gate');
  const browserBlock=workflow.slice(browserStart,gateStart);
  const gateBlock=workflow.slice(gateStart);
+ // Dynamic matrix is now genuinely consumed by GitHub Actions. The old
+ // reviewed group roster remains immutable inside required-browser-checks.
  const matches=[...browserBlock.matchAll(/^[ \t]*group:[ \t]*\[([^\]\n]+)\]/gm)];
- assert.equal(matches.length,1,'Current workflow must have exactly one reviewed browser matrix');
- const live=matches[0][1].split(',').map(s=>s.trim());
- eq(live,plan.legacyGroups.map(g=>g.id));
+ assert.equal(matches.length,0,'Static group list must not override registry-driven GitHub matrix');
+ assert.match(browserBlock,/matrix:\s*\$\{\{\s*fromJSON\(needs\.static-checks\.outputs\.browser_matrix\)\s*\}\}/);
+ assert.match(workflow,/browser_matrix:\s*\$\{\{\s*steps\.live_browser_matrix\.outputs\.browser_matrix\s*\}\}/);
+ assert.match(workflow,/node scripts\/ci-live-browser-matrix\.mjs output/);
+ const live=plan.legacyGroups.map(g=>g.id);
  assert.match(browserBlock,/needs:\s*static-checks\b/);
  assert.match(browserBlock,/fail-fast:\s*false\b/);
  assert.match(browserBlock,/max-parallel:\s*10\b/);
@@ -63,16 +67,16 @@ export function buildMatrixBridgePreview(plan,workflow){
  assert.ok(jobs.some(x=>x.id==='p10-learning-tail'&&x.commands.length===2));
  const proposal={
   schema:'math-ci-matrix-bridge-preview/1',mode:'shadow-only',
-  activationAllowed:false,liveWorkflowUnchanged:true,
+  activationAllowed:false,liveWorkflowUnchanged:false,
   sourcePlanDigest:plan.digest,sourceMainSha:plan.sourceMainSha,
   comparison:{liveMatrix:live,legacyGroups:13,legacyCalls:86,
-   legacyEvidenceDirs:83,addedLiveJobs:0},
+   legacyEvidenceDirs:83,addedLiveJobs:plan.plannedNewJobs.length},
   requiredLegacyJobs:jobs,unactivatedFutureJobs:future,
   expectedFullRequiredReceipts:[...jobs,...future].map(x=>x.id),
   guarantees:[
    'This is not a GitHub Actions matrix output',
-   'Actual Required gate still validates the original 13 mandatory groups',
-   'No future job is run or accepted by this preview',
+   'Actual Required gate validates the old 13 groups plus registry-owned new groups',
+   'Bridge is read-only; the separate live-matrix producer may schedule supported independent new families',
    'Any production promotion must implement receipt+artifact+identity gate and rollback separately'
   ]
  };

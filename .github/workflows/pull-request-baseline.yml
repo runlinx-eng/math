@@ -21,6 +21,7 @@ jobs:
     outputs:
       run_browser: ${{ steps.scope.outputs.run_browser }}
       run_offline: ${{ steps.scope.outputs.run_offline }}
+      browser_matrix: ${{ steps.live_browser_matrix.outputs.browser_matrix }}
     runs-on: ubuntu-24.04
     # Syntax, unit tests and source-derived audits keep their existing gates.
     timeout-minutes: 35
@@ -220,6 +221,7 @@ jobs:
             tests/ci-audit-viewports.test.mjs
             tests/ci-plan-math-families.test.mjs
             tests/ci-matrix-bridge.test.mjs
+            tests/ci-live-matrix.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
@@ -351,6 +353,13 @@ jobs:
           node --check tests/ci-matrix-bridge.test.mjs
           node scripts/ci-matrix-bridge.mjs --output verification/ci-shadow-plan/matrix-bridge-preview.json
 
+      - name: Produce reviewed LIVE browser matrix from family registry
+        id: live_browser_matrix
+        run: |
+          node --check scripts/ci-live-browser-matrix.mjs
+          node --check tests/ci-live-matrix.test.mjs
+          node scripts/ci-live-browser-matrix.mjs output
+
       - name: Archive evidence audit source-derived report
         if: always()
         uses: actions/upload-artifact@v4
@@ -382,8 +391,7 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 10
-      matrix:
-        group: [ui, evidence-core, evidence-place, evidence-expansion, evidence-area, evidence-expansion-2, evidence-quantity, evidence-fractioncase, p10-learning, p10-learning-tail, p10-offline, p8-performance, p9-multable]
+      matrix: ${{ fromJSON(needs.static-checks.outputs.browser_matrix) }}
     env:
       MATH_BROWSER_REQUIRED: ${{ matrix.group == 'p10-offline' && needs.static-checks.outputs.run_offline || needs.static-checks.outputs.run_browser }}
       MATH_BROWSER_GROUP: ${{ matrix.group }}
