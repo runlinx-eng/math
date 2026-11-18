@@ -22,11 +22,14 @@ test('#239 live output really contains the exact old 13 required groups and 86 l
  assert.equal(x.proof.legacyGroups,13);
  assert.equal(x.proof.legacyCalls,86);
  assert.equal(x.proof.legacyEvidenceDirs,83);
- assert.equal(x.proof.registeredNewFamilies,1);
+ assert.equal(x.proof.registeredNewFamilies,2);
  assert.equal(x.proof.addedGroups.length,1);
- assert.equal(x.proof.addedGroups[0].commandCount,1);
- assert.deepEqual(x.definitions['family-wave-1-job-01'].commands,
-  [{file:'tests/p9-sequence-invariance-browser.cjs',env:{}}]);
+ assert.equal(x.proof.addedGroups[0].commandCount,2);
+ assert.deepEqual(x.definitions['family-wave-1-job-01'].commands,[
+  {file:'tests/p9-unitrefine-adapter-browser.cjs',env:{}},
+  {file:'tests/p9-sequence-invariance-browser.cjs',env:{}}
+ ]);
+ assert.ok(x.definitions['family-wave-1-job-01'].artifacts.includes('verification/p9-unitrefine-adapter/'));
  assert.deepEqual(Object.keys(x.definitions),[...GROUP_NAMES,'family-wave-1-job-01']);
  assert.equal(JSON.stringify(BROWSER_GROUPS),before,'Production generation must not mutate frozen old roster');
  assert.equal(x.proof.digest,buildLiveBrowserMatrix().proof.digest,'Rebuilding plan is deterministic');

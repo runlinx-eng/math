@@ -1,3 +1,4 @@
+import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
@@ -86,6 +87,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-refine'){
+    const source=unitrefineBinding(task,context);
+    return source?{type:task.type,summary:'想一想：单位大小改变时，完整单位数和余量怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-units'){
     const source=unitcoverBinding(task,context);
     return source?{type:task.type,summary:'想一想：每块一样长，怎样正好盖住这段长度？（可选）',question:source.question}:null;
@@ -209,6 +214,22 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-refine'){
+    const source=unitrefineBinding(task,context);if(!source)return null;
+    const proof=replayUnitrefineEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '图上的单位大小、连续排放、完整单位数和余量由工具提供；这里核对当前两份有效保存记录。',
+      ...c.runs.map(r=>`使用“${r.label}”（大小 ${r.size}）的保存记录为 ${r.count} 个完整单位：${r.count} × ${r.size} + ${r.remainder} = ${c.total}。`),
+      `当前选择的单位是“${c.current.label}”，完整单位数为 ${c.current.count}，余量为 ${c.current.remainder}；本次填写的数量与完整单位数精确相等。`,
+      '每种单位第一次记录的原文和已有操作记录仍保留；这里核对当前两份有效保存，没有替换最早的原文。'
+    ];
+    if(proof.issue)detail.push('作品末尾仍保留工具的提示；这里没有把失败请求当作新放入的单位或新保存。');
+    if(proof.historyAtCapacity)detail.push('这份作品的操作记录已到可保存的上限；这里只核对已经保留的两份保存。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整模型一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:'已核对两种单位的有效保存：完整单位所占数量加上余量，都等于同一个总量。',
+      connection:'同一个总量，换一种大小的单位后，完整单位数和余量怎样对应？',detail,method:null};
+  }
   if(task?.type==='x-m28-units'){
     const source=unitcoverBinding(task,context);if(!source)return null;
     const proof=replayUnitcoverEvidence(task,model);if(!proof)return null;
