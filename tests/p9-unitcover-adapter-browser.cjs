@@ -83,24 +83,46 @@ async function unitcoverCapacityFlow(mode,spec,api){
  await api.field('prose','上限后仍可编辑的原话。');phases.push(await api.capture('at-capacity-prose-unsubmitted',false));phases.push(await api.check(true,true,'at-capacity-prose-rechecked'));
  await api.retry('capacity-'+mode.id);phases.push(await api.capture('shared-retry-after-capacity',false));await api.solve();phases.push(await api.check(true,true,'capacity-retry-corrected'));return phases;
 }
-function compactUnitcoverReport(value,{preserveModels=false}={}) {
- if(Array.isArray(value))return value.map(item=>compactUnitcoverReport(item,{preserveModels}));
- if(!value||typeof value!=='object')return value;
- const out={};
- for(const[key,item]of Object.entries(value)){
-  if(['record','attempts','emptyModel','originalState','decodedState'].includes(key))continue;
-  if(key==='model'&&!preserveModels)continue;
-  if(key==='attempt'){
-   out.attemptSummary=item?{id:item.id??null,at:item.at??null,supported:item.supported??null,exposed:item.exposed??null}:null;
-   continue;
+// Each capture already has an immutable raw State/v2 snapshot and SHA256.
+// Keep the full replay in memory for mathematical assertions, but index its
+// digest and bounded construction metadata instead of embedding 2000-event
+// histories repeatedly in phases, captures, ledgers and capacity evidence.
+function compactUnitcoverReport(value,{preserveModels=false,proofSummaries=new WeakMap()}={}){
+ const compactProof=proof=>{
+  if(proof===null)return null;
+  if(proof?.kind!=='unitcover'||!['events','records','removals','clears'].every(key=>Array.isArray(proof[key])))
+   throw Error('unexpected Unit Cover replay shape; refuse to omit proof details');
+  let summary=proofSummaries.get(proof);
+  if(!summary){
+   const{events,records,removals,clears,...metadata}=proof;
+   summary={...metadata,fullReplayInline:false,replayFrom:'capture.storage.state',
+    fullReplaySha256:require('node:crypto').createHash('sha256').update(JSON.stringify(proof)).digest('hex'),
+    eventRows:events.length,recordRows:records.length,removalRows:removals.length,clearRows:clears.length};
+   proofSummaries.set(proof,summary);
   }
-  if(key==='beforeRecord'||key==='afterRecord'){
-   out[key+'Summary']=item?{attemptCount:item.attempts?.length??0,support:item.support??null,exposed:item.exposed??null}:null;
-   continue;
+  return summary;
+ };
+ const walk=input=>{
+  if(Array.isArray(input))return input.map(walk);
+  if(!input||typeof input!=='object')return input;
+  const out={};
+  for(const[key,item]of Object.entries(input)){
+   if(['record','attempts','emptyModel','originalState','decodedState'].includes(key))continue;
+   if(key==='model'&&!preserveModels)continue;
+   if(key==='proof'){out.proof=compactProof(item);continue;}
+   if(key==='attempt'){
+    out.attemptSummary=item?{id:item.id??null,at:item.at??null,supported:item.supported??null,exposed:item.exposed??null}:null;
+    continue;
+   }
+   if(key==='beforeRecord'||key==='afterRecord'){
+    out[key+'Summary']=item?{attemptCount:item.attempts?.length??0,support:item.support??null,exposed:item.exposed??null}:null;
+    continue;
+   }
+   out[key]=walk(item);
   }
-  out[key]=compactUnitcoverReport(item,{preserveModels});
- }
- return out;
+  return out;
+ };
+ return walk(value);
 }
 module.exports={orderedUnitcoverTargets,unitcoverOperationPlan,unitcoverNativeFlow,unitcoverBoundaryKindsFor,unitcoverBoundaryFlow,unitcoverCapacityModes,constructUnitcoverCapacityFixture,unitcoverCapacityFlow,compactUnitcoverReport};
 
@@ -135,7 +157,8 @@ async function main(){
  const artifactPaths=new Set(),uniqueFile=name=>{assert.ok(!artifactPaths.has(name),'one immutable raw artifact: '+name);artifactPaths.add(name);return path.join(out,name);};
  fs.writeFileSync(uniqueFile('fixed-source-cases.json'),JSON.stringify(fixture,null,2));fs.writeFileSync(uniqueFile('fixed-navigation.json'),JSON.stringify(navigationFixture,null,2));
  let browser,server,activePage,label='setup';const openContexts=new Set(),diagnostics=new Map();
- const compact=(value,preserveModels=false)=>compactUnitcoverReport(value,{preserveModels});
+ const proofSummaries=new WeakMap();
+ const compact=(value,preserveModels=false)=>compactUnitcoverReport(value,{preserveModels,proofSummaries});
  const report=()=>({provenance,viewports,checks,errors,remote,
   observations:compact(observations),isolated:compact(isolated),boundaries:compact(boundaries),forgeries:compact(forgeries,true),
   backups:compact(backups),offline:compact(offline),preparations:compact(preparations),retries:compact(retries),navigations:compact(navigations),
@@ -453,12 +476,24 @@ async function main(){
   const attemptCounts=Object.fromEntries(['native','boundary','associated','prerequisite','capacity'].map(role=>[role,checkedLedger.filter(x=>x.role===role).length]));
   assert.deepEqual(attemptCounts,{native:210,boundary:28,associated:10,prerequisite:8,capacity:60});
   const checkedPaths=checkedLedger.flatMap(x=>[x.storage.raw,x.storage.state]),capturePaths=captures.flatMap(x=>[x.storage.raw,x.storage.state]);assert.equal(new Set(checkedPaths).size,632);assert.equal(new Set(capturePaths).size,1072);
-  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2));fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),attemptCounts,uniqueCheckedFiles:632,uniqueCaptureFiles:1072,originStopped:offline.every(x=>x.originStopped)},null,2));
+  fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2));
+  const resultsText=JSON.stringify({...report(),attemptCounts,uniqueCheckedFiles:632,uniqueCaptureFiles:1072,originStopped:offline.every(x=>x.originStopped)},null,2);
+  assert.ok(Buffer.byteLength(resultsText,'utf8')<64*1024*1024,'results index must stay bounded; raw evidence remains in separate files');
+  fs.writeFileSync(path.join(out,'results.json'),resultsText);
   console.log('P9_UNITCOVER_ADAPTER_BROWSER_OK '+JSON.stringify({checks:checks.length,nativeTasks:6,taskViewportPairs:12,sourceChecked:256,compatibilityChecked:60,checked:316,sourceCaptures:368,compatibilityCaptures:168,captures:536,oldPractice:6,sourceRetries:22,compatibilityRetries:12,next:16,forgeries:96,nativeBackups:2,compatibilityBackups:14,visuals:visuals.length}));
  }catch(error){
   if(error.diagnosticPage)activePage=error.diagnosticPage;const diagnosticFile=activePage&&diagnostics.has(activePage)?await diagnostics.get(activePage).dump(error).catch(reason=>({diagnosticError:String(reason)})):null;
   if(activePage){await activePage.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true}).catch(()=>{});fs.writeFileSync(path.join(out,label+'-failure.html'),await activePage.content().catch(()=>''));}
-  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({...report(),error:String(error),stack:error.stack,at:label,diagnosticFile},null,2));console.error(error.stack);process.exitCode=1;
+  // Preserve the original failure even if a results index becomes too large.
+  // Never re-serialize the same in-memory graph in the catch path.
+  const failure={schema:'p9-unitcover-browser-failure/1',provenance,at:label,error:String(error),stack:error.stack||null,diagnosticFile,
+   counts:{checks:checks.length,observations:observations.length,isolated:isolated.length,boundaries:boundaries.length,
+    forgeries:forgeries.length,backups:backups.length,preparations:preparations.length,retries:retries.length,
+    navigations:navigations.length,checked:checkedLedger.length,captures:captures.length,visuals:visuals.length,capacity:capacity.length},
+   evidenceFiles:fs.readdirSync(out).sort()};
+  try{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(failure,null,2));}
+  catch(writeError){console.error('Unable to preserve compact failure index:',writeError.stack||String(writeError));}
+  console.error('P9_UNITCOVER_ADAPTER_BROWSER_FAILED:',error.stack||String(error));process.exitCode=1;
  }finally{
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});for(const context of openContexts)await context.close();if(browser)await browser.close();
  }
