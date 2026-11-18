@@ -380,14 +380,17 @@ jobs:
         if: env.MATH_BROWSER_REQUIRED == 'true'
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          # Keep the existing runner, browser and CJK font requirements.
+          # Reuse existing Chinese fonts when present. If absent, install the
+          # small Ubuntu 24.04 WQY Micro Hei fallback (~1.6 MB download),
+          # rather than the ~61 MB Noto CJK package. Keep real Chromium/CJK QA.
           npx playwright install chromium
           if ! fc-list :lang=zh-cn family | grep -q .; then
             sudo apt-get update -qq -o Acquire::Retries=3
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
             fc-cache -f >/dev/null
           fi
           fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+          fc-match -f 'CI CJK fallback: %{family} [%{file}]\n' 'sans-serif:lang=zh-cn'
 
       - name: Run every browser command in this group
         shell: bash
