@@ -53,6 +53,8 @@ jobs:
       - name: Check runtime module syntax
         run: |
           node --check scripts/required-browser-checks.mjs
+          node --check scripts/ci-audit-viewports.mjs
+          node --check tests/ci-audit-viewports.test.mjs
           node --check dist/spatial-scene.js
           node --check dist/spatial-relationship.js
           node --check dist/spatial-model.js
@@ -208,6 +210,7 @@ jobs:
             tests/spatial-exploration.test.mjs
             tests/deployment-static.test.mjs
             tests/required-browser-checks.test.mjs
+            tests/ci-audit-viewports.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
             tests/grade-node-filter.test.mjs
