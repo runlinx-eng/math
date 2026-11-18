@@ -32,7 +32,7 @@ test('browser report compaction keeps evidence references and bounded audit summ
  const raw={model,record,attempts:record.attempts,emptyModel:model,originalState:{lessons:{x:{models:{0:model}}}},
   beforeRecord:record,afterRecord:record,attempt:{id:'a2',at:'2026-11-18T00:00:00Z',supported:true,exposed:false,value:model},
   storage:{raw:'raw-storage.txt',state:'state.json',rawSHA256:'abc',stateSHA256:'def'},
-  proof:{kind:'unitcover',eventCount:4,construction:{positions:[0,1]}},backupFile:'backup-v2.json'};
+  proof:{kind:'unitcover',eventCount:4,events:[{index:0,action:'place'}],records:[{index:0,measure:'2'}],removals:[],clears:[],construction:{positions:[0,1]}},backupFile:'backup-v2.json'};
  const compact=compactUnitcoverReport(raw);
  assert.equal(Object.hasOwn(compact,'model'),false);assert.equal(Object.hasOwn(compact,'record'),false);
  assert.equal(Object.hasOwn(compact,'attempts'),false);assert.equal(Object.hasOwn(compact,'emptyModel'),false);
@@ -41,9 +41,30 @@ test('browser report compaction keeps evidence references and bounded audit summ
  assert.deepEqual(compact.afterRecordSummary,{attemptCount:2,support:true,exposed:false});
  assert.deepEqual(compact.attemptSummary,{id:'a2',at:'2026-11-18T00:00:00Z',supported:true,exposed:false});
  assert.equal(compact.storage.state,'state.json');assert.equal(compact.backupFile,'backup-v2.json');
- assert.deepEqual(compact.proof,raw.proof);
+ assert.equal(compact.proof.kind,'unitcover');
+ assert.deepEqual(compact.proof.construction,raw.proof.construction);
+ assert.equal(compact.proof.fullReplayInline,false);
+ assert.equal(compact.proof.replayFrom,'capture.storage.state');
+ assert.equal(compact.proof.fullReplaySha256,digest(JSON.stringify(raw.proof)));
+ assert.deepEqual([compact.proof.eventRows,compact.proof.recordRows,compact.proof.removalRows,compact.proof.clearRows],[1,1,0,0]);
+ for(const key of ['events','records','removals','clears'])assert.equal(Object.hasOwn(compact.proof,key),false);
  const forged=compactUnitcoverReport({model:{history:[{a:'forged'}]},strict:false},{preserveModels:true});
  assert.deepEqual(forged.model,{history:[{a:'forged'}]});
+ assert.throws(()=>compactUnitcoverReport({proof:{kind:'unitcover'}}),/unexpected Unit Cover replay shape/);
+
+ // A 2,000-event replay occurs at every capacity check, often referenced
+ // again by phases, checked ledgers and captures. The index must stay bounded
+ // while every capture retains its immutable raw State file and proof digest.
+ const longProof={...raw.proof,eventCount:2000,
+  events:Array.from({length:2000},(_,i)=>({index:i,action:'record',coverage:[0,1,1,0,1,0],measure:String(i),unit:'块'}))};
+ const capture={...raw,proof:longProof};
+ const bulk=compactUnitcoverReport({captures:Array(536).fill(capture),checkedLedger:Array(316).fill(capture)});
+ const encoded=JSON.stringify(bulk);
+ assert.ok(Buffer.byteLength(encoded,'utf8')<2*1024*1024,'repeated full replays must not grow the report');
+ assert.deepEqual([bulk.captures.length,bulk.checkedLedger.length],[536,316]);
+ assert.equal(bulk.captures[0].storage.state,'state.json');
+ assert.equal(bulk.captures[0].proof.fullReplaySha256,digest(JSON.stringify(longProof)));
+ assert.equal(bulk.captures[0].proof.eventRows,2000);
 });
 function field(t,m,key,value){
  const html=V.controls(t,m),tags=[...html.matchAll(/<(?:input|select)\b[^>]*>/g)].map(x=>x[0]).filter(x=>attrs(x)['data-xfield']===key);
