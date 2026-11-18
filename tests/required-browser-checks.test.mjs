@@ -364,7 +364,7 @@ test('workflow retains the stable final check, isolated fixed groups, complete r
  assert.deepEqual(browser.match(/group: \[([^\]]+)\]/)[1].split(',').map(value=>value.trim()),GROUP_NAMES);
  assert.match(browser,/fail-fast: false/);assert.match(browser,/max-parallel: 10/);assert.doesNotMatch(workflow,/continue-on-error:/);
  assert.doesNotMatch(browser,/^    if:/m,'browser jobs themselves cannot be silently skipped by scope');
- assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-noto-cjk/);
+ assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-wqy-microhei/);
  assert.match(browser,/required-browser-result-\$\{\{ matrix\.group \}\}-attempt-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/math-required-checks-browser-evidence-\$\{\{ matrix\.group \}\}-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/if-no-files-found: error/);
