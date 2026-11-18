@@ -1,0 +1,12 @@
+{
+  "schema": "math-desktop-browser-viewport/1",
+  "width": 1920,
+  "height": 1080,
+  "unit": "Chromium viewport content pixels (not physical display size)",
+  "legacyBaselineCommit": "0231280c506309f3487f0d4a8dfe2f266068a9bf",
+  "appliesTo": "New browser test entrypoints introduced after legacyBaselineCommit",
+  "legacyPolicy": "Previously existing tests and their original viewport cases are grandfathered; no source or evidence edits required",
+  "newTestPolicy": "Use newDesktopContext for every Chromium context; no other viewport and no setViewportSize",
+  "layoutCoverage": "At the fixed desktop size, check text wrapping, scrolling, unobstructed actions, and accessible math tools",
+  "evidencePolicy": "Mathematics, correction, persistence, backup/restore, P10/offline, and required artifacts remain mandatory"
+}
