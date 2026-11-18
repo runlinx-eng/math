@@ -10,7 +10,7 @@ const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheck
  testedTree:execFileSync('git',['rev-parse','HEAD^{tree}'],{cwd:root,encoding:'utf8'}).trim()};
 fs.mkdirSync(out,{recursive:true});
 for(const file of ['results.json','failure.json'])fs.rmSync(path.join(out,file),{force:true});
-const runPhase=({phase,folder,port,repetition=null})=>{
+const runPhase=({phase,folder,repetition=null})=>{
  const destination=path.join(out,folder);
  fs.mkdirSync(destination,{recursive:true});
  for(const file of ['results.json','failure.json'])fs.rmSync(path.join(destination,file),{force:true});
@@ -19,7 +19,8 @@ const runPhase=({phase,folder,port,repetition=null})=>{
   result=spawnSync(process.execPath,[path.join(__dirname,'p10-release-upgrade-browser.cjs')],{
    cwd:root,encoding:'utf8',maxBuffer:20*1024*1024,timeout:300000,
    env:{...process.env,P10_SW_DIAGNOSTIC:'0',P10_UPGRADE_PHASE:phase,
-    P10_UPGRADE_OUTPUT:destination,P10_UPGRADE_PORT:String(port)}
+    // Each independent Chromium process binds its own OS-assigned free port.
+    P10_UPGRADE_OUTPUT:destination,P10_UPGRADE_PORT:'0'}
   });
  }catch(error){result={status:null,error};}
  const log=(result.stdout||'')+(result.stderr||'');
@@ -32,12 +33,15 @@ const runPhase=({phase,folder,port,repetition=null})=>{
  const success=result.status===0&&evidence?.oldCommit==='96844424ceb534e7ca5f864a006b72a52efd0d60'&&
   evidence?.newCommit===checkoutSha&&evidence?.phase===phase&&evidence?.retryCompleted===true&&
   evidence?.fullUpgradeCompleted===(phase==='full')&&evidence?.workerDiagnostic===false&&
+  Number.isInteger(evidence?.provenance?.serverPort)&&evidence.provenance.serverPort>0&&
+  evidence.provenance.origin===`http://127.0.0.1:${evidence.provenance.serverPort}/`&&
   evidence?.provenance?.historicalWorkerModified===false&&!!evidence?.provenance?.profileId&&
   Array.isArray(evidence?.checks)&&evidence.checks.length>0;
  const run={phase,repetition,countsTowardThreeFullRuns:phase==='full',success,
   exitCode:result.status,signal:result.signal,error:result.error?.message,evidenceError,
   checks:evidence?.checks||[],oldCommit:evidence?.oldCommit,newCommit:evidence?.newCommit,
   profileId:evidence?.provenance?.profileId,profiles:evidence?.provenance?.profiles||[],
+  serverPort:evidence?.provenance?.serverPort??null,origin:evidence?.provenance?.origin??null,
   fullUpgradeCompleted:evidence?.fullUpgradeCompleted===true,retryCompleted:evidence?.retryCompleted===true,
   evidence:path.relative(out,filename),historicalWorkerModified:false,diagnosticRuntimeInjection:false};
  console.log((phase==='full'?'P10_UPGRADE_REPETITION ':'P10_RETRY_INDEPENDENT ')+JSON.stringify({phase,repetition,success,checks:evidence?.checks?.length}));
@@ -45,9 +49,9 @@ const runPhase=({phase,folder,port,repetition=null})=>{
 };
 const runs=[];
 for(let repetition=1;repetition<=3;repetition++){
- runs.push(runPhase({phase:'full',repetition,folder:'run-'+repetition,port:43928+repetition}));
+ runs.push(runPhase({phase:'full',repetition,folder:'run-'+repetition}));
 }
-const retryIndependent=runPhase({phase:'retry',folder:'retry-independent',port:43932});
+const retryIndependent=runPhase({phase:'retry',folder:'retry-independent'});
 const allRuns=[...runs,retryIndependent];
 const independentProfiles=allRuns.every(run=>!!run.profileId)&&new Set(allRuns.map(run=>run.profileId)).size===allRuns.length;
 const complete=runs.every(run=>run.success)&&retryIndependent.success&&independentProfiles;
