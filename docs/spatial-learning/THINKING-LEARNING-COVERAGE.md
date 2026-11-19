@@ -1,3 +1,14 @@
+## 尺子、天平、仪表和单位换算（Issues #233–#236）
+
+| 合同 | 已审原生位置 | 核对范围 |
+| --- | ---: | --- |
+| ruler | 16 | 尺子选择、零刻度、保存读数，适用时核对估计与误差 |
+| balance-compare / balance-weigh | 6 | 原生轻重选择或模拟平衡、精确砝码合计及保存 |
+| scale-analog / scale-digital | 8 | 题图刻度和数字显示，以及保存的读数和单位 |
+| convert-exact / convert-given-approximation | 21 | 整组保存和当前追问，15 道精确换算、6 道按题给近似关系 |
+
+合计增加 51 道原生严格证据题、16 个净新增来源节点和 7 项契约。集成审计为 A679 / 1,996 原生题、255 / 587 来源节点、56 项契约。关联位置和真实旧练习按原来源检验兼容。正式主线覆盖以 [Issue #130 的完整提交验收](https://github.com/runlinx-eng/math/issues/130) 为准。
+
 ## 单位大小与余量（Issue #232）
 
 严格证据覆盖来源节点 `mt_e7tLi9SCIE` 的 `precisionunits:0、2、3`。三个位置以完整原题和原生上下文绑定。逐事件核对两种大小最新有效保存的完整单位数、余量与精确输入，再核对当前作品和最近提交。证据只描述工具辅助下的两次测量。关联题 `link-sameunitlength-precisionunits:1` 和旧练习 `precisionunits:-1` 用于兼容及隔离检查。

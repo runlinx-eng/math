@@ -1,3 +1,7 @@
+import {convertBinding,replayConvertEvidence} from './convert-evidence.js';
+import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
+import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
+import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
@@ -46,6 +50,13 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ ...['exact','given-approximation'].map(kind=>({id:'convert-'+kind,type:'x-m28-convert',
+  binding:(task,context)=>{const source=convertBinding(task,context);return source?.kind===kind?source:null;},replay:replayConvertEvidence})),
+ ...['analog','digital'].map(kind=>({id:'scale-'+kind,type:'x-m28-scale',
+  binding:(task,context)=>{const source=scaleBinding(task,context);return source?.kind===kind?source:null;},replay:replayScaleEvidence})),
+ ...['compare','weigh'].map(kind=>({id:'balance-'+kind,type:'x-m28-balance',
+  binding:(task,context)=>{const source=balanceBinding(task,context);return source?.kind===kind?source:null;},replay:replayBalanceEvidence})),
+ {id:'ruler',type:'x-m28-ruler',binding:rulerBinding,replay:replayRulerEvidence},
  {id:'unitrefine',type:'x-m28-refine',binding:unitrefineBinding,replay:replayUnitrefineEvidence},
  {id:'unitcover',type:'x-m28-units',binding:unitcoverBinding,replay:replayUnitcoverEvidence},
  {id:'multable',type:'x-multable',binding:multableBinding,replay:replayMultableEvidence},

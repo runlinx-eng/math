@@ -144,6 +144,21 @@ jobs:
           node --check tests/fixtures/p9-unitrefine-cases.cjs
           node --check tests/fixtures/p9-unitrefine-navigation.cjs
           node --check tests/p9-unitrefine-adapter-browser.cjs
+          node --check dist/learning/ruler-evidence.js
+          node --check tests/fixtures/p9-ruler-cases.cjs
+          node --check tests/p9-ruler-adapter-browser.cjs
+          node --check tests/fixtures/p9-ruler-navigation.cjs
+          node --check dist/learning/balance-evidence.js
+          node --check tests/fixtures/p9-balance-cases.cjs
+          node --check tests/p9-balance-adapter-browser.cjs
+          node --check tests/fixtures/p9-balance-navigation.cjs
+          node --check dist/learning/scale-evidence.js
+          node --check tests/fixtures/p9-scale-cases.cjs
+          node --check tests/p9-scale-adapter-browser.cjs
+          node --check tests/fixtures/p9-scale-navigation.cjs
+          node --check dist/learning/convert-evidence.js
+          node --check tests/fixtures/p9-convert-cases.cjs
+          node --check tests/p9-convert-adapter-browser.cjs
           node --check dist/learning/unitcover-evidence.js
           node --check tests/fixtures/p9-unitcover-navigation.cjs
           node --check tests/p9-unitcover-adapter-browser.cjs
@@ -271,6 +286,13 @@ jobs:
             tests/p9-multable-navigation.test.mjs
             tests/p9-unitrefine-evidence.test.mjs
             tests/p9-unitrefine-navigation.test.mjs
+            tests/p9-ruler-evidence.test.mjs
+            tests/p9-ruler-navigation.test.mjs
+            tests/p9-balance-evidence.test.mjs
+            tests/p9-balance-navigation.test.mjs
+            tests/p9-scale-evidence.test.mjs
+            tests/p9-scale-navigation.test.mjs
+            tests/p9-convert-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
             tests/p9-unitcover-navigation.test.mjs
             tests/p9-cubefraction-evidence.test.mjs
