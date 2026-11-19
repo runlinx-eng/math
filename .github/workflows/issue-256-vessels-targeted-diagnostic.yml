@@ -1,0 +1,55 @@
+name: Issue 256 isolated native vessel verification (temporary diagnostic)
+on:
+  push:
+    branches:
+      - diagnostic/issue-256-vessels-targeted
+
+permissions:
+  contents: read
+
+jobs:
+  targeted:
+    name: Node math plus three native Chromium vessels (not Required)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact original math, negative replays and native-source isolation
+        id: math
+        run: |
+          mkdir -p verification/issue-256-targeted
+          node --test tests/p9-vessels-evidence.test.mjs 2>&1 | tee verification/issue-256-targeted/node.log
+        shell: bash
+      - name: Install unchanged isolated Chromium and CJK fonts
+        if: always()
+        id: browser_setup
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+          fc-match -f 'CI CJK fallback: %{family} [%{file}]\n' 'sans-serif:lang=zh-cn'
+      - name: Three actual native 1920x1080 vessel operations / offline / V2
+        if: always() && steps.browser_setup.outcome == 'success'
+        run: |
+          mkdir -p verification/issue-256-targeted
+          node tests/p9-vessels-adapter-browser.cjs 2>&1 | tee verification/issue-256-targeted/browser.log
+        shell: bash
+      - name: Preserve this diagnostic branch's raw Node and Chromium evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-256-targeted-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: |
+            verification/issue-256-targeted/
+            verification/p9-vessels-adapter/
+          if-no-files-found: warn
