@@ -400,12 +400,13 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
  assert.match(workflow,/browser_matrix: \$\{\{ steps\.live_browser_matrix\.outputs\.browser_matrix \}\}/);
  assert.match(workflow,/node scripts\/ci-live-browser-matrix\.mjs output/);
  assert.match(browser,/fail-fast: false/);assert.match(browser,/max-parallel: 10/);assert.doesNotMatch(workflow,/continue-on-error:/);
- assert.doesNotMatch(browser,/^    if:/m,'browser jobs themselves cannot be silently skipped by scope');
+ assert.match(browser,/^    if: github.event_name == 'workflow_dispatch'$/m,
+  'Full legacy browser jobs only run on intentionally requested milestone regressions');
  assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-wqy-microhei/);
  assert.match(browser,/required-browser-result-\$\{\{ matrix\.group \}\}-attempt-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/math-required-checks-browser-evidence-\$\{\{ matrix\.group \}\}-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/if-no-files-found: error/);
- assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[static-checks, browser, smoke-checks\]/);
+ assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[static-checks, browser, smoke-checks, targeted\]/);
  assert.match(gate,/^    if: \$\{\{ always\(\) \}\}$/m);
  assert.match(gate,/MATH_REQUIRED_NEEDS: \$\{\{ toJSON\(needs\) \}\}/);
  assert.match(gate,/node scripts\/required-browser-checks\.mjs gate/);

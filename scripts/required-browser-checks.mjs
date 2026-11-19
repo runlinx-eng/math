@@ -493,7 +493,12 @@ async function main(){
   if(report.status==='failure')process.exitCode=1;return;
  }
  if(operation==='gate'){
-  const needs=JSON.parse(process.env.MATH_REQUIRED_NEEDS||'null');
+  check(context.event==='workflow_dispatch','Complete 17-group browser receipts belong to explicit milestone runs only');
+  const allNeeds=JSON.parse(process.env.MATH_REQUIRED_NEEDS||'null');
+  check(allNeeds&&same(Object.keys(allNeeds).sort(),['browser','smoke-checks','static-checks','targeted']),
+   'Unexpected jobs in the milestone Required gate');
+  check(allNeeds.targeted?.result==='skipped','Targeted runners must not replace full milestone browsers');
+  const needs={...allNeeds};delete needs.targeted;
   const directory=resolve(root,'verification/required-browser-results');
   const files=existsSync(directory)?readdirSync(directory):[];
   check(files.every(file=>file.endsWith('.json')),'Unexpected browser result artifact');
