@@ -121,11 +121,15 @@ test('replay rejects fabricated events, board changes and source drift',()=>{
   x=>x.prompt+='x',x=>x.unit='g']){const changed=cp(t);mutate(changed);assert.equal(plotBinding(changed,ctx(ids[0])),null);assert.equal(proof(changed,m),null);}
 });
 
-test('help event replays without asserting independent thinking or mastery',()=>{
+test('hidden actions cannot borrow a valid original grade',()=>{
  const t=clone(ids[0]),m=model(t);
- M.act(t,m,'m28-help');
- const p=proof(t,m);assert.ok(p);assert.equal(p.construction.firstMeasurements.help,true);
+ const p=proof(t,m);assert.ok(p);
  assert.equal(p.physicalMeasurementAssessed,false);assert.equal(p.generalMasteryAssessed,false);
+ for(const action of ['help','test','clear']){
+  const hidden=cp(m);M.act(t,hidden,'m28-'+action);
+  assert.equal(M.inspect(t,hidden).correct,true);
+  assert.equal(proof(t,hidden),null,'hidden '+action+' must not become real UI evidence');
+ }
 });
 
 test('feedback appears only for matching current latest submission',()=>{
