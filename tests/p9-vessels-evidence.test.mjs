@@ -105,3 +105,43 @@ test('#256 exactly three bridge vessel tasks have no native A binding',()=>{
   assert.equal(replayVesselsEvidence(task,original.example(task),{sessionId,index}),null);
  }
 });
+
+
+test('#256 exact capacity answers reject grader-only floating tolerance',()=>{
+ const task=sessionTaskFor('precisionunits',1);
+ const model=original.example(task);
+ assert.equal(original.valid(task,model),true);
+ assert.equal(original.inspect(task,model).correct,true);
+ assert.ok(replayVesselsEvidence(task,model,context('precisionunits')));
+ // The old near() grader accepts 6.00000001 as sufficiently close to 6,
+ // but a strict unit-count proof must not advertise eight decimal digits
+ // of fabricated count precision as the exact number of real pours.
+ const almost=clone(model);
+ almost.answers[0]='6.00000001';
+ assert.equal(original.valid(task,almost),true);
+ assert.equal(original.inspect(task,almost).correct,true,
+  'this documents a deliberately weaker unchanged original grading threshold');
+ assert.equal(replayVesselsEvidence(task,almost,context('precisionunits')),null);
+ const fraction=clone(model);
+ fraction.answers[0]='12/2';
+ assert.equal(original.valid(task,fraction),true);
+ assert.equal(original.inspect(task,fraction).correct,true);
+ assert.ok(replayVesselsEvidence(task,fraction,context('precisionunits')),
+  'exact rational equivalence is mathematical equality, not numeric tolerance');
+});
+
+test('#256 replay cannot discard actual pours, silently alter issues, or forge terminal board',()=>{
+ const task=sessionTaskFor('ordermeasure',1),m=original.example(task);
+ assert.ok(replayVesselsEvidence(task,m,context('ordermeasure')));
+ const before=JSON.stringify(m);
+ const deleted=clone(m);
+ deleted.history=deleted.history.filter(x=>x.a!=='pour');
+ assert.equal(replayVesselsEvidence(task,deleted,context('ordermeasure')),null);
+ const forged=clone(m);
+ forged.board.levels[0]=0;
+ assert.equal(replayVesselsEvidence(task,forged,context('ordermeasure')),null);
+ const issue=clone(m);
+ issue.issue='过去的失败不能被悄悄重写';
+ assert.equal(replayVesselsEvidence(task,issue,context('ordermeasure')),null);
+ assert.equal(JSON.stringify(m),before,'negative probes never mutate the original work');
+});
