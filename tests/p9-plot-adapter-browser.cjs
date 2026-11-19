@@ -119,7 +119,13 @@ async function main(){
     check((await page.evaluate(()=>window.mathLesson.snapshot())).id===row.id,label+' real Next retained lesson');
    }else{
     const response=await page.goto(origin.base+'learn.html#'+row.id,{waitUntil:'domcontentloaded'});
-    check(response?.fromServiceWorker()===true,label+' navigation was served offline');
+    // Consecutive courses use the same learn.html document. A hash-only
+    // navigation has no network response; this is not an offline cache miss.
+    // The forced real reload below must STILL come from the service worker
+    // after the origin has been stopped.
+    if(response)check(response.fromServiceWorker()===true,label+' full navigation is served offline');
+    else check(await page.evaluate(()=>!!navigator.serviceWorker.controller),
+     label+' hash-only navigation retains an active offline controller');
     await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,row.id);
     // New courses start with an empty original lesson. Enter its task view;
     // only the two unrelated B33/B38 prerequisites need a nonzero position.
