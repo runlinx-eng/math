@@ -4,7 +4,12 @@ on:
   pull_request:
     paths:
       - 'dist/**'
+      # Only the fixed startup/Phase4 deep-link benchmark is measured here.
+      # Phase5 lesson modules are lazy and tested by their own math/P10 gates;
+      # any shared startup/loader edit still matches dist/** and runs P8.
+      - '!dist/learning/phase5/**'
       - 'tests/p8-startup-performance-browser.cjs'
+      - 'tests/ci-p8-trigger.test.mjs'
       - '.github/workflows/p8-startup-performance.yml'
   workflow_dispatch:
 
