@@ -48,11 +48,16 @@ async function main(){
   context.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))errors.push('external '+req.url());});
   const shot=async suffix=>{const file=label+'-'+suffix+'.png';await page.screenshot({path:path.join(out,file),fullPage:false});screenshots.push(file);};
   const click=async(selector)=>{
-   if(selector.includes('m28-mark')||selector.includes('m28-unmark')){
-    const details=page.locator('#extra-controls details').first();
-    if(!await details.evaluate(el=>el.open))await details.locator('summary').click();
+   const loc=page.locator(selector);assert.equal(await loc.count(),1,selector);
+   // The shared P3 Retry and the dot controls live in original disclosure
+   // elements. Open their actual ancestor summaries before the genuine click.
+   for(let depth=0;depth<8&&!await loc.isVisible();depth++){
+    const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+    assert.equal(await closed.count(),1,selector+' has one outermost closed disclosure');
+    await closed.locator(':scope > summary').click();
    }
-   const loc=page.locator(selector);assert.equal(await loc.count(),1,selector);await loc.click();};
+   assert.equal(await loc.isVisible(),true,selector+' must be reachable');
+   await loc.scrollIntoViewIfNeeded();await loc.click();};
   const field=async(name,value)=>{const loc=page.locator('[data-xfield="'+name+'"]');assert.equal(await loc.count(),1,name);await loc.fill(String(value));};
   const captureNow=async(phase,row)=>{const item=await capture(page,out,key(row),row,phase);captures.push({
    id:row.id,index:row.index,phase,storage:item.storage,attempts:item.attempts.length,
