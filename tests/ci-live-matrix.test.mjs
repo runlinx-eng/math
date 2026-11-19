@@ -22,8 +22,8 @@ test('#239 live output keeps all 13 old browser groups and adds an isolated comp
  assert.equal(x.proof.legacyGroups,13);
  assert.equal(x.proof.legacyCalls,86);
  assert.equal(x.proof.legacyEvidenceDirs,83);
- assert.equal(x.proof.registeredNewFamilies,8);
- assert.deepEqual(x.proof.addedGroups.map(group=>group.commandCount),[1,2,3,2]);
+ assert.equal(x.proof.registeredNewFamilies,9);
+ assert.deepEqual(x.proof.addedGroups.map(group=>group.commandCount),[1,2,3,3]);
  assert.deepEqual(x.definitions['family-wave-1-job-01'].commands,[{file:'tests/p9-compare-adapter-browser.cjs',env:{}}]);
  assert.deepEqual(x.definitions['family-wave-1-job-02'].commands,[
   {file:'tests/p9-unitrefine-adapter-browser.cjs',env:{}},
@@ -35,6 +35,7 @@ test('#239 live output keeps all 13 old browser groups and adds an isolated comp
   {file:'tests/p9-scale-adapter-browser.cjs',env:{}}
  ]);
  assert.deepEqual(x.definitions['family-wave-1-job-04'].commands,[
+  {file:'tests/p9-vessels-adapter-browser.cjs',env:{}},
   {file:'tests/p9-convert-adapter-browser.cjs',env:{}},
   {file:'tests/p9-sequence-invariance-browser.cjs',env:{}}
  ]);
