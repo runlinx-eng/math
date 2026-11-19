@@ -122,7 +122,7 @@ export function replayCompareEvidence(task,model){
     q.n*BigInt(expected.denominator)!==BigInt(expected.numerator)*q.d)return null;}
   }
   const board={first:{},bad:false,offset:task.initialOffset??2,order:[],copied:[],choice:null};
-  let lastOffset=String(task.initialOffset??2),aligned=false;
+  let lastOffset=String(task.initialOffset??2),aligned=false,finalChoicePrerequisitesMet=false;
   const events=[],selections=[],firstWrong=[],copies=[],orders=[],resets=[];
   for(let index=0;index<model.history.length;index++){
    const e=model.history[index];
@@ -137,7 +137,7 @@ export function replayCompareEvidence(task,model){
    }else if(e.a==='choice'){
     if(plan.mode==='order'||!keys(e.d,['index'])||!keys(e.f,[])||
       !task.choices?.some(c=>c.id===e.d.index))return null;
-    const value=e.d.index,correct=value===plan.winner;
+    // The final comparison must follow the actual reference work, not merely coexist with it.\n    finalChoicePrerequisitesMet=plan.mode==='indirect'?\n      board.copied.length===plan.lengths.length:aligned&&board.offset===0;\n    const value=e.d.index,correct=value===plan.winner;
     board.first.choice??=value;if(!correct)board.bad=true;
     board.choice=value;event.choice=value;event.correct=correct;
     selections.push({index,value,correct});
@@ -171,7 +171,7 @@ export function replayCompareEvidence(task,model){
     board.order.length!==plan.lengths.length||
     !board.order.every((n,i)=>i===0||plan.lengths[board.order[i-1]]<=plan.lengths[n]):
     board.choice!==plan.winner)||
-   (plan.mode==='indirect'&&board.copied.length!==plan.lengths.length))return null;
+   (plan.mode==='indirect'&&board.copied.length!==plan.lengths.length)||\n   (plan.mode!=='order'&&!finalChoicePrerequisitesMet))return null;
   return{
    kind:'length-comparison',mode:plan.mode,eventCount:events.length,events,
    construction:{
