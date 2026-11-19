@@ -61,6 +61,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 const reviewed={
  compare:[...positions('compareheight',[0,1,2]),...positions('ordermeasure',[0,2]),
   ...positions('indirectlength',[0,1,2]),...positions('lengthdifference',[0,1,2])],
+ vessels:[...positions('indirectmass',[1]),...positions('ordermeasure',[1]),...positions('precisionunits',[1])],
  plot:[...positions('measureplot',[0,1,2]),...positions('quarterplot',[0,1,2]),...positions('eighthplot',[0,1,2]),...positions('modmoney',[2]),...positions('modelChoice38',[2])],
  ...Object.fromEntries(['exact','given-approximation'].map(kind=>['convert-'+kind,convert.cases.filter(c=>c.kind===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['analog','digital'].map(kind=>['scale-'+kind,scale.cases.filter(c=>c.math.shape===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
@@ -184,7 +185,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,53);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,54);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
@@ -221,7 +222,7 @@ for(const adapter of EVIDENCE_ADAPTERS){
    assert.equal(adapter.binding(task,context)?.nodeId,nodeId,key(context));
    assert.ok(matchesNativeEvidenceTask(task,context,{type:adapter.type,nodeId}));
    assert.ok(validModel(task,model)&&inspect(task,model).correct,'original grading remains necessary');
-   assert.ok(adapter.replay(task,model),'real event fixture must pass its independent mathematics replay');
+   assert.ok(adapter.replay(task,model,context),'real event fixture must pass its independent mathematics replay');
    assert.ok(latestSubmissionMatches(model,saved));
    assert.ok(thinkingFeedback(task,model,saved,context),'eligible current work receives bounded feedback');
    for(const changedContext of [{...context,index:String(context.index)},{...context,index:-1},
@@ -245,7 +246,7 @@ for(const adapter of EVIDENCE_ADAPTERS){
    assert.equal(latestSubmissionMatches(model,latestWrong),false);
    assert.equal(thinkingFeedback(task,model,latestWrong,context),null,'an older successful snapshot cannot outrank a newer submission');
    const absent=structuredClone(model);absent.history=[];
-   assert.equal(adapter.replay(task,absent),null,'correct-looking final board without actions is insufficient');
+   assert.equal(adapter.replay(task,absent,context),null,'correct-looking final board without actions is insufficient');
    assert.equal(thinkingFeedback(task,absent,record(absent),context),null);
    assert.equal(JSON.stringify(saved),before,'evidence lookup never mutates saved attempts');
   }
