@@ -77,7 +77,7 @@ test('duplicate ticks, unmark, wrong tick, and over-cap requests remain in histo
  const t=clone(ids[0]),m=model(t),p=proof(t,m);assert.ok(p);
  const repeated=p.construction.bins.filter(x=>x.frequency>1);
  assert.ok(repeated.length);
- const i=t.end-t.start;M.act(t,m,'m28-unmark',{index:i});
+ const i=p.construction.bins.findIndex(x=>x.frequency>0);M.act(t,m,'m28-unmark',{index:i});
  assert.equal(M.inspect(t,m).correct,false);assert.equal(proof(t,m),null);
  M.act(t,m,'m28-mark',{index:i});assert.ok(proof(t,m));
  M.act(t,m,'m28-mark',{index:0});assert.equal(M.inspect(t,m).correct,true);
