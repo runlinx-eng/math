@@ -5,6 +5,8 @@ import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {defaultModel,validModel,inspect} from '../dist/learning/tasks.js';
 import * as model from '../dist/learning/phase5/b28-model.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+await ensureB39Ready();
 
 const reviewed=Object.freeze([
  {sessionId:'indirectmass',index:1},
