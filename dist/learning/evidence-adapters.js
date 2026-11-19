@@ -1,3 +1,4 @@
+import {plotBinding,replayPlotEvidence} from './plot-evidence.js';
 import {convertBinding,replayConvertEvidence} from './convert-evidence.js';
 import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
 import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
@@ -50,6 +51,7 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ {id:'plot',type:'x-m28-plot',binding:plotBinding,replay:replayPlotEvidence},
  ...['exact','given-approximation'].map(kind=>({id:'convert-'+kind,type:'x-m28-convert',
   binding:(task,context)=>{const source=convertBinding(task,context);return source?.kind===kind?source:null;},replay:replayConvertEvidence})),
  ...['analog','digital'].map(kind=>({id:'scale-'+kind,type:'x-m28-scale',
