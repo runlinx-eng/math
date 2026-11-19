@@ -1,3 +1,4 @@
+import {convertBinding,replayConvertEvidence} from './convert-evidence.js';
 import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
 import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
@@ -90,6 +91,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-convert'){
+    const source=convertBinding(task,context);
+    return source?{type:task.type,summary:'想一想换单位后，数量怎样表示？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-scale'){
     const source=scaleBinding(task,context);
     return source?{type:task.type,summary:task.kind==='digital'?'想一想：显示的分和秒怎样对应保存的秒数？（可选）':'想一想：图上的位置与保存的读数怎样对应？（可选）',question:source.question}:null;
@@ -229,6 +234,25 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-convert'){
+    const source=convertBinding(task,context);if(!source)return null;
+    const proof=replayConvertEvidence(task,model);if(!proof)return null;
+    const approximate=source.kind==='given-approximation';
+    const detail=proof.rows.map(row=>{
+      const relation=approximate?`按本题给定的近似关系，${row.source} 约为 ${row.expected} ${row.unit}。`:
+        `${row.source} 与 ${row.expected} ${row.unit} 表示同一个量。`;
+      return relation+`你在这一行保存的是“${row.raw}” ${row.unit}。`;
+    });
+    for(const q of proof.currentQuestions)detail.push(`当前“${q.label}”填写“${q.display}”。`);
+    detail.push(`第一次成功保存的整组填写（${proof.firstSave.values.map(raw=>'“'+raw+'”').join('、')}）仍保留。`,
+      '工具为每一行画出两条数量条；这里核对整组保存值和当前追问填写。换算步骤和自由解释没有在这里评定。');
+    if(proof.issue)detail.push('末尾的填写提示与之前有效保存的整组记录都保留了。');
+    if(proof.historyAtCapacity)detail.push('操作记录已到保存上限；这里只核对已经保留的记录。');
+    if(attempts.length>1)detail.push('此前提交原样保留。这里描述的是与当前完整作品一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',observation:approximate?'当前整组保存值符合这道题给出的近似换算关系。':
+      '当前整组保存值与题目中的每个量精确对应。',connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-scale'){
     const source=scaleBinding(task,context);if(!source)return null;
     const proof=replayScaleEvidence(task,model);if(!proof)return null;

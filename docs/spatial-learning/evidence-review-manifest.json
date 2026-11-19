@@ -5974,6 +5974,195 @@
       "adapter": "scale-analog",
       "taskHash": "516a751ca33addb52d582333cbffe54d68e44a97aa509a6a5ac67afc96357417",
       "method": null
+    },
+    {
+      "sessionId": "baseconversions",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_d8al9JcajP",
+      "adapter": "convert-exact",
+      "taskHash": "5a054c579a00d1a470ad9f4a1ccc3797099dd538ccec877888707bdad252dc19",
+      "method": null
+    },
+    {
+      "sessionId": "baseconversions",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_d8al9JcajP",
+      "adapter": "convert-exact",
+      "taskHash": "43af455ad9317e18af55f87a327fe54ba73538b8e41fc096574089e2eaa30e7f",
+      "method": null
+    },
+    {
+      "sessionId": "baseconversions",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_d8al9JcajP",
+      "adapter": "convert-exact",
+      "taskHash": "69798daf9b4ab6890e424fc1bfca13bd6c8c152bf2916c61993a5ad65761d65d",
+      "method": null
+    },
+    {
+      "sessionId": "metricconversions",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_Zks8xyInSG",
+      "adapter": "convert-exact",
+      "taskHash": "07ddaa30c225da2c9989308db77997d576f1ca6bfddbe71476373335239380ce",
+      "method": null
+    },
+    {
+      "sessionId": "metricconversions",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_Zks8xyInSG",
+      "adapter": "convert-exact",
+      "taskHash": "610882e89deec8724ac37f7acc9f2a6b7c93d12a035cb82ae30eaf824305654c",
+      "method": null
+    },
+    {
+      "sessionId": "metricconversions",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_Zks8xyInSG",
+      "adapter": "convert-exact",
+      "taskHash": "74f47ec996d39cb96b5207845005e2833dd307a1f2284b68a18629e3bca1ca1d",
+      "method": null
+    },
+    {
+      "sessionId": "imperialconversions",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_p6MhZJYYPN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "ad6cac3aac163216f8c49a743e76db8ef54663314dfd33f3c9a8a79beee75ea4",
+      "method": null
+    },
+    {
+      "sessionId": "imperialconversions",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_p6MhZJYYPN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "7eb41428dd2e5cd4c8322eeaf73064bdb98aa2ec5066c134b52c3d151f19e9cd",
+      "method": null
+    },
+    {
+      "sessionId": "imperialconversions",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_p6MhZJYYPN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "980b72bb63c362ba9ea2be0246b1f35140280b834a5eef85afcd69fa8066ae83",
+      "method": null
+    },
+    {
+      "sessionId": "decimalunits",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_2VpdPjvewx",
+      "adapter": "convert-exact",
+      "taskHash": "e7a987b8c84c42576df0a403f33bbe5c45697cd1b3cd3a219e44a35628b87edb",
+      "method": null
+    },
+    {
+      "sessionId": "decimalunits",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_2VpdPjvewx",
+      "adapter": "convert-exact",
+      "taskHash": "ca9ef2ff5ee5cb8bb67e83c6d5add68d9c41f80d7c6d63e730020c63b18dec17",
+      "method": null
+    },
+    {
+      "sessionId": "decimalunits",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_2VpdPjvewx",
+      "adapter": "convert-exact",
+      "taskHash": "ecc6c306a2a923b74739f39f1966faa673773284bc0434f58b565034dc274f4a",
+      "method": null
+    },
+    {
+      "sessionId": "unitstories",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_SqhXQhAEUf",
+      "adapter": "convert-exact",
+      "taskHash": "41c4711373ffbf7d2126ac55c6a936c4a09bbaf77e0e0750314e7256a41fd56c",
+      "method": null
+    },
+    {
+      "sessionId": "unitstories",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_SqhXQhAEUf",
+      "adapter": "convert-exact",
+      "taskHash": "aeaec1af211898719872d798aab0db273e4df94c598a0bdd6498a51578cb5c84",
+      "method": null
+    },
+    {
+      "sessionId": "unitstories",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_SqhXQhAEUf",
+      "adapter": "convert-exact",
+      "taskHash": "4ace8027334a470c4c6062fded1f1528cc929dab47a5cbd61b02d0f44c0dedd1",
+      "method": null
+    },
+    {
+      "sessionId": "mileskm",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_3tPI0HqqcN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "f6f61257866c7aa6b8c9947947c3fee9e34aa9bdc839e5e9007b2544f71eae0c",
+      "method": null
+    },
+    {
+      "sessionId": "mileskm",
+      "index": 1,
+      "type": "x-m28-convert",
+      "nodeId": "mt_3tPI0HqqcN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "e634722f710cc0d3393add08820dbed211b01e45f86c84152358a705da884e78",
+      "method": null
+    },
+    {
+      "sessionId": "mileskm",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_3tPI0HqqcN",
+      "adapter": "convert-given-approximation",
+      "taskHash": "f443f0387aebbe385a6fb2d886c5c4eeb54788c97a415197472a546681f792b1",
+      "method": null
+    },
+    {
+      "sessionId": "practicalmeasure",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_5HV4mbgSGH",
+      "adapter": "convert-exact",
+      "taskHash": "b2663a02eb6fd66b04147ca6378ac5a16f6a7085e1600118f0f1f30d09776b85",
+      "method": null
+    },
+    {
+      "sessionId": "measureliquid",
+      "index": 2,
+      "type": "x-m28-convert",
+      "nodeId": "mt_-af65bxfdp",
+      "adapter": "convert-exact",
+      "taskHash": "e374fbda2eb60297b433892b7a83af33a347de3a6cf110e0abe3be4347f2489f",
+      "method": null
+    },
+    {
+      "sessionId": "model38",
+      "index": 0,
+      "type": "x-m28-convert",
+      "nodeId": "mt_8xVHooT4aI",
+      "adapter": "convert-exact",
+      "taskHash": "41c4711373ffbf7d2126ac55c6a936c4a09bbaf77e0e0750314e7256a41fd56c",
+      "method": null
     }
   ]
 }
