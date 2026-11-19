@@ -121,6 +121,24 @@ async function main(){
     ok(reload?.fromServiceWorker()===true,label+' full reload served offline');
     await page.waitForFunction(index=>window.mathLesson?.snapshot()?.index===index,row.index);
    }
+   const source=await page.evaluate(async({id,index})=>{
+    const {sessionTaskFor}=await import('./learning/bridges.js');
+    const {LESSONS}=await import('./learning/catalog.js');
+    const task=sessionTaskFor(id,index);
+    return {type:task?.type,nodeId:LESSONS[id]?.topicId,
+     lengths:task?.items?.map(item=>item.length),mode:task?.mode||'compare',
+     want:task?.want,answers:task?.questions?.map(q=>String(q.value))};
+   },row);
+   ok(source.type==='x-m28-compare'&&source.nodeId===row.nodeId,
+    label+' actual browser source/type/node matches the frozen original');
+   ok(JSON.stringify(source.lengths)===JSON.stringify(row.lengths)&&
+    source.mode===row.mode&&source.want===row.want&&
+    JSON.stringify(source.answers)===JSON.stringify(row.answers),
+    label+' browser model lengths/mode/answers agree with independent frozen source');
+   ok(Math.max(...source.lengths)-Math.min(...source.lengths)===row.difference&&
+    JSON.stringify(source.lengths.map((n,index)=>({n,index}))
+     .sort((a,b)=>a.n-b.n||a.index-b.index).map(x=>x.index))===JSON.stringify(row.sorted),
+    label+' independently recomputed browser length difference and order');
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),label+' 1920x1080');
    await shot('initial');
    const feedback=page.locator('#thinking-feedback');
@@ -169,13 +187,7 @@ async function main(){
     ok(done.model.board.bad===true&&done.model.board.first.choice===decisions[0],
       label+' original first error survives correction');
    }
-   for(let first=0;first<row.lengths.length;first++)
-    for(let second=first+1;second<row.lengths.length;second++){
-     const difference=row.lengths[first]-row.lengths[second];
-     ok(Number.isSafeInteger(difference)&&
-      ['<','=','>'].includes(difference<0?'<':difference>0?'>':'='),
-      label+' exact task-supplied pair '+first+'-'+second);
-    }
+
    ok(done.model?.board?.offset===0||row.mode==='indirect',label+' comparable lengths share zero');
    if(row.mode==='order')ok(JSON.stringify(done.model.board.order)===JSON.stringify(row.sorted),
     label+' sorted original lengths from shortest to longest');
