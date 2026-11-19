@@ -1,6 +1,5 @@
 'use strict';
-// #256 isolated native 1920x1080 vessel Chromium evidence. Not registered into
-// Required until #255 has been independently accepted on the merged main.
+// #256 source-bound 1920x1080 Chromium evidence, registered for targeted CI.
 // No pre-seeded attempts, grades, mathematical operations or proofs.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
