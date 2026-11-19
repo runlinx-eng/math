@@ -1,3 +1,4 @@
+import {compareBinding,replayCompareEvidence} from './compare-evidence.js';
 import {plotBinding,replayPlotEvidence} from './plot-evidence.js';
 import {convertBinding,replayConvertEvidence} from './convert-evidence.js';
 import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
@@ -92,6 +93,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-compare'){
+    const source=compareBinding(task,context);
+    return source?{type:task.type,summary:'想一想：比较长短时，起点、记录和顺序各起什么作用？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-plot'){
     const source=plotBinding(task,context);
     return source?{type:task.type,summary:'想一想：每条测量记录怎样放到相应刻度？（可选）',question:source.question}:null;
@@ -239,6 +244,33 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-compare'){
+    const source=compareBinding(task,context);if(!source)return null;
+    const proof=replayCompareEvidence(task,model);if(!proof)return null;
+    const c=proof.construction;
+    const detail=[
+      '物体长度与图示由工具给定；这里只核对原记录中的起点对齐、选择、纸条记录与排序操作。',
+      ...c.objects.map(x=>`${x.name}：图示长度 ${x.length}（题目给定）。`),
+      ...(proof.mode==='indirect'?
+        [`你实际点击记录了 ${c.recordedItems.length} 个物体的长度；这不等于亲手测量。`]:
+        ['本次记录中有起点对齐的实际操作，最后从共同零点比较。']),
+      ...(proof.mode==='order'?
+        [`当前从短到长排序的原物体编号：${c.orderedIndices.map(x=>x+1).join('、')}。`]:
+        [`最后的选择是“${c.choiceHistory.at(-1).value}”；先前的真实选择仍在历史中。`]),
+      ...c.questions.map(q=>`“${q.label}”这次填写“${q.raw}”，与给定长度关系一致。`),
+      '这里不评定实物尺量、独立证明传递性、自由解释或长期掌握。'
+    ];
+    if(c.firstWrongChoices.length)detail.push('原历史中的错误选择与之后的纠正都保留了。');
+    if(c.clearedOrders.length)detail.push('曾清空的排序与重新排列过程仍保留。');
+    if(proof.historyAtCapacity)detail.push('操作历史达到保存上限；未补造之后的操作。');
+    if(attempts.length>1)detail.push('此前提交仍保留；这里只描述与当前作品一致的最新提交。');
+    if(record.support)detail.push('你曾查看提示或比较反馈。');
+    return{title:'这次作品中的思考线索',
+      observation:proof.mode==='indirect'?'当前纸条记录与最后比较符合题面长度关系。':
+        proof.mode==='order'?'当前排列与题面给出的长短顺序一致。':
+        '本轮起点对齐与最后选择符合题面给出的长度关系。',
+      connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-plot'){
     const source=plotBinding(task,context);if(!source)return null;
     const proof=replayPlotEvidence(task,model);if(!proof)return null;

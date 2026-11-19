@@ -158,6 +158,9 @@ jobs:
           node --check tests/fixtures/p9-scale-navigation.cjs
           node --check dist/learning/convert-evidence.js
           node --check tests/fixtures/p9-convert-cases.cjs
+          node --check dist/learning/compare-evidence.js
+          node --check tests/fixtures/p9-compare-cases.cjs
+          node --check tests/p9-compare-adapter-browser.cjs
           node --check tests/p9-convert-adapter-browser.cjs
           node --check dist/learning/unitcover-evidence.js
           node --check tests/fixtures/p9-unitcover-navigation.cjs
@@ -293,6 +296,7 @@ jobs:
             tests/p9-scale-evidence.test.mjs
             tests/p9-scale-navigation.test.mjs
             tests/p9-convert-evidence.test.mjs
+            tests/p9-compare-evidence.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
             tests/p9-unitcover-navigation.test.mjs

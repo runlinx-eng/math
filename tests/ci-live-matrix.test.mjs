@@ -13,34 +13,35 @@ const mock=id=>({familyId:id,version:1,required:true,
  resources:{estimatedScriptMinutes:8,memoryMiB:2048,runnerType:'standard',exclusiveLocks:[]},dependsOn:[]});
 const plan=(r=registry(),options={})=>buildLiveBrowserMatrix(r,{fileExists:()=>true,...options});
 
-test('#239 live output really contains the exact old 13 required groups and 86 legacy invocations',()=>{
+test('#239 live output keeps all 13 old browser groups and adds an isolated compare group',()=>{
  const before=JSON.stringify(BROWSER_GROUPS);
  const x=buildLiveBrowserMatrix();
  assert.equal(x.proof.activation,'enabled');
  assert.deepEqual(x.matrix.group.slice(0,13),GROUP_NAMES);
- assert.deepEqual(x.matrix.group.slice(13),['family-wave-1-job-01','family-wave-1-job-02','family-wave-1-job-03']);
+ assert.deepEqual(x.matrix.group.slice(13),['family-wave-1-job-01','family-wave-1-job-02','family-wave-1-job-03','family-wave-1-job-04']);
  assert.equal(x.proof.legacyGroups,13);
  assert.equal(x.proof.legacyCalls,86);
  assert.equal(x.proof.legacyEvidenceDirs,83);
- assert.equal(x.proof.registeredNewFamilies,7);
- assert.deepEqual(x.proof.addedGroups.map(group=>group.commandCount),[2,3,2]);
- assert.deepEqual(x.definitions['family-wave-1-job-01'].commands,[
+ assert.equal(x.proof.registeredNewFamilies,8);
+ assert.deepEqual(x.proof.addedGroups.map(group=>group.commandCount),[1,2,3,2]);
+ assert.deepEqual(x.definitions['family-wave-1-job-01'].commands,[{file:'tests/p9-compare-adapter-browser.cjs',env:{}}]);
+ assert.deepEqual(x.definitions['family-wave-1-job-02'].commands,[
   {file:'tests/p9-unitrefine-adapter-browser.cjs',env:{}},
   {file:'tests/p9-ruler-adapter-browser.cjs',env:{}}
  ]);
- assert.deepEqual(x.definitions['family-wave-1-job-02'].commands,[
+ assert.deepEqual(x.definitions['family-wave-1-job-03'].commands,[
   {file:'tests/p9-balance-adapter-browser.cjs',env:{}},
   {file:'tests/p9-plot-adapter-browser.cjs',env:{}},
   {file:'tests/p9-scale-adapter-browser.cjs',env:{}}
  ]);
- assert.deepEqual(x.definitions['family-wave-1-job-03'].commands,[
+ assert.deepEqual(x.definitions['family-wave-1-job-04'].commands,[
   {file:'tests/p9-convert-adapter-browser.cjs',env:{}},
   {file:'tests/p9-sequence-invariance-browser.cjs',env:{}}
  ]);
- assert.ok(x.definitions['family-wave-1-job-01'].artifacts.includes('verification/p9-unitrefine-adapter/'));
- assert.deepEqual(Object.keys(x.definitions),[...GROUP_NAMES,'family-wave-1-job-01','family-wave-1-job-02','family-wave-1-job-03']);
- assert.equal(JSON.stringify(BROWSER_GROUPS),before,'Production generation must not mutate frozen old roster');
- assert.equal(x.proof.digest,buildLiveBrowserMatrix().proof.digest,'Rebuilding plan is deterministic');
+ assert.deepEqual(x.definitions['family-wave-1-job-01'].artifacts,['verification/p9-compare-adapter/']);
+ assert.deepEqual(Object.keys(x.definitions),[...GROUP_NAMES,'family-wave-1-job-01','family-wave-1-job-02','family-wave-1-job-03','family-wave-1-job-04']);
+ assert.equal(JSON.stringify(BROWSER_GROUPS),before,'Original browser list must not change');
+ assert.equal(x.proof.digest,buildLiveBrowserMatrix().proof.digest,'Deterministic matrix');
  const p={...x.proof};delete p.digest;
  assert.equal(x.proof.digest,createHash('sha256').update(JSON.stringify(p)).digest('hex'));
 });
