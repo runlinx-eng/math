@@ -54,6 +54,8 @@ Required attempt 1 与 attempt 2 均在35分钟硬限制下取消六至七个浏
 - **完整回归**：不按周/月/提交次数触发，只在重要家族或阶段验收、跨模块/数据安全高风险、重大故障后或正式发布候选时主动调用 `workflow_dispatch`；此模式保留原十七组94条 Chromium、P10、State-v2、离线、数学断言、35分钟上限、全部原始 Artifact 及其收据门禁。完整测试是否需要执行应基于风险和里程碑。
 - **节省资源与等待**：由独立小型 plan-checks Job 选出变化范围，与 Node/数学静态检查并行；冒烟/定向家族测试无需等待漫长的Node全集结束。GitHub Actions 不创建无作用的17组空Runner；每日只上传家族测试的简短、同运行同SHA收据，成功时不重复上传大量截图/ZIP，失败时上传诊断/原图。原全量模式仍归档完整证据。提交最终 required-checks 仍按本轮确实选中的作业和收据严格判断，不能用跳过、旧SHA、缺结果伪造绿灯。
 - 本条只改变测试的触发条件和日常证据成本，不删除原有数学测试、学习记录与备份兼容性，不改变部署/发布授权。历史全量验收记录继续保留；旧流程文字以本条为优先解释。
+- **开发期集中验证与发布版本预检（#268）**：同一任务内可以保留多个小而清晰的本地 Git commit，但尽量先完成受影响的源码/规则/测试修改与定向 Node/Chromium 验证，再统一 push；不按固定提交次数限制提交，也不把不同任务堆成一批。修复真实失败时仍可再次提交，每次正式验收以最新 HEAD 为准，不以旧 SHA 绿灯放行。
+- **离线 release 同步**：涉及 `dist/sw.js`、`dist/space.js`、`dist/exploration.js`、`dist/learning/learn.js` 的 release 变动时，先在开发分支完成原始改动，再运行 `node scripts/ci-release-sync.mjs sync --release math-explorer-<明确版本>`，检查改动列表并运行 `node scripts/ci-release-sync.mjs check` 和 `node --test tests/ci-release-sync.test.mjs`，最后集中 push。工具同步五处 release、学习入口 SHA-256 与已审导航 fixture 中的该入口哈希；仅允许 release-only 的学习入口变动自动更新审阅哈希，若学习入口有其他改动/来源不一致则拒绝改写，要求独立审阅。新增离线文件仍须人工登记 SW 缓存清单，并保留真实离线、P10/V2 与原数学门禁。现有 CI Node 范围均会执行这个 release 一致性测试，不新增全套浏览器 Job。
 
 # 数学树长期开发工作流
 
