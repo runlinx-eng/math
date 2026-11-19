@@ -5848,6 +5848,60 @@
       "adapter": "ruler",
       "taskHash": "e1f41a5b2900cb4fa24a2dd25beaf07e5457b209ff70d257bd3c9b381bd70ce2",
       "method": null
+    },
+    {
+      "sessionId": "compareweight",
+      "index": 0,
+      "type": "x-m28-balance",
+      "nodeId": "mt_-P1kdZhHbL",
+      "adapter": "balance-compare",
+      "taskHash": "444a75afcad8a55a7aa372d8f401b2d3b19319a285867126c15e32a2f6207bf1",
+      "method": null
+    },
+    {
+      "sessionId": "compareweight",
+      "index": 1,
+      "type": "x-m28-balance",
+      "nodeId": "mt_-P1kdZhHbL",
+      "adapter": "balance-compare",
+      "taskHash": "7492b2dd2a53d9aafcd43d075cf958c6bae4b7e6162d628ae24c1d3362cdf58c",
+      "method": null
+    },
+    {
+      "sessionId": "compareweight",
+      "index": 2,
+      "type": "x-m28-balance",
+      "nodeId": "mt_-P1kdZhHbL",
+      "adapter": "balance-compare",
+      "taskHash": "7b14009110e782399bcfedcdc8767dec44339fe3aa35b15b73571d61a19aab7c",
+      "method": null
+    },
+    {
+      "sessionId": "weightstart",
+      "index": 0,
+      "type": "x-m28-balance",
+      "nodeId": "mt_zd0YkB3xNj",
+      "adapter": "balance-compare",
+      "taskHash": "00fadcb86574c4a1bba420eafe1bc07f3d04fbe28fc9e112c7f31ba62a75e0ce",
+      "method": null
+    },
+    {
+      "sessionId": "weightstart",
+      "index": 1,
+      "type": "x-m28-balance",
+      "nodeId": "mt_zd0YkB3xNj",
+      "adapter": "balance-weigh",
+      "taskHash": "f8a16cb43e63005b5b9f63af5405322e80ce8ea3c8804f0c2d84b2deabbdde15",
+      "method": null
+    },
+    {
+      "sessionId": "measurecalc",
+      "index": 2,
+      "type": "x-m28-balance",
+      "nodeId": "mt_6oxQPNLHNv",
+      "adapter": "balance-weigh",
+      "taskHash": "4afb8f95c6649994654c8df07bafae4265dbce4bd82d905041ba2ae726e3b820",
+      "method": null
     }
   ]
 }

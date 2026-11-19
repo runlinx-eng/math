@@ -1,3 +1,4 @@
+import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
@@ -47,6 +48,8 @@ import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evi
 import {storyLedgerBinding,replayStoryLedgerEvidence} from './storyledger-evidence.js';
 
 export const EVIDENCE_ADAPTERS=Object.freeze([
+ ...['compare','weigh'].map(kind=>({id:'balance-'+kind,type:'x-m28-balance',
+  binding:(task,context)=>{const source=balanceBinding(task,context);return source?.kind===kind?source:null;},replay:replayBalanceEvidence})),
  {id:'ruler',type:'x-m28-ruler',binding:rulerBinding,replay:replayRulerEvidence},
  {id:'unitrefine',type:'x-m28-refine',binding:unitrefineBinding,replay:replayUnitrefineEvidence},
  {id:'unitcover',type:'x-m28-units',binding:unitcoverBinding,replay:replayUnitcoverEvidence},
