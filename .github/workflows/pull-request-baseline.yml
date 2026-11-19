@@ -440,22 +440,58 @@ jobs:
         id: group_config
         run: node scripts/required-browser-checks.mjs prepare "$MATH_BROWSER_GROUP"
 
-      - name: Install isolated Chromium test runtime
+      # The corresponding diagnostic probe passed on two fresh ubuntu-24.04 runners:
+      # https://github.com/runlinx-eng/math/actions/runs/44514144125
+      # Keep the original commands, conditional CJK fallback and 35-minute job cap.
+      # Separate timing is necessary because the 35-minute attempt #44480305187
+      # was cancelled after Chromium download, without identifying the hang.
+      - name: Record browser runner image
+        if: env.MATH_BROWSER_REQUIRED == 'true'
+        run: |
+          printf 'image=%s version=%s arch=%s\n' "$ImageOS" "$ImageVersion" "$RUNNER_ARCH"
+
+      - name: Install Playwright (timed)
+        if: env.MATH_BROWSER_REQUIRED == 'true'
+        run: python3 .github/ci-probes/time-runtime-step.py npm-playwright npm install --no-save --no-package-lock playwright@1.56.1
+
+      - name: Install Chromium (timed)
+        if: env.MATH_BROWSER_REQUIRED == 'true'
+        run: python3 .github/ci-probes/time-runtime-step.py chromium npx playwright install chromium
+
+      - name: Detect Chinese fonts (timed)
+        id: chinese_fonts
+        if: env.MATH_BROWSER_REQUIRED == 'true'
+        run: |
+          python3 .github/ci-probes/time-runtime-step.py font-detection bash -e -c '
+            if fc-list :lang=zh-cn family | grep -q .; then
+              echo "present=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "present=false" >> "$GITHUB_OUTPUT"
+            fi
+          '
+
+      # Reuse existing fonts when present, as before. No font cache or APT
+      # source change in this diagnostic integration.
+      - name: Refresh Ubuntu package lists (timed)
+        if: env.MATH_BROWSER_REQUIRED == 'true' && steps.chinese_fonts.outputs.present == 'false'
+        run: python3 .github/ci-probes/time-runtime-step.py apt-update sudo apt-get update -qq -o Acquire::Retries=3
+
+      - name: Install Chinese font fallback (timed)
+        if: env.MATH_BROWSER_REQUIRED == 'true' && steps.chinese_fonts.outputs.present == 'false'
+        run: python3 .github/ci-probes/time-runtime-step.py apt-install-font sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
+
+      - name: Rebuild font cache (timed)
+        if: env.MATH_BROWSER_REQUIRED == 'true' && steps.chinese_fonts.outputs.present == 'false'
+        run: python3 .github/ci-probes/time-runtime-step.py font-cache fc-cache -f
+
+      - name: Verify Chinese font (timed)
         id: browser_runtime
         if: env.MATH_BROWSER_REQUIRED == 'true'
         run: |
-          npm install --no-save --no-package-lock playwright@1.56.1
-          # Reuse existing Chinese fonts when present. If absent, install the
-          # small Ubuntu 24.04 WQY Micro Hei fallback (~1.6 MB download),
-          # rather than the ~61 MB Noto CJK package. Keep real Chromium/CJK QA.
-          npx playwright install chromium
-          if ! fc-list :lang=zh-cn family | grep -q .; then
-            sudo apt-get update -qq -o Acquire::Retries=3
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
-            fc-cache -f >/dev/null
-          fi
-          fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
-          fc-match -f 'CI CJK fallback: %{family} [%{file}]\n' 'sans-serif:lang=zh-cn'
+          python3 .github/ci-probes/time-runtime-step.py font-verification bash -e -c '
+            fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
+            fc-match -f "CI CJK fallback: %{family} [%{file}]\n" "sans-serif:lang=zh-cn"
+          '
 
       - name: Run every browser command in this group
         shell: bash
