@@ -98,7 +98,7 @@ test('#256 overflow never counts as measured quantity, but correction is preserv
 test('#256 exactly three bridge vessel tasks have no native A binding',()=>{
  const bridges=Object.keys(BRIDGES).flatMap(sessionId=>
   sessionTasks(sessionId).map((task,index)=>({sessionId,index,task})))
-  .filter(x=>x.task.type==='x-m28-vessels');
+  .filter(x=>x.task?.type==='x-m28-vessels');
  assert.equal(bridges.length,3);
  for(const {sessionId,index,task} of bridges){
   assert.equal(vesselsBinding(task,{sessionId,index}),null);
