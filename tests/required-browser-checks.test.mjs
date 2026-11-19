@@ -428,20 +428,50 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
   'verification/p7-d3/','verification/p7-d7/coverage.json'])assert.ok(workflow.includes(path),path);
 });
 
-test('CI Chromium runner uses a small Chinese font fallback and still fails without CJK coverage',()=>{
+test('CI Chromium runner times separate setup phases and still fails without CJK coverage',()=>{
  const yaml=readFileSync(new URL('../.github/workflows/pull-request-baseline.yml',import.meta.url),'utf8');
- const install=yaml.split('      - name: Install isolated Chromium test runtime')[1]
+ const browser=yaml.split('\n  browser:\n')[1]?.split('\n  required-checks:\n')[0]??'';
+ const install=browser.split('      - name: Record browser runner image')[1]
   ?.split('      - name: Run every browser command')[0]??'';
- assert.ok(install,'Chromium runtime install step must exist');
- assert.ok(install.includes('npx playwright install chromium'),'real Chromium must remain installed');
- assert.ok(install.includes('if ! fc-list :lang=zh-cn family | grep -q .; then'),'preinstalled CJK fonts must be preferred');
+ assert.ok(install,'timed Chromium runtime preparation must exist');
+ const ordered=['Install Playwright (timed)','Install Chromium (timed)',
+  'Detect Chinese fonts (timed)','Refresh Ubuntu package lists (timed)',
+  'Install Chinese font fallback (timed)','Rebuild font cache (timed)','Verify Chinese font (timed)'];
+ let previous=-1;
+ for(const name of ordered){
+  const position=install.indexOf('      - name: '+name);
+  assert.ok(position>previous,'required timed phase missing, duplicated or out of order: '+name);
+  previous=position;
+ }
+ assert.match(install,/npm install --no-save --no-package-lock playwright@1\.56\.1/,
+  'pin the existing Playwright version');
+ assert.match(install,/npx playwright install chromium/,'real Chromium must remain installed');
+ assert.match(install,/if fc-list :lang=zh-cn family \| grep -q \.; then/,
+  'preinstalled CJK fonts must be preferred');
+ assert.match(install,/echo "present=true" >> "\$GITHUB_OUTPUT"/);
+ assert.match(install,/echo "present=false" >> "\$GITHUB_OUTPUT"/);
+ for(const step of ['Refresh Ubuntu package lists (timed)','Install Chinese font fallback (timed)',
+   'Rebuild font cache (timed)']){
+  const segment=install.split('      - name: '+step)[1]?.split('      - name: ')[0]??'';
+  assert.ok(segment.includes("steps.chinese_fonts.outputs.present == 'false'"),
+   step+' must run only when CJK coverage is missing');
+ }
  assert.ok(install.includes('apt-get install -y --no-install-recommends fonts-wqy-microhei'),
   'missing CJK fonts must use the small Ubuntu 24.04 fallback');
  assert.ok(!install.includes('apt-get install -y --no-install-recommends fonts-noto-cjk'),
   'the old 61 MB font download must not remain the default');
  assert.ok(install.includes('fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }'),
   'missing Chinese font coverage must remain fail-closed');
- assert.ok(install.includes('fc-match -f'),'selected CJK font must be recorded in the logs');
+ assert.ok(install.includes('fc-match -f'),'selected CJK font must be logged');
+ assert.match(install,/python3 \.github\/ci-probes\/time-runtime-step\.py/g,
+  'each command must run under the tested timer');
+ assert.match(browser,/timeout-minutes: 35/,'keep the 35 minute browser job cap');
+ assert.match(browser,/max-parallel: 10/,'retain the existing concurrency bound');
+ const timer=readFileSync(new URL('../.github/ci-probes/time-runtime-step.py',import.meta.url),'utf8');
+ for(const word of ['PROBE_START','PROBE_END','PROBE_WAIT','show_processes','proc.wait(timeout=interval)'])
+  assert.ok(timer.includes(word),'timed setup must preserve '+word);
+ assert.ok(timer.includes('return code if code >= 0 else 128 - code'),
+  'a failed runtime setup must never be converted into success');
 });
 
 test('Area split is mandatory in the fail-closed gate and fallback uses the reviewed CJK font',()=>{
