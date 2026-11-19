@@ -17,6 +17,7 @@ const ASSOCIATED=Object.freeze({
  'link-measureplot-quarterplot':[0,1],
  'link-quarterplot-eighthplot':[0,1],
  'link-eighthplot-fractiondots':[0],
+ 'link-measureplot-modmoney':[0,1],
 });
 const cp=structuredClone, text=s=>typeof s==='string'&&s.length<=1200;
 const dense=a=>Array.isArray(a)&&Object.keys(a).length===a.length;
@@ -99,7 +100,7 @@ export function replayPlotEvidence(task,model){
     return !expected||!actual||actual.n*expected.d!==expected.n*actual.d;
   }))return null;
   const b={first:{},bad:false,selected:0,records:task.raw.map(()=>null),marks:math.frequencies.map(()=>0)};
-  let issue='';const events=[],records=[];
+  let issue='',lastRecorded=null;const events=[],records=[];
   for(let index=0;index<model.history.length;index++){
    const e=model.history[index];
    if(!keys(e,['a','d','f']))return null;
@@ -112,7 +113,8 @@ export function replayPlotEvidence(task,model){
     if(!keys(e.d,[])||!keys(e.f,[]))return null;
     event.invalidated=b.records[b.selected];b.records[b.selected]=null;event.selected=b.selected;
    }else if(e.a==='record'){
-    if(!keys(e.d,[])||!keys(e.f,['measure'])||!text(e.f.measure))return null;
+    if(!keys(e.d,[])||!keys(e.f,['measure','unit'])||!text(e.f.measure)||e.f.unit!=='')return null;
+    lastRecorded=e.f.measure;
     const q=entered(e.f.measure),want=BigInt(math.rounded[b.selected]),selected=b.selected;
     b.records[selected]=null;
     event.selected=selected;event.raw=e.f.measure;
@@ -129,13 +131,16 @@ export function replayPlotEvidence(task,model){
     if(!keys(e.d,['index'])||!keys(e.f,[])||!/^\d+$/.test(e.d.index))return null;
     const tick=Number(e.d.index);if(!Number.isInteger(tick)||tick>=b.marks.length)return null;
     const total=b.marks.reduce((a,c)=>a+c,0);
-    const applied=e.a==='mark'?total<task.raw.length:b.marks[tick]>0;
+    // The decrement control is only rendered for nonempty bins; reject
+    // fabricated hidden-button requests, not actual visible mark-at-capacity.
+    if(e.a==='unmark'&&b.marks[tick]===0)return null;
+    const applied=e.a==='mark'?total<task.raw.length:true;
     if(applied)b.marks[tick]+=e.a==='mark'?1:-1;
     event.tick=tick;event.applied=applied;
    }else return null;
    event.issue=issue;events.push(event);
   }
-  if(!same(b,model.board)||model.issue!==issue||
+  if(!same(b,model.board)||model.issue!==issue||model.measure!==lastRecorded||
    b.records.some((raw,i)=>!raw||!equal(entered(raw),BigInt(math.rounded[i]),BigInt(task.den)))||
    !same(b.marks,math.frequencies))return null;
   // A correct original submission can contain approximate saved strings. It is

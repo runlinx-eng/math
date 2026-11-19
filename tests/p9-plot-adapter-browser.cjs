@@ -152,7 +152,7 @@ async function main(){
    const importFile=async(payload,name)=>{
     const chooser=restoredPage.waitForEvent('filechooser');
     await restoredPage.locator('#main [data-do="import"]').first().click();
-    (await chooser).setFiles({name,mimeType:'application/json',buffer:payload});
+    await (await chooser).setFiles({name,mimeType:'application/json',buffer:payload});
     await restoredPage.waitForFunction(()=>document.querySelector('#import-file')?.value==='');
     return restoredPage.locator('#toast').innerText();
    };

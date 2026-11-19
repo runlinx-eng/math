@@ -53,8 +53,8 @@ test('eleven native source-bound B28 plot locations; full original source is unc
 
 test('all cloned associated/practice plot activities stay outside native binding',()=>{
  const linked=Object.entries(BRIDGES).flatMap(([id,b])=>
-  b.tasks.flatMap((t,index)=>t.type==='x-m28-plot'?[{id,index,t}]:[]));
- assert.ok(linked.length>=6);
+  b.tasks.flatMap((t,index)=>t?.type==='x-m28-plot'?[{id,index,t}]:[]));
+ assert.equal(linked.length,8,'reviewed B28/B33 associated copies, including both money-model bridge positions');
  for(const {id,index,t} of linked){
   assert.equal(plotBinding(t,{sessionId:id,index}),null);
   assert.ok(proof(t,model(t)),id+':'+index+' compatible replay');
@@ -122,6 +122,20 @@ test('replay rejects fabricated events, board changes and source drift',()=>{
  }
  for(const mutate of [x=>x.raw[0]++,x=>x.den++,x=>x.start++,x=>x.questions[0].value++,
   x=>x.prompt+='x',x=>x.unit='g']){const changed=cp(t);mutate(changed);assert.equal(plotBinding(changed,ctx(ids[0])),null);assert.equal(proof(changed,m),null);}
+});
+
+test('an impossible unmark and hidden unit tampering are excluded from strict plot evidence',()=>{
+ const t=clone(ids[0]),m=model(t);
+ const zero=m.board.marks.findIndex(x=>x===0);
+ const forged=cp(m);M.act(t,forged,'m28-unmark',{index:zero});
+ assert.equal(M.inspect(t,forged).correct,true);
+ assert.equal(proof(t,forged),null);
+ const altered=cp(m);altered.unit='g';
+ assert.equal(M.inspect(t,altered).correct,true);
+ assert.equal(proof(t,altered),null);
+ const changed=cp(m);changed.measure='wrong-unsaved';
+ assert.equal(M.inspect(t,changed).correct,true);
+ assert.equal(proof(t,changed),null);
 });
 
 test('hidden actions cannot borrow a valid original grade',()=>{
