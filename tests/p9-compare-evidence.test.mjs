@@ -128,6 +128,27 @@ test('a wrong order followed by clear and correct order keeps the original path'
  assert.equal(p.construction.orderHistory.length,6);
 });
 
+test('exactly seven cross-course linked comparisons stay nonnative',()=>{
+ const reviewedAssociated={
+  'link-attributes-compareheight':[1],
+  'link-compareheight-indirectlength':[0,1],
+  'link-compareheight-lengthstart':[0],
+  'link-lengthdifference-lengthstory':[0],
+  'link-lengthtools-lengthdifference':[1],
+  'link-ordermeasure-measurecalc':[0]
+ };
+ const list=Object.entries(reviewedAssociated).flatMap(([sessionId,indices])=>
+  indices.map(index=>({sessionId,index})));
+ assert.equal(list.length,7);
+ for(const s of list){
+  const task=at(s);
+  assert.equal(task.type,'x-m28-compare',s.sessionId+':'+s.index);
+  assert.equal(compareBinding(task,ctx(s)),null);
+  // A reused task may have a plausible example, but it is not a new native A.
+  assert.equal(M.inspect(task,M.example(task)).correct,true);
+ }
+});
+
 test('native binding does not leak to associated lessons, stale context or old practice',()=>{
  for(const [sessionId,bridge] of Object.entries(BRIDGES)){
   for(const [index,t] of sessionTasks(sessionId).entries()){
