@@ -1,3 +1,4 @@
+import {plotBinding,replayPlotEvidence} from './plot-evidence.js';
 import {convertBinding,replayConvertEvidence} from './convert-evidence.js';
 import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
 import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
@@ -91,6 +92,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-plot'){
+    const source=plotBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每条测量记录怎样放到相应刻度？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-convert'){
     const source=convertBinding(task,context);
     return source?{type:task.type,summary:'想一想换单位后，数量怎样表示？（可选）',question:source.question}:null;
@@ -234,6 +239,25 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-plot'){
+    const source=plotBinding(task,context);if(!source)return null;
+    const proof=replayPlotEvidence(task,model);if(!proof)return null;
+    const c=proof.construction;
+    const detail=[
+      '图中的物体和尺子刻度由工具给定；这里只核对这份作品里实际保存的读数和放点操作。',
+      ...c.bins.map(bin=>`${bin.length.text} ${c.unit}：放了 ${bin.marks} 个点，对应 ${bin.frequency} 条测量记录。`),
+      ...c.questions.map(q=>`当前“${q.label}”填写“${q.raw}”，按本题刻度核算为 ${q.expected.text}。`),
+      '不同物体可能有相同长度；每条记录仍各占一个点。最早的有效数字记录和错误后修正仍在原操作历史中。',
+      '这里不评定真实尺量、独立取整思路或自由解释。'
+    ];
+    if(c.hadOriginalBad)detail.push('原历史中曾保留错误读数；纠正没有抹掉首次读数或错误记录。');
+    if(proof.issue)detail.push('末尾提示按原模型保留；这里只描述已通过严格重放的完整作品。');
+    if(proof.historyAtCapacity)detail.push('操作历史已达到保存上限；这里不补造超出上限后的操作。');
+    if(attempts.length>1)detail.push('此前提交保持原样，这里只描述与当前作品完全一致的最新提交。');
+    if(record.support)detail.push('你曾查看提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:'每条测量读数已对应点图刻度；重复长度、刻度频数与当前读图答案一致。',
+      connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-convert'){
     const source=convertBinding(task,context);if(!source)return null;
     const proof=replayConvertEvidence(task,model);if(!proof)return null;

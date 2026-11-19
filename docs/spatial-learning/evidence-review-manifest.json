@@ -6163,6 +6163,105 @@
       "adapter": "convert-exact",
       "taskHash": "41c4711373ffbf7d2126ac55c6a936c4a09bbaf77e0e0750314e7256a41fd56c",
       "method": null
+    },
+    {
+      "sessionId": "measureplot",
+      "index": 0,
+      "type": "x-m28-plot",
+      "nodeId": "mt_mayItsxMUu",
+      "adapter": "plot",
+      "taskHash": "7ac5c65dcc5e6ed7c3959650f7dbd2f309419b465210ebc8e0871c47d844d844",
+      "method": null
+    },
+    {
+      "sessionId": "measureplot",
+      "index": 1,
+      "type": "x-m28-plot",
+      "nodeId": "mt_mayItsxMUu",
+      "adapter": "plot",
+      "taskHash": "5299d29e29457dab8c44a553425dd7ce3a641bbbf7b0445091d74679bac22235",
+      "method": null
+    },
+    {
+      "sessionId": "measureplot",
+      "index": 2,
+      "type": "x-m28-plot",
+      "nodeId": "mt_mayItsxMUu",
+      "adapter": "plot",
+      "taskHash": "1c97d71632b8e46014d6c08d25f7387a2e8c1f2fd8d540decd6bdec0916335ff",
+      "method": null
+    },
+    {
+      "sessionId": "quarterplot",
+      "index": 0,
+      "type": "x-m28-plot",
+      "nodeId": "mt_ghK1mnEstc",
+      "adapter": "plot",
+      "taskHash": "1fa65726ad47322b598049b0473e2293989b0ff42d61cfffa6bcf954b9647b4f",
+      "method": null
+    },
+    {
+      "sessionId": "quarterplot",
+      "index": 1,
+      "type": "x-m28-plot",
+      "nodeId": "mt_ghK1mnEstc",
+      "adapter": "plot",
+      "taskHash": "8f2251d0671c5d45a7daf448a3d1f0fcdfe8209be9b58d17d56150aa2d6418dc",
+      "method": null
+    },
+    {
+      "sessionId": "quarterplot",
+      "index": 2,
+      "type": "x-m28-plot",
+      "nodeId": "mt_ghK1mnEstc",
+      "adapter": "plot",
+      "taskHash": "971739a7006e8e44f90063bc29ebbf54b3a7a0e59feadde239e80c9b17c3c8d8",
+      "method": null
+    },
+    {
+      "sessionId": "eighthplot",
+      "index": 0,
+      "type": "x-m28-plot",
+      "nodeId": "mt_42QD6nYjiZ",
+      "adapter": "plot",
+      "taskHash": "3c10130272db9f28a076db11c3a040324b6a176056154b373177cb658d2c0531",
+      "method": null
+    },
+    {
+      "sessionId": "eighthplot",
+      "index": 1,
+      "type": "x-m28-plot",
+      "nodeId": "mt_42QD6nYjiZ",
+      "adapter": "plot",
+      "taskHash": "db7012f9420329bf56f910421a8943b07dd62215103fb722f231212c65c5964f",
+      "method": null
+    },
+    {
+      "sessionId": "eighthplot",
+      "index": 2,
+      "type": "x-m28-plot",
+      "nodeId": "mt_42QD6nYjiZ",
+      "adapter": "plot",
+      "taskHash": "0535597d20fd9c2e7d0e3de00887c6d4c475503f09e9a76d44f9261336e9056e",
+      "method": null
+    },
+    {
+      "sessionId": "modmoney",
+      "index": 2,
+      "type": "x-m28-plot",
+      "nodeId": "mt_iQYPw8bMfN",
+      "adapter": "plot",
+      "taskHash": "7ac5c65dcc5e6ed7c3959650f7dbd2f309419b465210ebc8e0871c47d844d844",
+      "method": null
+    },
+    {
+      "sessionId": "modelChoice38",
+      "index": 2,
+      "type": "x-m28-plot",
+      "nodeId": "mt_yqZiX6vS7D",
+      "adapter": "plot",
+      "taskHash": "7ac5c65dcc5e6ed7c3959650f7dbd2f309419b465210ebc8e0871c47d844d844",
+      "method": null
     }
   ]
 }
