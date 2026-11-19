@@ -6361,6 +6361,33 @@
       "adapter": "compare",
       "taskHash": "9f4ad71dd48641a72996e82bca4fffa79fc79d88dcb026ff2eaafa07a0606941",
       "method": null
+    },
+    {
+      "sessionId": "indirectmass",
+      "index": 1,
+      "type": "x-m28-vessels",
+      "nodeId": "mt_bnwHo5wfCD",
+      "adapter": "vessels",
+      "taskHash": "69d2c25c2e0854466a4b98003330122fbbb91a2bbe9464165671658a3103fbd1",
+      "method": null
+    },
+    {
+      "sessionId": "ordermeasure",
+      "index": 1,
+      "type": "x-m28-vessels",
+      "nodeId": "mt_BFJ-ch_8QU",
+      "adapter": "vessels",
+      "taskHash": "e5623bab9c8b20caaab8a0f69b29a9fef71ef6ec688990d23d1ba2fa6409d411",
+      "method": null
+    },
+    {
+      "sessionId": "precisionunits",
+      "index": 1,
+      "type": "x-m28-vessels",
+      "nodeId": "mt_e7tLi9SCIE",
+      "adapter": "vessels",
+      "taskHash": "2803df862117cb1c6e7c03bd751cd1d3fcaccde76dbc2b507afd4af99321ded0",
+      "method": null
     }
   ]
 }

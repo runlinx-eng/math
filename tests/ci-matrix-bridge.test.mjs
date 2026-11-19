@@ -48,7 +48,7 @@ test('#239 bridge preview ensures the live matrix is generated from the preserve
   ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-ruler-adapter-browser.cjs'],
   ['tests/p9-balance-adapter-browser.cjs','tests/p9-plot-adapter-browser.cjs',
    'tests/p9-scale-adapter-browser.cjs'],
-  ['tests/p9-convert-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']
+  ['tests/p9-vessels-adapter-browser.cjs','tests/p9-convert-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']
  ]);
  assert.equal(p.expectedFullRequiredReceipts.length,17);
  assert.equal(p.digest,make().digest,'Stable input yields stable digest');
@@ -57,7 +57,7 @@ test('#239 bridge preview ensures the live matrix is generated from the preserve
 test('#239 simulated promotion needs all original receipts and actual evidence ownership',()=>{
  const x=fixture();
  assert.deepEqual(validateMockPromotion(x),{
-  status:'simulated-only',complete:true,groups:17,commands:94});
+  status:'simulated-only',complete:true,groups:17,commands:95});
  const missing=fixture();missing.receipts.pop();
  assert.throws(()=>validateMockPromotion(missing),/Missing or extra/);
  const missingZIP=fixture();missingZIP.evidence.pop();

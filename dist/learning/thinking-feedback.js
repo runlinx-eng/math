@@ -6,6 +6,7 @@ import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
+import {vesselsBinding,replayVesselsEvidence} from './vessels-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
@@ -124,6 +125,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-m28-units'){
     const source=unitcoverBinding(task,context);
     return source?{type:task.type,summary:'想一想：每块一样长，怎样正好盖住这段长度？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-m28-vessels'){
+    const source=vesselsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每次倒入的量怎样对应容量和顺序？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-multable'){
     const source=multableBinding(task,context);
@@ -407,6 +412,24 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('你看过提示或比较反馈。');
     return{title:'这次作品中的思考线索',observation:`当前 ${c.count} 个相同长度的“${c.unit}”正好覆盖这段长度，保存的数量和单位也与当前摆放一致。`,
       connection:'每块一样长时，怎样检查起点、终点和中间都刚好接上？',detail,method:null};
+  }
+  if(task?.type==='x-m28-vessels'){
+    const source=vesselsBinding(task,context);if(!source)return null;
+    const proof=replayVesselsEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '容量和量杯大小由屏幕工具给定；这里只核对真实点击倒入、装满确认与当前排序，不推断实物测量或独立选策略。',
+      ...c.measurements.map(m=>`第 ${m.container+1} 个容器：实际用同一种“${m.unit}”（每次 ${m.unitAmount}）成功倒入 ${m.count} 次，${m.count} × ${m.unitAmount} = ${m.capacity}，之后才确认装满。`)
+    ];
+    if(proof.mode==='order')detail.push(`全部容器确认装满后，本次保留的从小到大排列是第 ${c.retainedOrder.map(i=>i+1).join('、')} 个容器。`);
+    else detail.push(`题目规定的量杯实际倒入次数与当前填写的“${c.questions[0].raw}”精确相符。`);
+    if(c.overflows.length)detail.push(`保留 ${c.overflows.length} 次装不下的请求；没有将失败倒入计入容量。`);
+    if(c.clears.length)detail.push(`保留 ${c.clears.length} 次清空与重新排列，未抹去原操作。`);
+    if(proof.historyAtCapacity)detail.push('原操作记录已到保存上限；未补造后续动作。');
+    if(attempts.length>1)detail.push('较早的错误与提交保留；这里只描述当前最新提交。');
+    if(record.support)detail.push('你曾查看提示或比较反馈。');
+    return{title:'这次作品中的思考线索',
+      observation:proof.mode==='order'?'每个容器都有重复倒入和装满确认，随后按容量排序。':'按题目要求的单位实际逐次倒入，次数与当前填写相符。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-multable'){
     const source=multableBinding(task,context);if(!source)return null;

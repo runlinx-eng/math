@@ -99,7 +99,10 @@ function proofHarness(env){
  const capture=(c,phase,strict,role,checkedAttempt=false)=>{
   const stem=label+'-'+phase;assert.ok(!names.has(stem),'one immutable raw/state path '+stem);names.add(stem);
   const a=page.record,m=cp(page.model),record=cp(a.cases[c.index]||null),task=taskFor(c),proof=replay(task,m),feedback=thinkingFeedback(task,m,record,ctx(c));
-  assert.equal(!!feedback,strict,stem);if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
+  const reviewedVesselsPrerequisite=c.id==='precisionunits'&&c.index===1&&phase==='navigation-prerequisite-1';
+   assert.equal(!!feedback,strict||reviewedVesselsPrerequisite,stem);
+   if(reviewedVesselsPrerequisite){assert.equal(proof,null,'separate vessels family does not become unitrefine proof');assert.equal(feedback.method,null);}
+   if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
   const row={id:c.id,index:c.index,label,phase,stem,role,checked:checkedAttempt,model:m,record,strict,proof,correct:Tasks.inspect(task,m).correct,raw:env.raw};captures.push(row);return row;
  };
  const check=(c,correct,strict,phase,role)=>{const attempt=page.check(correct),row=capture(c,phase,strict,role,true);row.attempt=attempt;checked.push(row);return row;};
