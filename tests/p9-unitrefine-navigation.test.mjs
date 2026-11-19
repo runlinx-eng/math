@@ -99,7 +99,10 @@ function proofHarness(env){
  const capture=(c,phase,strict,role,checkedAttempt=false)=>{
   const stem=label+'-'+phase;assert.ok(!names.has(stem),'one immutable raw/state path '+stem);names.add(stem);
   const a=page.record,m=cp(page.model),record=cp(a.cases[c.index]||null),task=taskFor(c),proof=replay(task,m),feedback=thinkingFeedback(task,m,record,ctx(c));
-  assert.equal(!!feedback,strict,stem);if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
+  const reviewedVesselsPrerequisite=c.id==='precisionunits'&&c.index===1&&phase==='navigation-prerequisite-1';
+   assert.equal(!!feedback,strict||reviewedVesselsPrerequisite,stem);
+   if(reviewedVesselsPrerequisite){assert.equal(proof,null,'separate vessels family does not become unitrefine proof');assert.equal(feedback.method,null);}
+   if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
   const row={id:c.id,index:c.index,label,phase,stem,role,checked:checkedAttempt,model:m,record,strict,proof,correct:Tasks.inspect(task,m).correct,raw:env.raw};captures.push(row);return row;
  };
  const check=(c,correct,strict,phase,role)=>{const attempt=page.check(correct),row=capture(c,phase,strict,role,true);row.attempt=attempt;checked.push(row);return row;};
@@ -135,7 +138,7 @@ test('the cumulative two-course source route uses original Next, Check, support 
  for(const c of flows.orderedUnitrefineTargets()){
   h.setLabel(c.role+'-'+c.id+'-'+c.index);if(c.id!==currentId){h.open(c.id);currentId=c.id;}
   while(h.page.record.index<c.index){const index=h.page.record.index,previous={id:c.id,index},task=taskFor(previous);
-   if(!h.page.record.cases[index]?.attempts?.some(a=>Tasks.inspect(task,a.value).correct)){const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===index);assert.ok(prep);for(const step of prep.steps)step.field?h.page.field(step.field,step.value):h.page.action(step.action,step.data?.index);h.check(previous,true,previous.id==='precisionunits'&&index===1,'navigation-prerequisite-'+index,'prerequisite');prerequisites++;}
+   if(!h.page.record.cases[index]?.attempts?.some(a=>Tasks.inspect(task,a.value).correct)){const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===index);assert.ok(prep);for(const step of prep.steps)step.field?h.page.field(step.field,step.value):h.page.action(step.action,step.data?.index);h.check(previous,true,false,'navigation-prerequisite-'+index,'prerequisite');prerequisites++;}
    h.page.next();
   }
   assert.equal(h.page.record.index,c.index);assert.equal(h.page.record.cases[c.index]?.attempts?.length||0,0);assert.equal(retryTags(h.page.record).length,0);const fresh=Tasks.defaultModel(taskFor(c));fresh.seed=h.page.model.seed;assert.deepEqual(h.page.model,fresh);
