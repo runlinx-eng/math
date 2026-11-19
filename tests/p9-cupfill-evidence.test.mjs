@@ -1,9 +1,10 @@
-// #270 candidate replay tests; no strict A registration or user-data writes.
+// #270 source-bound replay, shared visible feedback and strict negative tests.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {sessionTaskFor,sessionTasks,BRIDGES} from '../dist/learning/bridges.js';
 import * as original from '../dist/learning/phase5/b31-model.js';
 import {cupfillBinding,replayCupfillEvidence} from '../dist/learning/cupfill-evidence.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 const reviewed=[['comparecap',2,1],['comparecap',3,1],
  ['cupmeasure',0,1],['cupmeasure',1,2]];
@@ -127,4 +128,25 @@ test('#270 no bridge copy inherits native A or source-bound evidence',()=>{
   assert.equal(replayCupfillEvidence(t,original.example(t),c),null);
  }
  assert.ok(count>0,'at least one existing associated B31 cup task remains separate');
+});
+
+test('#270 shared feedback requires the latest checked unchanged native cupfill model',()=>{
+ for(const [id,index] of reviewed){
+  const task=sessionTaskFor(id,index),model=original.example(task),ctx=context(id,index);
+  const saved={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,saved});
+  const guide=thinkingGuide(task,ctx),feedback=thinkingFeedback(task,model,saved,ctx);
+  assert.ok(guide?.question);
+  assert.ok(feedback?.observation&&feedback.detail.length>=2);
+  assert.equal(feedback.method,null);
+  assert.ok(feedback.detail.some(s=>s.includes('实际选择')));
+  if(id==='cupmeasure'&&index===1)assert.match(feedback.observation,/杯越大/);
+  const edited=structuredClone(model);edited.count='999';
+  assert.equal(thinkingFeedback(task,edited,saved,ctx),null,'a visible edit revokes stale proof');
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[]},ctx),null);
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[{value:original.initial(task)}]},ctx),null);
+  assert.equal(thinkingGuide(task,{sessionId:id,index:String(index)}),null);
+  assert.equal(thinkingFeedback(task,model,saved,{sessionId:id,index:String(index)}),null);
+  assert.equal(JSON.stringify({task,model,saved}),before);
+ }
 });

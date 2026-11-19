@@ -6388,6 +6388,42 @@
       "adapter": "vessels",
       "taskHash": "2803df862117cb1c6e7c03bd751cd1d3fcaccde76dbc2b507afd4af99321ded0",
       "method": null
+    },
+    {
+      "sessionId": "comparecap",
+      "index": 2,
+      "type": "x-m31-fill",
+      "nodeId": "mt_zkFbMLpu3U",
+      "adapter": "cupfill",
+      "taskHash": "cb3bf03fe98f76aeea53c5168bc6ea5dd560c1587c997b98e86f1389d9960da3",
+      "method": null
+    },
+    {
+      "sessionId": "comparecap",
+      "index": 3,
+      "type": "x-m31-fill",
+      "nodeId": "mt_zkFbMLpu3U",
+      "adapter": "cupfill",
+      "taskHash": "ff691c65553787d00f009b83d45cdde79c27d2d7d40c8ee46b4aab479fdf4975",
+      "method": null
+    },
+    {
+      "sessionId": "cupmeasure",
+      "index": 0,
+      "type": "x-m31-fill",
+      "nodeId": "mt_4lp_b5Pzik",
+      "adapter": "cupfill",
+      "taskHash": "384760ec8985b6a00b3850623ff46bf8406b061a14c8ea5361ec0f91076d4584",
+      "method": null
+    },
+    {
+      "sessionId": "cupmeasure",
+      "index": 1,
+      "type": "x-m31-fill",
+      "nodeId": "mt_4lp_b5Pzik",
+      "adapter": "cupfill",
+      "taskHash": "9c28a8fef13c4c8e72f1b636ef9ccb62844b21f16c649b950bd294f2dc706b9b",
+      "method": null
     }
   ]
 }

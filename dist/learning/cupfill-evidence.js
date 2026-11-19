@@ -1,5 +1,5 @@
-// #270/B31: candidate ONLY. Do not register as strict A without independent
-// source review, real Chromium interaction, visible feedback, and P10 gates.
+// #270/B31: four source-reviewed native positions; strict A admission requires
+// shared feedback, an independently checked source manifest and final-head CI.
 // The existing task, original grading, storage and State-v2 are unchanged.
 import * as original from './phase5/b31-model.js';
 import {LESSONS} from './catalog.js';

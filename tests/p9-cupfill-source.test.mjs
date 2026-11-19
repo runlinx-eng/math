@@ -1,10 +1,12 @@
-// #270 read-only exact native sources; registration is deliberately deferred.
+// #270 independently reviewed source admission; no bridge inherits native evidence.
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTaskFor,sessionTasks} from '../dist/learning/bridges.js';
 import * as original from '../dist/learning/phase5/b31-model.js';
 import {cupfillBinding,replayCupfillEvidence} from '../dist/learning/cupfill-evidence.js';
+import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
 
 const selected=[['comparecap',2,200,1],['comparecap',3,100,1],
  ['cupmeasure',0,1000,1],['cupmeasure',1,1000,2]];
@@ -48,4 +50,14 @@ test('#270 source scope and real replay remain separate from A admission',()=>{
  assert.ok(replayCupfillEvidence(t,example,{sessionId:'cupmeasure',index:1}));
  assert.equal(replayCupfillEvidence(t,example,{sessionId:'comparecap',index:1}),null);
  assert.equal(replayCupfillEvidence(t,example,{sessionId:'cupmeasure',index:0}),null);
+});
+
+test('#270 the immutable reviewed source manifest admits only the four native positions',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
+ const actual=selected.map(([sessionId,index])=>({sessionId,index,type:'x-m31-fill',
+  nodeId:LESSONS[sessionId].topicId,adapter:'cupfill',
+  taskHash:taskFingerprint(sessionTaskFor(sessionId,index)),method:null}));
+ assert.equal(manifest.tasks.filter(row=>row.adapter==='cupfill').length,4);
+ for(const row of actual)assert.deepEqual(manifest.tasks.find(x=>x.adapter==='cupfill'&&
+  x.sessionId===row.sessionId&&x.index===row.index),row);
 });
