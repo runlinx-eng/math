@@ -1,0 +1,167 @@
+name: Issue 259 pinned Chinese font cold and warm cache probe
+on:
+  push:
+    branches: [diagnostic/issue-259-font-reuse-probe]
+permissions:
+  contents: read
+jobs:
+  cold:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and fail-closed CI assertions
+        run: |
+          bash -n .github/ci-probes/install-cjk-font.sh
+          node --test tests/required-browser-checks.test.mjs
+      - name: Runner provenance
+        run: printf 'image=%s version=%s arch=%s\\n' "$ImageOS" "$ImageVersion" "$RUNNER_ARCH"
+      - name: Install unchanged Playwright and real Chromium
+        run: |
+          python3 .github/ci-probes/time-runtime-step.py npm-playwright npm install --no-save --no-package-lock playwright@1.56.1
+          python3 .github/ci-probes/time-runtime-step.py chromium npx playwright install chromium
+      - name: Check preinstalled CJK
+        id: detect
+        run: |
+          if fc-list :lang=zh-cn family | grep -q .; then
+            echo "missing=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "missing=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore identical pinned package cache
+        id: cache
+        if: steps.detect.outputs.missing == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/math-tree/fonts-wqy-microhei_0.2.0-beta-3.1_all.deb
+          key: wqy-ubuntu24-0.2.0-beta-3.1-58d0a29af79ce1fc5c63b4276065f0fce27decf6839835f3f9c2e68d9f84ca20-v1
+      - name: Verify cold cache mode
+        run: |
+          echo "CJK_CACHE_HIT=${{ steps.cache.outputs.cache-hit }}"
+          echo 'Cold job will populate the cache if none exists'
+      - name: Install pinned font and rebuild fontconfig cache
+        if: steps.detect.outputs.missing == 'true'
+        run: |
+          python3 .github/ci-probes/time-runtime-step.py cjk-font bash .github/ci-probes/install-cjk-font.sh
+          python3 .github/ci-probes/time-runtime-step.py font-cache fc-cache -f
+      - name: Confirm real CJK glyphs in Chromium (six Chinese characters)
+        run: |
+          fc-list :lang=zh-cn family | grep -q . || exit 1
+          fc-match -f 'CJK family %{family} [%{file}]\\n' 'sans-serif:lang=zh-cn'
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const { execFileSync } = require('node:child_process');
+          const { chromium } = require('playwright');
+          (async () => {
+            const families = new Set(execFileSync('fc-list', [':lang=zh-cn', '-f', '%{family}\\n'],
+              { encoding: 'utf8' }).split(/[,\\n]/).map(name => name.trim().toLowerCase()).filter(Boolean));
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const page = await browser.newPage({viewport:{width:1920,height:1080}});
+              await page.setContent('<html lang="zh-CN"><span id="sample" style="font:32px sans-serif">数学测量长度</span></html>');
+              await page.evaluate(() => document.fonts.ready);
+              const session = await page.context().newCDPSession(page);
+              await session.send('DOM.enable');
+              await session.send('CSS.enable');
+              const { root } = await session.send('DOM.getDocument');
+              const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#sample' });
+              const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
+              console.log('CHROMIUM_RENDER_FONTS', JSON.stringify(fonts));
+              const glyphs = fonts.filter(font => families.has(font.familyName.toLowerCase()))
+                .reduce((count, font) => count + font.glyphCount, 0);
+              assert.equal(glyphs, 6, 'six Chinese characters must use real Chinese font');
+              await page.screenshot({path:'font-proof.png'});
+            } finally { await browser.close(); }
+          })().catch(error => { console.error(error); process.exitCode=1; });
+          NODE
+      - name: Preserve proof of real glyphs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue259-cjk-cold-${{ github.run_id }}
+          path: font-proof.png
+          if-no-files-found: warn
+
+  warm:
+    needs: cold
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and fail-closed CI assertions
+        run: |
+          bash -n .github/ci-probes/install-cjk-font.sh
+          node --test tests/required-browser-checks.test.mjs
+      - name: Runner provenance
+        run: printf 'image=%s version=%s arch=%s\\n' "$ImageOS" "$ImageVersion" "$RUNNER_ARCH"
+      - name: Install unchanged Playwright and real Chromium
+        run: |
+          python3 .github/ci-probes/time-runtime-step.py npm-playwright npm install --no-save --no-package-lock playwright@1.56.1
+          python3 .github/ci-probes/time-runtime-step.py chromium npx playwright install chromium
+      - name: Check preinstalled CJK
+        id: detect
+        run: |
+          if fc-list :lang=zh-cn family | grep -q .; then
+            echo "missing=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "missing=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore identical pinned package cache
+        id: cache
+        if: steps.detect.outputs.missing == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/math-tree/fonts-wqy-microhei_0.2.0-beta-3.1_all.deb
+          key: wqy-ubuntu24-0.2.0-beta-3.1-58d0a29af79ce1fc5c63b4276065f0fce27decf6839835f3f9c2e68d9f84ca20-v1
+      - name: Verify warm cache mode
+        run: |
+          echo "CJK_CACHE_HIT=${{ steps.cache.outputs.cache-hit }}"
+          test "${{ steps.cache.outputs.cache-hit }}" = true || { echo 'Expected cross-job verified cache hit'; exit 1; }
+      - name: Install pinned font and rebuild fontconfig cache
+        if: steps.detect.outputs.missing == 'true'
+        run: |
+          python3 .github/ci-probes/time-runtime-step.py cjk-font bash .github/ci-probes/install-cjk-font.sh
+          python3 .github/ci-probes/time-runtime-step.py font-cache fc-cache -f
+      - name: Confirm real CJK glyphs in Chromium (six Chinese characters)
+        run: |
+          fc-list :lang=zh-cn family | grep -q . || exit 1
+          fc-match -f 'CJK family %{family} [%{file}]\\n' 'sans-serif:lang=zh-cn'
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const { execFileSync } = require('node:child_process');
+          const { chromium } = require('playwright');
+          (async () => {
+            const families = new Set(execFileSync('fc-list', [':lang=zh-cn', '-f', '%{family}\\n'],
+              { encoding: 'utf8' }).split(/[,\\n]/).map(name => name.trim().toLowerCase()).filter(Boolean));
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const page = await browser.newPage({viewport:{width:1920,height:1080}});
+              await page.setContent('<html lang="zh-CN"><span id="sample" style="font:32px sans-serif">数学测量长度</span></html>');
+              await page.evaluate(() => document.fonts.ready);
+              const session = await page.context().newCDPSession(page);
+              await session.send('DOM.enable');
+              await session.send('CSS.enable');
+              const { root } = await session.send('DOM.getDocument');
+              const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#sample' });
+              const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
+              console.log('CHROMIUM_RENDER_FONTS', JSON.stringify(fonts));
+              const glyphs = fonts.filter(font => families.has(font.familyName.toLowerCase()))
+                .reduce((count, font) => count + font.glyphCount, 0);
+              assert.equal(glyphs, 6, 'six Chinese characters must use real Chinese font');
+              await page.screenshot({path:'font-proof.png'});
+            } finally { await browser.close(); }
+          })().catch(error => { console.error(error); process.exitCode=1; });
+          NODE
+      - name: Preserve proof of real glyphs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue259-cjk-warm-${{ github.run_id }}
+          path: font-proof.png
+          if-no-files-found: warn
