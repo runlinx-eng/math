@@ -6,6 +6,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 0' # Weekly full regression, UTC Sunday 09:00
 
 permissions:
   contents: read
@@ -416,6 +418,44 @@ jobs:
             verification/ci-shadow-plan/
           if-no-files-found: warn
 
+  smoke-checks:
+    name: smoke-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install lightweight real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Verify startup, 3D state isolation and V2 backup safety
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-smoke-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then ready=true; break; fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then cat /tmp/math-smoke-http.log; exit 1; fi
+          node tests/p9-three-view-lazy-browser.cjs
+          node tests/p10-backup-safety-browser.cjs
+      - name: Save smoke diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-smoke-failure-${{ github.run_attempt }}
+          path: |
+            verification/p9-three-view-lazy/
+            verification/p10-release-upgrade/backup-safety/
+            /tmp/math-smoke-http.log
+          if-no-files-found: warn
+
   browser:
     name: browser (${{ matrix.group }})
     needs: static-checks
@@ -565,7 +605,7 @@ jobs:
 
   required-checks:
     name: required-checks
-    needs: [static-checks, browser]
+    needs: [static-checks, browser, smoke-checks]
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
