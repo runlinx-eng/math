@@ -9,6 +9,7 @@ import {BRIDGES,sessionTaskFor,sessionTasks} from '../dist/learning/bridges.js';
 import * as State from '../dist/learning/state.js';
 import * as Core from '../dist/exploration-core.js';
 import * as Storage from '../dist/storage.js';
+import compareFixture from './fixtures/p9-compare-cases.cjs';
 import {compareBinding,replayCompareEvidence} from '../dist/learning/compare-evidence.js';
 
 const locations={
@@ -23,6 +24,28 @@ const cp=structuredClone,proof=(t,m)=>replayCompareEvidence(t,m);
 const field=(t,m,key,value)=>{m[key]=String(value);M.field(t,m,key);};
 const act=(t,m,a,index)=>M.act(t,m,'m28-'+a,index===undefined?{}:{index});
 const answer=(t,m)=>t.questions.forEach((q,i)=>{m.answers[i]=String(q.value);M.field(t,m,'answers.'+i);});
+
+test('eleven frozen original length values, answers and sorted orders have exact source meaning',()=>{
+ const source=compareFixture.cases;
+ assert.equal(source.length,11);
+ assert.equal(new Set(source.map(x=>x.id+':'+x.index)).size,11);
+ for(const row of source){
+  const s={sessionId:row.id,index:row.index},task=at(s),model=M.example(task);
+  const p=proof(task,model),b=compareBinding(task,ctx(s));
+  assert.ok(p&&b,row.id+':'+row.index);
+  assert.equal(b.nodeId,row.nodeId);
+  assert.equal(LESSONS[row.id].topicId,row.nodeId);
+  assert.equal(task.mode||'compare',row.mode);
+  assert.deepEqual(task.items.map(x=>x.length),row.lengths);
+  assert.equal(task.want,row.want);
+  assert.deepEqual(task.questions.map(q=>String(q.value)),row.answers);
+  assert.equal(p.construction.lengthDifference,String(row.difference));
+  assert.equal(Math.max(...row.lengths)-Math.min(...row.lengths),row.difference);
+  if(row.mode==='order')assert.deepEqual(p.construction.orderedIndices,row.sorted);
+  assert.deepEqual(row.sorted.map(index=>row.lengths[index]),
+    [...row.lengths].sort((a,b)=>a-b));
+ }
+});
 
 test('eleven independent original compare tasks are assigned to four exact source nodes',()=>{
  assert.equal(specs.length,11);
