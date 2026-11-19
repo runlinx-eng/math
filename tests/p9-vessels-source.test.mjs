@@ -1,5 +1,4 @@
-// #256: independent source audit only. Do not register this as a strict A family
-// until actual mathematical replay and current-submission contract are reviewed.
+// #256: source-bound contract; bridge examples never inherit strict eligibility.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
