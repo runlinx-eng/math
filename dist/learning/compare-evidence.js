@@ -81,7 +81,15 @@ function mathematicalPlan(t){
   return null;
  const questions=mathematicalQuestions(t,lengths);
  if(!questions)return null;
- return{mode,winner,questions,lengths,
+ // Relations are computed from task-supplied integer lengths, not inferred student work.
+ const pairwiseRelations=[];
+ for(let i=0;i<lengths.length;i++)for(let j=i+1;j<lengths.length;j++){
+  const signedDifference=lengths[i]-lengths[j];
+  pairwiseRelations.push({firstIndex:i,secondIndex:j,
+   relation:signedDifference>0?'>':signedDifference<0?'<':'=',
+   signedDifference:String(signedDifference)});
+ }
+ return{mode,winner,questions,lengths,pairwiseRelations,
   sortedIndices:lengths.map((length,index)=>({length,index})).sort((a,b)=>a.length-b.length||a.index-b.index)
     .map(x=>x.index),
   difference:Math.max(...lengths)-Math.min(...lengths)};
@@ -169,6 +177,7 @@ export function replayCompareEvidence(task,model){
    construction:{
     objects:task.items.map((x,i)=>({index:i,name:x.name,length:String(x.length)})),
     presentedLengths:true,measurementPerformed:false,
+    suppliedPairwiseRelations:cp(plan.pairwiseRelations),
     alignmentObserved:aligned,finalZeroAligned:plan.mode!=='indirect'&&board.offset===0,
     choiceHistory:selections,firstWrongChoices:firstWrong,
     copyHistory:copies,recordedItems:board.copied.slice(),
