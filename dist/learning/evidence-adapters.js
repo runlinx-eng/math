@@ -6,6 +6,7 @@ import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
+import {vesselsBinding,replayVesselsEvidence} from './vessels-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
@@ -63,6 +64,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'ruler',type:'x-m28-ruler',binding:rulerBinding,replay:replayRulerEvidence},
  {id:'unitrefine',type:'x-m28-refine',binding:unitrefineBinding,replay:replayUnitrefineEvidence},
  {id:'unitcover',type:'x-m28-units',binding:unitcoverBinding,replay:replayUnitcoverEvidence},
+ {id:'vessels',type:'x-m28-vessels',binding:vesselsBinding,replay:replayVesselsEvidence},
  {id:'multable',type:'x-multable',binding:multableBinding,replay:replayMultableEvidence},
  {id:'cubefraction',type:'x-m31-cubes',binding:cubeFractionBinding,replay:replayCubeFractionEvidence},
  ...['coins','cart'].map(kind=>({id:'money-'+kind,type:'x-m33-'+kind,
