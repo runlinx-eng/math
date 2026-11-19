@@ -2,7 +2,7 @@ name: Pull request required checks
 
 on:
   pull_request:
-  # Run the full gate again on the integrated SHA before publishing the preview.
+  # Main integration uses lightweight checks; full regression is milestone-triggered on demand.
   push:
     branches: [main]
   workflow_dispatch:
@@ -16,6 +16,26 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  plan-checks:
+    name: plan-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run_targeted: ${{ steps.target_plan.outputs.run_targeted }}
+      run_smoke: ${{ steps.target_plan.outputs.run_smoke }}
+      targeted_matrix: ${{ steps.target_plan.outputs.targeted_matrix }}
+      targeted_digest: ${{ steps.target_plan.outputs.targeted_digest }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Select impacted browser families from exact source diff
+        id: target_plan
+        run: node scripts/ci-targeted-checks.mjs plan
+
   static-checks:
     name: static-checks
     outputs:
@@ -61,6 +81,7 @@ jobs:
       - name: Check runtime module syntax
         run: |
           node --check scripts/required-browser-checks.mjs
+          node --check scripts/ci-targeted-checks.mjs
           node --check scripts/ci-audit-viewports.mjs
           node --check tests/ci-audit-viewports.test.mjs
           node --check dist/spatial-scene.js
@@ -244,6 +265,7 @@ jobs:
             tests/ci-plan-math-families.test.mjs
             tests/ci-matrix-bridge.test.mjs
             tests/ci-live-matrix.test.mjs
+            tests/ci-targeted-checks.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
@@ -394,7 +416,7 @@ jobs:
           node scripts/ci-live-browser-matrix.mjs output
 
       - name: Archive evidence audit source-derived report
-        if: always()
+        if: ${{ failure() || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v4
         with:
           name: learning-evidence-audit-${{ github.run_attempt }}
@@ -405,7 +427,7 @@ jobs:
         run: bash -n scripts/deploy-vps.sh scripts/rollback-vps.sh
 
       - name: Preserve Node audit and inventory evidence
-        if: always()
+        if: ${{ failure() || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v4
         with:
           name: math-required-checks-node-evidence-${{ github.run_attempt }}
@@ -416,9 +438,110 @@ jobs:
             verification/ci-shadow-plan/
           if-no-files-found: warn
 
+  smoke-checks:
+    name: smoke-checks
+    needs: plan-checks
+    if: ${{ needs.plan-checks.outputs.run_smoke == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install lightweight real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Verify startup, 3D state isolation and V2 backup safety
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-smoke-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then ready=true; break; fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then cat /tmp/math-smoke-http.log; exit 1; fi
+          node tests/p9-three-view-lazy-browser.cjs
+          node tests/p10-backup-safety-browser.cjs
+      - name: Save smoke diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-smoke-failure-${{ github.run_attempt }}
+          path: |
+            verification/p9-three-view-lazy/
+            verification/p10-release-upgrade/backup-safety/
+            /tmp/math-smoke-http.log
+          if-no-files-found: warn
+
+  targeted:
+    name: targeted (${{ matrix.script }})
+    needs: plan-checks
+    if: ${{ needs.plan-checks.outputs.run_targeted == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJSON(needs.plan-checks.outputs.targeted_matrix) }}
+    env:
+      MATH_TARGET_SCRIPT: ${{ matrix.script }}
+      MATH_TARGET_ID: ${{ matrix.id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare genuine Chromium and verified Chinese font when needed
+        shell: bash
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            bash .github/ci-probes/install-cjk-font.sh
+            fc-cache -f
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Run impacted math family in Chromium
+        shell: bash
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/math-targeted-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then ready=true; break; fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then cat /tmp/math-targeted-http.log; exit 1; fi
+          node scripts/ci-targeted-checks.mjs run
+      - name: Preserve only a small, SHA-bound family receipt in routine checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: targeted-result-${{ matrix.id }}-attempt-${{ github.run_attempt }}
+          path: verification/targeted-results/*.json
+          if-no-files-found: error
+      - name: Save full family evidence only for investigation on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: targeted-failure-${{ matrix.id }}-attempt-${{ github.run_attempt }}
+          path: |
+            verification/
+            /tmp/math-targeted-http.log
+          if-no-files-found: warn
+
   browser:
     name: browser (${{ matrix.group }})
     needs: static-checks
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
@@ -565,12 +688,14 @@ jobs:
 
   required-checks:
     name: required-checks
-    needs: [static-checks, browser]
+    needs: [plan-checks, static-checks, browser, smoke-checks, targeted]
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -581,8 +706,21 @@ jobs:
           pattern: required-browser-result-*
           merge-multiple: true
           path: verification/required-browser-results/
-      - name: Require every applicable check and complete group inventory
+      - name: Read selected family receipts only when relevant
+        if: needs.targeted.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          pattern: targeted-result-*
+          merge-multiple: true
+          path: verification/targeted-downloaded/
+      - name: Require exact selected receipts or the entire manually requested inventory
         if: always()
         env:
           MATH_REQUIRED_NEEDS: ${{ toJSON(needs) }}
-        run: node scripts/required-browser-checks.mjs gate
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            node scripts/required-browser-checks.mjs gate
+          else
+            node scripts/ci-targeted-checks.mjs gate
+          fi

@@ -91,13 +91,15 @@ test('the preview server keeps the app under a protected root and a public healt
   const rollback = fs.readFileSync(path.join(root, '.github/workflows/rollback-vps.yml'), 'utf8');
   const script = fs.readFileSync(path.join(root, 'scripts/deploy-vps.sh'), 'utf8');
 
-  // Integrated main still runs the complete Required gate, but passing it never auto-deploys.
+  // Routine main uses a fail-closed lightweight gate; full checks need intentional dispatch. CI never auto-deploys.
   assert.match(checks, /^  pull_request:/m);
   assert.match(checks, /^  push:\n    branches: \[main\]/m);
   assert.match(checks, /name: Pull request required checks/);
   assert.match(checks, /node scripts\/required-browser-checks\.mjs scope/, 'the workflow invokes its tested scope decision');
-  assert.equal(browserScope('push', []), 'true', 'main push requires complete browser coverage');
-  assert.throws(() => validateScope('false', 'push'), 'main cannot accept an omitted browser run');
+  assert.equal(browserScope('push', []), 'false', 'routine main push uses lightweight smoke');
+  assert.equal(validateScope('false', 'push'), false, 'main may omit full browser suites in routine checks');
+  assert.equal(browserScope('workflow_dispatch', []), 'true', 'manual milestone check uses full browser coverage');
+  assert.throws(() => validateScope('false', 'workflow_dispatch'), 'full dispatch cannot omit browser suites');
 
   // Integration safety gate: no workflow_run, push or PR can publish a release.
   assert.doesNotMatch(deploy, /^  workflow_run:/m, 'CI success must never automatically deploy');

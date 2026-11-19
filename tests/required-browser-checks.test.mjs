@@ -63,7 +63,7 @@ const addedScripts=['tests/p9-storyledger-adapter-browser.cjs','tests/p9-samefra
  'tests/p9-decimal-place-adapter-browser.cjs','tests/p9-fdpboard-adapter-browser.cjs','tests/p9-scalechain-adapter-browser.cjs','tests/p9-mixedaxis-adapter-browser.cjs','tests/p9-decimalengine-adapter-browser.cjs','tests/p9-fracshare-adapter-browser.cjs','tests/p9-mixedtrade-adapter-browser.cjs','tests/p9-fracdecompose-adapter-browser.cjs','tests/p9-paperlab-adapter-browser.cjs','tests/p9-wideshift-adapter-browser.cjs','tests/p9-pvbench-adapter-browser.cjs','tests/p9-time-adapter-browser.cjs','tests/p9-area-adapter-browser.cjs','tests/p9-order-adapter-browser.cjs','tests/p9-money-adapter-browser.cjs','tests/p9-cubefraction-adapter-browser.cjs','tests/p9-multable-adapter-browser.cjs','tests/p9-unitcover-adapter-browser.cjs'];
 const reviewedScripts=[...originalScripts,...addedScripts];
 const context={event:'pull_request',sha:'a'.repeat(40),runId:'123456789',attempt:2};
-const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline,browser_matrix:JSON.stringify({group:GROUP_NAMES})}},browser:{result:'success',outputs:{}}});
+const needs=(scope='true',offline=scope)=>({'static-checks':{result:'success',outputs:{run_browser:scope,run_offline:offline,browser_matrix:JSON.stringify({group:GROUP_NAMES})}},browser:{result:'success',outputs:{}},'smoke-checks':{result:'success',outputs:{}}});
 const fixture=(scope='true',identity=context,offline=scope)=>GROUP_NAMES.map(group=>runBrowserGroup({group,scope:group==='p10-offline'?offline:scope,
  context:identity,execute:()=>({status:0,signal:null})}));
 const success=()=>({needs:needs(),reports:fixture(),context});
@@ -227,36 +227,23 @@ test('each P10 group records every runner failure, without suppressing later dat
  }
 });
 
-test('main and manual scope always require all groups; PR scope includes the inventory and scheduler',()=>{
- for(const event of ['push','workflow_dispatch']){
-  assert.equal(browserScope(event,[]),'true');assert.equal(offlineScope(event,[]),'true');assert.equal(validateScope('true',event),true);
+test('routine PR and main runs are lightweight; milestone-triggered manual full regression stays strict',()=>{
+ for(const event of ['pull_request','push']){
+  assert.equal(browserScope(event,[]),'false');
+  assert.equal(offlineScope(event,[]),'false');
+  assert.equal(validateScope('false',event),false);
+  assert.equal(browserScope(event,['dist/sw.js','tests/p9-newfamily-browser.cjs']),'false');
+  assert.equal(offlineScope(event,['dist/sw.js']),'false');
+ }
+ for(const event of ['workflow_dispatch']){
+  assert.equal(browserScope(event,[]),'true');
+  assert.equal(offlineScope(event,[]),'true');
+  assert.equal(validateScope('true',event),true);
   assert.throws(()=>validateScope('false',event));
  }
- assert.equal(browserScope('pull_request',['README.md']),'false');
- assert.equal(offlineScope('pull_request',['README.md']),'false');
- assert.equal(offlineScope('pull_request',['dist/learning/phase5/b18-model.js']),'false');
- assert.equal(offlineScope('pull_request',['dist/learning/learn.js']),'false');
- assert.equal(browserScope('pull_request',[]),'false');
- for(const file of [...reviewedScripts,'dist/learning/place-evidence.js','scripts/required-browser-checks.mjs',
-  'tests/required-browser-checks.test.mjs','.github/workflows/pull-request-baseline.yml',
-  '.github/workflows/overview-readability-check.yml','docs/spatial-learning/INTERACTION-RULES.md',
-  'docs/language/TERMS.md','scripts/audit-learning-nodes.mjs','tests/learning-task-rules.test.mjs',
-  'scripts/audit-evidence-expansion.mjs','tests/evidence-expansion-audit.test.mjs',
-  'docs/spatial-learning/evidence-review-manifest.json'])
-  assert.equal(browserScope('pull_request',[file]),'true',file);
- for(const file of ['scripts/audit-evidence-expansion.mjs.bak','docs/spatial-learning/evidence-review-manifest.json.bak'])
-  assert.equal(browserScope('pull_request',[file]),'false',file);
  for(const value of [undefined,null,'',true,false,'TRUE','unknown'])assert.throws(()=>validateScope(value,'pull_request'));
- for(const event of ['',undefined,'pull_request_target','schedule'])assert.throws(()=>browserScope(event,[]));
+ for(const event of ['',undefined,'pull_request_target'])assert.throws(()=>browserScope(event,[]));
  assert.throws(()=>browserScope('pull_request',null));
- for(const path of ['dist/sw.js','dist/sw-client.js','dist/learn.html','dist/space.js',
-  'dist/exploration.js','dist/mac-local.html','dist/local-runtime.js','scripts/server.py',
-  'tests/p10-longterm-offline-browser.cjs','tests/p10-sw-retirement.test.mjs',
-  '.github/workflows/p9-bootstrap-failure-regression.yml']){
-  assert.equal(browserScope('pull_request',[path]),'true',path);
-  assert.equal(offlineScope('pull_request',[path]),'true',path);
- }
- assert.throws(()=>offlineScope('pull_request',['dist/sw.js'],'false'));
  assert.throws(()=>offlineScope('pull_request',null));
 });
 
@@ -294,7 +281,7 @@ test('math-only PR runs all 83 non-offline Chromium commands, including real bac
  rejected({needs:needs('false','true'),reports,context});
 });
 
-for(const job of ['static-checks','browser'])test(job+' failure, cancellation, skip and unknown or missing status fail closed',()=>{
+for(const job of ['static-checks','browser','smoke-checks'])test(job+' failure, cancellation, skip and unknown or missing status fail closed',()=>{
  for(const status of ['failure','cancelled','skipped','neutral','timed_out','unknown','',null,undefined]){
   const value=success();value.needs[job].result=status;rejected(value);
  }
@@ -396,12 +383,11 @@ test('#239 live gate binds exact dynamic group list and rejects missing new fami
  invalid({needs:missingMatrix,reports,context});
 });
 
-test('#239 future registered browser scripts and registry edits always trigger Chromium scope',()=>{
- for(const changed of ['ci/math-families.json','ci/live-browser-matrix.json',
-  'scripts/ci-live-browser-matrix.mjs','tests/p9-newfamily-browser.cjs']){
-  assert.equal(browserScope('pull_request',[changed]),'true',changed);
- }
- assert.equal(browserScope('pull_request',['README.md']),'false');
+test('reviewed new-family inventory is retained but routine PRs do not run full suites',()=>{
+ for(const path of ['ci/math-families.json','ci/live-browser-matrix.json',
+  'scripts/ci-live-browser-matrix.mjs','tests/p9-newfamily-browser.cjs','dist/learning/learn.js'])
+  assert.equal(browserScope('pull_request',[path]),'false',path);
+ assert.equal(browserScope('workflow_dispatch',[]),'true');
 });
 
 test('workflow retains the stable final check, isolated dynamic groups, complete runtime and artifact paths',()=>{
@@ -414,16 +400,19 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
  assert.match(workflow,/browser_matrix: \$\{\{ steps\.live_browser_matrix\.outputs\.browser_matrix \}\}/);
  assert.match(workflow,/node scripts\/ci-live-browser-matrix\.mjs output/);
  assert.match(browser,/fail-fast: false/);assert.match(browser,/max-parallel: 10/);assert.doesNotMatch(workflow,/continue-on-error:/);
- assert.doesNotMatch(browser,/^    if:/m,'browser jobs themselves cannot be silently skipped by scope');
+ assert.match(browser,/^    if: github.event_name == 'workflow_dispatch'$/m,
+  'Full legacy browser jobs only run on intentionally requested milestone regressions');
  assert.match(browser,/fetch-depth: 0/);assert.match(browser,/playwright@1\.56\.1/);assert.match(browser,/fonts-wqy-microhei/);
  assert.match(browser,/required-browser-result-\$\{\{ matrix\.group \}\}-attempt-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/math-required-checks-browser-evidence-\$\{\{ matrix\.group \}\}-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/if-no-files-found: error/);
- assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[static-checks, browser\]/);
+ assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[plan-checks, static-checks, browser, smoke-checks, targeted\]/);
  assert.match(gate,/^    if: \$\{\{ always\(\) \}\}$/m);
  assert.match(gate,/MATH_REQUIRED_NEEDS: \$\{\{ toJSON\(needs\) \}\}/);
  assert.match(gate,/node scripts\/required-browser-checks\.mjs gate/);
  assert.match(workflow,/push:\n    branches: \[main\]/);assert.match(workflow,/workflow_dispatch:/);
+ assert.doesNotMatch(workflow,/^  schedule:/m);assert.match(workflow,/^  smoke-checks:$/m);
+ assert.match(workflow,/node tests\/p10-backup-safety-browser\.cjs/);
  for(const path of ['verification/learning-evidence-audit/','verification/learning-node-audit/',
   'verification/p7-d3/','verification/p7-d7/coverage.json'])assert.ok(workflow.includes(path),path);
 });

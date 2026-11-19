@@ -253,14 +253,21 @@ const validEvent=event=>check(['pull_request','push','workflow_dispatch'].includ
 export function validateScope(value,event){
  validEvent(event);
  check(value==='true'||value==='false','Missing or invalid browser scope');
- check(event==='pull_request'||value==='true','Main pushes and manual runs require every browser group');
+ // An intentionally dispatched full regression must never silently skip browser groups.
+ check(!['workflow_dispatch'].includes(event)||value==='true','Full regression requires every browser group');
  return value==='true';
 }
 
 export function browserScope(event,changedFiles=[]){
  validEvent(event);
- if(event!=='pull_request')return 'true';
+ if(['workflow_dispatch'].includes(event))return 'true';
  check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
+ // Day-to-day PRs and main pushes use a small real-Chromium smoke job instead
+ // of the expensive 17-group historical regression. Full runs are manually requested at milestones.
+ return 'false';
+}
+
+function legacyBrowserScope(changedFiles=[]){
  const scripts=new Set(Object.values(BROWSER_GROUPS).flatMap(group=>group.commands.map(command=>command.file)));
  // Future source-review-only edits still need the complete browser/P10 gate,
  // even when no runtime, browser script or workflow file changes with them.
@@ -290,9 +297,13 @@ const OFFLINE_SENSITIVE_FILES=new Set([
 const OFFLINE_SENSITIVE_TEST=/^tests\/(p10-(longterm-offline|sw-nav-isolation|release-upgrade|sw-retirement)|p9-(offline-|module-recovery|bootstrap-failure|ordinal90-|mac-local-))/;
 export function offlineScope(event,changedFiles=[],browserRequired=browserScope(event,changedFiles)){
  validEvent(event);
- if(event!=='pull_request')return 'true';
+ if(['workflow_dispatch'].includes(event))return 'true';
  check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
  check(browserRequired==='true'||browserRequired==='false','Missing or invalid browser scope');
+ return 'false';
+}
+
+function legacyOfflineScope(changedFiles=[],browserRequired='true'){
  const required=changedFiles.some(file=>OFFLINE_SENSITIVE_FILES.has(file)||OFFLINE_SENSITIVE_TEST.test(file));
  check(!required||browserRequired==='true','Offline-sensitive changes must also run browser regressions');
  return required?'true':'false';
@@ -373,9 +384,9 @@ function validateReport(report,context,required,definitions=BROWSER_GROUPS){
 
 export function validateRequiredGate({needs,reports,context,definitions=BROWSER_GROUPS}){
  validateContext(context);
- check(object(needs)&&same(Object.keys(needs).sort(),['browser','static-checks']),
+ check(object(needs)&&same(Object.keys(needs).sort(),['browser','smoke-checks','static-checks']),
   'Missing or unexpected required job');
- for(const name of ['static-checks','browser'])
+ for(const name of ['static-checks','browser','smoke-checks'])
   check(needs[name]?.result==='success',name+' must finish with success; got '+String(needs[name]?.result));
  const {browser:required,offline:offlineRequired}=validateScopes(needs['static-checks'].outputs,context.event);
  const expectedNames=Object.keys(definitions);
@@ -482,7 +493,13 @@ async function main(){
   if(report.status==='failure')process.exitCode=1;return;
  }
  if(operation==='gate'){
-  const needs=JSON.parse(process.env.MATH_REQUIRED_NEEDS||'null');
+  check(context.event==='workflow_dispatch','Complete 17-group browser receipts belong to explicit milestone runs only');
+  const allNeeds=JSON.parse(process.env.MATH_REQUIRED_NEEDS||'null');
+  check(allNeeds&&same(Object.keys(allNeeds).sort(),['browser','plan-checks','smoke-checks','static-checks','targeted']),
+   'Unexpected jobs in the milestone Required gate');
+  check(allNeeds['plan-checks']?.result==='success','Milestone scope planning must succeed');
+  check(allNeeds.targeted?.result==='skipped','Targeted runners must not replace full milestone browsers');
+  const needs={...allNeeds};delete needs.targeted;delete needs['plan-checks'];
   const directory=resolve(root,'verification/required-browser-results');
   const files=existsSync(directory)?readdirSync(directory):[];
   check(files.every(file=>file.endsWith('.json')),'Unexpected browser result artifact');
