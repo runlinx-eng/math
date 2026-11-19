@@ -70,7 +70,7 @@ jobs:
               const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#sample' });
               const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
               console.log('CHROMIUM_RENDER_FONTS', JSON.stringify(fonts));
-              const glyphs = fonts.filter(font => families.has(font.familyName.toLowerCase()))
+              const glyphs = fonts.filter(font => font.familyName === 'WenQuanYi Micro Hei')
                 .reduce((count, font) => count + font.glyphCount, 0);
               assert.equal(glyphs, 6, 'six Chinese characters must use real Chinese font');
               await page.screenshot({path:'font-proof.png'});
@@ -151,7 +151,7 @@ jobs:
               const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#sample' });
               const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
               console.log('CHROMIUM_RENDER_FONTS', JSON.stringify(fonts));
-              const glyphs = fonts.filter(font => families.has(font.familyName.toLowerCase()))
+              const glyphs = fonts.filter(font => font.familyName === 'WenQuanYi Micro Hei')
                 .reduce((count, font) => count + font.glyphCount, 0);
               assert.equal(glyphs, 6, 'six Chinese characters must use real Chinese font');
               await page.screenshot({path:'font-proof.png'});
