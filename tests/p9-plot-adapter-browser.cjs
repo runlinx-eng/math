@@ -46,8 +46,13 @@ async function main(){
   page=await context.newPage();page.setDefaultTimeout(20000);
   page.on('pageerror',error=>errors.push(String(error)));
   context.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))errors.push('external '+req.url());});
-  const shot=async()=>{const file=label+'.png';await page.screenshot({path:path.join(out,file),fullPage:false});screenshots.push(file);};
-  const click=async(selector)=>{const loc=page.locator(selector);assert.equal(await loc.count(),1,selector);await loc.click();};
+  const shot=async suffix=>{const file=label+'-'+suffix+'.png';await page.screenshot({path:path.join(out,file),fullPage:false});screenshots.push(file);};
+  const click=async(selector)=>{
+   if(selector.includes('m28-mark')||selector.includes('m28-unmark')){
+    const details=page.locator('#extra-controls details').first();
+    if(!await details.evaluate(el=>el.open))await details.locator('summary').click();
+   }
+   const loc=page.locator(selector);assert.equal(await loc.count(),1,selector);await loc.click();};
   const field=async(name,value)=>{const loc=page.locator('[data-xfield="'+name+'"]');assert.equal(await loc.count(),1,name);await loc.fill(String(value));};
   const captureNow=async(phase,row)=>{const item=await capture(page,out,key(row),row,phase);captures.push({
    id:row.id,index:row.index,phase,storage:item.storage,attempts:item.attempts.length,
@@ -73,7 +78,7 @@ async function main(){
    await page.reload();
    await page.waitForFunction(index=>window.mathLesson?.snapshot()?.index===index,row.index);
    check(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),label+' 1920x1080');
-   await shot();
+   await shot('initial');
    const feedback=page.locator('#thinking-feedback');
    check(await feedback.count()===0,label+' no premature feedback');
    // Observable first wrong reading survives subsequent correction and Check.
@@ -84,7 +89,6 @@ async function main(){
    await click('#actions [data-do="check"]');
    check(await feedback.count()===0,label+' failed check gives no bounded evidence');
    // Add and retract an incorrect dot without changing the original raw task.
-   await page.locator('#extra-controls details').first().locator('summary').click();
    await click('[data-x="m28-mark"][data-index="0"]');
    await click('[data-x="m28-unmark"][data-index="0"]');
    for(let i=0;i<row.raw.length;i++){
@@ -107,7 +111,7 @@ async function main(){
    check(observed.includes('重复长度')&&observed.includes('刻度'),label+' honest bounded dot feedback');
    const done=await captureNow('correct-submitted',row);
    check(done.attempts.length>=2,label+' wrong Check and corrected Check both retained');
-   await shot();
+   await shot('checked');
    await page.reload();await page.waitForFunction(index=>window.mathLesson?.snapshot()?.index===index,row.index);
    check(await feedback.isVisible(),label+' proof survives actual persistence');
    const reloaded=await captureNow('reloaded',row);
@@ -118,7 +122,7 @@ async function main(){
    check(await feedback.count()===0,label+' stale evidence withheld on edit');
    await field('answers.0',row.answers[0]);await click('#actions [data-do="check"]');
    check(await feedback.isVisible(),label+' current recheck restores evidence');
-   await shot();
+   await shot('rechecked');
   }
   check(errors.length===0,'no browser page exceptions or foreign requests');
   save();console.log('P9_PLOT_BROWSER_OK '+JSON.stringify({native:rows.length,checks:checks.length,
