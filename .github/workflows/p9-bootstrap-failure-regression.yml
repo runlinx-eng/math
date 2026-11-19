@@ -17,6 +17,7 @@ on:
       - 'tests/p9-bootstrap-failure-artifact.test.mjs'
       - 'tests/p9-learning-bootstrap-error-banner.test.mjs'
       - '.github/workflows/p9-bootstrap-failure-regression.yml'
+      - '.github/ci-probes/install-cjk-font.sh'
   workflow_dispatch:
 permissions:
   contents: read
@@ -35,13 +36,28 @@ jobs:
       - name: Install matching Chromium runtime
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          # Keep the same verified lightweight CJK fallback used by Required.
           npx playwright install chromium
-          if ! fc-list :lang=zh-cn family | grep -q .; then
-            sudo apt-get update -qq -o Acquire::Retries=3
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
-            fc-cache -f >/dev/null
+      - name: Detect Chinese fonts
+        id: chinese_fonts
+        run: |
+          if fc-list :lang=zh-cn family | grep -q .; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
           fi
+      - name: Restore immutable CJK package cache
+        if: steps.chinese_fonts.outputs.present == 'false'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/math-tree/fonts-wqy-microhei_0.2.0-beta-3.1_all.deb
+          key: wqy-ubuntu24-0.2.0-beta-3.1-58d0a29af79ce1fc5c63b4276065f0fce27decf6839835f3f9c2e68d9f84ca20-v1
+      - name: Install Chinese font fallback
+        if: steps.chinese_fonts.outputs.present == 'false'
+        run: |
+          bash .github/ci-probes/install-cjk-font.sh
+          fc-cache -f
+      - name: Verify Chinese font
+        run: |
           fc-list :lang=zh-cn family | grep -q . || { echo "Missing CJK fonts"; exit 1; }
           fc-match -f 'Fallback CJK font: %{family} [%{file}]\n' 'sans-serif:lang=zh-cn'
       - name: Verify browser probe syntax and failure banner contract
