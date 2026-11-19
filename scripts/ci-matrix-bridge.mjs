@@ -41,7 +41,7 @@ export function buildMatrixBridgePreview(plan,workflow){
  assert.match(browserBlock,/fail-fast:\s*false\b/);
  assert.match(browserBlock,/max-parallel:\s*10\b/);
  assert.match(browserBlock,/timeout-minutes:\s*35\b/);
- assert.match(gateBlock,/needs:\s*\[static-checks,\s*browser,\s*smoke-checks,\s*targeted\]/);
+ assert.match(gateBlock,/needs:\s*\[plan-checks,\s*static-checks,\s*browser,\s*smoke-checks,\s*targeted\]/);
  assert.match(gateBlock,/if:\s*\$\{\{\s*always\(\)\s*\}\}/);
  assert.match(gateBlock,/pattern:\s*required-browser-result-\*/);
  assert.match(gateBlock,/node scripts\/required-browser-checks\.mjs gate/);

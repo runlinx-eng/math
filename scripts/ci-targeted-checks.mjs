@@ -111,12 +111,13 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
 export function validateDailyGate({needs,reports,context,plan}){
  check(context&&['pull_request','push'].includes(context.event),'Daily gate requires PR or main push');
  check(plan&&plan.event===context.event,'Daily gate requires matching PR or main push plan');
- same(Object.keys(needs||{}).sort(),['browser','smoke-checks','static-checks','targeted']);
+ same(Object.keys(needs||{}).sort(),['browser','plan-checks','smoke-checks','static-checks','targeted']);
+ check(needs['plan-checks']?.result==='success','Changed-file planning job failed');
  check(needs['static-checks']?.result==='success','Static checks failed');
  check(needs.browser?.result==='skipped','Full browser job must be skipped in daily mode');
  check(needs['smoke-checks']?.result===(plan.runSmoke?'success':'skipped'),'Smoke job result differs from required scope');
  check(needs.targeted?.result===(plan.scripts.length?'success':'skipped'),'Targeted job result differs from actual selected families');
- const outputs=needs['static-checks'].outputs||{};
+ const outputs=needs['plan-checks'].outputs||{};
  check(outputs.run_smoke===(plan.runSmoke?'true':'false'),'Smoke decision differs from recomputed source diff');
  check(outputs.run_targeted===(plan.scripts.length?'true':'false'),'Targeted decision differs from recomputed source diff');
  check(outputs.targeted_digest===plan.digest,'Targeted plan checksum differs from source diff');

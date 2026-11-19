@@ -10,7 +10,8 @@ const plan=(event,changedFiles,previousRegistry=null)=>
  planTargetedChecks({event,changedFiles,definitions,registry,previousRegistry});
 const context={event:'pull_request',sha:'f'.repeat(40),runId:'456789',attempt:1};
 const needs=(p,overrides={})=>({
- 'static-checks':{result:'success',outputs:{
+ 'static-checks':{result:'success'},
+ 'plan-checks':{result:'success',outputs:{
   run_smoke:p.runSmoke?'true':'false',run_targeted:p.scripts.length?'true':'false',
   targeted_matrix:JSON.stringify(p.matrix),targeted_digest:p.digest}},
  browser:{result:'skipped'},
@@ -94,12 +95,14 @@ test('targeted receipt gate rejects omission, stale SHA, wrong scope and fabrica
  assert.throws(()=>gate(p,needs(p),mutated),/Unselected/);
  mutated=receipts(p);mutated.push({...mutated[0]});
  assert.throws(()=>gate(p,needs(p),mutated),/Duplicate/);
- const fake=needs(p);fake['static-checks'].outputs.targeted_matrix=JSON.stringify({include:[]});
+ const fake=needs(p);fake['plan-checks'].outputs.targeted_matrix=JSON.stringify({include:[]});
  assert.throws(()=>gate(p,fake,receipts(p)));
- const fakeDigest=needs(p);fakeDigest['static-checks'].outputs.targeted_digest='a'.repeat(64);
+ const fakeDigest=needs(p);fakeDigest['plan-checks'].outputs.targeted_digest='a'.repeat(64);
  assert.throws(()=>gate(p,fakeDigest,receipts(p)),/checksum/);
  const cancelled=needs(p);cancelled.targeted.result='cancelled';
  assert.throws(()=>gate(p,cancelled,receipts(p)),/Targeted job/);
+ const failedPlanner=needs(p);failedPlanner['plan-checks'].result='failure';
+ assert.throws(()=>gate(p,failedPlanner,receipts(p)),/planning job/);
 });
 test('matrix decisions are deterministic and deduplicate related files',()=>{
  const p=plan('pull_request',['dist/learning/area-evidence.js','tests/p9-area-adapter-browser.cjs']);
@@ -112,13 +115,14 @@ test('workflow only starts full matrix on explicit dispatch and only saves daily
  const y=readFileSync(new URL('../.github/workflows/pull-request-baseline.yml',import.meta.url),'utf8');
  assert.match(y,/workflow_dispatch:/);
  assert.doesNotMatch(y,/^  schedule:/m);
+ assert.match(y,/^  plan-checks:/m);
  assert.match(y,/^  targeted:/m);
  assert.match(y,/^  browser:/m);
  assert.match(y,/run_targeted: \$\{\{ steps\.target_plan\.outputs\.run_targeted \}\}/);
  assert.match(y,/targeted_matrix: \$\{\{ steps\.target_plan\.outputs\.targeted_matrix \}\}/);
  assert.match(y,/run_smoke: \$\{\{ steps\.target_plan\.outputs\.run_smoke \}\}/);
  assert.match(y,/if: github\.event_name == 'workflow_dispatch'/);
- assert.match(y,/matrix: \$\{\{ fromJSON\(needs\.static-checks\.outputs\.targeted_matrix\) \}\}/);
+ assert.match(y,/matrix: \$\{\{ fromJSON\(needs\.plan-checks\.outputs\.targeted_matrix\) \}\}/);
  assert.match(y,/node scripts\/ci-targeted-checks\.mjs gate/);
  assert.match(y,/node scripts\/required-browser-checks\.mjs gate/);
  assert.match(y,/if: failure\(\)/);

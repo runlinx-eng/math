@@ -16,16 +16,32 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  plan-checks:
+    name: plan-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run_targeted: ${{ steps.target_plan.outputs.run_targeted }}
+      run_smoke: ${{ steps.target_plan.outputs.run_smoke }}
+      targeted_matrix: ${{ steps.target_plan.outputs.targeted_matrix }}
+      targeted_digest: ${{ steps.target_plan.outputs.targeted_digest }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Select impacted browser families from exact source diff
+        id: target_plan
+        run: node scripts/ci-targeted-checks.mjs plan
+
   static-checks:
     name: static-checks
     outputs:
       run_browser: ${{ steps.scope.outputs.run_browser }}
       run_offline: ${{ steps.scope.outputs.run_offline }}
       browser_matrix: ${{ steps.live_browser_matrix.outputs.browser_matrix }}
-      run_targeted: ${{ steps.target_plan.outputs.run_targeted }}
-      run_smoke: ${{ steps.target_plan.outputs.run_smoke }}
-      targeted_matrix: ${{ steps.target_plan.outputs.targeted_matrix }}
-      targeted_digest: ${{ steps.target_plan.outputs.targeted_digest }}
     runs-on: ubuntu-24.04
     # Syntax, unit tests and source-derived audits keep their existing gates.
     timeout-minutes: 35
@@ -41,10 +57,6 @@ jobs:
       - name: Determine whether browser regression is relevant
         id: scope
         run: node scripts/required-browser-checks.mjs scope
-
-      - name: Select impacted browser families from exact source diff
-        id: target_plan
-        run: node scripts/ci-targeted-checks.mjs plan
 
       - name: Check patch whitespace and merge markers
         shell: bash
@@ -428,8 +440,8 @@ jobs:
 
   smoke-checks:
     name: smoke-checks
-    needs: static-checks
-    if: ${{ needs.static-checks.outputs.run_smoke == 'true' }}
+    needs: plan-checks
+    if: ${{ needs.plan-checks.outputs.run_smoke == 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -468,14 +480,14 @@ jobs:
 
   targeted:
     name: targeted (${{ matrix.script }})
-    needs: static-checks
-    if: ${{ needs.static-checks.outputs.run_targeted == 'true' }}
+    needs: plan-checks
+    if: ${{ needs.plan-checks.outputs.run_targeted == 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
       fail-fast: false
       max-parallel: 10
-      matrix: ${{ fromJSON(needs.static-checks.outputs.targeted_matrix) }}
+      matrix: ${{ fromJSON(needs.plan-checks.outputs.targeted_matrix) }}
     env:
       MATH_TARGET_SCRIPT: ${{ matrix.script }}
       MATH_TARGET_ID: ${{ matrix.id }}
@@ -676,7 +688,7 @@ jobs:
 
   required-checks:
     name: required-checks
-    needs: [static-checks, browser, smoke-checks, targeted]
+    needs: [plan-checks, static-checks, browser, smoke-checks, targeted]
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10

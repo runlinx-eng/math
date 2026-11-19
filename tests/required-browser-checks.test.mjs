@@ -406,7 +406,7 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
  assert.match(browser,/required-browser-result-\$\{\{ matrix\.group \}\}-attempt-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/math-required-checks-browser-evidence-\$\{\{ matrix\.group \}\}-\$\{\{ github\.run_attempt \}\}/);
  assert.match(browser,/if-no-files-found: error/);
- assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[static-checks, browser, smoke-checks, targeted\]/);
+ assert.match(gate,/^    name: required-checks$/m);assert.match(gate,/needs: \[plan-checks, static-checks, browser, smoke-checks, targeted\]/);
  assert.match(gate,/^    if: \$\{\{ always\(\) \}\}$/m);
  assert.match(gate,/MATH_REQUIRED_NEEDS: \$\{\{ toJSON\(needs\) \}\}/);
  assert.match(gate,/node scripts\/required-browser-checks\.mjs gate/);
