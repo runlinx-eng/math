@@ -59,6 +59,8 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ compare:[...positions('compareheight',[0,1,2]),...positions('ordermeasure',[0,2]),
+  ...positions('indirectlength',[0,1,2]),...positions('lengthdifference',[0,1,2])],
  plot:[...positions('measureplot',[0,1,2]),...positions('quarterplot',[0,1,2]),...positions('eighthplot',[0,1,2]),...positions('modmoney',[2]),...positions('modelChoice38',[2])],
  ...Object.fromEntries(['exact','given-approximation'].map(kind=>['convert-'+kind,convert.cases.filter(c=>c.kind===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['analog','digital'].map(kind=>['scale-'+kind,scale.cases.filter(c=>c.math.shape===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
@@ -182,7 +184,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,52);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,53);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

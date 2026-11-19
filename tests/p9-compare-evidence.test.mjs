@@ -326,3 +326,20 @@ test('final comparison must follow the observable reference, not precede it',()=
   assert.equal(evidence.independentStrategyAssessed,false);
  }
 });
+
+test('reviewed source manifest matches eleven immutable native task SHA-256 fingerprints',()=>{
+ const reviewed=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))).tasks
+  .filter(entry=>entry.adapter==='compare');
+ assert.equal(reviewed.length,11);
+ const ordered=value=>Array.isArray(value)?value.map(ordered):value&&typeof value==='object'?
+  Object.fromEntries(Object.keys(value).sort().map(key=>[key,ordered(value[key])])):value;
+ for(const s of specs){
+  const row=reviewed.find(item=>item.sessionId===s.sessionId&&item.index===s.index);
+  assert.ok(row,s.sessionId+':'+s.index+' reviewed entry exists');
+  assert.deepEqual(Object.keys(row),['sessionId','index','type','nodeId','adapter','taskHash','method']);
+  assert.equal(row.nodeId,LESSONS[s.sessionId].topicId);
+  assert.equal(row.type,'x-m28-compare');
+  assert.equal(row.method,null);
+  assert.equal(row.taskHash,createHash('sha256').update(JSON.stringify(ordered(at(s)))).digest('hex'));
+ }
+});
