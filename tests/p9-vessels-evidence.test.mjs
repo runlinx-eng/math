@@ -1,9 +1,10 @@
-// #256 isolated Node verification. Not yet registered in Required CI.
+// #256 source-bound vessel replay and negative contracts, integrated into the shared gate.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as original from '../dist/learning/phase5/b28-model.js';
 import {BRIDGES,sessionTaskFor,sessionTasks} from '../dist/learning/bridges.js';
 import {vesselsBinding,replayVesselsEvidence} from '../dist/learning/vessels-evidence.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 const sources=['indirectmass','ordermeasure','precisionunits'];
 const context=sessionId=>({sessionId,index:1});
@@ -144,4 +145,20 @@ test('#256 replay cannot discard actual pours, silently alter issues, or forge t
  issue.issue='过去的失败不能被悄悄重写';
  assert.equal(replayVesselsEvidence(task,issue,context('ordermeasure')),null);
  assert.equal(JSON.stringify(m),before,'negative probes never mutate the original work');
+});
+
+test('#256 shared source-bound guide and current-submission visible feedback',()=>{
+ for(const sessionId of sources){
+  const task=sessionTaskFor(sessionId,1),model=original.example(task),source=context(sessionId);
+  const saved={support:false,attempts:[{value:clone(model)}]};
+  const guide=thinkingGuide(task,source),feedback=thinkingFeedback(task,model,saved,source);
+  assert.ok(guide?.question,'reviewed source has an optional question');
+  assert.ok(feedback?.observation&&feedback.detail.length>=2,'strict replay yields visible card');
+  assert.equal(feedback.method,null,'no independent reasoning method asserted');
+  const edited=clone(model);edited.offset='3';
+  assert.equal(thinkingFeedback(task,edited,saved,source),null,'edited work invalidates feedback');
+  assert.equal(thinkingGuide(task,{sessionId,index:'1'}),null);
+  assert.equal(thinkingFeedback(task,model,saved,{sessionId,index:'1'}),null);
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[{value:clone(model)},{value:original.initial(task,42)}]},source),null);
+ }
 });
