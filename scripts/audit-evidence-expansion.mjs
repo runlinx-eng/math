@@ -79,7 +79,7 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
    }
    for(const adapter of candidates){
     let binding=null,replayed=false,error=exampleError;
-    try{binding=adapter.binding(task,context);if(example)replayed=!!adapter.replay(task,example);}
+    try{binding=adapter.binding(task,context);if(example)replayed=!!adapter.replay(task,example,context);}
     catch(cause){error=String(cause.message||cause);}
     const manifestMatched=!!expected&&expected.adapter===adapter.id&&expected.type===task.type&&
      expected.nodeId===nodeId&&expected.taskHash===fingerprint;
