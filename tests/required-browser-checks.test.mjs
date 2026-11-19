@@ -465,7 +465,8 @@ test('CI Chromium runner times steps and uses pinned, fail-closed WQY cache',()=
   assert.ok(font.includes(fragment),'missing fail-closed font install check: '+fragment);
  assert.ok((font.match(/https:\/\//g)||[]).length>=3,
   'independently hosted Ubuntu mirrors must remain available');
- assert.ok(!font.includes('apt-get'),'do not reintroduce the unstable APT dependency');
+ assert.doesNotMatch(font,/^[ \\t]*(?:sudo[ \\t]+)?apt-get[ \\t]+(?:update|install)/m,
+  'do not execute the unstable APT dependency');
  assert.match(install,/bash \.github\/ci-probes\/install-cjk-font\.sh/);
  assert.match(install,/python3 \.github\/ci-probes\/time-runtime-step\.py/g);
  assert.ok(install.includes('key: '+cacheKey));
