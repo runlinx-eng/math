@@ -135,7 +135,7 @@ test('the cumulative two-course source route uses original Next, Check, support 
  for(const c of flows.orderedUnitrefineTargets()){
   h.setLabel(c.role+'-'+c.id+'-'+c.index);if(c.id!==currentId){h.open(c.id);currentId=c.id;}
   while(h.page.record.index<c.index){const index=h.page.record.index,previous={id:c.id,index},task=taskFor(previous);
-   if(!h.page.record.cases[index]?.attempts?.some(a=>Tasks.inspect(task,a.value).correct)){const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===index);assert.ok(prep);for(const step of prep.steps)step.field?h.page.field(step.field,step.value):h.page.action(step.action,step.data?.index);h.check(previous,true,false,'navigation-prerequisite-'+index,'prerequisite');prerequisites++;}
+   if(!h.page.record.cases[index]?.attempts?.some(a=>Tasks.inspect(task,a.value).correct)){const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===index);assert.ok(prep);for(const step of prep.steps)step.field?h.page.field(step.field,step.value):h.page.action(step.action,step.data?.index);h.check(previous,true,previous.id==='precisionunits'&&index===1,'navigation-prerequisite-'+index,'prerequisite');prerequisites++;}
    h.page.next();
   }
   assert.equal(h.page.record.index,c.index);assert.equal(h.page.record.cases[c.index]?.attempts?.length||0,0);assert.equal(retryTags(h.page.record).length,0);const fresh=Tasks.defaultModel(taskFor(c));fresh.seed=h.page.model.seed;assert.deepEqual(h.page.model,fresh);
