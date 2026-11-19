@@ -1,6 +1,7 @@
 // #256: source-bound contract; bridge examples never inherit strict eligibility.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {defaultModel,validModel,inspect} from '../dist/learning/tasks.js';
@@ -15,7 +16,6 @@ const reviewed=Object.freeze([
  {sessionId:'precisionunits',index:1}
 ]);
 const sourceKey=({sessionId,index})=>sessionId+':'+index;
-console.log('VESSELS_MANIFEST_CANDIDATES '+JSON.stringify(reviewed.map(({sessionId,index})=>({sessionId,index,type:sessionTasks(sessionId)[index].type,nodeId:LESSONS[sessionId].topicId,adapter:'vessels',taskHash:taskFingerprint(sessionTasks(sessionId)[index]),method:null}))));
 
 test('#256: the candidate is exactly three real native measurement sources',()=>{
  assert.equal(new Set(reviewed.map(sourceKey)).size,3);
@@ -55,4 +55,16 @@ test('#256: original task and model input are not mutated by the source audit',(
   assert.equal(model.valid(t,m),true);
   assert.equal(JSON.stringify(t),before);
  }
+});
+
+test('#256 reviewed native vessel task hashes match the immutable source manifest',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
+ const actual=reviewed.map(({sessionId,index})=>({
+  sessionId,index,type:sessionTasks(sessionId)[index].type,
+  nodeId:LESSONS[sessionId].topicId,adapter:'vessels',
+  taskHash:taskFingerprint(sessionTasks(sessionId)[index]),method:null
+ }));
+ const expected=manifest.tasks.filter(row=>row.adapter==='vessels');
+ assert.equal(expected.length,3,'no extra source admitted through the shared widget');
+ for(const row of actual)assert.deepEqual(expected.find(entry=>entry.sessionId===row.sessionId&&entry.index===row.index),row);
 });
