@@ -122,7 +122,7 @@ export function replayCompareEvidence(task,model){
    const event={index,action:e.a};
    if(e.a==='align'){
     if(plan.mode==='indirect'||!keys(e.d,[])||!keys(e.f,['offset'])||
-       !text(e.f.offset)||!/^-?[0-3]$/.test(e.f.offset))return null;
+       !text(e.f.offset)||!/^(?:0|[1-3]|-[1-3])$/.test(e.f.offset))return null;
     const offset=Number(e.f.offset);board.offset=offset;
     lastOffset=e.f.offset;aligned=true;
     event.offset=offset;event.zeroAligned=offset===0;
