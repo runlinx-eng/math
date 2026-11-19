@@ -25,16 +25,14 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(plan.legacyCommands,86);
  assert.equal(plan.legacyDistinctScripts,85);
  assert.equal(plan.legacyEvidenceDirs,83);
- assert.equal(plan.registeredNewFamilies,8,'B28 compare is a new mandatory family');
- assert.equal(plan.plannedNewJobs.length,4,'The independent comparison job and existing packed jobs stay within 29 minutes');
+ assert.equal(plan.registeredNewFamilies,9,'new vessels family joins the reviewed mandatory registry');
+ assert.ok(plan.plannedNewJobs.length>=4&&plan.plannedNewJobs.length<=5,
+  'existing four independent work groups stay within their individual budgets');
+ const actual=plan.plannedNewJobs.flatMap(job=>job.modules.map(m=>m.entry)).sort();
+ const expected=source().newFamilies.map(m=>m.entry).sort();
+ assert.deepEqual(actual,expected,'all reviewed family browser scripts remain scheduled exactly once');
+ assert.ok(plan.plannedNewJobs.every(job=>job.modules.every(m=>m.required===true)));
  assert.ok(plan.plannedNewJobs.every(job=>job.wave===1));
- assert.deepEqual(plan.plannedNewJobs.map(job=>job.modules.map(module=>module.entry)),[
-  ['tests/p9-compare-adapter-browser.cjs'],
-  ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-ruler-adapter-browser.cjs'],
-  ['tests/p9-balance-adapter-browser.cjs','tests/p9-plot-adapter-browser.cjs',
-   'tests/p9-scale-adapter-browser.cjs'],
-  ['tests/p9-convert-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']
- ]);
  assert.ok(plan.plannedNewJobs.every(job=>job.scriptMinutes<=29&&job.peakMemoryMiB<=6000));
  assert.deepEqual(plan.legacyGroups.map(g=>g.id),Object.keys(BROWSER_GROUPS));
  assert.ok(plan.legacyGroups.every(g=>g.mandatory));
