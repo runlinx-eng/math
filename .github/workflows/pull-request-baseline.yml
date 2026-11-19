@@ -2,12 +2,10 @@ name: Pull request required checks
 
 on:
   pull_request:
-  # Run the full gate again on the integrated SHA before publishing the preview.
+  # Main integration uses lightweight checks; full regression is milestone-triggered on demand.
   push:
     branches: [main]
   workflow_dispatch:
-  schedule:
-    - cron: '0 9 * * 0' # Weekly full regression, UTC Sunday 09:00
 
 permissions:
   contents: read

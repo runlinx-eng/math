@@ -248,22 +248,22 @@ const groupFor=(name,definitions=BROWSER_GROUPS)=>{
  check(typeof name==='string'&&Object.hasOwn(definitions,name),'Unknown browser group: '+String(name));
  return definitions[name];
 };
-const validEvent=event=>check(['pull_request','push','workflow_dispatch','schedule'].includes(event),'Unknown workflow event');
+const validEvent=event=>check(['pull_request','push','workflow_dispatch'].includes(event),'Unknown workflow event');
 
 export function validateScope(value,event){
  validEvent(event);
  check(value==='true'||value==='false','Missing or invalid browser scope');
- // A manual or scheduled full regression must never silently skip browser groups.
- check(!['workflow_dispatch','schedule'].includes(event)||value==='true','Full regression requires every browser group');
+ // An intentionally dispatched full regression must never silently skip browser groups.
+ check(!['workflow_dispatch'].includes(event)||value==='true','Full regression requires every browser group');
  return value==='true';
 }
 
 export function browserScope(event,changedFiles=[]){
  validEvent(event);
- if(['workflow_dispatch','schedule'].includes(event))return 'true';
+ if(['workflow_dispatch'].includes(event))return 'true';
  check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
  // Day-to-day PRs and main pushes use a small real-Chromium smoke job instead
- // of the expensive 17-group historical regression. Full runs are manual/weekly.
+ // of the expensive 17-group historical regression. Full runs are manually requested at milestones.
  return 'false';
 }
 
@@ -297,7 +297,7 @@ const OFFLINE_SENSITIVE_FILES=new Set([
 const OFFLINE_SENSITIVE_TEST=/^tests\/(p10-(longterm-offline|sw-nav-isolation|release-upgrade|sw-retirement)|p9-(offline-|module-recovery|bootstrap-failure|ordinal90-|mac-local-))/;
 export function offlineScope(event,changedFiles=[],browserRequired=browserScope(event,changedFiles)){
  validEvent(event);
- if(['workflow_dispatch','schedule'].includes(event))return 'true';
+ if(['workflow_dispatch'].includes(event))return 'true';
  check(Array.isArray(changedFiles)&&changedFiles.every(file=>typeof file==='string'),'Invalid changed-file list');
  check(browserRequired==='true'||browserRequired==='false','Missing or invalid browser scope');
  return 'false';

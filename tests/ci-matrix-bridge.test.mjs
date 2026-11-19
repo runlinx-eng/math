@@ -9,7 +9,7 @@ const reg=()=>JSON.parse(readFileSync(new URL('../ci/math-families.json',import.
 const wf=()=>readFileSync(new URL('../.github/workflows/pull-request-baseline.yml',import.meta.url),'utf8');
 const make=()=>buildMatrixBridgePreview(planShadow(reg()),wf());
 const context=()=>({sha:'aedf658d1663e2e4db1951a3e4c41cc1a7c55a60',
- event:'push',runId:'44303255167',attempt:1});
+ event:'workflow_dispatch',runId:'44303255167',attempt:1});
 const allGroups=preview=>[...preview.requiredLegacyJobs,...preview.unactivatedFutureJobs];
 function fixture(preview=make()){
  const ctx=context();
@@ -21,7 +21,7 @@ function fixture(preview=make()){
   group:g.id,sha:ctx.sha,runId:ctx.runId,attempt:ctx.attempt,
   status:'verified-original-zip',paths:[...g.artifacts]
  }));
- const needs={'static-checks':{result:'success'},browser:{result:'success'}};
+ const needs={'static-checks':{result:'success'},browser:{result:'success'},'smoke-checks':{result:'success'}};
  return {proposal:preview,context:ctx,needs,receipts,evidence};
 }
 const future=id=>({
@@ -68,6 +68,8 @@ test('#239 simulated promotion needs all original receipts and actual evidence o
  assert.throws(()=>validateMockPromotion(cancelled),/must have success/);
  const staticFailed=fixture();staticFailed.needs['static-checks'].result='failure';
  assert.throws(()=>validateMockPromotion(staticFailed),/must have success/);
+ const smokeFailed=fixture();smokeFailed.needs['smoke-checks'].result='failure';
+ assert.throws(()=>validateMockPromotion(smokeFailed),/must have success/);
 });
 
 test('#239 rejects wrong run SHA, attempted reuse, duplicate receipts and unexpected jobs',()=>{
@@ -80,7 +82,7 @@ test('#239 rejects wrong run SHA, attempted reuse, duplicate receipts and unexpe
  const extra=fixture();extra.receipts.push({...extra.receipts[0],group:'unknown'});
  assert.throws(()=>validateMockPromotion(extra),/Missing or extra/);
  const oldEvent=fixture();oldEvent.context.event='pull_request';
- assert.throws(()=>validateMockPromotion(oldEvent),/full main push/);
+ assert.throws(()=>validateMockPromotion(oldEvent),/manual full regression/);
 });
 
 test('#239 rejects any malformed or incomplete individual command',()=>{

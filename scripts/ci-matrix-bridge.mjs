@@ -41,7 +41,7 @@ export function buildMatrixBridgePreview(plan,workflow){
  assert.match(browserBlock,/fail-fast:\s*false\b/);
  assert.match(browserBlock,/max-parallel:\s*10\b/);
  assert.match(browserBlock,/timeout-minutes:\s*35\b/);
- assert.match(gateBlock,/needs:\s*\[static-checks,\s*browser\]/);
+ assert.match(gateBlock,/needs:\s*\[static-checks,\s*browser,\s*smoke-checks\]/);
  assert.match(gateBlock,/if:\s*\$\{\{\s*always\(\)\s*\}\}/);
  assert.match(gateBlock,/pattern:\s*required-browser-result-\*/);
  assert.match(gateBlock,/node scripts\/required-browser-checks\.mjs gate/);
@@ -93,9 +93,9 @@ export function validateMockPromotion({proposal,context,needs,receipts,evidence}
  assert.ok(context&&/^[a-f0-9]{40}$/.test(context.sha));
  assert.ok(/^[1-9][0-9]*$/.test(context.runId));
  assert.ok(Number.isSafeInteger(context.attempt)&&context.attempt>=1);
- assert.equal(context.event,'push','Simulated promotion contract requires full main push regression');
- eq(Object.keys(needs||{}).sort(),['browser','static-checks']);
- for(const key of ['browser','static-checks'])
+ assert.equal(context.event,'workflow_dispatch','Simulated promotion contract requires manual full regression');
+ eq(Object.keys(needs||{}).sort(),['browser','smoke-checks','static-checks']);
+ for(const key of ['browser','smoke-checks','static-checks'])
   assert.equal(needs[key]?.result,'success',key+' must have success (not skipped/cancelled)');
  assert.ok(Array.isArray(receipts)&&Array.isArray(evidence));
  const required=[...proposal.requiredLegacyJobs,...proposal.unactivatedFutureJobs];

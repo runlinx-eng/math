@@ -227,7 +227,7 @@ test('each P10 group records every runner failure, without suppressing later dat
  }
 });
 
-test('routine PR and main runs are lightweight; manual and weekly runs retain full strict regression',()=>{
+test('routine PR and main runs are lightweight; milestone-triggered manual full regression stays strict',()=>{
  for(const event of ['pull_request','push']){
   assert.equal(browserScope(event,[]),'false');
   assert.equal(offlineScope(event,[]),'false');
@@ -235,7 +235,7 @@ test('routine PR and main runs are lightweight; manual and weekly runs retain fu
   assert.equal(browserScope(event,['dist/sw.js','tests/p9-newfamily-browser.cjs']),'false');
   assert.equal(offlineScope(event,['dist/sw.js']),'false');
  }
- for(const event of ['workflow_dispatch','schedule']){
+ for(const event of ['workflow_dispatch']){
   assert.equal(browserScope(event,[]),'true');
   assert.equal(offlineScope(event,[]),'true');
   assert.equal(validateScope('true',event),true);
@@ -410,7 +410,7 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
  assert.match(gate,/MATH_REQUIRED_NEEDS: \$\{\{ toJSON\(needs\) \}\}/);
  assert.match(gate,/node scripts\/required-browser-checks\.mjs gate/);
  assert.match(workflow,/push:\n    branches: \[main\]/);assert.match(workflow,/workflow_dispatch:/);
- assert.match(workflow,/schedule:\n    - cron:/);assert.match(workflow,/^  smoke-checks:$/m);
+ assert.doesNotMatch(workflow,/^  schedule:/m);assert.match(workflow,/^  smoke-checks:$/m);
  assert.match(workflow,/node tests\/p10-backup-safety-browser\.cjs/);
  for(const path of ['verification/learning-evidence-audit/','verification/learning-node-audit/',
   'verification/p7-d3/','verification/p7-d7/coverage.json'])assert.ok(workflow.includes(path),path);
