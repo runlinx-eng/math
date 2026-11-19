@@ -137,7 +137,10 @@ export function replayCompareEvidence(task,model){
    }else if(e.a==='choice'){
     if(plan.mode==='order'||!keys(e.d,['index'])||!keys(e.f,[])||
       !task.choices?.some(c=>c.id===e.d.index))return null;
-    // The final comparison must follow the actual reference work, not merely coexist with it.\n    finalChoicePrerequisitesMet=plan.mode==='indirect'?\n      board.copied.length===plan.lengths.length:aligned&&board.offset===0;\n    const value=e.d.index,correct=value===plan.winner;
+    // The final comparison must follow the actual reference work, not merely coexist with it.
+    finalChoicePrerequisitesMet=plan.mode==='indirect'?
+      board.copied.length===plan.lengths.length:aligned&&board.offset===0;
+    const value=e.d.index,correct=value===plan.winner;
     board.first.choice??=value;if(!correct)board.bad=true;
     board.choice=value;event.choice=value;event.correct=correct;
     selections.push({index,value,correct});
@@ -171,7 +174,8 @@ export function replayCompareEvidence(task,model){
     board.order.length!==plan.lengths.length||
     !board.order.every((n,i)=>i===0||plan.lengths[board.order[i-1]]<=plan.lengths[n]):
     board.choice!==plan.winner)||
-   (plan.mode==='indirect'&&board.copied.length!==plan.lengths.length)||\n   (plan.mode!=='order'&&!finalChoicePrerequisitesMet))return null;
+   (plan.mode==='indirect'&&board.copied.length!==plan.lengths.length)||
+   (plan.mode!=='order'&&!finalChoicePrerequisitesMet))return null;
   return{
    kind:'length-comparison',mode:plan.mode,eventCount:events.length,events,
    construction:{
