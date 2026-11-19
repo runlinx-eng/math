@@ -104,10 +104,7 @@ export function replayPlotEvidence(task,model){
    const e=model.history[index];
    if(!keys(e,['a','d','f']))return null;
    issue='';const event={index,action:e.a};
-   if(e.a==='help'){
-    if(!keys(e.d,[])||!keys(e.f,[]))return null;
-    b.first.help=true;
-   }else if(e.a==='select'){
+   if(e.a==='select'){
     if(!keys(e.d,['index'])||!keys(e.f,[])||!/^\d+$/.test(e.d.index))return null;
     const selected=Number(e.d.index);if(!Number.isInteger(selected)||selected>=task.raw.length)return null;
     b.selected=selected;event.selected=selected;
