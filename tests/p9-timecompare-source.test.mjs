@@ -53,10 +53,15 @@ test('#273 all same-type native and bridge positions are source-scoped without i
   }
  }
 });
-test('#273 first-stage replay has no strict A manifest admission or shared feedback registration',()=>{
+test('#273 immutable reviewed source fingerprints admit exactly the six native positions',()=>{
  const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
- for(const [id,index] of sources){
-  assert.equal(manifest.tasks.some(t=>t.sessionId===id&&t.index===index),false);
+ assert.equal(manifest.tasks.filter(t=>t.adapter==='timecompare').length,6);
+ for(const [sessionId,index] of sources){
+  const item={sessionId,index,type:'x-t32-compare',
+   nodeId:LESSONS[sessionId].topicId,adapter:'timecompare',
+   taskHash:taskFingerprint(sessionTaskFor(sessionId,index)),method:null};
+  assert.deepEqual(manifest.tasks.find(t=>t.adapter==='timecompare'&&
+    t.sessionId===sessionId&&t.index===index),item);
  }
- assert.equal(EVIDENCE_ADAPTERS.some(a=>a.type==='x-t32-compare'),false);
+ assert.equal(EVIDENCE_ADAPTERS.filter(a=>a.type==='x-t32-compare').length,1);
 });

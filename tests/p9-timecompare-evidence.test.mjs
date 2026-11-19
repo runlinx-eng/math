@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {sessionTaskFor} from '../dist/learning/bridges.js';
 import * as original from '../dist/learning/phase5/b32-model.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from '../dist/learning/timecompare-evidence.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 const rows=[
  ['timecompare',0,'right','longer'],
@@ -110,4 +111,27 @@ test('#273 result and unit semantics are distinct for starting, ending and elaps
  assert.deepEqual(seconds.construction.numbers,[80,75]);
  assert.equal(seconds.construction.unit,'秒');
  assert.equal(earlier.construction.unit,'分钟');
+});
+
+test('#273 shared visible proof requires a matching actually checked native model',()=>{
+ for(const [id,index] of rows){
+  const task=sessionTaskFor(id,index),model=original.example(task);
+  const saved={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,saved});
+  const guide=thinkingGuide(task,ctx(id,index));
+  const feedback=thinkingFeedback(task,model,saved,ctx(id,index));
+  assert.ok(guide?.question);
+  assert.ok(feedback?.observation&&feedback.detail.length>=4);
+  assert.equal(feedback.method,null);
+  assert.ok(feedback.detail.some(s=>s.includes('结束减开始')));
+  const edited=structuredClone(model);edited.history.push({a:'choice',i:'left',v:''});
+  assert.equal(thinkingFeedback(task,edited,saved,ctx(id,index)),null,
+   'editing after Check revokes old strict proof');
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[]},ctx(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,
+   {support:false,attempts:[{value:original.initial(task)}]},ctx(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,saved,{sessionId:id,index:String(index)}),null);
+  assert.equal(thinkingGuide(task,{sessionId:id,index:String(index)}),null);
+  assert.equal(JSON.stringify({task,model,saved}),before);
+ }
 });

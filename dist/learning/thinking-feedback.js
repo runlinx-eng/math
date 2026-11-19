@@ -14,6 +14,7 @@ import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -155,6 +156,10 @@ export function thinkingGuide(task,context={}){
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次图形中的部分、面积和外边（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-t32-compare'){
+    const source=timeCompareBinding(task,context);
+    return source?{type:task.type,summary:'想一想：开始、结束和经过的时间是不是同一个量？（可选）',question:source.question}:null;
   }
   if(typeof task?.type==='string'&&task.type.startsWith('x-t32-')){
     const source=timeBinding(task,context);
@@ -598,6 +603,27 @@ export function thinkingFeedback(task,model,record,context={}){
     detail.push('这里只描述本次可核对的构造关系，没有自动评价自由解释、独立证明或长期掌握。');
     if(record.support)detail.push('你打开过提示或比较反馈。');
     return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
+  if(task?.type==='x-t32-compare'){
+    const source=timeCompareBinding(task,context);if(!source)return null;
+    const proof=replayTimeCompareEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction;
+    const time=n=>c.unit==='秒'?`${n} 秒`:`${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
+    const relationship=c.kind==='longer'?'经过时间（结束减开始）':c.kind==='earlier'?'开始时刻':'结束时刻';
+    const relation=c.expected==='equal'?'两项相同':c.expected==='left'?`“${c.metrics[0].name}”符合题目比较要求`:`“${c.metrics[1].name}”符合题目比较要求`;
+    const detail=[
+      '以下起止时间来自题目设置的模拟场景，不能作为真实活动计时或独立解题策略的证明。',
+      ...c.metrics.map(x=>`“${x.name}”：开始 ${time(x.start)}，结束 ${time(x.end)}，经过 ${x.duration} ${c.unit}（结束减开始）。`),
+      `本题比较的是${relationship}，两项对应 ${c.numbers[0]} 和 ${c.numbers[1]} ${c.unit}；${relation}。`,
+      `你先选“${c.firstGuess}”作为猜测，再点击展开时间；揭示后最后选择“${c.finalChoice}”，与题目比较要求一致。`
+    ];
+    if(!c.firstGuessCorrect)detail.push('第一次猜测不正确，原记录仍保留；猜测本身不是正式核对选择。');
+    if(c.wrongChoices.length)detail.push(`揭示之后曾有 ${c.wrongChoices.length} 次与结果不符的选择，后来实际纠正，原历史仍保留。`);
+    if(attempts.length>1)detail.push('此前提交仍保留；这里仅核对最新一次提交对应的完整作品。');
+    if(record.support)detail.push('你曾打开提示或反馈。');
+    return{title:'这次作品中的思考线索',
+      observation:`先猜测、展开时间、再比较：这次实际选择与${relationship}的数值关系一致。`,
+      connection:source.question,detail,method:null};
   }
   if(typeof task?.type==='string'&&task.type.startsWith('x-t32-')){
     const source=timeBinding(task,context);if(!source)return null;

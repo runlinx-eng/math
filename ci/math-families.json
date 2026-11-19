@@ -368,6 +368,33 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "timecompare",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-timecompare-adapter-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-timecompare-adapter/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative",
+        "backup"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 10,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }
