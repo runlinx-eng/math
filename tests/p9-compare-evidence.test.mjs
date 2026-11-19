@@ -6,6 +6,9 @@ import * as M from '../dist/learning/phase5/b28-model.js';
 import * as V from '../dist/learning/phase5/b28-view.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTaskFor,sessionTasks} from '../dist/learning/bridges.js';
+import * as State from '../dist/learning/state.js';
+import * as Core from '../dist/exploration-core.js';
+import * as Storage from '../dist/storage.js';
 import {compareBinding,replayCompareEvidence} from '../dist/learning/compare-evidence.js';
 
 const locations={
@@ -223,5 +226,60 @@ test('the original grader and state shape are not changed for inspected tasks',(
   assert.ok(M.inspect(t,model).correct);
   assert.equal(M.initial(t,314159).history.length,0);
   assert.equal(proof(t,M.initial(t,314159)),null);
+ }
+});
+
+
+test('visible duplicate copies and repeated sort clicks preserve no-op event history',()=>{
+ const indirect=at({sessionId:'indirectlength',index:1}),recorded=M.example(indirect);
+ assert.ok(proof(indirect,recorded));
+ act(indirect,recorded,'copy',0);
+ const recordedProof=proof(indirect,recorded);assert.ok(recordedProof);
+ assert.equal(recordedProof.construction.copyHistory.at(-1).item,0);
+ assert.equal(recordedProof.construction.copyHistory.at(-1).recorded,false);
+ assert.equal(recordedProof.events.at(-1).action,'copy');
+ const ordered=at({sessionId:'indirectlength',index:0}),sorted=M.example(ordered);
+ const repeatedIndex=sorted.board.order[0];
+ act(ordered,sorted,'order',repeatedIndex);
+ const sortedProof=proof(ordered,sorted);assert.ok(sortedProof);
+ assert.equal(sortedProof.construction.orderHistory.at(-1).item,repeatedIndex);
+ assert.equal(sortedProof.construction.orderHistory.at(-1).appended,false);
+ assert.equal(sortedProof.events.at(-1).action,'order');
+});
+
+test('a correct old grade cannot authorize invisible cross-mode controls',()=>{
+ const hidden=[
+  {sessionId:'compareheight',index:0,action:'clear'},
+  {sessionId:'indirectlength',index:0,action:'copy',value:0},
+  {sessionId:'indirectlength',index:1,action:'align'},
+  {sessionId:'indirectlength',index:1,action:'order',value:0},
+ ];
+ for(const s of hidden){
+  const t=at(s),m=M.example(t);
+  assert.ok(proof(t,m));
+  act(t,m,s.action,s.value);
+  assert.ok(M.valid(t,m),s.sessionId+':'+s.action+' old model accepts event');
+  assert.equal(M.inspect(t,m).correct,true);
+  assert.equal(proof(t,m),null,s.sessionId+':'+s.action+' is not a visible action');
+ }
+});
+
+test('every original comparison keeps real attempts and exact proof across unchanged V2 backup',()=>{
+ const atlas=JSON.parse(readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
+ for(const s of specs){
+  const task=at(s),model=M.example(task),lesson=State.freshLesson(s.sessionId);
+  lesson.index=s.index;lesson.view='task';lesson.models[s.index]=cp(model);
+  State.submitLesson(lesson);
+  assert.deepEqual(lesson.cases[s.index].attempts.at(-1).value,model);
+  const state=Core.fresh();state.lessons[s.sessionId]=lesson;
+  assert.deepEqual(Core.validate(cp(state),atlas),state);
+  const payload=JSON.stringify({app:'math-explorer',version:2,state});
+  const imported=Core.parseBackup(payload,atlas);
+  assert.deepEqual(imported,state);
+  assert.ok(proof(task,imported.lessons[s.sessionId].models[s.index]));
+  const originalBytes=JSON.stringify(state),saved=new Map();
+  const storage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value)};
+  Storage.writeStored(Core.KEY,originalBytes,storage);
+  assert.equal(Storage.readStored(Core.KEY,storage),originalBytes);
  }
 });
