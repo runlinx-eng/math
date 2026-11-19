@@ -6,6 +6,7 @@ import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {defaultModel,validModel,inspect} from '../dist/learning/tasks.js';
 import * as model from '../dist/learning/phase5/b28-model.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
 await ensureB39Ready();
 
 const reviewed=Object.freeze([
@@ -14,6 +15,7 @@ const reviewed=Object.freeze([
  {sessionId:'precisionunits',index:1}
 ]);
 const sourceKey=({sessionId,index})=>sessionId+':'+index;
+console.log('VESSELS_MANIFEST_CANDIDATES '+JSON.stringify(reviewed.map(({sessionId,index})=>({sessionId,index,type:sessionTasks(sessionId)[index].type,nodeId:LESSONS[sessionId].topicId,adapter:'vessels',taskHash:taskFingerprint(sessionTasks(sessionId)[index]),method:null}))));
 
 test('#256: the candidate is exactly three real native measurement sources',()=>{
  assert.equal(new Set(reviewed.map(sourceKey)).size,3);
