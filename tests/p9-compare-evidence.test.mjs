@@ -306,3 +306,23 @@ test('every original comparison keeps real attempts and exact proof across uncha
   assert.equal(Storage.readStored(Core.KEY,storage),originalBytes);
  }
 });
+
+
+test('final comparison must follow the observable reference, not precede it',()=>{
+ for(const s of [{sessionId:'compareheight',index:0},{sessionId:'indirectlength',index:1}]){
+  const task=at(s),model=M.initial(task,314159);
+  act(task,model,'choice',task.want);
+  if(task.mode==='indirect')task.items.forEach((_,i)=>act(task,model,'copy',i));
+  else field(task,model,'offset','0');
+  answer(task,model);
+  assert.equal(M.valid(task,model),true,s.sessionId+' original state remains valid');
+  assert.equal(M.inspect(task,model).correct,true,s.sessionId+' original grader remains unchanged');
+  assert.equal(proof(task,model),null,
+   s.sessionId+' final comparison must follow the observable reference');
+  act(task,model,'choice',task.want);
+  const evidence=proof(task,model);
+  assert.ok(evidence,s.sessionId+' an actual later comparison restores strict evidence');
+  assert.equal(evidence.construction.choiceHistory.length,2);
+  assert.equal(evidence.independentStrategyAssessed,false);
+ }
+});
