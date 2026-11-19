@@ -115,9 +115,9 @@ test('#239 any mismatched live workflow matrix, budget or missing gate fails pre
  const plan=planShadow(reg());
  assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('fromJSON(needs.static-checks.outputs.browser_matrix)','fromJSON("{}")'))
   ,/match/);
- assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('max-parallel: 10','max-parallel: 15'))
+ assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace(/(\n  browser:[\s\S]*?\n      max-parallel: )10/,(_match,prefix)=>prefix+'15'))
   ,/match/);
- assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('    timeout-minutes: 35\n    strategy:', '    timeout-minutes: 60\n    strategy:'))
+ assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace(/(\n  browser:[\s\S]*?\n    timeout-minutes: )35/,(_match,prefix)=>prefix+'60'))
   ,/match/);
  assert.throws(()=>buildMatrixBridgePreview(plan,wf().replace('node scripts/required-browser-checks.mjs gate','echo bypassed'))
   ,/match/);

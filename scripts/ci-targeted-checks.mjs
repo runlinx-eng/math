@@ -110,6 +110,7 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
 }
 export function validateDailyGate({needs,reports,context,plan}){
  check(context&&['pull_request','push'].includes(context.event),'Daily gate requires PR or main push');
+ check(plan&&plan.event===context.event,'Daily gate requires matching PR or main push plan');
  same(Object.keys(needs||{}).sort(),['browser','smoke-checks','static-checks','targeted']);
  check(needs['static-checks']?.result==='success','Static checks failed');
  check(needs.browser?.result==='skipped','Full browser job must be skipped in daily mode');
