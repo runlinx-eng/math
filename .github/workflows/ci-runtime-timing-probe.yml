@@ -1,0 +1,100 @@
+name: Chromium and Chinese font preparation timing
+
+on:
+  push:
+    branches: [codex/ci-runtime-probe-44480305187]
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    name: Fresh Ubuntu runner ${{ matrix.sample }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [1, 2]
+    env:
+      TIMER: .github/ci-probes/time-runtime-step.py
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Record runner image and runtime versions
+        run: |
+          printf 'image=%s version=%s arch=%s\n' "$ImageOS" "$ImageVersion" "$RUNNER_ARCH"
+          node --version
+          npm --version
+
+      - name: Install Playwright
+        run: python3 "$TIMER" npm-playwright npm install --no-save --no-package-lock playwright@1.56.1
+
+      - name: Install Chromium and wait for the installer to exit
+        run: python3 "$TIMER" chromium npx playwright install chromium
+
+      - name: Detect Chinese fonts
+        id: fonts
+        run: |
+          python3 "$TIMER" font-detection bash -e -c '
+            if fc-list :lang=zh-cn family | grep -q .; then
+              echo "present=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "present=false" >> "$GITHUB_OUTPUT"
+            fi
+          '
+
+      - name: Refresh Ubuntu package lists
+        if: steps.fonts.outputs.present == 'false'
+        run: python3 "$TIMER" apt-update sudo apt-get update -o Acquire::Retries=3
+
+      - name: Install WenQuanYi Micro Hei
+        if: steps.fonts.outputs.present == 'false'
+        run: python3 "$TIMER" apt-install-font sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-wqy-microhei
+
+      - name: Rebuild the font cache
+        if: steps.fonts.outputs.present == 'false'
+        run: python3 "$TIMER" font-cache fc-cache -f
+
+      - name: Verify the Chinese font selected by fontconfig
+        run: |
+          python3 "$TIMER" font-verification bash -e -c '
+            fc-list :lang=zh-cn family | grep -q .
+            fc-match -f "%{family} [%{file}]\n" "sans-serif:lang=zh-cn"
+          '
+
+      - name: Verify Chinese characters in a real Chromium instance
+        run: |
+          python3 "$TIMER" chromium-render node <<'NODE'
+          const assert = require('node:assert/strict');
+          const { execFileSync } = require('node:child_process');
+          const { chromium } = require('playwright');
+          (async () => {
+            const families = new Set(execFileSync('fc-list', [':lang=zh-cn', '-f', '%{family}\n'],
+              { encoding: 'utf8' }).split(/[,\n]/).map(name => name.trim().toLowerCase()).filter(Boolean));
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const page = await browser.newPage();
+              await page.setContent('<html lang="zh-CN"><span id="sample" style="font:32px sans-serif">数学测量长度</span></html>');
+              await page.evaluate(() => document.fonts.ready);
+              const session = await page.context().newCDPSession(page);
+              await session.send('DOM.enable');
+              await session.send('CSS.enable');
+              const { root } = await session.send('DOM.getDocument');
+              const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#sample' });
+              const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
+              console.log('CHROMIUM_RENDER_FONTS', JSON.stringify(fonts));
+              const glyphs = fonts.filter(font => families.has(font.familyName.toLowerCase()))
+                .reduce((count, font) => count + font.glyphCount, 0);
+              assert.equal(glyphs, 6, 'Expected all six Chinese characters to use a Chinese-capable system font');
+            } finally {
+              await browser.close();
+            }
+          })().catch(error => { console.error(error); process.exitCode = 1; });
+          NODE
