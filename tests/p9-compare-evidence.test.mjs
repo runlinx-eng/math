@@ -186,7 +186,7 @@ test('exactly seven cross-course linked comparisons stay nonnative',()=>{
 test('native binding does not leak to associated lessons, stale context or old practice',()=>{
  for(const [sessionId,bridge] of Object.entries(BRIDGES)){
   for(const [index,t] of sessionTasks(sessionId).entries()){
-   if(t.type==='x-m28-compare')
+   if(t?.type==='x-m28-compare')
     assert.equal(compareBinding(t,{sessionId,index}),null,sessionId+':'+index);
   }
  }
