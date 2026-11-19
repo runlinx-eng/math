@@ -15,13 +15,20 @@ const cp=structuredClone, ids=Object.entries(native).flatMap(([id,indices])=>ind
 const at=({id,index})=>sessionTaskFor(id,index),ctx=({id,index})=>({sessionId:id,index});
 const clone=spec=>cp(at(spec));
 const model=t=>M.example(t),proof=(t,m)=>replayPlotEvidence(t,m);
-const sha=s=>createHash('sha256').update(s).digest('hex');
 
 test('eleven native source-bound B28 plot locations; full original source is unchanged',()=>{
  assert.equal(ids.length,11);assert.equal(new Set(ids.map(x=>LESSONS[x.id].topicId)).size,5);
- const files=['dist/learning/phase5/b28-model.js','dist/learning/phase5/b28.js',
-  'dist/learning/phase5/b33.js','dist/learning/phase5/b38-more.js'];
- for(const p of files)assert.match(sha(readFileSync(new URL('../'+p,import.meta.url))),/^[0-9a-f]{64}$/);
+ // Frozen original source blobs (not generated from the new proof adapter).
+ const frozen={
+  'dist/learning/phase5/b28-model.js':'5ddc6c6f10ad79ba997a88ab25764a655fad4b94',
+  'dist/learning/phase5/b28.js':'51c25af8bd3f97959b4918a010a7488c142df943',
+  'dist/learning/phase5/b33.js':'17e2e2ab793384399f0c9ae86912e636c382c211',
+  'dist/learning/phase5/b38-more.js':'6e7d0a432925ed07be99440f5114bd7568c22baf'
+ };
+ for(const [p,want] of Object.entries(frozen)){
+  const bytes=readFileSync(new URL('../'+p,import.meta.url));
+  assert.equal(createHash('sha1').update('blob '+bytes.length+'\\0').update(bytes).digest('hex'),want,p);
+ }
  for(const s of ids){
   const t=at(s),m=model(t),b=plotBinding(t,ctx(s)),p=proof(t,m);
   assert.equal(t.type,'x-m28-plot',s.id+':'+s.index);
