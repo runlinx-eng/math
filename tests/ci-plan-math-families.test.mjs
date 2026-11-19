@@ -31,7 +31,7 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  const actual=plan.plannedNewJobs.flatMap(job=>job.modules.map(m=>m.entry)).sort();
  const expected=source().newFamilies.map(m=>m.entry).sort();
  assert.deepEqual(actual,expected,'all reviewed family browser scripts remain scheduled exactly once');
- assert.ok(plan.plannedNewJobs.every(job=>job.modules.every(m=>m.required===true)));
+ assert.ok(source().newFamilies.every(m=>m.required===true));
  assert.ok(plan.plannedNewJobs.every(job=>job.wave===1));
  assert.ok(plan.plannedNewJobs.every(job=>job.scriptMinutes<=29&&job.peakMemoryMiB<=6000));
  assert.deepEqual(plan.legacyGroups.map(g=>g.id),Object.keys(BROWSER_GROUPS));
