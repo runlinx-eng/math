@@ -83,15 +83,19 @@ test('literal positions cover 20 constructions, exclude all 40 answer/tool-only 
   assert.equal(taskFingerprint(t),c.taskHash,key(c));assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);
   assert.deepEqual(m.answers,c.answers);
   const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c));
+  // Old fixture compatibility accepts its own id/index shape. The new adapter
+  // deliberately uses the canonical native context rather than coercing id.
+  const nativeContext={sessionId:c.id,index:c.index};
+  const visibleContext=newComparison?nativeContext:c;
   assert.equal(!!timeBinding(t,c),previousFamily,
    key(c)+' old 20 constructions must remain independently source-bound');
-  assert.equal(!!timeCompareBinding(t,c),newComparison,
+  assert.equal(!!timeCompareBinding(t,nativeContext),newComparison,
    key(c)+' only the six reviewed compare positions get another adapter');
-  assert.equal(!!replayTimeCompareEvidence(t,m,c),newComparison,
+  assert.equal(!!replayTimeCompareEvidence(t,m,nativeContext),newComparison,
    key(c)+' only real original comparison events may replay');
-  assert.equal(!!thinkingGuide(t,c),previousFamily||newComparison,
+  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison,
    key(c)+' source-scoped thinking guide');
-  assert.equal(!!thinkingFeedback(t,m,saved(m),c),previousFamily||newComparison,
+  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison,
    key(c)+' source-scoped checked feedback');
   if(!c.id.startsWith('link-')&&!previousFamily)rejected(t,m);
  }
