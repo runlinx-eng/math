@@ -153,6 +153,29 @@ async function main(){
    ok(await feedback.isVisible(),label+' latest source-bound proof shown after original check');
    const done=await captureNow('correct-submitted',row);
    ok(done.attempts.length===2&&done.model?.history?.length>0,label+' wrong/correct checks both saved');
+   ok(JSON.stringify(done.attempts.at(-1).value)===JSON.stringify(done.model),
+    label+' latest original submission equals complete visible model');
+   ok(done.model.history.every(e=>['align','choice','copy','order','clear'].includes(e.a)),
+    label+' history only contains visible comparison operations');
+   if(row.mode==='order'){
+    const steps=done.model.history.filter(e=>e.a==='order');
+    ok(steps.length===row.lengths.length*2&&
+      done.model.history.filter(e=>e.a==='clear').length===1,
+      label+' original wrong ordering and visible clear retained');
+   }else{
+    const decisions=done.model.history.filter(e=>e.a==='choice').map(e=>e.d.index);
+    ok(decisions.length===2&&decisions[0]!==row.want&&decisions[1]===row.want,
+      label+' first visible wrong choice and genuine correction retained');
+    ok(done.model.board.bad===true&&done.model.board.first.choice===decisions[0],
+      label+' original first error survives correction');
+   }
+   for(let first=0;first<row.lengths.length;first++)
+    for(let second=first+1;second<row.lengths.length;second++){
+     const difference=row.lengths[first]-row.lengths[second];
+     ok(Number.isSafeInteger(difference)&&
+      ['<','=','>'].includes(difference<0?'<':difference>0?'>':'='),
+      label+' exact task-supplied pair '+first+'-'+second);
+    }
    ok(done.model?.board?.offset===0||row.mode==='indirect',label+' comparable lengths share zero');
    if(row.mode==='order')ok(JSON.stringify(done.model.board.order)===JSON.stringify(row.sorted),
     label+' sorted original lengths from shortest to longest');
