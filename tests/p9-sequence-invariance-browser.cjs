@@ -167,3 +167,4 @@ async function main(){
  }
 }
 if(require.main===module)main().catch(error=>{console.error(error.stack||error);process.exitCode=1;});
+// CI #261 isolation probe: comment-only change exercises targeted family selection; not for merge.
