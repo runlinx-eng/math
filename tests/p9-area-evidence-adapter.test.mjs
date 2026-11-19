@@ -179,3 +179,5 @@ test('current input spellings and the complete final snapshot remain intact thro
   assert.deepEqual(validateLesson(cp(a),c.id),a);field(t,m,'prose','new ungraded explanation');assert.equal(currentSubmission(a).status,'modified');assert.equal(thinkingFeedback(t,m,a.cases[c.index],c),null);submit(a,true);assert.ok(thinkingFeedback(t,m,a.cases[c.index],c));
  }
 });
+
+// CI #264 isolated Node-family route probe; no math or test logic changed, never merge.
