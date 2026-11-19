@@ -38,6 +38,14 @@ test('eleven independent original compare tasks are assigned to four exact sourc
   assert.equal(p.construction.lengthDifference,String(Math.max(...t.items.map(x=>x.length))-
     Math.min(...t.items.map(x=>x.length))));
   assert.equal(p.construction.measurementPerformed,false);
+  const relations=p.construction.suppliedPairwiseRelations;
+  assert.equal(relations.length,t.items.length*(t.items.length-1)/2);
+  for(const r of relations){
+   const difference=t.items[r.firstIndex].length-t.items[r.secondIndex].length;
+   assert.equal(r.signedDifference,String(difference));
+   assert.equal(r.relation,difference>0?'>':difference<0?'<':'=');
+   assert.ok(r.firstIndex<r.secondIndex);
+  }
   assert.equal(p.independentStrategyAssessed,false);
   assert.equal(p.generalMasteryAssessed,false);
   assert.equal(compareBinding(t,{sessionId:s.sessionId,index:-1}),null);
