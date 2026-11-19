@@ -27,7 +27,7 @@ test('eleven native source-bound B28 plot locations; full original source is unc
  };
  for(const [p,want] of Object.entries(frozen)){
   const bytes=readFileSync(new URL('../'+p,import.meta.url));
-  assert.equal(createHash('sha1').update('blob '+bytes.length+'\\0').update(bytes).digest('hex'),want,p);
+  assert.equal(createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex'),want,p);
  }
  for(const s of ids){
   const t=at(s),m=model(t),b=plotBinding(t,ctx(s)),p=proof(t,m);
