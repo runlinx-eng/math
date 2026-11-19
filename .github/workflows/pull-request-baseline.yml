@@ -58,6 +58,10 @@ jobs:
         id: scope
         run: node scripts/required-browser-checks.mjs scope
 
+      - name: Plan safe Node test scope from actual changed files
+        id: node_scope
+        run: node scripts/ci-node-scope.mjs output
+
       - name: Check patch whitespace and merge markers
         shell: bash
         run: |
@@ -81,6 +85,7 @@ jobs:
       - name: Check runtime module syntax
         run: |
           node --check scripts/required-browser-checks.mjs
+          node --check scripts/ci-node-scope.mjs
           node --check scripts/ci-targeted-checks.mjs
           node --check scripts/ci-audit-viewports.mjs
           node --check tests/ci-audit-viewports.test.mjs
@@ -252,6 +257,8 @@ jobs:
 
       - name: Run active Node.js unit and invariant tests
         shell: bash
+        env:
+          MATH_NODE_EXPECTED_SCOPE: ${{ steps.node_scope.outputs.mode }}
         run: |
           test_files=(
             tests/spatial-relationship.test.mjs
@@ -266,6 +273,7 @@ jobs:
             tests/ci-matrix-bridge.test.mjs
             tests/ci-live-matrix.test.mjs
             tests/ci-targeted-checks.test.mjs
+            tests/ci-node-scope.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
@@ -377,15 +385,18 @@ jobs:
             fi
           done
 
-          node --test "${test_files[@]}"
-          node scripts/audit-learning-nodes.mjs
-          node --test tests/learning-node-audit.test.mjs
-          node scripts/audit-learning-task-rules.mjs
-          node --test tests/learning-task-rules.test.mjs
-          node scripts/build_p7_d3_inventory.mjs
-          node scripts/build_p7_d7_coverage.mjs
+          node scripts/ci-node-scope.mjs run "${test_files[@]}"
+          if [[ "$MATH_NODE_EXPECTED_SCOPE" != ci-only ]]; then
+            node scripts/audit-learning-nodes.mjs
+            node --test tests/learning-node-audit.test.mjs
+            node scripts/audit-learning-task-rules.mjs
+            node --test tests/learning-task-rules.test.mjs
+            node scripts/build_p7_d3_inventory.mjs
+            node scripts/build_p7_d7_coverage.mjs
+          fi
 
       - name: Audit native interaction types and mathematics evidence (read-only)
+        if: steps.node_scope.outputs.mode != 'ci-only'
         run: |
           node --check scripts/audit-learning-evidence.mjs
           node --test tests/learning-evidence-audit.test.mjs
