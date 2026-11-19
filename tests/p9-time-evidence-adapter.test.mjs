@@ -11,6 +11,7 @@ import * as V from '../dist/learning/phase5/b32-view.js';
 import {freshLesson,submitLesson,currentSubmission,validateLesson} from '../dist/learning/state.js';
 import {studyActionFocus} from '../dist/learning/workspace-flow.js';
 import {timeBinding,replayTimeEvidence as replay} from '../dist/learning/time-evidence.js';
+import {timeCompareBinding,replayTimeCompareEvidence} from '../dist/learning/timecompare-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyTimeFixtureStep as apply,timeEvidenceExample as example} from '../scripts/time-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -25,6 +26,11 @@ const saved=m=>({support:false,attempts:[{value:cp(m)}]});
 const accepted=(t,m)=>{assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);const p=replay(t,m);assert.ok(p);return p;};
 const rejected=(t,m)=>assert.equal(replay(t,m),null);
 const find=(id,index=0)=>cases.find(c=>c.id===id&&c.index===index);
+// #273: these six independently source-reviewed native comparison positions
+// gain a different strict adapter. The old 20 time constructions keep their
+// exact type and all other answer-only/bridge locations remain excluded.
+const reviewedCompare=new Set(['timecompare:0','timecompare:1','timecompare:2',
+ 'durationorder:1','durationwork:1','minuteclock:2']);
 
 function repair(c,m){
  const t=task(c),kind=c.type.slice(6);
@@ -76,10 +82,18 @@ test('literal positions cover 20 constructions, exclude all 40 answer/tool-only 
   const t=task(c),m=example(t);
   assert.equal(taskFingerprint(t),c.taskHash,key(c));assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);
   assert.deepEqual(m.answers,c.answers);
-  assert.equal(!!timeBinding(t,c),cases.includes(c));
-  assert.equal(!!thinkingGuide(t,c),cases.includes(c));
-  assert.equal(!!thinkingFeedback(t,m,saved(m),c),cases.includes(c));
-  if(!c.id.startsWith('link-')&&!cases.includes(c))rejected(t,m);
+  const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c));
+  assert.equal(!!timeBinding(t,c),previousFamily,
+   key(c)+' old 20 constructions must remain independently source-bound');
+  assert.equal(!!timeCompareBinding(t,c),newComparison,
+   key(c)+' only the six reviewed compare positions get another adapter');
+  assert.equal(!!replayTimeCompareEvidence(t,m,c),newComparison,
+   key(c)+' only real original comparison events may replay');
+  assert.equal(!!thinkingGuide(t,c),previousFamily||newComparison,
+   key(c)+' source-scoped thinking guide');
+  assert.equal(!!thinkingFeedback(t,m,saved(m),c),previousFamily||newComparison,
+   key(c)+' source-scoped checked feedback');
+  if(!c.id.startsWith('link-')&&!previousFamily)rejected(t,m);
  }
  for(const [path,wanted] of Object.entries(fixture.sourceFiles))
   assert.equal(createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex'),wanted,path+' retains the original model/view');
