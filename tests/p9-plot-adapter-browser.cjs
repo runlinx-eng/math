@@ -48,7 +48,13 @@ async function main(){
   context.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))errors.push('external '+req.url());});
   const shot=async suffix=>{const file=label+'-'+suffix+'.png';await page.screenshot({path:path.join(out,file),fullPage:false});screenshots.push(file);};
   const click=async(selector)=>{
-   const loc=page.locator(selector);assert.equal(await loc.count(),1,selector);
+   // B28 intentionally renders the same add-point action in the SVG axis
+   // and in the accessible, disclosed button row. Choose the original
+   // button control explicitly rather than ambiguously matching both.
+   const target=selector.startsWith('[data-x="m28-mark"]')||
+    selector.startsWith('[data-x="m28-unmark"]')
+     ?'#extra-controls button'+selector:selector;
+   const loc=page.locator(target);assert.equal(await loc.count(),1,target);
    // The shared P3 Retry and the dot controls live in original disclosure
    // elements. Open their actual ancestor summaries before the genuine click.
    for(let depth=0;depth<8&&!await loc.isVisible();depth++){
