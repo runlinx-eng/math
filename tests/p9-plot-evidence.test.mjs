@@ -8,6 +8,9 @@ import {BRIDGES,sessionTaskFor} from '../dist/learning/bridges.js';
 import {plotBinding,replayPlotEvidence} from '../dist/learning/plot-evidence.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import * as State from '../dist/learning/state.js';
+import * as Core from '../dist/exploration-core.js';
+import * as Storage from '../dist/storage.js';
 
 const native={measureplot:[0,1,2],quarterplot:[0,1,2],eighthplot:[0,1,2],
  modmoney:[2],modelChoice38:[2]};
@@ -140,4 +143,24 @@ test('feedback appears only for matching current latest submission',()=>{
  assert.equal(thinkingFeedback(t,m,{attempts:[{value:{...cp(m),prose:'stale'}}]},ctx(s)),null);
  assert.equal(thinkingFeedback(t,m,record,{sessionId:'bad',index:0}),null);
  const edited=cp(m);edited.prose='changed';assert.equal(thinkingFeedback(t,edited,record,ctx(s)),null);
+});
+
+test('current exact plot model and original attempts survive v2 backup and storage bytes',()=>{
+ const atlas=JSON.parse(readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
+ for(const spec of ids){
+  const t=at(spec),m=model(t),lesson=State.freshLesson(spec.id);
+  lesson.index=spec.index;lesson.view='task';lesson.models[spec.index]=cp(m);
+  State.submitLesson(lesson);
+  assert.deepEqual(lesson.cases[spec.index].attempts.at(-1).value,m);
+  const state=Core.fresh();state.lessons[spec.id]=lesson;
+  assert.deepEqual(Core.validate(cp(state),atlas),state);
+  const payload=JSON.stringify({app:'math-explorer',version:2,state});
+  const parsed=Core.parseBackup(payload,atlas);
+  assert.deepEqual(parsed,state,'v2 parser did not change original model or attempt bytes');
+  assert.ok(proof(t,parsed.lessons[spec.id].models[spec.index]));
+  const raw=JSON.stringify(state),store=new Map();
+  const storage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
+  Storage.writeStored(Core.KEY,raw,storage);
+  assert.equal(Storage.readStored(Core.KEY,storage),raw);
+ }
 });
