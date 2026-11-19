@@ -1,3 +1,4 @@
+import {scaleBinding,replayScaleEvidence} from './scale-evidence.js';
 import {balanceBinding,replayBalanceEvidence} from './balance-evidence.js';
 import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
@@ -89,6 +90,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-scale'){
+    const source=scaleBinding(task,context);
+    return source?{type:task.type,summary:task.kind==='digital'?'想一想：显示的分和秒怎样对应保存的秒数？（可选）':'想一想：图上的位置与保存的读数怎样对应？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-balance'){
     const source=balanceBinding(task,context);
     return source?{type:task.type,summary:task.mode==='compare'?'想一想：天平的样子与这次选择怎样对应？（可选）':'想一想：砝码、平衡与保存的数量怎样对应？（可选）',question:source.question}:null;
@@ -224,6 +229,28 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-scale'){
+    const source=scaleBinding(task,context);if(!source)return null;
+    const proof=replayScaleEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,i=c.instrument,detail=[
+      '这幅仪器图或数字显示由工具给定；这里核对这份作品中实际保存的读数和单位。',
+      `实际保存的读数原文“${c.record.raw}”、单位“${c.record.unit}”，与题图给定的量精确对应。`
+    ];
+    if(i.shape==='digital')detail.push(`工具显示 ${i.display}，分别表示分和秒；按每分60秒，这个显示对应 ${task.value} 秒。`);
+    else{
+      const position={dial:'指针',jug:'液面',thermo:'液面',ruler:'终点'}[i.kind];
+      detail.push(`题图中相邻标记是 ${i.lowerLabel.text} 与 ${i.upperLabel.text} ${i.unit}，给定${position}位于这段间隔的 ${i.fractionBetweenLabels.text} 处。`);
+      if(i.kind==='ruler')detail.push(`这把图示尺每厘米分成 ${i.minorIntervalsPerMajor.text} 小格，每格表示 ${i.minorStep.text} cm；这些刻度是工具提供的。`);
+    }
+    for(const q of c.currentQuestions)detail.push(`当前“${q.label}”填写“${q.raw}”，与 ${task.value} ${q.sourceUnit} 表示同一段长度；这里只核对当前填写，没有记录它的填写时刻或独立换算步骤。`);
+    detail.push(`第一次有限数字保存的原文“${c.firstMeasure.raw}”仍保留；之后的纠正没有替换它。`,
+      '保存读数的记录不能说明你用了哪种求中点、数分度或换算方法；真实测量与自由解释也没有在这里评定。');
+    if(proof.issue)detail.push('末尾仍保留工具的真实提示；先前有效保存与后来未成功保存的请求都在原记录中。');
+    if(proof.historyAtCapacity)detail.push('操作记录已到保存上限；这里只核对已经保留的读数，不补记之后未保存的动作。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整作品一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:'当前保存的读数和单位，与工具给定的刻度位置或数字显示精确对应。',connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-balance'){
     const source=balanceBinding(task,context);if(!source)return null;
     const proof=replayBalanceEvidence(task,model);if(!proof)return null;

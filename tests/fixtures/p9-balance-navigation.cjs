@@ -78,12 +78,12 @@ module.exports={
       ],
       "taskHash": "892c4fd033c82c1c8adb22de1baa19db58653866e518156a8cd51c719bc5e952",
       "strictBalanceCoverage": false,
-      "existingOtherFeedback": false,
+      "existingOtherFeedback": true,
       "role": "prerequisite"
     }
   ],
   "sourceHashes": {
-    "dist/learning/learn.js": "167d5bc7213479506720fb342c7c3adad8e855c1c8cbaa4e429053cda216cd43"
+    "dist/learning/learn.js": "27fd83b1236edd305d8417ea8f61767dbef652398f73ef2cce32191585efeda9"
   },
   "controllerSourceHashes": {
     "update": "e9cce21f3f3cf36ba81f6d4996bc6bc090e22cb545cc0a2e7349720c9f0ff1cc",
