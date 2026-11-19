@@ -7,6 +7,7 @@ import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {vesselsBinding,replayVesselsEvidence} from './vessels-evidence.js';
+import {cupfillBinding,replayCupfillEvidence} from './cupfill-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
 import {cubeFractionBinding,replayCubeFractionEvidence} from './cubefraction-evidence.js';
 import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
@@ -129,6 +130,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-m28-vessels'){
     const source=vesselsBinding(task,context);
     return source?{type:task.type,summary:'想一想：每次倒入的量怎样对应容量和顺序？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-m31-fill'){
+    const source=cupfillBinding(task,context);
+    return source?{type:task.type,summary:'想一想：同一份水，换大小量杯后杯数为什么不同？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-multable'){
     const source=multableBinding(task,context);
@@ -429,6 +434,28 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('你曾查看提示或比较反馈。');
     return{title:'这次作品中的思考线索',
       observation:proof.mode==='order'?'每个容器都有重复倒入和装满确认，随后按容量排序。':'按题目要求的单位实际逐次倒入，次数与当前填写相符。',
+      connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-m31-fill'){
+    const source=cupfillBinding(task,context);if(!source)return null;
+    const proof=replayCupfillEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '容器容量、目标水量与量杯大小由屏幕题目给定；这里只核对实际点击倒杯、保存的数字与单位，不代表实物测量、自选策略或通用掌握。',
+      ...c.runs.map(run=>`实际选择“${run.unit}”（每杯 ${run.unitAmount} ${c.unit}），成功倒入 ${run.count} 次：${run.count} × ${run.unitAmount} = ${run.goal} ${c.unit}；之后才保存“${run.fields.count}”杯、“${run.fields.amount}”${run.fields.unit}。`)
+    ];
+    if(c.comparison){
+      const small=c.runs.find(x=>x.unit===c.comparison.smallerCup);
+      const large=c.runs.find(x=>x.unit===c.comparison.largerCup);
+      if(c.comparison.largerCupUsesFewer&&small&&large)
+        detail.push(`同一目标 ${c.goal} ${c.unit}，较大杯 ${large.unitAmount} ${c.unit} 倒 ${large.count} 次，较小杯 ${small.unitAmount} ${c.unit} 倒 ${small.count} 次；杯数减少而总量不变。`);
+    }
+    if(proof.failures.length)detail.push(`原历史保留了 ${proof.failures.length} 次不成功的操作或记录请求，纠正后才形成当前记录。`);
+    if(proof.overflows.length)detail.push(`有 ${proof.overflows.length} 次超过容器容量的倒杯请求，没有把这些失败请求算进水量。`);
+    if(c.firstRecorded?.record)detail.push(`第一次保存请求中的杯数原文为“${c.firstRecorded.record.count}”，没有替换成后来的数字。`);
+    if(attempts.length>1)detail.push('之前的提交仍保留；这里只核对当前作品与最新一次完整提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',
+      observation:c.runs.length>1?'同一个壶的两次量杯测量都完整记录：杯越大，需要的整杯次数越少，但总水量相同。':'实际倒入次数与每杯容量、目标水量及记录的单位一致。',
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-multable'){
