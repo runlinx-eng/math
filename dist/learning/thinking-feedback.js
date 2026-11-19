@@ -1,3 +1,4 @@
+import {rulerBinding,replayRulerEvidence} from './ruler-evidence.js';
 import {unitrefineBinding,replayUnitrefineEvidence} from './unitrefine-evidence.js';
 import {unitcoverBinding,replayUnitcoverEvidence} from './unitcover-evidence.js';
 import {multableBinding,replayMultableEvidence} from './multable-evidence.js';
@@ -87,6 +88,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：这些名字表示哪一部分？（可选）',question:source.question}:null;
   }
   if(!isEvidenceContext(context))return null;
+  if(task?.type==='x-m28-ruler'){
+    const source=rulerBinding(task,context);
+    return source?{type:task.type,summary:'想一想：对齐零刻度后，怎样留下读数和单位？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-m28-refine'){
     const source=unitrefineBinding(task,context);
     return source?{type:task.type,summary:'想一想：单位大小改变时，完整单位数和余量怎样对应？（可选）',question:source.question}:null;
@@ -214,6 +219,24 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-m28-ruler'){
+    const source=rulerBinding(task,context);if(!source)return null;
+    const proof=replayRulerEvidence(task,model);if(!proof)return null;
+    const c=proof.construction,detail=[
+      '物体长度、参照段和尺刻度由工具绘制；这里核对当前零点位置与有效保存的读数、单位。',
+      `零刻度已对齐物体起点；保存的读数原文是“${c.record.raw}”，单位是“${c.record.unit}”，与本题要求的读数精确一致。`,
+      `这份作品第一次实际保存的读数原文“${c.firstMeasure.raw}”仍保留；这里描述最后有效保存的这份作品。`
+    ];
+    if(c.readingRule==='nearest-whole-source-unit')detail.push(`图中给定长度为 ${task.actual} ${c.unit}；按本题要求取最近的整单位，保存的读数为 ${c.expectedReading.text} ${c.unit}。`);
+    if(c.selectedToolLabel)detail.push(`当前选择“${c.selectedToolLabel}”，与这道题给出的工具要求对应；该工具选择后的读数已经保存。`);
+    if(c.estimation)detail.push(`首次留下的有效估计原文“${c.estimation.rawPrediction}”仍保留；当前填写的差 ${c.estimation.rawError}，与该估计和读数相差 ${c.estimation.differenceFromReading.text} ${c.unit} 精确对应。`);
+    if(proof.issue)detail.push('作品末尾仍保留工具的提示；先前有效保存和之后的失败请求都在原记录中。');
+    if(proof.historyAtCapacity)detail.push('这份作品的操作记录已到保存上限；这里只核对已经保留的尺位置与保存读数。');
+    if(attempts.length>1)detail.push('此前提交原样保留，这里只描述与当前完整作品一致的最新提交。');
+    if(record.support)detail.push('你看过提示或比较反馈。');
+    return{title:'这次作品中的思考线索',observation:'零刻度已对齐，当前保存的读数与单位符合这道模拟尺题目的要求。',
+      connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-refine'){
     const source=unitrefineBinding(task,context);if(!source)return null;
     const proof=replayUnitrefineEvidence(task,model);if(!proof)return null;

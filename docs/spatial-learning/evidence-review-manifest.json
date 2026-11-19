@@ -5704,6 +5704,150 @@
       "adapter": "unitrefine",
       "taskHash": "5617ba45b7c747ffa1bdb9fb404e1adeeaa799d52378b9ed2bf7cecb4545849b",
       "method": null
+    },
+    {
+      "sessionId": "lengthstart",
+      "index": 1,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_KaF0SQvaiu",
+      "adapter": "ruler",
+      "taskHash": "6163451599ea7ecda317a4a5f4a3a4d902d4eeedcc3320dbba0a16a52ec7df35",
+      "method": null
+    },
+    {
+      "sessionId": "estimateLength",
+      "index": 0,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_OzRZ89GrQW",
+      "adapter": "ruler",
+      "taskHash": "16f5ac317e57f7e74457184915ffdbc779e3489a64543546c95ad291ff43974e",
+      "method": null
+    },
+    {
+      "sessionId": "estimateLength",
+      "index": 1,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_OzRZ89GrQW",
+      "adapter": "ruler",
+      "taskHash": "341a694edb48cbc89df6605a200b8f97417c1e650f2b9813c5da3daace882a28",
+      "method": null
+    },
+    {
+      "sessionId": "estimateLength",
+      "index": 2,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_OzRZ89GrQW",
+      "adapter": "ruler",
+      "taskHash": "6e8aa167d14a7016425814764863c566c9f9a8c2f5c179b7d3457ece93afd2fb",
+      "method": null
+    },
+    {
+      "sessionId": "estimateLength",
+      "index": 3,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_OzRZ89GrQW",
+      "adapter": "ruler",
+      "taskHash": "3bef89d793e97d52c9a9e8badc9ea7f040278777dbb852b10c83c14375df24d4",
+      "method": null
+    },
+    {
+      "sessionId": "lengthtools",
+      "index": 0,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_e4x3l2JeLI",
+      "adapter": "ruler",
+      "taskHash": "e1f41a5b2900cb4fa24a2dd25beaf07e5457b209ff70d257bd3c9b381bd70ce2",
+      "method": null
+    },
+    {
+      "sessionId": "lengthtools",
+      "index": 1,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_e4x3l2JeLI",
+      "adapter": "ruler",
+      "taskHash": "ebeec4980aa0f504e870fce158e428abaa6abc6341c39fb5ee27f1132fc950e1",
+      "method": null
+    },
+    {
+      "sessionId": "lengthtools",
+      "index": 2,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_e4x3l2JeLI",
+      "adapter": "ruler",
+      "taskHash": "fd4b6529ab97235a1dfc5346836914179aba0b01ff4a7890de990e4dd68e4177",
+      "method": null
+    },
+    {
+      "sessionId": "lengthtools",
+      "index": 3,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_e4x3l2JeLI",
+      "adapter": "ruler",
+      "taskHash": "2a4eb437a8ec787ba835f515d1ed03071eb63211bca7fbec262c90759338ea6a",
+      "method": null
+    },
+    {
+      "sessionId": "lengthtools",
+      "index": 4,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_e4x3l2JeLI",
+      "adapter": "ruler",
+      "taskHash": "335dba64b128357cca2adfee864c7fa018a44790d379dd5079353687bb5d2993",
+      "method": null
+    },
+    {
+      "sessionId": "twounits",
+      "index": 0,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_jHv4BgRK8B",
+      "adapter": "ruler",
+      "taskHash": "d8fb12f1e99f3d90d8352d65adfb49025b2f89ee438322ec078cc00f86886086",
+      "method": null
+    },
+    {
+      "sessionId": "twounits",
+      "index": 1,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_jHv4BgRK8B",
+      "adapter": "ruler",
+      "taskHash": "f39daad2ffb89f89ff9a99b9e5106c65919cc755d2647993c66903128f535271",
+      "method": null
+    },
+    {
+      "sessionId": "measurecalc",
+      "index": 0,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_6oxQPNLHNv",
+      "adapter": "ruler",
+      "taskHash": "6163451599ea7ecda317a4a5f4a3a4d902d4eeedcc3320dbba0a16a52ec7df35",
+      "method": null
+    },
+    {
+      "sessionId": "measuremoney",
+      "index": 0,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_mFJ-2ZF6Tk",
+      "adapter": "ruler",
+      "taskHash": "0345e7ff933a810f9f7179d57fbcf4a43477f83f488916276b6691dbbcebb9b1",
+      "method": null
+    },
+    {
+      "sessionId": "communicate38",
+      "index": 1,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_TMoHjMhRS2",
+      "adapter": "ruler",
+      "taskHash": "6163451599ea7ecda317a4a5f4a3a4d902d4eeedcc3320dbba0a16a52ec7df35",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 2,
+      "type": "x-m28-ruler",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "ruler",
+      "taskHash": "e1f41a5b2900cb4fa24a2dd25beaf07e5457b209ff70d257bd3c9b381bd70ce2",
+      "method": null
     }
   ]
 }

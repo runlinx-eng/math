@@ -106,7 +106,7 @@ async function main(){
  const hash=value=>digest(JSON.stringify(stable(value))),ok=(value,message,detail={})=>{assert.ok(value,message);checks.push({message,...detail});};
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
  const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),event=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
- const sourceFiles=['dist/learning/money-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-money-adapter-browser.cjs','tests/fixtures/p9-money-cases.cjs','tests/fixtures/p9-money-navigation.cjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
+ const sourceFiles=['dist/learning/money-evidence.js','dist/learning/ruler-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-money-adapter-browser.cjs','tests/fixtures/p9-money-cases.cjs','tests/fixtures/p9-money-navigation.cjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
  const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheckoutSha:checkoutSha,githubSha:process.env.GITHUB_SHA||null,runId:process.env.GITHUB_RUN_ID||null,runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,
   workflow:process.env.GITHUB_WORKFLOW||null,workingTreeDirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),nodeVersion:process.version,cache,
   sourceFiles:Object.fromEntries(sourceFiles.map(file=>[file,digest(fs.readFileSync(path.join(root,file)))])),childTrial:false,independentTeachingReview:false,seededCorrectWork:false,seededLessonPositions:false,
@@ -116,6 +116,7 @@ async function main(){
  const Tasks=await import('../dist/learning/tasks.js'),Engine=await import('../dist/learning/phase4/engine.js'),{setField}=await import('../dist/learning/phase4/ui.js');
  const State=await import('../dist/learning/state.js'),Core=await import('../dist/exploration-core.js'),{studyActionFocus}=await import('../dist/learning/workspace-flow.js');
  const {moneyBinding:binding,replayMoneyEvidence:replay}=await import('../dist/learning/money-evidence.js'),atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
+ const {rulerBinding,replayRulerEvidence}=await import('../dist/learning/ruler-evidence.js');
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const lessonFrom=(value,c)=>Object.hasOwn(BRIDGES,c.id)?value.daily.bridges[c.id]:value.lessons[c.id];
  for(const c of[...cases,...associated,...practice])assert.equal(hash(taskFor(c)),c.taskHash);
@@ -212,8 +213,10 @@ async function main(){
    const solve=async c=>{for(const step of operationPlan(c,await model(c)))step.field?await field(c,step.field,step.value):await act(c,step.action,step.index);};
    const capture=async(c,phase,strict,{role,checked=false}={})=>{
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
-    assert.equal(Tasks.validModel(task,m),true);assert.equal(await hint.count(),strict?1:0);if(strict)assert.equal(await hint.isVisible(),true);
-    const words=strict?await hint.innerText():null;
+    const rulerPrerequisite=role==='prerequisite'&&c.id==='measuremoney'&&c.index===0,hasFeedback=strict||rulerPrerequisite;
+    assert.equal(Tasks.validModel(task,m),true);assert.equal(await hint.count(),hasFeedback?1:0);if(hasFeedback)assert.equal(await hint.isVisible(),true);
+    const words=hasFeedback?await hint.innerText():null;
+    if(rulerPrerequisite){assert.equal(binding(task,ctx(c)),null);assert.ok(rulerBinding(task,ctx(c))&&replayRulerEvidence(task,m));assert.deepEqual(record.attempts.at(-1).value,m);assert.ok(words.includes('模拟尺')&&words.includes('物体长度、参照段和尺刻度由工具绘制'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);}
     if(strict){
      assert.ok(proof&&binding(task,ctx(c)));assert.deepEqual(record.attempts.at(-1).value,m);
      assert.ok(words.includes('合计和余款由工具显示')&&words.includes('不据此评价独立心算'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);
@@ -222,7 +225,7 @@ async function main(){
       assert.ok(words.includes(`本次提交的“${answer.label}”是“${option[1]}”`));assert.ok(!words.includes(`本次提交的“${answer.label}”是“${answer.raw}”`));
      }
     }
-    const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,
+    const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,existingRulerPrerequisiteFeedback:rulerPrerequisite,
      constructedCompatibilityFixture:contextRole==='constructed-compatibility'};captures.push(value);return value;
    };
    const check=async(c,correct,strict,phase,role)=>{
@@ -270,7 +273,7 @@ async function main(){
        return{...identity,report,ready:report?.cache===expected&&report.complete===true&&report.cached===report.total&&report.total>0};
       },cache);if(status.ready)break;await target.waitForTimeout(100);
      }
-     const modules=await target.evaluate(async expected=>{const store=await caches.open(expected);return Promise.all(['storage.js','v2.html','learn.html','learning/learn.js','exploration-core.js','exploration.js','learning/money-evidence.js','learning/evidence-contract.js','learning/evidence-adapters.js','learning/thinking-feedback.js','learning/state.js','learning/tasks.js','learning/phase4/ui.js','learning/phase4/engine.js','learning/phase4/view-engine.js','learning/p3-view.js','learning/p3-workflow.js','learning/workspace-flow.js','learning/phase5/b11-model.js','learning/phase5/b11-view.js','learning/phase5/b12-model.js','learning/phase5/b12-view.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.js','learning/phase5/b38.js','learning/phase5/b38-more.js','learning/phase4/async-batches.js','learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js'].map(async name=>({name,cached:!!await store.match(new URL(name,location.href))})));},cache);
+     const modules=await target.evaluate(async expected=>{const store=await caches.open(expected);return Promise.all(['storage.js','v2.html','learn.html','learning/learn.js','exploration-core.js','exploration.js','learning/money-evidence.js','learning/ruler-evidence.js','learning/evidence-contract.js','learning/evidence-adapters.js','learning/thinking-feedback.js','learning/state.js','learning/tasks.js','learning/phase4/ui.js','learning/phase4/engine.js','learning/phase4/view-engine.js','learning/p3-view.js','learning/p3-workflow.js','learning/workspace-flow.js','learning/phase5/b11-model.js','learning/phase5/b11-view.js','learning/phase5/b12-model.js','learning/phase5/b12-view.js','learning/phase5/b28-model.js','learning/phase5/b28-view.js','learning/phase5/b29-model.js','learning/phase5/b29-view.js','learning/phase5/b33-model.js','learning/phase5/b33-view.js','learning/phase5/b33.js','learning/phase5/b38.js','learning/phase5/b38-more.js','learning/phase4/async-batches.js','learning/phase5/b39.js','learning/phase5/b39-model.js','learning/phase5/b39-view.js'].map(async name=>({name,cached:!!await store.match(new URL(name,location.href))})));},cache);
      const empty=originalState(await state(target));assert.deepEqual(empty.lessons,{});assert.deepEqual(empty.daily.bridges,{});
      const item={width,height,role:profile.role,cache,status,modules,missing:modules.filter(x=>!x.cached).map(x=>x.name),originStopped:false,emptyLearningState:true,emptyStorage:storageOnly(await rawSnapshot('empty-'+profile.role,target))};
      ok(status.ready&&item.missing.length===0,prefix+' '+profile.role+' active complete cache and genuine empty learning state',item);offline.push(item);return item;
@@ -398,6 +401,7 @@ async function main(){
   assert.equal(errors.length,0);assert.equal(remote.length,0);assert.equal(observations.length,56);assert.equal(forgeries.length,224);assert.equal(preparations.length,20);assert.equal(navigations.length,66);
   assert.equal(isolated.filter(x=>x.kind==='associated').length,40);assert.equal(isolated.filter(x=>x.kind==='old-practice-compatibility').length,20);assert.equal(boundaries.length,16);
   assert.equal(checkedLedger.filter(x=>x.contextRole==='source').length,510);assert.equal(checkedLedger.filter(x=>x.contextRole==='constructed-compatibility').length,6);assert.equal(checkedLedger.length,516);
+  assert.deepEqual(checkedLedger.filter(x=>x.existingRulerPrerequisiteFeedback).map(x=>[x.width,x.id,x.index]),[[1440,'measuremoney',0],[1280,'measuremoney',0]]);
   assert.equal(captures.filter(x=>x.contextRole==='source').length,642);assert.equal(captures.filter(x=>x.contextRole==='constructed-compatibility').length,8);assert.equal(captures.length,650);
   assert.equal(retries.filter(x=>x.contextRole==='source').length,72);assert.equal(retries.filter(x=>x.contextRole==='constructed-compatibility').length,2);assert.equal(retries.length,74);
   assert.equal(backups.filter(x=>x.kind==='actual-browser-v2').length,2);assert.equal(backups.filter(x=>x.kind==='constructed-compatibility-final-v2').length,2);

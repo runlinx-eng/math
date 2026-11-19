@@ -20,6 +20,7 @@ import fixture from './fixtures/p9-unitcover-cases.cjs';
 import navigationFixture from './fixtures/p9-unitcover-navigation.cjs';
 import flows from './p9-unitcover-adapter-browser.cjs';
 import {unitcoverBinding as binding,replayUnitcoverEvidence as replay} from '../dist/learning/unitcover-evidence.js';
+import {rulerBinding,replayRulerEvidence} from '../dist/learning/ruler-evidence.js';
 import {thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 await ensureB39Ready();
 const cp=structuredClone;
@@ -99,8 +100,10 @@ function proofHarness(env){
  const capture=(c,phase,strict,role,checkedAttempt=false)=>{
   const stem=label+'-'+phase;assert.ok(!names.has(stem),'one immutable raw/state path '+stem);names.add(stem);
   const a=page.record,m=cp(page.model),record=cp(a.cases[c.index]||null),task=taskFor(c),proof=replay(task,m),feedback=thinkingFeedback(task,m,record,ctx(c));
-  assert.equal(!!feedback,strict,stem);if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
-  const row={id:c.id,index:c.index,label,phase,stem,role,checked:checkedAttempt,model:m,record,strict,proof,correct:Tasks.inspect(task,m).correct,raw:env.raw};captures.push(row);return row;
+  const rulerPrerequisite=role==='prerequisite'&&['lengthstart:1','twounits:0','twounits:1'].includes(c.id+':'+c.index);
+  assert.equal(!!feedback,strict||rulerPrerequisite,stem);if(strict){assert.ok(proof);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
+  if(rulerPrerequisite){assert.equal(binding(task,ctx(c)),null);assert.ok(rulerBinding(task,ctx(c))&&replayRulerEvidence(task,m));assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(feedback.method,null);}
+  const row={id:c.id,index:c.index,label,phase,stem,role,checked:checkedAttempt,model:m,record,strict,proof,existingRulerPrerequisiteFeedback:rulerPrerequisite,correct:Tasks.inspect(task,m).correct,raw:env.raw};captures.push(row);return row;
  };
  const check=(c,correct,strict,phase,role)=>{const attempt=page.check(correct),row=capture(c,phase,strict,role,true);row.attempt=attempt;checked.push(row);return row;};
  const retry=(c,kind)=>{const before=cp(page.record);page.retry();retries.push({id:c.id,index:c.index,kind,before,after:cp(page.record)});};
@@ -152,6 +155,7 @@ test('the entire cumulative source route uses original Next, Check, support and 
  }
  assert.equal(prerequisites,4);assert.equal(boundaries,4);assert.equal(env.stats.next,8);assert.equal(env.stats.rangeEvents,16);assert.equal(h.checked.length,128);assert.equal(h.captures.length,184);assert.equal(h.retries.length,11);
  assert.deepEqual(Object.fromEntries(['native','boundary','associated','prerequisite'].map(role=>[role,h.checked.filter(x=>x.role===role).length])),{native:105,boundary:14,associated:5,prerequisite:4});
+ assert.deepEqual(h.checked.filter(x=>x.existingRulerPrerequisiteFeedback).map(x=>x.id+':'+x.index).sort(),['lengthstart:1','twounits:0','twounits:1']);
  const all=env.read(),positions=[...new Set(h.checked.map(x=>x.id+':'+x.index))];assert.equal(positions.length,15);
  for(const key of positions){const rows=h.checked.filter(x=>x.id+':'+x.index===key),last=rows.at(-1),a=(Object.hasOwn(BRIDGES,last.id)?all.daily.bridges:all.lessons)[last.id];assert.deepEqual(a.cases[last.index].attempts,rows.map(x=>x.attempt));assert.deepEqual(a.models[last.index],last.model);}
  for(const row of h.captures){const a=(Object.hasOwn(BRIDGES,row.id)?all.daily.bridges:all.lessons)[row.id],old=row.record?.attempts||[];assert.deepEqual(a.cases[row.index].attempts.slice(0,old.length),old);}

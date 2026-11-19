@@ -138,7 +138,7 @@ async function main(){
  const hash=value=>digest(JSON.stringify(stable(value))),ok=(value,message,detail={})=>{assert.ok(value,message);checks.push({message,...detail});};
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
  const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),event=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
- const sourceFiles=['dist/learning/unitcover-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-unitcover-adapter-browser.cjs','tests/fixtures/p9-unitcover-cases.cjs','tests/p9-unitcover-evidence.test.mjs','tests/fixtures/p9-unitcover-navigation.cjs','tests/p9-unitcover-navigation.test.mjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
+ const sourceFiles=['dist/learning/unitcover-evidence.js','dist/learning/ruler-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-unitcover-adapter-browser.cjs','tests/fixtures/p9-unitcover-cases.cjs','tests/p9-unitcover-evidence.test.mjs','tests/fixtures/p9-unitcover-navigation.cjs','tests/p9-unitcover-navigation.test.mjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
  const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheckoutSha:checkoutSha,githubSha:process.env.GITHUB_SHA||null,runId:process.env.GITHUB_RUN_ID||null,runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,
   workflow:process.env.GITHUB_WORKFLOW||null,workingTreeDirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),nodeVersion:process.version,cache,
   sourceFiles:Object.fromEntries(sourceFiles.map(file=>[file,digest(fs.readFileSync(path.join(root,file)))])),childTrial:false,independentTeachingReview:false,nativeSourceSeededCorrectWork:false,nativeSourceSeededLessonPositions:false,
@@ -149,6 +149,7 @@ async function main(){
  const {thinkingFeedback}=await import('../dist/learning/thinking-feedback.js');
  const State=await import('../dist/learning/state.js'),Core=await import('../dist/exploration-core.js'),{studyActionFocus}=await import('../dist/learning/workspace-flow.js');
  const {unitcoverBinding:binding,replayUnitcoverEvidence:replay}=await import('../dist/learning/unitcover-evidence.js'),atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
+ const {rulerBinding,replayRulerEvidence}=await import('../dist/learning/ruler-evidence.js');
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const lessonFrom=(value,c)=>Object.hasOwn(BRIDGES,c.id)?value.daily.bridges[c.id]:value.lessons[c.id];
  for(const c of[...cases,...associated,...practice])assert.equal(hash(taskFor(c)),c.taskHash);
@@ -262,8 +263,10 @@ async function main(){
    const capture=async(c,phase,strict,{role,checked=false}={})=>{
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
     assert.equal(Tasks.validModel(task,m),true);const expectedFeedback=thinkingFeedback(task,m,record,ctx(c)),native=!!binding(task,ctx(c));
-    assert.equal(native&&!!expectedFeedback,strict);if(role!=='prerequisite')assert.equal(!!expectedFeedback,strict);
+    const rulerPrerequisite=role==='prerequisite'&&['lengthstart:1','twounits:0','twounits:1'].includes(c.id+':'+c.index);
+    assert.equal(native&&!!expectedFeedback,strict);assert.equal(!!expectedFeedback,strict||rulerPrerequisite);
     assert.equal(await hint.count(),expectedFeedback?1:0);if(expectedFeedback)assert.equal(await hint.isVisible(),true);const words=expectedFeedback?await hint.innerText():null;
+    if(rulerPrerequisite){assert.equal(binding(task,ctx(c)),null);assert.ok(rulerBinding(task,ctx(c))&&replayRulerEvidence(task,m));assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);assert.ok(words.includes('模拟尺')&&words.includes('物体长度、参照段和尺刻度由工具绘制'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);}
     if(strict){
      assert.ok(proof&&native);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);
      assert.ok(words.includes('网格、每块长度和“已放”块数由工具提供')&&words.includes('每个小格只盖一次'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);
@@ -469,6 +472,7 @@ async function main(){
   assert.equal(isolated.filter(x=>x.kind==='associated').length,10);assert.equal(isolated.filter(x=>x.kind==='old-practice-compatibility').length,6);assert.equal(boundaries.length,8);assert.equal(capacity.length,12);
   const nativeChecked=checkedLedger.filter(x=>x.contextRole==='source'),nativeCaptures=captures.filter(x=>x.contextRole==='source'),capacityChecked=checkedLedger.filter(x=>x.role==='capacity'),capacityCaptures=captures.filter(x=>x.role==='capacity');
   assert.equal(nativeChecked.length,256);assert.equal(nativeCaptures.length,368);assert.equal(capacityChecked.length,60);assert.equal(capacityCaptures.length,168);
+  assert.deepEqual(checkedLedger.filter(x=>x.existingOtherFeedback).map(x=>x.width+':'+x.id+':'+x.index).sort(),['1280:lengthstart:1','1280:twounits:0','1280:twounits:1','1440:lengthstart:1','1440:twounits:0','1440:twounits:1']);
   assert.equal(checkedLedger.length,316);assert.equal(captures.length,536);assert.equal(retries.filter(x=>x.contextRole==='source').length,22);assert.equal(retries.length,34);
   assert.ok(nativeChecked.every(x=>!x.constructedCompatibilityFixture));assert.ok(capacityChecked.every(x=>x.constructedCompatibilityFixture));
   assert.equal(backups.filter(x=>x.kind==='actual-browser-v2').length,2);assert.equal(backups.filter(x=>x.kind==='constructed-practice-final-v2').length,2);assert.equal(backups.filter(x=>x.kind==='constructed-capacity-final-v2').length,12);

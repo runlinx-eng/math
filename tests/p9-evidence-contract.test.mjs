@@ -1,3 +1,4 @@
+import ruler from './fixtures/p9-ruler-cases.cjs';
 import unitrefine from './fixtures/p9-unitrefine-cases.cjs';
 import unitcover from './fixtures/p9-unitcover-cases.cjs';
 import multable from './fixtures/p9-multable-cases.cjs';
@@ -55,6 +56,7 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 // Independently reviewed native locations: registry discovery must match this
 // contract, rather than allowing a new shared widget to self-authorize feedback.
 const reviewed={
+ ruler:ruler.cases.map(({id:sessionId,index})=>({sessionId,index})),
  unitrefine:unitrefine.cases.map(({id:sessionId,index})=>({sessionId,index})),
  unitcover:unitcover.cases.map(({id:sessionId,index})=>({sessionId,index})),
  multable:multable.cases.map(({id:sessionId,index})=>({sessionId,index})),
@@ -173,7 +175,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,47);
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,48);
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
