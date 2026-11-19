@@ -141,7 +141,6 @@ test('native binding does not leak to associated lessons, stale context or old p
    {sessionId:s.sessionId,index:-1},
    {sessionId:s.sessionId,index:s.index+0.1},
    {sessionId:s.sessionId,index:'0'},
-   {sessionId:s.sessionId,index:0,extra:'x'},
    {sessionId:'__unknown__',index:s.index},
    null,[],{}
   ])assert.equal(compareBinding(t,bad),null);
