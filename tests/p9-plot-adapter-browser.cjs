@@ -110,20 +110,19 @@ async function main(){
     const response=await page.goto(origin.base+'learn.html#'+row.id,{waitUntil:'domcontentloaded'});
     check(response?.fromServiceWorker()===true,label+' navigation was served offline');
     await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,row.id);
-    if(row.index){
-     // B33/B38 have unrelated native prerequisites. Position ONLY their still
-     // blank lesson; never inject correct content, models, scores or attempts.
-     await page.evaluate(({id,index})=>{
-      const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
-      const lesson=state.lessons[id];
-      if(!lesson||Object.keys(lesson.cases).length&&Object.values(lesson.cases).some(c=>c.attempts?.length))
-       throw Error('Index positioning requires untouched native lesson '+id);
-      lesson.index=index;lesson.view='task';
-      localStorage.setItem('math-explorer-v2',JSON.stringify(state));
-     },row);
-     const reload=await page.reload();
-     check(reload?.fromServiceWorker()===true,label+' seeded EMPTY lesson reload is offline');
-    }
+    // New courses start with an empty original lesson. Enter its task view;
+    // only the two unrelated B33/B38 prerequisites need a nonzero position.
+    // No answer, attempt, model, score or evidence is ever inserted.
+    await page.evaluate(({id,index})=>{
+     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     const lesson=state.lessons[id];
+     if(!lesson||Object.values(lesson.cases||{}).some(c=>c.attempts?.length))
+      throw Error('Native position requires untouched lesson '+id);
+     lesson.index=index;lesson.view='task';
+     localStorage.setItem('math-explorer-v2',JSON.stringify(state));
+    },row);
+    const reload=await page.reload();
+    check(reload?.fromServiceWorker()===true,label+' empty original task view is served offline');
     await page.waitForFunction(index=>window.mathLesson?.snapshot()?.index===index,row.index);
    }
    check(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),label+' 1920x1080');
