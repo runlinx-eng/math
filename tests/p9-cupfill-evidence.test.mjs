@@ -120,7 +120,7 @@ test('#270 stale saved record does not count after the current cup is reset',()=
 test('#270 no bridge copy inherits native A or source-bound evidence',()=>{
  let count=0;
  for(const id of Object.keys(BRIDGES))for(const [index,t] of (sessionTasks(id)||[]).entries()){
-  if(t.type!=='x-m31-fill')continue;
+  if(t?.type!=='x-m31-fill')continue;
   count++;
   const c=context(id,index);
   assert.equal(cupfillBinding(t,c),null);
