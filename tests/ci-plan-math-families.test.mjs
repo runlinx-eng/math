@@ -25,11 +25,14 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(plan.legacyCommands,86);
  assert.equal(plan.legacyDistinctScripts,85);
  assert.equal(plan.legacyEvidenceDirs,83);
- assert.equal(plan.registeredNewFamilies,2);
- assert.equal(plan.plannedNewJobs.length,1);
- assert.equal(plan.plannedNewJobs[0].wave,1);
- assert.deepEqual(plan.plannedNewJobs[0].modules.map(m=>m.entry),
-  ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']);
+ assert.equal(plan.registeredNewFamilies,6);
+ assert.equal(plan.plannedNewJobs.length,2);
+ assert.ok(plan.plannedNewJobs.every(job=>job.wave===1));
+ assert.deepEqual(plan.plannedNewJobs.map(job=>job.modules.map(module=>module.entry)),[
+  ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-ruler-adapter-browser.cjs'],
+  ['tests/p9-balance-adapter-browser.cjs','tests/p9-scale-adapter-browser.cjs',
+   'tests/p9-convert-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']
+ ]);
  assert.deepEqual(plan.legacyGroups.map(g=>g.id),Object.keys(BROWSER_GROUPS));
  assert.ok(plan.legacyGroups.every(g=>g.mandatory));
  assert.deepEqual(plan.legacyPilots.map(p=>p.familyId),['area','unitcover','multable']);
