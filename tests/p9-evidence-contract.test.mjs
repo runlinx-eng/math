@@ -61,7 +61,6 @@ const positions=(id,indices)=>indices.map(index=>({sessionId:id,index}));
 const reviewed={
  compare:[...positions('compareheight',[0,1,2]),...positions('ordermeasure',[0,2]),
   ...positions('indirectlength',[0,1,2]),...positions('lengthdifference',[0,1,2])],
- vessels:[...positions('indirectmass',[1]),...positions('ordermeasure',[1]),...positions('precisionunits',[1])],
  plot:[...positions('measureplot',[0,1,2]),...positions('quarterplot',[0,1,2]),...positions('eighthplot',[0,1,2]),...positions('modmoney',[2]),...positions('modelChoice38',[2])],
  ...Object.fromEntries(['exact','given-approximation'].map(kind=>['convert-'+kind,convert.cases.filter(c=>c.kind===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['analog','digital'].map(kind=>['scale-'+kind,scale.cases.filter(c=>c.math.shape===kind).map(({id:sessionId,index})=>({sessionId,index}))])),
@@ -69,6 +68,7 @@ const reviewed={
  ruler:ruler.cases.map(({id:sessionId,index})=>({sessionId,index})),
  unitrefine:unitrefine.cases.map(({id:sessionId,index})=>({sessionId,index})),
  unitcover:unitcover.cases.map(({id:sessionId,index})=>({sessionId,index})),
+ vessels:[...positions('indirectmass',[1]),...positions('ordermeasure',[1]),...positions('precisionunits',[1])],
  multable:multable.cases.map(({id:sessionId,index})=>({sessionId,index})),
  cubefraction:cubeFraction.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['coins','cart'].map(kind=>['money-'+kind,money.cases.filter(c=>c.type==='x-m33-'+kind).map(({id:sessionId,index})=>({sessionId,index}))])),
