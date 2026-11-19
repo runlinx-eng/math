@@ -287,6 +287,33 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "compare",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-compare-adapter-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-compare-adapter/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative",
+        "backup"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 29,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }

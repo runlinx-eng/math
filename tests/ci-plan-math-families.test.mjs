@@ -25,10 +25,11 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(plan.legacyCommands,86);
  assert.equal(plan.legacyDistinctScripts,85);
  assert.equal(plan.legacyEvidenceDirs,83);
- assert.equal(plan.registeredNewFamilies,7,'B28 plot is a new mandatory family');
- assert.equal(plan.plannedNewJobs.length,3,'Each packed job stays within 29 minutes');
+ assert.equal(plan.registeredNewFamilies,8,'B28 compare is a new mandatory family');
+ assert.equal(plan.plannedNewJobs.length,4,'The independent comparison job and existing packed jobs stay within 29 minutes');
  assert.ok(plan.plannedNewJobs.every(job=>job.wave===1));
  assert.deepEqual(plan.plannedNewJobs.map(job=>job.modules.map(module=>module.entry)),[
+  ['tests/p9-compare-adapter-browser.cjs'],
   ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-ruler-adapter-browser.cjs'],
   ['tests/p9-balance-adapter-browser.cjs','tests/p9-plot-adapter-browser.cjs',
    'tests/p9-scale-adapter-browser.cjs'],
