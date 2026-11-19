@@ -234,6 +234,8 @@ jobs:
           node --check tests/p9-line-adapter-browser.cjs
           node --check dist/learning/array-evidence.js
           node --check dist/learning/thinking-feedback.js
+          node --check dist/learning/vessels-evidence.js
+          node --check tests/p9-vessels-adapter-browser.cjs
           node --check tests/p9-sequence-adapter-browser.cjs
           node --check tests/p9-array-adapter-browser.cjs
           node --check tests/p9-thinking-feedback-browser.cjs
@@ -327,6 +329,8 @@ jobs:
             tests/p9-scale-navigation.test.mjs
             tests/p9-convert-evidence.test.mjs
             tests/p9-compare-evidence.test.mjs
+            tests/p9-vessels-evidence.test.mjs
+            tests/p9-vessels-source.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
             tests/p9-unitcover-navigation.test.mjs
