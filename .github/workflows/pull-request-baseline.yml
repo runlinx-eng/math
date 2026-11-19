@@ -293,6 +293,7 @@ jobs:
             tests/p9-scale-evidence.test.mjs
             tests/p9-scale-navigation.test.mjs
             tests/p9-convert-evidence.test.mjs
+            tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
             tests/p9-unitcover-navigation.test.mjs
             tests/p9-cubefraction-evidence.test.mjs
