@@ -25,7 +25,11 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(plan.legacyCommands,86);
  assert.equal(plan.legacyDistinctScripts,85);
  assert.equal(plan.legacyEvidenceDirs,83);
- assert.equal(plan.registeredNewFamilies,9,'new vessels family joins the reviewed mandatory registry');
+ assert.equal(plan.registeredNewFamilies,source().newFamilies.length,
+  'every reviewed new family is present in the mandatory registry');
+ assert.ok(source().newFamilies.some(m=>m.familyId==='cupfill'&&
+  m.entry==='tests/p9-cupfill-adapter-browser.cjs'),
+  'the four-source cupfill family joins the reviewed mandatory registry');
  assert.ok(plan.plannedNewJobs.length>=4&&plan.plannedNewJobs.length<=5,
   'existing four independent work groups stay within their individual budgets');
  const actual=plan.plannedNewJobs.flatMap(job=>job.modules.map(m=>m.entry)).sort();

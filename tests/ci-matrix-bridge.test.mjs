@@ -32,8 +32,8 @@ const future=id=>({
  dependsOn:[]
 });
 
-test('#239 bridge preview ensures the live matrix is generated from the preserved 13-group baseline',()=>{
- const p=make();
+test('#239 bridge preview preserves the 13 legacy groups and all registered family evidence',()=>{
+ const p=make(),registered=reg().newFamilies,future=p.unactivatedFutureJobs;
  assert.equal(p.schema,'math-ci-matrix-bridge-preview/1');
  assert.equal(p.mode,'shadow-only');
  assert.equal(p.activationAllowed,false);
@@ -42,22 +42,25 @@ test('#239 bridge preview ensures the live matrix is generated from the preserve
  assert.equal(p.requiredLegacyJobs.reduce((n,g)=>n+g.commands.length,0),86);
  assert.equal(p.requiredLegacyJobs.flatMap(g=>g.artifacts).length,83);
  assert.deepEqual(p.comparison.liveMatrix,p.requiredLegacyJobs.map(g=>g.id));
- assert.equal(p.unactivatedFutureJobs.length,4);
- assert.deepEqual(p.unactivatedFutureJobs.map(group=>group.commands.map(command=>command.file)),[
-  ['tests/p9-compare-adapter-browser.cjs'],
-  ['tests/p9-unitrefine-adapter-browser.cjs','tests/p9-ruler-adapter-browser.cjs'],
-  ['tests/p9-balance-adapter-browser.cjs','tests/p9-plot-adapter-browser.cjs',
-   'tests/p9-scale-adapter-browser.cjs'],
-  ['tests/p9-vessels-adapter-browser.cjs','tests/p9-convert-adapter-browser.cjs','tests/p9-sequence-invariance-browser.cjs']
- ]);
- assert.equal(p.expectedFullRequiredReceipts.length,17);
+ assert.ok(future.length>0);
+ assert.equal(p.comparison.addedLiveJobs,future.length);
+ assert.deepEqual(future.flatMap(g=>g.commands.map(c=>c.file)).sort(),
+  registered.map(m=>m.entry).sort(),'each reviewed browser command is preserved once');
+ assert.deepEqual(future.flatMap(g=>g.artifacts).sort(),
+  registered.flatMap(m=>m.artifacts).sort(),'each reviewed artifact has one owner');
+ assert.deepEqual(future.flatMap(g=>g.dependencyModules.map(m=>m.familyId)).sort(),
+  registered.map(m=>m.familyId).sort(),'no new family is omitted from the bridge');
+ assert.ok(future.some(g=>g.commands.some(c=>c.file==='tests/p9-cupfill-adapter-browser.cjs')),
+  'the four-source cupfill family remains accounted for');
+ assert.equal(p.expectedFullRequiredReceipts.length,13+future.length);
  assert.equal(p.digest,make().digest,'Stable input yields stable digest');
 });
 
 test('#239 simulated promotion needs all original receipts and actual evidence ownership',()=>{
  const x=fixture();
  assert.deepEqual(validateMockPromotion(x),{
-  status:'simulated-only',complete:true,groups:17,commands:95});
+  status:'simulated-only',complete:true,groups:x.proposal.expectedFullRequiredReceipts.length,
+  commands:86+reg().newFamilies.length});
  const missing=fixture();missing.receipts.pop();
  assert.throws(()=>validateMockPromotion(missing),/Missing or extra/);
  const missingZIP=fixture();missingZIP.evidence.pop();
