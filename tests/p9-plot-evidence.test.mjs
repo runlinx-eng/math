@@ -104,10 +104,9 @@ test('strict layer rejects near-only original success and current answer approxi
  assert.equal(M.inspect(t,a).correct,true);assert.equal(proof(t,a),null);
 });
 
-test('replay rejects fabricated events, board changes and source drift',()=>{
+test('replay rejects fabricated events, board changes and source drift; visible capped marks are separately retained',()=>{
  const t=clone(ids[0]),m=model(t);
  for(const mutate of [
-  x=>x.history.push({a:'mark',d:{index:'0'},f:{}}),
   x=>x.history[0].d.index='999',
   x=>x.history[0].a='make-up',
   x=>x.board.marks[0]++,
