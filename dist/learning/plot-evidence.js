@@ -17,7 +17,6 @@ const ASSOCIATED=Object.freeze({
  'link-measureplot-quarterplot':[0,1],
  'link-quarterplot-eighthplot':[0,1],
  'link-eighthplot-fractiondots':[0],
- 'link-measureplot-plot':[], // Explicitly no invented source relationship.
 });
 const cp=structuredClone, text=s=>typeof s==='string'&&s.length<=1200;
 const dense=a=>Array.isArray(a)&&Object.keys(a).length===a.length;
@@ -62,7 +61,7 @@ function query(t,q,math){
  let n,d=1n;
  const count=label.match(/^(.+?)(?:英寸| cm) ?(?:有几个|出现几次)$/);
  if(count){
-  const value=count[1].replace('½','.5').replace(/\s*1\/8$/,'.125');
+  const value=count[1].trim().replace('½','.5');
   const x=entered(value);if(!x||!(x.n*den%x.d===0n))return null;
   const tick=Number(x.n*den/x.d);n=BigInt(freq[tick-t.start]??0);
  }else if(label.includes('最长是多少')){n=BigInt(math.maximum);d=den;}
@@ -100,12 +99,15 @@ export function replayPlotEvidence(task,model){
     return !expected||!actual||actual.n*expected.d!==expected.n*actual.d;
   }))return null;
   const b={first:{},bad:false,selected:0,records:task.raw.map(()=>null),marks:math.frequencies.map(()=>0)};
-  let issue='',first=null;const events=[],records=[];
+  let issue='';const events=[],records=[];
   for(let index=0;index<model.history.length;index++){
    const e=model.history[index];
    if(!keys(e,['a','d','f']))return null;
    issue='';const event={index,action:e.a};
-   if(e.a==='select'){
+   if(e.a==='help'){
+    if(!keys(e.d,[])||!keys(e.f,[]))return null;
+    b.first.help=true;
+   }else if(e.a==='select'){
     if(!keys(e.d,['index'])||!keys(e.f,[])||!/^\d+$/.test(e.d.index))return null;
     const selected=Number(e.d.index);if(!Number.isInteger(selected)||selected>=task.raw.length)return null;
     b.selected=selected;event.selected=selected;
@@ -138,7 +140,7 @@ export function replayPlotEvidence(task,model){
   }
   if(!same(b,model.board)||model.issue!==issue||
    b.records.some((raw,i)=>!raw||!equal(entered(raw),BigInt(math.rounded[i]),BigInt(task.den)))||
-   !same(b.marks,math.frequencies)||!first&&Object.keys(b.first).length===0)return null;
+   !same(b.marks,math.frequencies))return null;
   // A correct original submission can contain approximate saved strings. It is
   // not promoted to strict evidence until every retained record is exact.
   const bins=math.frequencies.map((frequency,i)=>({length:quantity(BigInt(task.start+i),BigInt(task.den)),
