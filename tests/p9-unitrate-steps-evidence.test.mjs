@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {sessionTaskFor,sessionTasks,BRIDGES} from '../dist/learning/bridges.js';
 import {LESSONS} from '../dist/learning/catalog.js';
@@ -8,11 +9,12 @@ import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 import {freshLesson,submitLesson,validateLesson} from '../dist/learning/state.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
 await ensureB39Ready();
 
 const cases=[
- {id:'rateWords37',index:2,node:'mt_ATYLKt0je-',numbers:['120','60'],choice:'mph'},
- {id:'proportionGraph37',index:2,node:'mt_FspV_imUGK',numbers:['2','10'],choice:'zero'}
+ {id:'rateWords37',index:2,node:'mt_ATYLKt0je-',numbers:['120','60'],choice:'mph',hash:'3a762946cfa83816a8c8dc60a57a1a5dacddb1c961ea56abb5c61ba8b47a1c84'},
+ {id:'proportionGraph37',index:2,node:'mt_FspV_imUGK',numbers:['2','10'],choice:'zero',hash:'1f1e4b3afc01ad35dc167627d6dfaaec32f0dd3dfc7691eb0218edfca1a2ff54'}
 ];
 const task=c=>sessionTaskFor(c.id,c.index);
 const context=c=>({sessionId:c.id,index:c.index});
@@ -22,6 +24,7 @@ test('#323 both immutable original unit-rate tasks have independent numeric and 
   const t=task(c),m=native.example(t),before=JSON.stringify(m);
   assert.equal(t.type,'x-r37-steps');
   assert.equal(LESSONS[c.id].topicId,c.node);
+  assert.equal(taskFingerprint(t),c.hash,'independently reviewed immutable original SHA256');
   assert.equal(native.inspect(t,m).correct,true);
   assert.equal(unitRateStepsBinding(t,context(c))?.nodeId,c.node);
   const p=proof(c,m);assert.ok(p,c.id);
@@ -96,4 +99,11 @@ test('#323 strict source feedback requires newest real Check and accepts State-v
   assert.ok(thinkingFeedback(t,restored.models[c.index],restored.cases[c.index],ctx));
   assert.equal(unitRateStepsBinding({...t,prompt:t.prompt+' altered'},ctx),null);
  }
+});
+
+test('#323 two original SHA256s are separate, explicit review records, never inferred from a widget type',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url),'utf8'));
+ const expected=cases.map(c=>({sessionId:c.id,index:c.index,type:'x-r37-steps',nodeId:c.node,
+  adapter:'unitrate-steps',taskHash:c.hash,method:null}));
+ assert.deepEqual(manifest.tasks.filter(x=>x.adapter==='unitrate-steps'),expected);
 });

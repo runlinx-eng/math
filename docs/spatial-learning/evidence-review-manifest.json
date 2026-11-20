@@ -7180,6 +7180,24 @@
       "adapter": "pv-saved",
       "taskHash": "cd08dd4052954442639f3886a17c6b73cef0c85c906aedd155f53d49388f16b6",
       "method": null
+    },
+    {
+      "sessionId": "rateWords37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_ATYLKt0je-",
+      "adapter": "unitrate-steps",
+      "taskHash": "3a762946cfa83816a8c8dc60a57a1a5dacddb1c961ea56abb5c61ba8b47a1c84",
+      "method": null
+    },
+    {
+      "sessionId": "proportionGraph37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_FspV_imUGK",
+      "adapter": "unitrate-steps",
+      "taskHash": "1f1e4b3afc01ad35dc167627d6dfaaec32f0dd3dfc7691eb0218edfca1a2ff54",
+      "method": null
     }
   ]
 }

@@ -94,6 +94,7 @@ const reviewed={
  compoundunits:positions('rateUnit37',[0,2,3]),
  unitconversions:positions('convertUnits37',[0,1,2]),
  proportionalsteps:[...positions('proportion37',[2]),...positions('ratioLink37',[2])],
+ 'unitrate-steps':[...positions('rateWords37',[2]),...positions('proportionGraph37',[2])],
  proportionalgraph:[...positions('proportion37',[3]),...positions('proportionGraph37',[0])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  'pv-saved':[...positions('twoproblems',[2]),...positions('faces100',[1]),...positions('faces120',[1]),...positions('screen1000',[0])],
