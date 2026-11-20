@@ -14,6 +14,7 @@ import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -203,6 +204,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
     return source?{type:task.type,summary:'想一想：两条边按同一倍数缩放，面积会变成几倍？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-t32-clock'){
+    const source=clockSettingBinding(task,context);
+    return source?{type:task.type,summary:'想一想：长针移动时短针为什么也会慢慢移动？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);
@@ -868,6 +873,23 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('曾打开提示或比较反馈。');
     detail.push('对应角不变只按原选择题核对；没有记录独立证明、实际测量、自由解释或长期掌握。');
     return {title:'这次作品中的思考线索',observation:'实际保存了 '+c.records.length+' 次长宽缩放；最后长 '+c.lastWidth+'、宽 '+c.lastHeight+'，两条边同乘 '+c.lastFactor+'，面积由 '+c.originalArea+' 变为 '+c.scaledArea+'，即 '+c.areaFactor+' 倍。',connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-t32-clock'){
+    const source=clockSettingBinding(task,context);if(!source)return null;
+    const proof=replayClockSettingEvidence(task,model,context);if(!proof)return null;
+    const final=String(proof.hour||12)+':'+String(proof.minute).padStart(2,'0'),next=proof.hour%12+1;
+    const detail=[
+      '工具提供钟面刻度并自动画出两根指针；这里只核对原小时选择、分钟移动与记录顺序。',
+      '从原来的 1:05 出发，当前钟面为 '+final+'；长针转到 '+proof.minute+' 分钟，短针沿 '+proof.hour+' 点至 '+next+' 点之间连续移动。',
+      '短针数学角度为 '+proof.hourHandHalfDegrees+'/2 度，长针为 '+proof.minuteHandDegrees+' 度；角度由钟面关系计算，并非学习者亲自测量。',
+      '已保存的 '+proof.chronologicalControls.length+' 次真实控件请求全部逐条重放；首次设置及中途改正未删除。',
+      '这里没有评价独立读钟、徒手画针、自由解释、一般证明或长期掌握。'
+    ];
+    if(attempts.length>1)detail.push('此前检查的错误或正确快照仍在原记录；这里只描述最新检查后的当前作品。');
+    if(record.support)detail.push('你曾打开提示或比较反馈。');
+    return {title:'这次作品中的思考线索',
+      observation:'你记录了小时选择与分钟移动，最后调成 '+final+'。短针随分钟继续向下一小时移动，而不停在整点。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);if(!source)return null;
