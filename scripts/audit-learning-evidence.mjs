@@ -3,6 +3,7 @@ import {areaEvidenceExample} from './area-evidence-fixture.mjs';
 import {timeEvidenceExample} from './time-evidence-fixture.mjs';
 import {timeUnitPartsEvidenceExample} from './time-unit-parts-evidence-fixture.mjs';
 import {timeIdentityCardsEvidenceExample} from './time-identity-cards-evidence-fixture.mjs';
+import {weekDayCardsEvidenceExample} from './week-day-cards-evidence-fixture.mjs';
 import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
 import {pvSavedEvidenceExample} from './pv-saved-evidence-fixture.mjs';
 import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
@@ -80,7 +81,7 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // reviewed binding and successful independent replay establish A, not a board key.
  const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='pv-saved'?pvSavedEvidenceExample(task,{sessionId,index}):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task),{sessionId,index})):null;
+   adapter.replay(task,adapter.id==='pv-saved'?pvSavedEvidenceExample(task,{sessionId,index}):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task),{sessionId,index})):null;
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}

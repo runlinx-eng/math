@@ -16,6 +16,7 @@ import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from './time-unit-parts-evidence.js';
 import {timeIdentityCardsBinding,replayTimeIdentityCardsEvidence} from './time-identity-cards-evidence.js';
+import {weekDayCardsBinding,replayWeekDayCardsEvidence} from './week-day-cards-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
@@ -234,6 +235,8 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-t32-units'){
     const identity=timeIdentityCardsBinding(task,context);
     if(identity)return {type:task.type,summary:'想一想：正午、午夜与24小时表示（可选）',question:identity.question};
+    const weekDay=weekDayCardsBinding(task,context);
+    if(weekDay)return {type:task.type,summary:'想一想：一周七天，复名数怎样合成天数？（可选）',question:weekDay.question};
     const source=timeUnitPartsBinding(task,context);
     return source?{type:task.type,summary:'想一想：每段时间在统一单位下有多长？（可选）',question:source.question}:null;
   }
@@ -1019,6 +1022,20 @@ export function thinkingFeedback(task,model,record,context={}){
       return {title:'这次作品中的思考线索',
         observation:'你选齐了题目给出的时刻牌，最新填写与它们的上午、下午、正午及午夜身份相符。',
         connection:identity.question,detail,method:null};
+    }
+    const weekDay=weekDayCardsBinding(task,context);
+    if(weekDay){
+      const proof=replayWeekDayCardsEvidence(task,model,context);if(!proof)return null;
+      const detail=[
+        '原工具提供9张时间牌，其中8张是1周、1张是3天；实际记录 '+proof.observedEvents.length+' 次选择或取消，最后九张全部选中。',
+        '独立数学核对：每张1周都按7天计，8 × 7 + 3 = '+proof.totalDays+' 天。取消和重选只按最终选中牌计数。',
+        '原卡片与单位由工具提供；这些操作不证明孩子独立推导一周七天、自由解释、自己的换算方法或长期掌握。'
+      ];
+      if(attempts.length>1)detail.push('此前错误检查与后来的更正保留在原记录中；这里只核对最新一次正确检查的作品。');
+      if(record.support)detail.push('此前查看过可选提示。');
+      return {title:'这次作品中的思考线索',
+        observation:'你选齐了8张1周和1张3天的原单位牌，当前答案59天与逐张归一化核对一致。',
+        connection:weekDay.question,detail,method:null};
     }
     const source=timeUnitPartsBinding(task,context);if(!source)return null;
     const proof=replayTimeUnitPartsEvidence(task,model,context);if(!proof)return null;

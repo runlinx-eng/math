@@ -16,6 +16,7 @@ import {clockSettingBinding,replayClockSettingEvidence} from '../dist/learning/c
 import {calendarIntervalBinding,replayCalendarIntervalEvidence} from '../dist/learning/calendar-interval-evidence.js';
 import {calendarDateReadingBinding,replayCalendarDateReadingEvidence} from '../dist/learning/calendar-date-reading-evidence.js';
 import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from '../dist/learning/time-unit-parts-evidence.js';
+import {weekDayCardsBinding,replayWeekDayCardsEvidence} from '../dist/learning/week-day-cards-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyTimeFixtureStep as apply,timeEvidenceExample as example} from '../scripts/time-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -44,6 +45,8 @@ const reviewedDateReading=new Set(['calendaruse:0','calendaruse:1']);
 const reviewedIdentityCards=new Set(['ampmclock:2','romanclock:2','clockconvert:2']);
 const reviewedUnitParts=new Set(['durationunit:2','hoursday:0','hoursday:1','hoursday:2',
  'timeconvert:0','timeconvert:1','calendarfacts:0']);
+// #333: only the separately reviewed original eight-week and three-day unit cards.
+const reviewedWeekDayCards=new Set(['timeconvert:2']);
 
 function repair(c,m){
  const t=task(c),kind=c.type.slice(6);
@@ -83,7 +86,7 @@ function submit(a,correct){
  return a.cases[a.index];
 }
 
-test('20 time constructions and 40 existing tasks stay isolated except three dials, two calendar intervals, two date readings, seven durations and three time identities',()=>{
+test('20 time constructions and 40 existing tasks stay isolated except reviewed dials, calendars, duration units, time identities and one week/day card',()=>{
  assert.equal(cases.length,20);assert.equal(new Set(cases.map(c=>c.nodeId)).size,10);
  assert.equal(excludedCases.length,40);assert.equal(associatedCases.length,63);
  assert.deepEqual(Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(k=>[k,cases.filter(c=>c.type==='x-t32-'+k).length])),{order:5,parts:5,roman:1,stopwatch:3,steps:6});
@@ -98,9 +101,9 @@ test('20 time constructions and 40 existing tasks stay isolated except three dia
   const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c)),newClock=reviewedClock.has(key(c)),newCalendar=reviewedCalendar.has(key(c)),newDateReading=reviewedDateReading.has(key(c)),newUnitParts=reviewedUnitParts.has(key(c));
   // Old fixture compatibility accepts its own id/index shape. The new adapter
   // deliberately uses the canonical native context rather than coercing id.
-  const newIdentityCards=reviewedIdentityCards.has(key(c));
-   const nativeContext={sessionId:c.id,index:c.index};
-  const visibleContext=(newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards)?nativeContext:c;
+  const newIdentityCards=reviewedIdentityCards.has(key(c)),newWeekDayCards=reviewedWeekDayCards.has(key(c));
+  const nativeContext={sessionId:c.id,index:c.index};
+  const visibleContext=(newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards||newWeekDayCards)?nativeContext:c;
   assert.equal(!!timeBinding(t,c),previousFamily,
    key(c)+' old 20 constructions must remain independently source-bound');
   assert.equal(!!timeCompareBinding(t,nativeContext),newComparison,
@@ -123,9 +126,13 @@ test('20 time constructions and 40 existing tasks stay isolated except three dia
    key(c)+' only seven independently reviewed time-unit tasks can bind');
   assert.equal(!!replayTimeUnitPartsEvidence(t,m,nativeContext),newUnitParts,
    key(c)+' only original unit-card clicks can replay');
-  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards,
+  assert.equal(!!weekDayCardsBinding(t,nativeContext),newWeekDayCards,
+   key(c)+' only the frozen week/day native position may bind');
+  assert.equal(!!replayWeekDayCardsEvidence(t,m,nativeContext),newWeekDayCards,
+   key(c)+' only nine original week/day card selections may replay');
+  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards||newWeekDayCards,
    key(c)+' source-scoped thinking guide');
-  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards,
+  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock||newCalendar||newDateReading||newUnitParts||newIdentityCards||newWeekDayCards,
    key(c)+' source-scoped checked feedback');
   if(!c.id.startsWith('link-')&&!previousFamily)rejected(t,m);
  }
