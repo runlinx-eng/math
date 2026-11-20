@@ -507,6 +507,24 @@
       "method": null
     },
     {
+      "sessionId": "ratioNotation37",
+      "index": 1,
+      "type": "x-r37-steps",
+      "nodeId": "mt_XWSGuFW7It",
+      "adapter": "rationotation",
+      "taskHash": "ad19110a86afef2892af6e8be66de7c183c1ced41d187623cdb52874c48b9621",
+      "method": null
+    },
+    {
+      "sessionId": "ratioNotation37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_XWSGuFW7It",
+      "adapter": "rationotation",
+      "taskHash": "e5d2fd0622f4e630d95ed4314ca1c886eb173869e3f8289a38dc4a75185e30be",
+      "method": null
+    },
+    {
       "sessionId": "reason34",
       "index": 1,
       "type": "x-p34-sequence",

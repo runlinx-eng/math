@@ -21,6 +21,7 @@ import {ratioShapeBinding,replayRatioShapeEvidence} from './ratioshape-evidence.
 import {ratioStepsBinding,replayRatioStepsEvidence} from './ratiosteps-evidence.js';
 import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js';
 import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-evidence.js';
+import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -177,7 +178,9 @@ export function thinkingGuide(task,context={}){
     const changeSource=pctChangeBinding(task,context);
     if(changeSource)return{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question};
     const fractionSource=fractionPartsBinding(task,context);
-    return fractionSource?{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question}:null;
+    if(fractionSource)return{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question};
+    const notationSource=ratioNotationBinding(task,context);
+    return notationSource?{type:task.type,summary:'想一想：等值比的两端共同倍数与最简整数比（可选）',question:notationSource.question}:null;
   }
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
@@ -677,7 +680,26 @@ export function thinkingFeedback(task,model,record,context={}){
     if(!source){
       const pctSource=pctChangeBinding(task,context);
       if(!pctSource){
-      const fractionSource=fractionPartsBinding(task,context);if(!fractionSource)return null;
+      const fractionSource=fractionPartsBinding(task,context);
+      if(!fractionSource){
+        const notationSource=ratioNotationBinding(task,context);if(!notationSource)return null;
+        const notationProof=replayRatioNotationEvidence(task,model,context);if(!notationProof)return null;
+        const p=notationProof.construction;
+        const detail=[
+          '原始小数比或分数比、共同倍数与各步骤均由题卡提供；这里只复核真实逐步输入和最简整数比，不说明学生自行找到倍数。',
+          ...p.records.map((r,i)=>'第 '+(i+1)+' 次真实步骤（第 '+(r.index+1)+' 步）输入“'+r.answer+'”；'+
+            (r.correct?'符合原比同时乘相同倍数的独立有理数核算':'不符合该步共同倍数或整数比的核算')+'。'),
+          ...p.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：独立数理核对为“'+s.quantity+'”。')
+        ];
+        if(p.wrongStepIndices.length)detail.push('原记录中保留了最初错误步骤及随后实际纠正，没有把正确答案冒充首次输入。');
+        if(attempts.length>1)detail.push('历史的Check快照另行保留；这里只描述与最新提交完全一致的真实作品。');
+        if(record.support)detail.push('曾打开过提示或比较反馈。');
+        detail.push('最简整数比满足共同因数为1；不自动评定自选倍数、解释证明、口头推理或长期掌握。');
+        return {title:'这次作品中的思考线索',
+          observation:'真实完成 '+p.completedSteps+' 个等值比整数化步骤；共同乘数和最简整数比逐次独立核算，'+
+            (p.wrongStepIndices.length?'最初错误与纠正可回看。':'本次记录无错误步骤。'),
+          connection:notationSource.question,detail,method:null};
+      }
       const fractionProof=replayFractionPartsEvidence(task,model,context);if(!fractionProof)return null;
       const p=fractionProof.construction;
       const detail=[
