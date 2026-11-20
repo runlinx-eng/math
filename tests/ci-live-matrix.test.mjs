@@ -19,7 +19,7 @@ test('#239 live matrix preserves the 13 legacy groups and schedules every review
  assert.equal(x.proof.activation,'enabled');
  assert.deepEqual(x.matrix.group.slice(0,13),GROUP_NAMES);
  assert.ok(extra.length>0,'at least one independent family group is scheduled');
- assert.ok(extra.every(id=>/^family-wave-1-job-[0-9]+$/.test(id)));
+ assert.ok(extra.every(id=>/^family-wave-[1-9][0-9]*-job-[0-9]+$/.test(id)));
  assert.deepEqual(x.matrix.group,Object.keys(x.definitions));
  assert.deepEqual(extra,x.proof.addedGroups.map(g=>g.id));
  assert.equal(x.proof.legacyGroups,13);
@@ -84,13 +84,13 @@ test('#239 cross-group legacy and new-family dependencies must fail CLOSED in in
  }
 });
 
-test('#239 resource-lock conflict requiring another wave must fail, not silently parallelize',()=>{
+test('#315 resource locks reject unproven matrix concurrency, even when multiple batches fit',()=>{
  const r=registry();r.newFamilies=[mock('aaa'),mock('bbb')];
  for(const module of r.newFamilies){
   module.resources.estimatedScriptMinutes=20;
   module.resources.exclusiveLocks=['learning-store'];
  }
- assert.throws(()=>plan(r),/Cannot run dependency\/resource wave 2/);
+ assert.throws(()=>plan(r),/exclusive locks/);
 });
 
 test('#239 unprovisioned runner class and uncertain memory demand fail closed',()=>{
@@ -117,4 +117,19 @@ test('#239 forbids losing the rollback baseline or silently disabling registered
 test('#239 new registry proves real source files exist; synthetic success does not hide missing files',()=>{
  const r=registry();r.newFamilies=[mock('newmodule')];
  assert.throws(()=>buildLiveBrowserMatrix(r),/Missing new browser test/);
+});
+
+// More than 290 cumulative planned script minutes is legal in an explicitly
+// dispatched FULL run; queued GitHub matrix jobs still retain the 29/35 limits.
+test('#315 full matrix queues over-capacity independent families without omitting any',()=>{
+ const r=registry();r.newFamilies=Array.from({length:11},(_,i)=>{
+  const f=mock('batch'+String(i+1));f.resources.estimatedScriptMinutes=29;return f;
+ });
+ const x=plan(r),extra=x.matrix.group.slice(13);
+ assert.equal(extra.length,11);
+ assert.ok(extra.some(id=>id.startsWith('family-wave-2-')));
+ assert.deepEqual(extra.flatMap(id=>x.definitions[id].commands.map(c=>c.file)).sort(),
+  r.newFamilies.map(f=>f.entry).sort());
+ assert.ok(x.proof.addedGroups.every(g=>g.scriptMinutes<=29&&g.peakMemoryMiB<=6000));
+ assert.equal(x.proof.addedGroups.reduce((n,g)=>n+g.scriptMinutes,0),319);
 });
