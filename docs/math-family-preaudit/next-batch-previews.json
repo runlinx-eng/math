@@ -125,7 +125,7 @@
         "Tampered before/after, invalid unit counts, wrong-first reset/retry and current Check",
         "Targeted Node, original native Chromium, relevant P10/State-v2/long offline; no unrelated 94 browser calls"
       ],
-      "reviewStatus": "preflight-only-not-implementation",
+      "reviewStatus": "source-feasibility-reviewed-two-conditional-removal-tasks",
       "sourceTasks": [
         {
           "position": "tensmove:0",
@@ -208,7 +208,9 @@
           "sourceFreezeRequired": true,
           "existingStrictA": false
         }
-      ]
+      ],
+      "feasibilityReport": "source-feasibility.json",
+      "sourceReviewConclusion": "Only tensmove:1 and hundredsmove:1 have necessary real remove events. Four addition tasks auto-combine and cannot prove hand moving. All six still remain non-A."
     },
     {
       "id": "Q03",
@@ -240,7 +242,7 @@
         "First wrong cut/altitude then correct cut; undo/reset/hidden fields/source isolation",
         "Targeted mathematical Node and one real native desktop Chromium with P10/State-v2 if it modifies continuity"
       ],
-      "reviewStatus": "preflight-only-not-implementation",
+      "reviewStatus": "defer-strict-construction-no-freehand-events",
       "sourceTasks": [
         {
           "position": "triArea:0",
@@ -294,7 +296,9 @@
           "sourceFreezeRequired": true,
           "existingStrictA": false
         }
-      ]
+      ],
+      "feasibilityReport": "source-feasibility.json",
+      "sourceReviewConclusion": "Preset transform and one-part records do not prove learner cuts, copy/rotate/translate or self-chosen altitude; none of four is directly eligible for a strict construction contract."
     }
   ],
   "excludedOngoing": {

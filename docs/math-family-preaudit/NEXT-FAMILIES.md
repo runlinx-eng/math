@@ -28,3 +28,5 @@
 `x-pvbench` 非 A26、`x-r37-steps` 非 A10、`x-t32-clock` 非 A15、`x-wideboard` 非 A28 是**进一步拆解池**，不是整族可升题数；`proportionGraph37:0` 和 `proportion37:3` 属于正在开发的 #298/PR #299；非零截距 `proportionGraph37:1` 与只作选择的 `proportionGraph37:2` 不跟随该 Draft 绑定。源目标缺口 17 道先定位 runtime 原题，不猜合同。
 
 这份预案不改正式 A、研究流程和 CI 门槛。真实研发阶段再写 Issue、单独分支、精确定向测试；审核通过以后 PR 合并、新 main 独立验收，才在总控 #130 记正式新增。
+
+> **2026-11-20 后续源码预审**：Q02/Q03 的操作可观察性、逐题阻塞和已存在的 release/hash 预提交工具已核实，见 [Q02-Q03-FEASIBILITY.md](Q02-Q03-FEASIBILITY.md) 与 [source-feasibility.json](source-feasibility.json)。本文件原先把Q02六题、Q03四题列为下一候选，只表示最初的研究假设；实际开发优先级以最新源码评估为准。
