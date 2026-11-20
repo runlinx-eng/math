@@ -6595,6 +6595,60 @@
       "adapter": "ratiopair",
       "taskHash": "d31de2b81f571c2c26ad5955cf231a22b001c5aa1ce0979f723134ca8a1d866e",
       "method": null
+    },
+    {
+      "sessionId": "ratioShare37",
+      "index": 0,
+      "type": "x-r37-share",
+      "nodeId": "mt_FnUJMXPUZX",
+      "adapter": "ratioshare",
+      "taskHash": "4fe2a93628c3b9d1c6a1d389ee4ca5daaf88ab2d748cb85e31a267fa966c7c53",
+      "method": null
+    },
+    {
+      "sessionId": "ratioShare37",
+      "index": 1,
+      "type": "x-r37-share",
+      "nodeId": "mt_FnUJMXPUZX",
+      "adapter": "ratioshare",
+      "taskHash": "c654fe0d8b79210ece762fa1133bb8d082752a984b90f806246a60984f6f4b8d",
+      "method": null
+    },
+    {
+      "sessionId": "ratioShare37",
+      "index": 2,
+      "type": "x-r37-share",
+      "nodeId": "mt_FnUJMXPUZX",
+      "adapter": "ratioshare",
+      "taskHash": "09178b98f8059d88b76ad1d8c3461c864c1aaa10a90efab4916dfec1ac2e13ea",
+      "method": null
+    },
+    {
+      "sessionId": "ratioDivide37",
+      "index": 0,
+      "type": "x-r37-share",
+      "nodeId": "mt_nOCPx5qw0Z",
+      "adapter": "ratioshare",
+      "taskHash": "75a73ed0787d0b6a3708bf84ae86a60e9cd2842573953e35e71c685df529d5de",
+      "method": null
+    },
+    {
+      "sessionId": "ratioDivide37",
+      "index": 1,
+      "type": "x-r37-share",
+      "nodeId": "mt_nOCPx5qw0Z",
+      "adapter": "ratioshare",
+      "taskHash": "ab7284442b647c8ca705936775e9eeaa0c4fb496c423a4674483c9f2ed0094ae",
+      "method": null
+    },
+    {
+      "sessionId": "ratioDivide37",
+      "index": 2,
+      "type": "x-r37-share",
+      "nodeId": "mt_nOCPx5qw0Z",
+      "adapter": "ratioshare",
+      "taskHash": "7e1cfdcf04357764bdfa0d4d05a4787ea3990315d322671e927d285fef7003ad",
+      "method": null
     }
   ]
 }

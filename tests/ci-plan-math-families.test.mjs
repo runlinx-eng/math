@@ -30,8 +30,12 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.ok(source().newFamilies.some(m=>m.familyId==='cupfill'&&
   m.entry==='tests/p9-cupfill-adapter-browser.cjs'),
   'the four-source cupfill family joins the reviewed mandatory registry');
- assert.ok(plan.plannedNewJobs.length>=4&&plan.plannedNewJobs.length<=5,
-  'existing four independent work groups stay within their individual budgets');
+ const scheduledMinutes=source().newFamilies.reduce(
+  (sum,module)=>sum+module.resources.estimatedScriptMinutes,0);
+ assert.ok(
+  plan.plannedNewJobs.length>=Math.ceil(scheduledMinutes/plan.limits.maxNewScriptsMinutesPerJob)&&
+  plan.plannedNewJobs.length<=Math.min(plan.registeredNewFamilies,plan.limits.maxParallel),
+  'each added family remains scheduled without packing beyond the protected per-job budget');
  const actual=plan.plannedNewJobs.flatMap(job=>job.modules.map(m=>m.entry)).sort();
  const expected=source().newFamilies.map(m=>m.entry).sort();
  assert.deepEqual(actual,expected,'all reviewed family browser scripts remain scheduled exactly once');
