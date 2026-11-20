@@ -44,6 +44,7 @@ test('source/task fingerprints and exact native admission; no formal A registrat
 test('actual pick/remove/re-pick chrono, numerical order and final axis invariant',()=>{
  for(const c of native){
   const {task,m,expected}=build(c);
+  assert.equal(M.inspect(task,m).correct,true); // Baseline before deliberately wrong reorder.
   const move=expected[1];M.act(task,m,'wide-order',{index:move});M.act(task,m,'wide-order',{index:move});
   // re-select is appended last; so this corrected sequence must not pass.
   assert.equal(M.inspect(task,m).correct,false);
@@ -80,6 +81,9 @@ test('reject forgery, stale latest Check, no trace, wrong signed/source and trun
   assert.equal(replay(c,m,stale),null);
   const missingPoint=copy(m);missingPoint.touched[0]=false;
   assert.equal(replay(c,missingPoint,{attempts:[{value:copy(missingPoint)}]}),null);
+  const generated=M.example(task);
+  assert.equal(M.inspect(task,generated).correct,true);
+  assert.equal(replay(c,generated,{attempts:[{value:copy(generated)}]}),null); // Terminal state is not click evidence.
   const old=copy(m);delete old.orderTrace;delete old.orderTraceOverflow;
   assert.equal(M.valid(task,old),true); // State-v2 backward compatibility
   assert.equal(M.inspect(task,old).correct,true); // original grading unchanged
