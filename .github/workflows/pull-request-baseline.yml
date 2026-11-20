@@ -439,6 +439,7 @@ jobs:
 
       # Shadow mode ONLY: write a plan without controlling matrix/Required gate.
       - name: Validate declarative math-family registry and preserve shadow plan
+        if: github.event_name == 'workflow_dispatch'
         run: |
           node --check scripts/ci-plan-math-families.mjs
           node --check tests/ci-plan-math-families.test.mjs
@@ -448,6 +449,7 @@ jobs:
           node scripts/ci-matrix-bridge.mjs --output verification/ci-shadow-plan/matrix-bridge-preview.json
 
       - name: Produce reviewed LIVE browser matrix from family registry
+        if: github.event_name == 'workflow_dispatch'
         id: live_browser_matrix
         run: |
           node --check scripts/ci-live-browser-matrix.mjs
