@@ -210,8 +210,42 @@ async function main(){
   const restored=await restorePage.goto(origin.base+'learn.html#pctChange37');
   ok(restored?.fromServiceWorker()===true,'restored original lesson accessible offline');
   await restorePage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='pctChange37');
+  // The exported lesson is still on step-case 2, which was intentionally
+  // retried. Its current model is blank even though its past Check remains.
+  const afterRestore=await restorePage.evaluate(()=>{
+   const lesson=JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.pctChange37;
+   return {index:lesson.index,retried:lesson.models['2']?.history.length===0,
+    earlierAttempts:lesson.cases['0']?.attempts.length||0};
+  });
+  ok(afterRestore.index===2&&afterRestore.retried&&afterRestore.earlierAttempts===1,
+   'original V2 preserves the last Retry and earlier checked case without inventing feedback');
+  ok(!await restorePage.locator('#thinking-feedback').isVisible(),
+   'retried current case does not claim already-checked current proof');
+  // Re-select the actual checked case using the same test-only native lesson
+  // position selection used above; do not edit its model or graded attempts.
+  await restorePage.evaluate(()=>{
+   const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+   if(state.lessons.pctChange37.cases['0']?.attempts.length!==1)
+    throw Error('First checked original case absent in V2 restore');
+   state.lessons.pctChange37.index=0;
+   state.lessons.pctChange37.view='task';
+   localStorage.setItem('math-explorer-v2',JSON.stringify(state));
+  });
+  const selected=await restorePage.reload();
+  ok(selected?.fromServiceWorker()===true,'reselected checked original case reloads offline');
+  await restorePage.waitForFunction(()=>window.mathLesson?.snapshot()?.index===0);
+  const preservedProof=await restorePage.evaluate(async()=>{
+   const {sessionTaskFor}=await import('./learning/bridges.js');
+   const {replayPctChangeEvidence}=await import('./learning/pctchange-evidence.js');
+   const lesson=JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.pctChange37;
+   const model=lesson.models['0'],record=lesson.cases['0'];
+   const proof=replayPctChangeEvidence(sessionTaskFor('pctChange37',0),model,{sessionId:'pctChange37',index:0});
+   return !!proof&&proof.construction.wrongStepIndices.length===1&&
+     JSON.stringify(record.attempts.at(-1)?.value)===JSON.stringify(model);
+  });
+  ok(preservedProof,'restored first checked case retains exact source-bound wrong-to-right math history');
   ok(await restorePage.locator('#thinking-feedback').isVisible(),
-   'previous successful native ratio steps proof restored offline');
+   'previous successful native percentage-change Check shows feedback after offline V2 restoration');
   await restorePage.screenshot({path:path.join(out,'native-v2-restored.png'),fullPage:false});
   screenshots.push('native-v2-restored.png');
   ok(errors.length===0,'no page exception or external request');

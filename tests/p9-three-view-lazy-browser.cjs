@@ -67,6 +67,11 @@ function recordState(){
    await page.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='space');
    await page.waitForFunction(()=>!!document.querySelector('#cube-world canvas'));
    const active=await page.evaluate(recordState);
+   // A WebGL canvas is created before the optional module's resource timing
+   // entry is committed. Wait for the actual Three.js fetch rather than
+   // asserting synchronously against an incomplete Performance timeline.
+   await page.waitForFunction(()=>performance.getEntriesByType('resource').some(
+    x=>/\/vendor\/three\/three\.module\.min\.js/.test(new URL(x.name).pathname)));
    const activeResources=await page.evaluate(()=>performance.getEntriesByType('resource').map(x=>new URL(x.name).pathname));
    ok(active.canvas&&active.lesson.id==='space'&&!active.visible,'3D lesson renders original WebGL cube view');
    ok(activeResources.some(x=>/\/vendor\/three\/three\.module\.min\.js/.test(x)),'3D session fetches Three.js on demand');
