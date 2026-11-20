@@ -44,7 +44,7 @@ import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
-import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
+import {placeBinding,replayPlaceEvidence,placeRemovalBinding,replayPlaceRemovalEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
@@ -116,6 +116,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'fraction',type:'x-fracrename',binding:fractionBinding,replay:replayFractionEvidence},
  {id:'unitwalk',type:'x-unitwalk',binding:unitwalkBinding,replay:replayUnitwalkEvidence},
  {id:'place',type:'x-placecalc',binding:placeBinding,replay:replayPlaceEvidence},
+ {id:'place-removal',type:'x-placecalc',binding:placeRemovalBinding,replay:replayPlaceRemovalEvidence},
  {id:'groupwalk',type:'x-unitwalk',binding:groupwalkBinding,replay:replayGroupwalkEvidence},
  {id:'route',type:'x-routecalc',binding:routeBinding,replay:replayRouteEvidence},
  {id:'fraction-order',type:'x-fracorder',binding:fractionOrderBinding,replay:replayFractionOrderEvidence},
