@@ -1,6 +1,7 @@
 // #331 source preflight: independent math and genuine B32 control replay.
 // This is NOT formal A registration or Chromium acceptance.
 import test from 'node:test';
+import {timeIdentityCardsFingerprint,timeIdentityCardsEvidenceExample} from '../scripts/time-identity-cards-evidence-fixture.mjs';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
@@ -12,9 +13,9 @@ import {timeIdentityCardsBinding as bind,replayTimeIdentityCardsEvidence as repl
 
 await ensureB39Ready();
 const cases=[
- {sessionId:'ampmclock',index:2,nodeId:'mt_4m8BimI4G5',minutes:[740,20]},
- {sessionId:'romanclock',index:2,nodeId:'mt_5J2quSTspi',minutes:[920,425,740,20]},
- {sessionId:'clockconvert',index:2,nodeId:'mt_WfrE_4r-kY',minutes:[20,740]}
+ {sessionId:'ampmclock',index:2,nodeId:'mt_4m8BimI4G5',minutes:[740,20],hash:'2e1eccd3687fcc14db1fdea4610ad8d7b55e0219325b63362e9d8b04184e6d3c'},
+ {sessionId:'romanclock',index:2,nodeId:'mt_5J2quSTspi',minutes:[920,425,740,20],hash:'41bd633d375cda7ab04d3059e3ab1bb8e7f47ad2005efb8529a7d1a2062da0bd'},
+ {sessionId:'clockconvert',index:2,nodeId:'mt_WfrE_4r-kY',minutes:[20,740],hash:'d2e443e7b91877d239d6b9a40637d176836385d94f40a0910b1f91d946fceb20'}
 ];
 const copy=structuredClone;
 const at=c=>sessionTasks(c.sessionId)[c.index];
@@ -31,12 +32,14 @@ const positive=c=>{
  assert.equal(proof.learnerConversionDerivationAssessed,false);
  return {task,model,proof};
 };
-test('three isolated original positions; no automatic promotion to formal A',()=>{
+test('three exact original time identities have a registered audited adapter',()=>{
  assert.equal(cases.length,3);
  assert.equal(new Set(cases.map(x=>x.nodeId)).size,3);
- assert.equal(EVIDENCE_ADAPTERS.some(x=>x.id==='time-identity-cards'),false);
+ assert.equal(EVIDENCE_ADAPTERS.some(x=>x.id==='time-identity-cards'),true);
  for(const c of cases){
   const {task,model}=positive(c);
+  assert.equal(timeIdentityCardsFingerprint(task),c.hash,'complete frozen original SHA256');
+  assert.deepEqual(timeIdentityCardsEvidenceExample(task),model,'independently replayable original action fixture');
   assert.equal(LESSONS[c.sessionId].topicId,c.nodeId);
   assert.equal(bind(task,context(c))?.method,null);
   assert.equal(replay(task,model,{...context(c),index:c.index+1}),null);
