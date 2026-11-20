@@ -1255,7 +1255,7 @@ module.exports={
     "dist/learning/phase5/b14.js": "ea9fc678c74ecaebcd7557a302128312c48e3075c04bab38aaae3efcdda54093",
     "dist/learning/phase5/b18.js": "42a8183150eac38507cba09cbae6b9adc2ee0ff43dd4f820a56e4c17f8c05dd9",
     "dist/learning/phase5/b39.js": "f282d5afe8b478b1e6ff623424f473d42f70212142556a0a433d68d369670838",
-    "dist/learning/phase5/b08-model.js": "b966650d1aead5f49916911f8b2d7e6f6d41b6a9be465143359a3d82e06932c6",
+    "dist/learning/phase5/b08-model.js": "d7b43148e9970a50adc8b2c1f66b0ec017fa984aa76597cc87d0cf9289f7b2d3",
     "dist/learning/phase5/b08-math.js": "c32aa674806576039a7b947ac7a88a6b7c327b58a4ef9ee04a46192900ff9adb",
     "dist/learning/phase5/b08-view.js": "b17455e6ff2fad8e62f102ff394588bba9c469391fb810bcd5bee25b6a89db30"
   }

@@ -1,0 +1,307 @@
+{
+  "schema": "math-family-source-observability-review/1",
+  "reviewedMain": "2ef5c4c0445f510136685b66a1543f826dd1f81e",
+  "date": "2026-11-20",
+  "kind": "source-and-contract-static-preflight",
+  "notAnAReview": true,
+  "noNativeTaskHashesFrozen": true,
+  "sourceFiles": {
+    "b11Task": "dist/learning/phase5/b11.js#TASKS.tensmove/TASKS.hundredsmove",
+    "b11Model": "dist/learning/phase5/b11-model.js#act/inspect/solveSteps",
+    "b11Controls": "dist/learning/phase5/b11-view.js#controls/placeBoard",
+    "placeEvidence": "dist/learning/place-evidence.js#placeBinding/replayPlaceEvidence",
+    "placeTests": "tests/p9-place-evidence-adapter.test.mjs",
+    "b30Task": "dist/learning/phase5/b30.js#TASKS.triArea",
+    "b30Model": "dist/learning/phase5/b30-model.js#act/inspect/solveSteps",
+    "b30Controls": "dist/learning/phase5/b30-view.js#controls/pieceSvg",
+    "areaEvidence": "dist/learning/area-evidence.js#areaBinding/replayAreaEvidence",
+    "areaTests": "tests/p9-area-evidence-adapter.test.mjs",
+    "releaseTool": "scripts/ci-release-sync.mjs#checkRelease/syncRelease",
+    "releaseTests": "tests/ci-release-sync.test.mjs",
+    "audit": "scripts/audit-evidence-expansion.mjs",
+    "workflow": "docs/DEVELOPMENT-WORKFLOW.md#开发期集中验证与发布版本预检"
+  },
+  "status": "source-code-inspected; no native Chromium or new runtime contract executed",
+  "totals": {
+    "nativeReviewed": 10,
+    "Q02": 6,
+    "Q03": 4,
+    "conditionallyReviewableWithExistingVisibleProcess": 2,
+    "needsMoreVisibleEvidenceOrNarrowerClaim": 4,
+    "deferStrictConstructionWithoutNewObservableControls": 4,
+    "formalCoverageAdded": 0
+  },
+  "observations": {
+    "Q02": [
+      "b11-place-start logs the guess and alignment but automatically assembles addends into counts for '+'; not an event for each added bundle.",
+      "b11-remove logs actual column index, full before counts and the requested quantity for '-' even when no exchange occurs.",
+      "Current placeBinding explicitly permits tensmove only at index 3; it permits no hundredsmove position.",
+      "Current replayPlaceEvidence requires at least one successful exchange; no-regrouping paths in these six tasks cannot inherit it as-is.",
+      "Do not insert gratuitous exchange and reverse-exchange solely to satisfy a proof check. If no event demonstrates required learning, do not claim it."
+    ],
+    "Q03": [
+      "Original a30-transform only toggles the board's transformed flag and changes displayed, pre-authored before/after geometry; there are no freehand cut/translate/rotate actions.",
+      "a30-part records a field and the currently selected preset piece identity. These tasks each supply a single piece.",
+      "Current areaBinding's reviewed SOURCE set includes other pieces but excludes triArea:0..3; replayAreaEvidence also restricts geometry by exact native sources.",
+      "triArea:3 task points include irrational Math.sqrt(11); existing exact polygon helper assumes integer coordinates. Correct 50 alone is not an exact construction witness.",
+      "The original grader's correctness and optional prose are preserved, but correctness does not certify an independently built proof."
+    ]
+  },
+  "rows": [
+    {
+      "family": "Q02",
+      "position": "tensmove:0",
+      "nodeId": "mt_I5j1ZWo2cn",
+      "op": "+",
+      "values": [
+        45,
+        30
+      ],
+      "expected": 75,
+      "eventPath": [
+        "b11-place-start"
+      ],
+      "category": "requires-new-observable-work-or-narrower-claim",
+      "reason": "After the learner selects alignment and presses start, addition counts are assembled by the model; no per-bundle move is recorded. A direct 'moved 3 tens' proof would be inferred.",
+      "limitedClaim": "Learner chose digit alignment, froze a guess and submitted 75; combined tokens were created by the tool.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q02",
+      "position": "tensmove:1",
+      "nodeId": "mt_I5j1ZWo2cn",
+      "op": "-",
+      "values": [
+        82,
+        40
+      ],
+      "expected": 42,
+      "eventPath": [
+        "b11-place-start",
+        "b11-remove@index1,needed4"
+      ],
+      "category": "conditional-true-removal-review",
+      "reason": "Removing four tens is a visible recorded action, so narrowly source-bound subtraction may be independently replayed without regrouping. Existing replayPlaceEvidence rejects no-exchange success via !exchanges.length.",
+      "limitedClaim": "Learner aligned rows and requested removal of four tens from 82; this does not prove mental calculation.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q02",
+      "position": "tensmove:2",
+      "nodeId": "mt_I5j1ZWo2cn",
+      "op": "+",
+      "values": [
+        45,
+        3
+      ],
+      "expected": 48,
+      "eventPath": [
+        "b11-place-start"
+      ],
+      "category": "requires-new-observable-work-or-narrower-claim",
+      "reason": "One-digit addition is auto-assembled on start, with no recorded physical moving of three ones; do not conflate with thirty.",
+      "limitedClaim": "Learner aligned ones, froze a guess and submitted 48; the tool formed the sum.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q02",
+      "position": "hundredsmove:0",
+      "nodeId": "mt_xPqczp7zPX",
+      "op": "+",
+      "values": [
+        345,
+        200
+      ],
+      "expected": 545,
+      "eventPath": [
+        "b11-place-start"
+      ],
+      "category": "requires-new-observable-work-or-narrower-claim",
+      "reason": "The two hundreds are auto-combined on start; there is no native per-hundred move history.",
+      "limitedClaim": "Learner aligned hundreds, froze a guess and submitted 545.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q02",
+      "position": "hundredsmove:1",
+      "nodeId": "mt_xPqczp7zPX",
+      "op": "-",
+      "values": [
+        762,
+        400
+      ],
+      "expected": 362,
+      "eventPath": [
+        "b11-place-start",
+        "b11-remove@index2,needed4"
+      ],
+      "category": "conditional-true-removal-review",
+      "reason": "Removing four hundreds is a visible recorded operation and needs no regrouping. Existing replayPlaceEvidence imposes an exchange that the task does not need.",
+      "limitedClaim": "Learner aligned rows and requested removal of four hundreds; leftover 362 is source-bound.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q02",
+      "position": "hundredsmove:2",
+      "nodeId": "mt_xPqczp7zPX",
+      "op": "+",
+      "values": [
+        345,
+        20
+      ],
+      "expected": 365,
+      "eventPath": [
+        "b11-place-start"
+      ],
+      "category": "requires-new-observable-work-or-narrower-claim",
+      "reason": "The tool auto-creates the sum after alignment. The contrast 20 vs 200 is mathematically relevant but no explicit separate compare/choice action is saved.",
+      "limitedClaim": "Learner aligned tens and submitted 365; no independent comparative argument observed.",
+      "originalType": "x-placecalc",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q03",
+      "position": "triArea:0",
+      "nodeId": "mt_ML5t7n2-U8",
+      "op": "area",
+      "values": {
+        "base": 8,
+        "perpendicularHeight": 5
+      },
+      "expected": 40,
+      "eventPath": [
+        "a30-transform",
+        "a30-active@index0",
+        "a30-part"
+      ],
+      "category": "defer-strict-construction",
+      "reason": "The transform button toggles pre-authored before/after polygons; learner does not choose the cut, translation vector, or resulting alignment. A single tool-given polygon's area is recorded.",
+      "limitedClaim": "Learner requested a preconfigured rearrangement and recorded the given whole shape's area; not an independently constructed dissection.",
+      "originalType": "x-a30-pieces",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q03",
+      "position": "triArea:1",
+      "nodeId": "mt_ML5t7n2-U8",
+      "op": "area",
+      "values": {
+        "base": 6,
+        "perpendicularHeight": 4,
+        "shape": "right-triangle"
+      },
+      "expected": 12,
+      "eventPath": [
+        "a30-transform",
+        "a30-active@index0",
+        "a30-part"
+      ],
+      "category": "defer-strict-construction",
+      "reason": "A toggle displays a prebuilt congruent copy. No real learner-controlled copy, rotation, docking or overlap prevention action is recorded.",
+      "limitedClaim": "Learner viewed a tool-generated copy and entered one triangle's area; not proof of building a rectangle.",
+      "originalType": "x-a30-pieces",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q03",
+      "position": "triArea:2",
+      "nodeId": "mt_ML5t7n2-U8",
+      "op": "area",
+      "values": {
+        "base": 12,
+        "perpendicularHeight": 7,
+        "shape": "obtuse-triangle"
+      },
+      "expected": 42,
+      "eventPath": [
+        "a30-transform",
+        "a30-active@index0",
+        "a30-part"
+      ],
+      "category": "defer-strict-construction",
+      "reason": "The exterior perpendicular altitude and congruent copy are supplied by the task/view. The learner can pick the 'perpendicular height' option, but no hand-built exterior altitude or cut is logged.",
+      "limitedClaim": "Learner selected a height-related answer and recorded 42 for a given triangle; not independent external-altitude construction.",
+      "originalType": "x-a30-pieces",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    },
+    {
+      "family": "Q03",
+      "position": "triArea:3",
+      "nodeId": "mt_ML5t7n2-U8",
+      "op": "area",
+      "values": {
+        "base": 10,
+        "perpendicularHeight": 5,
+        "slantedSide": 6,
+        "geometry": "irrational x offset sqrt(11)"
+      },
+      "expected": 50,
+      "eventPath": [
+        "a30-active@index0",
+        "a30-part"
+      ],
+      "category": "defer-strict-construction",
+      "reason": "No transform/height-choice event exists. The native multiple choice concerns how to estimate the area of a different leaf shape; it does NOT ask learner to select 5 versus slanted side 6. Polygon source coordinates contain Math.sqrt(11) and cannot pass the existing integer-vertex BigInt polygon parser unchanged.",
+      "limitedClaim": "Learner entered one preset parallelogram's area and answered a leaf-estimation choice; not independently selected the perpendicular altitude.",
+      "originalType": "x-a30-pieces",
+      "nativeTaskHash": null,
+      "sourceFrozen": false,
+      "reviewedA": false
+    }
+  ],
+  "requiredBeforeImplementation": [
+    "Read latest main and current original module before freezing taskFingerprint(task), source ID and browser action grammar.",
+    "Write separate independent math replay, only for operations truly performed and recorded, preserving wrong-first, current submission, strict source and bridge/practice rejection.",
+    "Do not modify original task, grading, learning history or State-v2 merely to manufacture A evidence.",
+    "Targeted Node negatives first; use applicable native Chromium/P10/State-v2/offline CI only after an actual implementation PR."
+  ],
+  "releaseAndPrepush": {
+    "existingTool": "scripts/ci-release-sync.mjs (already on main; no duplicate script added)",
+    "existingCoverage": [
+      "all five offline release identities",
+      "startup dist/learning/learn.js SHA-256 in dist/learn.html",
+      "all reviewed navigation fixture hashes for dist/learning/learn.js",
+      "safe release-only sync; rejects non-release learn.js edits and stale unexpected fixture hashes"
+    ],
+    "commands": [
+      "node scripts/ci-release-sync.mjs check",
+      "node --test tests/ci-release-sync.test.mjs"
+    ],
+    "whenReleaseChanged": "For purely release identity changes: node scripts/ci-release-sync.mjs sync --release math-explorer-<explicit-version>, inspect the diff, rerun check and its test. Non-release learn.js edits require deliberate fixture re-review rather than silent sync.",
+    "mathAuditOnFamilyCodeChanges": [
+      "node --test tests/p9-evidence-contract.test.mjs tests/evidence-expansion-audit.test.mjs",
+      "node scripts/audit-evidence-expansion.mjs"
+    ],
+    "rationale": "PR #299 stale learn.js fixture hashes were already addressed by the existing #268 sync/check tool and its CI test; adding a second preflight implementation would duplicate it. CI on PR and independent main remains required.",
+    "observedCi": {
+      "main": "2ef5c4c0445f510136685b66a1543f826dd1f81e",
+      "requiredRun": 44706032779,
+      "requiredConclusion": "success",
+      "fallbackRun": 44706032825,
+      "fallbackConclusion": "success"
+    }
+  }
+}

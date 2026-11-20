@@ -110,9 +110,9 @@ async function run(){
    ok(await page.locator('#thinking-feedback').count()===0,label+' no pre-Check strict feedback');
    await field('guess','0');
    await click('#extra-controls [data-x="wide-predict"]');
-   if(row.index===3)await click('#extra-controls [data-x="wide-swap"][data-kind="down"][data-index="0"]');
-   await click('#extra-controls [data-x="wide-move"][data-delta="'+row.delta+'"]');
-   if(row.index===2)await click('#extra-controls [data-x="wide-swap"][data-kind="up"][data-index="1"]');
+   if(row.index===3)await click('#extra-visual [data-x="wide-swap"][data-kind="down"][data-index="0"]');
+   await click('#extra-visual [data-x="wide-move"][data-delta="'+row.delta+'"]');
+   if(row.index===2)await click('#extra-visual [data-x="wide-swap"][data-kind="up"][data-index="1"]');
    for(const column of row.changed)
     await click('#extra-controls [data-x="wide-changed"][data-index="'+column+'"]');
    await field('answer','0');
