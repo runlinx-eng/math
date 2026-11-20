@@ -120,7 +120,7 @@ async function run(){
      JSON.stringify(both.model.saved[1].u)===JSON.stringify(row.second),'second original form and save');
    ok(both.model.history.length===0,'no fake add/remove history');
    const field=async(key,value)=>{
-    const locator=page.locator('#extra-controls [data-xfield="'+key+'"]');
+    const locator=page.locator('[data-xfield="'+key+'"]');
     ok(await locator.count()===1,'original field '+key);await locator.fill(String(value));
    };
    if(row.expanded)for(let i=0;i<3;i++)
