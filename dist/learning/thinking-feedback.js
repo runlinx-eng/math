@@ -20,6 +20,7 @@ import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.
 import {ratioShapeBinding,replayRatioShapeEvidence} from './ratioshape-evidence.js';
 import {ratioStepsBinding,replayRatioStepsEvidence} from './ratiosteps-evidence.js';
 import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js';
+import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -174,7 +175,9 @@ export function thinkingGuide(task,context={}){
     const scaleSource=ratioStepsBinding(task,context);
     if(scaleSource)return{type:task.type,summary:'想一想：先对齐长度单位，再看面积倍数（可选）',question:scaleSource.question};
     const changeSource=pctChangeBinding(task,context);
-    return changeSource?{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question}:null;
+    if(changeSource)return{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question};
+    const fractionSource=fractionPartsBinding(task,context);
+    return fractionSource?{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question}:null;
   }
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
@@ -672,7 +675,27 @@ export function thinkingFeedback(task,model,record,context={}){
   if(task?.type==='x-r37-steps'){
     const source=ratioStepsBinding(task,context);
     if(!source){
-      const pctSource=pctChangeBinding(task,context);if(!pctSource)return null;
+      const pctSource=pctChangeBinding(task,context);
+      if(!pctSource){
+      const fractionSource=fractionPartsBinding(task,context);if(!fractionSource)return null;
+      const fractionProof=replayFractionPartsEvidence(task,model,context);if(!fractionProof)return null;
+      const p=fractionProof.construction;
+      const detail=[
+        '原题条件与步骤卡由学习工具给出；这里只核对实际步骤事件，不证明学生独立发明算法或理解了数学解释。',
+        ...p.records.map((r,i)=>'第 '+(i+1)+' 次操作（第 '+(r.index+1)+' 步）输入“'+r.answer+'”；'+
+          (r.correct?'符合本题独立的单位、分子分母或比较核算':'不符合本题该步的单位、分数形式或比较')+'。'),
+        ...p.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：按原条件核对为“'+s.quantity+
+          '”（'+(s.kind==='rawfraction'?'保留未约分分子分母':s.kind==='simple'?'必须是最简分数':s.kind==='choice'?'实际选择比较结果':'按相同单位计算')+'）。')
+      ];
+      if(p.wrongStepIndices.length)detail.push('首次错误输入与后面的纠正操作都保留，没有把最终正确值当作第一次答案。');
+      if(attempts.length>1)detail.push('旧Check原快照另行保留；这里只描述与最新实际提交一致的作品。');
+      if(record.support)detail.push('曾打开过提示或比较反馈。');
+      detail.push('没有自动核验学生自主策略、口头推理、实地测量或长期掌握。');
+      return {title:'这次作品中的思考线索',
+        observation:'真实完成 '+p.completedSteps+' 个部分与整体的步骤，分别保留同单位、未约分、最简分数及大于1的选择；'+
+          (p.wrongStepIndices.length?'此前错误和后续纠正均可核对。':'本次原记录未出现错误步骤。'),
+        connection:fractionSource.question,detail,method:null};
+      }
       const pctProof=replayPctChangeEvidence(task,model,context);if(!pctProof)return null;
       const p=pctProof.construction;
       const detail=[

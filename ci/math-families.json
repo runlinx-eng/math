@@ -530,6 +530,33 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "fractionparts",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-fractionparts-adapter-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-fractionparts-adapter/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative",
+        "backup"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 12,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }
