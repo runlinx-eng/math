@@ -83,7 +83,7 @@ module.exports={
     }
   ],
   "sourceHashes": {
-    "dist/learning/learn.js": "d9e93a2f17fc60dea0fcbb03c3a91c33fa00b34b9045aa6006571f6d29c6cc3b"
+    "dist/learning/learn.js": "b6f7decb0af1e612e54755195cdfe05199bf696a37ef21fb241dabf122d0677d"
   },
   "controllerSourceHashes": {
     "update": "e9cce21f3f3cf36ba81f6d4996bc6bc090e22cb545cc0a2e7349720c9f0ff1cc",
