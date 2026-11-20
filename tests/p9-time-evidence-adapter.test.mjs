@@ -13,6 +13,7 @@ import {studyActionFocus} from '../dist/learning/workspace-flow.js';
 import {timeBinding,replayTimeEvidence as replay} from '../dist/learning/time-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from '../dist/learning/timecompare-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from '../dist/learning/clock-setting-evidence.js';
+import {calendarIntervalBinding,replayCalendarIntervalEvidence} from '../dist/learning/calendar-interval-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyTimeFixtureStep as apply,timeEvidenceExample as example} from '../scripts/time-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -35,6 +36,7 @@ const reviewedCompare=new Set(['timecompare:0','timecompare:1','timecompare:2',
 // #306: these three setting tasks have their own source and mathematical replay,
 // without expanding the earlier 20 strict time-construction positions.
 const reviewedClock=new Set(['hourclock:2','fiveclock:2','quarterclock:1']);
+const reviewedCalendar=new Set(['calendaruse:2','calendaruse:3']);
 
 function repair(c,m){
  const t=task(c),kind=c.type.slice(6);
@@ -74,7 +76,7 @@ function submit(a,correct){
  return a.cases[a.index];
 }
 
-test('20 older constructions and 40 other tasks stay isolated, with only 3 new dial settings admitted',()=>{
+test('20 time constructions and 40 existing tasks stay isolated except three dials and two calendar intervals',()=>{
  assert.equal(cases.length,20);assert.equal(new Set(cases.map(c=>c.nodeId)).size,10);
  assert.equal(excludedCases.length,40);assert.equal(associatedCases.length,63);
  assert.deepEqual(Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(k=>[k,cases.filter(c=>c.type==='x-t32-'+k).length])),{order:5,parts:5,roman:1,stopwatch:3,steps:6});
@@ -86,11 +88,11 @@ test('20 older constructions and 40 other tasks stay isolated, with only 3 new d
   const t=task(c),m=example(t);
   assert.equal(taskFingerprint(t),c.taskHash,key(c));assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);
   assert.deepEqual(m.answers,c.answers);
-  const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c)),newClock=reviewedClock.has(key(c));
+  const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c)),newClock=reviewedClock.has(key(c)),newCalendar=reviewedCalendar.has(key(c));
   // Old fixture compatibility accepts its own id/index shape. The new adapter
   // deliberately uses the canonical native context rather than coercing id.
   const nativeContext={sessionId:c.id,index:c.index};
-  const visibleContext=(newComparison||newClock)?nativeContext:c;
+  const visibleContext=(newComparison||newClock||newCalendar)?nativeContext:c;
   assert.equal(!!timeBinding(t,c),previousFamily,
    key(c)+' old 20 constructions must remain independently source-bound');
   assert.equal(!!timeCompareBinding(t,nativeContext),newComparison,
@@ -101,9 +103,13 @@ test('20 older constructions and 40 other tasks stay isolated, with only 3 new d
    key(c)+' only the three separately reviewed original dial tasks may bind');
   assert.equal(!!replayClockSettingEvidence(t,m,nativeContext),newClock,
    key(c)+' only real original dial-setting actions may replay');
-  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock,
+   assert.equal(!!calendarIntervalBinding(t,nativeContext),newCalendar,
+    key(c)+' only the two reviewed day-interval originals may bind');
+   assert.equal(!!replayCalendarIntervalEvidence(t,m,nativeContext),newCalendar,
+    key(c)+' only source-bound original date clicks may replay');
+  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock||newCalendar,
    key(c)+' source-scoped thinking guide');
-  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock,
+  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock||newCalendar,
    key(c)+' source-scoped checked feedback');
   if(!c.id.startsWith('link-')&&!previousFamily)rejected(t,m);
  }
