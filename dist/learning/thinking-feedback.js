@@ -32,6 +32,7 @@ import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconver
 import {proportionalStepsBinding,replayProportionalStepsEvidence} from './proportionalsteps-evidence.js';
 import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
+import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
@@ -72,8 +73,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
   if(task?.type==='x-pvbench'){
-    const source=pvbenchBinding(task,context);
-    return source?{type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:source.question}:null;
+    const fixed=pvbenchBinding(task,context);
+    if(fixed)return {type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:fixed.question};
+    const saved=pvSavedBinding(task,context);
+    return saved?{type:task.type,summary:'想一想：两次保存的表示为什么总量相同？（可选）',question:saved.question}:null;
   }
   if(task?.type==='x-wideshift'){
     if(task.mode==='add'){
@@ -1039,6 +1042,26 @@ export function thinkingFeedback(task,model,record,context={}){
     if(attempts.length>1)detail.push('以前的检查快照仍保留；这里对应最新一次检查的完整作品。');
     if(record.support)detail.push('你打开过提示或比较反馈。');
     return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
+  if(task?.type==='x-pvbench'&&pvSavedBinding(task,context)){
+    const source=pvSavedBinding(task,context);
+    const proof=replayPVSavedEvidence(task,model,context);if(!proof)return null;
+    const formName={blocks:'方块',sticks:'线条和点'};
+    const describe=rep=>[3,0,1,2].filter(i=>rep.units[i]>0)
+      .map(i=>rep.units[i]+' 个 '+['百','十','一','千'][i]).join('、')||'零';
+    const detail=[
+      '这里只核对按保存顺序留下的两份数位表示，不把未记录的逐次添取、画法切换时刻或搭建顺序说成真实操作历史。',
+      ...proof.representations.map((rep,i)=>'第 '+(i+1)+' 份保存的是'+formName[rep.form]+'表示：'+describe(rep)+'，总量 '+rep.total+'。'),
+      '两份都按百、十、一、千的单位值重新求和，数值相同；原图形和百数表由工具提供，不证明独立作图或长期掌握。'
+    ];
+    if(proof.sourceSpecificFirstUnits)detail.push('第一份确实保留了 11 个十和 2 个一，第二份为另一种装法。');
+    if(proof.chartSelection!==null)detail.push('本次百数表选中了 '+proof.chartSelection+'，与两份表示的总量相符。');
+    if(proof.expanded)detail.push('本次填写的展开记录 '+proof.expanded.join(' + ')+' = '+proof.total+'，只是本次填写值。');
+    if(attempts.length>1)detail.push('此前检查及错误尝试原样保留；只对最新完整提交对应的作品给出反馈。');
+    if(record.support)detail.push('你曾查看过提示或比较反馈。');
+    return {title:'这次作品中的思考线索',
+      observation:'本次实际保存了两份不同画法的数位表示，每份核对的总量都是 '+proof.total+'；保存顺序可见，但搭建过程没有完整事件记录。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-pvbench'){
     const source=pvbenchBinding(task,context);if(!source)return null;

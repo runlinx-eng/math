@@ -20,7 +20,8 @@ function sourceFor(task,context){
     task.fixed===true||task.n!==source.n||!same(task.forms,source.forms)||
     task.saveCount!==undefined||task.exchanges!==undefined||task.start!==undefined||
     task.expanded!==source.expanded&&!(task.expanded===undefined&&source.expanded===undefined)||
-    task.chart!==source.chart||!same(task.firstEnd,source.firstEnd))return null;
+    task.chart!==source.chart||
+    !(task.firstEnd===undefined&&source.firstEnd===undefined||same(task.firstEnd,source.firstEnd)))return null;
  return source;
 }
 export function pvSavedBinding(task,context={}){

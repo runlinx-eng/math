@@ -5,6 +5,10 @@ import {sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as M from '../dist/learning/phase5/b07-model.js';
 import {pvSavedBinding,replayPVSavedEvidence} from '../dist/learning/pv-saved-evidence.js';
+import {pvSavedEvidenceExample,pvSavedEvidenceSteps} from '../scripts/pv-saved-evidence-fixture.mjs';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {freshLesson,submitLesson,validateLesson} from '../dist/learning/state.js';
 await ensureB39Ready();
 const cases=[
  ['twoproblems',2,'59a6ea394f2dcd1b08303a7cc9805a2486e9d1f6e520d0922fd85fc9d5718b09',[0,6,8,0],[0,6,8,0]],
@@ -72,4 +76,42 @@ test('only four approved candidate positions bind, and no fixed, other Q04 or br
  const wrong=positive(cases[2]);
  wrong.model.saved[1].u=[0,11,2,0];wrong.model.u=[0,11,2,0];
  assert.equal(replayPVSavedEvidence(wrong.task,wrong.model,wrong.context),null);
+});
+
+test('source-locked real action witnesses join review adapters and the original State-v2 submissions',()=>{
+ const adapter=EVIDENCE_ADAPTERS.find(a=>a.id==='pv-saved');
+ assert.ok(adapter&&adapter.type==='x-pvbench');
+ for(const row of cases){
+  const x=positive(row),{task,context}=x;
+  const sample=pvSavedEvidenceExample(task,context);
+  assert.deepEqual(sample,x.model,'fixture must use original B07 actions only');
+  assert.equal(pvSavedEvidenceSteps(task,context).filter(s=>s.action==='pv-save').length,2);
+  assert.equal(adapter.binding(task,context)?.method,null);
+  assert.ok(adapter.replay(task,sample,context));
+  assert.ok(thinkingGuide(task,context));
+  const record=freshLesson(context.sessionId);
+  record.index=context.index;
+  const model=record.models[context.index]=structuredClone(sample);
+  model.answer=task.n-1;
+  assert.equal(submitLesson(record).correct,false);
+  assert.equal(thinkingFeedback(task,model,record.cases[context.index],context),null);
+  const wrong=structuredClone(record.cases[context.index].attempts[0]);
+  model.answer=task.n;
+  assert.equal(thinkingFeedback(task,model,record.cases[context.index],context),null);
+  assert.equal(submitLesson(record).correct,true);
+  const current=record.cases[context.index];
+  assert.equal(current.attempts.length,2);
+  assert.deepEqual(current.attempts[0],wrong);
+  const feedback=thinkingFeedback(task,model,current,context);
+  assert.ok(feedback&&feedback.method===null);
+  assert.match(feedback.detail.join(' '),/没有完整事件记录|未记录/);
+  model.answer=task.n-1;
+  assert.equal(thinkingFeedback(task,model,current,context),null);
+  model.answer=task.n;
+  const restored=validateLesson(JSON.parse(JSON.stringify(record)),context.sessionId);
+  assert.deepEqual(restored.cases[context.index],current);
+  assert.ok(thinkingFeedback(task,restored.models[context.index],restored.cases[context.index],context));
+  assert.equal(thinkingFeedback(task,model,{...current,attempts:current.attempts.slice(0,1)},context),null);
+  assert.equal(thinkingGuide({...task,prompt:task.prompt+'!'},context),null);
+ }
 });
