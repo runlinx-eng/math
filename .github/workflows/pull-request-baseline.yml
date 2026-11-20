@@ -276,6 +276,7 @@ jobs:
             tests/ci-live-matrix.test.mjs
             tests/ci-targeted-checks.test.mjs
             tests/ci-node-scope.test.mjs
+            tests/ci-cancel-superseded.test.mjs
             tests/desktop-viewport-policy.test.mjs
             tests/grade-progression-model.test.mjs
             tests/grade-progression-overview.test.mjs
