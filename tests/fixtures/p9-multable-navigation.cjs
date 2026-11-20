@@ -514,7 +514,7 @@ module.exports={
     }
   ],
   "sourceHashes": {
-    "dist/learning/learn.js": "3f09f2c468d72966772cb1461a195be3fd8b10b9ee7c01ce8682e3dd67c9027b",
+    "dist/learning/learn.js": "e4c9162da6d9096b4ebc68ee373c1588f7edff56bedaefb6c2436bad3d37a125",
     "dist/learning/phase5/b13-model.js": "d5a146c466ac846dd555f833823453252f1268e6be4f4d1d845ad07c7c434cb3",
     "dist/learning/phase5/b13-view.js": "1cece24dc00f47b3d54bb1e0405d5f05270e625cd23841872cf38c96c024b6a8",
     "dist/learning/phase5/b16-model.js": "ab907c6334f7d0b0fb557a1f2a036be8228dd25253ff11736236865de6d53fab",
