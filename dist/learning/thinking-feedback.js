@@ -16,6 +16,7 @@ import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
+import {directedJumpBinding,replayDirectedJumpEvidence} from './directed-jump-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -169,6 +170,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-orderlab'){
     const source=orderBinding(task,context);
     return source?{type:task.type,summary:'想一想：这一小块要先准备什么？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-directedjump'){
+    const src=directedJumpBinding(task,context);
+    return src?{type:task.type,summary:'想一想：每段方向和长度怎样决定终点？（可选）',question:src.question}:null;
   }
   if(task?.type==='x-a30-grid'){
     const edge=perimeterEdgeBinding(task,context);
@@ -622,6 +627,24 @@ export function thinkingFeedback(task,model,record,context={}){
     if(proof.pending&&!proof.pending.rawMatchesBuilt)detail.push('输入框中的文字与已摆出的关系精确对应，但没有把未点击摆出的文字当成另一轮操作。');
     if(proof.currentIssue)detail.push('末次请求的原提示仍保留；它没有改变已完成的运算树，这次检查核对的是当前完整作品。');
     return{title:'这次作品中的思考线索',observation:`你在当前关系中亲手合过 ${proof.effectiveSteps.length} 块；每块所需的部分先准备好，填写的量与原算式精确对应。最后得到 ${result}，与这次提交的结果一致。`,connection:'如果先换到另一块，它需要的量是否都已准备好？哪些小块互不依赖，哪些必须先后接起来？',detail,method:null};
+  }
+  if(task?.type==='x-directedjump'){
+    const source=directedJumpBinding(task,context);
+    if(!source)return null;
+    const p=replayDirectedJumpEvidence(task,model,context);if(!p)return null;
+    const steps=p.observableSuccessfulJumps.map((e,i)=>
+      '第'+(i+1)+'跳：从'+e.from+(e.direction==='left'?'向左':'向右')+'走'+e.unitLength+'，到'+e.to+'。');
+    const detail=[
+      ...steps,
+      '从'+p.start+'开始累加每段有向变化，最终到'+p.end+'。每段长度不等于终点读数。',
+      '原历史没有完整记录撤销和改起点。不能复原的时序一律不生成严格反馈，也不补造历史。',
+      '箭头和数轴由工具生成；不评价最初猜想正确性、徒手绘图、自由解释或长期掌握。'
+    ];
+    if(attempts.length>1)detail.push('此前Check快照仍保留；这里只描述最新一次真实提交。');
+    if(record.support)detail.push('曾查看可选提示。');
+    return {title:'这次作品中的思考线索',
+      observation:'你实际保留了'+steps.length+'段有向跳跃，从'+p.start+'走到'+p.end+'，方向和长度与原题相符。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-a30-grid'){
     const source=perimeterEdgeBinding(task,context);

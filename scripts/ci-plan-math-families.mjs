@@ -18,6 +18,41 @@ const sha256=value=>createHash('sha256').update(JSON.stringify(value)).digest('h
 const overlap=(a,b)=>a.startsWith(b)||b.startsWith(a);
 const equal=(a,b)=>assert.deepEqual(a,b);
 
+// Independent new families may require a better packing than first-fit decreasing.
+// Try a bounded exact single-wave packing; never change a limit or skip a module.
+function repackIndependentWaveOne(families,limits){
+ const capacity=limits.maxNewScriptsMinutesPerJob,count=limits.maxParallel;
+ if(families.some(f=>f.dependsOn.length||f.resources.exclusiveLocks.length||
+  f.resources.runnerType!=='standard'||f.resources.memoryMiB>6000))return null;
+ if(families.reduce((sum,f)=>sum+f.resources.estimatedScriptMinutes,0)>capacity*count)return null;
+ const ordered=[...families].sort((a,b)=>b.resources.estimatedScriptMinutes-a.resources.estimatedScriptMinutes||
+  a.familyId.localeCompare(b.familyId,'en'));
+ const bins=Array.from({length:count},()=>({minutes:0,modules:[]}));
+ let visits=0;
+ function place(index){
+  if(++visits>1000000)return false;
+  if(index===ordered.length)return true;
+  const item=ordered[index],seen=new Set();
+  for(const bin of bins){
+   const before=bin.minutes,after=before+item.resources.estimatedScriptMinutes;
+   if(after>capacity||seen.has(before))continue;
+   seen.add(before);bin.minutes=after;bin.modules.push(item);
+   if(place(index+1))return true;
+   bin.modules.pop();bin.minutes=before;
+   if(before===0)break; // Empty bins are interchangeable.
+  }
+  return false;
+ }
+ if(!place(0))return null; // Keep original later wave: live CI will reject it.
+ return bins.filter(bin=>bin.modules.length).map((bin,index)=>({
+  id:'shadow-wave-1-job-'+String(index+1).padStart(2,'0'),wave:1,
+  runnerType:'standard',scriptMinutes:Number(bin.minutes.toFixed(3)),
+  peakMemoryMiB:Math.max(...bin.modules.map(m=>m.resources.memoryMiB)),locks:[],
+  modules:bin.modules.map(mod=>({familyId:mod.familyId,entry:mod.entry,
+   dependsOn:mod.dependsOn,artifacts:mod.artifacts,proofContracts:mod.proofContracts}))
+ }));
+}
+
 export function planShadow(registry,{groups=BROWSER_GROUPS,fileExists=p=>existsSync(resolve(root,p)),verifyFrozen=false}={}){
  assert.equal(registry.schema,'math-ci-family-registry/1');
  assert.equal(registry.mode,'shadow-only','The registry cannot activate the Required matrix');
@@ -142,6 +177,12 @@ export function planShadow(registry,{groups=BROWSER_GROUPS,fileExists=p=>existsS
    assigned.set(mod.familyId,chosen.wave);
    pending.delete(mod.familyId);
   }
+ }
+ // First-fit is cheap, but can spill independent tasks into wave 2 even when
+ // a legal ten-job first-wave packing exists. Preserve all original limits.
+ if(jobs.some(j=>j.wave>1)){
+  const packed=repackIndependentWaveOne(extra,limits);
+  if(packed)jobs.splice(0,jobs.length,...packed);
  }
  jobs.sort((a,b)=>a.wave-b.wave||a.id.localeCompare(b.id,'en'));
  const plan={schema:'math-ci-shadow-plan/1',mode:'shadow-only',sourceMainSha:main,

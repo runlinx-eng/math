@@ -49,6 +49,22 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(accepted().digest,plan.digest,'plan must be deterministic');
 });
 
+test('#312 current 27 mandatory family scripts fit ten unchanged 29-minute jobs',()=>{
+ const reg=source(),plan=accepted();
+ assert.equal(reg.newFamilies.length,27);
+ assert.equal(reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0),287);
+ assert.equal(plan.plannedNewJobs.length,10);
+ assert.ok(plan.plannedNewJobs.every(j=>j.wave===1&&j.scriptMinutes<=29&&j.peakMemoryMiB<=6000));
+ assert.equal(plan.plannedNewJobs.reduce((sum,j)=>sum+j.scriptMinutes,0),287);
+ assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
+  reg.newFamilies.map(m=>m.familyId).sort());
+});
+test('#312 truly over-capacity independent families still produce rejected later waves',()=>{
+ const modules=Array.from({length:11},(_,i)=>fakeModule('full'+i,{minutes:29}));
+ const plan=withSynthetic(modules);
+ assert.ok(plan.plannedNewJobs.some(j=>j.wave>1));
+});
+
 test('#239 registry packs compatible independently registered work into one safe wave',()=>{
  const reg=[fakeModule('alpha',{minutes:10,locks:['learning-store'],dependsOn:['legacy:evidence-area']}),
   fakeModule('beta',{minutes:11,locks:['learning-store']}),
