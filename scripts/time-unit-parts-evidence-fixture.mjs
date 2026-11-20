@@ -12,7 +12,7 @@ const reviewed=new Map([
  ['cef8b68d985c09debdf129887cfe8fe1c2aee31756f8a7308cf7c71ec875bf0f',['1','30']],
  ['1bae521a58580ee0fe402c19cf0f3d3aa946368e84fd42b3e1a2991f54aded92',['205']],
  ['2635aa3849d226069eb93f7f6efe01c25bb497f54034837d2ab98ccecf1c40ec',['2','30']],
- ['56655e258936575429bca55375504ac92cb9b58d05a55b75aad0053205c4f14d',['1']]
+ ['56655e258936575429bca55375504ac92cb9b58d05a55b75aad0053205c4f14d',['60']]
 ]);
 const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?
  Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,stable(value[k])])):value;

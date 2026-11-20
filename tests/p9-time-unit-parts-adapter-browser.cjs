@@ -15,7 +15,7 @@ const rows=[
  {id:'hoursday',index:2,node:'mt_2XDGT5tei1',labels:['60分钟','30分钟'],answers:['1','30'],seconds:5400},
  {id:'timeconvert',index:0,node:'mt_2yas4Unc8o',labels:['1小时','1小时','1小时','25分钟'],answers:['205'],seconds:12300},
  {id:'timeconvert',index:1,node:'mt_2yas4Unc8o',labels:['60秒','60秒','30秒'],answers:['2','30'],seconds:150},
- {id:'calendarfacts',index:0,node:'mt_EXlmTURK_o',labels:['15秒','15秒','15秒','15秒'],answers:['1'],seconds:60}
+ {id:'calendarfacts',index:0,node:'mt_EXlmTURK_o',labels:['15秒','15秒','15秒','15秒'],answers:['60'],seconds:60}
 ];
 const checks=[],captures=[],screenshots=[],errors=[];
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();

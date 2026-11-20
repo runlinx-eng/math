@@ -29,7 +29,8 @@ function sourceFor(task,context){
    k==='hoursday:1'?[sum/3600]:
    k==='hoursday:2'?[Math.floor(sum/3600),(sum%3600)/60]:
    k==='timeconvert:0'?[sum/60]:
-   k==='timeconvert:1'?[Math.floor(sum/60),sum%60]:[sum/60];
+   k==='timeconvert:1'?[Math.floor(sum/60),sum%60]:
+   k==='calendarfacts:0'?[sum]:[sum/60];
  if(!same(task.questions.map(q=>q?.value),expected)||
     !task.questions.every(q=>keys(q,['label','value','kind'])&&q.kind==='number'&&
        Number.isSafeInteger(q.value)))return null;
