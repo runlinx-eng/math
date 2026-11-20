@@ -29,11 +29,11 @@ const bounded=(n,min,max)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
 function gcd(a,b){a=a<0n?-a:a;while(b){const c=a%b;a=b;b=c;}return a||1n;}
 function fraction(value){
  if(typeof value!=='string'||value.length>96)return null;
- const text=value.trim().replace(/\\s*\\/\\s*/g,'/');
+ const text=value.trim().replace(/\s*\/\s*/g,'/');
  let n,d;
- if(/^-?\\d+\\/[1-9]\\d*$/.test(text)){
+ if(/^-?\d+\/[1-9]\d*$/.test(text)){
   const parts=text.split('/');n=BigInt(parts[0]);d=BigInt(parts[1]);
- }else if(/^-?\\d+(?:\\.\\d+)?$/.test(text)){
+ }else if(/^-?\d+(?:\.\d+)?$/.test(text)){
   const [whole,decimal='']=text.split('.');
   const negative=whole.startsWith('-');
   n=BigInt((negative?whole.slice(1):whole)+decimal)*(negative?-1n:1n);
