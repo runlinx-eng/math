@@ -169,7 +169,7 @@ async function main(){
    ok(replay?.construction?.completedSteps===task.steps.length&&
       JSON.stringify(replay?.construction?.wrongStepIndices)==='[0,3]'&&
       replay.independentStrategyAssessed===false&&replay.construction.choiceRecorded===true,
-      
+
       label+' real saved original model passes exact independent replay');
    await shot('checked');
    const refresh=await page.reload();
