@@ -33,7 +33,7 @@ export function replayPositiveOrderPreaudit(task,model,record,context={}){
     !Array.isArray(model.orderTrace)||!model.orderTrace.length||model.orderTrace.length>512||
     model.orderTraceOverflow!==false)return null;
   const expected=Object.keys(original.initial(task)).sort();
-  if(!keys(model,expected)||!keys(record.attempts.at(-1),['value']))return null;
+  if(!keys(model,expected))return null;
   const order=[],timeline=[],numbers=source.values.map(BigInt);
   for(let step=0;step<model.orderTrace.length;step++){
    const event=model.orderTrace[step];
@@ -48,8 +48,7 @@ export function replayPositiveOrderPreaudit(task,model,record,context={}){
   for(let i=1;i<order.length;i++)if(numbers[order[i-1]]>=numbers[order[i]])return null;
   const expectedOrder=numbers.map((n,i)=>({n,i})).sort((a,b)=>a.n<b.n?-1:a.n>b.n?1:0).map(x=>x.i);
   if(!same(order,expectedOrder))return null;
-  if(!same(model.positions.map((p,i)=>({index:i,position:p,touched:model.touched[i]})),
-    model.positions.map((p,i)=>({index:i,position:p,touched:true}))))return null;
+  if(!model.touched.every(value=>value===true))return null;
   // Positions are final-state observations, not a timeline of slider movements.
   const points=source.values.map((value,i)=>{
    const ideal=(Number(value)-task.min)/(task.max-task.min)*1000;
