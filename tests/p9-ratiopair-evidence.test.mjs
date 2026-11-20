@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {sessionTaskFor} from '../dist/learning/bridges.js';
 import * as native from '../dist/learning/phase5/b37-model.js';
 import {ratioPairBinding,replayRatioPairEvidence} from '../dist/learning/ratiopair-evidence.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 // Independently chosen original examples. Neither the adapter nor the model
 // is allowed to produce these expected mathematical relationships.
@@ -122,4 +123,27 @@ test('#276 merely placing a ratio without saving a judgement cannot prove it',()
  assert.ok(proof('ratioProblem37',1,m));
  m.value='7';native.field(t,m,'value');
  assert.equal(proof('ratioProblem37',1,m),null);
+});
+
+test('#276 shared feedback requires an actually checked identical and source-valid model',()=>{
+ for(const [id,index] of rows){
+  const task=sessionTaskFor(id,index),model=native.example(task);
+  const saved={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,saved});
+  const guide=thinkingGuide(task,ctx(id,index));
+  const feedback=thinkingFeedback(task,model,saved,ctx(id,index));
+  assert.ok(guide?.question);
+  assert.ok(feedback?.observation&&feedback.detail.length>=4);
+  assert.equal(feedback.method,null);
+  assert.ok(feedback.detail.some(s=>s.includes('独立核算')));
+  const edited=structuredClone(model);edited.value='999';
+  assert.equal(thinkingFeedback(task,edited,saved,ctx(id,index)),null,
+   'a later visible edit revokes stale proof');
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[]},ctx(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,
+   {support:false,attempts:[{value:native.initial(task)}]},ctx(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,saved,{sessionId:id,index:String(index)}),null);
+  assert.equal(thinkingGuide(task,{sessionId:id,index:String(index)}),null);
+  assert.equal(JSON.stringify({task,model,saved}),before);
+ }
 });

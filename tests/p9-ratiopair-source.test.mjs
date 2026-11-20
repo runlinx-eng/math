@@ -56,10 +56,16 @@ test('#276 all unreviewed native pair positions and bridges remain excluded',()=
   }
  }
 });
-test('#276 stage 1 alone grants no A rating and no shared learning feedback',()=>{
+test('#276 exact approved manifest fingerprints for the original 13 positions',()=>{
  const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
- assert.equal(manifest.tasks.length,714);
- for(const [sessionId,index] of sources)assert.equal(
-  manifest.tasks.some(x=>x.sessionId===sessionId&&x.index===index),false);
- assert.equal(EVIDENCE_ADAPTERS.some(x=>x.type==='x-r37-pair'),false);
+ assert.equal(manifest.tasks.filter(t=>t.adapter==='ratiopair').length,13);
+ for(const [sessionId,index] of sources){
+  const actual=manifest.tasks.find(t=>t.adapter==='ratiopair'&&
+   t.sessionId===sessionId&&t.index===index);
+  const expected={sessionId,index,type:'x-r37-pair',
+   nodeId:LESSONS[sessionId].topicId,adapter:'ratiopair',
+   taskHash:taskFingerprint(sessionTaskFor(sessionId,index)),method:null};
+  assert.deepEqual(actual,expected);
+ }
+ assert.equal(EVIDENCE_ADAPTERS.filter(a=>a.type==='x-r37-pair').length,1);
 });
