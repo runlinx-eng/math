@@ -47,9 +47,15 @@ async function run(){
   await restorePage.goto(origin.base+'v2.html#trail');
   await page.locator('#main [data-do="export"]').first().waitFor();
   await restorePage.locator('#main [data-do="export"]').first().waitFor();
+  // Separate contexts have separate SW installs; a visible document is not
+  // necessarily controlled. Activate and reload backup before HTTP is stopped.
+  await restorePage.evaluate(async()=>Boolean(await navigator.serviceWorker.ready));
+  await restorePage.reload();
+  await restorePage.waitForFunction(()=>!!navigator.serviceWorker.controller);
+  await restorePage.locator('#main [data-do="export"]').first().waitFor();
+  ok(await restorePage.evaluate(()=>!!navigator.serviceWorker.controller),
+     'backup context is SW-controlled before shutting down HTTP');
   await warmAndStop(page,origin,release,ok,label);
-  // restore context was loaded and controlled while origin was online.
-  ok(await restorePage.evaluate(()=>!!navigator.serviceWorker.controller),'backup context is SW-controlled');
   const selectOriginal=async row=>{
    const response=await page.goto(origin.base+'learn.html#'+row.id);
    ok(response?.fromServiceWorker()===true,row.id+' original course loaded offline');
