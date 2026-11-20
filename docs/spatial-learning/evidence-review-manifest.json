@@ -6811,6 +6811,33 @@
       "adapter": "ratioshape",
       "taskHash": "84f8a46d71de3c4bd6bc11fc90eabc87a6c57171a216d90db92976ff043ac06b",
       "method": null
+    },
+    {
+      "sessionId": "rateUnit37",
+      "index": 0,
+      "type": "x-r37-steps",
+      "nodeId": "mt_kLQOzZYrd5",
+      "adapter": "compoundunits",
+      "taskHash": "69272359c602558a94244a1294c6bf653d993e02331f615a859687154687dc72",
+      "method": null
+    },
+    {
+      "sessionId": "rateUnit37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_kLQOzZYrd5",
+      "adapter": "compoundunits",
+      "taskHash": "0f71251781e1a412d7a3fa45b64f5747c95862ab82c0333f0fb5c60f54f6a165",
+      "method": null
+    },
+    {
+      "sessionId": "rateUnit37",
+      "index": 3,
+      "type": "x-r37-steps",
+      "nodeId": "mt_kLQOzZYrd5",
+      "adapter": "compoundunits",
+      "taskHash": "951af1b4390e88b9c8ccebb2f857d7cfc362de9fcf77249288c2d49ee6734801",
+      "method": null
     }
   ]
 }

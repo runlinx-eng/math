@@ -22,6 +22,7 @@ import {ratioStepsBinding,replayRatioStepsEvidence} from './ratiosteps-evidence.
 import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js';
 import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-evidence.js';
 import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-evidence.js';
+import {compoundUnitsBinding,replayCompoundUnitsEvidence} from './compoundunits-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -179,6 +180,8 @@ export function thinkingGuide(task,context={}){
     if(changeSource)return{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question};
     const fractionSource=fractionPartsBinding(task,context);
     if(fractionSource)return{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question};
+    const unitsSource=compoundUnitsBinding(task,context);
+    if(unitsSource)return{type:task.type,summary:'想一想：速度、密度与复合单位的乘除关系（可选）',question:unitsSource.question};
     const notationSource=ratioNotationBinding(task,context);
     return notationSource?{type:task.type,summary:'想一想：等值比的两端共同倍数与最简整数比（可选）',question:notationSource.question}:null;
   }
@@ -682,6 +685,27 @@ export function thinkingFeedback(task,model,record,context={}){
       if(!pctSource){
       const fractionSource=fractionPartsBinding(task,context);
       if(!fractionSource){
+        const unitsSource=compoundUnitsBinding(task,context);
+        if(unitsSource){
+          const unitsProof=replayCompoundUnitsEvidence(task,model,context);
+          if(!unitsProof)return null;
+          const p=unitsProof.construction;
+          const detail=[
+            '已知距离、时间、质量、体积及原步骤由题目给出；这里只独立核对真实步骤事件和对应单位，不代表自行设计换算。',
+            ...p.records.map((r,i)=>'第 '+(i+1)+' 次实际操作（第 '+(r.index+1)+' 步）输入“'+r.answer+'”；'+
+              (r.correct?'符合独立的复合单位乘除核算':'与该步的单位或乘除核算不符')+'。'),
+            ...p.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：独立计算为 '+s.quantity+' '+s.unit+'。'),
+            '单位关系：'+p.equation+'。'
+          ];
+          if(p.wrongStepIndices.length)detail.push('原历史保留第一次错误和实际纠正，不以正确答案覆盖先前输入。');
+          if(attempts.length>1)detail.push('此前Check的原快照仍单独保留；这里只观察最新一致的提交。');
+          if(record.support)detail.push('曾使用过提示或反馈。');
+          detail.push('不自动认定学生自选策略、解释单位的能力、实际测量或长期掌握。');
+          return {title:'这次作品中的思考线索',
+            observation:'实际完成 '+p.completedSteps+' 个速度或密度步骤，复合单位和乘除逆关系已独立核算；'+
+              (p.wrongStepIndices.length?'先前错误与纠正均有原记录。':'本次没有保存错误步骤。'),
+            connection:unitsSource.question,detail,method:null};
+        }
         const notationSource=ratioNotationBinding(task,context);if(!notationSource)return null;
         const notationProof=replayRatioNotationEvidence(task,model,context);if(!notationProof)return null;
         const p=notationProof.construction;
