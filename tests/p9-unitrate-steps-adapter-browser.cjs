@@ -181,6 +181,11 @@ async function main(){
       JSON.stringify(saved.record)===JSON.stringify(success.record),
       label+' original corrections and check persist identically');
    await shot('reloaded');
+   if(row.id==='rateWords37'){
+    await click('#actions [data-do="next"]');
+    ok(await page.evaluate(()=>window.mathLesson?.snapshot()?.index===3),
+      label+' real Next advances while prior checked evidence stays saved');
+   }
   }
   // Retry clears only the current work, while the earlier native Check remains.
   const last=sources.at(-1);label='shared-retry-'+key(last);
