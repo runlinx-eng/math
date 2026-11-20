@@ -4,6 +4,11 @@ import {sessionTaskFor,sessionTasks,BRIDGES} from '../dist/learning/bridges.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import * as native from '../dist/learning/phase5/b37-model.js';
 import {unitRateStepsBinding,replayUnitRateStepsEvidence} from '../dist/learning/unitrate-steps-evidence.js';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+import {freshLesson,submitLesson,validateLesson} from '../dist/learning/state.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+await ensureB39Ready();
 
 const cases=[
  {id:'rateWords37',index:2,node:'mt_ATYLKt0je-',numbers:['120','60'],choice:'mph'},
@@ -68,4 +73,27 @@ test('#323 other r37-step native tasks and all bridge tasks remain unbound',()=>
   if(t.type==='x-r37-steps')assert.equal(!!unitRateStepsBinding(t,{sessionId:id,index}),accepted.has(id+':'+index),id+':'+index);
  for(const id of Object.keys(BRIDGES))for(const [index,t] of (sessionTasks(id)||[]).entries())
   if(t.type==='x-r37-steps')assert.equal(unitRateStepsBinding(t,{sessionId:id,index}),null,'bridge '+id+':'+index);
+});
+
+test('#323 strict source feedback requires newest real Check and accepts State-v2 restore',()=>{
+ const adapter=EVIDENCE_ADAPTERS.find(a=>a.id==='unitrate-steps');
+ assert.ok(adapter&&adapter.type==='x-r37-steps');
+ for(const c of cases){
+  const t=task(c),ctx=context(c),example=native.example(t);
+  assert.ok(adapter.binding(t,ctx)&&adapter.replay(t,example,ctx));
+  assert.ok(thinkingGuide(t,ctx));
+  const record=freshLesson(c.id);record.index=c.index;
+  const model=record.models[c.index]=structuredClone(example);
+  assert.equal(thinkingFeedback(t,model,record.cases[c.index],ctx),null);
+  assert.equal(submitLesson(record).correct,true);
+  const current=record.cases[c.index];
+  const feedback=thinkingFeedback(t,model,current,ctx);
+  assert.ok(feedback&&feedback.method===null);
+  assert.match(feedback.detail.join(' '),/原来的题卡|真实保存/);
+  assert.equal(thinkingFeedback(t,{...model,value:'stale'},current,ctx),null);
+  const restored=validateLesson(JSON.parse(JSON.stringify(record)),c.id);
+  assert.deepEqual(restored.cases[c.index],current);
+  assert.ok(thinkingFeedback(t,restored.models[c.index],restored.cases[c.index],ctx));
+  assert.equal(unitRateStepsBinding({...t,prompt:t.prompt+' altered'},ctx),null);
+ }
 });
