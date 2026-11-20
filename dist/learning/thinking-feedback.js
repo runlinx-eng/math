@@ -25,6 +25,7 @@ import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-
 import {compoundUnitsBinding,replayCompoundUnitsEvidence} from './compoundunits-evidence.js';
 import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconversions-evidence.js';
 import {proportionalStepsBinding,replayProportionalStepsEvidence} from './proportionalsteps-evidence.js';
+import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -166,6 +167,10 @@ export function thinkingGuide(task,context={}){
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次图形中的部分、面积和外边（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-graphpoints'){
+    const source=proportionalGraphBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每增加1千克，总价怎样变化，原点为什么也是这张图上的一点？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-r37-pair'){
     const source=ratioPairBinding(task,context);
@@ -641,6 +646,27 @@ export function thinkingFeedback(task,model,record,context={}){
     detail.push('这里只描述本次可核对的构造关系，没有自动评价自由解释、独立证明或长期掌握。');
     if(record.support)detail.push('你打开过提示或比较反馈。');
     return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
+  if(task?.type==='x-graphpoints'){
+    const source=proportionalGraphBinding(task,context);if(!source)return null;
+    const proof=replayProportionalGraphEvidence(task,model,context);if(!proof)return null;
+    const p=proof.construction;
+    const detail=[
+      '原题已经给出五组数对与千克/价格坐标轴；连线由工具自动显示，不是学生独立画线或完成一般正比例证明。',
+      ...p.attempts.map(a=>'第 '+(a.index+1)+' 次真实放点请求（'+a.x+'，'+a.y+'）：'+
+        (!a.placed?'超出原图允许范围，未成功放点':a.consistent?'所放位置满足价格=2×千克':'已放下但不符合本题的单位率')+'。'),
+      ...p.unitSteps.map(s=>'从（'+s.from.join('，')+'）到（'+s.to.join('，')+'），横轴加'+s.dx+'千克，纵轴加'+s.dy+'元。'),
+      '本次填写的单位率为2元/千克，零千克对应零元；均只按题给具体数对独立计算。'
+    ];
+    if(p.replacements.length)detail.push('同一个千克数重新放点 '+p.replacements.length+' 次，旧位置保留在操作历史里，当前图只显示最新位置。');
+    if(p.invalidIndices.length)detail.push('原记录另有 '+p.invalidIndices.length+' 次超出范围的放点请求，没有把它们计作有效落点。');
+    if(p.resets.length)detail.push('曾重新摆放 '+p.resets.length+' 次，原始首点尝试和旧操作没有被删除；反馈只描述目前的五个有效点。');
+    if(attempts.length>1)detail.push('以前提交的检查单独保留；这里只核对最新完整作品。');
+    if(record.support)detail.push('曾打开过提示或比较反馈。');
+    detail.push('这不是自主发现函数、独立证明过原点、自由解释、迁移或长期掌握的测量。');
+    return {title:'这次作品中的思考线索',
+      observation:'本次真实放下的五个点与题给正比例数表一致；相邻每增加1千克，总价增加2元，已通过独立整数核对。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-r37-pair'){
     const source=ratioPairBinding(task,context);if(!source)return null;

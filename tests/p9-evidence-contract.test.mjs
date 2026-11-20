@@ -87,6 +87,7 @@ const reviewed={
  compoundunits:positions('rateUnit37',[0,2,3]),
  unitconversions:positions('convertUnits37',[0,1,2]),
  proportionalsteps:[...positions('proportion37',[2]),...positions('ratioLink37',[2])],
+ proportionalgraph:[...positions('proportion37',[3]),...positions('proportionGraph37',[0])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
@@ -197,7 +198,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,60); // #284 independent steps type
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,61); // #298 real graph point type
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){

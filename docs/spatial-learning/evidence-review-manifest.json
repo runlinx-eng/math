@@ -6883,6 +6883,24 @@
       "adapter": "proportionalsteps",
       "taskHash": "783e99d8e05ebab01f9f5b41deca8a157f97c91d35be8308a66205b6cb4e4bb3",
       "method": null
+    },
+    {
+      "sessionId": "proportion37",
+      "index": 3,
+      "type": "x-graphpoints",
+      "nodeId": "mt_5mIcmKRCgA",
+      "adapter": "proportionalgraph",
+      "taskHash": "14fd7da716cb2c7e651f3ed704faeb7e0f0e6f3f4345f27f3b63f55c3cdd30e1",
+      "method": null
+    },
+    {
+      "sessionId": "proportionGraph37",
+      "index": 0,
+      "type": "x-graphpoints",
+      "nodeId": "mt_FspV_imUGK",
+      "adapter": "proportionalgraph",
+      "taskHash": "67e14dfd49433da6e48537d6653d081f2357a846a4ebdf910fc3c3ebc643c76c",
+      "method": null
     }
   ]
 }
