@@ -335,6 +335,8 @@ jobs:
             tests/p9-cupfill-source.test.mjs
             tests/p9-timecompare-evidence.test.mjs
             tests/p9-timecompare-source.test.mjs
+            tests/p9-ratiopair-evidence.test.mjs
+            tests/p9-ratiopair-source.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
             tests/p9-unitcover-navigation.test.mjs
