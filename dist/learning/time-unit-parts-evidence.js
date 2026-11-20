@@ -13,7 +13,7 @@ const SOURCES=Object.freeze({
  'timeconvert:1':{node:'mt_2yas4Unc8o',labels:['60秒','60秒','30秒'],seconds:[60,60,30]},
  'calendarfacts:0':{node:'mt_EXlmTURK_o',labels:['15秒','15秒','15秒','15秒'],seconds:[15,15,15,15]}
 });
-const exactInteger=s=>typeof s==='string'&&/^\\s*\\+?0*\\d+\\s*$/.test(s)&&
+const exactInteger=s=>typeof s==='string'&&/^\s*\+?0*\d+\s*$/.test(s)&&
  Number.isSafeInteger(Number(s.trim()));
 function sourceFor(task,context){
  if(!isEvidenceContext(context))return null;
@@ -54,7 +54,7 @@ export function replayTimeUnitPartsEvidence(task,model,context={}){
   const board={first:{},bad:false,selected:[]},events=[];
   for(const [at,event] of model.history.entries()){
    if(!keys(event,['a','i','v'])||event.a!=='unit'||event.v!==''||
-      typeof event.i!=='string'||!/^(0|[1-9]\\d*)$/.test(event.i))return null;
+      typeof event.i!=='string'||!/^(0|[1-9]\d*)$/.test(event.i))return null;
    const index=Number(event.i);
    if(!Number.isSafeInteger(index)||index<0||index>=source.labels.length)return null;
    const before=[...board.selected],old=board.selected.indexOf(index);
