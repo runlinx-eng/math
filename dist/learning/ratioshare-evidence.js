@@ -11,6 +11,39 @@ const POSITIONS=Object.freeze({
 });
 const integer=(x,low,high)=>Number.isSafeInteger(x)&&x>=low&&x<=high;
 const dense=a=>Array.isArray(a)&&Object.keys(a).length===a.length;
+// Map the original six question fields to a mathematical role, independently
+// of the native answer key and grading method.
+const ANSWER_ROLES=Object.freeze({
+ ratioShare37:[['part','amount:0','amount:1'],['part','amount:0','amount:1','amount:2'],['fraction:0','amount:1']],
+ ratioDivide37:[['part','amount:0','amount:1'],['part','parts:0','parts:1'],['part','amount:0','amount:1','amount:2']]
+});
+function exactAnswer(text,n,d=1){
+ if(typeof text!=='string'||text.length>96)return false;
+ const raw=text.trim().replace(/\s*\/\s*/g,'/');
+ let a,b;
+ if(/^\d+\/[1-9]\d*$/.test(raw))([a,b]=raw.split('/').map(BigInt));
+ else if(/^\d+(?:\.\d+)?$/.test(raw)){
+  const [whole,decimal='']=raw.split('.');
+  a=BigInt(whole+decimal);b=10n**BigInt(decimal.length);
+ }else return false;
+ return b>0n&&a*BigInt(d)===BigInt(n)*b;
+}
+function answerEvidence(task,model,context,plan){
+ const roles=ANSWER_ROLES[context.sessionId]?.[context.index];
+ if(!roles||roles.length!==(task.questions||[]).length||
+    !Array.isArray(model.answers)||model.answers.length!==roles.length)return null;
+ const rows=[];
+ for(let i=0;i<roles.length;i++){
+  const role=roles[i],part=Number(role.split(':')[1]);
+  const numerator=role==='part'?plan.partSize:
+   role.startsWith('amount:')?plan.amounts[part]:plan.parts[part];
+  const denominator=role.startsWith('fraction:')?plan.totalSlots:1;
+  const raw=model.answers[i];
+  if(!Number.isSafeInteger(numerator)||!exactAnswer(raw,numerator,denominator))return null;
+  rows.push({label:task.questions[i].label,raw,role,numerator,denominator});
+ }
+ return rows;
+}
 const rawIndex=(x,limit)=>typeof x==='string'&&/^(0|[1-9]\d*)$/.test(x)&&
  Number.isSafeInteger(Number(x))&&Number(x)<limit?Number(x):null;
 
@@ -72,6 +105,8 @@ export function replayRatioShareEvidence(task,model,context={}){
     events.push({at,action:'slot',slot:i,from,to});
    }else return null; // Other controller events cannot certify an equal-share construction.
   }
+  const checkedAnswers=answerEvidence(task,model,context,p);
+  if(!checkedAnswers)return null;
   const counts=p.parts.map((_,i)=>slots.filter(x=>x===i).length);
   if(events.at(-1)?.action!=='slot'||!slots.every(x=>x>=0)||
      !sameEvidence(counts,p.parts)||!sameEvidence(slots,model.board.slots)||
@@ -80,7 +115,7 @@ export function replayRatioShareEvidence(task,model,context={}){
    construction:{total:p.total,totalSlots:p.totalSlots,partSize:p.partSize,
     parts:p.parts,amounts:p.amounts,fractions:p.fractions,counts,
     firstAssigned,assigned,removed,reassigned,finalOwner:owner,
-    events},
+    answers:checkedAnswers,events},
    eventCount:events.length,originalControlsReplayed:true,
    taskValuesProvided:true,independentStrategyAssessed:false,
    freeExplanationAssessed:false,physicalSharingAssessed:false,

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {sessionTaskFor} from '../dist/learning/bridges.js';
 import * as original from '../dist/learning/phase5/b37-model.js';
 import {ratioShareBinding,replayRatioShareEvidence} from '../dist/learning/ratioshare-evidence.js';
+import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 
 // Expected numbers are independently specified, not taken from the native grader.
 const cases=[
@@ -127,4 +128,25 @@ test('#280 repeated and out-of-bound person/slot controls do not prove shares',(
  const bad=structuredClone(m);
  bad.history[0].i='01';
  assert.equal(proof('ratioShare37',0,bad),null);
+});
+
+test('#280 shared feedback requires the latest identical checked allocation',()=>{
+ for(const [id,index] of cases){
+  const task=sessionTaskFor(id,index),model=original.example(task);
+  const record={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,record});
+  const guide=thinkingGuide(task,context(id,index));
+  const feedback=thinkingFeedback(task,model,record,context(id,index));
+  assert.ok(guide?.question);
+  assert.ok(feedback?.observation?.includes('独立核算'));
+  assert.equal(feedback.method,null);
+  assert.ok(feedback.detail.some(s=>s.includes('没有自动检查')));
+  const edited=structuredClone(model);edited.answers[0]='999';
+  assert.equal(thinkingFeedback(task,edited,record,context(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[]},context(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,{support:false,attempts:[{value:original.initial(task)}]},context(id,index)),null);
+  assert.equal(thinkingFeedback(task,model,record,{sessionId:id,index:String(index)}),null);
+  assert.equal(thinkingGuide(task,{sessionId:id,index:String(index)}),null);
+  assert.equal(JSON.stringify({task,model,record}),before);
+ }
 });

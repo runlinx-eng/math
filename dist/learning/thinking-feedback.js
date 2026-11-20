@@ -16,6 +16,7 @@ import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
+import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -161,6 +162,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-pair'){
     const source=ratioPairBinding(task,context);
     return source?{type:task.type,summary:'想一想：是两边一起乘同一倍数，还是两个量的乘积不变？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-r37-share'){
+    const source=ratioShareBinding(task,context);
+    return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);
@@ -630,6 +635,25 @@ export function thinkingFeedback(task,model,record,context={}){
     detail.push('没有记录你是否自己想到倍数或乘积方法，也不评定自由解释、实际计量或长期掌握。');
     return{title:'这次作品中的思考线索',
       observation:`实际摆出、选择并保存的数量关系，最后对应${relation}；已经按本题给定数值独立核算。`,
+      connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-r37-share'){
+    const source=ratioShareBinding(task,context);if(!source)return null;
+    const proof=replayRatioShareEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction,unit=task.unit||'个';
+    const detail=[
+      '题目给出总量和比；分配块大小由工具提供。这里只核对原控件分配事件及本次填写，不评价是否独立发现了解题方法。',
+      '整个 '+c.total+' '+unit+' 按 '+c.parts.join(':')+' 分成 '+c.totalSlots+' 个同样大的小份；独立核算一份为 '+c.total+' ÷ '+c.totalSlots+' = '+c.partSize+' '+unit+'。',
+      ...c.parts.map((n,i)=>task.labels[i]+'实际得到 '+c.counts[i]+' 份；'+n+' × '+c.partSize+' = '+c.amounts[i]+' '+unit+'，占整个 '+c.fractions[i].numerator+'/'+c.fractions[i].denominator+'。'),
+      ...c.answers.map(a=>'你填写“'+a.label+'”为“'+a.raw+'”，与独立核算的 '+a.numerator+(a.denominator===1?'':'/'+a.denominator)+' 相同；填写顺序未单独记录。'),
+      '原控件实际分配 '+c.assigned+' 次，撤回 '+c.removed+' 次，改分给另一人 '+c.reassigned+' 次；最终 '+c.totalSlots+' 份全部分完。'
+    ];
+    if(c.removed||c.reassigned)detail.push('历史保留了重新分配或取回的动作；它们本身不是已经提交的错误答案。');
+    if(attempts.length>1)detail.push('此前实际检查的快照仍保留；这里只核对与最新完整提交相同的当前作品。');
+    if(record.support)detail.push('你曾打开过提示或比较反馈。');
+    detail.push('这里没有自动检查自由解释、独立策略、现实分物活动或长期掌握。');
+    return{title:'这次作品中的思考线索',
+      observation:'这次实际分配 '+c.totalSlots+' 个等份，份数符合 '+c.parts.join(':')+'；'+c.amounts.join(' + ')+' = '+c.total+' '+unit+'，当前提交已按给定总量独立核算。',
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-compare'){
