@@ -258,18 +258,24 @@ test('the same total cannot justify forged per-place counts, and written columns
  const zero=structuredClone(base);zero.columnAnswers[zero.columnAnswers.length-1]='0';accepts(task,zero);
 });
 
-test('thirteen no-exchange tasks remain excluded and nine separately reviewed decimal tasks never inherit integer scope',()=>{
+test('other no-exchange tasks remain excluded; Q02 independently records removal',()=>{
  const reviewed=new Set(cases.map(c=>c.sessionId+':'+c.index));let ordinary=0,decimal=0;
  for(const sessionId of Object.keys(LESSONS))sessionTasks(sessionId).forEach((task,index)=>{
   if(task.type!=='x-placecalc'||reviewed.has(sessionId+':'+index))return;
   const model=place.example(task),context={sessionId,index};originalAccepts(task,model);
   if((task.scale??1)===1){
-   ordinary++;assert.equal(placeBinding(task,context),null);assert.equal(thinkingGuide(task,context),null);
-   assert.equal(thinkingFeedback(task,model,record(model),context),null);
+   assert.equal(placeBinding(task,context),null);
+   if(index===1&&['tensmove','hundredsmove'].includes(sessionId)){
+    assert.ok(thinkingGuide(task,context));
+    assert.ok(thinkingFeedback(task,model,record(model),context));
+   }else{
+    ordinary++;assert.equal(thinkingGuide(task,context),null);
+    assert.equal(thinkingFeedback(task,model,record(model),context),null);
+   }
   }else{
    decimal++;assert.equal(placeBinding(task,context)?.scope,'decimal');
    assert.notEqual(placeBinding(task,context)?.scale,1);
   }
  });
- assert.equal(ordinary,13);assert.equal(decimal,9);
+ assert.equal(ordinary,11);assert.equal(decimal,9);
 });
