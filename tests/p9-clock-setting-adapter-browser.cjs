@@ -57,8 +57,11 @@ async function run(){
      'backup context is SW-controlled before shutting down HTTP');
   await warmAndStop(page,origin,release,ok,label);
   const selectOriginal=async row=>{
-   const response=await page.goto(origin.base+'learn.html#'+row.id);
-   ok(response?.fromServiceWorker()===true,row.id+' original course loaded offline');
+   // Hash-only lesson navigation can return null without an HTTP request.
+   // Force a real document reload and require that response to come from SW.
+   await page.goto(origin.base+'learn.html#'+row.id);
+   const response=await page.reload();
+   ok(response?.fromServiceWorker()===true,row.id+' original course reloaded offline');
    await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,row.id);
    const before=await page.evaluate(async({id,index})=>{
     const {unpackText,packText}=await import('./storage.js');
