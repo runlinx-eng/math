@@ -27,7 +27,7 @@ import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconver
 import {proportionalStepsBinding,replayProportionalStepsEvidence} from './proportionalsteps-evidence.js';
 import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
-import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
+import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
 import {decimalEngineBinding,replayDecimalEngineEvidence} from './decimalengine-evidence.js';
@@ -71,6 +71,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-wideshift'){
+    if(task.mode==='add'){
+      const source=wideShiftAddBinding(task,context);
+      return source?{type:task.type,summary:'想一想：一千与一万怎样交换？（可选）',question:source.question}:null;
+    }
     const source=wideShiftBinding(task,context);
     return source?{type:task.type,summary:'想一想：数字换到什么单位？（可选）',question:source.question}:null;
   }
@@ -949,6 +953,27 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:task.packReport?'一共能装多少包十颗，与十位上的数字有什么不同？试着用现在的装法说明。':
        '块数或条数变了，总量为什么还能保持？试着说明十个小单位和一个相邻大单位之间的关系。',
       detail,method:null};
+  }
+  if(task?.type==='x-wideshift'&&task.mode==='add'){
+    const source=wideShiftAddBinding(task,context);if(!source)return null;
+    const proof=replayWideShiftAddEvidence(task,model,context);if(!proof)return null;
+    const detail=['这里只核对这份新作品中实际记录的成功添取、换位和位置选择；没有记录的点击不作推断。',
+      '原题的筹码数位由工具绘制，不证明独立心算、一般规律或长期掌握。',
+      '最初留下的猜想是 '+proof.prediction.value+
+       (proof.prediction.matchesResult?'，与实际结果相符。':'，和实际结果不同；原猜想没有被改写。')];
+    if(proof.exchanges)detail.push('实际换位 '+proof.exchanges+' 次，换位前后的总量逐条相等。');
+    if(proof.regrouping==='ten-thousands-carry')
+      detail.push('9500 再添一千变成 10500，万位和千位都改变，不能说只有千位变化。');
+    if(proof.regrouping==='ten-thousands-borrow')
+      detail.push('先把一万拆成十个千，才能从 10500 拿走一千。');
+    if(attempts.length>1)detail.push('较早的提交和纠正历史仍独立保留；这里只对应最新一次检查。');
+    if(record.support)detail.push('你打开过可选引导。');
+    return {title:'这次作品中的思考线索',
+     observation:'从 '+proof.start+' 开始，实际记录 '+proof.successfulMoves+
+       ' 次成功添取一千、'+proof.exchanges+' 次成功十进换位；目前是 '+
+       proof.end+'，与你此次填写的答案相符。换位不改变总量，添取一次改变一千。',
+     connection:'仔细看万位和千位，哪些动作改变总量，哪些只是交换同样大小的数量？',
+     detail,method:null};
   }
   if(task?.type==='x-wideshift'){
     const source=wideShiftBinding(task,context);if(!source)return null;
