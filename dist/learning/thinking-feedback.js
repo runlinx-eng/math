@@ -14,6 +14,7 @@ import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from './time-unit-parts-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
@@ -227,6 +228,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
     return source?{type:task.type,summary:'想一想：两条边按同一倍数缩放，面积会变成几倍？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-t32-units'){
+    const source=timeUnitPartsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：每段时间在统一单位下有多长？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-calendar'){
     const source=calendarIntervalBinding(task,context);
@@ -993,6 +998,21 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('曾打开提示或比较反馈。');
     detail.push('对应角不变只按原选择题核对；没有记录独立证明、实际测量、自由解释或长期掌握。');
     return {title:'这次作品中的思考线索',observation:'实际保存了 '+c.records.length+' 次长宽缩放；最后长 '+c.lastWidth+'、宽 '+c.lastHeight+'，两条边同乘 '+c.lastFactor+'，面积由 '+c.originalArea+' 变为 '+c.scaledArea+'，即 '+c.areaFactor+' 倍。',connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-t32-units'){
+    const source=timeUnitPartsBinding(task,context);if(!source)return null;
+    const proof=replayTimeUnitPartsEvidence(task,model,context);if(!proof)return null;
+    const detail=[
+      '原工具提供每张时间牌的单位和长度；你亲自选择了 '+proof.sourceCards.map(x=>x.label).join('、')+'，最后全部选齐。',
+      '独立按这些预置长度换算，共 '+proof.totalSeconds+' 秒；当前填写的结果分别为 '+proof.expectedAnswers.join('、')+'。',
+      '共保留 '+proof.controlEvents.length+' 次真实原控件选择或取消。取消后重选留有记录，不重复计入最终总时长。',
+      '这里只复核时间牌与当前答案，不证明独立口算、自己提出换算方法、自由解释或长期掌握。'
+    ];
+    if(attempts.length>1)detail.push('此前错误检查与后来的更正都在原记录里；这里只复核最新检查作品。');
+    if(record.support)detail.push('此前查看过可选提示。');
+    return {title:'这次作品中的思考线索',
+      observation:'你选齐了题目给定的时间牌，当前填写的时长或整份余数与这些牌合计相符。',
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-calendar'){
     const source=calendarIntervalBinding(task,context);if(!source)return null;
