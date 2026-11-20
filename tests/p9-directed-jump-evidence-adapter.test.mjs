@@ -1,60 +1,133 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TASKS} from '../dist/learning/phase5/b09.js';
+import {createHash} from 'node:crypto';
+import source from './fixtures/p9-directed-jump-cases.cjs';
+import {TASKS,PRACTICE,BRIDGES} from '../dist/learning/phase5/b09.js';
+import {sessionTaskFor} from '../dist/learning/bridges.js';
 import * as model from '../dist/learning/phase5/b09-model.js';
 import {directedJumpBinding,replayDirectedJumpEvidence} from '../dist/learning/directed-jump-evidence.js';
 
-const cases=[
- ['linejumps',1,[20,7]],['linejumps',2,[-20,-4]],
- ['linejumps',3,[10,6]],['negativecontext',1,[4,3]],
- ['signedwalk',0,[5]],['signedwalk',1,[-7]],
- ['signedwalk',2,[-7]],['signedwalk',5,[-2]]
-];
-const context=(sessionId,index)=>({sessionId,index});
-function build(task,moves){
- const m=model.initial(task);
- m.anchor=task.start;model.field(task,m,'anchor');
- m.guess=String(task.start+(task.op==='+'?task.operand:-task.operand));
- model.act(task,m,'direct-predict');
+const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?
+ Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,stable(v[k])])):v;
+const hash=t=>createHash('sha256').update(JSON.stringify(stable(t))).digest('hex');
+const context=({id,index})=>({sessionId:id,index});
+const target=t=>t.start+(t.op==='+'?t.operand:-t.operand);
+function build(t,moves){
+ const m=model.initial(t);
+ m.anchor=t.start;model.field(t,m,'anchor');
+ m.guess=String(target(t));model.act(t,m,'direct-predict');
  for(const delta of moves){
   m.size=String(Math.abs(delta));m.dir=delta<0?'left':'right';
-  model.act(task,m,'direct-jump');
+  const before=m.jumps.length;
+  model.act(t,m,'direct-jump');
+  assert.equal(m.jumps.length,before+1,'original native jump must succeed');
  }
  m.answer=m.guess;
- if(task.zero)m.zero='reference';
+ if(t.zero)m.zero='reference';
  return m;
 }
-test('eight actual B09 directed jumps admit exact signed displacement, never synthetic type inheritance',()=>{
- for(const [sessionId,index,moves] of cases){
-  const task=TASKS[sessionId][index],ctx=context(sessionId,index);
-  assert.ok(directedJumpBinding(task,ctx),sessionId+':'+index);
-  const m=build(task,moves);
-  assert.equal(model.inspect(task,m).correct,true,sessionId+':'+index);
-  const proof=replayDirectedJumpEvidence(task,m,ctx);
-  assert.ok(proof,sessionId+':'+index);
-  assert.equal(proof.end,task.start+(task.op==='+'?task.operand:-task.operand));
-  assert.equal(proof.observableSuccessfulJumps.length,moves.length);
+test('#312 freezes eight complete native source hashes and signed displacement paths',()=>{
+ assert.equal(source.cases.length,8);
+ const positions=new Set();
+ for(const row of source.cases){
+  const t=sessionTaskFor(row.id,row.index),ctx=context(row),name=row.id+':'+row.index;
+  assert.ok(t);
+  assert.deepEqual(t,TASKS[row.id][row.index]);
+  assert.equal(hash(t),row.taskHash,name+' source task fingerprint');
+  assert.equal(t.type,'x-directedjump');
+  assert.equal(t.reverse,undefined);
+  assert.ok(!positions.has(name));positions.add(name);
+  assert.equal(directedJumpBinding(t,ctx)?.nodeId,row.nodeId);
+  const m=build(t,row.moves);
+  assert.equal(model.valid(t,m),true,name);
+  assert.equal(model.inspect(t,m).correct,true,name);
+  const proof=replayDirectedJumpEvidence(t,m,ctx);
+  assert.ok(proof,name+' independently replayed');
+  assert.equal(proof.start,t.start);
+  assert.equal(proof.end,target(t));
+  assert.equal(proof.signedChange,target(t)-t.start);
+  assert.deepEqual(proof.observableSuccessfulJumps.map(x=>x.change),row.moves);
+  assert.ok(proof.observableSuccessfulJumps.every(e=>e.to-e.from===e.change));
+  assert.equal(proof.initialGuessCorrectnessAssessed,false);
+  assert.equal(proof.undoOrAnchorResetChronologyProven,false);
   assert.equal(proof.learnerMasteryAssessed,false);
-  assert.equal(replayDirectedJumpEvidence(task,m,context(sessionId==='signedwalk'?'linejumps':'signedwalk',index)),null);
+  assert.deepEqual(replayDirectedJumpEvidence(t,m,{sessionId:'signedwalk',index:row.index}),row.id==='signedwalk'?proof:null);
+  // The same path copied into another session or task is not a native proof.
+  assert.equal(directedJumpBinding(t,{sessionId:'other',index:row.index}),null);
  }
 });
-test('wrong direction, missing initial guess, forged history, changed origin, and wrong source fail closed',()=>{
- const t=TASKS.signedwalk[1],ctx=context('signedwalk',1),good=build(t,[-7]);
- const edit=fn=>{const m=structuredClone(good);fn(m);assert.equal(replayDirectedJumpEvidence(t,m,ctx),null);};
- edit(m=>m.history[0]=7);
- edit(m=>m.jumps[0]=7);
- edit(m=>m.committed=null);
- edit(m=>m.anchor=0);
- edit(m=>m.answer='-4');
- edit(m=>m.history.push(-7));
- edit(m=>m.jumps.push(0));
- assert.equal(directedJumpBinding(t,context('signedwalk',3)),null);
- assert.equal(directedJumpBinding(TASKS.signedwalk[3],context('signedwalk',3)),null);
+test('#312 excludes reverse, signed-line, practice copies, all linked bridge copies',()=>{
+ for(const i of [3,4]){
+  assert.equal(directedJumpBinding(TASKS.signedwalk[i],{sessionId:'signedwalk',index:i}),null);
+ }
+ for(const [id,indices] of [['linejumps',[0]],['negativecontext',[0,2]]]){
+  for(const index of indices)assert.equal(directedJumpBinding(TASKS[id][index],{sessionId:id,index}),null);
+ }
+ for(const [id,task] of Object.entries(PRACTICE))
+  assert.equal(directedJumpBinding(task,{sessionId:id,index:0}),null);
+ for(const bridge of BRIDGES)for(const task of bridge.tasks)
+  assert.equal(directedJumpBinding(task,{sessionId:bridge.to,index:0}),null);
 });
-test('undo leaves an irrecoverable chronology gap and does not acquire strict evidence',()=>{
- const t=TASKS.linejumps[1],ctx=context('linejumps',1),m=build(t,[20,7]);
- model.act(t,m,'direct-undo');
- m.size='7';m.dir='right';model.act(t,m,'direct-jump');
+test('#312 adversarial mutation: forged source, path, prediction, reference and final answer fail closed',()=>{
+ for(const row of source.cases){
+  const t=sessionTaskFor(row.id,row.index),ctx=context(row),good=build(t,row.moves);
+  const bad=[
+   m=>{m.answer=String(target(t)+1);},
+   m=>{m.answer=String(target(t))+'.0';},
+   m=>{m.anchor=t.start===t.min?t.start+1:t.start-1;},
+   m=>{m.touched=false;},
+   m=>{m.committed=null;},
+   m=>{m.guess='987';},
+   m=>{m.reference=1;},
+   m=>{m.refTouched=true;},
+   m=>{m.refSaved=0;},
+   m=>{m.history[0]=-m.history[0];},
+   m=>{m.jumps[0]=-m.jumps[0];},
+   m=>{m.history.push(row.moves.at(-1));},
+   m=>{m.history.push(0);},
+   m=>{m.jumps.push(0);},
+   m=>{m.history.extra=1;},
+   m=>{m.jumps.extra=1;},
+   m=>{m.zero='nothing';}
+  ];
+  for(const mutate of bad){
+   const m=structuredClone(good);mutate(m);
+   // Non-zero tasks have no zero requirement: only zero=true checks it.
+   if(!t.zero&&mutate===bad.at(-1))continue;
+   assert.equal(replayDirectedJumpEvidence(t,m,ctx),null,row.id+':'+row.index+' '+String(mutate));
+  }
+  const prompt={...t,prompt:t.prompt+'!'};
+  assert.equal(directedJumpBinding(prompt,ctx),null,'source text drift');
+  assert.equal(replayDirectedJumpEvidence(prompt,good,ctx),null);
+  assert.equal(directedJumpBinding({...t,operand:t.operand+1},ctx),null,'source mathematical drift');
+  for(const malformed of [null,[],false,0,{sessionId:row.id,index:String(row.index)},{sessionId:row.id,index:1.1}]){
+   assert.equal(directedJumpBinding(t,malformed),null);
+  }
+ }
+});
+test('#312 original undo and anchor reset expose irrecoverable chronology gaps, not evidence',()=>{
+ for(const row of source.cases){
+  const t=sessionTaskFor(row.id,row.index),ctx=context(row),m=build(t,row.moves);
+  model.act(t,m,'direct-undo');
+  const last=row.moves.at(-1);
+  m.size=String(Math.abs(last));m.dir=last<0?'left':'right';
+  model.act(t,m,'direct-jump');
+  assert.equal(model.inspect(t,m).correct,true);
+  assert.equal(replayDirectedJumpEvidence(t,m,ctx),null,'undo replay cannot invent an event');
+  const reset=build(t,row.moves);
+  model.field(t,reset,'anchor');
+  for(const delta of row.moves){
+   reset.size=String(Math.abs(delta));reset.dir=delta<0?'left':'right';
+   model.act(t,reset,'direct-jump');
+  }
+  assert.equal(model.inspect(t,reset).correct,true);
+  assert.equal(replayDirectedJumpEvidence(t,reset,ctx),null,'anchor reset did not reset history');
+ }
+});
+test('#312 exact answer is stricter than original rational grader, not the reverse',()=>{
+ const row=source.cases.find(r=>r.id==='signedwalk'&&r.index===1);
+ const t=sessionTaskFor(row.id,row.index),ctx=context(row),m=build(t,row.moves);
+ m.answer='-3.0';
  assert.equal(model.inspect(t,m).correct,true);
  assert.equal(replayDirectedJumpEvidence(t,m,ctx),null);
 });

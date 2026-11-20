@@ -34,9 +34,16 @@ export function replayDirectedJumpEvidence(task,model,context={}){
      !model.jumps.length||model.jumps.length>40||
      // The original undo pops jumps but not history. Thus there is no
      // complete chronology after undo or anchor reset: fail closed.
-     !same(model.jumps,model.history)||!Object.keys(model.history).every((k,i)=>k===String(i))||
+     !same(model.jumps,model.history)||
+     !Object.keys(model.history).every((k,i)=>k===String(i))||
+     !Object.keys(model.jumps).every((k,i)=>k===String(i))||
      !model.touched||model.anchor!==task.start||
      typeof model.committed!=='string'||!model.committed.length||
+     // Once the original prediction is committed, the UI no longer exposes
+     // the guess field. A later mismatch cannot be explained by native input.
+     model.guess!==model.committed||
+     // Non-reverse originals never display or enable reference controls.
+     model.reference!==0||model.refTouched!==false||model.refSaved!==null||
      !exactInteger(model.answer,task.start+signed(task))||
      !b09.valid(task,model)||!b09.inspect(task,model).correct)return null;
   let at=task.start;
