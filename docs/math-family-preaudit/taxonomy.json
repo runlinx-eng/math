@@ -1,0 +1,655 @@
+{
+  "schema": "math-family-preaudit-taxonomy/1",
+  "snapshot_main": "6ee0eb9fc1ea2c6a944a84efdda5d11928c67866",
+  "status": "not-audit-certified",
+  "warning": "Rules express mathematical-operation research pools, NOT reviewed strict replay contracts; shared type never inherits A. Unmapped types remain separate and require semantic review. Source-specific contracts split during actual development.",
+  "rules": [
+    {
+      "id": "count-objects",
+      "name": "逐物计数与不重漏",
+      "types": [
+        "x-counttrail",
+        "x-countboard",
+        "x-fingers",
+        "x-pond"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "count-walk",
+      "name": "整数逐步递增递减",
+      "types": [
+        "x-countwalk",
+        "x-countsteps",
+        "x-rulejump",
+        "x-repeat"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "count-instant",
+      "name": "短时数量识别",
+      "types": [
+        "x-flashcount",
+        "x-paircounts"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "number-names",
+      "name": "数词与整数表示",
+      "types": [
+        "x-numberwrite",
+        "x-numbercards",
+        "x-numberfaces",
+        "x-romanwork",
+        "x-teenbuild",
+        "x-digitlens"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "place-compose",
+      "name": "位值组装与展开",
+      "types": [
+        "x-wideboard",
+        "x-pvbench",
+        "x-placevalue",
+        "x-decvalue",
+        "x-bundlecount",
+        "x-hundredcombine",
+        "x-hundredsplit"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "place-exchange",
+      "name": "十进位交换与加减",
+      "types": [
+        "x-pvshift",
+        "x-wideshift",
+        "x-placecalc",
+        "x-regroup",
+        "x-onechange",
+        "x-unitadd"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "number-order",
+      "name": "数字大小、排序与比较",
+      "types": [
+        "x-pvcompare",
+        "x-pvorder",
+        "x-digitcompare"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "number-line-position",
+      "name": "等距数轴及有向数定位",
+      "types": [
+        "x-signedline",
+        "x-pvline",
+        "x-orderline",
+        "x-betweenpoints",
+        "x-zerodistance"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "number-line-jumps",
+      "name": "数轴分段位移",
+      "types": [
+        "x-directedjump"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "rounding",
+      "name": "邻近整十百千取整",
+      "types": [
+        "x-roundwork",
+        "x-pvestimate"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "estimate-check",
+      "name": "估计、量级与核算",
+      "types": [
+        "x-estimatepad",
+        "x-estimate",
+        "x-recallbench"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "additive-structure",
+      "name": "加减结合、补十与逆运算",
+      "types": [
+        "x-tenbridge",
+        "x-threegroups",
+        "x-factfamily",
+        "x-undolab",
+        "x-complementpair"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "additive-story",
+      "name": "故事数量链与步骤",
+      "types": [
+        "x-storyplan",
+        "x-storychain",
+        "x-storyparts",
+        "x-story"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "multiplication-arrays",
+      "name": "乘法阵列及分配",
+      "types": [
+        "x-floor",
+        "x-planproduct",
+        "x-areaproduct",
+        "x-factorrects"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "multiplication-facts",
+      "name": "乘法次序与倍数事实",
+      "types": [
+        "x-mulfacts",
+        "x-mulchain",
+        "x-commute",
+        "x-lawtiles"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "factors-primes",
+      "name": "因数、倍数和筛选",
+      "types": [
+        "x-factorforest",
+        "x-factorcode",
+        "x-numbersearch"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "powers",
+      "name": "平方立方与幂构造",
+      "types": [
+        "x-powerbuild",
+        "x-powerchain",
+        "x-squarepair",
+        "x-rootwindow",
+        "x-powerpattern"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "division-sharing",
+      "name": "等分、平均与除法逆",
+      "types": [
+        "x-groupfour",
+        "x-fgroups",
+        "x-subgroups",
+        "x-divreverse",
+        "x-wholeshare"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "fraction-part",
+      "name": "整体平均分与单位分数",
+      "types": [
+        "partition",
+        "x-fraction",
+        "x-fwall",
+        "x-partbuild",
+        "x-foldpaper",
+        "x-fractiontalk"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "fraction-rename",
+      "name": "分数、百分数与小数等值",
+      "types": [
+        "equivalent",
+        "grid",
+        "x-fdprecall",
+        "x-fractionbridge",
+        "x-decimalzoom",
+        "x-percentkit"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "fraction-line",
+      "name": "分数数轴等距分点",
+      "types": [
+        "line",
+        "x-fline"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "fraction-amount",
+      "name": "分数乘法份额与比例条",
+      "types": [
+        "x-portionbar",
+        "x-ratio",
+        "x-comparebars"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "decimal-place",
+      "name": "小数位值表示及移动",
+      "types": [
+        "x-decimalmachine",
+        "x-decimalcompare"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "decimal-arithmetic",
+      "name": "小数乘除逐位换算",
+      "types": [
+        "x-decimaldivide",
+        "x-decimalproduct"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "ratio-balance",
+      "name": "等比与反比构造",
+      "types": [
+        "x-r37-share",
+        "x-scale"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "ratio-steps",
+      "name": "比例与复合单位步骤",
+      "types": [
+        "x-r37-steps"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "coordinate-functions",
+      "name": "坐标放点与变量关系",
+      "types": [
+        "x-f36-plot",
+        "x-f36-coord",
+        "x-f36-live",
+        "x-f36-ratio",
+        "x-graphpoints"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "equations",
+      "name": "等式、未知数与平衡变换",
+      "types": [
+        "x-a35-balance",
+        "x-a35-try",
+        "x-a35-pairs",
+        "x-a35-walk",
+        "x-a35-grid",
+        "x-a35-plot",
+        "x-a35-build",
+        "x-variable"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "algebra-forms",
+      "name": "式的结构、代入和因式",
+      "types": [
+        "x-a35-factor",
+        "x-a35-sort",
+        "x-f36-form",
+        "x-f36-eval",
+        "x-algebrabar"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "pattern-generalize",
+      "name": "规则生成与有限样本",
+      "types": [
+        "x-p34-program",
+        "x-p34-repeat",
+        "x-p34-grid",
+        "x-p34-growth",
+        "x-p34-relation",
+        "x-p34-pair"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "argument-structure",
+      "name": "反例、论证及观点检查",
+      "types": [
+        "x-r38-chain",
+        "x-proof",
+        "x-reason"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "tool-strategy",
+      "name": "方法工具选择与检验",
+      "types": [
+        "x-s39-choose",
+        "x-toolwork",
+        "x-s39-calc"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "shape-classify",
+      "name": "平面图形分类与嵌套",
+      "types": [
+        "x-s23-pick",
+        "x-s23-polygon",
+        "x-s23-quad",
+        "x-s23-nest",
+        "x-s23-sides"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "shape-draw",
+      "name": "尺规、点线构图",
+      "types": [
+        "x-s23-ruler",
+        "x-s23-compass",
+        "x-s23-frame",
+        "x-s23-circle",
+        "x-g25-triangle"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "symmetry-transform",
+      "name": "对称、平移、旋转",
+      "types": [
+        "x-s23-symmetry",
+        "x-p24-mirror",
+        "x-p24-spin",
+        "x-p24-frieze"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "coordinate-motion",
+      "name": "方格方位与坐标位移",
+      "types": [
+        "x-p24-grid",
+        "x-p24-place",
+        "x-p24-walk",
+        "x-p24-distance",
+        "x-p24-read",
+        "x-p24-fan",
+        "x-p24-tiles",
+        "x-p24-studio"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "angles",
+      "name": "角的比较、测量及内角和",
+      "types": [
+        "x-g25-vertices",
+        "x-g25-compare",
+        "x-g25-protractor",
+        "x-g25-estimate",
+        "x-g25-parallel",
+        "x-g25-polygon",
+        "x-g25-corners",
+        "x-anglejoin",
+        "x-shapeangle"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "solid-attributes",
+      "name": "立体识别、面棱顶点",
+      "types": [
+        "x-g27-sort",
+        "x-solid",
+        "x-g27-face",
+        "x-g27-build",
+        "x-g27-cut"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "solid-nets",
+      "name": "展开图、折叠与表面",
+      "types": [
+        "x-net",
+        "x-g27-net"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "measurement-compare",
+      "name": "间接比较与仪器测量",
+      "types": [
+        "x-m31-balance",
+        "x-m31-compare",
+        "x-measure",
+        "x-attributes",
+        "x-m29-tape",
+        "x-m29-combine"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "measurement-plot",
+      "name": "刻度等距与度量单位",
+      "types": [
+        "x-m29-interval",
+        "x-m31-meter",
+        "x-m29-share"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "area-grid",
+      "name": "方格面积与周长对照",
+      "types": [
+        "x-a30-grid"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "area-dissection",
+      "name": "面积重组、圆与补形",
+      "types": [
+        "x-a30-pieces",
+        "x-a30-circle",
+        "x-circlecut",
+        "x-a30-outline",
+        "x-rectangle"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "solid-metric",
+      "name": "体积、表面积与容量",
+      "types": [
+        "x-a30-solid",
+        "x-boxsummary",
+        "x-m31-product",
+        "x-capacity",
+        "cube-plan",
+        "irregular",
+        "fill",
+        "unit"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "clocks-calendar",
+      "name": "钟面、时长与历法",
+      "types": [
+        "x-t32-clock",
+        "x-t32-calendar",
+        "x-t32-units",
+        "x-t32-order",
+        "x-timetable",
+        "x-m29-clock"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "data-collect",
+      "name": "数据采样、计数与整理",
+      "types": [
+        "survey",
+        "x-datacount",
+        "x-dataplan",
+        "x-datastudio",
+        "x-samplelab",
+        "x-questionbuild"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "data-display",
+      "name": "图表坐标、频数与读数",
+      "types": [
+        "chart",
+        "compare",
+        "x-chartlab",
+        "x-dotdraw",
+        "x-histbuild",
+        "x-piesector",
+        "x-timeplot"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "data-summary",
+      "name": "集中趋势与分布解释",
+      "types": [
+        "x-distribution",
+        "x-statcentre",
+        "x-meandistance",
+        "x-mediarepair",
+        "x-rowrepair"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "scatter-trend",
+      "name": "散点图与相关趋势",
+      "types": [
+        "x-scatterbuild",
+        "x-correlationlab",
+        "x-graphcompare"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "chance-count",
+      "name": "样本空间与事件概率",
+      "types": [
+        "x-p22-pick",
+        "x-p22-order",
+        "x-p22-venn",
+        "x-p22-table",
+        "x-likelihood"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "chance-experiment",
+      "name": "重复试验与概率估计",
+      "types": [
+        "x-p22-experiment",
+        "x-experiment",
+        "x-spinner",
+        "x-simulation",
+        "x-p22-branch",
+        "x-p22-draw"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    },
+    {
+      "id": "money-units",
+      "name": "货币数量与找零账单",
+      "types": [
+        "x-m33-compare",
+        "x-m33-calc",
+        "x-m33-model",
+        "x-m33-sheet",
+        "x-m33-sort"
+      ],
+      "status": "provisional_math_mechanism",
+      "review_required": true
+    }
+  ]
+}
