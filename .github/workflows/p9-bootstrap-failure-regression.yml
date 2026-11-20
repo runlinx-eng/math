@@ -21,6 +21,12 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+# New commits on a PR supersede its unfinished same-workflow browser checks.
+# Never cancel a separate PR, a main push, or a manual diagnostic run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   chromium-failure-fallback:
     runs-on: ubuntu-24.04
