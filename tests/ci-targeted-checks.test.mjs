@@ -139,8 +139,9 @@ test('#315 daily impacted-family selection stays independent of total full capac
  })));
  const independent=dailyDefinitions(expanded,{fileExists:()=>true});
  assert.equal(Object.values(independent).filter(d=>d.newFamily).length,expanded.newFamilies.length);
- assert.throws(()=>buildLiveBrowserMatrix(expanded,{fileExists:()=>true}),
-  /single parallel|Cannot run dependency|wave|capacity/);
+ const full=buildLiveBrowserMatrix(expanded,{fileExists:()=>true});
+ assert.ok(full.matrix.group.some(id=>id.startsWith('family-wave-2-')),
+  'full regression must queue historical overflow rather than block the daily selector');
  const p=planTargetedChecks({event:'pull_request',changedFiles:['docs/LEARNING-DESIGN.md'],
   registry:expanded,definitions:independent});
  assert.deepEqual(p.scripts,[]);
