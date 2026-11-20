@@ -158,8 +158,8 @@ async function main(){
    const history=success.model.history,records=success.model.board.records;
    ok(history[0].a==='place'&&history[1].a==='save'&&history.at(-1).a==='save',
     label+' actual place and saved judgement order retained');
-   ok(history.filter(e=>e.a==='place').length===task.targets.length,
-    label+' one genuine placement per target');
+   ok(history.filter(e=>e.a==='place').length===task.targets.length+1,
+    label+' one genuine trial placement followed by one placement per target');
    ok(records.length===task.targets.length+(wrongFirst?1:0),
     label+' every saved comparison and first wrong attempt preserved');
    ok(records.at(-1).correct===true&&records.every(rec=>{
