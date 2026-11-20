@@ -34,13 +34,16 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
   (sum,module)=>sum+module.resources.estimatedScriptMinutes,0);
  assert.ok(
   plan.plannedNewJobs.length>=Math.ceil(scheduledMinutes/plan.limits.maxNewScriptsMinutesPerJob)&&
-  plan.plannedNewJobs.length<=Math.min(plan.registeredNewFamilies,plan.limits.maxParallel),
+  plan.plannedNewJobs.length<=plan.registeredNewFamilies &&
+  plan.plannedNewJobs.every(job=>plan.plannedNewJobs.filter(other=>other.wave===job.wave).length<=plan.limits.maxParallel),
   'each added family remains scheduled without packing beyond the protected per-job budget');
  const actual=plan.plannedNewJobs.flatMap(job=>job.modules.map(m=>m.entry)).sort();
  const expected=source().newFamilies.map(m=>m.entry).sort();
  assert.deepEqual(actual,expected,'all reviewed family browser scripts remain scheduled exactly once');
  assert.ok(source().newFamilies.every(m=>m.required===true));
- assert.ok(plan.plannedNewJobs.every(job=>job.wave===1));
+ assert.ok(plan.plannedNewJobs.every(job=>Number.isInteger(job.wave)&&job.wave>=1));
+ assert.ok(plan.plannedNewJobs.some(job=>job.wave>1),
+  'current 28-family inventory exceeds one 290-minute wave and must queue safely');
  assert.ok(plan.plannedNewJobs.every(job=>job.scriptMinutes<=29&&job.peakMemoryMiB<=6000));
  assert.deepEqual(plan.legacyGroups.map(g=>g.id),Object.keys(BROWSER_GROUPS));
  assert.ok(plan.legacyGroups.every(g=>g.mandatory));
@@ -49,8 +52,9 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.equal(accepted().digest,plan.digest,'plan must be deterministic');
 });
 
-test('#312 current 27 mandatory family scripts fit ten unchanged 29-minute jobs',()=>{
- const reg=source(),plan=accepted();
+test('#312 historical 27 mandatory families still fit ten protected 29-minute jobs',()=>{
+ const reg=source();reg.newFamilies=reg.newFamilies.filter(x=>x.familyId!=='calendar-interval');
+ const plan=planShadow(reg);
  assert.equal(reg.newFamilies.length,27);
  assert.equal(reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0),287);
  assert.equal(plan.plannedNewJobs.length,10);
@@ -58,6 +62,18 @@ test('#312 current 27 mandatory family scripts fit ten unchanged 29-minute jobs'
  assert.equal(plan.plannedNewJobs.reduce((sum,j)=>sum+j.scriptMinutes,0),287);
  assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
   reg.newFamilies.map(m=>m.familyId).sort());
+});
+test('#314 current 28 source-reviewed families use safely queued waves without dropping scripts',()=>{
+ const reg=source(),plan=accepted();
+ assert.equal(reg.newFamilies.length,28);
+ assert.equal(reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0),292);
+ assert.ok(plan.plannedNewJobs.some(j=>j.wave>1),'292 estimated minutes must exceed one ten-job wave');
+ assert.ok(plan.plannedNewJobs.every(j=>j.scriptMinutes<=29&&j.peakMemoryMiB<=8192));
+ assert.ok([...new Set(plan.plannedNewJobs.map(j=>j.wave))].every(w=>
+  plan.plannedNewJobs.filter(j=>j.wave===w).length<=10),'no wave exceeds 10 parallel jobs');
+ assert.equal(plan.plannedNewJobs.reduce((sum,j)=>sum+j.scriptMinutes,0),292);
+ assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
+  reg.newFamilies.map(m=>m.familyId).sort(),'no family lost or repeated across waves');
 });
 test('#312 truly over-capacity independent families still produce rejected later waves',()=>{
  const modules=Array.from({length:11},(_,i)=>fakeModule('full'+i,{minutes:29}));
