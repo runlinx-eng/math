@@ -54,6 +54,10 @@ export function replayCommonYearMonthCardsEvidence(task,model,context={}){
    observedEvents:events,selectedOriginalCardIndices:all,
    suppliedMonthDays:[...spec.days],suppliedMonthDaysTotal:365,
    aprilDays:30,commonYearFebruaryDays:28,sourceMonthFactsVerified:true,
+   // The native widget only tracks toggles of cards with answers already printed.
+   // This replay cannot establish which card answered which question or any 365-day calculation.
+   monthSpecificLookupStepsObserved:false,learnerComputedAnnualDaysAssessed:false,
+   strictAApproved:false,preReviewOnly:true,
    originalCardsToolProvided:true,learnerIndependentMonthDayDerivationAssessed:false,
    leapYearRuleAssessed:false,independentExplanationAssessed:false,
    learnerMasteryAssessed:false,method:null};

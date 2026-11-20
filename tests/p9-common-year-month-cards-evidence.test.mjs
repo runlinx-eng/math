@@ -3,6 +3,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+import {LESSONS} from '../dist/learning/catalog.js';
+import {BRIDGES} from '../dist/learning/bridges.js';
+import {commonYearMonthCardsFingerprint,commonYearMonthCardsEvidenceExample}
+ from '../scripts/common-year-month-cards-evidence-fixture.mjs';
 import * as native from '../dist/learning/phase5/b32-model.js';
 import {commonYearMonthCardsBinding as bind,replayCommonYearMonthCardsEvidence as replay}
  from '../dist/learning/common-year-month-cards-evidence.js';
@@ -62,4 +66,33 @@ test('tampering, invalid month indices and answer-only submissions fail closed',
   m=>{m.issue='invalid';},m=>{m.extra=true;}
  ]){const m=copy(original);edit(m);assert.equal(replay(task,m,source),null);}
  for(const m of [null,{},[],false])assert.equal(replay(task,m,source),null);
+});
+
+test('complete original task SHA, genuine action fixture and exact source are frozen',()=>{
+ assert.equal(LESSONS.calendarfacts.topicId,'mt_EXlmTURK_o');
+ assert.equal(commonYearMonthCardsFingerprint(task),
+  'd1b0ee036acf3aa56ebe9c4e228dd7a62d9383af23fc7773cce8dd48450a7546');
+ assert.deepEqual(commonYearMonthCardsEvidenceExample(task),native.example(task));
+});
+test('preprinted answers do not turn whole-board toggles into a demonstrated math derivation',()=>{
+ const proof=replay(task,commonYearMonthCardsEvidenceExample(task),source);
+ assert.ok(proof);
+ assert.equal(proof.preReviewOnly,true);
+ assert.equal(proof.strictAApproved,false);
+ assert.equal(proof.monthSpecificLookupStepsObserved,false);
+ assert.equal(proof.learnerComputedAnnualDaysAssessed,false);
+ assert.equal(proof.learnerIndependentMonthDayDerivationAssessed,false);
+ assert.equal(proof.independentExplanationAssessed,false);
+ assert.equal(proof.originalCardsToolProvided,true);
+ assert.equal(proof.observedEvents.length,12);
+ assert.equal(proof.suppliedMonthDaysTotal,365);
+});
+test('all other native unit sessions and associated clones remain excluded',()=>{
+ for(const id of Object.keys(LESSONS))sessionTasks(id).forEach((t,index)=>{
+  if(t.type==='x-t32-units'&&!(id==='calendarfacts'&&index===1))
+   assert.equal(bind(t,{sessionId:id,index}),null,id+':'+index);
+ });
+ for(const id of Object.keys(BRIDGES))sessionTasks(id).forEach((t,index)=>{
+  if(t.type==='x-t32-units')assert.equal(bind(t,{sessionId:id,index}),null,id+':'+index);
+ });
 });
