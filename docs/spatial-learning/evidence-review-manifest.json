@@ -7279,6 +7279,24 @@
       "adapter": "time-unit-parts",
       "taskHash": "56655e258936575429bca55375504ac92cb9b58d05a55b75aad0053205c4f14d",
       "method": null
+    },
+    {
+      "sessionId": "calendaruse",
+      "index": 0,
+      "type": "x-t32-calendar",
+      "nodeId": "mt_tVvZVWO5d6",
+      "adapter": "calendar-date-reading",
+      "taskHash": "18d0ebb351f38e6fc6a9e41e7a036c80c19b85dc7e430dd0632617303e0c4f2c",
+      "method": null
+    },
+    {
+      "sessionId": "calendaruse",
+      "index": 1,
+      "type": "x-t32-calendar",
+      "nodeId": "mt_tVvZVWO5d6",
+      "adapter": "calendar-date-reading",
+      "taskHash": "654994f34cef51db6825efea7ad6ddf25b1620b60016d66df1bea53765ed3d94",
+      "method": null
     }
   ]
 }

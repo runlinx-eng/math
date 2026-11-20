@@ -20,6 +20,7 @@ import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge
 import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
 import {directedJumpBinding,replayDirectedJumpEvidence} from './directed-jump-evidence.js';
 import {calendarIntervalBinding,replayCalendarIntervalEvidence} from './calendar-interval-evidence.js';
+import {calendarDateReadingBinding,replayCalendarDateReadingEvidence} from './calendar-date-reading-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -234,6 +235,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：每段时间在统一单位下有多长？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-calendar'){
+    const dateSource=calendarDateReadingBinding(task,context);
+    if(dateSource)return {type:task.type,summary:'想一想：你实际选中了哪一天？（可选）',question:dateSource.question};
     const source=calendarIntervalBinding(task,context);
     return source?{type:task.type,summary:'想一想：日期之间有多少个经过的日子？（可选）',question:source.question}:null;
   }
@@ -1015,6 +1018,20 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-calendar'){
+    const dateSource=calendarDateReadingBinding(task,context);
+    if(dateSource){
+      const p=replayCalendarDateReadingEvidence(task,model,context);if(!p)return null;
+      const detail=[
+       '原生控件记录了 '+p.observedDateClicks+' 次真实日期点击，当前选中 '+p.selectedDate+'；取消和重新选择按实际顺序保留。',
+       '独立公历核对：'+p.selectedDate+' 是 '+p.weekdayLabel+'，月份日期为 '+p.dayOfMonth+'；这是日历关系的计算结果。',
+       '日历格子与星期是工具提供的，不能从点击与填写推出你自己推导了星期、口头解释或长期掌握。'
+      ];
+      if(attempts.length>1)detail.push('之前的错误检查和更正仍留在原记录里；这里只验证最新提交。');
+      if(record.support)detail.push('曾查看过可选提示。');
+      return {title:'这次作品中的思考线索',
+        observation:'你在原生日历上选中了 '+p.selectedDate+'，当前答案与这一天的日期信息相符。',
+        connection:dateSource.question,detail,method:null};
+    }
     const source=calendarIntervalBinding(task,context);if(!source)return null;
     const proof=replayCalendarIntervalEvidence(task,model,context);if(!proof)return null;
     const detail=[
