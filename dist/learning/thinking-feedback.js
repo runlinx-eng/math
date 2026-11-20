@@ -15,6 +15,7 @@ import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
+import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -156,6 +157,10 @@ export function thinkingGuide(task,context={}){
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);
     return source?{type:task.type,summary:'想一想：这次图形中的部分、面积和外边（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-r37-pair'){
+    const source=ratioPairBinding(task,context);
+    return source?{type:task.type,summary:'想一想：是两边一起乘同一倍数，还是两个量的乘积不变？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);
@@ -603,6 +608,29 @@ export function thinkingFeedback(task,model,record,context={}){
     detail.push('这里只描述本次可核对的构造关系，没有自动评价自由解释、独立证明或长期掌握。');
     if(record.support)detail.push('你打开过提示或比较反馈。');
     return {title:'这次作品中的思考线索',observation,connection,detail,method:null};
+  }
+  if(task?.type==='x-r37-pair'){
+    const source=ratioPairBinding(task,context);if(!source)return null;
+    const proof=replayRatioPairEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction;
+    const direct=c.relation==='direct';
+    const relation=direct?'两种数量的同倍关系':'两个数量的乘积恒定关系';
+    const detail=[
+      '以下关系只对应题目给出的模拟数量和本次真实保存的比较。工具画出的条形图不表示实物测量，也不证明独立选择了解题策略。',
+      `原来两量是 ${c.base[0]} 与 ${c.base[1]}。${direct?'比较前项×原后项与后项×原前项是否相等。':'比较两个量的乘积是否与原来的乘积一致。'}`,
+      ...c.comparisons.map((r,i)=>{
+        const arithmetic=c.crossProducts[i],same=arithmetic.left===arithmetic.right;
+        return `第 ${i+1} 次确实摆出 ${r.pair[0]} 和 ${r.pair[1]}，随后选择“${r.guess==='same'?'关系不变':'关系改变'}”，保存为${r.correct?'与题目关系一致':'与题目关系不一致'}。独立核算 ${arithmetic.left} ${same?'=':'≠'} ${arithmetic.right}。`;
+      }),
+      `最早保存的猜测为“${c.firstSave.guess==='same'?'保持一样':'已经改变'}”；本次共真正摆出 ${c.placements} 组，保存 ${c.comparisons.length} 次比较。`
+    ];
+    if(c.wrongSaveIndices.length)detail.push(`原记录保留 ${c.wrongSaveIndices.length} 次比较结论错误的操作，以及后来真实保存的纠正。`);
+    if(attempts.length>1)detail.push('此前检查保留；这里只描述与当前完整作品一致的最新一次检查。');
+    if(record.support)detail.push('你曾打开提示或比较反馈。');
+    detail.push('没有记录你是否自己想到倍数或乘积方法，也不评定自由解释、实际计量或长期掌握。');
+    return{title:'这次作品中的思考线索',
+      observation:`实际摆出、选择并保存的数量关系，最后对应${relation}；已经按本题给定数值独立核算。`,
+      connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);if(!source)return null;

@@ -15,6 +15,7 @@ import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
+import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -84,6 +85,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
   replay:replayTimeEvidence
  })),
  {id:'timecompare',type:'x-t32-compare',binding:timeCompareBinding,replay:replayTimeCompareEvidence},
+ {id:'ratiopair',type:'x-r37-pair',binding:ratioPairBinding,replay:replayRatioPairEvidence},
  {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
  {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
