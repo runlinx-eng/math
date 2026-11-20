@@ -1,6 +1,8 @@
 import {orderEvidenceExample} from './order-evidence-fixture.mjs';
 import {areaEvidenceExample} from './area-evidence-fixture.mjs';
 import {timeEvidenceExample} from './time-evidence-fixture.mjs';
+import {timeUnitPartsEvidenceExample} from './time-unit-parts-evidence-fixture.mjs';
+import {timeUnitPartsBinding} from '../dist/learning/time-unit-parts-evidence.js';
 import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
 import {pvSavedEvidenceExample} from './pv-saved-evidence-fixture.mjs';
 import {pvSavedBinding} from '../dist/learning/pv-saved-evidence.js';
@@ -32,7 +34,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=(task,context)=>task.type==='x-pvbench'&&pvSavedBinding(task,context)?pvSavedEvidenceExample(task,context):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-a30-grid'&&task.mode==='edge'?exampleModel(task):task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type==='x-orderlab'?orderEvidenceExample(task):exampleModel(task);
+const fixtureFor=(task,context)=>task.type==='x-pvbench'&&pvSavedBinding(task,context)?pvSavedEvidenceExample(task,context):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):task.type==='x-t32-units'&&timeUnitPartsBinding(task,context)?timeUnitPartsEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-a30-grid'&&task.mode==='edge'?exampleModel(task):task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type==='x-orderlab'?orderEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
