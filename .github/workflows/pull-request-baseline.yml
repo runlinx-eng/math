@@ -163,6 +163,8 @@ jobs:
           node --check dist/learning/paperlab-evidence.js
           node --check tests/p9-paperlab-adapter-browser.cjs
           node --check dist/learning/wideshift-evidence.js
+          node --check dist/learning/positive-order-preaudit.js
+          node --check tests/p9-positive-order-preaudit.test.mjs
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
@@ -318,6 +320,7 @@ jobs:
             tests/p9-mixedtrade-evidence.test.mjs
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
+            tests/p9-positive-order-preaudit.test.mjs
             tests/p9-wideshift-navigation.test.mjs
             tests/p9-multable-evidence.test.mjs
             tests/p9-multable-navigation.test.mjs
