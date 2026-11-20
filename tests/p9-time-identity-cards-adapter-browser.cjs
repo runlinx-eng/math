@@ -24,6 +24,8 @@ const save=()=>{fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(ou
  proofContracts:['math','correction','persistence','negative','backup'],checks,errors,captures,screenshots
 },null,2)+'\n')};
 async function run(){
+ // Every snapshot writes original State-v2 bytes before the final summary receipt.
+ fs.mkdirSync(out,{recursive:true});
  let origin,browser,ctx,restore,page,restorePage;
  try{
   origin=await createOrigin(root);
