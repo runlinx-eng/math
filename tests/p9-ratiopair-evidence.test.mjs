@@ -116,6 +116,9 @@ test('#276 merely placing a ratio without saving a judgement cannot prove it',()
  m.choice='same';native.field(t,m,'choice');
  assert.equal(proof('ratioProblem37',1,m),null);
  choose(t,m,'same');
+ m.answers[0]=String(t.questions[0].value);
+ native.field(t,m,'answers.0');
+ assert.equal(native.inspect(t,m).correct,true);
  assert.ok(proof('ratioProblem37',1,m));
  m.value='7';native.field(t,m,'value');
  assert.equal(proof('ratioProblem37',1,m),null);
