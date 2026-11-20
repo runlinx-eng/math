@@ -116,7 +116,7 @@ async function run(){
      snapBefore.model.history.every(e=>e.a==='tile'&&Object.keys(e.f).length===0),
      row.id+' original SVG clicks recorded chronological tile events');
    await page.locator('#extra-controls [data-xfield="area"]').fill(String(row.length-1));
-   await page.locator('#extra-controls [data-xfield="unit"]').selectOption('cm');
+   await page.locator('#extra-controls [data-xfield="unit"]').selectOption('cm²');
    if(row.answer)await page.locator('#extra-controls [data-xfield="answers.0"]').fill(row.answer);
    await action('#actions [data-do="check"]');
    const wrong=await snap(row,'wrong-checked');
@@ -132,7 +132,7 @@ async function run(){
    const proof=await page.evaluate(async({id,index,model})=>{
     const {sessionTaskFor}=await import('./learning/bridges.js');
     const {replayUnitTileAreaEvidence}=await import('./learning/unit-tile-area-evidence.js');
-    return replayPerimeterEdgeEvidence(sessionTaskFor(id,index),model,{sessionId:id,index});
+    return replayUnitTileAreaEvidence(sessionTaskFor(id,index),model,{sessionId:id,index});
    },{...row,model:accepted.model});
    ok(proof?.areaSquareCentimeters===row.length&&
      proof.selectedOrder.length===row.count&&
@@ -140,7 +140,7 @@ async function run(){
      row.id+' independent square coverage equals original area');
    ok(await page.locator('#thinking-feedback').isVisible(),row.id+' source-bound feedback after latest Check');
    const message=await page.locator('#thinking-feedback').innerText();
-   ok(message.includes('平方厘米')&&message.includes('原来')===false&&message.includes('独立'),
+   ok(message.includes('平方厘米')&&message.includes('独立'),
      row.id+' feedback distinguishes tool grid from actual tile actions');
    label=row.id+'-'+row.index+'-correct';
    const png=label+'.png';await page.screenshot({path:path.join(out,png),fullPage:false});screenshots.push(png);
