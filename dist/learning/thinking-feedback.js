@@ -15,6 +15,7 @@ import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from './time-unit-parts-evidence.js';
+import {timeIdentityCardsBinding,replayTimeIdentityCardsEvidence} from './time-identity-cards-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
@@ -231,6 +232,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：两条边按同一倍数缩放，面积会变成几倍？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-units'){
+    const identity=timeIdentityCardsBinding(task,context);
+    if(identity)return {type:task.type,summary:'想一想：正午、午夜与24小时表示（可选）',question:identity.question};
     const source=timeUnitPartsBinding(task,context);
     return source?{type:task.type,summary:'想一想：每段时间在统一单位下有多长？（可选）',question:source.question}:null;
   }
@@ -1003,6 +1006,20 @@ export function thinkingFeedback(task,model,record,context={}){
     return {title:'这次作品中的思考线索',observation:'实际保存了 '+c.records.length+' 次长宽缩放；最后长 '+c.lastWidth+'、宽 '+c.lastHeight+'，两条边同乘 '+c.lastFactor+'，面积由 '+c.originalArea+' 变为 '+c.scaledArea+'，即 '+c.areaFactor+' 倍。',connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-units'){
+    const identity=timeIdentityCardsBinding(task,context);
+    if(identity){
+      const proof=replayTimeIdentityCardsEvidence(task,model,context);if(!proof)return null;
+      const detail=[
+        '原工具给出 '+proof.cards.length+' 张时刻牌，记录 '+proof.observedEvents.length+' 次真实选择或取消。',
+        '按日内分钟独立核对：'+proof.cards.map(c=>c.label+' = '+String(c.hour24).padStart(2,'0')+':'+String(c.minute).padStart(2,'0')).join('；')+'。',
+        '卡片由工具提供；这些记录不证明孩子独立推导换算、自由解释或长期掌握。'
+      ];
+      if(attempts.length>1)detail.push('此前的错误Check和后来的更正仍保留；这里仅审最新作品。');
+      if(record.support)detail.push('曾查看可选提示。');
+      return {title:'这次作品中的思考线索',
+        observation:'你选齐了题目给出的时刻牌，最新填写与它们的上午、下午、正午及午夜身份相符。',
+        connection:identity.question,detail,method:null};
+    }
     const source=timeUnitPartsBinding(task,context);if(!source)return null;
     const proof=replayTimeUnitPartsEvidence(task,model,context);if(!proof)return null;
     const detail=[

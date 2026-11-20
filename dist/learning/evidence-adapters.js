@@ -15,6 +15,7 @@ import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from './time-unit-parts-evidence.js';
+import {timeIdentityCardsBinding,replayTimeIdentityCardsEvidence} from './time-identity-cards-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
@@ -105,6 +106,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
   replay:replayTimeEvidence
  })),
  {id:'time-unit-parts',type:'x-t32-units',binding:timeUnitPartsBinding,replay:replayTimeUnitPartsEvidence},
+ {id:'time-identity-cards',type:'x-t32-units',binding:timeIdentityCardsBinding,replay:replayTimeIdentityCardsEvidence},
  {id:'clock-setting',type:'x-t32-clock',binding:clockSettingBinding,replay:replayClockSettingEvidence},
  {id:'area-edge',type:'x-a30-grid',binding:perimeterEdgeBinding,replay:replayPerimeterEdgeEvidence},
  {id:'unit-tile-area',type:'x-a30-grid',binding:unitTileAreaBinding,replay:replayUnitTileAreaEvidence},
