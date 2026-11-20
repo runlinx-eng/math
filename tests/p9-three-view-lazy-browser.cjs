@@ -37,6 +37,11 @@ function recordState(){
    const base='http://127.0.0.1:'+server.address().port+'/';
    context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'});
    const page=await context.newPage();page.setDefaultTimeout(20000);
+   // The expanded native learning ESM graph can exceed Chromium's default
+   // resource-timing buffer before optional Three.js loads. Preserve timing
+   // evidence for all real fetches rather than mistaking buffer saturation
+   // for a missing lazy-loaded dependency.
+   await page.addInitScript(()=>performance.setResourceTimingBufferSize(4096));
    page.on('pageerror',error=>item.pageErrors.push(String(error)));
    const ok=(condition,message)=>{assert.ok(condition,width+'x'+height+': '+message);item.checks.push(message);};
    await page.goto(base+'v2.html#trail');
@@ -67,6 +72,11 @@ function recordState(){
    await page.waitForFunction(()=>window.mathLesson?.snapshot?.()?.id==='space');
    await page.waitForFunction(()=>!!document.querySelector('#cube-world canvas'));
    const active=await page.evaluate(recordState);
+   // A WebGL canvas is created before the optional module's resource timing
+   // entry is committed. Wait for the actual Three.js fetch rather than
+   // asserting synchronously against an incomplete Performance timeline.
+   await page.waitForFunction(()=>performance.getEntriesByType('resource').some(
+    x=>/\/vendor\/three\/three\.module\.min\.js/.test(new URL(x.name).pathname)));
    const activeResources=await page.evaluate(()=>performance.getEntriesByType('resource').map(x=>new URL(x.name).pathname));
    ok(active.canvas&&active.lesson.id==='space'&&!active.visible,'3D lesson renders original WebGL cube view');
    ok(activeResources.some(x=>/\/vendor\/three\/three\.module\.min\.js/.test(x)),'3D session fetches Three.js on demand');

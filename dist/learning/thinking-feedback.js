@@ -19,6 +19,7 @@ import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js'
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
 import {ratioShapeBinding,replayRatioShapeEvidence} from './ratioshape-evidence.js';
 import {ratioStepsBinding,replayRatioStepsEvidence} from './ratiosteps-evidence.js';
+import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -170,8 +171,10 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-r37-steps'){
-    const source=ratioStepsBinding(task,context);
-    return source?{type:task.type,summary:'想一想：先对齐长度单位，再看面积倍数（可选）',question:source.question}:null;
+    const scaleSource=ratioStepsBinding(task,context);
+    if(scaleSource)return{type:task.type,summary:'想一想：先对齐长度单位，再看面积倍数（可选）',question:scaleSource.question};
+    const changeSource=pctChangeBinding(task,context);
+    return changeSource?{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question}:null;
   }
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
@@ -667,7 +670,25 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-r37-steps'){
-    const source=ratioStepsBinding(task,context);if(!source)return null;
+    const source=ratioStepsBinding(task,context);
+    if(!source){
+      const pctSource=pctChangeBinding(task,context);if(!pctSource)return null;
+      const pctProof=replayPctChangeEvidence(task,model,context);if(!pctProof)return null;
+      const p=pctProof.construction;
+      const detail=[
+        '原题的金额、折扣或利率与步骤卡由工具预设；这里仅独立核对当前真实输入和先后事件，不能推断学习者自创解题方法。',
+        ...p.records.map((r,i)=>'第 '+(i+1)+' 次真实步骤输入（第 '+(r.index+1)+' 步）“'+r.answer+'”；'+(r.correct?'与本题独立比例算式相同':'与本题独立比例算式不同')+'。'),
+        ...p.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.label+'”：按原来的量与指定百分率独立核对为 '+s.quantity+'。')
+      ];
+      if(p.wrongStepIndices.length)detail.push('前面有错误步骤，后来重新输入才完成；原来的错误与第一次输入仍保留。');
+      if(attempts.length>1)detail.push('以前检查的原快照另行保留；这里仅对应最新真实检查的完整作品。');
+      if(record.support)detail.push('曾打开过提示或比较反馈。');
+      detail.push('简单利息是按原本金算，不是逐年复利；没有记录独立策略、口头解释、实际金融活动或长期掌握。');
+      return {title:'这次作品中的思考线索',
+       observation:'实际完成 '+p.completedSteps+' 个百分变化或简单利息步骤，按原整体独立核算，'+
+         (p.wrongStepIndices.length?'早先错误与纠正都有记录。':'本次没有记录错误步骤。'),
+       connection:pctSource.question,detail,method:null};
+    }
     const proof=replayRatioStepsEvidence(task,model,context);if(!proof)return null;
     const c=proof.construction;
     const detail=[
