@@ -18,7 +18,10 @@ test('#288 exact part/whole source manifest, fingerprints and checked feedback',
  const reviewed=manifest.tasks.filter(x=>x.adapter==='fractionparts');
  assert.equal(reviewed.length,3);
  assert.equal(EVIDENCE_ADAPTERS.filter(a=>a.id==='fractionparts').length,1);
- assert.equal(EVIDENCE_ADAPTERS.filter(a=>a.type==='x-r37-steps').length,3);
+ const actualStepAdapters=EVIDENCE_ADAPTERS.filter(x=>x.type==='x-r37-steps').map(x=>x.id).sort();
+ const reviewedStepAdapters=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps').map(x=>x.adapter))].sort();
+ assert.deepEqual(actualStepAdapters,reviewedStepAdapters,
+  'every shared step adapter must have a distinct, strictly reviewed native source');
  for(const [sessionId,index,hash] of rows){
   const task=sessionTaskFor(sessionId,index),ctx={sessionId,index},m=native.example(task);
   assert.equal(taskFingerprint(task),hash);
