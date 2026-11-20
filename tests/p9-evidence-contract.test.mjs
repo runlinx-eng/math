@@ -80,6 +80,7 @@ const reviewed={
  ratiopair:[...positions('pctIdeas37',[0]),...positions('ratioProblem37',[0,1,2]),...positions('rateWords37',[0,1]),...positions('ratioNotation37',[0]),...positions('proportion37',[0,1]),...positions('ratioLink37',[0,1]),...positions('recipeScale37',[0,1])],
  ratioshare:[...positions('ratioShare37',[0,1,2]),...positions('ratioDivide37',[0,1,2])],
  ratioshape:[...positions('pctIdeas37',[2]),...positions('recipeScale37',[2]),...positions('similar37',[0,2]),...positions('scaleArea37',[0])],
+ ratiosteps:[...positions('scaleMap37',[0,1,2]),...positions('scaleArea37',[1,2])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
