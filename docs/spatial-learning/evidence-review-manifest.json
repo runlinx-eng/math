@@ -7198,6 +7198,24 @@
       "adapter": "unitrate-steps",
       "taskHash": "1f1e4b3afc01ad35dc167627d6dfaaec32f0dd3dfc7691eb0218edfca1a2ff54",
       "method": null
+    },
+    {
+      "sessionId": "complex38",
+      "index": 1,
+      "type": "x-r37-steps",
+      "nodeId": "mt_GpltXPoaoc",
+      "adapter": "estimate-steps",
+      "taskHash": "5378bf9822bdc1eed2db14bbb76234bfe2415fb99001b1e83c33040ee20a1eb2",
+      "method": null
+    },
+    {
+      "sessionId": "advancedPlan38",
+      "index": 3,
+      "type": "x-r37-steps",
+      "nodeId": "mt_FieL-vVTI_",
+      "adapter": "estimate-steps",
+      "taskHash": "3bebe3467199beab25c881d8f3c76e3b63fe45b4c709ef8a6830367a5d07f9ab",
+      "method": null
     }
   ]
 }
