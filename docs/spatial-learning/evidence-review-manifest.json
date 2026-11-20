@@ -6937,6 +6937,24 @@
       "adapter": "wideshift-add",
       "taskHash": "4f137472f6324b05b54066b3c3c2d6b9f8ae70ccfb2c6bb3d0c88d00bebcb86e",
       "method": null
+    },
+    {
+      "sessionId": "tensmove",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_I5j1ZWo2cn",
+      "adapter": "place-removal",
+      "taskHash": "42ef003e834f6b4407f857005e52e0585d2e0a29b186abc19e7cfef39b9af343",
+      "method": null
+    },
+    {
+      "sessionId": "hundredsmove",
+      "index": 1,
+      "type": "x-placecalc",
+      "nodeId": "mt_xPqczp7zPX",
+      "adapter": "place-removal",
+      "taskHash": "d64f49f77037193a52099f5cb98410800609c8afc9dc254889593a26b74abb3d",
+      "method": null
     }
   ]
 }
