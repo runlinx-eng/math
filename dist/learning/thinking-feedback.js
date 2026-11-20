@@ -17,6 +17,7 @@ import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {directedJumpBinding,replayDirectedJumpEvidence} from './directed-jump-evidence.js';
+import {calendarIntervalBinding,replayCalendarIntervalEvidence} from './calendar-interval-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -214,6 +215,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
     return source?{type:task.type,summary:'想一想：两条边按同一倍数缩放，面积会变成几倍？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-t32-calendar'){
+    const source=calendarIntervalBinding(task,context);
+    return source?{type:task.type,summary:'想一想：日期之间有多少个经过的日子？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-clock'){
     const source=clockSettingBinding(task,context);
@@ -921,6 +926,19 @@ export function thinkingFeedback(task,model,record,context={}){
     if(record.support)detail.push('曾打开提示或比较反馈。');
     detail.push('对应角不变只按原选择题核对；没有记录独立证明、实际测量、自由解释或长期掌握。');
     return {title:'这次作品中的思考线索',observation:'实际保存了 '+c.records.length+' 次长宽缩放；最后长 '+c.lastWidth+'、宽 '+c.lastHeight+'，两条边同乘 '+c.lastFactor+'，面积由 '+c.originalArea+' 变为 '+c.scaledArea+'，即 '+c.areaFactor+' 倍。',connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-t32-calendar'){
+    const source=calendarIntervalBinding(task,context);if(!source)return null;
+    const proof=replayCalendarIntervalEvidence(task,model,context);if(!proof)return null;
+    const detail=[
+      '你实际在原生日历中选择了 '+proof.firstDate+' 和 '+proof.lastDate+'，保存了 '+proof.observedDayClicks+' 次日期点击。',
+      '按公历逐日计算，从起始日之后开始计，到结束日共经过 '+proof.elapsedDays+' 天；起始日不重复算。',
+      '跨月时必须使用各月真实天数；2024年是闰年，2月有29天。',
+      '日历格子与星期由工具绘制；这里只证明选日与最新填写的间隔一致，不证明你独立心算、自由解释或长期掌握。'
+    ];
+    if(attempts.length>1)detail.push('先前的错误Check仍保留，这里只描述最新一次真实提交。');
+    if(record.support)detail.push('曾查看可选提示。');
+    return {title:'这次作品中的思考线索',observation:'从 '+proof.firstDate+' 到 '+proof.lastDate+'，你选出两端日期，填写了相隔 '+proof.elapsedDays+' 天。',connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-clock'){
     const source=clockSettingBinding(task,context);if(!source)return null;
