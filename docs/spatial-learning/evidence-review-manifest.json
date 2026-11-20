@@ -519,6 +519,51 @@
       "method": null
     },
     {
+      "sessionId": "scaleArea37",
+      "index": 1,
+      "type": "x-r37-steps",
+      "nodeId": "mt_CUJr8L5_Wn",
+      "adapter": "ratiosteps",
+      "taskHash": "3dce8b0f18028dd0e9a1e0da065693f094ac01c7ae1ce603f8dbd3a932a7ac6a",
+      "method": null
+    },
+    {
+      "sessionId": "scaleArea37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_CUJr8L5_Wn",
+      "adapter": "ratiosteps",
+      "taskHash": "083683212922d73111a50ab7cfc19036ed25f172c5ad4e2b8123f14773120b77",
+      "method": null
+    },
+    {
+      "sessionId": "scaleMap37",
+      "index": 0,
+      "type": "x-r37-steps",
+      "nodeId": "mt_1badik7iKJ",
+      "adapter": "ratiosteps",
+      "taskHash": "5cca4aa4ec9f1eca86da86325f3a4bb753072c571d93bc07922d3501639952c8",
+      "method": null
+    },
+    {
+      "sessionId": "scaleMap37",
+      "index": 1,
+      "type": "x-r37-steps",
+      "nodeId": "mt_1badik7iKJ",
+      "adapter": "ratiosteps",
+      "taskHash": "bf90e433c47ff8a8259f007a4008afac1c024932bb9b295da085b51f16be0817",
+      "method": null
+    },
+    {
+      "sessionId": "scaleMap37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_1badik7iKJ",
+      "adapter": "ratiosteps",
+      "taskHash": "abec9df4555bd8e90e058ec57fae2cdacf81c091b46b9dbdf4f1aef06a8a316d",
+      "method": null
+    },
+    {
       "sessionId": "showwhy",
       "index": 0,
       "type": "x-placecalc",

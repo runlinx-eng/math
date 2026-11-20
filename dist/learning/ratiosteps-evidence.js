@@ -58,7 +58,7 @@ function plan(task,context){
 }
 export function ratioStepsBinding(task,context={}){
  try{const p=plan(task,context);return p?{nodeId:p.nodeId,method:null,
-  question:'How do map scale, consistent length units and squared area ratios connect?'}:null;}catch{return null;}
+  question:'图上长度、实际长度怎样换成相同单位？面积为什么要按长度倍数的平方换算？'}:null;}catch{return null;}
 }
 export function replayRatioStepsEvidence(task,model,context={}){
  try{
