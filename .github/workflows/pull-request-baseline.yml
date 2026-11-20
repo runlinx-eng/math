@@ -347,6 +347,8 @@ jobs:
             tests/p9-pctchange-source.test.mjs
             tests/p9-fractionparts-evidence.test.mjs
             tests/p9-fractionparts-source.test.mjs
+            tests/p9-rationotation-evidence.test.mjs
+            tests/p9-rationotation-source.test.mjs
             tests/p9-ratiopair-source.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
