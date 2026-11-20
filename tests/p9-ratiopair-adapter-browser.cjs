@@ -124,20 +124,26 @@ async function main(){
    const feedback=page.locator('#thinking-feedback');
    ok(await feedback.count()===0,label+' no original proof before any submission');
    await shot('initial');
+   // B37 intentionally disables Check until the learner has really used
+   // place and save. Make a genuine incorrect record before the first Check;
+   // never force-click a disabled button or seed grading state.
+   const first=task.targets[0],firstRelation=expected(first)?'same':'different';
+   await field('value',first[0]);await field('second',first[1]);
+   await act('place');
+   await field('choice',firstRelation==='same'?'different':'same');
+   await act('save');
+   ok(await feedback.count()===0,label+' initial incorrect saved relation has no strict proof');
    await click('#actions [data-do="check"]');
    const wrong=await snapshot('wrong-submitted',row);
-   ok(wrong.attempts.length===1,label+' first failed original Check retained');
-   ok(await feedback.count()===0,label+' a blank original model is not strict mathematics');
-   const wrongFirst=row.id==='ratioProblem37'&&row.index===0;
-   for(const [i,pair] of task.targets.entries()){
+   ok(wrong.attempts.length===1,label+' genuine failed original Check retained');
+   ok(wrong.model.board.records.length===1&&wrong.model.board.records[0].correct===false,
+    label+' first wrong evidence really came from original visible controls');
+   ok(await feedback.count()===0,label+' wrong submitted ratio cannot earn strict evidence');
+   const wrongFirst=true;
+   for(const pair of task.targets){
     await field('value',pair[0]);await field('second',pair[1]);
     await act('place');
     const relation=expected(pair)?'same':'different';
-    if(wrongFirst&&i===0){
-     await field('choice',relation==='same'?'different':'same');
-     await act('save');
-     ok(await feedback.count()===0,label+' actual incorrect saved relationship is not strict proof');
-    }
     await field('choice',relation);
     await act('save');
    }
