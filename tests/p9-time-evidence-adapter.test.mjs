@@ -14,6 +14,7 @@ import {timeBinding,replayTimeEvidence as replay} from '../dist/learning/time-ev
 import {timeCompareBinding,replayTimeCompareEvidence} from '../dist/learning/timecompare-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from '../dist/learning/clock-setting-evidence.js';
 import {calendarIntervalBinding,replayCalendarIntervalEvidence} from '../dist/learning/calendar-interval-evidence.js';
+import {timeUnitPartsBinding,replayTimeUnitPartsEvidence} from '../dist/learning/time-unit-parts-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyTimeFixtureStep as apply,timeEvidenceExample as example} from '../scripts/time-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -37,6 +38,8 @@ const reviewedCompare=new Set(['timecompare:0','timecompare:1','timecompare:2',
 // without expanding the earlier 20 strict time-construction positions.
 const reviewedClock=new Set(['hourclock:2','fiveclock:2','quarterclock:1']);
 const reviewedCalendar=new Set(['calendaruse:2','calendaruse:3']);
+const reviewedUnitParts=new Set(['durationunit:2','hoursday:0','hoursday:1','hoursday:2',
+ 'timeconvert:0','timeconvert:1','calendarfacts:0']);
 
 function repair(c,m){
  const t=task(c),kind=c.type.slice(6);
@@ -76,7 +79,7 @@ function submit(a,correct){
  return a.cases[a.index];
 }
 
-test('20 time constructions and 40 existing tasks stay isolated except three dials and two calendar intervals',()=>{
+test('20 time constructions and 40 existing tasks stay isolated except three dials, two calendar intervals and seven unit cards',()=>{
  assert.equal(cases.length,20);assert.equal(new Set(cases.map(c=>c.nodeId)).size,10);
  assert.equal(excludedCases.length,40);assert.equal(associatedCases.length,63);
  assert.deepEqual(Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(k=>[k,cases.filter(c=>c.type==='x-t32-'+k).length])),{order:5,parts:5,roman:1,stopwatch:3,steps:6});
@@ -88,11 +91,11 @@ test('20 time constructions and 40 existing tasks stay isolated except three dia
   const t=task(c),m=example(t);
   assert.equal(taskFingerprint(t),c.taskHash,key(c));assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);
   assert.deepEqual(m.answers,c.answers);
-  const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c)),newClock=reviewedClock.has(key(c)),newCalendar=reviewedCalendar.has(key(c));
+  const previousFamily=cases.includes(c),newComparison=reviewedCompare.has(key(c)),newClock=reviewedClock.has(key(c)),newCalendar=reviewedCalendar.has(key(c)),newUnitParts=reviewedUnitParts.has(key(c));
   // Old fixture compatibility accepts its own id/index shape. The new adapter
   // deliberately uses the canonical native context rather than coercing id.
   const nativeContext={sessionId:c.id,index:c.index};
-  const visibleContext=(newComparison||newClock||newCalendar)?nativeContext:c;
+  const visibleContext=(newComparison||newClock||newCalendar||newUnitParts)?nativeContext:c;
   assert.equal(!!timeBinding(t,c),previousFamily,
    key(c)+' old 20 constructions must remain independently source-bound');
   assert.equal(!!timeCompareBinding(t,nativeContext),newComparison,
@@ -107,9 +110,13 @@ test('20 time constructions and 40 existing tasks stay isolated except three dia
     key(c)+' only the two reviewed day-interval originals may bind');
    assert.equal(!!replayCalendarIntervalEvidence(t,m,nativeContext),newCalendar,
     key(c)+' only source-bound original date clicks may replay');
-  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock||newCalendar,
+  assert.equal(!!timeUnitPartsBinding(t,nativeContext),newUnitParts,
+   key(c)+' only seven independently reviewed time-unit tasks can bind');
+  assert.equal(!!replayTimeUnitPartsEvidence(t,m,nativeContext),newUnitParts,
+   key(c)+' only original unit-card clicks can replay');
+  assert.equal(!!thinkingGuide(t,visibleContext),previousFamily||newComparison||newClock||newCalendar||newUnitParts,
    key(c)+' source-scoped thinking guide');
-  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock||newCalendar,
+  assert.equal(!!thinkingFeedback(t,m,saved(m),visibleContext),previousFamily||newComparison||newClock||newCalendar||newUnitParts,
    key(c)+' source-scoped checked feedback');
   if(!c.id.startsWith('link-')&&!previousFamily)rejected(t,m);
  }

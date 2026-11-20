@@ -13,6 +13,7 @@ import area from './fixtures/p9-area-cases.cjs';
 import {areaEvidenceExample} from '../scripts/area-evidence-fixture.mjs';
 import time from './fixtures/p9-time-cases.cjs';
 import {timeEvidenceExample} from '../scripts/time-evidence-fixture.mjs';
+import {timeUnitPartsEvidenceExample} from '../scripts/time-unit-parts-evidence-fixture.mjs';
 import pvbench from './fixtures/p9-pvbench-cases.cjs';
 import {pvbenchEvidenceExample} from '../scripts/pvbench-evidence-fixture.mjs';
 import {pvSavedEvidenceExample} from '../scripts/pv-saved-evidence-fixture.mjs';
@@ -78,6 +79,8 @@ const reviewed={
  order:order.cases.map(({id:sessionId,index})=>({sessionId,index})),
  ...Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(kind=>['area-'+kind,area.cases.filter(c=>c.kind===kind).map(({sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>['time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))])),
+ 'time-unit-parts':[...positions('durationunit',[2]),...positions('hoursday',[0,1,2]),
+  ...positions('timeconvert',[0,1]),...positions('calendarfacts',[0])],
  'clock-setting':[{sessionId:'hourclock',index:2},{sessionId:'fiveclock',index:2},{sessionId:'quarterclock',index:1}],
   'area-edge':[...positions('walkperim',[0,1,2]),...positions('polyperim',[0]),...positions('lperim',[0,1])],
   'unit-tile-area':positions('gridarea',[0,1]),
@@ -143,7 +146,7 @@ const unitTileAreaExample=task=>{
  model.unit='cm²';
  return model;
 };
-const example=(adapter,task,context)=>adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+const example=(adapter,task,context)=>adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -217,7 +220,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,64); // #314 B32 calendar is a distinct native widget
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,65); // #327 B32 unit cards are a distinct newly reviewed native type
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
