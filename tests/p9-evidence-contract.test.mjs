@@ -86,6 +86,7 @@ const reviewed={
   'unit-tile-area':positions('gridarea',[0,1]),
   'directed-jump':[...positions('linejumps',[1,2,3]),...positions('negativecontext',[1]),...positions('signedwalk',[0,1,2,5])],
   'calendar-interval':positions('calendaruse',[2,3]),
+ 'calendar-date-reading':positions('calendaruse',[0,1]),
  timecompare:[...positions('timecompare',[0,1,2]),...positions('durationorder',[1]),...positions('durationwork',[1]),...positions('minuteclock',[2])],
  ratiopair:[...positions('pctIdeas37',[0]),...positions('ratioProblem37',[0,1,2]),...positions('rateWords37',[0,1]),...positions('ratioNotation37',[0]),...positions('proportion37',[0,1]),...positions('ratioLink37',[0,1]),...positions('recipeScale37',[0,1])],
  ratioshare:[...positions('ratioShare37',[0,1,2]),...positions('ratioDivide37',[0,1,2])],
