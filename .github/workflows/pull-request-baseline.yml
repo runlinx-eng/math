@@ -351,6 +351,8 @@ jobs:
             tests/p9-rationotation-source.test.mjs
             tests/p9-compoundunits-evidence.test.mjs
             tests/p9-compoundunits-source.test.mjs
+            tests/p9-unitconversions-evidence.test.mjs
+            tests/p9-unitconversions-source.test.mjs
             tests/p9-ratiopair-source.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs

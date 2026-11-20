@@ -23,6 +23,7 @@ import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js'
 import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-evidence.js';
 import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-evidence.js';
 import {compoundUnitsBinding,replayCompoundUnitsEvidence} from './compoundunits-evidence.js';
+import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconversions-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -100,6 +101,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'fractionparts',type:'x-r37-steps',binding:fractionPartsBinding,replay:replayFractionPartsEvidence},
  {id:'rationotation',type:'x-r37-steps',binding:ratioNotationBinding,replay:replayRatioNotationEvidence},
  {id:'compoundunits',type:'x-r37-steps',binding:compoundUnitsBinding,replay:replayCompoundUnitsEvidence},
+ {id:'unitconversions',type:'x-r37-steps',binding:unitConversionsBinding,replay:replayUnitConversionsEvidence},
  {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
  {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},

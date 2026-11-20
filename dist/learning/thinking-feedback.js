@@ -23,6 +23,7 @@ import {pctChangeBinding,replayPctChangeEvidence} from './pctchange-evidence.js'
 import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-evidence.js';
 import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-evidence.js';
 import {compoundUnitsBinding,replayCompoundUnitsEvidence} from './compoundunits-evidence.js';
+import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconversions-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -180,6 +181,8 @@ export function thinkingGuide(task,context={}){
     if(changeSource)return{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question};
     const fractionSource=fractionPartsBinding(task,context);
     if(fractionSource)return{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question};
+    const conversionSource=unitConversionsBinding(task,context);
+    if(conversionSource)return{type:task.type,summary:'想一想：面积两方向、分钟秒数与立方厘米和升怎样换算？（可选）',question:conversionSource.question};
     const unitsSource=compoundUnitsBinding(task,context);
     if(unitsSource)return{type:task.type,summary:'想一想：速度、密度与复合单位的乘除关系（可选）',question:unitsSource.question};
     const notationSource=ratioNotationBinding(task,context);
@@ -685,6 +688,27 @@ export function thinkingFeedback(task,model,record,context={}){
       if(!pctSource){
       const fractionSource=fractionPartsBinding(task,context);
       if(!fractionSource){
+        const conversionSource=unitConversionsBinding(task,context);
+        if(conversionSource){
+          const conversionProof=replayUnitConversionsEvidence(task,model,context);
+          if(!conversionProof)return null;
+          const p=conversionProof.construction;
+          const detail=[
+            '长度、2.5小时和2500立方厘米以及步骤卡均由题目提供；仅复核当前真实输入，不说明学生自主设计方法。',
+            ...p.records.map((r,i)=>'第 '+(i+1)+' 次真实输入（第 '+(r.index+1)+' 步）“'+r.answer+'”；'+
+              (r.correct?'符合独立的单位换算':'不符合本步的单位换算')+'。'),
+            ...p.steps.map(v=>'第 '+(v.index+1)+' 步“'+v.originalLabel+'”：独立推导为 '+v.quantity+' '+v.unit+'。'),
+            '单位关系：'+p.equation+'。'
+          ];
+          if(p.wrongStepIndices.length)detail.push('首次错误和随后纠正的步骤仍在原始历史中。');
+          if(attempts.length>1)detail.push('旧Check快照另存；只描述最新一致的提交。');
+          if(record.support)detail.push('曾使用提示或反馈。');
+          detail.push('不自动评价自主策略、单位解释、实际测量或长期理解。');
+          return {title:'这次作品中的思考线索',
+            observation:'实际完成 '+p.completedSteps+' 个单位换算步骤，面积、时间或体积的量纲与有理数已独立核对；'+
+              (p.wrongStepIndices.length?'原历史保留错误与纠正。':'原记录未见错误步骤。'),
+            connection:conversionSource.question,detail,method:null};
+        }
         const unitsSource=compoundUnitsBinding(task,context);
         if(unitsSource){
           const unitsProof=replayCompoundUnitsEvidence(task,model,context);
