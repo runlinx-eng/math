@@ -20,7 +20,8 @@ const rows=[
 const checks=[],errors=[],captures=[],screenshots=[];
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
 const evt=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):null;
-const provenance={repo:'runlinx-eng/math',issue:310,sha,workflowRunId:process.env.GITHUB_RUN_ID||null,
+const provenance={repo:'runlinx-eng/math',issue:310,sha,testedCheckoutSha:sha,runId:process.env.GITHUB_RUN_ID||null,
+ runAttempt:Number(process.env.GITHUB_RUN_ATTEMPT||0),workflowRunId:process.env.GITHUB_RUN_ID||null,
  workflowAttempt:process.env.GITHUB_RUN_ATTEMPT||null,headSha:evt?.pull_request?.head?.sha||sha,
  originalControls:true,seededCorrectWork:false,seededLessonPositionOnly:true,
  childTrial:false,masteryInferred:false};

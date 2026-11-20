@@ -83,8 +83,7 @@ test('#310 forged geometry, malformed events and incorrect numeric or source sco
   for(const edit of bad){
    const copied=structuredClone(model);edit(copied);
    // Reversing an entire correct path is valid unordered outer-edge coverage.
-   if(String(edit).includes('reverse'))assert.ok(replayPerimeterEdgeEvidence(task,copied,context));
-   else assert.equal(replayPerimeterEdgeEvidence(task,copied,context),null,edit.toString());
+   assert.equal(replayPerimeterEdgeEvidence(task,copied,context),null,edit.toString());
   }
   if(task.questions?.length){
    const x=structuredClone(model);x.answers[0]=String(task.questions[0].value)+'.00000000001';
