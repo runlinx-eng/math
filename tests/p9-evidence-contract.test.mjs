@@ -36,6 +36,7 @@ import {defaultModel,exampleModel,validModel,inspect} from '../dist/learning/tas
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {sameEvidence,hasExactKeys,matchesNativeEvidenceTask,latestSubmissionMatches} from '../dist/learning/evidence-contract.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import * as tileModel from '../dist/learning/phase5/b30-model.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {fractionEvidenceExample} from '../scripts/fraction-evidence-fixture.mjs';
 import {joinStoryEvidenceExample} from '../scripts/joinstory-evidence-fixture.mjs';
@@ -78,6 +79,7 @@ const reviewed={
  ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>['time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))])),
  'clock-setting':[{sessionId:'hourclock',index:2},{sessionId:'fiveclock',index:2},{sessionId:'quarterclock',index:1}],
   'area-edge':[...positions('walkperim',[0,1,2]),...positions('polyperim',[0]),...positions('lperim',[0,1])],
+  'unit-tile-area':positions('gridarea',[0,1]),
   'directed-jump':[...positions('linejumps',[1,2,3]),...positions('negativecontext',[1]),...positions('signedwalk',[0,1,2,5])],
   'calendar-interval':positions('calendaruse',[2,3]),
  timecompare:[...positions('timecompare',[0,1,2]),...positions('durationorder',[1]),...positions('durationwork',[1]),...positions('minuteclock',[2])],
@@ -130,7 +132,14 @@ const reviewed={
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
-const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+const unitTileAreaExample=task=>{
+ const model=tileModel.initial(task);
+ for(const [x,y] of task.cells)tileModel.act(task,model,'a30-tile',{index:y*task.w+x});
+ model.area=String(task.cells.length);
+ model.unit='cm²';
+ return model;
+};
+const example=(adapter,task)=>adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -234,7 +243,7 @@ for(const adapter of EVIDENCE_ADAPTERS){
   }
  });
  test(adapter.id+': every reviewed task retains source binding, real replay and the latest checked work',()=>{
-  const outside=native.find(({task,context})=>task.type===adapter.type&&!reviewed[adapter.id].some(c=>key(c)===key(context)));
+  const outside=native.find(({task,context})=>task.type===adapter.type&&!EVIDENCE_ADAPTERS.some(a=>a.binding(task,context)));
   for(const context of reviewed[adapter.id]){
    const task=sessionTasks(context.sessionId)[context.index],nodeId=sessionMeta(context.sessionId).topicId;
    const model=example(adapter,task),saved=record(model),before=JSON.stringify(saved);

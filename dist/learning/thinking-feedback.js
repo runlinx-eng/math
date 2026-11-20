@@ -16,6 +16,7 @@ import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
+import {unitTileAreaBinding,replayUnitTileAreaEvidence} from './unit-tile-area-evidence.js';
 import {directedJumpBinding,replayDirectedJumpEvidence} from './directed-jump-evidence.js';
 import {calendarIntervalBinding,replayCalendarIntervalEvidence} from './calendar-interval-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
@@ -177,6 +178,8 @@ export function thinkingGuide(task,context={}){
     return src?{type:task.type,summary:'想一想：每段方向和长度怎样决定终点？（可选）',question:src.question}:null;
   }
   if(task?.type==='x-a30-grid'){
+    const tile=unitTileAreaBinding(task,context);
+    if(tile)return {type:task.type,summary:'想一想：每一块方片占多大的面积？（可选）',question:tile.question};
     const edge=perimeterEdgeBinding(task,context);
     if(edge)return{type:task.type,summary:'想一想：沿外边走过的真实长度（可选）',question:edge.question};
   }
@@ -652,6 +655,23 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-a30-grid'){
+    const tile=unitTileAreaBinding(task,context);
+    if(tile){
+      const p=replayUnitTileAreaEvidence(task,model,context);if(!p)return null;
+      const detail=[
+        '原来的方格和单位由工具提供；你实际点选了 '+p.selectedOrder.length+' 块方片，完整覆盖原图，每块占1平方厘米。',
+        '你点击的方格编号依次为 '+p.selectedOrder.map(n=>n+1).join('、')+'；不重叠、不遗漏，对应 '+p.areaSquareCentimeters+' 平方厘米。',
+        '这是原历史中可复核的点选和最新面积填写，并非你独立画出图形或证明通用面积公式。'
+      ];
+      if(p.toggles.length)detail.push('之前还有 '+p.toggles.length+' 次再次点格以取消选择的请求。');
+      if(p.undos.length)detail.push('之前还有 '+p.undos.length+' 次撤销最后一格的请求。');
+      if(p.clears.length)detail.push('之前还有 '+p.clears.length+' 次清空所有方片并重铺的请求。');
+      if(attempts.length>1)detail.push('错误检查已保留在原学习记录中，这里只描述最新一次提交。');
+      if(record.support)detail.push('曾查看可选提示。');
+      return {title:'这次作品中的思考线索',
+        observation:'你实际铺满 '+p.areaSquareCentimeters+' 块边长1厘米的方片，填写面积 '+p.areaSquareCentimeters+' 平方厘米。',
+        connection:tile.question,detail,method:null};
+    }
     const source=perimeterEdgeBinding(task,context);
     if(source){
       const p=replayPerimeterEdgeEvidence(task,model,context);if(!p)return null;

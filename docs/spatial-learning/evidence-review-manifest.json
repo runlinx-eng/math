@@ -7126,6 +7126,24 @@
       "adapter": "calendar-interval",
       "taskHash": "e8907a46c2676f70d17276230648ee5fc7556ac5e760c2dde24f7743af95ae3b",
       "method": null
+    },
+    {
+      "sessionId": "gridarea",
+      "index": 0,
+      "type": "x-a30-grid",
+      "nodeId": "mt_6xNmQLzuqm",
+      "adapter": "unit-tile-area",
+      "taskHash": "57841e0f8899cbc70e338cf980770c6c12b3cdc17441206db291343e3fa1c85b",
+      "method": null
+    },
+    {
+      "sessionId": "gridarea",
+      "index": 1,
+      "type": "x-a30-grid",
+      "nodeId": "mt_6xNmQLzuqm",
+      "adapter": "unit-tile-area",
+      "taskHash": "3fa5666f59799e2d95267be6c2c8f218155941a817e0525d19be8fbe8199a4f1",
+      "method": null
     }
   ]
 }

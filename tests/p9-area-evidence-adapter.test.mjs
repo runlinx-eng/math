@@ -11,6 +11,7 @@ import {freshLesson,submitLesson,currentSubmission,validateLesson} from '../dist
 import {studyActionFocus} from '../dist/learning/workspace-flow.js';
 import {areaBinding,replayAreaEvidence as replay} from '../dist/learning/area-evidence.js';
 import {perimeterEdgeBinding} from '../dist/learning/perimeter-edge-evidence.js';
+import {unitTileAreaBinding,replayUnitTileAreaEvidence} from '../dist/learning/unit-tile-area-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyAreaFixtureStep as apply,areaEvidenceExample as example} from '../scripts/area-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -46,7 +47,7 @@ function wrong(c,m){
 function record(c,m){const a=freshLesson(c.id);a.index=c.index;a.models[c.index]=m;return a;}
 function submit(a,correct){const old=cp(a.cases[a.index]?.attempts||[]),value=cp(a.models[a.index]);assert.equal(submitLesson(a).correct,correct);assert.deepEqual(a.cases[a.index].attempts.slice(0,-1),old);assert.deepEqual(a.cases[a.index].attempts.at(-1).value,value);assert.deepEqual(a.models[a.index],value);return a.cases[a.index];}
 
-test('17 complete native source bindings, 26 excluded tasks and all 44 associated sources are fixed separately',()=>{
+test('17 original area-family bindings, 26 exclusions from area replay and 44 associated sources remain separate',()=>{
  assert.equal(cases.length,17);assert.equal(new Set(cases.map(c=>c.nodeId)).size,9);assert.equal(excludedCases.length,26);assert.equal(associatedCases.length,44);
  assert.deepEqual(Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(k=>[k,cases.filter(c=>c.kind===k).length])),{partition:6,design:1,compare:4,pieces:4,stadium:1,openbox:1});
  const allNative=Object.keys(LESSONS).flatMap(id=>sessionTasks(id).map((t,index)=>({id,index,t}))).filter(r=>M.TYPES.has(r.t.type));
@@ -54,10 +55,11 @@ test('17 complete native source bindings, 26 excluded tasks and all 44 associate
  assert.deepEqual(allNative.map(key).sort(),[...cases,...excludedCases].map(key).sort());assert.deepEqual(allAssociated.map(key).sort(),associatedCases.map(key).sort());
  for(const c of [...cases,...excludedCases,...associatedCases]){
   const t=task(c),m=example(t);assert.equal(taskFingerprint(t),c.taskHash);assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);assert.deepEqual(m.answers,c.answers);
-  const areaReviewed=cases.includes(c),edgeReviewed=!!perimeterEdgeBinding(t,c);
+  const areaReviewed=cases.includes(c),edgeReviewed=!!perimeterEdgeBinding(t,c),tileReviewed=!!unitTileAreaBinding(t,c);
+   const tileProven=tileReviewed&&!!replayUnitTileAreaEvidence(t,m,c);
    assert.equal(!!areaBinding(t,c),areaReviewed);
-   assert.equal(!!thinkingGuide(t,c),areaReviewed||edgeReviewed);
-   assert.equal(!!thinkingFeedback(t,m,saved(m),c),areaReviewed||edgeReviewed);
+   assert.equal(!!thinkingGuide(t,c),areaReviewed||edgeReviewed||tileReviewed);
+   assert.equal(!!thinkingFeedback(t,m,saved(m),c),areaReviewed||edgeReviewed||tileProven);
   if(excludedCases.includes(c))rejected(t,m);
  }
  for(const [path,hash]of Object.entries(fixture.sourceFiles))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex'),hash,path+' remains unchanged');
