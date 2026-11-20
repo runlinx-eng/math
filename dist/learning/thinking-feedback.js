@@ -18,6 +18,7 @@ import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-eviden
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
 import {ratioShapeBinding,replayRatioShapeEvidence} from './ratioshape-evidence.js';
+import {ratioStepsBinding,replayRatioStepsEvidence} from './ratiosteps-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -167,6 +168,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-share'){
     const source=ratioShareBinding(task,context);
     return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-r37-steps'){
+    const source=ratioStepsBinding(task,context);
+    return source?{type:task.type,summary:'想一想：先对齐长度单位，再看面积倍数（可选）',question:source.question}:null;
   }
   if(task?.type==='x-r37-shape'){
     const source=ratioShapeBinding(task,context);
@@ -659,6 +664,24 @@ export function thinkingFeedback(task,model,record,context={}){
     detail.push('这里没有自动检查自由解释、独立策略、现实分物活动或长期掌握。');
     return{title:'这次作品中的思考线索',
       observation:'这次实际分配 '+c.totalSlots+' 个等份，份数符合 '+c.parts.join(':')+'；'+c.amounts.join(' + ')+' = '+c.total+' '+unit+'，当前提交已按给定总量独立核算。',
+      connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-r37-steps'){
+    const source=ratioStepsBinding(task,context);if(!source)return null;
+    const proof=replayRatioStepsEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction;
+    const detail=[
+      '原图和逐步题卡由工具提供；这里只核对真实输入的步骤与本题已知比例尺和单位，不能推断学生自己提出了解法。',
+      ...c.records.map((r,i)=>'第 '+(i+1)+' 次真实操作（第 '+(r.index+1)+' 步）：输入 '+r.answer+'；'+(r.correct?'独立单位换算一致':'不符合该步的长度或面积换算')+'。'),
+      ...c.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：按独立换算核对为 '+s.quantity+'。')
+    ];
+    if(c.wrongStepIndices.length)detail.push('此前确有错误步骤及后来重新输入纠正，首次输入与全部记录仍保留。');
+    if(attempts.length>1)detail.push('以前检查的原始快照单独保留；这里只描述最新真实提交的完整作品。');
+    if(record.support)detail.push('曾打开过提示或比较反馈。');
+    detail.push('没有自动评定自主构思、实地测量、自由解释或长期掌握。');
+    return {title:'这次作品中的思考线索',
+      observation:'实际完成 '+c.completedSteps+' 个步骤，逐步用相同单位与面积倍数平方核算；'+
+       (c.wrongStepIndices.length?'先前的错误与纠正仍保留。':'本次记录未发现错误步骤。'),
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-r37-shape'){

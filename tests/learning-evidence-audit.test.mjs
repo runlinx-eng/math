@@ -135,6 +135,8 @@ test('same type never implies replay evidence or cross-course thinking attributi
     ...[0,1,2].map(i=>'native:ratioDivide37:'+i),
     'native:pctIdeas37:2','native:recipeScale37:2',
     'native:similar37:0','native:similar37:2','native:scaleArea37:0',
+    'native:scaleArea37:1','native:scaleArea37:2',
+    ...[0,1,2].map(i=>'native:scaleMap37:'+i),
     ...[0,1,2].map(i=>'native:lineproperties:'+i),
     ...[0,1,2,3].map(i=>'native:lineorientation:'+i),
     ...[0,1,2].map(i=>'native:recutnames:'+i),
@@ -159,12 +161,12 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 738 individually reviewed native tasks reach A');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,275,'B37 shapes add one newly reviewed source node');
- assert.deepEqual(Object.fromEntries(['compare','vessels','cupfill','timecompare','ratiopair','ratioshare','ratioshape','plot','sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard','scalechain','mixedaxis','decimalengine','fracshare','mixedtrade','fracdecompose','paperlab','wideshift','pvbench','time-order','time-parts','time-roman','time-stopwatch','time-steps','area-partition','area-design','area-compare','area-pieces','area-stadium','area-openbox','order','money-coins','money-cart','cubefraction','multable','unitcover','unitrefine','ruler','balance-compare','balance-weigh','scale-analog','scale-digital','convert-exact','convert-given-approximation'].map(id=>
-   [id,a.filter(r=>r.evidenceAdapter===id).length])),{compare:11,vessels:3,cupfill:4,timecompare:6,ratiopair:13,ratioshare:6,ratioshape:5,plot:11,sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3,paperlab:12,wideshift:26,pvbench:11,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6,'area-partition':6,'area-design':1,'area-compare':4,'area-pieces':4,'area-stadium':1,'area-openbox':1,order:17,'money-coins':15,'money-cart':13,cubefraction:6,multable:10,unitcover:6,unitrefine:3,ruler:16,'balance-compare':4,'balance-weigh':2,'scale-analog':7,'scale-digital':1,'convert-exact':15,'convert-given-approximation':6});
+ assert.deepEqual(a.map(r=>r.id),exact,'only the 743 individually reviewed native tasks reach A');
+ assert.equal(new Set(a.map(r=>r.nodeId)).size,276,'B37 map steps add one newly reviewed source node');
+ assert.deepEqual(Object.fromEntries(['compare','vessels','cupfill','timecompare','ratiopair','ratioshare','ratioshape','ratiosteps','plot','sequence','array','line','counterexample','fraction','unitwalk','place','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard','scalechain','mixedaxis','decimalengine','fracshare','mixedtrade','fracdecompose','paperlab','wideshift','pvbench','time-order','time-parts','time-roman','time-stopwatch','time-steps','area-partition','area-design','area-compare','area-pieces','area-stadium','area-openbox','order','money-coins','money-cart','cubefraction','multable','unitcover','unitrefine','ruler','balance-compare','balance-weigh','scale-analog','scale-digital','convert-exact','convert-given-approximation'].map(id=>
+   [id,a.filter(r=>r.evidenceAdapter===id).length])),{compare:11,vessels:3,cupfill:4,timecompare:6,ratiopair:13,ratioshare:6,ratioshape:5,ratiosteps:5,plot:11,sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3,paperlab:12,wideshift:26,pvbench:11,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6,'area-partition':6,'area-design':1,'area-compare':4,'area-pieces':4,'area-stadium':1,'area-openbox':1,order:17,'money-coins':15,'money-cart':13,cubefraction:6,multable:10,unitcover:6,unitrefine:3,ruler:16,'balance-compare':4,'balance-weigh':2,'scale-analog':7,'scale-digital':1,'convert-exact':15,'convert-given-approximation':6});
  assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:738,B:189,C:124,D:865,E:80});
+   [level,s.tasks])),{A:743,B:189,C:124,D:860,E:80});
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,
