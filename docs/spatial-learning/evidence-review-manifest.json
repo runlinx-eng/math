@@ -6982,6 +6982,60 @@
       "adapter": "clock-setting",
       "taskHash": "3f0960356dc2c5af49fe123510405d94fb3af43daa12241f523342128f76d712",
       "method": null
+    },
+    {
+      "sessionId": "walkperim",
+      "index": 0,
+      "type": "x-a30-grid",
+      "nodeId": "mt_wE7-Gs9ENL",
+      "adapter": "area-edge",
+      "taskHash": "4ef7baffa20399fc7b94b2ca71e603182377a7037acfe26da1aa03d0f93eb1b6",
+      "method": null
+    },
+    {
+      "sessionId": "walkperim",
+      "index": 1,
+      "type": "x-a30-grid",
+      "nodeId": "mt_wE7-Gs9ENL",
+      "adapter": "area-edge",
+      "taskHash": "a1e0171ff716703a4f99c68ba4a3351240a5c73d8379b7213f662a78d4c9c238",
+      "method": null
+    },
+    {
+      "sessionId": "walkperim",
+      "index": 2,
+      "type": "x-a30-grid",
+      "nodeId": "mt_wE7-Gs9ENL",
+      "adapter": "area-edge",
+      "taskHash": "e9d3d665e1750475200dfc47a32a86a578ef9397979326cb35047bf4c03c7f41",
+      "method": null
+    },
+    {
+      "sessionId": "polyperim",
+      "index": 0,
+      "type": "x-a30-grid",
+      "nodeId": "mt_WtcFrxGOgw",
+      "adapter": "area-edge",
+      "taskHash": "3d67e040b458696577c6cfbbe4511d065ad96e6d629a6487d330fabff2735bfe",
+      "method": null
+    },
+    {
+      "sessionId": "lperim",
+      "index": 0,
+      "type": "x-a30-grid",
+      "nodeId": "mt_n0AlyLQwC9",
+      "adapter": "area-edge",
+      "taskHash": "a3dd7219b85e391ee9299e84cf87d874a6cb5ddb14b9a04890f5ecb12d0d9117",
+      "method": null
+    },
+    {
+      "sessionId": "lperim",
+      "index": 1,
+      "type": "x-a30-grid",
+      "nodeId": "mt_n0AlyLQwC9",
+      "adapter": "area-edge",
+      "taskHash": "1ebd24e74d3a518c2661cee4304e7216c2ff40c3110bda35871ef09de613c4f1",
+      "method": null
     }
   ]
 }

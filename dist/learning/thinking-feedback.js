@@ -15,6 +15,7 @@ import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
+import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -168,6 +169,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-orderlab'){
     const source=orderBinding(task,context);
     return source?{type:task.type,summary:'想一想：这一小块要先准备什么？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-a30-grid'){
+    const edge=perimeterEdgeBinding(task,context);
+    if(edge)return{type:task.type,summary:'想一想：沿外边走过的真实长度（可选）',question:edge.question};
   }
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);
@@ -617,6 +622,26 @@ export function thinkingFeedback(task,model,record,context={}){
     if(proof.pending&&!proof.pending.rawMatchesBuilt)detail.push('输入框中的文字与已摆出的关系精确对应，但没有把未点击摆出的文字当成另一轮操作。');
     if(proof.currentIssue)detail.push('末次请求的原提示仍保留；它没有改变已完成的运算树，这次检查核对的是当前完整作品。');
     return{title:'这次作品中的思考线索',observation:`你在当前关系中亲手合过 ${proof.effectiveSteps.length} 块；每块所需的部分先准备好，填写的量与原算式精确对应。最后得到 ${result}，与这次提交的结果一致。`,connection:'如果先换到另一块，它需要的量是否都已准备好？哪些小块互不依赖，哪些必须先后接起来？',detail,method:null};
+  }
+  if(task?.type==='x-a30-grid'){
+    const source=perimeterEdgeBinding(task,context);
+    if(source){
+      const p=replayPerimeterEdgeEvidence(task,model,context);if(!p)return null;
+      const detail=[
+        '原图、方格与可选边段由工具提供；这里只核对实际点击外边与最后填写，没有说成你自己画了边界或解释了计算方法。',
+        '真实点击顺序（边段编号）为 '+p.chronologicalRequests.filter(e=>e.action==='edge').map(e=>e.index+1).join('、')+'。',
+        '当前选中 '+p.selectedOrder.length+' 条外边直段，对应单位长度 '+p.runs.map(r=>r.length).join(' + ')+' = '+p.perimeter+' '+p.unit+'。',
+        '每条长直段要按端点的实际格长计算，不能把段数当周长；内部接缝没有计入。',
+        '旧操作、撤销和清空都保留，不等于你独立证明了周长公式、自由解释或长期掌握。'
+      ];
+      if(p.toggles.length)detail.push('历史中保留了 '+p.toggles.length+' 次取消已点亮边段的请求。');
+      if(p.undone.length)detail.push('历史中保留了 '+p.undone.length+' 次撤回最后选中边段的请求。');
+      if(p.clears.length)detail.push('历史中保留了 '+p.clears.length+' 次清空全部边段并重走的请求。');
+      if(p.answers.length)detail.push('对应原题附问：'+p.answers.map(a=>a.label+' = '+a.raw).join('；')+'；这不代替独立文字论证。');
+      if(attempts.length>1)detail.push('之前的错误或正确检查快照仍按原 State-v2 保留；这里只描述最新一次完整提交。');
+      if(record.support)detail.push('曾查看可选提示。');
+      return {title:'这次作品中的思考线索',observation:'你实际巡检了 '+p.selectedOrder.length+' 条外边直段，依每段长度合计 '+p.perimeter+' '+p.unit+'；面积和外边是不同的量。',connection:source.question,detail,method:null};
+    }
   }
   if(typeof task?.type==='string'&&task.type.startsWith('x-a30-')){
     const source=areaBinding(task,context);if(!source)return null;

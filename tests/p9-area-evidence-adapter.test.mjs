@@ -10,6 +10,7 @@ import * as M from '../dist/learning/phase5/b30-model.js';
 import {freshLesson,submitLesson,currentSubmission,validateLesson} from '../dist/learning/state.js';
 import {studyActionFocus} from '../dist/learning/workspace-flow.js';
 import {areaBinding,replayAreaEvidence as replay} from '../dist/learning/area-evidence.js';
+import {perimeterEdgeBinding} from '../dist/learning/perimeter-edge-evidence.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import {applyAreaFixtureStep as apply,areaEvidenceExample as example} from '../scripts/area-evidence-fixture.mjs';
 import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
@@ -53,7 +54,10 @@ test('17 complete native source bindings, 26 excluded tasks and all 44 associate
  assert.deepEqual(allNative.map(key).sort(),[...cases,...excludedCases].map(key).sort());assert.deepEqual(allAssociated.map(key).sort(),associatedCases.map(key).sort());
  for(const c of [...cases,...excludedCases,...associatedCases]){
   const t=task(c),m=example(t);assert.equal(taskFingerprint(t),c.taskHash);assert.ok(M.valid(t,m));assert.ok(M.inspect(t,m).correct);assert.deepEqual(m.answers,c.answers);
-  assert.equal(!!areaBinding(t,c),cases.includes(c));assert.equal(!!thinkingGuide(t,c),cases.includes(c));assert.equal(!!thinkingFeedback(t,m,saved(m),c),cases.includes(c));
+  const areaReviewed=cases.includes(c),edgeReviewed=!!perimeterEdgeBinding(t,c);
+   assert.equal(!!areaBinding(t,c),areaReviewed);
+   assert.equal(!!thinkingGuide(t,c),areaReviewed||edgeReviewed);
+   assert.equal(!!thinkingFeedback(t,m,saved(m),c),areaReviewed||edgeReviewed);
   if(excludedCases.includes(c))rejected(t,m);
  }
  for(const [path,hash]of Object.entries(fixture.sourceFiles))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+path,import.meta.url))).digest('hex'),hash,path+' remains unchanged');

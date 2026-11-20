@@ -77,6 +77,7 @@ const reviewed={
  ...Object.fromEntries(['partition','design','compare','pieces','stadium','openbox'].map(kind=>['area-'+kind,area.cases.filter(c=>c.kind===kind).map(({sessionId,index})=>({sessionId,index}))])),
  ...Object.fromEntries(['order','parts','roman','stopwatch','steps'].map(kind=>['time-'+kind,time.cases.filter(c=>c.type==='x-t32-'+kind).map(({sessionId,index})=>({sessionId,index}))])),
  'clock-setting':[{sessionId:'hourclock',index:2},{sessionId:'fiveclock',index:2},{sessionId:'quarterclock',index:1}],
+  'area-edge':[...positions('walkperim',[0,1,2]),...positions('polyperim',[0]),...positions('lperim',[0,1])],
  timecompare:[...positions('timecompare',[0,1,2]),...positions('durationorder',[1]),...positions('durationwork',[1]),...positions('minuteclock',[2])],
  ratiopair:[...positions('pctIdeas37',[0]),...positions('ratioProblem37',[0,1,2]),...positions('rateWords37',[0,1]),...positions('ratioNotation37',[0]),...positions('proportion37',[0,1]),...positions('ratioLink37',[0,1]),...positions('recipeScale37',[0,1])],
  ratioshare:[...positions('ratioShare37',[0,1,2]),...positions('ratioDivide37',[0,1,2])],
@@ -127,7 +128,7 @@ const reviewed={
 };
 const key=c=>c.sessionId+':'+c.index;
 const record=value=>({support:false,attempts:[{value:structuredClone(value)}]});
-const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+const example=(adapter,task)=>adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
