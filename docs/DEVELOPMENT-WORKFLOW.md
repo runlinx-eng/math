@@ -60,6 +60,9 @@ Required attempt 1 与 attempt 2 均在35分钟硬限制下取消六至七个浏
 - **开发期集中验证与发布版本预检（#268）**：同一任务内可以保留多个小而清晰的本地 Git commit，但尽量先完成受影响的源码/规则/测试修改与定向 Node/Chromium 验证，再统一 push；不按固定提交次数限制提交，也不把不同任务堆成一批。修复真实失败时仍可再次提交，每次正式验收以最新 HEAD 为准，不以旧 SHA 绿灯放行。
 - **离线 release 同步**：涉及 `dist/sw.js`、`dist/space.js`、`dist/exploration.js`、`dist/learning/learn.js` 的 release 变动时，先在开发分支完成原始改动，再运行 `node scripts/ci-release-sync.mjs sync --release math-explorer-<明确版本>`，检查改动列表并运行 `node scripts/ci-release-sync.mjs check` 和 `node --test tests/ci-release-sync.test.mjs`，最后集中 push。工具同步五处 release、学习入口 SHA-256 与已审导航 fixture 中的该入口哈希；仅允许 release-only 的学习入口变动自动更新审阅哈希，若学习入口有其他改动/来源不一致则拒绝改写，要求独立审阅。新增离线文件仍须人工登记 SW 缓存清单，并保留真实离线、P10/V2 与原数学门禁。现有 CI Node 范围均会执行这个 release 一致性测试，不新增全套浏览器 Job。
 
+- **普通家族提交前单入口预检（#308）**：在一个家族的源码/规则/测试/注册达到可复核检查点、计划首次远端推送之前，从仓库根目录执行 `node scripts/ci-push-preflight.mjs`。脚本只读、无 `git push`、不修改源码与受审指纹，依次重用现行 `ci-release-sync check`（release与入口/导航哈希）、`ci-live-browser-matrix inspect`（全部注册家族、资源容量与单波约束）及 Node 的发布/家族清单/顺序/调度/来源契约测试。任一失败立即停止，先按真实根因修复，不能通过删断言、伪造数学来源或改变时限取得绿色结果；预检通过**不能代替**定向原生 Chromium、适用 Required/Fallback、P10/State-v2、离线、Artifact、最终HEAD和新main独立验收。本地无法访问完整checkout或无法运行Node时必须如实记录未执行，不能用仅在 GitHub 写入成功冒充本地预检通过。
+- **减少重复推送与跨窗口接管（#308）**：优先在一份独立工作区完成同家族的原数学合同、反馈、注册、测试及必要 release 同步，执行预检与定向测试后**集中一次推送**；多次本地 commit 允许，真实失败修复需要再次推送也允许。若连接器单次写入受限，优先用 blob/tree/commit/ref 将多文件合为一个受审原子提交，并以 `expected_sha` 校验后写入与回读分支 HEAD；不得以省推送为理由隐藏未提交代码或丢失进度。换新窗口先读 #130 最新入口、实际 PR HEAD 与 CI run：旧HEAD已有结果则继续归因或验收，同一HEAD正运行时不无故重推；失败先收集该轮**全部**失败job，按共同原因批量修复，并以新HEAD重新验收。#130 保留简洁现状入口和完整历史，不开并行总控或重复审批；单写入者原则与其他家族共享文件的隔离继续生效。
+
 # 数学树长期开发工作流
 
 状态：长期基线。适用于数学探索（数学树）仓库的所有后续开发分支。本文规定如何交付，不替代产品规范，也不直接授权新的产品功能。
