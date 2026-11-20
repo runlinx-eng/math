@@ -267,6 +267,33 @@
       "method": null
     },
     {
+      "sessionId": "fractionOf37",
+      "index": 0,
+      "type": "x-r37-steps",
+      "nodeId": "mt_xAf2bu9wYK",
+      "adapter": "fractionparts",
+      "taskHash": "f9b4969c75ed81ec8ae778b1f140c09953f59fcd4010a80c326d6c27a3e1cdca",
+      "method": null
+    },
+    {
+      "sessionId": "fractionOf37",
+      "index": 1,
+      "type": "x-r37-steps",
+      "nodeId": "mt_xAf2bu9wYK",
+      "adapter": "fractionparts",
+      "taskHash": "be92e4d923c53aa7f58145f981574319424c2a688308e0305254ade627cad7e0",
+      "method": null
+    },
+    {
+      "sessionId": "fractionOf37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_xAf2bu9wYK",
+      "adapter": "fractionparts",
+      "taskHash": "7d12c7d28171862e2fbcace46754f280dffc3e4ac9b0af1fe0cf55b4021cef6a",
+      "method": null
+    },
+    {
       "sessionId": "general34",
       "index": 2,
       "type": "x-p34-sequence",
