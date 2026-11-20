@@ -79,6 +79,7 @@ const reviewed={
  'clock-setting':[{sessionId:'hourclock',index:2},{sessionId:'fiveclock',index:2},{sessionId:'quarterclock',index:1}],
   'area-edge':[...positions('walkperim',[0,1,2]),...positions('polyperim',[0]),...positions('lperim',[0,1])],
   'directed-jump':[...positions('linejumps',[1,2,3]),...positions('negativecontext',[1]),...positions('signedwalk',[0,1,2,5])],
+  'calendar-interval':positions('calendaruse',[2,3]),
  timecompare:[...positions('timecompare',[0,1,2]),...positions('durationorder',[1]),...positions('durationwork',[1]),...positions('minuteclock',[2])],
  ratiopair:[...positions('pctIdeas37',[0]),...positions('ratioProblem37',[0,1,2]),...positions('rateWords37',[0,1]),...positions('ratioNotation37',[0]),...positions('proportion37',[0,1]),...positions('ratioLink37',[0,1]),...positions('recipeScale37',[0,1])],
  ratioshare:[...positions('ratioShare37',[0,1,2]),...positions('ratioDivide37',[0,1,2])],
@@ -203,7 +204,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,63); // #312 B09 independent widget type
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,64); // #314 B32 calendar is a distinct native widget
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
