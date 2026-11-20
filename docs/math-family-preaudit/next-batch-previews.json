@@ -1,0 +1,308 @@
+{
+  "schema": "math-family-next-preflight/1",
+  "snapshotMain": "6ee0eb9fc1ea2c6a944a84efdda5d11928c67866",
+  "status": "review-only",
+  "next": [
+    {
+      "id": "Q01",
+      "name": "千位增减与跨万换位",
+      "positions": [
+        "thousandstep:0",
+        "thousandstep:1",
+        "thousandstep:2",
+        "thousandstep:3"
+      ],
+      "reason": "4 existing x-wideshift positions; 25 formal A same-control references, but these exact positions are unreviewed.",
+      "risk": "medium-high: carry/borrow across ten-thousands and original instructions that oversimplify which digit changes",
+      "dependencies": [
+        "No overlap with #298/#299",
+        "Inspect original visible action grammar and exact reset/history",
+        "Review true task fingerprints and native source"
+      ],
+      "mathContract": "Signed delta of ±1000 in integer base-10 units; real unit conversions preserve value. Boundaries: 4562+1000=5562; 4562−1000=3562; 9500+1000=10500; 10500−1000=9500. Task text about only thousands digit changing must NOT be generalized to overflow cases.",
+      "counterexamples": [
+        "9500+1000=10500 disproves unconditional 'only thousands digit changes'",
+        "Repeated exchange without enough lower units",
+        "Fake history skipping a visible conversion to ten-thousands",
+        "A changed current draft reusing a correct older Check",
+        "First wrong estimate followed by corrected action; old attempt preserved"
+      ],
+      "tests": [
+        "Source session/index/node/frozen full taskHash, original grade unchanged, bridge/practice isolation",
+        "Replay exact typed add/remove and regroup events, all state invariants",
+        "Wrong-first→correction, reset/retry, stale feedback invalidation, forged/tampered history rejection",
+        "Targeted Node math/source negatives; only then real native Chromium at required 1920x1080 and relevant P10/State-v2/offline/browser artifact evidence"
+      ],
+      "reviewStatus": "preflight-only-not-implementation",
+      "sourceTasks": [
+        {
+          "position": "thousandstep:0",
+          "sourceNodeId": "mt_9XVFje6Tyr",
+          "sourceName": "1000 More or Less",
+          "taskType": "x-wideshift",
+          "originalPrompt": "原来4562，添一包1000。先猜，再亲自添。",
+          "originalSourceGoals": [
+            "Given 4,562, state that 1000 more is 5,562 and 1000 less is 3,562",
+            "Explain using place value that only the thousands digit changes"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "thousandstep:1",
+          "sourceNodeId": "mt_9XVFje6Tyr",
+          "sourceName": "1000 More or Less",
+          "taskType": "x-wideshift",
+          "originalPrompt": "原来4562，拿回一包1000。先猜再试。",
+          "originalSourceGoals": [
+            "Given 4,562, state that 1000 more is 5,562 and 1000 less is 3,562",
+            "Explain using place value that only the thousands digit changes"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "thousandstep:2",
+          "sourceNodeId": "mt_9XVFje6Tyr",
+          "sourceName": "1000 More or Less",
+          "taskType": "x-wideshift",
+          "originalPrompt": "9500再添1000，千位装不下了。亲自换成一万。",
+          "originalSourceGoals": [
+            "Explain using place value that only the thousands digit changes",
+            "Apply this skill to numbers beyond 10,000"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "thousandstep:3",
+          "sourceNodeId": "mt_9XVFje6Tyr",
+          "sourceName": "1000 More or Less",
+          "taskType": "x-wideshift",
+          "originalPrompt": "10500拿走1000，先拆一万，再拿一千。",
+          "originalSourceGoals": [
+            "Explain using place value that only the thousands digit changes",
+            "Apply this skill to numbers beyond 10,000"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "name": "十位与百位的同单位增减",
+      "positions": [
+        "tensmove:0",
+        "tensmove:1",
+        "tensmove:2",
+        "hundredsmove:0",
+        "hundredsmove:1",
+        "hundredsmove:2"
+      ],
+      "reason": "6 already-present x-placecalc positions, 35 formal A same-control references; fixed session/position source requirements still separate.",
+      "risk": "medium: same visual widget also supports regroup, subtraction, fraction decimals, and hidden typed text; not one global contract",
+      "dependencies": [
+        "Independent source & taskHash for both node IDs",
+        "Review default visible action / start align / exchange / remove semantics",
+        "No reuse of x-placecalc runtime registration without explicit scope"
+      ],
+      "mathContract": "Preserve place unit weights exactly: 45+30=75; 82−40=42; 45+3=48; 345+200=545; 762−400=362; 345+20=365. A recorded move of tens is not a move of ones; distinguish 3 from 30 and 20 from 200. Only claim user-performed visible moves.",
+      "counterexamples": [
+        "45+3 incorrectly treated as 45+30",
+        "762−400 incorrectly removes 4 tens",
+        "Synthetic digit carry absent from original visible history",
+        "Edited alignment after Check; replaying previous result",
+        "First failed removal corrected by a legal move; preserve failure and latest model"
+      ],
+      "tests": [
+        "Session/index/node/hash explicit binding; same type in other lessons and bridges rejected",
+        "Independent integer unit-balance replay with all visible history events",
+        "Tampered before/after, invalid unit counts, wrong-first reset/retry and current Check",
+        "Targeted Node, original native Chromium, relevant P10/State-v2/long offline; no unrelated 94 browser calls"
+      ],
+      "reviewStatus": "preflight-only-not-implementation",
+      "sourceTasks": [
+        {
+          "position": "tensmove:0",
+          "sourceNodeId": "mt_I5j1ZWo2cn",
+          "sourceName": "Adding and subtracting tens mentally",
+          "taskType": "x-placecalc",
+          "originalPrompt": "45多了3捆，每捆十个。把它们放进对应位置。",
+          "originalSourceGoals": [
+            "Calculate 45 + 30 = 75 mentally",
+            "Explain that only the tens digit changes when adding/subtracting tens"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "tensmove:1",
+          "sourceNodeId": "mt_I5j1ZWo2cn",
+          "sourceName": "Adding and subtracting tens mentally",
+          "taskType": "x-placecalc",
+          "originalPrompt": "82拿走4捆，零散的2颗怎么办？",
+          "originalSourceGoals": [
+            "Calculate 82 − 40 = 42 mentally"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "tensmove:2",
+          "sourceNodeId": "mt_I5j1ZWo2cn",
+          "sourceName": "Adding and subtracting tens mentally",
+          "taskType": "x-placecalc",
+          "originalPrompt": "同样从45开始，这次只多3颗。",
+          "originalSourceGoals": [
+            "Explain that only the tens digit changes when adding/subtracting tens"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "hundredsmove:0",
+          "sourceNodeId": "mt_xPqczp7zPX",
+          "sourceName": "Mentally adding hundreds to 3-digit numbers",
+          "taskType": "x-placecalc",
+          "originalPrompt": "345增加2个百。只把整板搬进来。",
+          "originalSourceGoals": [
+            "Calculate 345 + 200 mentally",
+            "Explain that only the hundreds digit changes"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "hundredsmove:1",
+          "sourceNodeId": "mt_xPqczp7zPX",
+          "sourceName": "Mentally adding hundreds to 3-digit numbers",
+          "taskType": "x-placecalc",
+          "originalPrompt": "762拿走4个百，把零头保留下来。",
+          "originalSourceGoals": [
+            "Calculate 762 − 400 mentally",
+            "Explain that only the hundreds digit changes"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "hundredsmove:2",
+          "sourceNodeId": "mt_xPqczp7zPX",
+          "sourceName": "Mentally adding hundreds to 3-digit numbers",
+          "taskType": "x-placecalc",
+          "originalPrompt": "仍从345开始，这次增加的是2个十。与加200比较。",
+          "originalSourceGoals": [
+            "Explain that only the hundreds digit changes"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "name": "三角形与平行四边形真实面积构造",
+      "positions": [
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3"
+      ],
+      "reason": "4 x-a30-pieces tasks share a widget with 4 other formally A-reviewed tasks, but their shape geometry, external altitude, and student actions differ.",
+      "risk": "high: shape decomposition, slant-vs-perpendicular altitude, preset scaffolds and approximation",
+      "dependencies": [
+        "Inspect B30 original task structure and visible graphics/action history",
+        "Confirm user operations vs preset cut/fold/duplicate animation",
+        "Choose independent exact rational/geometric replay or leave conservative"
+      ],
+      "mathContract": "For parallelogram base 8×perpendicular height 5 = 40 cm²; right triangle 6×4÷2 = 12 cm²; obtuse triangle base 12×height 7÷2 = 42 cm², including altitude outside the triangle; parallelogram base10×height5=50, not slope 6 giving 60. Accept only genuine recorded rearrangement; tool-displayed sample is not independent learner construction.",
+      "counterexamples": [
+        "Use slanted side 6 in place of perpendicular height 5",
+        "Count both copies as the area of one triangle",
+        "Count overlapped area twice or forget a cut segment",
+        "Claim tool's provided shape is a student-drawn proof",
+        "Reset removes current retained construction but stale feedback survives"
+      ],
+      "tests": [
+        "Exact original source/task hashes, per-position angle/height/identity contract, original grader unchanged",
+        "Geometry invariants for rotation/translation and non-overlap, rational area calculation",
+        "First wrong cut/altitude then correct cut; undo/reset/hidden fields/source isolation",
+        "Targeted mathematical Node and one real native desktop Chromium with P10/State-v2 if it modifies continuity"
+      ],
+      "reviewStatus": "preflight-only-not-implementation",
+      "sourceTasks": [
+        {
+          "position": "triArea:0",
+          "sourceNodeId": "mt_ML5t7n2-U8",
+          "sourceName": "Area of Triangles & Parallelograms",
+          "taskType": "x-a30-pieces",
+          "originalPrompt": "底 8 cm、高 5 cm。把右端的小三角形移到左边，再算平行四边形。",
+          "originalSourceGoals": [
+            "Cut a right-angled triangle off one end of a parallelogram with base 8 cm and perpendicular height 5 cm, move it to the other end to make an 8 cm × 5 cm rectangle, and state the area as 40 cm²"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "triArea:1",
+          "sourceNodeId": "mt_ML5t7n2-U8",
+          "sourceName": "Area of Triangles & Parallelograms",
+          "taskType": "x-a30-pieces",
+          "originalPrompt": "底 6 cm、高 4 cm。复制并转动一块，看看两个三角形怎样拼。",
+          "originalSourceGoals": [
+            "Show that a right triangle with legs 6 cm and 4 cm is half of a 6 cm × 4 cm rectangle (12 cm²), and that an obtuse triangle with base 12 cm and perpendicular height 7 cm, drawn outside the triangle, is half of a parallelogram (42 cm²)"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "triArea:2",
+          "sourceNodeId": "mt_ML5t7n2-U8",
+          "sourceName": "Area of Triangles & Parallelograms",
+          "taskType": "x-a30-pieces",
+          "originalPrompt": "底 12 cm、高 7 cm。这个三角形的高落在外面，复制一块看看。",
+          "originalSourceGoals": [
+            "Show that a right triangle with legs 6 cm and 4 cm is half of a 6 cm × 4 cm rectangle (12 cm²), and that an obtuse triangle with base 12 cm and perpendicular height 7 cm, drawn outside the triangle, is half of a parallelogram (42 cm²)"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        },
+        {
+          "position": "triArea:3",
+          "sourceNodeId": "mt_ML5t7n2-U8",
+          "sourceName": "Area of Triangles & Parallelograms",
+          "taskType": "x-a30-pieces",
+          "originalPrompt": "底 10、高 5；斜边是 6。该用哪一段算面积？",
+          "originalSourceGoals": [
+            "Decide that a formula gives the area of a parallelogram with base 10 cm and perpendicular height 5 cm (50 cm², not the 60 cm² from its slanted 6 cm side) but not of an irregular leaf shape, whose area must be estimated by counting squares"
+          ],
+          "taskHash": null,
+          "sourceFreezeRequired": true,
+          "existingStrictA": false
+        }
+      ]
+    }
+  ],
+  "excludedOngoing": {
+    "issue": 298,
+    "pr": 299
+  },
+  "notes": [
+    "Original taskHash is deliberately null until a future source-faithful review",
+    "No original grader, source task, source relationship, or learning history is modified by this analysis"
+  ]
+}

@@ -1,0 +1,4091 @@
+{
+  "schema": "math-family-development-queue/1",
+  "snapshotMain": "6ee0eb9fc1ea2c6a944a84efdda5d11928c67866",
+  "policy": "One-time baseline; future windows consume this queue and update only impacted rows, not repeat full classification.",
+  "notIncludedInFormalCoverage": true,
+  "guardrails": [
+    "Formal A only after reviewed source hash, exact original position, independent process replay, current attempt, negative tests and applicable CI/Artifact, plus independent main Required/Fallback",
+    "PR #299 owns proportional graph-points; do not change or merge it from this document PR",
+    "Preserve B/C/D/E unless a future independent approved family PR meets actual evidence gate",
+    "Protect original native task, grading, source edges, lesson history, State-v2 and offline safety"
+  ],
+  "priorityPackages": [
+    {
+      "id": "Q01",
+      "rank": 1,
+      "reason": "Narrow four-task x-wideshift source with existing strict replay reference; inspect high-risk carry before implementation.",
+      "positions": [
+        "thousandstep:0",
+        "thousandstep:1",
+        "thousandstep:2",
+        "thousandstep:3"
+      ],
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q02",
+      "rank": 2,
+      "reason": "Six source-specific x-placecalc tasks; reuse precise decimal-unit proof while keeping distinct tens/hundreds contracts.",
+      "positions": [
+        "tensmove:0",
+        "tensmove:1",
+        "tensmove:2",
+        "hundredsmove:0",
+        "hundredsmove:1",
+        "hundredsmove:2"
+      ],
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q03",
+      "rank": 3,
+      "reason": "Four geometry tasks with strong instructional value and known perpendicular-altitude counterexamples; high math risk, after source geometry review.",
+      "positions": [
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3"
+      ],
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q04",
+      "rank": 4,
+      "reason": "Review remaining x-pvbench positions by task instruction; 26 nonA same type is a screening set, not one family.",
+      "positions": [
+        "twoplaces:0",
+        "twoplaces:1",
+        "twoplaces:2",
+        "decades:0",
+        "decades:1",
+        "decades:2",
+        "twoproblems:2",
+        "faces100:1",
+        "words100:0",
+        "words100:1",
+        "words100:2",
+        "read120:1",
+        "read120:2",
+        "faces120:1",
+        "threeplaces:0",
+        "threeplaces:1",
+        "threeplaces:2",
+        "hundreds:0",
+        "hundreds:2",
+        "problems1000:1",
+        "words1000:0",
+        "words1000:1",
+        "words1000:2",
+        "words1000:3",
+        "faces1000:2",
+        "screen1000:0"
+      ],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q05",
+      "rank": 5,
+      "reason": "Split residual x-r37-steps by original source and reject choice-only positions; do not touch #298/#299 concurrent work.",
+      "positions": [
+        "pctFraction37:1",
+        "rateWords37:2",
+        "rateWords37:3",
+        "similar37:3",
+        "proportionGraph37:2",
+        "model38:1",
+        "complex38:0",
+        "complex38:1",
+        "advancedPlan38:1",
+        "advancedPlan38:3"
+      ],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q06",
+      "rank": 6,
+      "reason": "Clock, calendar, and duration need separate reference models; only then pick narrow interaction cohorts.",
+      "positions": [
+        "durationunit:2",
+        "hoursday:0",
+        "hoursday:1",
+        "hoursday:2",
+        "hourclock:0",
+        "hourclock:1",
+        "hourclock:2",
+        "fiveclock:0",
+        "fiveclock:1",
+        "fiveclock:2",
+        "ampmclock:0",
+        "ampmclock:1",
+        "ampmclock:2",
+        "romanclock:0",
+        "romanclock:2",
+        "minuteclock:0",
+        "clockconvert:0",
+        "clockconvert:1",
+        "clockconvert:2",
+        "timeconvert:0",
+        "timeconvert:1",
+        "timeconvert:2",
+        "quarterclock:0",
+        "quarterclock:1",
+        "weekmonth:2",
+        "calendarfacts:0",
+        "calendarfacts:1",
+        "calendarfacts:2",
+        "calendaruse:0",
+        "calendaruse:1",
+        "calendaruse:2",
+        "calendaruse:3",
+        "precise38:3"
+      ],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q07",
+      "rank": 7,
+      "reason": "28 x-wideboard models are a control-based analysis set; never infer A or one integer-place contract.",
+      "positions": [
+        "fourplaces:0",
+        "fourplaces:1",
+        "fourplaces:2",
+        "fourfaces:0",
+        "fourfaces:1",
+        "fourfaces:2",
+        "bigcompare:0",
+        "bigcompare:1",
+        "bigcompare:2",
+        "placeproblems:1",
+        "placeproblems:2",
+        "sixdigits:0",
+        "sixdigits:1",
+        "sixdigits:2",
+        "bigproblems:0",
+        "bigproblems:2",
+        "millionwords:0",
+        "millionwords:1",
+        "millionwords:2",
+        "tenmillion:1",
+        "decimalplaces:0",
+        "decimalplaces:2",
+        "decimalwords:0",
+        "decimalwords:1",
+        "decimalwords:2",
+        "standardform:3",
+        "dividebyten:1",
+        "dividebyten:3"
+      ],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q08",
+      "rank": 8,
+      "reason": "Recover 17 missing nonA source-goal mappings from current runtime before any contract/family assignment.",
+      "positions": [
+        "withinthousand:3",
+        "skipbig:2",
+        "powersteps:0",
+        "powersteps:1",
+        "powersteps:2",
+        "powersteps:6",
+        "productways:3",
+        "chanceline:1",
+        "linemark:0",
+        "measurecalc:5",
+        "temperaturechange:4",
+        "rules34:3",
+        "bigmissing35:1",
+        "systems35:2",
+        "systems35:3",
+        "linear36:3",
+        "proportionGraph37:1"
+      ],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    },
+    {
+      "id": "Q09",
+      "rank": 9,
+      "reason": "Human-first/observational boundaries: tool choice, free reasoning, probability intuition and real-world collection are not inferred from correct outputs.",
+      "positions": [],
+      "reviewOnly": true,
+      "currentStatus": "not started",
+      "formalCoverageDelta": 0
+    }
+  ],
+  "allUnapprovedPools": [
+    {
+      "queueRank": 1,
+      "id": "perimeter-walk",
+      "positions": 7,
+      "complexity": "M",
+      "risk": "medium",
+      "score": 5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_SmghasIvbT",
+        "mt_WtcFrxGOgw",
+        "mt_n0AlyLQwC9",
+        "mt_wE7-Gs9ENL"
+      ],
+      "typeNames": [
+        "x-a30-grid"
+      ],
+      "positionIds": [
+        "walkperim:0",
+        "walkperim:1",
+        "walkperim:2",
+        "polyperim:0",
+        "lperim:0",
+        "lperim:1",
+        "multiShape38:1"
+      ]
+    },
+    {
+      "queueRank": 2,
+      "id": "area-grid",
+      "positions": 5,
+      "complexity": "M",
+      "risk": "medium",
+      "score": 5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_6xNmQLzuqm",
+        "mt_d-WZC2OyMB",
+        "mt_xfwv0M83mJ"
+      ],
+      "typeNames": [
+        "x-a30-grid"
+      ],
+      "positionIds": [
+        "gridarea:0",
+        "gridarea:1",
+        "gridarea:2",
+        "term38:2",
+        "tools39:4"
+      ]
+    },
+    {
+      "queueRank": 3,
+      "id": "clocks-calendar",
+      "positions": 39,
+      "complexity": "XL",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-vvVxpOHG2",
+        "mt_0XxyaQLRhn",
+        "mt_2XDGT5tei1",
+        "mt_2yas4Unc8o",
+        "mt_4m8BimI4G5",
+        "mt_5HV4mbgSGH",
+        "mt_5J2quSTspi",
+        "mt_Cqm8iy48UI",
+        "mt_EXlmTURK_o",
+        "mt_HNOPGJYiRK",
+        "mt_MgsDabdnr1",
+        "mt_UNzojLkNdm",
+        "mt_WfrE_4r-kY",
+        "mt__N55B7u7HD",
+        "mt_bj1YCgNWUx",
+        "mt_mywsN77hGZ",
+        "mt_tVvZVWO5d6"
+      ],
+      "typeNames": [
+        "x-m29-clock",
+        "x-t32-calendar",
+        "x-t32-clock",
+        "x-t32-order",
+        "x-t32-units",
+        "x-timetable"
+      ],
+      "positionIds": [
+        "timetable:0",
+        "timetable:1",
+        "timetable:2",
+        "timetable:3",
+        "practicalmeasure:2",
+        "eventorder:0",
+        "durationunit:2",
+        "hoursday:0",
+        "hoursday:1",
+        "hoursday:2",
+        "hourclock:0",
+        "hourclock:1",
+        "hourclock:2",
+        "fiveclock:0",
+        "fiveclock:1",
+        "fiveclock:2",
+        "ampmclock:0",
+        "ampmclock:1",
+        "ampmclock:2",
+        "romanclock:0",
+        "romanclock:2",
+        "minuteclock:0",
+        "clockconvert:0",
+        "clockconvert:1",
+        "clockconvert:2",
+        "timeconvert:0",
+        "timeconvert:1",
+        "timeconvert:2",
+        "quarterclock:0",
+        "quarterclock:1",
+        "weekmonth:2",
+        "calendarfacts:0",
+        "calendarfacts:1",
+        "calendarfacts:2",
+        "calendaruse:0",
+        "calendaruse:1",
+        "calendaruse:2",
+        "calendaruse:3",
+        "precise38:3"
+      ]
+    },
+    {
+      "queueRank": 4,
+      "id": "place-exchange",
+      "positions": 38,
+      "complexity": "XL",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_3e_PQxwC12",
+        "mt_9XVFje6Tyr",
+        "mt_FAXjFkgG6X",
+        "mt_HJTuIGHvcR",
+        "mt_I5j1ZWo2cn",
+        "mt_aHQ9kNt3is",
+        "mt_fZTn0W_iZR",
+        "mt_glPPG-kTQY",
+        "mt_izien3ZX51",
+        "mt_kJGCjnuelW",
+        "mt_kw7xmp68rU",
+        "mt_oDU_8zMZjp",
+        "mt_pyMD_SIiYO",
+        "mt_sYpKWbq5ra",
+        "mt_xPqczp7zPX"
+      ],
+      "typeNames": [
+        "x-onechange",
+        "x-placecalc",
+        "x-pvshift",
+        "x-regroup",
+        "x-unitadd",
+        "x-wideshift"
+      ],
+      "positionIds": [
+        "justify:0",
+        "justify:1",
+        "nextone:0",
+        "nextone:1",
+        "nextone:2",
+        "shift10:0",
+        "shift10:1",
+        "shift10:2",
+        "shift10:3",
+        "twoproblems:0",
+        "twoproblems:1",
+        "shift100:0",
+        "shift100:1",
+        "shift100:2",
+        "shift100:3",
+        "shift100:4",
+        "shift100:5",
+        "thousandstep:0",
+        "thousandstep:1",
+        "thousandstep:2",
+        "thousandstep:3",
+        "scaleadd:2",
+        "scaleadd:3",
+        "scaleadd:4",
+        "tensmove:0",
+        "tensmove:1",
+        "tensmove:2",
+        "decadetake:0",
+        "decadetake:1",
+        "addhundred:1",
+        "oneslarge:2",
+        "tenslarge:0",
+        "tenslarge:1",
+        "hundredsmove:0",
+        "hundredsmove:1",
+        "hundredsmove:2",
+        "structure34:0",
+        "general34:1"
+      ]
+    },
+    {
+      "queueRank": 5,
+      "id": "ratio-balance",
+      "positions": 5,
+      "complexity": "M",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_FieL-vVTI_",
+        "mt_VKW8lOcFaw",
+        "mt_yqZiX6vS7D"
+      ],
+      "typeNames": [
+        "x-r37-share",
+        "x-scale"
+      ],
+      "positionIds": [
+        "scale:0",
+        "scale:1",
+        "scale:2",
+        "modelChoice38:0",
+        "advancedPlan38:0"
+      ]
+    },
+    {
+      "queueRank": 6,
+      "id": "solid-metric/solidSurface",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_Sij9ByyHq6"
+      ],
+      "typeNames": [
+        "x-a30-solid"
+      ],
+      "positionIds": [
+        "solidSurface:0",
+        "solidSurface:1",
+        "solidSurface:2"
+      ]
+    },
+    {
+      "queueRank": 7,
+      "id": "widget-unclassified/x-orderlab",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_4WaKWECpcv"
+      ],
+      "typeNames": [
+        "x-orderlab"
+      ],
+      "positionIds": [
+        "expressions:0",
+        "expressions:1",
+        "expressions:2"
+      ]
+    },
+    {
+      "queueRank": 8,
+      "id": "ratio-steps/advancedPlan38",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_FieL-vVTI_"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "advancedPlan38:1",
+        "advancedPlan38:3"
+      ]
+    },
+    {
+      "queueRank": 9,
+      "id": "ratio-steps/complex38",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_GpltXPoaoc"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "complex38:0",
+        "complex38:1"
+      ]
+    },
+    {
+      "queueRank": 10,
+      "id": "ratio-steps/rateWords37",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_ATYLKt0je-"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "rateWords37:2",
+        "rateWords37:3"
+      ]
+    },
+    {
+      "queueRank": 11,
+      "id": "solid-metric/netSurface",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_tegkuJA5gM"
+      ],
+      "typeNames": [
+        "x-a30-solid"
+      ],
+      "positionIds": [
+        "netSurface:0",
+        "netSurface:1"
+      ]
+    },
+    {
+      "queueRank": 12,
+      "id": "solid-metric/prismFormulas",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_tAJH5BrpOx"
+      ],
+      "typeNames": [
+        "x-a30-solid"
+      ],
+      "positionIds": [
+        "prismFormulas:1",
+        "prismFormulas:2"
+      ]
+    },
+    {
+      "queueRank": 13,
+      "id": "ratio-steps/model38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_8xVHooT4aI"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "model38:1"
+      ]
+    },
+    {
+      "queueRank": 14,
+      "id": "ratio-steps/pctFraction37",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_ALUrJpY0cZ"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "pctFraction37:1"
+      ]
+    },
+    {
+      "queueRank": 15,
+      "id": "ratio-steps/proportionGraph37",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_FspV_imUGK"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "proportionGraph37:2"
+      ]
+    },
+    {
+      "queueRank": 16,
+      "id": "ratio-steps/similar37",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_2OtRUM_0zW"
+      ],
+      "typeNames": [
+        "x-r37-steps"
+      ],
+      "positionIds": [
+        "similar37:3"
+      ]
+    },
+    {
+      "queueRank": 17,
+      "id": "widget-unclassified/x-multable",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_XLP1IM3Qbb"
+      ],
+      "typeNames": [
+        "x-multable"
+      ],
+      "positionIds": [
+        "bigproduct:2"
+      ]
+    },
+    {
+      "queueRank": 18,
+      "id": "widget-unclassified/x-unitwalk",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": 3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_AYzE1EAvI0"
+      ],
+      "typeNames": [
+        "x-unitwalk"
+      ],
+      "positionIds": [
+        "wholefractions:0"
+      ]
+    },
+    {
+      "queueRank": 19,
+      "id": "place-compose",
+      "positions": 64,
+      "complexity": "XL",
+      "risk": "high",
+      "score": 2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_0ZDouU664X",
+        "mt_76SPWvdI7r",
+        "mt_98c2qwEF7Q",
+        "mt_9L3NQqgqRd",
+        "mt_Ac7oMWhyPw",
+        "mt_DW2D1c0fKx",
+        "mt_F_zEAJ8VIo",
+        "mt_Gag_h98jWP",
+        "mt_HczwO1sr-y",
+        "mt_JwP9QFv6gQ",
+        "mt_MHaiUd2FLA",
+        "mt_NaqEP8xDhZ",
+        "mt_QguIGVMB1o",
+        "mt_R2ccrI-nKD",
+        "mt_THl9GLxwoL",
+        "mt_VFsuftfvYM",
+        "mt_W17Kbwm0-u",
+        "mt_XNmGwNggdU",
+        "mt_XV0B4kWwqL",
+        "mt__sMrmOv3bx",
+        "mt_aPBzD28_mT",
+        "mt_bO-njVOige",
+        "mt_doX1BhmFgk",
+        "mt_jY7uf0Cb7o",
+        "mt_kDMKJ5Ztt6",
+        "mt_kJGCjnuelW",
+        "mt_lC_Q5mSL_I",
+        "mt_lNGpnILM5C",
+        "mt_xMt1TLTs--",
+        "mt_zfy1gOEewd"
+      ],
+      "typeNames": [
+        "x-bundlecount",
+        "x-decvalue",
+        "x-hundredcombine",
+        "x-hundredsplit",
+        "x-placevalue",
+        "x-pvbench",
+        "x-wideboard"
+      ],
+      "positionIds": [
+        "hundredths:0",
+        "decpercent:0",
+        "decpercent:1",
+        "decpercent:2",
+        "structure:1",
+        "bundles:0",
+        "bundles:1",
+        "bundles:2",
+        "twoplaces:0",
+        "twoplaces:1",
+        "twoplaces:2",
+        "decades:0",
+        "decades:1",
+        "decades:2",
+        "twoproblems:2",
+        "faces100:1",
+        "words100:0",
+        "words100:1",
+        "words100:2",
+        "read120:1",
+        "read120:2",
+        "faces120:1",
+        "threeplaces:0",
+        "threeplaces:1",
+        "threeplaces:2",
+        "hundreds:0",
+        "hundreds:2",
+        "problems1000:1",
+        "words1000:0",
+        "words1000:1",
+        "words1000:2",
+        "words1000:3",
+        "faces1000:2",
+        "screen1000:0",
+        "fourplaces:0",
+        "fourplaces:1",
+        "fourplaces:2",
+        "fourfaces:0",
+        "fourfaces:1",
+        "fourfaces:2",
+        "bigcompare:0",
+        "bigcompare:1",
+        "bigcompare:2",
+        "placeproblems:1",
+        "placeproblems:2",
+        "sixdigits:0",
+        "sixdigits:1",
+        "sixdigits:2",
+        "bigproblems:0",
+        "bigproblems:2",
+        "millionwords:0",
+        "millionwords:1",
+        "millionwords:2",
+        "tenmillion:1",
+        "decimalplaces:0",
+        "decimalplaces:2",
+        "decimalwords:0",
+        "decimalwords:1",
+        "decimalwords:2",
+        "standardform:3",
+        "tenthtohundred:1",
+        "tenthtohundred:3",
+        "dividebyten:1",
+        "dividebyten:3"
+      ]
+    },
+    {
+      "queueRank": 20,
+      "id": "rounding",
+      "positions": 29,
+      "complexity": "L",
+      "risk": "high",
+      "score": 1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_5NwqN6pf_A",
+        "mt_9L3NQqgqRd",
+        "mt_Fl7b8q9pI1",
+        "mt_Ii1hV4V5ql",
+        "mt_NLSfvB9vUl",
+        "mt_U9sme87C32",
+        "mt_VVn1IXjkzn",
+        "mt_XNmGwNggdU",
+        "mt__casygEB85",
+        "mt__sMrmOv3bx",
+        "mt_xMt1TLTs--"
+      ],
+      "typeNames": [
+        "x-pvestimate",
+        "x-roundwork"
+      ],
+      "positionIds": [
+        "faces100:2",
+        "roundwhole:0",
+        "roundwhole:1",
+        "roundwhole:2",
+        "roundwhole:3",
+        "placeproblems:0",
+        "bigproblems:1",
+        "roundlarge:0",
+        "roundlarge:1",
+        "roundlarge:2",
+        "tenmillion:0",
+        "tenmillion:2",
+        "rounddecimal:0",
+        "rounddecimal:1",
+        "rounddecimal:2",
+        "rounddecimal:3",
+        "roundtenths:0",
+        "roundtenths:1",
+        "roundtenths:2",
+        "roundtenths:3",
+        "roundprecise:0",
+        "roundprecise:1",
+        "roundprecise:2",
+        "accuracy:0",
+        "accuracy:1",
+        "accuracy:2",
+        "accuracy:3",
+        "accuracy:4",
+        "estbounds:0"
+      ]
+    },
+    {
+      "queueRank": 21,
+      "id": "area-dissection",
+      "positions": 13,
+      "complexity": "L",
+      "risk": "high",
+      "score": 1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_GzcJEVkNRn",
+        "mt_ML5t7n2-U8",
+        "mt_WtcFrxGOgw",
+        "mt_Xp-rj46S2w",
+        "mt_eiB3-6pu6a",
+        "mt_svFa6_mjO_"
+      ],
+      "typeNames": [
+        "x-a30-circle",
+        "x-a30-outline",
+        "x-a30-pieces",
+        "x-circlecut",
+        "x-rectangle"
+      ],
+      "positionIds": [
+        "rectangle:0",
+        "rectangle:1",
+        "rectangle:2",
+        "boundary:0",
+        "boundary:1",
+        "equalparts:0",
+        "polyperim:1",
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3",
+        "circleArea:0",
+        "circleArea:1"
+      ]
+    },
+    {
+      "queueRank": 22,
+      "id": "factors-primes",
+      "positions": 20,
+      "complexity": "L",
+      "risk": "medium",
+      "score": 0,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_0Wg5F97osg",
+        "mt_FHIAv6dfhU",
+        "mt_bZC-wqWX7Y",
+        "mt_gxCIASSezX",
+        "mt_xfwv0M83mJ",
+        "mt_xhoOWnhtHq",
+        "mt_y1XCVsIelg"
+      ],
+      "typeNames": [
+        "x-factorcode",
+        "x-factorforest",
+        "x-numbersearch"
+      ],
+      "positionIds": [
+        "factorlab:1",
+        "factorlab:2",
+        "factorlab:3",
+        "factorlab:4",
+        "factorlab:5",
+        "factoruse:0",
+        "factoruse:1",
+        "factoruse:2",
+        "primetest:0",
+        "primetest:1",
+        "primetest:2",
+        "primetest:3",
+        "squarecube:2",
+        "factorcode:1",
+        "factorcode:3",
+        "primeforest:0",
+        "primeforest:1",
+        "primeforest:2",
+        "primeforest:3",
+        "term38:1"
+      ]
+    },
+    {
+      "queueRank": 23,
+      "id": "number-order",
+      "positions": 17,
+      "complexity": "L",
+      "risk": "medium",
+      "score": 0,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_AQcVRBddko",
+        "mt_HczwO1sr-y",
+        "mt_QguIGVMB1o",
+        "mt_R2ccrI-nKD",
+        "mt_TMoHjMhRS2",
+        "mt_U0waNfD8PB",
+        "mt__YRJ23GuIK",
+        "mt_lMz9nAs7VO"
+      ],
+      "typeNames": [
+        "x-digitcompare",
+        "x-pvcompare",
+        "x-pvorder"
+      ],
+      "positionIds": [
+        "digitcompare:0",
+        "digitcompare:1",
+        "digitcompare:2",
+        "compare100:0",
+        "compare100:1",
+        "compare100:2",
+        "faces120:2",
+        "hundreds:1",
+        "compare1000:0",
+        "compare1000:1",
+        "compare1000:2",
+        "compare1000:3",
+        "compare1000:4",
+        "compare1000:5",
+        "screen1000:1",
+        "words38:1",
+        "communicate38:3"
+      ]
+    },
+    {
+      "queueRank": 24,
+      "id": "fraction-line",
+      "positions": 13,
+      "complexity": "M",
+      "risk": "medium",
+      "score": 0,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_Ep7TDFuYUa",
+        "mt_NoB20kVa4w",
+        "mt_TqDq6jyOmL",
+        "mt_cFltwUQi-d",
+        "mt_doX1BhmFgk"
+      ],
+      "typeNames": [
+        "line",
+        "x-fline"
+      ],
+      "positionIds": [
+        "equivalent:1",
+        "equivalent:2",
+        "decimal:3",
+        "amounts:2",
+        "fractionline:0",
+        "fractionline:1",
+        "fractionline:2",
+        "fractionline:3",
+        "fractionline:4",
+        "fractionline:5",
+        "hundredths:1",
+        "hundredths:2",
+        "hundredths:3"
+      ]
+    },
+    {
+      "queueRank": 25,
+      "id": "number-line-jumps",
+      "positions": 12,
+      "complexity": "M",
+      "risk": "medium",
+      "score": 0,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_19j_5AuuQI",
+        "mt_1KkvzwYxbR",
+        "mt_9QzSnn8m80",
+        "mt_gNUE4B3vuk"
+      ],
+      "typeNames": [
+        "x-directedjump"
+      ],
+      "positionIds": [
+        "linejumps:1",
+        "linejumps:2",
+        "linejumps:3",
+        "negativecontext:1",
+        "signedwalk:0",
+        "signedwalk:1",
+        "signedwalk:2",
+        "signedwalk:3",
+        "signedwalk:4",
+        "signedwalk:5",
+        "fractionfour:8",
+        "fractionfour:9"
+      ]
+    },
+    {
+      "queueRank": 26,
+      "id": "decimal-arithmetic",
+      "positions": 8,
+      "complexity": "M",
+      "risk": "medium",
+      "score": 0,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_SoDP1fSQEB",
+        "mt_gNUE4B3vuk",
+        "mt_lU-2aTRB9f",
+        "mt_vmW2cb5c7A"
+      ],
+      "typeNames": [
+        "x-decimaldivide",
+        "x-decimalproduct"
+      ],
+      "positionIds": [
+        "decimalproduct:0",
+        "decimalproduct:1",
+        "decimaldivide:0",
+        "decimaldivide:1",
+        "decimaldivide:2",
+        "mentalchoices:2",
+        "fractionfour:15",
+        "fractionfour:16"
+      ]
+    },
+    {
+      "queueRank": 27,
+      "id": "count-walk",
+      "positions": 36,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_7rJM8eWUfw",
+        "mt_HRKzwEQJgO",
+        "mt_IzQvs7k_sE",
+        "mt_M2v1A9OEuM",
+        "mt_M5PPDJStGm",
+        "mt_OkSJfrmFb_",
+        "mt_PpWSHA-0kv",
+        "mt_QCgbiVrwnp",
+        "mt_XV0B4kWwqL",
+        "mt_ZjIFGc6zPW",
+        "mt_aHAM29nidj",
+        "mt_jCy07DyBNU",
+        "mt_nvdpxAJTBG",
+        "mt_tAtMET4EIU"
+      ],
+      "typeNames": [
+        "x-countsteps",
+        "x-countwalk",
+        "x-repeat",
+        "x-rulejump"
+      ],
+      "positionIds": [
+        "repeat:0",
+        "repeat:1",
+        "repeat:2",
+        "countline:1",
+        "countline:2",
+        "skipbasic:0",
+        "skipbasic:1",
+        "skipbasic:2",
+        "skipthree:0",
+        "skipthree:1",
+        "anytens:0",
+        "anytens:1",
+        "withinthousand:0",
+        "withinthousand:1",
+        "withinthousand:2",
+        "withinthousand:4",
+        "skipfour:0",
+        "skipfour:1",
+        "skipfour:2",
+        "skipfour:3",
+        "skipbig:0",
+        "skipbig:1",
+        "skipbig:3",
+        "skipbig:4",
+        "powersteps:3",
+        "powersteps:4",
+        "powersteps:5",
+        "read120:0",
+        "countsteps:0",
+        "countsteps:1",
+        "countsteps:2",
+        "swapadd:1",
+        "percentpatterns:0",
+        "percentpatterns:1",
+        "nth35:0",
+        "nth35:2"
+      ]
+    },
+    {
+      "queueRank": 28,
+      "id": "symmetry-transform",
+      "positions": 16,
+      "complexity": "L",
+      "risk": "medium",
+      "score": -1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_61Nhj8W78f",
+        "mt_NM5I3yN-Q6",
+        "mt_WtIFJSCQIT",
+        "mt_hR2Y7NhMSY",
+        "mt_hRZyKvz1KN",
+        "mt_sBcRdUfAzV"
+      ],
+      "typeNames": [
+        "x-p24-frieze",
+        "x-p24-mirror",
+        "x-p24-spin",
+        "x-s23-symmetry"
+      ],
+      "positionIds": [
+        "sidesfold:1",
+        "shapeaxes:0",
+        "shapeaxes:1",
+        "shapeaxes:2",
+        "shapeaxes:3",
+        "shapeaxes:4",
+        "shapeaxes:5",
+        "shapeaxes:6",
+        "geometrynotation:1",
+        "mirrorfold:0",
+        "mirrorfold:1",
+        "mirrorfold:2",
+        "turnsym:0",
+        "turnsym:1",
+        "turnsym:2",
+        "patternfloor:2"
+      ]
+    },
+    {
+      "queueRank": 29,
+      "id": "measurement-plot",
+      "positions": 9,
+      "complexity": "M",
+      "risk": "medium",
+      "score": -1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-af65bxfdp",
+        "mt_4lp_b5Pzik",
+        "mt_5HV4mbgSGH",
+        "mt_RVK655t391",
+        "mt_oMkQQ2O-ML"
+      ],
+      "typeNames": [
+        "x-m29-interval",
+        "x-m29-share",
+        "x-m31-meter"
+      ],
+      "positionIds": [
+        "practicalmeasure:1",
+        "practicalmeasure:4",
+        "temperaturechange:0",
+        "temperaturechange:1",
+        "temperaturechange:3",
+        "cupmeasure:2",
+        "measureliquid:0",
+        "measureliquid:1",
+        "discounts:2"
+      ]
+    },
+    {
+      "queueRank": 30,
+      "id": "decimal-place",
+      "positions": 6,
+      "complexity": "M",
+      "risk": "medium",
+      "score": -1,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_933BohS9BH",
+        "mt_IegHBHERVa",
+        "mt_b4lbTOJYwI"
+      ],
+      "typeNames": [
+        "x-decimalcompare",
+        "x-decimalmachine"
+      ],
+      "positionIds": [
+        "numberworld:0",
+        "numberworld:1",
+        "numberworld:2",
+        "decimalorder2:1",
+        "raggeddecimals:0",
+        "raggeddecimals:2"
+      ]
+    },
+    {
+      "queueRank": 31,
+      "id": "shape-classify",
+      "positions": 34,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_2VR963szuk",
+        "mt_8H2kO4k2B9",
+        "mt_DNYQLahbfa",
+        "mt_KJeEeTutJI",
+        "mt_WtIFJSCQIT",
+        "mt_Xt1cRqaBOW",
+        "mt__Itf4aQZUj",
+        "mt_bfhng6mOuy",
+        "mt_lMz9nAs7VO",
+        "mt_liIW336odh",
+        "mt_sBcRdUfAzV",
+        "mt_vJUa62bxeR",
+        "mt_zuOGOGFAKb"
+      ],
+      "typeNames": [
+        "x-s23-nest",
+        "x-s23-pick",
+        "x-s23-polygon",
+        "x-s23-quad",
+        "x-s23-sides"
+      ],
+      "positionIds": [
+        "shapehello:0",
+        "shapehello:1",
+        "shapehello:2",
+        "shapeframe:0",
+        "shapeframe:1",
+        "sidesfold:0",
+        "sidesfold:2",
+        "shapeidentity:0",
+        "shapeidentity:1",
+        "shapeidentity:2",
+        "shapedraw:0",
+        "shapedraw:1",
+        "shapedraw:2",
+        "shapedraw:3",
+        "shapesides:0",
+        "shapesides:1",
+        "shapesides:2",
+        "quadsort:0",
+        "quadsort:1",
+        "quadsort:2",
+        "quadsort:3",
+        "regularity:0",
+        "regularity:1",
+        "regularity:2",
+        "regularity:3",
+        "quadhierarchy:0",
+        "quadhierarchy:1",
+        "quadhierarchy:2",
+        "geometrynotation:3",
+        "shapefacts:0",
+        "shapefacts:1",
+        "words38:2",
+        "structure39:2",
+        "structure39:3"
+      ]
+    },
+    {
+      "queueRank": 32,
+      "id": "solid-attributes",
+      "positions": 33,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_Mnodea7mG_",
+        "mt_QNxFnxikCN",
+        "mt_Qcp2d_kuta",
+        "mt_REwgr0d_ss",
+        "mt_TMoHjMhRS2",
+        "mt_UooUHC_V7U",
+        "mt_fEuoBYw6bU",
+        "mt_h02-C8PRrj",
+        "mt_mnEVZNkX3p",
+        "mt_nRksLqt-iR",
+        "mt_wUSbRt3-qw",
+        "mt_yGv8doDAmp"
+      ],
+      "typeNames": [
+        "x-g27-build",
+        "x-g27-cut",
+        "x-g27-face",
+        "x-g27-sort",
+        "x-solid"
+      ],
+      "positionIds": [
+        "solids:0",
+        "solids:1",
+        "solids:2",
+        "solidnames:0",
+        "solidnames:1",
+        "solidnames:2",
+        "flatcorners:0",
+        "flatcorners:1",
+        "flatcorners:2",
+        "flatcorners:3",
+        "flatvsolid:0",
+        "flatvsolid:1",
+        "flatvsolid:2",
+        "solidfaces:0",
+        "solidfaces:1",
+        "solidfaces:2",
+        "solidstack:0",
+        "solidstack:1",
+        "solidstack:2",
+        "solidsort:0",
+        "solidsort:1",
+        "solidsort:2",
+        "solidpictures:0",
+        "solidpictures:1",
+        "solidpictures:2",
+        "foldprism:2",
+        "crossparts:0",
+        "crossparts:1",
+        "crossparts:2",
+        "prismslices:0",
+        "prismslices:1",
+        "prismslices:2",
+        "communicate38:2"
+      ]
+    },
+    {
+      "queueRank": 33,
+      "id": "chance-count",
+      "positions": 30,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-bMnJcPJy8",
+        "mt_-c4Ca_nBzX",
+        "mt_1YwOCMMwD8",
+        "mt_3fwYu7imd4",
+        "mt_UcGn2hjhYU",
+        "mt_XfyqXLqzpx",
+        "mt_Zt30Gxi-qp",
+        "mt_aCwj2PCoRV",
+        "mt_eSv_w46u6H",
+        "mt_iFFKZd-Vgv",
+        "mt_t0g2SlP404",
+        "mt_vmQJAtAFuy"
+      ],
+      "typeNames": [
+        "x-likelihood",
+        "x-p22-order",
+        "x-p22-pick",
+        "x-p22-table",
+        "x-p22-venn"
+      ],
+      "positionIds": [
+        "likelihood:0",
+        "chanceorder:0",
+        "chanceorder:1",
+        "chanceorder:2",
+        "chancefraction:0",
+        "chancefraction:1",
+        "chancefraction:2",
+        "chancecalc:0",
+        "chancecalc:1",
+        "chancecalc:2",
+        "chanceline:0",
+        "chanceline:2",
+        "chancescale:0",
+        "chancescale:1",
+        "chancescale:2",
+        "trialcompare:2",
+        "chancemodel:0",
+        "chancemodel:1",
+        "chancemodel:2",
+        "chancenone:0",
+        "chancenone:1",
+        "chancenone:2",
+        "chancecomplement:0",
+        "chancecomplement:1",
+        "chancecomplement:2",
+        "chancesets:0",
+        "chancesets:2",
+        "chancevenn:0",
+        "chancevenn:1",
+        "chancevenn:2"
+      ]
+    },
+    {
+      "queueRank": 34,
+      "id": "shape-draw",
+      "positions": 30,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_167X6Ax8P7",
+        "mt_2VR963szuk",
+        "mt_3rTIyJDw7-",
+        "mt_4bc3EAxhlY",
+        "mt_DNYQLahbfa",
+        "mt_Jf8xcX4UTq",
+        "mt_KFKUR_gBg_",
+        "mt_ZrsqGVG-Wt",
+        "mt_hdrMoiTgqu",
+        "mt_vJUa62bxeR",
+        "mt_xq3YHZ2zeR"
+      ],
+      "typeNames": [
+        "x-g25-triangle",
+        "x-s23-circle",
+        "x-s23-compass",
+        "x-s23-frame",
+        "x-s23-ruler"
+      ],
+      "positionIds": [
+        "shapeframe:2",
+        "shapedraw:4",
+        "shapedraw:5",
+        "shapemeasures:0",
+        "shapemeasures:1",
+        "shapemeasures:2",
+        "circleparts:0",
+        "circleparts:1",
+        "circleparts:2",
+        "compasswork:0",
+        "compasswork:1",
+        "compasswork:2",
+        "rectanglefacts:0",
+        "rectanglefacts:1",
+        "rectanglefacts:2",
+        "shapefacts:2",
+        "triangledraw:0",
+        "triangledraw:1",
+        "triangledraw:2",
+        "trianglecongruent:0",
+        "trianglecongruent:1",
+        "trianglecongruent:2",
+        "trianglecongruent:3",
+        "trianglecongruent:4",
+        "trianglepossible:0",
+        "trianglepossible:1",
+        "trianglepossible:2",
+        "trianglepossible:4",
+        "trianglepossible:5",
+        "advancedWords38:0"
+      ]
+    },
+    {
+      "queueRank": 35,
+      "id": "additive-story",
+      "positions": 26,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_AR-K72OIIO",
+        "mt_CDa5AVakLE",
+        "mt_EBYGhd8X3x",
+        "mt_Eqk6oSbySH",
+        "mt_RKeheOL9uo",
+        "mt_RXnyhCRYXA",
+        "mt_SmghasIvbT",
+        "mt_SsLWS_APM7",
+        "mt_XuHmIn2xje",
+        "mt_f67qGDhyfi",
+        "mt_fLOkq-HfPB",
+        "mt_yTWxkzzoOZ"
+      ],
+      "typeNames": [
+        "x-story",
+        "x-storychain",
+        "x-storyparts",
+        "x-storyplan"
+      ],
+      "positionIds": [
+        "represent:0",
+        "represent:1",
+        "threepiles:0",
+        "threepiles:1",
+        "threepiles:2",
+        "storytwo:0",
+        "storytwo:1",
+        "storytwo:2",
+        "storytwo:3",
+        "storytwo:4",
+        "storytwo:5",
+        "plansteps:1",
+        "plansteps:2",
+        "plansteps:3",
+        "plansteps:4",
+        "combineproducts:3",
+        "storyoperations:0",
+        "storyoperations:1",
+        "storyoperations:2",
+        "fractionchoices:0",
+        "fractionchoices:2",
+        "bigmissing35:2",
+        "objects38:2",
+        "lifemath38:1",
+        "multi38:0",
+        "multiShape38:0"
+      ]
+    },
+    {
+      "queueRank": 36,
+      "id": "multiplication-arrays",
+      "positions": 25,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_0Wg5F97osg",
+        "mt_3VmBdlAeOZ",
+        "mt_8A3pZNOp7Z",
+        "mt_AR-K72OIIO",
+        "mt_DyGBW3ZHh3",
+        "mt_FHIAv6dfhU",
+        "mt_Jvvh5P06NV",
+        "mt_K3R0yaHVcx",
+        "mt_SoDP1fSQEB",
+        "mt_UTnDKQkVX5",
+        "mt__Itf4aQZUj",
+        "mt_mywsN77hGZ",
+        "mt_nZkL5-XjRX",
+        "mt_p-nbe0w_lf",
+        "mt_q9EaJc2FP8",
+        "mt_vmW2cb5c7A",
+        "mt_xfwv0M83mJ",
+        "mt_y1n0Zwhoca"
+      ],
+      "typeNames": [
+        "x-areaproduct",
+        "x-factorrects",
+        "x-floor",
+        "x-planproduct"
+      ],
+      "positionIds": [
+        "rows:0",
+        "rows:1",
+        "area:0",
+        "area:1",
+        "tiling:0",
+        "tiling:1",
+        "tiling:2",
+        "factorpairs:0",
+        "factorpairs:1",
+        "largerfacts:0",
+        "largerfacts:1",
+        "writtenstart:0",
+        "longproduct:2",
+        "remainders:3",
+        "remainders:4",
+        "factorlab:0",
+        "factoruse:4",
+        "decimalproduct:2",
+        "mentalchoices:0",
+        "combineproducts:0",
+        "modelrecipe:0",
+        "translateamount:1",
+        "precise38:2",
+        "term38:0",
+        "structure39:0"
+      ]
+    },
+    {
+      "queueRank": 37,
+      "id": "estimate-check",
+      "positions": 20,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_3e_PQxwC12",
+        "mt_3m0pA-aeat",
+        "mt_NmvuwVUFRS",
+        "mt__t4afSyZRm",
+        "mt__we2TDqnJx",
+        "mt_fQ9Rw10fss",
+        "mt_ghF3Vv6taM",
+        "mt_ilPrU0cbtT",
+        "mt_s2mfRBoTal"
+      ],
+      "typeNames": [
+        "x-estimate",
+        "x-estimatepad",
+        "x-recallbench"
+      ],
+      "positionIds": [
+        "factsfive:1",
+        "bonds20:2",
+        "factsten:1",
+        "factstwenty:2",
+        "scaleadd:0",
+        "calculatormeaning:0",
+        "calculatormeaning:1",
+        "calculatormeaning:2",
+        "calculatormeaning:3",
+        "calculatormeaning:4",
+        "calculatormeaning:5",
+        "estimatecheck:0",
+        "estimatecheck:1",
+        "estimatecheck:2",
+        "decimalestimate:0",
+        "decimalestimate:1",
+        "decimalestimate:2",
+        "estimatepeople:0",
+        "estimatepeople:1",
+        "estimatepeople:2"
+      ]
+    },
+    {
+      "queueRank": 38,
+      "id": "fraction-amount",
+      "positions": 20,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_6-j1NO2ZUH",
+        "mt_AR-K72OIIO",
+        "mt_CUmjcE7W6c",
+        "mt_EmR5n58jZt",
+        "mt_K3R0yaHVcx",
+        "mt_U4cIBXVug4",
+        "mt_dXq9VWm31W",
+        "mt_ePXg_XyCKU",
+        "mt_hlGKg5M7qJ",
+        "mt_wB-GBDkoNr"
+      ],
+      "typeNames": [
+        "x-comparebars",
+        "x-portionbar",
+        "x-ratio"
+      ],
+      "positionIds": [
+        "ratios:0",
+        "ratios:1",
+        "scaleandpair:0",
+        "scaleandpair:2",
+        "combineproducts:1",
+        "timesmeaning:0",
+        "timesmeaning:1",
+        "timesmeaning:2",
+        "timesproblems:0",
+        "timesproblems:1",
+        "timesproblems:2",
+        "timesproblems:3",
+        "modelrecipe:1",
+        "modelrecipe:2",
+        "viewlinks:0",
+        "storyfraction:1",
+        "fractionmeasure:0",
+        "fractionmeasure:2",
+        "structurechoices:2",
+        "structurechoices:3"
+      ]
+    },
+    {
+      "queueRank": 39,
+      "id": "tool-strategy",
+      "positions": 18,
+      "complexity": "L",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_IwEOCN6bL1",
+        "mt_d-WZC2OyMB",
+        "mt_ish_uH8vZe",
+        "mt_mQcWGh02no",
+        "mt_zMEvtigoM3"
+      ],
+      "typeNames": [
+        "x-s39-calc",
+        "x-s39-choose",
+        "x-toolwork"
+      ],
+      "positionIds": [
+        "toolchoice:0",
+        "toolchoice:1",
+        "toolchoice:2",
+        "toolchoice:3",
+        "toolchoice:4",
+        "strategy39:0",
+        "strategy39:1",
+        "strategy39:3",
+        "strategy39:4",
+        "tools39:0",
+        "tools39:1",
+        "tools39:3",
+        "representations39:0",
+        "representations39:1",
+        "calculator39:0",
+        "calculator39:1",
+        "calculator39:2",
+        "calculator39:3"
+      ]
+    },
+    {
+      "queueRank": 40,
+      "id": "powers",
+      "positions": 13,
+      "complexity": "L",
+      "risk": "medium",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_0Wg5F97osg",
+        "mt_gxCIASSezX",
+        "mt_hCVPYlF-7Y",
+        "mt_xfwv0M83mJ"
+      ],
+      "typeNames": [
+        "x-powerbuild",
+        "x-powerchain",
+        "x-rootwindow",
+        "x-squarepair"
+      ],
+      "positionIds": [
+        "powerblocks:0",
+        "powerblocks:1",
+        "powerblocks:2",
+        "powerblocks:3",
+        "powerblocks:4",
+        "powerblocks:5",
+        "powerblocks:6",
+        "powerblocks:7",
+        "powerblocks:8",
+        "factoruse:3",
+        "squarecube:0",
+        "squarecube:1",
+        "term38:4"
+      ]
+    },
+    {
+      "queueRank": 41,
+      "id": "count-objects",
+      "positions": 11,
+      "complexity": "L",
+      "risk": "medium",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_M5PPDJStGm",
+        "mt_QguIGVMB1o",
+        "mt_WcfaSfVT33",
+        "mt_dmNvjroCPT",
+        "mt_eiB3-6pu6a",
+        "mt_t9BICauBSI",
+        "mt_yqAL6O5i_v"
+      ],
+      "typeNames": [
+        "x-countboard",
+        "x-counttrail",
+        "x-fingers",
+        "x-pond"
+      ],
+      "positionIds": [
+        "boundary:2",
+        "countonce:0",
+        "countonce:1",
+        "lastcount:0",
+        "lastcount:1",
+        "lastcount:2",
+        "counttwenty:0",
+        "counttwenty:1",
+        "quickfive:3",
+        "countline:0",
+        "faces120:0"
+      ]
+    },
+    {
+      "queueRank": 42,
+      "id": "count-instant",
+      "positions": 8,
+      "complexity": "M",
+      "risk": "high",
+      "score": -2,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_BK5xwkrD5C",
+        "mt__h7hvT4tEb",
+        "mt_t9BICauBSI"
+      ],
+      "typeNames": [
+        "x-flashcount",
+        "x-paircounts"
+      ],
+      "positionIds": [
+        "paircounts:0",
+        "paircounts:1",
+        "paircounts:2",
+        "quickfive:0",
+        "quickfive:1",
+        "quickfive:2",
+        "partswithin:0",
+        "partswithin:1"
+      ]
+    },
+    {
+      "queueRank": 43,
+      "id": "data-collect",
+      "positions": 31,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_1VSfm9yiLn",
+        "mt_4zgPzc6yu5",
+        "mt_6gpryAnpoZ",
+        "mt_O-U263ukg1",
+        "mt_QHT16CrFO-",
+        "mt_SHVyE1CLUa",
+        "mt_Y6JmLjnfRP",
+        "mt_ebQURBOsM5",
+        "mt_iykH2P5oFq",
+        "mt_kxeuXm6EyC",
+        "mt_x7V1qrkiqH",
+        "mt_yrvYKSwSRZ"
+      ],
+      "typeNames": [
+        "survey",
+        "x-datacount",
+        "x-dataplan",
+        "x-datastudio",
+        "x-questionbuild",
+        "x-samplelab"
+      ],
+      "positionIds": [
+        "survey:0",
+        "survey:1",
+        "statquestions:1",
+        "statquestions:2",
+        "categoryuse:0",
+        "categoryuse:1",
+        "categoryuse:2",
+        "playgroundstudy:0",
+        "playgroundstudy:1",
+        "playgroundstudy:2",
+        "digitalstudy:0",
+        "digitalstudy:1",
+        "digitalstudy:2",
+        "ownstudy:0",
+        "ownstudy:1",
+        "ownstudy:2",
+        "studyplan:0",
+        "studyplan:1",
+        "studyplan:2",
+        "checkrecords:2",
+        "betterquestion:0",
+        "betterquestion:1",
+        "betterquestion:2",
+        "measurestory:0",
+        "fairdraw:0",
+        "fairdraw:1",
+        "fairdraw:2",
+        "samplevary:0",
+        "samplevary:1",
+        "samplevary:2",
+        "samplevary:3"
+      ]
+    },
+    {
+      "queueRank": 44,
+      "id": "data-summary",
+      "positions": 28,
+      "complexity": "L",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_2ESZh70NyS",
+        "mt_8IsaoMPvod",
+        "mt_A2hKhHXgL5",
+        "mt_Cg8VPguS_V",
+        "mt_KCS9GbZgU_",
+        "mt_OwYms2tB1L",
+        "mt_XSXnTQoQ4l",
+        "mt_ZfpeI1CFyP",
+        "mt_fmm-P17Vka",
+        "mt_km4V6d5IAh",
+        "mt_mn765HbXi1"
+      ],
+      "typeNames": [
+        "x-distribution",
+        "x-meandistance",
+        "x-mediarepair",
+        "x-rowrepair",
+        "x-statcentre"
+      ],
+      "positionIds": [
+        "fractionreason:1",
+        "statwords:0",
+        "statwords:1",
+        "meanbalance:0",
+        "meanbalance:1",
+        "meanbalance:2",
+        "meandistance:0",
+        "meandistance:1",
+        "meandistance:2",
+        "averagestory:0",
+        "averagestory:1",
+        "averagestory:2",
+        "distributionlook:0",
+        "distributionlook:1",
+        "distributionlook:2",
+        "quartiles:0",
+        "quartiles:1",
+        "quartiles:2",
+        "digitalsets:2",
+        "medialens:0",
+        "medialens:1",
+        "medialens:2",
+        "comparepeople:0",
+        "comparepeople:1",
+        "comparepeople:2",
+        "comparegap:0",
+        "comparegap:1",
+        "comparegap:2"
+      ]
+    },
+    {
+      "queueRank": 45,
+      "id": "additive-structure",
+      "positions": 27,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_20WfHhnL39",
+        "mt_T76hKqXf0z",
+        "mt_VUQNveSYjQ",
+        "mt_WkKkb7W9Qd",
+        "mt_Zx1xZM-RbX",
+        "mt__t4afSyZRm",
+        "mt__we2TDqnJx",
+        "mt_biGHAbkoV2",
+        "mt_ehGS_uVSJv",
+        "mt_fZTn0W_iZR",
+        "mt_ghF3Vv6taM",
+        "mt_m1W6nTQJ2b",
+        "mt_s2mfRBoTal",
+        "mt_sA2OvTiech"
+      ],
+      "typeNames": [
+        "x-complementpair",
+        "x-factfamily",
+        "x-tenbridge",
+        "x-threegroups",
+        "x-undolab"
+      ],
+      "positionIds": [
+        "screenadd:1",
+        "screenadd:2",
+        "factsfive:0",
+        "bonds20:0",
+        "bonds20:1",
+        "bridge20:0",
+        "bridge20:1",
+        "bridge20:2",
+        "factsten:0",
+        "factstwenty:0",
+        "factstwenty:1",
+        "tripleadd:0",
+        "tripleadd:1",
+        "regroupadd:0",
+        "regroupadd:1",
+        "undoadd:1",
+        "undoadd:2",
+        "undocalc:0",
+        "undocalc:1",
+        "undocalc:2",
+        "undocalc:3",
+        "undocalc:4",
+        "decimalmeasure3:3",
+        "decimalmeasure3:4",
+        "general34:0",
+        "tools38:0",
+        "sense38:2"
+      ]
+    },
+    {
+      "queueRank": 46,
+      "id": "algebra-forms",
+      "positions": 27,
+      "complexity": "L",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-3udyo6VyB",
+        "mt_3qrCtdoVAU",
+        "mt_3rTIyJDw7-",
+        "mt_9KmVWCuh5_",
+        "mt_Jvg8X0N5u0",
+        "mt_KwdjWEmMNo",
+        "mt_WBdHkc2HTf",
+        "mt_anAe11HAEH",
+        "mt_g_fkAqmz72",
+        "mt_i9rJbuFO3p",
+        "mt_nNNVrLqPW3",
+        "mt_uESbzWCZIq",
+        "mt_vHzVa3SURC"
+      ],
+      "typeNames": [
+        "x-a35-factor",
+        "x-a35-sort",
+        "x-algebrabar",
+        "x-f36-eval",
+        "x-f36-form"
+      ],
+      "positionIds": [
+        "representationmap:0",
+        "twostep35:0",
+        "twostep35:2",
+        "writing35:1",
+        "writing35:2",
+        "notation35:0",
+        "notation35:1",
+        "words35:0",
+        "words35:1",
+        "words35:2",
+        "terms35:0",
+        "terms35:1",
+        "terms35:2",
+        "factor35:0",
+        "factor35:1",
+        "factor35:2",
+        "formula36:2",
+        "substitute36:0",
+        "substitute36:1",
+        "substitute36:2",
+        "linear36:2",
+        "plot36:1",
+        "rearrange36:0",
+        "rearrange36:1",
+        "rearrange36:2",
+        "rearrange36:3",
+        "advancedWords38:1"
+      ]
+    },
+    {
+      "queueRank": 47,
+      "id": "money-units",
+      "positions": 25,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_20WfHhnL39",
+        "mt_5bmrA-0pBi",
+        "mt_FSLJbKkryb",
+        "mt_FVVSQR9vGg",
+        "mt_O_UOTiMvT_",
+        "mt_PNSyfH56eQ",
+        "mt_Qe2PsFmSAH",
+        "mt_cPZwlUk8Nd",
+        "mt_f67qGDhyfi",
+        "mt_iQYPw8bMfN",
+        "mt_kLQOzZYrd5",
+        "mt_mFJ-2ZF6Tk",
+        "mt_mMDpLugX2X",
+        "mt_oMkQQ2O-ML"
+      ],
+      "typeNames": [
+        "x-m33-calc",
+        "x-m33-compare",
+        "x-m33-model",
+        "x-m33-sheet",
+        "x-m33-sort"
+      ],
+      "positionIds": [
+        "coinvalues:0",
+        "coinvalues:1",
+        "coinvalues:2",
+        "modmoney:0",
+        "auscoins:0",
+        "moneycalc:0",
+        "moneycalc:1",
+        "moneycalc:2",
+        "measuremoney:1",
+        "roughmoney:0",
+        "roughmoney:1",
+        "roughmoney:2",
+        "budgetchoices:1",
+        "budgetchoices:2",
+        "budgetchoices:3",
+        "discounts:0",
+        "discounts:1",
+        "moneysheet:0",
+        "moneysheet:1",
+        "moneysheet:2",
+        "pctCalculate37:1",
+        "rateUnit37:1",
+        "tools38:1",
+        "lifemath38:0",
+        "plan38:1"
+      ]
+    },
+    {
+      "queueRank": 48,
+      "id": "multiplication-facts",
+      "positions": 16,
+      "complexity": "L",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_0u4KLbvBa1",
+        "mt_DW2D1c0fKx",
+        "mt_GDG9_SZmsO",
+        "mt_HhuSDxwDNM",
+        "mt_K5jM7vlVhA",
+        "mt_Lb2ZnMdkYR",
+        "mt_WX30dzi4dt",
+        "mt_hImiKNiaNh",
+        "mt_hlGKg5M7qJ",
+        "mt_nZkL5-XjRX",
+        "mt_pjfmCMMPjO",
+        "mt_w6MxaaoMXZ",
+        "mt_wQ89AEXhz3"
+      ],
+      "typeNames": [
+        "x-commute",
+        "x-lawtiles",
+        "x-mulchain",
+        "x-mulfacts"
+      ],
+      "positionIds": [
+        "structure:0",
+        "evenhalves:3",
+        "tables2510:2",
+        "tables348:3",
+        "tables348:4",
+        "tables348:5",
+        "tables12:1",
+        "missingfactor:2",
+        "factorpairs:2",
+        "mentalproducts:4",
+        "productways:2",
+        "mixedfacts:1",
+        "tablepatterns:1",
+        "structurebridge:1",
+        "structurechoices:0",
+        "structurechoices:1"
+      ]
+    },
+    {
+      "queueRank": 49,
+      "id": "scatter-trend",
+      "positions": 11,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_8atyuvPUZc",
+        "mt_BdAeZJUOir",
+        "mt_TiFjjvBMaY",
+        "mt_eKJG-0eC6D",
+        "mt_fmm-P17Vka"
+      ],
+      "typeNames": [
+        "x-correlationlab",
+        "x-graphcompare",
+        "x-scatterbuild"
+      ],
+      "positionIds": [
+        "chartfamilies:2",
+        "displaychoices:0",
+        "displaychoices:2",
+        "scattercraft:0",
+        "scattercraft:1",
+        "scattercraft:2",
+        "scattermeaning:0",
+        "scattermeaning:1",
+        "scattermeaning:2",
+        "scattermeaning:3",
+        "statwords:2"
+      ]
+    },
+    {
+      "queueRank": 50,
+      "id": "solid-nets",
+      "positions": 6,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_REwgr0d_ss",
+        "mt_nRksLqt-iR",
+        "mt_vnJEztczji"
+      ],
+      "typeNames": [
+        "x-g27-net",
+        "x-net"
+      ],
+      "positionIds": [
+        "nets:0",
+        "nets:1",
+        "nets:2",
+        "foldprism:0",
+        "foldprism:1",
+        "crossparts:3"
+      ]
+    },
+    {
+      "queueRank": 51,
+      "id": "widget-unclassified/x-pvpair",
+      "positions": 6,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_0u4KLbvBa1",
+        "mt_hniI4E-OCE"
+      ],
+      "typeNames": [
+        "x-pvpair"
+      ],
+      "positionIds": [
+        "parity:0",
+        "parity:1",
+        "parity:2",
+        "parity:3",
+        "evenhalves:0",
+        "evenhalves:2"
+      ]
+    },
+    {
+      "queueRank": 52,
+      "id": "widget-unclassified/x-s23-tile",
+      "positions": 6,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_MqqR7VUoz1",
+        "mt_XjwUlmxdCT"
+      ],
+      "typeNames": [
+        "x-s23-tile"
+      ],
+      "positionIds": [
+        "shapepieces:0",
+        "shapepieces:1",
+        "shapemerge:0",
+        "shapemerge:1",
+        "shapemerge:2",
+        "shapemerge:3"
+      ]
+    },
+    {
+      "queueRank": 53,
+      "id": "widget-unclassified/x-allowedrange",
+      "positions": 5,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_i2F1nWxJjv"
+      ],
+      "typeNames": [
+        "x-allowedrange"
+      ],
+      "positionIds": [
+        "allowedrange:0",
+        "allowedrange:1",
+        "allowedrange:2",
+        "allowedrange:3",
+        "allowedrange:4"
+      ]
+    },
+    {
+      "queueRank": 54,
+      "id": "widget-unclassified/x-g26-trig",
+      "positions": 5,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_KB_Czd7RQH"
+      ],
+      "typeNames": [
+        "x-g26-trig"
+      ],
+      "positionIds": [
+        "trigbasics:0",
+        "trigbasics:1",
+        "trigbasics:2",
+        "trigbasics:3",
+        "trigbasics:4"
+      ]
+    },
+    {
+      "queueRank": 55,
+      "id": "widget-unclassified/x-signwalk",
+      "positions": 5,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_gNUE4B3vuk",
+        "mt_rxInpOQ74w"
+      ],
+      "typeNames": [
+        "x-signwalk"
+      ],
+      "positionIds": [
+        "signedproducts:0",
+        "signedproducts:1",
+        "signedproducts:2",
+        "fractionfour:10",
+        "fractionfour:11"
+      ]
+    },
+    {
+      "queueRank": 56,
+      "id": "argument-structure",
+      "positions": 4,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_kJ5wYzO8qC",
+        "mt_pyMD_SIiYO"
+      ],
+      "typeNames": [
+        "x-proof",
+        "x-reason"
+      ],
+      "positionIds": [
+        "explain:0",
+        "explain:1",
+        "explain:2",
+        "justify:2"
+      ]
+    },
+    {
+      "queueRank": 57,
+      "id": "widget-unclassified/x-balance",
+      "positions": 4,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_TMoHjMhRS2",
+        "mt_oIzycTBeE4"
+      ],
+      "typeNames": [
+        "x-balance"
+      ],
+      "positionIds": [
+        "equality:0",
+        "equality:1",
+        "equality:2",
+        "communicate38:0"
+      ]
+    },
+    {
+      "queueRank": 58,
+      "id": "widget-unclassified/x-parityjoin",
+      "positions": 4,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_oxfxzbat3k"
+      ],
+      "typeNames": [
+        "x-parityjoin"
+      ],
+      "positionIds": [
+        "parityrules:0",
+        "parityrules:1",
+        "parityrules:2",
+        "parityrules:3"
+      ]
+    },
+    {
+      "queueRank": 59,
+      "id": "widget-unclassified/x-s39-chart",
+      "positions": 4,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_RFeVlw0QvX"
+      ],
+      "typeNames": [
+        "x-s39-chart"
+      ],
+      "positionIds": [
+        "pattern39:0",
+        "pattern39:1",
+        "pattern39:2",
+        "pattern39:3"
+      ]
+    },
+    {
+      "queueRank": 60,
+      "id": "widget-unclassified/x-s39-graph",
+      "positions": 4,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_Yw27nweoTj"
+      ],
+      "typeNames": [
+        "x-s39-graph"
+      ],
+      "positionIds": [
+        "graph39:0",
+        "graph39:1",
+        "graph39:2",
+        "graph39:3"
+      ]
+    },
+    {
+      "queueRank": 61,
+      "id": "widget-unclassified/x-sort",
+      "positions": 4,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_xppl18avyY",
+        "mt_ylXdiVRAYv"
+      ],
+      "typeNames": [
+        "x-sort"
+      ],
+      "positionIds": [
+        "sortobjects:0",
+        "sortobjects:1",
+        "sortdata:0",
+        "sortdata:1"
+      ]
+    },
+    {
+      "queueRank": 62,
+      "id": "widget-unclassified/x-splitbench",
+      "positions": 4,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_7XcCG43ZZW",
+        "mt_biGHAbkoV2",
+        "mt_e8CZ7E5qW7"
+      ],
+      "typeNames": [
+        "x-splitbench"
+      ],
+      "positionIds": [
+        "screenadd:0",
+        "splitpairs:0",
+        "splitpairs:1",
+        "partnersten:2"
+      ]
+    },
+    {
+      "queueRank": 63,
+      "id": "widget-unclassified/x-eventchart",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_X53txVXOcG"
+      ],
+      "typeNames": [
+        "x-eventchart"
+      ],
+      "positionIds": [
+        "digitalcharts:0",
+        "digitalcharts:1",
+        "digitalcharts:2"
+      ]
+    },
+    {
+      "queueRank": 64,
+      "id": "widget-unclassified/x-g26-length",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_1VmTUxBrNd"
+      ],
+      "typeNames": [
+        "x-g26-length"
+      ],
+      "positionIds": [
+        "pythagoras:2",
+        "pythagoras:3",
+        "pythagoras:4"
+      ]
+    },
+    {
+      "queueRank": 65,
+      "id": "widget-unclassified/x-grow",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_W3VOAuFwVw"
+      ],
+      "typeNames": [
+        "x-grow"
+      ],
+      "positionIds": [
+        "growing:0",
+        "growing:1",
+        "growing:2"
+      ]
+    },
+    {
+      "queueRank": 66,
+      "id": "widget-unclassified/x-p22-grid",
+      "positions": 3,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_1YwOCMMwD8",
+        "mt_GDtFU5fyUv"
+      ],
+      "typeNames": [
+        "x-p22-grid"
+      ],
+      "positionIds": [
+        "chancetree:0",
+        "chancetree:2",
+        "chancesets:1"
+      ]
+    },
+    {
+      "queueRank": 67,
+      "id": "widget-unclassified/x-p22-mapping",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_nzdtOLXWWa"
+      ],
+      "typeNames": [
+        "x-p22-mapping"
+      ],
+      "positionIds": [
+        "chancesim:0",
+        "chancesim:1",
+        "chancesim:2"
+      ]
+    },
+    {
+      "queueRank": 68,
+      "id": "widget-unclassified/x-s23-notation",
+      "positions": 3,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_3S10OOGPqu",
+        "mt_WtIFJSCQIT",
+        "mt_e4V6hvcuEJ"
+      ],
+      "typeNames": [
+        "x-s23-notation"
+      ],
+      "positionIds": [
+        "geometrynotation:0",
+        "angleparts:1",
+        "linenotation:1"
+      ]
+    },
+    {
+      "queueRank": 69,
+      "id": "widget-unclassified/x-s23-objects",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_mN4Ye_vtR7"
+      ],
+      "typeNames": [
+        "x-s23-objects"
+      ],
+      "positionIds": [
+        "shapeuses:0",
+        "shapeuses:1",
+        "shapeuses:2"
+      ]
+    },
+    {
+      "queueRank": 70,
+      "id": "widget-unclassified/x-s23-scene",
+      "positions": 3,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_SK7WntVZ6y",
+        "mt_XjwUlmxdCT"
+      ],
+      "typeNames": [
+        "x-s23-scene"
+      ],
+      "positionIds": [
+        "shapepieces:2",
+        "shapeapprox:0",
+        "shapeapprox:1"
+      ]
+    },
+    {
+      "queueRank": 71,
+      "id": "widget-unclassified/x-statbrief",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_tuEnyrp5Ia"
+      ],
+      "typeNames": [
+        "x-statbrief"
+      ],
+      "positionIds": [
+        "datasummary:0",
+        "datasummary:1",
+        "datasummary:2"
+      ]
+    },
+    {
+      "queueRank": 72,
+      "id": "widget-unclassified/x-unknown",
+      "positions": 3,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_3JgrHY221M"
+      ],
+      "typeNames": [
+        "x-unknown"
+      ],
+      "positionIds": [
+        "unknown:0",
+        "unknown:1",
+        "unknown:2"
+      ]
+    },
+    {
+      "queueRank": 73,
+      "id": "argument-structure/argument38",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_j5YqQnN6xe"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "argument38:0",
+        "argument38:2"
+      ]
+    },
+    {
+      "queueRank": 74,
+      "id": "argument-structure/because38",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_a3dov8CZkq"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "because38:1",
+        "because38:2"
+      ]
+    },
+    {
+      "queueRank": 75,
+      "id": "widget-unclassified/decompose",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_5TBUFnCy5-"
+      ],
+      "typeNames": [
+        "decompose"
+      ],
+      "positionIds": [
+        "steps:0",
+        "steps:1"
+      ]
+    },
+    {
+      "queueRank": 76,
+      "id": "widget-unclassified/x-boundinterval",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_VVn1IXjkzn"
+      ],
+      "typeNames": [
+        "x-boundinterval"
+      ],
+      "positionIds": [
+        "estbounds:1",
+        "estbounds:2"
+      ]
+    },
+    {
+      "queueRank": 77,
+      "id": "widget-unclassified/x-digitalsets",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_mn765HbXi1"
+      ],
+      "typeNames": [
+        "x-digitalsets"
+      ],
+      "positionIds": [
+        "digitalsets:0",
+        "digitalsets:1"
+      ]
+    },
+    {
+      "queueRank": 78,
+      "id": "widget-unclassified/x-f36-shape",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_Jvg8X0N5u0"
+      ],
+      "typeNames": [
+        "x-f36-shape"
+      ],
+      "positionIds": [
+        "formula36:0",
+        "formula36:1"
+      ]
+    },
+    {
+      "queueRank": 79,
+      "id": "widget-unclassified/x-measurestory",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_6gpryAnpoZ"
+      ],
+      "typeNames": [
+        "x-measurestory"
+      ],
+      "positionIds": [
+        "measurestory:1",
+        "measurestory:2"
+      ]
+    },
+    {
+      "queueRank": 80,
+      "id": "widget-unclassified/x-multisheet",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_bZC-wqWX7Y"
+      ],
+      "typeNames": [
+        "x-multisheet"
+      ],
+      "positionIds": [
+        "factorcode:0",
+        "factorcode:2"
+      ]
+    },
+    {
+      "queueRank": 81,
+      "id": "widget-unclassified/x-pairtable",
+      "positions": 2,
+      "complexity": "M",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_AR-K72OIIO",
+        "mt_EmR5n58jZt"
+      ],
+      "typeNames": [
+        "x-pairtable"
+      ],
+      "positionIds": [
+        "scaleandpair:1",
+        "combineproducts:2"
+      ]
+    },
+    {
+      "queueRank": 82,
+      "id": "widget-unclassified/x-straightgap",
+      "positions": 2,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_hlGKg5M7qJ"
+      ],
+      "typeNames": [
+        "x-straightgap"
+      ],
+      "positionIds": [
+        "structurechoices:4",
+        "structurechoices:5"
+      ]
+    },
+    {
+      "queueRank": 83,
+      "id": "argument-structure/complex38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_GpltXPoaoc"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "complex38:2"
+      ]
+    },
+    {
+      "queueRank": 84,
+      "id": "argument-structure/multiShape38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_SmghasIvbT"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "multiShape38:3"
+      ]
+    },
+    {
+      "queueRank": 85,
+      "id": "argument-structure/plan38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_O_UOTiMvT_"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "plan38:0"
+      ]
+    },
+    {
+      "queueRank": 86,
+      "id": "argument-structure/precise38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_mywsN77hGZ"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "precise38:1"
+      ]
+    },
+    {
+      "queueRank": 87,
+      "id": "argument-structure/sense38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_WkKkb7W9Qd"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "sense38:0"
+      ]
+    },
+    {
+      "queueRank": 88,
+      "id": "argument-structure/show38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_nyK25mNOeR"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "show38:2"
+      ]
+    },
+    {
+      "queueRank": 89,
+      "id": "argument-structure/story38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_IM1G_7QzTa"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "story38:2"
+      ]
+    },
+    {
+      "queueRank": 90,
+      "id": "argument-structure/tools38",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_20WfHhnL39"
+      ],
+      "typeNames": [
+        "x-r38-chain"
+      ],
+      "positionIds": [
+        "tools38:2"
+      ]
+    },
+    {
+      "queueRank": 91,
+      "id": "widget-unclassified/match",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_DRlbMok2lT"
+      ],
+      "typeNames": [
+        "match"
+      ],
+      "positionIds": [
+        "quarters:1"
+      ]
+    },
+    {
+      "queueRank": 92,
+      "id": "widget-unclassified/x-dataclean",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_QHT16CrFO-"
+      ],
+      "typeNames": [
+        "x-dataclean"
+      ],
+      "positionIds": [
+        "checkrecords:0"
+      ]
+    },
+    {
+      "queueRank": 93,
+      "id": "widget-unclassified/x-datakind",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_QHT16CrFO-"
+      ],
+      "typeNames": [
+        "x-datakind"
+      ],
+      "positionIds": [
+        "checkrecords:1"
+      ]
+    },
+    {
+      "queueRank": 94,
+      "id": "widget-unclassified/x-g25-similar",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_4bc3EAxhlY"
+      ],
+      "typeNames": [
+        "x-g25-similar"
+      ],
+      "positionIds": [
+        "trianglepossible:3"
+      ]
+    },
+    {
+      "queueRank": 95,
+      "id": "widget-unclassified/x-g25-ticks",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_e4V6hvcuEJ"
+      ],
+      "typeNames": [
+        "x-g25-ticks"
+      ],
+      "positionIds": [
+        "linenotation:2"
+      ]
+    },
+    {
+      "queueRank": 96,
+      "id": "widget-unclassified/x-g26-area",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_1VmTUxBrNd"
+      ],
+      "typeNames": [
+        "x-g26-area"
+      ],
+      "positionIds": [
+        "pythagoras:0"
+      ]
+    },
+    {
+      "queueRank": 97,
+      "id": "widget-unclassified/x-g26-check",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_1VmTUxBrNd"
+      ],
+      "typeNames": [
+        "x-g26-check"
+      ],
+      "positionIds": [
+        "pythagoras:1"
+      ]
+    },
+    {
+      "queueRank": 98,
+      "id": "widget-unclassified/x-m29-order",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_RVK655t391"
+      ],
+      "typeNames": [
+        "x-m29-order"
+      ],
+      "positionIds": [
+        "temperaturechange:2"
+      ]
+    },
+    {
+      "queueRank": 99,
+      "id": "widget-unclassified/x-mosaic",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_Xp-rj46S2w"
+      ],
+      "typeNames": [
+        "x-mosaic"
+      ],
+      "positionIds": [
+        "equalparts:1"
+      ]
+    },
+    {
+      "queueRank": 100,
+      "id": "widget-unclassified/x-p22-sort",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_dlg6i-Lw0I"
+      ],
+      "typeNames": [
+        "x-p22-sort"
+      ],
+      "positionIds": [
+        "chanceindependent:2"
+      ]
+    },
+    {
+      "queueRank": 101,
+      "id": "widget-unclassified/x-questionsort",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_iykH2P5oFq"
+      ],
+      "typeNames": [
+        "x-questionsort"
+      ],
+      "positionIds": [
+        "statquestions:0"
+      ]
+    },
+    {
+      "queueRank": 102,
+      "id": "widget-unclassified/x-s23-pixels",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_SK7WntVZ6y"
+      ],
+      "typeNames": [
+        "x-s23-pixels"
+      ],
+      "positionIds": [
+        "shapeapprox:2"
+      ]
+    },
+    {
+      "queueRank": 103,
+      "id": "widget-unclassified/x-shapefacts",
+      "positions": 1,
+      "complexity": "S",
+      "risk": "high",
+      "score": -3,
+      "reviewStatus": "widget-only-needs-semantic-review",
+      "sourceNodeIds": [
+        "mt_DW2D1c0fKx"
+      ],
+      "typeNames": [
+        "x-shapefacts"
+      ],
+      "positionIds": [
+        "structure:2"
+      ]
+    },
+    {
+      "queueRank": 104,
+      "id": "data-display",
+      "positions": 37,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -4,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_ChjMU2GDJa",
+        "mt_H6LlpWgEYS",
+        "mt_HlNSurPVDp",
+        "mt_IHipFGTFEY",
+        "mt_JRzXQl9M7c",
+        "mt_QpJydot2Kh",
+        "mt_TiFjjvBMaY",
+        "mt_VhBH8wrFC6",
+        "mt__yvsKKp3TS",
+        "mt_bESTSBB0wK",
+        "mt_c29FaCTNsx",
+        "mt_eKJG-0eC6D",
+        "mt_oderfUBZPw",
+        "mt_r8XnXwRA6g",
+        "mt_u5HkSxZECM"
+      ],
+      "typeNames": [
+        "chart",
+        "compare",
+        "x-chartlab",
+        "x-dotdraw",
+        "x-histbuild",
+        "x-piesector",
+        "x-timeplot"
+      ],
+      "positionIds": [
+        "tally:0",
+        "tally:1",
+        "tally:2",
+        "bars:0",
+        "bars:1",
+        "views:0",
+        "views:1",
+        "datavocab:0",
+        "scaledgraphs:0",
+        "scaledgraphs:1",
+        "displaypurpose:0",
+        "displaypurpose:1",
+        "chartfamilies:0",
+        "chartfamilies:1",
+        "timeorcategory:0",
+        "timeorcategory:1",
+        "timeorcategory:2",
+        "displaychoices:1",
+        "linequestions:0",
+        "linequestions:1",
+        "linequestions:2",
+        "timebuilder:0",
+        "timebuilder:1",
+        "timebuilder:2",
+        "fractiondots:0",
+        "fractiondots:1",
+        "fractiondots:2",
+        "piepieces:0",
+        "piepieces:1",
+        "piepieces:2",
+        "piepieces:3",
+        "dotrecords:0",
+        "dotrecords:1",
+        "dotrecords:2",
+        "histogram:0",
+        "histogram:1",
+        "histogram:2"
+      ]
+    },
+    {
+      "queueRank": 105,
+      "id": "number-names",
+      "positions": 26,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -4,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_9IzhGUZ30z",
+        "mt_MewIRdzpzz",
+        "mt_PsylzZ9lHW",
+        "mt_To9HdLy8vq",
+        "mt_b4lbTOJYwI",
+        "mt_dJOKkYMsCv",
+        "mt_fR0UtsSREU",
+        "mt_pAcaehday5",
+        "mt_uG2mjHFOlO",
+        "mt_x8TshvbbQT",
+        "mt_xmmgAzxe5j",
+        "mt_yqAL6O5i_v"
+      ],
+      "typeNames": [
+        "x-digitlens",
+        "x-numbercards",
+        "x-numberfaces",
+        "x-numberwrite",
+        "x-romanwork",
+        "x-teenbuild"
+      ],
+      "positionIds": [
+        "counttwenty:2",
+        "manyfaces:0",
+        "manyfaces:1",
+        "write20:0",
+        "write20:1",
+        "write20:2",
+        "teenbuild:0",
+        "teenbuild:1",
+        "teenbuild:2",
+        "numberwords:0",
+        "numberwords:1",
+        "numberwords:2",
+        "order20:1",
+        "write100:0",
+        "write100:1",
+        "write100:2",
+        "write100:3",
+        "roman100:0",
+        "roman100:1",
+        "roman100:2",
+        "romanyears:0",
+        "romanyears:1",
+        "romanyears:2",
+        "numberworld:3",
+        "mixedpoints:0",
+        "notice34:1"
+      ]
+    },
+    {
+      "queueRank": 106,
+      "id": "number-line-position",
+      "positions": 16,
+      "complexity": "L",
+      "risk": "high",
+      "score": -4,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_19j_5AuuQI",
+        "mt_1KkvzwYxbR",
+        "mt_9L3NQqgqRd",
+        "mt_F_zEAJ8VIo",
+        "mt_RWUY7_IXvw",
+        "mt_b4lbTOJYwI",
+        "mt_dJOKkYMsCv",
+        "mt_vXRzMbiPff"
+      ],
+      "typeNames": [
+        "x-betweenpoints",
+        "x-orderline",
+        "x-pvline",
+        "x-signedline",
+        "x-zerodistance"
+      ],
+      "positionIds": [
+        "order20:0",
+        "order20:2",
+        "faces100:0",
+        "faces1000:0",
+        "faces1000:1",
+        "linejumps:0",
+        "negativefirst:0",
+        "negativefirst:1",
+        "negativefirst:2",
+        "negativecontext:0",
+        "negativecontext:2",
+        "distancezero:0",
+        "distancezero:1",
+        "distancezero:2",
+        "numberworld:4",
+        "numberworld:5"
+      ]
+    },
+    {
+      "queueRank": 107,
+      "id": "coordinate-functions",
+      "positions": 15,
+      "complexity": "L",
+      "risk": "high",
+      "score": -4,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-3udyo6VyB",
+        "mt_5mIcmKRCgA",
+        "mt_9KmVWCuh5_",
+        "mt_CUmjcE7W6c",
+        "mt_FspV_imUGK",
+        "mt_GZuoYaDdWd",
+        "mt_WBdHkc2HTf",
+        "mt_hVpGOEz2kG",
+        "mt_z5iwdZyeDr"
+      ],
+      "typeNames": [
+        "x-f36-coord",
+        "x-f36-live",
+        "x-f36-plot",
+        "x-f36-ratio",
+        "x-graphpoints"
+      ],
+      "positionIds": [
+        "viewlinks:3",
+        "representationmap:1",
+        "model35:1",
+        "coords36:0",
+        "coords36:1",
+        "coords36:2",
+        "linear36:0",
+        "linear36:1",
+        "plot36:0",
+        "plot36:2",
+        "quadratic36:0",
+        "quadratic36:1",
+        "quadratic36:2",
+        "proportion37:3",
+        "proportionGraph37:0"
+      ]
+    },
+    {
+      "queueRank": 108,
+      "id": "coordinate-motion",
+      "positions": 34,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_61Nhj8W78f",
+        "mt_R4AY0LKxfl",
+        "mt_RdfzwInyAj",
+        "mt_TdV9YGJEoY",
+        "mt_Y9XKzLrUAZ",
+        "mt_h7zVgCDVmx",
+        "mt_i5_HnoFOYw",
+        "mt_jBQS-CicNn",
+        "mt_lMz9nAs7VO",
+        "mt_oDlduFnemk",
+        "mt_qeZYF6HZ4o",
+        "mt_snlqRCiA1R"
+      ],
+      "typeNames": [
+        "x-p24-distance",
+        "x-p24-fan",
+        "x-p24-grid",
+        "x-p24-place",
+        "x-p24-read",
+        "x-p24-studio",
+        "x-p24-tiles",
+        "x-p24-walk"
+      ],
+      "positionIds": [
+        "placewords:0",
+        "placewords:1",
+        "placewords:2",
+        "placewords:3",
+        "turnwalk:0",
+        "turnwalk:1",
+        "turnwalk:2",
+        "turnwalk:3",
+        "pointbuild:0",
+        "pointbuild:1",
+        "pointbuild:2",
+        "pointread:0",
+        "pointread:1",
+        "pointread:2",
+        "signedpoints:0",
+        "signedpoints:1",
+        "signedpoints:2",
+        "pointaxes:0",
+        "pointaxes:1",
+        "pointaxes:2",
+        "pointdistance:0",
+        "pointdistance:1",
+        "pointdistance:2",
+        "pointstory:0",
+        "pointstory:1",
+        "pointstory:2",
+        "geometrylab:3",
+        "patternfloor:0",
+        "patternfloor:1",
+        "turnroute:0",
+        "turnroute:1",
+        "turnroute:2",
+        "turnroute:3",
+        "words38:3"
+      ]
+    },
+    {
+      "queueRank": 109,
+      "id": "equations",
+      "positions": 29,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_FX4a2Q8XXN",
+        "mt_FieL-vVTI_",
+        "mt_HRKzwEQJgO",
+        "mt_KhS7K1Mgrw",
+        "mt_KwdjWEmMNo",
+        "mt_QhFEDyIwSO",
+        "mt_XuHmIn2xje",
+        "mt_YFS7JFk64p",
+        "mt_anAe11HAEH",
+        "mt_ezc2m_0dzN",
+        "mt_i9rJbuFO3p",
+        "mt_mqgu72aCMz",
+        "mt_u5HkSxZECM",
+        "mt_z5iwdZyeDr"
+      ],
+      "typeNames": [
+        "x-a35-balance",
+        "x-a35-build",
+        "x-a35-grid",
+        "x-a35-pairs",
+        "x-a35-plot",
+        "x-a35-try",
+        "x-a35-walk",
+        "x-variable"
+      ],
+      "positionIds": [
+        "datavocab:1",
+        "missing35:0",
+        "missing35:1",
+        "missing35:2",
+        "bigmissing35:0",
+        "twostep35:1",
+        "twounknown35:0",
+        "twounknown35:1",
+        "twounknown35:2",
+        "equations35:0",
+        "equations35:1",
+        "equations35:2",
+        "equations35:3",
+        "equations35:4",
+        "equations35:5",
+        "writing35:0",
+        "notation35:2",
+        "model35:0",
+        "model35:2",
+        "nth35:1",
+        "expand35:0",
+        "expand35:1",
+        "expand35:2",
+        "double35:0",
+        "double35:1",
+        "double35:2",
+        "systems35:0",
+        "systems35:1",
+        "advancedPlan38:2"
+      ]
+    },
+    {
+      "queueRank": 110,
+      "id": "fraction-part",
+      "positions": 21,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_BK5xwkrD5C",
+        "mt_FbDKeLfBCo",
+        "mt_HY8Yycu_rz",
+        "mt_VKW8lOcFaw",
+        "mt_aivrWs6jrS",
+        "mt_cFltwUQi-d",
+        "mt_gC-6JXAG5S",
+        "mt_ndGqFPWyen",
+        "mt_vKcxX6iNOA"
+      ],
+      "typeNames": [
+        "partition",
+        "x-foldpaper",
+        "x-fraction",
+        "x-fractiontalk",
+        "x-fwall",
+        "x-partbuild"
+      ],
+      "positionIds": [
+        "share:0",
+        "share:1",
+        "share:2",
+        "notation:0",
+        "notation:1",
+        "notation:2",
+        "notation:3",
+        "folds:0",
+        "folds:1",
+        "folds:2",
+        "folds:3",
+        "amounts:1",
+        "visualeq:0",
+        "visualeq:1",
+        "visualeq:2",
+        "scale:3",
+        "partswithin:2",
+        "derivepatterns:1",
+        "derivepatterns:2",
+        "precisefractions:0",
+        "precisefractions:2"
+      ]
+    },
+    {
+      "queueRank": 111,
+      "id": "pattern-generalize",
+      "positions": 17,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_A-FyLLLLzy",
+        "mt_QeKWt4BZn3",
+        "mt_WXW0hjNhph",
+        "mt_fxPtngwUfz",
+        "mt_gu0NPDvlhY",
+        "mt_iyovKgZC1q",
+        "mt_nx4a3kH-59",
+        "mt_uG2mjHFOlO",
+        "mt_zQfWqImxva"
+      ],
+      "typeNames": [
+        "x-p34-grid",
+        "x-p34-growth",
+        "x-p34-pair",
+        "x-p34-program",
+        "x-p34-relation",
+        "x-p34-repeat"
+      ],
+      "positionIds": [
+        "repeat34:0",
+        "repeat34:1",
+        "repeat34:2",
+        "paired34:0",
+        "paired34:1",
+        "notice34:2",
+        "reason34:3",
+        "shapeseq34:1",
+        "trace34:0",
+        "trace34:1",
+        "trace34:2",
+        "generate34:0",
+        "generate34:1",
+        "design34:0",
+        "design34:1",
+        "pairs34:0",
+        "pairs34:1"
+      ]
+    },
+    {
+      "queueRank": 112,
+      "id": "chance-experiment",
+      "positions": 15,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_-bMnJcPJy8",
+        "mt_8DT3LXwwH-",
+        "mt_GDtFU5fyUv",
+        "mt_J4j7d3iAfg",
+        "mt_dlg6i-Lw0I",
+        "mt_sHJqh6UUya",
+        "mt_xSgAgg9Ej_"
+      ],
+      "typeNames": [
+        "x-experiment",
+        "x-p22-branch",
+        "x-p22-draw",
+        "x-p22-experiment",
+        "x-simulation",
+        "x-spinner"
+      ],
+      "positionIds": [
+        "chance:0",
+        "chance:1",
+        "chance:2",
+        "fairness:0",
+        "fairness:1",
+        "fairness:2",
+        "simulation:0",
+        "trialcompare:0",
+        "trialcompare:1",
+        "trialestimate:0",
+        "trialestimate:1",
+        "trialestimate:2",
+        "chanceindependent:0",
+        "chanceindependent:1",
+        "chancetree:1"
+      ]
+    },
+    {
+      "queueRank": 113,
+      "id": "division-sharing",
+      "positions": 11,
+      "complexity": "L",
+      "risk": "high",
+      "score": -5,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_3VmBdlAeOZ",
+        "mt_4Km38F4L-6",
+        "mt_C9ZfT-4cgn",
+        "mt_T76hKqXf0z",
+        "mt_TiQbi027PE",
+        "mt_YzM5goBctT",
+        "mt_cFltwUQi-d",
+        "mt_iyovKgZC1q"
+      ],
+      "typeNames": [
+        "x-divreverse",
+        "x-fgroups",
+        "x-groupfour",
+        "x-subgroups",
+        "x-wholeshare"
+      ],
+      "positionIds": [
+        "amounts:0",
+        "regroupadd:2",
+        "fourparts:0",
+        "fourparts:1",
+        "turnarray:2",
+        "sharewholes:0",
+        "sharewholes:1",
+        "sharewholes:2",
+        "translateamount:0",
+        "tenpieces:2",
+        "reason34:2"
+      ]
+    },
+    {
+      "queueRank": 114,
+      "id": "angles",
+      "positions": 32,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -6,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_2ESZh70NyS",
+        "mt_4MFUAsbx_6",
+        "mt_8OAGVdeTJ_",
+        "mt_H_pNJ3ZI_S",
+        "mt_IwEOCN6bL1",
+        "mt_J03RFlVdas",
+        "mt_LBT-9jz7kR",
+        "mt_MFfYcnv6Tv",
+        "mt_QysgF57dxh",
+        "mt_YUJ5pwalqL",
+        "mt_cdMlC7EpTJ",
+        "mt_e4V6hvcuEJ",
+        "mt_h0CVtqI2xo",
+        "mt_hImiKNiaNh",
+        "mt_iyovKgZC1q"
+      ],
+      "typeNames": [
+        "x-anglejoin",
+        "x-g25-compare",
+        "x-g25-corners",
+        "x-g25-estimate",
+        "x-g25-parallel",
+        "x-g25-polygon",
+        "x-g25-protractor",
+        "x-g25-vertices",
+        "x-shapeangle"
+      ],
+      "positionIds": [
+        "structurebridge:0",
+        "fractionreason:2",
+        "fractionreason:3",
+        "anglecorner:2",
+        "rightcheck:0",
+        "rightcheck:1",
+        "angletypes:0",
+        "angletypes:1",
+        "angletypes:2",
+        "angletypes:3",
+        "angletypes:4",
+        "anglestraight:1",
+        "angleestimate:0",
+        "angleestimate:1",
+        "angleestimate:2",
+        "angleprotractor:0",
+        "angleprotractor:1",
+        "angleprotractor:2",
+        "linemark:2",
+        "linenotation:0",
+        "parallelangle:0",
+        "parallelangle:1",
+        "parallelangle:2",
+        "triangleangles:0",
+        "triangleangles:1",
+        "triangleangles:2",
+        "polygonangles:0",
+        "polygonangles:1",
+        "polygonangles:2",
+        "reason34:0",
+        "representations39:2",
+        "representations39:3"
+      ]
+    },
+    {
+      "queueRank": 115,
+      "id": "solid-metric",
+      "positions": 15,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -6,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_8VjmxR1yfw",
+        "mt_IlDaxVr60U",
+        "mt_IuHa5UI5od",
+        "mt_NSC3LT_-ch",
+        "mt_ZJC7JnnPCu",
+        "mt_d7XktBQPxm",
+        "mt_nTL-owFJTF"
+      ],
+      "typeNames": [
+        "cube-plan",
+        "fill",
+        "irregular",
+        "unit",
+        "x-boxsummary",
+        "x-capacity",
+        "x-m31-product"
+      ],
+      "positionIds": [
+        "space:0",
+        "space:1",
+        "hidden:0",
+        "hidden:1",
+        "hidden:2",
+        "box:0",
+        "box:1",
+        "capacity:0",
+        "capacity:1",
+        "capacity:2",
+        "boxsummary:0",
+        "boxsummary:1",
+        "boxsummary:2",
+        "fractionvolume:3",
+        "tooladv39:2"
+      ]
+    },
+    {
+      "queueRank": 116,
+      "id": "fraction-rename",
+      "positions": 14,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -6,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_4K1dr204Hi",
+        "mt_DRlbMok2lT",
+        "mt_Ep7TDFuYUa",
+        "mt_PNSyfH56eQ",
+        "mt_TqDq6jyOmL",
+        "mt_hImiKNiaNh",
+        "mt_jCy07DyBNU",
+        "mt_kdWoAel3Zl"
+      ],
+      "typeNames": [
+        "equivalent",
+        "grid",
+        "x-decimalzoom",
+        "x-fdprecall",
+        "x-fractionbridge",
+        "x-percentkit"
+      ],
+      "positionIds": [
+        "equivalent:0",
+        "decimal:0",
+        "decimal:1",
+        "decimal:2",
+        "quarters:0",
+        "structurebridge:2",
+        "percentpatterns:2",
+        "percentpatterns:3",
+        "thousandparts:0",
+        "thousandparts:2",
+        "thousandparts:3",
+        "fdpswitch:1",
+        "pctCalculate37:0",
+        "pctCalculate37:2"
+      ]
+    },
+    {
+      "queueRank": 117,
+      "id": "measurement-compare",
+      "positions": 14,
+      "complexity": "XL",
+      "risk": "high",
+      "score": -6,
+      "reviewStatus": "provisional-math-mechanism-not-approved",
+      "sourceNodeIds": [
+        "mt_5HV4mbgSGH",
+        "mt_6oxQPNLHNv",
+        "mt_DLcEzmmj2r",
+        "mt_DOe893F6gN",
+        "mt_NtJYlJdUe9",
+        "mt_bnwHo5wfCD",
+        "mt_zkFbMLpu3U"
+      ],
+      "typeNames": [
+        "x-attributes",
+        "x-m29-combine",
+        "x-m29-tape",
+        "x-m31-balance",
+        "x-m31-compare",
+        "x-measure"
+      ],
+      "positionIds": [
+        "attributes:0",
+        "attributes:1",
+        "measure:0",
+        "measure:1",
+        "measure:2",
+        "lengthstory:0",
+        "lengthstory:1",
+        "lengthstory:2",
+        "measurecalc:4",
+        "practicalmeasure:3",
+        "comparecap:0",
+        "comparecap:1",
+        "indirectmass:0",
+        "indirectmass:2"
+      ]
+    }
+  ],
+  "sourceMappingHoldingBin": [
+    "withinthousand:3",
+    "skipbig:2",
+    "powersteps:0",
+    "powersteps:1",
+    "powersteps:2",
+    "powersteps:6",
+    "productways:3",
+    "chanceline:1",
+    "linemark:0",
+    "measurecalc:5",
+    "temperaturechange:4",
+    "rules34:3",
+    "bigmissing35:1",
+    "systems35:2",
+    "systems35:3",
+    "linear36:3",
+    "proportionGraph37:1"
+  ],
+  "recentActiveDraftExcluded": {
+    "issue": 298,
+    "pr": 299,
+    "positions": [
+      "proportion37:3",
+      "proportionGraph37:0"
+    ],
+    "note": "Pending, not A; separate ongoing development."
+  }
+}
