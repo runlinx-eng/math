@@ -13,7 +13,7 @@ export const roundUnit=(t,m)=>m.unit||t.unit;
 export const partsFor=m=>{let s='',out=[];for(let i=0;i<m.roman.length;i++){s+=m.roman[i];if(m.cuts.includes(i)||i===m.roman.length-1){out.push(s);s='';}}return out;};
 export function initial(t){switch(t.type){
  case'x-wideboard':{const c=columns(t);return{active:0,rows:t.values.map(()=>c.map(()=>0)),parts:t.values.map(()=>c.map(()=>'')),answers:t.values.map(()=>''),words:t.values.map(()=>''),relation:'',first:'',order:[],positions:t.values.map(()=>0),touched:t.values.map(()=>false),gap:''};}
- case'x-wideshift':return{guess:'',committed:null,shift:0,trace:[],u:t.mode==='add'?digitRow(t.start,addColumns):[],moves:[],swaps:[],answer:'',factor:'',direction:'',exponent:'',changed:[]};
+ case'x-wideshift':{const m={guess:'',committed:null,shift:0,trace:[],u:t.mode==='add'?digitRow(t.start,addColumns):[],moves:[],swaps:[],answer:'',factor:'',direction:'',exponent:'',changed:[]};if(t.mode==='add')m.actions=[];return m;}
  case'x-roundwork':return{active:0,unit:t.units?'':t.unit,steps:t.values.map(()=>({low:'',high:'',mark:0,touched:false,result:''})),sig:[],estimate:'',exact:'',relation:''};
  case'x-boundinterval':return{low:'',high:'',left:'',right:'',probe:'',trials:[]};
  case'x-romanwork':return{roman:t.mode==='read'?roman(t.n):'',cuts:[],parts:[],answer:'',zero:'',each:['','']};
@@ -43,18 +43,21 @@ export function inspect(t,m){if(!valid(t,m))return{correct:false,feedback:'这�
  case'x-boundinterval':{const v=ticks(t.value),h=ticks(t.unit)/2,lo=v-h,hi=v+h;correct=isValue(m.low,lo)&&isValue(m.high,hi)&&m.left==='closed'&&m.right==='open'&&m.trials.some(s=>ticks(s.value)===lo&&s.inside)&&m.trials.some(s=>ticks(s.value)===hi&&!s.inside);feedback='两端离报告值都是半个记录单位。亲自试下端与上端：哪一端还能报成这个数，哪一端已经报成下一站？';break;}
  case'x-romanwork':{const chunks=romanParts(roman(t.n)),parts=partsFor(m);correct=m.roman===roman(t.n)&&isValue(m.answer,t.n*Q)&&(t.mode!=='read'||eq(parts,chunks)&&m.parts.length===chunks.length&&m.parts.every((v,i)=>isValue(v,romanValue(chunks[i])*Q)))&&(!t.zero||m.zero==='none'&&m.each.every(v=>isValue(v,10*Q)));feedback='先看看能一起读的小段：IV是4、IX是9、XL是40、XC是90、CD是400、CM是900。这里采用常用规范；钟面IIII是另一种写法。';break;}
  }return{correct,feedback:correct?'操作和记录对上了。也可以说说你发现了什么。':feedback};}
+// Supplementary chronological trace of successful controls for NEW additive work.
+// Old saved models still validate, but have no invented operation history.
+const addOp=(m,op)=>{if(Array.isArray(m.actions)&&m.actions.length<512)m.actions.push(op);};
 export function act(t,m,a,d={}){const i=Number(d.index),delta=Number(d.delta);
  if(a==='wide-active'&&int(i,0,t.values.length-1))m.active=i;
  if(a==='wide-add'&&t.type==='x-wideboard'&&['build','compare','puzzle'].includes(t.mode)&&int(i,0,columns(t).length-1)&&[-1,1].includes(delta)){const r=m.rows[m.active];if(int(r[i]+delta,0,9))r[i]+=delta;}
  if(a==='wide-order'&&int(i,0,t.values.length-1)){const p=m.order.indexOf(i);if(p<0)m.order.push(i);else m.order.splice(p,1);}
- if(a==='wide-predict'&&m.committed===null&&ticks(m.guess)!==null)m.committed=m.guess;
+ if(a==='wide-predict'&&m.committed===null&&ticks(m.guess)!==null){m.committed=m.guess;if(t.type==='x-wideshift'&&t.mode==='add')addOp(m,{kind:'predict',value:m.committed});}
  if(a==='wide-move'&&t.type==='x-wideshift'&&m.committed!==null&&[-1,1].includes(delta)){
-  if(t.mode==='add'&&m.moves.length<60){if(int(m.u[1]+delta,0,19)){m.u[1]+=delta;m.moves.push(delta);}}
+  if(t.mode==='add'&&m.moves.length<60){if(int(m.u[1]+delta,0,19)){m.u[1]+=delta;m.moves.push(delta);addOp(m,{kind:'move',delta});}}
   else if(t.mode!=='add'&&m.trace.length<60&&int(m.shift+delta,-9,9)&&shifted(t.start,m.shift+delta)!==null){m.shift+=delta;m.trace.push(delta);}}
  if(a==='wide-swap'&&t.mode==='add'&&m.committed!==null&&m.swaps.length<100&&int(i,0,4)){
-  const u=[...m.u];if(d.kind==='up'&&i>0&&u[i]>=10&&u[i-1]<19){u[i]-=10;u[i-1]++;m.swaps.push('up'+i);m.u=u;}
-  if(d.kind==='down'&&i<4&&u[i]>0&&u[i+1]<=9){u[i]--;u[i+1]+=10;m.swaps.push('down'+i);m.u=u;}}
- if(a==='wide-changed'&&int(i,0,4)){const p=m.changed.indexOf(i);if(p<0)m.changed.push(i);else m.changed.splice(p,1);}
+  const u=[...m.u];if(d.kind==='up'&&i>0&&u[i]>=10&&u[i-1]<19){u[i]-=10;u[i-1]++;m.swaps.push('up'+i);m.u=u;addOp(m,{kind:'swap',direction:'up',index:i});}
+  if(d.kind==='down'&&i<4&&u[i]>0&&u[i+1]<=9){u[i]--;u[i+1]+=10;m.swaps.push('down'+i);m.u=u;addOp(m,{kind:'swap',direction:'down',index:i});}}
+ if(a==='wide-changed'&&int(i,0,4)){const p=m.changed.indexOf(i);if(p<0)m.changed.push(i);else m.changed.splice(p,1);if(t.type==='x-wideshift'&&t.mode==='add')addOp(m,{kind:'changed',index:i});}
  if(a==='wide-sig'&&t.sf&&int(i,0,t.values[0].length-1)&&/\d/.test(t.values[0][i])){const p=m.sig.indexOf(i);if(p<0)m.sig.push(i);else m.sig.splice(p,1);}
  if(a==='wide-probe'&&t.type==='x-boundinterval'&&ticks(m.probe)!==null&&Number(m.probe)>=0&&m.trials.length<40)m.trials.push({value:m.probe,inside:rounded(m.probe,t.unit).result===ticks(t.value)});
  if(a==='roman-tile'&&t.mode==='write'&&/^[IVXLCDM]$/.test(d.tile)&&m.roman.length<20)m.roman+=d.tile;
@@ -64,7 +67,7 @@ export function act(t,m,a,d={}){const i=Number(d.index),delta=Number(d.delta);
 export function field(t,m,key){if(t.type==='x-wideboard'&&key.startsWith('positions.'))m.touched[Number(key.split('.')[1])]=true;if(t.type==='x-roundwork'&&/^steps\.\d+\.mark$/.test(key))m.steps[Number(key.split('.')[1])].touched=true;}
 export function example(t){const m=initial(t);switch(t.type){
  case'x-wideboard':{const c=columns(t);m.rows=t.values.map(v=>digitRow(v,c));m.parts=m.rows.map(r=>r.map((v,i)=>decimal(v*Math.round(Q*10**c[i]))));m.answers=[...t.values];m.words=t.values.map(v=>chinese(Number(v)));const a=Number(t.values[0]),b=Number(t.values[1]);m.relation=a===b?'=':a<b?'<':'>';const first=m.rows[0].findIndex((v,i)=>v!==m.rows[1]?.[i]);m.first=first<0?'same':String(first);m.order=t.values.map((_,i)=>i).sort((a,b)=>Number(t.values[a])-Number(t.values[b]));if(t.max!==undefined){m.positions=t.values.map(v=>Math.round((Number(v)-t.min)/(t.max-t.min)*1000));m.touched=t.values.map(()=>true);}m.gap=decimal(Math.max(...t.values.map(ticks))-Math.min(...t.values.map(ticks)));break;}
- case'x-wideshift':if(t.mode==='add'){const end=Number(t.start)+t.step;m.u=digitRow(String(end),addColumns);m.guess=m.answer=String(end);m.committed=m.guess;m.moves=[Math.sign(t.step)];m.changed=changed(t);if(t.step>0&&digitRow(t.start,addColumns)[1]===9)m.swaps=['up1'];if(t.step<0&&digitRow(t.start,addColumns)[1]===0)m.swaps=['down0'];}
+ case'x-wideshift':if(t.mode==='add'){const end=Number(t.start)+t.step;m.guess=String(end);act(t,m,'wide-predict');if(t.step<0&&m.u[1]===0)act(t,m,'wide-swap',{kind:'down',index:0});for(let n=0;n<Math.abs(t.step)/1000;n++){act(t,m,'wide-move',{delta:Math.sign(t.step)});if(m.u[1]>=10)act(t,m,'wide-swap',{kind:'up',index:1});}m.answer=String(end);for(const i of changed(t))act(t,m,'wide-changed',{index:i});}
   else{m.shift=targetShift(t);m.trace=Array.from({length:Math.abs(m.shift)},()=>Math.sign(m.shift));m.guess=m.answer=decimal(shifted(t.start,m.shift));m.committed=m.guess;m.factor=String(10**Math.abs(m.shift));m.direction=m.shift>0?'times':'divide';m.exponent=String(-m.shift);}break;
  case'x-roundwork':m.unit=t.unit;m.steps=t.values.map(v=>{const r=rounded(v,t.unit);return{low:decimal(r.low),high:decimal(r.high),mark:r.position,touched:true,result:decimal(r.result,dpFor(t.unit))};});if(t.sf)m.sig=significant(t.values[0],t.sf);if(t.calc)m.estimate=decimal(estimate(t,m));if(t.exact){const exact=t.values.map(ticks).reduce((s,x)=>s+x,0);m.exact=decimal(exact);const e=estimate(t,m);m.relation=e===exact?'=':e<exact?'<':'>';}break;
  case'x-boundinterval':{const a=ticks(t.value),h=ticks(t.unit)/2;m.low=decimal(a-h);m.high=decimal(a+h);m.left='closed';m.right='open';m.trials=[{value:m.low,inside:true},{value:m.high,inside:false}];m.probe=m.high;break;}

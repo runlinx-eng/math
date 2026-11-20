@@ -90,6 +90,7 @@ const reviewed={
  proportionalgraph:[...positions('proportion37',[3]),...positions('proportionGraph37',[0])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
+ 'wideshift-add':positions('thousandstep',[0,1,2,3]),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
   ...expansion.sequence.map(({id,index})=>({sessionId:id,index}))],
  array:[...positions('structure34',[1]),...positions('tables34',[1]),...positions('derivepatterns',[0,3,4,5,6]),
