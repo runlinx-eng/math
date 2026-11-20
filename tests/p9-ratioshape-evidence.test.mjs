@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {sessionTaskFor} from '../dist/learning/bridges.js';
 import * as native from '../dist/learning/phase5/b37-model.js';
 import {replayRatioShapeEvidence} from '../dist/learning/ratioshape-evidence.js';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 const cases=[
  ['pctIdeas37',2,'2','4','2','8','4'],
@@ -73,5 +74,24 @@ test('#282 reject one edge, add instead of multiply, area times k and bad answer
  for(const [index,value] of [[0,'6'],[1,'6'],[2,'3']]){
   const model=native.example(task);model.answers[index]=value;
   assert.equal(proof('scaleArea37',0,model),null);
+ }
+});
+
+test('#282 source feedback exists only for latest truly checked original model',()=>{
+ for(const [id,index] of cases){
+  const task=sessionTaskFor(id,index),model=native.example(task);
+  const record={support:false,attempts:[{value:structuredClone(model)}]};
+  const before=JSON.stringify({task,model,record});
+  const guide=thinkingGuide(task,{sessionId:id,index});
+  const feedback=thinkingFeedback(task,model,record,{sessionId:id,index});
+  assert.ok(guide?.question);
+  assert.ok(feedback?.observation?.includes('同乘'));
+  assert.equal(feedback.method,null);
+  assert.ok(feedback.detail.some(s=>s.includes('没有记录独立证明')));
+  const edited=structuredClone(model);edited.value='999';
+  assert.equal(thinkingFeedback(task,edited,record,{sessionId:id,index}),null);
+  assert.equal(thinkingFeedback(task,model,{attempts:[]},{sessionId:id,index}),null);
+  assert.equal(thinkingFeedback(task,model,record,{sessionId:id,index:String(index)}),null);
+  assert.equal(JSON.stringify({task,model,record}),before);
  }
 });

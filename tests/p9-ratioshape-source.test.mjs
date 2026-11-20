@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks,sessionTaskFor} from '../dist/learning/bridges.js';
 import * as native from '../dist/learning/phase5/b37-model.js';
@@ -49,4 +51,17 @@ test('#282 no unrelated native or bridge automatically inherits the adapter',()=
   const altered={...task,prompt:task.prompt+' changed'};
   assert.equal(ratioShapeBinding(altered,{sessionId,index}),null);
  }
+});
+
+test('#282 exact independent manifest and family registry',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
+ const rows=manifest.tasks.filter(x=>x.adapter==='ratioshape');
+ assert.equal(rows.length,5);
+ for(const [sessionId,index,taskHash] of reviewed){
+  assert.deepEqual(rows.find(x=>x.sessionId===sessionId&&x.index===index),{
+   sessionId,index,type:'x-r37-shape',nodeId:LESSONS[sessionId].topicId,
+   adapter:'ratioshape',taskHash,method:null
+  });
+ }
+ assert.equal(EVIDENCE_ADAPTERS.filter(x=>x.type==='x-r37-shape').length,1);
 });
