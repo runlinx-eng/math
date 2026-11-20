@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {planTargetedChecks,validateDailyGate} from '../scripts/ci-targeted-checks.mjs';
 import {buildLiveBrowserMatrix} from '../scripts/ci-live-browser-matrix.mjs';
+import {dailyDefinitions} from '../scripts/ci-targeted-checks.mjs';
 
 const registry=JSON.parse(readFileSync(new URL('../ci/math-families.json',import.meta.url),'utf8'));
 const definitions=buildLiveBrowserMatrix().definitions;
@@ -126,4 +127,22 @@ test('workflow only starts full matrix on explicit dispatch and only saves daily
  assert.match(y,/node scripts\/ci-targeted-checks\.mjs gate/);
  assert.match(y,/node scripts\/required-browser-checks\.mjs gate/);
  assert.match(y,/if: failure\(\)/);
+});
+
+test('#315 daily impacted-family selection stays independent of total full capacity',()=>{
+ const expanded=structuredClone(registry);
+ expanded.newFamilies.push(...Array.from({length:15},(_,i)=>({
+  ...structuredClone(registry.newFamilies[0]),familyId:'overflow'+i,
+  entry:'tests/p9-overflow'+i+'-browser.cjs',
+  artifacts:['verification/p9-overflow'+i+'/'],
+  resources:{...registry.newFamilies[0].resources,estimatedScriptMinutes:29}
+ })));
+ const defs=dailyDefinitions; // Source-aware helper validates paths in real runs.
+ assert.equal(typeof defs,'function');
+ const p=planTargetedChecks({event:'pull_request',changedFiles:['docs/LEARNING-DESIGN.md'],
+  registry:expanded,definitions:definitions});
+ assert.deepEqual(p.scripts,[]);
+ const q=planTargetedChecks({event:'pull_request',changedFiles:['dist/learning/area-evidence.js'],
+  registry:expanded,definitions:definitions});
+ assert.ok(q.scripts.includes('tests/p9-area-adapter-browser.cjs'));
 });

@@ -1,6 +1,7 @@
-// #239 stage 4: LIVE registry-driven browser matrix for independent new families.
-// Old 13 groups / 86 invocations remain mandatory and unchanged. Unsupported
-// cross-group dependencies reject CI rather than running in the wrong order.
+// #315: full-only registry-driven browser matrix for independent new families.
+// GitHub Actions queues matrix jobs beyond ten concurrent runners; the per-job
+// 29-minute script budget and 35-minute timeout remain unchanged. Dependencies
+// and exclusive resource locks are not supported by parallel matrix execution.
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {appendFileSync,mkdirSync,readFileSync,writeFileSync} from 'node:fs';
@@ -30,19 +31,21 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
  same(plan.legacyGroups.map(group=>group.id),GROUP_NAMES);
  for(const module of registry.newFamilies){
   assert.equal(module.dependsOn.length,0,
-   module.familyId+': cross-job dependencies are not implemented in live matrix v1; fail closed');
+   module.familyId+': cross-job dependencies are not implemented in live matrix; fail closed');
+  assert.equal(module.resources.exclusiveLocks.length,0,
+   module.familyId+': exclusive locks require an ordered executor; fail closed');
  }
  const definitions={...BROWSER_GROUPS};
  const added=[];
  for(const job of plan.plannedNewJobs){
-  assert.equal(job.wave,1,'Cannot run dependency/resource wave '+job.wave+
-   ' in a single parallel GitHub Actions matrix');
+  assert.ok(Number.isSafeInteger(job.wave)&&job.wave>=1,
+   'Full matrix requires a deterministic positive scheduling batch');
   assert.equal(job.runnerType,'standard','CPU-heavy runner type is not provisioned');
   assert.ok(job.scriptMinutes<=29&&job.peakMemoryMiB<=6000,
    'New runner exceeds actual standard-runner capacity');
   assert.ok(job.modules.length>0);
   const id=job.id.replace(/^shadow-/,'family-');
-  assert.match(id,/^family-wave-1-job-[0-9]+$/);
+  assert.match(id,/^family-wave-[1-9][0-9]*-job-[0-9]+$/);
   assert.ok(!Object.hasOwn(definitions,id),'Duplicate live job id '+id);
   const commands=job.modules.map(m=>({file:m.entry,env:{}}));
   const artifacts=job.modules.flatMap(m=>m.artifacts);
@@ -50,7 +53,7 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
   definitions[id]={commands,artifacts,newFamily:true,modules:job.modules.map(m=>({
    familyId:m.familyId,entry:m.entry,artifacts:[...m.artifacts],proofContracts:[...m.proofContracts]
   }))};
-  added.push({id,commandCount:commands.length,artifacts,
+  added.push({id,wave:job.wave,commandCount:commands.length,artifacts,
    scriptMinutes:job.scriptMinutes,peakMemoryMiB:job.peakMemoryMiB});
  }
  const groups=Object.keys(definitions);
@@ -65,7 +68,8 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
   sourcePlanDigest:plan.digest,liveMatrix:matrix,
   legacyGroups:13,legacyCalls:86,legacyEvidenceDirs:83,
   registeredNewFamilies:registry.newFamilies.length,addedGroups:added,
-  restrictions:['No cross-group dependencies in v1','No CPU-heavy unprovisioned runners',
+  restrictions:['GitHub max-parallel 10 queues overflow jobs without a workflow time cap',
+  'No cross-group dependencies or resource locks','No CPU-heavy unprovisioned runners',
    'Every new module must supply mathematical result, errors=[], original PNG and provenance',
    'Static legacy group source remains the complete rollback baseline']};
  proof.digest=digest(proof);

@@ -6,7 +6,7 @@ import {appendFileSync,existsSync,mkdirSync,readFileSync,readdirSync,writeFileSy
 import {execFileSync,spawnSync} from 'node:child_process';
 import {dirname,resolve,basename} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {buildLiveBrowserMatrix} from './ci-live-browser-matrix.mjs';
+import {BROWSER_GROUPS} from './required-browser-checks.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const hash=value=>createHash('sha256').update(typeof value==='string'?value:JSON.stringify(value)).digest('hex');
@@ -163,11 +163,37 @@ function previousRegistry(event,changed){
  return JSON.parse(execFileSync('git',['show',base+':ci/math-families.json'],
   {cwd:root,encoding:'utf8',maxBuffer:1024*1024}));
 }
+// Daily selection is deliberately independent of the historical full-regression
+// packing. Retain the exact legacy scripts and checked family entrypoints, but
+// never call the full ten-bin/29-minute packer for a routine PR or main push.
+export function dailyDefinitions(registry){
+ check(registry?.schema==='math-ci-family-registry/1'&&Array.isArray(registry.newFamilies),
+  'Invalid reviewed registry for daily checks');
+ const definitions={...BROWSER_GROUPS},entries=new Set(Object.values(BROWSER_GROUPS)
+  .flatMap(group=>group.commands.map(cmd=>cmd.file)));
+ for(const family of registry.newFamilies){
+  check(typeof family.familyId==='string'&&/^[a-z][a-z0-9-]*$/.test(family.familyId),
+   'Invalid daily family identity');
+  check(safeScript.test(family.entry)&&existsSync(resolve(root,family.entry)),
+   'Missing registered daily family browser script');
+  check(!entries.has(family.entry),'Duplicate registered browser entry');
+  entries.add(family.entry);
+  check(Array.isArray(family.artifacts)&&family.artifacts.length>0&&
+   Array.isArray(family.proofContracts)&&family.proofContracts.includes('math'),
+   'Missing family evidence contract');
+  const key='daily-'+family.familyId;
+  check(!Object.hasOwn(definitions,key),'Duplicate daily family ID');
+  definitions[key]={newFamily:true,commands:[{file:family.entry,env:{}}],
+   modules:[{familyId:family.familyId,entry:family.entry,artifacts:family.artifacts,
+    proofContracts:family.proofContracts}]};
+ }
+ return definitions;
+}
 export function currentPlan(){
  const event=process.env.GITHUB_EVENT_NAME,changed=currentFiles(event);
  const registry=JSON.parse(readFileSync(resolve(root,'ci/math-families.json'),'utf8'));
  return planTargetedChecks({event,changedFiles:changed,registry,
-  definitions:buildLiveBrowserMatrix().definitions,previousRegistry:previousRegistry(event,changed)});
+  definitions:dailyDefinitions(registry),previousRegistry:previousRegistry(event,changed)});
 }
 function verifyRegisteredFamily(script,context,definitions){
  for(const group of Object.values(definitions)){
@@ -203,7 +229,8 @@ export function runTargetedTask(){
  let error=child.error?String(child.error):child.signal?'Terminated: '+child.signal:null;
  let exitCode=Number.isInteger(child.status)?child.status:1;
  if(exitCode===0&&!error)try{
-  verifyRegisteredFamily(script,context,buildLiveBrowserMatrix().definitions);
+  verifyRegisteredFamily(script,context,dailyDefinitions(JSON.parse(
+   readFileSync(resolve(root,'ci/math-families.json'),'utf8'))));
  }catch(e){error=String(e.stack||e);exitCode=1;}
  const report={schema:'math-ci-targeted-result/1',id,script,...context,
   elapsedMs:Date.now()-start,exitCode,error:error?error.slice(0,2000):null,
