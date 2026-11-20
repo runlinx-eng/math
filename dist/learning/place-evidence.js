@@ -148,3 +148,79 @@ export function replayPlaceEvidence(task,model){
    display:{values:[...labels],total:place.fmt(target,scale),removed:place.fmt(removed,scale)}};
  }catch{return null;}
 }
+
+// #304: independent strict replay for two source-frozen no-exchange removals.
+// Does not weaken the existing place exchange contract or the original grader.
+const REMOVAL_SOURCES=Object.freeze({
+ tensmove:{index:1,nodeId:'mt_I5j1ZWo2cn',values:[82,40],result:42,column:1},
+ hundredsmove:{index:1,nodeId:'mt_xPqczp7zPX',values:[762,400],result:362,column:2}
+});
+export function placeRemovalBinding(task,context={}){
+ if(!isEvidenceContext(context)||!Object.hasOwn(REMOVAL_SOURCES,context.sessionId))return null;
+ const spec=REMOVAL_SOURCES[context.sessionId];
+ if(context.index!==spec.index||task?.type!=='x-placecalc'||(task.scale??1)!==1||
+    task.op!=='-'||task.written!==undefined||!same(task.values,spec.values)||
+    !matchesNativeEvidenceTask(task,context,{type:'x-placecalc',nodeId:spec.nodeId}))return null;
+ return {nodeId:spec.nodeId,method:null,scope:'zero-exchange-removal',
+  question:'你亲自拿走的是哪一列的四份？为什么不需要换单位，其他数位也不变？'};
+}
+export function replayPlaceRemovalEvidence(task,model,context={}){
+ try{
+  const source=placeRemovalBinding(task,context);if(!source)return null;
+  const spec=REMOVAL_SOURCES[context.sessionId],w=place.width(task);
+  const initial=place.digits(spec.values[0],w),originalRemaining=place.digits(spec.values[1],w);
+  const alignment=task.values.map((_,i)=>String(place.rowOffset(task,i)));
+  const total=cs=>cs.reduce((n,c,i)=>n+BigInt(c)*10n**BigInt(i),0n);
+  if(!keys(model,['history','issue','guess','first','align','started','counts','remaining','answer'])||
+     model.started!==true||!text(model.issue)||!text(model.guess)||!text(model.first)||
+     !text(model.answer)||!Array.isArray(model.history)||model.history.length<2||
+     model.history.length>10000)return null;
+  let started=false,first=null,lastGuess=null,failedStarts=0,removed=0;
+  let counts=[...initial],remaining=[...originalRemaining];
+  const events=[];let removal=null;
+  if(total(counts)!==BigInt(spec.values[0])||total(remaining)!==BigInt(spec.values[1]))return null;
+  for(const [historyIndex,event] of model.history.entries()){
+   if(event?.action==='b11-place-start'){
+    if(started||!keys(event,['action','guess','align'])||!text(event.guess)||
+       place.number(event.guess,1)===null||!Array.isArray(event.align)||
+       event.align.length!==alignment.length||
+       !event.align.every(x=>x===''||(typeof x==='string'&&/^\d+$/.test(x)&&
+         Number(x)<w&&String(Number(x))===x)))return null;
+    first??=event.guess;lastGuess=event.guess;
+    const accepted=same(event.align,alignment);
+    if(accepted)started=true;else failedStarts++;
+    events.push({historyIndex,action:event.action,accepted,guess:event.guess,
+     align:[...event.align],before:[...counts],after:[...counts]});
+    continue;
+   }
+   // Both sources have adequate tens/hundreds. Reject any exchange, repeated
+   // removal, no-op, unexpected unit, reorder, or fabricated before-state.
+   if(!started||removal||event?.action!=='b11-remove'||
+      !keys(event,['action','index','before','needed'])||
+      event.index!==spec.column||event.needed!==4||
+      !same(event.before,counts)||remaining[spec.column]!==4||
+      counts[spec.column]<4)return null;
+   const before=[...counts],beforeTotal=total(counts);
+   counts[spec.column]-=4;remaining[spec.column]=0;
+   removed=4*10**spec.column;
+   if(total(counts)!==beforeTotal-BigInt(removed)||
+      total(counts)+BigInt(removed)!==BigInt(spec.values[0])||
+      total(remaining)+BigInt(removed)!==BigInt(spec.values[1]))return null;
+   removal={historyIndex,index:spec.column,needed:4,
+    unit:10**spec.column,quantity:removed,before,after:[...counts]};
+   events.push({historyIndex,action:event.action,accepted:true,
+    index:spec.column,needed:4,before,after:[...counts]});
+  }
+  if(!started||!removal||model.first!==first||model.guess!==lastGuess||
+     !same(model.align,alignment)||model.issue!==''||
+     !same(model.counts,counts)||!same(model.remaining,remaining)||
+     !remaining.every(x=>x===0)||!counts.every(x=>integer(x,0,9))||
+     total(counts)!==BigInt(spec.result)||removed!==spec.values[1]||
+     place.number(model.answer,1)!==spec.result)return null;
+  if(!place.valid(task,model)||!place.inspect(task,model).correct)return null;
+  return {source:source.nodeId,operation:'-',values:[...spec.values],total:spec.result,
+   startCounts:[...initial],counts:[...counts],remaining:[...remaining],
+   removal,removed,failedStarts,first,events,exchangeCount:0,
+   display:{start:String(spec.values[0]),removed:String(removed),total:String(spec.result)}};
+ }catch{return null;}
+}

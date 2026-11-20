@@ -48,7 +48,7 @@ import {lineBinding,replayLineEvidence} from './line-evidence.js';
 import {counterexampleBinding,replayCounterexampleEvidence} from './counterexample-evidence.js';
 import {fractionBinding,replayFractionEvidence} from './fraction-evidence.js';
 import {unitwalkBinding,replayUnitwalkEvidence} from './unitwalk-evidence.js';
-import {placeBinding,replayPlaceEvidence} from './place-evidence.js';
+import {placeBinding,replayPlaceEvidence,placeRemovalBinding,replayPlaceRemovalEvidence} from './place-evidence.js';
 import {groupwalkBinding,replayGroupwalkEvidence} from './groupwalk-evidence.js';
 import {routeBinding,replayRouteEvidence} from './route-evidence.js';
 import {angleBinding,replayAngleEvidence} from './angle-evidence.js';
@@ -265,6 +265,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：每一步怎样接起来？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-placecalc'){
+    const removal=placeRemovalBinding(task,context);
+    if(removal)return {type:task.type,summary:'想一想：拿走的是哪一种单位？（可选）',question:removal.question};
     const source=placeBinding(task,context);
     return source?{type:task.type,summary:source.scope==='decimal'?
       '想一想：小数怎样对齐和换单位？（可选）':'想一想：换了单位，总量会变吗？（可选）',question:source.question}:null;
@@ -1523,6 +1525,18 @@ export function thinkingFeedback(task,model,record,context={}){
       detail,method:null};
   }
   if(task?.type==='x-placecalc'){
+    const removal=placeRemovalBinding(task,context);
+    if(removal){
+      const proof=replayPlaceRemovalEvidence(task,model,context);if(!proof)return null;
+      const detail=['这里只核对真实对齐和取走记录、原判题及最新提交；没有观察到心算策略、自主解释、儿童理解或长期掌握。'];
+      if(proof.failedStarts)detail.push('原记录保留 '+proof.failedStarts+' 次没有对齐成功的请求；失败不等于取走。');
+      if(attempts.slice(0,-1).some(a=>replayPlaceRemovalEvidence(task,a.value,context)===null))detail.unshift('你修改后又试了一次；原提交保留。');
+      if(record.support)detail.push('你看过提示或比较反馈。');
+      return {title:'这次作品中的思考线索',
+       observation:'从 '+proof.display.start+' 实际拿走 '+proof.removal.needed+' 份'+(proof.removal.unit===10?'十':'百')+'，共 '+proof.display.removed+'；没有换位操作。最后剩余 '+proof.display.total+'，与当前填写结果一致。',
+       connection:'这一步为什么无需拆开或重新凑十份？如果拿走的是个位单位，结果会怎样？',
+       detail,method:null};
+    }
     const source=placeBinding(task,context);
     if(!source)return null;
     const proof=replayPlaceEvidence(task,model);
