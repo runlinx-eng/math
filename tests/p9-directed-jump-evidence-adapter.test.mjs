@@ -35,7 +35,7 @@ test('eight actual B09 directed jumps admit exact signed displacement, never syn
   assert.equal(proof.end,task.start+(task.op==='+'?task.operand:-task.operand));
   assert.equal(proof.observableSuccessfulJumps.length,moves.length);
   assert.equal(proof.learnerMasteryAssessed,false);
-  assert.equal(replayDirectedJumpEvidence(task,m,context('signedwalk',index)),null);
+  assert.equal(replayDirectedJumpEvidence(task,m,context(sessionId==='signedwalk'?'linejumps':'signedwalk',index)),null);
  }
 });
 test('wrong direction, missing initial guess, forged history, changed origin, and wrong source fail closed',()=>{
