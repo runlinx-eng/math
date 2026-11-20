@@ -275,8 +275,16 @@ for(const adapter of EVIDENCE_ADAPTERS){
    const latestWrong={attempts:[{value:structuredClone(model)},{value:defaultModel(task)}]};
    assert.equal(latestSubmissionMatches(model,latestWrong),false);
    assert.equal(thinkingFeedback(task,model,latestWrong,context),null,'an older successful snapshot cannot outrank a newer submission');
-   const absent=structuredClone(model);absent.history=[];
-   assert.equal(adapter.replay(task,absent,context),null,'correct-looking final board without actions is insufficient');
+   const absent=structuredClone(model);
+   // #321: B07 records two real saved snapshots, but never writes individual add/remove history.
+   // Deleting history would manufacture a failure criterion for this explicitly bounded family.
+   if(adapter.id==='pv-saved'){
+    assert.equal(absent.history.length,0,'saved-form evidence must not invent click history');
+    absent.saved=[];
+   }else absent.history=[];
+   assert.equal(adapter.replay(task,absent,context),null,
+    adapter.id==='pv-saved'?'missing original saved representations are insufficient':
+     'correct-looking final board without actions is insufficient');
    assert.equal(thinkingFeedback(task,absent,record(absent),context),null);
    assert.equal(JSON.stringify(saved),before,'evidence lookup never mutates saved attempts');
   }
