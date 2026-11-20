@@ -9,7 +9,7 @@ const CASES=Object.freeze({
  1:{date:'2026-03-18',expected:18,kind:'number',weekday:3}
 });
 const isIndex=s=>typeof s==='string'&&/^(0|[1-9][0-9]*)$/.test(s)&&Number.isSafeInteger(Number(s));
-const isCivil=s=>typeof s==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(s);
+const isCivil=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s);
 // Independent proleptic Gregorian arithmetic; Sunday=0. Do not use displayed weekday.
 function civil(s){
  if(!isCivil(s))return null;
@@ -48,7 +48,7 @@ export function replayCalendarDateReadingEvidence(task,model,context={}){
      typeof model.prose!=='string'||model.issue!==''||
      !Array.isArray(model.answers)||model.answers.length!==1||
      (c.kind==='choice'?model.answers[0]!=='sun':
-      typeof model.answers[0]!=='string'||!/^\\s*\\+?0*18\\s*$/.test(model.answers[0]))||
+      typeof model.answers[0]!=='string'||!/^\s*\+?0*18\s*$/.test(model.answers[0]))||
      !Array.isArray(model.history)||model.history.length<1||model.history.length>1200||
      !native.valid(task,model)||!native.inspect(task,model).correct)return null;
   const board={first:{},bad:false,page:0,selected:[]};

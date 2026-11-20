@@ -1,12 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {TASKS,BRIDGES,PRACTICE} from '../dist/learning/phase5/b32.js';
 import * as native from '../dist/learning/phase5/b32-model.js';
 import {calendarDateReadingBinding,replayCalendarDateReadingEvidence} from '../dist/learning/calendar-date-reading-evidence.js';
 
+const stable=x=>Array.isArray(x)?x.map(stable):x&&typeof x==='object'?Object.fromEntries(Object.keys(x).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,stable(x[k])])):x;
+const fingerprint=t=>createHash('sha256').update(JSON.stringify(stable(t))).digest('hex');
 const cases=[
- {id:'calendaruse',index:0,date:'2026-03-15',answer:'sun',day:15,weekday:0},
- {id:'calendaruse',index:1,date:'2026-03-18',answer:'18',day:18,weekday:3}
+ {id:'calendaruse',index:0,date:'2026-03-15',hash:'18d0ebb351f38e6fc6a9e41e7a036c80c19b85dc7e430dd0632617303e0c4f2c',answer:'sun',day:15,weekday:0},
+ {id:'calendaruse',index:1,date:'2026-03-18',hash:'654994f34cef51db6825efea7ad6ddf25b1620b60016d66df1bea53765ed3d94',answer:'18',day:18,weekday:3}
 ];
 function solved(c){
  const task=TASKS[c.id][c.index],context={sessionId:c.id,index:c.index};
@@ -18,6 +21,7 @@ function solved(c){
 test('#329 both original dates have independent Gregorian results and real day clicks',()=>{
  for(const c of cases){
   const {task,context,model}=solved(c);
+  assert.equal(fingerprint(task),c.hash,'original complete source task SHA256');
   assert.equal(native.valid(task,model),true);
   assert.equal(native.inspect(task,model).correct,true);
   assert.equal(calendarDateReadingBinding(task,context)?.nodeId,'mt_tVvZVWO5d6');
@@ -73,7 +77,7 @@ test('#329 same widget must exclude prior two reviewed interval tasks, all bridg
    assert.equal(!!calendarDateReadingBinding(task,{sessionId:id,index}),expected,id+':'+index);
  }
  for(const [id,t]of Object.entries(PRACTICE||{}))
-  assert.equal(calendarDateReadingBinding(t,{sessionId:id,index:0}),null);
+  assert.equal(calendarDateReadingBinding(t,{sessionId:'practice:'+id,index:0}),null);
  for(const bridge of BRIDGES||[])for(const task of bridge.tasks||[])
   assert.equal(calendarDateReadingBinding(task,{sessionId:bridge.to,index:0}),null);
 });
