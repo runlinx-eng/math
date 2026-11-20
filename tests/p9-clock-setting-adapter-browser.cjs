@@ -99,6 +99,14 @@ async function run(){
   const action=async(selector)=>{
    const loc=page.locator(selector);
    assert.equal(await loc.count(),1,label+' exact control '+selector);
+   // #306: Retry is nested in optional history disclosures. Open the real
+   // visible summaries first, as in the verified #301 native browser route.
+   for(let n=0;n<8&&!(await loc.isVisible());n++){
+    const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+    assert.equal(await closed.count(),1,label+' collapsed ancestor '+selector);
+    await closed.locator(':scope > summary').click();
+   }
+   ok(await loc.isVisible(),label+' original control visible '+selector);
    await loc.scrollIntoViewIfNeeded();await loc.click();
   };
   const input=async(row,answer)=>{
