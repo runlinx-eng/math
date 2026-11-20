@@ -37,7 +37,8 @@ test('#294 exactly three original source fingerprints and strictly checked feedb
   const feedback=thinkingFeedback(task,model,record,context);
   assert.ok(feedback?.observation.includes('单位换算'));
   assert.equal(feedback.method,null);
-  assert.ok(feedback.detail.some(x=>x.includes('不自动认定学生自选策略')));
+  assert.ok(feedback.detail.some(x=>x.includes('不自动评价自主策略、单位解释、实际测量或长期理解'))),
+   'feedback must explicitly avoid inferring independent strategy, unit explanation, measurement or mastery');
   assert.equal(thinkingFeedback(task,model,{attempts:[]},context),null);
   const corrupted=structuredClone(model);corrupted.history=[];
   assert.equal(thinkingFeedback(task,corrupted,record,context),null);
