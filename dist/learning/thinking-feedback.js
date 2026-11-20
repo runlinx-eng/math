@@ -17,6 +17,7 @@ import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
+import {ratioShapeBinding,replayRatioShapeEvidence} from './ratioshape-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -166,6 +167,10 @@ export function thinkingGuide(task,context={}){
   if(task?.type==='x-r37-share'){
     const source=ratioShareBinding(task,context);
     return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
+  }
+  if(task?.type==='x-r37-shape'){
+    const source=ratioShapeBinding(task,context);
+    return source?{type:task.type,summary:'想一想：两条边按同一倍数缩放，面积会变成几倍？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);
@@ -655,6 +660,22 @@ export function thinkingFeedback(task,model,record,context={}){
     return{title:'这次作品中的思考线索',
       observation:'这次实际分配 '+c.totalSlots+' 个等份，份数符合 '+c.parts.join(':')+'；'+c.amounts.join(' + ')+' = '+c.total+' '+unit+'，当前提交已按给定总量独立核算。',
       connection:source.question,detail,method:null};
+  }
+  if(task?.type==='x-r37-shape'){
+    const source=ratioShapeBinding(task,context);if(!source)return null;
+    const proof=replayRatioShapeEvidence(task,model,context);if(!proof)return null;
+    const c=proof.construction;
+    const detail=[
+      '原图和可选倍数由题目、工具提供；这里只核对实际选定的倍数、保存的两条边与本次填写，不推断学生独立证明了相似图形。',
+      ...c.records.map((r,i)=>'第 '+(i+1)+' 次实际保存：倍数 '+r.factor+'，长 '+r.width+'、宽 '+r.height+'；按原边×倍数应为 '+r.expectedWidth+' 和 '+r.expectedHeight+'，对应面积 '+r.expectedArea+'、面积倍数 '+r.expectedAreaFactor+'；'+(r.correct?'两条边符合缩放':'至少有一条边不符合缩放')+'。'),
+      ...c.answers.map(a=>'本次填写“'+a.label+'”为“'+a.raw+'”，按该原题数学关系核对为“'+a.expected+'”。'),
+      '原面积 '+c.originalArea+'，最后保存的面积 '+c.scaledArea+'；两方向都乘 '+c.lastFactor+'，面积乘 '+c.areaFactor+'。'
+    ];
+    if(c.wrongSaveIndices.length)detail.push('以前有保存错误边长、后来真实纠正的操作，历史仍保留；未提交的编辑不冒称已经检查的错误答案。');
+    if(attempts.length>1)detail.push('以前的检查快照仍保留；这里仅对应最新一次真实检查的完整作品。');
+    if(record.support)detail.push('曾打开提示或比较反馈。');
+    detail.push('对应角不变只按原选择题核对；没有记录独立证明、实际测量、自由解释或长期掌握。');
+    return {title:'这次作品中的思考线索',observation:'实际保存了 '+c.records.length+' 次长宽缩放；最后长 '+c.lastWidth+'、宽 '+c.lastHeight+'，两条边同乘 '+c.lastFactor+'，面积由 '+c.originalArea+' 变为 '+c.scaledArea+'，即 '+c.areaFactor+' 倍。',connection:source.question,detail,method:null};
   }
   if(task?.type==='x-t32-compare'){
     const source=timeCompareBinding(task,context);if(!source)return null;

@@ -6649,6 +6649,51 @@
       "adapter": "ratioshare",
       "taskHash": "7e1cfdcf04357764bdfa0d4d05a4787ea3990315d322671e927d285fef7003ad",
       "method": null
+    },
+    {
+      "sessionId": "pctIdeas37",
+      "index": 2,
+      "type": "x-r37-shape",
+      "nodeId": "mt_ESgc4YBw-a",
+      "adapter": "ratioshape",
+      "taskHash": "68ce4e9f7f57f0887fd4961b56c9aa511ac775ad9e9d6f332b23eb50069aa97a",
+      "method": null
+    },
+    {
+      "sessionId": "recipeScale37",
+      "index": 2,
+      "type": "x-r37-shape",
+      "nodeId": "mt_ZOJ6EbdPOb",
+      "adapter": "ratioshape",
+      "taskHash": "b8c33afe27e8113c2df0d6219224f77a50faaf0ae56f47fcbfa43fa36909ccf0",
+      "method": null
+    },
+    {
+      "sessionId": "similar37",
+      "index": 0,
+      "type": "x-r37-shape",
+      "nodeId": "mt_2OtRUM_0zW",
+      "adapter": "ratioshape",
+      "taskHash": "ff7621db6a87718bf59a4c2d545cab909eb85e87af100a28b8f5c02a606a66b9",
+      "method": null
+    },
+    {
+      "sessionId": "similar37",
+      "index": 2,
+      "type": "x-r37-shape",
+      "nodeId": "mt_2OtRUM_0zW",
+      "adapter": "ratioshape",
+      "taskHash": "94e53fe969f56d86e4aaaf696645334e8d2ecc44bdfedc0538377cf58a40014d",
+      "method": null
+    },
+    {
+      "sessionId": "scaleArea37",
+      "index": 0,
+      "type": "x-r37-shape",
+      "nodeId": "mt_CUJr8L5_Wn",
+      "adapter": "ratioshape",
+      "taskHash": "84f8a46d71de3c4bd6bc11fc90eabc87a6c57171a216d90db92976ff043ac06b",
+      "method": null
     }
   ]
 }
