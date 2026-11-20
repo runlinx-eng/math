@@ -26,7 +26,7 @@
     {
       "id": "Q02",
       "rank": 2,
-      "reason": "Six source-specific x-placecalc tasks; reuse precise decimal-unit proof while keeping distinct tens/hundreds contracts.",
+      "reason": "Six x-placecalc sources inspected: b11-place-start auto-combines all four additions, so do not claim manual bundle moves; the two no-regrouping subtractions record actual b11-remove and can be conditionally evaluated with an independent zero-exchange replay.",
       "positions": [
         "tensmove:0",
         "tensmove:1",
@@ -35,21 +35,27 @@
         "hundredsmove:1",
         "hundredsmove:2"
       ],
-      "currentStatus": "not started",
-      "formalCoverageDelta": 0
+      "currentStatus": "static-source-feasibility-reviewed-two-conditional-subtractions",
+      "formalCoverageDelta": 0,
+      "feasibilityReview": "docs/math-family-preaudit/source-feasibility.json",
+      "reviewedAtMain": "2ef5c4c0445f510136685b66a1543f826dd1f81e",
+      "effectivePriority": "after-Q01: two real b11-remove positions only; four additions require stronger observable operations"
     },
     {
       "id": "Q03",
       "rank": 3,
-      "reason": "Four geometry tasks with strong instructional value and known perpendicular-altitude counterexamples; high math risk, after source geometry review.",
+      "reason": "All four triArea originals use preset polygon pieces, tool-defined transform toggles and one-part area records; no learner-defined cuts, translations or altitudes. triArea:3 uses irrational vertex geometry and does not explicitly ask learners to select perpendicular height versus slope.",
       "positions": [
         "triArea:0",
         "triArea:1",
         "triArea:2",
         "triArea:3"
       ],
-      "currentStatus": "not started",
-      "formalCoverageDelta": 0
+      "currentStatus": "deferred-source-events-insufficient-for-strict-self-construction",
+      "formalCoverageDelta": 0,
+      "feasibilityReview": "docs/math-family-preaudit/source-feasibility.json",
+      "reviewedAtMain": "2ef5c4c0445f510136685b66a1543f826dd1f81e",
+      "effectivePriority": "deferred: do not schedule as automatic four-task A batch without new true construction evidence"
     },
     {
       "id": "Q04",
@@ -4087,5 +4093,7 @@
       "proportionGraph37:0"
     ],
     "note": "Pending, not A; separate ongoing development."
-  }
+  },
+  "feasibilityReviewAt": "2ef5c4c0445f510136685b66a1543f826dd1f81e",
+  "feasibilityEvidence": "docs/math-family-preaudit/source-feasibility.json"
 }
