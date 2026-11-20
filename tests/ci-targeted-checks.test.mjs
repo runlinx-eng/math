@@ -137,10 +137,12 @@ test('#315 daily impacted-family selection stays independent of total full capac
   artifacts:['verification/p9-overflow'+i+'/'],
   resources:{...registry.newFamilies[0].resources,estimatedScriptMinutes:29}
  })));
- const defs=dailyDefinitions; // Source-aware helper validates paths in real runs.
- assert.equal(typeof defs,'function');
+ const independent=dailyDefinitions(expanded,{fileExists:()=>true});
+ assert.equal(Object.values(independent).filter(d=>d.newFamily).length,expanded.newFamilies.length);
+ assert.throws(()=>buildLiveBrowserMatrix(expanded,{fileExists:()=>true}),
+  /single parallel|Cannot run dependency|wave|capacity/);
  const p=planTargetedChecks({event:'pull_request',changedFiles:['docs/LEARNING-DESIGN.md'],
-  registry:expanded,definitions:definitions});
+  registry:expanded,definitions:independent});
  assert.deepEqual(p.scripts,[]);
  const q=planTargetedChecks({event:'pull_request',changedFiles:['dist/learning/area-evidence.js'],
   registry:expanded,definitions:definitions});

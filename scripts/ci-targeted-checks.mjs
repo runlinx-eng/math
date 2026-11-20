@@ -166,7 +166,7 @@ function previousRegistry(event,changed){
 // Daily selection is deliberately independent of the historical full-regression
 // packing. Retain the exact legacy scripts and checked family entrypoints, but
 // never call the full ten-bin/29-minute packer for a routine PR or main push.
-export function dailyDefinitions(registry){
+export function dailyDefinitions(registry,{fileExists=p=>existsSync(resolve(root,p))}={}){
  check(registry?.schema==='math-ci-family-registry/1'&&Array.isArray(registry.newFamilies),
   'Invalid reviewed registry for daily checks');
  const definitions={...BROWSER_GROUPS},entries=new Set(Object.values(BROWSER_GROUPS)
@@ -174,7 +174,7 @@ export function dailyDefinitions(registry){
  for(const family of registry.newFamilies){
   check(typeof family.familyId==='string'&&/^[a-z][a-z0-9-]*$/.test(family.familyId),
    'Invalid daily family identity');
-  check(safeScript.test(family.entry)&&existsSync(resolve(root,family.entry)),
+  check(safeScript.test(family.entry)&&fileExists(family.entry),
    'Missing registered daily family browser script');
   check(!entries.has(family.entry),'Duplicate registered browser entry');
   entries.add(family.entry);
