@@ -43,7 +43,7 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
  assert.ok(source().newFamilies.every(m=>m.required===true));
  assert.ok(plan.plannedNewJobs.every(job=>Number.isInteger(job.wave)&&job.wave>=1));
  assert.ok(plan.plannedNewJobs.some(job=>job.wave>1),
-  'current 28-family inventory exceeds one 290-minute wave and must queue safely');
+  'current mandatory inventory exceeds one 290-minute wave and must queue safely');
  assert.ok(plan.plannedNewJobs.every(job=>job.scriptMinutes<=29&&job.peakMemoryMiB<=6000));
  assert.deepEqual(plan.legacyGroups.map(g=>g.id),Object.keys(BROWSER_GROUPS));
  assert.ok(plan.legacyGroups.every(g=>g.mandatory));
@@ -53,7 +53,10 @@ test('#239 shadow only: exact 13 legacy groups, 86 commands, 85 scripts and 83 e
 });
 
 test('#312 historical 27 mandatory families still fit ten protected 29-minute jobs',()=>{
- const reg=source();reg.newFamilies=reg.newFamilies.filter(x=>x.familyId!=='calendar-interval');
+ const reg=source();
+ const end=reg.newFamilies.findIndex(x=>x.familyId==='calendar-interval');
+ assert.equal(end,27,'#312 reviewed historical inventory is a frozen prefix');
+ reg.newFamilies=reg.newFamilies.slice(0,end);
  const plan=planShadow(reg);
  assert.equal(reg.newFamilies.length,27);
  assert.equal(reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0),287);
@@ -63,8 +66,12 @@ test('#312 historical 27 mandatory families still fit ten protected 29-minute jo
  assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
   reg.newFamilies.map(m=>m.familyId).sort());
 });
-test('#314 current 28 source-reviewed families use safely queued waves without dropping scripts',()=>{
- const reg=source(),plan=accepted();
+test('#314 historical 28 source-reviewed families use safely queued waves without dropping scripts',()=>{
+ const reg=source();
+ const end=reg.newFamilies.findIndex(x=>x.familyId==='unit-tile-area');
+ assert.equal(end,28,'#314 reviewed historical inventory is a frozen prefix');
+ reg.newFamilies=reg.newFamilies.slice(0,end);
+ const plan=planShadow(reg);
  assert.equal(reg.newFamilies.length,28);
  assert.equal(reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0),292);
  assert.ok(plan.plannedNewJobs.some(j=>j.wave>1),'292 estimated minutes must exceed one ten-job wave');
@@ -75,6 +82,22 @@ test('#314 current 28 source-reviewed families use safely queued waves without d
  assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
   reg.newFamilies.map(m=>m.familyId).sort(),'no family lost or repeated across waves');
 });
+test('#318 and future reviewed families retain every mandatory script across protected queued waves',()=>{
+ const reg=source(),plan=accepted();
+ const total=reg.newFamilies.reduce((sum,m)=>sum+m.resources.estimatedScriptMinutes,0);
+ assert.ok(reg.newFamilies.length>=29,'#318 extends the 28-family historical inventory');
+ assert.ok(reg.newFamilies.some(m=>m.familyId==='unit-tile-area'&&
+  m.entry==='tests/p9-unit-tile-area-adapter-browser.cjs'));
+ assert.ok(total>=297,'current reviewed inventory exceeds the initial 290-minute wave');
+ assert.ok(plan.plannedNewJobs.some(j=>j.wave>1));
+ assert.ok(plan.plannedNewJobs.every(j=>j.scriptMinutes<=29&&j.peakMemoryMiB<=8192));
+ assert.ok([...new Set(plan.plannedNewJobs.map(j=>j.wave))].every(w=>
+  plan.plannedNewJobs.filter(j=>j.wave===w).length<=10));
+ assert.equal(plan.plannedNewJobs.reduce((sum,j)=>sum+j.scriptMinutes,0),total);
+ assert.deepEqual(plan.plannedNewJobs.flatMap(j=>j.modules.map(m=>m.familyId)).sort(),
+  reg.newFamilies.map(m=>m.familyId).sort(),'no previously registered family lost or repeated');
+});
+
 test('#312 truly over-capacity independent families still produce rejected later waves',()=>{
  const modules=Array.from({length:11},(_,i)=>fakeModule('full'+i,{minutes:29}));
  const plan=withSynthetic(modules);
