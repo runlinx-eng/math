@@ -339,6 +339,8 @@ jobs:
             tests/p9-ratiopair-evidence.test.mjs
             tests/p9-ratioshare-evidence.test.mjs
             tests/p9-ratioshare-source.test.mjs
+            tests/p9-ratioshape-evidence.test.mjs
+            tests/p9-ratioshape-source.test.mjs
             tests/p9-ratiopair-source.test.mjs
             tests/p9-plot-evidence.test.mjs
             tests/p9-unitcover-evidence.test.mjs
