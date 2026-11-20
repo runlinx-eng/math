@@ -83,6 +83,7 @@ const reviewed={
  ratiosteps:[...positions('scaleMap37',[0,1,2]),...positions('scaleArea37',[1,2])],
  pctchange:positions('pctChange37',[0,1,2]),
  fractionparts:positions('fractionOf37',[0,1,2]),
+ rationotation:positions('ratioNotation37',[1,2]),
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
