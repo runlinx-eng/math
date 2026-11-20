@@ -134,7 +134,7 @@ export function replayWideShiftAddEvidence(task,model,context={}){
      model.guess!==model.committed||integer(model.committed)===null||
      model.shift!==0||model.trace.length||model.factor!==''||
      model.direction!==''||model.exponent!==''||
-     !Array.isArray(model.actions)||model.actions.length<4||
+     !Array.isArray(model.actions)||model.actions.length<3||
      model.actions.length>512)return null;
   const start=BigInt(task.start),end=start+BigInt(task.step);
   let row=rowOf(start),predicted=false,sumOfMoves=0;
