@@ -989,6 +989,33 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "calendar-date-reading",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-calendar-date-reading-adapter-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-calendar-date-reading-adapter/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative",
+        "backup"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 5,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }
