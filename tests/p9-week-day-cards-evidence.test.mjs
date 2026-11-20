@@ -1,5 +1,8 @@
 // #333 WIP math/source preflight. Never interpret Node alone as formal A.
 import test from 'node:test';
+import {weekDayCardsFingerprint,weekDayCardsEvidenceExample} from '../scripts/week-day-cards-evidence-fixture.mjs';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 import assert from 'node:assert/strict';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
@@ -27,7 +30,16 @@ test('exact original week/day source is isolated without prematurely granting A'
  assert.equal(LESSONS.timeconvert.topicId,'mt_2yas4Unc8o');
  assert.equal(task.type,'x-t32-units');
  assert.equal(bind(task,source)?.method,null);
- validExample();
+ assert.equal(EVIDENCE_ADAPTERS.find(x=>x.id==='week-day-cards')?.type,'x-t32-units');
+ assert.equal(weekDayCardsFingerprint(task),'b4bdce5c9ab7c5c273aed81f2d2daeb33dfa3ccf22c838df1b21e5948bbe899a','complete frozen task SHA256');
+ assert.deepEqual(weekDayCardsEvidenceExample(task),native.example(task));
+ const current=validExample(),record={attempts:[{value:structuredClone(current)}]};
+ const feedback=thinkingFeedback(task,current,record,source);
+ assert.ok(thinkingGuide(task,source));
+ assert.ok(feedback&&feedback.detail.some(text=>text.includes('不证明孩子独立推导')));
+ assert.equal(feedback.method,null);
+ const stale=copy(current);stale.answers[0]='11';
+ assert.equal(thinkingFeedback(task,stale,record,source),null);
  for(const changed of [
   {...task,prompt:task.prompt+'!'},
   {...task,parts:task.parts.slice(1)},
