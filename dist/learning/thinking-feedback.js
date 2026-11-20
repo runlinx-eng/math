@@ -34,6 +34,7 @@ import {proportionalGraphBinding,replayProportionalGraphEvidence} from './propor
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
 import {unitRateStepsBinding,replayUnitRateStepsEvidence} from './unitrate-steps-evidence.js';
+import {estimateStepsBinding,replayEstimateStepsEvidence} from './estimate-steps-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
@@ -204,6 +205,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-r37-steps'){
+    const estimateSource=estimateStepsBinding(task,context);
+    if(estimateSource)return{type:task.type,summary:'想一想：近似值如何帮助检查本题结果的量级？（可选）',question:estimateSource.question};
     const rateSource=unitRateStepsBinding(task,context);
     if(rateSource)return {type:task.type,summary:'想一想：单位率怎样连接两种数量？（可选）',question:rateSource.question};
     const scaleSource=ratioStepsBinding(task,context);
@@ -801,6 +804,26 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-r37-steps'){
+    const estimateSource=estimateStepsBinding(task,context);
+    if(estimateSource){
+      const proof=replayEstimateStepsEvidence(task,model,context);
+      if(!proof)return null;
+      const p=proof.construction;
+      const detail=[
+        '题卡已经给出了近似步骤；这里只核对实际保存的数字与最后的量级判断，不证明学生自主提出估算策略。',
+        ...p.records.map((v,i)=>'第 '+(i+1)+' 次真实操作（第 '+(v.index+1)+' 步）保存“'+v.answer+'”；'+(v.correct?'与本步独立数学计算一致':'与本步数学计算不一致')+'。'),
+        ...p.steps.map(v=>'步骤“'+v.originalLabel+'”：独立复核的数值为 '+v.quantity+'。'),
+        '本题独立核算：'+p.reference+'。',
+        '估算和精确结果的关系只在这道原题的给定数值下复核，不把接近当作一般准确性证明。',
+        '末步真实选择了“'+p.terminalChoice+'”。题卡原有的步骤与选项不代表自由解释、通用数量级定理或长期掌握。'
+      ];
+      if(p.wrongStepIndices.length)detail.push('原始历史同时保留首次错误与真实更正。');
+      if(attempts.length>1)detail.push('旧Check记录仍保留；这里只描述最新一致的提交。');
+      if(record.support)detail.push('曾查看原有提示或比较反馈。');
+      return{title:'这次作品中的思考线索',
+        observation:'依原题的提示，实际保存了 '+p.steps.length+' 个估算数值并作出一次量级判断；已按两个独立来源的数学关系核验。',
+        connection:estimateSource.question,detail,method:null};
+    }
     const rateSource=unitRateStepsBinding(task,context);
     if(rateSource){
       const proof=replayUnitRateStepsEvidence(task,model,context);if(!proof)return null;
