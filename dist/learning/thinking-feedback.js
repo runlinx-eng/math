@@ -933,7 +933,7 @@ export function thinkingFeedback(task,model,record,context={}){
     const detail=[
       '你实际在原生日历中选择了 '+proof.firstDate+' 和 '+proof.lastDate+'，保存了 '+proof.observedDayClicks+' 次日期点击。',
       '按公历逐日计算，从起始日之后开始计，到结束日共经过 '+proof.elapsedDays+' 天；起始日不重复算。',
-      '跨月时必须使用各月真实天数；2024年2月有29天。',
+      '跨月时必须使用各月真实天数；2024年是闰年，2月有29天。',
       '日历格子与星期由工具绘制；这里只证明选日与最新填写的间隔一致，不证明你独立心算、自由解释或长期掌握。'
     ];
     if(attempts.length>1)detail.push('先前的错误Check仍保留，这里只描述最新一次真实提交。');
