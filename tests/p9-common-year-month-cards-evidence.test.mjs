@@ -2,10 +2,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {sessionTasks} from '../dist/learning/bridges.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as native from '../dist/learning/phase5/b32-model.js';
 import {commonYearMonthCardsBinding as bind,replayCommonYearMonthCardsEvidence as replay}
  from '../dist/learning/common-year-month-cards-evidence.js';
 
+await ensureB39Ready();
 const source={sessionId:'calendarfacts',index:1};
 const task=sessionTasks(source.sessionId)[source.index];
 const copy=structuredClone;
