@@ -714,7 +714,7 @@
       ],
       "dependsOn": [],
       "resources": {
-        "estimatedScriptMinutes": 12,
+        "estimatedScriptMinutes": 5,
         "memoryMiB": 4096,
         "runnerType": "standard",
         "exclusiveLocks": []
