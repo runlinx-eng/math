@@ -131,3 +131,19 @@ test('#312 exact answer is stricter than original rational grader, not the rever
  assert.equal(model.inspect(t,m).correct,true);
  assert.equal(replayDirectedJumpEvidence(t,m,ctx),null);
 });
+
+test('#312 latest checked attempt enables bounded feedback',async()=>{
+ const {thinkingGuide,thinkingFeedback}=await import('../dist/learning/thinking-feedback.js');
+ for(const row of source.cases){
+  const t=sessionTaskFor(row.id,row.index),ctx=context(row),m=build(t,row.moves);
+  const saved={support:false,attempts:[{value:structuredClone(m)}]};
+  assert.ok(thinkingGuide(t,ctx));const feedback=thinkingFeedback(t,m,saved,ctx);
+  assert.ok(feedback?.observation.includes(String(target(t))));
+  assert.ok(feedback.detail.some(x=>x.includes('长期掌握')));
+  assert.equal(thinkingFeedback(t,m,{support:false,attempts:[]},ctx),null);
+  const altered=structuredClone(m);altered.answer=String(target(t)+1);
+  assert.equal(thinkingFeedback(t,altered,saved,ctx),null);
+  const undo=structuredClone(m);undo.history=[];
+  assert.equal(thinkingFeedback(t,undo,{support:false,attempts:[{value:undo}]},ctx),null);
+ }
+});

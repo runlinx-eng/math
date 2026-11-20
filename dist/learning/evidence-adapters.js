@@ -16,6 +16,7 @@ import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
 import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {perimeterEdgeBinding,replayPerimeterEdgeEvidence} from './perimeter-edge-evidence.js';
+import {directedJumpBinding,replayDirectedJumpEvidence} from './directed-jump-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -98,6 +99,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  })),
  {id:'clock-setting',type:'x-t32-clock',binding:clockSettingBinding,replay:replayClockSettingEvidence},
  {id:'area-edge',type:'x-a30-grid',binding:perimeterEdgeBinding,replay:replayPerimeterEdgeEvidence},
+ {id:'directed-jump',type:'x-directedjump',binding:directedJumpBinding,replay:replayDirectedJumpEvidence},
  {id:'timecompare',type:'x-t32-compare',binding:timeCompareBinding,replay:replayTimeCompareEvidence},
  {id:'ratiopair',type:'x-r37-pair',binding:ratioPairBinding,replay:replayRatioPairEvidence},
  {id:'ratioshare',type:'x-r37-share',binding:ratioShareBinding,replay:replayRatioShareEvidence},

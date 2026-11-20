@@ -800,6 +800,33 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "directed-jump",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-directed-jump-adapter-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-directed-jump-adapter/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative",
+        "backup"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 8,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }
