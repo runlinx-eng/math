@@ -7144,6 +7144,42 @@
       "adapter": "unit-tile-area",
       "taskHash": "3fa5666f59799e2d95267be6c2c8f218155941a817e0525d19be8fbe8199a4f1",
       "method": null
+    },
+    {
+      "sessionId": "twoproblems",
+      "index": 2,
+      "type": "x-pvbench",
+      "nodeId": "mt_kJGCjnuelW",
+      "adapter": "pv-saved",
+      "taskHash": "59a6ea394f2dcd1b08303a7cc9805a2486e9d1f6e520d0922fd85fc9d5718b09",
+      "method": null
+    },
+    {
+      "sessionId": "faces100",
+      "index": 1,
+      "type": "x-pvbench",
+      "nodeId": "mt_9L3NQqgqRd",
+      "adapter": "pv-saved",
+      "taskHash": "07e8a17978517505e0ac71b1a76c2496470f34174a8284302e42e92cbd186991",
+      "method": null
+    },
+    {
+      "sessionId": "faces120",
+      "index": 1,
+      "type": "x-pvbench",
+      "nodeId": "mt_QguIGVMB1o",
+      "adapter": "pv-saved",
+      "taskHash": "52d7025de61aaa946b91cdfc0c1a24104caa2360d176f82c2323d461f8c8dcf3",
+      "method": null
+    },
+    {
+      "sessionId": "screen1000",
+      "index": 0,
+      "type": "x-pvbench",
+      "nodeId": "mt_HczwO1sr-y",
+      "adapter": "pv-saved",
+      "taskHash": "cd08dd4052954442639f3886a17c6b73cef0c85c906aedd155f53d49388f16b6",
+      "method": null
     }
   ]
 }

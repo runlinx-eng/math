@@ -2,6 +2,7 @@ import {orderEvidenceExample} from './order-evidence-fixture.mjs';
 import {areaEvidenceExample} from './area-evidence-fixture.mjs';
 import {timeEvidenceExample} from './time-evidence-fixture.mjs';
 import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
+import {pvSavedEvidenceExample} from './pv-saved-evidence-fixture.mjs';
 import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
 import {paperLabEvidenceExample} from './paperlab-evidence-fixture.mjs';
 // Read-only, source-derived task interaction and evidence capability inventory.
@@ -77,7 +78,7 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // reviewed binding and successful independent replay establish A, not a board key.
  const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
    adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task),{sessionId,index})):null;
+   adapter.replay(task,adapter.id==='pv-saved'?pvSavedEvidenceExample(task,{sessionId,index}):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task),{sessionId,index})):null;
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}

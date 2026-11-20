@@ -2,6 +2,8 @@ import {orderEvidenceExample} from './order-evidence-fixture.mjs';
 import {areaEvidenceExample} from './area-evidence-fixture.mjs';
 import {timeEvidenceExample} from './time-evidence-fixture.mjs';
 import {pvbenchEvidenceExample} from './pvbench-evidence-fixture.mjs';
+import {pvSavedEvidenceExample} from './pv-saved-evidence-fixture.mjs';
+import {pvSavedBinding} from '../dist/learning/pv-saved-evidence.js';
 import {wideShiftEvidenceExample} from './wideshift-evidence-fixture.mjs';
 import {paperLabEvidenceExample} from './paperlab-evidence-fixture.mjs';
 // Source-derived candidates are review work, never automatic runtime admission.
@@ -30,7 +32,7 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
  Object.fromEntries(Object.keys(value).sort(sort).map(key=>[key,stable(value[key])])):value;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
-const fixtureFor=task=>task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-a30-grid'&&task.mode==='edge'?exampleModel(task):task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type==='x-orderlab'?orderEvidenceExample(task):exampleModel(task);
+const fixtureFor=(task,context)=>task.type==='x-pvbench'&&pvSavedBinding(task,context)?pvSavedEvidenceExample(task,context):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-a30-grid'&&task.mode==='edge'?exampleModel(task):task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type==='x-orderlab'?orderEvidenceExample(task):exampleModel(task);
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
@@ -68,7 +70,7 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
    const candidates=adapters.filter(adapter=>adapter.type===task.type),matches=[];
    let example=null,exampleError=null;
    if(candidates.length||expected){
-    try{example=fixtureFor(task);}
+    try{example=fixtureFor(task,context);}
     catch(error){exampleError=String(error.message||error);}
    }
    // A registry declaration must not conceal an accidentally broad binding.
@@ -141,7 +143,7 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
   // leak reviewed native observations even while every adapter still says null.
   if(adapters.some(adapter=>adapter.type===task.type)){
    try{
-    const guide=guideFor(task,context),example=fixtureFor(task);
+    const guide=guideFor(task,context),example=fixtureFor(task,context);
     const feedback=feedbackFor(task,example,{attempts:[{value:structuredClone(example)}]},context);
     if(guide)report('bridge-inherits-native-guide',key,'Associated work received a native evidence guide');
     if(feedback)report('bridge-inherits-native-feedback',key,'Associated work received native strict factual feedback');

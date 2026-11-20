@@ -467,7 +467,9 @@ test('registered feedback uses actual checked work, preserves all attempts and n
   assert.equal(thinkingFeedback({...task,prompt:task.prompt+' changed'},model,record,c),null);
   assert.deepEqual(record,before,'production feedback never reconstructs or edits the checked record');
  }
- for(const c of [...unbound,...associated]){
+ // Four independently reviewed nonfixed positions now belong to pv-saved, not fixed pvbench.
+ const newlyReviewed=new Set(['twoproblems:2','faces100:1','faces120:1','screen1000:0']);
+ for(const c of [...unbound.filter(c=>!newlyReviewed.has(c.id+':'+c.index)),...associated]){
   const task=taskFor(c),model=pvbenchEvidenceExample(task);
   assert.equal(thinkingGuide(task,c),null);assert.equal(thinkingFeedback(task,model,{attempts:[{value:model}]},c),null);
  }

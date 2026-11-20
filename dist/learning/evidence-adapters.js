@@ -32,6 +32,7 @@ import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconver
 import {proportionalStepsBinding,replayProportionalStepsEvidence} from './proportionalsteps-evidence.js';
 import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
+import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
@@ -117,6 +118,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'proportionalsteps',type:'x-r37-steps',binding:proportionalStepsBinding,replay:replayProportionalStepsEvidence},
  {id:'proportionalgraph',type:'x-graphpoints',binding:proportionalGraphBinding,replay:replayProportionalGraphEvidence},
  {id:'pvbench',type:'x-pvbench',binding:pvbenchBinding,replay:replayPVBenchEvidence},
+ {id:'pv-saved',type:'x-pvbench',binding:pvSavedBinding,replay:replayPVSavedEvidence},
  {id:'wideshift',type:'x-wideshift',binding:wideShiftBinding,replay:replayWideShiftEvidence},
  {id:'wideshift-add',type:'x-wideshift',binding:wideShiftAddBinding,replay:replayWideShiftAddEvidence},
  {id:'sequence',type:'x-p34-sequence',binding:sequenceBinding,replay:replaySequenceEvidence},
