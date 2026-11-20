@@ -2,7 +2,7 @@
 // frozen native hashes, adversarial tests, original Chromium and new-main gates.
 // Replays actual hour/minute controls; correct displayed time alone is insufficient.
 import * as clock from './phase5/b32-model.js';
-import {matchesNativeEvidenceTask,hasExactKeys as keys,sameEvidence as same} from './evidence-contract.js';
+import {isEvidenceContext,matchesNativeEvidenceTask,hasExactKeys as keys,sameEvidence as same} from './evidence-contract.js';
 
 const CASES=Object.freeze({
  hourclock:{index:2,nodeId:'mt_0XxyaQLRhn',target:150,minute:30},
@@ -13,6 +13,7 @@ const exact=(s,min,max)=>typeof s==='string'&&/^(0|[1-9][0-9]*)$/.test(s)&&
  Number.isSafeInteger(Number(s))&&Number(s)>=min&&Number(s)<=max;
 
 export function clockSettingBinding(task,context={}){
+ if(!isEvidenceContext(context))return null;
  const c=Object.hasOwn(CASES,context?.sessionId)?CASES[context.sessionId]:null;
  if(!c||context.index!==c.index||!matchesNativeEvidenceTask(task,context,
   {type:'x-t32-clock',nodeId:c.nodeId})||task.mode!=='set'||
@@ -20,11 +21,20 @@ export function clockSettingBinding(task,context={}){
  return {nodeId:c.nodeId,kind:'clock-setting',method:null,
   question:'长针每前进一分钟，短针为什么也会缓慢前进？最后短针应落在两个整点之间的哪里？'};
 }
+const exactAnswer=(sessionId,value)=>{
+ if(typeof value!=='string')return false;
+ const answer=value.trim();
+ if(sessionId==='hourclock')return answer==='between';
+ const target=sessionId==='fiveclock'?20:15;
+ return new RegExp('^[+]?0*'+target+'(?:[.]0+)?$').test(answer);
+};
 export function replayClockSettingEvidence(task,model,context={}){
  try{
   const binding=clockSettingBinding(task,context);
   if(!binding||!keys(model,['hour','minute','jump','prose','answers','board','history','issue'])||
     !Array.isArray(model.history)||model.history.length<2||model.history.length>1200||
+    !Array.isArray(model.answers)||model.answers.length!==1||
+    !exactAnswer(context.sessionId,model.answers[0])||
     !clock.valid(task,model)||!clock.inspect(task,model).correct||
     model.issue!==''||!exact(model.hour,1,12)||!exact(model.minute,0,59))return null;
   let hour=1,minute=5,firstHour=null,firstMinute=null;

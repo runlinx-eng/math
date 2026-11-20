@@ -50,3 +50,27 @@ test('#306 rejects answer-only, history corruption, wrong source and stale clock
   assert.equal(replayClockSettingEvidence(task,model,{sessionId:'clockconvert',index:0}),null);
  }
 });
+
+test('#306 rejects malformed contexts, strict numeric approximations and old checked snapshots',async()=>{
+ const {thinkingGuide,thinkingFeedback}=await import('../dist/learning/thinking-feedback.js');
+ for(const [id,index,h,m] of cases){
+  const {task,model,context}=solved(id,index,h,m);
+  const saved={support:false,attempts:[{value:structuredClone(model)}]};
+  assert.ok(thinkingGuide(task,context));
+  assert.ok(thinkingFeedback(task,model,saved,context));
+  for(const bad of [null,[],false,0,{sessionId:{toString:null},index},
+   {sessionId:id,index:String(index)},{sessionId:id,index:0.5}]){
+   assert.equal(clockSettingBinding(task,bad),null);
+   assert.equal(thinkingGuide(task,bad),null);
+   assert.equal(thinkingFeedback(task,model,saved,bad),null);
+  }
+  assert.equal(thinkingFeedback(task,{...model,prose:'changed'},saved,context),null);
+  assert.equal(thinkingFeedback(task,model,{attempts:[{value:model},{value:clock.initial(task)}]},context),null);
+  if(id!=='hourclock'){
+   const approximate=structuredClone(model);
+   approximate.answers[0]+='.00000000001';
+   assert.equal(clock.inspect(task,approximate).correct,true);
+   assert.equal(replayClockSettingEvidence(task,approximate,context),null);
+  }
+ }
+});

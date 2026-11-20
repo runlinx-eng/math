@@ -14,6 +14,7 @@ import {moneyBinding,replayMoneyEvidence} from './money-evidence.js';
 import {orderBinding,replayOrderEvidence} from './order-evidence.js';
 import {areaBinding,replayAreaEvidence} from './area-evidence.js';
 import {timeBinding,replayTimeEvidence} from './time-evidence.js';
+import {clockSettingBinding,replayClockSettingEvidence} from './clock-setting-evidence.js';
 import {timeCompareBinding,replayTimeCompareEvidence} from './timecompare-evidence.js';
 import {ratioPairBinding,replayRatioPairEvidence} from './ratiopair-evidence.js';
 import {ratioShareBinding,replayRatioShareEvidence} from './ratioshare-evidence.js';
@@ -94,6 +95,7 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
   binding:(task,context)=>task?.type==='x-t32-'+kind?timeBinding(task,context):null,
   replay:replayTimeEvidence
  })),
+ {id:'clock-setting',type:'x-t32-clock',binding:clockSettingBinding,replay:replayClockSettingEvidence},
  {id:'timecompare',type:'x-t32-compare',binding:timeCompareBinding,replay:replayTimeCompareEvidence},
  {id:'ratiopair',type:'x-r37-pair',binding:ratioPairBinding,replay:replayRatioPairEvidence},
  {id:'ratioshare',type:'x-r37-share',binding:ratioShareBinding,replay:replayRatioShareEvidence},
