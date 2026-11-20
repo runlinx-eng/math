@@ -183,6 +183,9 @@ async function main(){
   // Native unchanged V2 download and import into an independent truly empty context.
   label='native-v2-restore';await page.goto(origin.base+'v2.html#trail');
   const source=await decoded(page);
+  // v2.html loads exploration.js asynchronously; require the real rendered export control.
+  // Do not relax click uniqueness or the downloaded native State-v2 equality checks.
+  await page.locator('#main [data-do="export"]').waitFor({state:'visible'});
   const started=page.waitForEvent('download');await click('#main [data-do="export"]');
   const download=await started,bytes=fs.readFileSync(await download.path()),backup=JSON.parse(bytes.toString('utf8'));
   ok(backup.app==='math-explorer'&&backup.version===2,'unchanged native V2 backup');
