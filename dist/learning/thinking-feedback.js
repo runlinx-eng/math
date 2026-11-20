@@ -33,6 +33,7 @@ import {proportionalStepsBinding,replayProportionalStepsEvidence} from './propor
 import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
+import {unitRateStepsBinding,replayUnitRateStepsEvidence} from './unitrate-steps-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
 import {mixedAxisBinding,replayMixedAxisEvidence} from './mixedaxis-evidence.js';
@@ -203,6 +204,8 @@ export function thinkingGuide(task,context={}){
     return source?{type:task.type,summary:'想一想：整个分成几份同样大的小份，怎样按比给每个人？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-r37-steps'){
+    const rateSource=unitRateStepsBinding(task,context);
+    if(rateSource)return {type:task.type,summary:'想一想：单位率怎样连接两种数量？（可选）',question:rateSource.question};
     const scaleSource=ratioStepsBinding(task,context);
     if(scaleSource)return{type:task.type,summary:'想一想：先对齐长度单位，再看面积倍数（可选）',question:scaleSource.question};
     const changeSource=pctChangeBinding(task,context);
@@ -798,6 +801,24 @@ export function thinkingFeedback(task,model,record,context={}){
       connection:source.question,detail,method:null};
   }
   if(task?.type==='x-r37-steps'){
+    const rateSource=unitRateStepsBinding(task,context);
+    if(rateSource){
+      const proof=replayUnitRateStepsEvidence(task,model,context);if(!proof)return null;
+      const p=proof.construction;
+      const detail=[
+        '原来的题卡提供已知数量和步骤；这里只核对真实保存的每步输入，不证明学生独立发现了单位率或选择了策略。',
+        ...p.records.map((v,i)=>'第 '+(i+1)+' 次实际操作（第 '+(v.index+1)+' 步）输入“'+v.answer+'”；'+(v.correct?'与独立计算一致':'与本题关系不一致')+'。'),
+        ...p.steps.slice(0,2).map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：按给定数量独立计算为 '+s.quantity+' '+s.unit+'。'),
+        '末步实际选择了“'+p.steps[2].choice+'”，按题目条件核对单位或零输入对应关系。',
+        '没有评定自主提出步骤、自由解释、一般比例关系证明或长期掌握。'
+      ];
+      if(p.wrongStepIndices.length)detail.push('最初错误与其后的真实纠正都保存在原来的操作记录中。');
+      if(attempts.length>1)detail.push('旧Check快照保留，本反馈仅对应最新完整提交。');
+      if(record.support)detail.push('曾查看提示或比较反馈。');
+      return {title:'这次作品中的思考线索',
+        observation:'实际完成三个单位率步骤（包括最后的单位或零输入选择），原生操作与独立计算一致。',
+        connection:rateSource.question,detail,method:null};
+    }
     const source=ratioStepsBinding(task,context);
     if(!source){
       const pctSource=pctChangeBinding(task,context);
