@@ -77,7 +77,7 @@ test('#318 real toggles, undo, clear and correction requests retain history with
   assert.equal(proof(x)?.toggles.length,2);
   b30.act(x.task,x.model,'a30-undo');
   assert.equal(proof(x),null);
-  b30.act(x.task,x.model,'a30-tile',{index:n-1});
+  b30.act(x.task,x.model,'a30-tile',{index:0});
   assert.equal(proof(x)?.undos.length,1);
   b30.act(x.task,x.model,'a30-clear');
   assert.equal(proof(x),null);
