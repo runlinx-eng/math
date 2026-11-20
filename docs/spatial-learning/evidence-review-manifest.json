@@ -6865,6 +6865,24 @@
       "adapter": "unitconversions",
       "taskHash": "b9921e9e531986a88daa969ca4740e1fe0b0963d4a70902864a71e66ed9ea3e2",
       "method": null
+    },
+    {
+      "sessionId": "proportion37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_5mIcmKRCgA",
+      "adapter": "proportionalsteps",
+      "taskHash": "e297b2c98126d3176b6a207848578c49e92d4875e6ceff118ba94dd8aff738c0",
+      "method": null
+    },
+    {
+      "sessionId": "ratioLink37",
+      "index": 2,
+      "type": "x-r37-steps",
+      "nodeId": "mt_yK51ZnKA8m",
+      "adapter": "proportionalsteps",
+      "taskHash": "783e99d8e05ebab01f9f5b41deca8a157f97c91d35be8308a66205b6cb4e4bb3",
+      "method": null
     }
   ]
 }

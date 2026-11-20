@@ -24,6 +24,7 @@ import {fractionPartsBinding,replayFractionPartsEvidence} from './fractionparts-
 import {ratioNotationBinding,replayRatioNotationEvidence} from './rationotation-evidence.js';
 import {compoundUnitsBinding,replayCompoundUnitsEvidence} from './compoundunits-evidence.js';
 import {unitConversionsBinding,replayUnitConversionsEvidence} from './unitconversions-evidence.js';
+import {proportionalStepsBinding,replayProportionalStepsEvidence} from './proportionalsteps-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence} from './wideshift-evidence.js';
 import {paperLabBinding,replayPaperLabEvidence} from './paperlab-evidence.js';
@@ -181,6 +182,8 @@ export function thinkingGuide(task,context={}){
     if(changeSource)return{type:task.type,summary:'想一想：变化前后哪个量是整体？简单利息按哪笔本金？（可选）',question:changeSource.question};
     const fractionSource=fractionPartsBinding(task,context);
     if(fractionSource)return{type:task.type,summary:'想一想：同单位、真分数、假分数与未约分（可选）',question:fractionSource.question};
+    const proportionalSource=proportionalStepsBinding(task,context);
+    if(proportionalSource)return{type:task.type,summary:'想一想：单位率、输入和输出怎样保持对应？（可选）',question:proportionalSource.question};
     const conversionSource=unitConversionsBinding(task,context);
     if(conversionSource)return{type:task.type,summary:'想一想：面积两方向、分钟秒数与立方厘米和升怎样换算？（可选）',question:conversionSource.question};
     const unitsSource=compoundUnitsBinding(task,context);
@@ -688,6 +691,26 @@ export function thinkingFeedback(task,model,record,context={}){
       if(!pctSource){
       const fractionSource=fractionPartsBinding(task,context);
       if(!fractionSource){
+        const proportionalSource=proportionalStepsBinding(task,context);
+        if(proportionalSource){
+          const proof=replayProportionalStepsEvidence(task,model,context);
+          if(!proof)return null;
+          const p=proof.construction;
+          const detail=[
+            '题目给出了价格、数量或 y=3x 的关系和步骤卡；这里只核对实际输入，不证明学生自主选择函数或方法。',
+            ...p.records.map((r,i)=>'第 '+(i+1)+' 次真实操作（第 '+(r.index+1)+' 步）输入“'+r.answer+'”；'+
+              (r.correct?'符合独立有理数核算':'不符合独立有理数核算')+'。'),
+            ...p.steps.map(s=>'第 '+(s.index+1)+' 步“'+s.originalLabel+'”：独立计算 '+s.quantity+' '+s.unit+'。'),
+            '数量关系：'+p.equation+'。'
+          ];
+          if(p.wrongStepIndices.length)detail.push('原始步骤保留首次错误和实际纠正，不以正确输入覆盖旧错误。');
+          if(attempts.length>1)detail.push('旧Check快照单独保留；本反馈只对应最新一致提交。');
+          if(record.support)detail.push('曾查看提示或反馈。');
+          detail.push('不自动评价自主策略、一般比例证明、单位解释或长期理解。');
+          return {title:'这次作品中的思考线索',
+            observation:'真实完成 '+p.completedSteps+' 个正比例数量步骤；原生记录与独立数学合同一致。',
+            connection:proportionalSource.question,detail,method:null};
+        }
         const conversionSource=unitConversionsBinding(task,context);
         if(conversionSource){
           const conversionProof=replayUnitConversionsEvidence(task,model,context);
