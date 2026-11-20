@@ -214,9 +214,9 @@ async function main(){
   ok(await raw()===first,'rejected package does not damage original bytes');
   const restored=await restorePage.goto(origin.base+'learn.html#ratioShare37');
   ok(restored?.fromServiceWorker()===true,'restored original lesson accessible offline');
-  await restorePage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='ratioProblem37');
+  await restorePage.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='ratioShare37');
   ok(await restorePage.locator('#thinking-feedback').isVisible(),
-   'previous successful ratio relation proof restored offline');
+   'previous successful native ratio sharing proof restored offline');
   await restorePage.screenshot({path:path.join(out,'native-v2-restored.png'),fullPage:false});
   screenshots.push('native-v2-restored.png');
   ok(errors.length===0,'no page exception or external request');
