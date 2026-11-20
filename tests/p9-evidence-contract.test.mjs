@@ -86,6 +86,7 @@ const reviewed={
  rationotation:positions('ratioNotation37',[1,2]),
  compoundunits:positions('rateUnit37',[0,2,3]),
  unitconversions:positions('convertUnits37',[0,1,2]),
+ proportionalsteps:[...positions('proportion37',[2]),...positions('ratioLink37',[2])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
