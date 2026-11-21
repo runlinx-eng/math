@@ -12,6 +12,15 @@
 - **停止制造重复的只读预检 PR：** #348 已核 365 来源 SHA、互斥及正式 813 零冲突；#349 对首批 12 道的 INACTIVE 预检（专用 CI #44921951088 与 Required #44921950978）均已 `completed/success`。#349 保留为 Draft/历史审计证据，**不继续扩大 #349、不复制到剩余 296 道，也不把此类预检当成新数学成果或授 A**。
 - **真正剩余工作：** 当确有准备纳入正式运行时的候选时，审其 *新增* 反馈措辞/方法标签能否由原合同支持；由中央单写入者做 `evidence-adapters.js` / `thinking-feedback.js` / 独立审批的 `evidence-review-manifest.json` 最小变更；按实际变更 HEAD 执行适用 CI/Artifact；只在另获授权合并后运行新 main Required/Fallback。未批准前不得注册或授 A。
 
+### 本窗口实质增量（2026-11-22）：反馈共享组合代码已成型，仍不生效
+
+- **隔离 [Draft PR #350](https://github.com/runlinx-eng/math/pull/350)**，exact HEAD `d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c`；仅新增 `dist/learning/issue341-inactive-shared-feedback.js` 与 `tests/issue341-inactive-shared-feedback.test.mjs`，再为新测试在既有 Required Node inventory 加**一行**，不删改原门禁。
+- 首批 P091/P105/P107/P109/P116 **5 家族/12 道**，复用既有 binding/replay/submitted 代码。新增的是 `issue341ProposedGuide` / `issue341ProposedFeedback` 的**实际可审反馈生成函数**，严格按原题来源、最新原 Check、原 B replay 生成，`method:null`；P091 历史图形不得外推。
+- **重要隔离：** 此新增文件未被正式 `thinking-feedback.js`/`evidence-adapters.js` 导入，正式 `evidence-review-manifest.json` 仍为 813。PR 是 Draft、未合并，**无运行时启用、无新增 A**。独立文字/数学范围批准之前，不得仅通过加 import 把它变成有效反馈。
+- #350 此变更的 Required [#44924008601](https://github.com/runlinx-eng/math/actions/runs/44924008601) 与 P8 [#44924008538](https://github.com/runlinx-eng/math/actions/runs/44924008538) 要以**实时终态**为准。P8 已成功；Required 建档时尚未到终态，**不预写 PASS**。旧初次 HEAD 的取消/失败 run 仍保留，但不替代新 HEAD 判定。
+- 新测试的范围仅为**新反馈函数**（原题正例文字、旧 Check 快照拒绝、非生效隔离、方法标签和原模型不变）；**没有重跑 B 308 原数学 Node/Chromium**，也不扩做 #348/#349 已成功的来源预检。
+- 下一步：独立确认新反馈五种措辞是否超出原 B 已测事实，然后由**中央单写入者**在另一个经准入审核的 Draft 做最小正式 `thinking-feedback.js` / `evidence-adapters.js` / manifest 变更；到那时再按实际变更 HEAD 做适用 P10/Chromium/Node/Artifact/Required。当前不得授 A/合并/部署。
+
 **旧通过回执不被本裁决抹除；未知数学范围不得宣称获正式批准。** 本段为最新操作规则，历史第 1–3、5 节的来源与历史测试结果继续有效。
 
 ---
@@ -53,7 +62,7 @@
 
 1. **只核新变化。** 读本最新交接、#341 最新评论，查当前 main/PR HEAD/CI/Artifact 是否相对上次记录变化；未变化直接复用 598/598 Node、12/12 Chromium、28/28 导航、365/365 来源锁定与 B 308 原工程/数学合同。不要开展批量 Python 数值抽查、第二套逐题证明或重复浏览器。
 2. **依已有 B 原合同审新的正式集成主张。** 以 #343 已开发数学不变量、B 原 replay/Node 负例与中央证据复用矩阵作为默认权威材料。只有新反馈文字/方法标签将宣称超出旧证据的内容，或发现可复现反例缺口时，才审该题位的新增主张；保留 P091、P110 限制，不能把未记录的历史补写为已发生。
-3. **结束重复预检方向。** 5 家族/12 道的 #349 INACTIVE preview 已成功；#348 全量 source lock 也已成功，不再为下一批继续造同构 preflight/范围说明。保留原两个 Draft 和原件，直接规划经范围批准后的中央单写入者最小实际共享接入；未经批准不得自动写入正式 813 manifest。
+3. **结束重复预检方向。** 5 家族/12 道的 #349 INACTIVE preview 已成功；#348 全量 source lock 也已成功，不再为下一批继续造同构 preflight/范围说明。现在 #350 的反馈组合实现也仅在隔离 Draft，仍须独立审新增反馈措辞，严禁直接启用。保留原两个 Draft 和原件，直接规划经范围批准后的中央单写入者最小实际共享接入；未经批准不得自动写入正式 813 manifest。
 4. **只对实际发生的共享代码变更按 exact HEAD 做适用 CI/Artifact。** 不是新的产品/共享更改，不应为了取得重复 PASS 重跑 308 数学/Chromium。未来若单独获得合并授权，才在新 main 再独立 Required/Fallback 双验。当前不合并、不授 A、不部署、不改原题/grader/SW、不降门禁。
 5. **写回规则。** 真缺口逐题记 `packet/position`、原来源、与 B 原证据相矛盾的精确主张、证据位置、是否影响共享反馈、所需的最小动作。无具体缺口保持 `specificMathEvidenceDefect=NONE_RECORDED_AS_OF_HANDOFF`；`missingEvidence` 只记正式共享集成与新 HEAD 门禁。阶段结果提交本审计分支 JSON/CSV/README 并在 #341 追加不可误读的评论。旧失败与旧通过保留。
 
@@ -67,4 +76,4 @@
 
 ## 6. 可直接复制到新窗口的任务
 
-> 接手数学项目 #341 中央验收。先读审计分支最新 `NEXT-WINDOW-HANDOFF.md` 的 **第 0 和第 4 节**、#341 最新评论与实时 PR #344–#349/CI。执行 2026-11-22 防重复裁决：**B 92 家族/308 道原数学 replay、负例、Node/Chromium、原 Check 与中央工程证据全部复用，不重复测试或逐家族改写数学证明；298 道额外 Python 抽查缺口和其他 290 道无第二份范围笔记都不是任务**。保留 18 道历史范围记录、#348 365 来源锁定和 #349 INACTIVE 12/12 成功原件，不再复制同构预检。仅在有精确矛盾/新拟上线反馈主张时针对该题补审；工作重点转向中央单写入者的*实际*最小共享接入，在数学文字/范围获独立批准前不改正式 manifest、不授 A。共享 HEAD 改动后才按适用范围 CI/Artifact；没有合并授权不合并 main、不部署、不降门禁。保留 A813/1996、新授 0，增量写回 #341 和 365 道 JSON/CSV。
+> 接手数学项目 #341 中央验收。先读审计分支最新 `NEXT-WINDOW-HANDOFF.md` 的 **第 0 和第 4 节**、#341 最新评论与实时 PR #344–#350/CI。执行 2026-11-22 防重复裁决：**B 92 家族/308 道原数学 replay、负例、Node/Chromium、原 Check 与中央工程证据全部复用，不重复测试或逐家族改写数学证明；298 道额外 Python 抽查缺口和其他 290 道无第二份范围笔记都不是任务**。保留 18 道历史范围记录、#348 365 来源锁定和 #349 INACTIVE 12/12 成功原件，不再复制同构预检。仅在有精确矛盾/新拟上线反馈主张时针对该题补审；工作重点转向中央单写入者的*实际*最小共享接入，在数学文字/范围获独立批准前不改正式 manifest、不授 A。共享 HEAD 改动后才按适用范围 CI/Artifact；没有合并授权不合并 main、不部署、不降门禁。保留 A813/1996、新授 0，增量写回 #341 和 365 道 JSON/CSV。

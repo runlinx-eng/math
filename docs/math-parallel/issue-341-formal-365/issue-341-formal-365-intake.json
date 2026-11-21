@@ -66,7 +66,20 @@
     "PR349DedicatedCIStatus": "COMPLETED_SUCCESS_44921951088",
     "PR349RequiredCIStatus": "COMPLETED_SUCCESS_44921950978",
     "PR349PreviewExtendingNotRequired": true,
-    "BmathScopeClaimsRequireRealDefectOrNewLiveFeedbackToReopen": true
+    "BmathScopeClaimsRequireRealDefectOrNewLiveFeedbackToReopen": true,
+    "BinactiveFeedbackDraftFamilies": 5,
+    "BinactiveFeedbackDraftPositions": 12,
+    "BinactiveFeedbackDraftPR": 350,
+    "BinactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+    "BinactiveFeedbackLiveRegistrations": 0,
+    "BinactiveFeedbackFormalApprovals": 0,
+    "BinactiveFeedbackSourceMathRetests": 0,
+    "BinactiveFeedbackNewFeatureNodeTestFile": "tests/issue341-inactive-shared-feedback.test.mjs",
+    "BinactiveFeedbackChangedHeadRequiredRun": 44924008601,
+    "BinactiveFeedbackChangedHeadRequiredStatus": "IN_PROGRESS_AT_INITIAL_HANDOFF_WRITE",
+    "BinactiveFeedbackChangedHeadP8Run": 44924008538,
+    "BinactiveFeedbackChangedHeadP8Status": "COMPLETED_SUCCESS",
+    "BinactiveFeedbackNewTestRegisteredInRequiredNodeInventory": true
   },
   "policy": "All rows NEEDS_EVIDENCE at formal intake, not a mathematical rejection nor an A grant; prior passing CI and archival checks preserved, no main merge, no change to candidates or grader.",
   "rows": [
@@ -8713,7 +8726,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8735,7 +8748,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8752,7 +8769,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8774,7 +8791,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9547,7 +9568,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -9572,7 +9593,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9589,7 +9614,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -9614,7 +9639,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9631,7 +9660,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -9656,7 +9685,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9706,7 +9739,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709606323,
@@ -9731,7 +9764,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9748,7 +9785,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709606323,
@@ -9773,7 +9810,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9823,7 +9864,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -9848,7 +9889,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9865,7 +9910,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -9890,7 +9935,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9907,7 +9956,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -9932,7 +9981,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -10622,7 +10675,7 @@
       "independentMathReview": "BOUNDED_P116_NUMERIC_CHECK_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -10644,7 +10697,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -10661,7 +10718,7 @@
       "independentMathReview": "BOUNDED_P116_NUMERIC_CHECK_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Central single-writer live feedback claim approval and reviewed shared adapter/feedback/manifest integration remain; after actual shared code changes run applicable exact-HEAD CI/Artifact, and only after an authorized merge run new main Required/Fallback. Reuse existing B source-bound math replay, negative tests, original Check/State-v2 and archived CI; do NOT require blanket proof rewriting, second Python check, or duplicate Node/Chromium. Target a named original position only when a reproducible contradiction/new live claim is recorded.",
+      "missingEvidence": "B original math proof/replay is reused, not re-reviewed. New feedback copy on isolated Draft PR #350 awaits independent source-claim/text approval; candidate module is NOT imported by live shared entry points. Only after approval prepare minimal official shared registry, feedback and approved manifest change; exact changed-HEAD CI/Artifact and authorized post-merge main Required/Fallback. No blanket B retests or added Python spotchecks.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -10683,7 +10740,11 @@
       "existingBMathContractReuse": "ACCEPT_ORIGINAL_B_REPLAY_NEGATIVE_CONTRACT_AS_CANDIDATE_EVIDENCE",
       "duplicateMathScopeWriteupRequired": false,
       "duplicateNodeChromiumRetestRequired": false,
-      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF"
+      "specificMathEvidenceDefect": "NONE_RECORDED_AS_OF_HANDOFF",
+      "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
+      "inactiveFeedbackDraftPR": 350,
+      "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -10796,6 +10857,19 @@
       "after any authorized merge, new main Required/Fallback"
     ],
     "approvalState": "NO_FORMAL_A_GRANTED",
-    "runtimeChanges": 0
+    "runtimeChanges": 0,
+    "latestFeedbackImplementation": {
+      "status": "INACTIVE_DRAFT_IMPLEMENTATION_NOT_APPROVED",
+      "pr": 350,
+      "head": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "sourceModule": "dist/learning/issue341-inactive-shared-feedback.js",
+      "newFeatureTest": "tests/issue341-inactive-shared-feedback.test.mjs",
+      "changedRequiredInventory": ".github/workflows/pull-request-baseline.yml",
+      "contract": "Only new feedback presentation with original B submitted replay; not a new math adjudication",
+      "reviewNeeded": "Exact new textual claims and optional UI guide; independent approval before any official shared import/manifest",
+      "runtimeActive": false,
+      "formalAAdded": 0,
+      "BtestsRerun": 0
+    }
   }
 }

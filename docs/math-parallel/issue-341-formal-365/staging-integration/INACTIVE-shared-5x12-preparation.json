@@ -121,5 +121,19 @@
     "current": 813,
     "totalNative": 1996,
     "newGrants": 0
+  },
+  "implementationDraft": {
+    "pr": 350,
+    "branch": "audit/issue-341-inactive-feedback-wiring-20261122",
+    "head": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+    "module": "dist/learning/issue341-inactive-shared-feedback.js",
+    "targetedTest": "tests/issue341-inactive-shared-feedback.test.mjs",
+    "status": "INACTIVE_NEW_FEEDBACK_CODE_PROPOSED_NOT_APPROVED",
+    "connection": "NOT_IMPORTED_BY_OFFICIAL_THINKING_FEEDBACK_OR_EVIDENCE_ADAPTERS",
+    "approvedManifestChanged": false,
+    "method": null,
+    "workflowNote": "Existing Required Node inventory receives only the new feature test; old B candidate math tests not rerun. Changed HEAD CI must finish before any pass statement.",
+    "requiredRun": 44924008601,
+    "p8Run": 44924008538
   }
 }
