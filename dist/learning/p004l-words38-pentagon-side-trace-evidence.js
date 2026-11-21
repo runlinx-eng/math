@@ -5,7 +5,7 @@ import {isEvidenceContext,matchesNativeEvidenceTask,
   latestSubmissionMatches,hasExactKeys as keys,sameEvidence as same}
   from './evidence-contract.js';
 
-const POSITION='words38:0', NODE='mt_lMz9nAs7VO';
+const POSITION='words38:2', NODE='mt_lMz9nAs7VO';
 function source(task,context){
   if(!isEvidenceContext(context)||
     context.sessionId+':'+context.index!==POSITION||
