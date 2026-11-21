@@ -137,7 +137,9 @@ async function run(){
     else await loc.fill(String(value));
    };
    for(const [i,q] of native.task.questions.entries())
-    await setAnswer(i,i===0?'0':q.value);
+    await setAnswer(i,i===0?(q.options?
+      q.options.find(option=>String(option[0])!==String(q.value))?.[0]:
+      '0'):q.value);
    await check();
    const wrong=await capture(page,out,s.id+'-'+s.index,s,'wrong-check');
    captures.push({position,phase:'wrong-check',attempts:wrong.attempts.length,
