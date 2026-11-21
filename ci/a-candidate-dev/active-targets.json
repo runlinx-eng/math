@@ -2,20 +2,39 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006h-native-usage-vs-people",
-      "sha": "39bc0c1e0eaacd37ad47d8830323970371bf092d",
-      "node_test": "tests/p9-p006h-native-usage-vs-people-evidence.test.mjs",
-      "browser_test": "tests/p9-p006h-native-usage-vs-people-browser.cjs",
+      "case": "P006i-native-studio-row-to-chart",
+      "sha": "d7010820d3d996f9f5ead6a556ae7fd5d4cfdc3b",
+      "node_test": "tests/p9-p006i-native-studio-row-to-chart-evidence.test.mjs",
+      "browser_test": "tests/p9-p006i-native-studio-row-to-chart-browser.cjs",
       "native": [
         {
-          "sessionId": "playgroundstudy",
-          "index": 2,
-          "nodeId": "mt_kxeuXm6EyC",
-          "taskSha256": "b982e6b2e7953fae44e694ed685f14442047ae9b20178cd1a8151e8b85b8d414",
-          "type": "x-dataplan",
+          "sessionId": "studyplan",
+          "index": 1,
+          "nodeId": "mt_SHVyE1CLUa",
+          "taskSha256": "676bf2641fedbcc8df28921b43eea110f63ea07c7841c09e3374bd4928d22d51",
+          "type": "x-datastudio",
           "view": "b19",
           "controls": [
-            "b19-plan"
+            "b19-plan",
+            "b19-record",
+            "b19-table",
+            "b19-plot",
+            "b19-report"
+          ]
+        },
+        {
+          "sessionId": "betterquestion",
+          "index": 1,
+          "nodeId": "mt_O-U263ukg1",
+          "taskSha256": "e53e0ff845065f9b5d80d0081102da7be09277257801ac5e6226b17b21ab3fd2",
+          "type": "x-datastudio",
+          "view": "b19",
+          "controls": [
+            "b19-plan",
+            "b19-record",
+            "b19-table",
+            "b19-plot",
+            "b19-report"
           ]
         }
       ]
