@@ -2,31 +2,31 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006k-native-simulated-survey-studio",
-      "sha": "4b4e9f3ce653de51f5e5d9851fadf5e1446a73a6",
-      "node_test": "tests/p9-p006k-native-simulated-survey-studio-evidence.test.mjs",
-      "browser_test": "tests/p9-p006k-native-simulated-survey-studio-browser.cjs",
+      "case": "P006l-native-random-sample-record",
+      "sha": "cab038ef7534b0110fa4c0fed6b866f0f8b620eb",
+      "node_test": "tests/p9-p006l-native-random-sample-record-evidence.test.mjs",
+      "browser_test": "tests/p9-p006l-native-random-sample-record-browser.cjs",
       "native": [
         {
-          "sessionId": "digitalstudy",
+          "sessionId": "fairdraw",
           "index": 0,
-          "nodeId": "mt_yrvYKSwSRZ",
-          "taskSha256": "24880cc3f5a04a8aff18ef85c521710c9423eb288a26ca4f95fcc285a00f9643",
-          "type": "x-datastudio",
-          "view": "b19",
+          "nodeId": "mt_4zgPzc6yu5",
+          "taskSha256": "8fe9d888f53692c0c592ffe2b36e2f9d74ecc152349581edb5bb2948286f8da3",
+          "type": "x-samplelab",
+          "view": "b21",
           "controls": [
-            "b19-plan"
+            "b21-draw"
           ]
         },
         {
-          "sessionId": "ownstudy",
-          "index": 0,
-          "nodeId": "mt_Y6JmLjnfRP",
-          "taskSha256": "b4978e3896ff692b60f981377649494f13771bb8da24015e78985648fc6be32d",
-          "type": "x-datastudio",
-          "view": "b19",
+          "sessionId": "fairdraw",
+          "index": 2,
+          "nodeId": "mt_4zgPzc6yu5",
+          "taskSha256": "e8ce0a04fca7daf066aebf3c2fd0e35cbca1c7299b8b494f96d0fe724087b38b",
+          "type": "x-samplelab",
+          "view": "b21",
           "controls": [
-            "b19-plan"
+            "b21-draw"
           ]
         }
       ]

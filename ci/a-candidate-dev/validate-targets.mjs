@@ -7,7 +7,7 @@ const sha64=/^[a-f0-9]{64}$/;
 const name=/^P[0-9]{3}[a-z]?-[a-z0-9-]+$/;
 const pathRule=/^tests\/p9-[a-z0-9-]+\.(?:test\.mjs|cjs)$/;
 const idRule=/^[a-z][a-z0-9]*$/;
-const uiAction=/^(?:g(?:23|25)|b(?:15|16|19))-[a-z][a-zA-Z-]*$/;
+const uiAction=/^(?:g(?:23|25)|b(?:15|16|19|21))-[a-z][a-zA-Z-]*$/;
 function reject(condition,message){if(!condition)throw new Error('A_DEV_TARGET_INVALID: '+message);}
 function exactKeys(value,want,where){
  reject(value!==null&&typeof value==='object'&&!Array.isArray(value),where+' must be object');
@@ -35,7 +35,7 @@ export function validateTargets(value){
    reject(typeof s.nodeId==='string'&&/^mt_[A-Za-z0-9_-]{6,30}$/.test(s.nodeId),at+' nodeId');
    reject(typeof s.taskSha256==='string'&&sha64.test(s.taskSha256),at+' full task SHA256');
    reject(typeof s.type==='string'&&/^x-[a-z0-9-]{2,45}$/.test(s.type),at+' task type');
-   reject(['b15','b16','b19','b23','b25',null].includes(s.view),at+' view adapter');
+   reject(['b15','b16','b19','b21','b23','b25',null].includes(s.view),at+' view adapter');
    reject(Array.isArray(s.controls)&&s.controls.length<=30&&s.controls.every(a=>typeof a==='string'&&uiAction.test(a)),at+' control IDs');
    reject((s.view!==null||s.controls.length===0),at+' controls need a view adapter');
    const key=s.sessionId+':'+s.index;

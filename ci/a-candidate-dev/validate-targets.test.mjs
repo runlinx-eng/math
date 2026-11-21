@@ -51,3 +51,15 @@ test('native B19 data-count view and original bar control permitted, unsafe acti
  valid.targets[0].native[0].controls[0]='b19_bad';
  assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
 });
+
+test('original B21 sample drawing and recording controls admitted, unsafe action rejected',()=>{
+ const valid=changed(x=>{
+  x.targets[0].native[0]={...x.targets[0].native[0],
+   sessionId:'fairdraw',index:0,nodeId:'mt_4zgPzc6yu5',
+   taskSha256:'8fe9d888f53692c0c592ffe2b36e2f9d74ecc152349581edb5bb2948286f8da3',
+   type:'x-samplelab',view:'b21',controls:['b21-draw','b21-record']};
+ });
+ assert.equal(validateTargets(valid).include[0].native[0].view,'b21');
+ valid.targets[0].native[0].controls[0]='b21_fake';
+ assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
+});
