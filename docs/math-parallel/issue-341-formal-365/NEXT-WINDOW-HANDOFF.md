@@ -1,3 +1,15 @@
+<!-- issue341-staged-formal-routing-20261122:begin -->
+## 当前365道正式接线的代码进展（2026-11-22）
+
+**不只继续写审计：** 在已通过 CI 的隔离共享代码 [PR #351](https://github.com/runlinx-eng/math/pull/351) 之上，新建真正的运行时接线代码 [Draft PR #354](https://github.com/runlinx-eng/math/pull/354)，源提交 `b32077b856b2131f28ea69779624adf3aa3387e3`，base 是 #351 的隔离分支，不指向 main，也未合并。
+
+本次实际增量仅为新 `dist/learning/issue341-formal-source-routing.js` 与其定向 Node 测试，以及既有 Required Node inventory 新增1项测试入口；代码显式从将来独立审批的正式 manifest 提取精确获批来源，把同一数学家族中的其他未批准来源拒之于运行时路由之外。它继续调用已有 `createIsolatedThinkingFeedback` 和原 `submitted` 完整记录门槛，不复制原数学。原正式 manifest 的813条仍完全不变；现无人审批365道，所以**新路由没有被正式模块或页面导入/调用，实际授A仍0/365**。没有生产接入、SW/release、main合并或部署。
+
+新提交的 [Required CI #44936948491](https://github.com/runlinx-eng/math/actions/runs/44936948491) 与 [P8 #44936948532](https://github.com/runlinx-eng/math/actions/runs/44936948532) 在本交接更新时尚未记为 PASS；只在收到该HEAD终态成功后才能关闭新代码门禁。原 PR #351 HEAD 已通过的旧完整 CI 继续复用；不要把过期/其它 HEAD 结果当成 #354 成功或把新测试当原数学重测。
+
+下一实际动作：[#352](https://github.com/runlinx-eng/math/issues/352) 取得授权的独立逐题决定后，中央才将这份精确路由与真实获准来源接到正式 registry/feedback/manifest，随后同步 SW/release 并按真实新激活 HEAD 做必要 CI。新126道依然排后，不参加本批。
+<!-- issue341-staged-formal-routing-20261122:end -->
+
 <!-- issue341-queue-order-20261122:begin -->
 ## 当前唯一优先批次：先完成既有 365 道；B 线新 126 道排后（2026-11-22）
 
