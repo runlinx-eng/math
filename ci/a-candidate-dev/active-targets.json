@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P007h-native-angle-bisector",
-      "sha": "8a70c5d4f46125257b60786116bfcdcdaaeddeda",
+      "sha": "74536fc98785fd42be7d563e9da9557d2bc27bc7",
       "node_test": "tests/p9-p007h-compass-angle-evidence.test.mjs",
       "browser_test": "tests/p9-p007h-compass-angle-browser.cjs",
       "native": [
@@ -22,7 +22,7 @@
     },
     {
       "case": "P007i-native-exterior-perpendicular",
-      "sha": "0c11119f47af48ea141c1ae24510db5d2c044469",
+      "sha": "dc98f4509a40ad44275d8f8b34c07235436f1579",
       "node_test": "tests/p9-p007i-compass-perpendicular-evidence.test.mjs",
       "browser_test": "tests/p9-p007i-compass-perpendicular-browser.cjs",
       "native": [
