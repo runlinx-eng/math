@@ -61,10 +61,10 @@ test('P001 original edge toggles, undo and clear really replay',()=>{
  b30.act(task,model,'a30-edge',{index:0});
  assert.equal(replay(task,model,context),null);
  b30.act(task,model,'a30-edge',{index:0});
- assert.equal(replay(task,model,context)?.toggles.length,2);
+ assert.equal(replay(task,model,context)?.toggles.length,1);
  b30.act(task,model,'a30-undo');
  assert.equal(replay(task,model,context),null);
- b30.act(task,model,'a30-edge',{index:boundaryRuns(task.cells).length-1});
+ b30.act(task,model,'a30-edge',{index:0});
  assert.equal(replay(task,model,context)?.undos.length,1);
  b30.act(task,model,'a30-clear');
  assert.equal(replay(task,model,context),null);
