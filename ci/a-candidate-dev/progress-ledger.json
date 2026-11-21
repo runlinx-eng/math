@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 107,
-    "developmentTestedCandidateCases": 57,
+    "developmentTestedPositions": 127,
+    "developmentTestedCandidateCases": 66,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 10,
+      "developmentTested": 30,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 20
+      "pendingOrOtherNotAccepted": 0
     }
   ],
   "cases": [
@@ -1217,6 +1217,188 @@
       },
       "artifact": {
         "id": 14706619640,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007h-native-angle-bisector",
+      "branch": "work/a/p007h-native-compass-angle-bisector",
+      "candidateSha": "dd4faa8eadbd2253c4b21774f435e24c93f6e96c",
+      "positions": [
+        "compasswork:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905055693,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14707327162,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007i-native-exterior-perpendicular",
+      "branch": "work/a/p007i-native-compass-exterior-perpendicular",
+      "candidateSha": "44521400301c1053f9fa48e825def87f02c066b9",
+      "positions": [
+        "compasswork:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905055693,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14707462795,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007j-native-rectangle-invariants",
+      "branch": "work/a/p007j-native-rectangle-invariants",
+      "candidateSha": "00f6dbeec869b866ed9b8df4cd61a322eee170ef",
+      "positions": [
+        "rectanglefacts:0",
+        "rectanglefacts:1",
+        "rectanglefacts:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905207750,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14707737040,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007k-native-circle-pi",
+      "branch": "work/a/p007k-native-pi-circumference",
+      "candidateSha": "1f528006c22aac2f7ea7d91a80ff3dcdad2ede81",
+      "positions": [
+        "shapefacts:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905207750,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14707368575,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007l-native-triangle-sas",
+      "branch": "work/a/p007l-triangle-sas",
+      "candidateSha": "62e5ad637bcd4cda7d63e8a90dcec3ca160dcbcb",
+      "positions": [
+        "triangledraw:0",
+        "trianglecongruent:0",
+        "trianglecongruent:3",
+        "trianglepossible:5"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905431028,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14707981252,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007m-native-triangle-sss",
+      "branch": "work/a/p007m-triangle-sss",
+      "candidateSha": "9eb90f233d66077e78c8b4d60569d4575ee88469",
+      "positions": [
+        "triangledraw:1",
+        "trianglecongruent:1",
+        "trianglepossible:0",
+        "trianglepossible:1",
+        "trianglepossible:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905431028,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14707976337,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007n-native-triangle-asa",
+      "branch": "work/a/p007n-triangle-asa",
+      "candidateSha": "eea37181efe7892428e21599228d4b6419f6d26f",
+      "positions": [
+        "triangledraw:2",
+        "trianglecongruent:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905431028,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14707369015,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007o-native-triangle-ssa",
+      "branch": "work/a/p007o-triangle-ssa",
+      "candidateSha": "656c4cd2141fadc35d08566b40b841fa9bacb64c",
+      "positions": [
+        "trianglecongruent:4",
+        "trianglepossible:4"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905431028,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14706983812,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007p-native-circle-terminology",
+      "branch": "work/a/p007p-native-circle-terminology",
+      "candidateSha": "a321983639798aba2223629f1b17fe486e99db8b",
+      "positions": [
+        "advancedWords38:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44905627141,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14707797806,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
