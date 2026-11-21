@@ -2,16 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005c-native-vertex-angles",
-      "sha": "ffae8774686b6a572f2f9eb488078ae6d0675e3d",
-      "node_test": "tests/p9-p005c-native-vertex-angle-evidence.test.mjs",
-      "browser_test": "tests/p9-p005c-native-vertex-angle-browser.cjs",
+      "case": "P005d-cross-source-vertex-angles",
+      "sha": "a91e5e5039f85d06bae9fdd84c4d44978a1a2067",
+      "node_test": "tests/p9-p005d-cross-source-vertex-angle-evidence.test.mjs",
+      "browser_test": "tests/p9-p005d-cross-source-vertex-angle-browser.cjs",
       "native": [
         {
-          "sessionId": "angletypes",
+          "sessionId": "anglecorner",
           "index": 2,
-          "nodeId": "mt_h0CVtqI2xo",
-          "taskSha256": "fe8d25eebb372ca59917395fad7ad2c641ebeb9e66b59da04e536e11850ffd4c",
+          "nodeId": "mt_8OAGVdeTJ_",
+          "taskSha256": "732d4288b4601c08cca221c8c35d13ebf080c2326d7a579f4b1cc0689087c5b8",
           "type": "x-g25-vertices",
           "view": "b25",
           "controls": [
@@ -19,10 +19,10 @@
           ]
         },
         {
-          "sessionId": "angletypes",
-          "index": 3,
-          "nodeId": "mt_h0CVtqI2xo",
-          "taskSha256": "3e545f1207fd64dcee25f76cc7449116ba45995afd385738fec4c7fce527b140",
+          "sessionId": "rightcheck",
+          "index": 1,
+          "nodeId": "mt_MFfYcnv6Tv",
+          "taskSha256": "0b936ffb21588a5f4b82cc6ee2f55796f509456cec2613e773131a1803e59979",
           "type": "x-g25-vertices",
           "view": "b25",
           "controls": [
@@ -30,10 +30,21 @@
           ]
         },
         {
-          "sessionId": "angletypes",
-          "index": 4,
-          "nodeId": "mt_h0CVtqI2xo",
-          "taskSha256": "e2b698087a7edc69401092db6ff10b55938c9b49caedb5dfaed420bef75e96c6",
+          "sessionId": "linemark",
+          "index": 2,
+          "nodeId": "mt_QysgF57dxh",
+          "taskSha256": "31fcde19c84f05c03b7e4629201d21e2ba1cfdeb4e0562053d3810e62e06d8db",
+          "type": "x-g25-vertices",
+          "view": "b25",
+          "controls": [
+            "g25-choose"
+          ]
+        },
+        {
+          "sessionId": "linenotation",
+          "index": 0,
+          "nodeId": "mt_e4V6hvcuEJ",
+          "taskSha256": "6e14b21b9bafdff25c2a163736fa1886d477ff10122c8f64ad816621a2773ab0",
           "type": "x-g25-vertices",
           "view": "b25",
           "controls": [
