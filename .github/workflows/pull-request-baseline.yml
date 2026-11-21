@@ -297,6 +297,7 @@ jobs:
             tests/p7-d6-learning-contract.test.mjs
             tests/p7-d7-task-adapters.test.mjs
             tests/thinking-feedback.test.mjs
+            tests/issue341-inactive-shared-feedback.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs
