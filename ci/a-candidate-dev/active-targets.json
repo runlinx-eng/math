@@ -15,8 +15,7 @@
           "type": "x-g25-estimate",
           "view": "b25",
           "controls": [
-            "g25-guess",
-            "g25-reveal"
+            "g25-guess"
           ]
         },
         {
@@ -27,8 +26,7 @@
           "type": "x-g25-estimate",
           "view": "b25",
           "controls": [
-            "g25-guess",
-            "g25-reveal"
+            "g25-guess"
           ]
         }
       ]
