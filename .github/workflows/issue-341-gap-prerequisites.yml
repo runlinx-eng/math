@@ -1,0 +1,69 @@
+name: Issue 341 targeted missing native prerequisite routes
+
+on:
+  pull_request:
+    paths:
+      - 'tests/issue341-gap-prereq-navigation.cjs'
+      - '.github/workflows/issue-341-gap-prerequisites.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gap-only-native-route:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        packet: [P111, P112, P113]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Execute only unresolved native prerequisite paths
+        env:
+          ISSUE341_GAP_PACKET: ${{ matrix.packet }}
+        run: |
+          set -euo pipefail
+          node --check tests/issue341-gap-prereq-navigation.cjs
+          node tests/issue341-gap-prereq-navigation.cjs
+      - name: Validate route-only artifact receipt
+        if: success()
+        env:
+          ISSUE341_GAP_PACKET: ${{ matrix.packet }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os,pathlib
+          packet=os.environ['ISSUE341_GAP_PACKET']
+          expected={'P111':1,'P112':4,'P113':2}[packet]
+          p=pathlib.Path('verification/issue341-gap-nav')/packet.lower()/'results.json'
+          r=json.loads(p.read_text())
+          assert r['packet']==packet and len(r['routes'])==expected,r
+          assert r['storageIndexWrites']==0 and r['errors']==[],r
+          assert len(r['head'])==40
+          assert all(x['method']=='native-next-after-correct-check'
+                     and x['previousTaskComplete'] and x['stoppedOriginSWReload']
+                     for x in r['routes']),r
+          assert all(x['originalCheckCorrect'] and x['rawStorageSaved']
+                     for x in r['prereqs']),r
+          print(f'{packet}: native {expected}/{expected}, no state seeding')
+          PY
+      - name: Archive original screenshots and raw Check/State-v2 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-missing-prerequisites-${{ matrix.packet }}
+          path: verification/issue341-gap-nav/
+          retention-days: 7
+          if-no-files-found: warn
