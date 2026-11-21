@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P005a-acute-angle-comparison
-            sha: 2978de5e762984fa9a681ecb2308a500cca48044
+            sha: 2f8bf2d715fabbc5c15e664de9c62780b70f71a3
             node_test: tests/p9-p005a-acute-angle-comparison-evidence.test.mjs
             browser_test: tests/p9-p005a-acute-angle-comparison-browser.cjs
 
