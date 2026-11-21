@@ -1,5 +1,5 @@
 'use strict';
-// #342 / P001: exercise all six authentic B30 SVG edge controls at 1920x1080.
+// #342 / P001: exercise one authentic B30 SVG edge task at 1920x1080.
 // No seeded answers; only the native lesson position is selected. Checks are
 // submitted through the existing UI, then preserved as original State-v2 bytes.
 const assert=require('node:assert/strict');
