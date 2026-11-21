@@ -37,6 +37,7 @@ function complete(wrong=false){
 }
 test('P006n original B21 source, complete SHA, repeated draws and variation',()=>{
  console.log('P006N_NATIVE_FULL_TASK_SHA256 samplevary:0 '+digest(task));
+ assert.equal(digest(task),'66b47f1c9c7dd633e5538f40852a8bd12561d5a077633717a5f01cf03b3bb546');
  assert.equal(LESSONS.samplevary.topicId,'mt_x7V1qrkiqH');
  assert.equal(task.type,'x-samplelab');
  assert.equal(task.N,80);assert.equal(task.n,20);
