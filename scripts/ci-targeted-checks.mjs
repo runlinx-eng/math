@@ -60,6 +60,21 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
  const smoke=full||changed.some(file=>!(/^(docs\/|README\.md$|AGENTS\.md$|LICENSE$|\.gitignore$)/).test(file));
  if(event==='pull_request'){
   for(const file of changed){
+   // #341: changes to the real composition layer must keep exercising the
+   // isolated all365 consumer. Preserve the normal shared P9/P10 selection too.
+   if(['dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
+       'dist/learning/issue341-candidate-descriptors.js',
+       'dist/learning/issue341-candidate-feedback.js',
+       'dist/learning/issue341-isolated-integration.js',
+       'dist/learning/issue341-inactive-shared-feedback.js',
+       'tests/fixtures/issue341-archived-input-references.json',
+       'scripts/issue341-prepare-archived-inputs.py',
+       'tests/issue341-isolated-integration.test.mjs',
+       'tests/issue341-audit-fixture-integration.test.mjs',
+       'tests/issue341-learning-audit-injection.test.mjs',
+       'tests/issue341-archived-input-transport.test.mjs',
+       'scripts/audit-learning-evidence.mjs','scripts/audit-evidence-expansion.mjs'].includes(file))
+    add('tests/issue341-isolated-integration-browser.cjs');
    if(registered.has(file)){add(file);continue;}
    if(safeScript.test(file)&&fileExists(file)){add(file);continue;}
    // #339: registered signed-order's source-bound replay and Node tests map to

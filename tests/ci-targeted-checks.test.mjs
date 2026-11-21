@@ -35,6 +35,25 @@ test('documentation-only changes launch no Chromium or empty family runner',()=>
  const failed=structuredClone(needs(p));failed['smoke-checks'].result='success';
  assert.throws(()=>gate(p,failed,[]),/Smoke job result/);
 });
+
+test('all365 isolated composition remains selected on later shared-source or archived-record changes',()=>{
+ const shared=plan('pull_request',['dist/learning/thinking-feedback.js']);
+ assert.deepEqual(shared.scripts,[
+  'tests/issue341-isolated-integration-browser.cjs',
+  'tests/p10-learning-continuity-browser.cjs','tests/p9-thinking-feedback-browser.cjs'
+ ]);
+ for(const file of ['dist/learning/evidence-adapters.js',
+  'dist/learning/issue341-candidate-descriptors.js','dist/learning/issue341-candidate-feedback.js','dist/learning/issue341-isolated-integration.js',
+  'dist/learning/issue341-inactive-shared-feedback.js',
+  'tests/fixtures/issue341-archived-input-references.json','scripts/issue341-prepare-archived-inputs.py',
+  'tests/issue341-isolated-integration.test.mjs',
+  'tests/issue341-audit-fixture-integration.test.mjs',
+       'tests/issue341-learning-audit-injection.test.mjs',
+       'tests/issue341-archived-input-transport.test.mjs',
+       'scripts/audit-learning-evidence.mjs','scripts/audit-evidence-expansion.mjs']){
+  assert.ok(plan('pull_request',[file]).scripts.includes('tests/issue341-isolated-integration-browser.cjs'),file);
+ }
+});
 test('CI-only edits run smoke without launching the 17 legacy empty jobs',()=>{
  const p=plan('pull_request',['.github/workflows/pull-request-baseline.yml','scripts/required-browser-checks.mjs']);
  assert.equal(p.runSmoke,true);

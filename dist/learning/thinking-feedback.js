@@ -77,6 +77,37 @@ import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evi
 import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
 import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evidence.js';
 import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
+import {EVIDENCE_ADAPTERS,createEvidenceAdapterRegistry} from './evidence-adapters.js';
+
+// Isolated, explicit composition. The application continues to call the two
+// existing exports below; it does not import a candidate list or this factory.
+// In particular, this is not a URL/storage flag that enables unapproved sources.
+export function createIsolatedThinkingFeedback({adapters,guideForBinding,feedbackForProof}){
+ if(!Array.isArray(adapters)||adapters.some(row=>typeof row?.submitted!=='function')||
+    typeof guideForBinding!=='function'||typeof feedbackForProof!=='function')
+  throw new TypeError('Isolated feedback requires original submitted contracts and explicit text');
+ const candidateIds=new Set(adapters.map(row=>row.id));
+ const registry=createEvidenceAdapterRegistry([...EVIDENCE_ADAPTERS,...adapters]);
+ const guide=(task,context={})=>{
+  const selected=registry.resolve(task,context);
+  if(selected.status==='invalid'||selected.status==='ambiguous')return null;
+  if(!selected.match||!candidateIds.has(selected.match.adapter.id))return thinkingGuide(task,context);
+  try{return guideForBinding(selected.match,task,context);}catch{return null;}
+ };
+ const feedback=(task,model,record,context={})=>{
+  const selected=registry.resolve(task,context);
+  if(selected.status==='invalid'||selected.status==='ambiguous')return null;
+  if(!selected.match||!candidateIds.has(selected.match.adapter.id))return thinkingFeedback(task,model,record,context);
+  if(!isEvidenceContext(context)||!latestSubmissionMatches(model,record))return null;
+  try{
+   // Do not replace this with replay + latestSubmissionMatches: P007 retains
+   // additional original wrong-to-correct Check requirements in submitted().
+   const proof=selected.match.adapter.submitted(task,model,record,context);
+   return proof?feedbackForProof(selected.match,proof,task,model,record,context):null;
+  }catch{return null;}
+ };
+ return Object.freeze({registry,guide,feedback});
+}
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
