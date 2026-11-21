@@ -582,6 +582,7 @@ jobs:
           name: p9-positive-order-review-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
           path: |
             verification/p9-positive-order-preaudit/results.json
+            verification/p9-positive-order-preaudit/raw-evidence.json
             verification/p9-positive-order-preaudit/*-corrected-1920x1080.png
           if-no-files-found: error
           retention-days: 7

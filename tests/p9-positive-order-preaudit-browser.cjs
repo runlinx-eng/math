@@ -32,7 +32,7 @@ async function main(){
   runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,viewport:[1920,1080],
   seededCorrectWork:false,seededLessonPositions:false,strictAApproved:false,
   childTrial:false,independentTeachingReview:false};
- const checks=[],errors=[],remote=[],observations=[],preparations=[];
+ const checks=[],errors=[],remote=[],observations=[],preparations=[],rawEvidence=[];
  const ok=(yes,message)=>{assert.ok(yes,message);checks.push(message);};
  const taskFor=s=>sessionTasks(s.id)[s.index];
  for(const s of cases){const t=taskFor(s);assert.equal(hash(t),s.taskHash);assert.equal(t.mode,'order');assert.equal(t.type,'x-wideboard');
@@ -185,6 +185,15 @@ async function main(){
    const afterReload=await saved(s.id);
    assert.deepEqual(afterReload.models,beforeReload.models,'State-v2 preserves original models on real reload');
    assert.deepEqual(afterReload.cases,beforeReload.cases,'State-v2 preserves original attempts on real reload');
+   const screenshotFile=label+'-corrected-1920x1080.png';
+   const screenshotSha256=crypto.createHash('sha256').update(fs.readFileSync(path.join(out,screenshotFile))).digest('hex');
+   // CI generated work only; preserve original attempts without interpreting strategy.
+   rawEvidence.push({id:s.id,index:s.index,nodeId:s.nodeId,taskHash:s.taskHash,
+    sourceTask:structuredClone(t),wrongFirstModel:structuredClone(first.model),
+    wrongFirstRecord:structuredClone(first.record),correctedModel:structuredClone(second.model),
+    correctedRecord:structuredClone(second.record),preauditProof:structuredClone(proof),
+    beforeReloadLesson:structuredClone(beforeReload),afterReloadLesson:structuredClone(afterReload),
+    screenshot:screenshotFile,screenshotSha256});
    observations.push({id:s.id,index:s.index,nodeId:s.nodeId,taskHash:s.taskHash,selectedOrder:proof.selectedOrder,
     eventCount:proof.events.length,wrongFirstSaved:true,correctionSaved:true,originalGrader:true,
     axisFinalOnly:true,strictAApproved:false,screenshot:label+'-corrected-1920x1080.png'});
@@ -193,6 +202,12 @@ async function main(){
   const report={schema:'math-positive-order-browser-preaudit/1',provenance,cases,checks,errors,remote,preparations,observations,
    cautions:['no slider movement chronology','no independently observed comparison strategy','no child mastery study','no strict A registration']};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2)+'\n');
+  fs.writeFileSync(path.join(out,'raw-evidence.json'),JSON.stringify({
+   schema:'math-positive-order-authentic-raw/1',provenance,cases:rawEvidence,
+   cautions:['CI-controlled original interface, not child observation',
+    'only pick/remove chronology; slider positions are final observations',
+    'not strict A approval']
+  },null,2)+'\n');
   console.log('P9_POSITIVE_ORDER_PREAUDIT_BROWSER_OK '+JSON.stringify({checks:checks.length,native:observations.length,
    prerequisites:preparations.length,headSha:sha,strictAApproved:false}));
  }finally{
