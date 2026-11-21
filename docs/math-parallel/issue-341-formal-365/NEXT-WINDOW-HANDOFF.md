@@ -17,7 +17,7 @@
 - **隔离 [Draft PR #350](https://github.com/runlinx-eng/math/pull/350)**，exact HEAD `d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c`；仅新增 `dist/learning/issue341-inactive-shared-feedback.js` 与 `tests/issue341-inactive-shared-feedback.test.mjs`，再为新测试在既有 Required Node inventory 加**一行**，不删改原门禁。
 - 首批 P091/P105/P107/P109/P116 **5 家族/12 道**，复用既有 binding/replay/submitted 代码。新增的是 `issue341ProposedGuide` / `issue341ProposedFeedback` 的**实际可审反馈生成函数**，严格按原题来源、最新原 Check、原 B replay 生成，`method:null`；P091 历史图形不得外推。
 - **重要隔离：** 此新增文件未被正式 `thinking-feedback.js`/`evidence-adapters.js` 导入，正式 `evidence-review-manifest.json` 仍为 813。PR 是 Draft、未合并，**无运行时启用、无新增 A**。独立文字/数学范围批准之前，不得仅通过加 import 把它变成有效反馈。
-- #350 此变更的 Required [#44924008601](https://github.com/runlinx-eng/math/actions/runs/44924008601) 与 P8 [#44924008538](https://github.com/runlinx-eng/math/actions/runs/44924008538) 要以**实时终态**为准。P8 已成功；Required 建档时尚未到终态，**不预写 PASS**。旧初次 HEAD 的取消/失败 run 仍保留，但不替代新 HEAD 判定。
+- #350 exact HEAD `d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c`：[Required #44924008601](https://github.com/runlinx-eng/math/actions/runs/44924008601) 与 [P8 #44924008538](https://github.com/runlinx-eng/math/actions/runs/44924008538) **均 completed/success**。Required 新反馈组合测试 **2/2 PASS**、Node **2424/2424 PASS**、受影响的 P10 连续性与 P9 反馈两项定向浏览器 **2/2 success**、smoke success；非定向大浏览器矩阵按现有策略 skipped，**不是 B308 再测或全量浏览器 PASS**。仅生成两份 targeted 收据 Artifact `14715027346`/`14714667582`，不能代替未来实际共享注册后的 CI/Artifact。此前被新提交取代的 cancelled/failed run 原样保留。
 - 新测试的范围仅为**新反馈函数**（原题正例文字、旧 Check 快照拒绝、非生效隔离、方法标签和原模型不变）；**没有重跑 B 308 原数学 Node/Chromium**，也不扩做 #348/#349 已成功的来源预检。
 - 下一步：独立确认新反馈五种措辞是否超出原 B 已测事实，然后由**中央单写入者**在另一个经准入审核的 Draft 做最小正式 `thinking-feedback.js` / `evidence-adapters.js` / manifest 变更；到那时再按实际变更 HEAD 做适用 P10/Chromium/Node/Artifact/Required。当前不得授 A/合并/部署。
 
@@ -57,6 +57,8 @@
 - [B 第 1 批 5 家族 12 道数学可观察边界](./b-first-12-observable-contract-review.json)：P105 3、P107 2、P109 3、P116 2、P091 2；其中 P091 `allowedrange:0/1` 仅保存 probe 结果/当前端点，**未保存每次历史图形位置和样式**，不得据此声称重建历史操作。
 - [B 第 1 批 5 家族／12 道**不生效**集成提案](./b-first-12-INACTIVE-integration-proposal.json)：明确 `NOT_APPROVED_NOT_RUNTIME_REGISTERED`；只列真实 type、绑定/重放/提交导出及 nodeId/完整 taskHash。不能直接粘贴进正式 manifest。
 - #341 最近中央交接评论：[证据复用](https://github.com/runlinx-eng/math/issues/341#issuecomment-7064965599)、[来源锁定与 first12](https://github.com/runlinx-eng/math/issues/341#issuecomment-7065150449)。#342 是 A 线历史交接，#343 是 B 线本机历史进度；对 #341 已经实收的 365 道以最新中央台账为准，不回退成“未上传”。
+
+**当前最后通过的代码验收点：** #350 反馈模块仍 **INACTIVE**、只测新反馈组合、已通过它自己变更 HEAD 的 Required/P8；真实共享注册与正式数学准入仍未发生，不能因此授 A 或放宽后续变更后的门禁。
 
 ## 4. 新窗口唯一允许的增量工作（禁止按家族重写 B 证明）
 

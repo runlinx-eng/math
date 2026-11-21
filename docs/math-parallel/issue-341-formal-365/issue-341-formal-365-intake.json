@@ -76,10 +76,17 @@
     "BinactiveFeedbackSourceMathRetests": 0,
     "BinactiveFeedbackNewFeatureNodeTestFile": "tests/issue341-inactive-shared-feedback.test.mjs",
     "BinactiveFeedbackChangedHeadRequiredRun": 44924008601,
-    "BinactiveFeedbackChangedHeadRequiredStatus": "IN_PROGRESS_AT_INITIAL_HANDOFF_WRITE",
+    "BinactiveFeedbackChangedHeadRequiredStatus": "COMPLETED_SUCCESS",
     "BinactiveFeedbackChangedHeadP8Run": 44924008538,
     "BinactiveFeedbackChangedHeadP8Status": "COMPLETED_SUCCESS",
-    "BinactiveFeedbackNewTestRegisteredInRequiredNodeInventory": true
+    "BinactiveFeedbackNewTestRegisteredInRequiredNodeInventory": true,
+    "BinactiveFeedbackChangedHeadNodeTests": 2424,
+    "BinactiveFeedbackChangedHeadNodePassed": 2424,
+    "BinactiveFeedbackChangedHeadNodeFailed": 0,
+    "BinactiveFeedbackNewCompositionTestsPassed": 2,
+    "BinactiveFeedbackChangedHeadTargetedBrowsersPassed": 2,
+    "BinactiveFeedbackChangedHeadSmokePassed": true,
+    "BinactiveFeedbackChangedHeadNonTargetedBrowser": "SKIPPED_UNCHANGED_CI_SCOPE"
   },
   "policy": "All rows NEEDS_EVIDENCE at formal intake, not a mathematical rejection nor an A grant; prior passing CI and archival checks preserved, no main merge, no change to candidates or grader.",
   "rows": [
@@ -8752,7 +8759,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -8795,7 +8806,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9597,7 +9612,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9643,7 +9662,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9689,7 +9712,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9768,7 +9795,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9814,7 +9845,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9893,7 +9928,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9939,7 +9978,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -9985,7 +10028,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -10701,7 +10748,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -10744,7 +10795,11 @@
       "inactiveFeedbackCodeReview": "DRAFT_IMPLEMENTED_INERT_PENDING_INDEPENDENT_TEXT_APPROVAL",
       "inactiveFeedbackDraftPR": 350,
       "inactiveFeedbackDraftHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
-      "inactiveFeedbackFormalApproval": "NOT_APPROVED"
+      "inactiveFeedbackFormalApproval": "NOT_APPROVED",
+      "inactiveFeedbackRequiredRun": 44924008601,
+      "inactiveFeedbackRequiredCI": "COMPLETED_SUCCESS_EXACT_HEAD",
+      "inactiveFeedbackP8Run": 44924008538,
+      "inactiveFeedbackP8CI": "COMPLETED_SUCCESS_EXACT_HEAD"
     },
     {
       "group": "B",
@@ -10869,7 +10924,25 @@
       "reviewNeeded": "Exact new textual claims and optional UI guide; independent approval before any official shared import/manifest",
       "runtimeActive": false,
       "formalAAdded": 0,
-      "BtestsRerun": 0
+      "BtestsRerun": 0,
+      "exactHeadCI": {
+        "head": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+        "requiredRun": 44924008601,
+        "required": "COMPLETED_SUCCESS",
+        "p8Run": 44924008538,
+        "p8": "COMPLETED_SUCCESS",
+        "newCompositionTests": "2/2 PASS",
+        "RequiredNode": "2424/2424 PASS",
+        "targetedBrowserJobs": "2/2 completed/success",
+        "smoke": "success",
+        "largeBrowserMatrix": "skipped under existing non-targeted policy",
+        "existingB308TestsRerun": false,
+        "artifacts": [
+          14715027346,
+          14714667582
+        ],
+        "scope": "INACTIVE_COMPOSITION_ONLY_NOT_FORMAL_A"
+      }
     }
   }
 }
