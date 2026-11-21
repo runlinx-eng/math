@@ -1,0 +1,571 @@
+{
+  "schema": "issue-341-frozen-source-integration-inventory/1",
+  "candidateHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "families": [
+    {
+      "packet": "P007A",
+      "path": "dist/learning/p007a-cube-frame-edge-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007B",
+      "path": "dist/learning/p007b-pyramid-view-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007C",
+      "path": "dist/learning/p007c-triangle-sas-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007D",
+      "path": "dist/learning/p007d-rectangle-dimensions-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007E",
+      "path": "dist/learning/p007e-regular-pentagon-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007F",
+      "path": "dist/learning/p007f-circle-radius-diameter-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007G",
+      "path": "dist/learning/p007g-compass-bisector-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007H",
+      "path": "dist/learning/p007h-compass-angle-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007I",
+      "path": "dist/learning/p007i-compass-perpendicular-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007J",
+      "path": "dist/learning/p007j-rectangle-invariants-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007K",
+      "path": "dist/learning/p007k-circle-pi-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007L",
+      "path": "dist/learning/p007l-triangle-sas-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007M",
+      "path": "dist/learning/p007m-triangle-sss-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007N",
+      "path": "dist/learning/p007n-triangle-asa-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007O",
+      "path": "dist/learning/p007o-triangle-ssa-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P007P",
+      "path": "dist/learning/p007p-circle-terminology-evidence.js",
+      "group": "P007"
+    },
+    {
+      "packet": "P009A",
+      "path": "dist/learning/p009a-ten-landmark-evidence.js",
+      "group": "P009"
+    },
+    {
+      "packet": "P009B",
+      "path": "dist/learning/p009b-add-subtract-family-evidence.js",
+      "group": "P009"
+    },
+    {
+      "packet": "P009C",
+      "path": "dist/learning/p009c-three-group-pairings-evidence.js",
+      "group": "P009"
+    },
+    {
+      "packet": "P009D",
+      "path": "dist/learning/p009d-inverse-calculation-evidence.js",
+      "group": "P009"
+    },
+    {
+      "packet": "P009E",
+      "path": "dist/learning/p009e-decimal-complements-evidence.js",
+      "group": "P009"
+    },
+    {
+      "packet": "P117",
+      "path": "dist/learning/p117-fractionfour-directed-jump-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P116",
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P115",
+      "path": "dist/learning/p115-signedpoints-quadrants-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P114",
+      "path": "dist/learning/p114-solidstack-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P113",
+      "path": "dist/learning/p113-tens-removal-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P112",
+      "path": "dist/learning/p112-fair-die-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P111",
+      "path": "dist/learning/p111-bilateral-equations-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P110",
+      "path": "dist/learning/p110-mean-distance-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P109",
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P108",
+      "path": "dist/learning/p108-digit-value-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P107",
+      "path": "dist/learning/p107-factor-pairs-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P106",
+      "path": "dist/learning/p106-paper-fold-counts-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P105",
+      "path": "dist/learning/p105-prime-divisors-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P104",
+      "path": "dist/learning/p104-step-tools-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P103",
+      "path": "dist/learning/p103-pair-grid-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P102",
+      "path": "dist/learning/p102-product-grouping-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P101",
+      "path": "dist/learning/p101-axis-mirror-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P100",
+      "path": "dist/learning/p100-boxplot-marks-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P099",
+      "path": "dist/learning/p099-length-tape-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P098",
+      "path": "dist/learning/p098-linear-parameter-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P097",
+      "path": "dist/learning/p097-square-pair-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P096",
+      "path": "dist/learning/p096-four-addends-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P095",
+      "path": "dist/learning/p095-zero-crossing-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P094",
+      "path": "dist/learning/p094-small-unit-product-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P093",
+      "path": "dist/learning/p093-triangular-prism-net-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P092",
+      "path": "dist/learning/p092-triangle-tiling-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P091",
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P090",
+      "path": "dist/learning/p090-signed-product-rows-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P089",
+      "path": "dist/learning/p089-parity-pairing-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P088",
+      "path": "dist/learning/p088-graph-crossings-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P087",
+      "path": "dist/learning/p087-unordered-split-pairs-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P086",
+      "path": "dist/learning/p086-joined-solid-surfaces-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P085",
+      "path": "dist/learning/p085-pythagoras-length-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P084",
+      "path": "dist/learning/p084-expression-build-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P083",
+      "path": "dist/learning/p083-chance-mapping-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P082",
+      "path": "dist/learning/p082-shape-uses-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P081",
+      "path": "dist/learning/p081-stat-brief-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P080",
+      "path": "dist/learning/p080-argument-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P079",
+      "path": "dist/learning/p079-net-surface-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P077",
+      "path": "dist/learning/p077-digital-sets-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P076",
+      "path": "dist/learning/p076-measure-story-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P075",
+      "path": "dist/learning/p075-pair-table-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P074",
+      "path": "dist/learning/p074-complex-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P073",
+      "path": "dist/learning/p073-plan-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P072",
+      "path": "dist/learning/p072-sense-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P071",
+      "path": "dist/learning/p071-story-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P070",
+      "path": "dist/learning/p070-perimeter-walk-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P069",
+      "path": "dist/learning/p069-complex-steps-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P068",
+      "path": "dist/learning/p068-percent-steps-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P067",
+      "path": "dist/learning/p067-similar-steps-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P066",
+      "path": "dist/learning/p066-data-clean-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P065",
+      "path": "dist/learning/p065-similar-triangles-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P064",
+      "path": "dist/learning/p064-pythagoras-area-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P063",
+      "path": "dist/learning/p063-temperature-order-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P062",
+      "path": "dist/learning/p062-zero-place-product-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P059",
+      "path": "dist/learning/p059-whole-unit-walk-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P058",
+      "path": "dist/learning/p058-leaf-grid-approximation-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P057",
+      "path": "dist/learning/p057-chance-condition-sort-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P055",
+      "path": "dist/learning/p055-right-triangle-condition-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P054",
+      "path": "dist/learning/p054-opposite-side-marks-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P053",
+      "path": "dist/learning/p053-data-kind-order-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P051",
+      "path": "dist/learning/p051-compound-unit-meaning-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P050",
+      "path": "dist/learning/p050-drawing-area-scale-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P049",
+      "path": "dist/learning/p049-ratio-smallest-basket-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P048",
+      "path": "dist/learning/p048-rope-cut-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P047",
+      "path": "dist/learning/p047-subtraction-first-error-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P046",
+      "path": "dist/learning/p046-three-fourths-chain-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P045",
+      "path": "dist/learning/p045-three-fifths-vs-half-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P044",
+      "path": "dist/learning/p044-straight-angle-gap-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P043",
+      "path": "dist/learning/p043-multiple-sheet-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P042",
+      "path": "dist/learning/p042-perimeter-area-trials-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P040",
+      "path": "dist/learning/p040-prism-face-volume-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P039",
+      "path": "dist/learning/p039-shortchains-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P037",
+      "path": "dist/learning/p037-composite-scene-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P036",
+      "path": "dist/learning/p036-geometry-notation-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P035",
+      "path": "dist/learning/p035-ordered-pair-grid-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P033",
+      "path": "dist/learning/p033-observation-tally-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P031",
+      "path": "dist/learning/p031-hundred-chart-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P028",
+      "path": "dist/learning/p028-trig-roles-and-ratios-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P027",
+      "path": "dist/learning/p027-equal-ratio-shares-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P025",
+      "path": "dist/learning/p025-decimal-remainders-and-place-values-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P023",
+      "path": "dist/learning/p023-graph-interpretation-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P020",
+      "path": "dist/learning/p020-boundary-and-area-construction-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P019",
+      "path": "dist/learning/p019-equivalent-names-and-percent-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P018",
+      "path": "dist/learning/p018-probability-observations-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P017",
+      "path": "dist/learning/p017-signed-walk-and-between-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P016",
+      "path": "dist/learning/p016-model-and-rule-checks-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P014",
+      "path": "dist/learning/p014-multiplicative-bars-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P013",
+      "path": "dist/learning/p013-recall-and-estimation-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P012",
+      "path": "dist/learning/p012-time-calendar-and-timetables-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P011",
+      "path": "dist/learning/p011-measurement-models-evidence.js",
+      "group": "B"
+    },
+    {
+      "packet": "P010",
+      "path": "dist/learning/p010-story-operation-plans-evidence.js",
+      "group": "B"
+    }
+  ]
+}
