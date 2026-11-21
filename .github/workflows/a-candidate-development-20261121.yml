@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - infra/a-dev-only-tests-20261121
+    paths:
+      - ci/a-candidate-dev/active-targets.json
 
 permissions:
   contents: read
