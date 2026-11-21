@@ -67,7 +67,11 @@ jobs:
           node --input-type=module - <<'NODE'
           import {appendFileSync} from 'node:fs';
           import {currentPlan} from './scripts/ci-targeted-checks.mjs';
-          const selected=currentPlan().scripts.includes('tests/issue341-isolated-integration-browser.cjs');
+          // The formal A-E CLI always consumes original Check records once #341 is in main.
+          // The targeted Chromium matrix alone is not sufficient on main push.
+          const {existsSync}=await import('node:fs');
+          const selected=currentPlan().scripts.includes('tests/issue341-isolated-integration-browser.cjs') ||
+            existsSync('dist/learning/issue341-formal-admissions.js');
           appendFileSync(process.env.GITHUB_OUTPUT,'selected='+selected+'\n');
           NODE
       - name: Read original archived Checks for the new integration only
