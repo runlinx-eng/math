@@ -167,7 +167,7 @@ async function run(){
   fs.writeFileSync(path.join(out,'native-state-v2.json'),raw);
   ok(errors.length===0,'no JS exceptions or off-origin requests');
   persist();
-  console.log('P006G_NATIVE_INFERENCE_BOUNDARIES_DEVELOPMENT_BROWSER_OK '+JSON.stringify({
+  console.log('P006G_NATIVE_QUESTION_SCHEMA_DEVELOPMENT_BROWSER_OK '+JSON.stringify({
    head:sha,positions:cases.length,checks:checks.length,strictAApproved:false
   }));
  }catch(e){
