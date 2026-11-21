@@ -180,8 +180,8 @@ async function run(){
    const forged=structuredClone(accepted.model);
    forged.history[0].d.index='08';
    ok(!candidate.submittedNativePolygonEvidence(native.task,accepted.model,stale,taskContext)&&
-    !candidate.replayFourPointQuadrilateralEvidence(native.task,forged,taskContext)&&
-    !candidate.replayFourPointQuadrilateralEvidence(native.task,accepted.model,
+    !candidate.replayNativePolygonEvidence(native.task,forged,taskContext)&&
+    !candidate.replayNativePolygonEvidence(native.task,accepted.model,
       {sessionId:s.id,index:s.index+1}),
     'stale Check, forged index and wrong source position rejected');
    ok(!proof.verbalProofObserved&&!proof.generalMasteryAssessed,
