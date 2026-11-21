@@ -2,31 +2,53 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005i-native-triangle-corners",
-      "sha": "fa8554b539181bdc61b957e36428cc857a7de724",
-      "node_test": "tests/p9-p005i-native-triangle-corner-evidence.test.mjs",
-      "browser_test": "tests/p9-p005i-native-triangle-corner-browser.cjs",
+      "case": "P005j-native-polygon-triangulation",
+      "sha": "35cab72eed9ead4412eb04178de3c30c7b55f66c",
+      "node_test": "tests/p9-p005j-native-polygon-triangulation-evidence.test.mjs",
+      "browser_test": "tests/p9-p005j-native-polygon-triangulation-browser.cjs",
       "native": [
         {
           "sessionId": "triangleangles",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_cdMlC7EpTJ",
-          "taskSha256": "86aafc8c07cd506552e0981c4b0b3c09384154e3d48f788050b71d7deaf13d4e",
-          "type": "x-g25-corners",
+          "taskSha256": "0f6663f98f33d41c0a34325fa27fa2efccd210c8226ec84f54b54d2c780fd0c7",
+          "type": "x-g25-polygon",
           "view": "b25",
           "controls": [
-            "g25-choose"
+            "g25-diagonal"
+          ]
+        },
+        {
+          "sessionId": "triangleangles",
+          "index": 2,
+          "nodeId": "mt_cdMlC7EpTJ",
+          "taskSha256": "147de24573fdcaf86536f966660dc6f70defc3f1c96a2b1d1f40c4ae83af2dec",
+          "type": "x-g25-polygon",
+          "view": "b25",
+          "controls": [
+            "g25-diagonal"
           ]
         },
         {
           "sessionId": "polygonangles",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_J03RFlVdas",
-          "taskSha256": "45f21a1463bb3b9b5a08f95f1d7010bc2b5b6eae63607cda1e269cbbd67f938b",
-          "type": "x-g25-corners",
+          "taskSha256": "07e4b762dc704c68929bf22c12cfa40b749813061618ad50bfee9da182053e11",
+          "type": "x-g25-polygon",
           "view": "b25",
           "controls": [
-            "g25-choose"
+            "g25-diagonal"
+          ]
+        },
+        {
+          "sessionId": "polygonangles",
+          "index": 2,
+          "nodeId": "mt_J03RFlVdas",
+          "taskSha256": "27d4dadcb1c638fb86fcdd4497c8658ebaa9716293697d394b252d6fe0a28993",
+          "type": "x-g25-polygon",
+          "view": "b25",
+          "controls": [
+            "g25-diagonal"
           ]
         }
       ]
