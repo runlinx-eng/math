@@ -1,0 +1,211 @@
+[
+  {
+    "group": "B",
+    "packet": "P081",
+    "family": "work/b/p081-stat-brief",
+    "position": "datasummary:0",
+    "nodeId": "mt_tuEnyrp5Ia",
+    "taskSha256": "0aeb3d6b4d91ed5b22e450ee5e7eb2777432d1a8dc2d41463b8c4b9235ae4a15",
+    "candidateCommit": "c2de9782a29a327eea17a7c19f01c1d62f9c8ab1",
+    "patchSha256": "6991fa3093e8b72eb28f0c45295fc038eee82239766fd2ed092cbd43de63d812",
+    "receiptSha256": "00046ee9e35198444384d48b5782df706355f2b551447619f8d349edbc93efb7"
+  },
+  {
+    "group": "B",
+    "packet": "P081",
+    "family": "work/b/p081-stat-brief",
+    "position": "datasummary:1",
+    "nodeId": "mt_tuEnyrp5Ia",
+    "taskSha256": "76982680a7fb01decac426c91f291026f2f965c579364f9a2746da1d41e91c5e",
+    "candidateCommit": "c2de9782a29a327eea17a7c19f01c1d62f9c8ab1",
+    "patchSha256": "6991fa3093e8b72eb28f0c45295fc038eee82239766fd2ed092cbd43de63d812",
+    "receiptSha256": "00046ee9e35198444384d48b5782df706355f2b551447619f8d349edbc93efb7"
+  },
+  {
+    "group": "B",
+    "packet": "P081",
+    "family": "work/b/p081-stat-brief",
+    "position": "datasummary:2",
+    "nodeId": "mt_tuEnyrp5Ia",
+    "taskSha256": "122dcf6b959fcfa1dace0c4486ab093b33e9522d6111ef4874f5062496dd2dbd",
+    "candidateCommit": "c2de9782a29a327eea17a7c19f01c1d62f9c8ab1",
+    "patchSha256": "6991fa3093e8b72eb28f0c45295fc038eee82239766fd2ed092cbd43de63d812",
+    "receiptSha256": "00046ee9e35198444384d48b5782df706355f2b551447619f8d349edbc93efb7"
+  },
+  {
+    "group": "B",
+    "packet": "P080",
+    "family": "work/b/p080-argument-chain",
+    "position": "argument38:0",
+    "nodeId": "mt_j5YqQnN6xe",
+    "taskSha256": "d4b297c23d57ced596cea60dfd8a1d41f6ee4a44c8a59677d0510e5a821d40f3",
+    "candidateCommit": "7f3be4257d25cab5c09a4255afa840caaafaac06",
+    "patchSha256": "e7b9de7b436e58f0b8db996e2e63cd7742b3a535abb8df96d126b4ab896c566c",
+    "receiptSha256": "2d50e009151d95f1bec8a12bc28ab4970da8741fdaacf26a223826808eaf0c8c"
+  },
+  {
+    "group": "B",
+    "packet": "P080",
+    "family": "work/b/p080-argument-chain",
+    "position": "argument38:2",
+    "nodeId": "mt_j5YqQnN6xe",
+    "taskSha256": "170f21b3ad21acacdc854d837d1d078b1389e9fd4da1e90152888b83caf778dd",
+    "candidateCommit": "7f3be4257d25cab5c09a4255afa840caaafaac06",
+    "patchSha256": "e7b9de7b436e58f0b8db996e2e63cd7742b3a535abb8df96d126b4ab896c566c",
+    "receiptSha256": "2d50e009151d95f1bec8a12bc28ab4970da8741fdaacf26a223826808eaf0c8c"
+  },
+  {
+    "group": "B",
+    "packet": "P079",
+    "family": "work/b/p079-net-surface",
+    "position": "netSurface:0",
+    "nodeId": "mt_tegkuJA5gM",
+    "taskSha256": "615c0f44811c01763437d44c711822f7304e6d3447d5de01f9f5bfe2f98ecef4",
+    "candidateCommit": "96ab1fb4c3aae65285e108d83526e5b7b6a299f1",
+    "patchSha256": "1a7a7421c2406ded8936841a102847071a25525487e57435bbcda28bb0b515ea",
+    "receiptSha256": "87f5774be64bc878240e9eca5d11bf113f50ba4731fb8b07512eef1a34dc02ad"
+  },
+  {
+    "group": "B",
+    "packet": "P079",
+    "family": "work/b/p079-net-surface",
+    "position": "netSurface:1",
+    "nodeId": "mt_tegkuJA5gM",
+    "taskSha256": "8e8751bc6a4ffa9743447cab900d0b8282d8dd258c6d5adb9f8d13a757cf06a3",
+    "candidateCommit": "96ab1fb4c3aae65285e108d83526e5b7b6a299f1",
+    "patchSha256": "1a7a7421c2406ded8936841a102847071a25525487e57435bbcda28bb0b515ea",
+    "receiptSha256": "87f5774be64bc878240e9eca5d11bf113f50ba4731fb8b07512eef1a34dc02ad"
+  },
+  {
+    "group": "B",
+    "packet": "P077",
+    "family": "work/b/p077-digital-sets",
+    "position": "digitalsets:0",
+    "nodeId": "mt_mn765HbXi1",
+    "taskSha256": "ecfb732d87e276cbb13e581d67df131548617486b0d780223045cbe8fda68b68",
+    "candidateCommit": "92da3b7319d4aa02f1172077c92b0f3263459ae6",
+    "patchSha256": "189155585c2c2ab87990bdbfe30b24ada5e9ebe1927bb70897ff3ad7156ba1b9",
+    "receiptSha256": "1fcfcbe5cc3240231ea776c577ca23e35852d31c2628de4d8e0b4fed8310f355"
+  },
+  {
+    "group": "B",
+    "packet": "P077",
+    "family": "work/b/p077-digital-sets",
+    "position": "digitalsets:1",
+    "nodeId": "mt_mn765HbXi1",
+    "taskSha256": "5c7e2243d37da7e32bec51e605ba7c7ffa9b2b5b95c23af71def07e144df6c8c",
+    "candidateCommit": "92da3b7319d4aa02f1172077c92b0f3263459ae6",
+    "patchSha256": "189155585c2c2ab87990bdbfe30b24ada5e9ebe1927bb70897ff3ad7156ba1b9",
+    "receiptSha256": "1fcfcbe5cc3240231ea776c577ca23e35852d31c2628de4d8e0b4fed8310f355"
+  },
+  {
+    "group": "B",
+    "packet": "P076",
+    "family": "work/b/p076-measure-story",
+    "position": "measurestory:1",
+    "nodeId": "mt_6gpryAnpoZ",
+    "taskSha256": "0f4e2126f9e4da1dd93e106969481217f74e452a4adacf9d6ac831cc43ac7c09",
+    "candidateCommit": "01f10aaeab9b88736b1e089dbf666a9572b97afb",
+    "patchSha256": "ee70be003ee620aa533d4f1c35ab5d70aadc7836086e6e0796161d2569530fc3",
+    "receiptSha256": "772af569d54e7bf6d156211866cc4325f988879bcc1c42e47da38b5e3d1e76f3"
+  },
+  {
+    "group": "B",
+    "packet": "P076",
+    "family": "work/b/p076-measure-story",
+    "position": "measurestory:2",
+    "nodeId": "mt_6gpryAnpoZ",
+    "taskSha256": "9cc95578b3d6aa4769d788000db3424223dd026cdd43c548a21855e8a66f816c",
+    "candidateCommit": "01f10aaeab9b88736b1e089dbf666a9572b97afb",
+    "patchSha256": "ee70be003ee620aa533d4f1c35ab5d70aadc7836086e6e0796161d2569530fc3",
+    "receiptSha256": "772af569d54e7bf6d156211866cc4325f988879bcc1c42e47da38b5e3d1e76f3"
+  },
+  {
+    "group": "B",
+    "packet": "P075",
+    "family": "work/b/p075-pair-table",
+    "position": "scaleandpair:1",
+    "nodeId": "mt_EmR5n58jZt",
+    "taskSha256": "e69f3bae4933da13648e661c87b09e211db4359a8c7f5ecd9b1b64bf1952fdc8",
+    "candidateCommit": "473214feace17c3669fde1b895c7ca749b76797c",
+    "patchSha256": "7492eddc1aeb71f059f00e6c7948ea128b62af1e50f1dbaae99eae461623d0f7",
+    "receiptSha256": "6c4324baf6758ed2080c46939a8c385c2ede3990949b27c1b625aefc4dcb1c39"
+  },
+  {
+    "group": "B",
+    "packet": "P075",
+    "family": "work/b/p075-pair-table",
+    "position": "combineproducts:2",
+    "nodeId": "mt_AR-K72OIIO",
+    "taskSha256": "85aa0bb0acb0cb000c4203fb0c024d59088188368fc5d85d9eb6f3f8e7af8008",
+    "candidateCommit": "473214feace17c3669fde1b895c7ca749b76797c",
+    "patchSha256": "7492eddc1aeb71f059f00e6c7948ea128b62af1e50f1dbaae99eae461623d0f7",
+    "receiptSha256": "6c4324baf6758ed2080c46939a8c385c2ede3990949b27c1b625aefc4dcb1c39"
+  },
+  {
+    "group": "B",
+    "packet": "P074",
+    "family": "work/b/p074-complex-chain",
+    "position": "complex38:2",
+    "nodeId": "mt_GpltXPoaoc",
+    "taskSha256": "dc29344b56a42563d492cdbfffe537182e4eb5b8d8fabf9cc45a2d302a909816",
+    "candidateCommit": "d8771fc9c7d18379bb7ed8728d60b3ed9be15758",
+    "patchSha256": "40c9600d9ef963215f1695ffb35c4dc43b2c12d58db51ba8d0be0340635c8a12",
+    "receiptSha256": "a458869394530e8f7349aabcea7ee834c9143f882bbd3464974102385b4943a5"
+  },
+  {
+    "group": "B",
+    "packet": "P073",
+    "family": "work/b/p073-plan-chain",
+    "position": "plan38:0",
+    "nodeId": "mt_O_UOTiMvT_",
+    "taskSha256": "e93f94db5aa990967d79732ab12d9e182369ecd1510718b12596026213217475",
+    "candidateCommit": "b691f138cce2f61f22528b69565da8d2506e7ef9",
+    "patchSha256": "f54e5d8c7ce6cd3e0a9a89dc36c03397a97daa6ff5379561bab25bc75225c00b",
+    "receiptSha256": "3b62cc56adaf1dfb5dffa19db8dd4e6e4f8cdc076fca48b94468c560f6ac5812"
+  },
+  {
+    "group": "B",
+    "packet": "P072",
+    "family": "work/b/p072-sense-chain",
+    "position": "sense38:0",
+    "nodeId": "mt_WkKkb7W9Qd",
+    "taskSha256": "8f98c155afccc5974cf104ef20e0a1a97f1f83ae51d1c255bd8926ac257f2381",
+    "candidateCommit": "76e49e18b1d77737f285d466156c9f2557beb0fb",
+    "patchSha256": "6a384d96c40a42d9d50bf1192aa89ddd4d2cfd464a98cb75d770cd00f79350d7",
+    "receiptSha256": "ffe6cda01f42c1186c5f11dcbdf32a2afc2d18d0983a2ec9eb5ad665ac6e24c3"
+  },
+  {
+    "group": "B",
+    "packet": "P071",
+    "family": "work/b/p071-story-chain",
+    "position": "story38:2",
+    "nodeId": "mt_IM1G_7QzTa",
+    "taskSha256": "e45928b8a7914d80391f0851a8ca01810dc1f0727dc45eb8df3451579f238d78",
+    "candidateCommit": "a807de3cafb5283b2cc328c9a1c6d6717d914cc5",
+    "patchSha256": "c8fb754f39135d668e02333431ed7ecb7ff71d4ebdc6e1a75ae38adbab1e32b8",
+    "receiptSha256": "8021b7e49be3c6243704c592c4deebcd414910d6609508b2e874f01675971cdd"
+  },
+  {
+    "group": "B",
+    "packet": "P070",
+    "family": "work/b/p070-perimeter-walk",
+    "position": "multiShape38:1",
+    "nodeId": "mt_SmghasIvbT",
+    "taskSha256": "3d67e040b458696577c6cfbbe4511d065ad96e6d629a6487d330fabff2735bfe",
+    "candidateCommit": "e7e29e431ae108c14238a43c49128365780bb486",
+    "patchSha256": "6137e222a92147e77e7d3124e0cb822b8dbf2645560f6a060f412fd698742333",
+    "receiptSha256": "7786751865e79363767c37d73ff552b17b41468deb356105b26e1300da424fcc"
+  },
+  {
+    "group": "B",
+    "packet": "P069",
+    "family": "work/b/p069-complex-steps",
+    "position": "complex38:0",
+    "nodeId": "mt_GpltXPoaoc",
+    "taskSha256": "3106348fc627d39c7aaf96d5adafca84750e0531ef186ae385330327bbb6b511",
+    "candidateCommit": "e7b040f8727b0d41850c81ccf6324b722eacdf5c",
+    "patchSha256": "a81884afcc66bb67da74d8f35278c837004f04cd48241e5cf5fc8da08adfacc1",
+    "receiptSha256": "bd3cb085ee17cf58fc62cf4ea1fee154cd256eed33d30213d3b23f23ce8c8b99"
+  }
+]
