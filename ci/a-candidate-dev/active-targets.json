@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P005j-native-polygon-triangulation",
-      "sha": "35cab72eed9ead4412eb04178de3c30c7b55f66c",
+      "sha": "95ff2bf5e337e0b240e8c219e07576186186b25b",
       "node_test": "tests/p9-p005j-native-polygon-triangulation-evidence.test.mjs",
       "browser_test": "tests/p9-p005j-native-polygon-triangulation-browser.cjs",
       "native": [
