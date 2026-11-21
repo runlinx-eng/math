@@ -2,20 +2,34 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006a-category-frequency-count",
-      "sha": "dd4459d4daaa394674ee8a8e7d9b24614f77cef7",
-      "node_test": "tests/p9-p006a-category-frequency-count-evidence.test.mjs",
-      "browser_test": "tests/p9-p006a-category-frequency-count-browser.cjs",
+      "case": "P006b-frequency-pair-ties",
+      "sha": "232a4da940d97bda0bc6320229e111ed33dd95ce",
+      "node_test": "tests/p9-p006b-frequency-pair-ties-evidence.test.mjs",
+      "browser_test": "tests/p9-p006b-frequency-pair-ties-browser.cjs",
       "native": [
         {
           "sessionId": "categoryuse",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_1VSfm9yiLn",
-          "taskSha256": "945aa122537d0193ef311aadb9b1d47bd5c3bbe22f472c19163977e69b117fbe",
+          "taskSha256": "7986284102490a6eaaf5e3b5f2ca3be505ccfaac91feadc0c305e48fb590c680",
           "type": "x-datacount",
           "view": "b19",
           "controls": [
-            "b19-bar"
+            "b19-bar",
+            "b19-pair"
+          ]
+        },
+        {
+          "sessionId": "categoryuse",
+          "index": 2,
+          "nodeId": "mt_1VSfm9yiLn",
+          "taskSha256": "d8a566016199a413177b13dc23eace3957cbecb5415167a162cd35eff31eb313",
+          "type": "x-datacount",
+          "view": "b19",
+          "controls": [
+            "b19-bar",
+            "b19-max",
+            "b19-min"
           ]
         }
       ]
