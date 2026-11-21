@@ -42,9 +42,9 @@ const navigationRoutes = [];
 async function routePosition(page, origin, row) {
   const url = origin.base + 'learn.html#' + row.id;
   if (page.url() !== url) {
-    const navigation = await page.goto(url);
-    ok(navigation?.fromServiceWorker() === true,
-      row.id + ':' + row.index + ' original lesson navigated offline');
+    // Hash-only lesson switching does not issue a new network response.
+    // Stopped-origin SW coverage is verified by the explicit page.reload below.
+    await page.goto(url);
   }
   await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
   const before = await page.evaluate(() => {
