@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 86,
-    "developmentTestedCandidateCases": 42,
+    "developmentTestedPositions": 88,
+    "developmentTestedCandidateCases": 43,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 20,
+      "developmentTested": 22,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 11
+      "pendingOrOtherNotAccepted": 9
     }
   ],
   "cases": [
@@ -917,6 +917,26 @@
       },
       "artifact": {
         "id": 14703255511,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006l-native-random-sample-record",
+      "branch": "work/a/p006l-native-random-sample-record",
+      "candidateSha": "6f25ed7bb4902fec9e15f3eb8b10aaf034698728",
+      "positions": [
+        "fairdraw:0",
+        "fairdraw:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44893982138,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14703540745,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
