@@ -2,27 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006i-native-studio-row-to-chart",
-      "sha": "d96595613af91d749d6f8b726286433a057466db",
-      "node_test": "tests/p9-p006i-native-studio-row-to-chart-evidence.test.mjs",
-      "browser_test": "tests/p9-p006i-native-studio-row-to-chart-browser.cjs",
+      "case": "P006j-native-playground-three-day-usage",
+      "sha": "71b46ed648896ced73d63d8682e1c2d4f07af70b",
+      "node_test": "tests/p9-p006j-native-playground-three-day-usage-evidence.test.mjs",
+      "browser_test": "tests/p9-p006j-native-playground-three-day-usage-browser.cjs",
       "native": [
         {
-          "sessionId": "studyplan",
-          "index": 1,
-          "nodeId": "mt_SHVyE1CLUa",
-          "taskSha256": "676bf2641fedbcc8df28921b43eea110f63ea07c7841c09e3374bd4928d22d51",
-          "type": "x-datastudio",
-          "view": "b19",
-          "controls": [
-            "b19-plan"
-          ]
-        },
-        {
-          "sessionId": "betterquestion",
-          "index": 1,
-          "nodeId": "mt_O-U263ukg1",
-          "taskSha256": "e53e0ff845065f9b5d80d0081102da7be09277257801ac5e6226b17b21ab3fd2",
+          "sessionId": "playgroundstudy",
+          "index": 0,
+          "nodeId": "mt_kxeuXm6EyC",
+          "taskSha256": "271fc40982890e7b261ed64bf00b387dd8f4071d13db5098186b47ebe1ecadff",
           "type": "x-datastudio",
           "view": "b19",
           "controls": [
