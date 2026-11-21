@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004l-words38-pentagon-side-trace
-            sha: e60c811c3bbb3b22921ec27f933d926736114c8e
+            sha: 22c063ea8de2bbc94f592ad9c36c523251b37840
             node_test: tests/p9-p004l-words38-pentagon-side-trace-evidence.test.mjs
             browser_test: tests/p9-p004l-words38-pentagon-side-trace-browser.cjs
 
