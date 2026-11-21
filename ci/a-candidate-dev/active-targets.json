@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P006l-native-random-sample-record",
-      "sha": "cab038ef7534b0110fa4c0fed6b866f0f8b620eb",
+      "sha": "6f25ed7bb4902fec9e15f3eb8b10aaf034698728",
       "node_test": "tests/p9-p006l-native-random-sample-record-evidence.test.mjs",
       "browser_test": "tests/p9-p006l-native-random-sample-record-browser.cjs",
       "native": [
