@@ -46,10 +46,21 @@ let savedNoteFeedback='';
 // Load large source-specific adapters only for a reviewed native session.
 // Missing/unavailable routes stay closed; legacy sources keep their old logic.
 let issue341FormalRouting=null,issue341RoutingPromise=null;
-const formalGuide=(task,context)=>hasIssue341FormalSource(context.sessionId,context.index)
- ?(issue341FormalRouting?.guide(task,context)??null):thinkingGuide(task,context);
-const formalFeedback=(task,model,record,context)=>hasIssue341FormalSource(context.sessionId,context.index)
- ?(issue341FormalRouting?.feedback(task,model,record,context)??null):thinkingFeedback(task,model,record,context);
+// Preserve the existing source-bound P9 MP.3 feedback on overlapping native
+// positions. The new formal candidate route adds evidence where there was
+// previously no bounded observation; it never suppresses a tested old one.
+const formalGuide=(task,context)=>{
+ const previous=thinkingGuide(task,context);
+ if(previous)return previous;
+ return hasIssue341FormalSource(context.sessionId,context.index)
+  ?(issue341FormalRouting?.guide(task,context)??null):null;
+};
+const formalFeedback=(task,model,record,context)=>{
+ const previous=thinkingFeedback(task,model,record,context);
+ if(previous)return previous;
+ return hasIssue341FormalSource(context.sessionId,context.index)
+  ?(issue341FormalRouting?.feedback(task,model,record,context)??null):null;
+};
 function ensureIssue341FormalRouting(sessionId){
  if(issue341FormalRouting||issue341RoutingPromise||!hasIssue341FormalSession(sessionId))return;
  issue341RoutingPromise=import('./issue341-formal-source-routing.js')
