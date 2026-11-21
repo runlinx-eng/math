@@ -15,11 +15,7 @@
           "type": "x-datastudio",
           "view": "b19",
           "controls": [
-            "b19-plan",
-            "b19-record",
-            "b19-table",
-            "b19-plot",
-            "b19-report"
+            "b19-plan"
           ]
         },
         {
@@ -30,11 +26,7 @@
           "type": "x-datastudio",
           "view": "b19",
           "controls": [
-            "b19-plan",
-            "b19-record",
-            "b19-table",
-            "b19-plot",
-            "b19-report"
+            "b19-plan"
           ]
         }
       ]
