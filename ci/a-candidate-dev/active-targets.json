@@ -2,22 +2,20 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005k-cross-source-angle-order",
-      "sha": "e72a8a3689f7a8be3319c1c5e6d9f26bb968fa95",
-      "node_test": "tests/p9-p005k-cross-source-angle-order-evidence.test.mjs",
-      "browser_test": "tests/p9-p005k-cross-source-angle-order-browser.cjs",
+      "case": "P005l-reason34-polygon-fan",
+      "sha": "b92c976ce016b7ac562b22095d3007be1982b445",
+      "node_test": "tests/p9-p005l-reason34-polygon-fan-evidence.test.mjs",
+      "browser_test": "tests/p9-p005l-reason34-polygon-fan-browser.cjs",
       "native": [
         {
-          "sessionId": "angleestimate",
-          "index": 2,
-          "nodeId": "mt_YUJ5pwalqL",
-          "taskSha256": "66129894fabd7fda86e14f8373186a7b65cae628f29a1868a7f30c137e0935e9",
-          "type": "x-g25-compare",
+          "sessionId": "reason34",
+          "index": 0,
+          "nodeId": "mt_iyovKgZC1q",
+          "taskSha256": "07e4b762dc704c68929bf22c12cfa40b749813061618ad50bfee9da182053e11",
+          "type": "x-g25-polygon",
           "view": "b25",
           "controls": [
-            "g25-test",
-            "g25-choose",
-            "g25-undo"
+            "g25-diagonal"
           ]
         }
       ]
