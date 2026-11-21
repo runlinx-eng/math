@@ -1,3 +1,9 @@
+# 新窗口接续入口（2026-11-21）
+
+**固定交接文件：[NEXT-WINDOW-HANDOFF.md](./NEXT-WINDOW-HANDOFF.md)。** 新窗口优先读取该文件、#341 最新评论及 PR #344–#348 HEAD，再继续隔离共享集成的证据范围审核。已经通过的 B 308 工程证据、28 原生导航、365 来源锁定等全部复用，**不因 298 道尚未做第二套 Python 抽查而统一重测**；不擅自合并 main、授 A、部署或降级门禁。正式 A813/1996，新增0。
+
+---
+
 # #341 最新：365 道来源锁定预检通过，B 线已有证据继续复用（2026-11-21）
 
 [隔离 Draft PR #348](https://github.com/runlinx-eng/math/pull/348) 的 [专用源码锁定 CI #44920634904](https://github.com/runlinx-eng/math/actions/runs/44920634904) **completed/success**：113 候选家族的 `Binding/replay/submitted` 函数均已解析，365 个原生位置对照完整 source nodeId/task SHA-256 成功；与既有 813 条正式 A manifest **0 重叠**，候选之间与既有运行时注册互相绑定冲突 **0**。未做第二套数学重测，未修改公开的 `evidence-review-manifest.json` 或 main，新增严格 A=0。#348 同一 exact HEAD 的 [Required #44920634864](https://github.com/runlinx-eng/math/actions/runs/44920634864) 也已 completed/success；日常 Required 自动跳过非定向 browser 矩阵，不能冒充全量复测。
