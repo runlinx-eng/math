@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004j-regular-hexagon-construction
-            sha: ec2560565bf5d9e7e4ea497bfb2c1e90ac3396a8
+            sha: 4ce45a5e652125a28f97016d32f35b7489df9aa8
             node_test: tests/p9-p004j-regular-hexagon-construction-evidence.test.mjs
             browser_test: tests/p9-p004j-regular-hexagon-construction-browser.cjs
 
