@@ -1,0 +1,349 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 90,
+  "end": 105,
+  "records": [
+    {
+      "packet": "P043",
+      "path": "dist/learning/p043-multiple-sheet-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p043MultipleSheetBinding"
+      ],
+      "replays": [
+        "replayP043MultipleSheetEvidence"
+      ],
+      "submitted": [
+        "submittedP043MultipleSheetEvidence"
+      ],
+      "sourceExports": [
+        "P043_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4201
+    },
+    {
+      "packet": "P042",
+      "path": "dist/learning/p042-perimeter-area-trials-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p042PerimeterAreaTrialsBinding"
+      ],
+      "replays": [
+        "replayP042PerimeterAreaTrialsEvidence"
+      ],
+      "submitted": [
+        "submittedP042PerimeterAreaTrialsEvidence"
+      ],
+      "sourceExports": [
+        "P042_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4643
+    },
+    {
+      "packet": "P040",
+      "path": "dist/learning/p040-prism-face-volume-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p040PrismFaceVolumeBinding"
+      ],
+      "replays": [
+        "replayP040PrismFaceVolumeEvidence"
+      ],
+      "submitted": [
+        "submittedP040PrismFaceVolumeEvidence"
+      ],
+      "sourceExports": [
+        "P040_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6126
+    },
+    {
+      "packet": "P039",
+      "path": "dist/learning/p039-shortchains-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p039ShortChainsBinding"
+      ],
+      "replays": [
+        "replayP039ShortChainsEvidence"
+      ],
+      "submitted": [
+        "submittedP039ShortChainsEvidence"
+      ],
+      "sourceExports": [
+        "P039_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5181
+    },
+    {
+      "packet": "P037",
+      "path": "dist/learning/p037-composite-scene-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p037CompositeSceneBinding"
+      ],
+      "replays": [
+        "replayP037CompositeSceneEvidence"
+      ],
+      "submitted": [
+        "submittedP037CompositeSceneEvidence"
+      ],
+      "sourceExports": [
+        "P037_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4695
+    },
+    {
+      "packet": "P036",
+      "path": "dist/learning/p036-geometry-notation-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p036GeometryNotationBinding"
+      ],
+      "replays": [
+        "replayP036GeometryNotationEvidence"
+      ],
+      "submitted": [
+        "submittedP036GeometryNotationEvidence"
+      ],
+      "sourceExports": [
+        "P036_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4534
+    },
+    {
+      "packet": "P035",
+      "path": "dist/learning/p035-ordered-pair-grid-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p035OrderedPairGridBinding"
+      ],
+      "replays": [
+        "replayP035OrderedPairGridEvidence"
+      ],
+      "submitted": [
+        "submittedP035OrderedPairGridEvidence"
+      ],
+      "sourceExports": [
+        "P035_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5414
+    },
+    {
+      "packet": "P033",
+      "path": "dist/learning/p033-observation-tally-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p033ObservationTallyBinding"
+      ],
+      "replays": [
+        "replayP033ObservationTallyEvidence"
+      ],
+      "submitted": [
+        "submittedP033ObservationTallyEvidence"
+      ],
+      "sourceExports": [
+        "P033_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5182
+    },
+    {
+      "packet": "P031",
+      "path": "dist/learning/p031-hundred-chart-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p031HundredChartBinding"
+      ],
+      "replays": [
+        "replayP031HundredChartEvidence"
+      ],
+      "submitted": [
+        "submittedP031HundredChartEvidence"
+      ],
+      "sourceExports": [
+        "P031_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3784
+    },
+    {
+      "packet": "P028",
+      "path": "dist/learning/p028-trig-roles-and-ratios-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p028TrigRolesAndRatiosBinding"
+      ],
+      "replays": [
+        "replayP028TrigRolesAndRatiosEvidence"
+      ],
+      "submitted": [
+        "submittedP028TrigRolesAndRatiosEvidence"
+      ],
+      "sourceExports": [
+        "P028_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 10525
+    },
+    {
+      "packet": "P027",
+      "path": "dist/learning/p027-equal-ratio-shares-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p027EqualRatioSharesBinding"
+      ],
+      "replays": [
+        "replayP027EqualRatioSharesEvidence"
+      ],
+      "submitted": [
+        "submittedP027EqualRatioSharesEvidence"
+      ],
+      "sourceExports": [
+        "P027_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3986
+    },
+    {
+      "packet": "P025",
+      "path": "dist/learning/p025-decimal-remainders-and-place-values-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p025DecimalRemaindersAndPlaceValuesBinding"
+      ],
+      "replays": [
+        "replayP025DecimalRemaindersAndPlaceValuesEvidence"
+      ],
+      "submitted": [
+        "submittedP025DecimalRemaindersAndPlaceValuesEvidence"
+      ],
+      "sourceExports": [
+        "P025_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-decimalmachine"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 7798
+    },
+    {
+      "packet": "P023",
+      "path": "dist/learning/p023-graph-interpretation-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p023GraphInterpretationBinding"
+      ],
+      "replays": [
+        "replayP023GraphInterpretationEvidence"
+      ],
+      "submitted": [
+        "submittedP023GraphInterpretationEvidence"
+      ],
+      "sourceExports": [
+        "P023_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-scatterbuild",
+        "x-graphcompare"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 16641
+    },
+    {
+      "packet": "P020",
+      "path": "dist/learning/p020-boundary-and-area-construction-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p020BoundaryAndAreaConstructionBinding"
+      ],
+      "replays": [
+        "replayP020BoundaryAndAreaConstructionEvidence"
+      ],
+      "submitted": [
+        "submittedP020BoundaryAndAreaConstructionEvidence"
+      ],
+      "sourceExports": [
+        "P020_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-a30-outline",
+        "x-a30-circle"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 12976
+    },
+    {
+      "packet": "P019",
+      "path": "dist/learning/p019-equivalent-names-and-percent-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p019EquivalentNamesAndPercentBinding"
+      ],
+      "replays": [
+        "replayP019EquivalentNamesAndPercentEvidence"
+      ],
+      "submitted": [
+        "submittedP019EquivalentNamesAndPercentEvidence"
+      ],
+      "sourceExports": [
+        "P019_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-fractionbridge",
+        "x-decimalzoom",
+        "x-percentkit"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 9568
+    }
+  ]
+}
