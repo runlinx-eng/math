@@ -81,6 +81,9 @@ async function run(){
   };
   for(const s of specs){
    stage=s.id+':'+s.index+':native-start';
+   // Force a real document navigation even when two cases share one lesson URL.
+   // A same-document hash navigation may return null rather than a SW Response.
+   await page.goto(origin.base+'v2.html#trail');
    const response=await page.goto(origin.base+'learn.html#'+s.id);
    ok(response?.fromServiceWorker()===true,'offline SW lesson navigation');
    await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,s.id);
