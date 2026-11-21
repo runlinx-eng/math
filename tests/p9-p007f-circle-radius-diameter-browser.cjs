@@ -67,7 +67,9 @@ async function run(){
   };
   const field=async(key,value)=>{
    const loc=page.locator('#extra-controls [data-xfield="'+key+'"]');
-   await reveal(loc);await loc.fill(String(value));
+   await reveal(loc);
+   if(await loc.evaluate(el=>el.tagName==='SELECT'))await loc.selectOption(String(value));
+   else await loc.fill(String(value));
   };
   const action=async name=>{
    const loc=page.locator('#extra-controls [data-x="g23-'+name+'"]');
