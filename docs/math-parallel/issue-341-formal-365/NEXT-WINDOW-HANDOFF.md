@@ -1,3 +1,5 @@
+**专项 CI 终态（2026-11-22）：** [Actions #44933304290](https://github.com/runlinx-eng/math/actions/runs/44933304290) 已在准入边界修复代码 HEAD `90fafe6506a3fb83f6d6bf876be3425ac8a5d787` completed/success，job `exact-native-scope` 通过。只运行365条元数据结构及跨家族重叠/HEAD 篡改负例；未运行 B 数学、浏览器或原 Check。它不是任何数学正式批准。后续文档/台账提交复用该固定代码 HEAD 的成功结论。
+
 ## 2026-11-22 本窗口后续：准入边界定向加固（不授 A）
 
 - 在审计分支提交 [`90fafe6506a3`](https://github.com/runlinx-eng/math/commit/90fafe6506a3fb83f6d6bf876be3425ac8a5d787)，只更新旧的 `formal-activation/approval-scope-preflight.mjs`，新增对应元数据负例回归与限定审计分支 push 的工作流，没有改动 PR #351、正式 manifest、生产运行时、原数学/浏览器测试。

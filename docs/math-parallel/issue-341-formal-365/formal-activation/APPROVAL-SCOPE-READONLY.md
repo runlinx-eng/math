@@ -26,3 +26,5 @@ node docs/math-parallel/issue-341-formal-365/formal-activation/approval-scope-pr
 ## 2026-11-22 定向加固
 
 [`90fafe6506a3`](https://github.com/runlinx-eng/math/commit/90fafe6506a3fb83f6d6bf876be3425ac8a5d787) 将所有原生题位按全局 `(sessionId,index)` 去重，不再仅按 packet 内去重，并把申请的 HEAD 固定为已审核 PR #351 的 `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。跨包别名与协调修改所有行的 HEAD 都会拒绝。新增 `approval-scope-preflight.test.mjs` 只运行元数据结构检查和两项篡改负例，既不读取原模型/Check，也不重做数学/浏览器。工作流局限于审计分支文件变更；其 CI 结果必须独立查看，不因测试提交就宣称已成功。该工具依旧只读、始终不授 A。
+
+专项 [Actions #44933304290](https://github.com/runlinx-eng/math/actions/runs/44933304290) completed/success（修复代码 HEAD `90fafe6506a3fb83f6d6bf876be3425ac8a5d787`）。仅涵盖元数据结构和篡改负例，不授 A。

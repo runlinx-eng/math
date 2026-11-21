@@ -179,7 +179,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -255,7 +255,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -331,7 +331,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -407,7 +407,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -483,7 +483,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -559,7 +559,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -635,7 +635,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -711,7 +711,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -787,7 +787,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -863,7 +863,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -939,7 +939,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1015,7 +1015,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1091,7 +1091,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1167,7 +1167,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1243,7 +1243,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1319,7 +1319,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1395,7 +1395,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1471,7 +1471,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1547,7 +1547,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1623,7 +1623,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1699,7 +1699,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1775,7 +1775,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1851,7 +1851,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -1927,7 +1927,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2003,7 +2003,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2079,7 +2079,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2155,7 +2155,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2231,7 +2231,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2307,7 +2307,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "packet": "P007",
@@ -2383,7 +2383,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2463,7 +2463,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2543,7 +2543,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2623,7 +2623,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2703,7 +2703,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2783,7 +2783,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2863,7 +2863,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -2943,7 +2943,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3023,7 +3023,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3103,7 +3103,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3183,7 +3183,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3263,7 +3263,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3343,7 +3343,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3423,7 +3423,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3503,7 +3503,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3583,7 +3583,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3663,7 +3663,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3743,7 +3743,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3823,7 +3823,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3903,7 +3903,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -3983,7 +3983,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4063,7 +4063,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4143,7 +4143,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4223,7 +4223,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4303,7 +4303,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4383,7 +4383,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4463,7 +4463,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "P009",
@@ -4543,7 +4543,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -4629,7 +4629,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -4715,7 +4715,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -4801,7 +4801,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -4887,7 +4887,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -4973,7 +4973,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5059,7 +5059,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5145,7 +5145,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5231,7 +5231,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5317,7 +5317,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5403,7 +5403,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5489,7 +5489,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5575,7 +5575,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5661,7 +5661,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5747,7 +5747,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5833,7 +5833,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -5919,7 +5919,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6005,7 +6005,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6091,7 +6091,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6177,7 +6177,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6263,7 +6263,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6349,7 +6349,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6435,7 +6435,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6521,7 +6521,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6607,7 +6607,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 24,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6693,7 +6693,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6779,7 +6779,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6865,7 +6865,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -6951,7 +6951,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7037,7 +7037,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7123,7 +7123,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7209,7 +7209,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7295,7 +7295,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7381,7 +7381,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7467,7 +7467,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7553,7 +7553,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7639,7 +7639,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7725,7 +7725,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7811,7 +7811,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7897,7 +7897,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -7983,7 +7983,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8069,7 +8069,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8155,7 +8155,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8241,7 +8241,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8327,7 +8327,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8413,7 +8413,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8499,7 +8499,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8585,7 +8585,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8671,7 +8671,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8757,7 +8757,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 25,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8843,7 +8843,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -8929,7 +8929,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9015,7 +9015,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9101,7 +9101,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9187,7 +9187,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9273,7 +9273,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9359,7 +9359,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9445,7 +9445,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9531,7 +9531,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9617,7 +9617,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9703,7 +9703,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9789,7 +9789,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9875,7 +9875,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -9961,7 +9961,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10047,7 +10047,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10133,7 +10133,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10219,7 +10219,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10305,7 +10305,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10391,7 +10391,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10477,7 +10477,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10563,7 +10563,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10649,7 +10649,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10735,7 +10735,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10821,7 +10821,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10907,7 +10907,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -10993,7 +10993,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11079,7 +11079,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11165,7 +11165,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 20,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11251,7 +11251,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11337,7 +11337,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11423,7 +11423,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11509,7 +11509,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11595,7 +11595,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11681,7 +11681,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11767,7 +11767,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11853,7 +11853,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -11939,7 +11939,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12025,7 +12025,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12111,7 +12111,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12197,7 +12197,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12283,7 +12283,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12369,7 +12369,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12455,7 +12455,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12541,7 +12541,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12627,7 +12627,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12713,7 +12713,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 18,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12799,7 +12799,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12885,7 +12885,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -12971,7 +12971,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13057,7 +13057,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13143,7 +13143,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13229,7 +13229,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13315,7 +13315,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13401,7 +13401,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13487,7 +13487,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13573,7 +13573,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13659,7 +13659,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 11,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13745,7 +13745,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13831,7 +13831,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -13917,7 +13917,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14003,7 +14003,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14089,7 +14089,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14175,7 +14175,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14261,7 +14261,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14347,7 +14347,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14433,7 +14433,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14519,7 +14519,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14605,7 +14605,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14691,7 +14691,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 8,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14777,7 +14777,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14863,7 +14863,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -14949,7 +14949,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15035,7 +15035,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15121,7 +15121,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15207,7 +15207,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15293,7 +15293,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15379,7 +15379,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15465,7 +15465,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 9,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15551,7 +15551,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15637,7 +15637,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15723,7 +15723,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15809,7 +15809,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15895,7 +15895,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -15981,7 +15981,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16067,7 +16067,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 7,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16153,7 +16153,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16239,7 +16239,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16325,7 +16325,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16411,7 +16411,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16497,7 +16497,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16583,7 +16583,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16669,7 +16669,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16755,7 +16755,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16841,7 +16841,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -16927,7 +16927,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 10,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17013,7 +17013,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17099,7 +17099,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17185,7 +17185,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17271,7 +17271,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17357,7 +17357,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17443,7 +17443,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17529,7 +17529,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17615,7 +17615,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17701,7 +17701,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17787,7 +17787,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17873,7 +17873,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -17959,7 +17959,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18045,7 +18045,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18131,7 +18131,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18217,7 +18217,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18303,7 +18303,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18389,7 +18389,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18475,7 +18475,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18561,7 +18561,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18647,7 +18647,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18733,7 +18733,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18819,7 +18819,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18905,7 +18905,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -18991,7 +18991,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19077,7 +19077,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19163,7 +19163,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19249,7 +19249,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19335,7 +19335,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19421,7 +19421,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19507,7 +19507,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19593,7 +19593,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19679,7 +19679,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19765,7 +19765,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19851,7 +19851,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -19937,7 +19937,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20023,7 +20023,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20109,7 +20109,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20195,7 +20195,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20281,7 +20281,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20367,7 +20367,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20453,7 +20453,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20539,7 +20539,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20625,7 +20625,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20711,7 +20711,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20797,7 +20797,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20883,7 +20883,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -20969,7 +20969,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21055,7 +21055,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21141,7 +21141,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21227,7 +21227,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21313,7 +21313,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21399,7 +21399,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21485,7 +21485,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21571,7 +21571,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21657,7 +21657,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21743,7 +21743,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21829,7 +21829,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -21915,7 +21915,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22001,7 +22001,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22087,7 +22087,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22173,7 +22173,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22259,7 +22259,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22345,7 +22345,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22431,7 +22431,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22517,7 +22517,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22603,7 +22603,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22689,7 +22689,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22775,7 +22775,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22861,7 +22861,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -22947,7 +22947,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23033,7 +23033,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23119,7 +23119,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23205,7 +23205,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23291,7 +23291,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23377,7 +23377,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23463,7 +23463,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23549,7 +23549,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23635,7 +23635,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23721,7 +23721,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23807,7 +23807,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23893,7 +23893,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -23979,7 +23979,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24065,7 +24065,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24151,7 +24151,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24237,7 +24237,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24323,7 +24323,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24409,7 +24409,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24495,7 +24495,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24581,7 +24581,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24667,7 +24667,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24753,7 +24753,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24839,7 +24839,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -24925,7 +24925,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25011,7 +25011,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25097,7 +25097,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25183,7 +25183,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25269,7 +25269,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25355,7 +25355,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25441,7 +25441,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25527,7 +25527,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25613,7 +25613,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25699,7 +25699,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25802,7 +25802,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25905,7 +25905,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -25991,7 +25991,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26077,7 +26077,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26163,7 +26163,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26249,7 +26249,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26335,7 +26335,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26421,7 +26421,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26507,7 +26507,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26593,7 +26593,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26679,7 +26679,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26765,7 +26765,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26851,7 +26851,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -26937,7 +26937,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27023,7 +27023,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27109,7 +27109,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27195,7 +27195,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27281,7 +27281,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27367,7 +27367,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27453,7 +27453,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27539,7 +27539,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27625,7 +27625,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27711,7 +27711,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27797,7 +27797,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27883,7 +27883,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -27972,7 +27972,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28061,7 +28061,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28167,7 +28167,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28273,7 +28273,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28379,7 +28379,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28468,7 +28468,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28574,7 +28574,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28680,7 +28680,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28769,7 +28769,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28875,7 +28875,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -28981,7 +28981,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29087,7 +29087,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29176,7 +29176,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29265,7 +29265,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29351,7 +29351,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29438,7 +29438,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29524,7 +29524,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29610,7 +29610,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29696,7 +29696,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 5,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29783,7 +29783,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29870,7 +29870,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -29956,7 +29956,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30042,7 +30042,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30129,7 +30129,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30216,7 +30216,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 6,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30302,7 +30302,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30388,7 +30388,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30475,7 +30475,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30562,7 +30562,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 4,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30648,7 +30648,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30734,7 +30734,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30820,7 +30820,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30906,7 +30906,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -30992,7 +30992,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 3,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -31095,7 +31095,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -31198,7 +31198,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 2,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     },
     {
       "group": "B",
@@ -31285,7 +31285,7 @@
       "publicNewFormalA": 0,
       "approvalScopeFamilyMemberCount": 1,
       "approvalScopeExactSourceAllowlistRequired": true,
-      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_NATIVE_GLOBAL_UNIQUENESS_AND_FIXED_SOURCE_HEAD_HUMAN_APPROVAL_PENDING"
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_REGRESSION_CI_PASS_NATIVE_GLOBAL_UNIQUENESS_FIXED_HEAD_NO_GRANT"
     }
   ],
   "followup20261121": {
@@ -32896,7 +32896,9 @@
     "hardeningCommit": "90fafe6506a3fb83f6d6bf876be3425ac8a5d787",
     "hardenedGlobalNativePositionUniqueness": true,
     "hardenedFixedPr351SourceHead": true,
-    "targetedSyntheticRegressionTests": "COMMITTED_PENDING_GITHUB_CI_NOT_CLAIMED_PASS",
-    "oldMathAndOriginalSuiteReruns": 0
+    "targetedSyntheticRegressionTests": "PASS_GITHUB_ACTIONS_44933304290_CODE_HEAD_90fafe6506a3fb83f6d6bf876be3425ac8a5d787",
+    "oldMathAndOriginalSuiteReruns": 0,
+    "scopeRegressionRun": 44933304290,
+    "scopeRegressionCodeHead": "90fafe6506a3fb83f6d6bf876be3425ac8a5d787"
   }
 }
