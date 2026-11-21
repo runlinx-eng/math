@@ -65,6 +65,26 @@ test('actual pick/remove/re-pick chrono, numerical order and final axis invarian
   assert.equal(JSON.stringify(m),before);
  }
 });
+test('refuse crossed or tied close axis positions despite original approximate grade',()=>{
+ const c=native[2],{task,m}=build(c);
+ const smaller=task.values.indexOf('7042500'),larger=task.values.indexOf('7045200');
+ assert.equal(m.positions[smaller],85);
+ assert.equal(m.positions[larger],90);
+ assert.ok(replay(c,m,{attempts:[{value:copy(m)}]}));
+ for(const kind of ['cross','tie']){
+  const altered=copy(m);
+  if(kind==='cross'){
+   [altered.positions[smaller],altered.positions[larger]]=
+    [altered.positions[larger],altered.positions[smaller]];
+  }else altered.positions[larger]=altered.positions[smaller];
+  assert.equal(M.valid(task,altered),true);
+  assert.equal(M.inspect(task,altered).correct,true,
+   'original grader intentionally accepts approximate positions');
+  assert.equal(replay(c,altered,{attempts:[{value:copy(altered)}]}),null,
+   'strict evidence must refuse spatial inversion or indistinguishable tie');
+ }
+});
+
 test('reject forgery, stale latest Check, no trace, wrong signed/source and truncation',()=>{
  for(const c of native){
   const {task,m,record}=build(c);

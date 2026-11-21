@@ -55,6 +55,12 @@ export function replayPositiveOrderPreaudit(task,model,record,context={}){
    return {index:i,value,position:model.positions[i],finalPositionError:Math.abs(model.positions[i]-ideal)};
   });
   if(points.some(p=>p.finalPositionError>6))return null;
+  // The original approximate grader permits a small absolute position error.
+  // Close distinct values can pass that tolerance with their positions crossed
+  // or tied; strict sorting evidence must also preserve left-to-right order.
+  for(let i=1;i<order.length;i++){
+   if(!(model.positions[order[i-1]]<model.positions[order[i]]))return null;
+  }
   return {preReviewOnly:true,strictAApproved:false,nodeId:source.nodeId,
    sessionId:context.sessionId,index:context.index,
    mathematicalInvariant:'ascending-distinct-positive-integer-card-values',
