@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 76,
-    "developmentTestedCandidateCases": 36,
+    "developmentTestedPositions": 78,
+    "developmentTestedCandidateCases": 37,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 10,
+      "developmentTested": 12,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 21
+      "pendingOrOtherNotAccepted": 19
     }
   ],
   "cases": [
@@ -799,6 +799,26 @@
       },
       "artifact": {
         "id": 14701576369,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006f-native-inference-boundaries",
+      "branch": "work/a/p006f-native-inference-boundaries",
+      "candidateSha": "69795ef4ebce224a8affcde9c7e493c0afea9fce",
+      "positions": [
+        "studyplan:2",
+        "betterquestion:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44889511308,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14701386922,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
