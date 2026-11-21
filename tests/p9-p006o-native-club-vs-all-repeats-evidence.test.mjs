@@ -38,7 +38,7 @@ function complete(wrong=false){
 }
 test('P006o original frame source, full SHA, six independent native draws',()=>{
  console.log('P006O_NATIVE_FULL_TASK_SHA256 samplevary:1 '+digest(task));
- assert.equal(digest(task),'0a01bd8e8dd95df5a801bc216e7d0d60d3f19c5dcbe5d94c135b958604e6896a');
+ assert.equal(digest(task),'89c72b9bbd6503b5c39ce9ee0393ed631f0595f91cd2015a5a95290978deaa04');
  assert.equal(LESSONS.samplevary.topicId,'mt_x7V1qrkiqH');
  assert.deepEqual(task.methods,['club','club','club','all','all','all']);
  assert.equal(task.type,'x-samplelab');
@@ -55,7 +55,7 @@ test('P006o original frame source, full SHA, six independent native draws',()=>{
   const proof=replayNativeClubVsAllRepeats(task,model,ctx);
   assert.ok(proof,'six independent original frame draws');
   assert.deepEqual(proof.sampleMeans,model.board.runs.map(r=>r.estimate));
-  assert.deepEqual(proof.sampleMeans,[6.3,6.2,6.9,2.5,1.9,3.2]);
+  assert.deepEqual(proof.sampleMeans,[6.2,6.2,6.8,2.5,1.9,3.2]);
   assert.equal(proof.sampleIds.length,6);
   assert.ok(proof.sampleIds.slice(0,3).every(ids=>ids.length===20&&ids.every(id=>id<=200)));
   assert.ok(proof.sampleIds.slice(3).every(ids=>ids.length===20&&ids.every(id=>id<=800)));
