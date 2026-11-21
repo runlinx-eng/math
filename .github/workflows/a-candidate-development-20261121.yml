@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004c-closed-polygon-pick
-            sha: a932d4b68f2960a628fd43caec50c1316d5f2473
+            sha: 41fba0b3ab40b57045d77d7b25f5c95eb03a3786
             node_test: tests/p9-p004c-closed-polygon-pick-evidence.test.mjs
             browser_test: tests/p9-p004c-closed-polygon-pick-browser.cjs
 
