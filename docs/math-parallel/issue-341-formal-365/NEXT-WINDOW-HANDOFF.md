@@ -1,3 +1,14 @@
+<!-- issue341-no-human-review-20261122:begin -->
+## 2026-11-22 生效决定：当前365道不需要独立人工审批（优先级最高）
+
+**用户明确取消独立人工审批。** [#352](https://github.com/runlinx-eng/math/issues/352) 已按 `not_planned` 关闭。以下旧章节中“须由独立审核人签署、等签署后才能工程接入”等仅是历史记录，不能再当作当前阻塞；不得重开人审、审批预检或新增审计项目。
+
+下一步直接开展已有工程证据支持的正式题位注册：仅针对现有365道，使用 #351 已通过的113家族隔离代码、原数学/完整Check/负例/Artifact和新增有界反馈；正式 manifest 的每个条目都要与冻结原生 `sessionId/index/nodeId/type/完整taskHash/adapter` 精确一致；同族未被列入的题位不生效，数据/证据错误仍 fail closed。#354 取消刚添加的独立签名决定第二道门控，恢复早先已通过CI的精确manifest路由源树（原始等价代码 HEAD `b32077b856b2131f28ea69779624adf3aa3387e3`）；提交 [`071944d63310`](https://github.com/runlinx-eng/math/commit/071944d633101650eb739894fd8129704e6c5f48) 保留明确的 Git 历史。
+
+**状态**：main 仍正式 A813/1996；新365尚未正式提交/合并到main，不虚报A1178或已上线；#351/#354保持Draft。新 HEAD 需验证适用CI，之后接正式manifest/adapter/feedback、SW缓存/release、实际激活HEAD必要门禁；main合并/部署仍需单独授权。旧数学与Chromium有效回执复用，不重跑原B308/298Python。B线新增126道继续排后，#353不恢复；目标2026-11-27。
+
+<!-- issue341-no-human-review-20261122:end -->
+
 <!-- issue341-staged-formal-routing-20261122:begin -->
 ## PR #354 实际 HEAD 的 CI 终态（2026-11-22）
 
