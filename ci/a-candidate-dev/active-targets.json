@@ -2,20 +2,33 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005l-reason34-polygon-fan",
-      "sha": "b92c976ce016b7ac562b22095d3007be1982b445",
-      "node_test": "tests/p9-p005l-reason34-polygon-fan-evidence.test.mjs",
-      "browser_test": "tests/p9-p005l-reason34-polygon-fan-browser.cjs",
+      "case": "P005m-native-fractionreason-anglejoin",
+      "sha": "89b87873c5b6f4d0d3f11c41fe66a1a2c7b28bd0",
+      "node_test": "tests/p9-p005m-native-fractionreason-anglejoin-evidence.test.mjs",
+      "browser_test": "tests/p9-p005m-native-fractionreason-anglejoin-browser.cjs",
       "native": [
         {
-          "sessionId": "reason34",
-          "index": 0,
-          "nodeId": "mt_iyovKgZC1q",
-          "taskSha256": "07e4b762dc704c68929bf22c12cfa40b749813061618ad50bfee9da182053e11",
-          "type": "x-g25-polygon",
-          "view": "b25",
+          "sessionId": "fractionreason",
+          "index": 2,
+          "nodeId": "mt_2ESZh70NyS",
+          "taskSha256": "87348811a8a2af3a10b9f4e29d1f56ffe13d6ebc0c4b259326cf5ec3a951ab70",
+          "type": "x-anglejoin",
+          "view": "b16",
           "controls": [
-            "g25-diagonal"
+            "b16-angle",
+            "b16-chain"
+          ]
+        },
+        {
+          "sessionId": "fractionreason",
+          "index": 3,
+          "nodeId": "mt_2ESZh70NyS",
+          "taskSha256": "7d32137f7f140f8fabaa1d8e07c2ae0a8a6a7c60933566b300a5beb3100506e8",
+          "type": "x-anglejoin",
+          "view": "b16",
+          "controls": [
+            "b16-angle",
+            "b16-chain"
           ]
         }
       ]
