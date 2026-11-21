@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 90,
-    "developmentTestedCandidateCases": 45,
+    "developmentTestedPositions": 91,
+    "developmentTestedCandidateCases": 46,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 24,
+      "developmentTested": 25,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 7
+      "pendingOrOtherNotAccepted": 6
     }
   ],
   "cases": [
@@ -975,6 +975,25 @@
       },
       "artifact": {
         "id": 14703741077,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006o-native-club-vs-all-repeats",
+      "branch": "work/a/p006o-native-club-vs-all-repeats",
+      "candidateSha": "cf67a5b63c606cf0166f58da1ba7e80fdc4912a0",
+      "positions": [
+        "samplevary:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44896068925,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14704076941,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
