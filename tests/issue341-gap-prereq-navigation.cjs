@@ -95,7 +95,7 @@ async function navigateToLesson(page,origin,id) {
   ok(s?.id===id&&s?.index===0&&s?.view==='task',
     id+' starts at native initial task, not seeded');
 }
-async function visitTarget(page,origin,model,taskFor,lessons,intake,target) {
+async function visitTarget(page,origin,model,tenMath,taskFor,lessons,intake,target) {
   const {id,index}=target,position=id+':'+index;
   const lock=intake.rows.find(r=>r.position===position && r.packet===packet);
   assert.ok(lock,'frozen #341 original-source intake for '+position);
@@ -106,19 +106,39 @@ async function visitTarget(page,origin,model,taskFor,lessons,intake,target) {
   for(let i=0;i<index;i++) {
     phase=id+':'+i+' real prerequisite';
     const task=taskFor(id,i);
-    ok(model.TYPES.has(task?.type),id+':'+i+' supports native prerequisite '+task?.type);
+    const nativeModel=task?.type==='x-threegroups'?tenMath:model;
+    ok(nativeModel?.TYPES.has(task?.type),id+':'+i+' supports native prerequisite '+task?.type);
     const initial=await snapshot(page);
     ok(initial.id===id&&initial.index===i&&initial.view==='task'&&!initial.complete,
       id+':'+i+' is the uncompleted original task');
 
-    const steps=model.solveSteps(task);
-    ok(Array.isArray(steps)&&steps.length>0,id+':'+i+' has original-control instructions');
-    for(const step of steps) await applyNativeStep(page,step);
+    let steps;
+    if(task.type==='x-threegroups'){
+      // B10 predecessor has no solveSteps export: use visible native picks,
+      // merge, two integer fields and the original Save button for all three pairs.
+      // Nothing is injected into app/model/storage; source values are read-only.
+      const pairs=[[0,1],[1,2],[0,2]];
+      steps=[];
+      const doStep=async step=>{steps.push(step);await applyNativeStep(page,step);};
+      for(const pair of pairs){
+        for(const chosen of pair)
+          await doStep({action:'triple-pick',data:{index:chosen}});
+        await doStep({action:'triple-merge'});
+        await doStep({field:'sub',value:pair.reduce((n,k)=>n+task.values[k],0)});
+        await doStep({field:'total',value:task.values.reduce((n,x)=>n+x,0)});
+        await doStep({action:'triple-save'});
+      }
+    } else {
+      steps=nativeModel.solveSteps(task);
+      ok(Array.isArray(steps)&&steps.length>0,
+        id+':'+i+' has original-control instructions');
+      for(const step of steps) await applyNativeStep(page,step);
+    }
     const check=await control(page,'#actions [data-do="check"]');
     ok(await check.isEnabled(),id+':'+i+' original Check is enabled');
     await check.click();
     const record=await capture(page,out,id+'-'+i,{id,index:i},'original-prerequisite-check');
-    ok(record.attempts.length===1&&model.inspect(task,record.model).correct,
+    ok(record.attempts.length===1&&nativeModel.inspect(task,record.model).correct,
       id+':'+i+' original grader accepted original control actions');
     const after=await snapshot(page);
     ok(after.id===id&&after.index===i&&after.complete,
@@ -179,6 +199,7 @@ async function run() {
       packet==='P112'?'dist/learning/phase5/b22-model.js':
         'dist/learning/phase5/b11-model.js')
   ]);
+  const tenMath=packet==='P113'?await entry('dist/learning/phase5/b10-model.js'):null;
   const intake=JSON.parse(fs.readFileSync(path.join(root,
     'docs/math-parallel/issue-341-formal-365/issue-341-formal-365-intake.json'),'utf8'));
   let origin,browser,context,page,chromiumVersion=null;
@@ -204,7 +225,7 @@ async function run() {
     await page.locator('#main [data-do="export"]').first().waitFor();
     await warmAndStop(page,origin,release,ok,packet+' gap-only');
     for(const target of targets[packet])
-      await visitTarget(page,origin,math,bridge.sessionTaskFor,
+      await visitTarget(page,origin,math,tenMath,bridge.sessionTaskFor,
         catalog.LESSONS,intake,target);
     ok(routes.length===targets[packet].length,
       packet+' all previously missing positions proved');
