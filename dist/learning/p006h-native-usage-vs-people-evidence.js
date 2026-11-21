@@ -5,7 +5,7 @@ import {isEvidenceContext,matchesNativeEvidenceTask,latestSubmissionMatches,
  hasExactKeys as exact,sameEvidence as same} from './evidence-contract.js';
 
 const choice=(key,label,options,answer)=>({key,label,options,answer});
-const plan=(prompt,choices)=>({type:'x-dataplan',prompt,choices,draft:true});
+const plan=(prompt,choices)=>({type:'x-dataplan',prompt,choices});
 const CASES=[
  {id:'playgroundstudy',index:2,node:'mt_kxeuXm6EyC',
   task:plan('三天共记录12次使用。先别把“次数”改成“人数”。',[
