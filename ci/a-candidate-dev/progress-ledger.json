@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 101,
-    "developmentTestedCandidateCases": 53,
+    "developmentTestedPositions": 102,
+    "developmentTestedCandidateCases": 54,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 4,
+      "developmentTested": 5,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 26
+      "pendingOrOtherNotAccepted": 25
     }
   ],
   "cases": [
@@ -1139,6 +1139,25 @@
       },
       "artifact": {
         "id": 14705838774,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007d-rectangle-dimensions",
+      "branch": "work/a/p007d-native-rectangle-dimensions",
+      "candidateSha": "6c0e5265ad106820085ef3529dffddda662a7fbf",
+      "positions": [
+        "shapemeasures:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44901650053,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14706058868,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
