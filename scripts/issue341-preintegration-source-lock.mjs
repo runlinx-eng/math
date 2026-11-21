@@ -20,6 +20,13 @@ const stable=value=>Array.isArray(value)?value.map(stable):
 const fingerprint=value=>createHash('sha256')
   .update(JSON.stringify(stable(value))).digest('hex');
 const position=row=>row.sessionId+':'+row.index;
+// P007's frozen ledger uses one packet label for 16 distinct development families.
+const candidateFamily=row=>{
+  if(row.group!=='P007')return row.packet;
+  const match=/^P007([a-p])-/.exec(row.family);
+  if(!match)throw Error('Unrecognized P007 family: '+String(row.family));
+  return 'P007'+match[1].toUpperCase();
+};
 const indexOf=label=>{const i=label.lastIndexOf(':');return {
   sessionId:label.slice(0,i),index:Number(label.slice(i+1))
 };};
@@ -52,8 +59,9 @@ try{
   }
   const rowsByPacket=new Map();
   for(const row of ledger.rows){
-    if(!rowsByPacket.has(row.packet))rowsByPacket.set(row.packet,[]);
-    rowsByPacket.get(row.packet).push(row);
+    const family=candidateFamily(row);
+    if(!rowsByPacket.has(family))rowsByPacket.set(family,[]);
+    rowsByPacket.get(family).push(row);
     if(official.has(row.position))
       fail('already-approved-position',row.position,'Would duplicate a reviewed A position');
   }
@@ -101,7 +109,7 @@ try{
       catch(error){fail('candidate-binding-throws',item.position,candidate.id+': '+String(error));}
       if(result)matches.push({id:candidate.id,binding:result});
     }
-    if(matches.length!==1||matches[0].id!=='issue341-'+item.packet)
+    if(matches.length!==1||matches[0].id!=='issue341-'+candidateFamily(item))
       fail('nonexclusive-candidate-binding',item.position,
         matches.map(x=>x.id).join(',')||'No matching candidate binding');
     const existingMatches=[];
