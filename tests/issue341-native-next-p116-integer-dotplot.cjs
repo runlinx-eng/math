@@ -172,6 +172,53 @@ async function run() {
     for (const row of cases) {
       phase = 'dotrecords:' + row.index;
       const tag = 'dotrecords-' + row.index;
+      // The index-2 candidate must be reached through the original index-1
+      // reading task. Index 1 already has a native, fully populated dot plot:
+      // completing its questions through original DOM controls is sufficient
+      // for the native grader to permit Next. No localStorage position edits.
+      if (row.id === 'dotrecords' && row.index === 2) {
+        phase = 'dotrecords:1 native prerequisite';
+        const initialRoute = await page.evaluate(() => {
+          const snap = window.mathLesson?.snapshot();
+          return {
+            id: snap?.id, index: snap?.index, view: snap?.view,
+            completed: snap?.summary?.cases?.[snap?.index]?.complete === true
+          };
+        });
+        ok(initialRoute.id === 'dotrecords' && initialRoute.index === 0 &&
+          initialRoute.view === 'task' && initialRoute.completed,
+          'index 0 original correct Check precedes navigation to prerequisite');
+        await click(page, '#actions [data-do="next"]');
+        await page.waitForFunction(() => window.mathLesson?.snapshot()?.index === 1);
+
+        const precedingTask = sessionTaskFor('dotrecords', 1);
+        ok(precedingTask?.type === 'x-dotdraw' && precedingTask.given === true &&
+          precedingTask.values.length === 20 && precedingTask.questions.length === 6,
+          'index 1 is the real pre-plotted reading task, not a synthetic shortcut');
+        for (const [questionIndex, question] of precedingTask.questions.entries()) {
+          await field(page, 'answers.' + questionIndex,
+            Array.isArray(question.value) ? question.value[0] : question.value,
+            Boolean(question.options));
+        }
+        await click(page, '#actions [data-do="check"]');
+        const precheck = await capture(page, out, 'dotrecords-1-native-prerequisite',
+          {id: 'dotrecords', index: 1}, 'correct-check');
+        ok(precheck.attempts.length === 1 &&
+          inspect(precedingTask, precheck.attempts[0].value).correct &&
+          precheck.model.board.placed.every((v,i) => v === precedingTask.values[i]),
+          'real prerequisite question answers and original grader Check passed');
+        const readyForNext = await page.evaluate(() => {
+          const snap = window.mathLesson?.snapshot();
+          return snap?.index === 1 && snap?.view === 'task' &&
+            snap?.summary?.cases?.[1]?.complete === true;
+        });
+        ok(readyForNext, 'index 1 original completion unlocks native Next to index 2');
+        observations.push({index: 1, stage: 'native-prerequisite-correct-check',
+          attempts: precheck.attempts.length, originalCheckCorrect: true,
+          storage: precheck.storage});
+        await picture(page, 'dotrecords-1-native-prerequisite.png');
+        phase = 'dotrecords:2';
+      }
       await routePosition(page, origin, row);
       const live = await page.evaluate(async ({id,index}) => {
         const {sessionTaskFor} = await import('./learning/bridges.js');
