@@ -107,14 +107,14 @@ async function run(){
    ok(await page.locator('#thinking-feedback').count()===0,'no premature shared registry');
    stage=position+':native-draw-wrong-estimate';
    await action('draw');
-   const pending=await page.evaluate(()=>window.mathLesson?.snapshot()?.model?.board?.pending);
+   const pending=(await capture(page,out,label,{id:s.id,index:s.index},'after-draw')).model.board.pending;
    ok(!!pending&&pending.ids.length===s.n&&new Set(pending.ids).size===s.n,
     'original draw without replacement');
    const sum=pending.values.reduce((a,b)=>a+b,0);
    const target=Math.round((sum/s.n*(original.task.mode==='proportion'?100:1)+Number.EPSILON)*10)/10;
    await field('estimate',target+1);
    await action('record');
-   const wrongModel=await page.evaluate(()=>window.mathLesson?.snapshot()?.model);
+   const wrongModel=(await capture(page,out,label,{id:s.id,index:s.index},'wrong-before-check')).model;
    ok(!!wrongModel?.issue&&!!wrongModel?.board?.pending,'wrong original estimate rejected');
    ok(!candidate.replayNativeSample(original.task,wrongModel,context),
     'independent replay refuses wrong estimate');
