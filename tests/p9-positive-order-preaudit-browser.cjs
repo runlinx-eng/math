@@ -5,6 +5,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto');
 const {execFileSync}=require('node:child_process');
+const {newDesktopContext}=require('./helpers/standard-desktop-viewport.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-positive-order-preaudit');
 const cases=[
  {id:'bigcompare',index:2,nodeId:'mt_MHaiUd2FLA',taskHash:'3af8e623611e2f89e1e0aa354e1f023203a77fd200f5ceee9381967878a05639'},
@@ -40,7 +41,7 @@ async function main(){
  let browser,context,server,page,label='setup';
  try{
   server=http.createServer((req,res)=>{
-   const rel=new URL(req.url,'http://localhost').pathname.replace(/^\\/+/, '')||'index.html';
+   const rel=new URL(req.url,'http://localhost').pathname.replace(/^[/]+/, '')||'index.html';
    fs.readFile(path.join(root,'dist',rel),(err,data)=>{
     res.writeHead(err?404:200,{'Content-Type':mime[path.extname(rel)]||'application/octet-stream','Cache-Control':'no-store'});
     res.end(err?'missing':data);
@@ -51,7 +52,7 @@ async function main(){
   browser=await chromium.launch({headless:true,...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
    args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   provenance.browserVersion=browser.version();
-  context=await browser.newContext({viewport:{width:1920,height:1080},reducedMotion:'reduce',acceptDownloads:true});
+  context=await newDesktopContext(browser,{reducedMotion:'reduce',acceptDownloads:true});
   context.on('request',request=>{if(/^https?:/.test(request.url())&&!request.url().startsWith(base))remote.push(request.url());});
   page=await context.newPage();page.setDefaultTimeout(20000);
   page.on('pageerror',error=>errors.push({label,error:String(error)}));
