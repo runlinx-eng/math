@@ -2,52 +2,32 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005d-cross-source-vertex-angles",
-      "sha": "5d08c89e98ee3c74ed4931fed8432b6fa44b3a05",
-      "node_test": "tests/p9-p005d-cross-source-vertex-angle-evidence.test.mjs",
-      "browser_test": "tests/p9-p005d-cross-source-vertex-angle-browser.cjs",
+      "case": "P005e-directed-angle-classification",
+      "sha": "22353075b55ebb81b055d35500e5eb281c866024",
+      "node_test": "tests/p9-p005e-directed-angle-classification-evidence.test.mjs",
+      "browser_test": "tests/p9-p005e-directed-angle-classification-browser.cjs",
       "native": [
         {
-          "sessionId": "anglecorner",
-          "index": 2,
-          "nodeId": "mt_8OAGVdeTJ_",
-          "taskSha256": "732d4288b4601c08cca221c8c35d13ebf080c2326d7a579f4b1cc0689087c5b8",
-          "type": "x-g25-vertices",
-          "view": "b25",
-          "controls": [
-            "g25-choose"
-          ]
-        },
-        {
           "sessionId": "rightcheck",
-          "index": 1,
-          "nodeId": "mt_MFfYcnv6Tv",
-          "taskSha256": "0b936ffb21588a5f4b82cc6ee2f55796f509456cec2613e773131a1803e59979",
-          "type": "x-g25-vertices",
-          "view": "b25",
-          "controls": [
-            "g25-choose"
-          ]
-        },
-        {
-          "sessionId": "linemark",
-          "index": 2,
-          "nodeId": "mt_QysgF57dxh",
-          "taskSha256": "31fcde19c84f05c03b7e4629201d21e2ba1cfdeb4e0562053d3810e62e06d8db",
-          "type": "x-g25-vertices",
-          "view": "b25",
-          "controls": [
-            "g25-choose"
-          ]
-        },
-        {
-          "sessionId": "linenotation",
           "index": 0,
-          "nodeId": "mt_e4V6hvcuEJ",
-          "taskSha256": "6e14b21b9bafdff25c2a163736fa1886d477ff10122c8f64ad816621a2773ab0",
-          "type": "x-g25-vertices",
+          "nodeId": "mt_MFfYcnv6Tv",
+          "taskSha256": "09beb6f706b5d3ed887b4002c1fbe8b01f0baa34252d1beb3545e6a3537b3faa",
+          "type": "x-g25-compare",
           "view": "b25",
           "controls": [
+            "g25-test",
+            "g25-choose"
+          ]
+        },
+        {
+          "sessionId": "anglestraight",
+          "index": 1,
+          "nodeId": "mt_LBT-9jz7kR",
+          "taskSha256": "8f6bc73d9e3bf01ece867b47a886b45e84a9de11e58b38e18785e971e8e227ce",
+          "type": "x-g25-compare",
+          "view": "b25",
+          "controls": [
+            "g25-test",
             "g25-choose"
           ]
         }
