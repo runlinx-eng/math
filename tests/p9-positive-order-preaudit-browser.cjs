@@ -119,7 +119,9 @@ async function main(){
    }
   };
   const open=async s=>{
-   const response=await page.goto(base+'learn.html#'+s.id);
+   // A different session hash alone is same-document navigation; force a new
+   // document request for each original lesson before checking its response.
+   const response=await page.goto(base+'learn.html?preaudit='+encodeURIComponent(s.id)+'#'+s.id);
    ok(response?.ok()===true,label+' original lesson document loaded');
    await wait({id:s.id,index:0});
    for(let at=0;at<s.index;at++){
