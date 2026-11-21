@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P005a-acute-angle-comparison
-            sha: 2f8bf2d715fabbc5c15e664de9c62780b70f71a3
-            node_test: tests/p9-p005a-acute-angle-comparison-evidence.test.mjs
-            browser_test: tests/p9-p005a-acute-angle-comparison-browser.cjs
+          - case: P005b-angle-ordering
+            sha: 8e595357d081d62c444861550d259996e15105dc
+            node_test: tests/p9-p005b-angle-ordering-evidence.test.mjs
+            browser_test: tests/p9-p005b-angle-ordering-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
