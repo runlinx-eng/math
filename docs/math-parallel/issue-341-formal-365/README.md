@@ -4,7 +4,7 @@
 
 B 线 **308 道已有原工程测试证据仍按上一轮接收并复用，不要求 298 道统一重测**。只读整理了 P091／P105／P107／P109／P116 共 **5 家族、12 道**的明确数学主张与不能外推之处，仍需正常共享接入和正式双门禁。已有 28/28 原生导航证明和此前有界独立数值复核全部保持。
 
-[完整来源锁定与 12 道范围审查报告](./20261121-preintegration-source-lock-and-first-12-scopes.md) · [B 12 道边界 JSON](./b-first-12-observable-contract-review.json) · [正式 A813 与 365 候选静态冲突预检](./staging-integration/approved-manifest-collision-precheck.json) · [365 道最新机器台账](./issue-341-formal-365-intake.json) · [CSV](./issue-341-formal-365-intake.csv)
+[完整来源锁定与 12 道范围审查报告](./20261121-preintegration-source-lock-and-first-12-scopes.md) · [B 12 道边界 JSON](./b-first-12-observable-contract-review.json) · [5 家族／12 题位不生效集成提案](./b-first-12-INACTIVE-integration-proposal.json) · [正式 A813 与 365 候选静态冲突预检](./staging-integration/approved-manifest-collision-precheck.json) · [365 道最新机器台账](./issue-341-formal-365-intake.json) · [CSV](./issue-341-formal-365-intake.csv)
 
 ---
 
