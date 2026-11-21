@@ -118,10 +118,6 @@ async function run(){
     const b=page.locator('#extra-controls [data-x="g23-sort"]');
     await reveal(b);await b.click();
   };
-  const check=async()=>{
-    const b=page.locator('#actions [data-do="check"]');
-    await reveal(b);await b.click();
-  };
   stage='quadsort:3:wrong-check';
   for(const [i,r] of s.regions.entries())await sort(i,i===0?0:r);
   const answer=page.locator('#extra-controls [data-xfield="answers.0"]');
