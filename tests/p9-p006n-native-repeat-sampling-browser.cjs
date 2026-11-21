@@ -9,7 +9,7 @@ const {createOrigin,capture,warmAndStop}=require('./helpers/p9-basic-artifact.cj
 const root=path.resolve(__dirname,'..');
 const out=path.join(root,'verification/p9-p006n-native-repeat-sampling');
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
-const sample={id:'samplevary',index:0,node:'mt_x7V1qrkiqH',hash:process.env.P006N_TASK_SHA||null};
+const sample={id:'samplevary',index:0,node:'mt_x7V1qrkiqH',hash:'66b47f1c9c7dd633e5538f40852a8bd12561d5a077633717a5f01cf03b3bb546'};
 let stage='startup';
 const checks=[],errors=[],captures=[],screenshots=[],nativeHashes=[];
 const ok=(v,msg)=>{assert.ok(v,stage+': '+msg);checks.push(stage+': '+msg);};
@@ -95,7 +95,7 @@ async function run(){
   const hash=digest(original.task);
   console.log('P006N_NATIVE_FULL_TASK_SHA256 '+position+' '+hash);
   nativeHashes.push({position,nodeId:original.nodeId,sha256:hash});
-  ok(original.nodeId===s.node&&(!s.hash||hash===s.hash)&&
+  ok(original.nodeId===s.node&&hash===s.hash&&
    original.task.type==='x-samplelab'&&original.task.runs===5,
    'original B21 source/full task type and five-draw contract');
   ok(candidate.nativeRepeatSamplingBinding(original.task,context)?.drawCount===5,
