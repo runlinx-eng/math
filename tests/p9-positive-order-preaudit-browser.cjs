@@ -135,7 +135,7 @@ async function main(){
     preparations.push({id:s.id,index:at,mode:t.mode,originalCorrect:true,visibleControls:true});
    }
    assert.deepEqual(await model(s),M.initial(taskFor(s)));
-   ok((await saved(s.id)).cases[s.index]?.attempts?.length===undefined,
+   ok(((await saved(s.id)).cases[s.index]?.attempts?.length??0)===0,
     label+' new target has no prior checked attempts');
   };
   const placeAxis=async s=>{
