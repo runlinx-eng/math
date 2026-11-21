@@ -2,46 +2,42 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005g-native-protractor",
-      "sha": "7c62d3f5d80833a48c9459073c039901ab3d02e4",
-      "node_test": "tests/p9-p005g-native-protractor-evidence.test.mjs",
-      "browser_test": "tests/p9-p005g-native-protractor-browser.cjs",
+      "case": "P005h-native-parallel",
+      "sha": "cf4ec2258fe91793730cf319a9960e9d90eff8f6",
+      "node_test": "tests/p9-p005h-native-parallel-transversal-evidence.test.mjs",
+      "browser_test": "tests/p9-p005h-native-parallel-transversal-browser.cjs",
       "native": [
         {
-          "sessionId": "angleprotractor",
+          "sessionId": "parallelangle",
           "index": 0,
-          "nodeId": "mt_4MFUAsbx_6",
-          "taskSha256": "107b5a8506ea58a40654d33f663faf8cc36d1060cbf5e3b6c890c95801bb126a",
-          "type": "x-g25-protractor",
+          "nodeId": "mt_H_pNJ3ZI_S",
+          "taskSha256": "cdbbc402bfcdd7e8593aa876f501b474fc69660ab61edce5e128fa3ca92ad28e",
+          "type": "x-g25-parallel",
           "view": "b25",
           "controls": [
-            "g25-move",
-            "g25-flip"
+            "g25-slide"
           ]
         },
         {
-          "sessionId": "angleprotractor",
+          "sessionId": "parallelangle",
           "index": 1,
-          "nodeId": "mt_4MFUAsbx_6",
-          "taskSha256": "b59a56720e76b1c137285af1f28c5a39215295ffe87712266a187c8d98fedc42",
-          "type": "x-g25-protractor",
+          "nodeId": "mt_H_pNJ3ZI_S",
+          "taskSha256": "455479ecfd0c03dc7b71f9e935889928d0727461b2bcf2c2faa74990eeab8b08",
+          "type": "x-g25-parallel",
           "view": "b25",
           "controls": [
-            "g25-move",
-            "g25-flip",
-            "g25-draw"
+            "g25-slide"
           ]
         },
         {
-          "sessionId": "angleprotractor",
+          "sessionId": "parallelangle",
           "index": 2,
-          "nodeId": "mt_4MFUAsbx_6",
-          "taskSha256": "38f731b2d957fd5a6bd7befea7ba52703a90d8ebe014cfaec13f0a82ed75440d",
-          "type": "x-g25-protractor",
+          "nodeId": "mt_H_pNJ3ZI_S",
+          "taskSha256": "74516eb7aa89d993be4b4c918e5aab4b1ccd7d7c08360714fb4b2596411d6fb9",
+          "type": "x-g25-parallel",
           "view": "b25",
           "controls": [
-            "g25-move",
-            "g25-flip"
+            "g25-slide"
           ]
         }
       ]
