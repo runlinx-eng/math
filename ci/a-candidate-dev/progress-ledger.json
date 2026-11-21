@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 41,
-    "developmentTestedCandidateCases": 20,
+    "developmentTestedPositions": 45,
+    "developmentTestedCandidateCases": 21,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 5,
+      "developmentTested": 9,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 27
+      "pendingOrOtherNotAccepted": 23
     }
   ],
   "cases": [
@@ -465,6 +465,28 @@
       },
       "artifact": {
         "id": 14697380630,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005d-cross-source-vertex-angles",
+      "branch": "work/a/p005d-cross-source-vertex-angles",
+      "candidateSha": "5d08c89e98ee3c74ed4931fed8432b6fa44b3a05",
+      "positions": [
+        "anglecorner:2",
+        "rightcheck:1",
+        "linemark:2",
+        "linenotation:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44880073176,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14697735619,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
