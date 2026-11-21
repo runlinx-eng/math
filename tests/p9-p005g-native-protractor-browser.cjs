@@ -132,8 +132,8 @@ async function run(){
    stage=position+':align';
    await click('move','right');await click('move','right');
    await click('move','up');await click('flip');
-   const state=await page.evaluate(()=>window.mathLesson.snapshot().model);
-   ok(state.board.x===0&&state.board.y===0&&state.board.rotation===0,
+   const aligned=await capture(page,out,label,{id:spec.id,index:spec.index},'aligned');
+   ok(aligned.model.board.x===0&&aligned.model.board.y===0&&aligned.model.board.rotation===0,
       'real move/move/move/flip aligned center and zero scale');
    stage=position+':wrong-check';
    if(spec.mode==='draw'){await fill('angle',50);await click('draw');}
