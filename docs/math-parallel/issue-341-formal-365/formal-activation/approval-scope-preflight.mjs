@@ -12,7 +12,11 @@ export function inspectIssue341ApprovalScope(request, proposal=null) {
   requireCond(request.newGrantedA === 0 && request.formalStrictA === 813, "formal A baseline differs from the reviewed snapshot");
   const head=request.sourceSnapshot?.head;
   requireCond(typeof head === "string" && /^[0-9a-f]{40}$/.test(head), "source HEAD missing or malformed");
-  const identities=new Map(), families=new Map(), groups={P007:0,P009:0,B:0};
+  // This request is a frozen review snapshot, not a movable ref. Refreshing
+  // code HEAD requires a new reviewed request and an explicit guard update.
+  requireCond(head === "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "request HEAD differs from reviewed PR #351 source");
+  const identities=new Map(), nativePositions=new Set(), families=new Map(), groups={P007:0,P009:0,B:0};
   const makeKey=r=>r.packet+"\u0000"+r.sessionId+"\u0000"+r.index;
   for (const row of request.rows) {
     requireCond(row && typeof row === "object" && ["P007","P009","B"].includes(row.group), "unknown request group");
@@ -25,6 +29,12 @@ export function inspectIssue341ApprovalScope(request, proposal=null) {
     requireCond(row.formalA === "NOT_GRANTED" && row.officialManifestWritten === false && row.newFeedback?.method === null, "formal gate or method claim differs from reviewed request");
     requireCond(row.existingMathematicalEvidence?.status === "REUSED_NO_NEW_PROOF_REQUEST" && typeof row.existingMathematicalEvidence?.moduleSha256 === "string", "original math contract evidence missing");
     requireCond(row.archivedFixture?.memberSha256 && row.archivedFixture?.resultsMemberSha256, "archived original input reference missing");
+    // Native session/index is globally unique across packets, not merely
+    // unique within a packet. Otherwise cross-packet aliasing defeats the
+    // exact-source admission boundary even if 365 request rows remain.
+    const nativeKey=JSON.stringify([row.sessionId,row.index]);
+    requireCond(!nativePositions.has(nativeKey), "duplicate native position across packets "+row.position);
+    nativePositions.add(nativeKey);
     const k=makeKey(row);
     requireCond(!identities.has(k), "duplicate source position "+row.position);
     identities.set(k,row);
@@ -34,6 +44,7 @@ export function inspectIssue341ApprovalScope(request, proposal=null) {
     if (row.group==="P007") requireCond(row.existingMathematicalEvidence.preserveAdditionalTwoCheckGate === true, "P007 two-check preservation missing");
   }
   requireCond(groups.P007===30 && groups.P009===27 && groups.B===308 && families.size===113, "reviewed group/family cardinality changed");
+  requireCond(nativePositions.size===365, "distinct native source count differs");
   requireCond([...families.values()].filter(x=>x.length>1).length===71 && [...families.values()].filter(x=>x.length>1).reduce((s,x)=>s+x.length,0)===323, "multi-position family cardinality changed");
   let selectedKeys=new Set();
   if (proposal !== null) {
