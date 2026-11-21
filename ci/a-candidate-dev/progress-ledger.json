@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 103,
-    "developmentTestedCandidateCases": 55,
+    "developmentTestedPositions": 106,
+    "developmentTestedCandidateCases": 56,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 6,
+      "developmentTested": 9,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 24
+      "pendingOrOtherNotAccepted": 21
     }
   ],
   "cases": [
@@ -1177,6 +1177,27 @@
       },
       "artifact": {
         "id": 14705489699,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007f-native-circle-radius-diameter",
+      "branch": "work/a/p007f-native-circle-radius-diameter",
+      "candidateSha": "f39bfd988ca85d4709dc942c3704e31c21e2f212",
+      "positions": [
+        "circleparts:0",
+        "circleparts:1",
+        "circleparts:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44903175915,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14706717546,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
