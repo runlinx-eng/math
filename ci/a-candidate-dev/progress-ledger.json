@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 67,
-    "developmentTestedCandidateCases": 32,
+    "developmentTestedPositions": 69,
+    "developmentTestedCandidateCases": 33,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 1,
+      "developmentTested": 3,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 30
+      "pendingOrOtherNotAccepted": 28
     }
   ],
   "cases": [
@@ -718,6 +718,26 @@
       },
       "artifact": {
         "id": 14700247843,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006b-frequency-pair-ties",
+      "branch": "work/a/p006b-frequency-pair-ties",
+      "candidateSha": "232a4da940d97bda0bc6320229e111ed33dd95ce",
+      "positions": [
+        "categoryuse:1",
+        "categoryuse:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44887007021,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14699404670,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
