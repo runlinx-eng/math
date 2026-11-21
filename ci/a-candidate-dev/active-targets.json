@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P006o-native-club-vs-all-repeats",
-      "sha": "8f2b85b5c5fe979159905fddc013fbfb873d4be8",
+      "sha": "cf67a5b63c606cf0166f58da1ba7e80fdc4912a0",
       "node_test": "tests/p9-p006o-native-club-vs-all-repeats-evidence.test.mjs",
       "browser_test": "tests/p9-p006o-native-club-vs-all-repeats-browser.cjs",
       "native": [
