@@ -1,3 +1,14 @@
+<!-- issue341-formal-activation-live-pr354-20261122:begin -->
+## 2026-11-22 最新执行交接：365道正式工程接入已提交，正在最终CI
+
+**已经实际写代码，不再等人工批准：** [Draft PR #354](https://github.com/runlinx-eng/math/pull/354) 叠在 #351 已通过的365隔离集成上，当前激活代码HEAD `b360e2b300ec6744eb9c1841a38cdcec620e76d4`。正式manifest在**此集成分支**由813增至1178（当前365道、113家族，冻结身份与旧813去重）；浏览器正式题位快照同源、learn.js按原生位置启动新反馈路由并保留旧P9既有反馈；SW新增118条缓存依赖并同步release `math-explorer-20261122-issue341-formal-365-v1`、启动SHA与8份既有导航指纹。没加入排队中的126道。原模型/完整Check、负例/Artifact证据复用，不重做298Python普查。
+
+**当前验收不是全部通过。** 最初新激活HEAD `5ea0ad2` 的Overview、P8与两项P9恢复成功，但Required中的P9思维反馈/旧隔离浏览器测试暴露两个真实兼容性缺口。已按最小范围修复：[`ac051267`](https://github.com/runlinx-eng/math/commit/ac051267908ff15b2decad9eb11458cf07c21bbf) 更新旧隔离浏览器测试以核真实正式接线；[`b360e2b3`](https://github.com/runlinx-eng/math/commit/b360e2b300ec6744eb9c1841a38cdcec620e76d4) 保留原P9 MP.3反馈并同步入口SHA/导航指纹。**最终只能以后一个HEAD的CI终态为准**：Required [#44961847398](https://github.com/runlinx-eng/math/actions/runs/44961847398)、P8 [#44961847413](https://github.com/runlinx-eng/math/actions/runs/44961847413)、Overview [#44961847374](https://github.com/runlinx-eng/math/actions/runs/44961847374) 及P9相关，当前Overview已通过，其余尚未取得整轮终态；不拿旧HEAD成功冒充最终结果。
+
+**授权边界：** 用户已取消独立人工审批，[#352](https://github.com/runlinx-eng/math/issues/352)已not_planned关闭；工程准入仅要求准确题位、旧数学证据复用与变更HEAD的必要CI。main**仍 A813/1996**、本批新main A0；集成分支内1178不是合并/部署完成。#351/#354继续Draft、main未合并、VPS未部署。只有真实CI故障才定向修复；main合并、部署仍各需用户另行授权。#353不恢复，126题排后。目标2026-11-27。
+
+<!-- issue341-formal-activation-live-pr354-20261122:end -->
+
 <!-- issue341-no-human-review-20261122:begin -->
 ## 2026-11-22 生效决定：当前365道不需要独立人工审批（优先级最高）
 
