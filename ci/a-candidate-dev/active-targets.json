@@ -2,27 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006g-native-question-schema",
-      "sha": "ed56d6f5577e6518d416dbe825ac085753fca520",
-      "node_test": "tests/p9-p006g-native-question-schema-evidence.test.mjs",
-      "browser_test": "tests/p9-p006g-native-question-schema-browser.cjs",
+      "case": "P006h-native-usage-vs-people",
+      "sha": "39bc0c1e0eaacd37ad47d8830323970371bf092d",
+      "node_test": "tests/p9-p006h-native-usage-vs-people-evidence.test.mjs",
+      "browser_test": "tests/p9-p006h-native-usage-vs-people-browser.cjs",
       "native": [
         {
-          "sessionId": "digitalstudy",
-          "index": 1,
-          "nodeId": "mt_yrvYKSwSRZ",
-          "taskSha256": "8a6ab9dade6db9c69df3522079c61190e5fddba7940162181553db02d582dc53",
-          "type": "x-dataplan",
-          "view": "b19",
-          "controls": [
-            "b19-plan"
-          ]
-        },
-        {
-          "sessionId": "ownstudy",
-          "index": 1,
-          "nodeId": "mt_Y6JmLjnfRP",
-          "taskSha256": "24d52fec334e5c24456dbbcdfddeba1a645863b650bee50527c68fec6fe8eedb",
+          "sessionId": "playgroundstudy",
+          "index": 2,
+          "nodeId": "mt_kxeuXm6EyC",
+          "taskSha256": "b982e6b2e7953fae44e694ed685f14442047ae9b20178cd1a8151e8b85b8d414",
           "type": "x-dataplan",
           "view": "b19",
           "controls": [
