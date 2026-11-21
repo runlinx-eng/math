@@ -1,3 +1,39 @@
+# 数学项目 #341｜中央验收公开状态交接（2026-11-22）
+
+## 当前公开状态：全部113家族／365道隔离共享集成代码
+
+**本次接续范围为全部365道，不再限于 PR #350 的首批12道。** [PR #351](https://github.com/runlinx-eng/math/pull/351) 已公开相应隔离共享集成代码，源 HEAD 为 `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。下列本仓库公开 workflow 均已 `completed/success`：
+
+| 公开 workflow | 运行 | 当前公开结论 |
+| --- | --- | --- |
+| Required | [44927311010](https://github.com/runlinx-eng/math/actions/runs/44927311010) | success |
+| P8 | [44927311025](https://github.com/runlinx-eng/math/actions/runs/44927311025) | success |
+| Overview | [44927311018](https://github.com/runlinx-eng/math/actions/runs/44927311018) | success |
+
+这里同步的是**公开代码范围与当前公开 CI 状态**，不表示独立人工正式数学准入、生产启用或发布批准。正式 A 仍为 **813**，本批新增 A **0**；独立人工批准仍 **PENDING**，生产候选仍未启用。
+
+[逐题 JSON](./issue-341-formal-365-intake.json) 和 [逐题 CSV](./issue-341-formal-365-intake.csv) 保留全部既有公开字段与历史记录，并为365道新增 `publicCurrentStatus`、PR/HEAD、三项公开运行和未准入状态。旧 `auditDisposition`、`missingEvidence` 与其他历史字段未删除、未改写；当前公开进度以新增 `public*` 字段和本节为准。
+
+**完整扩展验收与交接材料仍待明确的公开授权。** 本次只更新用户明确指定的 JSON、CSV 和本交接三个文件，不包含该待审扩展包。本节不把未公开的细项材料转换成已批准或已公开的证据。
+
+## 继续推进的门槛
+
+1. 独立人工正式数学／反馈准入。
+2. 按获批来源进行生产 adapter／feedback／manifest 接入，并完成适用的 SW 与 release 集成。
+3. 在实际生产启用的变更 HEAD 上完成必要 CI；当前隔离代码的公开成功不能替代后续不同 HEAD 的验收。
+4. 主线合并和部署分别保留用户授权；获授权合并后，再核对新 main Required／Fallback。
+5. 完整扩展材料的公开发布另待明确授权。
+
+继续复用已经公开记录的原数学、负例、Node／Chromium和工程证据；298道没有额外 Python 抽查不是统一任务。仅对具体缺口或实际代码变更执行必要工作，不因等待一项批准而停止其他已有授权的工作。
+
+## 下一窗口接续
+
+> 先读本节、#341最新公开交接、PR #351及其实际源HEAD和最新公开CI，再读365道JSON／CSV中的publicCurrentStatus。继续按全部113家族365道推进，继承既有公开证据，不回退到首批试点。保留人工正式批准、生产启用、后续实际HEAD门禁和合并／部署授权边界；完整扩展材料未经明确公开授权不得发布。下方旧交接与旧复制任务仅作历史，不能覆盖本节的当前公开进度。
+
+---
+
+## 以下原有公开交接全文保留
+
 # 数学项目 #341｜新窗口中央验收交接（2026-11-21）
 
 > **唯一接续入口。** 下个窗口先读本文件和 [#341 最新交接评论](https://github.com/runlinx-eng/math/issues/341)，再核对 GitHub 实时分支与 CI；优先**接着做尚缺的共享集成准备**，不要从开发测试重来。本文是交接，不是授权合并或正式授 A。
