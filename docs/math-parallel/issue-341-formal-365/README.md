@@ -1,3 +1,15 @@
+# #341 当前验收续办快照（2026-11-21，晚于下方初始记录）
+
+**最新实际执行：重点原生导航 28/28 取得 Check→Next 或原生首题完整链；P009 27 道新增 227/227 独立有界算术核验 PASS；现有独立有界数学题位合计 59/365。** 其余 306 道尚缺独立数学合同/反例审核。以上都不是正式 strict A，main 仍 A813/1996，新增严格 A=0，#344/#345 及新 #346/#347 均保持 Draft，不合并、不动公共正式注册或部署。
+
+[独立核验与分家族明细](./20261121-followup-navigation-and-p009-math.md) · [365 道最新 JSON](./issue-341-formal-365-intake.json) · [365 道最新 CSV](./issue-341-formal-365-intake.csv)
+
+新专用 CI 的原始结果：P111–P113 `80383841b2b96d81930b387167a6b01aeaa5b732` 的 Chromium [run #44916312166](https://github.com/runlinx-eng/math/actions/runs/44916312166) 及 Required [#44916312157](https://github.com/runlinx-eng/math/actions/runs/44916312157) 全部 success；P117 `d714f206371261fda35bbc4d64fa17a0232b89cc` 专用 Chromium [#44916741741](https://github.com/runlinx-eng/math/actions/runs/44916741741) success，独立 ZIP SHA256/CRC、8 个前题原 Check、8 个 Next、0 次存储索引写入均已复核。P117 新 Required 以独立实际运行状态为准，不因 Chromium PASS 预填。P009 不重新执行历史成功的 Node/Chromium，新增结果完全来自已有 ZIP 的离线纯数学交叉核对。
+
+---
+
+> 以下为**初始 intake 记录的历史快照**（当时 20/28 原生导航、8 个缺口）。新结论请以本页最上方增量及最新 CSV/JSON 为准，保留旧文字仅为审计历史。
+
 # #341｜365 道候选正式逐题验收入口（2026-11-21）
 
 **状态：CENTRAL_INTAKE_RECORDED / FORMAL_A_NOT_GRANTED。** 本记录把正式审核拆到 365 个原生位置，保留已有真实通过的运行和归档结果；尚未证明 365 道全部符合严格 A 的逐题数学合同，因此不将任何一个题位授 A。审计工作只落在独立分支 `audit/issue-341-formal-365-20261121`；不修改 main、原生任务、判题器、共享 registry/feedback/manifest、PR #344/#345，也不部署。
