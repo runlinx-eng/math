@@ -70,8 +70,8 @@ async function run(){
    const loc=page.locator('#actions [data-do="check"]');
    await reveal(loc);await loc.click();
   };
-  const s={id:'words38',index:0,node:'mt_lMz9nAs7VO'};
-  stage='words38:0:native-start';
+  const s={id:'words38',index:2,node:'mt_lMz9nAs7VO'};
+  stage='words38:2:native-start';
   await page.goto(origin.base+'v2.html#trail');
   const nav=await page.goto(origin.base+'learn.html#words38');
   ok(nav?.fromServiceWorker()===true,'original offline lesson navigation');
@@ -80,25 +80,25 @@ async function run(){
    const {packText,unpackText}=await import('./storage.js');
    const data=JSON.parse(unpackText(localStorage.getItem('math-explorer-v2')));
    const lesson=data.lessons.words38;
-   if(!lesson||lesson.cases?.[0]?.attempts?.length)
+   if(!lesson||lesson.cases?.[2]?.attempts?.length)
     throw Error('P004l requires untouched native task');
-   lesson.index=0;lesson.view='task';
+   lesson.index=2;lesson.view='task';
    localStorage.setItem('math-explorer-v2',packText(JSON.stringify(data)));
-   return lesson.cases?.[0]?.attempts?.length||0;
+   return lesson.cases?.[2]?.attempts?.length||0;
   });
   ok(existing===0,'native task has no seeded Check');
   const reload=await page.reload();
   ok(reload?.fromServiceWorker()===true,'original task reloads offline');
-  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===0);
+  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===2);
   const native=await page.evaluate(async()=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
    const {LESSONS}=await import('./learning/catalog.js');
-   return {task:sessionTaskFor('words38',0),nodeId:LESSONS.words38.topicId};
+   return {task:sessionTaskFor('words38',2),nodeId:LESSONS.words38.topicId};
   });
   const hash=digest(native.task);
-  console.log('P004L_NATIVE_FULL_TASK_SHA256 words38:0 '+hash);
-  nativeHashes.push({sessionId:'words38',index:0,sha256:hash,nodeId:native.nodeId});
-  const context={sessionId:'words38',index:0};
+  console.log('P004L_NATIVE_FULL_TASK_SHA256 words38:2 '+hash);
+  nativeHashes.push({sessionId:'words38',index:2,sha256:hash,nodeId:native.nodeId});
+  const context={sessionId:'words38',index:2};
   ok(native.nodeId===s.node&&native.task.type==='x-s23-sides'&&
    native.task.shape==='pentagon'&&native.task.rotation===24,
    'exact original pentagon source and rotation');
@@ -108,9 +108,9 @@ async function run(){
    'standard desktop viewport');
   ok(await page.locator('#thinking-feedback').count()===0,
    'no strict-A feedback from unregistered candidate');
-  stage='words38:0:incomplete-marks';
+  stage='words38:2:incomplete-marks';
   for(let i=0;i<4;i++)await mark(i);
-  const incomplete=await capture(page,out,'words38-0',s,'incomplete-marks');
+  const incomplete=await capture(page,out,'words38-2',s,'incomplete-marks');
   captures.push({phase:'incomplete-marks',attempts:incomplete.attempts.length,
    history:incomplete.model.history.length});
   ok(!candidate.replayWords38PentagonSideTraceEvidence(native.task,incomplete.model,context),
@@ -121,31 +121,31 @@ async function run(){
   for(const [i,value] of [['0','4'],['1','5']]){
    const loc=answer(i);await reveal(loc);await loc.fill(value);
   }
-  stage='words38:0:wrong-check';
+  stage='words38:2:wrong-check';
   await check();
-  const wrong=await capture(page,out,'words38-0',s,'wrong-check');
+  const wrong=await capture(page,out,'words38-2',s,'wrong-check');
   captures.push({phase:'wrong-check',attempts:wrong.attempts.length,
    history:wrong.model.history.length,storage:wrong.storage});
   ok(wrong.attempts.length===1,'real wrong Check retained');
   const originalWrong=await page.evaluate(async model=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
    const api=await import('./learning/phase5/b23-model.js');
-   return api.inspect(sessionTaskFor('words38',0),model).correct;
+   return api.inspect(sessionTaskFor('words38',2),model).correct;
   },wrong.model);
   ok(!originalWrong,'native grader rejects wrong edge count');
   ok(!candidate.replayWords38PentagonSideTraceEvidence(native.task,wrong.model,context),
    'candidate rejects wrong answer despite all edge marks');
-  stage='words38:0:corrected-check';
+  stage='words38:2:corrected-check';
   await answer(0).fill('5');
   await check();
-  const accepted=await capture(page,out,'words38-0',s,'correct-check');
+  const accepted=await capture(page,out,'words38-2',s,'correct-check');
   captures.push({phase:'correct-check',attempts:accepted.attempts.length,
    history:accepted.model.history.length,storage:accepted.storage});
   ok(accepted.attempts.length===2,'original wrong-to-correct Checks retained');
   const originalCorrect=await page.evaluate(async model=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
    const api=await import('./learning/phase5/b23-model.js');
-   return api.inspect(sessionTaskFor('words38',0),model).correct;
+   return api.inspect(sessionTaskFor('words38',2),model).correct;
   },accepted.model);
   ok(originalCorrect,'original grader accepts five marks and both counts');
   const proof=candidate.submittedWords38PentagonSideTraceEvidence(
@@ -165,14 +165,14 @@ async function run(){
    'stale Check, forged mark and wrong task position rejected');
   ok(!proof.physicalMeasurementObserved&&!proof.generalMasteryAssessed,
    'no unsupported claim about measurement or mastery');
-  const png='words38-0-correct.png';
+  const png='words38-2-correct.png';
   await page.screenshot({path:path.join(out,png),fullPage:false});
   screenshots.push(png);
-  stage='words38:0:offline-reload';
+  stage='words38:2:offline-reload';
   const offline=await page.reload();
   ok(offline?.fromServiceWorker()===true,'corrected task reloads from offline SW');
-  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===0);
-  const saved=await capture(page,out,'words38-0',s,'offline-reload');
+  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.index===2);
+  const saved=await capture(page,out,'words38-2',s,'offline-reload');
   captures.push({phase:'offline-reload',attempts:saved.attempts.length,
    history:saved.model.history.length,storage:saved.storage});
   assert.deepEqual(saved.model,accepted.model,'native side-mark model persists');
