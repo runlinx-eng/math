@@ -15,11 +15,13 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 65,
-    "developmentTestedCandidateCases": 30,
+    "developmentTestedPositions": 66,
+    "developmentTestedCandidateCases": 31,
     "blockedRuntime": [
       "structure39:2",
-      "structure39:3"
+      "structure39:3",
+      "representations39:2",
+      "representations39:3"
     ],
     "sourcePoolNotEqualNativeRuntime": true
   },
@@ -62,9 +64,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 29,
-      "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 3
+      "developmentTested": 30,
+      "blockedRuntime": 2,
+      "pendingOrOtherNotAccepted": 0
     }
   ],
   "cases": [
@@ -669,6 +671,25 @@
       },
       "artifact": {
         "id": 14699701755,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005n-structurebridge-parallel-rectangle",
+      "branch": "work/a/p005n-structurebridge-parallel-rectangle",
+      "candidateSha": "d0e5c27e9b737dfd12cfa39c3f22a5e8480df9c2",
+      "positions": [
+        "structurebridge:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44886388443,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14700083010,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
