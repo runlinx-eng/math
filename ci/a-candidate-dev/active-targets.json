@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P007h-native-angle-bisector",
-      "sha": "74536fc98785fd42be7d563e9da9557d2bc27bc7",
+      "sha": "dd4faa8eadbd2253c4b21774f435e24c93f6e96c",
       "node_test": "tests/p9-p007h-compass-angle-evidence.test.mjs",
       "browser_test": "tests/p9-p007h-compass-angle-browser.cjs",
       "native": [
@@ -22,7 +22,7 @@
     },
     {
       "case": "P007i-native-exterior-perpendicular",
-      "sha": "dc98f4509a40ad44275d8f8b34c07235436f1579",
+      "sha": "44521400301c1053f9fa48e825def87f02c066b9",
       "node_test": "tests/p9-p007i-compass-perpendicular-evidence.test.mjs",
       "browser_test": "tests/p9-p007i-compass-perpendicular-browser.cjs",
       "native": [
@@ -35,6 +35,47 @@
           "view": "b23",
           "controls": [
             "g23-arc"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "P007j-native-rectangle-invariants",
+      "sha": "92222894f3723ef7c57677ce054e059d400d4154",
+      "node_test": "tests/p9-p007j-rectangle-invariants-evidence.test.mjs",
+      "browser_test": "tests/p9-p007j-rectangle-invariants-browser.cjs",
+      "native": [
+        {
+          "sessionId": "rectanglefacts",
+          "index": 0,
+          "nodeId": "mt_KFKUR_gBg_",
+          "taskSha256": "51525557b3ab785b3a256fc25dd26a594c233e27f89c4022977b9e01d3f4703b",
+          "type": "x-s23-ruler",
+          "view": "b23",
+          "controls": [
+            "g23-draw"
+          ]
+        },
+        {
+          "sessionId": "rectanglefacts",
+          "index": 1,
+          "nodeId": "mt_KFKUR_gBg_",
+          "taskSha256": "5ead1dacb723f7815f8644c3ca88a37f9441430aa415fe830d521b54b5a097e0",
+          "type": "x-s23-ruler",
+          "view": "b23",
+          "controls": [
+            "g23-draw"
+          ]
+        },
+        {
+          "sessionId": "rectanglefacts",
+          "index": 2,
+          "nodeId": "mt_KFKUR_gBg_",
+          "taskSha256": "0426eaa9e4788cbcddee61834514a651dbb9bc068f45e3fc9f3abf3b7e856110",
+          "type": "x-s23-ruler",
+          "view": "b23",
+          "controls": [
+            "g23-draw"
           ]
         }
       ]
