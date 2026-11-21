@@ -2,28 +2,38 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006b-frequency-pair-ties",
-      "sha": "232a4da940d97bda0bc6320229e111ed33dd95ce",
-      "node_test": "tests/p9-p006b-frequency-pair-ties-evidence.test.mjs",
-      "browser_test": "tests/p9-p006b-frequency-pair-ties-browser.cjs",
+      "case": "P006c-native-frequency-scopes",
+      "sha": "a8fce730c6b79e83d1cc0427d3c26f0f319d5320",
+      "node_test": "tests/p9-p006c-native-frequency-scopes-evidence.test.mjs",
+      "browser_test": "tests/p9-p006c-native-frequency-scopes-browser.cjs",
       "native": [
         {
-          "sessionId": "categoryuse",
+          "sessionId": "playgroundstudy",
           "index": 1,
-          "nodeId": "mt_1VSfm9yiLn",
-          "taskSha256": "7986284102490a6eaaf5e3b5f2ca3be505ccfaac91feadc0c305e48fb590c680",
+          "nodeId": "mt_kxeuXm6EyC",
+          "taskSha256": "f0a5bb49744b71e2999b4cd02a6ccdad8687c20e8531100e31c3f3539c9b5be9",
           "type": "x-datacount",
           "view": "b19",
           "controls": [
-            "b19-bar",
-            "b19-pair"
+            "b19-bar"
           ]
         },
         {
-          "sessionId": "categoryuse",
+          "sessionId": "measurestory",
+          "index": 0,
+          "nodeId": "mt_6gpryAnpoZ",
+          "taskSha256": "ed4ec76e97c65506709940aafd84b7adabba2cd9f05558ffc2f88f3ece5be500",
+          "type": "x-datacount",
+          "view": "b19",
+          "controls": [
+            "b19-bar"
+          ]
+        },
+        {
+          "sessionId": "ownstudy",
           "index": 2,
-          "nodeId": "mt_1VSfm9yiLn",
-          "taskSha256": "d8a566016199a413177b13dc23eace3957cbecb5415167a162cd35eff31eb313",
+          "nodeId": "mt_Y6JmLjnfRP",
+          "taskSha256": "42fae338a6579eb8eb924ba776d3a156ec5ca5c4ee324b74ec0413b70f4a2e41",
           "type": "x-datacount",
           "view": "b19",
           "controls": [
