@@ -79,10 +79,10 @@ async function run(){
   stage=position+':wrong-original-draw';
   await field('first',s.w-1);await field('second',s.h);await action('draw');
   for(let i=0;i<s.questions.length;i++)await field('answers.'+i,s.questions[i].value);
-  const before=await capture(page,out,label,s,'wrong-before-check');
+  const before=await capture(page,out,label,{id:s.sessionId,index:s.index},'wrong-before-check');
   captures.push({position,phase:'wrong-before-check',storage:before.storage});
   await check();
-  const wrong=await capture(page,out,label,s,'wrong-check');
+  const wrong=await capture(page,out,label,{id:s.sessionId,index:s.index},'wrong-check');
   captures.push({position,phase:'wrong-check',attempts:wrong.attempts.length,storage:wrong.storage});
   const wrongGrade=await page.evaluate(async({index,model})=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
@@ -92,7 +92,7 @@ async function run(){
   ok(wrong.attempts.length===1&&!wrongGrade,'true wrong original Check');
   stage=position+':correct-original-draw';
   await field('first',s.w);await action('draw');await check();
-  const good=await capture(page,out,label,s,'correct-check');
+  const good=await capture(page,out,label,{id:s.sessionId,index:s.index},'correct-check');
   captures.push({position,phase:'correct-check',attempts:good.attempts.length,storage:good.storage});
   const actual=await page.evaluate(async({index,model})=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
@@ -116,7 +116,7 @@ async function run(){
   stage=position+':offline-reload';
   const offline=await page.reload();ok(offline?.fromServiceWorker()===true,'native case offline reload');
   await page.waitForFunction(i=>window.mathLesson?.snapshot()?.index===i,s.index);
-  const saved=await capture(page,out,label,s,'offline-reload');
+  const saved=await capture(page,out,label,{id:s.sessionId,index:s.index},'offline-reload');
   captures.push({position,phase:'offline-reload',attempts:saved.attempts.length,storage:saved.storage});
   assert.deepEqual(saved.model,good.model);assert.deepEqual(saved.record,good.record);
  }
