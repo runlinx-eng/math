@@ -1,3 +1,15 @@
+<!-- issue341-ci-final-20261122:begin -->
+## 最新完成状态（2026-11-22）：本批365道正式集成分支CI已通过
+
+[Draft PR #354](https://github.com/runlinx-eng/math/pull/354) **exact HEAD** `86de7b6d9d36dd4aa11480a3979f0302760335b6`：当前113家族365道已按冻结的精确原生题位写入**PR分支正式manifest**，接通正式学习反馈、SW离线缓存、release以及原始完整Check记录。分支A–E统计 **A1178/1996（原813+365）**，逐题冻结来源365/365与台账一致。排队的B新增126道未参加。
+
+**当前HEAD的必要门禁**：[Required #44962787677](https://github.com/runlinx-eng/math/actions/runs/44962787677) **completed/success**（正式来源、Node、定向Chromium、离线与发布升级）；[P8 #44962787662](https://github.com/runlinx-eng/math/actions/runs/44962787662) **completed/success**；[Overview #44962787642](https://github.com/runlinx-eng/math/actions/runs/44962787642) **completed/success**。P9故障/ESM恢复也success；P9 fraction ordinal 90独立附加作业上次检查仍在运行，不提前宣称成功。没有重跑原B308数学或298道额外Python普查。
+
+**分支通过≠主线合并/部署**：main仍 **A813/1996**，本批main新增A0；#351/#354均Draft，没有合并、没有部署。下一步仅剩单独授权的main合并、合并后新main Required/Fallback，部署另需授权。无需独立人工审批，#352已关闭；#353长期供给不恢复。此节优先于下方历史“等待审批/等待代码接线”旧待办，历史原文保留仅供追溯。
+
+当前365行JSON与CSV已更新分支成功及main尚未合并的状态，`formalStrictA=NOT_GRANTED_ON_MAIN`只表示main不宣称这365道已获A。
+<!-- issue341-ci-final-20261122:end -->
+
 <!-- issue341-formal-activation-live-pr354-20261122:begin -->
 ## 2026-11-22 最新执行交接：365道正式工程接入已提交，正在最终CI
 
