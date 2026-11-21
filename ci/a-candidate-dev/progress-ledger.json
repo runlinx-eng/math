@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 38,
-    "developmentTestedCandidateCases": 19,
+    "developmentTestedPositions": 41,
+    "developmentTestedCandidateCases": 20,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 2,
+      "developmentTested": 5,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 30
+      "pendingOrOtherNotAccepted": 27
     }
   ],
   "cases": [
@@ -444,6 +444,27 @@
       },
       "artifact": {
         "id": 14696331391,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005c-native-vertex-angles",
+      "branch": "work/a/p005c-native-vertex-angle-classification",
+      "candidateSha": "ffae8774686b6a572f2f9eb488078ae6d0675e3d",
+      "positions": [
+        "angletypes:2",
+        "angletypes:3",
+        "angletypes:4"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44878933302,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14697380630,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
