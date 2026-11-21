@@ -1,5 +1,5 @@
 'use strict';
-// #342 P006c: two real native B19 controls in Chromium, offline State-v2.
+// #342 P006c: three real native B19 controls in Chromium, offline State-v2.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url'),{createHash}=require('node:crypto');
@@ -119,7 +119,11 @@ async function run(){
     for(const [action,index] of [['min',3],['max',1]])
      await click('#extra-controls [data-x="b19-'+action+'"][data-index="'+index+'"]');
    }
-   if(s.scope)await field('scope',s.scope);
+   if(s.scope){
+    const scope=page.locator('#extra-controls [data-xfield="scope"]');
+    await reveal(scope);
+    await scope.selectOption(s.scope);
+   }
    stage=position+':original-wrong-check';
    await field('gap',s.gap);
    await field('total',s.total-1);
