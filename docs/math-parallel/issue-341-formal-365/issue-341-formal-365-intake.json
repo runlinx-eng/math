@@ -41,7 +41,19 @@
     "BboundedContractScopeSecondBatchPositions": 6,
     "BboundedContractScopeSecondBatchFamilies": 4,
     "BadditionalMathRerunsForSecondBatch": 0,
-    "P110StrictReplayVsApproximateNativeGradeScopeFlagged": 2
+    "P110StrictReplayVsApproximateNativeGradeScopeFlagged": 2,
+    "BinactiveSharedPreviewFamilies": 5,
+    "BinactiveSharedPreviewPositions": 12,
+    "BinactiveSharedPreviewExactHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+    "BinactiveSharedPreviewRun": 44921951088,
+    "BinactiveSharedPreviewArtifactId": 14713972350,
+    "BinactiveSharedPreviewErrors": 0,
+    "BinactiveSharedPreviewStatus": "PASS_INACTIVE_ONLY_NOT_FORMAL_A",
+    "BsharedRuntimeRegistrationsAdded": 0,
+    "BapprovedManifestRowsAdded": 0,
+    "BmathRerunsForInactivePreview": 0,
+    "BinactivePreviewRequiredRun": 44921950978,
+    "BinactivePreviewRequiredStatus": "PENDING_AS_OF_LEDGER_WRITE"
   },
   "policy": "All rows NEEDS_EVIDENCE at formal intake, not a mathematical rejection nor an A grant; prior passing CI and archival checks preserved, no main merge, no change to candidates or grader.",
   "rows": [
@@ -7704,7 +7716,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -7717,7 +7729,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
       "boundedContractClaim": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -7734,7 +7751,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -7747,7 +7764,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
       "boundedContractClaim": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8420,7 +8442,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -8436,7 +8458,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
       "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8453,7 +8480,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -8469,7 +8496,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
       "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8486,7 +8518,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709950119,
@@ -8502,7 +8534,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
       "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8548,7 +8585,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709606323,
@@ -8564,7 +8601,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
       "boundedContractClaim": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8581,7 +8623,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 4,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709606323,
@@ -8597,7 +8639,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
       "boundedContractClaim": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8643,7 +8690,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -8659,7 +8706,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
       "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8676,7 +8728,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -8692,7 +8744,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
       "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -8709,7 +8766,7 @@
       "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "independentMathCheckCount": 7,
       "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
       "independentMathAuditArtifactId": 14709214794,
@@ -8725,7 +8782,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
       "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9327,7 +9389,7 @@
       "independentMathReview": "BOUNDED_P116_NUMERIC_CHECK_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -9340,7 +9402,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
       "boundedContractClaim": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",
@@ -9357,7 +9424,7 @@
       "independentMathReview": "BOUNDED_P116_NUMERIC_CHECK_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "INACTIVE shared binding preview PASS only: exact source and runtime nonregistration. Bounded mathematical scope/feedback text still requires independent approval before any live shared registry/manifest integration; changed exact-HEAD runtime CI/Artifact and eventual new main Required/Fallback remain. No blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -9370,7 +9437,12 @@
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
       "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
       "boundedContractClaim": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
-      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+      "inactiveSharedPreview": "PASS_INACTIVE_NOT_RUNTIME_REGISTERED",
+      "inactiveSharedPreviewHead": "9c8040f03946c37d94ee0de5b16e69e379efb20b",
+      "inactiveSharedPreviewRun": 44921951088,
+      "inactiveSharedPreviewArtifactId": 14713972350,
+      "mathClaimAndFeedbackFormalApproval": "NOT_APPROVED"
     },
     {
       "group": "B",

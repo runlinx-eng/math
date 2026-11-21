@@ -6,6 +6,8 @@
 
 > **隔离共享接入准备（仍不生效）**：已为第一批 **5 家族/12 道**整理了真实 binding/replay/submitted 导出、最小可观察反馈文本和接入门禁，见 [INACTIVE-shared-5x12-preparation.json](./staging-integration/INACTIVE-shared-5x12-preparation.json)。不编辑三个正式共享文件；反馈仅为待审原文，全部 `method:null`，P091 历史图形界限明确保留。不得把预检结果冒充数学正式批准。
 
+> **INACTIVE 隔离预检实际结果**：新 [Draft PR #349](https://github.com/runlinx-eng/math/pull/349) exact HEAD `9c8040f03946c37d94ee0de5b16e69e379efb20b`，专用 [CI #44921951088](https://github.com/runlinx-eng/math/actions/runs/44921951088) **completed/success**，5 家族/12 道唯一原生绑定、完整 nodeId/task SHA、非正式 A813 与已注册 adapter 不冲突，错误 0。原件 Artifact [14713972350](https://github.com/runlinx-eng/math/actions/runs/44921951088/artifacts/14713972350)（2026-11-28 15:58 UTC 到期）。此 CI **只验证不生效接入形状**，不运行 B308 Node/Chromium 数学测试，正式 `evidence-adapters.js`、`thinking-feedback.js` 和 manifest 均未改；**Required #44921950978 仍以实时结果为准**。对应 12 道台账已注明 `PASS_INACTIVE_NOT_RUNTIME_REGISTERED`，并保留正式数学批准 `NOT_APPROVED` 和 `formalStrictA=NOT_GRANTED`。
+
 ---
 
 # #341 最新：365 道来源锁定预检通过，B 线已有证据继续复用（2026-11-21）
