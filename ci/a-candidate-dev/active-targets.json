@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P006c-native-frequency-scopes",
-      "sha": "cfbf56a067be7f8aaeba3aa7d07ee4e1a6697e5d",
+      "sha": "21ac6f9ef4f089a2847c295eaa5e03cac67f1158",
       "node_test": "tests/p9-p006c-native-frequency-scopes-evidence.test.mjs",
       "browser_test": "tests/p9-p006c-native-frequency-scopes-browser.cjs",
       "native": [
