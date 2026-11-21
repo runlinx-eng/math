@@ -1,4 +1,15 @@
 <!-- issue341-staged-formal-routing-20261122:begin -->
+## PR #354 实际 HEAD 的 CI 终态（2026-11-22）
+
+**正式题位精确路由代码（尚未激活）**：[Draft PR #354](https://github.com/runlinx-eng/math/pull/354)，源 HEAD `b32077b856b2131f28ea69779624adf3aa3387e3`，base 仍 #351 隔离分支。新源仅包含1个运行时正式题位路由模块、1份其定向Node测试及Required清单新增1行，正式manifest、production入口、SW/release、main均未变化。
+
+- [Required #44936948491](https://github.com/runlinx-eng/math/actions/runs/44936948491)：**completed/success**；原正式 Node inventory 在此**代码变更HEAD**运行并通过 **2428/2428**，包含新的3项正式范围路由测试。plan、static、smoke、P9 thinking-feedback、P10 learning continuity 定向job和required-checks全部success；非定向 browser matrix skipped，不声称全量 Chromium 再验。
+- [P8 #44936948532](https://github.com/runlinx-eng/math/actions/runs/44936948532)：**completed/success**。
+- 本次只验证**新路由的工程增量**，没有重新证明B308原数学或重新生成旧Check；原 [#351的Required/P8/Overview](https://github.com/runlinx-eng/math/pull/351)既有结果直接继承。B新增126道继续排后。
+
+**状态保持**：在没有 #352 的正式独立逐题批准前，#354不被生产模块导入，不把模拟题位选择当审批，不运行cache patch，不授A；正式813/1996，新增0/365，#351与#354均Draft、未合并。真实获批后再做正式manifest、shared入口、SW/release和实际激活HEAD门禁；合并main/部署各需另行授权。
+
+
 ## 当前365道正式接线的代码进展（2026-11-22）
 
 **不只继续写审计：** 在已通过 CI 的隔离共享代码 [PR #351](https://github.com/runlinx-eng/math/pull/351) 之上，新建真正的运行时接线代码 [Draft PR #354](https://github.com/runlinx-eng/math/pull/354)，源提交 `b32077b856b2131f28ea69779624adf3aa3387e3`，base 是 #351 的隔离分支，不指向 main，也未合并。

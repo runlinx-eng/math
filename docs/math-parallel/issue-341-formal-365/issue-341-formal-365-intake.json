@@ -32565,5 +32565,31 @@
     "reactivateDurableSourceOnlyIf": "New required CI actually needs originals after expiry",
     "historicalMissingEvidenceTextBeforeTimebox": "Independent human formal approval; reviewed production adapter/feedback/manifest activation; SW dependency inclusion and explicit release sync; actual production activation HEAD CI/Artifact; an authorized durable original-input source accessible to remote CI after the original Artifact IDs expire (Library persistence/local --archive-dir recovery is not remote automatic retrieval; remain fail closed, no expiry-driven old-suite rerun or unapproved Git/raw republication); only after user-authorized merge, new main Required/Fallback; deployment authorization. Reuse original mathematics, negative examples, Check/State-v2 and CI. No blanket Python, proof rewrite or old family suite rerun.",
     "stopUnneededStorageWork": true
+  },
+  "stagedFormalSourceRouting20261122": {
+    "schema": "issue341-formal-manifest-scoped-routing-staged/1",
+    "sourcePr": 354,
+    "sourceHead": "b32077b856b2131f28ea69779624adf3aa3387e3",
+    "basePr": 351,
+    "baseHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "codeMode": "INERT_UNIMPORTED_PENDING_INDEPENDENT_APPROVAL_AND_MANIFEST",
+    "runtimeModule": "dist/learning/issue341-formal-source-routing.js",
+    "behavior": "Exact signed-off formal manifest entry per source; no family-wide autoactivation",
+    "officialManifestTasks": 813,
+    "approvedNewPositions": 0,
+    "requiredRun": 44936948491,
+    "requiredStatus": "COMPLETED_SUCCESS",
+    "requiredNodeTests": "2428/2428_PASS_INCLUDES_3_NEW_ROUTING_TESTS",
+    "p8Run": 44936948532,
+    "p8Status": "COMPLETED_SUCCESS",
+    "targetedP9Feedback": "PASS",
+    "targetedP10Continuity": "PASS",
+    "allOldCandidateMathReproven": false,
+    "approvalIssue": 352,
+    "independentHumanApproval": "PENDING",
+    "next126Queue": "DEFERRED_BEHIND_CURRENT_365",
+    "mainMerge": false,
+    "deployment": false,
+    "note": "No per-item admission status changed; every one of the 365 positions retains formalStrictA=NOT_GRANTED."
   }
 }
