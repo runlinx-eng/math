@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004-quadrilateral-inclusion
-            sha: 362b09094bed917197056aefff68406b5e4397d7
+            sha: 3662ff0e7faa71a1c6830909ef064b141a8d5d4c
             node_test: tests/p9-p004-quadrilateral-inclusion-evidence.test.mjs
             browser_test: tests/p9-p004-quadrilateral-inclusion-browser.cjs
 
