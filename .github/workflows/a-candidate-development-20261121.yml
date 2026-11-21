@@ -24,18 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P001-gridarea-perimeter
-            sha: a373ada1be486b5d71d731f17e6317b6f7841d3d
-            node_test: tests/p9-gridarea-perimeter-contrast-evidence.test.mjs
-            browser_test: tests/p9-gridarea-perimeter-contrast-browser.cjs
-          - case: P002-wide-order-gap
-            sha: 82f07469947cb9861aced40eddd5a1f480ab8346
-            node_test: tests/p9-p002-wide-order-gap-evidence.test.mjs
-            browser_test: tests/p9-p002-wide-order-gap-browser.cjs
-          - case: P003-rulejump-equivalence
-            sha: dbc7e3560384737f8e491d33aaa9f5547fd494f1
-            node_test: tests/p9-p003-rulejump-equivalent-evidence.test.mjs
-            browser_test: tests/p9-p003-rulejump-equivalent-browser.cjs
+          - case: P004-quadrilateral-inclusion
+            sha: 362b09094bed917197056aefff68406b5e4397d7
+            node_test: tests/p9-p004-quadrilateral-inclusion-evidence.test.mjs
+            browser_test: tests/p9-p004-quadrilateral-inclusion-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
