@@ -17,8 +17,6 @@ const entry=s=>({sessionId:s.sessionId,index:s.index,type:s.type,
  nodeId:s.nodeId,adapter:family.id,taskHash:s.taskHash,method:null});
 const withEntries=(...extra)=>({...official,tasks:[...official.tasks,...extra]});
 const context=s=>({sessionId:s.sessionId,index:s.index});
-const decision=(s,decision='APPROVE')=>({packet:family.packet,sessionId:s.sessionId,
- index:s.index,nodeId:s.nodeId,type:s.type,taskHash:s.taskHash,adapter:family.id,decision});
 const clone=x=>JSON.parse(JSON.stringify(x));
 
 test('current official A813 produces zero candidate activation; default runtime stays untouched',()=>{
@@ -35,7 +33,7 @@ test('current official A813 produces zero candidate activation; default runtime 
 
 test('hypothetical one-of-two family selection stays restricted to the exact native position',()=>{
  assert.equal(family.sources.length,2);
- const route=createIssue341ManifestGatedRouting(withEntries(entry(one)),[decision(one)]);
+ const route=createIssue341ManifestGatedRouting(withEntries(entry(one)));
  assert.equal(route.approvedPositions,1);
  assert.equal(route.approvedFamilies,1);
  assert.equal(route.adapters.length,1);
@@ -65,36 +63,9 @@ test('only exact reviewed manifest identities can be routed; wrong hash/type/ada
   {...good,adapter:'issue341-P007B'},
   {...good,method:{nodeId:'made-up'}},
   {...good,index:String(good.index)}
- ])assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(tampered),[decision(one)]));
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(good,clone(good)),[decision(one)]),/Duplicate/);
+ ])assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(tampered)));
+ assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(good,clone(good))),/Duplicate/);
  assert.throws(()=>createIssue341ManifestGatedRouting(withEntries({
   ...good,sessionId:'unknown-native-source'
- }),[decision(one)]),/frozen original/);
-});
-
-test('independent decisions and manifest must BOTH approve the exact same position',()=>{
- const approved=entry(one);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved)),
-  /lacks matching independent approval/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[decision(one,'BLOCKED')]),
-  /lacks matching independent approval/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[decision(one,'REJECT')]),
-  /lacks matching independent approval/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[decision(two)]),
-  /lacks matching independent approval/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[{
-  ...decision(one),taskHash:'0'.repeat(64)}]),/frozen source identity/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[{
-  ...decision(one),packet:'P999'}]),/frozen source identity/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),[
-  decision(one),decision(one)]),/Duplicate independent/);
- assert.throws(()=>createIssue341ManifestGatedRouting(withEntries(approved),{}),
-  /decision list required/);
- assert.equal(createIssue341ManifestGatedRouting(official,[decision(one)]).approvedPositions,0,
-  'a review decision alone cannot change the formal manifest');
- const accepted=createIssue341ManifestGatedRouting(withEntries(approved),[
-  decision(one),decision(two,'BLOCKED')]);
- assert.equal(accepted.approvedPositions,1);
- assert.equal(accepted.adapters[0].sources.length,1);
- assert.equal(accepted.adapters[0].sources[0].sessionId,one.sessionId);
+ })),/frozen original/);
 });

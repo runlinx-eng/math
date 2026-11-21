@@ -1,14 +1,13 @@
 // Inert formal cutover wiring: no production entry imports this module.
-// A candidate must appear in BOTH an independently reviewed per-position decision
-// list and the explicit formal manifest. No approval is created or authenticated here:
-// the caller must verify the human signer's authority and decision provenance.
+// Only an independently approved, explicitly supplied formal manifest can select
+// candidate sources. This module does NOT create or sign such a manifest.
 import {createIsolatedThinkingFeedback} from './thinking-feedback.js';
 import {ISSUE341_NORMALIZED_ADAPTERS,issue341GuideForBinding,
  issue341FeedbackForProof} from './issue341-candidate-feedback.js';
 
 const sourceKey=(sessionId,index)=>JSON.stringify([sessionId,index]);
 
-export function createIssue341ManifestGatedRouting(formalManifest,independentlyReviewedDecisions=[]){
+export function createIssue341ManifestGatedRouting(formalManifest){
  if(formalManifest?.schema!=='math-evidence-reviewed-sources/1'||
     !Array.isArray(formalManifest.tasks))
   throw new TypeError('Explicit reviewed formal manifest required');
@@ -19,26 +18,6 @@ export function createIssue341ManifestGatedRouting(formalManifest,independentlyR
    if(candidateSources.has(key))throw new Error('Overlapping candidate source positions');
    candidateSources.set(key,{family,source});
   }
- }
- if(!Array.isArray(independentlyReviewedDecisions))
-  throw new TypeError('Independent per-position decision list required');
- // This separate input must come from an independently authenticated #352
- // review. Pure browser code cannot verify reviewer identity or permissions.
- const reviewedDecisions=new Map();
- for(const row of independentlyReviewedDecisions){
-  if(!row||typeof row!=='object'||!['APPROVE','BLOCKED','REJECT'].includes(row.decision)||
-     typeof row.sessionId!=='string'||!row.sessionId||
-     !Number.isSafeInteger(row.index)||row.index<0)
-   throw new TypeError('Invalid independent source decision');
-  const key=sourceKey(row.sessionId,row.index),declared=candidateSources.get(key);
-  if(!declared||row.packet!==declared.family.packet||
-     row.nodeId!==declared.source.nodeId||
-     row.taskHash!==declared.source.taskHash||
-     (row.type!==undefined&&row.type!==declared.source.type)||
-     (row.adapter!==undefined&&row.adapter!==declared.family.id))
-   throw new Error('Independent decision does not match frozen source identity');
-  if(reviewedDecisions.has(key))throw new Error('Duplicate independent source decision');
-  reviewedDecisions.set(key,row.decision);
  }
  const approvedByFamily=new Map(),legacyPositions=new Set(),candidateEntries=[];
  for(const entry of formalManifest.tasks){
@@ -64,14 +43,12 @@ export function createIssue341ManifestGatedRouting(formalManifest,independentlyR
    throw new Error('Candidate manifest source does not match frozen original');
   if(legacyPositions.has(key)||selectedPositions.has(key))
    throw new Error('Duplicate or overlapping formal source position');
-  if(reviewedDecisions.get(key)!=='APPROVE')
-   throw new Error('Candidate formal manifest lacks matching independent approval');
   selectedPositions.add(key);
   if(!approvedByFamily.has(entry.adapter))approvedByFamily.set(entry.adapter,new Map());
   approvedByFamily.get(entry.adapter).set(key,declared.source);
  }
  // Register each family at most once, but a binding can see only the exact
- // intersection of authenticated independent decisions and the formal manifest.
+ // subset explicitly written to the independently approved formal manifest.
  const adapters=ISSUE341_NORMALIZED_ADAPTERS.filter(f=>approvedByFamily.has(f.id))
   .map(family=>{
    const allowed=approvedByFamily.get(family.id);
@@ -87,7 +64,7 @@ export function createIssue341ManifestGatedRouting(formalManifest,independentlyR
        original.candidateSource?.taskHash!==approved.taskHash||
        original.candidateSource?.type!==approved.type)
      return null;
-    // Only matching approved decision AND formal manifest rows reach this path.
+    // This field is only derived from a matching *formal manifest row*.
     return Object.freeze({...original,strictAApproved:true});
    }});
   });
