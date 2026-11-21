@@ -6,8 +6,7 @@ import {isEvidenceContext, matchesNativeEvidenceTask,
   latestSubmissionMatches, hasExactKeys as keys, sameEvidence as same} from './evidence-contract.js';
 
 const SOURCES=Object.freeze({
-  'shapefacts:1':{nodeId:'mt_DNYQLahbfa',shape:'square',rotation:30,answer:'yes'},
-  'structure39:2':{nodeId:'mt__Itf4aQZUj',shape:'square',rotation:30,answer:'yes'}
+  'shapefacts:1':{nodeId:'mt_DNYQLahbfa',shape:'square',rotation:30,answer:'yes'}
 });
 const EPS=1e-7;
 const dot=(a,b)=>a[0]*b[0]+a[1]*b[1];

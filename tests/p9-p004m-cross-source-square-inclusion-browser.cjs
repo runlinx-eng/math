@@ -14,8 +14,7 @@ const root=path.resolve(__dirname,'..');
 const out=path.join(root,'verification/p9-p004m-cross-source-square-inclusion');
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
 const specs=[
- {id:'shapefacts',index:1,node:'mt_DNYQLahbfa',shape:'square',classes:[0,1,2,3,4,5],answer:'yes'},
- {id:'structure39',index:2,node:'mt__Itf4aQZUj',shape:'square',classes:[0,1,2,3,4,5],answer:'yes'}
+ {id:'shapefacts',index:1,node:'mt_DNYQLahbfa',shape:'square',classes:[0,1,2,3,4,5],answer:'yes'}
 ];
 let stage='startup';
 const checks=[],errors=[],captures=[],screenshots=[],nativeHashes=[];

@@ -9,9 +9,10 @@ import {crossSourceSquareInclusionBinding as binding,
  submittedCrossSourceSquareInclusionEvidence as submitted}
  from '../dist/learning/p004m-cross-source-square-inclusion-evidence.js';
 
+// B39/structure39:2 is not registered by the shipped tasks/catalog runtime.
+ // Do not fabricate a sessionTaskFor() result or claim a real native Check.
 const specs=[
- {id:'shapefacts',index:1,shape:'square',classes:[0,1,2,3,4,5],answer:'yes',node:'mt_DNYQLahbfa'},
- {id:'structure39',index:2,shape:'square',classes:[0,1,2,3,4,5],answer:'yes',node:'mt__Itf4aQZUj'}
+ {id:'shapefacts',index:1,shape:'square',classes:[0,1,2,3,4,5],answer:'yes',node:'mt_DNYQLahbfa'}
 ];
 const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?
  Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,stable(v[k])])):v;
