@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004m-cross-source-square-inclusion
-            sha: 0c2f78904981bde8e0a30dd93dba32e036f5d166
+            sha: d9c6f01ce19d6b93e698f5563c6ff48c029e9fb0
             node_test: tests/p9-p004m-cross-source-square-inclusion-evidence.test.mjs
             browser_test: tests/p9-p004m-cross-source-square-inclusion-browser.cjs
 
