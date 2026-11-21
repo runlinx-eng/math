@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 57,
-    "developmentTestedCandidateCases": 26,
+    "developmentTestedPositions": 61,
+    "developmentTestedCandidateCases": 27,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 21,
+      "developmentTested": 25,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 11
+      "pendingOrOtherNotAccepted": 7
     }
   ],
   "cases": [
@@ -589,6 +589,28 @@
       },
       "artifact": {
         "id": 14699075841,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005j-native-polygon-triangulation",
+      "branch": "work/a/p005j-native-polygon-triangulation",
+      "candidateSha": "95ff2bf5e337e0b240e8c219e07576186186b25b",
+      "positions": [
+        "triangleangles:1",
+        "triangleangles:2",
+        "polygonangles:1",
+        "polygonangles:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44883634201,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14698654297,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
