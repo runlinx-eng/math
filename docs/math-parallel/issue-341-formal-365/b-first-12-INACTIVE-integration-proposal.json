@@ -1,0 +1,174 @@
+{
+  "schema": "issue-341-inactive-pilot-batch-proposal/1",
+  "status": "NOT_APPROVED_NOT_RUNTIME_REGISTERED",
+  "baseline": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "candidateHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceLockHead": "d0b9bf929d0ddf7fcce23601cff27ff9dc0e320e",
+  "sourceLockRun": 44920634904,
+  "sourceLockZeroError": true,
+  "approvedA813Unaffected": true,
+  "scopeReviewFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+  "families": [
+    {
+      "packet": "P116",
+      "type": "x-dotdraw",
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "bindingExport": "p116IntegerDotplotBinding",
+      "replayExport": "replayP116IntegerDotplotEvidence",
+      "submittedExport": "submittedP116IntegerDotplotEvidence",
+      "method": null,
+      "positionCount": 2
+    },
+    {
+      "packet": "P109",
+      "type": "x-a35-factor",
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "bindingExport": "p109CommonFactorBinding",
+      "replayExport": "replayP109CommonFactorEvidence",
+      "submittedExport": "submittedP109CommonFactorEvidence",
+      "method": null,
+      "positionCount": 3
+    },
+    {
+      "packet": "P107",
+      "type": "x-factorrects",
+      "path": "dist/learning/p107-factor-pairs-evidence.js",
+      "bindingExport": "p107FactorPairsBinding",
+      "replayExport": "replayP107FactorPairsEvidence",
+      "submittedExport": "submittedP107FactorPairsEvidence",
+      "method": null,
+      "positionCount": 2
+    },
+    {
+      "packet": "P105",
+      "type": "x-numbersearch",
+      "path": "dist/learning/p105-prime-divisors-evidence.js",
+      "bindingExport": "p105PrimeDivisorsBinding",
+      "replayExport": "replayP105PrimeDivisorsEvidence",
+      "submittedExport": "submittedP105PrimeDivisorsEvidence",
+      "method": null,
+      "positionCount": 3
+    },
+    {
+      "packet": "P091",
+      "type": "x-allowedrange",
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "bindingExport": "p091OneSidedRangeBinding",
+      "replayExport": "replayP091OneSidedRangeEvidence",
+      "submittedExport": "submittedP091OneSidedRangeEvidence",
+      "method": null,
+      "positionCount": 2
+    }
+  ],
+  "proposedManifestEntries": [
+    {
+      "sessionId": "allowedrange",
+      "index": 0,
+      "type": "x-allowedrange",
+      "nodeId": "mt_i2F1nWxJjv",
+      "adapter": "issue341-P091",
+      "taskHash": "6a24b358799b89eb9025160a1354eef7ada2762f2383937f6db4a55a357933fb",
+      "method": null
+    },
+    {
+      "sessionId": "allowedrange",
+      "index": 1,
+      "type": "x-allowedrange",
+      "nodeId": "mt_i2F1nWxJjv",
+      "adapter": "issue341-P091",
+      "taskHash": "0fe9148d7f7be7a36807e72749a2649a52cb34dadad9b99ad35d3bd1d9387df4",
+      "method": null
+    },
+    {
+      "sessionId": "primetest",
+      "index": 0,
+      "type": "x-numbersearch",
+      "nodeId": "mt_y1XCVsIelg",
+      "adapter": "issue341-P105",
+      "taskHash": "0ef3cabc2ab08b88c366890dee7cd0ca50656f97b7b588e16980d0cf305efb01",
+      "method": null
+    },
+    {
+      "sessionId": "primetest",
+      "index": 1,
+      "type": "x-numbersearch",
+      "nodeId": "mt_y1XCVsIelg",
+      "adapter": "issue341-P105",
+      "taskHash": "019704b5ccd5cc445c9ef8c99e3299237c38566ef9047f7b528cf16cad9b1c0f",
+      "method": null
+    },
+    {
+      "sessionId": "primetest",
+      "index": 2,
+      "type": "x-numbersearch",
+      "nodeId": "mt_y1XCVsIelg",
+      "adapter": "issue341-P105",
+      "taskHash": "6c8ce662b07bd596b4cd3507748253afbbdb8077576cfab1320df951597db761",
+      "method": null
+    },
+    {
+      "sessionId": "factorpairs",
+      "index": 0,
+      "type": "x-factorrects",
+      "nodeId": "mt_nZkL5-XjRX",
+      "adapter": "issue341-P107",
+      "taskHash": "3565ef221b2242c95b06538b5bb4337ed2408bffbe99bc8e115f49b87ab808b0",
+      "method": null
+    },
+    {
+      "sessionId": "factorpairs",
+      "index": 1,
+      "type": "x-factorrects",
+      "nodeId": "mt_nZkL5-XjRX",
+      "adapter": "issue341-P107",
+      "taskHash": "ff89024af2052faa14649d37531ef1de7a1f3d64d2c1b0ca2284a39df21e91d9",
+      "method": null
+    },
+    {
+      "sessionId": "factor35",
+      "index": 0,
+      "type": "x-a35-factor",
+      "nodeId": "mt_uESbzWCZIq",
+      "adapter": "issue341-P109",
+      "taskHash": "1eef43242755c45b490f5c23af883e66af937bbaca5ded0304dc4293a2c3b50b",
+      "method": null
+    },
+    {
+      "sessionId": "factor35",
+      "index": 1,
+      "type": "x-a35-factor",
+      "nodeId": "mt_uESbzWCZIq",
+      "adapter": "issue341-P109",
+      "taskHash": "f80339a8fcebaa6a454476eb91d5c0e3627c11d93f45d2648bb4cd8363d17408",
+      "method": null
+    },
+    {
+      "sessionId": "factor35",
+      "index": 2,
+      "type": "x-a35-factor",
+      "nodeId": "mt_uESbzWCZIq",
+      "adapter": "issue341-P109",
+      "taskHash": "d51203982e18f2c0e6f2a8a3dd9a51d5dcfacd5aba4533fa6324edaa695cd5d6",
+      "method": null
+    },
+    {
+      "sessionId": "dotrecords",
+      "index": 0,
+      "type": "x-dotdraw",
+      "nodeId": "mt_JRzXQl9M7c",
+      "adapter": "issue341-P116",
+      "taskHash": "83b39dbc6097e844eae70a5c3540e4796e8b2adc77af4b0b30e86a7c2e74f797",
+      "method": null
+    },
+    {
+      "sessionId": "dotrecords",
+      "index": 2,
+      "type": "x-dotdraw",
+      "nodeId": "mt_JRzXQl9M7c",
+      "adapter": "issue341-P116",
+      "taskHash": "d97c93f555545c8e11931bb88872b2a5980be361758ab47a3b6413ef661e890f",
+      "method": null
+    }
+  ],
+  "nextGate": "Explicit independent scope decision and reviewed feedback; single-writer active registry+manifest integration on separate draft exact HEAD; post-merge new main double CI; current A unchanged."
+}
