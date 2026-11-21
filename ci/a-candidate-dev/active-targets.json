@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P007c-triangle-sas-drawing",
-      "sha": "5b766e5ab3cb153f10887ef5d6ed1377d5357fa1",
+      "sha": "01f3a0942b3c7f4d190f89f62b334f8868dfff41",
       "node_test": "tests/p9-p007c-triangle-sas-evidence.test.mjs",
       "browser_test": "tests/p9-p007c-triangle-sas-browser.cjs",
       "native": [
