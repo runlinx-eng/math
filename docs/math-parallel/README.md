@@ -50,15 +50,15 @@
 
 **专属中心写入文件：** `dist/learning/evidence-adapters.js`、`dist/learning/thinking-feedback.js`、`docs/spatial-learning/evidence-review-manifest.json`、`scripts/audit-learning-evidence.mjs`、`scripts/audit-evidence-expansion.mjs`、`ci/math-families.json`、`scripts/ci-targeted-checks.mjs`、`dist/sw.js`、`.github/workflows/`。现有发布/入口/nav SHA 和原始源图/题也由中心处理。
 
-各线应优先新增自身命名空间下的 source-aware 证据/测试文件。两线若需同一个 `dist/learning/phase5/*` 源模块、同一个 source nodeId、相同 release 或状态结构，预先加冲突标记，由中心选择排队或重新分配。**不直接推送 main，不自行合并，不改保护门禁，不部署 VPS。**
+各线只能在自己独占的新命名空间下新增 source-aware 证据/测试文件；仅研究池或 source nodeId 相同并不自动构成冲突。若确实要同时写同一原题、现有源模块、release 或状态结构，把受影响子题标 `blocked`，记录证据和需求并**继续本线下一未认领子题**，临近 P060 再由 #341 解决。**不直接推送 main，不自行合并，不改保护门禁，不部署 VPS。**
 
 ## 5. B 线本地 Codex 开发、测试与中央 CI 的边界
 
 - **B 线运行位置：用户的 Mac 本地 Codex / 独立 Git worktree。** 无需第二 GitHub 账号、Fork 或独立 GitHub Actions 配额；本准备阶段不连接/远程操作用户 Mac，不声称本地测试已运行。
-- B 从 `origin/main` 最新 SHA 创建 `work/b/p117-...` 等独立工作分支，并核对当前 A 线及中央 #341 的锁定范围；不得在原 `~/dev/math-issue180-test` 故障基线工作区覆盖文件。B 只更改自己独有的数学回放模块、单族 fixtures/测试与预审报告，共享源文件均由中央写。
+- B 从 `origin/main` 最新 SHA 创建或核对既有 `work/b/p117-...` 独立工作分支，检查 #342/#343 的精确原生位置与独占文件申领；不得在原 `~/dev/math-issue180-test` 故障基线工作区覆盖文件。B 只更改自己独有的数学回放模块、单族 fixtures/测试与预审报告，共享源文件均由中央写。
 - B 优先执行 Node 22 快速数学/反例测试；安装并配置好可用 Chromium/Playwright 后，针对**真实原生控件**运行该家族本地浏览器测试，保存 stdout/stderr、脚本/运行命令、`git rev-parse HEAD`、截图、raw JSON、错误与保存/纠错/刷新证据；缺依赖或无法运行必须标为 `NOT_RUN`，不能以旧家族通过代替新家族。
 - 本地交付是 `commit SHA + diff/branch + 数学审查结果 + 本地测试证据 + 未测项`。可由用户/中央指定已授权的 GitHub 账号 push **仅 B 工作分支**，或交付 patch/变更包；不要由本地 Codex 擅自 push main、开自动合并 PR、修改 CI 或发布。
-- **正式门禁仍在 GitHub 中央仓库**：整合者接收本地成果、与最新 main 同步公共模块、创建/更新 PR，执行确切新 HEAD 的 Required/适用 P8/P9/P10/Chromium/官方 Artifact 数学审查；正常合并后独立验新 main Required/Fallback。本地成功不能替代这两个阶段。
+- **正式门禁仍在 GitHub 中央仓库，但集中延后**：两线接近 P060 后，整合者接收各家族的候选提交/原始证据、统一接入公共模块、创建/更新 PR，执行 exact HEAD 的 Required/适用 P8/P9/P10/Chromium/官方 Artifact 数学审查；合并后独立验 main Required/Fallback。本地成功不能替代这两个阶段。
 - B 的详细操作、可复制起步命令和 Codex 工作提示见 [B-CODEX-LOCAL.md](B-CODEX-LOCAL.md)。A 仍按原有 GitHub 开发流程走，两线不抢共享登记。**无 Fork、无第二账号准备项。**
 
 ## 6. 第一轮落实及停止条件
