@@ -7,7 +7,9 @@ import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as M from '../dist/learning/phase5/b08-model.js';
 import {positiveOrderPreauditBinding,replayPositiveOrderModel,replayPositiveOrderPreaudit} from '../dist/learning/positive-order-preaudit.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
-import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
+import {positiveOrderBinding,replayPositiveOrderEvidence} from '../dist/learning/positive-order-evidence.js';
+import {positiveOrderEvidenceExample} from '../scripts/positive-order-evidence-fixture.mjs';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
 
 await ensureB39Ready();
 const copy=structuredClone;
@@ -28,14 +30,15 @@ function build(c){
  return {task,m,record:{attempts:[{value:copy(m)}]},expected};
 }
 const replay=(c,m,record)=>replayPositiveOrderPreaudit(tFor(c),m,record,context(c));
-test('source/task fingerprints and exact native admission; no formal A registration',()=>{
+test('source/task fingerprints and exact native admission; candidate registration',()=>{
  for(const c of native){
   const task=tFor(c),binding=positiveOrderPreauditBinding(task,context(c));
   assert.equal(LESSONS[c[0]].topicId,c[2]);
   assert.equal(hash(task),c[3]);
   assert.equal(binding?.strictAApproved,false);
-  assert.equal(EVIDENCE_ADAPTERS.some(a=>a.binding(task,context(c))),false);
-  assert.equal(thinkingGuide(task,context(c)),null);
+  assert.deepEqual(EVIDENCE_ADAPTERS.filter(a=>a.binding(task,context(c))).map(a=>a.id),['positive-order']);
+  assert.equal(positiveOrderBinding(task,context(c))?.nodeId,c[2]);
+  assert.equal(thinkingGuide(task,context(c))?.type,'x-wideboard');
   assert.equal(positiveOrderPreauditBinding({...task,prompt:task.prompt+' altered'},context(c)),null);
   assert.equal(positiveOrderPreauditBinding(task,{sessionId:c[0],index:99}),null);
   assert.equal(positiveOrderPreauditBinding(task,{sessionId:c[0],index:String(c[1])}),null);
@@ -63,6 +66,28 @@ test('actual pick/remove/re-pick chrono, numerical order and final axis invarian
   assert.equal(evidence.sliderMotionHistoryObserved,false);
   assert.deepEqual(evidence.selectedOrder,expected.map(i=>task.values[i]));
   assert.equal(JSON.stringify(m),before);
+ }
+});
+test('candidate replay, exact source feedback and current Check gate',()=>{
+ for(const c of native){
+  const {task,m,record,expected}=build(c);
+  const sample=positiveOrderEvidenceExample(task,context(c));
+  assert.equal(M.inspect(task,sample).correct,true);
+  const proof=replayPositiveOrderEvidence(task,m,context(c));
+  assert.ok(proof);
+  assert.deepEqual(proof.selectedOrder,expected.map(i=>task.values[i]));
+  assert.equal(proof.pickRemoveChronologyObserved,true);
+  assert.equal(proof.sliderMovementChronologyObserved,false);
+  assert.equal(proof.learnerMasteryAssessed,false);
+  assert.equal(replayPositiveOrderEvidence(task,M.example(task),context(c)),null);
+  const thought=thinkingFeedback(task,m,record,context(c));
+  assert.ok(thought?.observation.includes('从小到大'));
+  assert.ok(thought.detail.some(s=>s.includes('不证明学生使用了哪种数位比较策略')));
+  assert.equal(thinkingFeedback(task,m,{attempts:[]},context(c)),null);
+  const stale=copy(record);stale.attempts[0].value.order=[];
+  assert.equal(thinkingFeedback(task,m,stale,context(c)),null);
+  const reversed=copy(m);reversed.order.reverse();
+  assert.equal(replayPositiveOrderEvidence(task,reversed,context(c)),null);
  }
 });
 test('refuse crossed or tied close axis positions despite original approximate grade',()=>{

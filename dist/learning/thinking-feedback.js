@@ -37,6 +37,7 @@ import {proportionalStepsBinding,replayProportionalStepsEvidence} from './propor
 import {proportionalGraphBinding,replayProportionalGraphEvidence} from './proportionalgraph-evidence.js';
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
+import {positiveOrderBinding,replayPositiveOrderEvidence} from './positive-order-evidence.js';
 import {unitRateStepsBinding,replayUnitRateStepsEvidence} from './unitrate-steps-evidence.js';
 import {estimateStepsBinding,replayEstimateStepsEvidence} from './estimate-steps-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
@@ -78,6 +79,10 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
+  if(task?.type==='x-wideboard'){
+    const source=positiveOrderBinding(task,context);
+    return source?{type:task.type,summary:'想一想：怎样给不同的整数排队？（可选）',question:source.question}:null;
+  }
   if(task?.type==='x-pvbench'){
     const fixed=pvbenchBinding(task,context);
     if(fixed)return {type:task.type,summary:'想一想：换个装法，数量怎样保持？（可选）',question:fixed.question};
@@ -354,6 +359,24 @@ export function thinkingFeedback(task,model,record,context={}){
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  if(task?.type==='x-wideboard'){
+    const source=positiveOrderBinding(task,context);
+    if(!source)return null;
+    const proof=replayPositiveOrderEvidence(task,model,context);
+    if(!proof)return null;
+    const removed=proof.recordedOperations.filter(e=>e.kind==='remove').length;
+    const detail=[
+      '原题的整数卡片由工具提供，不等同于学生独立构造这些整数。',
+      '真实选择和撤选共 '+proof.recordedOperations.length+' 次，其中撤选 '+removed+' 次；记录逐项核对了整数的严格升序。',
+      '最终数轴位置符合原数值范围及严格从左到右的顺序；没有记录每条滑块移动路径，局部放大也不是滑动历史。',
+      '这些操作不证明学生使用了哪种数位比较策略、能够独立解释、已经理解或长期掌握。'
+    ];
+    if(attempts.length>1)detail.push('此前错误提交与后来订正仍分别保留；当前反馈只核对最新完整提交。');
+    if(record.support)detail.push('你曾打开过可选引导或比较反馈。');
+    return {title:'这次作品中的思考线索',
+      observation:'本次实际选择的整数顺序是 '+proof.selectedOrder.join(' < ')+'；卡片操作和最终数轴位置与从小到大的数学关系一致。',
+      connection:source.question,detail,method:null};
+  }
   if(task?.type==='x-m28-compare'){
     const source=compareBinding(task,context);if(!source)return null;
     const proof=replayCompareEvidence(task,model);if(!proof)return null;

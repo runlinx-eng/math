@@ -23,6 +23,7 @@ async function main(){
  const M=await import('../dist/learning/phase5/b08-model.js');
  const {chinese}=await import('../dist/learning/phase5/b08-math.js');
  const {positiveOrderPreauditBinding,replayPositiveOrderPreaudit:replay}=await import('../dist/learning/positive-order-preaudit.js');
+ const {replayPositiveOrderEvidence:formalReplay}=await import('../dist/learning/positive-order-evidence.js');
  const Core=await import('../dist/exploration-core.js');
  const atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
  const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
@@ -202,7 +203,15 @@ async function main(){
     ok(centers.length===2&&centers[1]-centers[0]>80,
      label+' nearby point markers are separated in the visible inset');
    }else ok(await closeZoom.count()===0,label+' ordinary number line unchanged');
-   assert.equal(await page.locator('#thinking-feedback').count(),0,'preaudit may not show strict A feedback');
+   const candidate=formalReplay(t,second.model,{sessionId:s.id,index:s.index});
+   ok(!!candidate&&candidate.selectedOrder.join(',')===proof.selectedOrder.join(','),
+    label+' candidate adapter independently preserves the strict integer order');
+   const thought=page.locator('#thinking-feedback');
+   ok(await thought.count()===1,label+' corrected Check has source-bound evidence feedback');
+   const thoughtText=await thought.innerText();
+   ok(thoughtText.includes('不证明学生使用了哪种数位比较策略')&&
+     thoughtText.includes('没有记录每条滑块移动路径'),
+     label+' feedback does not infer comparison strategy or slider history');
    await page.screenshot({path:path.join(out,label+'-corrected-1920x1080.png'),fullPage:true});
    const beforeReload=await saved(s.id);
    const reloadResponse=await page.reload();assert.ok(reloadResponse);await wait(s);
