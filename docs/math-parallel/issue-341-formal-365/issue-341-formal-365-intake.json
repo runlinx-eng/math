@@ -19,11 +19,11 @@
       "B": 308
     },
     "archiveAndStateEvidence": 365,
-    "independentMathBoundedEvidence": 32,
-    "mathContractIndependentAdjudicationRemaining": 333,
+    "independentMathBoundedEvidence": 59,
+    "mathContractIndependentAdjudicationRemaining": 306,
     "navigationAudited": 28,
-    "navigationNativeProof": 20,
-    "navigationSeededOnly": 8,
+    "navigationNativeProof": 28,
+    "navigationSeededOnly": 0,
     "formalNewStrictA": 0,
     "currentMainStrictA": 813,
     "currentMainNative": 1996
@@ -492,10 +492,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -509,10 +511,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -526,10 +530,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -543,10 +549,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -560,10 +568,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -577,10 +587,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -594,10 +606,12 @@
       "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -611,10 +625,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -628,10 +644,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -645,10 +663,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -662,10 +682,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -679,10 +701,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -696,10 +720,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -713,10 +739,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -730,10 +758,12 @@
       "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 12,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -747,10 +777,12 @@
       "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 11,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -764,10 +796,12 @@
       "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 11,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -781,10 +815,12 @@
       "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 11,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -798,10 +834,12 @@
       "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 11,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -815,10 +853,12 @@
       "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 11,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -832,10 +872,12 @@
       "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 3,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -849,10 +891,12 @@
       "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 5,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -866,10 +910,12 @@
       "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 3,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -883,10 +929,12 @@
       "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 3,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -900,10 +948,12 @@
       "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 3,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -917,10 +967,12 @@
       "receiptSha256": "03e9c8c7774c1be4f196c8c54116389788c0788f9b43eaf6d8669a398e901af0",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 5,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "P009",
@@ -934,10 +986,12 @@
       "receiptSha256": "03e9c8c7774c1be4f196c8c54116389788c0788f9b43eaf6d8669a398e901af0",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_P009_ARITHMETIC_227_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 5,
+      "independentMathAuditSource": "original_CI_44909628782_Python_fraction_integer_recomputation"
     },
     {
       "group": "B",
@@ -5814,9 +5868,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -5882,9 +5937,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -5899,9 +5955,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -5950,9 +6007,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -5967,9 +6025,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -6018,9 +6077,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -6035,9 +6095,10 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916312166
     },
     {
       "group": "B",
@@ -6171,9 +6232,34 @@
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
-      "navigation": "SEEDED_ONLY_NEEDS_PREREQUISITE",
+      "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "native prerequisite path; independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "navigationAuditEvidenceRun": 44916741741
     }
-  ]
+  ],
+  "followup20261121": {
+    "navigation": {
+      "originallyAtIntake": 20,
+      "newlyProved": 8,
+      "now": 28,
+      "seededOnlyRemaining": 0,
+      "exactHeads": {
+        "P111toP113": "80383841b2b96d81930b387167a6b01aeaa5b732",
+        "P117": "d714f206371261fda35bbc4d64fa17a0232b89cc"
+      },
+      "runs": {
+        "P111toP113": 44916312166,
+        "P117": 44916741741
+      }
+    },
+    "independentMath": {
+      "newP009Positions": 27,
+      "checks": 227,
+      "families": 5,
+      "originalArtifactRun": 44909628782
+    },
+    "auditReport": "docs/math-parallel/issue-341-formal-365/20261121-followup-navigation-and-p009-math.md",
+    "policy": "No main merge, no strict A grant. Already successful Node/Chromium tests were not rerun for mathematical evaluation; all new navigation proofs originated from distinct audit-only workflows."
+  }
 }
