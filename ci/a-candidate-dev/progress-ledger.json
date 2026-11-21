@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 61,
-    "developmentTestedCandidateCases": 27,
+    "developmentTestedPositions": 62,
+    "developmentTestedCandidateCases": 28,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 25,
+      "developmentTested": 26,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 7
+      "pendingOrOtherNotAccepted": 6
     }
   ],
   "cases": [
@@ -611,6 +611,25 @@
       },
       "artifact": {
         "id": 14698654297,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005k-cross-source-angle-order",
+      "branch": "work/a/p005k-cross-source-angle-order",
+      "candidateSha": "e72a8a3689f7a8be3319c1c5e6d9f26bb968fa95",
+      "positions": [
+        "angleestimate:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44884211202,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14699242271,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
