@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P007f-native-circle-radius-diameter",
-      "sha": "acdcba68add71edf44a2493b1f108525d05d8e9f",
+      "sha": "f39bfd988ca85d4709dc942c3704e31c21e2f212",
       "node_test": "tests/p9-p007f-circle-radius-diameter-evidence.test.mjs",
       "browser_test": "tests/p9-p007f-circle-radius-diameter-browser.cjs",
       "native": [
