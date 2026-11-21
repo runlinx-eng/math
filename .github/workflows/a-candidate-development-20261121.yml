@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004h-pentagon-side-trace
-            sha: 2e4c7e119ab423ea956b365f4caf4c7e8e8d153c
-            node_test: tests/p9-p004h-pentagon-side-trace-evidence.test.mjs
-            browser_test: tests/p9-p004h-pentagon-side-trace-browser.cjs
+          - case: P004i-rotated-parallelogram-family
+            sha: f51b43b8c55ee99e7cc01da1b65d78c70a7883dd
+            node_test: tests/p9-p004i-rotated-parallelogram-family-evidence.test.mjs
+            browser_test: tests/p9-p004i-rotated-parallelogram-family-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
