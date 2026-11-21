@@ -107,7 +107,7 @@ async function run(){
    nativeHashes.push({position,nodeId:original.nodeId,sha256:hash});
    ok(original.nodeId===s.node&&hash===s.hash&&original.task.type==='x-datacount',
       'runtime full SHA/source/original view');
-   ok(candidate.nativeFrequencyScopesBinding(original.task,context)?.kind===s.kind,
+   ok(candidate.nativeFrequencyScopesBinding(original.task,context)?.position===position,
       'source locked independent replay');
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),'1920x1080 real viewport');
    ok(await page.locator('#thinking-feedback').count()===0,'no premature shared registry');
