@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 55,
-    "developmentTestedCandidateCases": 25,
+    "developmentTestedPositions": 57,
+    "developmentTestedCandidateCases": 26,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 19,
+      "developmentTested": 21,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 13
+      "pendingOrOtherNotAccepted": 11
     }
   ],
   "cases": [
@@ -569,6 +569,26 @@
       },
       "artifact": {
         "id": 14698567473,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005i-native-triangle-corners",
+      "branch": "work/a/p005i-native-triangle-corner-sum",
+      "candidateSha": "fa8554b539181bdc61b957e36428cc857a7de724",
+      "positions": [
+        "triangleangles:0",
+        "polygonangles:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44882983440,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14699075841,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
