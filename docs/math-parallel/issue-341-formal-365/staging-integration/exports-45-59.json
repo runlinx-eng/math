@@ -1,0 +1,367 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 45,
+  "end": 60,
+  "records": [
+    {
+      "packet": "P093",
+      "path": "dist/learning/p093-triangular-prism-net-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p093TriangularPrismNetBinding"
+      ],
+      "replays": [
+        "replayP093TriangularPrismNetEvidence"
+      ],
+      "submitted": [
+        "submittedP093TriangularPrismNetEvidence"
+      ],
+      "sourceExports": [
+        "P093_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-g27-net"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4998
+    },
+    {
+      "packet": "P092",
+      "path": "dist/learning/p092-triangle-tiling-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p092TriangleTilingBinding"
+      ],
+      "replays": [
+        "replayP092TriangleTilingEvidence"
+      ],
+      "submitted": [
+        "submittedP092TriangleTilingEvidence"
+      ],
+      "sourceExports": [
+        "P092_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-s23-tile"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4698
+    },
+    {
+      "packet": "P091",
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p091OneSidedRangeBinding"
+      ],
+      "replays": [
+        "replayP091OneSidedRangeEvidence"
+      ],
+      "submitted": [
+        "submittedP091OneSidedRangeEvidence"
+      ],
+      "sourceExports": [
+        "P091_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-allowedrange"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3257
+    },
+    {
+      "packet": "P090",
+      "path": "dist/learning/p090-signed-product-rows-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p090SignedProductRowsBinding"
+      ],
+      "replays": [
+        "replayP090SignedProductRowsEvidence"
+      ],
+      "submitted": [
+        "submittedP090SignedProductRowsEvidence"
+      ],
+      "sourceExports": [
+        "P090_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-signwalk"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3959
+    },
+    {
+      "packet": "P089",
+      "path": "dist/learning/p089-parity-pairing-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p089ParityPairingBinding"
+      ],
+      "replays": [
+        "replayP089ParityPairingEvidence"
+      ],
+      "submitted": [
+        "submittedP089ParityPairingEvidence"
+      ],
+      "sourceExports": [
+        "P089_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-parityjoin"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3866
+    },
+    {
+      "packet": "P088",
+      "path": "dist/learning/p088-graph-crossings-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p088GraphCrossingsBinding"
+      ],
+      "replays": [
+        "replayP088GraphCrossingsEvidence"
+      ],
+      "submitted": [
+        "submittedP088GraphCrossingsEvidence"
+      ],
+      "sourceExports": [
+        "P088_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-s39-graph"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3835
+    },
+    {
+      "packet": "P087",
+      "path": "dist/learning/p087-unordered-split-pairs-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p087UnorderedSplitPairsBinding"
+      ],
+      "replays": [
+        "replayP087UnorderedSplitPairsEvidence"
+      ],
+      "submitted": [
+        "submittedP087UnorderedSplitPairsEvidence"
+      ],
+      "sourceExports": [
+        "P087_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-splitbench"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3460
+    },
+    {
+      "packet": "P086",
+      "path": "dist/learning/p086-joined-solid-surfaces-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p086JoinedSolidSurfacesBinding"
+      ],
+      "replays": [
+        "replayP086JoinedSolidSurfacesEvidence"
+      ],
+      "submitted": [
+        "submittedP086JoinedSolidSurfacesEvidence"
+      ],
+      "sourceExports": [
+        "P086_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-a30-solid"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4390
+    },
+    {
+      "packet": "P085",
+      "path": "dist/learning/p085-pythagoras-length-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p085PythagorasLengthBinding"
+      ],
+      "replays": [
+        "replayP085PythagorasLengthEvidence"
+      ],
+      "submitted": [
+        "submittedP085PythagorasLengthEvidence"
+      ],
+      "sourceExports": [
+        "P085_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-g26-length"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 7773
+    },
+    {
+      "packet": "P084",
+      "path": "dist/learning/p084-expression-build-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p084ExpressionBuildBinding"
+      ],
+      "replays": [
+        "replayP084ExpressionBuildEvidence"
+      ],
+      "submitted": [
+        "submittedP084ExpressionBuildEvidence"
+      ],
+      "sourceExports": [
+        "P084_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-orderlab"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4253
+    },
+    {
+      "packet": "P083",
+      "path": "dist/learning/p083-chance-mapping-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p083ChanceMappingBinding"
+      ],
+      "replays": [
+        "replayP083ChanceMappingEvidence"
+      ],
+      "submitted": [
+        "submittedP083ChanceMappingEvidence"
+      ],
+      "sourceExports": [
+        "P083_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-p22-mapping"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5889
+    },
+    {
+      "packet": "P082",
+      "path": "dist/learning/p082-shape-uses-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p082ShapeUsesBinding"
+      ],
+      "replays": [
+        "replayP082ShapeUsesEvidence"
+      ],
+      "submitted": [
+        "submittedP082ShapeUsesEvidence"
+      ],
+      "sourceExports": [
+        "P082_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-s23-objects"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5940
+    },
+    {
+      "packet": "P081",
+      "path": "dist/learning/p081-stat-brief-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p081StatBriefBinding"
+      ],
+      "replays": [
+        "replayP081StatBriefEvidence"
+      ],
+      "submitted": [
+        "submittedP081StatBriefEvidence"
+      ],
+      "sourceExports": [
+        "P081_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-statbrief"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5766
+    },
+    {
+      "packet": "P080",
+      "path": "dist/learning/p080-argument-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p080ArgumentChainBinding"
+      ],
+      "replays": [
+        "replayP080ArgumentChainEvidence"
+      ],
+      "submitted": [
+        "submittedP080ArgumentChainEvidence"
+      ],
+      "sourceExports": [
+        "P080_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4905
+    },
+    {
+      "packet": "P079",
+      "path": "dist/learning/p079-net-surface-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p079NetSurfaceBinding"
+      ],
+      "replays": [
+        "replayP079NetSurfaceEvidence"
+      ],
+      "submitted": [
+        "submittedP079NetSurfaceEvidence"
+      ],
+      "sourceExports": [
+        "P079_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-a30-solid"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 8380
+    }
+  ]
+}
