@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 106,
-    "developmentTestedCandidateCases": 56,
+    "developmentTestedPositions": 107,
+    "developmentTestedCandidateCases": 57,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 9,
+      "developmentTested": 10,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 21
+      "pendingOrOtherNotAccepted": 20
     }
   ],
   "cases": [
@@ -1198,6 +1198,25 @@
       },
       "artifact": {
         "id": 14706717546,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007g-native-compass-bisector",
+      "branch": "work/a/p007g-native-compass-perpendicular-bisector",
+      "candidateSha": "3ed4b279f63039f0926fb59cbfdbce321bf7fe12",
+      "positions": [
+        "compasswork:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44904025937,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14706619640,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
