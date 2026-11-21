@@ -65,7 +65,7 @@
     m=>m.history[1].a='reset',
     m=>m.history.push({a:'finish',f:{},d:{}}),
     m=>m.board.base+=0.25,
-    m=>m.board.points[0]&& (m.board.points[0][0]+=0.25),
+    m=>{if(m.board.points.length)m.board.points[0][0]+=0.25;else m.board.points=[[0,1]];},
     m=>m.board.first.base.base='false',
     m=>m.base='0',m=>m.answers[0]='bad',
     m=>m.seed=0,m=>m.prose='learned',m=>m.issue='fake',m=>m.extra=true
