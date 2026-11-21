@@ -38,6 +38,7 @@ import {proportionalGraphBinding,replayProportionalGraphEvidence} from './propor
 import {pvbenchBinding,replayPVBenchEvidence} from './pvbench-evidence.js';
 import {pvSavedBinding,replayPVSavedEvidence} from './pv-saved-evidence.js';
 import {positiveOrderBinding,replayPositiveOrderEvidence} from './positive-order-evidence.js';
+import {signedOrderBinding,replaySignedOrderEvidence} from './signed-order-evidence.js';
 import {unitRateStepsBinding,replayUnitRateStepsEvidence} from './unitrate-steps-evidence.js';
 import {estimateStepsBinding,replayEstimateStepsEvidence} from './estimate-steps-evidence.js';
 import {wideShiftBinding,replayWideShiftEvidence,wideShiftAddBinding,replayWideShiftAddEvidence} from './wideshift-evidence.js';
@@ -80,7 +81,7 @@ import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js'
 // Prompts are reviewed native positions, never inferred from a widget type.
 export function thinkingGuide(task,context={}){
   if(task?.type==='x-wideboard'){
-    const source=positiveOrderBinding(task,context);
+    const source=positiveOrderBinding(task,context)||signedOrderBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样给不同的整数排队？（可选）',question:source.question}:null;
   }
   if(task?.type==='x-pvbench'){
@@ -360,6 +361,23 @@ export function thinkingFeedback(task,model,record,context={}){
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
   if(task?.type==='x-wideboard'){
+    const signed=signedOrderBinding(task,context);
+    if(signed){
+      const proof=replaySignedOrderEvidence(task,model,context);
+      if(!proof)return null;
+      const removed=proof.recordedOperations.filter(e=>e.kind==='remove').length;
+      const detail=[
+        '三个负深度数值是题目提供的模拟数据，不是实测地点或地理深度，也不能证明学生自行生成了这些整数。',
+        '原控件真实选择和撤选共 '+proof.recordedOperations.length+' 次，其中撤选 '+removed+' 次；按有符号整数大小核对了最终严格升序。',
+        '数轴最终位置与模拟数值一致且从左到右严格递增；只观察最终位置，没有记录滑块每次移动的时间线。',
+        '这些记录不能说明学生独立采用了哪种负数比较方法，也不能推断自由解释、理解或长期掌握。'
+      ];
+      if(attempts.length>1)detail.push('之前错误提交与最新订正均保留；本反馈只验证最新保存的完整作品。');
+      if(record.support)detail.push('你曾打开可选引导或比较反馈。');
+      return {title:'这次作品中的思考线索',
+        observation:'这次实际选择的是 '+proof.selectedOrder.join(' < ')+'，卡片操作与最终数轴顺序符合有符号整数大小关系。',
+        connection:signed.question,detail,method:null};
+    }
     const source=positiveOrderBinding(task,context);
     if(!source)return null;
     const proof=replayPositiveOrderEvidence(task,model,context);

@@ -195,8 +195,8 @@ async function main(){
    // The zoom is visual only; it neither changes sliders nor adds evidence.
    const closeZoom=page.locator('.b8-axis .b8-axis-zoom');
    ok(await closeZoom.count()===0,label+' signed axis stays on the original unzoomed scale');
-   ok(EVIDENCE_ADAPTERS.filter(a=>a.binding(t,{sessionId:s.id,index:s.index})).length===0,
-    label+' preaudit is not a registered A adapter');
+   ok(EVIDENCE_ADAPTERS.filter(a=>a.binding(t,{sessionId:s.id,index:s.index})).map(a=>a.id).join(',')==='signed-order',
+    label+' exactly one formally registered signed-order adapter');
    const forged=structuredClone(second.model);forged.orderTrace[0].kind='remove';
    ok(replay(t,forged,{attempts:[{value:forged}]},{sessionId:s.id,index:s.index})===null,
     label+' independent replay rejects fabricated click sequence');

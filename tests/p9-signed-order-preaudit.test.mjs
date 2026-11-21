@@ -27,13 +27,13 @@ function make(){
 }
 const replay=m=>replaySignedOrderPreaudit(task,m,checked(m),context);
 
-test('exact native signed source, stable task fingerprint, no production registration',()=>{
+test('exact native signed source, stable task fingerprint, and one formal adapter',()=>{
  assert.equal(LESSONS.tenmillion.topicId,'mt_XNmGwNggdU');
  assert.equal(digest(task),'0deadc9a3d0aac1cdf6206a515848e9642f08d687f6d8e4b730d70aae64c859c');
  assert.deepEqual(task.values,['-8200','-7900','-9100']);
  assert.deepEqual([task.min,task.max],[-10000,0]);
  assert.equal(signedOrderPreauditBinding(task,context)?.strictAApproved,false);
- assert.deepEqual(EVIDENCE_ADAPTERS.filter(a=>a.binding(task,context)),[]);
+ assert.deepEqual(EVIDENCE_ADAPTERS.filter(a=>a.binding(task,context)).map(a=>a.id),['signed-order']);
  for(const c of [{sessionId:'tenmillion',index:0},{sessionId:'tenmillion',index:2},
   {sessionId:'bigcompare',index:2},{sessionId:'tenmillion',index:'1'},{}])
   assert.equal(signedOrderPreauditBinding(task,c),null);

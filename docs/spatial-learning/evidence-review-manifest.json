@@ -7360,6 +7360,15 @@
       "adapter": "positive-order",
       "taskHash": "f4b80d951ea72967caa1de4041a4aa113cd4d7d1d69d56ab59fb6ecbb1278e38",
       "method": null
+    },
+    {
+      "sessionId": "tenmillion",
+      "index": 1,
+      "type": "x-wideboard",
+      "nodeId": "mt_XNmGwNggdU",
+      "adapter": "signed-order",
+      "taskHash": "0deadc9a3d0aac1cdf6206a515848e9642f08d687f6d8e4b730d70aae64c859c",
+      "method": null
     }
   ]
 }
