@@ -25,9 +25,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t source_files < <(git diff --name-only origin/main...HEAD | grep -E '^dist/learning/p[0-9]{3}[a-z]?-.*-evidence\\.js$' | sort)
-          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+\\.test\\.mjs$' | sort)
-          printf 'Source modules: %s, Node tests: %s\\n' "${#source_files[@]}" "${#test_files[@]}"
+          mapfile -t source_files < <(git diff --name-only origin/main...HEAD | grep -E '^dist/learning/p[0-9]{3}[a-z]?-.*-evidence\.js$' | sort)
+          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+\.test\.mjs$' | sort)
+          printf 'Source modules: %s, Node tests: %s\n' "${#source_files[@]}" "${#test_files[@]}"
           test "${#test_files[@]}" -eq 113
           for f in "${source_files[@]}" "${test_files[@]}"; do node --check "$f"; done
           node --test --test-concurrency=4 "${test_files[@]}"
@@ -55,7 +55,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+-browser\\.cjs$' | sort)
+          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+-browser\.cjs$' | sort)
           test "${#test_files[@]}" -eq 113
           count=0
           for i in "${!test_files[@]}"; do
