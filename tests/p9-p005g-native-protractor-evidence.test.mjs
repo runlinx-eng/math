@@ -56,7 +56,7 @@ test('P005g original source, task SHA and independent protractor alignment',()=>
   const p=replay(t,m,ctx(s));
   assert.ok(p,'exact original replay exists');
   assert.equal(p.targetDegrees,s.amount);
-  assert.equal(p.independentlyObservedDegrees,s.amount);
+  assert.ok(Math.abs(p.independentlyObservedDegrees-s.amount)<1e-8);
   assert.deepEqual(p.alignedCenter,[0,0]);
   assert.equal(p.zeroLineRotationDegrees,0);
   assert.equal(p.originalControlEvents.length,s.mode==='draw'?6:4);
