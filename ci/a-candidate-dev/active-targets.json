@@ -2,33 +2,31 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006d-native-countif-records",
-      "sha": "8acf9eddee78e610ec971e8b0212eda5f1adfd86",
-      "node_test": "tests/p9-p006d-native-countif-records-evidence.test.mjs",
-      "browser_test": "tests/p9-p006d-native-countif-records-browser.cjs",
+      "case": "P006e-native-bounded-survey-plans",
+      "sha": "906fe4cb54c3029b387811453d3557e63d83054a",
+      "node_test": "tests/p9-p006e-native-bounded-survey-plans-evidence.test.mjs",
+      "browser_test": "tests/p9-p006e-native-bounded-survey-plans-browser.cjs",
       "native": [
         {
-          "sessionId": "digitalstudy",
-          "index": 2,
-          "nodeId": "mt_yrvYKSwSRZ",
-          "taskSha256": "772d795d586bc5e00f1eb0a20be87e5bccca909c46f6de2a622907030cbf01df",
-          "type": "x-datacount",
+          "sessionId": "studyplan",
+          "index": 0,
+          "nodeId": "mt_SHVyE1CLUa",
+          "taskSha256": "83f28a380491d9683372faf466c71c0ab8adf6e38ec691e4c473025ce70a22e6",
+          "type": "x-dataplan",
           "view": "b19",
           "controls": [
-            "b19-max",
-            "b19-min"
+            "b19-plan"
           ]
         },
         {
-          "sessionId": "checkrecords",
-          "index": 2,
-          "nodeId": "mt_QHT16CrFO-",
-          "taskSha256": "387c9a4156b40d7e2143b716ccca795f815afcf18585996be6c2cf8c462a65e4",
-          "type": "x-datacount",
+          "sessionId": "betterquestion",
+          "index": 0,
+          "nodeId": "mt_O-U263ukg1",
+          "taskSha256": "429d00abd6312dc3106e56cccf4a4cb7da38f8a7edb5a288464abe0a349211f6",
+          "type": "x-dataplan",
           "view": "b19",
           "controls": [
-            "b19-max",
-            "b19-min"
+            "b19-plan"
           ]
         }
       ]
