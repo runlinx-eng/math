@@ -2,16 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006m-native-sampling-frame-contrast",
-      "sha": "bc2c99deec41bcc32adbca98648e27ee057a05be",
-      "node_test": "tests/p9-p006m-native-sampling-frame-contrast-evidence.test.mjs",
-      "browser_test": "tests/p9-p006m-native-sampling-frame-contrast-browser.cjs",
+      "case": "P006n-native-repeat-sampling",
+      "sha": "52508d2d32a4d338e59641643a653c2aecf01e3c",
+      "node_test": "tests/p9-p006n-native-repeat-sampling-evidence.test.mjs",
+      "browser_test": "tests/p9-p006n-native-repeat-sampling-browser.cjs",
       "native": [
         {
-          "sessionId": "fairdraw",
-          "index": 1,
-          "nodeId": "mt_4zgPzc6yu5",
-          "taskSha256": "852bacf9fa85cb2853d9bcbb39f3c83135bbb5b8cc431e297dd55bd05143e321",
+          "sessionId": "samplevary",
+          "index": 0,
+          "nodeId": "mt_x7V1qrkiqH",
+          "taskSha256": "66b47f1c9c7dd633e5538f40852a8bd12561d5a077633717a5f01cf03b3bb546",
           "type": "x-samplelab",
           "view": "b21",
           "controls": [
