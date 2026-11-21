@@ -1,5 +1,10 @@
 # #341 审计扩展材料公开授权与增量交接（2026-11-22）
 
+## #341 当前新增：逐题精确范围预检（2026-11-22）
+
+**71个多题家族覆盖323/365道。** 部分题位获独立批准时不得仅按家族ID注册，否则扩大到未批准来源。新 [只读边界检查](./formal-activation/APPROVAL-SCOPE-READONLY.md)、[脚本](./formal-activation/approval-scope-preflight.mjs)及[365题结果](./formal-activation/approval-scope-check-365.json)已经核对每题身份，验证1题假设选中、错误hash/HEAD/重复/伪批准等失败关闭；逐题JSON/CSV新增3个`approvalScope*`字段，CSV现81列。该检查不复测B线原数学，不实施生产注册，不授A。正式A813/1996、新A0，独立人审PENDING。当前PR#351实际仍Draft=true、未合并；历史`draft=false`元数据不是当前GitHub PR状态。
+
+
 **状态：29份已审阅文档获用户明确授权公开。** 全量详细证明范围、工程审核、Artifact索引、逐题准入申请和未执行的激活提案发布于本审计分支。正式批准、生产启用、main合并、部署均未授权；A仍813/1996，本批A0。以下先完整保留上一轮已公开的交接前言（其中“扩展材料待授权”属于历史状态），随后进入本轮全量详细交接。
 
 ---

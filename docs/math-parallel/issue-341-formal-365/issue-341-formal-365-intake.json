@@ -176,7 +176,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -249,7 +252,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -322,7 +328,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -395,7 +404,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -468,7 +480,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -541,7 +556,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -614,7 +632,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -687,7 +708,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -760,7 +784,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -833,7 +860,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -906,7 +936,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -979,7 +1012,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1052,7 +1088,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1125,7 +1164,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1198,7 +1240,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1271,7 +1316,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1344,7 +1392,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1417,7 +1468,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1490,7 +1544,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1563,7 +1620,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1636,7 +1696,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1709,7 +1772,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1782,7 +1848,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1855,7 +1924,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -1928,7 +2000,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -2001,7 +2076,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -2074,7 +2152,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -2147,7 +2228,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -2220,7 +2304,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "packet": "P007",
@@ -2293,7 +2380,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2370,7 +2460,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2447,7 +2540,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2524,7 +2620,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2601,7 +2700,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2678,7 +2780,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2755,7 +2860,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2832,7 +2940,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2909,7 +3020,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -2986,7 +3100,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3063,7 +3180,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3140,7 +3260,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3217,7 +3340,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3294,7 +3420,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3371,7 +3500,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3448,7 +3580,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3525,7 +3660,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3602,7 +3740,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3679,7 +3820,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3756,7 +3900,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3833,7 +3980,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3910,7 +4060,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -3987,7 +4140,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -4064,7 +4220,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -4141,7 +4300,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -4218,7 +4380,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -4295,7 +4460,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "P009",
@@ -4372,7 +4540,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4455,7 +4626,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4538,7 +4712,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4621,7 +4798,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4704,7 +4884,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4787,7 +4970,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4870,7 +5056,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -4953,7 +5142,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5036,7 +5228,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5119,7 +5314,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5202,7 +5400,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5285,7 +5486,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5368,7 +5572,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5451,7 +5658,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5534,7 +5744,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5617,7 +5830,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5700,7 +5916,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5783,7 +6002,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5866,7 +6088,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -5949,7 +6174,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6032,7 +6260,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6115,7 +6346,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6198,7 +6432,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6281,7 +6518,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6364,7 +6604,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 24,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6447,7 +6690,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6530,7 +6776,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6613,7 +6862,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6696,7 +6948,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6779,7 +7034,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6862,7 +7120,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -6945,7 +7206,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7028,7 +7292,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7111,7 +7378,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7194,7 +7464,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7277,7 +7550,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7360,7 +7636,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7443,7 +7722,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7526,7 +7808,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7609,7 +7894,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7692,7 +7980,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7775,7 +8066,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7858,7 +8152,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -7941,7 +8238,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8024,7 +8324,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8107,7 +8410,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8190,7 +8496,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8273,7 +8582,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8356,7 +8668,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8439,7 +8754,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 25,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8522,7 +8840,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8605,7 +8926,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8688,7 +9012,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8771,7 +9098,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8854,7 +9184,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -8937,7 +9270,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9020,7 +9356,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9103,7 +9442,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9186,7 +9528,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9269,7 +9614,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9352,7 +9700,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9435,7 +9786,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9518,7 +9872,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9601,7 +9958,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9684,7 +10044,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9767,7 +10130,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9850,7 +10216,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -9933,7 +10302,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10016,7 +10388,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10099,7 +10474,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10182,7 +10560,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10265,7 +10646,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10348,7 +10732,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10431,7 +10818,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10514,7 +10904,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10597,7 +10990,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10680,7 +11076,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10763,7 +11162,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 20,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10846,7 +11248,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -10929,7 +11334,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11012,7 +11420,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11095,7 +11506,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11178,7 +11592,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11261,7 +11678,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11344,7 +11764,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11427,7 +11850,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11510,7 +11936,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11593,7 +12022,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11676,7 +12108,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11759,7 +12194,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11842,7 +12280,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -11925,7 +12366,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12008,7 +12452,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12091,7 +12538,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12174,7 +12624,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12257,7 +12710,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 18,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12340,7 +12796,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12423,7 +12882,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12506,7 +12968,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12589,7 +13054,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12672,7 +13140,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12755,7 +13226,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12838,7 +13312,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -12921,7 +13398,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13004,7 +13484,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13087,7 +13570,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13170,7 +13656,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 11,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13253,7 +13742,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13336,7 +13828,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13419,7 +13914,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13502,7 +14000,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13585,7 +14086,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13668,7 +14172,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13751,7 +14258,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13834,7 +14344,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -13917,7 +14430,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14000,7 +14516,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14083,7 +14602,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14166,7 +14688,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 8,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14249,7 +14774,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14332,7 +14860,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14415,7 +14946,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14498,7 +15032,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14581,7 +15118,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14664,7 +15204,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14747,7 +15290,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14830,7 +15376,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14913,7 +15462,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 9,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -14996,7 +15548,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15079,7 +15634,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15162,7 +15720,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15245,7 +15806,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15328,7 +15892,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15411,7 +15978,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15494,7 +16064,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 7,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15577,7 +16150,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15660,7 +16236,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15743,7 +16322,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15826,7 +16408,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15909,7 +16494,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -15992,7 +16580,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16075,7 +16666,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16158,7 +16752,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16241,7 +16838,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16324,7 +16924,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 10,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16407,7 +17010,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16490,7 +17096,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16573,7 +17182,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16656,7 +17268,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16739,7 +17354,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16822,7 +17440,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16905,7 +17526,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -16988,7 +17612,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17071,7 +17698,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17154,7 +17784,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17237,7 +17870,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17320,7 +17956,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17403,7 +18042,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17486,7 +18128,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17569,7 +18214,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17652,7 +18300,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17735,7 +18386,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17818,7 +18472,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17901,7 +18558,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -17984,7 +18644,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18067,7 +18730,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18150,7 +18816,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18233,7 +18902,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18316,7 +18988,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18399,7 +19074,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18482,7 +19160,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18565,7 +19246,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18648,7 +19332,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18731,7 +19418,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18814,7 +19504,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18897,7 +19590,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -18980,7 +19676,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19063,7 +19762,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19146,7 +19848,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19229,7 +19934,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19312,7 +20020,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19395,7 +20106,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19478,7 +20192,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19561,7 +20278,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19644,7 +20364,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19727,7 +20450,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19810,7 +20536,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19893,7 +20622,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -19976,7 +20708,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20059,7 +20794,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20142,7 +20880,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20225,7 +20966,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20308,7 +21052,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20391,7 +21138,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20474,7 +21224,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20557,7 +21310,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20640,7 +21396,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20723,7 +21482,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20806,7 +21568,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20889,7 +21654,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -20972,7 +21740,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21055,7 +21826,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21138,7 +21912,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21221,7 +21998,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21304,7 +22084,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21387,7 +22170,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21470,7 +22256,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21553,7 +22342,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21636,7 +22428,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21719,7 +22514,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21802,7 +22600,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21885,7 +22686,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -21968,7 +22772,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22051,7 +22858,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22134,7 +22944,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22217,7 +23030,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22300,7 +23116,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22383,7 +23202,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22466,7 +23288,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22549,7 +23374,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22632,7 +23460,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22715,7 +23546,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22798,7 +23632,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22881,7 +23718,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -22964,7 +23804,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23047,7 +23890,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23130,7 +23976,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23213,7 +24062,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23296,7 +24148,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23379,7 +24234,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23462,7 +24320,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23545,7 +24406,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23628,7 +24492,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23711,7 +24578,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23794,7 +24664,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23877,7 +24750,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -23960,7 +24836,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24043,7 +24922,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24126,7 +25008,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24209,7 +25094,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24292,7 +25180,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24375,7 +25266,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24458,7 +25352,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24541,7 +25438,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24624,7 +25524,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24707,7 +25610,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24790,7 +25696,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24890,7 +25799,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -24990,7 +25902,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25073,7 +25988,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25156,7 +26074,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25239,7 +26160,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25322,7 +26246,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25405,7 +26332,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25488,7 +26418,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25571,7 +26504,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25654,7 +26590,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25737,7 +26676,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25820,7 +26762,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25903,7 +26848,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -25986,7 +26934,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26069,7 +27020,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26152,7 +27106,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26235,7 +27192,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26318,7 +27278,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26401,7 +27364,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26484,7 +27450,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26567,7 +27536,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26650,7 +27622,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26733,7 +27708,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26816,7 +27794,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26899,7 +27880,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -26985,7 +27969,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27071,7 +28058,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27174,7 +28164,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27277,7 +28270,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27380,7 +28376,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27466,7 +28465,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27569,7 +28571,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27672,7 +28677,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27758,7 +28766,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27861,7 +28872,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -27964,7 +28978,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28067,7 +29084,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28153,7 +29173,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28239,7 +29262,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28322,7 +29348,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28406,7 +29435,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28489,7 +29521,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28572,7 +29607,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28655,7 +29693,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 5,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28739,7 +29780,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28823,7 +29867,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28906,7 +29953,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -28989,7 +30039,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29073,7 +30126,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29157,7 +30213,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 6,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29240,7 +30299,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29323,7 +30385,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29407,7 +30472,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29491,7 +30559,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 4,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29574,7 +30645,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29657,7 +30731,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29740,7 +30817,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29823,7 +30903,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -29906,7 +30989,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 3,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -30006,7 +31092,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -30106,7 +31195,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 2,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     },
     {
       "group": "B",
@@ -30190,7 +31282,10 @@
       "publicCurrentStatus": "PUBLIC_ALL365_ISOLATED_CODE_AND_WORKFLOW_SUCCESS_FORMAL_APPROVAL_PENDING",
       "publicIndependentHumanApproval": "PENDING",
       "publicProductionActive": false,
-      "publicNewFormalA": 0
+      "publicNewFormalA": 0,
+      "approvalScopeFamilyMemberCount": 1,
+      "approvalScopeExactSourceAllowlistRequired": true,
+      "approvalScopePreflightStatus": "STRUCTURAL_SCOPE_CHECKED_HUMAN_APPROVAL_PENDING"
     }
   ],
   "followup20261121": {
@@ -31778,5 +32873,25 @@
     "mainMerge": false,
     "deployment": false,
     "permissionBoundary": "Documentation publication approval only. Independent human/formal mathematical admission is still PENDING."
+  },
+  "nonGrantingApprovalScopePreflight20261122": {
+    "status": "PASS_STRUCTURAL_SOURCE_SCOPE_PREVIEW_NO_HUMAN_APPROVAL",
+    "reviewedCodeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "pr351LiveDraft": true,
+    "pr351Merged": false,
+    "metadataClarification": "Historical sourceSnapshot.draft=false and currentAll365SharedIntegration.draft=false are NOT the real-time GitHub PR #351 draft state. Live PR #351 is Draft=true and unmerged.",
+    "candidateFamilies": 113,
+    "candidatePositions": 365,
+    "multiPositionFamilies": 71,
+    "positionsInMultiPositionFamilies": 323,
+    "readOnlyScript": "formal-activation/approval-scope-preflight.mjs",
+    "perPositionCheckFile": "formal-activation/approval-scope-check-365.json",
+    "simulatedSingleFamilySubset": "PASS_EXACT_POSITION_SCOPE_ONLY",
+    "changedOldMathOrOriginalCI": false,
+    "independentHumanApproval": "PENDING",
+    "newFormalA": 0,
+    "productionActivation": false,
+    "mainMerged": false,
+    "deployed": false
   }
 }

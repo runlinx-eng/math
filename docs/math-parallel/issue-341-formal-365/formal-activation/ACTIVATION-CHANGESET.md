@@ -81,3 +81,7 @@ SW 变动会依据现有 targeted 规则触发长时离线、SW导航隔离和re
 365行请求已把需要审批的对象变成可检索数据：准确原题身份、原模块SHA与导出、保留的额外Check门槛、原ZIP/member与raw/results哈希、新反馈类型、独立agent文字审查与最终实现审查文件SHA、正式registry表示选择。最终实现审查绑定6个实际代码文件，材料生成时确认这6份字节仍与审查一致；这种字节比对不重跑数学合同。每行明确 `independentHumanApproval=PENDING`、`formalA=NOT_GRANTED`、`officialManifestWritten=false`。
 
 剩余决定按真实依赖分组：新反馈/数学正式批准，已选定113家族方案的获批生产注册与元数据处理，正式审计的获批来源配置，离线release闭包，实际变更HEAD门禁，主线合并及新main双验，部署授权。完整record扩展审计与A–E注入接口、纯模块拆分和最终实现独立agent审查均已完成；145条历史备选不是当前阻塞。任何一项等待批准均不应阻止继续完成其他可执行的集成代码与材料。
+
+## 补充：准确题位范围只读检查（2026-11-22）
+
+已新增 [APPROVAL-SCOPE-READONLY.md](./APPROVAL-SCOPE-READONLY.md)、`approval-scope-preflight.mjs` 和 `approval-scope-check-365.json`。71个多题家族覆盖323道，任何部分题位批准的正式注册都必须同时要求准确 `(sessionId,index,nodeId,taskHash)` 和已批准 manifest 交集，不能按family自动放行其余题位。只读脚本仅做模拟，不授A、不写manifest。原请求里的 `sourceSnapshot.draft=false` 不是PR实时状态；PR#351在GitHub仍Draft=true。实际人审、生产改动及变更HEAD的CI仍是独立门禁。
