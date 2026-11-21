@@ -72,7 +72,7 @@ async function run(){
    assert.ok(await loc.isVisible(),stage+': original control visible');
   };
   const toggle=async index=>{
-   const loc=page.locator('#extra-world [data-x="g23-toggle"][data-index="'+index+'"]');
+   const loc=page.locator('#extra-visual [data-x="g23-toggle"][data-index="'+index+'"]');
    await reveal(loc);await loc.click();
   };
   const check=async()=>{
