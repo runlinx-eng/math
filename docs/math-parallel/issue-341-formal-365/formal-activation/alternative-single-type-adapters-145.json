@@ -1,0 +1,1968 @@
+{
+  "schema": "issue-341-unapproved-typed-registry-alternative/1",
+  "status": "HISTORICAL_ALTERNATIVE_NOT_SELECTED_NOT_A_CURRENT_GATE",
+  "families": 113,
+  "entries": 145,
+  "rows": [
+    {
+      "familyId": "issue341-P007A",
+      "packet": "P007A",
+      "adapterId": "issue341-P007A",
+      "type": "x-s23-frame",
+      "positions": [
+        "shapedraw:4",
+        "shapeframe:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007B",
+      "packet": "P007B",
+      "adapterId": "issue341-P007B",
+      "type": "x-s23-frame",
+      "positions": [
+        "shapedraw:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007C",
+      "packet": "P007C",
+      "adapterId": "issue341-P007C",
+      "type": "x-s23-ruler",
+      "positions": [
+        "shapemeasures:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007D",
+      "packet": "P007D",
+      "adapterId": "issue341-P007D",
+      "type": "x-s23-ruler",
+      "positions": [
+        "shapemeasures:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007E",
+      "packet": "P007E",
+      "adapterId": "issue341-P007E",
+      "type": "x-s23-ruler",
+      "positions": [
+        "shapemeasures:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007F",
+      "packet": "P007F",
+      "adapterId": "issue341-P007F",
+      "type": "x-s23-circle",
+      "positions": [
+        "circleparts:0",
+        "circleparts:1",
+        "circleparts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007G",
+      "packet": "P007G",
+      "adapterId": "issue341-P007G",
+      "type": "x-s23-compass",
+      "positions": [
+        "compasswork:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007H",
+      "packet": "P007H",
+      "adapterId": "issue341-P007H",
+      "type": "x-s23-compass",
+      "positions": [
+        "compasswork:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007I",
+      "packet": "P007I",
+      "adapterId": "issue341-P007I",
+      "type": "x-s23-compass",
+      "positions": [
+        "compasswork:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007J",
+      "packet": "P007J",
+      "adapterId": "issue341-P007J",
+      "type": "x-s23-ruler",
+      "positions": [
+        "rectanglefacts:0",
+        "rectanglefacts:1",
+        "rectanglefacts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007K",
+      "packet": "P007K",
+      "adapterId": "issue341-P007K",
+      "type": "x-s23-circle",
+      "positions": [
+        "shapefacts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007L",
+      "packet": "P007L",
+      "adapterId": "issue341-P007L",
+      "type": "x-g25-triangle",
+      "positions": [
+        "trianglecongruent:0",
+        "trianglecongruent:3",
+        "triangledraw:0",
+        "trianglepossible:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007M",
+      "packet": "P007M",
+      "adapterId": "issue341-P007M",
+      "type": "x-g25-triangle",
+      "positions": [
+        "trianglecongruent:1",
+        "triangledraw:1",
+        "trianglepossible:0",
+        "trianglepossible:1",
+        "trianglepossible:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007N",
+      "packet": "P007N",
+      "adapterId": "issue341-P007N",
+      "type": "x-g25-triangle",
+      "positions": [
+        "trianglecongruent:2",
+        "triangledraw:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007O",
+      "packet": "P007O",
+      "adapterId": "issue341-P007O",
+      "type": "x-g25-triangle",
+      "positions": [
+        "trianglecongruent:4",
+        "trianglepossible:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P007P",
+      "packet": "P007P",
+      "adapterId": "issue341-P007P",
+      "type": "x-s23-circle",
+      "positions": [
+        "advancedWords38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P009A",
+      "packet": "P009A",
+      "adapterId": "issue341-P009A",
+      "type": "x-tenbridge",
+      "positions": [
+        "bonds20:1",
+        "bridge20:0",
+        "bridge20:1",
+        "factstwenty:0",
+        "screenadd:1",
+        "screenadd:2",
+        "tools38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P009B",
+      "packet": "P009B",
+      "adapterId": "issue341-P009B",
+      "type": "x-factfamily",
+      "positions": [
+        "bonds20:0",
+        "bridge20:2",
+        "factsfive:0",
+        "factsten:0",
+        "factstwenty:1",
+        "sense38:2",
+        "undoadd:1",
+        "undoadd:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P009C",
+      "packet": "P009C",
+      "adapterId": "issue341-P009C",
+      "type": "x-threegroups",
+      "positions": [
+        "general34:0",
+        "regroupadd:0",
+        "regroupadd:1",
+        "tripleadd:0",
+        "tripleadd:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P009D",
+      "packet": "P009D",
+      "adapterId": "issue341-P009D",
+      "type": "x-undolab",
+      "positions": [
+        "undocalc:0",
+        "undocalc:1",
+        "undocalc:2",
+        "undocalc:3",
+        "undocalc:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P009E",
+      "packet": "P009E",
+      "adapterId": "issue341-P009E",
+      "type": "x-complementpair",
+      "positions": [
+        "decimalmeasure3:3",
+        "decimalmeasure3:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P117",
+      "packet": "P117",
+      "adapterId": "issue341-P117",
+      "type": "x-directedjump",
+      "positions": [
+        "fractionfour:8"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P116",
+      "packet": "P116",
+      "adapterId": "issue341-P116",
+      "type": "x-dotdraw",
+      "positions": [
+        "dotrecords:0",
+        "dotrecords:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P115",
+      "packet": "P115",
+      "adapterId": "issue341-P115",
+      "type": "x-p24-grid",
+      "positions": [
+        "signedpoints:0",
+        "signedpoints:1",
+        "signedpoints:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P114",
+      "packet": "P114",
+      "adapterId": "issue341-P114",
+      "type": "x-g27-build",
+      "positions": [
+        "solidstack:0",
+        "solidstack:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P113",
+      "packet": "P113",
+      "adapterId": "issue341-P113",
+      "type": "x-placecalc",
+      "positions": [
+        "decadetake:0",
+        "decadetake:1",
+        "general34:1",
+        "tenslarge:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P112",
+      "packet": "P112",
+      "adapterId": "issue341-P112",
+      "type": "x-p22-pick",
+      "positions": [
+        "chancecalc:1",
+        "chancecomplement:1",
+        "chancecomplement:2",
+        "chancefraction:0",
+        "chancenone:1",
+        "chancescale:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P111",
+      "packet": "P111",
+      "adapterId": "issue341-P111",
+      "type": "x-a35-balance",
+      "positions": [
+        "equations35:0",
+        "equations35:2",
+        "equations35:3",
+        "equations35:4",
+        "equations35:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P110",
+      "packet": "P110",
+      "adapterId": "issue341-P110",
+      "type": "x-meandistance",
+      "positions": [
+        "meandistance:0",
+        "meandistance:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P109",
+      "packet": "P109",
+      "adapterId": "issue341-P109",
+      "type": "x-a35-factor",
+      "positions": [
+        "factor35:0",
+        "factor35:1",
+        "factor35:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P108",
+      "packet": "P108",
+      "adapterId": "issue341-P108",
+      "type": "x-digitlens",
+      "positions": [
+        "mixedpoints:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P107",
+      "packet": "P107",
+      "adapterId": "issue341-P107",
+      "type": "x-factorrects",
+      "positions": [
+        "factorpairs:0",
+        "factorpairs:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P106",
+      "packet": "P106",
+      "adapterId": "issue341-P106",
+      "type": "x-foldpaper",
+      "positions": [
+        "folds:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P105",
+      "packet": "P105",
+      "adapterId": "issue341-P105",
+      "type": "x-numbersearch",
+      "positions": [
+        "primetest:0",
+        "primetest:1",
+        "primetest:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P104",
+      "packet": "P104",
+      "adapterId": "issue341-P104",
+      "type": "x-toolwork",
+      "positions": [
+        "toolchoice:0",
+        "toolchoice:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P103",
+      "packet": "P103",
+      "adapterId": "issue341-P103",
+      "type": "x-p34-grid",
+      "positions": [
+        "pairs34:0",
+        "pairs34:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P102",
+      "packet": "P102",
+      "adapterId": "issue341-P102",
+      "type": "x-mulchain",
+      "positions": [
+        "structurechoices:0",
+        "structurechoices:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P101",
+      "packet": "P101",
+      "adapterId": "issue341-P101",
+      "type": "x-p24-mirror",
+      "positions": [
+        "mirrorfold:0",
+        "mirrorfold:1",
+        "mirrorfold:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P100",
+      "packet": "P100",
+      "adapterId": "issue341-P100",
+      "type": "x-boxsummary",
+      "positions": [
+        "boxsummary:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P099",
+      "packet": "P099",
+      "adapterId": "issue341-P099",
+      "type": "x-m29-tape",
+      "positions": [
+        "lengthstory:0",
+        "lengthstory:1",
+        "lengthstory:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P098",
+      "packet": "P098",
+      "adapterId": "issue341-P098",
+      "type": "x-f36-live",
+      "positions": [
+        "linear36:0",
+        "linear36:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P097",
+      "packet": "P097",
+      "adapterId": "issue341-P097",
+      "type": "x-squarepair",
+      "positions": [
+        "factoruse:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P096",
+      "packet": "P096",
+      "adapterId": "issue341-P096",
+      "type": "x-groupfour",
+      "positions": [
+        "fourparts:0",
+        "fourparts:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P095",
+      "packet": "P095",
+      "adapterId": "issue341-P095",
+      "type": "x-m29-interval",
+      "positions": [
+        "temperaturechange:0",
+        "temperaturechange:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P094",
+      "packet": "P094",
+      "adapterId": "issue341-P094",
+      "type": "x-decimalproduct",
+      "positions": [
+        "decimalproduct:0",
+        "decimalproduct:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P093",
+      "packet": "P093",
+      "adapterId": "issue341-P093",
+      "type": "x-g27-net",
+      "positions": [
+        "foldprism:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P092",
+      "packet": "P092",
+      "adapterId": "issue341-P092",
+      "type": "x-s23-tile",
+      "positions": [
+        "shapepieces:0",
+        "shapepieces:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P091",
+      "packet": "P091",
+      "adapterId": "issue341-P091",
+      "type": "x-allowedrange",
+      "positions": [
+        "allowedrange:0",
+        "allowedrange:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P090",
+      "packet": "P090",
+      "adapterId": "issue341-P090",
+      "type": "x-signwalk",
+      "positions": [
+        "signedproducts:0",
+        "signedproducts:1",
+        "signedproducts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P089",
+      "packet": "P089",
+      "adapterId": "issue341-P089",
+      "type": "x-parityjoin",
+      "positions": [
+        "parityrules:0",
+        "parityrules:1",
+        "parityrules:2",
+        "parityrules:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P088",
+      "packet": "P088",
+      "adapterId": "issue341-P088",
+      "type": "x-s39-graph",
+      "positions": [
+        "graph39:1",
+        "graph39:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P087",
+      "packet": "P087",
+      "adapterId": "issue341-P087",
+      "type": "x-splitbench",
+      "positions": [
+        "splitpairs:0",
+        "splitpairs:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P086",
+      "packet": "P086",
+      "adapterId": "issue341-P086",
+      "type": "x-a30-solid",
+      "positions": [
+        "solidSurface:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P085",
+      "packet": "P085",
+      "adapterId": "issue341-P085",
+      "type": "x-g26-length",
+      "positions": [
+        "pythagoras:2",
+        "pythagoras:3",
+        "pythagoras:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P084",
+      "packet": "P084",
+      "adapterId": "issue341-P084",
+      "type": "x-orderlab",
+      "positions": [
+        "expressions:0",
+        "expressions:1",
+        "expressions:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P083",
+      "packet": "P083",
+      "adapterId": "issue341-P083",
+      "type": "x-p22-mapping",
+      "positions": [
+        "chancesim:0",
+        "chancesim:1",
+        "chancesim:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P082",
+      "packet": "P082",
+      "adapterId": "issue341-P082",
+      "type": "x-s23-objects",
+      "positions": [
+        "shapeuses:0",
+        "shapeuses:1",
+        "shapeuses:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P081",
+      "packet": "P081",
+      "adapterId": "issue341-P081",
+      "type": "x-statbrief",
+      "positions": [
+        "datasummary:0",
+        "datasummary:1",
+        "datasummary:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P080",
+      "packet": "P080",
+      "adapterId": "issue341-P080",
+      "type": "x-r38-chain",
+      "positions": [
+        "argument38:0",
+        "argument38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P079",
+      "packet": "P079",
+      "adapterId": "issue341-P079",
+      "type": "x-a30-solid",
+      "positions": [
+        "netSurface:0",
+        "netSurface:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P077",
+      "packet": "P077",
+      "adapterId": "issue341-P077",
+      "type": "x-digitalsets",
+      "positions": [
+        "digitalsets:0",
+        "digitalsets:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P076",
+      "packet": "P076",
+      "adapterId": "issue341-P076",
+      "type": "x-measurestory",
+      "positions": [
+        "measurestory:1",
+        "measurestory:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P075",
+      "packet": "P075",
+      "adapterId": "issue341-P075",
+      "type": "x-pairtable",
+      "positions": [
+        "combineproducts:2",
+        "scaleandpair:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P074",
+      "packet": "P074",
+      "adapterId": "issue341-P074",
+      "type": "x-r38-chain",
+      "positions": [
+        "complex38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P073",
+      "packet": "P073",
+      "adapterId": "issue341-P073",
+      "type": "x-r38-chain",
+      "positions": [
+        "plan38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P072",
+      "packet": "P072",
+      "adapterId": "issue341-P072",
+      "type": "x-r38-chain",
+      "positions": [
+        "sense38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P071",
+      "packet": "P071",
+      "adapterId": "issue341-P071",
+      "type": "x-r38-chain",
+      "positions": [
+        "story38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P070",
+      "packet": "P070",
+      "adapterId": "issue341-P070",
+      "type": "x-a30-grid",
+      "positions": [
+        "multiShape38:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P069",
+      "packet": "P069",
+      "adapterId": "issue341-P069",
+      "type": "x-r37-steps",
+      "positions": [
+        "complex38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P068",
+      "packet": "P068",
+      "adapterId": "issue341-P068",
+      "type": "x-r37-steps",
+      "positions": [
+        "pctFraction37:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P067",
+      "packet": "P067",
+      "adapterId": "issue341-P067",
+      "type": "x-r37-steps",
+      "positions": [
+        "similar37:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P066",
+      "packet": "P066",
+      "adapterId": "issue341-P066",
+      "type": "x-dataclean",
+      "positions": [
+        "checkrecords:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P065",
+      "packet": "P065",
+      "adapterId": "issue341-P065",
+      "type": "x-g25-similar",
+      "positions": [
+        "trianglepossible:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P064",
+      "packet": "P064",
+      "adapterId": "issue341-P064",
+      "type": "x-g26-area",
+      "positions": [
+        "pythagoras:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P063",
+      "packet": "P063",
+      "adapterId": "issue341-P063",
+      "type": "x-m29-order",
+      "positions": [
+        "temperaturechange:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P062",
+      "packet": "P062",
+      "adapterId": "issue341-P062",
+      "type": "x-multable",
+      "positions": [
+        "bigproduct:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P059",
+      "packet": "P059",
+      "adapterId": "issue341-P059",
+      "type": "x-unitwalk",
+      "positions": [
+        "wholefractions:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P058",
+      "packet": "P058",
+      "adapterId": "issue341-P058",
+      "type": "x-s23-pixels",
+      "positions": [
+        "shapeapprox:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P057",
+      "packet": "P057",
+      "adapterId": "issue341-P057",
+      "type": "x-p22-sort",
+      "positions": [
+        "chanceindependent:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P055",
+      "packet": "P055",
+      "adapterId": "issue341-P055",
+      "type": "x-g26-check",
+      "positions": [
+        "pythagoras:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P054",
+      "packet": "P054",
+      "adapterId": "issue341-P054",
+      "type": "x-g25-ticks",
+      "positions": [
+        "linenotation:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P053",
+      "packet": "P053",
+      "adapterId": "issue341-P053",
+      "type": "x-datakind",
+      "positions": [
+        "checkrecords:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P051",
+      "packet": "P051",
+      "adapterId": "issue341-P051",
+      "type": "x-r37-steps",
+      "positions": [
+        "rateWords37:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P050",
+      "packet": "P050",
+      "adapterId": "issue341-P050",
+      "type": "x-r37-steps",
+      "positions": [
+        "model38:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P049",
+      "packet": "P049",
+      "adapterId": "issue341-P049",
+      "type": "x-r37-steps",
+      "positions": [
+        "advancedPlan38:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P048",
+      "packet": "P048",
+      "adapterId": "issue341-P048",
+      "type": "x-r38-chain",
+      "positions": [
+        "tools38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P047",
+      "packet": "P047",
+      "adapterId": "issue341-P047",
+      "type": "x-r38-chain",
+      "positions": [
+        "show38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P046",
+      "packet": "P046",
+      "adapterId": "issue341-P046",
+      "type": "x-r38-chain",
+      "positions": [
+        "precise38:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P045",
+      "packet": "P045",
+      "adapterId": "issue341-P045",
+      "type": "x-r38-chain",
+      "positions": [
+        "multiShape38:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P044",
+      "packet": "P044",
+      "adapterId": "issue341-P044",
+      "type": "x-straightgap",
+      "positions": [
+        "structurechoices:4",
+        "structurechoices:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P043",
+      "packet": "P043",
+      "adapterId": "issue341-P043",
+      "type": "x-multisheet",
+      "positions": [
+        "factorcode:0",
+        "factorcode:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P042",
+      "packet": "P042",
+      "adapterId": "issue341-P042",
+      "type": "x-f36-shape",
+      "positions": [
+        "formula36:0",
+        "formula36:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P040",
+      "packet": "P040",
+      "adapterId": "issue341-P040",
+      "type": "x-a30-solid",
+      "positions": [
+        "prismFormulas:1",
+        "prismFormulas:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P039",
+      "packet": "P039",
+      "adapterId": "issue341-P039",
+      "type": "x-r38-chain",
+      "positions": [
+        "because38:1",
+        "because38:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P037",
+      "packet": "P037",
+      "adapterId": "issue341-P037",
+      "type": "x-s23-scene",
+      "positions": [
+        "shapeapprox:0",
+        "shapeapprox:1",
+        "shapepieces:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P036",
+      "packet": "P036",
+      "adapterId": "issue341-P036",
+      "type": "x-s23-notation",
+      "positions": [
+        "angleparts:1",
+        "geometrynotation:0",
+        "linenotation:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P035",
+      "packet": "P035",
+      "adapterId": "issue341-P035",
+      "type": "x-p22-grid",
+      "positions": [
+        "chancesets:1",
+        "chancetree:0",
+        "chancetree:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P033",
+      "packet": "P033",
+      "adapterId": "issue341-P033",
+      "type": "x-eventchart",
+      "positions": [
+        "digitalcharts:0",
+        "digitalcharts:1",
+        "digitalcharts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P031",
+      "packet": "P031",
+      "adapterId": "issue341-P031",
+      "type": "x-s39-chart",
+      "positions": [
+        "pattern39:0",
+        "pattern39:1",
+        "pattern39:2",
+        "pattern39:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P028",
+      "packet": "P028",
+      "adapterId": "issue341-P028",
+      "type": "x-g26-trig",
+      "positions": [
+        "trigbasics:0",
+        "trigbasics:1",
+        "trigbasics:2",
+        "trigbasics:3",
+        "trigbasics:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P027",
+      "packet": "P027",
+      "adapterId": "issue341-P027",
+      "type": "x-r37-share",
+      "positions": [
+        "advancedPlan38:0",
+        "modelChoice38:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P025",
+      "packet": "P025",
+      "adapterId": "issue341-P025-x-decimalcompare",
+      "type": "x-decimalcompare",
+      "positions": [
+        "decimalorder2:1",
+        "raggeddecimals:0",
+        "raggeddecimals:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P025",
+      "packet": "P025",
+      "adapterId": "issue341-P025-x-decimalmachine",
+      "type": "x-decimalmachine",
+      "positions": [
+        "numberworld:0",
+        "numberworld:1",
+        "numberworld:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P023",
+      "packet": "P023",
+      "adapterId": "issue341-P023-x-correlationlab",
+      "type": "x-correlationlab",
+      "positions": [
+        "scattermeaning:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P023",
+      "packet": "P023",
+      "adapterId": "issue341-P023-x-graphcompare",
+      "type": "x-graphcompare",
+      "positions": [
+        "displaychoices:0",
+        "displaychoices:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P023",
+      "packet": "P023",
+      "adapterId": "issue341-P023-x-scatterbuild",
+      "type": "x-scatterbuild",
+      "positions": [
+        "scattercraft:0",
+        "scattercraft:1",
+        "scattercraft:2",
+        "scattermeaning:0",
+        "scattermeaning:1",
+        "scattermeaning:2",
+        "statwords:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P020",
+      "packet": "P020",
+      "adapterId": "issue341-P020-x-a30-circle",
+      "type": "x-a30-circle",
+      "positions": [
+        "circleArea:0",
+        "circleArea:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P020",
+      "packet": "P020",
+      "adapterId": "issue341-P020-x-a30-outline",
+      "type": "x-a30-outline",
+      "positions": [
+        "polyperim:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P020",
+      "packet": "P020",
+      "adapterId": "issue341-P020-x-a30-pieces",
+      "type": "x-a30-pieces",
+      "positions": [
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P019",
+      "packet": "P019",
+      "adapterId": "issue341-P019-x-decimalzoom",
+      "type": "x-decimalzoom",
+      "positions": [
+        "thousandparts:0",
+        "thousandparts:2",
+        "thousandparts:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P019",
+      "packet": "P019",
+      "adapterId": "issue341-P019-x-fdprecall",
+      "type": "x-fdprecall",
+      "positions": [
+        "fdpswitch:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P019",
+      "packet": "P019",
+      "adapterId": "issue341-P019-x-fractionbridge",
+      "type": "x-fractionbridge",
+      "positions": [
+        "structurebridge:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P019",
+      "packet": "P019",
+      "adapterId": "issue341-P019-x-percentkit",
+      "type": "x-percentkit",
+      "positions": [
+        "pctCalculate37:0",
+        "pctCalculate37:2",
+        "percentpatterns:2",
+        "percentpatterns:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P018",
+      "packet": "P018",
+      "adapterId": "issue341-P018-x-p22-branch",
+      "type": "x-p22-branch",
+      "positions": [
+        "chancetree:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P018",
+      "packet": "P018",
+      "adapterId": "issue341-P018-x-p22-draw",
+      "type": "x-p22-draw",
+      "positions": [
+        "chanceindependent:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P018",
+      "packet": "P018",
+      "adapterId": "issue341-P018-x-p22-experiment",
+      "type": "x-p22-experiment",
+      "positions": [
+        "chanceindependent:0",
+        "trialcompare:0",
+        "trialcompare:1",
+        "trialestimate:0",
+        "trialestimate:1",
+        "trialestimate:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P017",
+      "packet": "P017",
+      "adapterId": "issue341-P017-x-betweenpoints",
+      "type": "x-betweenpoints",
+      "positions": [
+        "numberworld:4",
+        "numberworld:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P017",
+      "packet": "P017",
+      "adapterId": "issue341-P017-x-signedline",
+      "type": "x-signedline",
+      "positions": [
+        "negativecontext:2",
+        "negativefirst:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-a35-plot",
+      "type": "x-a35-plot",
+      "positions": [
+        "systems35:2",
+        "systems35:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-a35-try",
+      "type": "x-a35-try",
+      "positions": [
+        "bigmissing35:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-divreverse",
+      "type": "x-divreverse",
+      "positions": [
+        "productways:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-f36-live",
+      "type": "x-f36-live",
+      "positions": [
+        "linear36:3",
+        "proportionGraph37:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-m29-combine",
+      "type": "x-m29-combine",
+      "positions": [
+        "measurecalc:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-m29-interval",
+      "type": "x-m29-interval",
+      "positions": [
+        "temperaturechange:4"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-p22-pick",
+      "type": "x-p22-pick",
+      "positions": [
+        "chanceline:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-p34-ambiguity",
+      "type": "x-p34-ambiguity",
+      "positions": [
+        "rules34:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P016",
+      "packet": "P016",
+      "adapterId": "issue341-P016-x-s23-notation",
+      "type": "x-s23-notation",
+      "positions": [
+        "linemark:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P014",
+      "packet": "P014",
+      "adapterId": "issue341-P014-x-comparebars",
+      "type": "x-comparebars",
+      "positions": [
+        "combineproducts:1",
+        "scaleandpair:0",
+        "scaleandpair:2",
+        "timesmeaning:0",
+        "timesmeaning:1",
+        "timesmeaning:2",
+        "timesproblems:0",
+        "timesproblems:1",
+        "timesproblems:2",
+        "timesproblems:3",
+        "viewlinks:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P014",
+      "packet": "P014",
+      "adapterId": "issue341-P014-x-portionbar",
+      "type": "x-portionbar",
+      "positions": [
+        "fractionmeasure:0",
+        "fractionmeasure:2",
+        "modelrecipe:1",
+        "modelrecipe:2",
+        "storyfraction:1",
+        "structurechoices:2",
+        "structurechoices:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P013",
+      "packet": "P013",
+      "adapterId": "issue341-P013-x-estimate",
+      "type": "x-estimate",
+      "positions": [
+        "estimatepeople:0",
+        "estimatepeople:1",
+        "estimatepeople:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P013",
+      "packet": "P013",
+      "adapterId": "issue341-P013-x-estimatepad",
+      "type": "x-estimatepad",
+      "positions": [
+        "calculatormeaning:0",
+        "calculatormeaning:1",
+        "calculatormeaning:2",
+        "calculatormeaning:3",
+        "calculatormeaning:4",
+        "calculatormeaning:5",
+        "decimalestimate:0",
+        "decimalestimate:1",
+        "decimalestimate:2",
+        "estimatecheck:0",
+        "estimatecheck:1",
+        "estimatecheck:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P013",
+      "packet": "P013",
+      "adapterId": "issue341-P013-x-recallbench",
+      "type": "x-recallbench",
+      "positions": [
+        "bonds20:2",
+        "factsfive:1",
+        "factsten:1",
+        "factstwenty:2",
+        "scaleadd:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P012",
+      "packet": "P012",
+      "adapterId": "issue341-P012-x-m29-clock",
+      "type": "x-m29-clock",
+      "positions": [
+        "practicalmeasure:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P012",
+      "packet": "P012",
+      "adapterId": "issue341-P012-x-t32-calendar",
+      "type": "x-t32-calendar",
+      "positions": [
+        "calendarfacts:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P012",
+      "packet": "P012",
+      "adapterId": "issue341-P012-x-t32-order",
+      "type": "x-t32-order",
+      "positions": [
+        "eventorder:0"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P012",
+      "packet": "P012",
+      "adapterId": "issue341-P012-x-t32-units",
+      "type": "x-t32-units",
+      "positions": [
+        "calendarfacts:1",
+        "weekmonth:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P012",
+      "packet": "P012",
+      "adapterId": "issue341-P012-x-timetable",
+      "type": "x-timetable",
+      "positions": [
+        "timetable:0",
+        "timetable:2",
+        "timetable:3"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P011",
+      "packet": "P011",
+      "adapterId": "issue341-P011-x-m33-calc",
+      "type": "x-m33-calc",
+      "positions": [
+        "budgetchoices:3",
+        "discounts:0",
+        "discounts:1",
+        "moneycalc:0",
+        "moneycalc:1",
+        "moneycalc:2",
+        "roughmoney:0",
+        "roughmoney:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P011",
+      "packet": "P011",
+      "adapterId": "issue341-P011-x-m33-compare",
+      "type": "x-m33-compare",
+      "positions": [
+        "budgetchoices:2",
+        "coinvalues:1",
+        "measuremoney:1",
+        "pctCalculate37:1",
+        "rateUnit37:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P011",
+      "packet": "P011",
+      "adapterId": "issue341-P011-x-m33-model",
+      "type": "x-m33-model",
+      "positions": [
+        "lifemath38:0",
+        "modmoney:0",
+        "plan38:1",
+        "tools38:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P011",
+      "packet": "P011",
+      "adapterId": "issue341-P011-x-m33-sheet",
+      "type": "x-m33-sheet",
+      "positions": [
+        "budgetchoices:1",
+        "moneysheet:0",
+        "moneysheet:1",
+        "moneysheet:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P011",
+      "packet": "P011",
+      "adapterId": "issue341-P011-x-m33-sort",
+      "type": "x-m33-sort",
+      "positions": [
+        "auscoins:0",
+        "coinvalues:0",
+        "coinvalues:2",
+        "roughmoney:1"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P010",
+      "packet": "P010",
+      "adapterId": "issue341-P010-x-storychain",
+      "type": "x-storychain",
+      "positions": [
+        "combineproducts:3",
+        "fractionchoices:0",
+        "fractionchoices:2",
+        "storyoperations:0",
+        "storyoperations:1",
+        "storyoperations:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P010",
+      "packet": "P010",
+      "adapterId": "issue341-P010-x-storyparts",
+      "type": "x-storyparts",
+      "positions": [
+        "threepiles:0",
+        "threepiles:1",
+        "threepiles:2"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    },
+    {
+      "familyId": "issue341-P010",
+      "packet": "P010",
+      "adapterId": "issue341-P010-x-storyplan",
+      "type": "x-storyplan",
+      "positions": [
+        "bigmissing35:2",
+        "lifemath38:1",
+        "multi38:0",
+        "multiShape38:0",
+        "objects38:2",
+        "plansteps:1",
+        "plansteps:2",
+        "plansteps:3",
+        "plansteps:4",
+        "storytwo:0",
+        "storytwo:1",
+        "storytwo:2",
+        "storytwo:3",
+        "storytwo:4",
+        "storytwo:5"
+      ],
+      "bindingRule": "task.type===declaredType && originalNormalizedBinding(task,context)",
+      "replay": "ORIGINAL_UNCHANGED",
+      "submitted": "ORIGINAL_UNCHANGED_FULL_RECORD"
+    }
+  ]
+}

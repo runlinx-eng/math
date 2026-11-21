@@ -1,0 +1,290 @@
+{
+  "schema": "issue-341-independent-agent-feedback-review/1",
+  "reviewedOn": "2026-11-22",
+  "reviewer": "independent-agent /root/feedback_review",
+  "authorSeparation": "Reviewer did not author PR #350 and does not implement current integration.",
+  "reviewedPR": 350,
+  "reviewedHead": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+  "verdict": "AGENT_REVIEW_PASS_FOR_ISOLATED_COMPOSITION_NOT_HUMAN_APPROVAL",
+  "blockingFindings": [],
+  "scope": {
+    "families": 5,
+    "nativePositions": 12,
+    "newFeedbackOnly": true,
+    "existingMathContractsReused": true,
+    "oldNodeTestsRerun": 0,
+    "oldChromiumTestsRerun": 0,
+    "numericalSpotchecksRun": 0,
+    "formalApprovalGranted": false,
+    "formalStrictAGranted": false,
+    "runtimeActivationAuthorisedByThisReview": false
+  },
+  "gates": [
+    {
+      "gate": "Exact original source",
+      "finding": "recognized() calls the original binding; exact sessionId/index/original task/node/type checks remain in each unchanged family."
+    },
+    {
+      "gate": "Latest complete original Check",
+      "finding": "submitted() calls latestSubmissionMatches and original replay, including original inspect(). Empty, stale or malformed attempts fail closed."
+    },
+    {
+      "gate": "Method and unsupported inference",
+      "finding": "recognized requires bound.method===null; output method:null. New text disclaims free explanation, independent strategy and long-term mastery."
+    },
+    {
+      "gate": "No learner record mutation",
+      "finding": "Presentation constructs strings and a new result object. Existing bindings/replays are called without editing the model or attempts."
+    },
+    {
+      "gate": "Malformed input",
+      "finding": "Binding and submitted replay exceptions are caught; null proofs and unrecognized classifications return null."
+    },
+    {
+      "gate": "Provenance limit",
+      "finding": "Full-snapshot equality preserves existing saved-record semantics. It does not cryptographically certify that no historical action was omitted; the proposed text does not assert that."
+    }
+  ],
+  "families": {
+    "P116": {
+      "positions": [
+        "dotrecords:0",
+        "dotrecords:2"
+      ],
+      "verdict": "PASS_WITHIN_EXISTING_CONTRACT",
+      "newClaim": "The saved plot has recordCount integer records, modes and zero-frequency ticks derived from the existing replay.",
+      "justification": "Returned recordCount/modes/zeroFrequencyTicks are directly rendered; text does not credit the learner with computing an unasked mode, choosing the plotting strategy, or a free explanation. Both originals contain zero-frequency ticks, so the list is nonempty.",
+      "wordingChangeRequired": false
+    },
+    "P109": {
+      "positions": [
+        "factor35:0",
+        "factor35:1",
+        "factor35:2"
+      ],
+      "verdict": "PASS_WITH_PRECISION_SUGGESTION",
+      "newClaim": "The current accepted expansion restores the two original terms, with greatestFactor coefficient and degree from existing replay.",
+      "justification": "Replay requires last accepted expansion to equal current inputs and original terms. Prior wrong expansions may remain, so naming the last expansion is clearer.",
+      "suggestion": "Replace 本次保存的展开与原式逐项一致 with 最后一次保存的展开与原式逐项一致.",
+      "wordingChangeRequired": false
+    },
+    "P107": {
+      "positions": [
+        "factorpairs:0",
+        "factorpairs:1"
+      ],
+      "verdict": "PASS_WITHIN_EXISTING_CONTRACT",
+      "newClaim": "The saved distinct unordered factor pairs multiply to the fixed original total; swapped orientations are counted once.",
+      "justification": "Rendering uses pairs.length and total from the existing complete canonical-pair result; it does not infer a general factor-pair algorithm.",
+      "wordingChangeRequired": false
+    },
+    "P105": {
+      "positions": [
+        "primetest:0",
+        "primetest:1",
+        "primetest:2"
+      ],
+      "verdict": "PASS_WITHIN_EXISTING_CONTRACT",
+      "newClaim": "The fixed original has checkedDivisors trial candidates, listed distinct factors and its neither/prime/composite classification.",
+      "justification": "The existing proof returns complete required candidates and factor set for 1, 2 or 51. New renderer has explicit names for all three classification values and rejects any other classification.",
+      "wordingChangeRequired": false
+    },
+    "P091": {
+      "positions": [
+        "allowedrange:0",
+        "allowedrange:1"
+      ],
+      "verdict": "PASS_WITH_PRECISION_SUGGESTION",
+      "newClaim": "Only final endpoint/right direction/open-closed status and saved probe truth relative to the original inequality are described.",
+      "justification": "The historical graph positions/styles are not stored; limitation explicitly says they cannot be reconstructed. The replay checks each actual truth, while it may retain historical graph disagreement. No general historical graph correctness claim is supported.",
+      "suggestion": "Replace 次试数判断已经按本题的不等号核对 with 次试数的题意结果已经按本题的不等号核对. Never call all historical graph verdicts correct.",
+      "wordingChangeRequired": false
+    }
+  },
+  "positions": [
+    {
+      "packet": "P091",
+      "position": "allowedrange:0",
+      "nodeId": "mt_i2F1nWxJjv",
+      "taskSha256": "6a24b358799b89eb9025160a1354eef7ada2762f2383937f6db4a55a357933fb",
+      "newFeedbackReview": "PASS_WITH_PRECISION_SUGGESTION",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P091",
+      "position": "allowedrange:1",
+      "nodeId": "mt_i2F1nWxJjv",
+      "taskSha256": "0fe9148d7f7be7a36807e72749a2649a52cb34dadad9b99ad35d3bd1d9387df4",
+      "newFeedbackReview": "PASS_WITH_PRECISION_SUGGESTION",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:0",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "0ef3cabc2ab08b88c366890dee7cd0ca50656f97b7b588e16980d0cf305efb01",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:1",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "019704b5ccd5cc445c9ef8c99e3299237c38566ef9047f7b528cf16cad9b1c0f",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:2",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "6c8ce662b07bd596b4cd3507748253afbbdb8077576cfab1320df951597db761",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P107",
+      "position": "factorpairs:0",
+      "nodeId": "mt_nZkL5-XjRX",
+      "taskSha256": "3565ef221b2242c95b06538b5bb4337ed2408bffbe99bc8e115f49b87ab808b0",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P107",
+      "position": "factorpairs:1",
+      "nodeId": "mt_nZkL5-XjRX",
+      "taskSha256": "ff89024af2052faa14649d37531ef1de7a1f3d64d2c1b0ca2284a39df21e91d9",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:0",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "1eef43242755c45b490f5c23af883e66af937bbaca5ded0304dc4293a2c3b50b",
+      "newFeedbackReview": "PASS_WITH_PRECISION_SUGGESTION",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:1",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "f80339a8fcebaa6a454476eb91d5c0e3627c11d93f45d2648bb4cd8363d17408",
+      "newFeedbackReview": "PASS_WITH_PRECISION_SUGGESTION",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:2",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "d51203982e18f2c0e6f2a8a3dd9a51d5dcfacd5aba4533fa6324edaa695cd5d6",
+      "newFeedbackReview": "PASS_WITH_PRECISION_SUGGESTION",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P116",
+      "position": "dotrecords:0",
+      "nodeId": "mt_JRzXQl9M7c",
+      "taskSha256": "83b39dbc6097e844eae70a5c3540e4796e8b2adc77af4b0b30e86a7c2e74f797",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    },
+    {
+      "packet": "P116",
+      "position": "dotrecords:2",
+      "nodeId": "mt_JRzXQl9M7c",
+      "taskSha256": "d97c93f555545c8e11931bb88872b2a5980be361758ab47a3b6413ef661e890f",
+      "newFeedbackReview": "PASS_WITHIN_EXISTING_CONTRACT",
+      "existingMathEvidence": "REUSED_NO_PROOF_REWRITE_OR_RETEST",
+      "formalStrictA": "NOT_GRANTED",
+      "humanApproval": "PENDING"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "dist/learning/issue341-inactive-shared-feedback.js",
+      "sha256": "89afb4d6664d4b3c537c8772f47a3e3130017aba7e5f4f154fc02ff430b44418",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/issue341-inactive-shared-feedback.js"
+    },
+    {
+      "path": "tests/issue341-inactive-shared-feedback.test.mjs",
+      "sha256": "98b741777fe36633baf07e4e8314ab7c104691f3b2e1db53998cd63e3618e4b7",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/tests/issue341-inactive-shared-feedback.test.mjs"
+    },
+    {
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "sha256": "fe6652b83a8219cf0fda0574603b7aeba3ddea732dafaa8534f6c8c440319125",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/p116-integer-dotplot-evidence.js"
+    },
+    {
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "sha256": "9a0645cbc3754b1bd8fa20f95a44ba901f070a0765700bff9b023939a5134d13",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/p109-common-factor-evidence.js"
+    },
+    {
+      "path": "dist/learning/p107-factor-pairs-evidence.js",
+      "sha256": "0eb6ed558090a495e63094e77399a33dc2679ba5c8071db37a23efd3560740d5",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/p107-factor-pairs-evidence.js"
+    },
+    {
+      "path": "dist/learning/p105-prime-divisors-evidence.js",
+      "sha256": "f7d329e5af4114bb47e188712cfdd4757a27f433c079511ab36e5a0c3ade57dd",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/p105-prime-divisors-evidence.js"
+    },
+    {
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "sha256": "289dc9b84096f260b819d13d86166f4310921f5e5e913f2279cc55504833e2af",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/p091-one-sided-range-evidence.js"
+    },
+    {
+      "path": "dist/learning/evidence-contract.js",
+      "sha256": "bc73050766cc97a8820bf39aed84e42ebdcbf6e4605a2128bf6ff975325f683e",
+      "commit": "d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c",
+      "url": "https://github.com/runlinx-eng/math/blob/d3ddd6ee7d1e3236cf9d01d74053489b32b1f31c/dist/learning/evidence-contract.js"
+    }
+  ],
+  "integrationRecommendations": [
+    "Preserve independent human/formal mathematical approval as pending. This review supports isolated preparation and review; it is not an A grant or production release approval.",
+    "Use a multi-entry lookup by type and then the original binding/source key. The five-type Map in #350 is safe only for these five distinct types; all113 families have repeated widget types.",
+    "For shared-runtime integration, call candidate source selection before any existing type branch that returns null; otherwise new original positions sharing an existing widget type can remain unreachable.",
+    "Keep approved A813 manifest unchanged until its separate approval. Candidate integration and formal qualification need distinct fields.",
+    "Test changed dispatch/presentation/approval gates on the new HEAD; reuse original mathematical and browser evidence. Existing #350 presentation tests use one position per family and do not individually cover the neither/composite, x-factor and exclusive-endpoint text branches; cover those new rendering branches only if the same detailed renderer is retained."
+  ],
+  "possibleCommonCopyForFurtherIsolatedPreparation": {
+    "summary": "想一想：这份记录怎样支持你的结果？（可选）",
+    "observation": "本次提交中保留的操作或表示记录已与这道原题核对。",
+    "detail": "这里只描述当前保存的记录，不推断自由解释、独立策略或长期掌握。",
+    "question": "Reuse the exact family binding.question; do not infer it from the widget type.",
+    "conditions": "Only after original source binding + original submitted replay + latest complete Check; no new method label. This common copy is a conservative proposal, not human approval of 365 positions."
+  }
+}

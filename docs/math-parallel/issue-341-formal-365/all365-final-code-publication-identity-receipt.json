@@ -1,0 +1,220 @@
+{
+  "schema": "issue-341-independent-publication-identity-receipt/1",
+  "verifiedAtUtc": "2026-11-21T16:57:27.855580+00:00",
+  "reviewer": "independent-agent /root/feedback_review",
+  "verificationMethod": "Read-only inspection of the exact locally fetched Git commit object. No test execution, source/index change or remote mutation.",
+  "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "tree": "9e390b5e752ea10ad6b9c8d9079a026dc207c9c4",
+  "expectedTree": "9e390b5e752ea10ad6b9c8d9079a026dc207c9c4",
+  "treeMatches": true,
+  "parents": [
+    "0f2e26677dcc53f96606f04eb58ec1e828ca1972"
+  ],
+  "expectedOnlyParent": "0f2e26677dcc53f96606f04eb58ec1e828ca1972",
+  "onlyExpectedParent": true,
+  "reviewedFilesCompared": 24,
+  "reviewedFilesIdentical": true,
+  "files": [
+    {
+      "path": ".github/workflows/pull-request-baseline.yml",
+      "reviewedSha256": "14c53761327620028fa9bce1f92a0ed67bad2334b09e56db812c90a22b0e58f0",
+      "publishedSha256": "14c53761327620028fa9bce1f92a0ed67bad2334b09e56db812c90a22b0e58f0",
+      "publishedSizeBytes": 40302,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/evidence-adapters.js",
+      "reviewedSha256": "c109360d3407c1e7fc2e54b0c6e19b4508b2ecea704cb0bfc26a492111c5312f",
+      "publishedSha256": "c109360d3407c1e7fc2e54b0c6e19b4508b2ecea704cb0bfc26a492111c5312f",
+      "publishedSizeBytes": 16440,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/issue341-candidate-descriptors.js",
+      "reviewedSha256": "7e32e9a6b6e76c71ef959a256468f065495bd34f7083a207751b5e17d453c621",
+      "publishedSha256": "7e32e9a6b6e76c71ef959a256468f065495bd34f7083a207751b5e17d453c621",
+      "publishedSizeBytes": 113736,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/issue341-candidate-feedback.js",
+      "reviewedSha256": "36eaea57942b4c116e65660157c44bbc55d4d4590cf57958725db61809343719",
+      "publishedSha256": "36eaea57942b4c116e65660157c44bbc55d4d4590cf57958725db61809343719",
+      "publishedSizeBytes": 3083,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/issue341-inactive-shared-feedback.js",
+      "reviewedSha256": "592be8a50b7a36d43d8830b8f7594793045633baeb4cd3b90e8b075c8704c652",
+      "publishedSha256": "592be8a50b7a36d43d8830b8f7594793045633baeb4cd3b90e8b075c8704c652",
+      "publishedSizeBytes": 6148,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/issue341-isolated-integration.js",
+      "reviewedSha256": "1c1e2f4f68232cce09e7e4f9e6a3eaaa703c6652388f57d3dfb6ba4020da0700",
+      "publishedSha256": "1c1e2f4f68232cce09e7e4f9e6a3eaaa703c6652388f57d3dfb6ba4020da0700",
+      "publishedSizeBytes": 926,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/thinking-feedback.js",
+      "reviewedSha256": "4d9b9a6839190fa91c2067c25334f55a334a9576a350f9ab71b457a3223656a6",
+      "publishedSha256": "4d9b9a6839190fa91c2067c25334f55a334a9576a350f9ab71b457a3223656a6",
+      "publishedSizeBytes": 205753,
+      "identical": true
+    },
+    {
+      "path": "scripts/audit-evidence-expansion.mjs",
+      "reviewedSha256": "6ab4535f924c1610378d5f77d7203cd29bfbfea077b9a50c5eaa9d3ce71d21b3",
+      "publishedSha256": "6ab4535f924c1610378d5f77d7203cd29bfbfea077b9a50c5eaa9d3ce71d21b3",
+      "publishedSizeBytes": 15626,
+      "identical": true
+    },
+    {
+      "path": "scripts/audit-learning-evidence.mjs",
+      "reviewedSha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+      "publishedSha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+      "publishedSizeBytes": 18506,
+      "identical": true
+    },
+    {
+      "path": "scripts/ci-targeted-checks.mjs",
+      "reviewedSha256": "406df823c24f4e96033747902c6955f5357c90737837a4947f0284ed0b4b4264",
+      "publishedSha256": "406df823c24f4e96033747902c6955f5357c90737837a4947f0284ed0b4b4264",
+      "publishedSizeBytes": 16449,
+      "identical": true
+    },
+    {
+      "path": "scripts/issue341-prepare-archived-inputs.py",
+      "reviewedSha256": "33b180bca684bb43b3efc92af52b11d6ee54d93683a202bc7143231d197e5cbe",
+      "publishedSha256": "33b180bca684bb43b3efc92af52b11d6ee54d93683a202bc7143231d197e5cbe",
+      "publishedSizeBytes": 11039,
+      "identical": true
+    },
+    {
+      "path": "tests/ci-targeted-checks.test.mjs",
+      "reviewedSha256": "d1868dc59ba9903341aacb389ec86d338a07d742d2bd1b42925903060ca33909",
+      "publishedSha256": "d1868dc59ba9903341aacb389ec86d338a07d742d2bd1b42925903060ca33909",
+      "publishedSizeBytes": 9725,
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/issue341-archived-checks-365.README.md",
+      "reviewedSha256": "8ffb177c6a8ee767cf5cf23b03f32d02d402779b7460d9e24f140d39592e8ae0",
+      "publishedSha256": "8ffb177c6a8ee767cf5cf23b03f32d02d402779b7460d9e24f140d39592e8ae0",
+      "publishedSizeBytes": 2440,
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/issue341-archived-input-references.json",
+      "reviewedSha256": "46eb601409ba4a2600b4ddc52de6b9e23c17668bf6ab49a586d0066d9554f689",
+      "publishedSha256": "46eb601409ba4a2600b4ddc52de6b9e23c17668bf6ab49a586d0066d9554f689",
+      "publishedSizeBytes": 189400,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-archived-input-transport.test.mjs",
+      "reviewedSha256": "5d24b6036ae7c8fcf5dab37459e34ae965f1e0576eca363960debfb9c189096c",
+      "publishedSha256": "5d24b6036ae7c8fcf5dab37459e34ae965f1e0576eca363960debfb9c189096c",
+      "publishedSizeBytes": 8010,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-audit-fixture-integration.test.mjs",
+      "reviewedSha256": "b532751eebb4cb2da53a4f9acbc777e0a25e0fca4706ac7dfca54978f9ed8a10",
+      "publishedSha256": "b532751eebb4cb2da53a4f9acbc777e0a25e0fca4706ac7dfca54978f9ed8a10",
+      "publishedSizeBytes": 5571,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-inactive-shared-feedback.test.mjs",
+      "reviewedSha256": "98b741777fe36633baf07e4e8314ab7c104691f3b2e1db53998cd63e3618e4b7",
+      "publishedSha256": "98b741777fe36633baf07e4e8314ab7c104691f3b2e1db53998cd63e3618e4b7",
+      "publishedSizeBytes": 4395,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-isolated-integration-browser.cjs",
+      "reviewedSha256": "96e22d891e60a71a7c83941c6ac895704492762c2f9194b21f7c3b761bc54977",
+      "publishedSha256": "96e22d891e60a71a7c83941c6ac895704492762c2f9194b21f7c3b761bc54977",
+      "publishedSizeBytes": 11101,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-isolated-integration.test.mjs",
+      "reviewedSha256": "a63c15a5b2bcec968b361997a5fc873d3d83684c46e639798cf42e7fddd99e3c",
+      "publishedSha256": "a63c15a5b2bcec968b361997a5fc873d3d83684c46e639798cf42e7fddd99e3c",
+      "publishedSizeBytes": 5420,
+      "identical": true
+    },
+    {
+      "path": "tests/issue341-learning-audit-injection.test.mjs",
+      "reviewedSha256": "7b7ec9a113c0b82acc7a21f177069e3369e2cbe6c9912d2219e72bd76dca334c",
+      "publishedSha256": "7b7ec9a113c0b82acc7a21f177069e3369e2cbe6c9912d2219e72bd76dca334c",
+      "publishedSizeBytes": 5038,
+      "identical": true
+    },
+    {
+      "path": "docs/spatial-learning/evidence-review-manifest.json",
+      "reviewedSha256": "f7a94a2fb595532cd9c5c20e22873e8c0c78ef73c56ebf2c2f902607ffe5bd3d",
+      "publishedSha256": "f7a94a2fb595532cd9c5c20e22873e8c0c78ef73c56ebf2c2f902607ffe5bd3d",
+      "publishedSizeBytes": 216890,
+      "identical": true
+    },
+    {
+      "path": "dist/learning/learn.js",
+      "reviewedSha256": "7ed972ade264dcc84294383d3c3c8fd114ada36e8e8b459c3f78957e4ec02c42",
+      "publishedSha256": "7ed972ade264dcc84294383d3c3c8fd114ada36e8e8b459c3f78957e4ec02c42",
+      "publishedSizeBytes": 64957,
+      "identical": true
+    },
+    {
+      "path": "dist/sw.js",
+      "reviewedSha256": "d38262032f002f73307373aba7f6aa062e182b2a6a0deba64dfa675fc5ee1778",
+      "publishedSha256": "d38262032f002f73307373aba7f6aa062e182b2a6a0deba64dfa675fc5ee1778",
+      "publishedSizeBytes": 17616,
+      "identical": true
+    },
+    {
+      "path": ".gitignore",
+      "reviewedSha256": "55b84d040cd5a791850f507c12321edb44331dfe58443c86ebd6d04cd16448a7",
+      "publishedSha256": "55b84d040cd5a791850f507c12321edb44331dfe58443c86ebd6d04cd16448a7",
+      "publishedSizeBytes": 448,
+      "identical": true
+    }
+  ],
+  "rejectedRawGzipPath": "tests/fixtures/issue341-archived-checks-365.json.gz",
+  "rawGzipInPublishedTree": false,
+  "rejectedLocalCommit": "611ac0e6c08b218bd184b1f3ef38cb1c4ab21c18",
+  "rejectedLocalCommitIsAncestor": false,
+  "approvedMainCommit": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "approvedMainIsAncestor": true,
+  "scopeBoundary": "This binds the reviewed bytes and safe commit ancestry to the published source identity. It is not a fresh CI run, formal A approval, main merge or release approval.",
+  "testsExecuted": 0,
+  "remoteMutations": 0,
+  "status": "PASS_PUBLISHED_IDENTITY_BOUND_TO_REVIEW",
+  "publishedChangedFiles": [
+    ".github/workflows/pull-request-baseline.yml",
+    "dist/learning/evidence-adapters.js",
+    "dist/learning/issue341-candidate-descriptors.js",
+    "dist/learning/issue341-candidate-feedback.js",
+    "dist/learning/issue341-inactive-shared-feedback.js",
+    "dist/learning/issue341-isolated-integration.js",
+    "dist/learning/thinking-feedback.js",
+    "scripts/audit-evidence-expansion.mjs",
+    "scripts/audit-learning-evidence.mjs",
+    "scripts/ci-targeted-checks.mjs",
+    "scripts/issue341-prepare-archived-inputs.py",
+    "tests/ci-targeted-checks.test.mjs",
+    "tests/fixtures/issue341-archived-checks-365.README.md",
+    "tests/fixtures/issue341-archived-input-references.json",
+    "tests/issue341-archived-input-transport.test.mjs",
+    "tests/issue341-audit-fixture-integration.test.mjs",
+    "tests/issue341-inactive-shared-feedback.test.mjs",
+    "tests/issue341-isolated-integration-browser.cjs",
+    "tests/issue341-isolated-integration.test.mjs",
+    "tests/issue341-learning-audit-injection.test.mjs"
+  ],
+  "publishedChangedFilesMatchReviewedSnapshot": true
+}

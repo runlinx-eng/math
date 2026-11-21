@@ -1,0 +1,189 @@
+{
+  "schema": "issue-341-pr351-original-artifact-inventory/1",
+  "pr": 351,
+  "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+  "status": "ALL_FIVE_ORIGINAL_ZIPS_VERIFIED",
+  "totalArtifacts": 5,
+  "originalZipBytes": 423244,
+  "allOfficialSizesMatch": true,
+  "allOfficialSha256Match": true,
+  "allZipCrcPass": true,
+  "rawInputPayloadIncluded": false,
+  "runs": [
+    {
+      "id": 44927311010,
+      "name": "Required",
+      "status": "completed",
+      "conclusion": "success",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf"
+    },
+    {
+      "id": 44927311025,
+      "name": "P8",
+      "status": "completed",
+      "conclusion": "success",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf"
+    },
+    {
+      "id": 44927311018,
+      "name": "Overview",
+      "status": "completed",
+      "conclusion": "success",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "artifacts": []
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14715898652,
+      "runId": 44927311010,
+      "name": "targeted-result-92e9e1947b86-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14715898652-targeted-result-92e9e1947b86-attempt-1.zip",
+      "bytes": 392,
+      "sha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+      "createdAt": "2026-11-21T16:57:40Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14715898652",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14715898652",
+      "expired": false,
+      "actualBytes": 392,
+      "actualSha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "92e9e1947b86-attempt-1.json",
+          "bytes": 325,
+          "crc32": "99bb3658"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": 14716172663,
+      "runId": 44927311025,
+      "name": "p8-startup-performance-comparison",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716172663-p8-startup-performance-comparison.zip",
+      "bytes": 7879,
+      "sha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+      "createdAt": "2026-11-21T16:58:26Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716172663",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311025/artifacts/14716172663",
+      "expired": false,
+      "actualBytes": 7879,
+      "actualSha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "comparison.json",
+          "bytes": 79190,
+          "crc32": "4794dfc3"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": 14716332376,
+      "runId": 44927311010,
+      "name": "targeted-result-273dab50d785-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716332376-targeted-result-273dab50d785-attempt-1.zip",
+      "bytes": 391,
+      "sha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+      "createdAt": "2026-11-21T16:58:35Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716332376",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716332376",
+      "expired": false,
+      "actualBytes": 391,
+      "actualSha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "273dab50d785-attempt-1.json",
+          "bytes": 322,
+          "crc32": "197f1975"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": 14716367242,
+      "runId": 44927311010,
+      "name": "targeted-result-094804ce60bb-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716367242-targeted-result-094804ce60bb-attempt-1.zip",
+      "bytes": 393,
+      "sha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+      "createdAt": "2026-11-21T16:58:23Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716367242",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716367242",
+      "expired": false,
+      "actualBytes": 393,
+      "actualSha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "094804ce60bb-attempt-1.json",
+          "bytes": 331,
+          "crc32": "862b0a73"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": 14716661429,
+      "runId": 44927311010,
+      "name": "issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716661429-issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1.zip",
+      "bytes": 414189,
+      "sha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+      "createdAt": "2026-11-21T16:58:25Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716661429",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716661429",
+      "expired": false,
+      "actualBytes": 414189,
+      "actualSha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "p091-bounded-feedback.png",
+          "bytes": 193508,
+          "crc32": "2555310f"
+        },
+        {
+          "name": "all365-shared-integration.png",
+          "bytes": 200261,
+          "crc32": "ff79ce74"
+        },
+        {
+          "name": "results.json",
+          "bytes": 340092,
+          "crc32": "88562d9d"
+        }
+      ],
+      "verified": true
+    }
+  ]
+}

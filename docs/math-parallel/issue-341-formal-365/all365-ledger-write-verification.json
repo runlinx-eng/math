@@ -1,0 +1,202 @@
+{
+  "schema": "issue-341-ledger-generation-verification/1",
+  "status": "PASS_METADATA_CONSERVATION_AND_CSV_PARITY",
+  "publishable": true,
+  "draft": false,
+  "codePR": 351,
+  "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "windowRevision": "33dddc361614fa9d",
+  "rows": 365,
+  "csvRows": 365,
+  "csvColumns": 68,
+  "families": 113,
+  "groups": {
+    "P007": 30,
+    "P009": 27,
+    "B": 308
+  },
+  "allPriorFieldsRetainedOrExplicitlyHistoried": true,
+  "formalAAdded": 0,
+  "rawInputsIncluded": false,
+  "mathematicalContractsEvaluated": 0,
+  "sourceInputs": {
+    "issue-341-formal-365-intake.json": "3abff419dfd2c23ac66c270c5e3ae7cce48e027ce8cbc875a9ca26d1a16d2708",
+    "issue-341-formal-365-intake.csv": "f4f18516ffe38ecd4a39ee5a1e8203f4088caeac8cccc4e4495e1b415e7b1959",
+    "README.md": "3e9eb36dc83dd8f667f96fcd4f703f08f580245a7ed5cb134c6177a110403b80",
+    "NEXT-WINDOW-HANDOFF.md": "a35adb4995b8ffb7c42daa264127a215b9812db3600a1f69475ce443a88d0cd0"
+  },
+  "outputFiles": {
+    "issue-341-formal-365-intake.json": {
+      "sha256": "583b89d7072c745f3bd2d6a24043793285b0518288aa6b048eb14140187170b8",
+      "bytes": 2058567
+    },
+    "issue-341-formal-365-intake.csv": {
+      "sha256": "3f71177e8af36e07375047402db8eb09f374ab8b93bded481e1ab04c0daba003",
+      "bytes": 1202311
+    },
+    "all365-current-window-evidence.json": {
+      "sha256": "9413011f6dbf6e42e3814d3f68e1b7b66c79c7d9e3346be140777bc7330a486c",
+      "bytes": 56319
+    },
+    "all365-final-implemented-feedback-review.json": {
+      "sha256": "5bd122e8d6c41631c776e029381de3a7711bd92289dc21dc930e1c982b0a1e86",
+      "bytes": 6372
+    },
+    "all365-final-code-review.json": {
+      "sha256": "bed55cb4fc263e3aef645c38e922e241b79f7c8fe090c9baec967549b07e55c7",
+      "bytes": 20749
+    },
+    "all365-ae-audit-injection-verification.json": {
+      "sha256": "44304268c730f61e89d3f78b3b0869742c3d9ab9236ca372020867df68813ad2",
+      "bytes": 2032
+    },
+    "all365-default-cli-compatibility.json": {
+      "sha256": "eb9a21a1475a403d07006500ad46532149cd5d9d60a6699b15f297941a1b220e",
+      "bytes": 1862
+    },
+    "all365-original-archive-retention.json": {
+      "sha256": "eba96eda2e0647939cb26cf5047aa7352e115da5760de70715341b027865faba",
+      "bytes": 1592
+    },
+    "all365-original-artifact-inventory-144.json": {
+      "sha256": "7b70b87f378e1d10c9c2c9a0c2979576d97a727a92ed3b9152218aa3f2ef46f3",
+      "bytes": 160561
+    },
+    "all365-historical-artifact-inventory-7.json": {
+      "sha256": "10c692555306b9d8347b71ec971cf9bad79162c601ce3c75aac4e632d120dd84",
+      "bytes": 10603
+    },
+    "all365-historical-archive-save-receipt.json": {
+      "sha256": "e5d09098f4c230d44eeb27defcb8b899f316813f402d537e9e116b40eaae4352",
+      "bytes": 756
+    },
+    "all365-pr351-archive-save-receipt.json": {
+      "sha256": "2503909448d3fe519fee4d890b20e7f9af99a1a6ac4a195d3f7d353bac5c216c",
+      "bytes": 754
+    },
+    "all365-pr351-original-artifact-inventory-5.json": {
+      "sha256": "ffffcc35e671152e11c69213386412efa5f86f67bb1405772eafd7269e35aba4",
+      "bytes": 6893
+    },
+    "all365-final-pr351-ci-evidence.json": {
+      "sha256": "e629e4dba0d1f3320c6f0776046b29347c7150c7c07f46c1f17f47e01666430b",
+      "bytes": 68150
+    },
+    "all365-final-code-publication-identity-receipt.json": {
+      "sha256": "4169f1c369521230a20b9e48fc1a58b7fbe2d8331b19e795d8babe50da6a0067",
+      "bytes": 10064
+    },
+    "all365-bounded-visual-review.json": {
+      "sha256": "a011941f7a9450b52e90f319ee59d2875c69dac54b63dc5a3a876fd16575f6f3",
+      "bytes": 1564
+    },
+    "all365-archived-input-references.json": {
+      "sha256": "46eb601409ba4a2600b4ddc52de6b9e23c17668bf6ab49a586d0066d9554f689",
+      "bytes": 189400
+    },
+    "formal-activation/reviews/pr350-independent-feedback-review.json": {
+      "sha256": "19ace599fc92704f94d62eccee19902088540162d1bfa12d6b86af1eaffadeb9",
+      "bytes": 14678
+    },
+    "formal-activation/reviews/all365-common-feedback-review.json": {
+      "sha256": "6c0c3c2c87875ebcc71a86b41807623547f6779acbfd8ec5b40530878ab9031e",
+      "bytes": 9688
+    },
+    "formal-activation/reviews/final-implemented-feedback-review.json": {
+      "sha256": "5bd122e8d6c41631c776e029381de3a7711bd92289dc21dc930e1c982b0a1e86",
+      "bytes": 6372
+    },
+    "formal-activation/admission-requests-365.json": {
+      "sha256": "6883a911c540f0d5cab9d6501174244033f42a1fad3eddfa7e3bfe3c671d953f",
+      "bytes": 1447987
+    },
+    "formal-activation/activation-sw-dependency-closure.json": {
+      "sha256": "a8c9670df2ebf50727da798b56fb9d14d482332d23f84fccaadaf8f7a59fd284",
+      "bytes": 234016
+    },
+    "formal-activation/alternative-single-type-adapters-145.json": {
+      "sha256": "a528ab7798fa948fe088629ecaefdc17c34863fc98b8256c11bb41c18f1cae64",
+      "bytes": 60635
+    },
+    "formal-activation/ACTIVATION-CHANGESET.md": {
+      "sha256": "c36707a4f7d1cbbedbbc3f47924303d4eb67330e99c53740d8402a142f39f813",
+      "bytes": 11087
+    },
+    "formal-activation/PENDING-APPROVAL-cache-only.patch": {
+      "sha256": "1042e2020cb5a3612b882ae4fbe687fd13937dcce4a9ae1f863d8e2698d80687",
+      "bytes": 26085
+    },
+    "formal-activation/issue341-typed-adapters-PROPOSED.js": {
+      "sha256": "6fa518626b1a62522b5f740b77571e93387e0a9ff7d5b06f210ed8315ad1495b",
+      "bytes": 788
+    },
+    "README.md": {
+      "sha256": "0fcc5ea4d6e3567fe8f70c7749070263b2ffe5ebc712b33ef91a9bdbcb8155a3",
+      "bytes": 28048
+    },
+    "NEXT-WINDOW-HANDOFF.md": {
+      "sha256": "1a0581f930848c4ba8181dc508c99213f50b032be0fb31991dff77241ea9d4e3",
+      "bytes": 26016
+    }
+  },
+  "publicationProjection": {
+    "status": "PASS_PUBLIC_LOCATORS_MINIMIZED",
+    "privateProviderIdsPublished": false,
+    "privateLibraryLinksPublished": false,
+    "absoluteLocalPathsPublished": false,
+    "counts": {
+      "private_locator_fields_omitted": 11,
+      "archive_locator_replaced": 2,
+      "private_urls_or_local_paths_omitted": 44,
+      "private_archive_id_replaced_by_filename": 365
+    },
+    "changedFiles": {
+      "docs/math-parallel/issue-341-formal-365/NEXT-WINDOW-HANDOFF.md": {
+        "originalSha256": "2558b5e8018167820d6b76be16b18983bc31e8245c40ce294e4f72311c09f8fc",
+        "publicSha256": "1a0581f930848c4ba8181dc508c99213f50b032be0fb31991dff77241ea9d4e3"
+      },
+      "docs/math-parallel/issue-341-formal-365/README.md": {
+        "originalSha256": "a0e1a5cb8d8cea22eb9601fe8e5b4d3cfb7eb5ee229d4fb4214ba9b9bdac4c55",
+        "publicSha256": "0fcc5ea4d6e3567fe8f70c7749070263b2ffe5ebc712b33ef91a9bdbcb8155a3"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-current-window-evidence.json": {
+        "originalSha256": "a2d6fd703c01dcaf4776d3f076df36bcd01cb3e70aebf5bdd58265136472f5bc",
+        "publicSha256": "9413011f6dbf6e42e3814d3f68e1b7b66c79c7d9e3346be140777bc7330a486c"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-final-pr351-ci-evidence.json": {
+        "originalSha256": "c76340d2ad74916f4761e92e89a779fd9d9b41cd03dea765a3d569f06f0b2b3c",
+        "publicSha256": "e629e4dba0d1f3320c6f0776046b29347c7150c7c07f46c1f17f47e01666430b"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-historical-archive-save-receipt.json": {
+        "originalSha256": "fe409aea0274a233eef1884bf54b684b5e95d187c56378df1e9645c5af855525",
+        "publicSha256": "e5d09098f4c230d44eeb27defcb8b899f316813f402d537e9e116b40eaae4352"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-historical-artifact-inventory-7.json": {
+        "originalSha256": "10e185235eaba85b8a92ccca5832c7fca02fcffce3073ff1a8fdc3820d48c036",
+        "publicSha256": "10c692555306b9d8347b71ec971cf9bad79162c601ce3c75aac4e632d120dd84"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-original-archive-retention.json": {
+        "originalSha256": "28cbb0d6356a32c4e04582ed6bc1e0c74f84c5a9c9e249a599b0a969f8f0d17f",
+        "publicSha256": "eba96eda2e0647939cb26cf5047aa7352e115da5760de70715341b027865faba"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-original-artifact-inventory-144.json": {
+        "originalSha256": "9bec7121a78645f336d4760066f24a1802ee64b18be64d7cf4978e12f50ea30b",
+        "publicSha256": "7b70b87f378e1d10c9c2c9a0c2979576d97a727a92ed3b9152218aa3f2ef46f3"
+      },
+      "docs/math-parallel/issue-341-formal-365/all365-pr351-archive-save-receipt.json": {
+        "originalSha256": "e707f8ce4ec0b79dcbfdaf4d6ce0f747f922b2ef932a159d5a08eccd6682031f",
+        "publicSha256": "2503909448d3fe519fee4d890b20e7f9af99a1a6ac4a195d3f7d353bac5c216c"
+      },
+      "docs/math-parallel/issue-341-formal-365/issue-341-formal-365-intake.json": {
+        "originalSha256": "0b2f94f99f9268438c33bab636c4c4a34a6dbd5f707ad67997214da09e6f9fce",
+        "publicSha256": "583b89d7072c745f3bd2d6a24043793285b0518288aa6b048eb14140187170b8"
+      },
+      "docs/math-parallel/issue-341-formal-365/issue-341-formal-365-intake.csv": {
+        "originalSha256": "c01bc7fabe024b908fd3d93addf02359641a1c74dca83445e5b5d57536edfdcb",
+        "publicSha256": "3f71177e8af36e07375047402db8eb09f374ab8b93bded481e1ab04c0daba003"
+      }
+    },
+    "historicalSourceFieldsModified": false,
+    "csvColumns": 68
+  }
+}

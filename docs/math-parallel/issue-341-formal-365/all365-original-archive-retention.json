@@ -1,0 +1,29 @@
+{
+  "schema": "issue-341-original-artifact-durable-save/1",
+  "asOf": "2026-11-22",
+  "status": "SUCCEEDED",
+  "archiveBytes": 99696640,
+  "archiveSha256": "b756251a717727e4132625d4dd35438d5d12a73e836c951c4d5df6ac3221bea7",
+  "originalZIPs": 144,
+  "originalZIPBytes": 98828153,
+  "members": 147,
+  "originalZipBytesChanged": false,
+  "historicalManifestInsideArchiveUnchanged": true,
+  "file_name": "issue341-original-artifacts-144-20261122.tar",
+  "githubPublication": "METADATA_REFERENCES_ONLY",
+  "rawInputsPublished": false,
+  "expirationRisk": "Some original GitHub Artifacts expire around2026-11-28; preserve and restore the same bytes, never regenerate by rerunning old suites",
+  "restoreBoundary": "Download the saved TAR through its authorized archive provider; verify TAR SHA256, then original ZIP identity/digest/CRC. Pass the original ZIP directory to the existing read-only preparation script. Missing or mismatched originals fail closed.",
+  "earliestGitHubExpiryUtc": "2026-11-28T13:41:38Z",
+  "original12BrowserInputEarliestExpiryUtc": "2026-11-28T13:42:40Z",
+  "all12BrowserInputExpiryDates": [
+    "2026-11-28"
+  ],
+  "inventoryFile": "all365-original-artifact-inventory-144.json",
+  "publicMetadataProjection": {
+    "privateProviderLocatorsPublished": false,
+    "localAbsolutePathsPublished": false,
+    "originalMetadataSha256": "28cbb0d6356a32c4e04582ed6bc1e0c74f84c5a9c9e249a599b0a969f8f0d17f",
+    "archiveLookup": "Resolve the exact owner-held archive filename and verify its published SHA256; private access identifiers are retained in the owner delivery."
+  }
+}

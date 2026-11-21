@@ -1,0 +1,378 @@
+{
+  "schema": "issue-341-independent-final-code-review/1",
+  "reviewedAtUtc": "2026-11-21T16:56:48.968214+00:00",
+  "reviewer": "independent-agent /root/feedback_review",
+  "authorSeparation": "Reviewer did not modify source, tests, workflow, Git index or remote GitHub; root and other agents implemented the changes.",
+  "reviewType": "READ_ONLY_FINAL_ISOLATED_COMPOSITION_TRANSPORT_AND_AUDIT_CODE_REVIEW",
+  "verdict": "approve-isolated-preparation-only",
+  "scope": {
+    "candidateFamilies": 113,
+    "candidatePositions": 365,
+    "P007Positions": 30,
+    "P009Positions": 27,
+    "BPositions": 308,
+    "officialManifestTasks": 813,
+    "newFormalAGrants": 0
+  },
+  "finalRootHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "observedLocalHeadDoNotPublish": "611ac0e6c08b218bd184b1f3ef38cb1c4ab21c18",
+  "expectedPublicationParentOnly": "0f2e26677dcc53f96606f04eb58ec1e828ca1972",
+  "codeIdentity": "The 24 SHA-256 values below match git show of published source HEAD fec2d5446c979741e3207a0c70f3e792a10eb5cf. The complete changed-path set matches the reviewed snapshot. Original prepublication observations remain as historical evidence; any later source-byte change requires a bounded follow-up review.",
+  "reviewedFiles": [
+    {
+      "path": ".github/workflows/pull-request-baseline.yml",
+      "sha256": "14c53761327620028fa9bce1f92a0ed67bad2334b09e56db812c90a22b0e58f0",
+      "sizeBytes": 40302
+    },
+    {
+      "path": "dist/learning/evidence-adapters.js",
+      "sha256": "c109360d3407c1e7fc2e54b0c6e19b4508b2ecea704cb0bfc26a492111c5312f",
+      "sizeBytes": 16440
+    },
+    {
+      "path": "dist/learning/issue341-candidate-descriptors.js",
+      "sha256": "7e32e9a6b6e76c71ef959a256468f065495bd34f7083a207751b5e17d453c621",
+      "sizeBytes": 113736
+    },
+    {
+      "path": "dist/learning/issue341-candidate-feedback.js",
+      "sha256": "36eaea57942b4c116e65660157c44bbc55d4d4590cf57958725db61809343719",
+      "sizeBytes": 3083
+    },
+    {
+      "path": "dist/learning/issue341-inactive-shared-feedback.js",
+      "sha256": "592be8a50b7a36d43d8830b8f7594793045633baeb4cd3b90e8b075c8704c652",
+      "sizeBytes": 6148
+    },
+    {
+      "path": "dist/learning/issue341-isolated-integration.js",
+      "sha256": "1c1e2f4f68232cce09e7e4f9e6a3eaaa703c6652388f57d3dfb6ba4020da0700",
+      "sizeBytes": 926
+    },
+    {
+      "path": "dist/learning/thinking-feedback.js",
+      "sha256": "4d9b9a6839190fa91c2067c25334f55a334a9576a350f9ab71b457a3223656a6",
+      "sizeBytes": 205753
+    },
+    {
+      "path": "scripts/audit-evidence-expansion.mjs",
+      "sha256": "6ab4535f924c1610378d5f77d7203cd29bfbfea077b9a50c5eaa9d3ce71d21b3",
+      "sizeBytes": 15626
+    },
+    {
+      "path": "scripts/audit-learning-evidence.mjs",
+      "sha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+      "sizeBytes": 18506
+    },
+    {
+      "path": "scripts/ci-targeted-checks.mjs",
+      "sha256": "406df823c24f4e96033747902c6955f5357c90737837a4947f0284ed0b4b4264",
+      "sizeBytes": 16449
+    },
+    {
+      "path": "scripts/issue341-prepare-archived-inputs.py",
+      "sha256": "33b180bca684bb43b3efc92af52b11d6ee54d93683a202bc7143231d197e5cbe",
+      "sizeBytes": 11039
+    },
+    {
+      "path": "tests/ci-targeted-checks.test.mjs",
+      "sha256": "d1868dc59ba9903341aacb389ec86d338a07d742d2bd1b42925903060ca33909",
+      "sizeBytes": 9725
+    },
+    {
+      "path": "tests/fixtures/issue341-archived-checks-365.README.md",
+      "sha256": "8ffb177c6a8ee767cf5cf23b03f32d02d402779b7460d9e24f140d39592e8ae0",
+      "sizeBytes": 2440
+    },
+    {
+      "path": "tests/fixtures/issue341-archived-input-references.json",
+      "sha256": "46eb601409ba4a2600b4ddc52de6b9e23c17668bf6ab49a586d0066d9554f689",
+      "sizeBytes": 189400
+    },
+    {
+      "path": "tests/issue341-archived-input-transport.test.mjs",
+      "sha256": "5d24b6036ae7c8fcf5dab37459e34ae965f1e0576eca363960debfb9c189096c",
+      "sizeBytes": 8010
+    },
+    {
+      "path": "tests/issue341-audit-fixture-integration.test.mjs",
+      "sha256": "b532751eebb4cb2da53a4f9acbc777e0a25e0fca4706ac7dfca54978f9ed8a10",
+      "sizeBytes": 5571
+    },
+    {
+      "path": "tests/issue341-inactive-shared-feedback.test.mjs",
+      "sha256": "98b741777fe36633baf07e4e8314ab7c104691f3b2e1db53998cd63e3618e4b7",
+      "sizeBytes": 4395
+    },
+    {
+      "path": "tests/issue341-isolated-integration-browser.cjs",
+      "sha256": "96e22d891e60a71a7c83941c6ac895704492762c2f9194b21f7c3b761bc54977",
+      "sizeBytes": 11101
+    },
+    {
+      "path": "tests/issue341-isolated-integration.test.mjs",
+      "sha256": "a63c15a5b2bcec968b361997a5fc873d3d83684c46e639798cf42e7fddd99e3c",
+      "sizeBytes": 5420
+    },
+    {
+      "path": "tests/issue341-learning-audit-injection.test.mjs",
+      "sha256": "7b7ec9a113c0b82acc7a21f177069e3369e2cbe6c9912d2219e72bd76dca334c",
+      "sizeBytes": 5038
+    },
+    {
+      "path": "docs/spatial-learning/evidence-review-manifest.json",
+      "sha256": "f7a94a2fb595532cd9c5c20e22873e8c0c78ef73c56ebf2c2f902607ffe5bd3d",
+      "sizeBytes": 216890
+    },
+    {
+      "path": "dist/learning/learn.js",
+      "sha256": "7ed972ade264dcc84294383d3c3c8fd114ada36e8e8b459c3f78957e4ec02c42",
+      "sizeBytes": 64957
+    },
+    {
+      "path": "dist/sw.js",
+      "sha256": "d38262032f002f73307373aba7f6aa062e182b2a6a0deba64dfa675fc5ee1778",
+      "sizeBytes": 17616
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "55b84d040cd5a791850f507c12321edb44331dfe58443c86ebd6d04cd16448a7",
+      "sizeBytes": 448
+    }
+  ],
+  "blockingCodeFindings": [],
+  "findings": [
+    {
+      "id": "PRODUCTION-ISOLATION",
+      "result": "PASS",
+      "files": [
+        "dist/learning/thinking-feedback.js",
+        "dist/learning/evidence-adapters.js",
+        "dist/learning/issue341-isolated-integration.js",
+        "dist/learning/learn.js",
+        "dist/sw.js"
+      ],
+      "evidence": "The new factory requires explicit candidate adapters and callbacks. Production exports retain the original default registry; learn.js, shared default modules and the service worker do not import a candidate entry. The isolated entry composes a separate registry only. There is no URL/storage activation switch."
+    },
+    {
+      "id": "NO-FORMAL-A-GRANT",
+      "result": "PASS",
+      "files": [
+        "dist/learning/issue341-candidate-feedback.js",
+        "scripts/audit-learning-evidence.mjs",
+        "scripts/audit-evidence-expansion.mjs",
+        "docs/spatial-learning/evidence-review-manifest.json"
+      ],
+      "evidence": "Normalized candidates carry strictAApproved:false and method:null. Explicit learning-audit reports are in-memory proposed simulations with classificationScope PROPOSED_SIMULATION_NOT_FORMAL_APPROVAL and formalStrictAGranted:0. Simulated evidenceLevel A rows are capability classifications, not admission. Only the unchanged default CLI writes its existing reports. The official manifest is byte-identical to approved main and audit base and remains 813 tasks."
+    },
+    {
+      "id": "ORIGINAL-FULL-RECORD-SUBMITTED",
+      "result": "PASS",
+      "files": [
+        "dist/learning/issue341-candidate-descriptors.js",
+        "dist/learning/issue341-candidate-feedback.js",
+        "dist/learning/thinking-feedback.js",
+        "scripts/audit-learning-evidence.mjs",
+        "scripts/audit-evidence-expansion.mjs",
+        "scripts/issue341-prepare-archived-inputs.py"
+      ],
+      "evidence": "Descriptors retain original binding/replay/submitted function references. The wrapper changes presentation metadata only. The isolated feedback factory calls the original submitted(task,model,record,context) after exact latest-submission/context gating. The A–E injected audit calls submitted when present and fails closed if recordFor is absent; it cannot substitute replay. Both integration audit callers pass the original complete record. Preparation preserves lesson.cases[index], all attempts, IDs/timestamps and model fields; P007 wrong-to-correct records are not trimmed."
+    },
+    {
+      "id": "ORIGINAL-MATHEMATICS-UNCHANGED",
+      "result": "PASS",
+      "files": [
+        "dist/learning/issue341-candidate-descriptors.js"
+      ],
+      "evidence": "All 113 original mathematics contract files still match the SHA-256 values recorded by the earlier independent metadata review. No original proofs, negative suites, Node suites or Chromium suites were executed for this review."
+    },
+    {
+      "id": "SOURCE-ROUTING-AND-BOUNDED-COPY",
+      "result": "PASS_REUSE_PRIOR_REVIEW",
+      "files": [
+        "dist/learning/evidence-adapters.js",
+        "dist/learning/issue341-candidate-feedback.js",
+        "dist/learning/issue341-inactive-shared-feedback.js"
+      ],
+      "evidence": "All six prior reviewed presentation/composition files remain byte-identical. Registry resolution retains every adapter per widget type and rejects multiple matches or binding exceptions. Explicit non-null methods are rejected. The guide uses the neutral pre-Check question; original questions are used only after successful submitted checks. P091 and P109 scope corrections remain in the actual implementation. No mastery, independent-strategy or unrecorded-history claim is added."
+    },
+    {
+      "id": "REFERENCES-ONLY-INPUT-TRANSPORT",
+      "result": "PASS",
+      "files": [
+        "scripts/issue341-prepare-archived-inputs.py",
+        "tests/fixtures/issue341-archived-input-references.json",
+        "tests/fixtures/issue341-archived-checks-365.README.md"
+      ],
+      "evidence": "The final tree contains source/Artifact/member identities and hashes for 365 positions, 113 families and 12 original ZIPs, with no model/record/attempts/history/answers/support/value payload fields. The removed gzip is absent from the final working tree. The helper verifies original run/HEAD, ZIP size/SHA-256/CRC, member hash and complete model/record digest before atomically writing only ignored runtime inputs. It deletes stale input before work and removes incomplete output on failure. It creates no replacement evidence."
+    },
+    {
+      "id": "TOKEN-AND-TRANSFER-BOUNDARY",
+      "result": "PASS",
+      "files": [
+        "scripts/issue341-prepare-archived-inputs.py",
+        ".github/workflows/pull-request-baseline.yml"
+      ],
+      "evidence": "Artifact access uses read-only actions/contents permissions and a per-step GITHUB_TOKEN. Redirects require HTTPS and a fresh request; authorization is not sent to a different origin and is never reattached after leaving the authenticated origin. Network/HTTP errors suppress signed URLs and headers. ZIPs are read in memory, not extracted to arbitrary filesystem paths."
+    },
+    {
+      "id": "NO-COMPLETE-INPUT-IN-NEW-LOGS-OR-ARTIFACTS",
+      "result": "PASS_FOR_REVIEWED_PATHS",
+      "files": [
+        ".github/workflows/pull-request-baseline.yml",
+        "tests/issue341-isolated-integration.test.mjs",
+        "tests/issue341-isolated-integration-browser.cjs",
+        "tests/issue341-audit-fixture-integration.test.mjs",
+        "tests/issue341-learning-audit-injection.test.mjs",
+        "tests/issue341-archived-input-transport.test.mjs"
+      ],
+      "evidence": "The new browser server binds loopback and passes full input only to the isolated local page. Its serialized results contain source identities, bounded feedback, check labels, attempt counts and provenance, not models or records. Screenshots contain only review cards. Mutation assertions use boolean equality so Node failure diffs cannot dump full original input. The dedicated success Artifact uploads only verification/issue341-isolated-integration; the broad failure Artifact explicitly excludes verification/issue341-inputs/**. Other reviewed upload paths do not include that directory. The helper prints only sanitized metadata. This finding covers these new source paths, not arbitrary future diagnostic code."
+    },
+    {
+      "id": "DEFAULT-AUDIT-COMPATIBILITY",
+      "result": "PASS_REUSED_EXACT_BYTES_RECEIPT",
+      "files": [
+        "scripts/audit-learning-evidence.mjs"
+      ],
+      "evidence": "The actual implementation SHA-256 exactly matches the independently exercised proposal. The separate default CLI compatibility receipt reports eight byte-identical outputs, including stdout, REPORT.md, summary, tasks, types, families, risks and uncertainty; existing formal A remains 813. This reviewer did not rerun that CLI or any old family test."
+    },
+    {
+      "id": "CI-SCOPE-AND-FAIL-CLOSED",
+      "result": "PASS_SOURCE_REVIEW_PENDING_FINAL_HEAD_EXECUTION",
+      "files": [
+        ".github/workflows/pull-request-baseline.yml",
+        "scripts/ci-targeted-checks.mjs",
+        "tests/ci-targeted-checks.test.mjs"
+      ],
+      "evidence": "Changes to shared composition, candidate descriptors/callbacks, references, transport and either audit select the new integration path while preserving normal shared P9/P10 selection. Node and browser consumers first restore exact original inputs with actions:read. Missing, altered or expired evidence fails closed; no solver generation or original-suite fallback is present. This review is not a substitute for required CI at the final published commit."
+    }
+  ],
+  "verifiedObservations": {
+    "localHead": "611ac0e6c08b218bd184b1f3ef38cb1c4ab21c18",
+    "previousFeedbackFilesUnchanged": 6,
+    "previousFeedbackFileCount": 6,
+    "originalContractsCompared": 113,
+    "originalContractsChanged": [],
+    "approvedManifest": {
+      "sha256": "f7a94a2fb595532cd9c5c20e22873e8c0c78ef73c56ebf2c2f902607ffe5bd3d",
+      "tasks": 813,
+      "byteEqualAuditBase": true,
+      "byteEqualApprovedMain": true
+    },
+    "committedReferences": {
+      "families": 113,
+      "positions": 365,
+      "originalZips": 12,
+      "rawPayloadKeys": []
+    },
+    "changedFiles": [
+      ".github/workflows/pull-request-baseline.yml",
+      "dist/learning/evidence-adapters.js",
+      "dist/learning/issue341-candidate-descriptors.js",
+      "dist/learning/issue341-candidate-feedback.js",
+      "dist/learning/issue341-inactive-shared-feedback.js",
+      "dist/learning/issue341-isolated-integration.js",
+      "dist/learning/thinking-feedback.js",
+      "scripts/audit-evidence-expansion.mjs",
+      "scripts/audit-learning-evidence.mjs",
+      "scripts/ci-targeted-checks.mjs",
+      "scripts/issue341-prepare-archived-inputs.py",
+      "tests/ci-targeted-checks.test.mjs",
+      "tests/fixtures/issue341-archived-checks-365.README.md",
+      "tests/fixtures/issue341-archived-input-references.json",
+      "tests/issue341-archived-input-transport.test.mjs",
+      "tests/issue341-audit-fixture-integration.test.mjs",
+      "tests/issue341-inactive-shared-feedback.test.mjs",
+      "tests/issue341-isolated-integration-browser.cjs",
+      "tests/issue341-isolated-integration.test.mjs",
+      "tests/issue341-learning-audit-injection.test.mjs"
+    ],
+    "stagedDiffSamePaths": true,
+    "workingTreeMatchesIndex": true,
+    "rawGzipAbsentInFinalTree": true,
+    "runtimeInputIgnored": true
+  },
+  "reusedDefaultCompatibilityEvidence": {
+    "receiptPath": "integration-prep/proposal/default-cli-compatibility.json",
+    "receiptSha256": "eb9a21a1475a403d07006500ad46532149cd5d9d60a6699b15f297941a1b220e",
+    "auditImplementationSha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+    "matchesValidatedProposalBytes": true,
+    "status": "PASS_DEFAULT_CLI_OUTPUT_BYTE_IDENTICAL",
+    "formalACount": 813,
+    "byteIdenticalOutputs": 8,
+    "reviewerExecutedAgain": false
+  },
+  "publicationRisk": {
+    "id": "RAW-GZIP-ANCESTRY",
+    "severity": "BLOCKING_IF_LOCAL_ANCESTRY_IS_PUSHED",
+    "status": "RESOLVED_BY_VERIFIED_PARENT_ONLY_PUBLICATION",
+    "finding": "Local commit 611ac0e6 already contains the rejected raw gzip. Deleting it in a descendant does not remove that blob from published ancestry.",
+    "rootConfirmedMitigation": "Create the final Git tree from the reviewed snapshot through the GitHub API, then create a commit whose only parent is audit base 0f2e26677dcc53f96606f04eb58ec1e828ca1972. Do not push local 611ac0e6 or any descendant history.",
+    "requiredReceipt": [
+      "Published commit parent list is exactly [0f2e26677dcc53f96606f04eb58ec1e828ca1972].",
+      "Published tree matches the approved final snapshot including any explicitly added review documents.",
+      "No raw gzip or complete model/record fixture is present in the published tree; reviewed source hashes remain identical."
+    ],
+    "remotelyVerifiedByThisReviewer": false,
+    "resolution": "The fetched published commit has exactly the required parent and tree, all 24 reviewed files match, the complete changed-file set equals the reviewed snapshot, the raw gzip is absent and local 611ac is not an ancestor. Approved main f4be9f88 is an ancestor.",
+    "verificationQualification": "Identity verified directly from the exact fetched Git commit object; no separate remote API or ref request was made by this reviewer."
+  },
+  "remainingGates": [
+    "Run and inspect necessary CI and the new isolated integration Artifact for that actual final HEAD, preserving established gates.",
+    "Obtain the required independent formal mathematical/pedagogical admission and separate activation authorization; this agent review grants neither.",
+    "Keep main merge and deployment/release authorization pending; no main merge, deployment or formal registration is approved here.",
+    "Before original GitHub Artifacts expire, establish an authorized durable CI input route or restore exact archived ZIPs explicitly; current expiry handling must remain fail closed."
+  ],
+  "reviewExecution": {
+    "oldMathematicalProofsRerun": 0,
+    "oldNodeFamilySuitesRerun": 0,
+    "oldChromiumFamilySuitesRerun": 0,
+    "newTestsExecutedByThisReviewer": 0,
+    "sourceOrRemoteMutationsByThisReviewer": 0,
+    "onlyCreatedReviewArtifacts": true
+  },
+  "reviewHistory": [
+    {
+      "event": "INITIAL_PREPUBLICATION_REVIEW",
+      "reviewedAtUtc": "2026-11-21T16:56:48.968214+00:00",
+      "finalRootHeadAtReview": "PENDING_ROOT_PUBLICATION",
+      "publicationRiskStatusAtReview": "MITIGATION_CONFIRMED_BY_ROOT_PENDING_REMOTE_RECEIPT",
+      "remainingGatesAtReview": [
+        "Publish through the safe parent-only route and bind the resulting HEAD and tree receipt.",
+        "Run and inspect necessary CI and the new isolated integration Artifact for that actual final HEAD, preserving established gates.",
+        "Obtain the required independent formal mathematical/pedagogical admission and separate activation authorization; this agent review grants neither.",
+        "Keep main merge and deployment/release authorization pending; no main merge, deployment or formal registration is approved here.",
+        "Before original GitHub Artifacts expire, establish an authorized durable CI input route or restore exact archived ZIPs explicitly; current expiry handling must remain fail closed."
+      ],
+      "originalCodeIdentityStatement": "Binds the exact SHA-256 values below. The root final commit is pending; any reviewed-code byte change requires a bounded follow-up review. Documentation may be added without changing these file identities.",
+      "historyPreserved": "Original verifiedObservations including local 611ac working tree, all source hashes, findings and review scope remain unchanged."
+    },
+    {
+      "event": "PUBLISHED_IDENTITY_BOUND",
+      "verifiedAtUtc": "2026-11-21T16:57:27.855580+00:00",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "tree": "9e390b5e752ea10ad6b9c8d9079a026dc207c9c4",
+      "testsExecuted": 0,
+      "approvalBoundaryUnchanged": "approve-isolated-preparation-only; no formal A, main merge or deployment approval."
+    }
+  ],
+  "finalRootTree": "9e390b5e752ea10ad6b9c8d9079a026dc207c9c4",
+  "publicationIdentityBinding": {
+    "verifiedAtUtc": "2026-11-21T16:57:27.855580+00:00",
+    "status": "PASS_PUBLISHED_IDENTITY_BOUND_TO_REVIEW",
+    "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "tree": "9e390b5e752ea10ad6b9c8d9079a026dc207c9c4",
+    "parents": [
+      "0f2e26677dcc53f96606f04eb58ec1e828ca1972"
+    ],
+    "reviewedFilesCompared": 24,
+    "reviewedFilesIdentical": true,
+    "publishedChangedFilesMatchReviewedSnapshot": true,
+    "rawGzipInPublishedTree": false,
+    "rejectedLocalCommitIsAncestor": false,
+    "approvedMainIsAncestor": true,
+    "receiptPath": "feedback-review/final-code-publication-identity-receipt.json",
+    "receiptSha256": "4169f1c369521230a20b9e48fc1a58b7fbe2d8331b19e795d8babe50da6a0067",
+    "method": "Read-only inspection of the exact locally fetched Git commit object. No test execution, source/index change or remote mutation."
+  }
+}

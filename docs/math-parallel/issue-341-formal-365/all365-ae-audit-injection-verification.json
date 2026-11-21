@@ -1,0 +1,38 @@
+{
+  "schema": "issue-341-ae-audit-compatibility-and-publication-binding/1",
+  "originalScratchProposalVerification": {
+    "status": "PROPOSAL_NOT_APPLIED",
+    "baseSha256": "ed5c906d74283c9463be34f2f1c491312d5e64908486789337db7e5c50d9219e",
+    "proposedSha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+    "changedFile": "scripts/audit-learning-evidence.mjs",
+    "defaultReports": "CLI only, same original format and files",
+    "explicitReports": "memory only; PROPOSED_SIMULATION_NOT_FORMAL_APPROVAL; formalStrictAGranted0",
+    "fixtures": "existing official Artifact extraction under ignored verification only",
+    "originalTestsExecuted": 0,
+    "verification": {
+      "defaultCli": "PASS_DEFAULT_CLI_OUTPUT_BYTE_IDENTICAL",
+      "defaultFormalA": 813,
+      "comparedOutputs": 8,
+      "changedCodeTest": "node --test tests/issue341-learning-audit-injection.test.mjs",
+      "newTests": 3,
+      "passed": 3,
+      "failed": 0,
+      "durationMs": 1909.366817,
+      "originalFamilyNodeSuites": 0,
+      "originalFamilyChromiumSuites": 0,
+      "defaultCompatibilityAuditRuns": {
+        "original": 1,
+        "proposed": 1
+      },
+      "runtimeTestWorkingTree": "scratch read-only dependency mirror",
+      "newTestInput": "Existing verified original Artifact extracted into ignored verification/issue341-inputs only; not committed or published"
+    },
+    "testSha256": "f26fd8d2f87a598ce441582b3026c88d7d27e0378f0088ba3155e98fe9670aba"
+  },
+  "publishedAuditImplementationSha256": "9f4765c65c79b7b76ff5ecfc4b8eafe6ae4a01e41dfd685e37b4150c4b635d15",
+  "implementationMatchesByteIdenticalCliReceipt": true,
+  "publishedTestSha256": "7b7ec9a113c0b82acc7a21f177069e3369e2cbe6c9912d2219e72bd76dca334c",
+  "publishedTestDiffersFromScratchReceipt": true,
+  "publishedTestBoundBy": "all365-final-code-review.json",
+  "scope": "Preserve the original local3/3 receipt without relabeling its test SHA. Published tests are bound by the final24-file code review; exact-HEAD CI remains separate."
+}

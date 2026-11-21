@@ -1,0 +1,16 @@
+{
+  "schema": "issue-341-historical-archive-durable-save/1",
+  "savedAtUtc": "2026-11-21T17:00:58.937Z",
+  "status": "SUCCEEDED",
+  "archiveFileName": "issue341-historical-artifacts-7-20261122.tar",
+  "archiveBytes": 1474560,
+  "archiveSha256": "7311899ebd938b44f6d977760ce26ddd3ba1fa6b23d2affdd01f734c79935830",
+  "originalArtifacts": 7,
+  "originalTestsRerun": 0,
+  "publicMetadataProjection": {
+    "privateProviderLocatorsPublished": false,
+    "localAbsolutePathsPublished": false,
+    "originalMetadataSha256": "fe409aea0274a233eef1884bf54b684b5e95d187c56378df1e9645c5af855525",
+    "archiveLookup": "Resolve the exact owner-held archive filename and verify its published SHA256; private access identifiers are retained in the owner delivery."
+  }
+}

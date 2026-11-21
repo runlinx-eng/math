@@ -1,0 +1,55 @@
+{
+  "status": "PASS_DEFAULT_CLI_OUTPUT_BYTE_IDENTICAL",
+  "formalACount": 813,
+  "comparison": "Original and proposed changed audit CLI only, each once; no family Node/Chromium tests",
+  "files": [
+    {
+      "file": "cli-stdout.txt",
+      "identical": true,
+      "sha256": "1568b261092ec96c73257acf1d91f37e233a2275c72a80e448b9ae825b04e894",
+      "bytes": 1318
+    },
+    {
+      "file": "verification/learning-evidence-audit/REPORT.md",
+      "identical": true,
+      "sha256": "d802d9bb92e45ef6f0634fd6246614295d963187eeca713307ff331d40f344a5",
+      "bytes": 3453
+    },
+    {
+      "file": "verification/learning-evidence-audit/cross-course-risks.json",
+      "identical": true,
+      "sha256": "5093ac2e2b6547fc0322462bc3ff94cb83bc69336e449cfea3196b073709531b",
+      "bytes": 35166
+    },
+    {
+      "file": "verification/learning-evidence-audit/summary.json",
+      "identical": true,
+      "sha256": "e2ff64b45a460579c51a52d99692d3e0f6c03e91073af1d9f2e21c3834565ef9",
+      "bytes": 1669
+    },
+    {
+      "file": "verification/learning-evidence-audit/tasks.json",
+      "identical": true,
+      "sha256": "e0b203b2c637bd661a6db97b42e0abe0fef417084aa2d2f102b0be2a074e0c97",
+      "bytes": 5059805
+    },
+    {
+      "file": "verification/learning-evidence-audit/types.json",
+      "identical": true,
+      "sha256": "1bc345aa41d6cdafb812daa24d640fb648d4877096a6fb1b8f8f4340dc80f58a",
+      "bytes": 124982
+    },
+    {
+      "file": "verification/learning-evidence-audit/uncertain.json",
+      "identical": true,
+      "sha256": "fb2989323b717f2e869a06272d8ee4b35b4e516d6a555f4ce3d19f9ee3606ff0",
+      "bytes": 17
+    },
+    {
+      "file": "verification/learning-evidence-audit/validator-families.json",
+      "identical": true,
+      "sha256": "935e88f9f72e0b7d659ab26d9f0203dc5fb83d95146c214c1f81729c0cc90d63",
+      "bytes": 19763
+    }
+  ]
+}

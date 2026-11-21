@@ -1,3 +1,11 @@
+# #341 审计扩展材料公开授权与增量交接（2026-11-22）
+
+**状态：29份已审阅文档获用户明确授权公开。** 全量详细证明范围、工程审核、Artifact索引、逐题准入申请和未执行的激活提案发布于本审计分支。正式批准、生产启用、main合并、部署均未授权；A仍813/1996，本批A0。以下先完整保留上一轮已公开的交接前言（其中“扩展材料待授权”属于历史状态），随后进入本轮全量详细交接。
+
+---
+
+## 上一轮公开状态（历史原文）
+
 # 数学项目 #341｜中央验收公开状态交接（2026-11-22）
 
 ## 当前公开状态：全部113家族／365道隔离共享集成代码
@@ -32,7 +40,81 @@
 
 ---
 
-## 以下原有公开交接全文保留
+---
+
+## 全量详细交接（本次获批公开）
+
+# 数学项目 #341｜新窗口中央验收交接（2026-11-22）
+
+<!-- issue341-window:33dddc361614fa9d -->
+## 最新中央接续：全部113家族／365道共享隔离集成（2026-11-22）
+
+**当前工作对象已覆盖全部365道，不再停留于 #350 的首批12道。** 本节覆盖下方历史段落中“仍只完成首批反馈”“还需重做范围说明”等旧待办；原通过、失败、来源与限制记录全部保留。
+
+代码：[Draft PR #351](https://github.com/runlinx-eng/math/pull/351)；exact HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`；CI/Artifact 状态 **`EXACT_HEAD_CI_AND_ARTIFACTS_ACCEPTED`**。正式 manifest 仍813，本批新增 A 0，人工正式准入 **PENDING**；生产候选尚未启用。
+
+### 本窗口已经完成的实际准备
+
+- 113 家族／365 道接入显式共享 registry 与 feedback factory；按原题来源唯一匹配，同 type 多家族参与解析，歧义/异常拒绝。纯候选反馈模块与隔离组合分开，默认正式注册和生产导入保持不启用候选。
+- 原 binding/replay/submitted 合同直接复用。P007 的完整两次错→对 Check 条件保留；不拿通用 replay 取代原 submitted。检查前提示中性，原含答案问题只在提交通过后出现，`method:null`，不外推 P091 历史图形或 P110 容差范围。
+- 最终独立 agent [完整代码审核](./all365-final-code-review.json) 已绑定实际发布的24份文件与 [发布身份回执](./all365-final-code-publication-identity-receipt.json)，源HEAD、tree和唯一parent明确，原raw gzip不在发布tree或祖先中；早先6份反馈文件审核继续保留为历史子证据。这是隔离准备审核，**不是独立人工数学准入**。
+- 扩展审计支持 `.types[]`、原模型与完整 Check provider；A–E 分类审计状态为 **`IMPLEMENTED_EXPLICIT_INJECTION_DEFAULT_OUTPUT_BYTE_IDENTICAL`**。兼容性核对中原/新 CLI 各执行一次，stdout 与7份输出逐字节一致，默认 A813；原提案新增注入测试3/3通过，最终测试已收窄失败断言以免输出原record，其发布字节由24-file审核绑定，实际HEAD CI另列。原113候选数学套件未单独重跑，旧113浏览器suite未选；Required既有正式Node门禁仍按实际共享变更执行，不能记作整个CI旧Node执行0。
+- 已准备365行正式批准请求，技术方案已选定113个 types-aware 家族条目；145个单type条目只保留为历史备选，不是待用户批准的阻塞。精确生产缓存闭包与未应用 patch 已备；纯生产入口缺116个缓存模块，隔离 wrapper 另加1个。详见 [正式激活材料](./formal-activation/ACTIVATION-CHANGESET.md)。
+
+### 本窗口实际 HEAD 的 CI 与 Artifact
+
+- [Pull request required checks #44927311010](https://github.com/runlinx-eng/math/actions/runs/44927311010)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+- [P8 startup performance comparison #44927311025](https://github.com/runlinx-eng/math/actions/runs/44927311025)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+- [Math Tree overview checks #44927311018](https://github.com/runlinx-eng/math/actions/runs/44927311018)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+
+
+| 本HEAD实际验证范围 | 结果 |
+| --- | --- |
+| 新增组合／审计／传输 Node | 13/13 PASS |
+| 保留的 Required 正式 Node 门禁 | full 144文件，2425/2425 PASS |
+| 新共享隔离 Chromium | 365/365题、113家族、2952项检查，errors=0 |
+| 新浏览器视口 | 1920×1080 |
+| 当前HEAD原 Artifact | 5份，全部实核大小/SHA256/ZIP CRC |
+
+实际测试 checkout `8f46a03173eff3b16627f4856b67deb21a0b06f9` 是GitHub PR merge提交，源PR HEAD仍为 `fec2d5446c979741e3207a0c70f3e792a10eb5cf`，二者分别保留。完整门禁和3项targeted作业结果见 [最终CI原元数据](./all365-final-pr351-ci-evidence.json)。
+
+
+完整范围、运行状态、Artifact ID/SHA与覆盖指标见 [本窗口元数据回执](./all365-current-window-evidence.json)。CI 尚未提供/未完成/Artifact尚未核对时均保留为真实门槛；旧 #344–#350 的成功不替代当前共享变更的验证。
+
+本轮新增隔离组合的两张代表截图已有 [有界视觉审核](./all365-bounded-visual-review.json)；该审核仅覆盖1920×1080下新共享组合卡片的可读性和P091边界文字，不代表重新运行原生113套控件测试或人工正式数学批准。
+
+### 原件留存与安全恢复
+
+144 份原 ZIP 已原样保存：`issue341-original-artifacts-144-20261122.tar`（已持久保存，按文件名与SHA取回）；TAR SHA256 `b756251a717727e4132625d4dd35438d5d12a73e836c951c4d5df6ac3221bea7`，原ZIP字节未改。当前所需12份浏览器原输入均于2026-11-28到期，最早为 `2026-11-28T13:42:40Z`（上海21:42:40）；全部144份原件中最早到期 `2026-11-28T13:41:38Z`（上海21:41:38）。不能把中央12分片误当90天。到期不等于已持久保存的数学证据失效，也不能成为重跑旧套件的理由。
+
+另有 **7份互异的历史失败/取消轮次原ZIP** 已保存到 `issue341-historical-artifacts-7-20261122.tar`（已持久保存，按文件名与SHA取回），TAR SHA256 `7311899ebd938b44f6d977760ce26ddd3ba1fa6b23d2affdd01f734c79935830`，见 [历史清单](./all365-historical-artifact-inventory-7.json) 与 [保存回执](./all365-historical-archive-save-receipt.json)。原144份未改。source-lock失败轮次 #44920568201 无Artifact，保留其失败元数据；导航失败轮次 #44916179044 保存3份原件；PR350三轮cancelled包含部分Required汇总job failure，保留run级与job级区别，不把整轮改成failure或PASS。
+
+本HEAD新增 **5份原ZIP** 也已保存到 `issue341-pr351-artifacts-5-20261122.tar`（已持久保存，按文件名与SHA取回），TAR SHA256 `4273f9e5c870171a94da68521b34451e196aeed9b9a6fff7b12a45cac55b5b23`，见 [新增保存回执](./all365-pr351-archive-save-receipt.json) 与 [5份清单](./all365-pr351-original-artifact-inventory-5.json)。**三档共156份互异原ZIP（144+7+5）均保留原bytes。**
+
+Git 仅发布代码、来源引用和摘要哈希；原模型/完整 Check 只由既有官方 Artifact 或上述同一字节归档读入 ignored `verification/issue341-inputs`。读取脚本校验原 ZIP 大小、SHA256、CRC与member哈希；缺失、过期或不匹配即 fail closed，清除旧输入，禁止伪造/放行。需要恢复时先核 TAR SHA，再恢复原 ZIP 到本地只读输入目录，运行已有 `--archive-dir` 模式；不把原记录重新上传Git或新CI Artifact。详见 [归档元数据](./all365-original-archive-retention.json) 与 [365题引用](./all365-archived-input-references.json)。
+
+**尚未解决的工程门槛：`authorized-durable-ci-input-source`。** 持久保存原件和本地 `--archive-dir` 精确恢复，**不等于GitHub runner已经具备长期自动取件能力**；当前runner仍按原Artifact IDs下载，12份输入到期后会拒绝运行。后续必须落实受许可、CI可访问的持久原件源或获许可的精确原件交付流程，继续核原ZIP摘要；未落实时维持fail closed，禁止为续期重跑旧套件或再次未经许可把raw输入写Git/公开发布。此前自动审批已经拒绝把原模型和完整Check的gzip写入Git，本轮采用metadata-only引用与ignored运行时读取的安全替代，发布tree和祖先均排除了被拒绝的raw提交；这不构成未来raw再发布授权。
+
+### 真实剩余门槛与下一窗口动作
+
+1. 仅对本次实际共享代码 HEAD 收齐适用 CI/Artifact；若已通过，直接复用，不再重跑无变更的原合同、源码锁定或首批预检。
+2. 取得独立人工正式数学/反馈批准，再由中央单写入者做获批生产 adapter/feedback/manifest 注册。当前365行均 `formalStrictA=NOT_GRANTED`。
+3. 正式启用时应用经审阅的 SW 依赖与 release/entry/navigation 同步，按实际激活 HEAD 做必要 CI与 Artifact；当前隔离通过不代替生产启用验收。
+   同时落实 `authorized-durable-ci-input-source`：当前CI成功仅说明原Artifact仍可读，不能提前关闭到期后的远端原件供应门槛。
+4. main 合并与部署仍分别保留用户授权；获授权合并后再看新 main Required/Fallback。等待某项批准时，继续处理其他已有授权的缺口。
+
+B308 原合同/负例/Node/Chromium与工程证据继续全部复用；298 没有额外 Python 抽查不是统一任务，历史18道范围笔记不生成剩余逐题重写队列。只有具体题位的可复现矛盾或新反馈主张超出原证据时，才开启定向核查。逐题旧状态原文保留在 `intakeDecisionHistory`，其他历史字段未删改。
+
+### 最新可复制的下一窗口任务
+
+> 接手数学项目 #341 中央验收。先读本文件最上方“最新中央接续”节、#341最新评论、PR #351 的真实源HEAD与最终CI/Artifact、365道JSON/CSV、24-file代码审核及发布身份回执。全部113家族365道已具备显式共享隔离组合与两类审计注入，不回退到 #350 首批12道试点。复用B308原合同/负例/Node/Chromium和既有导航/来源证据；298额外Python抽查不是任务。若本共享HEAD适用CI/Artifact已完成就直接继承，仅修真实缺口。采用已定113 types-aware方案，继续准备独立人工正式准入、获批生产注册和隔离元数据处理、SW/release及真实激活HEAD门禁；不得自行授A、合并main或部署，也不得等待某项批准就停止其他可执行工作。原12分片将于2026-11-28到期；持久归档与本地恢复不等于远端CI长期自动取件，需落实authorized-durable-ci-input-source，缺失/不匹配fail closed，不续期重跑旧套件，不重新未经许可发布被自动审批拒绝的raw输入。持续更新#341、365台账和本交接，保留全部历史。
+
+**下方历史第6节的旧复制任务仅作留档，不能继续作为当前任务入口或把工作限制回首批。**
+<!-- /issue341-window:33dddc361614fa9d -->
+
+---
+
+### 以下为保留的历史交接
 
 # 数学项目 #341｜新窗口中央验收交接（2026-11-21）
 

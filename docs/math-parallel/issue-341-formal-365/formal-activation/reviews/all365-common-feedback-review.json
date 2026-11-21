@@ -1,0 +1,257 @@
+{
+  "schema": "issue-341-independent-agent-common-feedback-review/1",
+  "reviewedOn": "2026-11-22",
+  "reviewer": "independent-agent /root/feedback_review",
+  "inputBaseline": "0f2e26677dcc53f96606f04eb58ec1e828ca1972",
+  "scope": "NEW common presentation for remaining108 families /353 positions, together with composition API compatibility across all113 /365; not a repeat source-lock or mathematical proof audit.",
+  "verdict": "COMMON_POST_CHECK_COPY_ACCEPTABLE_FOR_ISOLATED_FACTORY_WITH_EXPLICIT_SCHEMA_AND_GUIDE_LIMITS",
+  "humanFormalApproval": "PENDING",
+  "formalStrictA": "NOT_GRANTED",
+  "productionImportsAllowedByThisReview": false,
+  "approvedManifestMustRemain": 813,
+  "reviewedCopy": {
+    "summary": "想一想：这次保存的记录能说明什么？（可选）",
+    "observation": "这次检查对应的保存记录符合本题已核对的条件。",
+    "detail": [
+      "这里只描述与最近一次 Check 一致、且通过本题证据核对的已保存作品。",
+      "这条反馈不评定自由解释、独立策略、理解或长期掌握。"
+    ],
+    "method": null
+  },
+  "whySupported": "The observation reports only that the saved record passed the preexisting original submitted contract. It does not describe unrecorded actions, assume freedom from help, claim a general theorem or assess understanding. Requiring original submitted() unchanged preserves family-specific proof and Check conditions.",
+  "findings": [
+    {
+      "id": "NEW-COMPOSITION-01",
+      "severity": "implementation-required",
+      "scope": "P007A-P007P /30 positions",
+      "fact": "All16 P007 bindings have no method or question properties. Other97 families/335 positions have method:null and a nonempty question after required original lazy loading. No candidate binding emitted a non-null method.",
+      "impact": "A literal bound.method===null gate copied from #350 excludes all30 P007 positions; directly using bound.question produces undefined.",
+      "fix": "In the new isolated composition only, allow absent method as no-method, output method:null, retain rejection of an explicit non-null method, and use an explicitly reviewed neutral question fallback when original question is absent. Do not change original bindings or submitted contracts."
+    },
+    {
+      "id": "NEW-COMPOSITION-02",
+      "severity": "presentation-required",
+      "scope": "Use of binding.question before successful submitted evidence",
+      "fact": "Several existing questions contain the original answer (for example P062 60800, P0691500克, P07026cm, P07994/96cm²), so copying them into a guide visible before Check changes the learning flow.",
+      "impact": "Pre-Check guide reuse can disclose the answer. This is a new integration/presentation issue, not a defect in the original post-result mathematical contract.",
+      "fix": "Use binding.question only as feedback.connection after unchanged submitted() succeeds. Use a neutral question for the optional guide; no need to individually rewrite all family questions.",
+      "neutralGuideQuestion": "哪些记录能帮助你核对这次结果？",
+      "neutralPostCheckFallback": "你保存的哪些记录支持这次结果？"
+    },
+    {
+      "id": "NEW-COMPOSITION-03",
+      "severity": "integration-requirement",
+      "scope": "P088 graph39:1/2 and P031 pattern39:0-3",
+      "fact": "Original B39 tasks are lazy-loaded. Before ensureB39Ready, sessionTaskFor is undefined; after original ensureB39Ready all six bindings expose method:null and a nonempty question.",
+      "fix": "Preserve native lazy readiness. Do not cache a missing task or null binding at module import time; introspection/tests should await the same original ready function."
+    },
+    {
+      "id": "NEW-COMPOSITION-04",
+      "severity": "integration-requirement",
+      "scope": "All113 family dispatcher",
+      "fact": "Several families share widget type.",
+      "fix": "A single Map(type->oneFamily) cannot scale #350. Match the exact source key and call that original binding; retain uniqueness semantics and reject ambiguous matches."
+    }
+  ],
+  "metadata": {
+    "families": 113,
+    "positions": 365,
+    "existingQuestionsAndNullMethods": 335,
+    "absentQuestionAndMethod": 30,
+    "nonnullMethods": 0,
+    "missingFields": [
+      {
+        "packet": "P007A",
+        "position": "shapedraw:4",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007A",
+        "position": "shapeframe:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007B",
+        "position": "shapedraw:5",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007C",
+        "position": "shapemeasures:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007D",
+        "position": "shapemeasures:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007E",
+        "position": "shapemeasures:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007F",
+        "position": "circleparts:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007F",
+        "position": "circleparts:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007F",
+        "position": "circleparts:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007G",
+        "position": "compasswork:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007H",
+        "position": "compasswork:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007I",
+        "position": "compasswork:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007J",
+        "position": "rectanglefacts:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007J",
+        "position": "rectanglefacts:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007J",
+        "position": "rectanglefacts:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007K",
+        "position": "shapefacts:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007L",
+        "position": "trianglecongruent:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007L",
+        "position": "trianglecongruent:3",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007L",
+        "position": "triangledraw:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007L",
+        "position": "trianglepossible:5",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007M",
+        "position": "trianglecongruent:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007M",
+        "position": "triangledraw:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007M",
+        "position": "trianglepossible:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007M",
+        "position": "trianglepossible:1",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007M",
+        "position": "trianglepossible:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007N",
+        "position": "trianglecongruent:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007N",
+        "position": "triangledraw:2",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007O",
+        "position": "trianglecongruent:4",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007O",
+        "position": "trianglepossible:4",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      },
+      {
+        "packet": "P007P",
+        "position": "advancedWords38:0",
+        "methodFieldMissing": true,
+        "questionFieldMissing": true
+      }
+    ],
+    "nonnullMethodRows": [],
+    "file": "all113-feedback-metadata.json",
+    "sha256": "97dc235d7db26dc08624e32dbe8550378820d1a65962b5c3090374fc19f49702"
+  },
+  "workPerformed": {
+    "readOriginalBindingMetadataForNewPresentation": true,
+    "originalSubmittedOrReplayExecuted": false,
+    "originalNodeSuitesExecuted": false,
+    "originalChromiumSuitesExecuted": false,
+    "newNumericalSpotchecks": false,
+    "newProofWriteups": false
+  },
+  "approvalBoundary": "Independent agent feedback review supports isolated code preparation. It does not satisfy the pending independent human/formal mathematical approval, authorise insertion into approved A813 manifest, main merge or deployment."
+}

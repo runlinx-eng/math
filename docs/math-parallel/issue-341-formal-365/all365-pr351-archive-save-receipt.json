@@ -1,0 +1,16 @@
+{
+  "schema": "issue-341-pr351-archive-durable-save/1",
+  "status": "SUCCEEDED",
+  "file_name": "issue341-pr351-artifacts-5-20261122.tar",
+  "current_version_number": 0,
+  "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "originalZIPs": 5,
+  "archiveBytes": 450560,
+  "archiveSha256": "4273f9e5c870171a94da68521b34451e196aeed9b9a6fff7b12a45cac55b5b23",
+  "publicMetadataProjection": {
+    "privateProviderLocatorsPublished": false,
+    "localAbsolutePathsPublished": false,
+    "originalMetadataSha256": "e707f8ce4ec0b79dcbfdaf4d6ce0f747f922b2ef932a159d5a08eccd6682031f",
+    "archiveLookup": "Resolve the exact owner-held archive filename and verify its published SHA256; private access identifiers are retained in the owner delivery."
+  }
+}

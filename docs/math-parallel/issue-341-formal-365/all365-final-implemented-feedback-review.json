@@ -1,0 +1,127 @@
+{
+  "schema": "issue-341-independent-implemented-feedback-review/1",
+  "reviewedOn": "2026-11-22",
+  "reviewer": "independent-agent /root/feedback_review",
+  "authorSeparation": "Reviewer supplied prior review findings but did not write or modify the implementation; root implemented it independently.",
+  "reviewType": "READ_ONLY_NEW_PRESENTATION_AND_COMPOSITION_CODE_REVIEW",
+  "verdict": "PASS_FOR_ISOLATED_INTEGRATION_PENDING_FINAL_HEAD_CI_AND_HUMAN_FORMAL_APPROVAL",
+  "reviewedWorkingTreeParent": "742ab3336b976f5d7054bee0985f248c4ae2b1ed",
+  "codeIdentity": "This review binds the file SHA-256 values below, not an as-yet-uncreated commit. It remains valid only while these reviewed bytes remain identical.",
+  "reviewedFiles": [
+    {
+      "path": "dist/learning/issue341-candidate-feedback.js",
+      "sha256": "36eaea57942b4c116e65660157c44bbc55d4d4590cf57958725db61809343719",
+      "sizeBytes": 3083
+    },
+    {
+      "path": "dist/learning/issue341-inactive-shared-feedback.js",
+      "sha256": "592be8a50b7a36d43d8830b8f7594793045633baeb4cd3b90e8b075c8704c652",
+      "sizeBytes": 6148
+    },
+    {
+      "path": "dist/learning/issue341-isolated-integration.js",
+      "sha256": "1c1e2f4f68232cce09e7e4f9e6a3eaaa703c6652388f57d3dfb6ba4020da0700",
+      "sizeBytes": 926
+    },
+    {
+      "path": "dist/learning/issue341-candidate-descriptors.js",
+      "sha256": "7e32e9a6b6e76c71ef959a256468f065495bd34f7083a207751b5e17d453c621",
+      "sizeBytes": 113736
+    },
+    {
+      "path": "dist/learning/thinking-feedback.js",
+      "sha256": "4d9b9a6839190fa91c2067c25334f55a334a9576a350f9ab71b457a3223656a6",
+      "sizeBytes": 205753
+    },
+    {
+      "path": "dist/learning/evidence-adapters.js",
+      "sha256": "c109360d3407c1e7fc2e54b0c6e19b4508b2ecea704cb0bfc26a492111c5312f",
+      "sizeBytes": 16440
+    }
+  ],
+  "blockingFindings": [],
+  "implementedFindings": [
+    {
+      "finding": "PR350-P109-expansion-scope",
+      "status": "RESOLVED",
+      "evidence": "issue341ProposedObservation now says 最后一次保存的展开与原式逐项一致; prior failed expansions are not described as correct."
+    },
+    {
+      "finding": "PR350-P091-trial-scope",
+      "status": "RESOLVED",
+      "evidence": "The observation now says 次试数的题意结果已经按本题的不等号核对. Explicit limitation still denies reconstruction of historical graph positions/open-closed styles."
+    },
+    {
+      "finding": "COMMON-COPY",
+      "status": "MATCHES_REVIEWED_WORDING",
+      "evidence": "Remaining families render only 这次检查对应的保存记录符合本题已核对的条件。 and the two exact reviewed limitations; no claim of independent strategy, understanding, mastery or unrecorded events."
+    },
+    {
+      "finding": "PRECHECK-QUESTION-ANSWER-LEAK",
+      "status": "RESOLVED",
+      "evidence": "issue341GuideForBinding always uses 哪些记录能帮助你核对这次结果？; original binding.question is rendered only by feedbackForProof after submitted success."
+    },
+    {
+      "finding": "P007-MISSING-PRESENTATION-FIELDS",
+      "status": "RESOLVED_IN_WRAPPER_ONLY",
+      "evidence": "Normalization allows missing/null method, rejects explicit non-null with raw.method!=null, and supplies 你保存的哪些记录支持这次结果？ when the original question is absent. Output method is null and strictAApproved remains false."
+    },
+    {
+      "finding": "ORIGINAL-SUBMITTED-CONTRACTS",
+      "status": "PRESERVED",
+      "evidence": "Descriptors retain original submitted exports; normalized spread does not override submitted; shared isolated factory invokes selected.match.adapter.submitted directly after latest-snapshot/context gating. P007 additional wrong-to-correct requirements are not replaced by generic replay."
+    },
+    {
+      "finding": "SAME-TYPE-MULTIFAMILY",
+      "status": "RESOLVED",
+      "evidence": "createEvidenceAdapterRegistry stores arrays by type, obtains every binding match, rejects ambiguity and binding exceptions, and calls new callbacks only for the uniquely selected candidate."
+    },
+    {
+      "finding": "LAZY-READINESS",
+      "status": "PRESERVED",
+      "evidence": "Descriptors contain static frozen source entries and original function references. No sessionTaskFor is evaluated at module load and no unready binding result is cached; the original binding executes at resolution time."
+    },
+    {
+      "finding": "PRODUCTION-ISOLATION",
+      "status": "PRESERVED",
+      "evidence": "Production default functions and EVIDENCE_ADAPTERS remain their original code/data; explicit factory is exported separately. Candidate callbacks import descriptors but not default shared routers, avoiding circular activation. Shared files do not import candidate modules; approved manifest remains byte-identical to main."
+    }
+  ],
+  "unchangedOriginalContracts": {
+    "filesComparedToEarlierReviewerMetadata": 113,
+    "changedFiles": [],
+    "comparisonType": "Byte hashes only to confirm the existing proof inputs remain unchanged, not a proof rerun or source-lock audit."
+  },
+  "approvedManifest": {
+    "path": "docs/spatial-learning/evidence-review-manifest.json",
+    "entries": 813,
+    "sha256": "f7a94a2fb595532cd9c5c20e22873e8c0c78ef73c56ebf2c2f902607ffe5bd3d",
+    "byteIdenticalToMain": true
+  },
+  "formalStatus": {
+    "independentAgentFeedbackReview": "PASS",
+    "independentHumanMathematicalApproval": "PENDING",
+    "formalStrictAGrant": "NOT_GRANTED",
+    "formalA": 813,
+    "newFormalA": 0,
+    "mainMerge": "NOT_AUTHORIZED",
+    "deployment": "NOT_AUTHORIZED"
+  },
+  "scopeLimits": [
+    "Pure presentation callbacks depend on the isolated factory calling them only after source resolution and original submitted success. They are not standalone validators.",
+    "No CI conclusion is asserted by this read-only review. Applicable new changed-HEAD CI and artifacts remain separate evidence.",
+    "This review does not re-review or re-prove B308 original mathematics and cannot be used as human formal mathematical signoff."
+  ],
+  "testsExecutedByReviewer": {
+    "oldMath": 0,
+    "oldNode": 0,
+    "oldChromium": 0,
+    "newNumericalSpotchecks": 0,
+    "newRuntimeTests": 0
+  },
+  "priorReviewFiles": [
+    "pr350-independent-feedback-review.json",
+    "all365-common-feedback-review.json",
+    "all113-feedback-metadata.json"
+  ]
+}

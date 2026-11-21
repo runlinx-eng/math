@@ -1,0 +1,35 @@
+{
+  "schema": "issue-341-bounded-browser-screenshot-review/1",
+  "reviewer": "root visual inspection",
+  "reviewedAtUtc": "2026-11-21T17:00:16.815683+00:00",
+  "pr": 351,
+  "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+  "artifactId": 14716661429,
+  "artifactSha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "scope": "Two representative screenshots of the new shared composition review harness, not a repeat of native controls or human formal mathematics admission",
+  "status": "PASS_BOUNDED_RENDERING_REVIEW",
+  "findings": [
+    "Chinese glyphs, cards and selectors render legibly; no visible text overlap in the captured viewport.",
+    "All365 overview explicitly labels 113 families and formal new A zero.",
+    "P091 cards state that saved probe results were checked against the original inequality, and explicitly retain the missing historical graph-position/open-closed-style boundary.",
+    "Rendered content contains bounded feedback and provenance labels, not complete model or Check-record payloads."
+  ],
+  "screenshots": [
+    {
+      "name": "all365-shared-integration.png",
+      "sha256": "41a8a4b1d61684de69107a21baf779866e0731582f05d22cbd2b4042e0dd75d3",
+      "bytes": 200261
+    },
+    {
+      "name": "p091-bounded-feedback.png",
+      "sha256": "864ad6ee39d039e4b1df90aee96b2431aa66a84f01ac9b81c5e8a7a1b43b73d2",
+      "bytes": 193508
+    }
+  ],
+  "newFormalAGrants": 0
+}

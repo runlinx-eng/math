@@ -1,0 +1,1767 @@
+{
+  "schema": "issue-341-pr351-ci-evidence/1",
+  "scope": "ISOLATED_ALL365_SHARED_INTEGRATION",
+  "status": "PASS_CURRENT_SOURCE_HEAD_CI_AND_LOCAL_ARTIFACT_VERIFICATION",
+  "observedAt": "2026-11-21 17:01:59 UTC",
+  "generatedAt": "2026-11-21T17:02:31.318754+00:00",
+  "repository": "runlinx-eng/math",
+  "pr": 351,
+  "prUrl": "https://github.com/runlinx-eng/math/pull/351",
+  "prState": {
+    "number": 351,
+    "url": "https://github.com/runlinx-eng/math/pull/351",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "mergeable": true,
+    "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "sourceBranch": "integration/issue-341-all365-shared-20261122",
+    "baseHead": "0f2e26677dcc53f96606f04eb58ec1e828ca1972",
+    "baseBranch": "audit/issue-341-formal-365-20261121",
+    "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+    "commits": 1,
+    "changedFiles": 20
+  },
+  "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+  "baseHead": "0f2e26677dcc53f96606f04eb58ec1e828ca1972",
+  "baseBranch": "audit/issue-341-formal-365-20261121",
+  "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+  "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+  "headSemantics": "Run/artifact head fields identify source PR HEAD; receipt SHA and browser testedCheckoutSha identify the actual GitHub pull_request merge checkout. Both are preserved separately.",
+  "allRequiredForWindowSuccessful": true,
+  "runs": [
+    {
+      "id": 44927311010,
+      "name": "Pull request required checks",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010",
+      "apiUrl": "https://api.github.com/repos/runlinx-eng/math/actions/runs/44927311010",
+      "attempt": 1,
+      "event": "pull_request",
+      "workflowPath": ".github/workflows/pull-request-baseline.yml",
+      "createdAt": "2026-11-21T16:56:43Z",
+      "updatedAt": "2026-11-21T17:00:57Z",
+      "requiredForWindow": true,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "jobs": [
+        {
+          "id": 136916127123,
+          "name": "plan-checks",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Select impacted browser families from exact source diff",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127123",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        },
+        {
+          "id": 136916127277,
+          "name": "static-checks",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Determine whether browser regression is relevant",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Select the new isolated shared-integration Node contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Read original archived Checks for the new integration only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify shared routing and proposed audit with preserved original Checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Plan safe Node test scope from actual changed files",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Check patch whitespace and merge markers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Enforce standard viewport for new browser test entrypoints",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Check runtime module syntax",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run active Node.js unit and invariant tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Audit native interaction types and mathematics evidence (read-only)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Validate declarative math-family registry and preserve shadow plan",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Produce reviewed LIVE browser matrix from family registry",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 15
+            },
+            {
+              "name": "Archive evidence audit source-derived report",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 16
+            },
+            {
+              "name": "Check deployment script syntax",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Preserve Node audit and inventory evidence",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 35
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 36
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 37
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127277",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        },
+        {
+          "id": 136916201347,
+          "name": "smoke-checks",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install lightweight real Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify startup, 3D state isolation and V2 backup safety",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Save smoke diagnostics on failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916201347",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        },
+        {
+          "id": 136916201353,
+          "name": "targeted (tests/p9-thinking-feedback-browser.cjs)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Prepare genuine Chromium and verified Chinese font when needed",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Read original Check inputs for isolated shared integration",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 5
+            },
+            {
+              "name": "Run impacted math family in Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Preserve only a small, SHA-bound family receipt in routine checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Preserve Q07 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 8
+            },
+            {
+              "name": "Preserve signed B08 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Preserve new all365 shared-integration evidence and original-input provenance",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 10
+            },
+            {
+              "name": "Save full family evidence only for investigation on failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916201353",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [
+            14716332376
+          ],
+          "artifactDisposition": "present"
+        },
+        {
+          "id": 136916201415,
+          "name": "targeted (tests/issue341-isolated-integration-browser.cjs)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Prepare genuine Chromium and verified Chinese font when needed",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Read original Check inputs for isolated shared integration",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run impacted math family in Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Preserve only a small, SHA-bound family receipt in routine checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Preserve Q07 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 8
+            },
+            {
+              "name": "Preserve signed B08 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Preserve new all365 shared-integration evidence and original-input provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Save full family evidence only for investigation on failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916201415",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [
+            14716661429,
+            14716367242
+          ],
+          "artifactDisposition": "present"
+        },
+        {
+          "id": 136916201471,
+          "name": "targeted (tests/p10-learning-continuity-browser.cjs)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Prepare genuine Chromium and verified Chinese font when needed",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Read original Check inputs for isolated shared integration",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 5
+            },
+            {
+              "name": "Run impacted math family in Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Preserve only a small, SHA-bound family receipt in routine checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Preserve Q07 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 8
+            },
+            {
+              "name": "Preserve signed B08 original Chromium evidence for independent preaudit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Preserve new all365 shared-integration evidence and original-input provenance",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 10
+            },
+            {
+              "name": "Save full family evidence only for investigation on failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916201471",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [
+            14715898652
+          ],
+          "artifactDisposition": "present"
+        },
+        {
+          "id": 136917129208,
+          "name": "required-checks",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Read the small group result artifacts",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 4
+            },
+            {
+              "name": "Read selected family receipts only when relevant",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Require exact selected receipts or the entire manually requested inventory",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136917129208",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        },
+        {
+          "id": 136917130075,
+          "name": "browser (${{ matrix.group }})",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 44927311010,
+          "logs_url": null,
+          "steps": null,
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136917130075",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": null,
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 14716661429,
+          "runId": 44927311010,
+          "name": "issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "fileName": "14716661429-issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1.zip",
+          "bytes": 414189,
+          "sha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+          "createdAt": "2026-11-21T16:58:25Z",
+          "expiresAt": "2027-02-19T16:56:43Z",
+          "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716661429",
+          "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716661429",
+          "expired": false,
+          "actualBytes": 414189,
+          "actualSha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+          "sizeMatch": true,
+          "sha256Match": true,
+          "zipCrc": "PASS",
+          "members": [
+            {
+              "name": "p091-bounded-feedback.png",
+              "bytes": 193508,
+              "crc32": "2555310f"
+            },
+            {
+              "name": "all365-shared-integration.png",
+              "bytes": 200261,
+              "crc32": "ff79ce74"
+            },
+            {
+              "name": "results.json",
+              "bytes": 340092,
+              "crc32": "88562d9d"
+            }
+          ],
+          "verified": true,
+          "officialDigest": "sha256:71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+          "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "headEqualityVerified": true,
+          "rawInputMembersPresent": false,
+          "rawModelOrCheckPayloadKeysFound": 0
+        },
+        {
+          "id": 14716367242,
+          "runId": 44927311010,
+          "name": "targeted-result-094804ce60bb-attempt-1",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "fileName": "14716367242-targeted-result-094804ce60bb-attempt-1.zip",
+          "bytes": 393,
+          "sha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+          "createdAt": "2026-11-21T16:58:23Z",
+          "expiresAt": "2027-02-19T16:56:43Z",
+          "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716367242",
+          "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716367242",
+          "expired": false,
+          "actualBytes": 393,
+          "actualSha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+          "sizeMatch": true,
+          "sha256Match": true,
+          "zipCrc": "PASS",
+          "members": [
+            {
+              "name": "094804ce60bb-attempt-1.json",
+              "bytes": 331,
+              "crc32": "862b0a73"
+            }
+          ],
+          "verified": true,
+          "officialDigest": "sha256:b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+          "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "headEqualityVerified": true,
+          "rawInputMembersPresent": false,
+          "rawModelOrCheckPayloadKeysFound": 0
+        },
+        {
+          "id": 14716332376,
+          "runId": 44927311010,
+          "name": "targeted-result-273dab50d785-attempt-1",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "fileName": "14716332376-targeted-result-273dab50d785-attempt-1.zip",
+          "bytes": 391,
+          "sha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+          "createdAt": "2026-11-21T16:58:35Z",
+          "expiresAt": "2027-02-19T16:56:43Z",
+          "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716332376",
+          "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716332376",
+          "expired": false,
+          "actualBytes": 391,
+          "actualSha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+          "sizeMatch": true,
+          "sha256Match": true,
+          "zipCrc": "PASS",
+          "members": [
+            {
+              "name": "273dab50d785-attempt-1.json",
+              "bytes": 322,
+              "crc32": "197f1975"
+            }
+          ],
+          "verified": true,
+          "officialDigest": "sha256:072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+          "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "headEqualityVerified": true,
+          "rawInputMembersPresent": false,
+          "rawModelOrCheckPayloadKeysFound": 0
+        },
+        {
+          "id": 14715898652,
+          "runId": 44927311010,
+          "name": "targeted-result-92e9e1947b86-attempt-1",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "fileName": "14715898652-targeted-result-92e9e1947b86-attempt-1.zip",
+          "bytes": 392,
+          "sha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+          "createdAt": "2026-11-21T16:57:40Z",
+          "expiresAt": "2027-02-19T16:56:43Z",
+          "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14715898652",
+          "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14715898652",
+          "expired": false,
+          "actualBytes": 392,
+          "actualSha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+          "sizeMatch": true,
+          "sha256Match": true,
+          "zipCrc": "PASS",
+          "members": [
+            {
+              "name": "92e9e1947b86-attempt-1.json",
+              "bytes": 325,
+              "crc32": "99bb3658"
+            }
+          ],
+          "verified": true,
+          "officialDigest": "sha256:39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+          "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "headEqualityVerified": true,
+          "rawInputMembersPresent": false,
+          "rawModelOrCheckPayloadKeysFound": 0
+        }
+      ],
+      "artifactDisposition": "present"
+    },
+    {
+      "id": 44927311025,
+      "name": "P8 startup performance comparison",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311025",
+      "apiUrl": "https://api.github.com/repos/runlinx-eng/math/actions/runs/44927311025",
+      "attempt": 1,
+      "event": "pull_request",
+      "workflowPath": ".github/workflows/p8-startup-performance.yml",
+      "createdAt": "2026-11-21T16:56:43Z",
+      "updatedAt": "2026-11-21T16:58:29Z",
+      "requiredForWindow": true,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "jobs": [
+        {
+          "id": 136916127096,
+          "name": "startup-comparison",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311025,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install isolated Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Check out the same-stack second-round baseline (3c62216)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run matched cold / refresh / deep-link benchmarks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Upload raw timings and failures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311025/job/136916127096",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [
+            14716172663
+          ],
+          "artifactDisposition": "present"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 14716172663,
+          "runId": 44927311025,
+          "name": "p8-startup-performance-comparison",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "fileName": "14716172663-p8-startup-performance-comparison.zip",
+          "bytes": 7879,
+          "sha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+          "createdAt": "2026-11-21T16:58:26Z",
+          "expiresAt": "2027-02-19T16:56:43Z",
+          "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716172663",
+          "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311025/artifacts/14716172663",
+          "expired": false,
+          "actualBytes": 7879,
+          "actualSha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+          "sizeMatch": true,
+          "sha256Match": true,
+          "zipCrc": "PASS",
+          "members": [
+            {
+              "name": "comparison.json",
+              "bytes": 79190,
+              "crc32": "4794dfc3"
+            }
+          ],
+          "verified": true,
+          "officialDigest": "sha256:ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+          "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "headEqualityVerified": true,
+          "rawInputMembersPresent": false,
+          "rawModelOrCheckPayloadKeysFound": 0
+        }
+      ],
+      "artifactDisposition": "present"
+    },
+    {
+      "id": 44927311018,
+      "name": "Math Tree overview checks",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311018",
+      "apiUrl": "https://api.github.com/repos/runlinx-eng/math/actions/runs/44927311018",
+      "attempt": 1,
+      "event": "pull_request",
+      "workflowPath": ".github/workflows/overview-readability-check.yml",
+      "createdAt": "2026-11-21T16:56:43Z",
+      "updatedAt": "2026-11-21T16:56:55Z",
+      "requiredForWindow": true,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "jobs": [
+        {
+          "id": 136916127482,
+          "name": "math-structure-and-ui-syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44927311018,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Check modified browser module syntax",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Check relationship and grade observation data",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ],
+          "url": "https://github.com/runlinx-eng/math/actions/runs/44927311018/job/136916127482",
+          "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+          "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+          "artifactIds": [],
+          "artifactDisposition": "none"
+        }
+      ],
+      "artifacts": [],
+      "artifactDisposition": "none"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14715898652,
+      "runId": 44927311010,
+      "name": "targeted-result-92e9e1947b86-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14715898652-targeted-result-92e9e1947b86-attempt-1.zip",
+      "bytes": 392,
+      "sha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+      "createdAt": "2026-11-21T16:57:40Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14715898652",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14715898652",
+      "expired": false,
+      "actualBytes": 392,
+      "actualSha256": "39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "92e9e1947b86-attempt-1.json",
+          "bytes": 325,
+          "crc32": "99bb3658"
+        }
+      ],
+      "verified": true,
+      "officialDigest": "sha256:39f862975d5f3ae15b7284edf166b4ac3ac497f7b2579e29c598759d24bbf968",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "headEqualityVerified": true,
+      "rawInputMembersPresent": false,
+      "rawModelOrCheckPayloadKeysFound": 0
+    },
+    {
+      "id": 14716172663,
+      "runId": 44927311025,
+      "name": "p8-startup-performance-comparison",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716172663-p8-startup-performance-comparison.zip",
+      "bytes": 7879,
+      "sha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+      "createdAt": "2026-11-21T16:58:26Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716172663",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311025/artifacts/14716172663",
+      "expired": false,
+      "actualBytes": 7879,
+      "actualSha256": "ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "comparison.json",
+          "bytes": 79190,
+          "crc32": "4794dfc3"
+        }
+      ],
+      "verified": true,
+      "officialDigest": "sha256:ec74c5818174545d7168b5a1df58523ff09be69958bb51c812d3bd31220cee34",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "headEqualityVerified": true,
+      "rawInputMembersPresent": false,
+      "rawModelOrCheckPayloadKeysFound": 0
+    },
+    {
+      "id": 14716332376,
+      "runId": 44927311010,
+      "name": "targeted-result-273dab50d785-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716332376-targeted-result-273dab50d785-attempt-1.zip",
+      "bytes": 391,
+      "sha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+      "createdAt": "2026-11-21T16:58:35Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716332376",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716332376",
+      "expired": false,
+      "actualBytes": 391,
+      "actualSha256": "072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "273dab50d785-attempt-1.json",
+          "bytes": 322,
+          "crc32": "197f1975"
+        }
+      ],
+      "verified": true,
+      "officialDigest": "sha256:072e6e5a46642061ef03470200e297f53ed554413896a03514752ee0c2ed6844",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "headEqualityVerified": true,
+      "rawInputMembersPresent": false,
+      "rawModelOrCheckPayloadKeysFound": 0
+    },
+    {
+      "id": 14716367242,
+      "runId": 44927311010,
+      "name": "targeted-result-094804ce60bb-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716367242-targeted-result-094804ce60bb-attempt-1.zip",
+      "bytes": 393,
+      "sha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+      "createdAt": "2026-11-21T16:58:23Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716367242",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716367242",
+      "expired": false,
+      "actualBytes": 393,
+      "actualSha256": "b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "094804ce60bb-attempt-1.json",
+          "bytes": 331,
+          "crc32": "862b0a73"
+        }
+      ],
+      "verified": true,
+      "officialDigest": "sha256:b9cf616ac1cc35b991b23a69353e88cdbae5583bfdaa321336f236e812b5a08c",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "headEqualityVerified": true,
+      "rawInputMembersPresent": false,
+      "rawModelOrCheckPayloadKeysFound": 0
+    },
+    {
+      "id": 14716661429,
+      "runId": 44927311010,
+      "name": "issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1",
+      "head": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "headSha": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "fileName": "14716661429-issue341-isolated-integration-fec2d5446c979741e3207a0c70f3e792a10eb5cf-attempt-1.zip",
+      "bytes": 414189,
+      "sha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+      "createdAt": "2026-11-21T16:58:25Z",
+      "expiresAt": "2027-02-19T16:56:43Z",
+      "artifactUrl": "https://api.github.com/repos/runlinx-eng/math/actions/artifacts/14716661429",
+      "githubArtifactUrl": "https://github.com/runlinx-eng/math/actions/runs/44927311010/artifacts/14716661429",
+      "expired": false,
+      "actualBytes": 414189,
+      "actualSha256": "71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+      "sizeMatch": true,
+      "sha256Match": true,
+      "zipCrc": "PASS",
+      "members": [
+        {
+          "name": "p091-bounded-feedback.png",
+          "bytes": 193508,
+          "crc32": "2555310f"
+        },
+        {
+          "name": "all365-shared-integration.png",
+          "bytes": 200261,
+          "crc32": "ff79ce74"
+        },
+        {
+          "name": "results.json",
+          "bytes": 340092,
+          "crc32": "88562d9d"
+        }
+      ],
+      "verified": true,
+      "officialDigest": "sha256:71580539a07437157f23b29ddd0981bd91f9c35ad718c5d3c0f96e028cf5d60e",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "headEqualityVerified": true,
+      "rawInputMembersPresent": false,
+      "rawModelOrCheckPayloadKeysFound": 0
+    }
+  ],
+  "coverage": {
+    "positions": 365,
+    "candidatePositions": 365,
+    "families": 113,
+    "candidateFamilies": 113,
+    "sharedIntegrationPassed": 365,
+    "groups": {
+      "P007": 30,
+      "P009": 27,
+      "B": 308
+    },
+    "checks": 2952,
+    "browserChecks": 2952,
+    "errors": 0,
+    "browserErrors": 0,
+    "browserViewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "formalA": 813,
+    "newFormalA": 0,
+    "bridgeBindings": 0,
+    "originalFamilyBrowserSuitesRerun": 0,
+    "scopedNewNodeTests": 13,
+    "scopedNewNodePassed": 13,
+    "scopedNewNodeFailed": 0,
+    "existingRequiredNodeGate": {
+      "mode": "full",
+      "reason": "shared-cross-family-or-unknown",
+      "selectedFiles": 144,
+      "tests": 2425,
+      "passed": 2425,
+      "failed": 0,
+      "keptExistingGate": true
+    }
+  },
+  "newIntegration": {
+    "status": "PASS_ISOLATED_SHARED_INTEGRATION_ONLY",
+    "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "sourcehead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "codeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "actualCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+    "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+    "runId": 44927311010,
+    "jobId": 136916201415,
+    "artifactId": 14716661429,
+    "positions": 365,
+    "families": 113,
+    "passed": 365,
+    "checks": 2952,
+    "errors": 0,
+    "errorList": [],
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "browserVersion": "141.0.7390.37",
+    "groups": {
+      "P007": 30,
+      "P009": 27,
+      "B": 308
+    },
+    "originalAttemptsDistribution": {
+      "2": 360,
+      "3": 5
+    },
+    "proofContracts": [
+      "shared-routing",
+      "latest-check",
+      "original-submitted",
+      "feedback-rendering",
+      "production-isolation"
+    ],
+    "scope": {
+      "candidateFamilies": 113,
+      "candidatePositions": 365,
+      "formalA": 813,
+      "newFormalA": 0,
+      "originalFamilySuitesRerun": 0,
+      "originalNavigationRerun": 0,
+      "oldMathProofsRewritten": 0,
+      "nativeUIControlsReperformed": false,
+      "offlineCandidateActivation": false
+    },
+    "provenance": {
+      "testedCheckoutSha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "runId": "44927311010",
+      "runAttempt": 1,
+      "reusedOriginalRun": 44909628782,
+      "reusedOriginalHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+      "fixtureSha256": "c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c"
+    },
+    "screenshots": [
+      {
+        "name": "all365-shared-integration.png",
+        "bytes": 200261,
+        "sha256": "41a8a4b1d61684de69107a21baf779866e0731582f05d22cbd2b4042e0dd75d3",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "name": "p091-bounded-feedback.png",
+        "bytes": 193508,
+        "sha256": "864ad6ee39d039e4b1df90aee96b2431aa66a84f01ac9b81c5e8a7a1b43b73d2",
+        "width": 1920,
+        "height": 1080
+      }
+    ],
+    "rawOriginalModelsAndChecksIncluded": false
+  },
+  "targetedReceipts": [
+    {
+      "schema": "math-ci-targeted-result/1",
+      "id": "92e9e1947b86",
+      "script": "tests/p10-learning-continuity-browser.cjs",
+      "sha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "event": "pull_request",
+      "runId": "44927311010",
+      "attempt": 1,
+      "elapsedMs": 8088,
+      "exitCode": 0,
+      "error": null,
+      "status": "success",
+      "artifactId": 14715898652,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "receiptShaIsActualCheckout": true
+    },
+    {
+      "schema": "math-ci-targeted-result/1",
+      "id": "273dab50d785",
+      "script": "tests/p9-thinking-feedback-browser.cjs",
+      "sha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "event": "pull_request",
+      "runId": "44927311010",
+      "attempt": 1,
+      "elapsedMs": 6092,
+      "exitCode": 0,
+      "error": null,
+      "status": "success",
+      "artifactId": 14716332376,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "receiptShaIsActualCheckout": true
+    },
+    {
+      "schema": "math-ci-targeted-result/1",
+      "id": "094804ce60bb",
+      "script": "tests/issue341-isolated-integration-browser.cjs",
+      "sha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "event": "pull_request",
+      "runId": "44927311010",
+      "attempt": 1,
+      "elapsedMs": 2182,
+      "exitCode": 0,
+      "error": null,
+      "status": "success",
+      "artifactId": 14716367242,
+      "sourceHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "receiptShaIsActualCheckout": true
+    }
+  ],
+  "requiredGate": {
+    "jobId": 136917129208,
+    "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136917129208",
+    "line": "2026-11-21T17:00:53.0319714Z REQUIRED_DAILY_SUCCESS {\"mode\":\"daily\",\"sha\":\"8f46a03173eff3b16627f4856b67deb21a0b06f9\",\"runId\":\"44927311010\",\"smoke\":true,\"targetedScripts\":[\"tests/issue341-isolated-integration-browser.cjs\",\"tests/p10-learning-continuity-browser.cjs\",\"tests/p9-thinking-feedback-browser.cjs\"]}",
+    "parsed": {
+      "mode": "daily",
+      "sha": "8f46a03173eff3b16627f4856b67deb21a0b06f9",
+      "runId": "44927311010",
+      "smoke": true,
+      "targetedScripts": [
+        "tests/issue341-isolated-integration-browser.cjs",
+        "tests/p10-learning-continuity-browser.cjs",
+        "tests/p9-thinking-feedback-browser.cjs"
+      ]
+    }
+  },
+  "existingRequiredNodeGate": {
+    "mode": "full",
+    "reason": "shared-cross-family-or-unknown",
+    "selectedFiles": 144,
+    "tests": 2425,
+    "passed": 2425,
+    "failed": 0,
+    "keptExistingGate": true
+  },
+  "scopedNewNode": {
+    "files": [
+      "tests/issue341-archived-input-transport.test.mjs",
+      "tests/issue341-isolated-integration.test.mjs",
+      "tests/issue341-audit-fixture-integration.test.mjs",
+      "tests/issue341-learning-audit-injection.test.mjs"
+    ],
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "jobId": 136916127277,
+    "status": "success"
+  },
+  "supplementaryChecks": {
+    "p9ThinkingFeedback": {
+      "jobId": 136916201353,
+      "checks": 32,
+      "errors": 0
+    },
+    "p10Continuity": {
+      "jobId": 136916201471,
+      "checks": 24,
+      "status": "success"
+    },
+    "smoke": {
+      "jobId": 136916201347,
+      "p9ThreeViewChecks": 20,
+      "p9Viewports": 2,
+      "p10BackupChecks": 44,
+      "status": "success"
+    },
+    "p8": {
+      "artifactId": 14716172663,
+      "source": "GitHub Actions isolated Chromium; not VPS",
+      "serviceWorkers": "blocked",
+      "runtime": {
+        "browserVersion": "141.0.7390.37",
+        "rounds": 5,
+        "viewport": "1440x900",
+        "network": "two loopback Python HTTP servers; no artificial throttling",
+        "baseReference": "3c62216aa5e38a3a57b0f25415aa0596fd12f8b4"
+      },
+      "samples": 40,
+      "errors": 0,
+      "failures": 0
+    },
+    "overview": {
+      "runId": 44927311018,
+      "status": "success",
+      "artifacts": "none"
+    }
+  },
+  "inputTransport": {
+    "mode": "read-only original GitHub artifacts; local ignored fixture only",
+    "sourceRun": 44909628782,
+    "sourceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+    "originalZipCount": 12,
+    "positions": 365,
+    "families": 113,
+    "fixtureSha256": "c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c",
+    "staticLog": {
+      "jobId": 136916127277,
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127277",
+      "line": "2026-11-21T16:57:18.5595759Z ISSUE341_ARCHIVED_INPUTS {\"status\": \"PASS_ORIGINAL_ARTIFACT_TRANSPORT_ONLY\", \"positions\": 365, \"families\": 113, \"originalZipCount\": 12, \"fixtureSha256\": \"c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c\", \"rawRecordsPublished\": false, \"originalMathOrBrowserTestsRerun\": 0}",
+      "parsed": {
+        "status": "PASS_ORIGINAL_ARTIFACT_TRANSPORT_ONLY",
+        "positions": 365,
+        "families": 113,
+        "originalZipCount": 12,
+        "fixtureSha256": "c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c",
+        "rawRecordsPublished": false,
+        "originalMathOrBrowserTestsRerun": 0
+      }
+    },
+    "browserLog": {
+      "jobId": 136916201415,
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916201415",
+      "line": "2026-11-21T16:58:18.5675334Z ISSUE341_ARCHIVED_INPUTS {\"status\": \"PASS_ORIGINAL_ARTIFACT_TRANSPORT_ONLY\", \"positions\": 365, \"families\": 113, \"originalZipCount\": 12, \"fixtureSha256\": \"c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c\", \"rawRecordsPublished\": false, \"originalMathOrBrowserTestsRerun\": 0}",
+      "parsed": {
+        "status": "PASS_ORIGINAL_ARTIFACT_TRANSPORT_ONLY",
+        "positions": 365,
+        "families": 113,
+        "originalZipCount": 12,
+        "fixtureSha256": "c521e4a50a965bc8328087683cfec4eb52c4140d1a1df32472c4aaab4c34390c",
+        "rawRecordsPublished": false,
+        "originalMathOrBrowserTestsRerun": 0
+      }
+    },
+    "originalPayloadRepublished": false,
+    "autoRerunOnMissingInput": false
+  },
+  "artifactVerification": {
+    "count": 5,
+    "bytes": 423244,
+    "allOfficialSizesMatched": true,
+    "allOfficialSha256Matched": true,
+    "allZipCrcPassed": true,
+    "allSourceHeadsMatched": true,
+    "memberCount": 7,
+    "rawInputMembersPresent": false,
+    "rawModelOrCheckPayloadKeysFound": 0,
+    "inspection": "Inspected all seven JSON/PNG members. No issue341-inputs or archived-checks fixture member; recursive JSON scan found no model/models/record/records/lessons/attempts/history/answers payload fields.",
+    "earliestExpiresAt": "2027-02-19T16:56:43Z"
+  },
+  "workflowInputSafety": {
+    "source": {
+      "path": ".github/workflows/pull-request-baseline.yml",
+      "ref": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+      "blobSha": "d4199b96b801a8c9cd9cdb684d091129681353da",
+      "url": "https://github.com/runlinx-eng/math/blob/fec2d5446c979741e3207a0c70f3e792a10eb5cf/.github/workflows/pull-request-baseline.yml"
+    },
+    "readJobPermissions": [
+      "contents:read",
+      "actions:read"
+    ],
+    "newNodePreparationCondition": "currentPlan selects tests/issue341-isolated-integration-browser.cjs",
+    "browserPreparationCondition": "matrix.script == tests/issue341-isolated-integration-browser.cjs",
+    "successfulNewBrowserUploadPath": "verification/issue341-isolated-integration/",
+    "failureUploadExclusion": "!verification/issue341-inputs/**",
+    "inputRestorationPathIgnored": "verification/issue341-inputs/",
+    "inputPayloadUploaded": false
+  },
+  "noArtifactJobs": [
+    {
+      "runId": 44927311010,
+      "jobId": 136916127123,
+      "name": "plan-checks",
+      "conclusion": "success",
+      "artifactDisposition": "none",
+      "reason": "Successful routine job has no upload artifact configured for this event"
+    },
+    {
+      "runId": 44927311010,
+      "jobId": 136916127277,
+      "name": "static-checks",
+      "conclusion": "success",
+      "artifactDisposition": "none",
+      "reason": "Successful routine job has no upload artifact configured for this event"
+    },
+    {
+      "runId": 44927311010,
+      "jobId": 136916201347,
+      "name": "smoke-checks",
+      "conclusion": "success",
+      "artifactDisposition": "none",
+      "reason": "Successful routine job has no upload artifact configured for this event"
+    },
+    {
+      "runId": 44927311010,
+      "jobId": 136917129208,
+      "name": "required-checks",
+      "conclusion": "success",
+      "artifactDisposition": "none",
+      "reason": "Successful routine job has no upload artifact configured for this event"
+    },
+    {
+      "runId": 44927311010,
+      "jobId": 136917130075,
+      "name": "browser (${{ matrix.group }})",
+      "conclusion": "skipped",
+      "artifactDisposition": "none",
+      "reason": "Skipped manual full-browser matrix"
+    },
+    {
+      "runId": 44927311018,
+      "jobId": 136916127482,
+      "name": "math-structure-and-ui-syntax",
+      "conclusion": "success",
+      "artifactDisposition": "none",
+      "reason": "Successful routine job has no upload artifact configured for this event"
+    }
+  ],
+  "productionAudits": {
+    "learning": {
+      "jobId": 136916127277,
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127277",
+      "line": "2026-11-21T16:59:53.6223864Z LEARNING_EVIDENCE_AUDIT {\"schema\":\"math-learning-interaction-evidence/1\",\"basis\":\"Live source modules with B39 loaded; static capability audit, not learner/browser proof\",\"sourceNodes\":587,\"sourceEdges\":1223,\"sourceThinkingNodes\":50,\"nativeSessions\":587,\"nativeCoreTasks\":1996,\"bridgeSessions\":776,\"bridgeTasks\":1552,\"uniqueInteractionTypes\":323,\"validatorFamilies\":39,\"proposedTeachingAdapterFamilies\":\"not determined; requires semantic review beyond validator module identity\",\"evidenceLevelsNative\":{\"A\":{\"tasks\":813,\"nodes\":305,\"sessions\":305,\"native\":813,\"bridge\":0,\"percent\":40.73},\"B\":{\"tasks\":183,\"nodes\":86,\"sessions\":86,\"native\":183,\"bridge\":0,\"percent\":9.17},\"C\":{\"tasks\":120,\"nodes\":50,\"sessions\":50,\"native\":120,\"bridge\":0,\"percent\":6.01},\"D\":{\"tasks\":808,\"nodes\":293,\"sessions\":293,\"native\":808,\"bridge\":0,\"percent\":40.48},\"E\":{\"tasks\":72,\"nodes\":29,\"sessions\":29,\"native\":72,\"bridge\":0,\"percent\":3.61}},\"unknownTaskCount\":0,\"crossCourseReusedTypes\":186,\"historyTasksNative\":1636,\"replayVerifiedTasksNative\":813,\"guideBindingsNative\":813,\"caution\":\"A is a source-bound strict mathematical replay capability of the individually reviewed registered adapters at exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.\"}",
+      "parsed": {
+        "schema": "math-learning-interaction-evidence/1",
+        "basis": "Live source modules with B39 loaded; static capability audit, not learner/browser proof",
+        "sourceNodes": 587,
+        "sourceEdges": 1223,
+        "sourceThinkingNodes": 50,
+        "nativeSessions": 587,
+        "nativeCoreTasks": 1996,
+        "bridgeSessions": 776,
+        "bridgeTasks": 1552,
+        "uniqueInteractionTypes": 323,
+        "validatorFamilies": 39,
+        "proposedTeachingAdapterFamilies": "not determined; requires semantic review beyond validator module identity",
+        "evidenceLevelsNative": {
+          "A": {
+            "tasks": 813,
+            "nodes": 305,
+            "sessions": 305,
+            "native": 813,
+            "bridge": 0,
+            "percent": 40.73
+          },
+          "B": {
+            "tasks": 183,
+            "nodes": 86,
+            "sessions": 86,
+            "native": 183,
+            "bridge": 0,
+            "percent": 9.17
+          },
+          "C": {
+            "tasks": 120,
+            "nodes": 50,
+            "sessions": 50,
+            "native": 120,
+            "bridge": 0,
+            "percent": 6.01
+          },
+          "D": {
+            "tasks": 808,
+            "nodes": 293,
+            "sessions": 293,
+            "native": 808,
+            "bridge": 0,
+            "percent": 40.48
+          },
+          "E": {
+            "tasks": 72,
+            "nodes": 29,
+            "sessions": 29,
+            "native": 72,
+            "bridge": 0,
+            "percent": 3.61
+          }
+        },
+        "unknownTaskCount": 0,
+        "crossCourseReusedTypes": 186,
+        "historyTasksNative": 1636,
+        "replayVerifiedTasksNative": 813,
+        "guideBindingsNative": 813,
+        "caution": "A is a source-bound strict mathematical replay capability of the individually reviewed registered adapters at exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family."
+      }
+    },
+    "expansion": {
+      "jobId": 136916127277,
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127277",
+      "line": "2026-11-21T17:00:16.8001497Z EVIDENCE_EXPANSION_AUDIT {\"schema\":\"math-evidence-expansion-audit/1\",\"nativeTasks\":1996,\"nativeNodes\":587,\"bridgeSessions\":776,\"bridgeTasks\":1552,\"reviewedTasks\":813,\"boundTasks\":813,\"boundNodes\":305,\"families\":88,\"defects\":0,\"bridgeBindings\":0,\"caution\":\"A passing example identifies a review candidate only; it never grants A classification, a binding, method label, learner score or pedagogical approval. Full A–E classification remains in audit-learning-evidence.mjs.\"}",
+      "parsed": {
+        "schema": "math-evidence-expansion-audit/1",
+        "nativeTasks": 1996,
+        "nativeNodes": 587,
+        "bridgeSessions": 776,
+        "bridgeTasks": 1552,
+        "reviewedTasks": 813,
+        "boundTasks": 813,
+        "boundNodes": 305,
+        "families": 88,
+        "defects": 0,
+        "bridgeBindings": 0,
+        "caution": "A passing example identifies a review candidate only; it never grants A classification, a binding, method label, learner score or pedagogical approval. Full A–E classification remains in audit-learning-evidence.mjs."
+      }
+    },
+    "proposedCandidateClassification": {
+      "jobId": 136916127277,
+      "url": "https://github.com/runlinx-eng/math/actions/runs/44927311010/job/136916127277",
+      "line": "2026-11-21T16:57:20.2876739Z # ISSUE341_LEARNING_AUDIT_INJECTION {\"status\":\"PASS_PROPOSED_CLASSIFICATION_INJECTION_NOT_FORMAL_APPROVAL\",\"families\":113,\"positions\":365,\"originalRecords\":365,\"bridgeBindings\":0,\"formalStrictAGranted\":0,\"officialManifestTasks\":813,\"originalArtifactRun\":44909628782,\"originalArtifactHead\":\"0cafdaed5aad3d32bf09ab1d9abf6e77130a069d\"}",
+      "parsed": {
+        "status": "PASS_PROPOSED_CLASSIFICATION_INJECTION_NOT_FORMAL_APPROVAL",
+        "families": 113,
+        "positions": 365,
+        "originalRecords": 365,
+        "bridgeBindings": 0,
+        "formalStrictAGranted": 0,
+        "officialManifestTasks": 813,
+        "originalArtifactRun": 44909628782,
+        "originalArtifactHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d"
+      }
+    }
+  },
+  "historicalEvidence": {
+    "original144ZipBytesUnchanged": true,
+    "oldFailureAndCancellationMetadataRetained": true,
+    "newRemoteRerunsTriggeredByThisAudit": 0
+  },
+  "boundaries": [
+    "This is isolated shared-consumer integration evidence for 365 candidate positions; it is not independent formal mathematical admission.",
+    "No A grant, production registration, main merge, deployment, service-worker candidate activation or weakened gate.",
+    "The new all365 browser uses only 1920x1080; it does not replace historical per-family native interaction or multi-viewport evidence.",
+    "Original source mathematics/browser suites were not manually rerun; the unchanged Required selector ran its existing 144-file Node gate because shared cross-family code changed.",
+    "Five new output ZIPs are separate from the unchanged 144 original ZIP archive.",
+    "Artifacts are verified locally; durable persistence is handled by the parent task."
+  ],
+  "publicMetadataProjection": {
+    "privateProviderLocatorsPublished": false,
+    "localAbsolutePathsPublished": false,
+    "originalMetadataSha256": "c76340d2ad74916f4761e92e89a779fd9d9b41cd03dea765a3d569f06f0b2b3c",
+    "archiveLookup": "Resolve the exact owner-held archive filename and verify its published SHA256; private access identifiers are retained in the owner delivery."
+  }
+}
