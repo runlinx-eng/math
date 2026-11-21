@@ -1087,8 +1087,7 @@
         "math",
         "correction",
         "persistence",
-        "negative",
-        "backup"
+        "negative"
       ],
       "dependsOn": [],
       "resources": {
