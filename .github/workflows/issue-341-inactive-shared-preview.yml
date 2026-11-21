@@ -1,0 +1,53 @@
+name: Issue 341 inactive shared preview
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/issue341-inactive-shared-preview.mjs'
+      - '.github/workflows/issue-341-inactive-shared-preview.yml'
+      - 'docs/math-parallel/issue-341-formal-365/staging-integration/INACTIVE-shared-5x12-preparation.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inactive-shared-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate inactive pilot source bindings; no math or browser rerun
+        run: |
+          set -euo pipefail
+          node --check scripts/issue341-inactive-shared-preview.mjs
+          node scripts/issue341-inactive-shared-preview.mjs
+      - name: Assert no runtime registration, grant, or new math tests
+        if: success()
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('verification/issue341-inactive-shared-preview/results.json').read_text())
+          assert r['status']=='PASS_INACTIVE_PREVIEW_ONLY',r['errors']
+          assert (r['checkedPositions'],r['checkedFamilies'],r['currentApprovedA'])==(12,5,813)
+          assert r['newStrictA']==r['mathematicalRetestsRun']==r['chromiumRetestsRun']==0
+          assert r['approvedManifestModified'] is False
+          assert r['candidateRuntimeRegistered'] is False
+          assert r['methodLabelsApproved'] is False
+          print('PASS: INACTIVE pilot only, no A grant')
+          PY
+      - name: Archive inactive-only preflight
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-INACTIVE-shared-preview
+          path: verification/issue341-inactive-shared-preview/
+          retention-days: 7
+          if-no-files-found: warn
