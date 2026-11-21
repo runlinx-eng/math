@@ -1,0 +1,272 @@
+diff --git a/dist/learning/p115f-polygon-angle-fan-evidence.js b/dist/learning/p115f-polygon-angle-fan-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e954030120704b7850e0e93b551d3f191fce740f
+--- /dev/null
++++ b/dist/learning/p115f-polygon-angle-fan-evidence.js
+@@ -0,0 +1,61 @@
++import {initial, valid} from './phase5/b24-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++export const P115F_SOURCES=Object.freeze([Object.freeze({
++  sessionId:'patternfloor',index:0,nodeId:'mt_61Nhj8W78f',type:'x-p24-fan',
++  taskHash:'67cf90d194df985310dd7ad5f28d58a080ddeb85c43c503a8d7851377a7ee2e3',
++})]);
++
++export function p115fPolygonAngleFanBinding(task,context) {
++  const [row]=P115F_SOURCES;
++  if (context?.sessionId!==row.sessionId||context?.index!==row.index||
++      !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p115f-polygon-angle-fan',method:null,question:'各个角围起来刚好360度、还有空隙，还是超过一整圈？'};
++}
++
++export function replayP115FPolygonAngleFanEvidence(task,model,context) {
++  try {
++    const binding=p115fPolygonAngleFanBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const runs=[];
++    let shape=null;
++    let count=0;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','d','f'])||!hasExactKeys(event.d,[])) return null;
++      if (event.a==='fanChoose'&&hasExactKeys(event.f,['kind'])) {
++        const sides=Number(event.f.kind);
++        if ([3,4,5,6].includes(sides)&&equal(event.f.kind,sides)) {
++          shape=sides;
++          count=0;
++        }
++        continue;
++      }
++      if (!hasExactKeys(event.f,[])) return null;
++      switch (event.a) {
++      case 'reset': shape=null; count=0; runs.length=0; break;
++      case 'fanClear': count=0; break;
++      case 'fanAdd': if (shape&&count<6) count++; break;
++      case 'fanRecord':
++        if (shape&&count&&!runs.some(([s,n])=>s===shape&&n===count)) runs.push([shape,count]);
++        break;
++      default: return null;
++      }
++    }
++    if (shape!==model.board.shape||count!==model.board.count||!sameEvidence(runs,model.board.runs)||
++        !task.samples.every(sample=>runs.some(run=>sameEvidence(sample,run)))) return null;
++    const angle=(sides,n)=>180*(sides-2)*n/sides;
++    const threePentagons=angle(5,3);
++    const fills=runs.filter(([s,n])=>angle(s,n)===360).map(([s])=>s).sort((a,b)=>a-b);
++    if (!equal(model.answers[0],threePentagons)||!equal(model.answers[1],360-threePentagons)||
++        !sameEvidence(fills,[3,4,6])||model.answers[2]!=='three') return null;
++    return {...binding,angles:runs.map(([s,n])=>angle(s,n))};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP115FPolygonAngleFanEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP115FPolygonAngleFanEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p115f-polygon-angle-fan-browser.cjs b/tests/p9-p115f-polygon-angle-fan-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..ffa66512769b4edc7908367c627986d5fe44e06f
+--- /dev/null
++++ b/tests/p9-p115f-polygon-angle-fan-browser.cjs
+@@ -0,0 +1,162 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P115F_ARTIFACTS || path.join(root, 'verification/p9-p115f-polygon-angle-fan'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P115F_SOURCES, replayP115FPolygonAngleFanEvidence, submittedP115FPolygonAngleFanEvidence} = await entry('dist/learning/p115f-polygon-angle-fan-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b24 = await entry('dist/learning/phase5/b24-model.js');
++
++const wrongSteps = task => b24.solveSteps(task).map(step =>
++  step.field === 'answers.0' ? {...step,value:'0'} : step);
++const correctSteps = task => b24.solveSteps(task).filter(step => step.field === "answers.0");
++
++  const cases = P115F_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP115FPolygonAngleFanEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b24.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P115F');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b24.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b24.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP115FPolygonAngleFanEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P115F_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p115f-polygon-angle-fan-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P115F_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p115f-polygon-angle-fan.test.mjs b/tests/p9-p115f-polygon-angle-fan.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e8f18a6ac4768f20c235ec09419807e6adfc3d0e
+--- /dev/null
++++ b/tests/p9-p115f-polygon-angle-fan.test.mjs
+@@ -0,0 +1,31 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b24-model.js';
++import {P115F_SOURCES, replayP115FPolygonAngleFanEvidence, submittedP115FPolygonAngleFanEvidence} from '../dist/learning/p115f-polygon-angle-fan-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P115F_SOURCES) {
++  test(`${sessionId}:${index} replays saved fans and verifies gap and overlap`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP115FPolygonAngleFanEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.angles, [360,360,360,324,432]);
++    assert.equal(replayP115FPolygonAngleFanEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answers[0] = '0';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP115FPolygonAngleFanEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP115FPolygonAngleFanEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].f.kind = '9';
++    assert.equal(replay(forged), null);
++    assert.equal(replay({...correct,answers:['324','36.000000001','three']}),null);
++  });
++}

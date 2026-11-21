@@ -1,0 +1,306 @@
+diff --git a/dist/learning/p098p-graph-plot-evidence.js b/dist/learning/p098p-graph-plot-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..fce86a56f18979c67c2b64f436cb1c5db640df3a
+--- /dev/null
++++ b/dist/learning/p098p-graph-plot-evidence.js
+@@ -0,0 +1,86 @@
++import {eq,fn,initial,val,valid} from './phase5/b36-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P098P_SOURCES=Object.freeze([
++  {
++    "sessionId": "plot36",
++    "index": 0,
++    "nodeId": "mt_-3udyo6VyB",
++    "type": "x-f36-plot",
++    "taskHash": "139ac557b035860387eb5db2e25ccb02655583db2786f4ff5460929df30ec55f"
++  },
++  {
++    "sessionId": "quadratic36",
++    "index": 0,
++    "nodeId": "mt_GZuoYaDdWd",
++    "type": "x-f36-plot",
++    "taskHash": "628dbe45e9d82d984a049a95e1fe04a39ce2c7ed0070b158e00c63a838f92f4a"
++  },
++  {
++    "sessionId": "quadratic36",
++    "index": 2,
++    "nodeId": "mt_GZuoYaDdWd",
++    "type": "x-f36-plot",
++    "taskHash": "b9c69b762412c340305b658862f703414bc93b3a371ac0875007e661bcc6c3f6"
++  }
++].map(Object.freeze));
++
++export function p098pGraphPlotBinding(task,context) {
++  const row=P098P_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p098p-graph-plot',method:null,
++    question:'每个点的纵坐标怎样由横坐标算出？图在哪些地方过横轴？'};
++}
++
++export function replayP098PGraphPlotEvidence(task,model,context) {
++  try {
++    const binding=p098pGraphPlotBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const {board}=initial(task);
++    let rejected=false;
++    for (const e of model.history) {
++      if (!hasExactKeys(e,['a','i','v','w','z'])) return null;
++      rejected=false;
++      if (e.a==='point'&&e.i==='') {
++        const x=val(e.v), actual=fn(task,e.v);
++        board.first.point??=[e.v,e.w];
++        if (!task.xs.includes(x)||!actual||!eq(e.w,actual)) {
++          rejected=true;
++        } else if (!board.points.some(p=>p[0]===x)) {
++          board.points.push([x,val(actual)]);
++        }
++      } else if (e.a==='undo'&&e.i==='') {
++        board.points.pop();
++        board.roots=[];
++      } else if (e.a==='root'&&task.rootSelect) {
++        const i=board.points.findIndex((_,j)=>e.i===String(j));
++        if (i<0) return null;
++        board.first.root??=e.i;
++        const old=board.roots.indexOf(i);
++        if (old!==-1) board.roots.splice(old,1);
++        else if (board.points[i][1]===0) board.roots.push(i);
++        else rejected=true;
++      } else return null;
++      if (rejected) board.bad=true;
++    }
++    if (rejected||!sameEvidence(board,model.board)||board.points.length!==task.xs.length) return null;
++    const xIntercepts=board.roots.map(i=>board.points[i][0]).sort((a,b)=>a-b);
++    if (task.rootSelect&&(!sameEvidence(xIntercepts,task.xs.filter(x=>eq(fn(task,x),0)))||
++        xIntercepts.length!==task.rootCount)) return null;
++    if (!task.questions.every((q,i)=>{
++      if (q.kind==='approx') {
++        const expected=(i===0?-1:1)*Math.sqrt(-task.c/task.a);
++        return Math.abs(val(model.answers[i])-expected)<=q.tolerance;
++      }
++      return q.kind==='number'&&eq(model.answers[i],task.b);
++    })) return null;
++    return {...binding,pointCount:board.points.length,selectedIntercepts:xIntercepts};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP098PGraphPlotEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP098PGraphPlotEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p098p-graph-plot-browser.cjs b/tests/p9-p098p-graph-plot-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..6a77e99b131282b3dce3857f51a9e05a3047f072
+--- /dev/null
++++ b/tests/p9-p098p-graph-plot-browser.cjs
+@@ -0,0 +1,166 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P098P_ARTIFACTS || path.join(root, 'verification/p9-p098p-graph-plot'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P098P_SOURCES, replayP098PGraphPlotEvidence, submittedP098PGraphPlotEvidence} = await entry('dist/learning/p098p-graph-plot-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b36 = await entry('dist/learning/phase5/b36-model.js');
++  const b35=await entry('dist/learning/phase5/b35-model.js');
++  const solvePrior=task=>(b36.TYPES.has(task.type)?b36:b35).solveSteps(task);
++  const wrongSteps = task => b36.solveSteps(task).slice(0,-1);
++  const correctSteps = task => b36.solveSteps(task).slice(-1);
++  const cases = P098P_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP098PGraphPlotEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b36.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P098P');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,solvePrior(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b36.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the unfinished construction or answer fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP098PGraphPlotEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p098p.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098p-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P098P_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p098p-graph-plot-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P098P_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p098p-graph-plot.test.mjs b/tests/p9-p098p-graph-plot.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..8703126f0674b877355aa8dfbbb01429a0519863
+--- /dev/null
++++ b/tests/p9-p098p-graph-plot.test.mjs
+@@ -0,0 +1,36 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example,inspect} from '../dist/learning/phase5/b36-model.js';
++import {P098P_SOURCES, replayP098PGraphPlotEvidence, submittedP098PGraphPlotEvidence} from '../dist/learning/p098p-graph-plot-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P098P_SOURCES) {
++  test(`${sessionId}:${index} checks the saved construction and the submitted conclusion`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP098PGraphPlotEvidence(task,model,context);
++    const proof=replay(good);
++    assert.ok(proof);
++    assert.equal(replayP098PGraphPlotEvidence(task,good,{sessionId,index:-1}),null);
++    for (const edit of [
++      m=>{m.history=[];},
++      m=>{m.history[0].a='select';},
++      m=>{m.history[0].i='forged';},
++      m=>{m.board.bad=!m.board.bad;},
++      m=>{m.answers.push('forged');},
++    ]) {
++      const bad=structuredClone(good);
++      edit(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP098PGraphPlotEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP098PGraphPlotEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

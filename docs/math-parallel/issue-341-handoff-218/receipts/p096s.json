@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-subtraction-grouping",
+  "commit": "072787704af31fd09b77b80e51e2ab032966c1aa",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p096s-subtraction-grouping-evidence.js",
+    "tests/p9-p096s-subtraction-grouping-browser.cjs",
+    "tests/p9-p096s-subtraction-grouping.test.mjs"
+  ],
+  "scope": "核对两种括号位置的已保存两步结果及各自追加日志的相容性；原生未保存撤回时刻。",
+  "sources": [
+    {
+      "sessionId": "regroupadd",
+      "index": 2,
+      "nodeId": "mt_T76hKqXf0z",
+      "type": "x-subgroups",
+      "taskHash": "7c4a6de5df2c93a0ffdc3c8eded0690f7970382bd4e87a22883d4a48d5ecc460"
+    }
+  ],
+  "nodePass": 19,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "dd900939d5cb07c1e2da62af46ba9eabe9c04e210e929038da118baff00b92ca",
+    "native-state-v2.json": "501b5784f69130977632d7c160bf8aaa033909bfba772f94e6739242a5fcfa9f",
+    "node.log": "be5f003498e1322955df6fe5888bbdedc1306fcc9e38757902a2eec3d0659694",
+    "preflight.log": "3ef3b4a0e2a6fd55d1831e0bb1d397a7d0d36a5ba366b0e44c65e5e4f5aef847",
+    "regroupadd-2-correct-check-decoded.json": "88128d3ff6ecf50f109c6ae0709494ab5ed36ecf37ad07765773b533a00e8fa2",
+    "regroupadd-2-correct-check-storage.txt": "88128d3ff6ecf50f109c6ae0709494ab5ed36ecf37ad07765773b533a00e8fa2",
+    "regroupadd-2-correct.png": "9127a818b4e6f97d8efb3dec552f2dacd049675966bfb29fc9e4f954fb3a926f",
+    "regroupadd-2-corrected-draft-decoded.json": "849c4812bea61b17bd627c485f6ad51f6d0e92573dc093f1551346a084ab5188",
+    "regroupadd-2-corrected-draft-storage.txt": "849c4812bea61b17bd627c485f6ad51f6d0e92573dc093f1551346a084ab5188",
+    "regroupadd-2-offline-reload-decoded.json": "21e7ca21129a5906eba6a34564116bfef7a099b8f9786181d48ec205056ca528",
+    "regroupadd-2-offline-reload-storage.txt": "21e7ca21129a5906eba6a34564116bfef7a099b8f9786181d48ec205056ca528",
+    "regroupadd-2-restored-backup-decoded.json": "f1091035a49a4b3b23582d2bfc34872addcfaab6927ee7cb7aaf864b1f061ca3",
+    "regroupadd-2-restored-backup-storage.txt": "f1091035a49a4b3b23582d2bfc34872addcfaab6927ee7cb7aaf864b1f061ca3",
+    "regroupadd-2-retry-decoded.json": "dc3f6db19ab3c0ecf26c294f962022d7c2ebe2af356bc5b81a8b427efe1a4182",
+    "regroupadd-2-retry-storage.txt": "dc3f6db19ab3c0ecf26c294f962022d7c2ebe2af356bc5b81a8b427efe1a4182",
+    "regroupadd-2-wrong-check-decoded.json": "4f588d1583edb2b77b19437258870464029090fdc43677e73743091d1c03a1d6",
+    "regroupadd-2-wrong-check-storage.txt": "4f588d1583edb2b77b19437258870464029090fdc43677e73743091d1c03a1d6",
+    "regroupadd-2-wrong.png": "e52303a14e0ecf78569748156e0598d2ea6aaa9056fcc78ff62ff27c3125c214",
+    "results.json": "61c19047295a2cc80bebe3540b650b1cc42a21ad417733f091768ac4274ff5d8"
+  }
+}

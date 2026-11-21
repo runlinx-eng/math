@@ -1,0 +1,335 @@
+diff --git a/dist/learning/p107p-product-plans-evidence.js b/dist/learning/p107p-product-plans-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6cd9970e5a7e89ec50550838321c9bfef8091200
+--- /dev/null
++++ b/dist/learning/p107p-product-plans-evidence.js
+@@ -0,0 +1,110 @@
++import {initial,number,valid} from './phase5/b14-model.js';
++import {equivalent,norm} from './phase5/b15-model.js';
++import {equal,rational} from './phase5/b16-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P107P_SOURCES=Object.freeze([
++  {
++    "sessionId": "remainders",
++    "index": 3,
++    "nodeId": "mt_p-nbe0w_lf",
++    "type": "x-planproduct",
++    "taskHash": "a226434c8efd9bc80ba6b7cb9489e68cdf3235fb2b0f3cd509968befcc5ff17f"
++  },
++  {
++    "sessionId": "remainders",
++    "index": 4,
++    "nodeId": "mt_p-nbe0w_lf",
++    "type": "x-planproduct",
++    "taskHash": "0893576e1c69162ff67758968d1750c9dd63d49f2c236d2a56887d6d04642574"
++  },
++  {
++    "sessionId": "factoruse",
++    "index": 4,
++    "nodeId": "mt_0Wg5F97osg",
++    "type": "x-planproduct",
++    "taskHash": "ac8fd2af6c812a0e5e7ed5c64f08053405d4f793118d07323c2b89570455f5d0"
++  }
++].map(Object.freeze));
++
++function readsEquation(task,raw) {
++  const [a,b,...rest]=norm(raw).replace(/[ＮN]/g,'n').split('=');
++  if (rest.length||!a||!b) return false;
++  const expr=a==='n'?b:b==='n'?a:null;
++  if (expr===null) return false;
++  const plans=task.plans.map(s=>s.replace(/\d/g,i=>String(task.values[Number(i)]/(Number(i)===task.values.length-1?100:1))));
++  const permitted=[...task.equations.map(s=>norm(s).split('=')[1]),...plans];
++  return permitted.some(p=>equivalent(expr,p));
++}
++
++export function p107pProductPlansBinding(task,context) {
++  const row=P107P_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p107p-product-plans',method:null,
++    question:'这一步先合并哪两张卡？每个数还有没有被重复使用？'};
++}
++
++export function replayP107PProductPlansEvidence(task,model,context) {
++  try {
++    const binding=p107pProductPlansBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    let {board}=initial(task);
++    let rejected=false;
++    for (const {action,data} of model.history) {
++      const {index,side,value,fields}=data;
++      if (side!==null||value!==null) return null;
++      rejected=false;
++      if (action==='b14-reset'&&index===null) {
++        board=initial(task).board;
++      } else if (action==='b14-plan-split'&&index===null&&task.split&&!board.split) {
++        const a=number(fields.left), b=number(fields.right);
++        rejected=!Number.isInteger(a)||!Number.isInteger(b)||a<2||b<2||a*b!==task.values[0];
++        if (!rejected) {
++          board.groups=[{value:a,expr:'0a',ids:['0a']},{value:b,expr:'0b',ids:['0b']},
++            {value:task.values[1],expr:'1',ids:[1]}];
++          board.split=true;
++          board.selected=[];
++        }
++      } else if (action==='b14-plan-pick'&&index!==null&&board.groups[index]&&(!task.split||board.split)) {
++        const at=board.selected.indexOf(index);
++        if (at!==-1) board.selected.splice(at,1);
++        else if (board.selected.length<2) board.selected.push(index);
++      } else if (action==='b14-merge'&&index===null&&board.selected.length===2) {
++        const [i,j]=board.selected,[a,b]=[board.groups[i],board.groups[j]];
++        const op=task.split?'*':fields.operator;
++        if (op!=='*'&&op!=='/') {
++          rejected=true;
++          continue;
++        }
++        const [an,ad]=rational(a.value), [bn,bd]=rational(b.value);
++        const [n,d]=op==='*'?[an*bn,ad*bd]:[an*bd,ad*bn];
++        rejected=!d||!equal(fields.result,n,d)||number(fields.result)===null;
++        if (!rejected) {
++          const result=n/d;
++          board.merges.push({before:board.groups,left:a.value,right:b.value,op,value:result});
++          board.groups=board.groups.filter((_,k)=>k!==i&&k!==j);
++          board.groups.push({value:result,expr:`(${a.expr}${op}${b.expr})`,ids:[...a.ids,...b.ids]});
++          board.selected=[];
++        }
++      } else if (action==='b14-undo'&&index===null&&board.merges.length) {
++        board.groups=board.merges.pop().before;
++        board.selected=[];
++      } else return null;
++    }
++    const [a,b,c]=task.values, n=task.values.length===2?a*b:a*c, d=c===undefined?1:b;
++    const [final]=board.groups;
++    if (rejected||!sameEvidence(board,model.board)||board.groups.length!==1||(task.split&&!board.split)||
++        !equal(String(final.value),n,d)||(task.plans&&!task.plans.includes(final.expr))||
++        !equal(model.answer,n,d*(task.money?100:1))||
++        (task.money&&(!/^\d+\.\d{2}$/.test(model.answer.trim())||!readsEquation(task,model.equation)))) return null;
++    return {...binding,steps:board.merges.map(({left,right,op,value})=>({left,right,op,value})),
++      answer:model.answer.trim(),unit:task.money?'yuan':null};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP107PProductPlansEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP107PProductPlansEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p107p-product-plans-browser.cjs b/tests/p9-p107p-product-plans-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..93c4dc7c08c4b363cf7211c7bedc8dbfeb16f4c7
+--- /dev/null
++++ b/tests/p9-p107p-product-plans-browser.cjs
+@@ -0,0 +1,164 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P107P_ARTIFACTS || path.join(root, 'verification/p9-p107p-product-plans'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P107P_SOURCES, replayP107PProductPlansEvidence, submittedP107PProductPlansEvidence} = await entry('dist/learning/p107p-product-plans-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b14 = await entry('dist/learning/phase5/b14-model.js');
++  const wrongSteps = task => b14.solveSteps(task).slice(0,-1);
++  const correctSteps = task => b14.solveSteps(task).slice(-1);
++  const cases = P107P_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP107PProductPlansEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b14.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P107P');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b14.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b14.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'missing equation or final answer fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP107PProductPlansEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p107p.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p107p-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P107P_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p107p-product-plans-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P107P_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p107p-product-plans.test.mjs b/tests/p9-p107p-product-plans.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..f69097e8d6bbb915e1be3ddd5ffde59392c9aa1a
+--- /dev/null
++++ b/tests/p9-p107p-product-plans.test.mjs
+@@ -0,0 +1,43 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,inspect,solveSteps} from '../dist/learning/phase5/b14-model.js';
++import {P107P_SOURCES,replayP107PProductPlansEvidence,submittedP107PProductPlansEvidence} from '../dist/learning/p107p-product-plans-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P107P_SOURCES) {
++  test(`${sessionId}:${index} replays the card plan with exact units and the word-problem equation`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=m=>replayP107PProductPlansEvidence(task,m,context);
++    const proof=replay(good);
++    assert.equal(proof?.answer,good.answer);
++    assert.equal(replayP107PProductPlansEvidence(task,good,{sessionId,index:-1}),null);
++    const reset=structuredClone(good);
++    act(task,reset,'b14-reset');
++    assert.equal(replay(reset),null);
++    for (const step of solveSteps(task)) {
++      if (step.field) reset[step.field]=step.value;
++      else act(task,reset,step.action,step.data);
++    }
++    assert.deepEqual(replay(reset),proof);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history[0].action='b14-split';},
++      m=>{m.history[0].data.index=999;},
++      m=>{m.board.groups[0].value++;},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP107PProductPlansEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP107PProductPlansEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-fractional-volume",
+  "commit": "80b5c031cfed8905275173df101ad5415ee9dab2",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p100v-fractional-volume-evidence.js",
+    "tests/p9-p100v-fractional-volume-browser.cjs",
+    "tests/p9-p100v-fractional-volume.test.mjs"
+  ],
+  "scope": "重放实际转动，从题面上的带分数边长精确计算底面积与体积，核对立方单位。分别填写的算式结果没有书写步骤日志。",
+  "sources": [
+    {
+      "sessionId": "fractionvolume",
+      "index": 3,
+      "nodeId": "mt_IlDaxVr60U",
+      "type": "x-m31-product",
+      "taskHash": "20cd22353a7b014e7ff80546231b87ca894c7b8ea9386abd2cbd9e395ca804f6"
+    }
+  ],
+  "nodePass": 22,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "3b7250c3a67ae857641f11c0570c875c2a19ea8a73e9380243dc30eb1043f84b",
+    "fractionvolume-3-correct-check-decoded.json": "a8a17b1c948879616cd9e7d3ee97a8690715a23129fdb478210f20e899a26878",
+    "fractionvolume-3-correct-check-storage.txt": "a8a17b1c948879616cd9e7d3ee97a8690715a23129fdb478210f20e899a26878",
+    "fractionvolume-3-correct.png": "a98888b70af4476ea3a9fcbcb1e0503e0942be4e7c3041800dd24cdafa546fe0",
+    "fractionvolume-3-corrected-draft-decoded.json": "06dfbad6acaa906d29e019b9b678e71bb346975d6e4bf2eefb0f17f0cb2d6f36",
+    "fractionvolume-3-corrected-draft-storage.txt": "06dfbad6acaa906d29e019b9b678e71bb346975d6e4bf2eefb0f17f0cb2d6f36",
+    "fractionvolume-3-offline-reload-decoded.json": "443d68be3d89735fd572760a1ad8c19f4125676080f89c2d2fd47a1be070b656",
+    "fractionvolume-3-offline-reload-storage.txt": "443d68be3d89735fd572760a1ad8c19f4125676080f89c2d2fd47a1be070b656",
+    "fractionvolume-3-restored-backup-decoded.json": "5bfbe707c3a095eb98b030189a55f5ee544ae701b1e6bf9660bb46a920193ec7",
+    "fractionvolume-3-restored-backup-storage.txt": "5bfbe707c3a095eb98b030189a55f5ee544ae701b1e6bf9660bb46a920193ec7",
+    "fractionvolume-3-retry-decoded.json": "2df9452f5abf8119705b3d3b6e1e7b329307d924167bbdcf7965808484b41df0",
+    "fractionvolume-3-retry-storage.txt": "2df9452f5abf8119705b3d3b6e1e7b329307d924167bbdcf7965808484b41df0",
+    "fractionvolume-3-wrong-check-decoded.json": "d5c33678f9969032f5053155cb7669bc8ee37fa4c8b4956f7a2475c02513af18",
+    "fractionvolume-3-wrong-check-storage.txt": "d5c33678f9969032f5053155cb7669bc8ee37fa4c8b4956f7a2475c02513af18",
+    "fractionvolume-3-wrong.png": "8e7474bde047dd5dee76be7350755dd278c992f13423eaadce1fe4dae158b661",
+    "native-state-v2.json": "097b82b959b589c326bdd4cf1736694a290f771a4641621f1ce603bc6b76351d",
+    "node.log": "9cb0d4708229e4c22fe8ad6dc159feb8d2635768bdac4f111dbb4b1fbeea8057",
+    "preflight.log": "00221282541bfba2374a2be7b0db53d87cde78f9570506030384e36e7a8a823c",
+    "results.json": "715361bb9e43cb39765b27d38b41e29833f5bc6346943ebd0a6a3626fb240d54"
+  }
+}

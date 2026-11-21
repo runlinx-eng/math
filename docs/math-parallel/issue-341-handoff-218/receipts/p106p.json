@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-part-whole-snapshots",
+  "commit": "309397606b6aca797fda619aa90f8d942805073e",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p106p-part-whole-snapshots-evidence.js",
+    "tests/p9-p106p-part-whole-snapshots-browser.cjs",
+    "tests/p9-p106p-part-whole-snapshots.test.mjs"
+  ],
+  "scope": "仅验证两种不同的保留分法快照，每种合成八；互换颜色不增加分法。无逐次滑块动作。",
+  "sources": [
+    {
+      "sessionId": "partswithin",
+      "index": 2,
+      "nodeId": "mt_BK5xwkrD5C",
+      "type": "x-partbuild",
+      "taskHash": "dcc8018242bd2d64b108672982a1c4bc0775184243cc103610d9df4949feede4"
+    }
+  ],
+  "nodePass": 18,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "658a3ea3fd57a82e8d898740ab844659459a3558fbab1748c018114323d5d516",
+    "native-state-v2.json": "fe9d21fef2c6e4d210fa47f6549865e83053c0d564dbf037f8cea55d7df5a0d7",
+    "node.log": "335266d87c695ebe1b4d0f0a68e2a7a1c76e7633dc3d385130604fe98c988218",
+    "partswithin-2-correct-check-decoded.json": "4e070f1bb6c52317c0c8b08b6adb5d645d7aad9a10667130a42a203e8026ba76",
+    "partswithin-2-correct-check-storage.txt": "4e070f1bb6c52317c0c8b08b6adb5d645d7aad9a10667130a42a203e8026ba76",
+    "partswithin-2-correct.png": "717e5a3db806677516e8b1ba1f12ee2dbd5c5b6006311e2d9663b8024b978206",
+    "partswithin-2-corrected-draft-decoded.json": "a2034109a36665a5c378f0725fd514be40de3321acaf19c972d38775a7b8c53d",
+    "partswithin-2-corrected-draft-storage.txt": "a2034109a36665a5c378f0725fd514be40de3321acaf19c972d38775a7b8c53d",
+    "partswithin-2-offline-reload-decoded.json": "3e8d629b473e111156bf69d7efd4fb26b83c999422a8b6ad252ac6b3cde5c37b",
+    "partswithin-2-offline-reload-storage.txt": "3e8d629b473e111156bf69d7efd4fb26b83c999422a8b6ad252ac6b3cde5c37b",
+    "partswithin-2-restored-backup-decoded.json": "782ff5699f77b062791741bbf770dd8452cb24e5649b4ff973c67e974af211e4",
+    "partswithin-2-restored-backup-storage.txt": "782ff5699f77b062791741bbf770dd8452cb24e5649b4ff973c67e974af211e4",
+    "partswithin-2-retry-decoded.json": "cfd774bda9762fcf6782c2480641f41626798852a32f7027943ca44c497aba3a",
+    "partswithin-2-retry-storage.txt": "cfd774bda9762fcf6782c2480641f41626798852a32f7027943ca44c497aba3a",
+    "partswithin-2-wrong-check-decoded.json": "95f23d670193be288ce1a2aea8db00bd9e2cde9ef366cde63c8d6efdfc30c833",
+    "partswithin-2-wrong-check-storage.txt": "95f23d670193be288ce1a2aea8db00bd9e2cde9ef366cde63c8d6efdfc30c833",
+    "partswithin-2-wrong.png": "1b181f590417722b3cc7d317ed80f0340b0b3b230ccefab8cb1388acefa8f49d",
+    "preflight.log": "a3f0535c57e2060c5bfc4d8ad00e6adfb05be72ee2fca0467f38e33d4ebdccf8",
+    "results.json": "bd56870656cfe85ef44f59962ad2b708993bde15237adef556fceab968d0eee9"
+  }
+}

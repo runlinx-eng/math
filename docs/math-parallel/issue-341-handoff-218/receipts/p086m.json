@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-prism-measures",
+  "commit": "8d047262ae38e3c0d2f892245f4e47fb2104a10c",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p086m-prism-measures-evidence.js",
+    "tests/p9-p086m-prism-measures-browser.cjs",
+    "tests/p9-p086m-prism-measures.test.mjs"
+  ],
+  "scope": "重放转动和选面，按三角柱展开多边形或 L 形底面重算底面积、表面积与体积，核对平方和立方单位。",
+  "sources": [
+    {
+      "sessionId": "solidSurface",
+      "index": 0,
+      "nodeId": "mt_Sij9ByyHq6",
+      "type": "x-a30-solid",
+      "taskHash": "b12960f77dff3c1471cb18cf98d497c17b8a6cdb478c2750b935d856cbcde93e"
+    },
+    {
+      "sessionId": "solidSurface",
+      "index": 2,
+      "nodeId": "mt_Sij9ByyHq6",
+      "type": "x-a30-solid",
+      "taskHash": "135458801b6c73fe3e3d3e7986a091a148f7ca04dd4d6c3a28175a6b965764ae"
+    }
+  ],
+  "nodePass": 24,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "8935c84063a4b79894a2beaffb1564551943c1538b5a9dfbcc436751f473fbf6",
+    "native-state-v2.json": "5f9a0bde5690dc773093b4038d1bb627cfb1557f54e115facbaa11e4cfe085ee",
+    "node.log": "c121efadb4c692f18978f137a385b0eec62ca03327ba09548f803e8b60e15482",
+    "preflight.log": "22f36ee354d3972bb94215a624f7e7b9d79d434c87ff8a21ed4fc53fe07eaf40",
+    "results.json": "db52074103b37b7f96003ab68ac9a75aa81a5f15d36c5b4504e0472d1b26a63b",
+    "solidSurface-0-correct-check-decoded.json": "9a0986fa01474c02390812aae3c649254bc53ace3e8d4e80649c0d73924cc640",
+    "solidSurface-0-correct-check-storage.txt": "9a0986fa01474c02390812aae3c649254bc53ace3e8d4e80649c0d73924cc640",
+    "solidSurface-0-correct.png": "aa5dd97e5ede2b5dcfe424a4893e24d67b6e35edb8e06852d82c406904e72bed",
+    "solidSurface-0-corrected-draft-decoded.json": "5ee310b7038b72a763ca2b37c386d96f541746b69be2fa7b6da933aed458ebba",
+    "solidSurface-0-corrected-draft-storage.txt": "5ee310b7038b72a763ca2b37c386d96f541746b69be2fa7b6da933aed458ebba",
+    "solidSurface-0-offline-reload-decoded.json": "8bb846c9b4aad6f282d252be5df865003f9f1b70a24dd4d4d2b76ba0f2043c9a",
+    "solidSurface-0-offline-reload-storage.txt": "8bb846c9b4aad6f282d252be5df865003f9f1b70a24dd4d4d2b76ba0f2043c9a",
+    "solidSurface-0-restored-storage-decoded.json": "b9b4d0c53bcdb88f64d1fcb1be560be59f72f676260a62585ef3fa3682921b94",
+    "solidSurface-0-restored-storage-storage.txt": "b9b4d0c53bcdb88f64d1fcb1be560be59f72f676260a62585ef3fa3682921b94",
+    "solidSurface-0-wrong-check-decoded.json": "1512a10c95e255d4f463ea75a9223f7b3c961fc0c0049a8171976db5f45cb8b6",
+    "solidSurface-0-wrong-check-storage.txt": "1512a10c95e255d4f463ea75a9223f7b3c961fc0c0049a8171976db5f45cb8b6",
+    "solidSurface-0-wrong.png": "0e0ece6d3f1dd7a61e5e8cdbeaf62a8df3282af2dad7331aeb52ba9da63e5083",
+    "solidSurface-2-correct-check-decoded.json": "412b9fe65cdfb0fefca920cf36031162205c5bca433bebb7436f5c818f84e98a",
+    "solidSurface-2-correct-check-storage.txt": "412b9fe65cdfb0fefca920cf36031162205c5bca433bebb7436f5c818f84e98a",
+    "solidSurface-2-correct.png": "e23639458ceedb6cac17439669e46de76a3b59503cb9724e1a9c93d07bdd1cec",
+    "solidSurface-2-corrected-draft-decoded.json": "72f01ee489594e025795a80957af4ef5773a38dc67b99a3739af2f2e7ad24e4f",
+    "solidSurface-2-corrected-draft-storage.txt": "72f01ee489594e025795a80957af4ef5773a38dc67b99a3739af2f2e7ad24e4f",
+    "solidSurface-2-offline-reload-decoded.json": "bb79af3ca9c4e7e74dbd4cadf1a0fd89d87c8af6aad0700232ef398e4df4d3a7",
+    "solidSurface-2-offline-reload-storage.txt": "bb79af3ca9c4e7e74dbd4cadf1a0fd89d87c8af6aad0700232ef398e4df4d3a7",
+    "solidSurface-2-restored-backup-decoded.json": "b9b4d0c53bcdb88f64d1fcb1be560be59f72f676260a62585ef3fa3682921b94",
+    "solidSurface-2-restored-backup-storage.txt": "b9b4d0c53bcdb88f64d1fcb1be560be59f72f676260a62585ef3fa3682921b94",
+    "solidSurface-2-retry-decoded.json": "17120235e484f843b487975a2a8b592cb3b3a154ec56b9b19a285894333c937d",
+    "solidSurface-2-retry-storage.txt": "17120235e484f843b487975a2a8b592cb3b3a154ec56b9b19a285894333c937d",
+    "solidSurface-2-wrong-check-decoded.json": "59c5af511c3d9d6f05204cdbd2d86a0e50c1140d5e035dae996a197006eaaafa",
+    "solidSurface-2-wrong-check-storage.txt": "59c5af511c3d9d6f05204cdbd2d86a0e50c1140d5e035dae996a197006eaaafa",
+    "solidSurface-2-wrong.png": "4987599252f9d8b02a57d88bd36b67dbd62b03732dcfc9c8b1e424204c4894f5"
+  }
+}

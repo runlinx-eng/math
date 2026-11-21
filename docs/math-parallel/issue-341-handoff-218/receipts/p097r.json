@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-root-interval",
+  "commit": "c4d8f43a3679e77c98c06de31fafc016da7a6dcf",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p097r-root-interval-evidence.js",
+    "tests/p9-p097r-root-interval-browser.cjs",
+    "tests/p9-p097r-root-interval.test.mjs"
+  ],
+  "scope": "从 [1,2] 逐次重算每一对试探端点，分数精确平方，核对保留结果与最后区间为何足以支持三位小数近似。",
+  "sources": [
+    {
+      "sessionId": "powerblocks",
+      "index": 8,
+      "nodeId": "mt_hCVPYlF-7Y",
+      "type": "x-rootwindow",
+      "taskHash": "214564ebe0fdcb60a7b822a54c12b498b4a738023f3e2737f7885d5fa2514d10"
+    }
+  ],
+  "nodePass": 25,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "ff839bb8aa628f6e82702947527033d5b60e532e3ecea04c0caa5490ad13ddb2",
+    "native-state-v2.json": "abf9e8ff579a702ada980cbbdb850f731cd6780adc64ef7844e81d45ddb4d62f",
+    "node.log": "a024e4a4b6ec18d14658323d0df28b92b3a0a8df22b86680bae771be9e59ff69",
+    "powerblocks-8-correct-check-decoded.json": "bc029b13397321205417ba68c81295522973748e4a23a37d6223748de350949e",
+    "powerblocks-8-correct-check-storage.txt": "bc029b13397321205417ba68c81295522973748e4a23a37d6223748de350949e",
+    "powerblocks-8-correct.png": "4718b0de7febad12fc1d374e30139ba41ffe251791d7f401b7322946327c99ac",
+    "powerblocks-8-corrected-draft-decoded.json": "a830c55f5e1ab0d6a5622c8ab54f1f33dd0b810b9893c073e69c04f8e62c556c",
+    "powerblocks-8-corrected-draft-storage.txt": "a830c55f5e1ab0d6a5622c8ab54f1f33dd0b810b9893c073e69c04f8e62c556c",
+    "powerblocks-8-offline-reload-decoded.json": "80e872e16b7d1d5a364586f022ff23c1aad7d2999b07de125aabb959ad3230b8",
+    "powerblocks-8-offline-reload-storage.txt": "80e872e16b7d1d5a364586f022ff23c1aad7d2999b07de125aabb959ad3230b8",
+    "powerblocks-8-restored-backup-decoded.json": "f5ec6a67f7e12eb7886e7fc714dc857993549c87836b62d0979fd85ebfe24094",
+    "powerblocks-8-restored-backup-storage.txt": "f5ec6a67f7e12eb7886e7fc714dc857993549c87836b62d0979fd85ebfe24094",
+    "powerblocks-8-retry-decoded.json": "4e46916c3da85cc7b5c10fb26a0e272f4546d216334d1dff108d17d0fbd2804d",
+    "powerblocks-8-retry-storage.txt": "4e46916c3da85cc7b5c10fb26a0e272f4546d216334d1dff108d17d0fbd2804d",
+    "powerblocks-8-wrong-check-decoded.json": "5d2b9507fd26638c6178abb040fa997eca0f8fe3e736eed7495ed3d091997555",
+    "powerblocks-8-wrong-check-storage.txt": "5d2b9507fd26638c6178abb040fa997eca0f8fe3e736eed7495ed3d091997555",
+    "powerblocks-8-wrong.png": "f9e59af6bd788bb00f6e50065bd5384e94bdff0dadba0301564a89d05a3d31b6",
+    "preflight.log": "ac55cfd794d5f7ea3845899f79bc8fb2b61a32cc2f1c27cbed9231793e8a48d6",
+    "results.json": "6127da5449dc5ae644bbdc01b1bc8df1007ec0bd24f6416a849fe4bed92904ce"
+  }
+}

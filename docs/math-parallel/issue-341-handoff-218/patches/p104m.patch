@@ -1,0 +1,338 @@
+diff --git a/dist/learning/p104m-calculator-method-evidence.js b/dist/learning/p104m-calculator-method-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6e3f15ec0b31595ef0d751bd2fd07a2d885cb689
+--- /dev/null
++++ b/dist/learning/p104m-calculator-method-evidence.js
+@@ -0,0 +1,113 @@
++import {initial, valid} from './phase5/b39-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++import {norm, parse} from './phase5/b15-model.js';
++
++export const P104M_SOURCES = Object.freeze([
++  {
++    "sessionId": "strategy39",
++    "index": 0,
++    "nodeId": "mt_mQcWGh02no",
++    "type": "x-s39-choose",
++    "taskHash": "a6d2783245da097ec131ef1aaa320dbe598b1c977c304f1c51597acddaedba87"
++  },
++  {
++    "sessionId": "strategy39",
++    "index": 1,
++    "nodeId": "mt_mQcWGh02no",
++    "type": "x-s39-choose",
++    "taskHash": "a21a29e89f3a1fb2f593b1ca1ceea56b14b97e5725220d0651f2b6add84103ac"
++  },
++  {
++    "sessionId": "tools39",
++    "index": 0,
++    "nodeId": "mt_d-WZC2OyMB",
++    "type": "x-s39-choose",
++    "taskHash": "fa6b43a9ccdea6eece97c3492431860b9c076d1e5861ee7d49545023d77dd04b"
++  },
++  {
++    "sessionId": "tools39",
++    "index": 1,
++    "nodeId": "mt_d-WZC2OyMB",
++    "type": "x-s39-choose",
++    "taskHash": "606e1840f80bdc176ac1f18c9d2cc4aa8488817671e52074ba0d7a9925c57321"
++  },
++  {
++    "sessionId": "tools39",
++    "index": 3,
++    "nodeId": "mt_d-WZC2OyMB",
++    "type": "x-s39-choose",
++    "taskHash": "cc0185f5827d90f88b2eb7a63c9ae11554d07b3ad388965200ae67a7581292a2"
++  },
++  {
++    "sessionId": "representations39",
++    "index": 0,
++    "nodeId": "mt_IwEOCN6bL1",
++    "type": "x-s39-choose",
++    "taskHash": "85159bc5608b3058f7bc19700e70dcce79f68f9fb8fa3d6ffa9fc80eb741e6d5"
++  },
++  {
++    "sessionId": "representations39",
++    "index": 1,
++    "nodeId": "mt_IwEOCN6bL1",
++    "type": "x-s39-choose",
++    "taskHash": "1cc67cbfc45888779d8bf220c4a8fe55f299b8c926405e60d54649ffc8571d14"
++  },
++  {
++    "sessionId": "calculator39",
++    "index": 1,
++    "nodeId": "mt_ish_uH8vZe",
++    "type": "x-s39-choose",
++    "taskHash": "904850a48d6cd3c9724a9e4d8e8a3c7b5dbd8e01fbdeacc2f71aa94c0203751a"
++  },
++  {
++    "sessionId": "calculator39",
++    "index": 2,
++    "nodeId": "mt_ish_uH8vZe",
++    "type": "x-s39-choose",
++    "taskHash": "952964456a23217670aa72436d9b738c2ccb6f6d955f4b8444088bcf1e9530f7"
++  }
++].map(Object.freeze));
++
++export function p104mCalculatorMethodBinding(task,context) {
++  const row=P104M_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p104m-calculator-method',method:'calculator',question:'怎样核对输入的数、运算和算出的结果？'};
++}
++
++function operandLeaves(node,operator) {
++  if (node.op===operator) return [...operandLeaves(node.a,operator),...operandLeaves(node.b,operator)];
++  return [node.op==='num'&&Number.isSafeInteger(node.v)?node.v:null];
++}
++
++export function replayP104MCalculatorMethodEvidence(task,model,context) {
++  try {
++    const binding=p104mCalculatorMethodBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||model.method!=='calculator'||Object.keys(model.history).length!==model.history.length) return null;
++    let last=null;
++    let runs=0;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','i','v','w','c'])||event.a!=='run'||event.i!=='') return null;
++      last=event;
++      runs++;
++    }
++    if (!last||last.c!=='calculator'||last.w!==model.entry||model.board.runs.length!==runs) return null;
++    const decimalTokens=norm(last.w).match(/\d+\.\d+/g)??[];
++    if (decimalTokens.some(token=>!/\.0+$/.test(token))) return null;
++    const actual=operandLeaves(parse(last.w),task.operator).sort((a,b)=>a-b);
++    const expected=[...task.operands].sort((a,b)=>a-b);
++    if (!sameEvidence(actual,expected)) return null;
++    const result=Number(actual.map(BigInt).reduce((a,b)=>task.operator==='+'?a+b:a*b));
++    const stored=model.board.runs.at(-1);
++    if (!stored?.matched||stored.entry!==last.w||stored.value!==result||!equal(model.answer,result)) return null;
++    return {...binding,result};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP104MCalculatorMethodEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP104MCalculatorMethodEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p104m-calculator-method-browser.cjs b/tests/p9-p104m-calculator-method-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9efec8f3a9b4af9721ce5377be3e41a5424bce3a
+--- /dev/null
++++ b/tests/p9-p104m-calculator-method-browser.cjs
+@@ -0,0 +1,163 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P104M_ARTIFACTS || path.join(root, 'verification/p9-p104m-calculator-method'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P104M_SOURCES, replayP104MCalculatorMethodEvidence, submittedP104MCalculatorMethodEvidence} = await entry('dist/learning/p104m-calculator-method-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b39 = await entry('dist/learning/phase5/b39-model.js');
++  const b16 = await entry('dist/learning/phase5/b16-model.js');
++  await (await entry('dist/learning/phase4/async-batches.js')).ensureB39Ready();
++
++const wrongSteps = task => [{field:'method',value:'calculator'},{field:'entry',value:'1+1'},
++  {action:'s39-run'},{field:'answer',value:String(task.result)}];
++const correctSteps = task => [{field:'entry',value:task.operands.join(task.operator)},{action:'s39-run'}];
++  const cases = P104M_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP104MCalculatorMethodEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b39.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P104M');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b39,b16].find(m=>m.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b39.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP104MCalculatorMethodEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P104M_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p104m-calculator-method-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P104M_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p104m-calculator-method.test.mjs b/tests/p9-p104m-calculator-method.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..7d57de96a3b44ca23204b2ab3cc210482442ba1e
+--- /dev/null
++++ b/tests/p9-p104m-calculator-method.test.mjs
+@@ -0,0 +1,44 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, example, initial, inspect} from '../dist/learning/phase5/b39-model.js';
++import {P104M_SOURCES, replayP104MCalculatorMethodEvidence, submittedP104MCalculatorMethodEvidence} from '../dist/learning/p104m-calculator-method-evidence.js';
++
++const {ensureB39Ready}=await import('../dist/learning/phase4/async-batches.js');
++await ensureB39Ready();
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P104M_SOURCES) {
++  test(`${sessionId}:${index} only certifies a real local calculator run`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP104MCalculatorMethodEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const mental = example(task);
++    assert.ok(inspect(task,mental).correct);
++    assert.equal(replay(mental),null);
++    assert.equal(replay({...mental,method:'written'}),null);
++    const correct=initial(task);
++    correct.method='calculator';
++    correct.entry=task.operands.join(task.operator);
++    correct.answer=String(task.result);
++    assert.equal(replay(correct),null);
++    act(task,correct,'s39-run');
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.result, task.result);
++    assert.equal(replayP104MCalculatorMethodEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answer = '999';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP104MCalculatorMethodEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP104MCalculatorMethodEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].c='mental';
++    assert.equal(replay(forged), null);
++    const tampered=structuredClone(correct);
++    tampered.board.runs.at(-1).value++;
++    assert.equal(replay(tampered),null);
++  });
++}

@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-capacity-compare",
+  "commit": "2af041028d266dbc3f1dd937a663f3695635c524",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p099c-capacity-compare-evidence.js",
+    "tests/p9-p099c-capacity-compare-browser.cjs",
+    "tests/p9-p099c-capacity-compare.test.mjs"
+  ],
+  "scope": "重放猜测、两次倒入同样杯子和选择，按实际倒出的量而非原容器形状或标称容量计算。",
+  "sources": [
+    {
+      "sessionId": "comparecap",
+      "index": 0,
+      "nodeId": "mt_zkFbMLpu3U",
+      "type": "x-m31-compare",
+      "taskHash": "492f803439179b59e9ffa89d1df2fe8978bd6da6f0aef922d0ec71580c8e7c18"
+    },
+    {
+      "sessionId": "comparecap",
+      "index": 1,
+      "nodeId": "mt_zkFbMLpu3U",
+      "type": "x-m31-compare",
+      "taskHash": "2c0aff0e6e26d96545ef754722004d28f73e70096abe5586d418b65d3e1d8ff0"
+    }
+  ],
+  "nodePass": 23,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "1411429422b59245fc33feb795cead59fe5db38d59d6f37f44f6cc7b957b948f",
+    "comparecap-0-correct-check-decoded.json": "c11abb42f7f37e14d73628a002e163d2e8fe655d415ab5c598a76abec79f0f81",
+    "comparecap-0-correct-check-storage.txt": "c11abb42f7f37e14d73628a002e163d2e8fe655d415ab5c598a76abec79f0f81",
+    "comparecap-0-correct.png": "b4d3225d1a3d650ed125ecf9fc526107f8fea4d9ee186c5baec121aa3c10233e",
+    "comparecap-0-corrected-draft-decoded.json": "a66634cdcd7788f262c1df5958b7dbd733aec79833e6a3eaa081200f969311d3",
+    "comparecap-0-corrected-draft-storage.txt": "a66634cdcd7788f262c1df5958b7dbd733aec79833e6a3eaa081200f969311d3",
+    "comparecap-0-offline-reload-decoded.json": "93fb2db8d677e5e0202ede228e1106451e6a88315be08ee7a3032bf77b4ffb53",
+    "comparecap-0-offline-reload-storage.txt": "93fb2db8d677e5e0202ede228e1106451e6a88315be08ee7a3032bf77b4ffb53",
+    "comparecap-0-restored-storage-decoded.json": "0ebc2da1e3610834214aef4c943ee7b62e316de8d106a461f6edf5de2ce845c1",
+    "comparecap-0-restored-storage-storage.txt": "0ebc2da1e3610834214aef4c943ee7b62e316de8d106a461f6edf5de2ce845c1",
+    "comparecap-0-wrong-check-decoded.json": "0eb34d2c3a9ba43244d612d4189596d93b152c965e2cb7339269513744f0a39b",
+    "comparecap-0-wrong-check-storage.txt": "0eb34d2c3a9ba43244d612d4189596d93b152c965e2cb7339269513744f0a39b",
+    "comparecap-0-wrong.png": "c1ccc82c07fb96fe0606b8eca60b7bafe6b9673748d335c71aad9fc6a19dd073",
+    "comparecap-1-correct-check-decoded.json": "36b1fc0388196fc9bd1c20d885721f44aa7c02b3578362dec50b204bd6b52255",
+    "comparecap-1-correct-check-storage.txt": "36b1fc0388196fc9bd1c20d885721f44aa7c02b3578362dec50b204bd6b52255",
+    "comparecap-1-correct.png": "8eecf8d67c2aece42eb02adc2e5346dce4f5ae87de090baa92ae269343eba21d",
+    "comparecap-1-corrected-draft-decoded.json": "b90d24dc96b0b54ea7c206dff3351874d3cd82f4bcee5c5ace34ccf897bfe79d",
+    "comparecap-1-corrected-draft-storage.txt": "b90d24dc96b0b54ea7c206dff3351874d3cd82f4bcee5c5ace34ccf897bfe79d",
+    "comparecap-1-offline-reload-decoded.json": "a49759ef70d477f3dcbf67a73ff9afe5a51553687e15ad4797daca1e90931d85",
+    "comparecap-1-offline-reload-storage.txt": "a49759ef70d477f3dcbf67a73ff9afe5a51553687e15ad4797daca1e90931d85",
+    "comparecap-1-restored-backup-decoded.json": "0ebc2da1e3610834214aef4c943ee7b62e316de8d106a461f6edf5de2ce845c1",
+    "comparecap-1-restored-backup-storage.txt": "0ebc2da1e3610834214aef4c943ee7b62e316de8d106a461f6edf5de2ce845c1",
+    "comparecap-1-retry-decoded.json": "24bce617abec32085a56b75beb3634e78a92183db191ba8ae8559030df3b7ff5",
+    "comparecap-1-retry-storage.txt": "24bce617abec32085a56b75beb3634e78a92183db191ba8ae8559030df3b7ff5",
+    "comparecap-1-wrong-check-decoded.json": "ca75c042565ef79f42fbf09153cd89a87e59d74b806cfeb5f65384c190745ea5",
+    "comparecap-1-wrong-check-storage.txt": "ca75c042565ef79f42fbf09153cd89a87e59d74b806cfeb5f65384c190745ea5",
+    "comparecap-1-wrong.png": "c9b93590b0f9c8a539b4ff95e71c66e470027c29a79c61387cf04d179272cb0b",
+    "native-state-v2.json": "b241f200a1b7ff2d957f16dc68b9c42bbb9268e5b74b5e86981bb020a775ead2",
+    "node.log": "1329175c2921e50f285d24bba8611bcba7de5159706ed16a3d18307941d43c04",
+    "preflight.log": "8c69dd6a704bc7e98c5277a32529507a6f6fadc378392b5b326f2dd44e93fe6d",
+    "results.json": "3d89075e9db72b775181339db147a1f5c9567b421ebdb437b984ceeb9658b1ac"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-distributive-tiles",
+  "commit": "564a713ea6730ff6af587c8312a5f8f9978912a6",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p102l-distributive-tiles-evidence.js",
+    "tests/p9-p102l-distributive-tiles-browser.cjs",
+    "tests/p9-p102l-distributive-tiles.test.mjs"
+  ],
+  "scope": "逐次核对拆出的长条及常量块，至少两组参数在完整构造下验证等量。记录只支持实际摆出的构造。",
+  "sources": [
+    {
+      "sessionId": "structurebridge",
+      "index": 1,
+      "nodeId": "mt_hImiKNiaNh",
+      "type": "x-lawtiles",
+      "taskHash": "fb49c413f9d627c1f7c49d5441505d13a28e99ecdfa29206526603a2ab2d4937"
+    }
+  ],
+  "nodePass": 29,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "ad6407c223eb2d63872c53e0fe89d7308fd8e9e0084a84399918fad3bcccf596",
+    "native-state-v2.json": "cd5ccda832d60268d877bbdc487a381db516c792cae1c0964d12355f0c09cac9",
+    "node.log": "ba6693317103edf81e6568d39c36c04f13cc0cb5dc65aa16c6b05adc249f735c",
+    "preflight.log": "c5c07a2952088e09b9f6846b8514667f7926ca35bb2e4fddd9e99f8c20c0108b",
+    "results.json": "6d920091972ebeceafc7e97f43fab13dc9357a7ec4779d22acec82f07908eb13",
+    "structurebridge-1-correct-check-decoded.json": "f1c8a5639455a213322fed08fa658cd5fac1520edb012d0db99397a247d4f213",
+    "structurebridge-1-correct-check-storage.txt": "f1c8a5639455a213322fed08fa658cd5fac1520edb012d0db99397a247d4f213",
+    "structurebridge-1-correct.png": "09cc346c58c873bfc1ea2a42e707e1986e109298c508a08c99ae0f1d6b995c85",
+    "structurebridge-1-corrected-draft-decoded.json": "adc99cc769f749b735be2dd19e7c9320c39e1f63c9e1751ec00fa1df68336eec",
+    "structurebridge-1-corrected-draft-storage.txt": "adc99cc769f749b735be2dd19e7c9320c39e1f63c9e1751ec00fa1df68336eec",
+    "structurebridge-1-offline-reload-decoded.json": "0f4b579535bea00a586cf66120b28e1d36eb755cd75b5cae6520330c8049967d",
+    "structurebridge-1-offline-reload-storage.txt": "0f4b579535bea00a586cf66120b28e1d36eb755cd75b5cae6520330c8049967d",
+    "structurebridge-1-restored-backup-decoded.json": "4d20eb24aaff9803b8a2bc29d011831b718401cc653487f66ff00e57f9638f16",
+    "structurebridge-1-restored-backup-storage.txt": "4d20eb24aaff9803b8a2bc29d011831b718401cc653487f66ff00e57f9638f16",
+    "structurebridge-1-retry-decoded.json": "575664311e42f6d09060a95c542bcf7ccc3eb4af328137bd854380ca2445f8e8",
+    "structurebridge-1-retry-storage.txt": "575664311e42f6d09060a95c542bcf7ccc3eb4af328137bd854380ca2445f8e8",
+    "structurebridge-1-wrong-check-decoded.json": "62a0cba9df02b837e098541b4900b0994c381d83525d742bbef3d6d52220c11e",
+    "structurebridge-1-wrong-check-storage.txt": "62a0cba9df02b837e098541b4900b0994c381d83525d742bbef3d6d52220c11e",
+    "structurebridge-1-wrong.png": "867d3ab59ee4e1256d4b3fd2effa5c534a91b7260de88171aba8a516daea2f0d"
+  }
+}

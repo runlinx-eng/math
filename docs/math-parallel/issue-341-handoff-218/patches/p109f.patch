@@ -1,0 +1,290 @@
+diff --git a/dist/learning/p109f-formula-rearrange-evidence.js b/dist/learning/p109f-formula-rearrange-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ad75d2c7f375b65c83082fc7f0f615b565714ff
+--- /dev/null
++++ b/dist/learning/p109f-formula-rearrange-evidence.js
+@@ -0,0 +1,70 @@
++import {eq,formCorrect,initial,valid} from './phase5/b36-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P109F_SOURCES=Object.freeze([
++  {
++    "sessionId": "plot36",
++    "index": 1,
++    "nodeId": "mt_-3udyo6VyB",
++    "type": "x-f36-form",
++    "taskHash": "92f26d9061a486b290e77cdc8b0106859079a3d9a326c0e7af9a846220c0e6cd"
++  },
++  {
++    "sessionId": "rearrange36",
++    "index": 1,
++    "nodeId": "mt_3qrCtdoVAU",
++    "type": "x-f36-form",
++    "taskHash": "df025886dc2e247d139b98de32de582c1314f24cdcff6d1dd18e45534d6181dc"
++  },
++  {
++    "sessionId": "rearrange36",
++    "index": 2,
++    "nodeId": "mt_3qrCtdoVAU",
++    "type": "x-f36-form",
++    "taskHash": "1b4297b6e0a2a1580f91f4f2990ac8024275128b9e434cb31f0f7f56ae919f9d"
++  },
++  {
++    "sessionId": "rearrange36",
++    "index": 3,
++    "nodeId": "mt_3qrCtdoVAU",
++    "type": "x-f36-form",
++    "taskHash": "2029c13f6ca017a85f03f8d017e6f13f21c0e70d6d09f25f4de56e239f26a400"
++  }
++].map(Object.freeze));
++
++export function p109fFormulaRearrangeBinding(task,context) {
++  const row=P109F_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p109f-formula-rearrange',method:null,
++    question:'移项或除法以后，原有关系怎样保持？有哪些值要排除或同时保留？'};
++}
++
++export function replayP109FFormulaRearrangeEvidence(task,model,context) {
++  try {
++    const binding=p109fFormulaRearrangeBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const {board}=initial(task);
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','i','v','w','z'])||event.a!=='form'||event.i!=='') return null;
++      const fields={value:event.v,second:event.w,third:event.z};
++      const correct=formCorrect(task,fields);
++      board.first.form??=fields;
++      if (!correct) board.bad=true;
++      board.trials.push({fields,correct});
++    }
++    const last=board.trials.at(-1);
++    if (!sameEvidence(board,model.board)||!last?.correct||
++        !sameEvidence(last.fields,{value:model.value,second:model.second,third:model.third})||
++        !task.questions.every((q,i)=>q.kind==='choice'
++          ? model.answers[i].trim()===q.value
++          : eq(model.answers[i],q.value))) return null;
++    return {...binding,mode:task.mode,subject:task.subject,form:last.fields,matchedInputs:task.questions.length};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP109FFormulaRearrangeEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP109FFormulaRearrangeEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p109f-formula-rearrange-browser.cjs b/tests/p9-p109f-formula-rearrange-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..909d30dadc4f592302aa57d37c0310b48ea9f7cf
+--- /dev/null
++++ b/tests/p9-p109f-formula-rearrange-browser.cjs
+@@ -0,0 +1,166 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P109F_ARTIFACTS || path.join(root, 'verification/p9-p109f-formula-rearrange'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P109F_SOURCES, replayP109FFormulaRearrangeEvidence, submittedP109FFormulaRearrangeEvidence} = await entry('dist/learning/p109f-formula-rearrange-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b36 = await entry('dist/learning/phase5/b36-model.js');
++  const b35=await entry('dist/learning/phase5/b35-model.js');
++  const solvePrior=task=>(b36.TYPES.has(task.type)?b36:b35).solveSteps(task);
++  const wrongSteps = task => b36.solveSteps(task).slice(0,-1);
++  const correctSteps = task => b36.solveSteps(task).slice(-1);
++  const cases = P109F_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP109FFormulaRearrangeEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b36.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P109F');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,solvePrior(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b36.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the unfinished construction or answer fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP109FFormulaRearrangeEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p109f.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p109f-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P109F_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p109f-formula-rearrange-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P109F_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p109f-formula-rearrange.test.mjs b/tests/p9-p109f-formula-rearrange.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..ab9fd63f6dafa4abae150bfa54dc856f468c9a41
+--- /dev/null
++++ b/tests/p9-p109f-formula-rearrange.test.mjs
+@@ -0,0 +1,36 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example,inspect} from '../dist/learning/phase5/b36-model.js';
++import {P109F_SOURCES, replayP109FFormulaRearrangeEvidence, submittedP109FFormulaRearrangeEvidence} from '../dist/learning/p109f-formula-rearrange-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P109F_SOURCES) {
++  test(`${sessionId}:${index} checks the saved construction and the submitted conclusion`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP109FFormulaRearrangeEvidence(task,model,context);
++    const proof=replay(good);
++    assert.ok(proof);
++    assert.equal(replayP109FFormulaRearrangeEvidence(task,good,{sessionId,index:-1}),null);
++    for (const edit of [
++      m=>{m.history=[];},
++      m=>{m.history[0].a='select';},
++      m=>{m.history[0].i='forged';},
++      m=>{m.board.bad=!m.board.bad;},
++      m=>{m.answers.push('forged');},
++    ]) {
++      const bad=structuredClone(good);
++      edit(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP109FFormulaRearrangeEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP109FFormulaRearrangeEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

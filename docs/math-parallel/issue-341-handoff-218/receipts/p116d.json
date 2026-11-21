@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-fraction-dot-fair-share",
+  "commit": "c63d0eebb181351042ebb0db017006219a2331fb",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p116d-fraction-fair-share-evidence.js",
+    "tests/p9-p116d-fraction-fair-share-browser.cjs",
+    "tests/p9-p116d-fraction-fair-share.test.mjs"
+  ],
+  "scope": "先重放原量点图，再按每次八分之一杯核对转移和最终均分、总量守恒。",
+  "sources": [
+    {
+      "sessionId": "fractiondots",
+      "index": 2,
+      "nodeId": "mt_IHipFGTFEY",
+      "type": "x-dotdraw",
+      "taskHash": "3873e521e51855f69df548b45580bf627d70d3bdd27ec34378142830502ad1c1"
+    }
+  ],
+  "nodePass": 30,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "0a652cd564a3b359bf2227afea29270574c437c910456dddbfd2a2db7d3d58d1",
+    "fractiondots-2-correct-check-decoded.json": "5dbc6b8e672e151732a1f8c97f24095db1fe8db299ffb21b2ee4ad05e252602d",
+    "fractiondots-2-correct-check-storage.txt": "5dbc6b8e672e151732a1f8c97f24095db1fe8db299ffb21b2ee4ad05e252602d",
+    "fractiondots-2-correct.png": "4e86f8e64c212b7e7e9e5d3afd13d0c61ac0faf6fda6c6330454b7d3882af275",
+    "fractiondots-2-corrected-draft-decoded.json": "2b988b10c8a991cc767226bcd7d89b849d6a5d412fe2eb12f21c5f4fcb926149",
+    "fractiondots-2-corrected-draft-storage.txt": "2b988b10c8a991cc767226bcd7d89b849d6a5d412fe2eb12f21c5f4fcb926149",
+    "fractiondots-2-offline-reload-decoded.json": "8219346cb26dc14f1b9e1bf36554d9e5408781d406bfe5edbd99313506171a52",
+    "fractiondots-2-offline-reload-storage.txt": "8219346cb26dc14f1b9e1bf36554d9e5408781d406bfe5edbd99313506171a52",
+    "fractiondots-2-restored-backup-decoded.json": "770e2d7fdac6ab9f2f249ec6c490c50876a0c9345d33b08f251bebe3851e07c6",
+    "fractiondots-2-restored-backup-storage.txt": "770e2d7fdac6ab9f2f249ec6c490c50876a0c9345d33b08f251bebe3851e07c6",
+    "fractiondots-2-retry-decoded.json": "c610a2312d53953e0b8950b874c45d17e674ad8f4ec9bc0178167850d62a7ac5",
+    "fractiondots-2-retry-storage.txt": "c610a2312d53953e0b8950b874c45d17e674ad8f4ec9bc0178167850d62a7ac5",
+    "fractiondots-2-wrong-check-decoded.json": "032b4781f1a8c96a1574f065cbccd5006415f974ab0d7faba592b457f509ef5b",
+    "fractiondots-2-wrong-check-storage.txt": "032b4781f1a8c96a1574f065cbccd5006415f974ab0d7faba592b457f509ef5b",
+    "fractiondots-2-wrong.png": "ee21bf464ee2756f2d02001a7d5aba3ec862251d378dc8a08165b962f96989f1",
+    "native-state-v2.json": "779c940772a5df445f2056a3548a8b9cffd04c25f1c5ee809b2c7d4adc4699a9",
+    "node.log": "59ddfbf2e23e69ffe6f846da2fa0e922740d106f0d1fcaded55df315da0dd352",
+    "preflight.log": "0ecdd3902b1ba8bdd4471c5f16642af0b0916d06fe720cf1968ddb2eca8f70f8",
+    "results.json": "8eb06b535ab032b41eb7209cc49ed7f1cbcbe7e69690653856883477e3d384e3"
+  }
+}

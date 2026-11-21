@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-balance-order",
+  "commit": "e7f1874b5700968bb9745d0cfc0b1bbfdac7e377",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p099b-balance-order-evidence.js",
+    "tests/p9-p099b-balance-order-browser.cjs",
+    "tests/p9-p099b-balance-order.test.mjs"
+  ],
+  "scope": "验证两次指定天平比较和排序，按模型质量独立复核每对关系及从轻到重的顺序。",
+  "sources": [
+    {
+      "sessionId": "indirectmass",
+      "index": 0,
+      "nodeId": "mt_bnwHo5wfCD",
+      "type": "x-m31-balance",
+      "taskHash": "925193940e9b50cc117549768649d5ca55addc296df16e9d1d831e1bc85553e8"
+    },
+    {
+      "sessionId": "indirectmass",
+      "index": 2,
+      "nodeId": "mt_bnwHo5wfCD",
+      "type": "x-m31-balance",
+      "taskHash": "d547e62fcc1ad259fd6de601579b45246f669ee70249537db6e7e0bf5016f611"
+    }
+  ],
+  "nodePass": 23,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "08f5479501a6bc1278cadcdfeec110e5afa190b9d1e05704d5b9913bdc8f164e",
+    "indirectmass-0-correct-check-decoded.json": "5e2cca920b1f52ffb79568b442370ca3cc3b95d0ae6352dd515713eed0eabae3",
+    "indirectmass-0-correct-check-storage.txt": "5e2cca920b1f52ffb79568b442370ca3cc3b95d0ae6352dd515713eed0eabae3",
+    "indirectmass-0-correct.png": "d0de3b661fd7df547129d83c8bfa0af5dc55690748a41cc0cafddacf3b3176d0",
+    "indirectmass-0-corrected-draft-decoded.json": "ff0d458d8944b2cd33e9f9954d601c88b25de8f804d0e5bf831f594f330720c1",
+    "indirectmass-0-corrected-draft-storage.txt": "ff0d458d8944b2cd33e9f9954d601c88b25de8f804d0e5bf831f594f330720c1",
+    "indirectmass-0-offline-reload-decoded.json": "e76554ab3cea45cae724947f630e4c2fea61fcaf98c794cd4471ca0754681c3f",
+    "indirectmass-0-offline-reload-storage.txt": "e76554ab3cea45cae724947f630e4c2fea61fcaf98c794cd4471ca0754681c3f",
+    "indirectmass-0-restored-storage-decoded.json": "2a530dd8cb08b01de9b2f589bfc4256e498a37281878f468f63e7d931bedf6d9",
+    "indirectmass-0-restored-storage-storage.txt": "2a530dd8cb08b01de9b2f589bfc4256e498a37281878f468f63e7d931bedf6d9",
+    "indirectmass-0-wrong-check-decoded.json": "da44ef0be5acf48b5493e203e4885b70322e36716ccf59df6c83d0a8288c30dc",
+    "indirectmass-0-wrong-check-storage.txt": "da44ef0be5acf48b5493e203e4885b70322e36716ccf59df6c83d0a8288c30dc",
+    "indirectmass-0-wrong.png": "48d6d42e03118aceddce800f58355a55270221fc7cc317c6b487d1bdc3cdc0dd",
+    "indirectmass-2-correct-check-decoded.json": "34c73349274f02064425553eca22aa36063fcb517bcd48fb6b277e6efa31156b",
+    "indirectmass-2-correct-check-storage.txt": "34c73349274f02064425553eca22aa36063fcb517bcd48fb6b277e6efa31156b",
+    "indirectmass-2-correct.png": "f6b41337f2e9e6c25226f98e0eea4b745109f0db556af9430091fe0ba7d26dec",
+    "indirectmass-2-corrected-draft-decoded.json": "9cc5f8287a6cf9a84e583f2555733599f04c9ff724aa9b4a0d97d914982f844a",
+    "indirectmass-2-corrected-draft-storage.txt": "9cc5f8287a6cf9a84e583f2555733599f04c9ff724aa9b4a0d97d914982f844a",
+    "indirectmass-2-offline-reload-decoded.json": "7219f52bffd4e247c98e4a40b53de2230ba34a4a4172eff8fd95eaa42903753e",
+    "indirectmass-2-offline-reload-storage.txt": "7219f52bffd4e247c98e4a40b53de2230ba34a4a4172eff8fd95eaa42903753e",
+    "indirectmass-2-restored-backup-decoded.json": "2a530dd8cb08b01de9b2f589bfc4256e498a37281878f468f63e7d931bedf6d9",
+    "indirectmass-2-restored-backup-storage.txt": "2a530dd8cb08b01de9b2f589bfc4256e498a37281878f468f63e7d931bedf6d9",
+    "indirectmass-2-retry-decoded.json": "b22d1ebadeba0fecdf7dd478818ce63e0f20dd70ab5b2d08be7911e6966d53fb",
+    "indirectmass-2-retry-storage.txt": "b22d1ebadeba0fecdf7dd478818ce63e0f20dd70ab5b2d08be7911e6966d53fb",
+    "indirectmass-2-wrong-check-decoded.json": "49370a3e14697033aba0391d61b4287f49fcfb7d31cb370ccdc2b8a483f7837d",
+    "indirectmass-2-wrong-check-storage.txt": "49370a3e14697033aba0391d61b4287f49fcfb7d31cb370ccdc2b8a483f7837d",
+    "indirectmass-2-wrong.png": "84df675996791071b0a861db05fe610098366c689e4094db09df55be7901d407",
+    "native-state-v2.json": "2c43bc90509a95a06e507b1bfdee990359a1eccf18dc8ed07e2eec674846e63f",
+    "node.log": "9887ddf7dd2d05e4a851e6e38845a7966a19edfbcc5c603113d672843481d192",
+    "preflight.log": "ef913a2cae9b128feed8705cf6fdf790a4ecce078baa8eecf8b81baf55e23f4c",
+    "results.json": "36e08bf4185aadffe47494b22c4b379f0171ccca3d364ef8dc150a9a8d4d56e0"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-frieze",
+  "commit": "ee4b25e07f532a33a0ce8d53a2914892f9acfcce",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p101f-frieze-evidence.js",
+    "tests/p9-p101f-frieze-browser.cjs",
+    "tests/p9-p101f-frieze.test.mjs"
+  ],
+  "scope": "重放先反射后平移，按图形顶点独立计算重复后四块的位置。",
+  "sources": [
+    {
+      "sessionId": "patternfloor",
+      "index": 2,
+      "nodeId": "mt_61Nhj8W78f",
+      "type": "x-p24-frieze",
+      "taskHash": "c4fbd3c4e84f77c338faa746ceb82a4c7a3a453a8c20a87ef7b2af4aaca47305"
+    }
+  ],
+  "nodePass": 38,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "5559547ad1e18c744563d94f1e06587b99082e82bafe5afd75907eb3fd3cd87c",
+    "native-state-v2.json": "67ea13cbb00b50d41f3563a672138361fdc9aef32a5e32735276c0a89b93a679",
+    "node.log": "7bf8952a7434d019bafb3ac9eda58ba0df628a6c9a0da5301e609be7d9606863",
+    "patternfloor-2-correct-check-decoded.json": "0ba346baabb574a270376e6c8418657e8d95a8fe690add67237577406c4bcbc5",
+    "patternfloor-2-correct-check-storage.txt": "0ba346baabb574a270376e6c8418657e8d95a8fe690add67237577406c4bcbc5",
+    "patternfloor-2-correct.png": "de1874d03daefe61ca6866f22736dae875fe2af4ae1a30a6de570782a2c843a6",
+    "patternfloor-2-corrected-draft-decoded.json": "7b7cb00ca13ca797e0674ed1cadded6bc135830686c93b9cc688fd8cf2b7f065",
+    "patternfloor-2-corrected-draft-storage.txt": "7b7cb00ca13ca797e0674ed1cadded6bc135830686c93b9cc688fd8cf2b7f065",
+    "patternfloor-2-offline-reload-decoded.json": "1da7c2a13dc3a6b87377815dee36a3d0cf2cd69d2b8c7f5e3ed5fe74e39333e1",
+    "patternfloor-2-offline-reload-storage.txt": "1da7c2a13dc3a6b87377815dee36a3d0cf2cd69d2b8c7f5e3ed5fe74e39333e1",
+    "patternfloor-2-restored-backup-decoded.json": "4c985adaea0d739e2870bc36ceb447f7c21c337385174dab96248c55e520c756",
+    "patternfloor-2-restored-backup-storage.txt": "4c985adaea0d739e2870bc36ceb447f7c21c337385174dab96248c55e520c756",
+    "patternfloor-2-retry-decoded.json": "d2d28b07af63a1904486ce8d679a8220a4fa82f89863835cb29e5848657b7ee1",
+    "patternfloor-2-retry-storage.txt": "d2d28b07af63a1904486ce8d679a8220a4fa82f89863835cb29e5848657b7ee1",
+    "patternfloor-2-wrong-check-decoded.json": "fdb03247fea65985f6a54c87048310c85b11889a28df76f6eeb205cc3cb40bcc",
+    "patternfloor-2-wrong-check-storage.txt": "fdb03247fea65985f6a54c87048310c85b11889a28df76f6eeb205cc3cb40bcc",
+    "patternfloor-2-wrong.png": "1e35712e6e440f65e017a0bd17af27015e1a44ce31741b5a3d1139796cc95f7f",
+    "preflight.log": "fd63eabdf38724e3abb1d0f3258aea8389b24fd7252473da24abd780006ba424",
+    "results.json": "3be2e1ede0fed650ddf05d8430fa29f894133bbf62105ced28606be9f5a4d201"
+  }
+}

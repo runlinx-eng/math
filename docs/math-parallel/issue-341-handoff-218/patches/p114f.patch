@@ -1,0 +1,323 @@
+diff --git a/dist/learning/p114f-solid-faces-evidence.js b/dist/learning/p114f-solid-faces-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..2a30b031112ed17e5c99595d271dcb093fe640f8
+--- /dev/null
++++ b/dist/learning/p114f-solid-faces-evidence.js
+@@ -0,0 +1,92 @@
++import {initial} from './phase5/b27-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P114F_SOURCES=Object.freeze([
++  {
++    "sessionId": "flatcorners",
++    "index": 3,
++    "nodeId": "mt_yGv8doDAmp",
++    "type": "x-g27-face",
++    "taskHash": "b16185895f54c9e1b22d01ba339c3d35e6da14f0d64785fd802c736aae4dbf8a"
++  },
++  {
++    "sessionId": "solidfaces",
++    "index": 0,
++    "nodeId": "mt_UooUHC_V7U",
++    "type": "x-g27-face",
++    "taskHash": "429cc1f5a10adcd516b9f428a736f30ed6a42f4cb86fe3cc92a04b5b2195f8fe"
++  },
++  {
++    "sessionId": "solidfaces",
++    "index": 1,
++    "nodeId": "mt_UooUHC_V7U",
++    "type": "x-g27-face",
++    "taskHash": "28706f79909a7c064cbfe37e4b9f034484162474413d7a255f8f893cba56efc0"
++  },
++  {
++    "sessionId": "solidfaces",
++    "index": 2,
++    "nodeId": "mt_UooUHC_V7U",
++    "type": "x-g27-face",
++    "taskHash": "0e29d53281c7a025432d2973c76a3abb41f6bdd98ff332f2b8a628d7b78d2ec3"
++  }
++].map(Object.freeze));
++
++const faceShapes={
++  cube:{front:'square'},cuboid:{front:'rectangle'},
++  cylinder:{top:'circle'},cone:{bottom:'circle'},pyramid:{side:'triangle'},
++};
++
++export function p114fSolidFacesBinding(task,context) {
++  const row=P114F_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p114f-solid-faces',method:null,
++    question:'刚才点亮的这个面是什么形状？'};
++}
++
++export function replayP114FSolidFacesEvidence(task,model,context) {
++  try {
++    const binding=p114fSolidFacesBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||
++        !Number.isInteger(model.seed)||model.seed<1||model.seed>4294967295||
++        !['position','foldPosition','prose','issue'].every(k=>typeof model[k]==='string'&&model[k].length<=1500)||
++        model.position!=='2'||model.foldPosition!=='0'||
++        !Array.isArray(model.history)||model.history.length>1000||
++        Object.keys(model.history).length!==model.history.length) return null;
++
++    const bins=task.bins.map(b=>b.id);
++    const categories=task.cards.map(card=>faceShapes[card.shape]?.[card.face]);
++    if (!categories.every(c=>bins.includes(c))) return null;
++    let {board}=initial(task,model.seed);
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','d'])) return null;
++      const {a,d}=event;
++      if (a==='card'&&hasExactKeys(d,['index'])&&typeof d.index==='string'&&
++          task.cards.some((_,i)=>String(i)===d.index)) {
++        board.card=Number(d.index);
++      } else if (a==='choose'&&hasExactKeys(d,['index'])&&bins.includes(d.index)) {
++        if (!board.probed.includes(board.card)) return null;
++        board.first['card'+board.card]??=d.index;
++        if (d.index!==categories[board.card]) board.bad=true;
++        board.choices[board.card]=d.index;
++      } else if (hasExactKeys(d,[])) {
++        if (a==='turn') board.turned=true;
++        else if (a==='help') board.first.help=true;
++        else if (a==='reset') board={...initial(task,model.seed).board,first:board.first,bad:board.bad};
++        else if (a==='probe') {
++          if (!board.probed.includes(board.card)) board.probed.push(board.card);
++        } else return null;
++      } else return null;
++    }
++    if (model.issue!==''||!sameEvidence(board,model.board)||
++        !sameEvidence(board.choices,categories)||(task.rotate&&!board.turned)||
++        board.probed.length!==task.cards.length) return null;
++    return {...binding,categories,turned:board.turned,probed:[...board.probed]};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP114FSolidFacesEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP114FSolidFacesEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p114f-solid-faces-browser.cjs b/tests/p9-p114f-solid-faces-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..7b9928eb65be986c5953cbdf00a720e215c55348
+--- /dev/null
++++ b/tests/p9-p114f-solid-faces-browser.cjs
+@@ -0,0 +1,168 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P114F_ARTIFACTS || path.join(root, 'verification/p9-p114f-solid-faces'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P114F_SOURCES, replayP114FSolidFacesEvidence, submittedP114FSolidFacesEvidence} = await entry('dist/learning/p114f-solid-faces-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b27 = await entry('dist/learning/phase5/b27-model.js');
++  const wrongSteps = task => [
++    {action:'g27-card',data:{index:0}},
++    {action:'g27-probe'},
++    {action:'g27-choose',data:{index:task.bins.find(bin=>bin.id!==task.cards[0].answer).id}},
++  ];
++  const correctSteps = task => b27.solveSteps(task);
++  const cases = P114F_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP114FSolidFacesEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b27.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P114F');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b27.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b27.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP114FSolidFacesEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p114f.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p114f-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P114F_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p114f-solid-faces-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P114F_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p114f-solid-faces.test.mjs b/tests/p9-p114f-solid-faces.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..f1ca5389097576a40b10d947fec981604ddcf122
+--- /dev/null
++++ b/tests/p9-p114f-solid-faces.test.mjs
+@@ -0,0 +1,45 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,initial,inspect,solveSteps} from '../dist/learning/phase5/b27-model.js';
++import {P114F_SOURCES,replayP114FSolidFacesEvidence,submittedP114FSolidFacesEvidence} from '../dist/learning/p114f-solid-faces-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P114F_SOURCES) {
++  test(`${sessionId}:${index} certifies the visible classifications from the saved actions`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP114FSolidFacesEvidence(task,model,context);
++    const proof=replay(good);
++    assert.deepEqual(proof?.categories,task.cards.map(c=>c.answer));
++    assert.equal(replayP114FSolidFacesEvidence(task,good,{sessionId,index:-1}),null);
++    const pending=initial(task,1);
++    act(task,pending,'g27-probe');
++    act(task,pending,'g27-choose',{index:task.bins.find(x=>x.id!==task.cards[0].answer).id});
++    act(task,pending,'g27-reset');
++    assert.equal(replay(pending),null);
++    for (const step of solveSteps(task)) {
++      act(task,pending,step.action==='turn-extra'?'g27-turn':step.action,step.data);
++    }
++    assert.deepEqual(replay(pending),proof);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history.find(e=>e.a==='choose').d.index='unknown';},
++      m=>{m.history=m.history.filter(e=>e.a!=='turn');},
++      m=>{m.history=m.history.filter(e=>e.a!=='probe');},
++      m=>{m.board.choices[0]=null;},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP114FSolidFacesEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP114FSolidFacesEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

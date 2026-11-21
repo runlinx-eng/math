@@ -1,0 +1,423 @@
+diff --git a/dist/learning/p110c-statistical-centre-evidence.js b/dist/learning/p110c-statistical-centre-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0f062a0c9d8b05a2da1e1bdaf47b82cc9c756f53
+--- /dev/null
++++ b/dist/learning/p110c-statistical-centre-evidence.js
+@@ -0,0 +1,191 @@
++import {fields,initial,number,stats,valid} from './phase5/b21-model.js';
++import {rational} from './phase5/b16-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P110C_SOURCES=Object.freeze([
++  {
++    "sessionId": "statwords",
++    "index": 0,
++    "nodeId": "mt_fmm-P17Vka",
++    "type": "x-statcentre",
++    "taskHash": "16c55c5295f0f19b94bae151a0a0dc42766f9a2ffe4c101ba0c39f80f8719e71"
++  },
++  {
++    "sessionId": "statwords",
++    "index": 1,
++    "nodeId": "mt_fmm-P17Vka",
++    "type": "x-statcentre",
++    "taskHash": "992c688aa55f9364094830c1eb1621ae6d59fd1d84acbaa10109c747d74ba897"
++  },
++  {
++    "sessionId": "meanbalance",
++    "index": 0,
++    "nodeId": "mt_Cg8VPguS_V",
++    "type": "x-statcentre",
++    "taskHash": "7cd0762e78e1e0e4a74a8df33f19d3e00207116f566e39ea1170ed663bcf3dc2"
++  },
++  {
++    "sessionId": "meanbalance",
++    "index": 1,
++    "nodeId": "mt_Cg8VPguS_V",
++    "type": "x-statcentre",
++    "taskHash": "2bbc697cf68f741137706e3a296b607be68b2326fc7b57fd6ad047f4a9641570"
++  },
++  {
++    "sessionId": "meanbalance",
++    "index": 2,
++    "nodeId": "mt_Cg8VPguS_V",
++    "type": "x-statcentre",
++    "taskHash": "f102506b895645588b5209c2818e196acde91ad638c9e4db968df79e4786137e"
++  },
++  {
++    "sessionId": "averagestory",
++    "index": 0,
++    "nodeId": "mt_XSXnTQoQ4l",
++    "type": "x-statcentre",
++    "taskHash": "fa6e053fba8619b9cf0f9f8ff7114a2780370f85974842c8e3f5eb67e944fc01"
++  },
++  {
++    "sessionId": "averagestory",
++    "index": 1,
++    "nodeId": "mt_XSXnTQoQ4l",
++    "type": "x-statcentre",
++    "taskHash": "f71713eb257cd5a096c9502f5e254138d1ed02d283539af99c89cc7db6510291"
++  },
++  {
++    "sessionId": "quartiles",
++    "index": 0,
++    "nodeId": "mt_KCS9GbZgU_",
++    "type": "x-statcentre",
++    "taskHash": "3dfe6fe3d9e229436705c20c3806ae82c6af4d5f9d55055ce296cd9a0ab4960f"
++  },
++  {
++    "sessionId": "quartiles",
++    "index": 1,
++    "nodeId": "mt_KCS9GbZgU_",
++    "type": "x-statcentre",
++    "taskHash": "dbdb7a49fc1807fc1ff0bc2d1dc917b9b451bbe22aadd502349e7f2f360663a4"
++  },
++  {
++    "sessionId": "quartiles",
++    "index": 2,
++    "nodeId": "mt_KCS9GbZgU_",
++    "type": "x-statcentre",
++    "taskHash": "fcc08a037977aaf0e3075f75895a8a259288188b4d2084129a21705ba11a71f7"
++  }
++].map(Object.freeze));
++
++const eventFields={
++  reset:[],put:[],undo:[],start:['guess'],change:[],
++  transfer:['from','to','amount'],whole:['total'],missing:['value'],
++};
++const predictionWarning='记录改变后再比较总量与份数。最初的猜想也保留，可以看它哪里需要调整。';
++const transferWarning='从一堆拿出有的数量，交给另一堆；总量保持不变。';
++const sum=values=>values.reduce((total,value)=>total+value,0);
++
++function exact(raw,n,d=1) {
++  const pair=rational(raw);
++  return Number.isFinite(number(raw))&&pair!==null&&BigInt(pair[0])*BigInt(d)===BigInt(n)*BigInt(pair[1]);
++}
++function integer(raw) {
++  const value=number(raw);
++  return Number.isSafeInteger(value)&&exact(raw,value)?value:null;
++}
++function metricMatches(raw,wanted) {
++  const decimalScale=100000000;
++  return exact(raw,Math.round(wanted*decimalScale),decimalScale);
++}
++function modeMatches(raw,modes) {
++  const entries=raw.split(/[,，、\s]+/).filter(Boolean).map(integer);
++  return entries.every(n=>n!==null)&&sameEvidence(entries.sort((a,b)=>a-b),modes);
++}
++
++export function p110cStatisticalCentreBinding(task,context) {
++  const row=P110C_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p110c-statistical-centre',method:null,
++    question:'这次用了哪些记录，怎样算出中心和散开的程度？'};
++}
++
++export function replayP110CStatisticalCentreEvidence(task,model,context) {
++  try {
++    const binding=p110cStatisticalCentreBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        Object.keys(model.history).length!==model.history.length) return null;
++    const sort=['sort','quartile'].includes(task.mode);
++    const change=['change','append'].includes(task.mode);
++    const allFieldKeys=Object.keys(fields(task));
++    let {board}=initial(task);
++    let issue='';
++    for (const e of model.history) {
++      if (!hasExactKeys(e,['a','d','f'])||!Object.hasOwn(eventFields,e.a)||
++          !(hasExactKeys(e.f,eventFields[e.a])||hasExactKeys(e.f,allFieldKeys))||
++          !hasExactKeys(e.d,e.a==='put'?['index']:[])) return null;
++      const {a,f,d}=e;
++      board.first[a+'-0']??=f;
++      issue='';
++      if (a==='reset') {
++        board={...initial(task).board,first:board.first};
++      } else if (a==='put'&&sort) {
++        const i=task.values.findIndex((_,index)=>d.index===String(index));
++        if (i<0||board.order.includes(i)) return null;
++        board.order.push(i);
++      } else if (a==='undo'&&sort) {
++        board.order.pop();
++      } else if (a==='start'&&change&&!board.started) {
++        if (['up','down','same','unknown'].includes(f.guess)) board.started=true;
++      } else if (a==='change'&&change&&board.started&&!board.changed) {
++        const order=task.mode==='append'
++          ? task.append*task.values.length-sum(task.values)
++          : task.change[1]-task.values[task.change[0]];
++        if (task.mode==='append') board.values.push(task.append);
++        else board.values[task.change[0]]=task.change[1];
++        board.changed=true;
++        if (board.first['start-0'].guess!==(order>0?'up':order<0?'down':'same')) issue=predictionWarning;
++      } else if (a==='transfer'&&task.mode==='level') {
++        const from=integer(f.from),to=integer(f.to),amount=integer(f.amount);
++        if (from===null||to===null||from===to||board.piles[from]===undefined||
++            board.piles[to]===undefined||amount===null||amount<=0||
++            amount>board.piles[from]||amount%(task.step||1)!==0) {
++          issue=transferWarning;
++        } else {
++          board.piles[from]-=amount;
++          board.piles[to]+=amount;
++          board.moves++;
++        }
++      } else if ((a==='whole'||a==='missing')&&task.mode==='missing') {
++        const current=number(a==='whole'?f.total:f.value);
++        if (current>=0&&current<=10000) {
++          if (!Number.isSafeInteger(current)) return null;
++          if (a==='whole') board.total=current;
++          else board.values=[...task.values,current];
++        }
++      } else return null;
++    }
++    if (issue!==model.issue||!sameEvidence(board,model.board)) return null;
++    if (sort&&(board.order.length!==task.values.length||
++        board.order.some((id,i)=>i>0&&task.values[board.order[i-1]]>task.values[id]))) return null;
++    if (change&&!board.changed) return null;
++    if (task.mode==='level'&&(!board.moves||
++        board.piles.some(n=>n*board.piles.length!==sum(task.values)))) return null;
++    const total=task.targetMean*task.targetCount, missing=total-sum(task.values);
++    if (task.mode==='missing'&&(board.total!==total||
++        board.values.length!==task.targetCount||board.values.at(-1)!==missing)) return null;
++    const result={...stats(board.values),total,missing};
++    if (!task.metrics.every((metric,i)=>metric==='mode'
++      ? modeMatches(model.metrics[i],result.modes)
++      : (metric==='mean'&&exact(model.metrics[i],result.sum,result.n))||
++        metricMatches(model.metrics[i],result[metric]))) return null;
++    if (!task.questions.every((q,i)=>Array.isArray(q.value)
++      ? q.value.includes(model.answers[i])
++      : metricMatches(model.answers[i],q.value))) return null;
++    return {...binding,mode:task.mode,metrics:Object.fromEntries(task.metrics.map(key=>
++      [key,key==='mode'?result.modes:result[key]])),originalCount:task.values.length,currentCount:board.values.length};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP110CStatisticalCentreEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP110CStatisticalCentreEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p110c-statistical-centre-browser.cjs b/tests/p9-p110c-statistical-centre-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..db925a787073dfd64fd687f8bf4169645a73c861
+--- /dev/null
++++ b/tests/p9-p110c-statistical-centre-browser.cjs
+@@ -0,0 +1,164 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P110C_ARTIFACTS || path.join(root, 'verification/p9-p110c-statistical-centre'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P110C_SOURCES, replayP110CStatisticalCentreEvidence, submittedP110CStatisticalCentreEvidence} = await entry('dist/learning/p110c-statistical-centre-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b21 = await entry('dist/learning/phase5/b21-model.js');
++  const wrongSteps = task => b21.solveSteps(task).slice(0,-1);
++  const correctSteps = task => b21.solveSteps(task).slice(-1);
++  const cases = P110C_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP110CStatisticalCentreEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b21.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P110C');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b21.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b21.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'a missing statistic or follow-up answer fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP110CStatisticalCentreEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p110c.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p110c-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P110C_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p110c-statistical-centre-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P110C_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p110c-statistical-centre.test.mjs b/tests/p9-p110c-statistical-centre.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c3661411a869853f8548c2241cff8257312f0cb7
+--- /dev/null
++++ b/tests/p9-p110c-statistical-centre.test.mjs
+@@ -0,0 +1,50 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,inspect,solveSteps} from '../dist/learning/phase5/b21-model.js';
++import {P110C_SOURCES,replayP110CStatisticalCentreEvidence,submittedP110CStatisticalCentreEvidence} from '../dist/learning/p110c-statistical-centre-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P110C_SOURCES) {
++  test(`${sessionId}:${index} replays the recorded statistical construction and checks its result`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP110CStatisticalCentreEvidence(task,model,context);
++    const proof=replay(good);
++    assert.equal(proof?.mode,task.mode);
++    if (task.mode==='append') {
++      const equivalent=structuredClone(good);
++      equivalent.metrics[0]='205/3';
++      assert.ok(inspect(task,equivalent).correct);
++      assert.deepEqual(replay(equivalent),proof);
++    }
++    assert.equal(replayP110CStatisticalCentreEvidence(task,good,{sessionId,index:-1}),null);
++    const reset=structuredClone(good);
++    act(task,reset,'b21-reset');
++    assert.equal(replay(reset),null);
++    for (const step of solveSteps(task)) {
++      if (step.action) act(task,reset,step.action,step.data);
++      else if (!step.field.includes('.')) reset[step.field]=step.value;
++    }
++    assert.deepEqual(replay(reset),proof);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history[0].a='row';},
++      m=>{m.board.values[0]++;},
++      m=>{m.metrics[0]=String(Number(m.metrics[0])+0.00000001);},
++      m=>{m.issue='fabricated';},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP110CStatisticalCentreEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP110CStatisticalCentreEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

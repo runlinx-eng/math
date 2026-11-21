@@ -1,0 +1,267 @@
+diff --git a/dist/learning/p096s-subtraction-grouping-evidence.js b/dist/learning/p096s-subtraction-grouping-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e7e241d392d6ec68b66f4243272c0bafa6364fba
+--- /dev/null
++++ b/dist/learning/p096s-subtraction-grouping-evidence.js
+@@ -0,0 +1,44 @@
++import {initial,num,valid} from './phase5/b10-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P096S_SOURCES=Object.freeze([Object.freeze({
++  sessionId:'regroupadd',index:2,nodeId:'mt_T76hKqXf0z',type:'x-subgroups',
++  taskHash:'7c4a6de5df2c93a0ffdc3c8eded0690f7970382bd4e87a22883d4a48d5ecc460',
++})]);
++
++export function p096sSubtractionGroupingBinding(task,context) {
++  const [row]=P096S_SOURCES;
++  if (context?.sessionId!==row.sessionId||context?.index!==row.index||
++      !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p096s-subtraction-grouping',method:null,question:'括号移到另一边，先算哪一步？两种结果相等吗？'};
++}
++
++export function replayP096SSubtractionGroupingEvidence(task,model,context) {
++  try {
++    const binding=p096sSubtractionGroupingBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const left=10-3;
++    const right=3-2;
++    const expected=[[left,left-2],[right,10-right]];
++    if (!sameEvidence(model.paths,expected)) return null;
++    const entries=[[],[]];
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['branch','next'])||![0,1].includes(event.branch)) return null;
++      const next=num(event.next);
++      if (next===null||next<0||next>30) return null;
++      entries[event.branch].push(next);
++    }
++    // The native arrays retain push order, but not pop timing. A retained
++    // two-entry stack must end with the last push in that branch. The first
++    // entry can remain below it while other second entries come and go.
++    if (!expected.every(([first,last],i)=>entries[i].at(-1)===last&&entries[i].slice(0,-1).includes(first))) return null;
++    return {...binding,paths:expected,evidenceScope:'retained-answers-with-compatible-push-history'};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP096SSubtractionGroupingEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP096SSubtractionGroupingEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p096s-subtraction-grouping-browser.cjs b/tests/p9-p096s-subtraction-grouping-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..0da62447dc77b2c7b7a85761197aafce0cc0b29a
+--- /dev/null
++++ b/tests/p9-p096s-subtraction-grouping-browser.cjs
+@@ -0,0 +1,176 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P096S_ARTIFACTS || path.join(root, 'verification/p9-p096s-subtraction-grouping'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', ''));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P096S_SOURCES, replayP096SSubtractionGroupingEvidence, submittedP096SSubtractionGroupingEvidence} = await entry('dist/learning/p096s-subtraction-grouping-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b10 = await entry('dist/learning/phase5/b10-model.js');
++
++const field=(field,value)=>({field,value:String(value)});
++const act=(action,data)=>({action,data});
++const branch=(index,results)=>[act('subgroups-branch',{index}),
++  ...results.flatMap(n=>[field('next',n),act('subgroups-next')])];
++const wrongSteps=()=>[...branch(0,[7,6]),...branch(1,[1,9])];
++const correctSteps=()=>[act('subgroups-branch',{index:0}),act('subgroups-undo'),field('next',5),act('subgroups-next')];
++const total=task=>task.values.reduce((a,b)=>a+b,0);
++const pairSteps=(task,pair)=>[
++  ...pair.map(index=>act('triple-pick',{index})),act('triple-merge'),
++  field('sub',task.values[pair[0]]+task.values[pair[1]]),field('total',total(task)),act('triple-save'),
++];
++  const cases = P096S_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP096SSubtractionGroupingEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b10.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P096S');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        assert.equal(prior.type,'x-threegroups');
++        await runSteps(page,[...pairSteps(prior,[0,1]),...pairSteps(prior,[1,2])]);
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b10.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP096SSubtractionGroupingEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P096S_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p096s-subtraction-grouping-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P096S_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p096s-subtraction-grouping.test.mjs b/tests/p9-p096s-subtraction-grouping.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9c34ac65d8481371b608b128943f72b8a7337850
+--- /dev/null
++++ b/tests/p9-p096s-subtraction-grouping.test.mjs
+@@ -0,0 +1,29 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,inspect} from '../dist/learning/phase5/b10-model.js';
++import {P096S_SOURCES,replayP096SSubtractionGroupingEvidence,submittedP096SSubtractionGroupingEvidence} from '../dist/learning/p096s-subtraction-grouping-evidence.js';
++
++test('verifies both recorded subtraction paths without inventing undo order',()=>{
++  const {sessionId,index,taskHash}=P096S_SOURCES[0];
++  const context={sessionId,index};
++  const task=sessionTaskFor(sessionId,index);
++  const replay=model=>replayP096SSubtractionGroupingEvidence(task,model,context);
++  const ordered=Object.fromEntries(Object.entries(task).sort(([a],[b])=>a.localeCompare(b,'en')));
++  assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),taskHash);
++  const model=example(task);
++  assert.deepEqual(replay(model)?.paths,[[7,5],[1,9]]);
++  assert.equal(replayP096SSubtractionGroupingEvidence(task,model,{sessionId,index:-1}),null);
++  const earlier=structuredClone(model);
++  act(task,model,'subgroups-undo');
++  model.next='9';
++  act(task,model,'subgroups-next');
++  assert.ok(replay(model));
++  assert.equal(submittedP096SSubtractionGroupingEvidence(task,model,{attempts:[{value:earlier}]},context),null);
++  assert.deepEqual(submittedP096SSubtractionGroupingEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),replay(model));
++  const forged=structuredClone(model);
++  forged.history.push({branch:0,next:'6'});
++  assert.ok(inspect(task,forged).correct);
++  assert.equal(replay(forged),null);
++});

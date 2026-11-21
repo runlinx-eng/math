@@ -1,0 +1,387 @@
+diff --git a/dist/learning/p113s-place-value-shifts-evidence.js b/dist/learning/p113s-place-value-shifts-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0e49f16286d1c06e57599141a5f42fd4435d0b92
+--- /dev/null
++++ b/dist/learning/p113s-place-value-shifts-evidence.js
+@@ -0,0 +1,157 @@
++import {initial, valid} from './phase5/b07-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++
++export const P113S_SOURCES = Object.freeze([
++  {
++    "sessionId": "shift10",
++    "index": 0,
++    "nodeId": "mt_kw7xmp68rU",
++    "type": "x-pvshift",
++    "taskHash": "a0bfe750d6e635f194e00d80d3b7de61482c1558dad3a1a7a3c816e03ea2af4c"
++  },
++  {
++    "sessionId": "shift10",
++    "index": 1,
++    "nodeId": "mt_kw7xmp68rU",
++    "type": "x-pvshift",
++    "taskHash": "b7778525c8f055a3a9c84ba906bc80ee56cab3bb5ec905160baaff49b764313b"
++  },
++  {
++    "sessionId": "shift10",
++    "index": 2,
++    "nodeId": "mt_kw7xmp68rU",
++    "type": "x-pvshift",
++    "taskHash": "e301a9ecaec55c05728f9a7c45855e538cce7ee07e1074b7058ed090905bf1f4"
++  },
++  {
++    "sessionId": "shift10",
++    "index": 3,
++    "nodeId": "mt_kw7xmp68rU",
++    "type": "x-pvshift",
++    "taskHash": "1ce037951f0c9911dfb2b68f8304ca7c8a2416188c3f329a440be02037f16bac"
++  },
++  {
++    "sessionId": "twoproblems",
++    "index": 0,
++    "nodeId": "mt_kJGCjnuelW",
++    "type": "x-pvshift",
++    "taskHash": "66417539a37a5bdf5d2b5bfb584643dfd1921136576d971261c3b496b5c9e0a5"
++  },
++  {
++    "sessionId": "twoproblems",
++    "index": 1,
++    "nodeId": "mt_kJGCjnuelW",
++    "type": "x-pvshift",
++    "taskHash": "fb221d652d4d79115b3ec2a4536965f35a4820134d1f52e6a377db0b4bf9b15e"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 0,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "5e335d920e302127b52d6d760169ba8ecd47d3563fe14690ebc936ab4711abc1"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 1,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "db0349aeb7c806409d06991bc1371d2958e9e50ca540038c04b23d4323ae95b0"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 2,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 3,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "b310eb3ab48ff4ba6b9d48f820187e49cab9368898ff9377db0a1b560ba6bc68"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 4,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "daa00e2fc926348d5ddac163f6155ae229013f28aef540393c7e63509e1460dd"
++  },
++  {
++    "sessionId": "shift100",
++    "index": 5,
++    "nodeId": "mt_izien3ZX51",
++    "type": "x-pvshift",
++    "taskHash": "78d39bf0fa53fabe84740da6463f2f2073f9d0e912f57ab48c1343d1800cfdbd"
++  },
++  {
++    "sessionId": "structure34",
++    "index": 0,
++    "nodeId": "mt_FAXjFkgG6X",
++    "type": "x-pvshift",
++    "taskHash": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b"
++  }
++].map(Object.freeze));
++
++export function p113sPlaceValueShiftsBinding(task,context) {
++  const row=P113S_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p113s-place-value-shifts',method:null,question:'添取改变了多少？换捆时为什么总量保持不变？'};
++}
++
++const exchanges={up1:[0,1,-10,0],down1:[0,-1,10,0],up10:[1,-10,0,0],down10:[-1,10,0,0]};
++const plus=(a,b)=>a.map((value,i)=>value+b[i]);
++const prefix=vectors=>vectors.reduce((heads,v)=>(heads.push(plus(heads.at(-1),v)),heads),[[0,0,0,0]]);
++const canonical=n=>n===1000?[0,0,0,1]:[Math.floor(n/100),Math.floor(n/10)%10,n%10,0];
++
++function feasibleInterleaving(start,moves,swaps) {
++  // Each prefix pair determines the same unit counts for every possible interleaving.
++  const grid=Array.from({length:moves.length},()=>Array(swaps.length).fill(false));
++  for (const [i,moved] of moves.entries()) {
++    for (const [j,swapped] of swaps.entries()) {
++      if ((i||j)&&!grid[i-1]?.[j]&&!grid[i][j-1]) continue;
++      const [h,t,o,k]=plus(start,plus(moved,swapped));
++      grid[i][j]=[h,t,o,k].every(x=>x>=0)&&h<=10&&t<=100&&o<=100&&k<=1&&100*h+10*t+o+1000*k<=1000;
++    }
++  }
++  return grid.at(-1).at(-1);
++}
++
++export function replayP113SPlaceValueShiftsEvidence(task,model,context) {
++  try {
++    const binding=p113sPlaceValueShiftsBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.committed===null||!model.moves.length||Object.keys(model.moves).length!==model.moves.length||
++        Object.keys(model.history).length!==model.history.length||
++        !model.history.every(key=>Object.hasOwn(exchanges,key))) return null;
++    const end=task.start+task.delta;
++    if (model.moves.reduce((a,b)=>a+b,0)!==task.delta||model.answer!==end||
++        !sameEvidence(model.u,canonical(end))) return null;
++    const changed=['h','t','o'].filter((_,i)=>canonical(task.start)[i]!==model.u[i]).join('');
++    if (model.changed!==changed) return null;
++    const moveVectors=model.moves.map(delta=>Math.abs(delta)===100?[delta/100,0,0,0]:[0,delta/10,0,0]);
++    if (task.start<100&&model.moves.some(delta=>Math.abs(delta)===100)) return null;
++    const moved=prefix(moveVectors);
++    const swapped=prefix(model.history.map(key=>exchanges[key]));
++    const start=canonical(task.start);
++    if (!sameEvidence(plus(start,plus(moved.at(-1),swapped.at(-1))),model.u)||
++        !feasibleInterleaving(start,moved,swapped)) return null;
++    let forcedOrder=null;
++    if (context.sessionId==='shift100'&&[4,5].includes(context.index)) {
++      const up=context.index===4;
++      if (!sameEvidence(model.moves,[up?10:-10])||!sameEvidence(model.history,[up?'up10':'down10'])) return null;
++      // At 190 the exchange cannot precede the move; at 300 removal cannot precede the exchange.
++      forcedOrder=up?['move','exchange']:['exchange','move'];
++    }
++    return {...binding,netChange:task.delta,moves:[...model.moves],exchanges:[...model.history],forcedOrder};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP113SPlaceValueShiftsEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP113SPlaceValueShiftsEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p113s-place-value-shifts-browser.cjs b/tests/p9-p113s-place-value-shifts-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e983bd4a4cc37f4d33001b0ccec2e1fe67a1c84e
+--- /dev/null
++++ b/tests/p9-p113s-place-value-shifts-browser.cjs
+@@ -0,0 +1,170 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P113S_ARTIFACTS || path.join(root, 'verification/p9-p113s-place-value-shifts'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', ''));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P113S_SOURCES, replayP113SPlaceValueShiftsEvidence, submittedP113SPlaceValueShiftsEvidence} = await entry('dist/learning/p113s-place-value-shifts-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b07 = await entry('dist/learning/phase5/b07-model.js');
++
++const field=(field,value)=>({field,value:String(value)});
++function correctSteps(task) {
++  const end=task.start+task.delta;
++  const steps=[field('guess',end),{action:'pv-predict'}];
++  const delta=Math.sign(task.delta)*(Math.abs(task.delta)>=100?100:10);
++  if (delta===-10&&Math.floor(task.start/10)%10===0) steps.push({action:'pv-swap',data:{kind:'down10'}});
++  for (let i=0;i<Math.abs(task.delta/delta);i++) steps.push({action:'pv-move',data:{delta}});
++  if (delta===10&&Math.floor(task.start/10)%10+task.delta/10>=10) steps.push({action:'pv-swap',data:{kind:'up10'}});
++  return [...steps,field('answer',end),field('changed',b07.changed(task))];
++}
++const wrongSteps=task=>correctSteps(task).map(step=>step.field==='answer'?{...step,value:'999'}:step);
++  const cases = P113S_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP113SPlaceValueShiftsEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b07.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P113S');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,correctSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b07.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task).filter(step=>step.field==='answer'));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP113SPlaceValueShiftsEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P113S_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p113s-place-value-shifts-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P113S_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p113s-place-value-shifts.test.mjs b/tests/p9-p113s-place-value-shifts.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..74a26284f59f3151a5c8c06428b16322ff23ba08
+--- /dev/null
++++ b/tests/p9-p113s-place-value-shifts.test.mjs
+@@ -0,0 +1,42 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,changed,initial,inspect} from '../dist/learning/phase5/b07-model.js';
++import {P113S_SOURCES,replayP113SPlaceValueShiftsEvidence,submittedP113SPlaceValueShiftsEvidence} from '../dist/learning/p113s-place-value-shifts-evidence.js';
++
++for (const {sessionId,index,taskHash} of P113S_SOURCES) {
++  test(`${sessionId}:${index} verifies native move and exchange constraints`,()=>{
++    const context={sessionId,index};
++    const task=sessionTaskFor(sessionId,index);
++    const replay=model=>replayP113SPlaceValueShiftsEvidence(task,model,context);
++    const ordered=Object.fromEntries(Object.entries(task).sort(([a],[b])=>a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),taskHash);
++    const model=initial(task);
++    model.guess=task.start+task.delta;
++    act(task,model,'pv-predict');
++    if (task.start===300) act(task,model,'pv-swap',{kind:'down10'});
++    const delta=Math.sign(task.delta)*(Math.abs(task.delta)>=100?100:10);
++    for (let i=0;i<Math.abs(task.delta/delta);i++) act(task,model,'pv-move',{delta});
++    if (task.start===190) act(task,model,'pv-swap',{kind:'up10'});
++    model.answer=task.start+task.delta;
++    model.changed=changed(task);
++    assert.ok(inspect(task,model).correct);
++    assert.equal(replay(model)?.netChange,task.delta);
++    assert.equal(replayP113SPlaceValueShiftsEvidence(task,model,{sessionId,index:-1}),null);
++    const wrong=structuredClone(model);
++    wrong.answer=999;
++    assert.equal(submittedP113SPlaceValueShiftsEvidence(task,model,{attempts:[{value:wrong}]},context),null);
++    assert.deepEqual(submittedP113SPlaceValueShiftsEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),replay(model));
++    if (!model.history.length) {
++      const roundTrip=structuredClone(model);
++      act(task,roundTrip,'pv-swap',{kind:'down1'});
++      act(task,roundTrip,'pv-swap',{kind:'up1'});
++      assert.ok(replay(roundTrip));
++    }
++    const impossible=structuredClone(model);
++    impossible.history.unshift('up1','down1');
++    assert.ok(inspect(task,impossible).correct);
++    assert.equal(replay(impossible),null);
++  });
++}

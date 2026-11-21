@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-complementary-tiles",
+  "commit": "ce14addfa32e7a8a1c7f55e7f9768920fd83e796",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p115t-complementary-tiles-evidence.js",
+    "tests/p9-p115t-complementary-tiles-browser.cjs",
+    "tests/p9-p115t-complementary-tiles.test.mjs"
+  ],
+  "scope": "重放改边、转动与放片，检验相邻边界吻合和四个位置无空隙重叠。",
+  "sources": [
+    {
+      "sessionId": "patternfloor",
+      "index": 1,
+      "nodeId": "mt_61Nhj8W78f",
+      "type": "x-p24-tiles",
+      "taskHash": "ec3e1b37bc41d0293310b06029f030ede413bb9b422e9db74069e52c49ab7911"
+    }
+  ],
+  "nodePass": 38,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "2d4e8b9554ff9dbe51ee75dadc8dd1f125d15deab3dd7bb5f8f18a623294f11b",
+    "native-state-v2.json": "497d5e1557484615b708558e601d8af4e8ff06d64a3a2beabec0db229ee0d4b7",
+    "node.log": "c4d6bff8b4d04310a8c86ee0196fd7946b3ce34397bab46806030c5cd75da4eb",
+    "patternfloor-1-correct-check-decoded.json": "9925e8b94398b5a8657e3e68906a859a827266687ce8a4dd8660a94946e1864a",
+    "patternfloor-1-correct-check-storage.txt": "9925e8b94398b5a8657e3e68906a859a827266687ce8a4dd8660a94946e1864a",
+    "patternfloor-1-correct.png": "ef1a46bd2b506b8e56154fa1508e35433bc952dc0ffb5b6948f2792dc0e599f7",
+    "patternfloor-1-corrected-draft-decoded.json": "f163290ab79b4ed616dfacd31b360b1488f777fbf6fc0ee737fe21801cee692f",
+    "patternfloor-1-corrected-draft-storage.txt": "f163290ab79b4ed616dfacd31b360b1488f777fbf6fc0ee737fe21801cee692f",
+    "patternfloor-1-offline-reload-decoded.json": "4aa51166be9355d8c423e978b968429293e98cb541725b64269a52edb7d3be78",
+    "patternfloor-1-offline-reload-storage.txt": "4aa51166be9355d8c423e978b968429293e98cb541725b64269a52edb7d3be78",
+    "patternfloor-1-restored-backup-decoded.json": "829f3e6169aa0c26b6df416c40ba723c4df226fa472c1edc27b12f24ffe8a2cc",
+    "patternfloor-1-restored-backup-storage.txt": "829f3e6169aa0c26b6df416c40ba723c4df226fa472c1edc27b12f24ffe8a2cc",
+    "patternfloor-1-retry-decoded.json": "33f6e5f8c75b5450df213533469d50f69e051adbadbb67386cafd01b8d3955f7",
+    "patternfloor-1-retry-storage.txt": "33f6e5f8c75b5450df213533469d50f69e051adbadbb67386cafd01b8d3955f7",
+    "patternfloor-1-wrong-check-decoded.json": "c00b9076d240facf55f37eeeffc1067e229cf594d2c92c210d10c04bbce24efb",
+    "patternfloor-1-wrong-check-storage.txt": "c00b9076d240facf55f37eeeffc1067e229cf594d2c92c210d10c04bbce24efb",
+    "patternfloor-1-wrong.png": "0d4bb5f2e9f6668e67c6654a4f2f7a64c22e3afe8d2d3edaf8f975eac694c70b",
+    "preflight.log": "15909e57a2b07eef1252f5b0809daec28369f548f5c249b21675b60507816b4a",
+    "results.json": "66c5e17580a041b7239ab5d0eb5104b4a3d4ac594db3372620af01ab9beacbcc"
+  }
+}

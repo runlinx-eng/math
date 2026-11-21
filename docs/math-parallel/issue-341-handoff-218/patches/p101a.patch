@@ -1,0 +1,360 @@
+diff --git a/dist/learning/p101a-reflection-axes-evidence.js b/dist/learning/p101a-reflection-axes-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..4677834760cb08b2c074fada0f44c1f950545f1f
+--- /dev/null
++++ b/dist/learning/p101a-reflection-axes-evidence.js
+@@ -0,0 +1,137 @@
++import {initial,number,valid} from './phase5/b23-model.js';
++import {rational} from './phase5/b16-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P101A_SOURCES=Object.freeze([
++  {
++    "sessionId": "sidesfold",
++    "index": 1,
++    "nodeId": "mt_sBcRdUfAzV",
++    "type": "x-s23-symmetry",
++    "taskHash": "0663a7b8366d5f9507c13778751eed40fedc9d8ba5383ac7d4aded97079ebc6e"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 0,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "7f7826e579de7751b92858c16f2cdf5cb7dabee7be17aaf599788d4e693d13bb"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 1,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "13e6024f703f11632dea0ce3de77c22465fc583efecaad223bed91d34098dff0"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 2,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "b6fe903511b28ad38f4723e4a25ec650c1710e27b1b6d98751c8a93bc418f045"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 3,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "662e3cb60d463c26ad8a712bd592394e41ad19fac97b9cc67aa6c1973f1e5d14"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 4,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "d5cde1835b557739d2d03ade17948dc6493a4e58cc0b278dfa5717aa8509c073"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 5,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "b82fe006b52eb48dfcd7519fd42340c4078ce77e6086f3a6683af6a0df66e102"
++  },
++  {
++    "sessionId": "shapeaxes",
++    "index": 6,
++    "nodeId": "mt_hRZyKvz1KN",
++    "type": "x-s23-symmetry",
++    "taskHash": "ddc7dea76eb327490f6f4ecb4a6b57e9d553d94e9dcd094d3baf0aea6c98f098"
++  },
++  {
++    "sessionId": "geometrynotation",
++    "index": 1,
++    "nodeId": "mt_WtIFJSCQIT",
++    "type": "x-s23-symmetry",
++    "taskHash": "af207f5cb81ffdd295365845ad6e09086149d689823007ce4b5c70564a430e4b"
++  }
++].map(Object.freeze));
++
++const unturnedAxes={
++  rectangle:[0,90],square:[0,45,90,135],equilateral:[30,90,150],
++  hexagon:[0,30,60,90,120,150],isosceles:[90],triangle:[],
++};
++const canonical=degrees=>((degrees%180)+180)%180;
++
++export function p101aReflectionAxesBinding(task,context) {
++  const row=P101A_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p101a-reflection-axes',method:null,
++    question:'沿哪些线反射以后，整个图形会和原图完全重合？'};
++}
++
++export function replayP101AReflectionAxesEvidence(task,model,context) {
++  try {
++    const binding=p101aReflectionAxesBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const angles=unturnedAxes[task.shape].map(a=>canonical(a+task.rotation));
++    const target=task.candidates.flatMap((angle,i)=>angles.includes(canonical(angle))?[i]:[]);
++    let {board}=initial(task,model.seed);
++    for (const e of model.history) {
++      if (!hasExactKeys(e,['a','f','d'])||!hasExactKeys(e.f,[])) return null;
++      const {a,d}=e;
++      board.first[a]??={};
++      if ((a==='test'||a==='mark')&&hasExactKeys(d,['index'])) {
++        const i=task.candidates.findIndex((_,index)=>String(index)===d.index);
++        if (i<0) return null;
++        if (a==='test') {
++          if (!board.tested.includes(i)) board.tested.push(i);
++          board.last=i;
++        } else {
++          if (!board.tested.length) return null;
++          const at=board.marked.indexOf(i);
++          if (at===-1) board.marked.push(i);
++          else board.marked.splice(at,1);
++          board.none=false;
++        }
++      } else if (hasExactKeys(d,[])) {
++        if (a==='reset') board={...initial(task,model.seed).board,first:board.first};
++        else if (a==='turn'&&task.turn) board.turns++;
++        else if (a==='none'&&board.tested.length) {
++          board.none=!board.none;
++          board.marked=[];
++        } else return null;
++      } else return null;
++    }
++    if (!sameEvidence(board,model.board)||board.tested.length!==task.candidates.length||
++        !sameEvidence([...board.marked].sort((a,b)=>a-b),target)||
++        board.none!==(target.length===0)||(task.turn&&!board.turns)) return null;
++    const minimumTurn=task.turn?360/6:null;
++    if (!task.questions.every((q,i)=>{
++      const input=model.answers[i];
++      if (q.options) return input==='match';
++      const wanted=q.label.includes('最小正转')?minimumTurn:target.length;
++      const pair=rational(input);
++      return Number.isFinite(number(input))&&pair!==null&&BigInt(pair[0])===BigInt(wanted)*BigInt(pair[1]);
++    })) return null;
++    return {...binding,axes:target.map(i=>task.candidates[i]),tested:board.tested.length,minimumTurn};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP101AReflectionAxesEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP101AReflectionAxesEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p101a-reflection-axes-browser.cjs b/tests/p9-p101a-reflection-axes-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..48bb9775fd56b9a37a17412107d846ca41c307c4
+--- /dev/null
++++ b/tests/p9-p101a-reflection-axes-browser.cjs
+@@ -0,0 +1,164 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P101A_ARTIFACTS || path.join(root, 'verification/p9-p101a-reflection-axes'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P101A_SOURCES, replayP101AReflectionAxesEvidence, submittedP101AReflectionAxesEvidence} = await entry('dist/learning/p101a-reflection-axes-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b23 = await entry('dist/learning/phase5/b23-model.js');
++  const wrongSteps = task => b23.solveSteps(task).slice(0,-1);
++  const correctSteps = task => b23.solveSteps(task).slice(-1);
++  const cases = P101A_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP101AReflectionAxesEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b23.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P101A');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b23.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b23.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'a missing symmetry answer fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP101AReflectionAxesEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p101a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p101a-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P101A_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p101a-reflection-axes-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P101A_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p101a-reflection-axes.test.mjs b/tests/p9-p101a-reflection-axes.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2af627205218e548482fba0556fafc304e21d3a
+--- /dev/null
++++ b/tests/p9-p101a-reflection-axes.test.mjs
+@@ -0,0 +1,41 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,axes,example,inspect,solveSteps} from '../dist/learning/phase5/b23-model.js';
++import {P101A_SOURCES,replayP101AReflectionAxesEvidence,submittedP101AReflectionAxesEvidence} from '../dist/learning/p101a-reflection-axes-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P101A_SOURCES) {
++  test(`${sessionId}:${index} compares recorded mirror tests with geometric axes`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP101AReflectionAxesEvidence(task,model,context);
++    const proof=replay(good);
++    assert.deepEqual(proof?.axes,axes(task).map(i=>task.candidates[i]));
++    if (task.turn) assert.equal(proof.minimumTurn,60);
++    assert.equal(replayP101AReflectionAxesEvidence(task,good,{sessionId,index:-1}),null);
++    const reset=structuredClone(good);
++    act(task,reset,'g23-reset');
++    assert.equal(replay(reset),null);
++    for (const step of solveSteps(task)) if (step.action) act(task,reset,step.action,step.data);
++    assert.deepEqual(replay(reset),proof);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history[0].d.index='999';},
++      m=>{m.board.marked=[];m.board.none=!m.board.none;},
++      m=>{m.answers[0]='999';},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP101AReflectionAxesEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP101AReflectionAxesEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

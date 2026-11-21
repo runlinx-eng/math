@@ -1,0 +1,339 @@
+diff --git a/dist/learning/p101s-rotation-symmetry-evidence.js b/dist/learning/p101s-rotation-symmetry-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..44b9da9be89733bcba94635a3cf27bd39004d624
+--- /dev/null
++++ b/dist/learning/p101s-rotation-symmetry-evidence.js
+@@ -0,0 +1,126 @@
++import {initial, valid} from './phase5/b24-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++import {motifMatches,motifs,rotate,samePolygons} from './phase5/b24-geometry.js';
++
++export const P101S_SOURCES = Object.freeze([
++  {
++    "sessionId": "turnsym",
++    "index": 0,
++    "nodeId": "mt_NM5I3yN-Q6",
++    "type": "x-p24-spin",
++    "taskHash": "af2d9f7a67e72beeb017ef38da9794067475abdfd2787492879239691668e3f6"
++  },
++  {
++    "sessionId": "turnsym",
++    "index": 1,
++    "nodeId": "mt_NM5I3yN-Q6",
++    "type": "x-p24-spin",
++    "taskHash": "581db9aa2035473a4628d56b096086fd0ae470efd72de16e7434952bda68ace3"
++  },
++  {
++    "sessionId": "turnsym",
++    "index": 2,
++    "nodeId": "mt_NM5I3yN-Q6",
++    "type": "x-p24-spin",
++    "taskHash": "523af51fb09f8bff1f44d4d5093b99edb72f0bbf56c35884a28d5318c28c6f9c"
++  }
++].map(Object.freeze));
++
++export function p101sRotationSymmetryBinding(task,context) {
++  const row=P101S_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p101s-rotation-symmetry',method:null,question:'转过多少角度时，整个图形才与原来的位置重合？'};
++}
++
++const toggle=(set,i)=>set.has(i)?set.delete(i):set.add(i);
++
++function squareEvidence(history,board,answer) {
++  let angle=0;
++  let matches=[];
++  for (const event of history) {
++    if (!hasExactKeys(event.d,[])) return null;
++    if (event.a==='reset') {
++      angle=0;
++      matches=[];
++    } else if (event.a==='spin') {
++      angle+=90;
++      if (motifMatches('square',angle)) matches.push(angle);
++    } else {
++      return null;
++    }
++  }
++  const withinTurn=matches.filter(value=>0<value&&value<=360);
++  if (angle!==board.angle||!sameEvidence(matches,board.matches)||withinTurn.length!==4||
++      !equal(answer,withinTurn.length)) return null;
++  return {matches:withinTurn};
++}
++
++function classifyEvidence(history,board,answer) {
++  const tested=new Set();
++  const selected=new Set();
++  let last=null;
++  for (const event of history) {
++    if (event.a==='reset'&&hasExactKeys(event.d,[])) {
++      tested.clear();
++      selected.clear();
++      last=null;
++      continue;
++    }
++    if (!hasExactKeys(event.d,['index'])||!['0','1','2'].includes(event.d.index)) return null;
++    const i=Number(event.d.index);
++    if (event.a==='spin') {
++      tested.add(i);
++      last=i;
++    } else if (event.a==='choose') {
++      toggle(selected,i);
++    } else {
++      return null;
++    }
++  }
++  const expected=['pinwheel','heart','triangle'].flatMap((name,i)=>motifMatches(name,[90,180,120][i])?[i]:[]);
++  if (tested.size!==3||last!==board.last||!sameEvidence([...tested],board.tested)||
++      !sameEvidence([...selected],board.selected)||!sameEvidence([...selected].sort(),expected)||answer!=='no') return null;
++  return {selected:expected};
++}
++
++function bladeEvidence(history,board,answer) {
++  const rotations=[0,0,0,0];
++  const placed=new Set();
++  for (const event of history) {
++    if (event.a==='reset'&&hasExactKeys(event.d,[])) {
++      rotations.fill(0);
++      placed.clear();
++      continue;
++    }
++    if (!hasExactKeys(event.d,['index'])||!['0','1','2','3'].includes(event.d.index)) return null;
++    const i=Number(event.d.index);
++    if (event.a==='pieceTurn') rotations[i]=(rotations[i]+90)%360;
++    else if (event.a==='piecePlace') toggle(placed,i);
++    else return null;
++  }
++  if (placed.size!==4||new Set(rotations).size!==4||!sameEvidence(rotations,board.rotations)||
++      !sameEvidence([...placed],board.placed)||!equal(answer,placed.size)) return null;
++  const blades=rotations.map(angle=>motifs.pinwheel[0].map(point=>rotate(point,[0,0],angle)));
++  const rotated=blades.map(blade=>blade.map(([x,y])=>[-y,x]));
++  return samePolygons(blades,rotated)?{rotations}:null;
++}
++
++export function replayP101SRotationSymmetryEvidence(task,model,context) {
++  try {
++    const binding=p101sRotationSymmetryBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length||
++        !model.history.every(event=>hasExactKeys(event,['a','d','f'])&&hasExactKeys(event.f,[]))) return null;
++    const check={square:squareEvidence,classify:classifyEvidence,build:bladeEvidence}[task.mode];
++    const evidence=check(model.history,model.board,model.answers[0]);
++    return evidence?{...binding,mode:task.mode,...evidence}:null;
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP101SRotationSymmetryEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP101SRotationSymmetryEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p101s-rotation-symmetry-browser.cjs b/tests/p9-p101s-rotation-symmetry-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..64fccc38289c464b6c26c27e2b5cc9b7e6521830
+--- /dev/null
++++ b/tests/p9-p101s-rotation-symmetry-browser.cjs
+@@ -0,0 +1,162 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P101S_ARTIFACTS || path.join(root, 'verification/p9-p101s-rotation-symmetry'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P101S_SOURCES, replayP101SRotationSymmetryEvidence, submittedP101SRotationSymmetryEvidence} = await entry('dist/learning/p101s-rotation-symmetry-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b24 = await entry('dist/learning/phase5/b24-model.js');
++
++const wrongSteps = task => b24.solveSteps(task).map(step =>
++  step.field === 'answers.0' ? {...step,value:task.questions[0].options?.find(([id])=>id!==step.value)?.[0]??'999'} : step);
++const correctSteps = task => b24.solveSteps(task).filter(step => step.field === "answers.0");
++
++  const cases = P101S_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP101SRotationSymmetryEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b24.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P101S');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b24.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b24.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP101SRotationSymmetryEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P101S_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p101s-rotation-symmetry-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P101S_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p101s-rotation-symmetry.test.mjs b/tests/p9-p101s-rotation-symmetry.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..19bc802a788057797c0fc73b8d5cbaa0ab2bc42a
+--- /dev/null
++++ b/tests/p9-p101s-rotation-symmetry.test.mjs
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b24-model.js';
++import {P101S_SOURCES, replayP101SRotationSymmetryEvidence, submittedP101SRotationSymmetryEvidence} from '../dist/learning/p101s-rotation-symmetry-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P101S_SOURCES) {
++  test(`${sessionId}:${index} replays actual turns, classification or blade placement`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP101SRotationSymmetryEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.mode, task.mode);
++    assert.equal(replayP101SRotationSymmetryEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answers[0] = '999';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP101SRotationSymmetryEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP101SRotationSymmetryEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].a = 'reset';
++    assert.equal(replay(forged), null);
++    const tampered=structuredClone(correct);
++    tampered.board.first.spin={unexpected:true};
++    assert.equal(replay(tampered),null);
++  });
++}

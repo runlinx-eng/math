@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-coefficient-views",
+  "commit": "4f09125bfa6c2a530f352299ad827c51c0ee1f85",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p098v-coefficient-views-evidence.js",
+    "tests/p9-p098v-coefficient-views-browser.cjs",
+    "tests/p9-p098v-coefficient-views.test.mjs"
+  ],
+  "scope": "逐次重放平方项系数的改变和保存，核对正负系数两种观察及负系数时向下开口。",
+  "sources": [
+    {
+      "sessionId": "quadratic36",
+      "index": 1,
+      "nodeId": "mt_GZuoYaDdWd",
+      "type": "x-f36-live",
+      "taskHash": "b34f8ea1c53fe868d343e9c50644751d4ebcc2e75726e5c8cd26f3d85a3b6d80"
+    }
+  ],
+  "nodePass": 31,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "92f9f233f86aff6a4c3f7db93d58311e78ffde05cefaf21d9a29148487922421",
+    "native-state-v2.json": "361ea5f311075075b874c4eda0b70150081511b068b52d49b501bd8f400430aa",
+    "node.log": "3f61adfa780f1418d72f265a1876052623b5ea959a91eaffe6b072cba988f556",
+    "preflight.log": "39c0d4f4fc3726e885abd3de89a1f558c5d0df58145a0b57298fcdb58a10c631",
+    "quadratic36-1-correct-check-decoded.json": "0754e30ed9112850174419c96b85ea6322828ad11bd6d4de9742dcc062486ca7",
+    "quadratic36-1-correct-check-storage.txt": "0754e30ed9112850174419c96b85ea6322828ad11bd6d4de9742dcc062486ca7",
+    "quadratic36-1-correct.png": "b99ef096f6212e116cd49a9f3e800f958dc18edc71a86d627a12d98317928205",
+    "quadratic36-1-corrected-draft-decoded.json": "4707fa5b0f7f5538e597682b071f32ee5173e4a8ebdb7ca2f55951fd922890e6",
+    "quadratic36-1-corrected-draft-storage.txt": "4707fa5b0f7f5538e597682b071f32ee5173e4a8ebdb7ca2f55951fd922890e6",
+    "quadratic36-1-offline-reload-decoded.json": "7e277320c09d52097fe9adea19c0d6761fce6a7dbeee3736d56eedb996012aff",
+    "quadratic36-1-offline-reload-storage.txt": "7e277320c09d52097fe9adea19c0d6761fce6a7dbeee3736d56eedb996012aff",
+    "quadratic36-1-restored-backup-decoded.json": "6a18c0b4fe5c8428108a78d4f7b32006cdb1345408fb13030a1cd154ceb6821e",
+    "quadratic36-1-restored-backup-storage.txt": "6a18c0b4fe5c8428108a78d4f7b32006cdb1345408fb13030a1cd154ceb6821e",
+    "quadratic36-1-retry-decoded.json": "365180829baa96b79bf2fd502aff34a4bf907b6222fb6f5c1d57ad4cf5023f95",
+    "quadratic36-1-retry-storage.txt": "365180829baa96b79bf2fd502aff34a4bf907b6222fb6f5c1d57ad4cf5023f95",
+    "quadratic36-1-wrong-check-decoded.json": "f5343bd07022380916bfd03a71d8d1396e1f064366fd75e65e98ce7e0d580cf1",
+    "quadratic36-1-wrong-check-storage.txt": "f5343bd07022380916bfd03a71d8d1396e1f064366fd75e65e98ce7e0d580cf1",
+    "quadratic36-1-wrong.png": "fe924a65d38f8d8e68db581b72b00e87d2549710278d77a41a83e4b01cab1835",
+    "results.json": "3a132f4007bf49810bf472ffca10aec4939c49092dbd8e5f60e2c6b3fa5b9d9f"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-algebra-actions",
+  "commit": "78a0ae1595184f37bb35f8d1f267de408dd55c8a",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p111a-algebra-actions-evidence.js",
+    "tests/p9-p111a-algebra-actions-browser.cjs",
+    "tests/p9-p111a-algebra-actions.test.mjs"
+  ],
+  "scope": "重放积木添加、撤回、清空与运行，核对先乘再加得到17的输入与提交等式。",
+  "sources": [
+    {
+      "sessionId": "writing35",
+      "index": 0,
+      "nodeId": "mt_i9rJbuFO3p",
+      "type": "x-a35-build",
+      "taskHash": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48"
+    },
+    {
+      "sessionId": "advancedPlan38",
+      "index": 2,
+      "nodeId": "mt_FieL-vVTI_",
+      "type": "x-a35-build",
+      "taskHash": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48"
+    }
+  ],
+  "nodePass": 32,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "advancedPlan38-2-correct-check-decoded.json": "6aea59d8e6b0bdaef0c0cd14aeef300c1c5eaec38dc42205b4dd70ec453aac51",
+    "advancedPlan38-2-correct-check-storage.txt": "6aea59d8e6b0bdaef0c0cd14aeef300c1c5eaec38dc42205b4dd70ec453aac51",
+    "advancedPlan38-2-correct.png": "9b20609875aae30899cc87d6fd9d06d26e981e3c9053384fd86174ac600ed3c4",
+    "advancedPlan38-2-corrected-draft-decoded.json": "62ce4bbeeda144ca1ac5da000e8d6affd18ba4ac53c51ad8a15886c3806b0123",
+    "advancedPlan38-2-corrected-draft-storage.txt": "62ce4bbeeda144ca1ac5da000e8d6affd18ba4ac53c51ad8a15886c3806b0123",
+    "advancedPlan38-2-offline-reload-decoded.json": "c502228cc14fb3e510f1adfd1ac9bd4ac9f546f3808ad4dc7cc1e14e9275ba99",
+    "advancedPlan38-2-offline-reload-storage.txt": "c502228cc14fb3e510f1adfd1ac9bd4ac9f546f3808ad4dc7cc1e14e9275ba99",
+    "advancedPlan38-2-restored-backup-decoded.json": "4bcafd0753af5cd7d2606a57823864c665be7708019b8cab43de3170aa45685b",
+    "advancedPlan38-2-restored-backup-storage.txt": "4bcafd0753af5cd7d2606a57823864c665be7708019b8cab43de3170aa45685b",
+    "advancedPlan38-2-retry-decoded.json": "34de43a8e40ddbc86cf7aba26212b66729618924c3f0f340e6c167fd78e7e755",
+    "advancedPlan38-2-retry-storage.txt": "34de43a8e40ddbc86cf7aba26212b66729618924c3f0f340e6c167fd78e7e755",
+    "advancedPlan38-2-wrong-check-decoded.json": "e7838be9e554f8f8de3b93b6520d62dffbcb328aa5f57e2c050b9f4d44370ecf",
+    "advancedPlan38-2-wrong-check-storage.txt": "e7838be9e554f8f8de3b93b6520d62dffbcb328aa5f57e2c050b9f4d44370ecf",
+    "advancedPlan38-2-wrong.png": "b75ee3681f12eb8ad493f9af87a45dbfc6289c23d9a8390400a6b60cacdb3080",
+    "browser.log": "ef04dcab11d3b31173973897c924c8f8d9395c6fb7669ef2e63db83b04c6af74",
+    "native-state-v2.json": "35d340544ce620853cd49137ef1e0ee9b3768ad980d13a530dd868068d6c6dee",
+    "node.log": "1a4e8e2477c95bae8e6a45774c4f4c56464969684ff0ca3e7b0b22ec28fe8ee5",
+    "preflight.log": "f1a0fdbfdaaeac058ca74666d9f0661421cff5d67837605b9a4a03b9085e8cb3",
+    "results.json": "a62a215590750a3d4496459ded70893c55d99c1a0264f8b6315b5663bda3e359",
+    "writing35-0-correct-check-decoded.json": "79cd39b99dba58144cc774e192559a11d02f7e823a1f6ca7e5749c25c6e54b16",
+    "writing35-0-correct-check-storage.txt": "79cd39b99dba58144cc774e192559a11d02f7e823a1f6ca7e5749c25c6e54b16",
+    "writing35-0-correct.png": "981c179f13504444cb31d45e7cd89ce5d1f8e054e12d1e2f0596c3da5dacb398",
+    "writing35-0-corrected-draft-decoded.json": "1d2077ef92ff12b9bfacb240846c775859d533913f0aa8a8024497dd431a9044",
+    "writing35-0-corrected-draft-storage.txt": "1d2077ef92ff12b9bfacb240846c775859d533913f0aa8a8024497dd431a9044",
+    "writing35-0-offline-reload-decoded.json": "5a13b5bad47215b1eb13b58d8f452308afe32f92357e8c49bad13bc1e7b75c9b",
+    "writing35-0-offline-reload-storage.txt": "5a13b5bad47215b1eb13b58d8f452308afe32f92357e8c49bad13bc1e7b75c9b",
+    "writing35-0-restored-storage-decoded.json": "4bcafd0753af5cd7d2606a57823864c665be7708019b8cab43de3170aa45685b",
+    "writing35-0-restored-storage-storage.txt": "4bcafd0753af5cd7d2606a57823864c665be7708019b8cab43de3170aa45685b",
+    "writing35-0-wrong-check-decoded.json": "88bc2997cfe6149336aac4c89e007310b7bfbe9f94f511a6e764ea033c930c28",
+    "writing35-0-wrong-check-storage.txt": "88bc2997cfe6149336aac4c89e007310b7bfbe9f94f511a6e764ea033c930c28",
+    "writing35-0-wrong.png": "dfe38405eb63327cbcf6f106014e1421d9f0b7f3ad51485d0aa7bb2348592921"
+  }
+}

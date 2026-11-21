@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-studio-symmetry",
+  "commit": "809fdd61d287559f766d8f838882d29c257cf6a8",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p115s-studio-symmetry-evidence.js",
+    "tests/p9-p115s-studio-symmetry-browser.cjs",
+    "tests/p9-p115s-studio-symmetry.test.mjs"
+  ],
+  "scope": "复核竖轴反射在先、半转在后，按顶点核算横轴、竖轴和半转重合。",
+  "sources": [
+    {
+      "sessionId": "geometrylab",
+      "index": 3,
+      "nodeId": "mt_RdfzwInyAj",
+      "type": "x-p24-studio",
+      "taskHash": "35fdfaebdb96347e8d5e9f10d633f74b3067f95db3dcd87ea4a19935dd546739"
+    }
+  ],
+  "nodePass": 38,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "6bb8ca7ba9815e1c6ce9a069f5b98eb3223cabbb7bc1e808c85bc3d7d3e06b40",
+    "geometrylab-3-correct-check-decoded.json": "66edd626a2df7e9e9055a55bd3afa50d9c05a78661ae9064847df15ced1b6011",
+    "geometrylab-3-correct-check-storage.txt": "66edd626a2df7e9e9055a55bd3afa50d9c05a78661ae9064847df15ced1b6011",
+    "geometrylab-3-correct.png": "35c068a8d0ffcf75c3d91811e26c19961b0ead33c3eac80ec891116393eaecce",
+    "geometrylab-3-corrected-draft-decoded.json": "ba3dd1e003ddf6ae9b0b3b86410fc536507f5e2fff353caefdd475bed2c8267d",
+    "geometrylab-3-corrected-draft-storage.txt": "ba3dd1e003ddf6ae9b0b3b86410fc536507f5e2fff353caefdd475bed2c8267d",
+    "geometrylab-3-offline-reload-decoded.json": "b4c3456f2f624a4216a1b01ce7b01ff9202c28188db845dbcd0d388d01353522",
+    "geometrylab-3-offline-reload-storage.txt": "b4c3456f2f624a4216a1b01ce7b01ff9202c28188db845dbcd0d388d01353522",
+    "geometrylab-3-restored-backup-decoded.json": "cea8fd7c8739e264aaf89dfffeca47138d05071400db48af7662bc5f69219d49",
+    "geometrylab-3-restored-backup-storage.txt": "cea8fd7c8739e264aaf89dfffeca47138d05071400db48af7662bc5f69219d49",
+    "geometrylab-3-retry-decoded.json": "7a404d17b8111c7a2364cd2ae15fc162a61d2ea6b86812edcd0dba17c2da6bbd",
+    "geometrylab-3-retry-storage.txt": "7a404d17b8111c7a2364cd2ae15fc162a61d2ea6b86812edcd0dba17c2da6bbd",
+    "geometrylab-3-wrong-check-decoded.json": "01c0609510ae11e3a87e642b1b965bbff4faa59beee156a5e6853173513a734c",
+    "geometrylab-3-wrong-check-storage.txt": "01c0609510ae11e3a87e642b1b965bbff4faa59beee156a5e6853173513a734c",
+    "geometrylab-3-wrong.png": "899d0ce949c99212227fc0042de1052739e4f97e82b9535983a2a94e0e753cbb",
+    "native-state-v2.json": "126ef5d4da720849a2a797e8b20aa785b907b4f3c2d42bf1f80c50c55e0ddf93",
+    "node.log": "9c88f360b8db976279feb9dfd03d35738333a588f0edc575b83d2931c059f929",
+    "preflight.log": "34c8c4cb21227f9ba57b100241377f5cee20f874d892ce3c92a5af8aed5466db",
+    "results.json": "b33eee3a1a09b3bbc2b3b5041a17076f98b9c31b61bf5baf53858a876e4c4133"
+  }
+}

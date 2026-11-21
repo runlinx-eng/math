@@ -1,0 +1,359 @@
+diff --git a/dist/learning/p112v-venn-regions-evidence.js b/dist/learning/p112v-venn-regions-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ee249977a414d7853dca070ba605525e7ca123d
+--- /dev/null
++++ b/dist/learning/p112v-venn-regions-evidence.js
+@@ -0,0 +1,146 @@
++import {initial, valid} from './phase5/b22-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++import {number} from './phase5/b20-model.js';
++
++export const P112V_SOURCES = Object.freeze([
++  {
++    "sessionId": "chancesets",
++    "index": 0,
++    "nodeId": "mt_1YwOCMMwD8",
++    "type": "x-p22-venn",
++    "taskHash": "b49927fb4621037c49b99fb8a0a4149707e5a785f793849cbeba669659fcfb57"
++  },
++  {
++    "sessionId": "chancesets",
++    "index": 2,
++    "nodeId": "mt_1YwOCMMwD8",
++    "type": "x-p22-venn",
++    "taskHash": "e7ea2195297e493121a259059504afdfac9a84d41f0c4e3b4d03279e5d557fc9"
++  },
++  {
++    "sessionId": "chancevenn",
++    "index": 0,
++    "nodeId": "mt_eSv_w46u6H",
++    "type": "x-p22-venn",
++    "taskHash": "0b16cf75043c9ccbe4ef39c3d302148d2fe621b1d6051d1d491b3dd8a2b661e3"
++  },
++  {
++    "sessionId": "chancevenn",
++    "index": 1,
++    "nodeId": "mt_eSv_w46u6H",
++    "type": "x-p22-venn",
++    "taskHash": "4e8366b3764b934ee67237984c34460e27907bb95075a333cc939134720081f6"
++  },
++  {
++    "sessionId": "chancevenn",
++    "index": 2,
++    "nodeId": "mt_eSv_w46u6H",
++    "type": "x-p22-venn",
++    "taskHash": "c30031bd7fc613825777db36c18a9ee4c762300d61ebc4b8eec8b8b30fe524f3"
++  }
++].map(Object.freeze));
++
++export function p112vVennRegionsBinding(task,context) {
++  const row=P112V_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p112v-venn-regions',method:null,question:'怎样把每个结果只放一次，又不漏掉两边都没有的？'};
++}
++
++const sorted=xs=>[...xs].sort((a,b)=>a-b);
++const masks={both:[1],either:[0,1,2],notA:[2,3]};
++
++function index(raw,length) {
++  const i=number(raw);
++  return Number.isInteger(i)&&i>=0&&i<length&&equal(raw,i)?i:null;
++}
++
++function setMatches(raw,expected) {
++  const tokens=raw.split(/[,，、\s]+/).filter(Boolean);
++  return sameEvidence(sorted(tokens.map(token=>index(token,9))),expected);
++}
++
++function itemsEvidence(task,model) {
++  const assigned=task.items.map(()=>null);
++  for (const {a,d,f} of model.history) {
++    if (!hasExactKeys(d,[])) return false;
++    if (a==='reset'&&hasExactKeys(f,[])) {
++      assigned.fill(null);
++    } else if (a==='place'&&hasExactKeys(f,['item','region'])) {
++      const i=index(f.item,assigned.length);
++      const r=index(f.region,4);
++      if (i!==null&&r!==null) assigned[i]=r;
++    } else {
++      return false;
++    }
++  }
++  const expected=task.items.map(n=>n%2===0?(n<4?1:0):(n<4?2:3));
++  return sameEvidence(assigned,expected)&&sameEvidence(assigned,model.board.assigned)&&
++    setMatches(model.answers[0],task.items.filter((_,i)=>assigned[i]!==3))&&
++    setMatches(model.answers[1],task.items.filter((_,i)=>assigned[i]===1));
++}
++
++function countsEvidence(task,model) {
++  const [a,b,ab,total]=task.totals;
++  const union=a+b-ab;
++  const counts=[a-ab,ab,b-ab,total-union];
++  let built=null;
++  for (const {a,d,f} of model.history) {
++    if (!hasExactKeys(d,[])) return false;
++    if (a==='reset'&&hasExactKeys(f,[])) built=null;
++    else if (a==='build'&&hasExactKeys(f,['values'])) built=f.values;
++    else return false;
++  }
++  if (!built||!sameEvidence(counts,model.board.built)||
++      !counts.every((count,i)=>equal(built[i],count)&&equal(model.values[i],count))) return false;
++  if (model.answers.length===2) return equal(model.answers[0],union)&&model.answers[1]==='once';
++  return [a,b,ab,union].every((count,i)=>equal(model.answers[i],count,total));
++}
++
++function shadeEvidence(task,model) {
++  let shades={};
++  let selected=[];
++  let event='';
++  for (const {a,d,f} of model.history) {
++    if (a==='reset'&&hasExactKeys(d,[])&&hasExactKeys(f,[])) {
++      shades={};
++      selected=[];
++      event='';
++    } else if (a==='activate'&&hasExactKeys(d,[])&&hasExactKeys(f,['event'])&&task.events.includes(f.event)) {
++      event=f.event;
++      selected=[...(shades[event]??[])];
++    } else if (a==='shade'&&event&&hasExactKeys(d,['index'])&&hasExactKeys(f,[])) {
++      const i=index(d.index,4);
++      if (i===null) return false;
++      selected=selected.includes(i)?selected.filter(j=>j!==i):[...selected,i];
++    } else if (a==='save'&&hasExactKeys(d,[])&&hasExactKeys(f,['event'])&&event&&event===f.event) {
++      shades[event]=[...selected];
++    } else {
++      return false;
++    }
++  }
++  if (!sameEvidence(shades,model.board.shades)||!sameEvidence(selected,model.board.selected)||
++      event!==model.board.event||!task.events.every(e=>shades[e]&&sameEvidence(sorted(shades[e]),masks[e]))||
++      !sameEvidence(sorted(selected),sorted(shades[event]??[]))) return false;
++  const union=task.counts.slice(0,3).reduce((a,b)=>a+b,0);
++  return model.answers.length===1?model.answers[0]==='once':equal(model.answers[0],union)&&model.answers[1]==='once';
++}
++
++export function replayP112VVennRegionsEvidence(task,model,context) {
++  try {
++    const binding=p112vVennRegionsBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length||
++        !model.history.every(event=>hasExactKeys(event,['a','d','f']))) return null;
++    const check={items:itemsEvidence,counts:countsEvidence,shade:shadeEvidence}[task.mode];
++    if (!check(task,model)) return null;
++    return {...binding,mode:task.mode};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP112VVennRegionsEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP112VVennRegionsEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p112v-venn-regions-browser.cjs b/tests/p9-p112v-venn-regions-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..2a95e82dbc3ab3e75421698d53a1ad71935596b1
+--- /dev/null
++++ b/tests/p9-p112v-venn-regions-browser.cjs
+@@ -0,0 +1,162 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P112V_ARTIFACTS || path.join(root, 'verification/p9-p112v-venn-regions'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P112V_SOURCES, replayP112VVennRegionsEvidence, submittedP112VVennRegionsEvidence} = await entry('dist/learning/p112v-venn-regions-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b22 = await entry('dist/learning/phase5/b22-model.js');
++
++const wrongSteps = task => b22.solveSteps(task).map(step =>
++  step.field === 'answers.0' ? {...step,value:task.questions[0].options?.find(([id])=>id!==step.value)?.[0] ?? '8'} : step);
++const correctSteps = task => b22.solveSteps(task).filter(step => step.field?.startsWith('answers.'));
++
++  const cases = P112V_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP112VVennRegionsEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b22.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P112V');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b22.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b22.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP112VVennRegionsEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P112V_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p112v-venn-regions-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P112V_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p112v-venn-regions.test.mjs b/tests/p9-p112v-venn-regions.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9f08c8e8707248e488f6a617ba5f5e70aa6adb93
+--- /dev/null
++++ b/tests/p9-p112v-venn-regions.test.mjs
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b22-model.js';
++import {P112V_SOURCES, replayP112VVennRegionsEvidence, submittedP112VVennRegionsEvidence} from '../dist/learning/p112v-venn-regions-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P112V_SOURCES) {
++  test(`${sessionId}:${index} replays the selected Venn mode and exact set membership`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP112VVennRegionsEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.equal(replay(correct)?.mode,task.mode);
++    assert.equal(replayP112VVennRegionsEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answers[0] = '8';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP112VVennRegionsEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP112VVennRegionsEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].a = 'sample';
++    assert.equal(replay(forged), null);
++    const tampered=structuredClone(correct);
++    tampered.board.cursor++;
++    assert.equal(replay(tampered),null);
++  });
++}

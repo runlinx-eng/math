@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-factor-program",
+  "commit": "2552afeae48a866bef71a068b755f47bf244d97b",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p105c-factor-program-evidence.js",
+    "tests/p9-p105c-factor-program-browser.cjs",
+    "tests/p9-p105c-factor-program.test.mjs"
+  ],
+  "scope": "重放积木顺序、撤回与运行，逐个整数检查因数余数或因数个数。结论只涵盖题设的有限范围。",
+  "sources": [
+    {
+      "sessionId": "factorcode",
+      "index": 1,
+      "nodeId": "mt_bZC-wqWX7Y",
+      "type": "x-factorcode",
+      "taskHash": "b24cacb73fa68511e1c44a0b91ddecc421257472e72de46a97d9da9eaeb8e75f"
+    },
+    {
+      "sessionId": "factorcode",
+      "index": 3,
+      "nodeId": "mt_bZC-wqWX7Y",
+      "type": "x-factorcode",
+      "taskHash": "0f6c07e7d4c6abdc38b48afc8421a1f6601b2e9caff31fe69ad23b658fe4fe1e"
+    }
+  ],
+  "nodePass": 32,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "165686dac2ca1fefc6e0d7529403edf03b6d5092d9af717bb297d24e5f71ad23",
+    "factorcode-1-correct-check-decoded.json": "3ad489493fb9126059f83997033f8a4aa0ca0f01dafa7de5d62ad941418740ba",
+    "factorcode-1-correct-check-storage.txt": "3ad489493fb9126059f83997033f8a4aa0ca0f01dafa7de5d62ad941418740ba",
+    "factorcode-1-correct.png": "cdb2435b5ccef74155fb43516a02c6b16e1b3bf46e71616fa7a79645aea420bc",
+    "factorcode-1-corrected-draft-decoded.json": "b3ec91f956ddc0c80ba163d6e7aacac28468c7cb7a3c7a11a4823bf1adcaaffb",
+    "factorcode-1-corrected-draft-storage.txt": "b3ec91f956ddc0c80ba163d6e7aacac28468c7cb7a3c7a11a4823bf1adcaaffb",
+    "factorcode-1-offline-reload-decoded.json": "537ad0ed889e0d7909394c1f3c71cae647cbaef2fc7b19f726e81a8b652752cb",
+    "factorcode-1-offline-reload-storage.txt": "537ad0ed889e0d7909394c1f3c71cae647cbaef2fc7b19f726e81a8b652752cb",
+    "factorcode-1-restored-storage-decoded.json": "28a421f8931edef6e85827ce023800465a1d8b9dc51434dfd5f3cdb2ff5f9167",
+    "factorcode-1-restored-storage-storage.txt": "28a421f8931edef6e85827ce023800465a1d8b9dc51434dfd5f3cdb2ff5f9167",
+    "factorcode-1-wrong-check-decoded.json": "59e71ab1e6243ad7377c2a2f6286f7d674b8efebe3cf0d5c83a9e8ea4e87768f",
+    "factorcode-1-wrong-check-storage.txt": "59e71ab1e6243ad7377c2a2f6286f7d674b8efebe3cf0d5c83a9e8ea4e87768f",
+    "factorcode-1-wrong.png": "dd2d963fb0c18af1b1fa12911bf56fe047eaacefd0a2ff50a25a54ab3c649f58",
+    "factorcode-3-correct-check-decoded.json": "b270111d80d05cf7f32455adf4e1224ae8b46bda8fb3cc7ce18dc14dd5fc5eb7",
+    "factorcode-3-correct-check-storage.txt": "b270111d80d05cf7f32455adf4e1224ae8b46bda8fb3cc7ce18dc14dd5fc5eb7",
+    "factorcode-3-correct.png": "77d7a74e2b96c243471ef3923c3079c28054b16119d4a783293b5cc137820849",
+    "factorcode-3-corrected-draft-decoded.json": "f65adf815858b9993e5e4f91a3d485c90f4ead7f3cb7243609e7d02a4c92618b",
+    "factorcode-3-corrected-draft-storage.txt": "f65adf815858b9993e5e4f91a3d485c90f4ead7f3cb7243609e7d02a4c92618b",
+    "factorcode-3-offline-reload-decoded.json": "d636632eabedd0f606083b5e8b07f587e2ad5516eb01c7064776cac3093e17db",
+    "factorcode-3-offline-reload-storage.txt": "d636632eabedd0f606083b5e8b07f587e2ad5516eb01c7064776cac3093e17db",
+    "factorcode-3-restored-backup-decoded.json": "28a421f8931edef6e85827ce023800465a1d8b9dc51434dfd5f3cdb2ff5f9167",
+    "factorcode-3-restored-backup-storage.txt": "28a421f8931edef6e85827ce023800465a1d8b9dc51434dfd5f3cdb2ff5f9167",
+    "factorcode-3-retry-decoded.json": "626dc56d01e38dc86fb4a2b49bfee785e5179a495ff8fc7c8e432da8ad0d55c4",
+    "factorcode-3-retry-storage.txt": "626dc56d01e38dc86fb4a2b49bfee785e5179a495ff8fc7c8e432da8ad0d55c4",
+    "factorcode-3-wrong-check-decoded.json": "0259c769d210b3de0422b390b7c5875bcba006be09ea1b0669133a6fc0e06617",
+    "factorcode-3-wrong-check-storage.txt": "0259c769d210b3de0422b390b7c5875bcba006be09ea1b0669133a6fc0e06617",
+    "factorcode-3-wrong.png": "29046cce9b8e43d32415992bbcac73b47ac8271bdf2a1132df35775f353fa558",
+    "native-state-v2.json": "20e2830d1f6424532753914b637f829abcb8b7452785b3ce6f3c3ca8d5c7a640",
+    "node.log": "1a922598e9c30e3760ec8450208aabf07b4bca8cf453964ce02f40d179a9b751",
+    "preflight.log": "9fe7e19a0f955e3f7c19ec54079dde9ef23c95377a77cb4046934089cf8987bc",
+    "results.json": "28286233c9ae4375e4a07b20162b8ac43512b97613d87ba91bc664777c116e82"
+  }
+}

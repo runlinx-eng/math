@@ -1,0 +1,418 @@
+diff --git a/dist/learning/p114s-solid-classification-evidence.js b/dist/learning/p114s-solid-classification-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..a6f300516aecac0854c300ec241ebce0e8b42181
+--- /dev/null
++++ b/dist/learning/p114s-solid-classification-evidence.js
+@@ -0,0 +1,190 @@
++import {initial} from './phase5/b27-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P114S_SOURCES=Object.freeze([
++  {
++    "sessionId": "solidnames",
++    "index": 0,
++    "nodeId": "mt_Qcp2d_kuta",
++    "type": "x-g27-sort",
++    "taskHash": "1e55df9b67792c2aa22ab8b39290b4bd6ef4be18eaeae72694b411065cf8bf49"
++  },
++  {
++    "sessionId": "solidnames",
++    "index": 1,
++    "nodeId": "mt_Qcp2d_kuta",
++    "type": "x-g27-sort",
++    "taskHash": "f5019fb4c762ccb8a630d25d9fac01d4406bba4bc55ad9f3595e9c1b17273bf2"
++  },
++  {
++    "sessionId": "solidnames",
++    "index": 2,
++    "nodeId": "mt_Qcp2d_kuta",
++    "type": "x-g27-sort",
++    "taskHash": "c65082e42d6da76504b6eb7d5311c0ec35646d4affb682db05471cf82c200f10"
++  },
++  {
++    "sessionId": "flatcorners",
++    "index": 0,
++    "nodeId": "mt_yGv8doDAmp",
++    "type": "x-g27-sort",
++    "taskHash": "b1283fe0acc1fabd73526f2803c3a0018ee66d9c8f6d3cf6fb9c08a09345eb54"
++  },
++  {
++    "sessionId": "flatcorners",
++    "index": 1,
++    "nodeId": "mt_yGv8doDAmp",
++    "type": "x-g27-sort",
++    "taskHash": "604e3c0fba659070846b36c53184664328f99dcadd6bd123630d950175ff885f"
++  },
++  {
++    "sessionId": "flatcorners",
++    "index": 2,
++    "nodeId": "mt_yGv8doDAmp",
++    "type": "x-g27-sort",
++    "taskHash": "5ef75fc0f4ff855f88e05ad4a346c5689d47c58a8b2b2979ee0405f8b947e1f8"
++  },
++  {
++    "sessionId": "flatvsolid",
++    "index": 0,
++    "nodeId": "mt_mnEVZNkX3p",
++    "type": "x-g27-sort",
++    "taskHash": "795702deb01c182a82a3ff1c50d764177b41c04e89e93c582fefbeded4f967a0"
++  },
++  {
++    "sessionId": "flatvsolid",
++    "index": 1,
++    "nodeId": "mt_mnEVZNkX3p",
++    "type": "x-g27-sort",
++    "taskHash": "35a3d801f56d2b4e83fe7c20b369b24a52637cefe9f23d747d7f654cacd7194b"
++  },
++  {
++    "sessionId": "flatvsolid",
++    "index": 2,
++    "nodeId": "mt_mnEVZNkX3p",
++    "type": "x-g27-sort",
++    "taskHash": "1a0c3b8c69e8acdb3861a2d4f50d09b1586e4b01490239edae7745685735a5f5"
++  },
++  {
++    "sessionId": "solidstack",
++    "index": 2,
++    "nodeId": "mt_QNxFnxikCN",
++    "type": "x-g27-sort",
++    "taskHash": "41c2c9ac94d848a8183f4c7b7895bd0c29ed2652b293fa8486e1861b72d54c0a"
++  },
++  {
++    "sessionId": "solidsort",
++    "index": 0,
++    "nodeId": "mt_fEuoBYw6bU",
++    "type": "x-g27-sort",
++    "taskHash": "12edd5f4dfff95290ebe4d51a8956f35af4163d5d13b3f8bef36c2bd80b4649c"
++  },
++  {
++    "sessionId": "solidsort",
++    "index": 1,
++    "nodeId": "mt_fEuoBYw6bU",
++    "type": "x-g27-sort",
++    "taskHash": "fa0df059ab71b105791920a1c905e99cf7f1ab1abdf89bf0488a670a8de5371f"
++  },
++  {
++    "sessionId": "solidsort",
++    "index": 2,
++    "nodeId": "mt_fEuoBYw6bU",
++    "type": "x-g27-sort",
++    "taskHash": "f8f5f3526f7ee1fad52a4d3d904fd3b6463c7e719ba1b90ddecd02bbe248087c"
++  },
++  {
++    "sessionId": "solidpictures",
++    "index": 0,
++    "nodeId": "mt_wUSbRt3-qw",
++    "type": "x-g27-sort",
++    "taskHash": "b3809674faf7acab07c47cf6da1adfbf2bbb84af9bac6c412566e7b70ab3d499"
++  },
++  {
++    "sessionId": "solidpictures",
++    "index": 1,
++    "nodeId": "mt_wUSbRt3-qw",
++    "type": "x-g27-sort",
++    "taskHash": "66eb9234d27106d55befebb8cd348ba5553d570ff6529ca25b099d4f5e2a05dd"
++  },
++  {
++    "sessionId": "solidpictures",
++    "index": 2,
++    "nodeId": "mt_wUSbRt3-qw",
++    "type": "x-g27-sort",
++    "taskHash": "b449fce1dad2f3c7a10d43aaed499a24a1f24b195d5eb720aa9d843ecb3f223f"
++  }
++].map(Object.freeze));
++
++const vertexCount={triangle:'3',rectangle:'4',square:'4',pentagon:'5'};
++const planeShapes=new Set(['circle',...Object.keys(vertexCount)]);
++const solidShapes=new Set(['cube','cuboid','sphere','cylinder','cone','pyramid','prism']);
++const curvedShapes=new Set(['sphere','cylinder','cone']);
++const combinations={tower:'cylcone',cubehouse:'boxpyramid'};
++const representations={netbox:'cuboid',picturebox:'cuboid',pictureprism:'prism',netcube:'cube',netprism:'prism'};
++
++function classify(card,bins) {
++  const {shape}=card;
++  if (bins.includes('3')) return vertexCount[shape];
++  if (bins.includes('curved')) return solidShapes.has(shape)?(curvedShapes.has(shape)?'curved':'flat'):null;
++  if (bins.includes('solid')) return solidShapes.has(shape)?'solid':planeShapes.has(shape)?'flat':null;
++  if (bins.includes('cylcone')) return combinations[shape];
++  return representations[shape]??(solidShapes.has(shape)?shape:null);
++}
++
++export function p114sSolidClassificationBinding(task,context) {
++  const row=P114S_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p114s-solid-classification',method:null,
++    question:'你看的是顶点、平面和曲面，还是立体的组成？'};
++}
++
++export function replayP114SSolidClassificationEvidence(task,model,context) {
++  try {
++    const binding=p114sSolidClassificationBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||
++        !Number.isInteger(model.seed)||model.seed<1||model.seed>4294967295||
++        !['position','foldPosition','prose','issue'].every(k=>typeof model[k]==='string'&&model[k].length<=1500)||
++        model.position!=='2'||model.foldPosition!=='0'||
++        !Array.isArray(model.history)||model.history.length>1000||
++        Object.keys(model.history).length!==model.history.length) return null;
++
++    const bins=task.bins.map(b=>b.id);
++    const categories=task.cards.map(card=>classify(card,bins));
++    if (!categories.every(c=>bins.includes(c))) return null;
++    let {board}=initial(task,model.seed);
++    let issue='';
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','d'])) return null;
++      const {a,d}=event;
++      issue='';
++      if (a==='card'&&hasExactKeys(d,['index'])&&typeof d.index==='string'&&
++          task.cards.some((_,i)=>String(i)===d.index)) {
++        board.card=Number(d.index);
++      } else if (a==='choose'&&hasExactKeys(d,['index'])&&bins.includes(d.index)) {
++        board.first['card'+board.card]??=d.index;
++        if (d.index!==categories[board.card]) board.bad=true;
++        board.choices[board.card]=d.index;
++        board.revealed=board.revealed.filter(x=>x!==board.card);
++      } else if (hasExactKeys(d,[])) {
++        if (a==='turn') board.turned=true;
++        else if (a==='help') board.first.help=true;
++        else if (a==='reset') board={...initial(task,model.seed).board,first:board.first,bad:board.bad};
++        else if (a==='show'&&task.cards[board.card].reveal) {
++          if (board.choices[board.card]===null) issue='先猜它是什么，再展开立体看看。';
++          else if (!board.revealed.includes(board.card)) board.revealed.push(board.card);
++        } else return null;
++      } else return null;
++    }
++    if (issue!==model.issue||issue||!sameEvidence(board,model.board)||
++        !sameEvidence(board.choices,categories)||(task.rotate&&!board.turned)||
++        !task.cards.every((card,i)=>!card.reveal||board.revealed.includes(i))) return null;
++    return {...binding,categories,turned:board.turned,revealed:[...board.revealed]};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP114SSolidClassificationEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP114SSolidClassificationEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p114s-solid-classification-browser.cjs b/tests/p9-p114s-solid-classification-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..582a3b2c103f7f8aa37e95d97546dca0b1699fa4
+--- /dev/null
++++ b/tests/p9-p114s-solid-classification-browser.cjs
+@@ -0,0 +1,167 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P114S_ARTIFACTS || path.join(root, 'verification/p9-p114s-solid-classification'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P114S_SOURCES, replayP114SSolidClassificationEvidence, submittedP114SSolidClassificationEvidence} = await entry('dist/learning/p114s-solid-classification-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b27 = await entry('dist/learning/phase5/b27-model.js');
++  const wrongSteps = task => [
++    {action:'g27-card',data:{index:0}},
++    {action:'g27-choose',data:{index:task.bins.find(bin=>bin.id!==task.cards[0].answer).id}},
++  ];
++  const correctSteps = task => b27.solveSteps(task);
++  const cases = P114S_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP114SSolidClassificationEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b27.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P114S');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b27.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b27.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP114SSolidClassificationEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p114s.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p114s-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P114S_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p114s-solid-classification-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P114S_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p114s-solid-classification.test.mjs b/tests/p9-p114s-solid-classification.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..43b82514594ca63763e6071fc693aa6da2f98ac7
+--- /dev/null
++++ b/tests/p9-p114s-solid-classification.test.mjs
+@@ -0,0 +1,43 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,initial,inspect,solveSteps} from '../dist/learning/phase5/b27-model.js';
++import {P114S_SOURCES,replayP114SSolidClassificationEvidence,submittedP114SSolidClassificationEvidence} from '../dist/learning/p114s-solid-classification-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P114S_SOURCES) {
++  test(`${sessionId}:${index} certifies the visible classifications from the saved actions`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=model=>replayP114SSolidClassificationEvidence(task,model,context);
++    const proof=replay(good);
++    assert.deepEqual(proof?.categories,task.cards.map(c=>c.answer));
++    assert.equal(replayP114SSolidClassificationEvidence(task,good,{sessionId,index:-1}),null);
++    const pending=initial(task,1);
++    act(task,pending,'g27-choose',{index:task.bins.find(x=>x.id!==task.cards[0].answer).id});
++    act(task,pending,'g27-reset');
++    assert.equal(replay(pending),null);
++    for (const step of solveSteps(task)) {
++      act(task,pending,step.action==='turn-extra'?'g27-turn':step.action,step.data);
++    }
++    assert.deepEqual(replay(pending),proof);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history.find(e=>e.a==='choose').d.index='unknown';},
++      m=>{m.history=m.history.filter(e=>e.a!=='turn');},
++      m=>{m.board.choices[0]=null;},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP114SSolidClassificationEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP114SSolidClassificationEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

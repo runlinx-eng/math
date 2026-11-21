@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-graph-reading",
+  "commit": "efa14ad06fb1e71b087bdcf0cd7bb6b6117e2396",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p088r-graph-reading-evidence.js",
+    "tests/p9-p088r-graph-reading-browser.cjs",
+    "tests/p9-p088r-graph-reading.test.mjs"
+  ],
+  "scope": "按十分之一格重放采样标记，分别核算曲线函数值与行程水平段。保留原题明确的读数容差。",
+  "sources": [
+    {
+      "sessionId": "graph39",
+      "index": 0,
+      "nodeId": "mt_Yw27nweoTj",
+      "type": "x-s39-graph",
+      "taskHash": "1eec6cf40609b87aa267170a6e66026b4c4a54c948bb7293129a55f6da427635"
+    },
+    {
+      "sessionId": "graph39",
+      "index": 3,
+      "nodeId": "mt_Yw27nweoTj",
+      "type": "x-s39-graph",
+      "taskHash": "9f6a367322f7bd237cb87e0030a157912d8597777f052efd2d11be0686a23e3b"
+    }
+  ],
+  "nodePass": 25,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "a4efe430a79e800505be918b075cac01be2c19e00c1d043a383de23cfe886dee",
+    "graph39-0-correct-check-decoded.json": "10def9adb93957cfbe1a45ad552d6ac7e4fc56f2c85f531024e9e0b50cb3aeae",
+    "graph39-0-correct-check-storage.txt": "10def9adb93957cfbe1a45ad552d6ac7e4fc56f2c85f531024e9e0b50cb3aeae",
+    "graph39-0-correct.png": "8b3b2481cf2b831838ab70920e92a0f5fa0901d5e71fccbb1c2f3021619170af",
+    "graph39-0-corrected-draft-decoded.json": "0333dc4a3e8b1db215137e4e717c471f21c75893f037546c0a7a4195bfbd090c",
+    "graph39-0-corrected-draft-storage.txt": "0333dc4a3e8b1db215137e4e717c471f21c75893f037546c0a7a4195bfbd090c",
+    "graph39-0-offline-reload-decoded.json": "5f2cb1815bf9860cc9c469b11697f43e100ea665ef8570dff23659cf4145149c",
+    "graph39-0-offline-reload-storage.txt": "5f2cb1815bf9860cc9c469b11697f43e100ea665ef8570dff23659cf4145149c",
+    "graph39-0-restored-storage-decoded.json": "b27aa18d7d13c5408c3e387c20b04a04cdadc91704ecf1edc70bca0444d21842",
+    "graph39-0-restored-storage-storage.txt": "b27aa18d7d13c5408c3e387c20b04a04cdadc91704ecf1edc70bca0444d21842",
+    "graph39-0-wrong-check-decoded.json": "ec969335c4f0f8d961c6f38276206e5c180261ca3ff3e74e2bb82eedc8d949f7",
+    "graph39-0-wrong-check-storage.txt": "ec969335c4f0f8d961c6f38276206e5c180261ca3ff3e74e2bb82eedc8d949f7",
+    "graph39-0-wrong.png": "79bac27aec69f80202c7fdc81b5cd1d19f8a1f9ea81ec92d31cd4ba5480591b9",
+    "graph39-3-correct-check-decoded.json": "9cda1309848a01c1cc20197dc5f5d6565d10be16a64dd7c8cf72d5bc52ca0e05",
+    "graph39-3-correct-check-storage.txt": "9cda1309848a01c1cc20197dc5f5d6565d10be16a64dd7c8cf72d5bc52ca0e05",
+    "graph39-3-correct.png": "7a0a47567767f89c520f66b5548c57091328748fa04a987e987de9342973aada",
+    "graph39-3-corrected-draft-decoded.json": "8c1973b1e5507b33a08e6b6825e048756814d705773de5c0638a5a11271a54d2",
+    "graph39-3-corrected-draft-storage.txt": "8c1973b1e5507b33a08e6b6825e048756814d705773de5c0638a5a11271a54d2",
+    "graph39-3-offline-reload-decoded.json": "f2deac61838b0210df7d2e7961b76faa5c46dea252dfece06b156a446c5e4fd7",
+    "graph39-3-offline-reload-storage.txt": "f2deac61838b0210df7d2e7961b76faa5c46dea252dfece06b156a446c5e4fd7",
+    "graph39-3-restored-backup-decoded.json": "b27aa18d7d13c5408c3e387c20b04a04cdadc91704ecf1edc70bca0444d21842",
+    "graph39-3-restored-backup-storage.txt": "b27aa18d7d13c5408c3e387c20b04a04cdadc91704ecf1edc70bca0444d21842",
+    "graph39-3-retry-decoded.json": "548c1104d658b1436ced7ad467ff5d86a73cb44f32b3b93788d52d0a5217b847",
+    "graph39-3-retry-storage.txt": "548c1104d658b1436ced7ad467ff5d86a73cb44f32b3b93788d52d0a5217b847",
+    "graph39-3-wrong-check-decoded.json": "4918b3e0899da8898e37afa2def865e237b37a37062fd03a6d0c04244f2d574f",
+    "graph39-3-wrong-check-storage.txt": "4918b3e0899da8898e37afa2def865e237b37a37062fd03a6d0c04244f2d574f",
+    "graph39-3-wrong.png": "7b584d34134f034bd38612143665c85ab6f7cc5f9d64db2a2a909c6c824fc192",
+    "native-state-v2.json": "b0a721ba160e337085c1713559bd28c123fee517c4da6bee58cad48beb084130",
+    "node.log": "99aa3301e9e0d7ceb9334b3a3637a851bd38c9cd9504cd9bd11f4db4adb0a0f6",
+    "preflight.log": "08ef0b60a5a052a5ee65bf0e5dacdae1de107a52cbd31760d9f807e68464fe56",
+    "results.json": "91a6a7db89f9c5139f399692fff4420d94a6be42bcf123aa300bc7d1451ee7a5"
+  }
+}

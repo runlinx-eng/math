@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/specialized-polygon-angle-fan",
+  "commit": "a2ff2145b96c6e7cbb0a72e50e0351e0b1229f66",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p115f-polygon-angle-fan-evidence.js",
+    "tests/p9-p115f-polygon-angle-fan-browser.cjs",
+    "tests/p9-p115f-polygon-angle-fan.test.mjs"
+  ],
+  "scope": "独立重放选多边形、放块和保存尝试，重算围满、留空、超过整圈三种结果。",
+  "sources": [
+    {
+      "sessionId": "patternfloor",
+      "index": 0,
+      "nodeId": "mt_61Nhj8W78f",
+      "type": "x-p24-fan",
+      "taskHash": "67cf90d194df985310dd7ad5f28d58a080ddeb85c43c503a8d7851377a7ee2e3"
+    }
+  ],
+  "nodePass": 38,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "b912e99d9f157c398e5fe4f710b10830eef2787176e003367e57ceb69117e177",
+    "native-state-v2.json": "29955c32adffb64a5832266ceea112ceb9635e674d06a6fab439db6c232b0be3",
+    "node.log": "ff1f19770a18664d87fdba3c461fbd2488781faf4565fb65452439d540525611",
+    "patternfloor-0-correct-check-decoded.json": "55b58230b384f4f8b3cb7c137e5bd29e6632cdc53173d2f0baf8657edde138a7",
+    "patternfloor-0-correct-check-storage.txt": "55b58230b384f4f8b3cb7c137e5bd29e6632cdc53173d2f0baf8657edde138a7",
+    "patternfloor-0-correct.png": "9cd25b519de6c80076a90b6c8fa3b4f57e9823553769a6004e13d4b4db406c89",
+    "patternfloor-0-corrected-draft-decoded.json": "ee783390d4cd3bb0fd168f4c5f606d412c3cebd845bd3ed025b7f4a5d17be0aa",
+    "patternfloor-0-corrected-draft-storage.txt": "ee783390d4cd3bb0fd168f4c5f606d412c3cebd845bd3ed025b7f4a5d17be0aa",
+    "patternfloor-0-offline-reload-decoded.json": "9779629984c642d31c051b1a58cffb797025100fc035b3f6f721af2a9a348215",
+    "patternfloor-0-offline-reload-storage.txt": "9779629984c642d31c051b1a58cffb797025100fc035b3f6f721af2a9a348215",
+    "patternfloor-0-restored-backup-decoded.json": "a96a2a91a00395eb7ac8bc4706577d7751a4af4c2209511c5aafe71cf18e9751",
+    "patternfloor-0-restored-backup-storage.txt": "a96a2a91a00395eb7ac8bc4706577d7751a4af4c2209511c5aafe71cf18e9751",
+    "patternfloor-0-retry-decoded.json": "ab5f26a9bcdd76e776d0a063d6f032f854161b259768ccce3cd4443c76377e61",
+    "patternfloor-0-retry-storage.txt": "ab5f26a9bcdd76e776d0a063d6f032f854161b259768ccce3cd4443c76377e61",
+    "patternfloor-0-wrong-check-decoded.json": "214abbd93a579ed221063ae182f5ecea0f60c05e8d7444909ff6611e1b0d596a",
+    "patternfloor-0-wrong-check-storage.txt": "214abbd93a579ed221063ae182f5ecea0f60c05e8d7444909ff6611e1b0d596a",
+    "patternfloor-0-wrong.png": "7554c1dc4003cdbb286e0cbfe93a699d2834ce46b2ea11f92af3731e77f7d872",
+    "preflight.log": "4199177c1374f5948660d96bbab7883723d6570ce27c0f7c684296e2b6c89b3f",
+    "results.json": "611a6ee8b30e5989a79fffea253838838462ed677b5ea58a181e30a2df48c417"
+  }
+}

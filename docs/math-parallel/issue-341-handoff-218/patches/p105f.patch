@@ -1,0 +1,348 @@
+diff --git a/dist/learning/p105f-prime-forest-evidence.js b/dist/learning/p105f-prime-forest-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..c1f3ad16f0f668505a9b9e5354426bfb33bc8fe6
+--- /dev/null
++++ b/dist/learning/p105f-prime-forest-evidence.js
+@@ -0,0 +1,123 @@
++import {gcd,initial,isPrime,leaves,number,primeExpression,valid} from './phase5/b14-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++export const P105F_SOURCES=Object.freeze([
++  {
++    "sessionId": "primeforest",
++    "index": 0,
++    "nodeId": "mt_xhoOWnhtHq",
++    "type": "x-factorforest",
++    "taskHash": "326da521788da4dfe125e17792594d55d078d9951820abe672b2039d2f14fdf0"
++  },
++  {
++    "sessionId": "primeforest",
++    "index": 1,
++    "nodeId": "mt_xhoOWnhtHq",
++    "type": "x-factorforest",
++    "taskHash": "032d0b96e9d44c88c597b7a4455dfc1c73c581ef1ec6a2cf73de5f8eb4b33afb"
++  },
++  {
++    "sessionId": "primeforest",
++    "index": 2,
++    "nodeId": "mt_xhoOWnhtHq",
++    "type": "x-factorforest",
++    "taskHash": "559c007cb78d9200f45d26936a901e2e5498df6a3e4805ffe3ed9e61fa4e42c2"
++  },
++  {
++    "sessionId": "primeforest",
++    "index": 3,
++    "nodeId": "mt_xhoOWnhtHq",
++    "type": "x-factorforest",
++    "taskHash": "d410f55f5cf01bc9da789deb59477793e63ff81863655d35831fe2c12cab8917"
++  }
++].map(Object.freeze));
++
++const ordered=numbers=>[...numbers].sort((a,b)=>a-b);
++const product=numbers=>numbers.reduce((a,b)=>a*b,1);
++const primeLeaves=board=>leaves(board).every(node=>isPrime(node.value));
++
++export function p105fPrimeForestBinding(task,context) {
++  const row=P105F_SOURCES.find(s=>s.sessionId===context?.sessionId&&s.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p105f-prime-forest',method:null,
++    question:'拆到质数后，每个质数有几份？双方各用几份？'};
++}
++
++export function replayP105FPrimeForestEvidence(task,model,context) {
++  try {
++    const binding=p105fPrimeForestBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    let {board}=initial(task);
++    let rejected=false;
++    for (const {action,data} of model.history) {
++      const {side,index,value,fields}=data;
++      if (side!==null||value!==null) return null;
++      rejected=false;
++      if (action==='b14-reset'&&index===null) {
++        board=initial(task).board;
++      } else if (action==='b14-leaf'&&leaves(board).some(node=>node.id===index)) {
++        board.selected=index;
++      } else if (action==='b14-split'&&index===null&&board.selected!==null) {
++        const node=board.nodes[board.selected], a=number(fields.left), b=number(fields.right);
++        rejected=!Number.isInteger(a)||!Number.isInteger(b)||a<2||b<2||a*b!==node.value;
++        if (!rejected) {
++          const i=board.nodes.length;
++          node.children=[i,i+1];
++          board.nodes.push(...[a,b].map((size,offset)=>({
++            id:i+offset,parent:node.id,root:node.root,value:size,children:[],
++          })));
++          board.selected=null;
++          board.matches=[];
++          board.pair=[];
++        }
++      } else if (action==='b14-match'&&task.common&&index!==null) {
++        const node=leaves(board).find(item=>item.id===index);
++        if (!node||!isPrime(node.value)||board.matches.flat().includes(index)) {
++          rejected=true;
++        } else if (!board.pair.length) {
++          board.pair=[index];
++        } else {
++          const other=board.nodes[board.pair[0]];
++          rejected=other.root===node.root||other.value!==node.value;
++          if (!rejected) board.matches.push([other.id,index]);
++          board.pair=[];
++        }
++      } else if (action==='b14-tree-save'&&task.twice&&index===null) {
++        rejected=Boolean(board.first)||!primeLeaves(board)||!primeExpression(fields.expression,task.ns[0]);
++        if (!rejected) {
++          const first={nodes:board.nodes,expression:fields.expression};
++          board={...initial(task).board,first};
++        }
++      } else return null;
++    }
++    const [a,b]=task.ns;
++    if (rejected||!sameEvidence(board,model.board)||!primeLeaves(board)||
++        !primeExpression(model.expression,a)||(a===360&&!/[\^²³]/.test(model.expression))) return null;
++    const primeFactors=task.ns.map((n,i)=>ordered(leaves(board).filter(node=>node.root===i).map(node=>node.value)));
++    if (!primeFactors.every((f,i)=>product(f)===task.ns[i])) return null;
++    let common=null;
++    if (task.common) {
++      const shared=board.matches.map(([id])=>board.nodes[id].value);
++      const hcf=gcd(a,b), lcm=a/hcf*b;
++      if (board.pair.length||product(shared)!==hcf||number(model.hcf)!==hcf||
++          number(model.lcm)!==lcm||!primeExpression(model.equation,b)) return null;
++      common={shared:ordered(shared),hcf,lcm};
++    }
++    let firstCut=null;
++    if (task.twice) {
++      if (!board.first) return null;
++      const cut=nodes=>ordered(nodes[0].children.map(i=>nodes[i].value));
++      firstCut=cut(board.first.nodes);
++      if (sameEvidence(firstCut,cut(board.nodes))||
++          !sameEvidence(ordered(leaves(board.first).map(node=>node.value)),primeFactors[0])) return null;
++    }
++    return {...binding,primeFactors,common,firstCut};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP105FPrimeForestEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP105FPrimeForestEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p105f-prime-forest-browser.cjs b/tests/p9-p105f-prime-forest-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..d34f5bf0b4620714a6a693682242fdabc23248a7
+--- /dev/null
++++ b/tests/p9-p105f-prime-forest-browser.cjs
+@@ -0,0 +1,168 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P105F_ARTIFACTS || path.join(root, 'verification/p9-p105f-prime-forest'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else if (await inp.getAttribute('type')==='range') {
++        const value=Number(await inp.inputValue());
++        const step=Number(await inp.getAttribute('step'));
++        const target=Number(s.value);
++        for (let i=0;i<Math.round(Math.abs(value-target)/step);i++) await inp.press(value<target?'ArrowRight':'ArrowLeft');
++      } else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P105F_SOURCES, replayP105FPrimeForestEvidence, submittedP105FPrimeForestEvidence} = await entry('dist/learning/p105f-prime-forest-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b14 = await entry('dist/learning/phase5/b14-model.js');
++  const wrongSteps=task=>{
++    const steps=b14.solveSteps(task);
++    steps[steps.length-1]={...steps.at(-1),value:'0'};
++    return steps;
++  };
++  const correctSteps=task=>b14.solveSteps(task).slice(-1);
++  const cases = P105F_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP105FPrimeForestEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b14.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P105F');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b14.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b14.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'incomplete factorization or missing LCM fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP105FPrimeForestEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p105f.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p105f-repeat.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P105F_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p105f-prime-forest-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P105F_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p105f-prime-forest.test.mjs b/tests/p9-p105f-prime-forest.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..1e85c2e2be30504a7917fdf1b3189a80ead89014
+--- /dev/null
++++ b/tests/p9-p105f-prime-forest.test.mjs
+@@ -0,0 +1,39 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,example,inspect} from '../dist/learning/phase5/b14-model.js';
++import {P105F_SOURCES,replayP105FPrimeForestEvidence,submittedP105FPrimeForestEvidence} from '../dist/learning/p105f-prime-forest-evidence.js';
++
++const ordered=value=>Array.isArray(value)?value.map(ordered):
++  value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++
++for (const {sessionId,index,taskHash} of P105F_SOURCES) {
++  test(`${sessionId}:${index} replays prime-factor trees and compares the two constructions`,()=>{
++    const task=sessionTaskFor(sessionId,index);
++    const context={sessionId,index};
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const good=example(task);
++    assert.ok(inspect(task,good).correct);
++    const replay=m=>replayP105FPrimeForestEvidence(task,m,context);
++    const proof=replay(good);
++    assert.equal(proof?.primeFactors.length,task.ns.length);
++    assert.equal(replayP105FPrimeForestEvidence(task,good,{sessionId,index:-1}),null);
++    const reset=structuredClone(good);
++    act(task,reset,'b14-reset');
++    assert.equal(replay(reset),null);
++    if (task.common) assert.equal(proof.common.hcf,index===1?12:1);
++    if (task.twice) assert.deepEqual(proof.firstCut,[2,30]);
++    for (const change of [
++      m=>{m.history=[];},
++      m=>{m.history[0].data.index=999;},
++      m=>{m.board.nodes[0].value++;},
++    ]) {
++      const bad=structuredClone(good);
++      change(bad);
++      assert.equal(replay(bad),null);
++      assert.equal(submittedP105FPrimeForestEvidence(task,good,{attempts:[{value:bad}]},context),null);
++    }
++    assert.deepEqual(submittedP105FPrimeForestEvidence(task,good,{attempts:[{value:structuredClone(good)}]},context),proof);
++  });
++}

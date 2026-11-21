@@ -1,0 +1,377 @@
+diff --git a/dist/learning/p115g-coordinate-construction-evidence.js b/dist/learning/p115g-coordinate-construction-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..b668040922ea99c69f9dc2cecace1a0825d2683b
+--- /dev/null
++++ b/dist/learning/p115g-coordinate-construction-evidence.js
+@@ -0,0 +1,164 @@
++import {initial, valid} from './phase5/b24-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++import {number} from './phase5/b20-model.js';
++import {simple} from './phase5/b24-geometry.js';
++
++export const P115G_SOURCES = Object.freeze([
++  {
++    "sessionId": "pointbuild",
++    "index": 0,
++    "nodeId": "mt_i5_HnoFOYw",
++    "type": "x-p24-grid",
++    "taskHash": "0ba7ff37a93d039608fe8c61be23910c6db795a01e8a0353de23b87639e7d90f"
++  },
++  {
++    "sessionId": "pointbuild",
++    "index": 1,
++    "nodeId": "mt_i5_HnoFOYw",
++    "type": "x-p24-grid",
++    "taskHash": "261471586246a19595c3fff883730187033f78105907fbc69c972bee6401c160"
++  },
++  {
++    "sessionId": "pointbuild",
++    "index": 2,
++    "nodeId": "mt_i5_HnoFOYw",
++    "type": "x-p24-grid",
++    "taskHash": "26f0865e339077f011a88d8cce0b4fb3e0d376f74787dfdddd4cf05d0bde03e9"
++  },
++  {
++    "sessionId": "pointaxes",
++    "index": 0,
++    "nodeId": "mt_oDlduFnemk",
++    "type": "x-p24-grid",
++    "taskHash": "c3b3e1d71e872611634915dcf5da9d94b12eb99648d5a0d707c74d82b98aecb0"
++  },
++  {
++    "sessionId": "pointaxes",
++    "index": 1,
++    "nodeId": "mt_oDlduFnemk",
++    "type": "x-p24-grid",
++    "taskHash": "c5c254dc112767ec7e4a6bbe9a0887b7b1db13ec99a85da13e518ed2e5f7053a"
++  },
++  {
++    "sessionId": "pointaxes",
++    "index": 2,
++    "nodeId": "mt_oDlduFnemk",
++    "type": "x-p24-grid",
++    "taskHash": "ba39ec664b80769f388127c25044a59b9b0ca960168d0e911b0e4d3b4efba50e"
++  },
++  {
++    "sessionId": "pointdistance",
++    "index": 0,
++    "nodeId": "mt_h7zVgCDVmx",
++    "type": "x-p24-grid",
++    "taskHash": "cd43f31da42ff261d50ecf45050036db836281ec81967f2f8d301dd06d02a824"
++  },
++  {
++    "sessionId": "pointstory",
++    "index": 0,
++    "nodeId": "mt_snlqRCiA1R",
++    "type": "x-p24-grid",
++    "taskHash": "10a837fa383bb4d5ca2ab88b3f88373a787419608d983bc908080f26c32cf380"
++  },
++  {
++    "sessionId": "pointstory",
++    "index": 1,
++    "nodeId": "mt_snlqRCiA1R",
++    "type": "x-p24-grid",
++    "taskHash": "d7741a4c44d48e4fe5a691d6e5263d1277f77618547be1756c04f9f9db8a1fcc"
++  }
++].map(Object.freeze));
++
++export function p115gCoordinateConstructionBinding(task,context) {
++  const row=P115G_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p115g-coordinate-construction',method:null,question:'横纵坐标怎样确定点？连成的图形有哪些可以算出的量？'};
++}
++
++function questionsMatch(context,model,placed,polygon) {
++  const {sessionId,index}=context;
++  const answers=model.answers;
++  const [first]=placed;
++  if (sessionId==='pointaxes') {
++    if (index===0) return sameEvidence(first,[0,0])&&sameEvidence(answers,['x','y']);
++    if (index===2) return placed.length===2&&
++      placed[0][0]===placed[1][1]&&placed[0][1]===placed[1][0]&&answers[0]==='different';
++  }
++  if (sessionId==='pointstory'&&index===1) return placed.some(point=>sameEvidence(point,[2,4]))&&answers[0]==='meaning';
++  if (sessionId==='pointbuild'&&index===2) return equal(answers[0],polygon.length);
++  if (sessionId==='pointbuild'&&index===1) {
++    const square=polygon.map(([x,y],i)=>{
++      const [a,b]=polygon[(i+1)%polygon.length];
++      return (a-x)**2+(b-y)**2;
++    });
++    if (!square.every(side=>side===square[0])) return false;
++  }
++  if (sessionId==='pointdistance'||(sessionId==='pointbuild'&&index===0)) {
++    const xs=polygon.map(p=>p[0]);
++    const ys=polygon.map(p=>p[1]);
++    const width=Math.max(...xs)-Math.min(...xs);
++    const height=Math.max(...ys)-Math.min(...ys);
++    const expected=[width,height,2*(width+height),width*height];
++    return answers.every((answer,i)=>equal(answer,expected[i]));
++  }
++  return answers.length===2&&answers.every((answer,i)=>equal(answer,first[i]));
++}
++
++export function replayP115GCoordinateConstructionEvidence(task,model,context) {
++  try {
++    const binding=p115gCoordinateConstructionBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task,1)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    let placed=[];
++    let closed=false;
++    const [x0,x1,y0,y1]=task.domain;
++    const width=x1-x0+1;
++    const inRange=([x,y])=>Number.isSafeInteger(x)&&Number.isSafeInteger(y)&&x>=x0&&x<=x1&&y>=y0&&y<=y1;
++
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','d','f'])) return null;
++      let point;
++      if (event.a==='plot'&&hasExactKeys(event.f,['x','y'])&&hasExactKeys(event.d,[])) {
++        point=[number(event.f.x),number(event.f.y)];
++        if (!inRange(point)) continue;
++        if (!equal(event.f.x,point[0])||!equal(event.f.y,point[1])) return null;
++      } else if (event.a==='dot'&&hasExactKeys(event.f,[])&&hasExactKeys(event.d,['index'])&&/^\d+$/.test(event.d.index)) {
++        const i=Number(event.d.index);
++        if (i>=width*(y1-y0+1)) return null;
++        point=[x0+i%width,y0+Math.floor(i/width)];
++      } else if (hasExactKeys(event.d,[])&&hasExactKeys(event.f,[])) {
++        if (event.a==='undo') {
++          placed.pop();
++          closed=false;
++        } else if (event.a==='reset') {
++          placed=[];
++          closed=false;
++        } else if (event.a==='close'&&task.close) {
++          closed ||= simple([...task.given,...placed]);
++        } else {
++          return null;
++        }
++        continue;
++      } else {
++        return null;
++      }
++      if (placed.length<16&&![...task.given,...placed].some(p=>sameEvidence(p,point))) {
++        placed.push(point);
++        closed=false;
++      }
++    }
++    const polygon=[...task.given,...placed];
++    if (!sameEvidence(placed,model.board.placed)||closed!==model.board.closed||
++        placed.length!==task.target.length||!task.target.every(target=>placed.some(p=>sameEvidence(p,target)))||
++        (task.close&&(!closed||!simple(polygon)))||!questionsMatch(context,model,placed,polygon)) return null;
++    return {...binding,placed,closed};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP115GCoordinateConstructionEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP115GCoordinateConstructionEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p115g-coordinate-construction-browser.cjs b/tests/p9-p115g-coordinate-construction-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..075d8904c37d99e7ba38fee37f69c230a91d42fe
+--- /dev/null
++++ b/tests/p9-p115g-coordinate-construction-browser.cjs
+@@ -0,0 +1,162 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P115G_ARTIFACTS || path.join(root, 'verification/p9-p115g-coordinate-construction'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P115G_SOURCES, replayP115GCoordinateConstructionEvidence, submittedP115GCoordinateConstructionEvidence} = await entry('dist/learning/p115g-coordinate-construction-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b24 = await entry('dist/learning/phase5/b24-model.js');
++
++const wrongSteps = task => b24.solveSteps(task).map(step =>
++  step.field === 'answers.0' ? {...step,value:task.questions[0].options?.find(([id])=>id!==step.value)?.[0]??'999'} : step);
++const correctSteps = task => b24.solveSteps(task).filter(step => step.field === "answers.0");
++
++  const cases = P115G_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP115GCoordinateConstructionEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b24.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P115G');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b24.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b24.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP115GCoordinateConstructionEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P115G_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p115g-coordinate-construction-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P115G_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p115g-coordinate-construction.test.mjs b/tests/p9-p115g-coordinate-construction.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..0800ac1b0d4fa962d5d83ed027c4ea63271c899c
+--- /dev/null
++++ b/tests/p9-p115g-coordinate-construction.test.mjs
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b24-model.js';
++import {P115G_SOURCES, replayP115GCoordinateConstructionEvidence, submittedP115GCoordinateConstructionEvidence} from '../dist/learning/p115g-coordinate-construction-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P115G_SOURCES) {
++  test(`${sessionId}:${index} replays each point, polygon and coordinate answers`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP115GCoordinateConstructionEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.placed, task.target);
++    assert.equal(replayP115GCoordinateConstructionEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answers[0] = '999';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP115GCoordinateConstructionEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP115GCoordinateConstructionEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].f.x = '99';
++    assert.equal(replay(forged), null);
++    const tampered=structuredClone(correct);
++    tampered.board.placed[0][0]++;
++    assert.equal(replay(tampered),null);
++  });
++}

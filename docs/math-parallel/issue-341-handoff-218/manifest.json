@@ -1,0 +1,5293 @@
+{
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "candidates": 52,
+  "positions": 218,
+  "chromiumChecks": 1886,
+  "precedingHandoffs": [
+    335,
+    126
+  ],
+  "deferredProcessEvidence": 119,
+  "records": [
+    {
+      "batch": "p086m",
+      "type": "x-a30-solid",
+      "branch": "work/b/specialized-prism-measures",
+      "commit": "8d047262ae38e3c0d2f892245f4e47fb2104a10c",
+      "scope": "重放转动和选面，按三角柱展开多边形或 L 形底面重算底面积、表面积与体积，核对平方和立方单位。",
+      "positions": [
+        {
+          "题包": "P086",
+          "原生题位": "solidSurface:0",
+          "来源节点": "mt_Sij9ByyHq6",
+          "原题SHA256": "b12960f77dff3c1471cb18cf98d497c17b8a6cdb478c2750b935d856cbcde93e",
+          "原因": "题位要求不同的立体表面、底面或容积操作，需分开定义转动与计算能证明的范围。样例回放事件 face、turn",
+          "样例记录": {
+            "faceValues": {
+              "n": 5,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 6,
+              "actions": [
+                "face",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P086",
+          "原生题位": "solidSurface:2",
+          "来源节点": "mt_Sij9ByyHq6",
+          "原题SHA256": "135458801b6c73fe3e3d3e7986a091a148f7ca04dd4d6c3a28175a6b965764ae",
+          "原因": "题位要求不同的立体表面、底面或容积操作，需分开定义转动与计算能证明的范围。样例回放事件 turn",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "calcValues": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p086m.patch",
+      "patchSha256": "dfda786dbdd6adf778746742978a76b94cb5df0fea736c096484338e428b87c2",
+      "receipt": "receipts/p086m.json",
+      "receiptSha256": "25a5daa78feeb528af2094727e1460a4e9ee4e5904273088372e35c7ceecc158",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p086m-prism-measures-evidence.js",
+        "tests/p9-p086m-prism-measures-browser.cjs",
+        "tests/p9-p086m-prism-measures.test.mjs"
+      ]
+    },
+    {
+      "batch": "p088r",
+      "type": "x-s39-graph",
+      "branch": "work/b/specialized-graph-reading",
+      "commit": "efa14ad06fb1e71b087bdcf0cd7bb6b6117e2396",
+      "scope": "按十分之一格重放采样标记，分别核算曲线函数值与行程水平段。保留原题明确的读数容差。",
+      "positions": [
+        {
+          "题包": "P088",
+          "原生题位": "graph39:0",
+          "来源节点": "mt_Yw27nweoTj",
+          "原题SHA256": "1eec6cf40609b87aa267170a6e66026b4c4a54c948bb7293129a55f6da427635",
+          "原因": "读值时有原生标记，但采样位置与图值的合同不同于求交点，需要另验。样例回放事件 mark",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P088",
+          "原生题位": "graph39:3",
+          "来源节点": "mt_Yw27nweoTj",
+          "原题SHA256": "9f6a367322f7bd237cb87e0030a157912d8597777f052efd2d11be0686a23e3b",
+          "原因": "读值时有原生标记，但采样位置与图值的合同不同于求交点，需要另验。样例回放事件 mark",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p088r.patch",
+      "patchSha256": "4390f70c5dc1be9a80fe793ad1370995c2cfc9bfc4eb2ca754e1fc74016bf75d",
+      "receipt": "receipts/p088r.json",
+      "receiptSha256": "a92c7f3ebed8a949b2347d442dac55c99661ca5839f458838629f6a7c513d2fc",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p088r-graph-reading-evidence.js",
+        "tests/p9-p088r-graph-reading-browser.cjs",
+        "tests/p9-p088r-graph-reading.test.mjs"
+      ]
+    },
+    {
+      "batch": "p091r",
+      "type": "x-allowedrange",
+      "branch": "work/b/specialized-inequality-range",
+      "commit": "12156d705f04368dd9dcbde21f13df8aa33f53a9",
+      "scope": "精确重算保留的等价变换、数轴方向与开闭端点，核对边界、内外取值的测试结果。探测记录只有图上判断，没有每次绘图状态。",
+      "positions": [
+        {
+          "题包": "P091",
+          "原生题位": "allowedrange:2",
+          "来源节点": "mt_i2F1nWxJjv",
+          "原题SHA256": "23e057bedce800d7efbfe66f9c4945d45b0f9679eeece2d3e5ae8ec967e200cb",
+          "原因": "有试数与变形日志，需另核双端点或代数变形的等价和边界",
+          "样例记录": {
+            "commands": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "trials": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P091",
+          "原生题位": "allowedrange:3",
+          "来源节点": "mt_i2F1nWxJjv",
+          "原题SHA256": "9f32760d348ca1a918870a17c30dbf9c17fe38f3cfc75d10e93b719380f7d735",
+          "原因": "有试数与变形日志，需另核双端点或代数变形的等价和边界",
+          "样例记录": {
+            "commands": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "trials": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P091",
+          "原生题位": "allowedrange:4",
+          "来源节点": "mt_i2F1nWxJjv",
+          "原题SHA256": "0abdd2469d1f616c43e723d9e09edd7d85af8cd672c9be2488a098fbd11f6110",
+          "原因": "有试数与变形日志，需另核双端点或代数变形的等价和边界",
+          "样例记录": {
+            "trials": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p091r.patch",
+      "patchSha256": "4d0fef5f8fc710fe29b9fe9fce470b4c9994e9676363eb1b6a1d37fc37144427",
+      "receipt": "receipts/p091r.json",
+      "receiptSha256": "e33005778901bbed5a17ac565fa138d71d738c94808f2d641c08347cc7896091",
+      "chromiumChecks": 28,
+      "files": [
+        "dist/learning/p091r-inequality-range-evidence.js",
+        "tests/p9-p091r-inequality-range-browser.cjs",
+        "tests/p9-p091r-inequality-range.test.mjs"
+      ]
+    },
+    {
+      "batch": "p092t",
+      "type": "x-s23-tile",
+      "branch": "work/b/specialized-piece-assembly",
+      "commit": "8df04d5be1d587c61c3dac93f99422744ba3022a",
+      "scope": "重放小块旋转、放入与取出，核对互补角度覆盖整形，以及完整拼合后拆去一个部分。",
+      "positions": [
+        {
+          "题包": "P092",
+          "原生题位": "shapemerge:0",
+          "来源节点": "mt_MqqR7VUoz1",
+          "原题SHA256": "5e1473b68cfbe06cbd1ca1cf64b396f6c517c94d7b6386395bbbafd02753dbb3",
+          "原因": "入槽、转动与拆分可追踪，需按拼合/拆解及形状规则分组。样例回放事件 place、rotate",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 4,
+              "actions": [
+                "place",
+                "rotate"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P092",
+          "原生题位": "shapemerge:1",
+          "来源节点": "mt_MqqR7VUoz1",
+          "原题SHA256": "c9650c46872601ffff9be6acbefb60e5cb9cf2fb53ed4ed6a2fafb25dc12a207",
+          "原因": "入槽、转动与拆分可追踪，需按拼合/拆解及形状规则分组。样例回放事件 place、rotate",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 10,
+              "actions": [
+                "place",
+                "rotate"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P092",
+          "原生题位": "shapemerge:2",
+          "来源节点": "mt_MqqR7VUoz1",
+          "原题SHA256": "47b13df8ec9ca9ec60b727bc97e9154367b3ee1ea7692440228f3d45c76b3b0d",
+          "原因": "入槽、转动与拆分可追踪，需按拼合/拆解及形状规则分组。样例回放事件 place、rotate",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 3,
+              "actions": [
+                "place",
+                "rotate"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P092",
+          "原生题位": "shapemerge:3",
+          "来源节点": "mt_MqqR7VUoz1",
+          "原题SHA256": "589413fb5749de2e81ad8f20c62333e3751bcb032c58d4004ef9997f90c0b612",
+          "原因": "入槽、转动与拆分可追踪，需按拼合/拆解及形状规则分组。样例回放事件 place、rotate、unplace",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 4,
+              "actions": [
+                "place",
+                "rotate",
+                "unplace"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p092t.patch",
+      "patchSha256": "762cd87aa34fdb84fdb5f66ae01dab6b325fbf0edac028ca9ce99abc9114394d",
+      "receipt": "receipts/p092t.json",
+      "receiptSha256": "f867d8f23e5cd066b49f1730996b4280327c34ce370e20aa4647ae51e791e3f2",
+      "chromiumChecks": 34,
+      "files": [
+        "dist/learning/p092t-piece-assembly-evidence.js",
+        "tests/p9-p092t-piece-assembly-browser.cjs",
+        "tests/p9-p092t-piece-assembly.test.mjs"
+      ]
+    },
+    {
+      "batch": "p093n",
+      "type": "x-net",
+      "branch": "work/b/specialized-cube-nets",
+      "commit": "045a36b5e0a9c203a1915af14df1e9c0c21e20d2",
+      "scope": "逐份验证可追溯的折合快照，按面法向重建是否能合成、相对面及重叠。记录只支持折合快照，未保存画格或滑动的逐步轨迹。",
+      "positions": [
+        {
+          "题包": "P093",
+          "原生题位": "nets:0",
+          "来源节点": "mt_vnJEztczji",
+          "原题SHA256": "f42bbc7b3e31a495fe4f7e1c1539c77cffc900990b6c37e66f5652f0c484a8da",
+          "原因": "折叠提交 `runs` 记录形状和预测，绘制、展平与改形没有逐事件日志，需单列折叠快照能证明的范围",
+          "样例记录": {
+            "cells": {
+              "n": 6,
+              "actions": [
+                ""
+              ]
+            },
+            "pair": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "runs": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P093",
+          "原生题位": "nets:1",
+          "来源节点": "mt_vnJEztczji",
+          "原题SHA256": "aeb0bb16299d8bc9d23d820709d9943a8e7ff9d8841aece32d59643fa422f143",
+          "原因": "折叠提交 `runs` 记录形状和预测，绘制、展平与改形没有逐事件日志，需单列折叠快照能证明的范围",
+          "样例记录": {
+            "cells": {
+              "n": 6,
+              "actions": [
+                ""
+              ]
+            },
+            "pair": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "runs": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P093",
+          "原生题位": "nets:2",
+          "来源节点": "mt_vnJEztczji",
+          "原题SHA256": "2cfb329225ce1150813fa0e19c180026ca618189dbb57dff0b2ab9fa16346970",
+          "原因": "折叠提交 `runs` 记录形状和预测，绘制、展平与改形没有逐事件日志，需单列折叠快照能证明的范围",
+          "样例记录": {
+            "cells": {
+              "n": 6,
+              "actions": [
+                ""
+              ]
+            },
+            "pair": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "runs": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P093",
+          "原生题位": "foldprism:0",
+          "来源节点": "mt_REwgr0d_ss",
+          "原题SHA256": "7384afd56f0a567fa6d2f41a0351e02219544190817c26dcce7e2985bfd610ce",
+          "原因": "折叠提交 `runs` 记录形状和预测，绘制、展平与改形没有逐事件日志，需单列折叠快照能证明的范围",
+          "样例记录": {
+            "cells": {
+              "n": 6,
+              "actions": [
+                ""
+              ]
+            },
+            "pair": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "runs": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P093",
+          "原生题位": "crossparts:3",
+          "来源节点": "mt_nRksLqt-iR",
+          "原题SHA256": "2bbbc9a0ca791d88f67f7da61e23d607937a325fd44ece4a1fa540ddf806ce05",
+          "原因": "折叠提交 `runs` 记录形状和预测，绘制、展平与改形没有逐事件日志，需单列折叠快照能证明的范围",
+          "样例记录": {
+            "cells": {
+              "n": 6,
+              "actions": [
+                ""
+              ]
+            },
+            "pair": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "runs": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p093n.patch",
+      "patchSha256": "7e49a4954e141e7e913396ba80f9cca1607946ef966481e4c0879f206aa9f0be",
+      "receipt": "receipts/p093n.json",
+      "receiptSha256": "42d865aea0a074847c4ad5f1e187ccd33eaf026605003910487ff1cd4efd33a2",
+      "chromiumChecks": 42,
+      "files": [
+        "dist/learning/p093n-cube-nets-evidence.js",
+        "tests/p9-p093n-cube-nets-browser.cjs",
+        "tests/p9-p093n-cube-nets.test.mjs"
+      ]
+    },
+    {
+      "batch": "p094d",
+      "type": "x-decimaldivide",
+      "branch": "work/b/specialized-decimal-division",
+      "commit": "244c3db419b7d8bf3a65ce398090f991a9877a62",
+      "scope": "逐位复算商、余数换单位、补零与最后乘回总量，按分数精确校验。四道均由原控件和 Next 实测，含 fractionfour:16 的完整前置流程。",
+      "positions": [
+        {
+          "题包": "P094",
+          "原生题位": "decimaldivide:0",
+          "来源节点": "mt_lU-2aTRB9f",
+          "原题SHA256": "1fd54779ec0ab39e68ba14f3f0b5f89fd8e33608d9c9e0b0ae0408fad65cbcad",
+          "原因": "保留落点、逐位换单位、补零/除尽记录，需用小数除法规则独立重放。样例回放事件 b15-point、b15-bring、b15-div-step",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "b15-point",
+                "b15-bring",
+                "b15-div-step"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P094",
+          "原生题位": "decimaldivide:1",
+          "来源节点": "mt_lU-2aTRB9f",
+          "原题SHA256": "62191b1624669ac8c4417939e82fb1114e31d7a716d985c6260667b3089b8310",
+          "原因": "保留落点、逐位换单位、补零/除尽记录，需用小数除法规则独立重放。样例回放事件 b15-point、b15-bring、b15-div-step、b15-zero",
+          "样例记录": {
+            "history": {
+              "n": 11,
+              "actions": [
+                "b15-point",
+                "b15-bring",
+                "b15-div-step",
+                "b15-zero"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P094",
+          "原生题位": "decimaldivide:2",
+          "来源节点": "mt_lU-2aTRB9f",
+          "原题SHA256": "22bb363e5c240751d9b2528888c62137f7c5f7df2f024489e58091c5caf5ce84",
+          "原因": "保留落点、逐位换单位、补零/除尽记录，需用小数除法规则独立重放。样例回放事件 b15-point、b15-bring、b15-div-step、b15-zero",
+          "样例记录": {
+            "history": {
+              "n": 10,
+              "actions": [
+                "b15-point",
+                "b15-bring",
+                "b15-div-step",
+                "b15-zero"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P094",
+          "原生题位": "fractionfour:16",
+          "来源节点": "mt_gNUE4B3vuk",
+          "原题SHA256": "4b5f695a3a534cef56059aeea855f4821c9a6cb730a33e33dfd9c5e9e6fc722e",
+          "原因": "保留落点、逐位换单位、补零/除尽记录，需用小数除法规则独立重放。样例回放事件 b15-point、b15-bring、b15-div-step",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "b15-point",
+                "b15-bring",
+                "b15-div-step"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p094d.patch",
+      "patchSha256": "9f0b44b70f55dc838bfad92137b362d9e180dd9e851f1e777283af2dea37d44b",
+      "receipt": "receipts/p094d.json",
+      "receiptSha256": "8b9fcbd656ad6f6ba9215ccdc6bf55046f816bf389ebb2ca5b07993ca233ded2",
+      "chromiumChecks": 35,
+      "files": [
+        "dist/learning/p094d-decimal-division-evidence.js",
+        "tests/p9-p094d-decimal-division-browser.cjs",
+        "tests/p9-p094d-decimal-division.test.mjs"
+      ]
+    },
+    {
+      "batch": "p095m",
+      "type": "x-m31-meter",
+      "branch": "work/b/specialized-meter-reading",
+      "commit": "1f39fa1ceaf97195a27d67e02214360e7ef42d4e",
+      "scope": "重建先估后保存刻度、读数和单位，分数精确比较。估计本身不要求刚好，证据来自模拟仪表。",
+      "positions": [
+        {
+          "题包": "P095",
+          "原生题位": "cupmeasure:2",
+          "来源节点": "mt_4lp_b5Pzik",
+          "原题SHA256": "4784d46c91843578f9cc5d4499a13cba87b2c6b725577cb5bff9d4a0e99aa310",
+          "原因": "预测与计量事件可核，需单独确认尺度及单位。样例回放事件 predict、meter",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "predict",
+                "meter"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P095",
+          "原生题位": "measureliquid:0",
+          "来源节点": "mt_-af65bxfdp",
+          "原题SHA256": "946cc31504c0620dcbf3caeea004fa2d970a7a378e2a94f941d2e3ccc56dd7cd",
+          "原因": "预测与计量事件可核，需单独确认尺度及单位。样例回放事件 predict、meter",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "predict",
+                "meter"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P095",
+          "原生题位": "measureliquid:1",
+          "来源节点": "mt_-af65bxfdp",
+          "原题SHA256": "f82c7e41f56a18fecc1e57ffc647ee93701b0196b6492052f547eb341574cff2",
+          "原因": "预测与计量事件可核，需单独确认尺度及单位。样例回放事件 predict、meter",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "predict",
+                "meter"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p095m.patch",
+      "patchSha256": "1189b4755b010a5fdd18e6a2c6607c2f47e5f59ef8a56127f0a3955bd3c9437c",
+      "receipt": "receipts/p095m.json",
+      "receiptSha256": "5c720a3173b583310b37c1242cdc1935181f0bf46cb5e5c0b1303019189df886",
+      "chromiumChecks": 29,
+      "files": [
+        "dist/learning/p095m-meter-reading-evidence.js",
+        "tests/p9-p095m-meter-reading-browser.cjs",
+        "tests/p9-p095m-meter-reading.test.mjs"
+      ]
+    },
+    {
+      "batch": "p096s",
+      "type": "x-subgroups",
+      "branch": "work/b/specialized-subtraction-grouping",
+      "commit": "072787704af31fd09b77b80e51e2ab032966c1aa",
+      "scope": "核对两种括号位置的已保存两步结果及各自追加日志的相容性；原生未保存撤回时刻。",
+      "positions": [
+        {
+          "题包": "P096",
+          "原生题位": "regroupadd:2",
+          "来源节点": "mt_T76hKqXf0z",
+          "原题SHA256": "7c4a6de5df2c93a0ffdc3c8eded0690f7970382bd4e87a22883d4a48d5ecc460",
+          "原因": "前进项记录有分支编号，撤回未同步入日志，需另定可重放边界。样例保留步长或数值序列",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "paths": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p096s.patch",
+      "patchSha256": "7e76eb6719177b1f9e4020520fb94eac62aa418fea0e00f97f3d97928d6b9ab5",
+      "receipt": "receipts/p096s.json",
+      "receiptSha256": "42b4a2f360f4fedd4f877b1319e48d771bec50b28e47fad2be77d7153ff2fc7c",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p096s-subtraction-grouping-evidence.js",
+        "tests/p9-p096s-subtraction-grouping-browser.cjs",
+        "tests/p9-p096s-subtraction-grouping.test.mjs"
+      ]
+    },
+    {
+      "batch": "p096w",
+      "type": "x-wholeshare",
+      "branch": "work/b/specialized-whole-sharing",
+      "commit": "10ca39b3d4a800b755f81a8670f4f225f2de0609",
+      "scope": "按原生操作重放整份、切余下整体、人和小份的分配；精确验算每人的量、除法和乘回总量。",
+      "positions": [
+        {
+          "题包": "P096",
+          "原生题位": "sharewholes:0",
+          "来源节点": "mt_4Km38F4L-6",
+          "原题SHA256": "46762e377a10ad2c597376e3957194fda38afd7a40bb6bd2c52b278173601c47",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 17,
+              "actions": [
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P096",
+          "原生题位": "sharewholes:1",
+          "来源节点": "mt_4Km38F4L-6",
+          "原题SHA256": "14df910d580247bfa418be8e751c8beabbb1cf4a1add22a16aacbf7ecc3a8071",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 round、cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 60,
+              "actions": [
+                "round",
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P096",
+          "原生题位": "sharewholes:2",
+          "来源节点": "mt_4Km38F4L-6",
+          "原题SHA256": "adda570f60bcf2155d3921173f10bf8db596d0eee784bad3fe5bdfb0d0865622",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 round、cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "round",
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P096",
+          "原生题位": "translateamount:0",
+          "来源节点": "mt_3VmBdlAeOZ",
+          "原题SHA256": "21c33177d54b7652b5b7bb52019e507b493335a634bdc0398ca645004802fefc",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 17,
+              "actions": [
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P096",
+          "原生题位": "tenpieces:2",
+          "来源节点": "mt_YzM5goBctT",
+          "原题SHA256": "ed2697d0737daf0ed9a380f967baa2bf168ad4a49b274da1d373c7b874e70f4c",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 41,
+              "actions": [
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P096",
+          "原生题位": "reason34:2",
+          "来源节点": "mt_iyovKgZC1q",
+          "原题SHA256": "21c33177d54b7652b5b7bb52019e507b493335a634bdc0398ca645004802fefc",
+          "原因": "整份分配、切份和余下份等表示需按实际过程独立核。样例回放事件 cut-wholes、person、share-piece",
+          "样例记录": {
+            "history": {
+              "n": 17,
+              "actions": [
+                "cut-wholes",
+                "person",
+                "share-piece"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p096w.patch",
+      "patchSha256": "dadfe530b05ddd33291d92b0a51255fcbf98ed8c6ca56350f271f9d148c240ec",
+      "receipt": "receipts/p096w.json",
+      "receiptSha256": "468176690bcf2865cad43c62b1a8d447dc34d492724e31ee205863e84d8b4bb5",
+      "chromiumChecks": 49,
+      "files": [
+        "dist/learning/p096w-whole-sharing-evidence.js",
+        "tests/p9-p096w-whole-sharing-browser.cjs",
+        "tests/p9-p096w-whole-sharing.test.mjs"
+      ]
+    },
+    {
+      "batch": "p097c",
+      "type": "x-powerchain",
+      "branch": "work/b/specialized-power-chain",
+      "commit": "53b25036a51db30813b1ad20a843e728d634d1cc",
+      "scope": "从 1 累乘重算每个保留结果和最后加数，核对留档的推入序列能产生最终链。撤回和加法按钮的具体时刻没有记录。",
+      "positions": [
+        {
+          "题包": "P097",
+          "原生题位": "powerblocks:4",
+          "来源节点": "mt_hCVPYlF-7Y",
+          "原题SHA256": "995681037a87078aef27e5bfc967fd74d1d55dfaf52ff7c8092453d6b854478c",
+          "原因": "产品提交列表存在，撤回及加回的过程没有完整顺序，需限定合同。样例保留步长或数值序列",
+          "样例记录": {
+            "products": {
+              "n": 10,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 10,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P097",
+          "原生题位": "powerblocks:5",
+          "来源节点": "mt_hCVPYlF-7Y",
+          "原题SHA256": "1b75b1b2adc9070279892408f9a437d429a657083604205b22617d77054600bf",
+          "原因": "产品提交列表存在，撤回及加回的过程没有完整顺序，需限定合同。样例保留步长或数值序列",
+          "样例记录": {
+            "products": {
+              "n": 5,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P097",
+          "原生题位": "powerblocks:6",
+          "来源节点": "mt_hCVPYlF-7Y",
+          "原题SHA256": "5b90691d38a7ef2e1a3a703ff1107d4d885c34d138636fe219f10edefa6bbf70",
+          "原因": "产品提交列表存在，撤回及加回的过程没有完整顺序，需限定合同。样例保留步长或数值序列",
+          "样例记录": {
+            "products": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P097",
+          "原生题位": "powerblocks:7",
+          "来源节点": "mt_hCVPYlF-7Y",
+          "原题SHA256": "b1f897357d7c6736c63897fa94c6fba4e7cccc9fb810cbc4c44ab6573a3809e4",
+          "原因": "产品提交列表存在，撤回及加回的过程没有完整顺序，需限定合同。样例保留步长或数值序列",
+          "样例记录": {
+            "products": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p097c.patch",
+      "patchSha256": "9f20984141976b81aabc857f7516fe7e21229a11ccb0a795b4c9450c4513fa3b",
+      "receipt": "receipts/p097c.json",
+      "receiptSha256": "7a8b24cd335932df3a3f6e68b186ce8e034f0f024599de1a950025b10d62d195",
+      "chromiumChecks": 34,
+      "files": [
+        "dist/learning/p097c-power-chain-evidence.js",
+        "tests/p9-p097c-power-chain-browser.cjs",
+        "tests/p9-p097c-power-chain.test.mjs"
+      ]
+    },
+    {
+      "batch": "p097r",
+      "type": "x-rootwindow",
+      "branch": "work/b/specialized-root-interval",
+      "commit": "c4d8f43a3679e77c98c06de31fafc016da7a6dcf",
+      "scope": "从 [1,2] 逐次重算每一对试探端点，分数精确平方，核对保留结果与最后区间为何足以支持三位小数近似。",
+      "positions": [
+        {
+          "题包": "P097",
+          "原生题位": "powerblocks:8",
+          "来源节点": "mt_hCVPYlF-7Y",
+          "原题SHA256": "214564ebe0fdcb60a7b822a54c12b498b4a738023f3e2737f7885d5fa2514d10",
+          "原因": "有 `trials` 和保存的缩小区间，需专门重放边界、交叉和精确不等式",
+          "样例记录": {
+            "windows": {
+              "n": 3,
+              "actions": [
+                [
+                  7,
+                  5
+                ],
+                [
+                  141,
+                  100
+                ],
+                [
+                  707,
+                  500
+                ]
+              ]
+            },
+            "trials": {
+              "n": 3,
+              "actions": [
+                "7/5",
+                "141/100",
+                "707/500"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p097r.patch",
+      "patchSha256": "4decef227409db2af76b5c73aa14d897499dd0de0bc694f36624cfae6665c81e",
+      "receipt": "receipts/p097r.json",
+      "receiptSha256": "b06265a16a2b175fdca87ffb95928e08267f3a48880c78fe8cdba5d15e30ce1a",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p097r-root-interval-evidence.js",
+        "tests/p9-p097r-root-interval-browser.cjs",
+        "tests/p9-p097r-root-interval.test.mjs"
+      ]
+    },
+    {
+      "batch": "p098p",
+      "type": "x-f36-plot",
+      "branch": "work/b/specialized-graph-plot",
+      "commit": "f8579661690042e7a12a18808c1978655f47dd0c",
+      "scope": "从横坐标精确计算纵坐标，重放放点、撤回与标注零点。只在明确要求估读的题里使用原题给定容差。",
+      "positions": [
+        {
+          "题包": "P098",
+          "原生题位": "plot36:0",
+          "来源节点": "mt_-3udyo6VyB",
+          "原题SHA256": "139ac557b035860387eb5db2e25ccb02655583db2786f4ff5460929df30ec55f",
+          "原因": "描点与根/交点判定必须区分，需单列图形合同。样例回放事件 point",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "point"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P098",
+          "原生题位": "quadratic36:0",
+          "来源节点": "mt_GZuoYaDdWd",
+          "原题SHA256": "628dbe45e9d82d984a049a95e1fe04a39ce2c7ed0070b158e00c63a838f92f4a",
+          "原因": "描点与根/交点判定必须区分，需单列图形合同。样例回放事件 point、root",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "point",
+                "root"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P098",
+          "原生题位": "quadratic36:2",
+          "来源节点": "mt_GZuoYaDdWd",
+          "原题SHA256": "b9c69b762412c340305b658862f703414bc93b3a371ac0875007e661bcc6c3f6",
+          "原因": "描点与根/交点判定必须区分，需单列图形合同。样例回放事件 point",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "point"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p098p.patch",
+      "patchSha256": "3a900e0a434d85064aad8206c05929c694810d84e840910a0ca6f48e1940208a",
+      "receipt": "receipts/p098p.json",
+      "receiptSha256": "44c160865744072263bd47e23d46b1d81be637cc1e24a7e39b379b5e1eae28d6",
+      "chromiumChecks": 29,
+      "files": [
+        "dist/learning/p098p-graph-plot-evidence.js",
+        "tests/p9-p098p-graph-plot-browser.cjs",
+        "tests/p9-p098p-graph-plot.test.mjs"
+      ]
+    },
+    {
+      "batch": "p098v",
+      "type": "x-f36-live",
+      "branch": "work/b/specialized-coefficient-views",
+      "commit": "4f09125bfa6c2a530f352299ad827c51c0ee1f85",
+      "scope": "逐次重放平方项系数的改变和保存，核对正负系数两种观察及负系数时向下开口。",
+      "positions": [
+        {
+          "题包": "P098",
+          "原生题位": "quadratic36:1",
+          "来源节点": "mt_GZuoYaDdWd",
+          "原题SHA256": "b34f8ea1c53fe868d343e9c50644751d4ebcc2e75726e5c8cd26f3d85a3b6d80",
+          "原因": "参数改动与所存图形可追溯，但二次图形需单列。样例回放事件 save、change",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "save",
+                "change"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p098v.patch",
+      "patchSha256": "5d5857f3a2bfbbff17ff46b3be633545b52b4767e1002a5a3a223327760645e5",
+      "receipt": "receipts/p098v.json",
+      "receiptSha256": "068e6a8defc5c6e0828cbd1dca6c70aaf039d58a18e0695e98f13def2763ba35",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p098v-coefficient-views-evidence.js",
+        "tests/p9-p098v-coefficient-views-browser.cjs",
+        "tests/p9-p098v-coefficient-views.test.mjs"
+      ]
+    },
+    {
+      "batch": "p099c",
+      "type": "x-m31-compare",
+      "branch": "work/b/specialized-capacity-compare",
+      "commit": "2af041028d266dbc3f1dd937a663f3695635c524",
+      "scope": "重放猜测、两次倒入同样杯子和选择，按实际倒出的量而非原容器形状或标称容量计算。",
+      "positions": [
+        {
+          "题包": "P099",
+          "原生题位": "comparecap:0",
+          "来源节点": "mt_zkFbMLpu3U",
+          "原题SHA256": "492f803439179b59e9ffa89d1df2fe8978bd6da6f0aef922d0ec71580c8e7c18",
+          "原因": "先猜再倒量有记录，需按量具和容积单位单独验收。样例回放事件 guess、pour、choice",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "guess",
+                "pour",
+                "choice"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P099",
+          "原生题位": "comparecap:1",
+          "来源节点": "mt_zkFbMLpu3U",
+          "原题SHA256": "2c0aff0e6e26d96545ef754722004d28f73e70096abe5586d418b65d3e1d8ff0",
+          "原因": "先猜再倒量有记录，需按量具和容积单位单独验收。样例回放事件 guess、pour、choice",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "guess",
+                "pour",
+                "choice"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p099c.patch",
+      "patchSha256": "4085a34875ab48570adbed68cdf709ac6860aff91bb49b601a479e96e159930f",
+      "receipt": "receipts/p099c.json",
+      "receiptSha256": "ae9cc0d25e662de0b533a1c1b3a069b95ce263e8dd88189be12d2fbada8ba34a",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p099c-capacity-compare-evidence.js",
+        "tests/p9-p099c-capacity-compare-browser.cjs",
+        "tests/p9-p099c-capacity-compare.test.mjs"
+      ]
+    },
+    {
+      "batch": "p099b",
+      "type": "x-m31-balance",
+      "branch": "work/b/specialized-balance-order",
+      "commit": "e7f1874b5700968bb9745d0cfc0b1bbfdac7e377",
+      "scope": "验证两次指定天平比较和排序，按模型质量独立复核每对关系及从轻到重的顺序。",
+      "positions": [
+        {
+          "题包": "P099",
+          "原生题位": "indirectmass:0",
+          "来源节点": "mt_bnwHo5wfCD",
+          "原题SHA256": "925193940e9b50cc117549768649d5ca55addc296df16e9d1d831e1bc85553e8",
+          "原因": "独立核不同砝码、平衡和排序的因果关系。样例回放事件 test、order",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "test",
+                "order"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P099",
+          "原生题位": "indirectmass:2",
+          "来源节点": "mt_bnwHo5wfCD",
+          "原题SHA256": "d547e62fcc1ad259fd6de601579b45246f669ee70249537db6e7e0bf5016f611",
+          "原因": "独立核不同砝码、平衡和排序的因果关系。样例回放事件 test、order",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "test",
+                "order"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p099b.patch",
+      "patchSha256": "4a5372f46c233845ed14f9ea959e6ecd8ba42b611b6d552d71d0ef57fc269216",
+      "receipt": "receipts/p099b.json",
+      "receiptSha256": "d9d71e526a5b81b872a707a84cdd58c0e91639dc9ddc548fdf4305e6d9b424d5",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p099b-balance-order-evidence.js",
+        "tests/p9-p099b-balance-order-browser.cjs",
+        "tests/p9-p099b-balance-order.test.mjs"
+      ]
+    },
+    {
+      "batch": "p100b",
+      "type": "x-boxsummary",
+      "branch": "work/b/specialized-boxplot-summary",
+      "commit": "a456362d43fe9f624f7f70fa03d4a1ff0810e759",
+      "scope": "重放修改内部数据，精确核验改动前后以及对照组的五数概括是否相同。",
+      "positions": [
+        {
+          "题包": "P100",
+          "原生题位": "boxsummary:1",
+          "来源节点": "mt_8VjmxR1yfw",
+          "原题SHA256": "199c0b9d306a18117039cefeb5d1b81e6c9a666ff8c83759c32265585c520577",
+          "原因": "改内部数后比较五数和两组分布，需要独立统计口径。样例回放事件 alter",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "alter"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p100b.patch",
+      "patchSha256": "4aad5bfc1198fa56f6f4122764aeb0f8e10f26bc38a5b6bbc276b22fd538a4f1",
+      "receipt": "receipts/p100b.json",
+      "receiptSha256": "29d6f6b1995f0fd756f85e5fd60b8fa56c2a3440cb84cc194b3cf26c41202acf",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p100b-boxplot-summary-evidence.js",
+        "tests/p9-p100b-boxplot-summary-browser.cjs",
+        "tests/p9-p100b-boxplot-summary.test.mjs"
+      ]
+    },
+    {
+      "batch": "p100v",
+      "type": "x-m31-product",
+      "branch": "work/b/specialized-fractional-volume",
+      "commit": "80b5c031cfed8905275173df101ad5415ee9dab2",
+      "scope": "重放实际转动，从题面上的带分数边长精确计算底面积与体积，核对立方单位。分别填写的算式结果没有书写步骤日志。",
+      "positions": [
+        {
+          "题包": "P100",
+          "原生题位": "fractionvolume:3",
+          "来源节点": "mt_IlDaxVr60U",
+          "原题SHA256": "20cd22353a7b014e7ff80546231b87ca894c7b8ea9386abd2cbd9e395ca804f6",
+          "原因": "只重放了转动，最终体积的计算途径没有记录，需先限定可验收范围。样例回放事件 turn",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p100v.patch",
+      "patchSha256": "4016b69b84488099acc1a2c4008a1f9e9247e0bab5d8f425776e6cf52c9aec1b",
+      "receipt": "receipts/p100v.json",
+      "receiptSha256": "ceffffd2de76faa34a88691340100879b65c8a46af9d70d659061ba8f3e4d847",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p100v-fractional-volume-evidence.js",
+        "tests/p9-p100v-fractional-volume-browser.cjs",
+        "tests/p9-p100v-fractional-volume.test.mjs"
+      ]
+    },
+    {
+      "batch": "p101a",
+      "type": "x-s23-symmetry",
+      "branch": "work/b/specialized-reflection-axes",
+      "commit": "12b929feab18ef8ee1bd32606770eaec9b46b3e6",
+      "scope": "按角度的解析几何关系计算对称轴，重放每条候选线试折、选择或无轴选项，以及正六边形的转动记录。具体拖动轨迹和口头证明未记录。",
+      "positions": [
+        {
+          "题包": "P101",
+          "原生题位": "sidesfold:1",
+          "来源节点": "mt_sBcRdUfAzV",
+          "原题SHA256": "0663a7b8366d5f9507c13778751eed40fedc9d8ba5383ac7d4aded97079ebc6e",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 6,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:0",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "7f7826e579de7751b92858c16f2cdf5cb7dabee7be17aaf599788d4e693d13bb",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 6,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:1",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "13e6024f703f11632dea0ce3de77c22465fc583efecaad223bed91d34098dff0",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 8,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:2",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "b6fe903511b28ad38f4723e4a25ec650c1710e27b1b6d98751c8a93bc418f045",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 9,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:3",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "662e3cb60d463c26ad8a712bd592394e41ad19fac97b9cc67aa6c1973f1e5d14",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 12,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:4",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "d5cde1835b557739d2d03ade17948dc6493a4e58cc0b278dfa5717aa8509c073",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 8,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:5",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "b82fe006b52eb48dfcd7519fd42340c4078ce77e6086f3a6683af6a0df66e102",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "test",
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "shapeaxes:6",
+          "来源节点": "mt_hRZyKvz1KN",
+          "原题SHA256": "ddc7dea76eb327490f6f4ecb4a6b57e9d553d94e9dcd094d3baf0aea6c98f098",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、none",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 9,
+              "actions": [
+                "test",
+                "none"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "geometrynotation:1",
+          "来源节点": "mt_WtIFJSCQIT",
+          "原题SHA256": "af207f5cb81ffdd295365845ad6e09086149d689823007ce4b5c70564a430e4b",
+          "原因": "保留试轴/标记，需分无轴、折叠验证和转动后对称等情形。样例回放事件 test、mark、turn",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 13,
+              "actions": [
+                "test",
+                "mark",
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p101a.patch",
+      "patchSha256": "02fc52348a7099d4ce6be8802c48bacc34c4f1412838ee79bc80b4eae85fe3a8",
+      "receipt": "receipts/p101a.json",
+      "receiptSha256": "2dd648dc6e67b420bcd8c09bba5d9b8f8c189e40aba31364275ae6f03c14042c",
+      "chromiumChecks": 66,
+      "files": [
+        "dist/learning/p101a-reflection-axes-evidence.js",
+        "tests/p9-p101a-reflection-axes-browser.cjs",
+        "tests/p9-p101a-reflection-axes.test.mjs"
+      ]
+    },
+    {
+      "batch": "p101s",
+      "type": "x-p24-spin",
+      "branch": "work/b/specialized-rotation-symmetry",
+      "commit": "d5a5c022b5d45cf92d6a60b6c4d5e4cdec4f1ca0",
+      "scope": "核验正方形四次重合、三类给定图形的转动试验与四片围绕共同中心的旋转对称。",
+      "positions": [
+        {
+          "题包": "P101",
+          "原生题位": "turnsym:0",
+          "来源节点": "mt_NM5I3yN-Q6",
+          "原题SHA256": "af2d9f7a67e72beeb017ef38da9794067475abdfd2787492879239691668e3f6",
+          "原因": "顺序、旋转不变以及拼片对应不同场景，需按模式分开核。样例回放事件 spin",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 4,
+              "actions": [
+                "spin"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "turnsym:1",
+          "来源节点": "mt_NM5I3yN-Q6",
+          "原题SHA256": "581db9aa2035473a4628d56b096086fd0ae470efd72de16e7434952bda68ace3",
+          "原因": "顺序、旋转不变以及拼片对应不同场景，需按模式分开核。样例回放事件 spin、choose",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "spin",
+                "choose"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P101",
+          "原生题位": "turnsym:2",
+          "来源节点": "mt_NM5I3yN-Q6",
+          "原题SHA256": "523af51fb09f8bff1f44d4d5093b99edb72f0bbf56c35884a28d5318c28c6f9c",
+          "原因": "顺序、旋转不变以及拼片对应不同场景，需按模式分开核。样例回放事件 piecePlace、pieceTurn",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 10,
+              "actions": [
+                "piecePlace",
+                "pieceTurn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p101s.patch",
+      "patchSha256": "0fbc0914e82f1f8904ab39fc6ec6277ea75aad04d56af1896f11a82bbaeb2964",
+      "receipt": "receipts/p101s.json",
+      "receiptSha256": "bc1a59baa47561b3f60600a08c76966475153e2a7b1782aaf3984db440b284e0",
+      "chromiumChecks": 28,
+      "files": [
+        "dist/learning/p101s-rotation-symmetry-evidence.js",
+        "tests/p9-p101s-rotation-symmetry-browser.cjs",
+        "tests/p9-p101s-rotation-symmetry.test.mjs"
+      ]
+    },
+    {
+      "batch": "p101f",
+      "type": "x-p24-frieze",
+      "branch": "work/b/specialized-frieze",
+      "commit": "ee4b25e07f532a33a0ce8d53a2914892f9acfcce",
+      "scope": "重放先反射后平移，按图形顶点独立计算重复后四块的位置。",
+      "positions": [
+        {
+          "题包": "P101",
+          "原生题位": "patternfloor:2",
+          "来源节点": "mt_61Nhj8W78f",
+          "原题SHA256": "c4fbd3c4e84f77c338faa746ceb82a4c7a3a453a8c20a87ef7b2af4aaca47305",
+          "原因": "按动作保存平移及反射组合，需单列图案等价规则。样例回放事件 friezeMirror、friezeRepeat",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "friezeMirror",
+                "friezeRepeat"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p101f.patch",
+      "patchSha256": "bda2621d21a9c9557231c44de0f17b09856afb68ebda000a4ead657ad41bbcb7",
+      "receipt": "receipts/p101f.json",
+      "receiptSha256": "bbfc673ddd0dfb875e9280441db92fe49b31f712bb0444a75bbe4ef91e2c5a7c",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p101f-frieze-evidence.js",
+        "tests/p9-p101f-frieze-browser.cjs",
+        "tests/p9-p101f-frieze.test.mjs"
+      ]
+    },
+    {
+      "batch": "p102l",
+      "type": "x-lawtiles",
+      "branch": "work/b/specialized-distributive-tiles",
+      "commit": "564a713ea6730ff6af587c8312a5f8f9978912a6",
+      "scope": "逐次核对拆出的长条及常量块，至少两组参数在完整构造下验证等量。记录只支持实际摆出的构造。",
+      "positions": [
+        {
+          "题包": "P102",
+          "原生题位": "structurebridge:1",
+          "来源节点": "mt_hImiKNiaNh",
+          "原题SHA256": "fb49c413f9d627c1f7c49d5441505d13a28e99ecdfa29206526603a2ab2d4937",
+          "原因": "需核图块组成、替换参数及等式恒成立的范围。样例回放事件 b15-tile、b15-trial",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "b15-tile",
+                "b15-trial"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p102l.patch",
+      "patchSha256": "19992b2e35c609b10922b7fb6f07e30548da2ca336b91151bc5549c344c5eccc",
+      "receipt": "receipts/p102l.json",
+      "receiptSha256": "18acec76e41442b6cddcb7de349a0c326b26840d86af303c8b3639c75155abbc",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p102l-distributive-tiles-evidence.js",
+        "tests/p9-p102l-distributive-tiles-browser.cjs",
+        "tests/p9-p102l-distributive-tiles.test.mjs"
+      ]
+    },
+    {
+      "batch": "p103t",
+      "type": "x-p34-program",
+      "branch": "work/b/specialized-program-trace",
+      "commit": "9ee4e8e442ce032aec7d62e0f466a39287018ff9",
+      "scope": "逐条复算奇偶和阈值分支、首次停止条件以及积木运行的有限输出。只评价内置程序和实际记录的试验。",
+      "positions": [
+        {
+          "题包": "P103",
+          "原生题位": "trace34:0",
+          "来源节点": "mt_zQfWqImxva",
+          "原题SHA256": "0dc393d18025bc6b94aa12ccf20c6641a404506f792377b8d0a4b2bb550cd136",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 step",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "step"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "trace34:1",
+          "来源节点": "mt_zQfWqImxva",
+          "原题SHA256": "174fc76cca3b87849dd95c0cd6ca427401c42106d9f731beb643fe5e9be9a7d9",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 branch",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "branch"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "trace34:2",
+          "来源节点": "mt_zQfWqImxva",
+          "原题SHA256": "3e76d246e5e966c5a55cae2327b0df6a9f886df2c9bab9a3d134866d889d7ce1",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 branch",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "branch"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "generate34:0",
+          "来源节点": "mt_QeKWt4BZn3",
+          "原题SHA256": "f089f2b20b5e4067ab79da7f1ed61acef080127c9c6c564c38022d7f8536f92a",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 step、stop",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "step",
+                "stop"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "generate34:1",
+          "来源节点": "mt_QeKWt4BZn3",
+          "原题SHA256": "6fee96e3bae0412e7fbde8a9e0d3816af0b96630a245f6d2fe2ffdae39b6d0b6",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 step、stop",
+          "样例记录": {
+            "history": {
+              "n": 12,
+              "actions": [
+                "step",
+                "stop"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "design34:0",
+          "来源节点": "mt_nx4a3kH-59",
+          "原题SHA256": "3cbd5146577df2cb9b773c430ca53039a285bd431b1ea77faf7b0ec77b397c8c",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 block、run",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "block",
+                "run"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P103",
+          "原生题位": "design34:1",
+          "来源节点": "mt_nx4a3kH-59",
+          "原题SHA256": "e30f6370df100ab654f2776554a988537838729d67e5304050b82d488318d4fe",
+          "原因": "按模式区分循环、条件分支、程序步进及停止。样例回放事件 block、run",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "block",
+                "run"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p103t.patch",
+      "patchSha256": "cda00b7f2bd56aed404d38db41ad0d22ce674ac5e5d1b0ba4b9d5bdd14dc47f4",
+      "receipt": "receipts/p103t.json",
+      "receiptSha256": "046e01ef661fc3fdcc9f1662fd6060dbf39cd56b9a2f454de4d1523169fdf95c",
+      "chromiumChecks": 54,
+      "files": [
+        "dist/learning/p103t-program-trace-evidence.js",
+        "tests/p9-p103t-program-trace-browser.cjs",
+        "tests/p9-p103t-program-trace.test.mjs"
+      ]
+    },
+    {
+      "batch": "p104t",
+      "type": "x-toolwork",
+      "branch": "work/b/specialized-tool-paths",
+      "commit": "7d0463ed22d488ccdbf70e41386a7773feffa232",
+      "scope": "数轴和百数表逐条复算两条独立路径。量尺按保存分段核对零点、相接长度和单位，历史只支持对齐与工具，无法恢复撤回顺序和已撤分段的长度。",
+      "positions": [
+        {
+          "题包": "P104",
+          "原生题位": "toolchoice:3",
+          "来源节点": "mt_zMEvtigoM3",
+          "原题SHA256": "4682de9d44be426e09691a8af01e52966d35e1bf4886eb442eb648225957895d",
+          "原因": "计量/数轴路径有片段记录，工具切换或撤回缺统一时序，需按模式核",
+          "样例记录": {
+            "segments": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P104",
+          "原生题位": "toolchoice:4",
+          "来源节点": "mt_zMEvtigoM3",
+          "原题SHA256": "59c5db26e7baf11d9781316e7df8677e5a15d1f3c243c379ae13a314edf491ae",
+          "原因": "计量/数轴路径有片段记录，工具切换或撤回缺统一时序，需按模式核",
+          "样例记录": {
+            "segments": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P104",
+          "原生题位": "strategy39:3",
+          "来源节点": "mt_mQcWGh02no",
+          "原题SHA256": "59c5db26e7baf11d9781316e7df8677e5a15d1f3c243c379ae13a314edf491ae",
+          "原因": "计量/数轴路径有片段记录，工具切换或撤回缺统一时序，需按模式核",
+          "样例记录": {
+            "segments": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P104",
+          "原生题位": "strategy39:4",
+          "来源节点": "mt_mQcWGh02no",
+          "原题SHA256": "f737425d54111adc53d3a5b1525b5cfa9ade58ff320f70ef0075cf48167f808b",
+          "原因": "计量/数轴路径有片段记录，工具切换或撤回缺统一时序，需按模式核",
+          "样例记录": {
+            "line": {
+              "n": 10,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p104t.patch",
+      "patchSha256": "edb52d389c849fe15d77cdeeda97ba8f0ef294b83a0a745d98870b2dff946776",
+      "receipt": "receipts/p104t.json",
+      "receiptSha256": "0a195e2a9516e4fa623ab0d67c14899d95871d459c89e54abe8003a62b2faa3a",
+      "chromiumChecks": 35,
+      "files": [
+        "dist/learning/p104t-tool-paths-evidence.js",
+        "tests/p9-p104t-tool-paths-browser.cjs",
+        "tests/p9-p104t-tool-paths.test.mjs"
+      ]
+    },
+    {
+      "batch": "p104m",
+      "type": "x-s39-choose",
+      "branch": "work/b/specialized-calculator-method",
+      "commit": "8858e2165b19d2467016dbbe1405a16d5ac59011",
+      "scope": "仅认内置计算器实际运行的算式、操作数和精确结果。心算和纸笔仅有标签与答案，不认作过程证据。",
+      "positions": [
+        {
+          "题包": "P104",
+          "原生题位": "strategy39:0",
+          "来源节点": "mt_mQcWGh02no",
+          "原题SHA256": "a6d2783245da097ec131ef1aaa320dbe598b1c977c304f1c51597acddaedba87",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "strategy39:1",
+          "来源节点": "mt_mQcWGh02no",
+          "原题SHA256": "a21a29e89f3a1fb2f593b1ca1ceea56b14b97e5725220d0651f2b6add84103ac",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "tools39:0",
+          "来源节点": "mt_d-WZC2OyMB",
+          "原题SHA256": "fa6b43a9ccdea6eece97c3492431860b9c076d1e5861ee7d49545023d77dd04b",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "tools39:1",
+          "来源节点": "mt_d-WZC2OyMB",
+          "原题SHA256": "606e1840f80bdc176ac1f18c9d2cc4aa8488817671e52074ba0d7a9925c57321",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "tools39:3",
+          "来源节点": "mt_d-WZC2OyMB",
+          "原题SHA256": "cc0185f5827d90f88b2eb7a63c9ae11554d07b3ad388965200ae67a7581292a2",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "representations39:0",
+          "来源节点": "mt_IwEOCN6bL1",
+          "原题SHA256": "85159bc5608b3058f7bc19700e70dcce79f68f9fb8fa3d6ffa9fc80eb741e6d5",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "representations39:1",
+          "来源节点": "mt_IwEOCN6bL1",
+          "原题SHA256": "1cc67cbfc45888779d8bf220c4a8fe55f299b8c926405e60d54649ffc8571d14",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "calculator39:1",
+          "来源节点": "mt_ish_uH8vZe",
+          "原题SHA256": "904850a48d6cd3c9724a9e4d8e8a3c7b5dbd8e01fbdeacc2f71aa94c0203751a",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        },
+        {
+          "题包": "P104",
+          "原生题位": "calculator39:2",
+          "来源节点": "mt_ish_uH8vZe",
+          "原题SHA256": "952964456a23217670aa72436d9b738c2ccb6f6d955f4b8444088bcf1e9530f7",
+          "原因": "仅计算器路径保存实际运算，可单独核该路径，心算和纸笔路径只提交方法标签和答案",
+          "样例记录": {}
+        }
+      ],
+      "patch": "patches/p104m.patch",
+      "patchSha256": "d111e6172aa6aeb8b019c73d6e86a02845b235ba69c8c968d2f4e5a346c04e65",
+      "receipt": "receipts/p104m.json",
+      "receiptSha256": "4ffa0c52d4b36dde8f74ea202f194ba8bbb383e10adc43ad9ab2719ce2af6d4b",
+      "chromiumChecks": 67,
+      "files": [
+        "dist/learning/p104m-calculator-method-evidence.js",
+        "tests/p9-p104m-calculator-method-browser.cjs",
+        "tests/p9-p104m-calculator-method.test.mjs"
+      ]
+    },
+    {
+      "batch": "p105n",
+      "type": "x-numbersearch",
+      "branch": "work/b/specialized-number-search",
+      "commit": "87e2978201e1b0c2066fbe07e0aa1eba27d55286",
+      "scope": "重放带余数的试除、逐步列出倍数或平方数、点选公共数，并独立复算。只选择 1 到 19 的质数一题可核对完整选择，原生记录没有逐数试除。",
+      "positions": [
+        {
+          "题包": "P105",
+          "原生题位": "factorlab:1",
+          "来源节点": "mt_FHIAv6dfhU",
+          "原题SHA256": "1059544ba30ec89c353645515c8fd54552ceccb0faf812265188c804efe9ebd8",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-list",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "b14-list"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factorlab:2",
+          "来源节点": "mt_FHIAv6dfhU",
+          "原题SHA256": "e5f3772c2487d4cfb59358741b66387335378400a6f665401779a74fceaa5bfb",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test、b14-select",
+          "样例记录": {
+            "history": {
+              "n": 16,
+              "actions": [
+                "b14-test",
+                "b14-select"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factorlab:3",
+          "来源节点": "mt_FHIAv6dfhU",
+          "原题SHA256": "cc13d1d2080f9219f621c0bf8ca7e6a2058661f9aee784d09b0dfaedb59a455c",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test、b14-select",
+          "样例记录": {
+            "history": {
+              "n": 18,
+              "actions": [
+                "b14-test",
+                "b14-select"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factorlab:4",
+          "来源节点": "mt_FHIAv6dfhU",
+          "原题SHA256": "e4a4001b24868e59ca72d6fea3a12e22c7f5ac7d36fb04f0aa2477840a629144",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-list、b14-select",
+          "样例记录": {
+            "history": {
+              "n": 24,
+              "actions": [
+                "b14-list",
+                "b14-select"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factorlab:5",
+          "来源节点": "mt_FHIAv6dfhU",
+          "原题SHA256": "4526b0722685c5892f349f5f9b9381a888ce5a78cae28a287cbb8e00f755135f",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "b14-test"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factoruse:0",
+          "来源节点": "mt_0Wg5F97osg",
+          "原题SHA256": "2c1dc1f951fbda257d3d4732f963d3b0f6779fcc4aaa0d4f48a4cc9119dd1e14",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "b14-test"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factoruse:1",
+          "来源节点": "mt_0Wg5F97osg",
+          "原题SHA256": "433a0b699133acce99150cd7b6f1b8b1e4a1bafffb62d5ee9a816f735c3a3b22",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "b14-test"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factoruse:2",
+          "来源节点": "mt_0Wg5F97osg",
+          "原题SHA256": "b2cf5e6017938716085388effdc6bab66bbacfa0c4692b8a0ad826dced05b308",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-test",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "b14-test"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "primetest:3",
+          "来源节点": "mt_y1XCVsIelg",
+          "原题SHA256": "34955aa89254a8d5ea7e3e6afcb040e58fed2a9728fc03aa0883c622baaca85e",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-select",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "b14-select"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "squarecube:2",
+          "来源节点": "mt_gxCIASSezX",
+          "原题SHA256": "2d51e87b365d04a58e006687e47fade6b22054b9790debd46864fe193e675ca0",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-list",
+          "样例记录": {
+            "history": {
+              "n": 10,
+              "actions": [
+                "b14-list"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "term38:1",
+          "来源节点": "mt_xfwv0M83mJ",
+          "原题SHA256": "1059544ba30ec89c353645515c8fd54552ceccb0faf812265188c804efe9ebd8",
+          "原因": "试除、列倍数、选公因数和识别平方数是不同操作，需按模式分别定义。样例回放事件 b14-list",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "b14-list"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p105n.patch",
+      "patchSha256": "514e5b60aedfa6dd4226ebbb2a4dc9be34f45f8a383d20174c4ff331243efcf3",
+      "receipt": "receipts/p105n.json",
+      "receiptSha256": "d6c4f4632f645b530b0c8789c04e718ff8643da9d000cc66d8be6b61b7f0931a",
+      "chromiumChecks": 80,
+      "files": [
+        "dist/learning/p105n-number-search-evidence.js",
+        "tests/p9-p105n-number-search-browser.cjs",
+        "tests/p9-p105n-number-search.test.mjs"
+      ]
+    },
+    {
+      "batch": "p105c",
+      "type": "x-factorcode",
+      "branch": "work/b/specialized-factor-program",
+      "commit": "2552afeae48a866bef71a068b755f47bf244d97b",
+      "scope": "重放积木顺序、撤回与运行，逐个整数检查因数余数或因数个数。结论只涵盖题设的有限范围。",
+      "positions": [
+        {
+          "题包": "P105",
+          "原生题位": "factorcode:1",
+          "来源节点": "mt_bZC-wqWX7Y",
+          "原题SHA256": "b24cacb73fa68511e1c44a0b91ddecc421257472e72de46a97d9da9eaeb8e75f",
+          "原因": "需单独核程序步骤、条件及因数/质数输出。样例回放事件 b14-block、b14-run",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "b14-block",
+                "b14-run"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "factorcode:3",
+          "来源节点": "mt_bZC-wqWX7Y",
+          "原题SHA256": "0f6c07e7d4c6abdc38b48afc8421a1f6601b2e9caff31fe69ad23b658fe4fe1e",
+          "原因": "需单独核程序步骤、条件及因数/质数输出。样例回放事件 b14-block、b14-run",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "b14-block",
+                "b14-run"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p105c.patch",
+      "patchSha256": "e017a06861941d47d575ae3df921c8affc41d168f77826fa0569b3325fc7e5f5",
+      "receipt": "receipts/p105c.json",
+      "receiptSha256": "c3ce483893ff46b64056a3c298623037dc678b2316b639646d2d325f29ad11b6",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p105c-factor-program-evidence.js",
+        "tests/p9-p105c-factor-program-browser.cjs",
+        "tests/p9-p105c-factor-program.test.mjs"
+      ]
+    },
+    {
+      "batch": "p105f",
+      "type": "x-factorforest",
+      "branch": "work/b/specialized-prime-forest",
+      "commit": "eb7ad36732c3899f003889c633278a972280132a",
+      "scope": "重放分解、保存重拆和质数叶配对。最大公因数与最小公倍数独立计算，包含没有共有质因数时公因数仍为 1 的反例。",
+      "positions": [
+        {
+          "题包": "P105",
+          "原生题位": "primeforest:0",
+          "来源节点": "mt_xhoOWnhtHq",
+          "原题SHA256": "326da521788da4dfe125e17792594d55d078d9951820abe672b2039d2f14fdf0",
+          "原因": "因数树、公共因数和最小公倍数要分别核验。样例回放事件 b14-leaf、b14-split",
+          "样例记录": {
+            "history": {
+              "n": 10,
+              "actions": [
+                "b14-leaf",
+                "b14-split"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "primeforest:1",
+          "来源节点": "mt_xhoOWnhtHq",
+          "原题SHA256": "032d0b96e9d44c88c597b7a4455dfc1c73c581ef1ec6a2cf73de5f8eb4b33afb",
+          "原因": "因数树、公共因数和最小公倍数要分别核验。样例回放事件 b14-leaf、b14-split、b14-match",
+          "样例记录": {
+            "history": {
+              "n": 18,
+              "actions": [
+                "b14-leaf",
+                "b14-split",
+                "b14-match"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "primeforest:2",
+          "来源节点": "mt_xhoOWnhtHq",
+          "原题SHA256": "559c007cb78d9200f45d26936a901e2e5498df6a3e4805ffe3ed9e61fa4e42c2",
+          "原因": "因数树、公共因数和最小公倍数要分别核验。样例回放事件 b14-leaf、b14-split",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "b14-leaf",
+                "b14-split"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P105",
+          "原生题位": "primeforest:3",
+          "来源节点": "mt_xhoOWnhtHq",
+          "原题SHA256": "d410f55f5cf01bc9da789deb59477793e63ff81863655d35831fe2c12cab8917",
+          "原因": "因数树、公共因数和最小公倍数要分别核验。样例回放事件 b14-leaf、b14-split、b14-tree-save",
+          "样例记录": {
+            "history": {
+              "n": 13,
+              "actions": [
+                "b14-leaf",
+                "b14-split",
+                "b14-tree-save"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p105f.patch",
+      "patchSha256": "acb7dd2b19940630196541a84f05434b00c5cb722d4e01f3edcd718e4dced884",
+      "receipt": "receipts/p105f.json",
+      "receiptSha256": "448263b3d4e2261aeaec6c9cb910942f6f24567e8ac357143953774f58e3f616",
+      "chromiumChecks": 34,
+      "files": [
+        "dist/learning/p105f-prime-forest-evidence.js",
+        "tests/p9-p105f-prime-forest-browser.cjs",
+        "tests/p9-p105f-prime-forest.test.mjs"
+      ]
+    },
+    {
+      "batch": "p106p",
+      "type": "x-partbuild",
+      "branch": "work/b/specialized-part-whole-snapshots",
+      "commit": "309397606b6aca797fda619aa90f8d942805073e",
+      "scope": "仅验证两种不同的保留分法快照，每种合成八；互换颜色不增加分法。无逐次滑块动作。",
+      "positions": [
+        {
+          "题包": "P106",
+          "原生题位": "partswithin:2",
+          "来源节点": "mt_BK5xwkrD5C",
+          "原题SHA256": "dcc8018242bd2d64b108672982a1c4bc0775184243cc103610d9df4949feede4",
+          "原因": "不同分法有保存快照，红蓝计数的调整顺序没有记录，需单列快照合同",
+          "样例记录": {
+            "saved": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p106p.patch",
+      "patchSha256": "5c0623eb5bd35eb1110fda860310c3f1a70ee90cd687c830f86d5dd5a716390f",
+      "receipt": "receipts/p106p.json",
+      "receiptSha256": "e7dd4578baffba5993500b61327a60abf75da4016f3db73c04051099752e04d5",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p106p-part-whole-snapshots-evidence.js",
+        "tests/p9-p106p-part-whole-snapshots-browser.cjs",
+        "tests/p9-p106p-part-whole-snapshots.test.mjs"
+      ]
+    },
+    {
+      "batch": "p106n",
+      "type": "x-fractiontalk",
+      "branch": "work/b/specialized-fraction-notation",
+      "commit": "9c46f803f407ff494839f070e1d977a8d79c1dca",
+      "scope": "逐卡核对保存的数量、单位、分数词汇、金额两位格式和分数大小符号，不评价自由说明。",
+      "positions": [
+        {
+          "题包": "P106",
+          "原生题位": "precisefractions:0",
+          "来源节点": "mt_HY8Yycu_rz",
+          "原题SHA256": "b745e0c23434ec260c393cf8ad64808f374e3893cb1a7d3eee296f8e13b8249c",
+          "原因": "有演示记录，需将等份构造与文字解释分开认定。样例回放事件 talk",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "talk"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P106",
+          "原生题位": "precisefractions:2",
+          "来源节点": "mt_HY8Yycu_rz",
+          "原题SHA256": "baaea912bc6b72df66c81fb193e4515f777edfeb4c85f31ac8438995fd372020",
+          "原因": "有演示记录，需将等份构造与文字解释分开认定。样例回放事件 talk",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "talk"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p106n.patch",
+      "patchSha256": "0cf25321453267304c9fd14254d7d2fffe4f16f11b9d7acc485cfced7a954cc0",
+      "receipt": "receipts/p106n.json",
+      "receiptSha256": "1e6de4692b78dfb24ebfabd163a0a36aafe1444b2b5ca59f3fec347755001005",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p106n-fraction-notation-evidence.js",
+        "tests/p9-p106n-fraction-notation-browser.cjs",
+        "tests/p9-p106n-fraction-notation.test.mjs"
+      ]
+    },
+    {
+      "batch": "p107p",
+      "type": "x-planproduct",
+      "branch": "work/b/specialized-product-plans",
+      "commit": "678e4f705d9bb20b1e4bf58b4c215fae7c2e00ec",
+      "scope": "逐次核对卡片拆分、选择、合并和撤回，精确算中间值及金额并核对情境式，确保每个原量按角色使用。",
+      "positions": [
+        {
+          "题包": "P107",
+          "原生题位": "remainders:3",
+          "来源节点": "mt_p-nbe0w_lf",
+          "原题SHA256": "a226434c8efd9bc80ba6b7cb9489e68cdf3235fb2b0f3cd509968befcc5ff17f",
+          "原因": "切分、重组及合并语义须独立核对。样例回放事件 b14-plan-pick、b14-merge",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "b14-plan-pick",
+                "b14-merge"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P107",
+          "原生题位": "remainders:4",
+          "来源节点": "mt_p-nbe0w_lf",
+          "原题SHA256": "0893576e1c69162ff67758968d1750c9dd63d49f2c236d2a56887d6d04642574",
+          "原因": "切分、重组及合并语义须独立核对。样例回放事件 b14-plan-pick、b14-merge",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "b14-plan-pick",
+                "b14-merge"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P107",
+          "原生题位": "factoruse:4",
+          "来源节点": "mt_0Wg5F97osg",
+          "原题SHA256": "ac8fd2af6c812a0e5e7ed5c64f08053405d4f793118d07323c2b89570455f5d0",
+          "原因": "切分、重组及合并语义须独立核对。样例回放事件 b14-plan-split、b14-plan-pick、b14-merge",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "b14-plan-split",
+                "b14-plan-pick",
+                "b14-merge"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p107p.patch",
+      "patchSha256": "c257e3fd9a070d2038378a3780a428bc54a36d4a45157118699b8d8c79affbe0",
+      "receipt": "receipts/p107p.json",
+      "receiptSha256": "09e2a491e135801be66cb5d600bad16cba431ff076fbe3875746a4d96becc210",
+      "chromiumChecks": 29,
+      "files": [
+        "dist/learning/p107p-product-plans-evidence.js",
+        "tests/p9-p107p-product-plans-browser.cjs",
+        "tests/p9-p107p-product-plans.test.mjs"
+      ]
+    },
+    {
+      "batch": "p109b",
+      "type": "x-algebrabar",
+      "branch": "work/b/specialized-algebra-balance",
+      "commit": "8c40fa67361d21c85e9e5cf08665d8f48374b327",
+      "scope": "重放搭建等量关系、两边同时移除固定量和平均分，精确核对每份值和原等式。",
+      "positions": [
+        {
+          "题包": "P109",
+          "原生题位": "representationmap:0",
+          "来源节点": "mt_9KmVWCuh5_",
+          "原题SHA256": "03a0cf7da68af78dfd306b686916d31eddd1be02bb13728eca6c601b4fbd1cc0",
+          "原因": "需分别核验条形表示和消项过程是否保持等量。样例回放事件 algebra、remove、divide",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "algebra",
+                "remove",
+                "divide"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "twostep35:0",
+          "来源节点": "mt_anAe11HAEH",
+          "原题SHA256": "8c1a38b5eaf8295d25c760e6a3bc24bec9be21745504a866e57f4a2e4578b0df",
+          "原因": "需分别核验条形表示和消项过程是否保持等量。样例回放事件 algebra、remove、divide",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "algebra",
+                "remove",
+                "divide"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "twostep35:2",
+          "来源节点": "mt_anAe11HAEH",
+          "原题SHA256": "ce18a6cce31f97c4ec68109394c17e64cb54bfe9eaccb82a3cb58e7fd3bf11db",
+          "原因": "需分别核验条形表示和消项过程是否保持等量。样例回放事件 algebra、remove、divide",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "algebra",
+                "remove",
+                "divide"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "writing35:1",
+          "来源节点": "mt_i9rJbuFO3p",
+          "原题SHA256": "e1dc4ab36d317fb22109e31881e877077a42a5d98b84d1f498279652588b45d5",
+          "原因": "需分别核验条形表示和消项过程是否保持等量。样例回放事件 algebra、remove、divide",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "algebra",
+                "remove",
+                "divide"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p109b.patch",
+      "patchSha256": "15274022a11f11974d6b0832f3d07bede5ea2dd3c409917b3d4c0fd81cd646f7",
+      "receipt": "receipts/p109b.json",
+      "receiptSha256": "8caf08fa467bf4fe5c3965f32b40cce924957c5d6d0c2e8ffe2afc452fb18630",
+      "chromiumChecks": 36,
+      "files": [
+        "dist/learning/p109b-algebra-balance-evidence.js",
+        "tests/p9-p109b-algebra-balance-browser.cjs",
+        "tests/p9-p109b-algebra-balance.test.mjs"
+      ]
+    },
+    {
+      "batch": "p109a",
+      "type": "x-a35-sort",
+      "branch": "work/b/specialized-algebra-classification",
+      "commit": "b9d469b1bc64f37eae24cda1455e8e4a1e82bea0",
+      "scope": "重放选卡及分组，按符号、运算结构、单项字母和指数等推导分组，检查附带等式、表达式或选项。原生记录保留选卡和分组动作，附问按提交时字段验算。",
+      "positions": [
+        {
+          "题包": "P109",
+          "原生题位": "writing35:2",
+          "来源节点": "mt_i9rJbuFO3p",
+          "原题SHA256": "a6404c98f13455e6887094f66466fb5fbd1efc3b099cbe57749fdf231a85682a",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "notation35:0",
+          "来源节点": "mt_KwdjWEmMNo",
+          "原题SHA256": "722620a6a371d7d3781fca6b6e2e6aa97f8280cb3785c975f75506822c8fe7bb",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "notation35:1",
+          "来源节点": "mt_KwdjWEmMNo",
+          "原题SHA256": "9b3046d6f8256e4b88e88522750c38b6a59f75fe35add2c653002e4d1bedee57",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "words35:0",
+          "来源节点": "mt_g_fkAqmz72",
+          "原题SHA256": "319b19f581397c7c2934a9daf3fdba1de43853e29347800ba67ff8d78336e6c1",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "words35:1",
+          "来源节点": "mt_g_fkAqmz72",
+          "原题SHA256": "23a0e831baa78517b8578571b2e1197e0a4aa37394c7bcb9cdc8f343e912bc04",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "words35:2",
+          "来源节点": "mt_g_fkAqmz72",
+          "原题SHA256": "ef6a8d8e8075d885110636f4d21b4a42ed0b0d3541d5e7befe90c6dc90aea9d9",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "terms35:0",
+          "来源节点": "mt_nNNVrLqPW3",
+          "原题SHA256": "bc6cbd02e0840868672010246bfdda39af464ab7e80d21aaccf25a5c0abd4349",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 14,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "terms35:1",
+          "来源节点": "mt_nNNVrLqPW3",
+          "原题SHA256": "bb6ff64d08824aec18d70251f5231121dc4271424976eea893c5b911ca15251e",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "terms35:2",
+          "来源节点": "mt_nNNVrLqPW3",
+          "原题SHA256": "f2c29444683e3b30601ce76cbfab6ddbc9a262420bb93ff3df2de638838b0728",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "linear36:2",
+          "来源节点": "mt_WBdHkc2HTf",
+          "原题SHA256": "2f5e25238d15e0bb563633ca505547c3e57d2a0c3fd3c4adc280601eab0b9aa2",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 8,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "rearrange36:0",
+          "来源节点": "mt_3qrCtdoVAU",
+          "原题SHA256": "f99047124f05de2a1456dd20fb11dd0709d5bb49d8f8bbdd389df953398610cb",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "advancedWords38:1",
+          "来源节点": "mt_3rTIyJDw7-",
+          "原题SHA256": "623d808e41977720b3995b893c41781a87ccd8191e6eed67e3e4a9bdb2043aca",
+          "原因": "保留分类选择，但表达式、同类项及直曲线分类规则不同，需按数学对象拆分。样例回放事件 choose、group",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "choose",
+                "group"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p109a.patch",
+      "patchSha256": "aadb0c60625e2e0e2dd43b05210ea172f165b7771912227dbd8a366ddf53abec",
+      "receipt": "receipts/p109a.json",
+      "receiptSha256": "85be9d1ac496adc57f05986a2fda0a8776610e572f129da5ea64a7f887f39493",
+      "chromiumChecks": 88,
+      "files": [
+        "dist/learning/p109a-algebra-classification-evidence.js",
+        "tests/p9-p109a-algebra-classification-browser.cjs",
+        "tests/p9-p109a-algebra-classification.test.mjs"
+      ]
+    },
+    {
+      "batch": "p109f",
+      "type": "x-f36-form",
+      "branch": "work/b/specialized-formula-rearrange",
+      "commit": "399ca904e09db22961292ea6ab965f10a53bc2f0",
+      "scope": "核对每次留档的等价变形和最新字段，包含每项都除、非零分母与平方反推两个实根。",
+      "positions": [
+        {
+          "题包": "P109",
+          "原生题位": "plot36:1",
+          "来源节点": "mt_-3udyo6VyB",
+          "原题SHA256": "92f26d9061a486b290e77cdc8b0106859079a3d9a326c0e7af9a846220c0e6cd",
+          "原因": "线性式、分式及二次根式各需独立的等价、定义域或解集核验。样例回放事件 form",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "form"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "rearrange36:1",
+          "来源节点": "mt_3qrCtdoVAU",
+          "原题SHA256": "df025886dc2e247d139b98de32de582c1314f24cdcff6d1dd18e45534d6181dc",
+          "原因": "线性式、分式及二次根式各需独立的等价、定义域或解集核验。样例回放事件 form",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "form"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "rearrange36:2",
+          "来源节点": "mt_3qrCtdoVAU",
+          "原题SHA256": "1b4297b6e0a2a1580f91f4f2990ac8024275128b9e434cb31f0f7f56ae919f9d",
+          "原因": "线性式、分式及二次根式各需独立的等价、定义域或解集核验。样例回放事件 form",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "form"
+              ]
+            },
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P109",
+          "原生题位": "rearrange36:3",
+          "来源节点": "mt_3qrCtdoVAU",
+          "原题SHA256": "2029c13f6ca017a85f03f8d017e6f13f21c0e70d6d09f25f4de56e239f26a400",
+          "原因": "线性式、分式及二次根式各需独立的等价、定义域或解集核验。样例回放事件 form",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "form"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p109f.patch",
+      "patchSha256": "2bef1956b816da7d5afb46fb43a093143c8f7744e4385315e5c79e2d0e44e7ea",
+      "receipt": "receipts/p109f.json",
+      "receiptSha256": "4f308f76c8136bbd709bcf6d31ba3b37ce4175de5c24581a37589ee89c081b91",
+      "chromiumChecks": 35,
+      "files": [
+        "dist/learning/p109f-formula-rearrange-evidence.js",
+        "tests/p9-p109f-formula-rearrange-browser.cjs",
+        "tests/p9-p109f-formula-rearrange.test.mjs"
+      ]
+    },
+    {
+      "batch": "p110c",
+      "type": "x-statcentre",
+      "branch": "work/b/specialized-statistical-centre",
+      "commit": "b16a11b8fae379273f854e3a73054e403bcb8d25",
+      "scope": "重放排序和撤回、移量均分、补缺或改变样本，再复算均值、中位数、众数、极差和四分位距。均值可用精确分数或原生八位小数。",
+      "positions": [
+        {
+          "题包": "P110",
+          "原生题位": "statwords:0",
+          "来源节点": "mt_fmm-P17Vka",
+          "原题SHA256": "16c55c5295f0f19b94bae151a0a0dc42766f9a2ffe4c101ba0c39f80f8719e71",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 put",
+          "样例记录": {
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 7,
+              "actions": [
+                "put"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "statwords:1",
+          "来源节点": "mt_fmm-P17Vka",
+          "原题SHA256": "992c688aa55f9364094830c1eb1621ae6d59fd1d84acbaa10109c747d74ba897",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 start、change",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "start",
+                "change"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "meanbalance:0",
+          "来源节点": "mt_Cg8VPguS_V",
+          "原题SHA256": "7cd0762e78e1e0e4a74a8df33f19d3e00207116f566e39ea1170ed663bcf3dc2",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 transfer",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 4,
+              "actions": [
+                "transfer"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "meanbalance:1",
+          "来源节点": "mt_Cg8VPguS_V",
+          "原题SHA256": "2bbc697cf68f741137706e3a296b607be68b2326fc7b57fd6ad047f4a9641570",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 whole、missing",
+          "样例记录": {
+            "metrics": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "whole",
+                "missing"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "meanbalance:2",
+          "来源节点": "mt_Cg8VPguS_V",
+          "原题SHA256": "f102506b895645588b5209c2818e196acde91ad638c9e4db968df79e4786137e",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 start、change",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "start",
+                "change"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "averagestory:0",
+          "来源节点": "mt_XSXnTQoQ4l",
+          "原题SHA256": "fa6e053fba8619b9cf0f9f8ff7114a2780370f85974842c8e3f5eb67e944fc01",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 put",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "put"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "averagestory:1",
+          "来源节点": "mt_XSXnTQoQ4l",
+          "原题SHA256": "f71713eb257cd5a096c9502f5e254138d1ed02d283539af99c89cc7db6510291",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 start、change",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "start",
+                "change"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "quartiles:0",
+          "来源节点": "mt_KCS9GbZgU_",
+          "原题SHA256": "3dfe6fe3d9e229436705c20c3806ae82c6af4d5f9d55055ce296cd9a0ab4960f",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 put",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 11,
+              "actions": [
+                "put"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "quartiles:1",
+          "来源节点": "mt_KCS9GbZgU_",
+          "原题SHA256": "dbdb7a49fc1807fc1ff0bc2d1dc917b9b451bbe22aadd502349e7f2f360663a4",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 put",
+          "样例记录": {
+            "metrics": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 10,
+              "actions": [
+                "put"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "quartiles:2",
+          "来源节点": "mt_KCS9GbZgU_",
+          "原题SHA256": "fcc08a037977aaf0e3075f75895a8a259288188b4d2084129a21705ba11a71f7",
+          "原因": "排序、中位数、均衡转移、改值及四分位数的规则分别验。样例回放事件 start、change",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "metrics": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "start",
+                "change"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p110c.patch",
+      "patchSha256": "a930781900c4b699427b057e5ff08e455ac861a0ca9e60cd641467da420e7160",
+      "receipt": "receipts/p110c.json",
+      "receiptSha256": "71ecc78b9b6c3dc01c9944e907465810dd9448c35f76ad2c8d81c568ef30ce94",
+      "chromiumChecks": 73,
+      "files": [
+        "dist/learning/p110c-statistical-centre-evidence.js",
+        "tests/p9-p110c-statistical-centre-browser.cjs",
+        "tests/p9-p110c-statistical-centre.test.mjs"
+      ]
+    },
+    {
+      "batch": "p110d",
+      "type": "x-distribution",
+      "branch": "work/b/specialized-distribution-range",
+      "commit": "cbff2d3e5cfb40a872e22f4d629f619fd2fdd509",
+      "scope": "重放在共同刻度上留下的范围、离群点与换形后的重新标记，重新计算两组分布的中心、平均距离、众数和范围重叠。只评价题中给定的模拟数据与选项。",
+      "positions": [
+        {
+          "题包": "P110",
+          "原生题位": "meandistance:2",
+          "来源节点": "mt_ZfpeI1CFyP",
+          "原题SHA256": "04c772ee94c7ee5394f6175dc346a89a1bff3f3246b1cfb46eb74bd5551a3c0a",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 8,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "averagestory:2",
+          "来源节点": "mt_XSXnTQoQ4l",
+          "原题SHA256": "cad364947b111c05617ec302ba7597fec3e5efe4b7f99cdc5258bf338de46ad3",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 5,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 10,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "distributionlook:0",
+          "来源节点": "mt_OwYms2tB1L",
+          "原题SHA256": "4092e65b294b8f0897eaf23d913bb2c6040cc3ce75c37edb949b67d599ce0a85",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 50,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "distributionlook:1",
+          "来源节点": "mt_OwYms2tB1L",
+          "原题SHA256": "9d620117f16fd1290cbb6d3fd2ef255f32378d4db8709b9c6c91b5466dda6948",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 20,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "digitalsets:2",
+          "来源节点": "mt_mn765HbXi1",
+          "原题SHA256": "4f74fc5ab103cb2cfe11d2230a491bab1b29d553e51ff8d0b790923d073fceb0",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 16,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparepeople:0",
+          "来源节点": "mt_km4V6d5IAh",
+          "原题SHA256": "d780c35776afa45e6e13bad1d0bbbdbf7541e2e055eed5d3059c2d0c70ad2218",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 40,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparepeople:2",
+          "来源节点": "mt_km4V6d5IAh",
+          "原题SHA256": "9d9f1b50f15f3cdfc3943728f9b613a163774ea4025ff62c69b07d3f93b99d01",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 10,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparegap:0",
+          "来源节点": "mt_A2hKhHXgL5",
+          "原题SHA256": "e3e0c9cec74b96ea3f7dd76f956d9e5fd95db7e97c7c65112ffcff0ffe676acf",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 12,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparegap:1",
+          "来源节点": "mt_A2hKhHXgL5",
+          "原题SHA256": "1916e9ffa811cded6c1e8899d6f289eb9de4b44243342bf81ef225e22c27bf8c",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 mark",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 8,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "mark"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparegap:2",
+          "来源节点": "mt_A2hKhHXgL5",
+          "原题SHA256": "2a819f16f73aee32bfd9f29f3d5eda9bcf789fa71d227a1ff99b43ab7205e171",
+          "原因": "记录了标记，但聚集、外点、重叠和总体推断各需不同的判定边界。样例回放事件 swap、mark",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "heights": {
+              "n": 8,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "swap",
+                "mark"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p110d.patch",
+      "patchSha256": "5d5221f0614c62b8074b820405d04252a7c144a4d2b02ff01e61dd9c81aa8569",
+      "receipt": "receipts/p110d.json",
+      "receiptSha256": "db00af1131e507357a0adf83b2e30813849e6f5cee4c772cf5f45c802d66acd8",
+      "chromiumChecks": 75,
+      "files": [
+        "dist/learning/p110d-distribution-range-evidence.js",
+        "tests/p9-p110d-distribution-range-browser.cjs",
+        "tests/p9-p110d-distribution-range.test.mjs"
+      ]
+    },
+    {
+      "batch": "p110m",
+      "type": "x-mediarepair",
+      "branch": "work/b/specialized-media-claims",
+      "commit": "681780c2eb3d7fca84c1db5b0c08c9e487620e4d",
+      "scope": "重放补回零基线、按原始记录处理远点或限定标题。数字差与样本人数独立核对，结论只覆盖题中给出的记录和选项。",
+      "positions": [
+        {
+          "题包": "P110",
+          "原生题位": "distributionlook:2",
+          "来源节点": "mt_OwYms2tB1L",
+          "原题SHA256": "f601a4a476a14799ddc035c51547d19789cc080ae206cc412d1ab9531567019d",
+          "原因": "只改变轴或保存判断，因果、图轴与标题问题要分别验收。样例回放事件 handle",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 3,
+              "actions": [
+                "handle"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "medialens:0",
+          "来源节点": "mt_8IsaoMPvod",
+          "原题SHA256": "6aaecdf6231d4c0df7d221aae3d497ec720cc315188bc107d9a2a102062bda64",
+          "原因": "只改变轴或保存判断，因果、图轴与标题问题要分别验收。样例回放事件 axis",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "axis"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "medialens:1",
+          "来源节点": "mt_8IsaoMPvod",
+          "原题SHA256": "0297aa938fffd127738d640a41342a73200abfd9c037fece1f106e20777a1c3d",
+          "原因": "只改变轴或保存判断，因果、图轴与标题问题要分别验收。样例回放事件 headline",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "headline"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "medialens:2",
+          "来源节点": "mt_8IsaoMPvod",
+          "原题SHA256": "b668c88d0b023d7a8d0ec55755cd299b375e970eeca5a7c44e6dab337d3e131c",
+          "原因": "只改变轴或保存判断，因果、图轴与标题问题要分别验收。样例回放事件 headline",
+          "样例记录": {
+            "history": {
+              "n": 1,
+              "actions": [
+                "headline"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P110",
+          "原生题位": "comparepeople:1",
+          "来源节点": "mt_km4V6d5IAh",
+          "原题SHA256": "3704e261ddd938f1103fc0e51f4f6daf0afa392a40f1a89745313f30210c2dfb",
+          "原因": "只改变轴或保存判断，因果、图轴与标题问题要分别验收。样例回放事件 headline",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "headline"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p110m.patch",
+      "patchSha256": "fd1e66c71d56600c5f089ef01b63e23c8d4cd76ff8d68511092283caa9d6573e",
+      "receipt": "receipts/p110m.json",
+      "receiptSha256": "cf4cba3b493b4401893adff62767330cc771ca4b50e73ea53c0d0aa1fe9f3a3a",
+      "chromiumChecks": 42,
+      "files": [
+        "dist/learning/p110m-media-claims-evidence.js",
+        "tests/p9-p110m-media-claims-browser.cjs",
+        "tests/p9-p110m-media-claims.test.mjs"
+      ]
+    },
+    {
+      "batch": "p111a",
+      "type": "x-a35-build",
+      "branch": "work/b/specialized-algebra-actions",
+      "commit": "78a0ae1595184f37bb35f8d1f267de408dd55c8a",
+      "scope": "重放积木添加、撤回、清空与运行，核对先乘再加得到17的输入与提交等式。",
+      "positions": [
+        {
+          "题包": "P111",
+          "原生题位": "writing35:0",
+          "来源节点": "mt_i9rJbuFO3p",
+          "原题SHA256": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48",
+          "原因": "程序由模块顺序、输入与运行组成，需独立检查程序语义。样例回放事件 block、run",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "block",
+                "run"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P111",
+          "原生题位": "advancedPlan38:2",
+          "来源节点": "mt_FieL-vVTI_",
+          "原题SHA256": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48",
+          "原因": "程序由模块顺序、输入与运行组成，需独立检查程序语义。样例回放事件 block、run",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "block",
+                "run"
+              ]
+            },
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p111a.patch",
+      "patchSha256": "631981edd64859245e4089987fbc361d039bdb55b1a998fa151c9f16790589f5",
+      "receipt": "receipts/p111a.json",
+      "receiptSha256": "41db26e3022da16beade258cb5bdcd58e1493051262ad7c88c8e46200cf22bd5",
+      "chromiumChecks": 23,
+      "files": [
+        "dist/learning/p111a-algebra-actions-evidence.js",
+        "tests/p9-p111a-algebra-actions-browser.cjs",
+        "tests/p9-p111a-algebra-actions.test.mjs"
+      ]
+    },
+    {
+      "batch": "p111g",
+      "type": "x-a35-plot",
+      "branch": "work/b/specialized-graph-intersection",
+      "commit": "c0642edb6d8269ebdb7c72385a0c67bb8c207adc",
+      "scope": "按整数或半单位重放试点，分别代入两条直线并核对唯一交点。",
+      "positions": [
+        {
+          "题包": "P111",
+          "原生题位": "systems35:0",
+          "来源节点": "mt_mqgu72aCMz",
+          "原题SHA256": "6429e2364204c5df1f8f4a4d1977267a584b3c48cc976eeb8d9818c299590112",
+          "原因": "需区分图上试点和联立关系的解，按题位明确何种证据成立。样例回放事件 plot",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P111",
+          "原生题位": "systems35:1",
+          "来源节点": "mt_mqgu72aCMz",
+          "原题SHA256": "699f59fdd61c75c87a42be25dcddeba2578e462d3dc3c3f3ae8c1530c9e1aafb",
+          "原因": "需区分图上试点和联立关系的解，按题位明确何种证据成立。样例回放事件 plot",
+          "样例记录": {
+            "history": {
+              "n": 2,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p111g.patch",
+      "patchSha256": "0214683f04038e0be5005a3cc8a81f998929b32a95a74842191e7db88512e724",
+      "receipt": "receipts/p111g.json",
+      "receiptSha256": "c8514f78751324dd85ae1ca8a682b535e7055e2d9da4b3a727be9a149e83c5ca",
+      "chromiumChecks": 22,
+      "files": [
+        "dist/learning/p111g-graph-intersection-evidence.js",
+        "tests/p9-p111g-graph-intersection-browser.cjs",
+        "tests/p9-p111g-graph-intersection.test.mjs"
+      ]
+    },
+    {
+      "batch": "p112b",
+      "type": "x-p22-order",
+      "branch": "work/b/specialized-bag-sampling",
+      "commit": "a7943b123910fbd9b833f2760b593f5fe0938d06",
+      "scope": "核对先猜后各抽50次的放回模拟与实际种子记录，独立按袋构成算理论概率。",
+      "positions": [
+        {
+          "题包": "P112",
+          "原生题位": "chanceorder:1",
+          "来源节点": "mt_UcGn2hjhYU",
+          "原题SHA256": "e32656ecc9f522a5126f9ff1c540874f859177c96672a976a47a4d9c29b4d36e",
+          "原因": "理论比例排序之外还有放回抽样，需分开核随机过程和理论比较。样例回放事件 start、sample、put",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "start",
+                "sample",
+                "put"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p112b.patch",
+      "patchSha256": "5db83c297fd952334728ed402a59532d68d10e3b2988accde340a2d0c69874f6",
+      "receipt": "receipts/p112b.json",
+      "receiptSha256": "9d903421b1c60b2985c65c8047d99061d6f88e35991c2b2e17defbd0c06a8a8c",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p112b-bag-sampling-evidence.js",
+        "tests/p9-p112b-bag-sampling-browser.cjs",
+        "tests/p9-p112b-bag-sampling.test.mjs"
+      ]
+    },
+    {
+      "batch": "p112v",
+      "type": "x-p22-venn",
+      "branch": "work/b/specialized-venn-regions",
+      "commit": "320709c34f5f1b9e2b768595e7f30130eece9c34",
+      "scope": "分模式重放数字摆卡、提交四区计数及涂色留档，核对集合关系和概率。",
+      "positions": [
+        {
+          "题包": "P112",
+          "原生题位": "chancesets:0",
+          "来源节点": "mt_1YwOCMMwD8",
+          "原题SHA256": "b49927fb4621037c49b99fb8a0a4149707e5a785f793849cbeba669659fcfb57",
+          "原因": "摆物、填写分区计数、涂事件区域应按各自方式核验。样例回放事件 place",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 8,
+              "actions": [
+                "place"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P112",
+          "原生题位": "chancesets:2",
+          "来源节点": "mt_1YwOCMMwD8",
+          "原题SHA256": "e7ea2195297e493121a259059504afdfac9a84d41f0c4e3b4d03279e5d557fc9",
+          "原因": "摆物、填写分区计数、涂事件区域应按各自方式核验。样例回放事件 activate、shade、save",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 12,
+              "actions": [
+                "activate",
+                "shade",
+                "save"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P112",
+          "原生题位": "chancevenn:0",
+          "来源节点": "mt_eSv_w46u6H",
+          "原题SHA256": "0b16cf75043c9ccbe4ef39c3d302148d2fe621b1d6051d1d491b3dd8a2b661e3",
+          "原因": "摆物、填写分区计数、涂事件区域应按各自方式核验。样例回放事件 build",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "values": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "build"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P112",
+          "原生题位": "chancevenn:1",
+          "来源节点": "mt_eSv_w46u6H",
+          "原题SHA256": "4e8366b3764b934ee67237984c34460e27907bb95075a333cc939134720081f6",
+          "原因": "摆物、填写分区计数、涂事件区域应按各自方式核验。样例回放事件 activate、shade、save",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 8,
+              "actions": [
+                "activate",
+                "shade",
+                "save"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P112",
+          "原生题位": "chancevenn:2",
+          "来源节点": "mt_eSv_w46u6H",
+          "原题SHA256": "c30031bd7fc613825777db36c18a9ee4c762300d61ebc4b8eec8b8b30fe524f3",
+          "原因": "摆物、填写分区计数、涂事件区域应按各自方式核验。样例回放事件 build",
+          "样例记录": {
+            "answers": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "values": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "build"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p112v.patch",
+      "patchSha256": "6f3dc2f55bd2469b3e88032fec8b4fa658c2da2b3b2de0b6201a8fcaa4794c74",
+      "receipt": "receipts/p112v.json",
+      "receiptSha256": "8cbbde0dafbeb019491eb69ffa13c08b58b191480b728f7d73e53f1f40d0b07a",
+      "chromiumChecks": 41,
+      "files": [
+        "dist/learning/p112v-venn-regions-evidence.js",
+        "tests/p9-p112v-venn-regions-browser.cjs",
+        "tests/p9-p112v-venn-regions.test.mjs"
+      ]
+    },
+    {
+      "batch": "p113s",
+      "type": "x-pvshift",
+      "branch": "work/b/specialized-place-value-shifts",
+      "commit": "2b78e59989fc7f462416ea73173626fffb5ee21c",
+      "scope": "分别验证增减与换捆序列相容、净变化、结果和变化数位。只在状态约束可唯一确定时认定二者次序。",
+      "positions": [
+        {
+          "题包": "P113",
+          "原生题位": "shift10:0",
+          "来源节点": "mt_kw7xmp68rU",
+          "原题SHA256": "a0bfe750d6e635f194e00d80d3b7de61482c1558dad3a1a7a3c816e03ea2af4c",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift10:1",
+          "来源节点": "mt_kw7xmp68rU",
+          "原题SHA256": "b7778525c8f055a3a9c84ba906bc80ee56cab3bb5ec905160baaff49b764313b",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift10:2",
+          "来源节点": "mt_kw7xmp68rU",
+          "原题SHA256": "e301a9ecaec55c05728f9a7c45855e538cce7ee07e1074b7058ed090905bf1f4",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift10:3",
+          "来源节点": "mt_kw7xmp68rU",
+          "原题SHA256": "1ce037951f0c9911dfb2b68f8304ca7c8a2416188c3f329a440be02037f16bac",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "twoproblems:0",
+          "来源节点": "mt_kJGCjnuelW",
+          "原题SHA256": "66417539a37a5bdf5d2b5bfb584643dfd1921136576d971261c3b496b5c9e0a5",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "twoproblems:1",
+          "来源节点": "mt_kJGCjnuelW",
+          "原题SHA256": "fb221d652d4d79115b3ec2a4536965f35a4820134d1f52e6a377db0b4bf9b15e",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:0",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "5e335d920e302127b52d6d760169ba8ecd47d3563fe14690ebc936ab4711abc1",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:1",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "db0349aeb7c806409d06991bc1371d2958e9e50ca540038c04b23d4323ae95b0",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:2",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:3",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "b310eb3ab48ff4ba6b9d48f820187e49cab9368898ff9377db0a1b560ba6bc68",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:4",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "daa00e2fc926348d5ddac163f6155ae229013f28aef540393c7e63509e1460dd",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "shift100:5",
+          "来源节点": "mt_izien3ZX51",
+          "原题SHA256": "78d39bf0fa53fabe84740da6463f2f2073f9d0e912f57ab48c1343d1800cfdbd",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P113",
+          "原生题位": "structure34:0",
+          "来源节点": "mt_FAXjFkgG6X",
+          "原题SHA256": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b",
+          "原因": "移动与换捆分别保存在两个数组，缺两类操作的交错顺序，需单列可重放边界",
+          "样例记录": {
+            "u": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "moves": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p113s.patch",
+      "patchSha256": "da028fd82fb944f22ae6d7ab57af1e8c8dc171a7a2bc35355244b582ef6595b9",
+      "receipt": "receipts/p113s.json",
+      "receiptSha256": "310d75293454143d31ebedc825d01610d445482ca0bb0bd065ae0d0afb7df819",
+      "chromiumChecks": 91,
+      "files": [
+        "dist/learning/p113s-place-value-shifts-evidence.js",
+        "tests/p9-p113s-place-value-shifts-browser.cjs",
+        "tests/p9-p113s-place-value-shifts.test.mjs"
+      ]
+    },
+    {
+      "batch": "p114s",
+      "type": "x-g27-sort",
+      "branch": "work/b/specialized-solid-classification",
+      "commit": "b7d44f9af2b97b361513da267755dcd3ed3652f5",
+      "scope": "逐次核对选卡、分类、打开与转动。按顶点数、平面或立体、曲面特征、组合部件或图示对应的立体计算目标。转动记录为整个题面保存，不区分逐卡角度。",
+      "positions": [
+        {
+          "题包": "P114",
+          "原生题位": "solidnames:0",
+          "来源节点": "mt_Qcp2d_kuta",
+          "原题SHA256": "1e55df9b67792c2aa22ab8b39290b4bd6ef4be18eaeae72694b411065cf8bf49",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidnames:1",
+          "来源节点": "mt_Qcp2d_kuta",
+          "原题SHA256": "f5019fb4c762ccb8a630d25d9fac01d4406bba4bc55ad9f3595e9c1b17273bf2",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidnames:2",
+          "来源节点": "mt_Qcp2d_kuta",
+          "原题SHA256": "c65082e42d6da76504b6eb7d5311c0ec35646d4affb682db05471cf82c200f10",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatcorners:0",
+          "来源节点": "mt_yGv8doDAmp",
+          "原题SHA256": "b1283fe0acc1fabd73526f2803c3a0018ee66d9c8f6d3cf6fb9c08a09345eb54",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatcorners:1",
+          "来源节点": "mt_yGv8doDAmp",
+          "原题SHA256": "604e3c0fba659070846b36c53184664328f99dcadd6bd123630d950175ff885f",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatcorners:2",
+          "来源节点": "mt_yGv8doDAmp",
+          "原题SHA256": "5ef75fc0f4ff855f88e05ad4a346c5689d47c58a8b2b2979ee0405f8b947e1f8",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatvsolid:0",
+          "来源节点": "mt_mnEVZNkX3p",
+          "原题SHA256": "795702deb01c182a82a3ff1c50d764177b41c04e89e93c582fefbeded4f967a0",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatvsolid:1",
+          "来源节点": "mt_mnEVZNkX3p",
+          "原题SHA256": "35a3d801f56d2b4e83fe7c20b369b24a52637cefe9f23d747d7f654cacd7194b",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "flatvsolid:2",
+          "来源节点": "mt_mnEVZNkX3p",
+          "原题SHA256": "1a0c3b8c69e8acdb3861a2d4f50d09b1586e4b01490239edae7745685735a5f5",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidstack:2",
+          "来源节点": "mt_QNxFnxikCN",
+          "原题SHA256": "41c2c9ac94d848a8183f4c7b7895bd0c29ed2652b293fa8486e1861b72d54c0a",
+          "原因": "预置模型无法验搭建，但可通过 card/turn/choose 记录核立体组成识别。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 5,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidsort:0",
+          "来源节点": "mt_fEuoBYw6bU",
+          "原题SHA256": "12edd5f4dfff95290ebe4d51a8956f35af4163d5d13b3f8bef36c2bd80b4649c",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidsort:1",
+          "来源节点": "mt_fEuoBYw6bU",
+          "原题SHA256": "fa0df059ab71b105791920a1c905e99cf7f1ab1abdf89bf0488a670a8de5371f",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidsort:2",
+          "来源节点": "mt_fEuoBYw6bU",
+          "原题SHA256": "f8f5f3526f7ee1fad52a4d3d904fd3b6463c7e719ba1b90ddecd02bbe248087c",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidpictures:0",
+          "来源节点": "mt_wUSbRt3-qw",
+          "原题SHA256": "b3809674faf7acab07c47cf6da1adfbf2bbb84af9bac6c412566e7b70ab3d499",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、show、turn",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "card",
+                "choose",
+                "show",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidpictures:1",
+          "来源节点": "mt_wUSbRt3-qw",
+          "原题SHA256": "66eb9234d27106d55befebb8cd348ba5553d570ff6529ca25b099d4f5e2a05dd",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、show、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "show",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidpictures:2",
+          "来源节点": "mt_wUSbRt3-qw",
+          "原题SHA256": "b449fce1dad2f3c7a10d43aaed499a24a1f24b195d5eb720aa9d843ecb3f223f",
+          "原因": "识别/分类、展开预览与立体搭建的证明范围不同，需独立分组。样例回放事件 card、choose、show、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "choose",
+                "show",
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p114s.patch",
+      "patchSha256": "26f593d21c952559a21e4a9c7e44861776c5dbbd30ed49e5ac27b9286e773990",
+      "receipt": "receipts/p114s.json",
+      "receiptSha256": "6145500b9a0421d63d59d9cfdb4db50375a1ae2a83121b623c72e45a026b3041",
+      "chromiumChecks": 111,
+      "files": [
+        "dist/learning/p114s-solid-classification-evidence.js",
+        "tests/p9-p114s-solid-classification-browser.cjs",
+        "tests/p9-p114s-solid-classification.test.mjs"
+      ]
+    },
+    {
+      "batch": "p114f",
+      "type": "x-g27-face",
+      "branch": "work/b/specialized-solid-faces",
+      "commit": "c27dd4d5e9e1eac1bf6d47339bee277a2320cbe9",
+      "scope": "逐卡重放点亮指定平面并识别轮廓，区分圆柱顶面、圆锥底面、盒子的正面和方底尖顶的侧面。只评价题中指定平面。",
+      "positions": [
+        {
+          "题包": "P114",
+          "原生题位": "flatcorners:3",
+          "来源节点": "mt_yGv8doDAmp",
+          "原题SHA256": "b16185895f54c9e1b22d01ba339c3d35e6da14f0d64785fd802c736aae4dbf8a",
+          "原因": "探查及选面日志可核，需区分截面和视角的任务约束。样例回放事件 card、probe、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "card",
+                "probe",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidfaces:0",
+          "来源节点": "mt_UooUHC_V7U",
+          "原题SHA256": "429cc1f5a10adcd516b9f428a736f30ed6a42f4cb86fe3cc92a04b5b2195f8fe",
+          "原因": "探查及选面日志可核，需区分截面和视角的任务约束。样例回放事件 card、probe、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "probe",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidfaces:1",
+          "来源节点": "mt_UooUHC_V7U",
+          "原题SHA256": "28706f79909a7c064cbfe37e4b9f034484162474413d7a255f8f893cba56efc0",
+          "原因": "探查及选面日志可核，需区分截面和视角的任务约束。样例回放事件 card、probe、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 4,
+              "actions": [
+                "card",
+                "probe",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "solidfaces:2",
+          "来源节点": "mt_UooUHC_V7U",
+          "原题SHA256": "0e29d53281c7a025432d2973c76a3abb41f6bdd98ff332f2b8a628d7b78d2ec3",
+          "原因": "探查及选面日志可核，需区分截面和视角的任务约束。样例回放事件 card、probe、choose、turn",
+          "样例记录": {
+            "history": {
+              "n": 7,
+              "actions": [
+                "card",
+                "probe",
+                "choose",
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p114f.patch",
+      "patchSha256": "3cbd32bfc3042a59cc847278f4605dad7ceae6b0ebd9d4a23db72c8e59a2a0a2",
+      "receipt": "receipts/p114f.json",
+      "receiptSha256": "743b73017f561f67cb8c9dabe7563d93fac887f1774b2bc17b5c17bcda6d8e8f",
+      "chromiumChecks": 35,
+      "files": [
+        "dist/learning/p114f-solid-faces-evidence.js",
+        "tests/p9-p114f-solid-faces-browser.cjs",
+        "tests/p9-p114f-solid-faces.test.mjs"
+      ]
+    },
+    {
+      "batch": "p114c",
+      "type": "x-g27-cut",
+      "branch": "work/b/specialized-solid-sections",
+      "commit": "fd67febba7eb974b3847ef59577cd8e5eec815c3",
+      "scope": "以保存的猜测、切面位置和结论重建过程，按指定方向和位置计算截面形状或相对大小。只评价离散位置上的模拟截面。",
+      "positions": [
+        {
+          "题包": "P114",
+          "原生题位": "crossparts:2",
+          "来源节点": "mt_nRksLqt-iR",
+          "原题SHA256": "c610a9b7bb64904498f16883c13153f465d7ea341dc9fe04c1fea1d7edb6cdea",
+          "原因": "预测、切割与折叠结果需按几何性质独立重算。样例回放事件 card、predict、cut、answer、turn",
+          "样例记录": {
+            "history": {
+              "n": 9,
+              "actions": [
+                "card",
+                "predict",
+                "cut",
+                "answer",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "prismslices:0",
+          "来源节点": "mt_h02-C8PRrj",
+          "原题SHA256": "a25f80b4ce7785562916c04fba8d0179faa0bcf8eec0e6a978f7807671a5e3c0",
+          "原因": "预测、切割与折叠结果需按几何性质独立重算。样例回放事件 card、predict、cut、answer、turn",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "card",
+                "predict",
+                "cut",
+                "answer",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "prismslices:1",
+          "来源节点": "mt_h02-C8PRrj",
+          "原题SHA256": "622e0fd5b30cdac43b4cf409e0b8819f6d7703541a324536885718737739e48d",
+          "原因": "预测、切割与折叠结果需按几何性质独立重算。样例回放事件 card、predict、cut、answer、turn",
+          "样例记录": {
+            "history": {
+              "n": 6,
+              "actions": [
+                "card",
+                "predict",
+                "cut",
+                "answer",
+                "turn"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P114",
+          "原生题位": "prismslices:2",
+          "来源节点": "mt_h02-C8PRrj",
+          "原题SHA256": "b03867e9d22883977531187df457f3d25d9ce9b34fc90f012e632d2466d7b5a8",
+          "原因": "预测、切割与折叠结果需按几何性质独立重算。样例回放事件 card、predict、cut、answer、turn",
+          "样例记录": {
+            "history": {
+              "n": 16,
+              "actions": [
+                "card",
+                "predict",
+                "cut",
+                "answer",
+                "turn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p114c.patch",
+      "patchSha256": "8e158d669d2bf4860a2f3ab2b06c72042590a52f2678f5a3bd9eeddafbdf9804",
+      "receipt": "receipts/p114c.json",
+      "receiptSha256": "0c603eac5936875fd7b9dea6f55c40801d61edf272c4b4fae9f9911d52091661",
+      "chromiumChecks": 35,
+      "files": [
+        "dist/learning/p114c-solid-sections-evidence.js",
+        "tests/p9-p114c-solid-sections-browser.cjs",
+        "tests/p9-p114c-solid-sections.test.mjs"
+      ]
+    },
+    {
+      "batch": "p115g",
+      "type": "x-p24-grid",
+      "branch": "work/b/specialized-coordinate-construction",
+      "commit": "47a1fd5992d40a65f8fa2cb9e3315b2a7bd52a20",
+      "scope": "重放原生放点、撤回和闭合，按具体题位核对坐标、形状、边长、周长面积或图轴含义；不推断下笔或横纵移动顺序。",
+      "positions": [
+        {
+          "题包": "P115",
+          "原生题位": "pointbuild:0",
+          "来源节点": "mt_i5_HnoFOYw",
+          "原题SHA256": "0ba7ff37a93d039608fe8c61be23910c6db795a01e8a0353de23b87639e7d90f",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot、close",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "plot",
+                "close"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointbuild:1",
+          "来源节点": "mt_i5_HnoFOYw",
+          "原题SHA256": "261471586246a19595c3fff883730187033f78105907fbc69c972bee6401c160",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot、close",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "plot",
+                "close"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointbuild:2",
+          "来源节点": "mt_i5_HnoFOYw",
+          "原题SHA256": "26f0865e339077f011a88d8cce0b4fb3e0d376f74787dfdddd4cf05d0bde03e9",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot、close",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "plot",
+                "close"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointaxes:0",
+          "来源节点": "mt_oDlduFnemk",
+          "原题SHA256": "c3b3e1d71e872611634915dcf5da9d94b12eb99648d5a0d707c74d82b98aecb0",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointaxes:1",
+          "来源节点": "mt_oDlduFnemk",
+          "原题SHA256": "c5c254dc112767ec7e4a6bbe9a0887b7b1db13ec99a85da13e518ed2e5f7053a",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointaxes:2",
+          "来源节点": "mt_oDlduFnemk",
+          "原题SHA256": "ba39ec664b80769f388127c25044a59b9b0ca960168d0e911b0e4d3b4efba50e",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointdistance:0",
+          "来源节点": "mt_h7zVgCDVmx",
+          "原题SHA256": "cd43f31da42ff261d50ecf45050036db836281ec81967f2f8d301dd06d02a824",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot、close",
+          "样例记录": {
+            "answers": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "plot",
+                "close"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointstory:0",
+          "来源节点": "mt_snlqRCiA1R",
+          "原题SHA256": "10a837fa383bb4d5ca2ab88b3f88373a787419608d983bc908080f26c32cf380",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P115",
+          "原生题位": "pointstory:1",
+          "来源节点": "mt_snlqRCiA1R",
+          "原题SHA256": "d7741a4c44d48e4fe5a691d6e5263d1277f77618547be1756c04f9f9db8a1fcc",
+          "原因": "不同题涉及放点、连线闭合或几何形状，需按原任务拆分。样例回放事件 plot",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 3,
+              "actions": [
+                "plot"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p115g.patch",
+      "patchSha256": "d9cf62834d6a0353b45d7d3dc2f9ecdd70ec6ab771646b67e1616bec6e987401",
+      "receipt": "receipts/p115g.json",
+      "receiptSha256": "eecaecffab0dd2b0f0b232fe3bcda6f6456c0532898c17fdb2b92b4561213b67",
+      "chromiumChecks": 67,
+      "files": [
+        "dist/learning/p115g-coordinate-construction-evidence.js",
+        "tests/p9-p115g-coordinate-construction-browser.cjs",
+        "tests/p9-p115g-coordinate-construction.test.mjs"
+      ]
+    },
+    {
+      "batch": "p115s",
+      "type": "x-p24-studio",
+      "branch": "work/b/specialized-studio-symmetry",
+      "commit": "809fdd61d287559f766d8f838882d29c257cf6a8",
+      "scope": "复核竖轴反射在先、半转在后，按顶点核算横轴、竖轴和半转重合。",
+      "positions": [
+        {
+          "题包": "P115",
+          "原生题位": "geometrylab:3",
+          "来源节点": "mt_RdfzwInyAj",
+          "原题SHA256": "35fdfaebdb96347e8d5e9f10d633f74b3067f95db3dcd87ea4a19935dd546739",
+          "原因": "同一作品内镜像和变换的组合顺序需独立核验。样例回放事件 studioMirror、studioRotate",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 2,
+              "actions": [
+                "studioMirror",
+                "studioRotate"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p115s.patch",
+      "patchSha256": "a7900c80dcaa866074cbeecc009364ac1c1d223457775de5ccedea1977e87b35",
+      "receipt": "receipts/p115s.json",
+      "receiptSha256": "c20750399b2eb8fa49cb39fdd1bc08abe87e67105bacefd9f3ec9fae98c5967a",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p115s-studio-symmetry-evidence.js",
+        "tests/p9-p115s-studio-symmetry-browser.cjs",
+        "tests/p9-p115s-studio-symmetry.test.mjs"
+      ]
+    },
+    {
+      "batch": "p115f",
+      "type": "x-p24-fan",
+      "branch": "work/b/specialized-polygon-angle-fan",
+      "commit": "a2ff2145b96c6e7cbb0a72e50e0351e0b1229f66",
+      "scope": "独立重放选多边形、放块和保存尝试，重算围满、留空、超过整圈三种结果。",
+      "positions": [
+        {
+          "题包": "P115",
+          "原生题位": "patternfloor:0",
+          "来源节点": "mt_61Nhj8W78f",
+          "原题SHA256": "67cf90d194df985310dd7ad5f28d58a080ddeb85c43c503a8d7851377a7ee2e3",
+          "原因": "有选择、累加、保存事件，角度合成需独立核验。样例回放事件 fanChoose、fanAdd、fanRecord",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 30,
+              "actions": [
+                "fanChoose",
+                "fanAdd",
+                "fanRecord"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p115f.patch",
+      "patchSha256": "6e22faeb2d19c343c84efb3f41cc9e3b80df4d63808d6c97ce2dab6e8451cdc0",
+      "receipt": "receipts/p115f.json",
+      "receiptSha256": "896c4370726ddd431b1a104cc488959912747de124097d93c4e05b3a960991e4",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p115f-polygon-angle-fan-evidence.js",
+        "tests/p9-p115f-polygon-angle-fan-browser.cjs",
+        "tests/p9-p115f-polygon-angle-fan.test.mjs"
+      ]
+    },
+    {
+      "batch": "p115t",
+      "type": "x-p24-tiles",
+      "branch": "work/b/specialized-complementary-tiles",
+      "commit": "ce14addfa32e7a8a1c7f55e7f9768920fd83e796",
+      "scope": "重放改边、转动与放片，检验相邻边界吻合和四个位置无空隙重叠。",
+      "positions": [
+        {
+          "题包": "P115",
+          "原生题位": "patternfloor:1",
+          "来源节点": "mt_61Nhj8W78f",
+          "原题SHA256": "ec3e1b37bc41d0293310b06029f030ede413bb9b422e9db74069e52c49ab7911",
+          "原因": "平移、转动、放片后的空间占用和拼合规则需独立验证。样例回放事件 design、tilePlace、tileTurn",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 7,
+              "actions": [
+                "design",
+                "tilePlace",
+                "tileTurn"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p115t.patch",
+      "patchSha256": "d98218d6b68e37653a064e1917b728bd3e30f135ccd8507a51e613482529355b",
+      "receipt": "receipts/p115t.json",
+      "receiptSha256": "c3e61775943d516ef9a67d10fe322b9b6a2e4aae8a3a839bf4bf78c61da41e60",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p115t-complementary-tiles-evidence.js",
+        "tests/p9-p115t-complementary-tiles-browser.cjs",
+        "tests/p9-p115t-complementary-tiles.test.mjs"
+      ]
+    },
+    {
+      "batch": "p116h",
+      "type": "x-histbuild",
+      "branch": "work/b/specialized-histogram-bins",
+      "commit": "47249f275d98908766dd82b1a0c4d9db8ffb8837",
+      "scope": "逐项重放归组、换组距或更正，按左闭右开边界重算各组人数及坐标轴含义。",
+      "positions": [
+        {
+          "题包": "P116",
+          "原生题位": "chartfamilies:0",
+          "来源节点": "mt_eKJG-0eC6D",
+          "原题SHA256": "508c6fa707bc9ae0d01974cac53b50181d85755e11747016a5da870c3ee3c054",
+          "原因": "有归组记录，需分别核半开区间、变组距以及边界值。样例回放事件 bin",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 16,
+              "actions": [
+                "bin"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "histogram:0",
+          "来源节点": "mt_oderfUBZPw",
+          "原题SHA256": "2a10eccb3b0274ca55006910ca5fd4d910164e1b787386e4273528513d371937",
+          "原因": "有归组记录，需分别核半开区间、变组距以及边界值。样例回放事件 bin",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 30,
+              "actions": [
+                "bin"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "histogram:2",
+          "来源节点": "mt_oderfUBZPw",
+          "原题SHA256": "36e4f9439846ce2c09173245dba048f6dfb07624b4875959414e4f08db8693cf",
+          "原因": "有归组记录，需分别核半开区间、变组距以及边界值。样例回放事件 bin",
+          "样例记录": {
+            "answers": {
+              "n": 3,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 8,
+              "actions": [
+                "bin"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p116h.patch",
+      "patchSha256": "8a8924f39b9cb70a8deb85786188de7d7cc29e0df085b91e8f81c0d07bd57ba1",
+      "receipt": "receipts/p116h.json",
+      "receiptSha256": "96aa40b8fa9524b5bad3105983ea028e395a6d76d69d225e100c7f3a71a94e1d",
+      "chromiumChecks": 29,
+      "files": [
+        "dist/learning/p116h-histogram-bins-evidence.js",
+        "tests/p9-p116h-histogram-bins-browser.cjs",
+        "tests/p9-p116h-histogram-bins.test.mjs"
+      ]
+    },
+    {
+      "batch": "p116p",
+      "type": "x-piesector",
+      "branch": "work/b/specialized-pie-sectors",
+      "commit": "d181ef38562eabb888c8fc2f41962c6202ebe7e9",
+      "scope": "逐块重放圆图扇区提交和更正，验证各类别比例及总和 360°。",
+      "positions": [
+        {
+          "题包": "P116",
+          "原生题位": "chartfamilies:1",
+          "来源节点": "mt_eKJG-0eC6D",
+          "原题SHA256": "df7fdb1c32984df97bed621eceaffe5d42fa038efae6a7ac3053c3fc53b00616",
+          "原因": "有逐扇区保存，需独立核比例、角度及总和。样例回放事件 sector",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "sector"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "piepieces:1",
+          "来源节点": "mt_bESTSBB0wK",
+          "原题SHA256": "16f097d56008b86956e36c9e8fa5bb5c077cde1b8162bb9b8108c594d25809a8",
+          "原因": "有逐扇区保存，需独立核比例、角度及总和。样例回放事件 sector",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "sector"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "piepieces:3",
+          "来源节点": "mt_bESTSBB0wK",
+          "原题SHA256": "f7233854cc20113d83e66631b13d49b24c911488b5bfafe5c718c6ab31744a9e",
+          "原因": "有逐扇区保存，需独立核比例、角度及总和。样例回放事件 sector",
+          "样例记录": {
+            "history": {
+              "n": 3,
+              "actions": [
+                "sector"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p116p.patch",
+      "patchSha256": "bf3451adc0d4cba8910e12341c9e221d0f53e905df12136650e8a42e94084908",
+      "receipt": "receipts/p116p.json",
+      "receiptSha256": "103584f0db0c55f1d57f189a570600dd65d96346279cd8efbce7e7941aa94f01",
+      "chromiumChecks": 29,
+      "files": [
+        "dist/learning/p116p-pie-sectors-evidence.js",
+        "tests/p9-p116p-pie-sectors-browser.cjs",
+        "tests/p9-p116p-pie-sectors.test.mjs"
+      ]
+    },
+    {
+      "batch": "p116t",
+      "type": "x-timeplot",
+      "branch": "work/b/specialized-time-and-category-graphs",
+      "commit": "e41b66ce0cc72ea218bee1112f764e9372ce9b77",
+      "scope": "分别重放折线、类别柱图和刻度变化。复核时间间隔、每时变化率和条件插值，不把推算当实测。",
+      "positions": [
+        {
+          "题包": "P116",
+          "原生题位": "timeorcategory:1",
+          "来源节点": "mt_ChjMU2GDJa",
+          "原题SHA256": "52bd14122cd049fcf5c2762b11f0426c23a59208f8ae6593a0572d019f9c78aa",
+          "原因": "画点连线、类别柱图或改刻度需要各自的轴与数据规则。样例回放事件 point、connect",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "point",
+                "connect"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "timeorcategory:2",
+          "来源节点": "mt_ChjMU2GDJa",
+          "原题SHA256": "a94a5dec308400fd968d2a165e828531686cc6f047c0292c8598112c5bcaeaae",
+          "原因": "画点连线、类别柱图或改刻度需要各自的轴与数据规则。样例回放事件 point",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 3,
+              "actions": [
+                "point"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "timebuilder:0",
+          "来源节点": "mt_HlNSurPVDp",
+          "原题SHA256": "855a3e2a5f45acae5d171b053cf04b45aeee5166a6050bd22c4ff828e8567a75",
+          "原因": "画点连线、类别柱图或改刻度需要各自的轴与数据规则。样例回放事件 point、connect",
+          "样例记录": {
+            "answers": {
+              "n": 1,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 6,
+              "actions": [
+                "point",
+                "connect"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "timebuilder:1",
+          "来源节点": "mt_HlNSurPVDp",
+          "原题SHA256": "b464f6e140fc3796fa1264b2c8e9771e44c9c2ed1a4c9d1e5f3881ed4c702ab8",
+          "原因": "画点连线、类别柱图或改刻度需要各自的轴与数据规则。样例回放事件 point、connect",
+          "样例记录": {
+            "answers": {
+              "n": 4,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 5,
+              "actions": [
+                "point",
+                "connect"
+              ]
+            }
+          }
+        },
+        {
+          "题包": "P116",
+          "原生题位": "timebuilder:2",
+          "来源节点": "mt_HlNSurPVDp",
+          "原题SHA256": "1a426cad60963ba5303c2eb7c931b9559c80951f4d7dffd3ff278eafbc55389f",
+          "原因": "画点连线、类别柱图或改刻度需要各自的轴与数据规则。样例回放事件 scale",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 1,
+              "actions": [
+                "scale"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p116t.patch",
+      "patchSha256": "31a05fa1659960c9aa8b1b6af6365e2dfeb6d54f4be752a6c6f030a5d5bfd0b5",
+      "receipt": "receipts/p116t.json",
+      "receiptSha256": "a619a2924e7537d45f7fe653ed4917e61df56c48fc018c05d7efa1ff60709123",
+      "chromiumChecks": 41,
+      "files": [
+        "dist/learning/p116t-time-category-graphs-evidence.js",
+        "tests/p9-p116t-time-category-graphs-browser.cjs",
+        "tests/p9-p116t-time-category-graphs.test.mjs"
+      ]
+    },
+    {
+      "batch": "p116d",
+      "type": "x-dotdraw",
+      "branch": "work/b/specialized-fraction-dot-fair-share",
+      "commit": "c63d0eebb181351042ebb0db017006219a2331fb",
+      "scope": "先重放原量点图，再按每次八分之一杯核对转移和最终均分、总量守恒。",
+      "positions": [
+        {
+          "题包": "P116",
+          "原生题位": "fractiondots:2",
+          "来源节点": "mt_IHipFGTFEY",
+          "原题SHA256": "3873e521e51855f69df548b45580bf627d70d3bdd27ec34378142830502ad1c1",
+          "原因": "分数点图之外还有单位份额的转移，需单独核守恒和公平分配。样例回放事件 dot、transfer",
+          "样例记录": {
+            "answers": {
+              "n": 2,
+              "actions": [
+                ""
+              ]
+            },
+            "history": {
+              "n": 6,
+              "actions": [
+                "dot",
+                "transfer"
+              ]
+            }
+          }
+        }
+      ],
+      "patch": "patches/p116d.patch",
+      "patchSha256": "a512081f50e79c959db3b3588e7e42c34066291f6864ccf0b07a1e9ccf7089be",
+      "receipt": "receipts/p116d.json",
+      "receiptSha256": "b63770c3cccea77261bc59d2b04dd04a2b293d8f938cb648a34c9537b4e7c0cd",
+      "chromiumChecks": 16,
+      "files": [
+        "dist/learning/p116d-fraction-fair-share-evidence.js",
+        "tests/p9-p116d-fraction-fair-share-browser.cjs",
+        "tests/p9-p116d-fraction-fair-share.test.mjs"
+      ]
+    }
+  ]
+}

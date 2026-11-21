@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-graph-intersection",
+  "commit": "c0642edb6d8269ebdb7c72385a0c67bb8c207adc",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p111g-graph-intersection-evidence.js",
+    "tests/p9-p111g-graph-intersection-browser.cjs",
+    "tests/p9-p111g-graph-intersection.test.mjs"
+  ],
+  "scope": "按整数或半单位重放试点，分别代入两条直线并核对唯一交点。",
+  "sources": [
+    {
+      "sessionId": "systems35",
+      "index": 0,
+      "nodeId": "mt_mqgu72aCMz",
+      "type": "x-a35-plot",
+      "taskHash": "6429e2364204c5df1f8f4a4d1977267a584b3c48cc976eeb8d9818c299590112"
+    },
+    {
+      "sessionId": "systems35",
+      "index": 1,
+      "nodeId": "mt_mqgu72aCMz",
+      "type": "x-a35-plot",
+      "taskHash": "699f59fdd61c75c87a42be25dcddeba2578e462d3dc3c3f3ae8c1530c9e1aafb"
+    }
+  ],
+  "nodePass": 32,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "09298d7251c625b842a0d07b037771ef4a84861237af3150aecaafaef2ea3ba9",
+    "native-state-v2.json": "f175203d3a1debca19de490639a18bfb7950dcc3c14c3b7ef638e2b7d54747e3",
+    "node.log": "4ca194d9e7eab4e13676628c3a6a5f9a6496dc61a824fb46cb1dee9c8071411a",
+    "preflight.log": "b2dcdb9629225a73ebb109c13e2b12d75ae6dfc786dcf41276d916a582916dc3",
+    "results.json": "43e8e09193c8cbc738697554912be7e68b506474bffea5ba541cd8a7202889ef",
+    "systems35-0-correct-check-decoded.json": "bd76e5ca0a18341acaa6f888f0faa61342c64b4b5bb92af827bc284fcc3f6aa8",
+    "systems35-0-correct-check-storage.txt": "bd76e5ca0a18341acaa6f888f0faa61342c64b4b5bb92af827bc284fcc3f6aa8",
+    "systems35-0-correct.png": "82c2c285683346b8fddba560190e3b0850634a432a4f774eddea0de3b741df72",
+    "systems35-0-corrected-draft-decoded.json": "9c6cb9aba9a87b491792ab73583415b0a7bc1b8a63fc35eeb1726d1260135bec",
+    "systems35-0-corrected-draft-storage.txt": "9c6cb9aba9a87b491792ab73583415b0a7bc1b8a63fc35eeb1726d1260135bec",
+    "systems35-0-offline-reload-decoded.json": "6792666db38a172e681dc93e4def6f7079c2b52ffeb671f617fe382227dadb30",
+    "systems35-0-offline-reload-storage.txt": "6792666db38a172e681dc93e4def6f7079c2b52ffeb671f617fe382227dadb30",
+    "systems35-0-restored-storage-decoded.json": "7141ac22238929f61fdb0ae465cb87995f587a0618c292f64edf5b6bb789955f",
+    "systems35-0-restored-storage-storage.txt": "7141ac22238929f61fdb0ae465cb87995f587a0618c292f64edf5b6bb789955f",
+    "systems35-0-wrong-check-decoded.json": "38d3d6e954320dea24d35f199bb0357c248baae79dfceda4ecddfb9553dae5cc",
+    "systems35-0-wrong-check-storage.txt": "38d3d6e954320dea24d35f199bb0357c248baae79dfceda4ecddfb9553dae5cc",
+    "systems35-0-wrong.png": "19ec37c8e5770ac430e4509559e29d19066ba8549b52e655486f26398367e9da",
+    "systems35-1-correct-check-decoded.json": "c1efd67f6706aabda9b50f80b31dafe8327578127ffe5e5771a8d716d3b04669",
+    "systems35-1-correct-check-storage.txt": "c1efd67f6706aabda9b50f80b31dafe8327578127ffe5e5771a8d716d3b04669",
+    "systems35-1-correct.png": "59654e58264e0ec32feba6ee994ec907d5e5addedf110c1523f71db8e72ffac9",
+    "systems35-1-corrected-draft-decoded.json": "06b5a72dbceaeaf507a92f65472e5e2cdc2f84a0c8806e8a50e97537e493315f",
+    "systems35-1-corrected-draft-storage.txt": "06b5a72dbceaeaf507a92f65472e5e2cdc2f84a0c8806e8a50e97537e493315f",
+    "systems35-1-offline-reload-decoded.json": "6667bcf9cabb36eb4f709dad292ce92d12a26a26317656cf225c1531d3200ea0",
+    "systems35-1-offline-reload-storage.txt": "6667bcf9cabb36eb4f709dad292ce92d12a26a26317656cf225c1531d3200ea0",
+    "systems35-1-restored-backup-decoded.json": "7141ac22238929f61fdb0ae465cb87995f587a0618c292f64edf5b6bb789955f",
+    "systems35-1-restored-backup-storage.txt": "7141ac22238929f61fdb0ae465cb87995f587a0618c292f64edf5b6bb789955f",
+    "systems35-1-retry-decoded.json": "c9023b01255794c8aee89bad5919873798bf888691f21ff523d050fef8fa1a41",
+    "systems35-1-retry-storage.txt": "c9023b01255794c8aee89bad5919873798bf888691f21ff523d050fef8fa1a41",
+    "systems35-1-wrong-check-decoded.json": "396e8ceba4222bc842bdc7cd777c60256e5ba2e6d849863669d8b09aed39ebb0",
+    "systems35-1-wrong-check-storage.txt": "396e8ceba4222bc842bdc7cd777c60256e5ba2e6d849863669d8b09aed39ebb0",
+    "systems35-1-wrong.png": "4ece260ec925fd42b64c1c5d2fba1ffbf7d8049c167d912627245c7591473e41"
+  }
+}

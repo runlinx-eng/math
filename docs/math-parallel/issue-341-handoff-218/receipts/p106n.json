@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/specialized-fraction-notation",
+  "commit": "9c46f803f407ff494839f070e1d977a8d79c1dca",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p106n-fraction-notation-evidence.js",
+    "tests/p9-p106n-fraction-notation-browser.cjs",
+    "tests/p9-p106n-fraction-notation.test.mjs"
+  ],
+  "scope": "逐卡核对保存的数量、单位、分数词汇、金额两位格式和分数大小符号，不评价自由说明。",
+  "sources": [
+    {
+      "sessionId": "precisefractions",
+      "index": 0,
+      "nodeId": "mt_HY8Yycu_rz",
+      "type": "x-fractiontalk",
+      "taskHash": "b745e0c23434ec260c393cf8ad64808f374e3893cb1a7d3eee296f8e13b8249c"
+    },
+    {
+      "sessionId": "precisefractions",
+      "index": 2,
+      "nodeId": "mt_HY8Yycu_rz",
+      "type": "x-fractiontalk",
+      "taskHash": "baaea912bc6b72df66c81fb193e4515f777edfeb4c85f31ac8438995fd372020"
+    }
+  ],
+  "nodePass": 34,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "075a3d11de301885655f447f898ec8f09ac34dbfed080b8177a75c88701400fc",
+    "native-state-v2.json": "e35365957cd999740d49b2a4f3a0fb4c55d5a3da23a6b1aea9a94d22507eb295",
+    "node.log": "2beb84227f1019dac6c973cf61bdbc6de7102a35988235f4d7ed8dcdbe678316",
+    "precisefractions-0-correct-check-decoded.json": "3d925907cf8518c10bc7ca0d26141b1d65fa5b4c0400d5640a9dc644414c1a00",
+    "precisefractions-0-correct-check-storage.txt": "3d925907cf8518c10bc7ca0d26141b1d65fa5b4c0400d5640a9dc644414c1a00",
+    "precisefractions-0-correct.png": "5766cd316c7bfbe2a6e1673afde81d4300957699a0d4672931f3c2c639d7600f",
+    "precisefractions-0-corrected-draft-decoded.json": "211d3f9048d0a6db238a758dd28e7e352d41917b93ed5d973f4e355498083a63",
+    "precisefractions-0-corrected-draft-storage.txt": "211d3f9048d0a6db238a758dd28e7e352d41917b93ed5d973f4e355498083a63",
+    "precisefractions-0-offline-reload-decoded.json": "5ecef129bca3e2f800e64bda8ae88f80bcc58ff4234e49337526b4c8f1d7e575",
+    "precisefractions-0-offline-reload-storage.txt": "5ecef129bca3e2f800e64bda8ae88f80bcc58ff4234e49337526b4c8f1d7e575",
+    "precisefractions-0-restored-storage-decoded.json": "9ec781a5d55813acf90e2475a9fc38c4fc5f80dddc080869dd2cb11df148f2bd",
+    "precisefractions-0-restored-storage-storage.txt": "9ec781a5d55813acf90e2475a9fc38c4fc5f80dddc080869dd2cb11df148f2bd",
+    "precisefractions-0-wrong-check-decoded.json": "cb67f2cd3e45807d831e055d3fcbbcbde66d42f85751c4a2f821d76f93362ead",
+    "precisefractions-0-wrong-check-storage.txt": "cb67f2cd3e45807d831e055d3fcbbcbde66d42f85751c4a2f821d76f93362ead",
+    "precisefractions-0-wrong.png": "af58d78e6459b86fd04d380e99c8708e37249043bbf624080808ce448886854f",
+    "precisefractions-2-correct-check-decoded.json": "21bee462daa7230bcd816b301d88de87b3dee824d1a81eb2d899483bc816d784",
+    "precisefractions-2-correct-check-storage.txt": "21bee462daa7230bcd816b301d88de87b3dee824d1a81eb2d899483bc816d784",
+    "precisefractions-2-correct.png": "ac6b0aaba1f874fbd4da771b9f1ba7d50b30ca56194b2624eaa314fe857e6b32",
+    "precisefractions-2-corrected-draft-decoded.json": "f5e48c0f24034c5e6db982be92562f4bfb264bd424976e6a5a49849815845392",
+    "precisefractions-2-corrected-draft-storage.txt": "f5e48c0f24034c5e6db982be92562f4bfb264bd424976e6a5a49849815845392",
+    "precisefractions-2-offline-reload-decoded.json": "b9f5b929318badf5f66980c45fc422795d841376876eba770eb62aecf964155d",
+    "precisefractions-2-offline-reload-storage.txt": "b9f5b929318badf5f66980c45fc422795d841376876eba770eb62aecf964155d",
+    "precisefractions-2-restored-backup-decoded.json": "9ec781a5d55813acf90e2475a9fc38c4fc5f80dddc080869dd2cb11df148f2bd",
+    "precisefractions-2-restored-backup-storage.txt": "9ec781a5d55813acf90e2475a9fc38c4fc5f80dddc080869dd2cb11df148f2bd",
+    "precisefractions-2-retry-decoded.json": "aa46614ffa3fdc2948d795919bd9dc545b044219a46b137864d82c6f1591a75f",
+    "precisefractions-2-retry-storage.txt": "aa46614ffa3fdc2948d795919bd9dc545b044219a46b137864d82c6f1591a75f",
+    "precisefractions-2-wrong-check-decoded.json": "9c1b602917542f642200edf08c2d5a7a523f842b73ad6884de81aaa8d19ec3de",
+    "precisefractions-2-wrong-check-storage.txt": "9c1b602917542f642200edf08c2d5a7a523f842b73ad6884de81aaa8d19ec3de",
+    "precisefractions-2-wrong.png": "2b6f0e2c1a8787d73ed4c0425d8e5f7c2a15e2ce08ecf89affaa8a383753e682",
+    "preflight.log": "aebfaa9168ba2d9d63a197141b459b0aab3183a88b4eb8f0de8c990aaba35a78",
+    "results.json": "6ab38f0676c6d1dd926fc480e3ab52649031934cc16fb7239f0c2305480fab09"
+  }
+}
