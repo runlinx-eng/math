@@ -1,0 +1,57 @@
+name: Issue 341 P117 eight native prerequisites
+on:
+  pull_request:
+    paths:
+      - 'tests/issue341-p117-native-eight-prereqs.cjs'
+      - '.github/workflows/issue-341-p117-eight-prerequisites.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  p117-eight-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Exercise eight original B17 Checks and native Next to P117
+        run: |
+          set -euo pipefail
+          node --check tests/issue341-p117-native-eight-prereqs.cjs
+          node tests/issue341-p117-native-eight-prereqs.cjs
+      - name: Validate unseeded route receipt
+        if: success()
+        run: |
+          python3 - <<'PY'
+          import json,pathlib
+          p=pathlib.Path('verification/issue341-gap-nav/p117/results.json')
+          r=json.loads(p.read_text())
+          assert r['packet']=='P117' and r['storageIndexWrites']==0,r
+          assert len(r['routes'])==1 and len(r['prereqs'])==8,r
+          assert r['routes'][0]['position']=='fractionfour:8',r
+          assert r['routes'][0]['method']=='native-next-after-correct-check',r
+          assert r['routes'][0]['stoppedOriginSWReload'],r
+          assert not r['errors'],r
+          assert all(x['originalCheckCorrect'] and x['rawStorageSaved']
+                     for x in r['prereqs']),r
+          print('P117 fractionfour:8 arrived after 8 native predecessor Checks/Next')
+          PY
+      - name: Archive eight raw prereqs and original next arrival
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-p117-eight-prerequisites
+          path: verification/issue341-gap-nav/p117/
+          if-no-files-found: warn
+          retention-days: 7
