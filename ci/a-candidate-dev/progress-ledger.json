@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 99,
-    "developmentTestedCandidateCases": 51,
+    "developmentTestedPositions": 100,
+    "developmentTestedCandidateCases": 52,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 2,
+      "developmentTested": 3,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 28
+      "pendingOrOtherNotAccepted": 27
     }
   ],
   "cases": [
@@ -1101,6 +1101,25 @@
       },
       "artifact": {
         "id": 14705511317,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007b-pyramid-view-identity",
+      "branch": "work/a/p007b-pyramid-view-identity",
+      "candidateSha": "6a2bd6024727cccbae2c143d82568e44e32640b4",
+      "positions": [
+        "shapedraw:5"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44900548009,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14706155673,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
