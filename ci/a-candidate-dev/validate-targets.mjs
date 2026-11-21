@@ -30,7 +30,14 @@ export function validateTargets(value){
   for(const [i,s] of target.native.entries()){
    const at=where+'.native['+i+']';
    exactKeys(s,['sessionId','index','nodeId','taskSha256','type','view','controls'],at);
-   reject(typeof s.sessionId==='string'&&idRule.test(s.sessionId),at+' sessionId');
+   // One exact, independently source-locked B38 camel-case native lesson;
+   // do not relax the general lowercase session-name gate.
+   const reviewedB38Circle=s.sessionId==='advancedWords38'&&s.index===0&&
+    s.nodeId==='mt_3rTIyJDw7-'&&
+    s.taskSha256==='a1466d51fcca03b4c7946c32cf66db3dc1eea6a4bf0fff0b1baea449ee38a234'&&
+    s.type==='x-s23-circle'&&s.view==='b23'&&
+    Array.isArray(s.controls)&&s.controls.length===1&&s.controls[0]==='g23-circle';
+   reject(typeof s.sessionId==='string'&&(idRule.test(s.sessionId)||reviewedB38Circle),at+' sessionId');
    reject(Number.isInteger(s.index)&&s.index>=0&&s.index<1000,at+' index');
    reject(typeof s.nodeId==='string'&&/^mt_[A-Za-z0-9_-]{6,30}$/.test(s.nodeId),at+' nodeId');
    reject(typeof s.taskSha256==='string'&&sha64.test(s.taskSha256),at+' full task SHA256');
