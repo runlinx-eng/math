@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004n-geometrynotation-hexagon
-            sha: d0dd8b440e91cc2d7015dc8c7a856b6bc4c23e06
-            node_test: tests/p9-p004n-geometrynotation-hexagon-evidence.test.mjs
-            browser_test: tests/p9-p004n-geometrynotation-hexagon-browser.cjs
+          - case: P005a-acute-angle-comparison
+            sha: 2978de5e762984fa9a681ecb2308a500cca48044
+            node_test: tests/p9-p005a-acute-angle-comparison-evidence.test.mjs
+            browser_test: tests/p9-p005a-acute-angle-comparison-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
