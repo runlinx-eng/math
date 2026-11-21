@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004d-triangle-drawing
-            sha: e8b0ac7738bbbf1c58f7c44a35c344f6482736c4
+            sha: abd7f41bf763b6d84c567670a8069cbc82bf55c6
             node_test: tests/p9-p004d-triangle-drawing-evidence.test.mjs
             browser_test: tests/p9-p004d-triangle-drawing-browser.cjs
 
