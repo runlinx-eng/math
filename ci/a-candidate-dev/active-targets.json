@@ -2,21 +2,28 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006q-native-sleep-means-vs-individual",
-      "sha": "408437d602bcdebc24e9f642d5f584209f67cf24",
-      "node_test": "tests/p9-p006q-native-sleep-means-vs-individual-evidence.test.mjs",
-      "browser_test": "tests/p9-p006q-native-sleep-means-vs-individual-browser.cjs",
+      "case": "P006r-native-question-variation-checks",
+      "sha": "6738eb3bdcde508a43a042ead5218e42742f9994",
+      "node_test": "tests/p9-p006r-native-question-variation-evidence.test.mjs",
+      "browser_test": "tests/p9-p006r-native-question-variation-browser.cjs",
       "native": [
         {
-          "sessionId": "samplevary",
-          "index": 3,
-          "nodeId": "mt_x7V1qrkiqH",
-          "taskSha256": "3d675ec15ac349231bfff6609b098091f56c56506d9cb20c83b3546e35c03fc7",
-          "type": "x-samplelab",
-          "view": "b21",
-          "controls": [
-            "b21-draw"
-          ]
+          "sessionId": "statquestions",
+          "index": 1,
+          "nodeId": "mt_iykH2P5oFq",
+          "taskSha256": "1f654a820c65fc8586140e4977c599093e869fdc8ee54a1fdbb7265dd83f7bd3",
+          "type": "x-questionbuild",
+          "view": null,
+          "controls": []
+        },
+        {
+          "sessionId": "statquestions",
+          "index": 2,
+          "nodeId": "mt_iykH2P5oFq",
+          "taskSha256": "eb954fa3f8aead15a7e41265af49424e2dfb61a178e180c078069d32825a34a7",
+          "type": "x-questionbuild",
+          "view": null,
+          "controls": []
         }
       ]
     }
