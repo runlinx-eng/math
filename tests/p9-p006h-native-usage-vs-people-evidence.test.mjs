@@ -29,7 +29,7 @@ for(const s of cases){
   const t=sessionTaskFor(s.id,s.index);
   console.log('P006H_NATIVE_FULL_TASK_SHA256 '+position+' '+digest(t));
   assert.equal(LESSONS[s.id].topicId,s.node);assert.equal(digest(t),s.hash);
-  assert.equal(t.type,'x-dataplan');assert.equal(t.draft,true);
+  assert.equal(t.type,'x-dataplan');assert.equal(Object.hasOwn(t,'draft'),false);
   assert.deepEqual(t.choices.map(x=>x.answer),s.correct);
   assert.equal(nativeUsageCountBoundaryBinding(t,ctx)?.position,position);
   for(const fromCorrect of [false,true]){
