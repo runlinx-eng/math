@@ -1,0 +1,199 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {LESSONS} from '../dist/learning/catalog.js';
+import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+import * as M from '../dist/learning/phase5/b08-model.js';
+import {positiveOrderPreauditBinding,replayPositiveOrderModel,replayPositiveOrderPreaudit} from '../dist/learning/positive-order-preaudit.js';
+import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {positiveOrderBinding,replayPositiveOrderEvidence} from '../dist/learning/positive-order-evidence.js';
+import {positiveOrderEvidenceExample} from '../scripts/positive-order-evidence-fixture.mjs';
+import {thinkingGuide,thinkingFeedback} from '../dist/learning/thinking-feedback.js';
+
+await ensureB39Ready();
+const copy=structuredClone;
+const stable=x=>Array.isArray(x)?x.map(stable):x&&typeof x==='object'?Object.fromEntries(Object.keys(x).sort().map(k=>[k,stable(x[k])])):x;
+const digest=x=>createHash('sha256').update(x).digest('hex'),hash=t=>digest(JSON.stringify(stable(t)));
+const native=[
+ ['bigcompare',2,'mt_MHaiUd2FLA','3af8e623611e2f89e1e0aa354e1f023203a77fd200f5ceee9381967878a05639'],
+ ['sixdigits',2,'mt_JwP9QFv6gQ','15c65015c8abb99241d30bb8ffff1bf16ea6ba529c114a612ffd664acce484ea'],
+ ['millionwords',1,'mt_Gag_h98jWP','f4b80d951ea72967caa1de4041a4aa113cd4d7d1d69d56ab59fb6ecbb1278e38']
+];
+const tFor=([id,index])=>sessionTasks(id)[index];
+const context=([id,index])=>({sessionId:id,index});
+function build(c){
+ const task=tFor(c),m=M.initial(task);
+ const expected=task.values.map((v,i)=>({n:BigInt(v),i})).sort((a,b)=>a.n<b.n?-1:a.n>b.n?1:0).map(x=>x.i);
+ for(const i of expected)M.act(task,m,'wide-order',{index:i});
+ for(let i=0;i<task.values.length;i++){m.positions[i]=Math.round((Number(task.values[i])-task.min)/(task.max-task.min)*1000);M.field(task,m,'positions.'+i);}
+ return {task,m,record:{attempts:[{value:copy(m)}]},expected};
+}
+const replay=(c,m,record)=>replayPositiveOrderPreaudit(tFor(c),m,record,context(c));
+test('source/task fingerprints and exact native admission; candidate registration',()=>{
+ for(const c of native){
+  const task=tFor(c),binding=positiveOrderPreauditBinding(task,context(c));
+  assert.equal(LESSONS[c[0]].topicId,c[2]);
+  assert.equal(hash(task),c[3]);
+  assert.equal(binding?.strictAApproved,false);
+  assert.deepEqual(EVIDENCE_ADAPTERS.filter(a=>a.binding(task,context(c))).map(a=>a.id),['positive-order']);
+  assert.equal(positiveOrderBinding(task,context(c))?.nodeId,c[2]);
+  assert.equal(thinkingGuide(task,context(c))?.type,'x-wideboard');
+  assert.equal(positiveOrderPreauditBinding({...task,prompt:task.prompt+' altered'},context(c)),null);
+  assert.equal(positiveOrderPreauditBinding(task,{sessionId:c[0],index:99}),null);
+  assert.equal(positiveOrderPreauditBinding(task,{sessionId:c[0],index:String(c[1])}),null);
+ }
+});
+test('actual pick/remove/re-pick chrono, numerical order and final axis invariant',()=>{
+ for(const c of native){
+  const {task,m,expected}=build(c);
+  assert.equal(M.inspect(task,m).correct,true); // Baseline before deliberately wrong reorder.
+  const move=expected[1];M.act(task,m,'wide-order',{index:move});M.act(task,m,'wide-order',{index:move});
+  // re-select is appended last; so this corrected sequence must not pass.
+  assert.equal(M.inspect(task,m).correct,false);
+  M.act(task,m,'wide-order',{index:move}); // undo last, current remaining cards
+  assert.equal(m.order.length,expected.length-1);
+  // Rebuild correct via real clicking (first clear, then reselect in sorted order).
+  for(const i of [...m.order])M.act(task,m,'wide-order',{index:i});
+  for(const i of expected)M.act(task,m,'wide-order',{index:i});
+  assert.equal(M.valid(task,m),true);
+  assert.equal(M.inspect(task,m).correct,true);
+  const record={attempts:[{value:copy(m)}]},before=JSON.stringify(m);
+  const evidence=replay(c,m,record);
+  assert.ok(evidence);
+  assert.equal(evidence.strictAApproved,false);
+  assert.equal(evidence.events.length,m.orderTrace.length);
+  assert.equal(evidence.sliderMotionHistoryObserved,false);
+  assert.deepEqual(evidence.selectedOrder,expected.map(i=>task.values[i]));
+  assert.equal(JSON.stringify(m),before);
+ }
+});
+test('candidate replay, exact source feedback and current Check gate',()=>{
+ for(const c of native){
+  const {task,m,record,expected}=build(c);
+  const sample=positiveOrderEvidenceExample(task,context(c));
+  assert.equal(M.inspect(task,sample).correct,true);
+  const proof=replayPositiveOrderEvidence(task,m,context(c));
+  assert.ok(proof);
+  assert.deepEqual(proof.selectedOrder,expected.map(i=>task.values[i]));
+  assert.equal(proof.pickRemoveChronologyObserved,true);
+  assert.equal(proof.sliderMovementChronologyObserved,false);
+  assert.equal(proof.learnerMasteryAssessed,false);
+  assert.equal(replayPositiveOrderEvidence(task,M.example(task),context(c)),null);
+  const thought=thinkingFeedback(task,m,record,context(c));
+  assert.ok(thought?.observation.includes('从小到大'));
+  assert.ok(thought.detail.some(s=>s.includes('不证明学生使用了哪种数位比较策略')));
+  assert.equal(thinkingFeedback(task,m,{attempts:[]},context(c)),null);
+  const stale=copy(record);stale.attempts[0].value.order=[];
+  assert.equal(thinkingFeedback(task,m,stale,context(c)),null);
+  const reversed=copy(m);reversed.order.reverse();
+  assert.equal(replayPositiveOrderEvidence(task,reversed,context(c)),null);
+ }
+});
+test('refuse crossed or tied close axis positions despite original approximate grade',()=>{
+ const c=native[2],{task,m}=build(c);
+ const smaller=task.values.indexOf('7042500'),larger=task.values.indexOf('7045200');
+ assert.equal(m.positions[smaller],85);
+ assert.equal(m.positions[larger],90);
+ assert.ok(replay(c,m,{attempts:[{value:copy(m)}]}));
+ for(const kind of ['cross','tie']){
+  const altered=copy(m);
+  if(kind==='cross'){
+   [altered.positions[smaller],altered.positions[larger]]=
+    [altered.positions[larger],altered.positions[smaller]];
+  }else altered.positions[larger]=altered.positions[smaller];
+  assert.equal(M.valid(task,altered),true);
+  assert.equal(M.inspect(task,altered).correct,true,
+   'original grader intentionally accepts approximate positions');
+  assert.equal(replay(c,altered,{attempts:[{value:copy(altered)}]}),null,
+   'strict evidence must refuse spatial inversion or indistinguishable tie');
+ }
+});
+
+test('reject forgery, stale latest Check, no trace, wrong signed/source and truncation',()=>{
+ for(const c of native){
+  const {task,m,record}=build(c);
+  assert.ok(replay(c,m,record));
+  const altered=copy(m);altered.orderTrace[0].index=999;
+  assert.equal(replay(c,altered,{attempts:[{value:copy(altered)}]}),null);
+  const changedKind=copy(m);changedKind.orderTrace[0].kind='remove';
+  assert.equal(replay(c,changedKind,{attempts:[{value:copy(changedKind)}]}),null);
+  const missing=copy(m);missing.orderTrace=[];
+  assert.equal(replay(c,missing,{attempts:[{value:copy(missing)}]}),null);
+  const overflow=copy(m);overflow.orderTraceOverflow=true;
+  assert.equal(replay(c,overflow,{attempts:[{value:copy(overflow)}]}),null);
+  const stale=copy(record);stale.attempts[0].value.order=[];
+  assert.equal(replay(c,m,stale),null);
+  const missingPoint=copy(m);missingPoint.touched[0]=false;
+  assert.equal(replay(c,missingPoint,{attempts:[{value:copy(missingPoint)}]}),null);
+  const generated=M.example(task);
+  assert.equal(M.inspect(task,generated).correct,true);
+  assert.equal(replay(c,generated,{attempts:[{value:copy(generated)}]}),null); // Terminal state is not click evidence.
+  const old=copy(m);delete old.orderTrace;delete old.orderTraceOverflow;
+  assert.equal(M.valid(task,old),true); // State-v2 backward compatibility
+  assert.equal(M.inspect(task,old).correct,true); // original grading unchanged
+  assert.equal(replay(c,old,{attempts:[{value:copy(old)}]}),null);
+ }
+ assert.equal(positiveOrderPreauditBinding(tFor(native[0]),{sessionId:'tenmillion',index:1}),null);
+});
+
+test('real control overflow preserves original ordering grade but strictly refuses truncated evidence',()=>{
+ for(const c of native){
+  const {task,m,expected}=build(c);
+  const first=expected[0];
+  // 514 actual toggles return this card to its starting inclusion state;
+  // event capture must stop at 512 and remember the loss permanently.
+  for(let i=0;i<514;i++)M.act(task,m,'wide-order',{index:first});
+  // Toggling a selected card removes then appends it, changing its order.
+  // Use actual controls to restore a sorted final state after the capture limit.
+  // Overflow must remain true: the missing chronology is never recovered.
+  for(const i of [...m.order])M.act(task,m,'wide-order',{index:i});
+  for(const i of expected)M.act(task,m,'wide-order',{index:i});
+  assert.equal(m.orderTrace.length,512);
+  assert.equal(m.orderTraceOverflow,true);
+  assert.equal(M.valid(task,m),true);
+  assert.equal(M.inspect(task,m).correct,true);
+  assert.deepEqual(m.order,expected);
+  assert.equal(replay(c,m,{attempts:[{value:copy(m)}]}),null,
+   'a valid original grade never promotes incomplete event evidence');
+ }
+});
+
+test('only three exact positive native positions bind; all other wideboards and every bridge remain excluded',()=>{
+ const allowed=new Set(native.map(([id,index])=>id+':'+index));
+ const actual=[];
+ for(const id of Object.keys(LESSONS))sessionTasks(id).forEach((task,index)=>{
+  if(task.type!=='x-wideboard')return;
+  const found=positiveOrderPreauditBinding(task,{sessionId:id,index});
+  if(found)actual.push(id+':'+index);
+  else assert.equal(replayPositiveOrderPreaudit(task,M.example(task),
+   {attempts:[{value:M.example(task)}]},{sessionId:id,index}),null,
+   id+':'+index+' must not infer history from a final answer');
+ });
+ assert.deepEqual(actual.sort(),[...allowed].sort());
+ let excluded=0;
+ for(const id of Object.keys(BRIDGES))sessionTasks(id).forEach((task,index)=>{
+  if(task.type!=='x-wideboard')return;
+  excluded++;
+  assert.equal(positiveOrderPreauditBinding(task,{sessionId:id,index}),null);
+ });
+ assert.ok(excluded>0,'exercise real associated wideboard sources');
+});
+
+test('model-only mathematical replay remains pure and does not fabricate a saved Check',()=>{
+ for(const c of native){
+  const {task,m,record}=build(c),before=JSON.stringify(m);
+  const proof=replayPositiveOrderModel(task,m,context(c));
+  assert.ok(proof,'genuine picked cards independently reconstruct their ascending order');
+  assert.deepEqual(proof,replay(c,m,record));
+  assert.equal(proof.preReviewOnly,true);
+  assert.equal(proof.strictAApproved,false);
+  assert.equal(replay(c,m,{attempts:[]}),null,'no saved Check cannot be inferred');
+  assert.equal(replay(c,m,{attempts:[{value:{}}]}),null,'stale Check cannot be inferred');
+  const forged=copy(m);forged.orderTrace.pop();
+  assert.equal(replayPositiveOrderModel(task,forged,context(c)),null,
+   'a terminal order cannot repair missing pick history');
+  assert.equal(replayPositiveOrderModel({...task,prompt:task.prompt+' changed'},m,context(c)),null);
+  assert.equal(JSON.stringify(m),before,'independent replay must never change learner state');
+ }
+});

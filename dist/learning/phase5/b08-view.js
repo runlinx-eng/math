@@ -7,12 +7,52 @@ const field=(key,label,v)=>input(key,esc(label),v,'inputmode="decimal" autocompl
 const slider=(key,label,v)=>`<label class="field b8-slider">${esc(label)}<input type="range" min="0" max="1000" step="1" data-xfield="${key}" aria-label="${esc(label)}" value="${v}"><span class="muted">拖动圆点，也可以用方向键微调</span></label>`;
 const active=(t,m)=>t.values.length>1?`<div class="b8-tabs">${t.values.map((v,i)=>button('wide-active',`${i+1} · ${v}`,`data-index="${i}" aria-pressed="${m.active===i}"`)).join('')}</div>`:'';
 function cells(cols,row,editable=false){return`<div class="b8-columns" style="--n:${cols.length}">${cols.map((e,i)=>`<section class="${e===0?'point-edge':''}"><span>${labels[e]||'位置'+e}</span><small>${value(e)}</small><strong>${row[i]??0}</strong>${editable?`<div class="b8-coins">${Array.from({length:row[i]},()=>'<i></i>').join('')||'<span>空着</span>'}</div>${button('wide-add','＋',`data-index="${i}" data-delta="1" aria-label="添一个${labels[e]}" ${row[i]>=9?'disabled':''}`)}${button('wide-add','−',`data-index="${i}" data-delta="-1" aria-label="拿走一个${labels[e]}" ${row[i]===0?'disabled':''}`)}`:''}</section>`).join('')}</div>`;}
-function axis(low,high,markers=[],middle=true){return`<svg class="b8-axis" viewBox="0 0 820 126" role="img" aria-label="从${esc(low)}到${esc(high)}的数轴"><path d="M55 66H765"/>${[55,410,765].map((x,i)=>`<path d="M${x} 58v16"/><text x="${x}" y="104">${i===0?esc(low):i===2?esc(high):middle?'一半':''}</text>`).join('')}${markers.map(({p,label},i)=>`<path class="b8-mark" d="M${55+p*.71} 25v40"/><circle class="b8-mark" cx="${55+p*.71}" cy="66" r="6"/><text class="b8-mark-label" x="${Math.max(65,Math.min(755,55+p*.71))}" y="${i%2?48:20}">${esc(label)}</text>`).join('')}</svg>`;}
+// On a large range, two genuinely different values may share one visible dot.
+// Only magnify current learner-set axis positions; never infer a slider history.
+function closeOrderZoom(low,high,markers){
+ const min=Number(low),max=Number(high);
+ if(!Number.isSafeInteger(min)||!Number.isSafeInteger(max)||max<=min||markers.length<2)return '';
+ const placed=markers.map(({p,label},i)=>({p:Number(p),label:String(label),i}));
+ if(placed.some(m=>!Number.isInteger(m.p)||m.p<0||m.p>1000||!/^[1-9][0-9]*$/.test(m.label)||!Number.isSafeInteger(Number(m.label))))return '';
+ const sorted=[...placed].sort((a,b)=>a.p-b.p||a.i-b.i);
+ let close=null;
+ for(let i=1;i<sorted.length;i++){
+  const gap=sorted[i].p-sorted[i-1].p;
+  if(gap>0&&(!close||gap<close.gap))close={left:sorted[i-1],right:sorted[i],gap};
+ }
+ if(!close||close.gap*.71>=12)return '';
+ let start=Math.max(0,Math.floor((close.left.p-2)/10)*10);
+ let end=Math.min(1000,Math.ceil((close.right.p+2)/10)*10);
+ if(end<=start)return '';
+ if(close.gap/(end-start)*710<90){
+  start=Math.max(0,close.left.p-close.gap);
+  end=Math.min(1000,close.right.p+close.gap);
+ }
+ const value=p=>Math.round(min+(max-min)*p/1000);
+ const x=p=>55+(p-start)/(end-start)*710;
+ return `<g class="b8-axis-zoom" role="group" aria-label="从${value(start)}到${value(end)}的局部放大数轴">`+
+  `<text x="55" y="143">近处两点 · 局部放大（按当前标记位置）</text>`+
+  '<path d="M55 193H765"/><path d="M55 185v16"/><path d="M765 185v16"/>'+
+  `<text x="55" y="235">${value(start)}</text><text x="765" y="235">${value(end)}</text>`+
+  [close.left,close.right].map(p=>`<path class="b8-mark" d="M${x(p.p)} 173v20"/>`+
+   `<circle class="b8-mark" cx="${x(p.p)}" cy="193" r="6"/>`+
+   `<text class="b8-zoom-value" x="${x(p.p)}" y="168">${esc(p.label)}</text>`).join('')+'</g>';
+}
+function axis(low,high,markers=[],middle=true,spreadLabels=false){
+ const labelY=markers.map((_,i)=>i%2?48:20);
+ if(spreadLabels)markers.map((m,i)=>({i,p:Number(m.p)})).sort((a,b)=>a.p-b.p||a.i-b.i).forEach(({i},rank)=>{labelY[i]=rank%2?48:20;});
+ const zoom=spreadLabels?closeOrderZoom(low,high,markers):'';
+ return `<svg class="b8-axis" viewBox="0 0 820 ${zoom?250:126}" role="img" aria-label="从${esc(low)}到${esc(high)}的数轴">`+
+  '<path d="M55 66H765"/>'+
+  [55,410,765].map((x,i)=>`<path d="M${x} 58v16"/><text x="${x}" y="104">${i===0?esc(low):i===2?esc(high):middle?'一半':''}</text>`).join('')+
+  markers.map(({p,label},i)=>`<path class="b8-mark" d="M${55+p*.71} 25v40"/><circle class="b8-mark" cx="${55+p*.71}" cy="66" r="6"/><text class="b8-mark-label" x="${Math.max(65,Math.min(755,55+p*.71))}" y="${labelY[i]}">${esc(label)}</text>`).join('')+
+  zoom+'</svg>';
+}
 function moveBoard(t,m){const v=shifted(t.start,m.shift),s=decimal(v),max=Math.max(2,...[String(t.start),s].map(x=>x.split('.')[0].length-1)),min=-Math.max(2,...[String(t.start),s].map(x=>(x.split('.')[1]||'').length)),cols=Array.from({length:max-min+1},(_,i)=>max-i);return cells(cols,cols.map(e=>Math.floor(v/Math.round(Q*10**e))%10))+`<p class="b8-caption">小数点固定在“一”和“十分之一”之间 · 现在表示 <b>${s}</b></p>`;}
 export function visual(t,m){switch(t.type){
  case'x-wideboard':if(['build','compare','puzzle'].includes(t.mode))return active(t,m)+`<p class="b8-caption">${t.mode==='puzzle'?`六个数字合计：${m.rows[0].reduce((s,x)=>s+x,0)} / ${t.sum}`:`第${m.active+1}行 · 用筹码摆出 ${t.values[m.active]}`}<span>每个筹码按所在格的单位计数</span></p>`+cells(columns(t),m.rows[m.active],true)+(t.mode==='compare'?`<div class="b8-comparison">${m.rows.map((r,i)=>`<span>第${i+1}行：${decimal(rowValue(r,columns(t)))}</span>`).join('<b>?</b>')}</div>`:'');
   else if(t.mode==='line')return axis(t.min,t.max,[{p:m.positions[0],label:m.touched[0]?t.values[0]:'把点移到合适位置'}],false);
-  else return `<div class="b8-cards">${t.values.map((v,i)=>button('wide-order',t.notation?.[i]||v,`data-index="${i}" aria-pressed="${m.order.includes(i)}"`)).join('')}</div><p class="b8-caption">从小到大：${m.order.map(i=>esc(t.notation?.[i]||t.values[i])).join(' → ')||'依次点卡片；再点一次可取回'}</p>`+(t.conversions?'':axis(t.min,t.max,m.positions.map((p,i)=>({p,label:m.touched[i]?t.values[i]:'?'})),false));
+  else return `<div class="b8-cards">${t.values.map((v,i)=>button('wide-order',t.notation?.[i]||v,`data-index="${i}" aria-pressed="${m.order.includes(i)}"`)).join('')}</div><p class="b8-caption">从小到大：${m.order.map(i=>esc(t.notation?.[i]||t.values[i])).join(' → ')||'依次点卡片；再点一次可取回'}</p>`+(t.conversions?'':axis(t.min,t.max,m.positions.map((p,i)=>({p,label:m.touched[i]?t.values[i]:'?'})),false,true));
  case'x-wideshift':{const locked=m.committed===null;return`<p class="b8-caption">原来 ${t.start}${locked?'':` · 先前猜 ${esc(m.committed)}`}</p>`+(t.mode==='add'?cells(addColumns,m.u)+`<div class="b8-actions">${[-1,1].map(d=>button('wide-move',d>0?'添一千':'拿走一千',`data-delta="${d}" ${locked||m.u[1]+d<0||m.u[1]+d>19?'disabled':''}`)).join('')}${button('wide-swap','十个千合成一万',`data-kind="up" data-index="1" ${locked||m.u[1]<10?'disabled':''}`)}${button('wide-swap','拆一万，换十个千',`data-kind="down" data-index="0" ${locked||m.u[0]<1||m.u[1]>9?'disabled':''}`)}</div><p class="muted">添取记录：${m.moves.map(d=>d>0?'＋1000':'−1000').join('，')||'还没添取'}</p>`:moveBoard(t,m)+`<div class="b8-actions">${button('wide-move','← 数字向左一格 · ×10',`data-delta="1" ${locked||shifted(t.start,m.shift+1)===null?'disabled':''}`)}${button('wide-move','数字向右一格 · ÷10 →',`data-delta="-1" ${locked||shifted(t.start,m.shift-1)===null?'disabled':''}`)}</div><p class="b8-trace">${t.factors?'1 ':''}${m.trace.map(d=>d>0?'× 10':'÷ 10').join('　')||'先留下猜想，再移动'}</p>`);}
  case'x-roundwork':{const s=m.steps[m.active],u=roundUnit(t,m);return active(t,m)+`<p class="b8-caption">原数 <b>${t.values[m.active]}</b> · 每两站相隔 ${u}${t.sf?`<span>先从第一个非零数字开始，点出要留下的${t.sf}位</span>`:''}</p>`+(t.sf?`<div class="b8-digits">${t.values[0].split('').map((c,i)=>c==='.'?'<b>·</b>':button('wide-sig',c,`data-index="${i}" aria-pressed="${m.sig.includes(i)}"`)).join('')}</div>`:'')+axis(s.low||'左边一站',s.high||'右边一站',[{p:s.mark,label:s.touched?t.values[m.active]:'把原数放上来'}])+`<p class="muted">找相邻两站 → 把原数放上来 → 记下更近的一站。正好一半时取较大的一站。</p>`;}
  case'x-boundinterval':return`<p class="b8-caption">报告值 ${t.value} · 每 ${t.unit} 记一站</p>`+axis(m.low||'可能的下端',m.high||'可能的上端',[{p:500,label:t.value}],false)+`<div class="b8-endpoints"><span>${m.left==='closed'?'● 包括':m.left==='open'?'○ 不包括':'下端待决定'}</span><span>${m.right==='closed'?'● 包括':m.right==='open'?'○ 不包括':'上端待决定'}</span></div><div class="b8-trials">${m.trials.map(s=>`<span>${esc(s.value)} → ${s.inside?`还报 ${t.value}`:'报成了别的一站'}</span>`).join('')||'输入一个可能的原数，试试它会报到哪一站。'}</div>`;

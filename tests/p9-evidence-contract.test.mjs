@@ -19,6 +19,7 @@ import {weekDayCardsEvidenceExample} from '../scripts/week-day-cards-evidence-fi
 import pvbench from './fixtures/p9-pvbench-cases.cjs';
 import {pvbenchEvidenceExample} from '../scripts/pvbench-evidence-fixture.mjs';
 import {pvSavedEvidenceExample} from '../scripts/pv-saved-evidence-fixture.mjs';
+import {positiveOrderEvidenceExample} from '../scripts/positive-order-evidence-fixture.mjs';
 import wideShift from './fixtures/p9-wideshift-cases.cjs';
 import {wideShiftEvidenceExample} from '../scripts/wideshift-evidence-fixture.mjs';
 import {paperLabEvidenceExample} from '../scripts/paperlab-evidence-fixture.mjs';
@@ -107,6 +108,7 @@ const reviewed={
  proportionalgraph:[...positions('proportion37',[3]),...positions('proportionGraph37',[0])],
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  'pv-saved':[...positions('twoproblems',[2]),...positions('faces100',[1]),...positions('faces120',[1]),...positions('screen1000',[0])],
+ 'positive-order':[...positions('bigcompare',[2]),...positions('sixdigits',[2]),...positions('millionwords',[1])],
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  'wideshift-add':positions('thousandstep',[0,1,2,3]),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
@@ -151,7 +153,7 @@ const unitTileAreaExample=task=>{
  model.unit='cm²';
  return model;
 };
-const example=(adapter,task,context)=>adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+const example=(adapter,task,context)=>adapter.id==='positive-order'?positiveOrderEvidenceExample(task,context):adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -225,7 +227,7 @@ test('registered families stay distinct and cover exactly the reviewed native lo
  // both. Widget-type uniqueness is not a substitute for this source check.
  // Cube adds a distinct x-m31-cubes type; two pre-existing type pairs
  // intentionally share their widgets but never the same native source.
- assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,65); // #327 B32 unit cards are a distinct newly reviewed native type
+ assert.equal(new Set(EVIDENCE_ADAPTERS.map(a=>a.type)).size,66); // #337 B08 positive integer cards add one source-locked widget type
  for(const {task,context} of native)
   assert.ok(EVIDENCE_ADAPTERS.filter(adapter=>adapter.binding(task,context)).length<=1,key(context)+' binds at most one mathematical family');
  for(const adapter of EVIDENCE_ADAPTERS){
@@ -291,7 +293,8 @@ for(const adapter of EVIDENCE_ADAPTERS){
    if(adapter.id==='pv-saved'){
     assert.equal(absent.history.length,0,'saved-form evidence must not invent click history');
     absent.saved=[];
-   }else absent.history=[];
+   }else if(adapter.id==='positive-order')absent.orderTrace=[];
+   else absent.history=[];
    assert.equal(adapter.replay(task,absent,context),null,
     adapter.id==='pv-saved'?'missing original saved representations are insufficient':
      'correct-looking final board without actions is insufficient');
