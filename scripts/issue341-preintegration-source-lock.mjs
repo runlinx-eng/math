@@ -149,7 +149,7 @@ try{
       P009:details.filter(r=>r.packet.startsWith('P009')).length,
       B:details.filter(r=>!r.packet.startsWith('P007')&&!r.packet.startsWith('P009')).length
     },
-    sourcesMatch:trueOnlyIfNoErrors:errorList.length===0,
+    sourcesMatchOnlyIfNoErrors:errorList.length===0,
     candidateRuntimeRegistered:false,
     approvedManifestModified:false,
     newStrictA:0,
