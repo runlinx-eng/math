@@ -32,7 +32,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P102",
+        "sourceCodeBytes": 4325,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P101",
@@ -62,7 +77,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P101",
+        "sourceCodeBytes": 5648,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P100",
@@ -90,7 +120,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P100",
+        "sourceCodeBytes": 4427,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P099",
@@ -120,7 +165,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P099",
+        "sourceCodeBytes": 4232,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P098",
@@ -149,7 +209,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P098",
+        "sourceCodeBytes": 4184,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P097",
@@ -176,7 +251,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P097",
+        "sourceCodeBytes": 2738,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P096",
@@ -205,7 +295,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P096",
+        "sourceCodeBytes": 3614,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P095",
@@ -234,7 +339,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P095",
+        "sourceCodeBytes": 4051,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P094",
@@ -263,7 +383,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P094",
+        "sourceCodeBytes": 5778,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P093",
@@ -291,7 +426,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P093",
+        "sourceCodeBytes": 4998,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P092",
@@ -320,7 +470,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P092",
+        "sourceCodeBytes": 4698,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P091",
@@ -349,7 +514,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P091",
+        "sourceCodeBytes": 3257,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": false
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P090",
@@ -380,7 +560,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P090",
+        "sourceCodeBytes": 3959,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P089",
@@ -411,7 +606,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P089",
+        "sourceCodeBytes": 3866,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     },
     {
       "packet": "P088",
@@ -440,7 +650,22 @@
         "latestCheck": true
       },
       "hasNullAssertions": true,
-      "hasAssertCorrect": true
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P088",
+        "sourceCodeBytes": 3835,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
     }
   ]
 }
