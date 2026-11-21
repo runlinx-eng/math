@@ -2,31 +2,46 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005f-native-angle-estimates",
-      "sha": "60e083a100cbb3833fa968b4de1db67d0a3b8bc4",
-      "node_test": "tests/p9-p005f-native-angle-estimates-evidence.test.mjs",
-      "browser_test": "tests/p9-p005f-native-angle-estimates-browser.cjs",
+      "case": "P005g-native-protractor",
+      "sha": "fbae03b6cff424d9456cdd5200a3a23e4f96ba2b",
+      "node_test": "tests/p9-p005g-native-protractor-evidence.test.mjs",
+      "browser_test": "tests/p9-p005g-native-protractor-browser.cjs",
       "native": [
         {
-          "sessionId": "angleestimate",
+          "sessionId": "angleprotractor",
           "index": 0,
-          "nodeId": "mt_YUJ5pwalqL",
-          "taskSha256": "2e95b28676442bc8fc86c1bdfdeec5cfb3cff4d88efa1c546acbf6dfa3e06e35",
-          "type": "x-g25-estimate",
+          "nodeId": "mt_4MFUAsbx_6",
+          "taskSha256": "107b5a8506ea58a40654d33f663faf8cc36d1060cbf5e3b6c890c95801bb126a",
+          "type": "x-g25-protractor",
           "view": "b25",
           "controls": [
-            "g25-guess"
+            "g25-move",
+            "g25-flip"
           ]
         },
         {
-          "sessionId": "angleestimate",
+          "sessionId": "angleprotractor",
           "index": 1,
-          "nodeId": "mt_YUJ5pwalqL",
-          "taskSha256": "0747b513cf0a1b47fa7287c24c8f1124fad9decd5264b49ac198cc44d8c24b6d",
-          "type": "x-g25-estimate",
+          "nodeId": "mt_4MFUAsbx_6",
+          "taskSha256": "b59a56720e76b1c137285af1f28c5a39215295ffe87712266a187c8d98fedc42",
+          "type": "x-g25-protractor",
           "view": "b25",
           "controls": [
-            "g25-guess"
+            "g25-move",
+            "g25-flip",
+            "g25-draw"
+          ]
+        },
+        {
+          "sessionId": "angleprotractor",
+          "index": 2,
+          "nodeId": "mt_4MFUAsbx_6",
+          "taskSha256": "38f731b2d957fd5a6bd7befea7ba52703a90d8ebe014cfaec13f0a82ed75440d",
+          "type": "x-g25-protractor",
+          "view": "b25",
+          "controls": [
+            "g25-move",
+            "g25-flip"
           ]
         }
       ]
