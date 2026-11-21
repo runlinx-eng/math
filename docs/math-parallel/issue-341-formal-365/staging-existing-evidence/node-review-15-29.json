@@ -1,0 +1,446 @@
+{
+  "schema": "issue-341-node-test-contract-inventory/1",
+  "sourceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceHandoff": "3c4801f969f09a98c9f2bc4ed2f1cb953adbd530",
+  "start": 15,
+  "end": 30,
+  "records": [
+    {
+      "packet": "P102",
+      "positions": [
+        "structurechoices:0",
+        "structurechoices:1"
+      ],
+      "commit": "e9e0fdfa7277d54666b04a57d753a202812f5a3c",
+      "testPath": "tests/p9-p102-product-grouping.test.mjs",
+      "browserPath": "tests/p9-p102-product-grouping-browser.cjs",
+      "evidencePath": "dist/learning/p102-product-grouping-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P102 binds the two complete original sources and fingerprints",
+        "P102 restores separate factor identities after Undo and counts each original once",
+        "P102 accepts grouping the two 4s or pairing the first factor with a 4",
+        "P102 requires two retained merges, exact total and a fresh matching Check",
+        "P102 rejects forged merge provenance, hidden coordinates and an incomplete path",
+        "P102 excludes other multiplication positions, practice and related bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P101",
+      "positions": [
+        "mirrorfold:0",
+        "mirrorfold:1",
+        "mirrorfold:2"
+      ],
+      "commit": "bae84808cf6ba896376359b29f77fc8360c076b9",
+      "testPath": "tests/p9-p101-axis-mirror.test.mjs",
+      "browserPath": "tests/p9-p101-axis-mirror-browser.cjs",
+      "evidencePath": "dist/learning/p101-axis-mirror-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P101 binds the three complete originals and their fingerprints",
+        "P101 verifies axis-fixed points and actual mirror placements from both sides",
+        "P101 requires an actual new fold followed by the latest original Check",
+        "P101 supports exact integer aliases and declines a silently rounded coordinate",
+        "P101 declines forged folds, noncanonical grid identities and wrong source geometry",
+        "P101 excludes adjacent geometry, actual practice and source bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P100",
+      "positions": [
+        "boxsummary:0"
+      ],
+      "commit": "155421e3d526eb5192ee68113c1f8c5afd3c299c",
+      "testPath": "tests/p9-p100-boxplot-marks.test.mjs",
+      "browserPath": "tests/p9-p100-boxplot-marks-browser.cjs",
+      "evidencePath": "dist/learning/p100-boxplot-marks-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P100 binds the complete box construction source and fingerprint",
+        "P100 replays all five marks and a returned row correction",
+        "P100 requires exact numeric quantities and the source whisker convention",
+        "P100 requires current saves and a latest matching original Check",
+        "P100 rejects forged event coordinates, missing marks and hidden alterations",
+        "P100 excludes the other boxplot modes, practice and original bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P099",
+      "positions": [
+        "lengthstory:0",
+        "lengthstory:1",
+        "lengthstory:2"
+      ],
+      "commit": "fd47e359eef43d0411c8704401a516146c186b11",
+      "testPath": "tests/p9-p099-length-tape.test.mjs",
+      "browserPath": "tests/p9-p099-length-tape-browser.cjs",
+      "evidencePath": "dist/learning/p099-length-tape-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P099 binds the exact source at all three original positions",
+        "P099 replays correction on each side and verifies conservation of length",
+        "P099 preserves the role of the unit and supports exact related equations",
+        "P099 requires the saved cut and a new original Check on that model",
+        "P099 declines forged cuts, unsupported actions and hidden action targets",
+        "P099 excludes other measuring models, practice and related bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P098",
+      "positions": [
+        "linear36:0",
+        "linear36:1"
+      ],
+      "commit": "6b184a54df3b6c8d4ac8729c6e490358668a1b27",
+      "testPath": "tests/p9-p098-linear-parameter.test.mjs",
+      "browserPath": "tests/p9-p098-linear-parameter-browser.cjs",
+      "evidencePath": "dist/learning/p098-linear-parameter-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P098 binds the complete originals and preserved source hashes",
+        "P098 derives the exact intercept and per-step change while the other parameter is fixed",
+        "P098 requires each saved comparison and latest matching Check",
+        "P098 distinguishes a current draft line from an actual saved line",
+        "P098 declines edits to the fixed parameter, forged saves and a wrong reading",
+        "P098 excludes the quadratic mode, practice and original bridge positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P097",
+      "positions": [
+        "factoruse:3"
+      ],
+      "commit": "e74a2b68465139da612c717b8c3434e25eb52f6e",
+      "testPath": "tests/p9-p097-square-pair.test.mjs",
+      "browserPath": "tests/p9-p097-square-pair-browser.cjs",
+      "evidencePath": "dist/learning/p097-square-pair-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P097 locks the actual square-pair task and entire source fingerprint",
+        "P097 distinguishes a zero side, insufficient sum and correct pair",
+        "P097 requires a genuine current placement and latest matching Check",
+        "P097 rejects forged side snapshots, hidden positions and fabricated attempts",
+        "P097 excludes prior divisor questions, old practice and real bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P096",
+      "positions": [
+        "fourparts:0",
+        "fourparts:1"
+      ],
+      "commit": "cc79c09b3fa0956e394a674ad03e28853afc5f17",
+      "testPath": "tests/p9-p096-four-addends.test.mjs",
+      "browserPath": "tests/p9-p096-four-addends-browser.cjs",
+      "evidencePath": "dist/learning/p096-four-addends-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P096 binds both original four-addend positions with the complete fingerprints",
+        "P096 traces each pair to independent original IDs and exact subtotals",
+        "P096 accepts alternate legal pairs and describes the actual subtotals",
+        "P096 requires the complete history and a new original Check on the current work",
+        "P096 rejects invented or duplicated group history and incorrect active leftovers",
+        "P096 excludes a different grouping mechanism, practice and related bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P095",
+      "positions": [
+        "temperaturechange:0",
+        "temperaturechange:1"
+      ],
+      "commit": "1067fd247cdb109787a9f9b883230fdf6de7b39b",
+      "testPath": "tests/p9-p095-zero-crossing.test.mjs",
+      "browserPath": "tests/p9-p095-zero-crossing-browser.cjs",
+      "evidencePath": "dist/learning/p095-zero-crossing-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P095 binds exact sources, units and full fingerprints",
+        "P095 verifies real steps, rejected overshoot, Undo and exact spans in both directions",
+        "P095 permits an exact move across zero without requiring a stop at zero",
+        "P095 requires an exact distance, correct unit and latest original Check",
+        "P095 rejects forged event targets, missing histories and later unsaved inputs",
+        "P095 excludes other interval sources, actual practice and related bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P094",
+      "positions": [
+        "decimalproduct:0",
+        "decimalproduct:1"
+      ],
+      "commit": "de7f2c5eeb19991e81447d310122fc05f5b4f067",
+      "testPath": "tests/p9-p094-small-unit-product.test.mjs",
+      "browserPath": "tests/p9-p094-small-unit-product-browser.cjs",
+      "evidencePath": "dist/learning/p094-small-unit-product-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P094 locks both exact original sources and full fingerprints",
+        "P094 independently reconstructs each count, bundles, digit and carry",
+        "P094 requires actual conversion out of the small unit and exact equivalent decimal forms",
+        "P094 requires a fresh latest Check after correction or an original reset",
+        "P094 excludes altered cast-off bundles and unsupported hidden events",
+        "P094 excludes decimal division, practice and related real bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P093",
+      "positions": [
+        "foldprism:1"
+      ],
+      "commit": "8561bdfd25e1683bbe598074870bb2b921e22927",
+      "testPath": "tests/p9-p093-triangular-prism-net.test.mjs",
+      "browserPath": "tests/p9-p093-triangular-prism-net-browser.cjs",
+      "evidencePath": "dist/learning/p093-triangular-prism-net-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P093 locks the original prompt, node and complete fingerprint",
+        "P093 reconstructs the visible shell and its two triangular ends",
+        "P093 preserves the missing end and demands a new Check after correction",
+        "P093 rejects half-folds, an opposing prediction and an unturned result",
+        "P093 excludes impossible native actions and tampering with the recorded fold",
+        "P093 excludes the prerequisite, practice and bridge positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P092",
+      "positions": [
+        "shapepieces:0",
+        "shapepieces:1"
+      ],
+      "commit": "b61fe5937c2773d7644c5519608cd78f3b2f8f3e",
+      "testPath": "tests/p9-p092-triangle-tiling.test.mjs",
+      "browserPath": "tests/p9-p092-triangle-tiling-browser.cjs",
+      "evidencePath": "dist/learning/p092-triangle-tiling-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P092 locks both exact original geometry tasks",
+        "P092 needs complementary orientations even when every piece has been placed",
+        "P092 records the protruding quarter-turn of a right triangle",
+        "P092 checks the numeric answer and requires a fresh Check after fixing the layout",
+        "P092 recognizes allowed exploration and fails closed on tampered geometry",
+        "P092 excludes practice, bridge and separately scoped shape-merger material"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P091",
+      "positions": [
+        "allowedrange:0",
+        "allowedrange:1"
+      ],
+      "commit": "8855f11e3a1d4932c4122882b7756a4cac5a896d",
+      "testPath": "tests/p9-p091-one-sided-range.test.mjs",
+      "browserPath": "tests/p9-p091-one-sided-range-browser.cjs",
+      "evidencePath": "dist/learning/p091-one-sided-range-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P091 checks both original prompts and fingerprints",
+        "P091 distinguishes open and closed endpoints and compares fractional probes exactly",
+        "P091 retains a disagreement at the endpoint and requires a fresh Check",
+        "P091 needs all three actual probe classes and a deliberately set boundary",
+        "P091 rejects altered probe verdicts, the graph and extra unrecorded algebra",
+        "P091 does not bind practice, bridges, algebra or a two-ended interval"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P090",
+      "positions": [
+        "signedproducts:0",
+        "signedproducts:1",
+        "signedproducts:2"
+      ],
+      "commit": "3c75aec6811bb9f3b4a49a5c5ae9d9655bedc7e3",
+      "testPath": "tests/p9-p090-signed-product-rows.test.mjs",
+      "browserPath": "tests/p9-p090-signed-product-rows-browser.cjs",
+      "evidencePath": "dist/learning/p090-signed-product-rows-evidence.js",
+      "nodeTests": 7,
+      "nodeTestTitles": [
+        "P090 locks the three original task fingerprints and node positions",
+        "P090 derives the change across zero by removing one negative factor amount",
+        "P090 distinguishes magnitudes, signs and the product involving zero",
+        "P090 can reconstruct all divisions as inverse multiplication",
+        "P090 requires actual current rows and a fresh Check through a real reset",
+        "P090 rejects altered operations or forged later rows",
+        "P090 excludes practice, bridges and the duplicate mixed-lesson positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P089",
+      "positions": [
+        "parityrules:0",
+        "parityrules:1",
+        "parityrules:2",
+        "parityrules:3"
+      ],
+      "commit": "e85623a8d18d99b131f9c345c4593ecc8aed1c74",
+      "testPath": "tests/p9-p089-parity-pairing.test.mjs",
+      "browserPath": "tests/p9-p089-parity-pairing-browser.cjs",
+      "evidencePath": "dist/learning/p089-parity-pairing-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P089 binds all four exact original prompts and their fingerprints",
+        "P089 distinguishes the leftovers and the pairs already formed by two piles",
+        "P089 reconstructs three pairs of whole groups and 37 matched positions per pair",
+        "P089 requires prediction, pairing, the reason and a fresh Check",
+        "P089 distinguishes a blank prediction from a saved guess and excludes forged actions",
+        "P089 excludes practice, bridge and other source positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P088",
+      "positions": [
+        "graph39:1",
+        "graph39:2"
+      ],
+      "commit": "06ea261e15a97843935892c4ca24373d99793f74",
+      "testPath": "tests/p9-p088-graph-crossings.test.mjs",
+      "browserPath": "tests/p9-p088-graph-crossings-browser.cjs",
+      "evidencePath": "dist/learning/p088-graph-crossings-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P088 binds both exact original crossing tasks and their fingerprints",
+        "P088 independently finds crossings with the axis and with y = x",
+        "P088 rejects repeated marks on one side and requires a new Check after undo",
+        "P088 distinguishes approximate crossings from exploratory marks and out-of-window guesses",
+        "P088 rejects altered artifacts and unsupported action histories",
+        "P088 excludes the native prerequisite, journey reading, practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    }
+  ]
+}
