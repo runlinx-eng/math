@@ -2,16 +2,35 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P007g-native-compass-bisector",
-      "sha": "3ed4b279f63039f0926fb59cbfdbce321bf7fe12",
-      "node_test": "tests/p9-p007g-compass-bisector-evidence.test.mjs",
-      "browser_test": "tests/p9-p007g-compass-bisector-browser.cjs",
+      "case": "P007h-native-angle-bisector",
+      "sha": "8a70c5d4f46125257b60786116bfcdcdaaeddeda",
+      "node_test": "tests/p9-p007h-compass-angle-evidence.test.mjs",
+      "browser_test": "tests/p9-p007h-compass-angle-browser.cjs",
       "native": [
         {
           "sessionId": "compasswork",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_ZrsqGVG-Wt",
-          "taskSha256": "05568f1f7538a0362961fc24bb1411c5e568e36abc065c1f6b1598554150aaba",
+          "taskSha256": "afc67970d24d820a8a7cedabd17eebeee81d46dbf74999cb27496b36bd029579",
+          "type": "x-s23-compass",
+          "view": "b23",
+          "controls": [
+            "g23-arc"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "P007i-native-exterior-perpendicular",
+      "sha": "0c11119f47af48ea141c1ae24510db5d2c044469",
+      "node_test": "tests/p9-p007i-compass-perpendicular-evidence.test.mjs",
+      "browser_test": "tests/p9-p007i-compass-perpendicular-browser.cjs",
+      "native": [
+        {
+          "sessionId": "compasswork",
+          "index": 2,
+          "nodeId": "mt_ZrsqGVG-Wt",
+          "taskSha256": "1eebbac570ca690187b7b129b88c541663d8c12e9ebfe7b76c0e0ab01de11a9a",
           "type": "x-s23-compass",
           "view": "b23",
           "controls": [
