@@ -70,12 +70,13 @@ test('all365 archived records pass the new composition, with source-exclusive ro
  }
 });
 
-test('formal manifest, default adapter array and application imports do not activate candidates',()=>{
+test('isolated factory stays separate from the newly connected formal route',()=>{
  const manifest=JSON.parse(read('../docs/spatial-learning/evidence-review-manifest.json'));
- assert.equal(manifest.tasks.length,813);
+ assert.equal(manifest.tasks.length,1178);
+ assert.equal(manifest.tasks.filter(row=>row.adapter?.startsWith('issue341-')).length,365);
  assert.ok(EVIDENCE_ADAPTERS.every(row=>!row.id.startsWith('issue341-')));
- assert.equal(read('../dist/learning/learn.js').includes('issue341-'),false);
+ assert.equal(read('../dist/learning/learn.js').includes('issue341-formal-admissions.js'),true);
  assert.equal(read('../dist/learning/thinking-feedback.js').includes("from './issue341-"),false);
  assert.equal(read('../dist/learning/evidence-adapters.js').includes("from './issue341-"),false);
- assert.equal(read('../dist/sw.js').includes('issue341-'),false);
+ assert.equal(read('../dist/sw.js').includes('issue341-formal-source-routing.js'),true);
 });

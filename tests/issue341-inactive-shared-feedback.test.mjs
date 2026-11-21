@@ -48,11 +48,11 @@ function interval(){
  return {...x,model:m,word:'端点为 12'};
 }
 
-test('candidate-only feedback code never changes official A813, adapters, or the live UI',()=>{
+test('candidate-only feedback stays isolated after the formal source snapshot is updated, adapters, or the live UI',()=>{
  assert.equal(ISSUE341_FEEDBACK_PROPOSAL_STATUS,'INACTIVE_NOT_APPROVED_NOT_RUNTIME_REGISTERED');
  assert.equal(ISSUE341_INACTIVE_ADAPTER_PROPOSALS.length,5);
  const official=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
- assert.equal(official.tasks.length,813);
+ assert.equal(official.tasks.length,1178);
  assert.ok(EVIDENCE_ADAPTERS.every(x=>!x.id.startsWith('issue341-')));
  for(const row of ISSUE341_INACTIVE_ADAPTER_PROPOSALS){
    assert.equal(row.id.startsWith('issue341-'),true);
