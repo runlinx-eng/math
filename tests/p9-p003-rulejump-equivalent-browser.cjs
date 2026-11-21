@@ -4,6 +4,7 @@
 // Do not register strict A or treat this as an official CI/Artifact result.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
+const {pathToFileURL}=require('node:url');
 const {createHash}=require('node:crypto');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
@@ -36,6 +37,7 @@ function persist(){
 }
 async function run(){
  fs.mkdirSync(out,{recursive:true});
+ const candidate=await import(pathToFileURL(path.join(root,'dist/learning/p003-rulejump-equivalent-evidence.js')).href);
  let origin,browser,ctx,page;
  try{
   origin=await createOrigin(root);
@@ -141,14 +143,16 @@ async function run(){
   await check();
   const alternate=await snap('alternative-check');
   ok(alternate.attempts.length===2,'alternative Check retained after incomplete one');
-  const alternateProof=await page.evaluate(async m=>{
+  // Original grading remains in Chromium; strict candidate validation uses
+  // the genuine captured native task and model in Node, outside the released SW.
+  const nativeCorrect=await page.evaluate(async m=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
-   const task=sessionTaskFor('percentpatterns',0);
    const original=await import('./learning/phase5/b17-model.js');
-   const candidate=await import('./learning/p003-rulejump-equivalent-evidence.js');
-   return {nativeCorrect:original.inspect(task,m).correct,
-    candidate: candidate.replayRulejumpEquivalentEvidence(task,m,{sessionId:'percentpatterns',index:0})};
+   return original.inspect(sessionTaskFor('percentpatterns',0),m).correct;
   },alternate.model);
+  const alternateProof={nativeCorrect,
+   candidate:candidate.replayRulejumpEquivalentEvidence(native.task,alternate.model,
+    {sessionId:spec.id,index:spec.index})};
   ok(alternateProof.nativeCorrect===true,'original grader allows equivalent times-25 rule');
   ok(alternateProof.candidate===null,'candidate rejects an unobserved times-100 / divide-4 method');
   stage='canonical-correction';
@@ -160,18 +164,17 @@ async function run(){
   await check();
   const accepted=await snap('canonical-check');
   ok(accepted.attempts.length===3,'incomplete, alternative, and canonical Checks preserved');
-  const proof=await page.evaluate(async({model,record})=>{
-   const {sessionTaskFor}=await import('./learning/bridges.js');
-   const candidate=await import('./learning/p003-rulejump-equivalent-evidence.js');
-   const task=sessionTaskFor('percentpatterns',0),context={sessionId:'percentpatterns',index:0};
-   const done=candidate.submittedRulejumpEquivalentEvidence(task,model,record,context);
-   const stale={...record,attempts:record.attempts.slice(0,-1)};
-   const forged=structuredClone(model);
-   forged.history[0].a='run';
-   return {done,staleAccepted:!!candidate.submittedRulejumpEquivalentEvidence(task,model,stale,context),
-    forgedAccepted:!!candidate.replayRulejumpEquivalentEvidence(task,forged,context),
-    otherIndexAccepted:!!candidate.replayRulejumpEquivalentEvidence(task,model,{sessionId:'percentpatterns',index:1})};
-  },{model:accepted.model,record:accepted.record});
+  const context={sessionId:spec.id,index:spec.index};
+  const stale={...accepted.record,attempts:accepted.record.attempts.slice(0,-1)};
+  const forged=structuredClone(accepted.model);
+  forged.history[0].a='run';
+  const proof={
+   done:candidate.submittedRulejumpEquivalentEvidence(native.task,accepted.model,accepted.record,context),
+   staleAccepted:!!candidate.submittedRulejumpEquivalentEvidence(native.task,accepted.model,stale,context),
+   forgedAccepted:!!candidate.replayRulejumpEquivalentEvidence(native.task,forged,context),
+   otherIndexAccepted:!!candidate.replayRulejumpEquivalentEvidence(native.task,accepted.model,
+    {sessionId:'percentpatterns',index:1})
+  };
   ok(proof.done?.kind==='rulejump-times100-divide4','latest genuine Check binds exact P003 proof');
   ok(JSON.stringify(proof.done?.canonicalRuns.map(x=>x.thenDivideBy4))===JSON.stringify([100,175,400]),
    'three mathematically independent expected results');
