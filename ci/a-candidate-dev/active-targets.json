@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P006i-native-studio-row-to-chart",
-      "sha": "d7010820d3d996f9f5ead6a556ae7fd5d4cfdc3b",
+      "sha": "d96595613af91d749d6f8b726286433a057466db",
       "node_test": "tests/p9-p006i-native-studio-row-to-chart-evidence.test.mjs",
       "browser_test": "tests/p9-p006i-native-studio-row-to-chart-browser.cjs",
       "native": [
