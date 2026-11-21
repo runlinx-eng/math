@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004d-triangle-drawing
-            sha: abd7f41bf763b6d84c567670a8069cbc82bf55c6
-            node_test: tests/p9-p004d-triangle-drawing-evidence.test.mjs
-            browser_test: tests/p9-p004d-triangle-drawing-browser.cjs
+          - case: P004e-regular-polygon-conditions
+            sha: 99e07c4e2c9410125176b4a9f4a31105e0a53ac1
+            node_test: tests/p9-p004e-regular-polygon-conditions-evidence.test.mjs
+            browser_test: tests/p9-p004e-regular-polygon-conditions-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
