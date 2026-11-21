@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 92,
-    "developmentTestedCandidateCases": 47,
+    "developmentTestedPositions": 93,
+    "developmentTestedCandidateCases": 48,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 26,
+      "developmentTested": 27,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 5
+      "pendingOrOtherNotAccepted": 4
     }
   ],
   "cases": [
@@ -1013,6 +1013,25 @@
       },
       "artifact": {
         "id": 14703909293,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006q-native-sleep-means-vs-individual",
+      "branch": "work/a/p006q-native-sleep-means-vs-individual",
+      "candidateSha": "408437d602bcdebc24e9f642d5f584209f67cf24",
+      "positions": [
+        "samplevary:3"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44897322461,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14704117648,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
