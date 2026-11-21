@@ -25,15 +25,15 @@ jobs:
       matrix:
         include:
           - case: P001-gridarea-perimeter
-            sha: 8fd1dcd9e6d1b3d4af403157e4f6556003851ff4
+            sha: a373ada1be486b5d71d731f17e6317b6f7841d3d
             node_test: tests/p9-gridarea-perimeter-contrast-evidence.test.mjs
             browser_test: tests/p9-gridarea-perimeter-contrast-browser.cjs
           - case: P002-wide-order-gap
-            sha: 6f46e69ff98876e590b1da05c397e67ba404c0f1
+            sha: 82f07469947cb9861aced40eddd5a1f480ab8346
             node_test: tests/p9-p002-wide-order-gap-evidence.test.mjs
             browser_test: tests/p9-p002-wide-order-gap-browser.cjs
           - case: P003-rulejump-equivalence
-            sha: b0765f3fc6ff65fcb5e55ba4ea19856bdb7f25b4
+            sha: dbc7e3560384737f8e491d33aaa9f5547fd494f1
             node_test: tests/p9-p003-rulejump-equivalent-evidence.test.mjs
             browser_test: tests/p9-p003-rulejump-equivalent-browser.cjs
 
