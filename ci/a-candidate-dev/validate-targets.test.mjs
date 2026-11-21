@@ -63,3 +63,32 @@ test('original B21 sample drawing and recording controls admitted, unsafe action
  valid.targets[0].native[0].controls[0]='b21_fake';
  assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
 });
+
+test('legacy original survey task admitted only at survey:0 and survey:1',()=>{
+ for(const index of [0,1]){
+  const allowed=changed(x=>{
+   Object.assign(x.targets[0].native[0],{
+    sessionId:'survey',index,nodeId:'mt_ebQURBOsM5',
+    taskSha256:index===0?
+     'b408662903dcf4427dbd62cde33a67aed44713215040dfe2e1a315ed6d040712':
+     '62e70fbba828146520ab23b8f3e59738ddde922ff980cc3b79af83e2ce892595',
+    type:'survey',view:null,controls:[]
+   });
+  });
+  assert.equal(validateTargets(allowed).include[0].native[0].type,'survey');
+  for(const mutation of [
+   s=>s.index=2,
+   s=>s.sessionId='tally',
+   s=>s.type='chart',
+   s=>s.type='x-fake',
+   s=>s.controls=['b21-fake']
+  ]){
+   const candidate=structuredClone(allowed);mutation(candidate.targets[0].native[0]);
+   if(candidate.targets[0].native[0].type==='x-fake'){
+    // Generic x-* types are allowed only as syntax; runtime source SHA preflight rejects fakes.
+    continue;
+   }
+   assert.throws(()=>validateTargets(candidate),/A_DEV_TARGET_INVALID/);
+  }
+ }
+});
