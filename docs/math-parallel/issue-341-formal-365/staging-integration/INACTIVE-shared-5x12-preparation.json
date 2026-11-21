@@ -1,0 +1,125 @@
+{
+  "schema": "issue-341-isolated-inactive-shared-preparation/1",
+  "createdAsOf": "2026-11-21",
+  "status": "INACTIVE_PREPARATION_ONLY_NOT_APPROVED_NOT_RUNTIME_REGISTERED",
+  "candidateHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceLockHead": "d0b9bf929d0ddf7fcce23601cff27ff9dc0e320e",
+  "stage": "first-5-family-12-position-pilot",
+  "families": [
+    {
+      "packet": "P116",
+      "type": "x-dotdraw",
+      "adapterId": "issue341-P116",
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "bindingExport": "p116IntegerDotplotBinding",
+      "replayExport": "replayP116IntegerDotplotEvidence",
+      "submittedExport": "submittedP116IntegerDotplotEvidence",
+      "method": null,
+      "questionOnly": true,
+      "feedbackCopy": {
+        "summary": "核对了已记录的点图叠点、频数、众数以及本次修订。",
+        "detail": "只说明本题被保存的点图和最近一次原 Check，不评价自由解释或长期掌握。",
+        "question": "每个整数位置的点数怎样决定众数和空刻度？"
+      },
+      "count": 2
+    },
+    {
+      "packet": "P109",
+      "type": "x-a35-factor",
+      "adapterId": "issue341-P109",
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "bindingExport": "p109CommonFactorBinding",
+      "replayExport": "replayP109CommonFactorEvidence",
+      "submittedExport": "submittedP109CommonFactorEvidence",
+      "method": null,
+      "questionOnly": true,
+      "feedbackCopy": {
+        "summary": "核对了本题共同因数的系数、字母次数和已保存的展开验证。",
+        "detail": "仅限三道冻结代数原题，不能推断独立发现一般因式分解策略。",
+        "question": "怎样确认提出的是本题最大公因式？"
+      },
+      "count": 3
+    },
+    {
+      "packet": "P107",
+      "type": "x-factorrects",
+      "adapterId": "issue341-P107",
+      "path": "dist/learning/p107-factor-pairs-evidence.js",
+      "bindingExport": "p107FactorPairsBinding",
+      "replayExport": "replayP107FactorPairsEvidence",
+      "submittedExport": "submittedP107FactorPairsEvidence",
+      "method": null,
+      "questionOnly": true,
+      "feedbackCopy": {
+        "summary": "核对了这道原题保存的因数对与面积数量。",
+        "detail": "交换行列的重复组合不当成不同因数对；不代表其他数也已验证。",
+        "question": "为什么交换行和列后，有些因数对算同一种？"
+      },
+      "count": 2
+    },
+    {
+      "packet": "P105",
+      "type": "x-numbersearch",
+      "adapterId": "issue341-P105",
+      "path": "dist/learning/p105-prime-divisors-evidence.js",
+      "bindingExport": "p105PrimeDivisorsBinding",
+      "replayExport": "replayP105PrimeDivisorsEvidence",
+      "submittedExport": "submittedP105PrimeDivisorsEvidence",
+      "method": null,
+      "questionOnly": true,
+      "feedbackCopy": {
+        "summary": "核对了这道原题已记录的除法试探、余数和因数。",
+        "detail": "只涉及这道冻结题和实际保存的试探，不代表所有整数都已证明。",
+        "question": "怎样用试除结果判断本题是否存在非平凡因数？"
+      },
+      "count": 3
+    },
+    {
+      "packet": "P091",
+      "type": "x-allowedrange",
+      "adapterId": "issue341-P091",
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "bindingExport": "p091OneSidedRangeBinding",
+      "replayExport": "replayP091OneSidedRangeEvidence",
+      "submittedExport": "submittedP091OneSidedRangeEvidence",
+      "method": null,
+      "questionOnly": true,
+      "feedbackCopy": {
+        "summary": "核对了数轴最终端点、方向及已保存的有理数探测结果。",
+        "detail": "探测时的历史图形位置和端点样式未记录，因此不能还原。",
+        "question": "最终端点和方向如何决定哪些数符合条件？"
+      },
+      "count": 2
+    }
+  ],
+  "sourceProposal": "docs/math-parallel/issue-341-formal-365/b-first-12-INACTIVE-integration-proposal.json",
+  "scopeSource": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
+  "officialFilesUnmodified": [
+    "dist/learning/evidence-adapters.js",
+    "dist/learning/thinking-feedback.js",
+    "docs/spatial-learning/evidence-review-manifest.json"
+  ],
+  "inertAdapterPreview": "Each adapter descriptor is a separate staging-only import/binding/replay reference. No import from official shared registry; no auto-insertion into EVIDENCE_ADAPTERS.",
+  "inertFeedbackPreview": "The texts in feedbackCopy are proposed conditional observations, not a scored mathematical method, and must not be inserted into thinking-feedback.js until reviewed against the original replay and latest Check.",
+  "approvalRules": [
+    "Review the 12 original mathematical claim limits and literal observation texts one-by-one before any runtime feedback insertion.",
+    "Only exact sessionId/index plus original task SHA/node/type may activate a future adapter.",
+    "Require original/latest successful Check and candidate submitted replay, not just a correct grade or final answer.",
+    "P091 historical graph positions and open/closed styling at each probe cannot be reconstructed.",
+    "P110 strict replay vs native tolerance boundary is a separate later scope, not part of this first 12.",
+    "Keep method=null for all five; never infer CCSS MP labels from widget type.",
+    "Approved manifest remains 813 unchanged until independent scope approval; proposed 12 rows remain explicitly unapproved.",
+    "Any future runtime modified exact HEAD requires applicable Node, Chromium, P10, Artifact and Required gates; new main Required/Fallback only after an expressly authorized merge."
+  ],
+  "CIPlan": {
+    "isolationPreflight": "Check all 5 exports against exact 12 source hashes, exclusivity, formal manifest non-overlap and no registered adapters; artifact contains only INACTIVE preview report.",
+    "mathRetesting": "None for unchanged B 308; investigate only a specified reproducible defect.",
+    "futureAfterApproval": "New exact-HEAD CI on changed shared files, not substitute old source-lock CI.",
+    "futureMain": "No main merge here, no A grant or deployment."
+  },
+  "officialStrictA": {
+    "current": 813,
+    "totalNative": 1996,
+    "newGrants": 0
+  }
+}

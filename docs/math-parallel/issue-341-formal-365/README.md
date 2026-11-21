@@ -4,6 +4,8 @@
 
 > **2026-11-21 中央续办：第二批只读数学范围** 已从 B 5 家族/12 道扩至 **9 家族/18 道**（P104 2、P106 1、P108 1、P110 2）。仅审已有冻结 replay、原 Node 合同及通过的 CI，没有重复测试。特别保留 P110 的“原 Check 近似容差 ≠ replay 精确证据”限制。详见 [新增 6 道范围](./b-second-6-observable-contract-review.json) 与同步的 [365 JSON](./issue-341-formal-365-intake.json)／[CSV](./issue-341-formal-365-intake.csv)。B308 工程证据复用及旧 67 道额外有界数值复核不变，298 非强制重测；新授 A 为 0，当前不生效提案不变。
 
+> **隔离共享接入准备（仍不生效）**：已为第一批 **5 家族/12 道**整理了真实 binding/replay/submitted 导出、最小可观察反馈文本和接入门禁，见 [INACTIVE-shared-5x12-preparation.json](./staging-integration/INACTIVE-shared-5x12-preparation.json)。不编辑三个正式共享文件；反馈仅为待审原文，全部 `method:null`，P091 历史图形界限明确保留。不得把预检结果冒充数学正式批准。
+
 ---
 
 # #341 最新：365 道来源锁定预检通过，B 线已有证据继续复用（2026-11-21）
